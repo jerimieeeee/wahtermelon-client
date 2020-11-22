@@ -1,20 +1,14 @@
 <div class="container-xl mx-auto bg-white">
-  <nav class="bg-white">
-    <div class="container mx-auto px-6 py-3 md:flex md:justify-between md:items-center">
+  <nav class="bg-white w-100">
+    <div class="py-3 px-6 md:flex md:justify-between md:items-center">
       <div class="flex justify-between items-center">
+        
+        <img src="./assets/img/wah_icon.png" class="rounded-full w-12 h-12 mx-auto mr-5" />
         <div class="pt-2 relative mx-auto text-gray-600">
-          <input class="border-2 border-gray-300 bg-white h-10 px-5 pr-16 rounded-lg text-sm focus:outline-none"
+          <input class="border-2 border-gray-300 bg-white h-10 px-5 pr-16 rounded-3xl text-sm focus:outline-none"
             type="search" name="search" placeholder="Search">
           <button type="submit" class="absolute right-0 top-0 mt-4 mr-4 text-gray-700 hover:text-indigo-500">
-
             <fa-icon class="mx-0 my-0" [icon]="faSearch"></fa-icon>
-            <!-- <svg class="text-gray-600 h-4 w-4 fill-current" xmlns="http://www.w3.org/2000/svg"
-              xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px"
-              viewBox="0 0 56.966 56.966" style="enable-background:new 0 0 56.966 56.966;" xml:space="preserve"
-              width="512px" height="512px">
-              <path
-                d="M55.146,51.887L41.588,37.786c3.486-4.144,5.396-9.358,5.396-14.786c0-12.682-10.318-23-23-23s-23,10.318-23,23  s10.318,23,23,23c4.761,0,9.298-1.436,13.177-4.162l13.661,14.208c0.571,0.593,1.339,0.92,2.162,0.92  c0.779,0,1.518-0.297,2.079-0.837C56.255,54.982,56.293,53.08,55.146,51.887z M23.984,6c9.374,0,17,7.626,17,17s-7.626,17-17,17  s-17-7.626-17-17S14.61,6,23.984,6z" />
-            </svg> -->
           </button>
         </div>
       </div>
@@ -43,7 +37,7 @@
           </a>
 
           <div class="flex justify-center md:block leading-tight mx-2 my-1">
-            <img src="https://randomuser.me/api/portraits/women/76.jpg" class="rounded-full w-12 h-12 mx-auto" />
+            <img src="./assets/img/profile_1.jpg" class="rounded-full w-12 h-12 mx-auto" />
           </div>
 
           <div class="flex justify-center md:block leading-tight mx-2 my-1">
@@ -51,17 +45,24 @@
               Hello,
             </span>
             <span class="block text-blue-500 font-medium">
-              Mark Christian Santos
+              Dahyun, Kim
             </span>
           </div>
+          
+          <div>
+            <div class="dropdown inline-block relative">
+              <button class="bg-gray-300 text-gray-700 font-semibold py-2 px-2 rounded-2xl rounded inline-flex items-center">
+                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/> </svg>
+              </button>
 
-          <div class="flex justify-center md:block mx-2 my-1">
-            <a class="relative text-gray-700 hover:text-gray-600" href="#">
-              <fa-icon [icon]="faChevronCircleDown" size="lg"></fa-icon>
-
-              <span class="absolute top-0 left-0 rounded-full bg-indigo-500 text-white p-1 text-xs"></span>
-            </a>
+              <ul class="dropdown-menu absolute hidden text-gray-700 pt-1 mr-1">
+                <li class=""><a class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap" href="#">One</a></li>
+                <li class=""><a class="bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap" href="#">Two</a></li>
+                <li class=""><a class="rounded-b bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap" href="#">Three is the magic number</a></li>
+              </ul>
+            </div>
           </div>
+
           <div class="flex md:hidden">
             <button type="button" class="text-gray-500 hover:text-gray-600 focus:outline-none focus:text-gray-600" aria-label="toggle menu">
               <svg viewBox="0 0 24 24" class="h-6 w-6 fill-current">
@@ -74,18 +75,12 @@
     </div>
   </nav>
 
-  <div class="flex flex-row h-full">
-    <nav class="bg-blue-500 w-20  justify-between flex flex-col ">
-      <div class="mt-10 mb-10">
-        <a href="#">
-          <img
-            src="https://randomuser.me/api/portraits/women/76.jpg"
-            class="rounded-full w-10 h-10 mb-3 mx-auto"
-          />
-        </a>
-        <div class="mt-10">
+  <div class="flex flex-row h-100">
+    <nav class="bg-blue-500 w-20 justify-between flex flex-col rounded-tr-3xl">
+      <div class="mt-15 mb-0">
+        <div class="mt-20">
           <ul>
-            <li class="mb-6">
+            <li class="mb-10">
               <a href="#">
                 <span>
                   <svg
@@ -104,7 +99,7 @@
                 </span>
               </a>
             </li>
-            <li class="mb-6">
+            <li class="mb-10">
               <a href="#">
                 <span>
                   <svg
@@ -120,7 +115,7 @@
                 </span>
               </a>
             </li>
-            <li class="mb-6">
+            <li class="mb-10">
               <a href="#">
                 <span>
                   <svg
@@ -164,30 +159,15 @@
           </ul>
         </div>
       </div>
-      <div class="mb-4">
-        <a href="#">
-          <span>
-            <svg
-              class="fill-current h-5 w-5 text-gray-300 mx-auto hover:text-red-500"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M13 4.00894C13.0002 3.45665 12.5527 3.00876 12.0004 3.00854C11.4481 3.00833 11.0002 3.45587 11 4.00815L10.9968 12.0116C10.9966 12.5639 11.4442 13.0118 11.9965 13.012C12.5487 13.0122 12.9966 12.5647 12.9968 12.0124L13 4.00894Z"
-                fill="currentColor"
-              />
-              <path
-                d="M4 12.9917C4 10.7826 4.89541 8.7826 6.34308 7.33488L7.7573 8.7491C6.67155 9.83488 6 11.3349 6 12.9917C6 16.3054 8.68629 18.9917 12 18.9917C15.3137 18.9917 18 16.3054 18 12.9917C18 11.3348 17.3284 9.83482 16.2426 8.74903L17.6568 7.33481C19.1046 8.78253 20 10.7825 20 12.9917C20 17.41 16.4183 20.9917 12 20.9917C7.58172 20.9917 4 17.41 4 12.9917Z"
-                fill="currentColor"
-              />
-            </svg>
-          </span>
-        </a>
-      </div>
     </nav>
-    <div class="px-8 py-4 text-gray-700 h-screen w-screen">
-      <!-- Content -->s
+  
+    <div class="px-8 py-4 ml-5 rounded-3xl bg-gray-800 text-gray-700 h-screen w-3/5 shadow-xl">
+      
+    </div>
+
+    <div class="px-8 py-4 ml-5 rounded-3xl bg-gray-800 text-gray-700 h-screen w-2/5 shadow-xl">
+      
     </div>
   </div>
+
 </div>
