@@ -6,16 +6,12 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { TodaysConsultComponent } from './components/todays-consult/todays-consult.component';
-import { TodaysStatComponent } from './components/todays-stat/todays-stat.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     SidenavComponent,
-    TodaysConsultComponent,
-    TodaysStatComponent
   ],
   imports: [
     BrowserModule,

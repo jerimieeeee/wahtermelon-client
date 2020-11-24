@@ -1,10 +1,10 @@
-<div class="container-xl mx-auto bg-white">
+<div class="w-auto mx-auto bg-white">
   <app-header></app-header>
-  <div class="flex flex-row h-100">
+  <div class="flex-1 flex">
     <app-sidenav></app-sidenav>
 
-    <app-todays-consult class="w-4/5"></app-todays-consult>
-
-    <app-todays-stat class="w-1/5"></app-todays-stat>
+    <div class="flex-1 w-screen flex-col overflow-hidden">
+      <router-outlet ></router-outlet>
+    </div>
   </div>
 </div>
