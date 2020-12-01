@@ -2,12 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
-  selector: 'app-todays-stat',
-  templateUrl: './todays-stat.component.html',
-  styleUrls: ['./todays-stat.component.scss']
+  selector: 'app-todays-stats',
+  templateUrl: './todays-stats.component.html',
+  styleUrls: ['./todays-stats.component.scss']
 })
-export class TodaysStatComponent implements OnInit {
+export class TodaysStatsComponent implements OnInit {
   faChevronDown = faChevronDown;
+
   constructor() { }
 
   ngOnInit(): void {

@@ -7,6 +7,11 @@ const routes: Routes = [
     loadChildren: () => import('./modules/dashboard/dashboard.module').then( m => m.DashboardModule)
   },
   {
+    path:'',
+    redirectTo:'/home',
+    pathMatch:'full'
+  },
+  {
     path: 'fp',
     loadChildren: () => import('./modules/familyplanning/familyplanning.module').then(m => m.FamilyplanningModule)
   },
@@ -14,6 +19,10 @@ const routes: Routes = [
     path: 'cc',
     loadChildren: () => import('./modules/childcare/childcare.module').then(m => m.ChildcareModule)
   },
+  {
+    path: 'itr',
+    loadChildren: () => import('./modules/patient-itr/patient-itr.module').then(m => m.PatientItrModule)
+  }
 ];
 
 @NgModule({
