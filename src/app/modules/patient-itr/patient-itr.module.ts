@@ -5,7 +5,6 @@ import { PatientItrRoutingModule } from './patient-itr-routing.module';
 import { PatientItrComponent } from './patient-itr.component';
 import { SharedComponentsModule } from 'src/app/shared/shared-components/shared-components.module';
 
-
 @NgModule({
   declarations: [PatientItrComponent],
   imports: [

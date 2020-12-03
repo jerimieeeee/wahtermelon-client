@@ -15,209 +15,112 @@
     </div>
   
     <div>
-      <div class="flex justify-between items-center mb-3">
+      <div class="flex justify-between items-center mb-3" *ngFor="let profile of today_consults">
         <div class="flex">
-          <img src="./assets/img/profile_1.jpg" class="rounded-full w-20 h-20 mx-auto mr-2" />
-  
+          <a href="{{ profile.id }}">
+            <img src="{{ './assets/img/' + profile.img_name }}" class="rounded-full w-20 h-20 mx-auto mr-2" />
+          </a>
+
           <div class="flex justify-center md:block leading-tight mx-2 my-1">
             <span class="block text-blue-500 font-medium">
-              Dahyun, Kim
+              {{ profile.last_name }}, {{ profile.first_name }}
             </span>
-  
+
             <span class="block text-xs">
-              Seoul, South Korea
+              {{ profile.address }}
             </span>
-  
+
             <div class="flex pt-2">
-              <fa-icon class="mx-0 my-0 text-blue-500 mr-1" [icon]="faQuestionCircle" size="lg"></fa-icon>
-              <fa-icon class="mx-0 my-0 text-blue-500 mr-1" [icon]="faQuestionCircle" size="lg"></fa-icon>
-              <fa-icon class="mx-0 my-0 text-blue-500 mr-1" [icon]="faQuestionCircle" size="lg"></fa-icon>
-              <fa-icon class="mx-0 my-0 text-blue-500 mr-1" [icon]="faQuestionCircle" size="lg"></fa-icon>
+              <fa-icon class="mx-0 my-0 text-gray-500 mr-2" [icon]="faHeart" size="lg"></fa-icon>
+              <fa-icon class="mx-0 my-0 text-green-500 mr-2" [icon]="faFlask" size="lg"></fa-icon>
+              <fa-icon class="mx-0 my-0 text-blue-500 mr-2" [icon]="faNotesMedical" size="lg"></fa-icon>
+              <fa-icon class="mx-0 my-0 text-red-500 mr-2" [icon]="faExclamationCircle" size="lg"></fa-icon>
             </div>
           </div>
         </div>
-  
+
         <div class="flex">
           <div class="flex items-center">
             <div class="px-5">
               <button type="button" class="text-gray-700 hover:text-indigo-500">
                 <fa-icon class="mx-0 my-0" [icon]="faFolderOpen"></fa-icon>
               </button>
-              General Consult
+              {{ profile.visit_type }}
             </div>
             <div class="px-5">
-              Physician
+              {{ profile.location }}
             </div>
             <div class="px-5">
-              1 hour 30 mins
-            </div>
-          </div>
-        </div>
-      </div>
-  
-      <div class="flex justify-between items-center mb-3">
-        <div class="flex">
-          <img src="./assets/img/profile_1.jpg" class="rounded-full w-20 h-20 mx-auto mr-2" />
-  
-          <div class="flex justify-center md:block leading-tight mx-2 my-1">
-            <span class="block text-blue-500 font-medium">
-              Dahyun, Kim
-            </span>
-  
-            <span class="block text-xs">
-              Seoul, South Korea
-            </span>
-  
-            <div class="flex pt-2">
-              <fa-icon class="mx-0 my-0 text-blue-500 mr-1" [icon]="faQuestionCircle" size="lg"></fa-icon>
-              <fa-icon class="mx-0 my-0 text-blue-500 mr-1" [icon]="faQuestionCircle" size="lg"></fa-icon>
-              <fa-icon class="mx-0 my-0 text-blue-500 mr-1" [icon]="faQuestionCircle" size="lg"></fa-icon>
-              <fa-icon class="mx-0 my-0 text-blue-500 mr-1" [icon]="faQuestionCircle" size="lg"></fa-icon>
-            </div>
-          </div>
-        </div>
-  
-        <div class="flex">
-          <div class="flex items-center">
-            <div class="px-5">
-              <button type="button" class="text-gray-700 hover:text-indigo-500">
-                <fa-icon class="mx-0 my-0" [icon]="faFolderOpen"></fa-icon>
-              </button>
-              General Consult
-            </div>
-            <div class="px-5">
-              Physician
-            </div>
-            <div class="px-5">
-              1 hour 30 mins
-            </div>
-          </div>
-        </div>
-      </div>
-  
-      <div class="flex justify-between items-center mb-3">
-        <div class="flex">
-          <img src="./assets/img/profile_1.jpg" class="rounded-full w-20 h-20 mx-auto mr-2" />
-  
-          <div class="flex justify-center md:block leading-tight mx-2 my-1">
-            <span class="block text-blue-500 font-medium">
-              Dahyun, Kim
-            </span>
-  
-            <span class="block text-xs">
-              Seoul, South Korea
-            </span>
-  
-            <div class="flex pt-2">
-              <fa-icon class="mx-0 my-0 text-blue-500 mr-1" [icon]="faQuestionCircle" size="lg"></fa-icon>
-              <fa-icon class="mx-0 my-0 text-blue-500 mr-1" [icon]="faQuestionCircle" size="lg"></fa-icon>
-              <fa-icon class="mx-0 my-0 text-blue-500 mr-1" [icon]="faQuestionCircle" size="lg"></fa-icon>
-              <fa-icon class="mx-0 my-0 text-blue-500 mr-1" [icon]="faQuestionCircle" size="lg"></fa-icon>
-            </div>
-          </div>
-        </div>
-  
-        <div class="flex">
-          <div class="flex items-center">
-            <div class="px-5">
-              <button type="button" class="text-gray-700 hover:text-indigo-500">
-                <fa-icon class="mx-0 my-0" [icon]="faFolderOpen"></fa-icon>
-              </button>
-              General Consult
-            </div>
-            <div class="px-5">
-              Physician
-            </div>
-            <div class="px-5">
-              1 hour 30 mins
-            </div>
-          </div>
-        </div>
-      </div>
-  
-      <div class="flex justify-between items-center mb-3">
-        <div class="flex">
-          <img src="./assets/img/profile_1.jpg" class="rounded-full w-20 h-20 mx-auto mr-2" />
-  
-          <div class="flex justify-center md:block leading-tight mx-2 my-1">
-            <span class="block text-blue-500 font-medium">
-              Dahyun, Kim
-            </span>
-  
-            <span class="block text-xs">
-              Seoul, South Korea
-            </span>
-  
-            <div class="flex pt-2">
-              <fa-icon class="mx-0 my-0 text-blue-500 mr-1" [icon]="faQuestionCircle" size="lg"></fa-icon>
-              <fa-icon class="mx-0 my-0 text-blue-500 mr-1" [icon]="faQuestionCircle" size="lg"></fa-icon>
-              <fa-icon class="mx-0 my-0 text-blue-500 mr-1" [icon]="faQuestionCircle" size="lg"></fa-icon>
-              <fa-icon class="mx-0 my-0 text-blue-500 mr-1" [icon]="faQuestionCircle" size="lg"></fa-icon>
-            </div>
-          </div>
-        </div>
-  
-        <div class="flex">
-          <div class="flex items-center">
-            <div class="px-5">
-              <button type="button" class="text-gray-700 hover:text-indigo-500">
-                <fa-icon class="mx-0 my-0" [icon]="faFolderOpen"></fa-icon>
-              </button>
-              General Consult
-            </div>
-            <div class="px-5">
-              Physician
-            </div>
-            <div class="px-5">
-              1 hour 30 mins
-            </div>
-          </div>
-        </div>
-      </div>
-  
-      <div class="flex justify-between items-center mb-3">
-        <div class="flex">
-          <img src="./assets/img/profile_1.jpg" class="rounded-full w-20 h-20 mx-auto mr-2" />
-  
-          <div class="flex justify-center md:block leading-tight mx-2 my-1">
-            <span class="block text-blue-500 font-medium">
-              Dahyun, Kim
-            </span>
-  
-            <span class="block text-xs">
-              Seoul, South Korea
-            </span>
-  
-            <div class="flex pt-2">
-              <fa-icon class="mx-0 my-0 text-blue-500 mr-1" [icon]="faQuestionCircle" size="lg"></fa-icon>
-              <fa-icon class="mx-0 my-0 text-blue-500 mr-1" [icon]="faQuestionCircle" size="lg"></fa-icon>
-              <fa-icon class="mx-0 my-0 text-blue-500 mr-1" [icon]="faQuestionCircle" size="lg"></fa-icon>
-              <fa-icon class="mx-0 my-0 text-blue-500 mr-1" [icon]="faQuestionCircle" size="lg"></fa-icon>
-            </div>
-          </div>
-        </div>
-  
-        <div class="flex">
-          <div class="flex items-center">
-            <div class="px-5">
-              <button type="button" class="text-gray-700 hover:text-indigo-500">
-                <fa-icon class="mx-0 my-0" [icon]="faFolderOpen"></fa-icon>
-              </button>
-              General Consult
-            </div>
-            <div class="px-5">
-              Physician
-            </div>
-            <div class="px-5">
-              1 hour 30 mins
+              {{ profile.duration }}
             </div>
           </div>
         </div>
       </div>
     </div>
   
-    <div class="flex border-t-2 justify-end">
-      1 2 3 4
+    <div>
+      <div class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
+        <div class="flex-1 flex justify-between sm:hidden">
+          <a href="#" class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:text-gray-500">
+            Previous
+          </a>
+          <a href="#" class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:text-gray-500">
+            Next
+          </a>
+        </div>
+        <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+          <div>
+            <p class="text-sm text-gray-700">
+              Showing
+              <span class="font-medium">1</span>
+              to
+              <span class="font-medium">6</span>
+              of
+              <span class="font-medium">72</span>
+              results
+            </p>
+          </div>
+          <div>
+            <nav class="relative z-0 inline-flex shadow-sm -space-x-px" aria-label="Pagination">
+              <a href="#" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                <span class="sr-only">Previous</span>
+                <!-- Heroicon name: chevron-left -->
+                <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                  <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+                </svg>
+              </a>
+              <a href="#" class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
+                1
+              </a>
+              <a href="#" class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
+                2
+              </a>
+              <a href="#" class="hidden md:inline-flex relative items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
+                3
+              </a>
+              <span class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700">
+                ...
+              </span>
+              <a href="#" class="hidden md:inline-flex relative items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
+                8
+              </a>
+              <a href="#" class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
+                9
+              </a>
+              <a href="#" class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
+                10
+              </a>
+              <a href="#" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                <span class="sr-only">Next</span>
+                <!-- Heroicon name: chevron-right -->
+                <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                  <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                </svg>
+              </a>
+            </nav>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
   
