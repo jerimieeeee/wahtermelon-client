@@ -3,8 +3,63 @@
       <app-patient-info></app-patient-info>
     </div>
   
-    <div class="w-9/12 h-screen shadow px-8 py-4 ml-5 rounded-3xl text-gray-600 shadow-md">
-      axasdfvadfb x bfxb sd bd
+    <div class="block w-9/12">
+      <div class="flex w-full">
+        <div class="w-1/2 h-48 shadow px-5 py-4 ml-5 rounded-3xl text-gray-600 shadow-md">
+          axasdfvadfb x bfxb sd bd
+        </div>
+        <div class="w-1/2 h-48 shadow px-5 py-4 ml-5 rounded-3xl text-gray-600 shadow-md">
+          axasdfvadfb x bfxb sd bd
+        </div>
+      </div>
+      <div class="flex h-screen shadow px-5 mt-6 ml-5 rounded-3xl text-gray-600 shadow-md">
+        <div class="w-7/12 mt-4">
+          <div class="flex ml-4 justify-between">
+            <div class="text-sm font-semibold">MEDICAL JOURNAL</div>
+            <div>
+              <button type="button" class="bg-blue-500 px-3 rounded-full mr-3 text-gray-100 hover:text-indigo-500">
+                New Visit +
+              </button>
+            </div>
+          </div>
+
+          <div class="flex justify-start mt-4 mx-4"  *ngFor="let entry of medical_journal">
+            <div class="w-2/12"></div>
+            <div class="block leading-none bg-gray-100 w-full p-2">
+              <div class="mb-8" *ngFor="let visits of entry.visits">
+                <div class="font-semibold text-blue-500">{{ visits.visit_type }}</div>
+                <div>Assessed by: {{ visits.assessed_by }}</div>
+                <div>Diagnosed by: {{ visits.diagnosed_by }}</div>
+              </div>
+              <div class="italic text-xs font-semibold">{{ entry.visit_date }}</div>
+            </div>
+          </div>
+        </div>
+        <!-- <div class="w-7/12 mt-4">
+          <div class="flex ml-4 justify-between">
+            <div class="text-sm font-semibold">MEDICAL JOURNAL</div>
+            <div>
+              <button type="button" class="bg-blue-500 px-3 rounded-full mr-3 text-gray-100 hover:text-indigo-500">
+                New Visit +
+              </button>
+            </div>
+          </div>
+
+          <div class="flex justify-start mt-4 mx-4">
+            <div class="w-2/12"></div>
+            <div class="block leading-none bg-gray-200 w-full p-2">
+              <div class="font-semibold text-blue-500">GENERAL CONSULTATION</div>
+              <div>Assessed by: John Doe</div>
+              <div>Diagnosed by: Dr. Robert Martinez</div>
+              <div class="italic mt-8 text-xs font-semibold">07/23/2020</div>
+            </div>
+          </div>
+        </div> -->
+
+        <div class="w-5/12 mt-4">
+          x
+        </div>
+      </div>
     </div>
   </div>
   
