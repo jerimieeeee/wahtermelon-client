@@ -4,13 +4,15 @@ import { CommonModule } from '@angular/common';
 import { PatientItrRoutingModule } from './patient-itr-routing.module';
 import { PatientItrComponent } from './patient-itr.component';
 import { SharedComponentsModule } from 'src/app/shared/shared-components/shared-components.module';
+import { NgApexchartsModule } from 'ng-apexcharts';
 
 @NgModule({
   declarations: [PatientItrComponent],
   imports: [
     CommonModule,
     PatientItrRoutingModule,
-    SharedComponentsModule
+    SharedComponentsModule,
+    NgApexchartsModule
   ]
 })
 export class PatientItrModule { }

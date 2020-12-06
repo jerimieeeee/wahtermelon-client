@@ -1,4 +1,34 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import {
+  ChartComponent,
+  ApexAxisChartSeries,
+  ApexChart,
+  ApexXAxis,
+  ApexDataLabels,
+  ApexTooltip,
+  ApexStroke,
+  ApexTitleSubtitle
+} from "ng-apexcharts";
+
+export type ChartOptions = {
+  series: ApexAxisChartSeries;
+  chart: ApexChart;
+  xaxis: ApexXAxis;
+  stroke: ApexStroke;
+  tooltip: ApexTooltip;
+  dataLabels: ApexDataLabels;
+  title: ApexTitleSubtitle;
+};
+
+export type WeightChart = {
+  series: ApexAxisChartSeries;
+  chart: ApexChart;
+  xaxis: ApexXAxis;
+  stroke: ApexStroke;
+  tooltip: ApexTooltip;
+  dataLabels: ApexDataLabels;
+  title: ApexTitleSubtitle;
+};
 
 @Component({
   selector: 'app-patient-itr',
@@ -54,7 +84,94 @@ export class PatientItrComponent implements OnInit {
     }
   ];
 
-  constructor() { }
+  @ViewChild("bp-chart") bp_chart: ChartComponent;
+  @ViewChild("weight-chart") weight_chart: ChartComponent;
+  public chartOptions: Partial<ChartOptions>;
+  public WeightChart: Partial<WeightChart>;
+
+  constructor() {
+    this.chartOptions = {
+      series: [
+        {
+          name: "Systolic",
+          data: [120, 120, 110, 120, 140, 120, 120]
+        },
+        {
+          name: "Diastolic",
+          data: [90, 80, 80, 84, 92, 70, 80]
+        }
+      ],
+      chart: {
+        height: 200,
+        type: "area"
+      },
+      dataLabels: {
+        enabled: false
+      },
+      stroke: {
+        curve: "smooth"
+      },
+      title: {
+        text: "Blood Pressure History"
+      },
+      xaxis: {
+        type: "datetime",
+        categories: [
+          "2018-09-19T00:00:00.000Z",
+          "2018-09-19T01:30:00.000Z",
+          "2018-09-19T02:30:00.000Z",
+          "2018-09-19T03:30:00.000Z",
+          "2018-09-19T04:30:00.000Z",
+          "2018-09-19T05:30:00.000Z",
+          "2018-09-19T06:30:00.000Z"
+        ]
+      },
+      tooltip: {
+        x: {
+          format: "dd/MM/yy HH:mm"
+        }
+      }
+    };
+
+    this.WeightChart = {
+      series: [
+        {
+          name: "Weight",
+          data: [120, 120, 110, 120, 140, 120, 120]
+        }
+      ],
+      chart: {
+        height: 200,
+        type: "line"
+      },
+      dataLabels: {
+        enabled: false
+      },
+      stroke: {
+        curve: "smooth"
+      },
+      title: {
+        text: "Weight History"
+      },
+      xaxis: {
+        type: "datetime",
+        categories: [
+          "2018-09-19T00:00:00.000Z",
+          "2018-09-19T01:30:00.000Z",
+          "2018-09-19T02:30:00.000Z",
+          "2018-09-19T03:30:00.000Z",
+          "2018-09-19T04:30:00.000Z",
+          "2018-09-19T05:30:00.000Z",
+          "2018-09-19T06:30:00.000Z"
+        ]
+      },
+      tooltip: {
+        x: {
+          format: "dd/MM/yy HH:mm"
+        }
+      }
+    };
+  }
 
   ngOnInit(): void {
   }
