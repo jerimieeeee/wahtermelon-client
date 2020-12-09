@@ -1,9 +1,517 @@
 <div class="flex w-full">
+  
+
   <div class="w-3/12">
     <app-patient-itr></app-patient-itr>
   </div>
+  
+  <div class="flex-wrap w-9/12 h-full shadow px-8 py-4 ml-5 rounded-3xl text-gray-600">
 
-  <div class="w-9/12 h-screen shadow px-8 py-4 ml-5 rounded-3xl text-gray-600 shadow-md">
-    INSERT CC TEMPLATE HERE
-  </div>
+
+    <!--First Visit Section-->
+    <div>
+      <h4 class="font-bold text-gray-600 text-md">FIRST VISIT</h4>
+    </div>
+    <!--Admission Date & Time Section-->
+    <div class="flex item-start flex-wrap shadow-md rounded-xl pb-5 mt-5">
+
+        <div class="w-full bg-blue-300 px-5 py-3 rounded-tl rounded-tr">
+          <h4 class="font-bold text-white text-md">Admission Date & Time</h4>
+        </div>
+
+        <div class="w-full md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
+            <h1 class="font-bold text-gray-600 text-md">Admission Date</h1>
+            <input class="w-full border-2 border-gray-300 bg-white h-10 px-5 pr-2 rounded-lg text-sm mt-2 text-gray-500 text-md"
+            type="datetime-local" name="date-time" placeholder="Select Date & Time">
+        </div>
+
+        <div class="w-full md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
+            <h1 class="font-bold text-gray-600 text-md">Discharge Date</h1>
+            <input class="w-full border-2 border-gray-300 bg-white h-10 px-5 pr-2 rounded-lg text-sm mt-2 text-gray-500 text-md"
+            type="datetime-local" name="date-time" placeholder="Select Date & Time">
+        </div>
+    </div> 
+
+    <!--Birth Info Section-->
+    <div class="flex item-start flex-wrap shadow-md rounded-xl pb-5 mt-5">
+
+        <div class="w-full bg-blue-300 px-5 py-3 rounded-tl rounded-tr">
+          <h4 class="font-bold text-white text-md">Birth Information</h4>
+        </div>
+
+        <div class="relative w-full md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
+            <input class="w-full border-2 border-gray-300 bg-white h-10 px-5 pr-2 rounded-lg text-sm mt-2"
+            type="text" name="text" placeholder="Enter Weight at Birth (kg)">
+            <button type="submit" class="absolute right-0 top-4 mt-4 mr-8 text-gray-700 hover:text-indigo-500">
+            <fa-icon class="mx-0 my-0" [icon]="faBalanceScale"></fa-icon>
+            </button>
+        </div>
+    </div>
+
+    <!--Mother Info Section-->
+    <div class="flex item-start flex-wrap shadow-md rounded-xl pb-5 mt-5">
+
+        <div class="w-full bg-blue-300 px-5 py-3 rounded-tl rounded-tr">
+          <h4 class="font-bold text-white text-md">Mother Information</h4>
+       </div>
+
+        <div class="relative w-full md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
+          <input class="w-full border-2 border-gray-300 bg-white h-10 px-5 pr-2 rounded-lg text-sm mt-2"
+          type="text" name="search" placeholder="Search for Mother's Name">
+          <button type="submit" class="absolute right-0 top-4 mt-4 mr-8 text-gray-700 hover:text-indigo-500">
+          <fa-icon class="mx-0 my-0" [icon]="faSearch"></fa-icon>
+          </button>
+      </div>
+    </div>
+
+    <!--border-->
+    <div class="border-b-2 py-4"></div>
+
+    <!--Services Section-->
+    <div>
+      <h4 class="font-bold text-gray-600 text-md mt-5">SERVICES</h4>
+    </div>
+    
+    <!--Essential Newborn Care Section-->
+    <div class="flex item-start flex-wrap shadow-md rounded-xl pb-5 mt-5">
+
+      <div class="flex justify-between w-full bg-yellow-500 px-5 py-3 rounded-tl rounded-tr">
+        <h4 class="font-bold text-white text-md mt-2">Essential Newborn Care</h4>
+        <button class="rounded-full bg-white text-gray-800 font-bold border-b-2 border-green-500 hover:border-green-600 hover:bg-green-500 hover:text-white shadow-md py-0 px-2 inline-flex items-center" name="add-btn" (click)="toggleModal()">
+        <fa-icon class="mx-0 my-0" [icon]="faPlus"></fa-icon>
+        </button>  
+      </div>
+
+      <!--Essential Newborn Care Modal-->
+      <div *ngIf="showModal" class="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex">
+        <div class="relative w-auto my-6 mx-auto max-w-6xl">
+          <!--content-->
+          <div class="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+            <!--header-->
+            <div class="flex items-start justify-between p-5 border-b border-solid border-gray-300 rounded-t">
+              <h4 class="font-bold text-gray-600 text-md mt-2">
+                Essential Newborn Care
+              </h4>
+              <button class="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none" (click)="toggleModal()">
+                <span class="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
+                  ×
+                </span>
+              </button>
+            </div>
+            <!--body-->
+            <div class="relative flex-auto px-12">
+              <table class="w-full flex justify-between text-md bg-white rounded">
+                <tbody>
+                  <tr class="border-b items-center">
+                    <th class="text-center p-3 px-5">Service</th>
+                    <th class="text-center p-3 px-5">Date</th>
+                    
+                </tr>
+                <tr class="border-b hover:bg-yellow-100 bg-transparent">
+                    <td class="p-3 px-5">Complimentary Feeding</td>
+                    <td class="p-3 px-5">
+                      <input type="date" id="birthday" name="birthday" class="bg-transparent">
+                    </td>
+                   
+                </tr>
+                <tr class="border-b hover:bg-yellow-100 bg-transparent">
+                  <td class="p-3 px-5">Dental Check-up</td>
+                  <td class="p-3 px-5">
+                    <input type="date" id="birthday" name="birthday" class="bg-transparent">
+                  </td>
+                 
+                </tr>
+                
+                <tr class="border-b hover:bg-yellow-100 bg-transparent">
+                  <td class="p-3 px-5">Newborn Hearing Screening</td>
+                  <td class="p-3 px-5">
+                    <input type="date" id="birthday" name="birthday" class="bg-transparent">
+                  </td>
+                  
+                </tr>
+                <tr class="border-b hover:bg-yellow-100 bg-transparent">
+                  <td class="p-3 px-5">Iron Intake</td>
+                  <td class="p-3 px-5">
+                    <input type="date" id="birthday" name="birthday" class="bg-transparent">
+                  </td>
+                 
+                </tr>
+                <tr class="border-b hover:bg-yellow-100 bg-transparent">
+                  <td class="p-3 px-5">Received MNP</td>
+                  <td class="p-3 px-5">
+                    <input type="date" id="birthday" name="birthday" class="bg-transparent">
+                  </td>
+                  
+                </tr>
+                <tr class="border-b hover:bg-yellow-100 bg-transparent">
+                  <td class="p-3 px-5">Newborn Screening</td>
+                  <td class="p-3 px-5">
+                    <input type="date" id="birthday" name="birthday" class="bg-transparent">
+                  </td>
+                 
+                </tr>
+                <tr class="border-b hover:bg-yellow-100 bg-transparent">
+                  <td class="p-3 px-5">Weighing</td>
+                  <td class="p-3 px-5">
+                    <input type="date" id="birthday" name="birthday" class="bg-transparent">
+                  </td>
+                
+                </tr>
+                </tbody>
+            </table>
+            </div>
+            <!--footer-->
+            <div class="flex items-center justify-end p-6 border-t border-solid border-gray-300 rounded-b">
+              <button class="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1" type="button" style="transition: all .15s ease" (click)="toggleModal()">
+                Close
+              </button>
+              <button class="bg-green-500 text-white active:bg-green-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1" type="button" style="transition: all .15s ease" (click)="toggleModal()">
+                Save
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="showModal" class="opacity-25 fixed inset-0 z-40 bg-black"></div>
+
+    </div>
+
+
+    <!--Services Section-->
+    <div class="flex item-start flex-wrap shadow-md rounded-xl pb-5 mt-5">
+
+      <div class="flex justify-between w-full bg-yellow-500 px-5 py-3 rounded-tl rounded-tr ">
+        <h4 class="font-bold text-white text-md mt-2">Services</h4>
+        <button class="rounded-full bg-white text-gray-800 font-bold border-b-2 border-green-500 hover:border-green-600 hover:bg-green-500 hover:text-white shadow-md py-0 px-2 inline-flex items-center" name="add-btn" (click)="toggleServiceModal()">
+        <fa-icon class="mx-0 my-0" [icon]="faPlus"></fa-icon>
+        </button>  
+      </div>
+
+      <!--Services Modal-->
+      <div *ngIf="showServiceModal" class="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex">
+        <div class="relative w-auto my-6 mx-auto max-w-6xl">
+          <!--content-->
+          <div class="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+            <!--header-->
+            <div class="flex items-start justify-between p-5 border-b border-solid border-gray-300 rounded-t">
+              <h4 class="font-bold text-gray-600 text-md mt-2">
+                Services
+              </h4>
+              <button class="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none" (click)="toggleServiceModal()">
+                <span class="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
+                  ×
+                </span>
+              </button>
+            </div>
+            <!--body-->
+            <div class="relative flex-auto px-12">
+              <table class="w-full flex justify-between text-md bg-white rounded">
+                <tbody>
+                    <tr class="border-b items-center">
+                        <th class="text-center p-3 px-5">Service</th>
+                        <th class="text-center p-3 px-5">Date</th>
+                        
+                    </tr>
+                    <tr class="border-b hover:bg-yellow-100 bg-transparent">
+                        <td class="p-3 px-5">Complimentary Feeding</td>
+                        <td class="p-3 px-5">
+                          <input type="date" id="birthday" name="birthday" class="bg-transparent">
+                        </td>
+                       
+                    </tr>
+                    <tr class="border-b hover:bg-yellow-100 bg-transparent">
+                      <td class="p-3 px-5">Dental Check-up</td>
+                      <td class="p-3 px-5">
+                        <input type="date" id="birthday" name="birthday" class="bg-transparent">
+                      </td>
+                     
+                    </tr>
+                    
+                    <tr class="border-b hover:bg-yellow-100 bg-transparent">
+                      <td class="p-3 px-5">Newborn Hearing Screening</td>
+                      <td class="p-3 px-5">
+                        <input type="date" id="birthday" name="birthday" class="bg-transparent">
+                      </td>
+                      
+                    </tr>
+                    <tr class="border-b hover:bg-yellow-100 bg-transparent">
+                      <td class="p-3 px-5">Iron Intake</td>
+                      <td class="p-3 px-5">
+                        <input type="date" id="birthday" name="birthday" class="bg-transparent">
+                      </td>
+                     
+                    </tr>
+                    <tr class="border-b hover:bg-yellow-100 bg-transparent">
+                      <td class="p-3 px-5">Received MNP</td>
+                      <td class="p-3 px-5">
+                        <input type="date" id="birthday" name="birthday" class="bg-transparent">
+                      </td>
+                      
+                    </tr>
+                    <tr class="border-b hover:bg-yellow-100 bg-transparent">
+                      <td class="p-3 px-5">Newborn Screening</td>
+                      <td class="p-3 px-5">
+                        <input type="date" id="birthday" name="birthday" class="bg-transparent">
+                      </td>
+                     
+                    </tr>
+                    <tr class="border-b hover:bg-yellow-100 bg-transparent">
+                      <td class="p-3 px-5">Weighing</td>
+                      <td class="p-3 px-5">
+                        <input type="date" id="birthday" name="birthday" class="bg-transparent">
+                      </td>
+                    
+                    </tr>
+                </tbody>
+            </table>
+            </div>
+            <!--footer-->
+            <div class="flex items-center justify-end p-6 border-t border-solid border-gray-300 rounded-b">
+              <button class="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1" type="button" style="transition: all .15s ease" (click)="toggleServiceModal()">
+                Close
+              </button>
+              <button class="bg-green-500 text-white active:bg-green-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1" type="button" style="transition: all .15s ease" (click)="toggleServiceModal()">
+                Save
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="showVaccineModal" class="opacity-25 fixed inset-0 z-40 bg-black"></div>
+
+    
+
+    </div>
+
+    <!--border-->
+    <div class="border-b-2 py-4"></div>
+
+    <!--Vaccine Section-->
+    <div>
+      <h4 class="font-bold text-gray-600 text-md mt-5">VACCINE</h4>
+    </div>
+
+
+    <div class="flex item-start flex-wrap shadow-md rounded-xl pb-5 mt-5">
+
+      <div class="flex justify-between w-full bg-teal-400 px-5 py-3 rounded-tl rounded-tr ">
+        <h4 class="font-bold text-white text-md mt-2">Type of Vaccine</h4>
+        <button class="rounded-full bg-white text-gray-800 font-bold border-b-2 border-green-500 hover:border-green-600 hover:bg-green-500 hover:text-white shadow-md py-0 px-2 inline-flex items-center" name="add-btn" (click)="toggleVaccineModal()">
+        <fa-icon class="mx-0 my-0" [icon]="faPlus"></fa-icon>
+        </button>  
+      </div>
+
+      <!--Vaccine Modal-->
+      <div *ngIf="showVaccineModal" class="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex">
+        <div class="relative w-auto my-6 mx-auto max-w-6xl">
+          <!--content-->
+          <div class="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+            <!--header-->
+            <div class="flex items-start justify-between p-5 border-b border-solid border-gray-300 rounded-t">
+              <h4 class="font-bold text-gray-600 text-md mt-2">
+                Type of Vaccine
+              </h4>
+              <button class="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none" (click)="toggleVaccineModal()">
+                <span class="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
+                  ×
+                </span>
+              </button>
+            </div>
+            <!--body-->
+            <div class="relative flex-auto px-12">
+              <table class="w-full flex justify-between text-md bg-white rounded">
+                <tbody>
+                    <tr class="border-b items-center">
+                        <th class="text-center p-3 px-5">Service</th>
+                        <th class="text-center p-3 px-5">Date</th>
+                        
+                    </tr>
+                    <tr class="border-b hover:bg-yellow-100 bg-transparent">
+                        <td class="p-3 px-5">Complimentary Feeding</td>
+                        <td class="p-3 px-5">
+                          <input type="date" id="birthday" name="birthday" class="bg-transparent">
+                        </td>
+                       
+                    </tr>
+                    <tr class="border-b hover:bg-yellow-100 bg-transparent">
+                      <td class="p-3 px-5">Dental Check-up</td>
+                      <td class="p-3 px-5">
+                        <input type="date" id="birthday" name="birthday" class="bg-transparent">
+                      </td>
+                     
+                    </tr>
+                    
+                    <tr class="border-b hover:bg-yellow-100 bg-transparent">
+                      <td class="p-3 px-5">Newborn Hearing Screening</td>
+                      <td class="p-3 px-5">
+                        <input type="date" id="birthday" name="birthday" class="bg-transparent">
+                      </td>
+                      
+                    </tr>
+                    <tr class="border-b hover:bg-yellow-100 bg-transparent">
+                      <td class="p-3 px-5">Iron Intake</td>
+                      <td class="p-3 px-5">
+                        <input type="date" id="birthday" name="birthday" class="bg-transparent">
+                      </td>
+                     
+                    </tr>
+                    <tr class="border-b hover:bg-yellow-100 bg-transparent">
+                      <td class="p-3 px-5">Received MNP</td>
+                      <td class="p-3 px-5">
+                        <input type="date" id="birthday" name="birthday" class="bg-transparent">
+                      </td>
+                      
+                    </tr>
+                    <tr class="border-b hover:bg-yellow-100 bg-transparent">
+                      <td class="p-3 px-5">Newborn Screening</td>
+                      <td class="p-3 px-5">
+                        <input type="date" id="birthday" name="birthday" class="bg-transparent">
+                      </td>
+                     
+                    </tr>
+                    <tr class="border-b hover:bg-yellow-100 bg-transparent">
+                      <td class="p-3 px-5">Weighing</td>
+                      <td class="p-3 px-5">
+                        <input type="date" id="birthday" name="birthday" class="bg-transparent">
+                      </td>
+                    
+                    </tr>
+                </tbody>
+            </table>
+            </div>
+            <!--footer-->
+            <div class="flex items-center justify-end p-6 border-t border-solid border-gray-300 rounded-b">
+              <button class="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1" type="button" style="transition: all .15s ease" (click)="toggleVaccineModal()">
+                Close
+              </button>
+              <button class="bg-green-500 text-white active:bg-green-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1" type="button" style="transition: all .15s ease" (click)="toggleVaccineModal()">
+                Save
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="showServiceModal" class="opacity-25 fixed inset-0 z-40 bg-black"></div>
+
+    
+    </div>
+
+    <!--border-->
+    <div class="border-b-2 py-4"></div>
+
+    <!--Breastfeeding Section-->
+    <div>
+      <h4 class="font-bold text-gray-600 text-md mt-5">BREASTFEEDING</h4>
+    </div>
+
+
+    <div class="flex item-start flex-wrap shadow-md rounded-xl pb-5 mt-5">
+
+      <div class="flex justify-between w-full bg-orange-400 px-5 py-3 rounded-tl rounded-tr ">
+        <h4 class="font-bold text-white text-md mt-2">Breastfeeding Date</h4>
+        <button class="bg-white text-gray-800 font-bold rounded-full border-b-2 border-green-500 hover:border-green-600 hover:bg-green-500 hover:text-white shadow-md py-0 px-2 inline-flex items-center" name="add-btn" (click)="toggleBreastfeedingModal()">
+        <fa-icon class="mx-0 my-0" [icon]="faPlus"></fa-icon>
+        </button>  
+      </div>
+
+      <!--Breastfeeding Modal-->
+      <div *ngIf="showBreastfeedingModal" class="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex">
+        <div class="relative w-auto my-6 mx-auto max-w-6xl">
+          <!--content-->
+          <div class="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+            <!--header-->
+            <div class="flex items-start justify-between p-5 border-b border-solid border-gray-300 rounded-t">
+              <h4 class="font-bold text-gray-600 text-md mt-2">
+                Breastfeeding Date
+              </h4>
+              <button class="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none" (click)="toggleBreastfeedingModal()">
+                <span class="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
+                  ×
+                </span>
+              </button>
+            </div>
+            <!--body-->
+            <div class="relative flex-auto px-12">
+              <table class="w-full flex justify-between text-md bg-white rounded">
+                <tbody>
+                    <tr class="border-b items-center">
+                        <th class="text-center p-3 px-5">Service</th>
+                        <th class="text-center p-3 px-5">Date</th>
+                        
+                    </tr>
+                    <tr class="border-b hover:bg-yellow-100 bg-transparent">
+                        <td class="p-3 px-5">Month 1</td>
+                        <td class="p-3 px-5">
+                          <input type="date" id="birthday" name="birthday" class="bg-transparent">
+                        </td>
+                       
+                    </tr>
+                    <tr class="border-b hover:bg-yellow-100 bg-transparent">
+                      <td class="p-3 px-5">Month 2</td>
+                      <td class="p-3 px-5">
+                        <input type="date" id="birthday" name="birthday" class="bg-transparent">
+                      </td>
+                     
+                    </tr>
+                    
+                    <tr class="border-b hover:bg-yellow-100 bg-transparent">
+                      <td class="p-3 px-5">Month 3</td>
+                      <td class="p-3 px-5">
+                        <input type="date" id="birthday" name="birthday" class="bg-transparent">
+                      </td>
+                      
+                    </tr>
+                    <tr class="border-b hover:bg-yellow-100 bg-transparent">
+                      <td class="p-3 px-5">Month 4</td>
+                      <td class="p-3 px-5">
+                        <input type="date" id="birthday" name="birthday" class="bg-transparent">
+                      </td>
+                     
+                    </tr>
+                    <tr class="border-b hover:bg-yellow-100 bg-transparent">
+                      <td class="p-3 px-5">Month 5</td>
+                      <td class="p-3 px-5">
+                        <input type="date" id="birthday" name="birthday" class="bg-transparent">
+                      </td>
+                      
+                    </tr>
+                    <tr class="border-b hover:bg-yellow-100 bg-transparent">
+                      <td class="p-3 px-5">Month 6</td>
+                      <td class="p-3 px-5">
+                        <input type="date" id="birthday" name="birthday" class="bg-transparent">
+                      </td>
+                     
+                    </tr>
+                    <tr class="border-b hover:bg-yellow-100 bg-transparent">
+                      <td class="p-3 px-5">Month 7</td>
+                      <td class="p-3 px-5">
+                        <input type="date" id="birthday" name="birthday" class="bg-transparent">
+                      </td>
+                    
+                    </tr>
+                </tbody>
+            </table>
+            </div>
+            <!--footer-->
+            <div class="flex items-center justify-end p-6 border-t border-solid border-gray-300 rounded-b">
+              <button class="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1" type="button" style="transition: all .15s ease" (click)="toggleBreastfeedingModal()">
+                Close
+              </button>
+              <button class="bg-green-500 text-white active:bg-green-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1" type="button" style="transition: all .15s ease" (click)="toggleBreastfeedingModal()">
+                Save
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="showBreastfeedingModal" class="opacity-25 fixed inset-0 z-40 bg-black"></div>
+
+    
+    </div>
+
+
+
 </div>
+
+</div>
+
