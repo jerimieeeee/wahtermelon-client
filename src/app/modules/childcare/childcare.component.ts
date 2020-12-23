@@ -10,25 +10,15 @@ import { faSearch,faBalanceScale,faPlus } from '@fortawesome/free-solid-svg-icon
 })
 export class ChildcareComponent implements OnInit {
 
+
+  services : any
+
+
+
   faSearch = faSearch;
   faBalanceScale = faBalanceScale;
   faPlus = faPlus;
 
-  services = [
-    {
-      id: "cc",
-      desc: "cord clamping"
-    },
-    {
-      id: "drying",
-      desc: "drying"
-    },
-    {
-      id: "bf",
-      desc: "breastfeeding"
-    }
-  ]
-  
   showModal = false;
   toggleModal(){
     this.showModal = !this.showModal;
@@ -52,7 +42,55 @@ export class ChildcareComponent implements OnInit {
   
   
 
-  constructor() { }
+  constructor() { 
+
+this.services=[
+{
+  
+  "name":"Complimentary Feeding",
+  "date": 12/21/2020
+},
+
+{
+  
+  "name":"Dental Check-up",
+  "date": 12/21/2020
+},
+
+{
+  
+  "name":"Newborn Hearing Screening",
+  "date": 12/21/2020
+},
+
+{
+  
+  "name":"Iron Intake",
+  "date": 12/21/2020
+},
+
+{
+  
+  "name":"Received MNP",
+  "date": 12/21/2020
+},
+
+{
+  
+  "name":"Newborn Screening",
+  "date": 12/21/2020
+},
+
+{
+  
+  "name":"Weighing",
+  "date": 12/21/2020
+}
+
+]
+
+
+  }
 
   ngOnInit(): void {
   }

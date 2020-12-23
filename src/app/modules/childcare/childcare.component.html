@@ -107,55 +107,11 @@
                     <th class="text-center p-3 px-5">Date</th>
                     
                 </tr>
-                <tr class="border-b hover:bg-yellow-100 bg-transparent">
-                    <td class="p-3 px-5">Complimentary Feeding</td>
+                <tr *ngFor="let service of services" class="border-b hover:bg-yellow-100 bg-transparent">
+                    <td class="p-3 px-5">{{service.name}}</td>
                     <td class="p-3 px-5">
                       <input type="date" id="birthday" name="birthday" class="bg-transparent">
                     </td>
-                   
-                </tr>
-                <tr class="border-b hover:bg-yellow-100 bg-transparent">
-                  <td class="p-3 px-5">Dental Check-up</td>
-                  <td class="p-3 px-5">
-                    <input type="date" id="birthday" name="birthday" class="bg-transparent">
-                  </td>
-                 
-                </tr>
-                
-                <tr class="border-b hover:bg-yellow-100 bg-transparent">
-                  <td class="p-3 px-5">Newborn Hearing Screening</td>
-                  <td class="p-3 px-5">
-                    <input type="date" id="birthday" name="birthday" class="bg-transparent">
-                  </td>
-                  
-                </tr>
-                <tr class="border-b hover:bg-yellow-100 bg-transparent">
-                  <td class="p-3 px-5">Iron Intake</td>
-                  <td class="p-3 px-5">
-                    <input type="date" id="birthday" name="birthday" class="bg-transparent">
-                  </td>
-                 
-                </tr>
-                <tr class="border-b hover:bg-yellow-100 bg-transparent">
-                  <td class="p-3 px-5">Received MNP</td>
-                  <td class="p-3 px-5">
-                    <input type="date" id="birthday" name="birthday" class="bg-transparent">
-                  </td>
-                  
-                </tr>
-                <tr class="border-b hover:bg-yellow-100 bg-transparent">
-                  <td class="p-3 px-5">Newborn Screening</td>
-                  <td class="p-3 px-5">
-                    <input type="date" id="birthday" name="birthday" class="bg-transparent">
-                  </td>
-                 
-                </tr>
-                <tr class="border-b hover:bg-yellow-100 bg-transparent">
-                  <td class="p-3 px-5">Weighing</td>
-                  <td class="p-3 px-5">
-                    <input type="date" id="birthday" name="birthday" class="bg-transparent">
-                  </td>
-                
                 </tr>
                 </tbody>
             </table>
@@ -210,61 +166,18 @@
                     <tr class="border-b items-center">
                         <th class="text-center p-3 px-5">Service</th>
                         <th class="text-center p-3 px-5">Date</th>
-                        
                     </tr>
-                    <tr class="border-b hover:bg-yellow-100 bg-transparent">
-                        <td class="p-3 px-5">Complimentary Feeding</td>
-                        <td class="p-3 px-5">
-                          <input type="date" id="birthday" name="birthday" class="bg-transparent">
-                        </td>
-                       
-                    </tr>
-                    <tr class="border-b hover:bg-yellow-100 bg-transparent">
-                      <td class="p-3 px-5">Dental Check-up</td>
+
+                    <tr *ngFor="let service of services" class="border-b hover:bg-yellow-100 bg-transparent">
+                      <td class="p-3 px-5">{{service.name}}</td>
                       <td class="p-3 px-5">
                         <input type="date" id="birthday" name="birthday" class="bg-transparent">
                       </td>
-                     
-                    </tr>
-                    
-                    <tr class="border-b hover:bg-yellow-100 bg-transparent">
-                      <td class="p-3 px-5">Newborn Hearing Screening</td>
-                      <td class="p-3 px-5">
-                        <input type="date" id="birthday" name="birthday" class="bg-transparent">
-                      </td>
-                      
-                    </tr>
-                    <tr class="border-b hover:bg-yellow-100 bg-transparent">
-                      <td class="p-3 px-5">Iron Intake</td>
-                      <td class="p-3 px-5">
-                        <input type="date" id="birthday" name="birthday" class="bg-transparent">
-                      </td>
-                     
-                    </tr>
-                    <tr class="border-b hover:bg-yellow-100 bg-transparent">
-                      <td class="p-3 px-5">Received MNP</td>
-                      <td class="p-3 px-5">
-                        <input type="date" id="birthday" name="birthday" class="bg-transparent">
-                      </td>
-                      
-                    </tr>
-                    <tr class="border-b hover:bg-yellow-100 bg-transparent">
-                      <td class="p-3 px-5">Newborn Screening</td>
-                      <td class="p-3 px-5">
-                        <input type="date" id="birthday" name="birthday" class="bg-transparent">
-                      </td>
-                     
-                    </tr>
-                    <tr class="border-b hover:bg-yellow-100 bg-transparent">
-                      <td class="p-3 px-5">Weighing</td>
-                      <td class="p-3 px-5">
-                        <input type="date" id="birthday" name="birthday" class="bg-transparent">
-                      </td>
-                    
-                    </tr>
+                  </tr>
                 </tbody>
             </table>
             </div>
+
             <!--footer-->
             <div class="flex items-center justify-end p-6 border-t border-solid border-gray-300 rounded-b">
               <button class="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1" type="button" style="transition: all .15s ease" (click)="toggleServiceModal()">
@@ -326,56 +239,14 @@
                         <th class="text-center p-3 px-5">Date</th>
                         
                     </tr>
-                    <tr class="border-b hover:bg-yellow-100 bg-transparent">
-                        <td class="p-3 px-5">Complimentary Feeding</td>
-                        <td class="p-3 px-5">
-                          <input type="date" id="birthday" name="birthday" class="bg-transparent">
-                        </td>
-                       
-                    </tr>
-                    <tr class="border-b hover:bg-yellow-100 bg-transparent">
-                      <td class="p-3 px-5">Dental Check-up</td>
-                      <td class="p-3 px-5">
-                        <input type="date" id="birthday" name="birthday" class="bg-transparent">
-                      </td>
-                     
-                    </tr>
                     
-                    <tr class="border-b hover:bg-yellow-100 bg-transparent">
-                      <td class="p-3 px-5">Newborn Hearing Screening</td>
-                      <td class="p-3 px-5">
-                        <input type="date" id="birthday" name="birthday" class="bg-transparent">
-                      </td>
-                      
-                    </tr>
-                    <tr class="border-b hover:bg-yellow-100 bg-transparent">
-                      <td class="p-3 px-5">Iron Intake</td>
-                      <td class="p-3 px-5">
-                        <input type="date" id="birthday" name="birthday" class="bg-transparent">
-                      </td>
-                     
-                    </tr>
-                    <tr class="border-b hover:bg-yellow-100 bg-transparent">
-                      <td class="p-3 px-5">Received MNP</td>
-                      <td class="p-3 px-5">
-                        <input type="date" id="birthday" name="birthday" class="bg-transparent">
-                      </td>
-                      
-                    </tr>
-                    <tr class="border-b hover:bg-yellow-100 bg-transparent">
-                      <td class="p-3 px-5">Newborn Screening</td>
-                      <td class="p-3 px-5">
-                        <input type="date" id="birthday" name="birthday" class="bg-transparent">
-                      </td>
-                     
-                    </tr>
-                    <tr class="border-b hover:bg-yellow-100 bg-transparent">
-                      <td class="p-3 px-5">Weighing</td>
-                      <td class="p-3 px-5">
-                        <input type="date" id="birthday" name="birthday" class="bg-transparent">
-                      </td>
-                    
-                    </tr>
+                     <tr *ngFor="let service of services" class="border-b hover:bg-yellow-100 bg-transparent">
+                    <td class="p-3 px-5">{{service.name}}</td>
+                    <td class="p-3 px-5">
+                      <input type="date" id="birthday" name="birthday" class="bg-transparent">
+                    </td>
+                </tr>
+
                 </tbody>
             </table>
             </div>
