@@ -10,6 +10,8 @@ module.exports = {
 
      
   },
-  variants: {},
+  variants: {
+    animate: ['hover'],
+  },
   plugins: [],
 }

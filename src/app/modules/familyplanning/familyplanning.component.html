@@ -21,42 +21,20 @@
       <app-fppe></app-fppe>
     </div>
 
-    <div class="flex w-12/12 h-2/3 px-8 border-b py-3 border-gray-400">
-      <h1 class="flex-inital font-bold inline-block flex-initial w-2/12 mt-2">PELVIC EXAM</h1>
-      <div class="w-10/12 text-white">
-      <div class="flex justify-end w-12/12 mr-3">
-        <button class="font-bold text-white rounded-full py-2 px-6 show-modal"  (click)="openModal()" style="background-color: #25d156;"> <!-- show-modal -->
-                add +
-        </button>
-      </div>
-      </div>
-      <div *ngIf="showModal" class="modal flex justify-center items-center bg-black bg-opacity-50 inset-0 fixed z-50 outline-none focus:outline-none"> <!-- modal -->
-        <div class="bg-gray-200 min-w-lg py-3 px-5 rounded shadow-xl text-gray-800 relative w-auto m-10 mx-auto max-w-6x1 " style="border: 1px solid red;">
-            <div class="flex justify-between items-center">
-              <h4 class="text-lg font-bold" >PELVIC EXAM</h4>
-              <fa-icon [icon]="faTimes" class="object-center close-modal"></fa-icon><!-- close-modal --> 
-            </div>
-            <div class="mt-2 text-sm py-5 h-64 overflow-y-scroll ">
-              <app-pelvicexam></app-pelvicexam>
-            </div>
-            
-        </div>
-      </div>
-      
+    <div class="w-12/12 h-2/3 px-8 border-b py-5 border-gray-400"> 
+        <app-pelvicexam ></app-pelvicexam> <!-- modal -->
     </div>
+      
+      
+
     
     <div class="text-white w-12/12 h-32 px-8 border-b py-5 border-gray-400">
       sqsqsqsqsqs
     </div>
   </div>
 </div>
-
-<script>
-  const modal = document.querySelector('.modal');
-
-  const showModal = document.querySelector('.show-modal');
-  const closeModal = document.querySelectorAll('.close-modal');
-
+  
+  <script> 
   showModal.addEventListener('click', function (){
     modal.classList.remove('hidden')
   });
@@ -67,4 +45,6 @@
     });
   });
 </script>
+
+
 
