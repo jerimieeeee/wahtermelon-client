@@ -1,0 +1,167 @@
+<div class="flex w-full">
+    <div class="w-3/12">
+      <app-patient-info></app-patient-info>
+    </div>
+
+    <div class="block w-9/12">
+      <div class="flex w-full">
+        <div class="w-1/2 shadow px-5 py-4 ml-5 rounded-3xl text-gray-600 shadow-md">
+          <div id="bp-chart">
+            <apx-chart
+              [series]="chartOptions.series"
+              [chart]="chartOptions.chart"
+              [xaxis]="chartOptions.xaxis"
+              [stroke]="chartOptions.stroke"
+              [tooltip]="chartOptions.tooltip"
+              [dataLabels]="chartOptions.dataLabels"
+              [title]="chartOptions.title"
+            ></apx-chart>
+          </div>
+        </div>
+        <div class="w-1/2 shadow px-5 py-4 ml-5 rounded-3xl text-gray-600 shadow-md">
+          <div id="weight-chart">
+            <apx-chart
+              [series]="WeightChart.series"
+              [chart]="WeightChart.chart"
+              [xaxis]="WeightChart.xaxis"
+              [stroke]="WeightChart.stroke"
+              [tooltip]="WeightChart.tooltip"
+              [dataLabels]="WeightChart.dataLabels"
+              [title]="WeightChart.title"
+            ></apx-chart>
+          </div>
+        </div>
+      </div>
+      <div class="flex shadow px-5 pb-5 mt-6 ml-5 rounded-3xl text-gray-600 shadow-md">
+        <div class="w-7/12 mt-4">
+          <div class="flex ml-4 justify-between">
+            <div class="text-sm font-semibold">MEDICAL JOURNAL</div>
+            <div>
+              <button type="button" class="bg-blue-500 px-3 rounded-full mr-3 text-gray-100 hover:text-indigo-500">
+                New Visit +
+              </button>
+            </div>
+          </div>
+
+          <!-- START INPUTS-->
+          <div>
+            <label>test</label>
+            <input type="text">
+          </div>
+          <div class="mb-2 block items-center">
+            <div class="flex">
+              <div class="w-1/2 mt-5 mr-5">
+                <label class="block text-xs font-semibold text-gray-600 mb-1 ml-1">LAST NAME</label>
+                <input type="text" />
+              </div>
+              <div class="w-1/2 mt-5 mr-5">
+                <label class="block text-xs font-semibold text-gray-600 mb-1 ml-1">FIRST NAME</label>
+                <input class="w-full px-3 py-2 mb-1 border-2 border-gray-400 rounded-xl focus:outline-none focus:border-indigo-500 transition-colors" placeholder="(ex. Juan)" type="text" />
+              </div>
+            </div>
+            <div class="w-1/2 mt-5">
+              <label class="block text-xs font-semibold text-gray-600 mb-2">WEIGHT (kg)</label>
+              <input class="w-full px-3 py-2 mb-1 border-2 border-gray-400 rounded-xl focus:outline-none focus:border-indigo-500 transition-colors" placeholder="(ex. 48)" type="number" min="1" max="30" step="1" />
+            </div>
+
+            <div class="w-1/2 mt-5">
+              <label class="block text-xs font-semibold text-gray-600 mb-2">MOBILE NUMBER</label>
+              <div class="flex">
+                <div class="flex -mr-px">
+                  <span class="flex items-center leading-normal bg-grey-400 rounded-xl rounded-r-none border-2 border-r-0  px-3 whitespace-no-wrap text-grey-dark text-sm">+63</span>
+                </div>
+                <input type="text" class="flex-shrink w-full flex-grow flex-auto leading-normal w-px flex-1 border-2 h-10  rounded-xl rounded-l-none px-3 relative focus:outline-none focus:border-indigo-500" placeholder="912-345-6789">
+              </div>
+            </div>
+
+            <div class="w-1/2 mt-5">
+              <label class="block text-xs font-semibold text-gray-600 mb-2">GENDER</label>
+              <select class="border-2 border-grey-400 w-full rounded-xl px-3 py-2 focus:outline-none focus:border-indigo-500 transition-colors">
+                <option>-</option>
+                <option>Male</option>
+                <option>Female</option>
+              </select>
+            </div>
+
+            <div class="flex mt-5">
+              <button class="text-gray-100 bg-green-500 hover:bg-green-600 px-5 py-2 mr-5 rounded-lg">
+                Submit
+              </button>
+              <button class="text-gray-100 bg-gray-500 hover:bg-gray-600 px-5 py-2 mr-5 rounded-lg">
+                Cancel
+              </button>
+              <button class="text-gray-100 bg-red-500 hover:bg-red-600 px-5 py-2 rounded-lg">
+                Delete
+              </button>
+            </div>
+
+            <div class="flex mt-5">
+              <button type="button" class="bg-blue-500 px-3 py-1 rounded-full text-gray-100 hover:bg-blue-600">
+                options -
+              </button>
+            </div>
+
+            <div class="row">
+              <div class="col">
+                <h2>Open <b>multiple</b></h2>
+                <div class="tabs">
+                  <div class="tab">
+                    <input type="checkbox" id="chck1">
+                    <label class="tab-label" for="chck1">Item 1</label>
+                    <div class="tab-content">
+                      Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsum, reiciendis!
+                    </div>
+                  </div>
+                  <div class="tab">
+                    <input type="checkbox" id="chck2">
+                    <label class="tab-label" for="chck2">Item 2</label>
+                    <div class="tab-content">
+                      Lorem ipsum dolor sit amet consectetur adipisicing elit. A, in!
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <!-- END INPUTS-->
+
+          <div class="flex justify-start mt-4 mx-4"  *ngFor="let entry of medical_journal">
+            <div class="w-2/12"></div>
+            <div class="block leading-none bg-gray-100 w-full p-2">
+              <div class="mb-8" *ngFor="let visits of entry.visits">
+                <div class="font-semibold text-blue-500">{{ visits.visit_type }}</div>
+                <div>Assessed by: {{ visits.assessed_by }}</div>
+                <div>Diagnosed by: {{ visits.diagnosed_by }}</div>
+              </div>
+              <div class="italic text-xs font-semibold">{{ entry.visit_date }}</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="w-5/12">
+          <div class="flex justify-start">
+            <div class="block  w-full">
+              <div class="bg-blue-500 text-gray-100 p-2">
+                SAMPLE VISIT
+              </div>
+              <div class="leading-none p-2 bg-gray-100 text-gray-600 justify-between">
+                <div class="flex bg-gray-100 text-gray-600 justify-between text-sm">
+                  <div>Date:</div>
+                  <div class="italic">March 09, 2020</div>
+                </div>
+                <div class="flex bg-gray-100 text-gray-600 justify-between text-sm">
+                  <div>Assessed by:</div>
+                  <div class="italic">John Doe</div>
+                </div>
+                <div class="flex bg-gray-100 text-gray-600 justify-between text-sm">
+                  <div>Physician</div>
+                  <div class="italic">Robert Martinez</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

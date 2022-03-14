@@ -30,7 +30,9 @@
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": [],
+            "scripts": [
+              "node_modules/apexcharts/dist/apexcharts.min.js"
+            ],
             "customWebpackConfig": {
               "path": "webpack.config.js"
             }
@@ -69,10 +71,7 @@
         "serve": {
           "builder": "@angular-builders/custom-webpack:dev-server",
           "options": {
-            "browserTarget": "wahtermelon-client:build",
-            "customWebpackConfig": {
-              "path": "webpack.config.js"
-            }
+            "browserTarget": "wahtermelon-client:build"
           },
           "configurations": {
             "production": {
@@ -100,19 +99,8 @@
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": []
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "tsconfig.app.json",
-              "tsconfig.spec.json",
-              "e2e/tsconfig.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
+            "scripts": [
+              "node_modules/apexcharts/dist/apexcharts.min.js"
             ]
           }
         },

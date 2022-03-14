@@ -6,12 +6,16 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { VitalsGraphComponent } from './components/vitals-graph/vitals-graph.component';
+import { VitalsComponent } from './components/vitals/vitals.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     SidenavComponent,
+    VitalsGraphComponent,
+    VitalsComponent
   ],
   imports: [
     BrowserModule,
