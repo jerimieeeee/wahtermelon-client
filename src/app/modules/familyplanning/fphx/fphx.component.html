@@ -148,7 +148,7 @@
             </div>
         </div>
 
-        <form action="">
+        <!-- <form action="">
         <div class="grid grid-cols-3 rounded-lg border-dashed border border-white mb-5 bg-orange-300" *ngIf="module_strings.includes('abdomen')">
             <div (click)="hideModule('abdomen')" class="text-white form-check col-span-3 p-2 font-semibold border-dashed border border-white border-t-0 border-l-0 border-r-0">
                 <h1 class="select-none">Abdomen</h1>
@@ -364,28 +364,28 @@
                     <button type="button" class="bg-gray-200 hover:bg-green-400 font-bold py-1 px-3 rounded-full" (click)="formCheck()"> <fa-icon [icon]="faPlus" size="lg" class=""></fa-icon> Add</button>
                     </div>
                 </div>
-            </div>
+            </div> -->
 
-            <!-- <div *ngFor="let fphx_cat of fp_hx_cat">
+            <div *ngFor="let fphx_cat of fp_hx_cat">
                 <form action="">
                     <div class="grid grid-cols-3 rounded-lg border-dashed border border-white mb-5 bg-orange-300" *ngIf="module_strings.includes(fphx_cat)">
                         <div (click)="hideModule(fphx_cat)" class="text-white form-check col-span-3 p-2 font-semibold border-dashed border border-white border-t-0 border-l-0 border-r-0">
                             <h1 class="select-none">{{fphx_cat}}</h1>
                         </div>
-                        <div *ngFor="let fphx of fp_hx_symptoms">
-                            <div *ngIf="fphx.history_cat == fphx_cat" class="border-check-red">
-                                <input class=" appearance-none  h-5 w-5 border border-orange-600 rounded-md bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="checkbox" value="fphx.history_id" id="fphx.history_text" (change)="onChange(fphx.history_text)" [checked]="fphx_strings.includes(fphx.history_text)">
-                                <label class=" inline-block text-gray-800" name="fphx.history_text" (click)="logForText(fphx.history_text)" for="fphx.history_text" value="fphx.history_id">
-                                {{ fphx.history_text }}
+                        <div *ngFor="let check of check_list">
+                            <div class="border-check-red p-2">
+                                <input class="form-check-input appearance-none  h-5 w-5 border border-orange-600 rounded-md bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="checkbox" value="check" [attr.id]="check" (change)="onChange(check,fphx_cat)" [checked]="fphx_strings.includes(check)">
+                                <label class=" text-gray-800" name="check" (click)="logForText(check)" [attr.for]="check" value="check.history_id">
+                                {{ check }}
                                 </label>
                             </div>
                         </div>
                         <div class="col-span-3">
                             <div class="relative ">
                                 <div class="inline-flex m-2 float-right">
-                                    <button type="button" class="border-check text-white font-bold py-1 px-3 rounded-full" id="cancelFPHX" (click)="uncheck($event.target.id)" *ngIf="fphx_typing">Cancel</button>
+                                    <button type="button" class="border-check text-white font-bold py-1 px-3 rounded-full" id="cancel" (click)="uncheck($event.target.id + fphx_cat)" *ngIf="cat_strings.includes(fphx_cat)">Cancel</button>
                                 
-                                    <button type="button" class="border-check bg-white hover:bg-green-400 hover:text-white text-green-500 font-bold py-1 px-5 rounded-full" (click)="formCheck()" *ngIf="fphx_typing">Save</button>
+                                    <button type="button" class="border-check bg-white hover:bg-green-400 hover:text-white text-green-500 font-bold py-1 px-5 rounded-full" (click)="formCheck()" *ngIf="cat_strings.includes(fphx_cat)">Save</button>
                                 </div>
                             </div>  
                         </div>
@@ -399,7 +399,7 @@
                         </div>
                     </div>
                 </div>
-            </div> -->
+            </div>
     </div>
 
 
