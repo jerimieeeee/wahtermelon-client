@@ -1,0 +1,39 @@
+<form action="">
+    <div class="grid grid-rows-2 gap-4" style="grid-template-columns: repeat(16, minmax(0, 1fr));" (click)="flip()" *ngIf="focused">
+        <div class="border-check row-span-2 col-span-2 hover:bg-gray-50 rounded-r" [hidden]="!sampleForm.alc && !sampleForm.bi && !sampleForm.dlc && !sampleForm.ami"><button class="font-bold" type="button" >Visit Info</button></div>
+        <div class="border-check row-span-2 col-span-2 hover:bg-gray-50 rounded-r" [hidden]="sampleForm.alc || sampleForm.bi || sampleForm.dlc || sampleForm.ami"><button class="font-bold" type="button" >First Visit</button></div>
+
+    </div>
+
+    <div class="grid grid-rows-2 gap-4" style="grid-template-columns: repeat(16, minmax(0, 1fr));" *ngIf="!focused" >
+        <div class="border-check row-span-2 col-span-2 hover:bg-gray-50 rounded-r" [hidden]="!sampleForm.alc && !sampleForm.bi && !sampleForm.dlc && !sampleForm.ami" (click)="flip()"><button class="font-bold" type="button" >Visit Info</button></div>
+        <div class="border-check row-span-2 col-span-2 hover:bg-gray-50 rounded-r" [hidden]="sampleForm.alc || sampleForm.bi || sampleForm.dlc || sampleForm.ami" (click)="flip()"><button class="font-bold" type="button" >First Visit</button></div>
+        <div class="transitions col-span-7 border-check" *ngIf="!focused">
+            <h3>ALC Count</h3>
+            <!-- <input type="text" class="border-check focus:border-2 focus:border-blue-300 focus:outline-none rounded border-solid border border-zinc-300" *ngIf="!sampleForm.alc" > -->
+            <input type="text" class="border-check focus:border-2 focus:border-blue-300 focus:outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100" placeholder="{{sampleForm.alc}}" [disabled]="sampleForm.alc || sampleForm.bi || sampleForm.dlc || sampleForm.ami" (change)="onChange($event.target.value)">
+        </div>
+        <div class="transitions col-span-7 border-check"  *ngIf="!focused">
+            <h3>DLC Count</h3>
+            <!-- <input type="text" class="border-check focus:border-2 focus:border-blue-300 focus:outline-none rounded border-solid border border-zinc-300" *ngIf="!sampleForm.dlc"> -->
+            <input type="text" class="border-check focus:border-2 focus:border-blue-300 focus:outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100" placeholder="{{sampleForm.dlc}}" [disabled]="sampleForm.alc || sampleForm.bi || sampleForm.dlc || sampleForm.ami" (change)="onChange($event.target.value)">
+        </div>
+        <div class="transitions col-span-7 border-check" *ngIf="!focused">
+            <h3>Birth Interval</h3>
+            <!-- <input type="text" class="border-check focus:border-2 focus:border-blue-300 focus:outline-none rounded border-solid border border-zinc-300" *ngIf="!sampleForm.bi"> -->
+            <input type="text" class="border-check focus:border-2 focus:border-blue-300 focus:outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100" placeholder="{{sampleForm.bi}}" [disabled]="sampleForm.alc || sampleForm.bi || sampleForm.dlc || sampleForm.ami" (change)="onChange($event.target.value)">
+        </div>
+        <div class="transitions col-span-7 border-check" *ngIf="!focused">
+            <h3>Average Monthly Income</h3>
+            <!-- <input type="text" class="border-check focus:border-2 focus:border-blue-300 focus:outline-none rounded border-solid border border-zinc-300" *ngIf="!sampleForm.ami" > -->
+            <input type="text" class="border-check focus:border-2 focus:border-blue-300 focus:outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100" placeholder="{{sampleForm.ami}}" [disabled]="sampleForm.alc || sampleForm.bi || sampleForm.dlc || sampleForm.ami" (change)="onChange($event.target.value)">
+        </div>
+        <div class="inline-flex col-span-2 " *ngIf="!focused" style="grid-column-start: 14;" hidden>
+            <button type="button" class="text-gray-300 font-bold py-1 px-3 rounded-full" (click)="flip()" [disabled]="sampleForm.alc || sampleForm.bi || sampleForm.dlc || sampleForm.ami" *ngIf="!typing">Cancel</button>
+            <button type="button" class="  bg-gray-200 hover:bg-green-400 hover:text-white text-green-500 font-bold py-1 px-3 rounded-full" (click)="formCheck()" [hidden]="sampleForm.alc || sampleForm.bi || sampleForm.dlc || sampleForm.ami" *ngIf="!typing">Save</button>
+            
+            <button type="button" class="text-gray-300 font-bold py-1 px-3 rounded-full disabled:text-white" (click)="flip()" disabled [hidden]="!sampleForm.alc && !sampleForm.bi && !sampleForm.dlc && !sampleForm.ami">Cancel</button>
+            <button type="button" class="  bg-gray-200 hover:bg-orange-400 hover:text-white text-orange-400 font-bold py-1 px-3 rounded-full" (click)="edit()" [hidden]="!sampleForm.alc && !sampleForm.bi && !sampleForm.dlc && !sampleForm.ami">Edit</button>
+        </div>
+    </div>
+</form>

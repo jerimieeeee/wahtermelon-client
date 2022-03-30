@@ -1,0 +1,46 @@
+<form action="">
+    <div class="grid grid-rows-2 gap-4" style="grid-template-columns: repeat(16, minmax(0, 1fr));" (click)="flip()" *ngIf="!focused2">
+        <div class=" border-check row-span-2 col-span-2 hover:bg-gray-50 rounded-r" ><button class="font-bold" type="button">FP Chart</button></div>
+    </div>
+
+    <div class="grid grid-rows-2 gap-4" style="grid-template-columns: repeat(16, minmax(0, 1fr));" *ngIf="!focused">
+    <div class="row-span-2 col-span-2 hover:bg-gray-50 rounded-r " (click)="flip()"><button class="font-bold" type="button">FP Chart</button></div>
+    <div class="transitions col-span-4"  *ngIf="!focused">
+        <h3 for="service_date">Date Service Given</h3>
+        <div class="grid grid-cols-10">
+            <div class="icon-height col-span-2 p-2 pt-1 rounded-l border-solid border border-zinc-300">
+                <fa-icon [icon]="faCalendarDay" size="lg"  class="text-blue-500" for="service_date"></fa-icon>
+            </div>
+            <input [(ngModel)]="form.service_date" id="service_date" name="service_date" type="date" class="col-span-8 rounded-r border-solid border border-l-0 border-zinc-300 focus:border-2 focus:border-blue-300 focus:outline-none" width="auto" (change)="onChange($event.target.value)">
+        </div>
+    </div>
+    <div class="transitions col-span-5"  *ngIf="!focused">
+        <h3>Source</h3>
+        <input [(ngModel)]="form.source" name="source" type="text" class="focus:border-2 focus:border-blue-300 focus:outline-none rounded border-solid border border-zinc-300" (change)="onChange($event.target.value)">
+    </div>
+    <div class="transitions col-span-5"  *ngIf="!focused">
+        <h3>Quantity</h3>
+        <input [(ngModel)]="form.quantity" name="quantity" type="tel" class="focus:border-2 focus:border-blue-300 focus:outline-none rounded border-solid border border-zinc-300">
+    </div>
+    <div class="transitions col-span-4"  *ngIf="!focused">
+        <h3>Next Service Given</h3>
+        <div class="grid grid-cols-10">
+            <div class="icon-height col-span-2 p-2 pt-1 rounded-l border-solid border border-zinc-300">
+                <fa-icon [icon]="faCalendarDay" size="lg" class="text-orange-400"></fa-icon>
+            </div>
+            <input datepicker [(ngModel)]="form.next_service" name="next_service" type="date" class="focus:border-2 focus:border-blue-300 focus:outline-none col-span-8 rounded-r border-solid border border-l-0 border-zinc-300" width="auto">
+        </div>
+    </div>
+    <div class="col-span-10"  *ngIf="!focused">
+        <h3>Remarks</h3>
+        <input [(ngModel)]="remarks" name="remarks" type="text" class="focus:border-2 focus:border-blue-300 focus:outline-none rounded border-solid border border-zinc-300">
+    </div>
+    <div class="inline-flex col-span-2 " *ngIf="!focused" style="grid-column-start: 14;">
+        <button type="button" class=" text-gray-300 font-bold py-1 px-3 rounded-full" (click)="flip()" *ngIf="!typing">Cancel</button>
+    
+        <button type="button" class="  bg-gray-200 hover:bg-green-400 hover:text-white text-green-500 font-bold py-1 px-3 rounded-full" (click)="formCheck()" *ngIf="!typing">Save</button>
+    </div>
+    
+    <!-- [disabled]="service_date === '' || source === ''  || quantity === ''  || next_service === ''  || remarks === '' " -->
+</div>
+</form>

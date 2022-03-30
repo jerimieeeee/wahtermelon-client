@@ -1,0 +1,10 @@
+<div class="max-w-sm rounded overflow-hidden shadow-lg border-check">
+    <div *ngFor="let fppe_cat of fp_pe_cat">
+      <h1>{{ fppe_cat }}</h1>
+      <div *ngFor="let fppe of fp_pe_symptoms">
+        <div *ngIf="fppe.pe_cat == fppe_cat">
+          {{ fppe.pe_name }}
+        </div>
+      </div>
+    </div>
+</div>
