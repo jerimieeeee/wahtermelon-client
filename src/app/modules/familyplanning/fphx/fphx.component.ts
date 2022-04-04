@@ -99,10 +99,10 @@ export class FphxComponent implements OnInit {
   public history_symptoms = [
     {id:1, name: 'Allergies', x: 1},
     {id:2, name: 'Anemia', x: 1},
-    {id:3, name: 'Bleeding Tendencies', x: 0},
+    {id:3, name: 'Bleeding Tendencies', x: 1},
     {id:4, name: 'Diabetes', x: 1},
     {id:5, name: 'Drug Intake', x: 1},
-    {id:6, name: 'Ectopic Pregnancy', x: 0},
+    {id:6, name: 'Ectopic Pregnancy', x: 1},
     {id:7, name: 'Hydatidiform Mole', x: 0},
     {id:8, name: 'Multiple Partners', x: 1},
     {id:9, name: 'Smoking', x: 1},
@@ -158,12 +158,12 @@ export class FphxComponent implements OnInit {
       }
     });
 
-    // this.abdomen_symptoms.forEach(abdomenElement => {
-    //   if(abdomenElement.x == 1){
-    //   this.show_abdomen_strings = true;
-    //   console.log(this.show_abdomen_strings);
-    // }
-    // });
+    this.abdomen_symptoms.forEach(abdomenElement => {
+      if(abdomenElement.x == 1){
+      this.show_abdomen_strings = true;
+      console.log(this.show_abdomen_strings);
+    }
+    });
 
     this.history_symptoms.forEach(historyElement => {
       if(historyElement.x == 1){
@@ -328,11 +328,12 @@ onChange(id_name,cat){
      
     this.fphx_typing = true;
       if(this.fphx_strings.includes(id_name)){
+        this.fphx_strings.splice(this.fphx_strings.indexOf(id_name), 1);
         // console.log("existing will not push");
       }else{
         this.fphx_strings.push(id_name);
       }
-    // console.log(this.fphx_strings);
+    console.log(this.fphx_strings + '   FPHX STRINGSSSSSSSS');
   }
   });
   
