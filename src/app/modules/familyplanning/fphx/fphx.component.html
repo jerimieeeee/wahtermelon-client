@@ -2,7 +2,7 @@
     <div class="grid gap-4 max-h-fit" style="grid-template-columns: repeat(16, minmax(0, 1fr));" (click)="flip()" *ngIf="!focused">
         <div class=" border-check row-span-2 col-span-2 hover:bg-gray-50 rounded-r" ><button class="font-bold" type="button">FP HX</button></div>
         <div style="grid-column: span 14 / span 14;" class="" >
-            <div class="rounded-lg border-dashed border border-orange-400 mb-5" *ngIf="show_abdomen_strings">
+            <!-- <div class="rounded-lg border-dashed border border-orange-400 mb-5" *ngIf="show_abdomen_strings">
                 <div class="form-check p-1 font-semibold border-dashed border border-orange-400 border-t-0 border-l-0 border-r-0">
                     <h1>Abdomen</h1>
                 </div>
@@ -70,6 +70,20 @@
                 <div *ngFor="let skinSymptom of skin_symptoms">
                     <h1 *ngIf="skinSymptom.x" class="p-1 border-check-red">{{skinSymptom.name}},</h1>
                 </div>
+                </div>
+            </div> -->
+            <div *ngFor="let fphx_cat of fp_hx_cat">
+                <div class="rounded-lg border-dashed border border-orange-400 mb-5">
+                    <div class="form-check p-1 font-semibold border-dashed border border-orange-400 border-t-0 border-l-0 border-r-0">
+                        <h1>{{fphx_cat}}</h1>
+                    </div>
+                    <div class="font-medium flex">
+                    <div *ngFor="let fphx of fp_hx_symptoms"> 
+                        <div *ngIf="fphx_cat == fphx.history_cat">
+                            <h1 *ngIf="fphx.x" class="p-1 border-check-red">{{fphx.history_text}},</h1>
+                        </div>
+                    </div>
+                    </div>
                 </div>
             </div>
         </div>
