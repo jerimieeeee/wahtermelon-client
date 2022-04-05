@@ -11,6 +11,7 @@ export class FpchartComponent implements OnInit {
   textbox: boolean;
   focused2: boolean;
   typing: boolean;
+ public keyUp = [];
   constructor() { }
  public form = {
   service_date: '',
@@ -29,23 +30,27 @@ export class FpchartComponent implements OnInit {
     this.typing = true;
   }
 
-  flip(): void{
+  flip(){
     this.focused = !this.focused;
     this.focused2 = !this.focused2;
+    this.keyUp = [];
   }
 
   formCheck(){
     console.log(this.form.service_date);
   }
  
-  onChange(data_input) {
-    data_input = data_input + data_input;
-    console.log(data_input);
-    if( data_input == ''){
-      this.typing = true;
-    }else{
-    this.typing = false;
-    }
-
+  onKeyUp(data_input: string, id: string){
+    console.log(data_input + " data_input");
+    console.log(id + " id");
+        if(this.keyUp.includes(id)){
+          if(data_input == ''){
+            this.keyUp.splice(this.keyUp.indexOf(id), 1);
+          }
+        }else{
+          this.keyUp.push(id);
+        }
+        console.log(this.keyUp);
+        
   }
 }

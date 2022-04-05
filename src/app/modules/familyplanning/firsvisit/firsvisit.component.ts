@@ -8,7 +8,9 @@ import { Router } from '@angular/router';
 export class FirsvisitComponent implements OnInit {
   focused: boolean;
   focused2: boolean;
-  typing: boolean;
+  
+  public keyUp = [];
+
 
   constructor(  private router: Router) { }
   public sampleForm = {
@@ -24,12 +26,11 @@ export class FirsvisitComponent implements OnInit {
     }else{
       this.focused = true;
     }
-    this.typing = true;
   }
 
   flip(): void{
     this.focused = !this.focused;
-    // this.focused2 = !this.focused2;
+    this.keyUp = [];
   }
 
   edit(){
@@ -38,14 +39,17 @@ export class FirsvisitComponent implements OnInit {
     this.sampleForm.bi = '';
     this.sampleForm.ami = '';
   }
-  onChange(data_input) {
-    data_input = data_input;
-    console.log(data_input);
-    if( data_input == ''){
-      this.typing = true;
-    }else{
-    this.typing = false;
-    }
 
+  onKeyUp(data_input: string, id: string){
+    console.log(data_input + " data_input");
+    console.log(id + " id");
+        if(this.keyUp.includes(id)){
+          if(data_input == ''){
+            this.keyUp.splice(this.keyUp.indexOf(id), 1);
+          }
+        }else{
+          this.keyUp.push(id);
+        }
   }
+
 }

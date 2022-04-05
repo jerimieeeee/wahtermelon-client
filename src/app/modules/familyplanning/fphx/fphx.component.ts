@@ -23,13 +23,6 @@ export class FphxComponent implements OnInit {
  
   constructor() {}
 
-  // public abdomen_strings = [];
-  // public history_strings = [];
-  // public heart_strings = [];
-  // public extremities_strings = [];
-  // public genital_strings = [];
-  // public heent_strings = [];
-  // public skin_strings = [];
   public fphx_strings = [];
   public cat_strings = [];
 
