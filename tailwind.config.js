@@ -4,6 +4,12 @@ module.exports = {
   ],
   theme: {
     extend: {},
+
+
+     
+  },
+  variants: {
+    animate: ['hover'],
   },
   plugins: [],
 }

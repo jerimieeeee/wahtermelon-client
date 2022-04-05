@@ -1,9 +1,50 @@
-<div class="flex w-full">
+<div class="flex w-full" >
   <div class="w-3/12">
-    <app-patient-itr></app-patient-itr>
+    <app-patient-info></app-patient-info>
   </div>
 
-  <div class="w-9/12 h-screen shadow px-8 py-4 ml-5 rounded-3xl text-gray-600 shadow-md">
-    INSERT FP TEMPLATE HERE
+  <div class="w-9/12 h-screen shadow px-2 py-4 ml-5 rounded-3xl text-gray-600 shadow-md overflow-y-scroll">
+   
+    <div class="w-12/12 px-8 py-5 border-solid border-2 border-zinc-100 border-l-0 border-r-0 border-t-0 p-3">
+      <app-firsvisit></app-firsvisit>
+    </div>
+
+    <div class="w-12/12 px-8 py-5 border-solid border-2 border-zinc-100 border-l-0 border-r-0 border-t-0 p-3">
+      <app-fpchart></app-fpchart>
+    </div>
+
+    <div class="w-12/12 px-8 py-5 border-solid border-2 border-zinc-100 border-l-0 border-r-0 border-t-0 p-3">
+      <app-fphx></app-fphx>
+    </div>
+
+    <div class="w-12/12 px-8 py-5 border-solid border-2 border-zinc-100 border-l-0 border-r-0 border-t-0 p-3 border-check">
+      <app-fppe></app-fppe>
+    </div> 
+
+    <!-- <div class="w-12/12 h-2/3 px-8 border-b py-5 border-gray-400"> 
+        <app-pelvicexam ></app-pelvicexam> 
+    </div>
+      
+      
+
+    
+    <div class="text-white w-12/12 h-32 px-8 border-b py-5 border-gray-400">
+      sqsqsqsqsqs
+    </div> -->
   </div>
 </div>
+  
+  <script> 
+  showModal.addEventListener('click', function (){
+    modal.classList.remove('hidden')
+  });
+
+  closeModal.forEach(close => {
+    close.addEventListener('click', function (){
+      modal.classList.add('hidden')
+    });
+  });
+</script>
+
+
+

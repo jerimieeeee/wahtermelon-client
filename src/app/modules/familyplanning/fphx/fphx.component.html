@@ -1,0 +1,295 @@
+
+    <div class="grid gap-4 max-h-fit" style="grid-template-columns: repeat(16, minmax(0, 1fr));" (click)="flip()" *ngIf="focused">
+        <div class=" border-check row-span-2 col-span-2 hover:bg-gray-50 rounded-r" ><button class="font-bold" type="button">FP HX</button></div>
+        <div style="grid-column: span 14 / span 14;" class="" >
+            <div class="rounded-lg mb-5">
+                <div *ngFor="let fphx_cat of fp_hx_cat2">
+                    <div class="form-check px-1 font-semibold" style="color: #0099ff;">
+                        <h1>{{fphx_cat}}</h1>
+                    </div>
+                    <div class="font-medium flex">
+                    <div *ngFor="let fphx of fp_hx_symptoms" > 
+                        <div *ngIf="fphx_cat == fphx.history_cat">
+                            <h1 *ngIf="fphx.x" class="m-0.5 mb-2 border-check bg-gray-200 px-2 rounded-full history-show" id="test">{{fphx.history_id}}</h1>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="grid gap-4 max-h-fit" style="grid-template-columns: repeat(16, minmax(0, 1fr));" *ngIf="!focused">
+    <div class=" border-check row-span-2 col-span-2 hover:bg-gray-50 rounded-r" (click)="flip()"><button class="font-bold" type="button">FP HX</button></div>
+    <div style="grid-column: span 14 / span 14;" class="" >
+        <div class="rounded-lg mb-5">
+            <div *ngFor="let fphx_cat of fp_hx_cat2">
+                <div class="form-check px-1 font-semibold " style="color: #0099ff;">
+                    <h1>{{fphx_cat}}</h1>
+                </div>
+                <div class="font-medium flex">
+                <div *ngFor="let fphx of fp_hx_symptoms" > 
+                    <div *ngIf="fphx_cat == fphx.history_cat">
+                        <h1 *ngIf="fphx.x" class="m-0.5 mb-2 border-check bg-gray-200 px-2 rounded-full ">{{fphx.history_id}}</h1>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- <form action="">
+        <div class="grid grid-cols-3 rounded-lg border-dashed border border-white mb-5 bg-orange-300" *ngIf="module_strings.includes('abdomen')">
+            <div (click)="hideModule('abdomen')" class="text-white form-check col-span-3 p-2 font-semibold border-dashed border border-white border-t-0 border-l-0 border-r-0">
+                <h1 class="select-none">Abdomen</h1>
+            </div>
+            <div class="form-check p-2" *ngFor="let abdomen of  abdomen_symptoms">
+                <input class="form-check-input appearance-none  h-5 w-5 border border-orange-600 rounded-md bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="checkbox" value="{{abdomen.id}}" id="{{abdomen.name}}" (change)="onChange($event.target.id)" [checked]="abdomen_strings.includes(abdomen.name)">
+                <label class="form-check-label inline-block text-gray-800" for="{{abdomen.name}}" value="abdomen.id">
+               {{ abdomen.name }}
+                </label>
+            </div>
+            <div class="col-span-3">
+                <div class="relative ">
+                    <div class="inline-flex m-2 float-right">
+                        <button type="button" class="border-check text-white font-bold py-1 px-3 rounded-full" id="cancelAbdomen" (click)="uncheck($event.target.id)" *ngIf="abdomen_typing">Cancel</button>
+                    
+                        <button type="button" class="border-check bg-white hover:bg-green-400 hover:text-white text-green-500 font-bold py-1 px-5 rounded-full" (click)="formCheck()" *ngIf="abdomen_typing">Save</button>
+                    </div>
+                </div>  
+            </div>  
+        </div>
+        
+    </form>
+    <div class="rounded-lg mb-5 bg-gray-200" id="abdomen" (click)="showModule('abdomen')" *ngIf="!module_strings.includes('abdomen')">
+        <div class="relative flex text-align-center text-orange-500 p-2 font-semibold ">
+            <h1 class="select-none">Abdomen</h1>
+            <div class="absolute right-1 top-1 hover:text-white text-green-500" >
+            <button type="button" class="bg-gray-200 hover:bg-green-400 font-bold py-1 px-3 rounded-full" (click)="formCheck()"> <fa-icon [icon]="faPlus" size="lg" class=""></fa-icon> Add</button>
+            </div>
+        </div>
+    </div>
+    <form action="">
+        <div class="grid grid-cols-3 rounded-lg border-dashed border border-white mb-5 bg-orange-300" *ngIf="module_strings.includes('history')">
+            <div (click)="hideModule('history')" class="text-white form-check col-span-3 p-2 font-semibold border-dashed border border-white border-t-0 border-l-0 border-r-0">
+                <h1 class="select-none">History</h1>
+            </div>
+            <div class="form-check p-2" *ngFor="let history of  history_symptoms">
+                <input class="form-check-input appearance-none  h-5 w-5 border border-orange-600 rounded-md bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="checkbox" value="{{history.id}}" id="{{history.name}}" (change)="onChange($event.target.id)" [checked]="history_strings.includes(history.name)">
+                <label class="form-check-label inline-block text-gray-800" for="{{history.name}}" value="history.id">
+               {{ history.name }}
+                </label>
+            </div>
+            <div class="col-span-3">
+                <div class="relative ">
+                    <div class="inline-flex m-2 float-right">
+                        <button type="button" class="border-check text-white font-bold py-1 px-3 rounded-full" id="cancelHistory" (click)="uncheck($event.target.id)" *ngIf="history_typing">Cancel</button>
+                    
+                        <button type="button" class="border-check bg-white hover:bg-green-400 hover:text-white text-green-500 font-bold py-1 px-5 rounded-full" (click)="formCheck()" *ngIf="history_typing">Save</button>
+                    </div>
+                </div>  
+            </div>
+        </div>
+    </form>
+        
+    <div class="rounded-lg mb-5 bg-gray-200" (click)="showModule('history')" *ngIf="!module_strings.includes('history')">
+        <div class="relative flex text-align-center text-orange-500 p-2 font-semibold ">
+            <h1 class="select-none">History</h1>
+            <div class="absolute right-1 top-1 hover:text-white text-green-500" >
+            <button type="button" class="bg-gray-200 hover:bg-green-400 font-bold py-1 px-3 rounded-full" (click)="formCheck()"> <fa-icon [icon]="faPlus" size="lg" class=""></fa-icon> Add</button>
+            </div>
+        </div>
+    </div>
+
+    <form action="">
+        <div class="grid grid-cols-3 rounded-lg border-dashed border border-white mb-5 bg-orange-300" *ngIf="module_strings.includes('heart')">
+            <div (click)="hideModule('heart')" class="text-white form-check col-span-3 p-2 font-semibold border-dashed border border-white border-t-0 border-l-0 border-r-0">
+                <h1 class="select-none">Chest/Heart</h1>
+            </div>
+            <div class="form-check p-2" *ngFor="let heart of  heart_symptoms" >
+                <input class="form-check-input appearance-none  h-5 w-5 border border-orange-600 rounded-md bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="checkbox" value="{{heart.id}}" id="{{heart.name}}" (change)="onChange($event.target.id)" [checked]="heart_strings.includes(heart.name)">
+                <label class=" form-check-label inline-block text-gray-800" for="{{heart.name}}" value="heart.id">
+                {{ heart.name }}
+                </label>
+            </div>
+            <div class="col-span-3">
+                <div class="relative ">
+                    <div class="inline-flex m-2 float-right">
+                        <button type="button" class="border-check text-white font-bold py-1 px-3 rounded-full" id="cancelHeart" (click)="uncheck($event.target.id)" *ngIf="heart_typing">Cancel</button>
+                    
+                        <button type="button" class="border-check bg-white hover:bg-green-400 hover:text-white text-green-500 font-bold py-1 px-5 rounded-full" (click)="formCheck()" *ngIf="heart_typing">Save</button>
+                    </div>
+                </div>  
+            </div>
+            </div>
+        </form>
+        <div class="rounded-lg mb-5 bg-gray-200" (click)="showModule('heart')" *ngIf="!module_strings.includes('heart')">
+            <div class="relative flex text-align-center text-orange-500 p-2 font-semibold ">
+                <h1 class="select-none">Chest/Heart</h1>
+                <div class="absolute right-1 top-1 hover:text-white text-green-500" >
+                <button type="button" class="bg-gray-200 hover:bg-green-400 font-bold py-1 px-3 rounded-full" (click)="formCheck()"> <fa-icon [icon]="faPlus" size="lg" class=""></fa-icon> Add</button>
+                </div>
+            </div>
+        </div>
+
+        <form action="">
+            <div class="grid grid-cols-3 rounded-lg border-dashed border border-white mb-5 bg-orange-300" *ngIf="module_strings.includes('extremities')">
+                <div (click)="hideModule('extremities')" class="text-white form-check col-span-3 p-2 font-semibold border-dashed border border-white border-t-0 border-l-0 border-r-0">
+                    <h1 class="select-none">Extremities</h1>
+                </div>
+                <div class="form-check p-2" *ngFor="let extreme of  extremities_symptoms" >
+                    <input class="form-check-input appearance-none  h-5 w-5 border border-orange-600 rounded-md bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="checkbox" value="{{extreme.id}}" id="{{extreme.name}}" (change)="onChange($event.target.id)" [checked]="extremities_strings.includes(extreme.name)">
+                    <label class=" form-check-label inline-block text-gray-800" for="{{extreme.name}}" value="extreme.id">
+                    {{ extreme.name }}
+                    </label>
+                </div>
+                <div class="col-span-3">
+                    <div class="relative ">
+                        <div class="inline-flex m-2 float-right">
+                            <button type="button" class="border-check text-white font-bold py-1 px-3 rounded-full" id="cancelExtreme" (click)="uncheck($event.target.id)" *ngIf="extremities_typing">Cancel</button>
+                        
+                            <button type="button" class="border-check bg-white hover:bg-green-400 hover:text-white text-green-500 font-bold py-1 px-5 rounded-full" (click)="formCheck()" *ngIf="extremities_typing">Save</button>
+                        </div>
+                    </div>  
+                </div>
+                </div>
+            </form>
+            <div class="rounded-lg mb-5 bg-gray-200" (click)="showModule('extremities')" *ngIf="!module_strings.includes('extremities')">
+                <div class="relative flex text-align-center text-orange-500 p-2 font-semibold ">
+                    <h1 class="select-none">Extremities</h1>
+                    <div class="absolute right-1 top-1 hover:text-white text-green-500" >
+                    <button type="button" class="bg-gray-200 hover:bg-green-400 font-bold py-1 px-3 rounded-full" (click)="formCheck()"> <fa-icon [icon]="faPlus" size="lg" class=""></fa-icon> Add</button>
+                    </div>
+                </div>
+            </div>
+
+            <form action="">
+                <div class="grid grid-cols-3 rounded-lg border-dashed border border-white mb-5 bg-orange-300" *ngIf="module_strings.includes('genital')">
+                    <div (click)="hideModule('genital')" class="text-white form-check col-span-3 p-2 font-semibold border-dashed border border-white border-t-0 border-l-0 border-r-0">
+                        <h1 class="select-none">Genital</h1>
+                    </div>
+                    <div class="form-check p-2" *ngFor="let genital of  genital_symptoms" >
+                        <input class="form-check-input appearance-none  h-5 w-5 border border-orange-600 rounded-md bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="checkbox" value="{{genital.id}}" id="{{genital.name}}" (change)="onChange($event.target.id)" [checked]="genital_strings.includes(genital.name)">
+                        <label class=" form-check-label inline-block text-gray-800" for="{{genital.name}}" value="genital.id">
+                        {{ genital.name }}
+                        </label>
+                    </div>
+                    <div class="col-span-3">
+                        <div class="relative ">
+                            <div class="inline-flex m-2 float-right">
+                                <button type="button" class="border-check text-white font-bold py-1 px-3 rounded-full" id="cancelGenital" (click)="uncheck($event.target.id)" *ngIf="genital_typing">Cancel</button>
+                            
+                                <button type="button" class="border-check bg-white hover:bg-green-400 hover:text-white text-green-500 font-bold py-1 px-5 rounded-full" (click)="formCheck()" *ngIf="genital_typing">Save</button>
+                            </div>
+                        </div>  
+                    </div>
+                    </div>
+                </form>
+            <div class="rounded-lg mb-5 bg-gray-200" (click)="showModule('genital')" *ngIf="!module_strings.includes('genital')">
+                <div class="relative flex text-align-center text-orange-500 p-2 font-semibold ">
+                    <h1 class="select-none">Genital</h1>
+                    <div class="absolute right-1 top-1 hover:text-white text-green-500" >
+                    <button type="button" class="bg-gray-200 hover:bg-green-400 font-bold py-1 px-3 rounded-full" (click)="formCheck()"> <fa-icon [icon]="faPlus" size="lg" class=""></fa-icon> Add</button>
+                    </div>
+                </div>
+            </div>
+
+            <form action="">
+                <div class="grid grid-cols-3 rounded-lg border-dashed border border-white mb-5 bg-orange-300" *ngIf="module_strings.includes('heent')">
+                    <div (click)="hideModule('heent')" class="text-white form-check col-span-3 p-2 font-semibold border-dashed border border-white border-t-0 border-l-0 border-r-0">
+                        <h1 class="select-none">HEENT</h1>
+                    </div>
+                    <div class="form-check p-2" *ngFor="let heent of  heent_symptoms" >
+                        <input class="form-check-input appearance-none  h-5 w-5 border border-orange-600 rounded-md bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="checkbox" value="{{heent.id}}" id="{{heent.name}}" (change)="onChange($event.target.id)" [checked]="heent_strings.includes(heent.name)">
+                        <label class=" form-check-label inline-block text-gray-800" for="{{heent.name}}" value="heent.id">
+                        {{ heent.name }}
+                        </label>
+                    </div>
+                    <div class="col-span-3">
+                        <div class="relative ">
+                            <div class="inline-flex m-2 float-right">
+                                <button type="button" class="border-check text-white font-bold py-1 px-3 rounded-full" id="cancelHEENT" (click)="uncheck($event.target.id)" *ngIf="heent_typing">Cancel</button>
+                            
+                                <button type="button" class="border-check bg-white hover:bg-green-400 hover:text-white text-green-500 font-bold py-1 px-5 rounded-full" (click)="formCheck()" *ngIf="heent_typing">Save</button>
+                            </div>
+                        </div>  
+                    </div>
+                    </div>
+                </form>
+            <div class="rounded-lg mb-5 bg-gray-200" (click)="showModule('heent')" *ngIf="!module_strings.includes('heent')">
+                <div class="relative flex text-align-center text-orange-500 p-2 font-semibold ">
+                    <h1 class="select-none">HEENT</h1>
+                    <div class="absolute right-1 top-1 hover:text-white text-green-500" >
+                    <button type="button" class="bg-gray-200 hover:bg-green-400 font-bold py-1 px-3 rounded-full" (click)="formCheck()"> <fa-icon [icon]="faPlus" size="lg" class=""></fa-icon> Add</button>
+                    </div>
+                </div>
+            </div>
+
+            <form action="">
+                <div class="grid grid-cols-3 rounded-lg border-dashed border border-white mb-5 bg-orange-300" *ngIf="module_strings.includes('skin')">
+                    <div (click)="hideModule('skin')" class="text-white form-check col-span-3 p-2 font-semibold border-dashed border border-white border-t-0 border-l-0 border-r-0">
+                        <h1 class="select-none">Skin</h1>
+                    </div>
+                    <div class="form-check p-2" *ngFor="let skin of  skin_symptoms" >
+                        <input class="form-check-input appearance-none  h-5 w-5 border border-orange-600 rounded-md bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="checkbox" value="{{skin.id}}" id="{{skin.name}}" (change)="onChange($event.target.id)" [checked]="skin_strings.includes(skin.name)">
+                        <label class=" form-check-label inline-block text-gray-800" for="{{skin.name}}" value="skin.id">
+                        {{ skin.name }}
+                        </label>
+                    </div>
+                    <div class="col-span-3">
+                        <div class="relative ">
+                            <div class="inline-flex m-2 float-right">
+                                <button type="button" class="border-check text-white font-bold py-1 px-3 rounded-full" id="cancelSkin" (click)="uncheck($event.target.id)" *ngIf="skin_typing">Cancel</button>
+                            
+                                <button type="button" class="border-check bg-white hover:bg-green-400 hover:text-white text-green-500 font-bold py-1 px-5 rounded-full" (click)="formCheck()" *ngIf="skin_typing">Save</button>
+                            </div>
+                        </div>  
+                    </div>
+                    </div>
+                </form>
+            <div class="rounded-lg mb-5 bg-gray-200" (click)="showModule('skin')" *ngIf="!module_strings.includes('skin')">
+                <div class="relative flex text-align-center text-orange-500 p-2 font-semibold ">
+                    <h1 class="select-none">Skin</h1>
+                    <div class="absolute right-1 top-1 hover:text-white text-green-500" >
+                    <button type="button" class="bg-gray-200 hover:bg-green-400 font-bold py-1 px-3 rounded-full" (click)="formCheck()"> <fa-icon [icon]="faPlus" size="lg" class=""></fa-icon> Add</button>
+                    </div>
+                </div>
+            </div> -->
+
+            <div *ngFor="let fphx_cat of fp_hx_cat">
+                <form action="">
+                    <div class="grid grid-cols-3 rounded-lg mb-5 drop-shadow-lg bg-white rounded-lg border border-orange-400" *ngIf="module_strings.includes(fphx_cat) ">
+                        <div (click)="hideModule(fphx_cat)" class="text-orange-500 form-check col-span-3 p-2 font-semibold rounded-tr-lg rounded-tl-lg border border-dashed border-orange-300 border-t-0 border-l-0 border-r-0">
+                            <h1 class="select-none">{{fphx_cat}}</h1>
+                        </div>
+                        <div *ngFor="let check of check_list">
+                            <div class="border-check-red p-2">
+                                <input class="form-check-input appearance-none h-5 w-5 border border-orange-600 rounded-md bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="checkbox" value="check" [attr.id]="check" (change)="onChange(check,fphx_cat)" [checked]="fphx_strings.includes(check)">
+                                <label class="text-gray-800" name="check" [attr.for]="check" value="check.history_id">
+                                {{ check }}
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-span-3">
+                            <div class="relative ">
+                                <div class="inline-flex m-2 float-right">
+                                    <button type="button" class="border-check text-gray-400 font-bold py-1 px-3 rounded-full hover:bg-gray-400 hover:text-white" id="cancel" (click)="uncheck($event.target.id + fphx_cat)" *ngIf="cat_strings.includes(fphx_cat)">Cancel</button>
+                                
+                                    <button type="button" class="border-check bg-white hover:bg-green-400 hover:text-white text-green-500 font-bold py-1 px-5 rounded-full" (click)="formCheck()" *ngIf="cat_strings.includes(fphx_cat)">Save</button>
+                                </div>
+                            </div>  
+                        </div>
+                    </div>
+                </form>
+                <div class="rounded-tr-lg rounded-tl-lg mb-1 bg-gray-200" (click)="showModule(fphx_cat)" *ngIf="!module_strings.includes(fphx_cat)">
+                    <div class="relative flex text-orange-500 form-check col-span-3 p-2 font-semibold rounded-tr-lg rounded-tl-lg border border-orange-300 border-t-0 border-l-0 border-r-0">
+                        <h1 class="select-none">{{fphx_cat}}</h1>
+                        <div class="absolute right-1 top-1 hover:text-white text-green-500" >
+                        <button type="button" class="bg-gray-200 hover:bg-green-400 font-bold py-1 px-3 rounded-full" (click)="formCheck()"> <fa-icon [icon]="faPlus" size="lg" class=""></fa-icon> Add</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+
+
+
+
