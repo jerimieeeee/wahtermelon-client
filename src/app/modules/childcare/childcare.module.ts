@@ -9,6 +9,8 @@ import { FirstVisitComponent } from './components/first-visit/first-visit.compon
 import { ServicesComponent } from './components/services/services.component';
 import { VaccineInfoComponent } from './components/vaccine-info/vaccine-info.component';
 import { BreastfeedingComponent } from './components/breastfeeding/breastfeeding.component';
+import { StoreModule } from '@ngrx/store';
+import { reducer } from './reducers/birthweight.reducer';
 
 
 
@@ -23,7 +25,9 @@ import { BreastfeedingComponent } from './components/breastfeeding/breastfeeding
     CommonModule,
     ChildcareRoutingModule,
     SharedComponentsModule,
-    FontAwesomeModule
+    FontAwesomeModule,StoreModule.forRoot({
+      tutorial: reducer
+    })
   ]
 })
 export class ChildcareModule { }

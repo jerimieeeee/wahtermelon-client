@@ -1,6 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { faSearch,faBalanceScale,faPlus } from '@fortawesome/free-solid-svg-icons';
+import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { BirthInfoWeight } from '../../models/birthweight.model';
+import { AppState } from '../../app.state';
+import * as TutorialActions from '../../actions/birthweight.action';
+
+
 
 @Component({
   selector: 'app-first-visit',
@@ -12,26 +19,27 @@ export class FirstVisitComponent implements OnInit {
 
   faSearch = faSearch;
   faBalanceScale = faBalanceScale;
+  faPlus = faPlus;
 
-  title ='localstorage';
-  weight!: any;
-  myform!: any;
+  tutorials: Observable<BirthInfoWeight[]>;
 
-  ngOnInit(){
-   this.myform = new FormGroup({
-     weight: new FormControl('')
+  saved: boolean;
 
-   });
-
-    this.display();
+  // Section 2
+  constructor(private store: Store<AppState>) { 
+    this.tutorials = store.select('tutorial');
   }
 
-  display() {
-    this.weight = localStorage.getItem('formdata');  
+  addWeight(weight, mname) {
+    this.store.dispatch(new TutorialActions.AddWeight({weight: weight, mname: mname}) )
+    console.log({weight: weight, mname: mname});
+    this.saved = true;
   }
 
-  onSubmit() {
-    localStorage.setItem("formdata", JSON.stringify(this.myform.value));
-  }
+  
 
+  ngOnInit() {
+    this.saved = false;
+  }
+ 
 }

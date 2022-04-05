@@ -15,7 +15,7 @@ import { VitalsComponent } from './components/vitals/vitals.component';
     HeaderComponent,
     SidenavComponent,
     VitalsGraphComponent,
-    VitalsComponent
+    VitalsComponent,
   ],
   imports: [
     BrowserModule,

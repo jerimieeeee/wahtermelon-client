@@ -1,5 +1,5 @@
 <div>
-      <h4 class="font-bold text-gray-600 text-md">FIRST VISIT {{weight}}</h4>
+      <h4 class="font-bold text-gray-600 text-md">FIRST VISIT</h4>
     </div>
     <!--Admission Date & Time Section-->
     <div class="flex item-start flex-wrap shadow-md rounded-xl pb-5 mt-5">
@@ -24,8 +24,14 @@
     <!--Birth Info Section-->
     <div class="flex item-start flex-wrap shadow-md rounded-xl pb-5 mt-5">
 
-        <div class="w-full bg-blue-300 px-5 py-3 rounded-tl rounded-tr">
-          <h4 class="font-bold text-white text-md">Birth Information</h4>
+      <div class="flex justify-between w-full bg-blue-300 px-5 py-3 rounded-tl rounded-tr">
+        <h4 class="font-bold text-white text-md mt-2">Birth Information</h4>
+          <button  *ngIf="!saved" type="submit" class="py-2 px-6 rounded-full bg-white text-gray-600 font-bold drop-shadow-md hover:border-white-600 hover:bg-blue-400 hover:text-white shadow-md inline-flex items-center" name="add-btn"  (click)="addWeight(weight.value, mname.value)">
+            <label>Save</label>
+            </button>
+            <button *ngIf="saved" type="submit" class="py-2 px-4 rounded-full bg-white text-gray-600 font-bold drop-shadow-md hover:border-white-600 hover:bg-blue-400 hover:text-white shadow-md inline-flex items-center" name="add-btn"  (click)="addWeight(weight.value, mname.value)">
+              <label>Update</label>
+              </button>
         </div>
 
         <!-- <form [formGroup]="myform">
@@ -35,16 +41,21 @@
         </form> -->
 
         <div class="relative w-full md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
-            <input class="w-full border-2 border-slate-300 bg-white h-10 px-5 pr-2 rounded-lg text-sm mt-2"
-            id= "weight" type="text" name="text" placeholder="Enter Weight at Birth (kg)">
-            <button type="submit" class="absolute right-0 top-3 mt-4 mr-8 text-gray-700 hover:text-indigo-500">
-            <fa-icon class="flex justify-end mb-2 text-sm" [icon]="faBalanceScale"></fa-icon>
-            </button>
+          <input (keyup.enter)="addWeight(weight.value, mname.value)" class="w-full border-2 focus:border-2 focus:outline-none focus:border-red-300 border-gray-300 bg-white h-10 px-5 pr-2 rounded-lg text-sm mt-2 mb-2"
+          id= "weight" type="text" name="text" placeholder="Enter Weight at Birth (kg)" #weight>
         </div>
+
+        <div class="relative w-full md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
+          <input (keyup.enter)="addWeight(weight.value, mname.value)" class="select-none w-full border-2 focus:border-2 focus:outline-none focus:border-red-300 border-gray-300 bg-white h-10 px-5 pr-2 rounded-lg text-sm mt-2 mb-2"
+          type="text" name="search" placeholder="Enter Mother's Name" #mname [disabled]="saved">
+          <button  class="absolute right-0 top-3 mt-4 mr-8 text-gray-700 hover:text-indigo-500">
+          </button>
+      </div>
+
     </div>
 
     <!--Mother Info Section-->
-    <div class="flex item-start flex-wrap shadow-md rounded-xl pb-5 mt-5">
+    <!-- <div class="flex item-start flex-wrap shadow-md rounded-xl pb-5 mt-5">
 
         <div class="w-full bg-blue-300 px-5 py-3 rounded-tl rounded-tr">
           <h4 class="font-bold text-white text-md">Mother Information</h4>
@@ -57,4 +68,4 @@
           <fa-icon class="flex justify-end mb-2 text-sm" [icon]="faSearch"></fa-icon>
           </button>
       </div>
-    </div>
+    </div> -->
