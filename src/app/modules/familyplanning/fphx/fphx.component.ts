@@ -19,10 +19,11 @@ export class FphxComponent implements OnInit {
 
   show_fphx_strings: boolean;
   save_id: void;
+  pill: boolean;
 
  
   constructor() {}
-
+  
   public fphx_strings = [];
   public cat_strings = [];
 
@@ -72,6 +73,8 @@ export class FphxComponent implements OnInit {
 
   public fp_hx_cat = [];
   public fp_hx_cat2 = [];
+
+  public pill_box = [];
 
   ngOnInit(): void {
     this.focused = true;
@@ -166,18 +169,26 @@ hideModule(id_name){
 }
 
 hoverPill(id_name){
-  this.fp_hx_symptoms.forEach(e => {
-    console.log("log hist_id here first " + e.history_id);
+  // this.fp_hx_symptoms.forEach(e => {
+  //   console.log("log hist_id here first " + e.history_id);
     
-    let save_id = e.history_id
-    if(e.history_id == id_name){
-      console.log('im hovering');
-      e.history_id = e.history_text;
-    }
-    console.log(save_id + ' this was my hist_id b4');
-    
-  });
+  //   let save_id = e.history_id
+  //   if(e.history_id == id_name){
+  //     console.log('im hovering');
+  //     e.history_id = e.history_text;
+  //   }
+  //   console.log(save_id + ' this was my hist_id b4');
+  //   this.pill = false;
+  // });
+  if(!this.pill_box.includes(id_name)){
+    this.pill_box.push(id_name);
+  }
+  console.log(this.pill_box);
+  
+  //this.pill = false;
 }
-
+  leavePill(){
+    this.pill_box = [];
+  }
 
 }

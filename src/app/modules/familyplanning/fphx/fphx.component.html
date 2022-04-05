@@ -33,12 +33,13 @@
                         </div>
                     </div>
                 </form>
-                <div class=" rounded-lg mb-1 bg-gray-100 hover:bg-gray-300" (click)="showModule(fphx_cat)" *ngIf="!module_strings.includes(fphx_cat)">
+                <div class=" rounded-lg mb-1 hover:bg-gray-300" (click)="showModule(fphx_cat)" *ngIf="!module_strings.includes(fphx_cat)">
                     <div class="relative flex text-orange-500 form-check col-span-3 p-2 rounded-lg border border-orange-300" >
                         <h1 class="select-none font-semibold">{{fphx_cat}}</h1>
                         <div *ngFor="let fphx of fp_hx_symptoms" > 
                             <div *ngIf="fphx_cat == fphx.history_cat">
-                                <h1 *ngIf="fphx.x" class="select-none m-0.5 border-check px-2 top-1 rounded-full history-show text-gray-400 font-light" id="test">{{fphx.history_id}}</h1>
+                                <h1 *ngIf="fphx.x" class="bg-gray-100 select-none m-0.5 border-check px-2 rounded-full text-gray-400 font-light" style="margin-top: 0;" (mouseover)="hoverPill(fphx.history_id)" [hidden]="pill_box.includes(fphx.history_id)" id="test">{{fphx.history_id}}</h1>
+                                <h1 *ngIf="fphx.x"  class="select-none m-0.5 border-check px-2 rounded-full text-orange-400 font-medium typed-out" style="margin-top: 0;" [hidden]="!pill_box.includes(fphx.history_id)" (mouseout)="leavePill()" id="test">{{fphx.history_text}}</h1>
                             </div>
                         </div>
                         <div class="absolute right-1 top-1 hover:text-white text-green-500" >
@@ -46,8 +47,10 @@
                         </div>
                     </div>
                 </div>
+                <div class="w-max">
                 <p style="margin-top: -0.25rem;" class="mb-5 font-light text-red-400" *ngIf="cat_strings.includes(fphx_cat) && !module_strings.includes(fphx_cat) ">**You have unsaved stuff in {{fphx_cat}}</p>
-                <p style="margin-top: -1.25rem;" class="mb-5 font-light text-red-400" *ngIf="cat_strings.includes(fphx_cat) && module_strings.includes(fphx_cat)">**You have unsaved stuff in {{fphx_cat}}</p>
+                <!-- <p style="margin-top: -1.25rem;" class="mb-5 font-light text-red-400 typed-out w-fit" *ngIf="cat_strings.includes(fphx_cat) && module_strings.includes(fphx_cat)">**You have unsaved stuff in {{fphx_cat}}</p> -->
+                </div>
             </div>
     </div>
 

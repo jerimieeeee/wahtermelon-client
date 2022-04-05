@@ -17,8 +17,46 @@ label{
 .containers{
     max-height: 100vh;
 }
+@keyframes bounce {
+    0%, 100% {
+      transform: translateY(-5%);
+      animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+    }
+    50% {
+      transform: translateY(5%);
+      animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+    }
+  }
 
-.history-show:hover{
-    color: red;
-    content: "asef eawfeawef" !important;
-}
+@keyframes type_in {
+    from { width: 0 }
+    to { width: 100% }
+  }
+
+  @keyframes type_out {
+    from { width: 100% }
+    to { width: 0 }
+  }
+
+  .typed-out{
+    overflow: hidden;
+    // border: 1px solid red;
+    // border-right: .15em solid orange;
+    white-space: nowrap;
+    animation: 
+    type_in 0.68s steps(100, end) forwards,
+    bounce 1s infinite;
+    width: 0;
+
+  }
+
+//   .typed-out:hover{
+//     overflow: hidden;
+//     // border: 1px solid red;
+//     // border-right: .15em solid orange;
+//     white-space: nowrap;
+//     animation: 
+//     type_out 1s steps(20, end) forwards;
+//     width: 0;
+
+//   }
