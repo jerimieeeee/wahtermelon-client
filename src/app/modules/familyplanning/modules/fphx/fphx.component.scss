@@ -45,7 +45,8 @@ label{
     white-space: nowrap;
     animation: 
     type_in 0.68s steps(100, end) forwards,
-    bounce 1s infinite;
+    // bounce 1s infinite
+    ;
     width: 0;
 
   }
@@ -60,3 +61,17 @@ label{
 //     width: 0;
 
 //   }
+
+
+.button-out:hover{
+  overflow: hidden;
+  // border: 1px solid red;
+  // border-right: .15em solid orange;
+  white-space: nowrap;
+  animation: 
+  type_in 0.68s steps(100, end) forwards,
+  // bounce 1s infinite
+  ;
+  width: 0;
+
+}

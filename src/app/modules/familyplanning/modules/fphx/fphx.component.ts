@@ -10,6 +10,7 @@ import { faCalendarDay, faPlus, faSave } from '@fortawesome/free-solid-svg-icons
 export class FphxComponent implements OnInit {
   faCalendarDay = faCalendarDay;
   faPlus = faPlus;
+  faSave = faSave;
 
   typing: boolean;
   checked: boolean;
@@ -36,7 +37,7 @@ export class FphxComponent implements OnInit {
   {"history_id":"BLEEDING","history_text":"Bleeding tendencies (nose, gums, etc.)","history_cat":"ANY","x":1 },
   {"history_id":"DIABETES","history_text":"Diabetes","history_cat":"ANY","x":0 },
   {"history_id":"DRUGINTAKE","history_text":"Drug intake (anti-TB, anti-diabetic, anticonvulsant)","history_cat":"ANY","x":1 },
-  {"history_id":"ECTPREG","history_text":"Ectopic pregnancy","history_cat":"ANY","x":0 },
+  {"history_id":"ECTPREG","history_text":"Ectopic pregnancy","history_cat":"ANY","x": 0 },
   {"history_id":"HMOLE","history_text":"Hydatidiform mole (w/in the last 12 mos.)","history_cat":"ANY","x":1 },
   {"history_id":"MPARTNERS","history_text":"Multiple partners","history_cat":"ANY","x":1 },
   {"history_id":"SMOKING","history_text":"Smoking","history_cat":"ANY","x":1 },
@@ -133,7 +134,6 @@ onChange(id_name,cat){
     this.fphx_typing = true;
       if(this.fphx_strings.includes(id_name)){
         this.fphx_strings.splice(this.fphx_strings.indexOf(id_name), 1);
-        // console.log("existing will not push");
       }else{
         this.fphx_strings.push(id_name);
       }
@@ -146,14 +146,10 @@ onChange(id_name,cat){
 showModule(id_name){  
   this.module_strings = [];
   this.check_list = [];
-  // console.log(id_name);
   this.module_strings.push(id_name);
-  // console.log(this.module_strings);
   this.fp_hx_symptoms.forEach(element => {
     if(element.history_cat == id_name){
-      // console.log(element.history_text);
       this.check_list.push(element.history_text);
-      // console.log(this.check_list);
     }
   });
 }
@@ -163,32 +159,28 @@ hideModule(id_name){
     // console.log(id_name);
     this.module_strings.splice(this.module_strings.indexOf(id_name),1 );
   }
-  // console.log(this.module_strings);
-  
-//  this.typing = true;
 }
 
 hoverPill(id_name){
-  // this.fp_hx_symptoms.forEach(e => {
-  //   console.log("log hist_id here first " + e.history_id);
-    
-  //   let save_id = e.history_id
-  //   if(e.history_id == id_name){
-  //     console.log('im hovering');
-  //     e.history_id = e.history_text;
-  //   }
-  //   console.log(save_id + ' this was my hist_id b4');
-  //   this.pill = false;
-  // });
-  if(!this.pill_box.includes(id_name)){
-    this.pill_box.push(id_name);
-  }
+  this.pill_box = [];
+  this.pill_box.push(id_name);
   console.log(this.pill_box);
-  
-  //this.pill = false;
 }
-  leavePill(){
-    this.pill_box = [];
+leavePill(){
+  this.pill_box = [];
+}
+selectAll(select_name){
+  let cat = select_name.replace("select",'');
+  if(!this.cat_strings.includes(cat)){
+    this.cat_strings.push(cat);
   }
 
+  this.fp_hx_symptoms.forEach(e => {
+    if(cat == e.history_cat){
+      if(!this.fphx_strings.includes(e.history_text)){
+        this.fphx_strings.push(e.history_text);
+      }
+    }
+  });
+}
 }
