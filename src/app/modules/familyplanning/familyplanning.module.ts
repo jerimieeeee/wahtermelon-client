@@ -11,6 +11,7 @@ import { FpchartComponent } from './modules/fpchart/fpchart.component';
 import { FirsvisitComponent } from './modules/firsvisit/firsvisit.component';
 import { FppeComponent } from './modules/fppe/fppe.component';
 import { FphxComponent } from './modules/fphx/fphx.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [FamilyplanningComponent, FpchartComponent, FirsvisitComponent, FppeComponent, FphxComponent, 
@@ -21,6 +22,8 @@ import { FphxComponent } from './modules/fphx/fphx.component';
     FamilyplanningRoutingModule,
     SharedComponentsModule,
     angularFontawesome.FontAwesomeModule,
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class FamilyplanningModule { }

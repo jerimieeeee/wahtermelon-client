@@ -1,39 +1,93 @@
-<form action="">
-    <div class="grid grid-rows-2 gap-4" style="grid-template-columns: repeat(16, minmax(0, 1fr));" (click)="flip()" *ngIf="focused">
-        <div class="border-check row-span-2 col-span-2 hover:bg-gray-50 rounded-r" [hidden]="!sampleForm.alc && !sampleForm.bi && !sampleForm.dlc && !sampleForm.ami"><button class="font-bold" type="button" >Visit Info</button></div>
-        <div class="border-check row-span-2 col-span-2 hover:bg-gray-50 rounded-r" [hidden]="sampleForm.alc || sampleForm.bi || sampleForm.dlc || sampleForm.ami"><button class="font-bold" type="button" >First Visit</button></div>
+<form [formGroup]="fv_form" (ngSubmit)="saveForm(fv_form.value)">
+    <div class="grid grid-rows-2 gap-4 " style="grid-template-columns: repeat(16, minmax(0, 1fr));" (click)="flip()"
+        *ngIf="focused">
+        <div class="border-check row-span-2 col-span-2 hover:bg-gray-50 rounded-r" [hidden]="fv_form.enabled">
+            <button class="font-bold" type="button">Visit Info</button></div>
+        <div class="border-check row-span-2 col-span-2 hover:bg-gray-50 rounded-r" [hidden]="fv_form.disabled">
+            <button class="font-bold" type="button">First Visit</button></div>
 
     </div>
 
-    <div class="grid grid-rows-2 gap-4" style="grid-template-columns: repeat(16, minmax(0, 1fr));" *ngIf="!focused" >
-        <div class="border-check row-span-2 col-span-2 hover:bg-gray-50 rounded-r" [hidden]="!sampleForm.alc && !sampleForm.bi && !sampleForm.dlc && !sampleForm.ami" (click)="flip()"><button class="font-bold" type="button" >Visit Info</button></div>
-        <div class="border-check row-span-2 col-span-2 hover:bg-gray-50 rounded-r" [hidden]="sampleForm.alc || sampleForm.bi || sampleForm.dlc || sampleForm.ami" (click)="flip()"><button class="font-bold" type="button" >First Visit</button></div>
-        <div class="transitions col-span-7 border-check" *ngIf="!focused">
+    <div class="grid grid-rows-2 gap-4 relative animates-dropdown" style="grid-template-columns: repeat(16, minmax(0, 1fr));" *ngIf="!focused">
+        <div class="border-check row-span-2 col-span-2 hover:bg-gray-50 rounded-r" [hidden]="fv_form.enabled"
+            (click)="flip()"><button class="font-bold" type="button">Visit Info</button></div>
+        <div class="border-check row-span-2 col-span-2 hover:bg-gray-50 rounded-r" [hidden]="fv_form.disabled"
+            (click)="flip()"><button class="font-bold" type="button">First Visit</button></div>
+        <div class="transitions col-span-7 border-check relative" *ngIf="!focused">
             <h3>ALC Count</h3>
-            <!-- <input type="text" class="border-check focus:border-2 focus:border-blue-300 focus:outline-none rounded border-solid border border-zinc-300" *ngIf="!sampleForm.alc" > -->
-            <input type="text" class="border-check focus:border-2 focus:border-blue-300 focus:outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100" placeholder="{{sampleForm.alc}}" [disabled]="sampleForm.alc || sampleForm.bi || sampleForm.dlc || sampleForm.ami" (keyup)="onKeyUp($event.target.value, $event.target.id)" (keyup.escape)="$event.target.value = ''; onKeyUp($event.target.value, $event.target.id)" id="alc">
+            <!-- <input type="text" class="border-check focus:border-2 focus:border-blue-300 focus:outline-none rounded border-solid border border-zinc-300" *ngIf="!fv_form.alc" > -->
+            <input type="text" formControlName="alc"
+                class="border-check focus:border-2 focus:border-blue-300 focus:outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100"
+                (keyup)="onKeyUp($event.target.value, $event.target.id)"
+                (keyup.escape)="clearForm($event.target.id); onKeyUp($event.target.value, $event.target.id)" id="alc">
+            <fa-icon [icon]="faTimesCircle" (click)="clearForm('alc')"
+                class="absolute right-0 py-1 px-2 text-gray-200 hover:text-gray-500" *ngIf="keyUp.includes('alc') && !fv_form.disabled">
+            </fa-icon>
+            <!-- <span *ngIf="keyUp.includes('alc')" class="text-red-400">Error!!!!</span> -->
         </div>
-        <div class="transitions col-span-7 border-check"  *ngIf="!focused">
+        <div class="transitions col-span-7 border-check relative" *ngIf="!focused">
             <h3>DLC Count</h3>
-            <!-- <input type="text" class="border-check focus:border-2 focus:border-blue-300 focus:outline-none rounded border-solid border border-zinc-300" *ngIf="!sampleForm.dlc"> -->
-            <input type="text" class="border-check focus:border-2 focus:border-blue-300 focus:outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100" placeholder="{{sampleForm.dlc}}" [disabled]="sampleForm.alc || sampleForm.bi || sampleForm.dlc || sampleForm.ami" (keyup)="onKeyUp($event.target.value, $event.target.id)" (keyup.escape)="$event.target.value = ''; onKeyUp($event.target.value, $event.target.id)" id="dlc">
+            <!-- <input type="text" class="border-check focus:border-2 focus:border-blue-300 focus:outline-none rounded border-solid border border-zinc-300" *ngIf="!fv_form.dlc"> -->
+            <input type="text" formControlName="dlc"
+                class="border-check focus:border-2 focus:border-blue-300 focus:outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100"
+                (keyup)="onKeyUp($event.target.value, $event.target.id)"
+                (keyup.escape)="clearForm($event.target.id); onKeyUp($event.target.value, $event.target.id)" id="dlc">
+            <fa-icon [icon]="faTimesCircle" (click)="clearForm('dlc')"
+                class="absolute right-0 py-1 px-2 text-gray-200 hover:text-gray-500" *ngIf="keyUp.includes('dlc') && !fv_form.disabled">
+            </fa-icon>
         </div>
-        <div class="transitions col-span-7 border-check" *ngIf="!focused">
+        <div class="transitions col-span-7 border-check relative" *ngIf="!focused">
             <h3>Birth Interval</h3>
-            <!-- <input type="text" class="border-check focus:border-2 focus:border-blue-300 focus:outline-none rounded border-solid border border-zinc-300" *ngIf="!sampleForm.bi"> -->
-            <input type="text" class="border-check focus:border-2 focus:border-blue-300 focus:outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100" placeholder="{{sampleForm.bi}}" [disabled]="sampleForm.alc || sampleForm.bi || sampleForm.dlc || sampleForm.ami" (keyup)="onKeyUp($event.target.value, $event.target.id)" (keyup.escape)="$event.target.value = ''; onKeyUp($event.target.value, $event.target.id)" id="birth_interval">
+            <!-- <input type="text" class="border-check focus:border-2 focus:border-blue-300 focus:outline-none rounded border-solid border border-zinc-300" *ngIf="!fv_form.bi"> -->
+            <input type="text" formControlName="bi"
+                class="border-check focus:border-2 focus:border-blue-300 focus:outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100"
+                (keyup)="onKeyUp($event.target.value, $event.target.id)"
+                (keyup.escape)="clearForm($event.target.id); onKeyUp($event.target.value, $event.target.id)" id="bi">
+            <fa-icon [icon]="faTimesCircle" (click)="clearForm('bi')"
+                class="absolute right-0 py-1 px-2 text-gray-200 hover:text-gray-500" *ngIf="keyUp.includes('bi') && !fv_form.disabled">
+            </fa-icon>
         </div>
-        <div class="transitions col-span-7 border-check" *ngIf="!focused">
+        <div class="transitions col-span-7 border-check relative" *ngIf="!focused">
             <h3>Average Monthly Income</h3>
-            <!-- <input type="text" class="border-check focus:border-2 focus:border-blue-300 focus:outline-none rounded border-solid border border-zinc-300" *ngIf="!sampleForm.ami" > -->
-            <input type="text" class="border-check focus:border-2 focus:border-blue-300 focus:outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100" placeholder="{{sampleForm.ami}}" [disabled]="sampleForm.alc || sampleForm.bi || sampleForm.dlc || sampleForm.ami" (keyup)="onKeyUp($event.target.value, $event.target.id)" (keyup.escape)="$event.target.value = ''; onKeyUp($event.target.value, $event.target.id)" id="ami">
+            <!-- <input type="text" class="border-check focus:border-2 focus:border-blue-300 focus:outline-none rounded border-solid border border-zinc-300" *ngIf="!fv_form.ami" > -->
+            <input type="text" formControlName="ami"
+                class="border-check focus:border-2 focus:border-blue-300 focus:outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100"
+                (keyup)="onKeyUp($event.target.value, $event.target.id)"
+                (keyup.escape)="clearForm($event.target.id); onKeyUp($event.target.value, $event.target.id)" id="ami">
+            <fa-icon [icon]="faTimesCircle" (click)="clearForm('ami')"
+                class="absolute right-0 py-1 px-2 text-gray-200 hover:text-gray-500" *ngIf="keyUp.includes('ami') && !fv_form.disabled">
+            </fa-icon>
         </div>
-        <div class="inline-flex col-span-2 " *ngIf="!focused" style="grid-column-start: 14;" hidden>
-            <button type="button" class="text-gray-300 font-bold py-1 px-3 rounded-full" (click)="flip()" [disabled]="sampleForm.alc || sampleForm.bi || sampleForm.dlc || sampleForm.ami" *ngIf="keyUp.length > 0">Cancel</button>
-            <button type="button" class="  bg-gray-200 hover:bg-green-400 hover:text-white text-green-500 font-bold py-1 px-3 rounded-full" (click)="formCheck()" [hidden]="sampleForm.alc || sampleForm.bi || sampleForm.dlc || sampleForm.ami" *ngIf="keyUp.length > 0">Save</button>
-            
-            <button type="button" class="text-gray-300 font-bold py-1 px-3 rounded-full disabled:text-white" (click)="flip()" disabled [hidden]="!sampleForm.alc && !sampleForm.bi && !sampleForm.dlc && !sampleForm.ami">Cancel</button>
-            <button type="button" class="  bg-gray-200 hover:bg-orange-400 hover:text-white text-orange-400 font-bold py-1 px-3 rounded-full" (click)="edit()" [hidden]="!sampleForm.alc && !sampleForm.bi && !sampleForm.dlc && !sampleForm.ami">Edit</button>
+        <div class="relative w-auto border-check mb-5" *ngIf="!focused && keyUp.length > 0 && !fv_form.disabled" style="grid-column: span 16 / span 16;">
+            <div class="absolute inline-flex m-2 right-0 top-0" style=" top: -0.85rem;">
+                <div class="flex hover:animate-bounce border-check bg-white hover:bg-gray-400 text-gray-400 py-1 rounded-full hover:text-white px-2"
+                (click)="flip()" (mouseover)="buttonShow('cancel')">
+                    <fa-icon [icon]="faTimes" size="lg" class="mr-2">
+                    </fa-icon>
+                    <button type="button" class="font-bold button-out border-check-red"
+                        *ngIf="buttons.includes('cancel')">Cancel</button>
+                </div>
+                <div class="flex hover:animate-bounce border-check bg-white hover:bg-green-400 py-1 rounded-full text-green-500 hover:text-white px-2"
+                    (mouseover)="buttonShow('save')">
+                    <fa-icon [icon]="faSave" size="lg" class="mr-2 ">
+                    </fa-icon>
+                    <button type="submit" class="font-bold button-out border-check-red"
+                        (keyup.enter)="uncheck($event.target.id + fphx_cat)"
+                        *ngIf="buttons.includes('save')">Save</button>
+                </div>
+            </div>
+        </div>
+        <div class="relative w-auto border-check mb-5" *ngIf="!focused && fv_form.disabled" style="grid-column: span 16 / span 16;">
+            <div class="absolute inline-flex m-2 right-0 top-0" style=" top: -0.85rem;" (click)="edit()">
+                <div class="flex hover:animate-bounce border-check bg-white hover:bg-orange-400 py-1 rounded-full text-orange-500 hover:text-white px-2"
+                    (mouseover)="buttonShow('edit')" (mouseleave)="buttonShow()">
+                    <fa-icon [icon]="faPencil" size="lg" class="mr-2 ">
+                    </fa-icon>
+                    <button type="submit" class="font-bold button-out border-check-red"
+                        (keyup.enter)="uncheck($event.target.id + fphx_cat)"
+                        *ngIf="buttons.includes('edit')">Edit</button>
+                </div>
+            </div>
         </div>
     </div>
 </form>

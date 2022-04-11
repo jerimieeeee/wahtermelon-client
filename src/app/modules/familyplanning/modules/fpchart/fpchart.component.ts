@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { faHome, faCalendarDay, faFlask } from '@fortawesome/free-solid-svg-icons';
+
 @Component({
   selector: 'app-fpchart',
   templateUrl: './fpchart.component.html',
@@ -11,9 +12,9 @@ export class FpchartComponent implements OnInit {
   textbox: boolean;
   focused2: boolean;
   typing: boolean;
- public keyUp = [];
+  public keyUp = [];
   constructor() { }
- public form = {
+  public form = {
   service_date: '',
   source: '',
   quantity: '',

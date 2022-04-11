@@ -1,6 +1,6 @@
 import { ElementSchemaRegistry } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
-import { faCalendarDay, faPlus, faSave } from '@fortawesome/free-solid-svg-icons';
+import { faCalendarDay, faPlus, faSave, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-fphx',
@@ -11,7 +11,7 @@ export class FphxComponent implements OnInit {
   faCalendarDay = faCalendarDay;
   faPlus = faPlus;
   faSave = faSave;
-
+  faTimes = faTimes;
   typing: boolean;
   checked: boolean;
   focused: boolean;
@@ -76,7 +76,7 @@ export class FphxComponent implements OnInit {
   public fp_hx_cat2 = [];
 
   public pill_box = [];
-
+  public buttons = [];
   ngOnInit(): void {
     this.focused = true;
 
@@ -145,6 +145,8 @@ onChange(id_name,cat){
 
 showModule(id_name){  
   this.module_strings = [];
+  this.buttons = [];
+  this.buttons.push('save');
   this.check_list = [];
   this.module_strings.push(id_name);
   this.fp_hx_symptoms.forEach(element => {
@@ -183,4 +185,14 @@ selectAll(select_name){
     }
   });
 }
+
+buttonShow(name){
+  this.buttons = [];
+  if(!this.buttons.includes(name)){
+    this.buttons.push(name);
+  }
+  console.log(this.buttons);
+  
+}
+
 }
