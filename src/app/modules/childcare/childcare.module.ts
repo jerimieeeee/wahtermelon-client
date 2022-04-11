@@ -10,7 +10,9 @@ import { ServicesComponent } from './components/services/services.component';
 import { VaccineInfoComponent } from './components/vaccine-info/vaccine-info.component';
 import { BreastfeedingComponent } from './components/breastfeeding/breastfeeding.component';
 import { StoreModule } from '@ngrx/store';
-import { reducer } from './reducers/birthweight.reducer';
+import { reducer } from './reducers/birthinformation.reducer';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+
 
 
 
@@ -25,8 +27,9 @@ import { reducer } from './reducers/birthweight.reducer';
     CommonModule,
     ChildcareRoutingModule,
     SharedComponentsModule,
-    FontAwesomeModule,StoreModule.forRoot({
-      tutorial: reducer
+    FontAwesomeModule,ReactiveFormsModule,
+    FormsModule,StoreModule.forRoot({
+      birthinfo: reducer
     })
   ]
 })

@@ -1,4 +1,5 @@
-export interface BirthInfoWeight {
+export interface BirthInformation {
     weight: string;
     mname: string;
+
 }

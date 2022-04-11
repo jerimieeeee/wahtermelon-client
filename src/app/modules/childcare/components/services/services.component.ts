@@ -11,11 +11,14 @@ export class ServicesComponent implements OnInit {
   services : any
   services2 : any
 
+  saved: boolean;
+
   faSearch = faSearch;
   faPlus = faPlus;
 
  showModal = false;
   toggleModal(){
+    this.uncheckAllServices();
     this.showModal = !this.showModal;
   }
 
@@ -31,21 +34,20 @@ export class ServicesComponent implements OnInit {
   
 
   constructor() { 
+    
 
     this.services = [
-      { name: 'Cord Clamping', selected: false },
+      { name: 'Cord Clamping', "selected": false },
       { name: 'Drying', selected: false },
       { name: 'Non-Separation', selected: false },
       { name: 'Prophylaxis', selected: false },
       { name: 'Skin to Skin', selected: false },
       { name: 'Vitamin K', selected: false },
       { name: 'Weighing', selected: false },
-      { name: 'Select ALL', selected: false },
     ]
 
 this.services2=[
   {
-    
     "name":"Complimentary Feeding",
     "date": 12/21/2022
   },
@@ -103,7 +105,22 @@ this.services2=[
 
   }
 
+  public service_list = [];
+
   ngOnInit(): void {
   }
 
+  checkAllServices(){
+    this.services.forEach(e => {
+      e.selected = true;
+      console.log({e});
+    });
+
+  }
+  uncheckAllServices(){
+    this.services.forEach(e => {
+      e.selected = false;
+    });
+
+  }
 }

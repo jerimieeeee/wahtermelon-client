@@ -3,7 +3,7 @@
   </div>
   
   <!--Essential Newborn Care Section-->
-  <div class="flex item-start flex-wrap shadow-md rounded-xl pb-5 mt-5">
+  <div class="flex item-start flex-wrap shadow-md rounded-xl mt-5">
 
     <div class="flex justify-between w-full bg-yellow-500 px-5 py-3 rounded-tl rounded-tr">
       <h4 class="font-bold text-white text-md mt-2 mb-2">Essential Newborn Care</h4>
@@ -11,6 +11,7 @@
       <label> <fa-icon class="text-sm " [icon]="faPlus"></fa-icon> Add</label>
       </button>  
     </div>
+
 
     <!--Essential Newborn Care Modal-->
     <div *ngIf="showModal" class="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex">
@@ -22,11 +23,6 @@
             <h4 class="font-bold text-gray-600 text-md mt-2">
               Essential Newborn Care
             </h4>
-            <button class="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none" (click)="toggleModal()">
-              <span class="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
-                ×
-              </span>
-            </button>
           </div>
           <!--body-->
           <div class="relative flex-auto px-12">
@@ -37,10 +33,10 @@
                   <th class="p-3">Status</th>
                   
               </tr>
-              <tr *ngFor="let service of services" class="border-b hover:bg-yellow-100 bg-transparent">
-                  <td class="p-3 px-5">{{service.name}}</td>
-                  <td class="p-3 text-center">
-                    <input type="checkbox" id="servicedate" name="servicedate" class="bg-transparent">
+              <tr *ngFor="let service of services" class="p-3 px-8 border-b hover:bg-yellow-100 bg-transparent">
+                  <td class="p-3 px-8">{{service.name}}</td>
+                  <td class="p-3 px-8 text-center">
+                    <input class="p-3 px-8" type="checkbox" id="servicedate" name="servicedate" class="bg-transparent" [checked]="service.selected == true">
                   </td>
               </tr>
               </tbody>
@@ -48,10 +44,13 @@
           </div>
           <!--footer-->
           <div class="flex items-center justify-end p-6 border-t border-solid border-gray-300 rounded-b">
+            <button class="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1" type="button" style="transition: all .15s ease" (click)="checkAllServices()">
+              <label>Select All</label>
+            </button>
             <button class="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1" type="button" style="transition: all .15s ease" (click)="toggleModal()">
               Close
             </button>
-            <button class="bg-green-500 text-white active:bg-green-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1" type="button" style="transition: all .15s ease" (click)="toggleModal()">
+            <button class="bg-green-500 text-white active:bg-green-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1" type="button" style="transition: all .15s ease"(click)="addService(name.value, selected.value)" (click)="toggleModal()">
               Save
             </button>
           </div>
@@ -64,7 +63,7 @@
 
 
   <!--Services Section-->
-  <div class="flex item-start flex-wrap shadow-md rounded-xl pb-5 mt-5">
+  <div class="flex item-start flex-wrap shadow-md rounded-xl mt-5">
 
     <div class="flex justify-between w-full bg-yellow-500 px-5 py-3 rounded-tl rounded-tr ">
       <h4 class="font-bold text-white text-md mt-2 mb-2">Services</h4>

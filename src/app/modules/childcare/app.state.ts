@@ -1,5 +1,5 @@
-import { BirthInfoWeight } from './models/birthweight.model';
+import { BirthInformation } from './models/birthinformation.model';
 
 export interface AppState {
-  readonly tutorial: BirthInfoWeight[];
+  readonly birthinfo: BirthInformation[];
 }

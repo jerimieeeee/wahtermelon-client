@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { BirthInfoWeight } from './models/birthweight.model';
+import { BirthInformation } from './models/birthinformation.model'
 import { AppState } from './app.state';
 
 
@@ -13,11 +13,11 @@ import { AppState } from './app.state';
 })
 export class ChildcareComponent implements OnInit {
 
-  tutorials: Observable<BirthInfoWeight[]>;
+  tutorials: Observable<BirthInformation[]>;
 
   // Section 2
   constructor(private store: Store<AppState>) { 
-    this.tutorials = store.select('tutorial');
+    this.tutorials = store.select('birthinfo');
   }
 
   ngOnInit() {}
