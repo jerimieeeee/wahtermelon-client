@@ -6,33 +6,71 @@
 
       <div class="flex justify-between w-full bg-blue-300 px-5 py-3 rounded-tl rounded-tr">
         <h4 class="font-bold text-white text-md mt-2">Admission Information</h4>
-          <button  *ngIf="!saved" type="submit" class="py-2 px-6 rounded-full bg-white text-gray-600 font-bold drop-shadow-md hover:border-white-600 hover:bg-blue-400 hover:text-white shadow-md inline-flex items-center" name="add-btn"  (click)="onFormSubmit()">
-            <label>Save</label>
+          <button  *ngIf="!saved2" type="submit" class="py-2 px-6 rounded-full bg-white text-gray-600 font-bold drop-shadow-md hover:border-white-600 hover:bg-blue-400 hover:text-white shadow-md inline-flex items-center" name="add-btn" (click)="toggleAdmissionModal()">
+            <label>Add</label>
             </button>
-            <button *ngIf="saved" type="submit" class="py-2 px-4 rounded-full bg-white text-gray-600 font-bold drop-shadow-md hover:border-white-600 hover:bg-blue-400 hover:text-white shadow-md inline-flex items-center" name="add-btn">
+            <button *ngIf="saved2" type="submit" class="py-2 px-4 rounded-full bg-white text-gray-600 font-bold drop-shadow-md hover:border-white-600 hover:bg-blue-400 hover:text-white shadow-md inline-flex items-center" name="add-btn" (click)="toggleAdmissionModal()">
               <label>Update</label>
               </button>
         </div>
 
-        <div class="w-full md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
-          <form [formGroup]="mandoForm" (ngSubmit)="onFormSubmit()">
-        <div class="w-full md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
-            <h1 class="font-bold text-gray-600 text-md">Admission Date</h1>
-           
-            <input class="w-full border-2 border-gray-300 bg-white h-10 px-5 pr-2 rounded-lg text-sm mt-2 text-gray-500 text-md"
-            type="datetime-local" name="date-time" placeholder="Select Date & Time" formControlName="admissionDate">
+        <div class="relative w-full md:w-1/2 lg:w-1/2 px-5 mt-4">
+          <label> Admission Date: {{y.admissionDate | date:'short'}}</label>
         </div>
 
-        <div class="w-full md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
-            <h1 class="font-bold text-gray-600 text-md">Discharge Date</h1>
-            
-            <input class="w-full border-2 border-gray-300 bg-white h-10 px-5 pr-2 rounded-lg text-sm mt-2 text-gray-500 text-md"
-            type="datetime-local" name="date-time" placeholder="Select Date & Time" formControlName="dischargedDate">
+        <div class="relative w-full md:w-1/2 lg:w-1/2 px-5 mt-4">
+          <label> Discharge Date: {{y.dischargedDate | date:'short'}}</label>
         </div>
+
         
-        
-      </form>
+
+
+      <!--Admission Modal-->
+    <div *ngIf="showAdmissionModal" class="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex">
+      <div class="relative w-auto my-6 mx-auto max-w-6xl">
+        <!--content-->
+        <div class="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+          <!--header-->
+          <div class="flex items-start justify-between p-5 border-b border-solid border-gray-300 rounded-t">
+            <h4 class="font-bold text-gray-600 text-md mt-2">
+              Admission Date & Time
+            </h4>
+          </div>
+          <!--body-->
+          <div class="relative flex-auto px-12">
+            <div class="px-5 py-2">
+              <form [formGroup]="mandoForm" (ngSubmit)="onFormSubmit()">
+            <div class="px-5 py-2 mt-2">
+                <h1 class="font-bold text-gray-600 text-md">Admission Date</h1>
+               
+                <input class="w-full border-2 border-gray-300 bg-white h-10 px-5 pr-2 rounded-lg text-sm mt-2 text-gray-500 text-md"
+                type="datetime-local" name="date-time" [placeholder]="" formControlName="admissionDate">
+            </div>
+    
+            <div class="px-6 py-2 mt-2 mb-2">
+                <h1 class="font-bold text-gray-600 text-md">Discharge Date</h1>
+                
+                <input class="w-full border-2 border-gray-300 bg-white h-10 px-5 pr-2 rounded-lg text-sm mt-2 text-gray-500 text-md"
+                type="datetime-local" name="date-time" placeholder="" formControlName="dischargedDate">
+            </div>
+            
+            
+          </form>
+          </div>
+          </div>
+          <!--footer-->
+          <div class="flex items-center justify-end p-6 border-t border-solid border-gray-300 rounded-b">
+            <button class="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1" type="button" style="transition: all .15s ease" (click)="toggleAdmissionModal()">
+              Close
+            </button>
+            <button class="bg-green-500 text-white active:bg-green-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1" name="add-btn" type="submit" style="transition: all .15s ease" (click)="doubleFunction()">
+              Save
+            </button>
+          </div>
+        </div>
       </div>
+    </div>
+    <div *ngIf="showAdmissionModal" class="opacity-25 fixed inset-0 z-40 bg-black"></div>
         
 
     </div> 
@@ -56,16 +94,17 @@
             <button type="submit">Save</button>
         </form> -->
 
-        <div class="relative w-full md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
+        <div class="relative w-full md:w-1/2 lg:w-1/2 px-5 py-2 mt-2" >
           <input (keyup.enter)="addWeight(weight.value, mname.value)" class="w-full border-2 focus:border-2 focus:outline-none focus:border-red-300 border-gray-300 bg-white h-10 px-5 pr-2 rounded-lg text-sm mt-2 mb-2"
-          id= "weight" type="text" name="text" placeholder="Enter Weight at Birth (kg)" #weight>
+          id= "weight" type="text" name="text" [placeholder]="x.weight.length>0 ? x.weight + ' kg' : 'Enter Weight'" #weight [disabled]="x.weight.length>0">
         </div>
 
         <div class="relative w-full md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
           <input (keyup.enter)="addWeight(weight.value, mname.value)" class="select-none w-full border-2 focus:border-2 focus:outline-none focus:border-red-300 border-gray-300 bg-white h-10 px-5 pr-2 rounded-lg text-sm mt-2 mb-2"
-          id="mname" type="text" name="search" placeholder="Enter Mother's Name" #mname [disabled]="saved">
+          id="mname" type="text" name="search" [placeholder]="x.mname.length>0 ? x.mname : 'Search Mothers Name'" #mname [disabled]="x.mname.length>0">
           
       </div>
+
 
     
     <!--Mother Info Section-->

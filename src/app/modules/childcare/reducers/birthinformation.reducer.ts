@@ -1,10 +1,10 @@
-import { Action } from '@ngrx/store'
+import { Action } from '@ngrx/store';
 import { BirthInformation } from '../models/birthinformation.model'
 import * as BirthInformationActions from '../actions/birthinformation.action'
 
 // Section 1
 const initialState: BirthInformation = {
-    weight: 'Null',
+    weight: '0',
     mname: 'Null',
     
 }

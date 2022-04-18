@@ -13,11 +13,11 @@ import { AppState } from './app.state';
 })
 export class ChildcareComponent implements OnInit {
 
-  tutorials: Observable<BirthInformation[]>;
+  birthinfos: Observable<BirthInformation[]>;
 
   // Section 2
   constructor(private store: Store<AppState>) { 
-    this.tutorials = store.select('birthinfo');
+    this.birthinfos = store.select('birthinfo');
   }
 
   ngOnInit() {}
