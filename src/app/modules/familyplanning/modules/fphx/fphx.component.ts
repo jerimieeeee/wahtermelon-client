@@ -1,6 +1,6 @@
 import { ElementSchemaRegistry } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
-import { faCalendarDay, faPlus, faSave, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faCalendarDay, faPencil, faPlus, faSave, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-fphx',
@@ -12,10 +12,11 @@ export class FphxComponent implements OnInit {
   faPlus = faPlus;
   faSave = faSave;
   faTimes = faTimes;
+  faPencil = faPencil;
   typing: boolean;
   checked: boolean;
   focused: boolean;
-
+  i : number;
   fphx_typing: boolean;
 
   show_fphx_strings: boolean;
@@ -27,10 +28,13 @@ export class FphxComponent implements OnInit {
   
   public fphx_strings = [];
   public cat_strings = [];
+  public cat_strings2 = [];
+
 
   public check_list = [];
 
   public module_strings = [];
+  public locations = [];
   public fp_hx_symptoms = [
   {"history_id":"ALLERGY","history_text":"Allergies","history_cat":"ANY","x":0 },
   {"history_id":"ANEMIA","history_text":"Anemia","history_cat":"ANY","x":0 },
@@ -101,27 +105,28 @@ flip(): void{
   this.focused = !this.focused;
 }
 
-uncheck(cancel_name){
-
-  let cat = cancel_name.replace("cancel",'');
-  console.log(cat + ' this is my cat from uncheck');
-  this.cat_strings.splice(this.fphx_strings.indexOf(cat),1 );
-  console.log("emtying out cat_strings");
-  
+uncheck(cat){
+  // console.log(cat, ' this is my cat from uncheck');
+  this.cat_strings.splice(this.cat_strings.indexOf(cat),1);
+  // console.log(this.cat_strings, " emtying out cat_strings");
   this.fp_hx_symptoms.forEach( e => {
+
     if(e.history_cat == cat){
+
       if(this.fphx_strings.includes(e.history_text)){
-        console.log(this.fphx_strings);
-        
-        this.fphx_strings.splice(this.fphx_strings.indexOf(e.history_text),1 );
+        // console.log(this.fphx_strings.indexOf(e.history_text), " log for fphx_strings index");
+        this.fphx_strings.splice(this.fphx_strings.indexOf(e.history_text),1);
+        // console.log(this.fphx_strings);
       }
      
     }
+
   });
 
 }
 
 onChange(id_name,cat){  
+
  if(!this.cat_strings.includes(cat)){
     this.cat_strings.push(cat);
   }
@@ -129,26 +134,35 @@ onChange(id_name,cat){
   console.log(this.cat_strings);
   
   this.fp_hx_symptoms.forEach(fphxElement => {
+
     if(fphxElement.history_text == id_name){
      
     this.fphx_typing = true;
+    
       if(this.fphx_strings.includes(id_name)){
         this.fphx_strings.splice(this.fphx_strings.indexOf(id_name), 1);
+        if(this.fphx_strings.length == 0){
+          this.cat_strings = [];
+        }
       }else{
         this.fphx_strings.push(id_name);
       }
-    console.log(this.fphx_strings + '   FPHX STRINGSSSSSSSS');
+    // console.log(this.fphx_strings, '   FPHX STRINGSSSSSSSS');
   }
   });
   
 }
 
-showModule(id_name){  
+showModule(id_name, i){  
   this.module_strings = [];
   this.buttons = [];
   this.buttons.push('save');
   this.check_list = [];
-  this.module_strings.push(id_name);
+  this.module_strings.push(i);
+
+  console.log('showing my fphx_strings ', this.fphx_strings);
+  console.log(this.cat_strings.includes(id_name), ' that cat_strings.includes(fphx_cat)');
+  console.log(this.fphx_strings.length == 0, ' that fphx_strings.length > 0');
   this.fp_hx_symptoms.forEach(element => {
     if(element.history_cat == id_name){
       this.check_list.push(element.history_text);
@@ -156,17 +170,17 @@ showModule(id_name){
   });
 }
 
-hideModule(id_name){  
-  if(this.module_strings.includes(id_name)){
+hideModule(i){  
+  if(this.module_strings.includes(i)){
     // console.log(id_name);
-    this.module_strings.splice(this.module_strings.indexOf(id_name),1 );
+    this.module_strings.splice(this.module_strings.indexOf(i),1 );
   }
 }
 
 hoverPill(id_name){
   this.pill_box = [];
   this.pill_box.push(id_name);
-  console.log(this.pill_box);
+  // console.log(this.pill_box);
 }
 leavePill(){
   this.pill_box = [];
@@ -191,8 +205,20 @@ buttonShow(name){
   if(!this.buttons.includes(name)){
     this.buttons.push(name);
   }
-  console.log(this.buttons);
+  // console.log(this.buttons);
   
+}
+saveModule(id_name, i){
+  this.fphx_strings = [];
+  this.cat_strings = [];
+  // console.log(this.cat_strings.includes(id_name));
+  // console.log(this.fphx_strings.length);
+  // console.log(this.module_strings.includes(i));
+  
+  if(this.module_strings.includes(i-1)){
+    console.log(id_name, i , ' this is idname and i');
+   this.showModule(id_name, i);
+  };
 }
 
 }

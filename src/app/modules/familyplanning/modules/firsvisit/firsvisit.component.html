@@ -61,7 +61,7 @@
         <div class="relative w-auto border-check mb-5" *ngIf="!focused && keyUp.length > 0 && !fv_form.disabled" style="grid-column: span 16 / span 16;">
             <div class="absolute inline-flex m-2 right-0 top-0" style=" top: -0.85rem;">
                 <div class="flex hover:animate-bounce border-check bg-white hover:bg-gray-400 text-gray-400 py-1 rounded-full hover:text-white px-2"
-                (click)="flip()" (mouseover)="buttonShow('cancel')">
+                (click)="cancel()" (mouseover)="buttonShow('cancel')">
                     <fa-icon [icon]="faTimes" size="lg" class="mr-2">
                     </fa-icon>
                     <button type="button" class="font-bold button-out border-check-red"

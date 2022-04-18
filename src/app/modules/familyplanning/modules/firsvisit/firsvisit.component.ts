@@ -27,24 +27,16 @@ export class FirsvisitComponent implements OnInit {
   ami : Number = new Number();
 
   constructor(  private router: Router) { }
-  public sampleForm = {
-    alc: '',
-    dlc: '',
-    bi: '',
-    ami: '',
-   };
 
   ngOnInit(): void {
-    // console.log("init FV");
-    // if(this.sampleForm != null){
-    //   this.focused = false;
-    // }else{
-    //   this.focused = true;
-    // }
     this.createForm();
-   console.log( this.fv_form.value + ' this is my fv_form');
+    this.fv_form.disable();
+  //  console.log( this.fv_form.value + ' this is my fv_form');
   }
-  
+  cancel(){
+    this.keyUp = [];
+    this.fv_form.reset();
+  }
   createForm(){
     this.fv_form = new FormGroup({
       alc : new FormControl(this.alc),
@@ -55,12 +47,6 @@ export class FirsvisitComponent implements OnInit {
   }
 
   saveForm(data){
-    console.log(data + ' this is my data');
-    this.sampleForm.alc = data.alc;
-    this.sampleForm.dlc = data.dlc;
-    this.sampleForm.bi = data.bi;
-    this.sampleForm.ami = data.ami;
-
     this.fv_form.setValue({
       alc : data.alc,
       dlc : data.dlc,
@@ -75,22 +61,19 @@ export class FirsvisitComponent implements OnInit {
     this.keyUp = [];
     this.buttons = [];
     this.buttons.push('save');
+    this.fv_form.reset();
   }
 
   edit(){
-    this.sampleForm.alc = '';
-    this.sampleForm.dlc = '';
-    this.sampleForm.bi = '';
-    this.sampleForm.ami = '';
     this.fv_form.enable();
   }
 
   clearForm(id){
     this.fv_form.get(id).reset();
-    this.onKeyUp('', id);
+    // this.onKeyUp('', id);
   }
   onKeyUp(data_input: string, id: string){
-    console.log(data_input + ' this is my data input');
+    // console.log(data_input + ' this is my data input');
     
         if(this.keyUp.includes(id)){
           if(data_input == ''){
@@ -100,8 +83,8 @@ export class FirsvisitComponent implements OnInit {
           this.keyUp.push(id);
           
         }
-        console.log(this.keyUp.length);
-        console.log(this.keyUp);
+        // console.log(this.keyUp.length);
+        // console.log(this.keyUp);
         
   }
   buttonShow(name){
@@ -109,7 +92,7 @@ export class FirsvisitComponent implements OnInit {
     if(!this.buttons.includes(name)){
       this.buttons.push(name);
     }
-    console.log(this.buttons);
+    // console.log(this.buttons);
     
   }
 

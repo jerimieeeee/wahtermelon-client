@@ -1,19 +1,18 @@
-// .border-check-red{border: 1px dashed rgb(255, 0, 0);}
-// .border-check-blue{border: 1px dashed rgb(0, 4, 255);}
-// .border-check-black{border: 1px dashed rgb(0, 0, 0);}
+// .border-check{border: 1px dashed rgb(255, 0, 0);}
 
-label{
-    color: rgb(92, 92, 92);
-    padding-top: .15rem;
-    padding-bottom: .25rem;
-    font-size: 0.875rem; /* 14px */
-    line-height: 1.25rem; /* 20px */
-    font-weight: 700;
-    user-select: none;
-  }
-  .containers{
-      max-height: 100vh;
-  }
+// .transitions{
+//     height: 5rem;
+//     transition: all 1000ms;
+// }
+.icon-height{
+    height: 2.25rem;
+}
+
+.colButton{
+    // height: 50px;
+    padding-bottom: -500px;
+}
+
 @keyframes bounce {
     0%, 100% {
     transform: translateY(-5%);
@@ -37,6 +36,11 @@ label{
     to { width: 0 }
   }
 
+@keyframes visible_drop {
+    from { height: 0 }
+    to { height: 100% }
+}
+
   .typed-out{
     overflow: hidden;
     white-space: nowrap;
@@ -53,3 +57,18 @@ label{
     button_in 0.68s steps(60, end) forwards
     ;
   }
+  
+input{
+    padding-right: 12px;
+    padding-left: 12px;
+    height: 2.25rem;
+    width: 100%;
+}
+h3{
+    color: rgb(92, 92, 92);
+    padding-top: .15rem;
+    padding-bottom: .25rem;
+    font-size: 0.875rem; /* 14px */
+    line-height: 1.25rem; /* 20px */
+    font-weight: 700;
+}

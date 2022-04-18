@@ -1,10 +1,88 @@
-<div class="max-w-sm rounded overflow-hidden shadow-lg border-check">
-    <div *ngFor="let fppe_cat of fp_pe_cat">
-      <h1>{{ fppe_cat }}</h1>
-      <div *ngFor="let fppe of fp_pe_symptoms">
-        <div *ngIf="fppe.pe_cat == fppe_cat">
-          {{ fppe.pe_name }}
-        </div>
-      </div>
+<div class="grid gap-4 max-h-fit" style="grid-template-columns: repeat(16, minmax(0, 1fr));" (click)="flip()"
+    *ngIf="focused">
+    <div class=" border-check row-span-2 col-span-2 hover:bg-gray-50 rounded-r"><button class="font-bold"
+            type="button">FP PE</button></div>
+    <div style="grid-column: span 14 / span 14;" class="">
     </div>
 </div>
+<div class="grid gap-4 max-h-fit" style="grid-template-columns: repeat(16, minmax(0, 1fr));" *ngIf="!focused">
+    <div class=" border-check row-span-2 col-span-2 hover:bg-gray-50 rounded-r" (click)="flip()"><button
+            class="font-bold" type="button">FP PE</button></div>
+    <div style="grid-column: span 14 / span 14;" class="">
+
+        <div *ngFor="let fppe_cat of fp_pe_cat">
+            <form action="">
+                <div class="grid grid-cols-3 mb-5 rounded-lg drop-shadow-lg bg-white rounded-lg border border-blue-400"
+                    *ngIf="module_strings.includes(fppe_cat)">
+                    <div (click)="hideModule(fppe_cat)"
+                        class="text-blue-500 form-check col-span-3 p-2 font-semibold rounded-tr-lg rounded-tl-lg border border-dashed border-blue-300 border-t-0 border-l-0 border-r-0">
+                        <h1 class="select-none">{{fppe_cat}}</h1>
+                    </div>
+                    <div class="absolute right-1 top-1 hover:text-white text-green-400">
+                        <button type="button" class=" hover:bg-green-400 font-semibold  py-0.5 px-2 rounded-full"
+                            (click)="selectAll('select' + fppe_cat)" *ngIf="0 == fppe_strings.length">Select All</button>
+                        <button type="submit" class=" hover:bg-green-400 font-semibold  py-0.5 px-2 rounded-full"
+                            (click)="uncheck('cancel' + fppe_cat)" *ngIf="fppe_strings.length > 0"
+                            (keyup.enter)="uncheck($event.target.id + fppe_cat)">Unselect All</button>
+                    </div>
+                    <div *ngFor="let check of check_list">
+                        <div class="border-check-red p-2">
+                            <input
+                                class="form-check-input appearance-none h-5 w-5 border border-blue-600 rounded-md bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                                type="checkbox" value="check" [attr.id]="check" (change)="onChange(check,fppe_cat)"
+                                [checked]="fppe_strings.includes(check)" (keyup.escape)="uncheck('cancel' + fppe_cat)">
+                            <label class="text-gray-800" name="check" [attr.for]="check" value="check.id">
+                                {{ check }}
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-span-3">
+                        <div class="relative ">
+                            <div class="inline-flex m-2 float-right"
+                                *ngIf="cat_strings.includes(fppe_cat) && fppe_strings.length > 0">
+                                <div class="flex hover:animate-bounce border-check bg-white hover:bg-gray-400 text-gray-400 py-1 rounded-full hover:text-white px-2"
+                                    (click)="uncheck($event.target.id + fppe_cat)" (mouseover)="buttonShow('cancel')">
+                                    <fa-icon [icon]="faTimes" size="lg" class="mr-2">
+                                    </fa-icon>
+                                    <button type="button" class="font-bold button-out border-check-red"
+                                        *ngIf="buttons.includes('cancel')">Cancel</button>
+                                </div>
+                                <div class="flex hover:animate-bounce border-check bg-white hover:bg-green-400 py-1 rounded-full text-green-500 hover:text-white px-2"
+                                    (click)="uncheck($event.target.id + fppe_cat)" (mouseover)="buttonShow('save')">
+                                    <fa-icon [icon]="faSave" size="lg" class="mr-2 ">
+                                    </fa-icon>
+                                    <button type="submit" class="font-bold button-out border-check-red"
+                                        (keyup.enter)="uncheck($event.target.id + fppe_cat)"
+                                        *ngIf="buttons.includes('save')">Save</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div class=" rounded-lg mb-1 hover:bg-gray-200" (click)="showModule(fppe_cat)"
+                *ngIf="!module_strings.includes(fppe_cat)">
+                <div
+                    class="relative flex text-blue-500 form-check col-span-3 p-2 rounded-lg border border-blue-300">
+                    <h1 class="select-none font-semibold">{{fppe_cat}}</h1>
+                    <div *ngFor="let fppe of fp_pe_symptoms">
+                        <div *ngIf="fppe_cat == fppe.pe_cat">
+                            <h1 *ngIf="fppe.x"
+                                class="bg-gray-100 select-none m-0.5 border-check px-2 rounded-full text-gray-500 font-medium"
+                                style="margin-top: 0;" (mouseover)="hoverPill(fppe.id)"
+                                [hidden]="pill_box.includes(fppe.id)" id="test">{{fppe.id}}</h1>
+                            <h1 *ngIf="fppe.x"
+                                class="select-none m-0.5 border-check px-2 rounded-full text-blue-400 font-medium typed-out"
+                                style="margin-top: 0;" [hidden]="!pill_box.includes(fppe.id)"
+                                (mouseout)="leavePill()" id="test">{{fppe.pe_name}}</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="w-max">
+                <p style="margin-top: -0.25rem;" class="mb-5 font-light text-red-400"
+                    *ngIf="cat_strings.includes(fppe_cat) && fppe_strings.length > 0 && !module_strings.includes(fppe_cat) ">
+                    **You have unsaved stuff in {{fppe_cat}}</p>
+            </div>
+        </div>
+    </div>
