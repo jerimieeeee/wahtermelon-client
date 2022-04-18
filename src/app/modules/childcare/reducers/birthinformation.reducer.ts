@@ -4,8 +4,8 @@ import * as BirthInformationActions from '../actions/birthinformation.action'
 
 // Section 1
 const initialState: BirthInformation = {
-    weight: '0',
-    mname: 'Null',
+    weight: '',
+    mname: '',
     
 }
 

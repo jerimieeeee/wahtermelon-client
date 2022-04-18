@@ -11,6 +11,7 @@ export class ServicesComponent implements OnInit {
 
   
   services2 : any
+  z: any
 
   checkBoxValue: any = false;
 
@@ -30,6 +31,8 @@ export class ServicesComponent implements OnInit {
     { id: 6, name: 'Vitamin K', checked: false},
     { id: 7, name: 'Weighing', checked: false},
   ];
+
+  
 
  showEssentialModal = false;
   toggleEssentialModal(){
@@ -67,6 +70,18 @@ export class ServicesComponent implements OnInit {
     console.log(this.form.value);
     localStorage.setItem('eservice', JSON.stringify(this.form.value));
   }
+
+  geteServiceName(){
+    this.z = JSON.parse(localStorage.getItem('eservice'));
+    console.log('retrievedeServices: ',{ccdev: this.z} );
+  }
+
+
+
+ 
+  
+
+  
   
 
   constructor(private fb: FormBuilder) { 
@@ -97,6 +112,9 @@ export class ServicesComponent implements OnInit {
 
   
 
-  ngOnInit(): void {
+  
+
+  ngOnInit() {
+    this.geteServiceName()
   }
 }
