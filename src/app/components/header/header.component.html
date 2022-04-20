@@ -4,14 +4,42 @@
       <a href="">
         <img src="./assets/img/wah_icon.png" class="rounded-full w-12 h-12 mx-auto mr-5" />
       </a>
-      <div class="pt-2 relative mx-auto text-gray-600">
+      <!-- <div class="pt-2 relative mx-auto text-gray-600">
         <input class="border-2 border-gray-300 bg-white h-10 px-5 pr-16 rounded-3xl text-sm focus:outline-none"
           type="search" name="search" placeholder="Search">
         <button type="submit" class="absolute right-0 top-0 mt-4 mr-4 text-gray-700 hover:text-indigo-500">
           <fa-icon class="mx-0 my-0" [icon]="faSearch"></fa-icon>
         </button>
-      </div>
+      </div> -->
+
+      <!-- <div class="md:h-22 py-auto px-6 md:flex md:justify-between md:items-center"> -->
+        <!-- <ng-select class="search" placeholder="search" [(ngModel)]="selectedPatient">
+          <ng-option *ngFor="let patient of patients" [value]="car.id">{{car.name}}</ng-option>
+        </ng-select> -->
+
+        <ng-select class="search" placeholder="search"
+          [items]="patients$ | async"
+          [(ngModel)]="selectedPatient"
+          [typeahead]="searchInput$"
+          [minTermLength]="minLengthTerm"
+          (change)="inFocus()"
+          bindLabel="last_name">
+          <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
+              <div class="grid grid-flow-col auto-cols-max">
+                  <div class="my-auto mr-3">
+                    <img src="./assets/img/profile_1.jpg" alt="profile_img" class="rounded-full w-14 h-14 mx-auto mr-2" />
+                  </div>
+                  <div>
+                    <h5 class="text-blue-400" [ngOptionHighlight]="search">{{ item.last_name }}, {{ item.first_name }}</h5>
+                    <h6 class="text-muted">{{ item.birthdate }}</h6>
+                    <h6 class="text-muted">{{ item.brgy }}, {{ item.muncity }}</h6>
+                  </div>
+              </div>
+          </ng-template>
+        </ng-select>
+      <!-- </div> -->
     </div>
+
 
     <div class="md:flex items-center">
       <div class="flex flex-col md:flex-row md:mx-2 items-center">
@@ -73,4 +101,17 @@
       </div>
     </div>
   </div>
+
+
+  <!-- <div class="md:h-22 py-auto px-6 md:flex md:justify-between md:items-center">
+      <ng-select class="custom" placeholder="search" [(ngModel)]="selectedCar">
+        <ng-option *ngFor="let car of cars" [value]="car.id">{{car.name}}</ng-option>
+      </ng-select>
+      <ng-select [items]="cars"
+                bindLabel="name"
+                bindValue="id"
+                [(ngModel)]="selectedCar">
+      </ng-select>
+  </div> -->
+
 </nav>
