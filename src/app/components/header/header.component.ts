@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { faChevronCircleDown, faBell, faSearch } from '@fortawesome/free-solid-svg-icons';
-import { concat, debounceTime, distinctUntilChanged, filter, Observable, of, Subject, switchMap, tap } from 'rxjs';
+import { catchError, concat, debounceTime, distinctUntilChanged, filter, Observable, of, Subject, switchMap, tap } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -52,9 +52,7 @@ export class HeaderComponent implements OnInit {
       muncity: 'Tarlac'
     },
   ];
-  inFocus(){
-    console.log(this.searchInput$)
-  }
+
   loadPatients() {
     this.patients$ = concat(
       of([]), // default items
@@ -66,15 +64,23 @@ export class HeaderComponent implements OnInit {
         debounceTime(800),
         tap(() => this.moviesLoading = true),
         switchMap(term => {
-          return this.patients$ = of(this.getPatient(term));
+          return this.patients$ = this.getPatient(term).pipe(
+            catchError(() => of([])),
+            tap(() =>  this.moviesLoading = false)
+          );
         })
       )
     );
   }
 
+  onSelect(selectedPatient){
+    console.log(selectedPatient);
+    this.selectedPatient = '';
+  }
+
   getPatient(term: string = null) {
     console.log(term)
-    return this.patient_list;
+    return of(this.patient_list);
   }
 
   constructor() { }

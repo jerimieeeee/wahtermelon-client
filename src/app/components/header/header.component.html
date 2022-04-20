@@ -22,7 +22,9 @@
           [(ngModel)]="selectedPatient"
           [typeahead]="searchInput$"
           [minTermLength]="minLengthTerm"
-          (change)="inFocus()"
+          [loading]="moviesLoading"
+          (change)="onSelect(selectedPatient)"
+          [clearSearchOnAdd]="true"
           bindLabel="last_name">
           <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
               <div class="grid grid-flow-col auto-cols-max">
