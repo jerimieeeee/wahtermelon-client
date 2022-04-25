@@ -1,22 +1,9 @@
-<nav class="bg-white w-screen">
+<nav class="sticky top-0 z-50 bg-white">
   <div class="md:h-22 py-auto px-6 md:flex md:justify-between md:items-center">
     <div class="flex justify-between items-center">
       <a href="">
         <img src="./assets/img/wah_icon.png" class="rounded-full w-12 h-12 mx-auto mr-5" />
       </a>
-      <!-- <div class="pt-2 relative mx-auto text-gray-600">
-        <input class="border-2 border-gray-300 bg-white h-10 px-5 pr-16 rounded-3xl text-sm focus:outline-none"
-          type="search" name="search" placeholder="Search">
-        <button type="submit" class="absolute right-0 top-0 mt-4 mr-4 text-gray-700 hover:text-indigo-500">
-          <fa-icon class="mx-0 my-0" [icon]="faSearch"></fa-icon>
-        </button>
-      </div> -->
-
-      <!-- <div class="md:h-22 py-auto px-6 md:flex md:justify-between md:items-center"> -->
-        <!-- <ng-select class="search" placeholder="search" [(ngModel)]="selectedPatient">
-          <ng-option *ngFor="let patient of patients" [value]="car.id">{{car.name}}</ng-option>
-        </ng-select> -->
-
         <ng-select class="search" placeholder="search"
           [items]="patients$ | async"
           [(ngModel)]="selectedPatient"
