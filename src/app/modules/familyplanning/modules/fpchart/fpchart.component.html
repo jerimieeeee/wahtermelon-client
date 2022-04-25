@@ -1,68 +1,113 @@
-<div class="grid grid-rows-2 gap-4" style="grid-template-columns: repeat(16, minmax(0, 1fr));" (click)="flip()"
-    *ngIf="!focused2">
-    <div class=" border-check row-span-2 col-span-2 hover:bg-gray-50 rounded-r"><button class="font-bold"
-            type="button">FP Chart</button></div>
+<div class="grid gap-4 hover:bg-gray-100 cursor-pointer" style="grid-template-columns: repeat(16, minmax(0, 1fr));"
+    (click)="flip()" *ngIf="focused">
+    <div class=" border-check row-span-2 col-span-2  rounded-r"><button class="font-bold" type="button">FP
+            Chart</button></div>
 </div>
-<form action="">
-    <div class="grid grid-rows-2 gap-4" style="grid-template-columns: repeat(16, minmax(0, 1fr));" *ngIf="!focused">
-        <div class="row-span-2 col-span-2 hover:bg-gray-50 rounded-r " (click)="flip()"><button class="font-bold"
-                type="button">FP Chart</button></div>
-        <div class="transitions col-span-4" *ngIf="!focused">
-            <h3 for="service_date">Date Service Given</h3>
-            <div class="grid grid-cols-10">
-                <div class="icon-height col-span-2 p-2 pt-1 rounded-l border-solid border border-zinc-300">
-                    <fa-icon [icon]="faCalendarDay" size="lg" class="text-blue-500" for="service_date"></fa-icon>
+<form [formGroup]="fp_form" (ngSubmit)="saveForm(fp_form.value)">
+    <div class="grid gap-4" style="grid-template-columns: repeat(16, minmax(0, 1fr));" *ngIf="!focused">
+        <div class="row-span-2 col-span-2 hover:bg-gray-100 rounded-r cursor-pointer" (click)="flip()"><button
+                class="font-bold" type="button">FP Chart</button></div>
+        <div style="grid-column: span 14 / span 14;">
+            <div class="grid gap-4 rounded-lg hover:drop-shadow-lg drop-shadow-md bg-white rounded-lg hover:border border-gray-300 hover:border-blue-400 p-2 m-2 border"
+                style="grid-template-columns: repeat(14, minmax(0, 1fr));">
+
+                <div class="transitions col-span-4" *ngIf="!focused">
+                    <h3 for="service_date">Date Service Given</h3>
+                    <div class="grid grid-cols-10">
+                        <div class="icon-height col-span-2 p-2 pt-1 rounded-l border-solid border border-zinc-300">
+                            <fa-icon [icon]="faCalendarDay" size="lg" class="text-blue-500" for="service_date">
+                            </fa-icon>
+                        </div>
+                        <input formControlName="service_date" id="service_date" name="service_date" type="date"
+                            class="col-span-8 rounded-r border-solid border border-l-0 border-zinc-300 focus:border-2 focus:border-blue-300 focus:outline-none disabled:cursor-not-allowed"
+                            width="auto"
+                            (keyup.escape)="$event.target.value = ''; onKeyUp($event.target.value, $event.target.id)"
+                            (change)="onKeyUp($event.target.value, $event.target.id)">
+                    </div>
                 </div>
-                <input [(ngModel)]="form.service_date" id="service_date" name="service_date" type="date"
-                    class="col-span-8 rounded-r border-solid border border-l-0 border-zinc-300 focus:border-2 focus:border-blue-300 focus:outline-none"
-                    width="auto"
-                    (keyup.escape)="$event.target.value = ''; onKeyUp($event.target.value, $event.target.id)"
-                    (change)="onKeyUp($event.target.value, $event.target.id)">
+                <div class="transitions col-span-5 relative" *ngIf="!focused">
+                    <h3>Source</h3>
+                    <input formControlName="source" name="source" type="text"
+                        class="focus:border-2 focus:border-blue-300 focus:outline-none rounded border-solid border border-zinc-300 disabled:cursor-not-allowed"
+                        (keyup)="onKeyUp($event.target.value, $event.target.id)"
+                        (keyup.escape)="$event.target.value = ''; onKeyUp($event.target.value, $event.target.id)"
+                        id="source">
+                        <fa-icon [icon]="faTimesCircle" (click)="clearForm('source')"
+                        class="absolute right-0 py-1 px-2 text-gray-400 hover:text-gray-600"
+                        *ngIf="keyUp.includes('source') && !fp_form.disabled">
+                        </fa-icon>
+                </div>
+                <div class="transitions col-span-5 relative" *ngIf="!focused">
+                    <h3>Quantity</h3>
+                    <input formControlName="quantity" id="quantity" name="quantity" type="text"
+                        class="focus:border-2 focus:border-blue-300 focus:outline-none rounded border-solid border border-zinc-300 disabled:cursor-not-allowed"
+                        (keyup)="onKeyUp($event.target.value, $event.target.id)"
+                        (keyup.escape)="$event.target.value = ''; onKeyUp($event.target.value, $event.target.id)">
+                        <fa-icon [icon]="faTimesCircle" (click)="clearForm('quantity')"
+                        class="absolute right-0 py-1 px-2 text-gray-400 hover:text-gray-600"
+                        *ngIf="keyUp.includes('quantity') && !fp_form.disabled">
+                        </fa-icon>
+                </div>
+                <div class="transitions col-span-4" *ngIf="!focused">
+                    <h3>Next Service Given</h3>
+                    <div class="grid grid-cols-10">
+                        <div class="icon-height col-span-2 p-2 pt-1 rounded-l border-solid border border-zinc-300">
+                            <fa-icon [icon]="faCalendarDay" size="lg" class="text-orange-400"></fa-icon>
+                        </div>
+                        <input datepicker formControlName="next_service" name="next_service" type="date"
+                            class="focus:border-2 focus:border-blue-300 focus:outline-none col-span-8 rounded-r border-solid border border-l-0 border-zinc-300 disabled:cursor-not-allowed"
+                            width="auto" (change)="onKeyUp($event.target.value, $event.target.id)"
+                            (keyup.escape)="$event.target.value = ''; onKeyUp($event.target.value, $event.target.id)"
+                            id="next_service">
+                    </div>
+                </div>
+                <div class="col-span-10 relative" *ngIf="!focused">
+                    <h3>Remarks</h3>
+                    <input formControlName="remarks" name="remarks" type="text"
+                        class="focus:border-2 focus:border-blue-300 focus:outline-none rounded border-solid border border-zinc-300 disabled:cursor-not-allowed"
+                        (keyup)="onKeyUp($event.target.value, $event.target.id)"
+                        (keyup.escape)="$event.target.value = ''; onKeyUp($event.target.value, $event.target.id)"
+                        id="remarks">
+                        <fa-icon [icon]="faTimesCircle" (click)="clearForm('remarks')"
+                        class="absolute right-0 py-1 px-2 text-gray-400 hover:text-gray-600"
+                        *ngIf="keyUp.includes('remarks') && !fp_form.disabled">
+                        </fa-icon>
+                </div>
+                <!-- [disabled]="service_date === '' || source === ''  || quantity === ''  || next_service === ''  || remarks === '' " -->
             </div>
         </div>
-        <div class="transitions col-span-5" *ngIf="!focused">
-            <h3>Source</h3>
-            <input [(ngModel)]="form.source" name="source" type="text"
-                class="focus:border-2 focus:border-blue-300 focus:outline-none rounded border-solid border border-zinc-300"
-                (keyup)="onKeyUp($event.target.value, $event.target.id)"
-                (keyup.escape)="$event.target.value = ''; onKeyUp($event.target.value, $event.target.id)" id="source">
-        </div>
-        <div class="transitions col-span-5" *ngIf="!focused">
-            <h3>Quantity</h3>
-            <input [(ngModel)]="form.quantity" id="quantity" name="quantity" type="tel"
-                class="focus:border-2 focus:border-blue-300 focus:outline-none rounded border-solid border border-zinc-300"
-                (keyup)="onKeyUp($event.target.value, $event.target.id)"
-                (keyup.escape)="$event.target.value = ''; onKeyUp($event.target.value, $event.target.id)">
-        </div>
-        <div class="transitions col-span-4" *ngIf="!focused">
-            <h3>Next Service Given</h3>
-            <div class="grid grid-cols-10">
-                <div class="icon-height col-span-2 p-2 pt-1 rounded-l border-solid border border-zinc-300">
-                    <fa-icon [icon]="faCalendarDay" size="lg" class="text-orange-400"></fa-icon>
+        <div class="relative w-auto border-check mb-7" *ngIf="!focused && keyUp.length > 0 && !fp_form.disabled"
+            style="grid-column: span 14 / span 14;">
+            <div class="absolute inline-flex m-2 right-0 top-0" style=" top: -0.85rem;">
+                <div class="flex hover:animate-bounce border-check bg-white hover:bg-gray-400 text-gray-400 py-1 rounded-full hover:text-white px-2"
+                    (click)="cancel()" (mouseover)="buttonShow('cancel')">
+                    <fa-icon [icon]="faTimes" size="lg" class="mr-2">
+                    </fa-icon>
+                    <button type="button" class="font-bold button-out border-check-red"
+                        *ngIf="buttons.includes('cancel')">Cancel</button>
                 </div>
-                <input datepicker [(ngModel)]="form.next_service" name="next_service" type="date"
-                    class="focus:border-2 focus:border-blue-300 focus:outline-none col-span-8 rounded-r border-solid border border-l-0 border-zinc-300"
-                    width="auto" (change)="onKeyUp($event.target.value, $event.target.id)"
-                    (keyup.escape)="$event.target.value = ''; onKeyUp($event.target.value, $event.target.id)"
-                    id="next_service">
+                <div class="flex hover:animate-bounce border-check bg-white hover:bg-green-400 py-1 rounded-full text-green-500 hover:text-white px-2"
+                    (mouseover)="buttonShow('save')">
+                    <fa-icon [icon]="faSave" size="lg" class="mr-2 ">
+                    </fa-icon>
+                    <button type="submit" class="font-bold button-out border-check-red"
+                        (keyup.enter)="uncheck($event.target.id + fphx_cat)"
+                        *ngIf="buttons.includes('save')">Save</button>
+                </div>
             </div>
         </div>
-        <div class="col-span-10" *ngIf="!focused">
-            <h3>Remarks</h3>
-            <input [(ngModel)]="remarks" name="remarks" type="text"
-                class="focus:border-2 focus:border-blue-300 focus:outline-none rounded border-solid border border-zinc-300"
-                (keyup)="onKeyUp($event.target.value, $event.target.id)"
-                (keyup.escape)="$event.target.value = ''; onKeyUp($event.target.value, $event.target.id)" id="remarks">
+        <div class="relative w-auto border-check mb-7" *ngIf="!focused && fp_form.disabled"
+            style="grid-column: span 14 / span 14;">
+            <div class="absolute inline-flex m-2 right-0 top-0" style=" top: -0.85rem;" (click)="edit()">
+                <div class="flex hover:animate-bounce border-check bg-white hover:bg-orange-400 py-1 rounded-full text-orange-500 hover:text-white px-2"
+                    (mouseover)="buttonShow('edit')" (mouseleave)="buttonShow()">
+                    <fa-icon [icon]="faPencil" size="lg" class="mr-2 ">
+                    </fa-icon>
+                    <button type="submit" class="font-bold button-out border-check-red"
+                        (keyup.enter)="uncheck($event.target.id + fphx_cat)"
+                        *ngIf="buttons.includes('edit')">Edit</button>
+                </div>
+            </div>
         </div>
-        <div class="inline-flex col-span-2 " *ngIf="!focused" style="grid-column-start: 14;">
-            <button type="button" class=" text-gray-300 font-bold py-1 px-3 rounded-full" (click)="flip()"
-                *ngIf="keyUp.length > 0">Cancel</button>
-
-            <button type="button"
-                class="  bg-gray-200 hover:bg-green-400 hover:text-white text-green-500 font-bold py-1 px-3 rounded-full"
-                (click)="formCheck()" *ngIf="keyUp.length > 0">Save</button>
-        </div>
-
-        <!-- [disabled]="service_date === '' || source === ''  || quantity === ''  || next_service === ''  || remarks === '' " -->
     </div>
 </form>

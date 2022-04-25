@@ -1,12 +1,12 @@
-<div class="grid gap-4 max-h-fit" style="grid-template-columns: repeat(16, minmax(0, 1fr));" (click)="flip()"
+<div class="grid gap-4 max-h-fit cursor-pointer hover:bg-gray-100" style="grid-template-columns: repeat(16, minmax(0, 1fr));" (click)="flip()"
     *ngIf="focused">
-    <div class=" border-check row-span-2 col-span-2 hover:bg-gray-50 rounded-r"><button class="font-bold"
+    <div class=" border-check row-span-2 col-span-2 rounded-r "><button class="font-bold"
             type="button">FP HX</button></div>
     <div style="grid-column: span 14 / span 14;" class="">
     </div>
 </div>
 <div class="grid gap-4 max-h-fit" style="grid-template-columns: repeat(16, minmax(0, 1fr));" *ngIf="!focused" >
-    <div class=" border-check row-span-2 col-span-2 hover:bg-gray-50 rounded-r" (click)="flip()"><button
+    <div class=" border-check row-span-2 col-span-2 hover:bg-gray-100 rounded-r cursor-pointer" (click)="flip()"><button
             class="font-bold" type="button">FP HX</button></div>
     <div style="grid-column: span 14 / span 14;" class="">
 
@@ -35,7 +35,7 @@
                                 [checked]="fphx_strings.includes(check)" (keyup.escape)="uncheck(fphx_cat)"
                                 (keyup.enter)="saveModule(fp_hx_cat[i+1], i+1)"
                                 >
-                            <label class="text-gray-800" name="check" [attr.for]="check" value="check.history_id">
+                            <label class="text-gray-800 cursor-pointer" name="check" [attr.for]="check" value="check.history_id">
                                 {{ check }}
                             </label>
                         </div>
@@ -63,10 +63,10 @@
                     </div>
                 </div>
             </form>
-            <div class=" rounded-lg mb-1 hover:bg-gray-200" (click)="showModule(fphx_cat, i)"
+            <div class=" rounded-lg mb-1 " (click)="showModule(fphx_cat, i)"
                 *ngIf="!module_strings.includes(i)">
                 <div
-                    class="relative flex text-orange-500 form-check col-span-3 p-2 rounded-lg border border-orange-300">
+                    class="relative flex text-orange-500 form-check col-span-3 p-2 rounded-lg border border-gray-200 hover:drop-shadow-md bg-white hover:border-orange-300">
                     <h1 class="select-none font-semibold">{{fphx_cat}}</h1>
                     <div *ngFor="let fphx of fp_hx_symptoms">
                         <div *ngIf="fphx_cat == fphx.history_cat">

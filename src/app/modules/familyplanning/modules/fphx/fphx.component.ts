@@ -40,27 +40,27 @@ export class FphxComponent implements OnInit {
   {"history_id":"ANEMIA","history_text":"Anemia","history_cat":"ANY","x":0 },
   {"history_id":"BLEEDING","history_text":"Bleeding tendencies (nose, gums, etc.)","history_cat":"ANY","x":1 },
   {"history_id":"DIABETES","history_text":"Diabetes","history_cat":"ANY","x":0 },
-  {"history_id":"DRUGINTAKE","history_text":"Drug intake (anti-TB, anti-diabetic, anticonvulsant)","history_cat":"ANY","x":1 },
+  {"history_id":"DRUGINTAKE","history_text":"Drug intake (anti-TB, anti-diabetic, anticonvulsant)","history_cat":"ANY","x":0 },
   {"history_id":"ECTPREG","history_text":"Ectopic pregnancy","history_cat":"ANY","x": 0 },
-  {"history_id":"HMOLE","history_text":"Hydatidiform mole (w/in the last 12 mos.)","history_cat":"ANY","x":1 },
-  {"history_id":"MPARTNERS","history_text":"Multiple partners","history_cat":"ANY","x":1 },
-  {"history_id":"SMOKING","history_text":"Smoking","history_cat":"ANY","x":1 },
+  {"history_id":"HMOLE","history_text":"Hydatidiform mole (w/in the last 12 mos.)","history_cat":"ANY","x":0 },
+  {"history_id":"MPARTNERS","history_text":"Multiple partners","history_cat":"ANY","x":0 },
+  {"history_id":"SMOKING","history_text":"Smoking","history_cat":"ANY","x":0 },
   {"history_id":"STD","history_text":"STD","history_cat":"ANY","x":0 },
 
   {"history_id":"BRSTMASS","history_text":"Breast/axillary masses","history_cat":"CXHRT","x":0 },
   {"history_id":"CVAHARHD","history_text":"Family history of CVA (strokes), hypertension, asthma, rheumatic heart disease","history_cat":"CXHRT","x":0 },
   {"history_id":"CXPAIN","history_text":"Severe chest pain","history_cat":"CXHRT","x":0 },
-  {"history_id":"DIAS90","history_text":"Diastolic of 90 & above","history_cat":"CXHRT","x":1 },
+  {"history_id":"DIAS90","history_text":"Diastolic of 90 & above","history_cat":"CXHRT","x":0 },
   {"history_id":"FATIGUE","history_text":"Shortness of breath and easy fatiguability","history_cat":"CXHRT","x":0 },
   {"history_id":"NIPBLOOD","history_text":"Nipple discharges (blood)","history_cat":"CXHRT","x":1 },
   {"history_id":"NIPPUS","history_text":"Nipple discharges (pus)","history_cat":"CXHRT","x":0 },
-  {"history_id":"SYS140","history_text":"Systolic of 140 & above","history_cat":"CXHRT","x":1 },
+  {"history_id":"SYS140","history_text":"Systolic of 140 & above","history_cat":"CXHRT","x":0 },
 
-  {"history_id":"EPILEPSY","history_text":"Epilepsy/Convulsion/Seizure","history_cat":"HEENT","x":1 },
+  {"history_id":"EPILEPSY","history_text":"Epilepsy/Convulsion/Seizure","history_cat":"HEENT","x":0 },
   {"history_id":"ETHY","history_text":"Enlarged thyroid","history_cat":"HEENT","x":0 },
-  {"history_id":"HEADACHE","history_text":"Severe headache/dizziness","history_cat":"HEENT","x":1 },
+  {"history_id":"HEADACHE","history_text":"Severe headache/dizziness","history_cat":"HEENT","x":0 },
   {"history_id":"VISION","history_text":"Visual disturbance/blurring of vision","history_cat":"HEENT","x":0 },
-  {"history_id":"YCONJ","history_text":"Yellowish conjunctive","history_cat":"HEENT","x":1 },
+  {"history_id":"YCONJ","history_text":"Yellowish conjunctive","history_cat":"HEENT","x":0 },
 
   {"history_id":"GALL","history_text":"History of gallbladder disease","history_cat":"ABD","x":0 },
   {"history_id":"LIVER","history_text":"History of liver disease","history_cat":"ABD","x":0 },
@@ -71,8 +71,8 @@ export class FphxComponent implements OnInit {
   {"history_id":"UTERUS","history_text":"Mass in the uterus","history_cat":"GEN","x":0 },
   {"history_id":"VAGDISCH","history_text":"Vaginal discharge","history_cat":"GEN","x":0 },
 
-  {"history_id":"LEGPAIN","history_text":"Swelling or severe pain in the legs not related to injuries","history_cat":"EXT","x":1 },
-  {"history_id":"VARICOSE","history_text":"Severe varicosities","history_cat":"EXT","x":1 },
+  {"history_id":"LEGPAIN","history_text":"Swelling or severe pain in the legs not related to injuries","history_cat":"EXT","x":0 },
+  {"history_id":"VARICOSE","history_text":"Severe varicosities","history_cat":"EXT","x":0 },
 
   {"history_id":"YELLOWSKIN","history_text":"Yellowish skin","history_cat":"SKIN","x":1 }];
 

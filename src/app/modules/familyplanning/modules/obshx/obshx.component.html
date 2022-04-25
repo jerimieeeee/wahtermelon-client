@@ -1,11 +1,11 @@
 <form [formGroup]="obshx_form" (ngSubmit)="saveForm(obshx_form.value)">
-    <div class="grid gap-4 " style="grid-template-columns: repeat(16, minmax(0, 1fr));" (click)="flip()"
+    <div class="grid gap-4 hover:bg-gray-100 cursor-pointer" style="grid-template-columns: repeat(16, minmax(0, 1fr));" (click)="flip()"
         *ngIf="focused">
-        <div class="border-check row-span-2 col-span-2 hover:bg-gray-50 rounded-r">
+        <div class="border-check row-span-2 col-span-2 rounded-r">
             <button class="font-bold" type="button">OBS HX</button></div>
     </div>
     <div class="grid gap-4 relative animates-dropdown" style="grid-template-columns: repeat(16, minmax(0, 1fr));"  *ngIf="!focused">
-        <div class="border-check row-span-3 col-span-2 hover:bg-gray-50 rounded-r"
+        <div class="border-check row-span-3 col-span-2 hover:bg-gray-100 cursor-pointer rounded-r"
         (click)="flip()"><button class="font-bold" type="button">OBS HX</button>
         </div>
         <div class="rounded-lg drop-shadow-md hover:drop-shadow-lg bg-white rounded-lg border border-gray-300 hover:border-blue-400" style="grid-column: span 14 / span 14 ; grid-column-start: 3;">
@@ -24,7 +24,7 @@
                 <!-- <span *ngIf="keyUp.includes('alc')" class="text-red-400">Error!!!!</span> -->
             </div>
             <div class="transitions col-span-7 border-check relative" *ngIf="!focused">
-                <h3>pre_Term</h3>
+                <h3>Pre-Term</h3>
                 <!-- <input type="text" class="border-check focus:border-2 focus:border-blue-300 focus:outline-none rounded border-solid border border-zinc-300" *ngIf="!obshx_form.alc" > -->
                 <input type="text" formControlName="pre_term"
                     class="border-check focus:border-2 focus:border-blue-300 focus:outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100"

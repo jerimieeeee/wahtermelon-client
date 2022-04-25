@@ -41,7 +41,7 @@
     overflow: hidden;
     white-space: nowrap;
     animation: 
-    type_in 0.68s steps(100, end) forwards,
+    type_in 0.68s ease-in-out forwards,
     ;
     width: 0;
   }
@@ -50,6 +50,6 @@
     overflow: hidden;
     white-space: nowrap;
     animation: 
-    button_in 0.68s steps(60, end) forwards
+    button_in 0.68s ease-in-out forwards,
     ;
   }

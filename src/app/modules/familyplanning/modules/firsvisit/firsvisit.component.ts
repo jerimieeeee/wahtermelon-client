@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { faCalendarDay, faPlus, faSave, faTimes , faClose, faTimesCircle, faPencil} from '@fortawesome/free-solid-svg-icons';
+import { faCalendarDay, faPlus, faSave, faTimes , faClose, faTimesCircle, faPencil, faCaretDown, faAngleDown} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-firsvisit',
@@ -16,6 +16,8 @@ export class FirsvisitComponent implements OnInit {
   faTimesCircle = faTimesCircle;
   faSave = faSave;
   faPencil = faPencil;
+  faAngleDown = faAngleDown;
+
   
   public buttons = [];
 
@@ -30,7 +32,8 @@ export class FirsvisitComponent implements OnInit {
 
   ngOnInit(): void {
     this.createForm();
-    this.fv_form.disable();
+    !this.focused;
+  this. fv_form.disable();
   //  console.log( this.fv_form.value + ' this is my fv_form');
   }
   cancel(){
@@ -70,6 +73,7 @@ export class FirsvisitComponent implements OnInit {
 
   clearForm(id){
     this.fv_form.get(id).reset();
+    this.keyUp.splice(this.keyUp.indexOf(id),1);
     // this.onKeyUp('', id);
   }
   onKeyUp(data_input: string, id: string){

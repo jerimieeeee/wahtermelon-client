@@ -57,6 +57,20 @@ h3{
     to { height: 100% }
 }
 
+@keyframes spins {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(180deg);
+  }
+}
+
+  .carets:hover{
+    animation: spins 0.3s steps(100, end) forwards;
+  }
+  
+
   .typed-out{
     overflow: hidden;
     white-space: nowrap;
