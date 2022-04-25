@@ -1,6 +1,7 @@
 import { ElementSchemaRegistry } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
-import { faCalendarDay, faPencil, faPlus, faSave, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faCalendarDay, faCircleCheck, faPencil, faPlus, faSave, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { LoginComponent } from 'src/app/modules/login/login.component';
 
 @Component({
   selector: 'app-fphx',
@@ -13,11 +14,15 @@ export class FphxComponent implements OnInit {
   faSave = faSave;
   faTimes = faTimes;
   faPencil = faPencil;
+  faCircleCheck = faCircleCheck;
+
   typing: boolean;
   checked: boolean;
   focused: boolean;
   i : number;
   fphx_typing: boolean;
+  flippable: boolean;
+  saved: boolean;
 
   show_fphx_strings: boolean;
   save_id: void;
@@ -98,14 +103,20 @@ export class FphxComponent implements OnInit {
         }
      }
     });
-
+    this.flippable = true;
+    this.showModule("ANY",0);
+    // this.showModule("CXHRT",1);
+    // this.showModule("HEENT",2);
+    this.saved = false;
   }
 
 flip(): void{
+  console.log('flip');
   this.focused = !this.focused;
 }
 
 uncheck(cat){
+  console.log('uncheck');
   // console.log(cat, ' this is my cat from uncheck');
   this.cat_strings.splice(this.cat_strings.indexOf(cat),1);
   // console.log(this.cat_strings, " emtying out cat_strings");
@@ -126,12 +137,13 @@ uncheck(cat){
 }
 
 onChange(id_name,cat){  
+console.log("onChange");
 
  if(!this.cat_strings.includes(cat)){
     this.cat_strings.push(cat);
   }
   
-  console.log(this.cat_strings);
+  // console.log(this.cat_strings);
   
   this.fp_hx_symptoms.forEach(fphxElement => {
 
@@ -154,23 +166,29 @@ onChange(id_name,cat){
 }
 
 showModule(id_name, i){  
+  console.log("showModule");
+  console.log(this.flippable);
+  
+  if (this.flippable){
   this.module_strings = [];
   this.buttons = [];
   this.buttons.push('save');
   this.check_list = [];
   this.module_strings.push(i);
 
-  console.log('showing my fphx_strings ', this.fphx_strings);
-  console.log(this.cat_strings.includes(id_name), ' that cat_strings.includes(fphx_cat)');
-  console.log(this.fphx_strings.length == 0, ' that fphx_strings.length > 0');
+  // console.log('showing my fphx_strings ', this.fphx_strings);
+  // console.log(this.cat_strings.includes(id_name), ' that cat_strings.includes(fphx_cat)');
+  // console.log(this.fphx_strings.length == 0, ' that fphx_strings.length > 0');
   this.fp_hx_symptoms.forEach(element => {
     if(element.history_cat == id_name){
       this.check_list.push(element.history_text);
     }
   });
 }
+}
 
 hideModule(i){  
+  console.log('hideModule');
   if(this.module_strings.includes(i)){
     // console.log(id_name);
     this.module_strings.splice(this.module_strings.indexOf(i),1 );
@@ -178,14 +196,18 @@ hideModule(i){
 }
 
 hoverPill(id_name){
+  console.log("hoverPill");
   this.pill_box = [];
   this.pill_box.push(id_name);
   // console.log(this.pill_box);
 }
 leavePill(){
+  console.log('leavePill');
   this.pill_box = [];
 }
 selectAll(select_name){
+  console.log("selectAll");
+  
   let cat = select_name.replace("select",'');
   if(!this.cat_strings.includes(cat)){
     this.cat_strings.push(cat);
@@ -201,6 +223,8 @@ selectAll(select_name){
 }
 
 buttonShow(name){
+  console.log('buttonShow');
+  
   this.buttons = [];
   if(!this.buttons.includes(name)){
     this.buttons.push(name);
@@ -208,17 +232,34 @@ buttonShow(name){
   // console.log(this.buttons);
   
 }
-saveModule(id_name, i){
-  this.fphx_strings = [];
-  this.cat_strings = [];
+nextModule(id_name, i){
+  console.log("nextModule", this.fphx_strings);
+  
+  // this.fphx_strings = [];
+  // this.cat_strings = [];
   // console.log(this.cat_strings.includes(id_name));
   // console.log(this.fphx_strings.length);
   // console.log(this.module_strings.includes(i));
   
   if(this.module_strings.includes(i-1)){
-    console.log(id_name, i , ' this is idname and i');
+    // console.log(id_name, i , ' this is idname and i');
    this.showModule(id_name, i);
   };
+}
+saveModule(){
+  console.log(this.fphx_strings);
+  
+  this.saved = true;
+  this.showModule('NON', 10);
+  this.flippable = false;
+  console.log(this.flippable);
+  // console.log(this.fphx_strings);
+}
+editModule(){
+  console.log(this.fphx_strings);
+  this.saved = false;
+  this.flippable = true;
+  console.log(this.flippable);
 }
 
 }

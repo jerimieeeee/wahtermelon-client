@@ -79,15 +79,15 @@
                 <div class="flex hover:animate-bounce border-check bg-white hover:bg-gray-400 text-gray-400 py-1 rounded-full hover:text-white px-2"
                     (click)="cancel()" (mouseover)="buttonShow('cancel')">
                     <fa-icon [icon]="faTimes" size="lg" class="mr-2">
-                    </fa-icon>
-                    <button type="button" class="font-bold button-out border-check-red"
+                    </fa-icon> 
+                    <button type="button" class="font-bold button-out border-check-red typed-out"
                         *ngIf="buttons.includes('cancel')">Cancel</button>
                 </div>
                 <div class="flex hover:animate-bounce border-check bg-white hover:bg-green-400 py-1 rounded-full text-green-500 hover:text-white px-2"
                     (mouseover)="buttonShow('save')">
                     <fa-icon [icon]="faSave" size="lg" class="mr-2 ">
                     </fa-icon>
-                    <button type="submit" class="font-bold button-out border-check-red"
+                    <button type="submit" class="font-bold button-out border-check-red typed-out"
                         (keyup.enter)="uncheck($event.target.id + fphx_cat)"
                         *ngIf="buttons.includes('save')">Save</button>
                 </div>
@@ -99,8 +99,8 @@
                 <div class="flex hover:animate-bounce border-check bg-white hover:bg-orange-400 py-1 rounded-full text-orange-500 hover:text-white px-2"
                     (mouseover)="buttonShow('edit')" (mouseleave)="buttonShow()">
                     <fa-icon [icon]="faPencil" size="lg" class="mr-2 ">
-                    </fa-icon>
-                    <button type="submit" class="font-bold button-out border-check-red"
+                    </fa-icon> 
+                    <button type="submit" class="font-bold button-out border-check-red typed-out"
                         (keyup.enter)="uncheck($event.target.id + fphx_cat)"
                         *ngIf="buttons.includes('edit')">Edit</button>
                 </div>

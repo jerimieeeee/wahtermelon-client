@@ -37,7 +37,7 @@ export class FpchartComponent implements OnInit {
 
   ngOnInit(){
     this.createForm();
-    this.fp_form.disable();
+    // this.fp_form.disable();
 
     console.log("init fpchart");
     
