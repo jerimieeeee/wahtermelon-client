@@ -80,10 +80,10 @@
 
       <div class="flex justify-between w-full bg-blue-300 px-5 py-3 rounded-tl rounded-tr">
         <h4 class="font-bold text-white text-md mt-2">Birth Information</h4>
-          <button  *ngIf="!saved" type="submit" class="py-2 px-6 rounded-full bg-white text-gray-600 font-bold drop-shadow-md hover:border-white-600 hover:bg-blue-400 hover:text-white shadow-md inline-flex items-center" name="add-btn"  (click)="addWeight(weight.value, mname.value)">
+          <button  *ngIf="saved" type="submit" class="py-2 px-6 rounded-full bg-white text-gray-600 font-bold drop-shadow-md hover:border-white-600 hover:bg-blue-400 hover:text-white shadow-md inline-flex items-center" name="add-btn"  (click)="addWeight(weight.value, mname.value)">
             <label>Save</label>
             </button>
-            <button *ngIf="saved" type="submit" class="py-2 px-4 rounded-full bg-white text-gray-600 font-bold drop-shadow-md hover:border-white-600 hover:bg-blue-400 hover:text-white shadow-md inline-flex items-center" name="add-btn"  (click)="addWeight(weight.value, mname.value)">
+            <button *ngIf="!saved" type="submit" class="py-2 px-4 rounded-full bg-white text-gray-600 font-bold drop-shadow-md hover:border-white-600 hover:bg-blue-400 hover:text-white shadow-md inline-flex items-center" name="add-btn"  (click)="addWeight(weight.value, mname.value)">
               <label>Update</label>
               </button>
         </div>

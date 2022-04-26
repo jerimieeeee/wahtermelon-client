@@ -33,12 +33,12 @@
             <table class="w-full flex justify-between text-md bg-white rounded">
               <tbody>
                   <tr class="border-b items-center">
-                      <th class="text-center p-3 px-5">Breast Feeding Date</th>
+                      <th class="text-center p-3 px-5">Month</th>
                       <th class="text-center p-3 px-5">Status</th>
-                      
                   </tr>
-                  <tr *ngFor="let month of months" class="border-b hover:bg-yellow-100 bg-transparent">
-                    <td class="p-3 px-5">{{month.name}}</td>
+
+                  <tr *ngFor="let month of bfed_month" class="border-b hover:bg-yellow-100 bg-transparent">
+                    <td class="p-3 px-5">{{month.name}} - ({{month.date}})</td>
                     <td class="p-3 text-center">
                       <input type="checkbox" id="servicedate" name="servicedate" class="bg-transparent">
                     </td>
@@ -52,7 +52,7 @@
             <button class="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1" type="button" style="transition: all .15s ease" (click)="toggleBreastfeedingModal()">
               Close
             </button>
-            <button class="bg-green-500 text-white active:bg-green-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1" type="button" style="transition: all .15s ease" (click)="toggleBreastfeedingModal()">
+            <button class="bg-green-500 text-white active:bg-green-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1" type="button" style="transition: all .15s ease" (click)="save_breastfed()" (click)="toggleBreastfeedingModal()" >
               Save
             </button>
           </div>

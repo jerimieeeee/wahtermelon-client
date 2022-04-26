@@ -9,29 +9,42 @@ import { FormBuilder, FormGroup,FormArray,FormControl,Validators,} from '@angula
 })
 export class ServicesComponent implements OnInit {
 
+  selectedServiceList = [];
+  checkedIDs = [];
   
-  services2 : any
-  z: any
-
-  checkBoxValue: any = false;
+  z: any;
+  z2: any;
 
   saved: boolean;
 
   faSearch = faSearch;
   faPlus = faPlus;
 
-  form: FormGroup;
+  defaultDate = new Date().toISOString().slice(0, 16);
 
-  eservices: Array <any> = [
-    { id: 1, name: 'Cord Clamping', checked: false},
-    { id: 2, name: 'Drying', checked: false},
-    { id: 3, name: 'Non-Separation', checked: false},
-    { id: 4, name: 'Prophylaxis', checked: false},
-    { id: 5, name: 'Skin to Skin', checked: false},
-    { id: 6, name: 'Vitamin K', checked: false},
-    { id: 7, name: 'Weighing', checked: false},
+  serviceForm = new FormGroup({
+    serviceDate: new FormControl()
+  });
+
+  services= [
+    { id: 1, name: 'Cord Clamping', cc_id: 'CLAMP', ischecked: false},
+    { id: 2, name: 'Drying', cc_id: 'DRYING', ischecked: false},
+    { id: 3, name: 'Non-Separation', cc_id: 'NONSEP', ischecked: false},
+    { id: 4, name: 'Prophylaxis', cc_id: 'PROP', ischecked: false},
+    { id: 5, name: 'Skin to Skin', cc_id: 'SKIN', ischecked: false},
+    { id: 6, name: 'Vitamin K', cc_id: 'VITK', ishecked: false},
+    { id: 7, name: 'Weighing', cc_id: 'WEIGHT', ischecked: false},
   ];
 
+  eservices2= [
+    { id: 1, name: 'Cord Clamping', cc_id: 'CLAMP', ischecked: false},
+    { id: 2, name: 'Drying', cc_id: 'DRYING', ischecked: false},
+    { id: 3, name: 'Non-Separation', cc_id: 'NONSEP', ischecked: false},
+    { id: 4, name: 'Prophylaxis', cc_id: 'PROP', ischecked: false},
+    { id: 5, name: 'Skin to Skin', cc_id: 'SKIN', ischecked: false},
+    { id: 6, name: 'Vitamin K', cc_id: 'VITK', ishecked: false},
+    { id: 7, name: 'Weighing', cc_id: 'WEIGHT', ischecked: false},
+  ];
   
 
  showEssentialModal = false;
@@ -49,72 +62,56 @@ export class ServicesComponent implements OnInit {
     this.showVaccineModal = !this.showVaccineModal;
   }
 
-  onCheckboxChange(e: any) {
-    const eServices: FormArray = this.form.get('eServices') as FormArray;
-    if (e.target.checked) {
-      eServices.push(new FormControl(e.target.value));
-    } else {
-      let i: number = 0;
-      eServices.controls.forEach((item: any) => {
-        if (item.value == e.target.value) {
-          eServices.removeAt(i);
-          return;
-        }
-        i++;
-        
-      });
-    }
-  }
-
-  submitForm() {
-    console.log(this.form.value);
-    localStorage.setItem('eservice', JSON.stringify(this.form.value));
-  }
-
   geteServiceName(){
     this.z = JSON.parse(localStorage.getItem('eservice'));
-    console.log('retrievedeServices: ',{ccdev: this.z} );
+    console.log('retrievedeServices: ', this.z );
   }
 
+  geteServiceDate(){
+    this.z2 = JSON.parse(localStorage.getItem('eserviceDate'));
+    console.log('retrievedeServicesDate: ',this.z2 );
+  }
 
-
- 
-  
-
-  
-  
-
-  constructor(private fb: FormBuilder) { 
-    
-    this.form = this.fb.group({
-      eServices: this.fb.array([], [Validators.required]),
+  fetchSelectedItems() {
+    this.selectedServiceList = this.eservices2.filter((value, index) => {
+      return value.ischecked
     });
-    
-    
-    
-
-    this.services2 = [
-      { id: 1, name: 'Complimentary Feeding', checked: false},
-      { id: 2, name: 'Dental Check-up', checked: false},
-      { id: 3, name: 'Newborn Hearing Screening', checked: false},
-      { id: 4, name: 'Iron Intake', checked: false},
-      { id: 5, name: 'Received Micronutrient Powder (MNP)', checked: false},
-      { id: 6, name: 'Newborn Screening (Referred)', checked: false},
-      { id: 7, name: 'Newborn Screening (Done)', checked: false},
-      { id: 8, name: 'Vitamin A', checked: false},
-      { id: 9, name: 'Deworming', checked: false},
-    ]
-
-
   }
 
-  public service_list = [];
+  submit() {
+    this.selectedServiceList = this.eservices2.filter((value, index) => {
+      return value.ischecked,
+      console.log('Service Date:' + this.serviceForm.get('serviceDate').value),
+      localStorage.setItem('eservice', JSON.stringify(this.selectedServiceList)),
+      localStorage.setItem('eserviceDate', JSON.stringify(this.serviceForm.value))
+      
+    });
+  }
 
-  
+  fetchCheckedIDs() {
+    this.checkedIDs = []
+    this.eservices2.forEach((value, index) => {
+      if (value.ischecked) {
+        this.checkedIDs.push(value.id);
+      }
+    });
+  }
+ 
+  changeSelection() {
+    this.fetchSelectedItems()
+  }
 
-  
+
+  constructor() { 
+
+  }
 
   ngOnInit() {
     this.geteServiceName()
+    this.fetchSelectedItems()
+    this.fetchCheckedIDs()
+    this.serviceForm = new FormGroup({
+      serviceDate: new FormControl((new Date()).toISOString().substring(0,10))
+    });
   }
 }

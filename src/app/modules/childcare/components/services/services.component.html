@@ -13,6 +13,10 @@
       </button>  
     </div>
 
+    <div class="relative w-full md:w-1/2 lg:w-1/2 px-5 mt-4">
+      <label>{{z.name}}</label>
+    </div>
+
 
     <!--Essential Newborn Care Modal-->
     <div *ngIf="showEssentialModal" class="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex">
@@ -28,32 +32,40 @@
           <!--body-->
           
           <div class="relative flex-auto px-12">
-            <form [formGroup]="form" (ngSubmit)="submitForm()">
+            
             <table class="w-full flex justify-between text-md bg-white rounded">
               <tbody>
                   <tr class="border-b items-center">
                       <th class="text-left p-3 px-5">Service</th>
                       <th class="text-center p-3 px-5">Status</th>
+                      <th class="text-center p-3 px-5">Date</th>
                   </tr>
 
-                  <tr *ngFor="let service of eservices; let i=index" class="border-b hover:bg-blue-100 bg-transparent">
-                    <td class="p-3 px-5">{{service.name}}</td>
+                  <tr *ngFor="let item of eservices2" class="border-b hover:bg-blue-100 bg-transparent">
+                    <td class="p-3 px-5">{{item.name}}</td>
                     <td class="p-3 px-5 text-center">
-                    <input type="checkbox" [value]="service.name" (change)="onCheckboxChange($event)" />
+                      <input type="checkbox" name="" id="" (change)="changeSelection()" [(ngModel)]="item.ischecked">
                     </td>
+                    <td class="p-3 px-5 text-center">
+                    <form [formGroup]="serviceForm" (ngSubmit)="submit()">
+                    
+                      <input class="items-center"
+                type="date" name="date" formControlName="serviceDate" *ngIf="item.ischecked">
+                   
+                    </form>
+                  </td>
                 </tr>
               </tbody>
-          </table>
-          </form>
+          </table>   
           </div>
 
-        
+          
           <!--footer-->
           <div class="flex items-center justify-end p-6 border-t border-solid border-gray-300 rounded-b">
             <button class="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1" type="button" style="transition: all .15s ease" (click)="toggleEssentialModal()">
               Close
             </button>
-            <button class="bg-green-500 text-white active:bg-green-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1" type="button" style="transition: all .15s ease" (click)="submitForm()" (click)="toggleEssentialModal()">
+            <button class="bg-green-500 text-white active:bg-green-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1" type="button" style="transition: all .15s ease" (click)="submit()" (click)="toggleEssentialModal()">
               Save
             </button>
           </div>
@@ -91,6 +103,8 @@
               </span>
             </button>
           </div>
+
+          
           <!--body-->
           <div class="relative flex-auto px-12">
             <table class="w-full flex justify-between text-md bg-white rounded">
