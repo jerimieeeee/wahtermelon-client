@@ -32,12 +32,50 @@
       <span class="block border-b-2 w-full">
         Medical Journal
       </span>
-      <div class="grid grid-cols-2 gap-2">
-        <div class="col-span-1">
-s
+      <div class="grid grid-cols-5 gap-2 mb-2">
+        <div [ngClass]="{'col-span-3' : show_details, 'col-span-5' : !show_details}">
+          <div class="last:border-0 border-b border-slate-200 pb-2" *ngFor="let journal of medical_journal">
+            <div class="grid grid-cols-8 gap-2 mt-2">
+              <div class="col-span-2 text-sm font-semibold h-full">
+                {{ journal.visit_date | date:'MM/dd/yyyy'}} {{ journal.index}}
+              </div>
+              <div class="col-span-6 bg-blue-50 hover:bg-blue-200 hover:cursor-pointer p-2 text-sm col-start-3"
+                *ngFor="let visit of journal.visits"
+                (click)="open_details()">
+                <span class="text-cyan-700 text-base font-semibold">{{ visit.visit_type }}</span><br />
+                  Attended by: {{ visit.assessed_by }} <br />
+                  Diagnosed by: {{ visit.diagnosed_by }}
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="col-span-1">
-x
+
+        <div *ngIf="show_details" class="col-span-2 h-full mt-2 bg-blue-50">
+          <span class="block bg-yellow-400 w-full p-2 font-semibold text-sm mb-1">VISIT DETAILS</span>
+          <div class="flex mx-2 text-sm">
+            <span class="flex-1 text-left font-semibold">
+              Date:
+            </span>
+            <span class="flex-1 text-right">
+              07/01/2020
+            </span>
+          </div>
+          <div class="flex mx-2 text-sm">
+            <span class="flex-1 text-left font-semibold">
+              Assessed By:
+            </span>
+            <span class="flex-1 text-right">
+              Nurse 1
+            </span>
+          </div>
+          <div class="flex mx-2 text-sm">
+            <span class="flex-1 text-left font-semibold">
+              Physician:
+            </span>
+            <span class="flex-1 text-right">
+              Doctor 1
+            </span>
+          </div>
         </div>
       </div>
     </div>

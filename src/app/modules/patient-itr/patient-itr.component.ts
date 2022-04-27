@@ -36,6 +36,7 @@ export type WeightChart = {
   styleUrls: ['./patient-itr.component.scss']
 })
 export class PatientItrComponent implements OnInit {
+  show_details = true;
   medical_journal = [
     {
       visit_date: "July 01, 2020",
@@ -83,6 +84,14 @@ export class PatientItrComponent implements OnInit {
       ]
     }
   ];
+
+  open_details(){
+    if(this.show_details == true){
+      this.show_details = false;
+    }else{
+      this.show_details = true;
+    }
+  }
 
   @ViewChild("bp-chart") bp_chart: ChartComponent;
   @ViewChild("weight-chart") weight_chart: ChartComponent;
