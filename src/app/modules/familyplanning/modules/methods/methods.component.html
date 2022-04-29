@@ -1,0 +1,80 @@
+<form action="">
+    <div class="grid grid-rows-2 gap-4 cursor-pointer hover:bg-gray-100 relative"
+        style="grid-template-columns: repeat(16, minmax(0, 1fr));" (click)="flip()" *ngIf="focused">
+        <div class="border-check row-span-2 col-span-2 rounded-r">
+            <button class="font-bold" type="button">Methods</button>
+        </div>
+        <div class="absolute right-0 top-0">
+            <fa-icon [icon]="faInfoCircle" class="ml-3 text-gray-300 hover:text-gray-500 z-50"
+                (mouseover)="showModal('show')" (mouseleave)="showModal('marps')"></fa-icon>
+            <div class="absolute text-sm bg-gradient-to-b from-stone-500 to-gray-400 p-2 rounded-md border border-gray-500  text-white drop-shadow-lg opacity-90 border-check z-50 w-64 right-0"
+                *ngIf="modal">
+                <h1 class="font-bold drop-shadow-lg">IMPORTANT</h1>
+                <p class="font-light drop-shadow-lg">Once saved, the information will be displayed in the input boxes
+                    and shall not be editable unless Edit button is pressed.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid gap-4 relative animates-dropdown " style="grid-template-columns: repeat(16, minmax(0, 1fr));"
+        *ngIf="!focused">
+        <div class="border-check col-span-2 hover:bg-gray-100 rounded-r cursor-pointer" (click)="flip();"><button
+                class="font-bold" type="button">Methods</button>
+            <div class="absolute left-16 top-0">
+                <fa-icon [icon]="faInfoCircle" class="ml-3 text-gray-300 hover:text-gray-500 z-50"
+                    (mouseover)="showModal('show')" (mouseleave)="showModal('marps')"></fa-icon>
+                <div class="absolute text-sm bg-gradient-to-b from-stone-500 to-gray-400 p-2 rounded-md border border-gray-500  text-white drop-shadow-lg opacity-90 border-check z-50 w-64"
+                    *ngIf="modal">
+                    <h1 class="font-bold drop-shadow-lg">IMPORTANT</h1>
+                    <p class="font-light drop-shadow-lg">Once saved, the information will be displayed in the input
+                        boxes and shall not be editable unless Edit button is pressed.</p>
+                </div>
+            </div>
+
+        </div>
+        <div style="grid-column: span 14 / span 14;">
+            <div class="grid gap-4 rounded-lg hover:drop-shadow-lg drop-shadow-md bg-white rounded-lg hover:border border-gray-300 hover:border-blue-400 p-2 m-2 border"
+                style="grid-template-columns: repeat(14, minmax(0, 1fr));">
+                <div class="transitions col-span-4" *ngIf="!focused">
+                    <h3>Enrollment Date</h3>
+                    <div class="grid grid-cols-10">
+                        <div class="icon-height col-span-2 p-2 pt-1 rounded-l border-solid border border-zinc-300">
+                            <fa-icon [icon]="faCalendarDay" size="lg" class="text-orange-400"></fa-icon>
+                        </div>
+                        <input datepicker name="next_service" type="date"
+                            class="focus:border-2 focus:border-blue-300 focus:outline-none col-span-8 rounded-r border-solid border border-l-0 border-zinc-300 disabled:cursor-not-allowed"
+                            width="auto" id="next_service">
+                    </div>
+                </div>
+                <div class="transitions col-span-4 border-check relative select-none" *ngIf="!focused">
+                    <h3>Family Planning Method</h3>
+                    <select
+                        class="bg-white text-align-left drop_btn border-check focus:border-2 focus:border-blue-300 focus:outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed">
+                        <option *ngFor="let fp_method of fp_methods" class="p-2" (click)="drop()">
+                            {{ fp_method.method }}
+                        </option>
+                    </select>
+                </div>
+                <div class="transitions col-span-6 border-check relative select-none" *ngIf="!focused">
+                    <h3>Treatment Partner</h3>
+                    <!-- <input type="text" class="border-check focus:border-2 focus:border-blue-300 focus:outline-none rounded border-solid border border-zinc-300" *ngIf="!fv_form.alc" > -->
+                    <input type="text"
+                        class="invalid:border-red-500 border-check focus:border-2 focus:border-blue-300 focus:outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed">
+                    <fa-icon [icon]="faTimesCircle"
+                        class="absolute right-0 py-1 px-2 text-gray-400 hover:text-gray-600">
+                    </fa-icon>
+                    <!-- <span *ngIf="keyUp.includes('alc')" class="text-red-400">Error!!!!</span> -->
+                </div>
+                <div class="transitions col-span-4 border-check relative select-none" *ngIf="!focused">
+                    <h3>Client Type</h3>
+                    <select
+                        class="bg-white text-align-left drop_btn border-check focus:border-2 focus:border-blue-300 focus:outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed">
+                        <option *ngFor="let fp_method of fp_methods" class="p-2" (click)="drop()">
+                            {{ fp_method.method }}
+                        </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

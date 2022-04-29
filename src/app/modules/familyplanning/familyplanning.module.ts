@@ -14,9 +14,10 @@ import { FphxComponent } from './modules/fphx/fphx.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ObshxComponent } from './modules/obshx/obshx.component';
 import { PelvicComponent } from './modules/pelvic/pelvic.component';
+import { MethodsComponent } from './modules/methods/methods.component';
 
 @NgModule({
-  declarations: [FamilyplanningComponent, FpchartComponent, FirsvisitComponent, FppeComponent, FphxComponent, ObshxComponent, PelvicComponent, 
+  declarations: [FamilyplanningComponent, FpchartComponent, FirsvisitComponent, FppeComponent, FphxComponent, ObshxComponent, PelvicComponent, MethodsComponent, 
     //  FpchartComponent, FphxComponent, FppeComponent, PelvicexamComponent
   ],
   imports: [
