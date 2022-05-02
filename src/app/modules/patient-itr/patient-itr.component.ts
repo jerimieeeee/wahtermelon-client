@@ -36,7 +36,7 @@ export type WeightChart = {
   styleUrls: ['./patient-itr.component.scss']
 })
 export class PatientItrComponent implements OnInit {
-  show_details = true;
+  showDetails = true;
   medical_journal = [
     {
       visit_date: "July 01, 2020",
@@ -86,10 +86,10 @@ export class PatientItrComponent implements OnInit {
   ];
 
   open_details(){
-    if(this.show_details == true){
-      this.show_details = false;
+    if(this.showDetails == true){
+      this.showDetails = false;
     }else{
-      this.show_details = true;
+      this.showDetails = true;
     }
   }
 

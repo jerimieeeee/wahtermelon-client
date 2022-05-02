@@ -33,7 +33,7 @@
         Medical Journal
       </span>
       <div class="grid grid-cols-5 gap-2 mb-2">
-        <div [ngClass]="{'col-span-3' : show_details, 'col-span-5' : !show_details}">
+        <div [ngClass]="{'col-span-3' : showDetails, 'col-span-5' : !showDetails}">
           <div class="last:border-0 border-b border-slate-200 pb-2" *ngFor="let journal of medical_journal">
             <div class="grid grid-cols-8 gap-2 mt-2">
               <div class="col-span-2 text-sm font-semibold h-full">
@@ -50,11 +50,11 @@
           </div>
         </div>
 
-        <div *ngIf="show_details" class="col-span-2 h-full mt-2 bg-blue-50">
-          <span class="block bg-yellow-400 w-full p-2 font-semibold text-sm mb-1">VISIT DETAILS</span>
+        <div  *ngIf="showDetails" class="col-span-2 h-full mt-2 bg-blue-50/50 transition ease-in-out delay-1000">
+          <span class="block bg-blue-500 w-full p-2 font-semibold text-sm mb-1 text-white">VISIT DETAILS</span>
           <div class="flex mx-2 text-sm">
             <span class="flex-1 text-left font-semibold">
-              Date:
+              Date
             </span>
             <span class="flex-1 text-right">
               07/01/2020
@@ -62,7 +62,7 @@
           </div>
           <div class="flex mx-2 text-sm">
             <span class="flex-1 text-left font-semibold">
-              Assessed By:
+              Assessed By
             </span>
             <span class="flex-1 text-right">
               Nurse 1
@@ -70,12 +70,175 @@
           </div>
           <div class="flex mx-2 text-sm">
             <span class="flex-1 text-left font-semibold">
-              Physician:
+              Physician
             </span>
             <span class="flex-1 text-right">
               Doctor 1
             </span>
           </div>
+
+          <div class="flex mx-2 mt-3 text-sm font-semibold">
+              VITALS
+          </div>
+            <div class="flex mx-2 ml-4 text-sm">
+              <span class="flex-1 text-left">
+                Weight
+              </span>
+              <span class="flex-1 text-right">
+                70kg
+              </span>
+            </div>
+            <div class="flex mx-2 ml-4 text-sm">
+              <span class="flex-1 text-left">
+                Height
+              </span>
+              <span class="flex-1 text-right">
+                172cm
+              </span>
+            </div>
+            <div class="flex mx-2 ml-4 text-sm">
+              <span class="flex-1 text-left">
+                BMI
+              </span>
+              <span class="flex-1 text-right text-orange-400">
+                28.5 (Overweight)
+              </span>
+            </div>
+            <div class="flex mx-2 ml-4 text-sm">
+              <span class="flex-1 text-left">
+                Blood Pressure
+              </span>
+              <span class="flex-1 text-right text-red-600">
+                150/90 (hypertensive)
+              </span>
+            </div>
+            <div class="flex mx-2 ml-4 text-sm">
+              <span class="flex-1 text-left">
+                Temp
+              </span>
+              <span class="flex-1 text-right">
+                -
+              </span>
+            </div>
+            <div class="flex mx-2 ml-4 text-sm">
+              <span class="flex-1 text-left">
+                Heart Rate
+              </span>
+              <span class="flex-1 text-right">
+                -
+              </span>
+            </div>
+            <div class="flex mx-2 ml-4 text-sm">
+              <span class="flex-1 text-left">
+                Resp Rate
+              </span>
+              <span class="flex-1 text-right">
+                -
+              </span>
+            </div>
+
+          <div class="flex mx-2 mt-3 text-sm font-semibold">
+            CHIEF COMPLAINT
+          </div>
+            <div class="flex mx-2 ml-4 text-sm">
+              <span class="flex-1 text-left">
+                Sample Complaint
+              </span>
+            </div>
+
+          <div class="flex mx-2 mt-3 text-sm font-semibold">
+            HISTORY OF CURRENT ILLNESS
+          </div>
+            <div class="flex mx-2 ml-4 text-sm">
+              <span class="flex-1 text-left">
+                Sample History
+              </span>
+            </div>
+
+          <div class="flex mx-2 mt-3 text-sm font-semibold">
+            PHYSICAL EXAM
+          </div>
+            <div class="flex mx-2 ml-4 text-sm">
+              <span class="flex-1 text-left">
+                Skin
+              </span>
+              <span class="flex-1 text-right">
+                -
+              </span>
+            </div>
+            <div class="flex mx-2 ml-4 text-sm">
+              <span class="flex-1 text-left">
+                HEENT
+              </span>
+              <span class="flex-1 text-right">
+                -
+              </span>
+            </div>
+            <div class="flex mx-2 ml-4 text-sm">
+              <span class="flex-1 text-left">
+                Chest
+              </span>
+              <span class="flex-1 text-right">
+                -
+              </span>
+            </div>
+            <div class="flex mx-2 ml-4 text-sm">
+              <span class="flex-1 text-left">
+                Heart
+              </span>
+              <span class="flex-1 text-right">
+                -
+              </span>
+            </div>
+            <div class="flex mx-2 ml-4 text-sm">
+              <span class="flex-1 text-left">
+                Abdomen
+              </span>
+              <span class="flex-1 text-right">
+                -
+              </span>
+            </div>
+            <div class="flex mx-2 ml-4 text-sm">
+              <span class="flex-1 text-left">
+                Extremities
+              </span>
+              <span class="flex-1 text-right">
+                -
+              </span>
+            </div>
+
+          <div class="flex mx-2 mt-3 text-sm font-semibold">
+            DIAGNOSIS
+          </div>
+            <div class="flex mx-2 ml-4 text-sm">
+              <span class="flex-1 text-left">
+                Initial
+              </span>
+              <span class="flex-1 text-right">
+                -<br />
+              </span>
+            </div>
+
+            <div class="flex mx-2 ml-4 text-sm">
+              <span class="flex-1 text-left">
+                Final
+              </span>
+              <span class="flex-1 text-right">
+                -<br />
+              </span>
+            </div>
+
+          <div class="flex mx-2 mt-3 text-sm font-semibold">
+            PRESCRIPTION
+          </div>
+            <div class="flex mx-2 ml-4 text-sm">
+              <span class="flex-1 text-left">
+                -
+              </span>
+              <span class="flex-1 text-right">
+                -<br />
+              </span>
+            </div>
         </div>
       </div>
     </div>
