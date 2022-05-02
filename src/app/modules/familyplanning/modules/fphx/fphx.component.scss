@@ -31,7 +31,6 @@ label {
     animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
   }
 }
-
 @keyframes type_in {
   from {
     width: 0
@@ -90,5 +89,5 @@ label {
 }
 
 .parent > div {
-  flex: 1 0 25%;
+  flex: 1 1 33.3333%;
 }

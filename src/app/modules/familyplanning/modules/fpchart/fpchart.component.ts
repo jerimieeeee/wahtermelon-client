@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { faHome, faCalendarDay, faFlask, faTimes, faSave, faTimesCircle, faPencil } from '@fortawesome/free-solid-svg-icons';
+import { faHome, faCalendarDay, faFlask, faTimes, faSave, faTimesCircle, faPencil, faCaretLeft } from '@fortawesome/free-solid-svg-icons';
 import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
@@ -14,7 +14,7 @@ export class FpchartComponent implements OnInit {
   faSave = faSave;
   faTimesCircle = faTimesCircle;
   faPencil = faPencil;
-
+  
   textbox: boolean;
   focused2: boolean;
   typing: boolean;
@@ -37,12 +37,10 @@ export class FpchartComponent implements OnInit {
 
   ngOnInit(){
     this.createForm();
-    // this.fp_form.disable();
 
     console.log("init fpchart");
     
-    this.focused = true;
-    this.focused2 = false;
+    this.focused = false;
     this.typing = true;
   }
   createForm(){
@@ -73,7 +71,7 @@ export class FpchartComponent implements OnInit {
     this.keyUp = [];
     this.buttons = [];
     this.buttons.push('save');
-    this.fp_form.reset();
+    // this.fp_form.reset();
   }
 
   edit(){

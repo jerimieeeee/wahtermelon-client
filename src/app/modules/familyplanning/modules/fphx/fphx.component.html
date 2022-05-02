@@ -12,16 +12,28 @@
 
         <div *ngFor="let fphx_cat of fp_hx_cat;  let i = index">
             <form action="">
-                <div class="grid grid-cols-4 mb-5 rounded-lg drop-shadow-lg bg-white rounded-lg border border-orange-400"
-                    *ngIf="module_strings.includes(i)">
-                    <div (click)="hideModule(i)"
-                        class="text-orange-500 form-check col-span-4 p-2 font-semibold rounded-tr-lg rounded-tl-lg border border-dashed border-orange-300 border-t-0 border-l-0 border-r-0">
+                <div class="grid sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 mb-2 rounded-lg bg-white rounded-lg border border-gray-200 hover:border-orange-300"
+                    [style]="module_strings.includes(i)? 'border-color: rgb(251 146 60); filter: drop-shadow(0 10px 8px rgb(0 0 0 / 0.04)) drop-shadow(0 4px 3px rgb(0 0 0 / 0.1)); margin-bottom: 1.25rem;' : ''">
+                    <div (click)="showModule(fphx_cat, i)" (keyup.tab)="nextModule(fp_hx_cat[i+1], i+1);"
+                        (keyup.enter)="selectAll('select' + fphx_cat)"
+                        class="text-orange-500 form-check sm:col-span-1 md:col-span-3 lg:col-span-4 p-2 font-semibold"
+                        [style]="module_strings.includes(i)? 'border-bottom-width: 1px; border-style: dashed; border-color: rgb(251 146 60); border-top-width: 0px; border-left-width: 0px; border-right-width: 0px;' : ''">
                         <h1 class="select-none">{{fphx_cat}}</h1>
+                        <div *ngFor="let fphx of fp_hx_symptoms">
+                            <div *ngFor="let string of fphx_strings; let x = index">
+                                <div *ngIf="fphx_cat == fphx.history_cat && fphx.history_text == string">
+                                    <h1 class="group select-none m-0.5 border-check px-2 rounded-full text-orange-400 font-medium typed-out hover:bg-gray-100 hover:text-gray-500"
+                                        style="margin-top: 0;" *ngIf="!module_strings.includes(i)" id="test">
+                                        <fa-icon [icon]="faCaretRight" *ngIf="!module_strings.includes(i)"
+                                            class="group-hover:text-orange-400 text-gray-300"></fa-icon>
+                                        {{fphx.history_text}}
+                                    </h1>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="absolute right-1 top-1 hover:text-white text-green-400">
-                        <!-- <button type="button" class=" hover:bg-green-400 font-semibold  py-0.5 px-2 rounded-full"
-                            (click)="selectAll('select' + fphx_cat)" [hidden]="cat_strings.includes(fphx_cat)">Select
-                            All</button> -->
+                    <div class="absolute right-1 top-1 hover:text-white text-green-400"
+                        *ngIf="module_strings.includes(i)">
                         <div class="inline-flex float-right" *ngIf="!cat_strings.includes(fphx_cat)">
                             <div class="flex hover:animate-bounce border-check bg-white hover:bg-gray-400 text-gray-300 py-1 rounded-full hover:text-white px-2"
                                 (click)="selectAll('select' + fphx_cat)" (mouseover)="buttonShow('select')"
@@ -47,7 +59,7 @@
                         </div>
                     </div>
                     <div *ngFor="let check of check_list;">
-                        <div class="border-check-red p-2">
+                        <div class="border-check-red p-2" *ngIf="module_strings.includes(i)">
                             <input
                                 class="appearance-none h-6 w-6 border border-orange-600 rounded-lg bg-white checked:bg-blue-300 checked:border-blue-500 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
                                 type="checkbox" value="check" [attr.id]="check" (change)="onChange(check,fphx_cat)"
@@ -61,30 +73,12 @@
                     </div>
                 </div>
             </form>
-            <div class=" rounded-lg mb-1 " (click)="showModule(fphx_cat, i)" *ngIf="!module_strings.includes(i)">
-                <div
-                    class="relative flex text-orange-500 form-check col-span-3 p-2 rounded-lg border border-gray-200 hover:drop-shadow-md bg-white hover:border-orange-300">
-                    <h1 class="select-none font-semibold">{{fphx_cat}}</h1>
-                    <div *ngFor="let fphx of fp_hx_symptoms">
-                        <div *ngFor="let string of fphx_strings">
-                            <div *ngIf="fphx_cat == fphx.history_cat && fphx.history_text == string">
-                                <h1 class="bg-gray-100 select-none m-0.5 border-check px-2 rounded-full text-gray-500 font-medium"
-                                    style="margin-top: 0;" (mouseover)="hoverPill(fphx.history_id)"
-                                    [hidden]="pill_box.includes(fphx.history_id)" id="test">{{fphx.history_id}}</h1>
-                                <h1 class="select-none m-0.5 border-check px-2 rounded-full text-orange-400 font-medium typed-out"
-                                    style="margin-top: 0;" [hidden]="!pill_box.includes(fphx.history_id)"
-                                    (mouseout)="leavePill()" id="test">{{fphx.history_text}}</h1>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
         <div class="col-span-3">
             <div class="relative ">
                 <div class="inline-flex m-2 float-right" *ngIf="saved">
                     <div class="flex hover:animate-bounce border-check bg-white hover:bg-orange-400 text-orange-400 py-1 rounded-full hover:text-white px-2"
-                        (click)="editModule()" (mouseover)="buttonShow('edit')">
+                        (click)="editModule()" (mouseover)="buttonShow('edit')" (mouseleave)="buttonShow()">
                         <fa-icon [icon]="faPencil" size="lg" class="mr-2">
                         </fa-icon>
                         <button type="button" class="font-bold button-out border-check-red"
