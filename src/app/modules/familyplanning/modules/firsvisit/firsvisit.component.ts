@@ -35,6 +35,7 @@ export class FirsvisitComponent implements OnInit {
   ngOnInit(): void {
     this.createForm();
     !this.focused;
+    this.fv_form.reset();
     //this.fv_form.disable();
     //  console.log( this.fv_form.value + ' this is my fv_form');
   }

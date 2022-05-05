@@ -36,6 +36,7 @@ export class ObshxComponent implements OnInit {
   ngOnInit(): void {
     this.focused = true;
     this.createForm();
+    this.obshx_form.reset();
   }
 
   flip(): void{

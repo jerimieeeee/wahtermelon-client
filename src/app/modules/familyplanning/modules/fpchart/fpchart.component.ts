@@ -42,6 +42,7 @@ export class FpchartComponent implements OnInit {
     
     this.focused = false;
     this.typing = true;
+    this.fp_form.reset();
   }
   createForm(){
     this.fp_form = new FormGroup({

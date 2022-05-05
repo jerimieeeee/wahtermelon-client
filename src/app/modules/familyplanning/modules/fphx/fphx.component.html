@@ -10,19 +10,28 @@
             class="font-bold" type="button">FP HX</button></div>
     <div style="grid-column: span 14 / span 14;" class="">
 
-        <div *ngFor="let fphx_cat of fp_hx_cat;  let i = index">
+        <div *ngFor="let fphx_cat of fp_hx_cat;  let i = index;">
+
             <form action="">
-                <div class="grid sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 mb-2 rounded-lg bg-white rounded-lg border border-gray-200 hover:border-orange-300"
-                    [style]="module_strings.includes(i)? 'border-color: rgb(251 146 60); filter: drop-shadow(0 10px 8px rgb(0 0 0 / 0.04)) drop-shadow(0 4px 3px rgb(0 0 0 / 0.1)); margin-bottom: 1.25rem;' : ''">
+                <div class="grid sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 mb-2 bg-white rounded-lg border m-2"
+                    [style]="module_strings.includes(i) && !saved? 'border-color: rgb(251 146 60); filter: drop-shadow(0 10px 8px rgb(0 0 0 / 0.04)) drop-shadow(0 4px 3px rgb(0 0 0 / 0.1)); margin-bottom: 1.25rem;' : ' '"
+                    [class]="saved? 'hover:drop-shadow-lg drop-shadow-md hover:border border-gray-300 hover:border-orange-400':'hover:border-orange-300 border-gray-200'">
+                    
                     <div (click)="showModule(fphx_cat, i)" (keyup.tab)="nextModule(fp_hx_cat[i+1], i+1);"
                         (keyup.enter)="selectAll('select' + fphx_cat)"
                         class="text-orange-500 form-check sm:col-span-1 md:col-span-3 lg:col-span-4 p-2 font-semibold"
                         [style]="module_strings.includes(i)? 'border-bottom-width: 1px; border-style: dashed; border-color: rgb(251 146 60); border-top-width: 0px; border-left-width: 0px; border-right-width: 0px;' : ''">
-                        <h1 class="select-none">{{fphx_cat}}</h1>
+                        <div *ngFor="let cat_name of lib_cat_name">
+                            <h1 class="select-none" *ngIf="fphx_cat == cat_name.history_cat_id">
+                                {{cat_name.history_cat_name}}
+                            </h1>
+                        </div>
+                        
+                  
                         <div *ngFor="let fphx of fp_hx_symptoms">
                             <div *ngFor="let string of fphx_strings; let x = index">
                                 <div *ngIf="fphx_cat == fphx.history_cat && fphx.history_text == string">
-                                    <h1 class="group select-none m-0.5 border-check px-2 rounded-full text-orange-400 font-medium typed-out hover:bg-gray-100 hover:text-gray-500"
+                                    <h1 class="group select-none m-0.5 border-check px-2 rounded-full text-orange-400 font-medium typed-out hover:bg-gray-100 hover:text-gray-500 hover:font-semibold"
                                         style="margin-top: 0;" *ngIf="!module_strings.includes(i)" id="test">
                                         <fa-icon [icon]="faCaretRight" *ngIf="!module_strings.includes(i)"
                                             class="group-hover:text-orange-400 text-gray-300"></fa-icon>
@@ -59,9 +68,9 @@
                         </div>
                     </div>
                     <div *ngFor="let check of check_list;">
-                        <div class="border-check-red p-2" *ngIf="module_strings.includes(i)">
+                        <div class="border-check-red p-2 group" *ngIf="module_strings.includes(i)">
                             <input
-                                class="appearance-none h-6 w-6 border border-orange-600 rounded-lg bg-white checked:bg-blue-300 checked:border-blue-500 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                                class=" h-6 w-6 border border-gray-400 group-hover:border-orange-600 rounded-md group-hover:rounded-lg checked:rounded-full checked:border-2 bg-white checked:bg-blue-300 checked:border-blue-500 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
                                 type="checkbox" value="check" [attr.id]="check" (change)="onChange(check,fphx_cat)"
                                 [checked]="fphx_strings.includes(check)" (keyup.escape)="uncheck(fphx_cat)"
                                 (keyup.enter)="saveModule()" (keyup.tab)="nextModule(fp_hx_cat[i+1], i+1);">
@@ -73,7 +82,8 @@
                     </div>
                 </div>
             </form>
-        </div>
+
+    </div>
         <div class="col-span-3">
             <div class="relative ">
                 <div class="inline-flex m-2 float-right" *ngIf="saved">
