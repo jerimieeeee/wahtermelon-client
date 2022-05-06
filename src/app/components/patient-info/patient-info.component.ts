@@ -13,9 +13,14 @@ export class PatientInfoComponent implements OnInit {
   faExclamationCircle = faExclamationCircle;
   faPlusCircle = faPlusCircle;
 
+  showModal: boolean = false;
+
   constructor() { }
 
   ngOnInit(): void {
   }
 
+  toggleModal(){
+    this.showModal = !this.showModal;
+  }
 }

@@ -14,7 +14,9 @@
           [clearSearchOnAdd]="true"
           bindLabel="last_name">
           <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
+            <a href="itr">
               <div class="grid grid-flow-col auto-cols-max">
+
                   <div class="my-auto mr-3">
                     <img src="./assets/img/profile_1.jpg" alt="profile_img" class="rounded-full w-14 h-14 mx-auto mr-2" />
                   </div>
@@ -24,6 +26,11 @@
                     <h6 class="text-muted">{{ item.brgy }}, {{ item.muncity }}</h6>
                   </div>
               </div>
+            </a>
+          </ng-template>
+
+          <ng-template ng-footer-tmp>
+            <a class="text-blue-600" href="registration"> Create a new record</a>
           </ng-template>
         </ng-select>
       <!-- </div> -->

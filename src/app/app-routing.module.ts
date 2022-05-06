@@ -22,7 +22,12 @@ const routes: Routes = [
   {
     path: 'itr',
     loadChildren: () => import('./modules/patient-itr/patient-itr.module').then(m => m.PatientItrModule)
-  }
+  },
+  {
+    path: 'registration',
+    loadChildren: () => import('./modules/patient-registration/patient-registration.module').then(m => m.PatientRegistrationModule)
+  },
+  { path: 'dental', loadChildren: () => import('./modules/dental/dental.module').then(m => m.DentalModule) }
 ];
 
 @NgModule({
