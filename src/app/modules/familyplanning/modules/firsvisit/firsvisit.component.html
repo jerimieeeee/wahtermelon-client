@@ -8,9 +8,8 @@
             <button class="font-bold" type="button">First Visit</button>
         </div>
         <div class="absolute right-0 top-0">
-            <fa-icon [icon]="faInfoCircle" class="ml-3 text-gray-300 hover:text-gray-500 z-50"
-            (mouseover)="showModal('show')" (mouseleave)="showModal('marps')"></fa-icon>
-            <div class="absolute text-sm bg-gradient-to-b from-stone-500 to-gray-400 p-2 rounded-md border border-gray-500  text-white drop-shadow-lg opacity-90 border-check z-50 w-64 right-0" *ngIf="modal">
+            <fa-icon [icon]="faInfoCircle" class="peer ml-3 text-gray-300 hover:text-gray-500 z-50"></fa-icon>
+            <div class="absolute text-sm bg-gradient-to-b from-stone-500 to-gray-400 p-2 rounded-md border border-gray-500  text-white drop-shadow-lg opacity-90 border-check z-50 w-64 right-0 invisible peer-hover:visible">
                 <h1 class="font-bold drop-shadow-lg">IMPORTANT</h1>
                 <p class="font-light drop-shadow-lg">Once saved, the information will be displayed in the input boxes and shall not be editable unless Edit button is pressed.</p>
             </div>
@@ -22,24 +21,19 @@
         <div class="border-check col-span-2 hover:bg-gray-100 rounded-r cursor-pointer" [hidden]="fv_form.enabled"
             (click)="flip(); showModal();"><button class="font-bold" type="button">Visit Info </button>
             <div class="absolute left-16 top-0">
-                <fa-icon [icon]="faInfoCircle" class="ml-3 text-gray-300 hover:text-gray-500 z-50"
-                (mouseover)="showModal('show')" (mouseleave)="showModal('marps')"></fa-icon>
-                <div class="absolute text-sm bg-gradient-to-b from-stone-500 to-gray-400 p-2 rounded-md border border-gray-500  text-white drop-shadow-lg opacity-90 border-check z-50 w-64" *ngIf="modal">
+                <fa-icon [icon]="faInfoCircle" class=" peer ml-3 text-gray-300 hover:text-gray-500 z-50"></fa-icon>
+                <div class="absolute text-sm bg-gradient-to-b from-stone-500 to-gray-400 p-2 rounded-md border border-gray-500  text-white drop-shadow-lg opacity-90 border-check z-50 w-64 invisible peer-hover:visible">
                     <h1 class="font-bold drop-shadow-lg">IMPORTANT</h1>
                     <p class="font-light drop-shadow-lg">Once saved, the information will be displayed in the input boxes and shall not be editable unless Edit button is pressed.</p>
                 </div>
-            </div>
-            <!-- <fa-icon [icon]="faInfoCircle" class="pl-2 text-gray-300 hover:text-gray-500 relative"
-                (mouseover)="showModal('show')" (mouseleave)="showModal('marps')"></fa-icon> -->
-                
+            </div>            
         </div>
 
         <div class="border-check col-span-2 hover:bg-gray-100 rounded-r cursor-pointer" [hidden]="fv_form.disabled"
             (click)="flip(); showModal();"><button class="font-bold" type="button">First Visit </button>
             <div class="absolute left-16 top-0">
-                <fa-icon [icon]="faInfoCircle" class="ml-3 text-gray-300 hover:text-gray-500 z-50"
-                (mouseover)="showModal('show')" (mouseleave)="showModal('marps')"></fa-icon>
-                <div class="absolute text-sm bg-gradient-to-b from-stone-500 to-gray-400 p-2 rounded-md border border-gray-500  text-white drop-shadow-lg opacity-90 border-check z-50 w-64" *ngIf="modal">
+                <fa-icon [icon]="faInfoCircle" class=" peer ml-3 text-gray-300 hover:text-gray-500 z-50"></fa-icon>
+                <div class="absolute text-sm bg-gradient-to-b from-stone-500 to-gray-400 p-2 rounded-md border border-gray-500  text-white drop-shadow-lg opacity-90 border-check z-50 w-64 invisible peer-hover:visible">
                     <h1 class="font-bold drop-shadow-lg">IMPORTANT</h1>
                     <p class="font-light drop-shadow-lg">Once saved, the information will be displayed in the input boxes and shall not be editable unless Edit button is pressed.</p>
                 </div>
@@ -51,9 +45,9 @@
                 style="grid-template-columns: repeat(14, minmax(0, 1fr));">
                 <div class="transitions col-span-7 border-check relative select-none" *ngIf="!focused">
                     <h3>Actual Living Children Count</h3>
-                    <!-- <input type="text" class="border-check focus:border-2 focus:border-blue-300 focus:outline-none rounded border-solid border border-zinc-300" *ngIf="!fv_form.alc" > -->
+                    <!-- <input type="text" class="border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300" *ngIf="!fv_form.alc" > -->
                     <input type="text" formControlName="alc"
-                        class="invalid:border-red-500 border-check focus:border-2 focus:border-blue-300 focus:outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed"
+                        class="invalid:border-red-500 border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed"
                         (keyup)="onKeyUp($event.target.value, $event.target.id)"
                         (keyup.escape)="clearForm($event.target.id)" id="alc" 
                         autofocus>
@@ -65,9 +59,9 @@
                 </div>
                 <div class="transitions col-span-7 border-check relative select-none" *ngIf="!focused">
                     <h3>Desired Living Children Count</h3>
-                    <!-- <input type="text" class="border-check focus:border-2 focus:border-blue-300 focus:outline-none rounded border-solid border border-zinc-300" *ngIf="!fv_form.dlc"> -->
+                    <!-- <input type="text" class="border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300" *ngIf="!fv_form.dlc"> -->
                     <input type="text" formControlName="dlc"
-                        class="border-check focus:border-2 focus:border-blue-300 focus:outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed"
+                        class="border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed"
                         (keyup)="onKeyUp($event.target.value, $event.target.id)"
                         (keyup.escape)="clearForm($event.target.id)" id="dlc">
                     <fa-icon [icon]="faTimesCircle" (click)="clearForm('dlc')"
@@ -77,9 +71,9 @@
                 </div>
                 <div class="transitions col-span-7 border-check relative select-none" *ngIf="!focused">
                     <h3>Birth Interval</h3>
-                    <!-- <input type="text" class="border-check focus:border-2 focus:border-blue-300 focus:outline-none rounded border-solid border border-zinc-300" *ngIf="!fv_form.bi"> -->
+                    <!-- <input type="text" class="border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300" *ngIf="!fv_form.bi"> -->
                     <input type="text" formControlName="bi"
-                        class="border-check focus:border-2 focus:border-blue-300 focus:outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed"
+                        class="border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed"
                         (keyup)="onKeyUp($event.target.value, $event.target.id)"
                         (keyup.escape)="clearForm($event.target.id)" id="bi">
                     <fa-icon [icon]="faTimesCircle" (click)="clearForm('bi')"
@@ -89,9 +83,9 @@
                 </div>
                 <div class="transitions col-span-7 border-check relative select-none" *ngIf="!focused">
                     <h3>Average Monthly Income</h3>
-                    <!-- <input type="text" class="border-check focus:border-2 focus:border-blue-300 focus:outline-none rounded border-solid border border-zinc-300" *ngIf="!fv_form.ami" > -->
+                    <!-- <input type="text" class="border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300" *ngIf="!fv_form.ami" > -->
                     <input type="text" formControlName="ami"
-                        class="border-check focus:border-2 focus:border-blue-300 focus:outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed"
+                        class="border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed"
                         (keyup)="onKeyUp($event.target.value, $event.target.id)"
                         (keyup.escape)="clearForm($event.target.id)" id="ami">
                     <fa-icon [icon]="faTimesCircle" (click)="clearForm('ami')"
@@ -112,13 +106,12 @@
                     <button type="button" class="font-bold button-out border-check-red typed-out"
                         *ngIf="buttons.includes('cancel')">Cancel</button>
                 </div>
-                <div class="flex hover:animate-bounce border-check bg-white hover:bg-green-400 py-1 rounded-full text-green-500 hover:text-white px-2"
-                    (mouseover)="buttonShow('save')">
-                    <fa-icon [icon]="faSave" size="lg" class="mr-2 " [attr.for]="save">
+                <div class="peer flex hover:animate-bounce border-check bg-white hover:bg-green-400 py-1 rounded-full text-green-500 hover:text-white px-2"
+                   >
+                    <fa-icon [icon]="faSave" size="lg" class="mr-2 peer" [attr.for]="save">
                     </fa-icon>
-                    <button type="submit" [attr.id]="save" class="font-bold button-out border-check-red typed-out"
-                        (keyup.enter)="uncheck($event.target.id + fphx_cat)"
-                        *ngIf="buttons.includes('save')">Save</button>
+                    <button type="submit" [attr.id]="save" class="font-bold button-out border-check-red typed-out hidden peer-hover:visible"
+                        (keyup.enter)="uncheck($event.target.id + fphx_cat)">Save</button>
                 </div>
             </div>
         </div>

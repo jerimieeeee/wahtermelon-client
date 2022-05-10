@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { faCalendarDay, faCaretLeft, faCaretRight, faCircleCheck, faPencil, faPlus, faSave, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faCalendarDay, faCaretLeft, faCaretRight, faCircleCheck, faInfoCircle, faPencil, faPlus, faSave, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FormControl, FormGroup } from '@angular/forms';
 
 
@@ -16,7 +16,8 @@ export class FphxComponent implements OnInit {
   faPencil = faPencil;
   faCircleCheck = faCircleCheck;
   faCaretRight = faCaretRight;
-
+  faInfoCircle = faInfoCircle;
+  
   typing: boolean;
   checked: boolean;
   focused: boolean;

@@ -90,8 +90,6 @@ export class FirsvisitComponent implements OnInit {
       this.keyUp.push(id);
 
     }
-    // console.log(this.keyUp.length);
-    // console.log(this.keyUp);
 
   }
   buttonShow(name) {
@@ -100,15 +98,6 @@ export class FirsvisitComponent implements OnInit {
       this.buttons.push(name);
     }
     // console.log(this.buttons);
-
-  }
-
-  showModal(action) {
-    if (action == 'show') {
-      this.modal = true;
-    } else {
-      this.modal = false;
-    }
 
   }
 

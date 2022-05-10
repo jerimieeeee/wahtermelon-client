@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { faCalendarDay, faPlus, faSave, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faCalendarDay, faInfoCircle, faPlus, faSave, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 
 @Component({
@@ -12,6 +12,7 @@ export class FppeComponent implements OnInit {
   faPlus = faPlus;
   faSave = faSave;
   faTimes = faTimes;
+  faInfoCircle = faInfoCircle;
   try: any;
   focused: boolean;
   fppe_typing: boolean;

@@ -11,5 +11,5 @@ module.exports = {
   variants: {
     animate: ['hover'],
   },
-  plugins: [],
+  plugins: [require("@tailwindcss/forms")],
 }

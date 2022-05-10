@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup,FormControl } from '@angular/forms';
-import { faCalendarDay, faClose, faPencil, faSave, faTimes, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
+import { faCalendarDay, faClose, faInfoCircle, faPencil, faSave, faTimes, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-obshx',
@@ -30,6 +30,7 @@ export class ObshxComponent implements OnInit {
   faClose = faClose;
   faTimes = faTimes;
   faPencil = faPencil;
+  faInfoCircle = faInfoCircle;
 
   public buttons = [];
   public keyUp = [];

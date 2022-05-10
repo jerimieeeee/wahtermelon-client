@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { faHome, faCalendarDay, faFlask, faTimes, faSave, faTimesCircle, faPencil, faCaretLeft } from '@fortawesome/free-solid-svg-icons';
+import { faHome, faCalendarDay, faFlask, faTimes, faSave, faTimesCircle, faPencil, faCaretLeft, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
@@ -14,7 +14,7 @@ export class FpchartComponent implements OnInit {
   faSave = faSave;
   faTimesCircle = faTimesCircle;
   faPencil = faPencil;
-  
+  faInfoCircle = faInfoCircle;
   textbox: boolean;
   focused2: boolean;
   typing: boolean;

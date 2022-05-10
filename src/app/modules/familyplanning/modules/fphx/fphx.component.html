@@ -1,13 +1,29 @@
-<div class="grid gap-4 max-h-fit cursor-pointer hover:bg-gray-100"
+<div class="grid gap-4 max-h-fit cursor-pointer hover:bg-gray-100 relative"
     style="grid-template-columns: repeat(16, minmax(0, 1fr));" (click)="flip()" *ngIf="focused">
     <div class=" border-check row-span-2 col-span-2 rounded-r "><button class="font-bold" type="button">FP HX</button>
     </div>
-    <div style="grid-column: span 14 / span 14;" class="">
+    <div class="absolute right-0 top-0">
+        <fa-icon [icon]="faInfoCircle" class="peer ml-3 text-gray-300 hover:text-gray-500 z-50"></fa-icon>
+        <div
+            class="absolute text-sm bg-gradient-to-b from-stone-500 to-gray-400 p-2 rounded-md border border-gray-500  text-white drop-shadow-lg opacity-90 border-check z-50 w-64 right-0 invisible peer-hover:visible">
+            <h1 class="font-bold drop-shadow-lg">IMPORTANT</h1>
+            <p class="font-light drop-shadow-lg">Once saved, the information will be displayed in the input boxes and
+                shall not be editable unless Edit button is pressed.</p>
+        </div>
     </div>
+    <!-- <div style="grid-column: span 14 / span 14;" class="">
+    </div> -->
 </div>
-<div class="grid gap-4 max-h-fit" style="grid-template-columns: repeat(16, minmax(0, 1fr));" *ngIf="!focused">
+<div class="grid gap-4 max-h-fit relative" style="grid-template-columns: repeat(16, minmax(0, 1fr));" *ngIf="!focused">
     <div class=" border-check row-span-2 col-span-2 hover:bg-gray-100 rounded-r cursor-pointer" (click)="flip()"><button
             class="font-bold" type="button">FP HX</button></div>
+            <div class="absolute left-16 top-0">
+                <fa-icon [icon]="faInfoCircle" class=" peer ml-3 text-gray-300 hover:text-gray-500 z-50"></fa-icon>
+            <div class="absolute text-sm bg-gradient-to-b from-stone-500 to-gray-400 p-2 rounded-md border border-gray-500  text-white drop-shadow-lg opacity-90 border-check z-50 w-64 invisible peer-hover:visible">
+                <h1 class="font-bold drop-shadow-lg">IMPORTANT</h1>
+                <p class="font-light drop-shadow-lg">Once saved, the information will be displayed in the input boxes and shall not be editable unless Edit button is pressed.</p>
+            </div>
+            </div>
     <div style="grid-column: span 14 / span 14;" class="">
 
         <div *ngFor="let fphx_cat of fp_hx_cat;  let i = index;">
@@ -70,7 +86,7 @@
                     <div *ngFor="let check of check_list;">
                         <div class="border-check-red p-2 group" *ngIf="module_strings.includes(i)">
                             <input
-                                class=" h-6 w-6 border border-gray-400 group-hover:border-orange-600 rounded-md group-hover:rounded-lg checked:rounded-full checked:border-2 bg-white checked:bg-blue-300 checked:border-blue-500 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                                class=" h-6 w-6 border border-gray-400 rounded-md group-hover:rounded-lg checked:rounded-full checked:border-2 bg-white checked:bg-blue-400 checked:border-blue-500 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
                                 type="checkbox" value="check" [attr.id]="check" (change)="onChange(check,fphx_cat)"
                                 [checked]="fphx_strings.includes(check)" (keyup.escape)="uncheck(fphx_cat)"
                                 (keyup.enter)="saveModule()" (keyup.tab)="nextModule(fp_hx_cat[i+1], i+1);">
