@@ -10,13 +10,15 @@ import { VitalsGraphComponent } from './components/vitals-graph/vitals-graph.com
 import { VitalsComponent } from './components/vitals/vitals.component';
 import { FormsModule} from '@angular/forms';
 
+
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     SidenavComponent,
     VitalsGraphComponent,
-    VitalsComponent
+    VitalsComponent,
+
   ],
   imports: [
     BrowserModule,
