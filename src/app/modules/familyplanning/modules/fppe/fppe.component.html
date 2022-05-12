@@ -1,103 +1,125 @@
-<div class="grid gap-4 max-h-fit cursor-pointer hover:bg-gray-100 relative" style="grid-template-columns: repeat(16, minmax(0, 1fr));" (click)="flip()"
-    *ngIf="focused">
-    <div class=" border-check row-span-2 col-span-2 rounded-r "><button class="font-bold"
-            type="button">FP PE</button></div>
-            <div class="absolute right-0 top-0">
-                <fa-icon [icon]="faInfoCircle" class="peer ml-3 text-gray-300 hover:text-gray-500 z-50"></fa-icon>
-                <div class="absolute text-sm bg-gradient-to-b from-stone-500 to-gray-400 p-2 rounded-md border border-gray-500  text-white drop-shadow-lg opacity-90 border-check z-50 w-64 right-0 invisible peer-hover:visible">
-                    <h1 class="font-bold drop-shadow-lg">IMPORTANT</h1>
-                    <p class="font-light drop-shadow-lg">Once saved, the information will be displayed in the input boxes and shall not be editable unless Edit button is pressed.</p>
-                </div>
-            </div>
+<div class="grid gap-4 max-h-fit cursor-pointer hover:bg-gray-100 relative"
+    style="grid-template-columns: repeat(16, minmax(0, 1fr));" (click)="flip()" *ngIf="focused">
+    <div class=" border-check row-span-2 col-span-2 rounded-r "><button class="font-bold" type="button">FP PE</button>
+    </div>
+    <div class="absolute right-0 top-0">
+        <fa-icon [icon]="faInfoCircle" class="peer ml-3 text-gray-300 hover:text-gray-500 z-50"></fa-icon>
+        <div
+            class="absolute text-sm bg-gradient-to-b from-stone-500 to-gray-400 p-2 rounded-md border border-gray-500  text-white drop-shadow-lg opacity-90 border-check z-50 w-64 right-0 invisible peer-hover:visible">
+            <h1 class="font-bold drop-shadow-lg">IMPORTANT</h1>
+            <p class="font-light drop-shadow-lg">Once saved, the information will be displayed in the input boxes and
+                shall not be editable unless Edit button is pressed.</p>
+        </div>
+    </div>
+    <!-- <div style="grid-column: span 14 / span 14;" class="">
+    </div> -->
 </div>
-<div class="grid gap-4 max-h-fit relative" style="grid-template-columns: repeat(16, minmax(0, 1fr));" *ngIf="!focused" >
+<div class="grid gap-4 max-h-fit relative" style="grid-template-columns: repeat(16, minmax(0, 1fr));" *ngIf="!focused">
     <div class=" border-check row-span-2 col-span-2 hover:bg-gray-100 rounded-r cursor-pointer" (click)="flip()"><button
             class="font-bold" type="button">FP PE</button></div>
             <div class="absolute left-16 top-0">
                 <fa-icon [icon]="faInfoCircle" class=" peer ml-3 text-gray-300 hover:text-gray-500 z-50"></fa-icon>
-                <div class="absolute text-sm bg-gradient-to-b from-stone-500 to-gray-400 p-2 rounded-md border border-gray-500  text-white drop-shadow-lg opacity-90 border-check z-50 w-64 invisible peer-hover:visible">
-                    <h1 class="font-bold drop-shadow-lg">IMPORTANT</h1>
-                    <p class="font-light drop-shadow-lg">Once saved, the information will be displayed in the input boxes and shall not be editable unless Edit button is pressed.</p>
-                </div>
+            <div class="absolute text-sm bg-gradient-to-b from-stone-500 to-gray-400 p-2 rounded-md border border-gray-500  text-white drop-shadow-lg opacity-90 border-check z-50 w-64 invisible peer-hover:visible">
+                <h1 class="font-bold drop-shadow-lg">IMPORTANT</h1>
+                <p class="font-light drop-shadow-lg">Once saved, the information will be displayed in the input boxes and shall not be editable unless Edit button is pressed.</p>
+            </div>
             </div>
     <div style="grid-column: span 14 / span 14;" class="">
 
-        <div *ngFor="let fppe_cat of fp_pe_cat;  let i = index">
+        <div *ngFor="let fppe_cat of fp_pe_cat;  let i = index;">
+
             <form action="">
-                <div class="grid grid-cols-3 mb-5 rounded-lg drop-shadow-lg bg-white rounded-lg border border-blue-400"
-                    *ngIf="module_strings.includes(i)"
-                    >
-                    <div (click)="hideModule(i)"
-                        class="text-blue-500 form-check col-span-3 p-2 font-semibold rounded-tr-lg rounded-tl-lg border border-dashed border-blue-300 border-t-0 border-l-0 border-r-0">
-                        <h1 class="select-none">{{fppe_cat}}</h1>
-                    </div>
-                    <div class="absolute right-1 top-1 hover:text-white text-green-400">
-                        <button type="button" class=" hover:bg-green-400 font-semibold  py-0.5 px-2 rounded-full"
-                            (click)="selectAll('select' + fppe_cat)" [hidden]="cat_strings.includes(fppe_cat)" 
-                            >Select All</button>
-                        <button type="submit" class=" hover:bg-green-400 font-semibold  py-0.5 px-2 rounded-full"
-                            (click)="uncheck(fppe_cat)" *ngIf="cat_strings.includes(fppe_cat) && fppe_strings.length > 0"
-                            >Unselect All</button>
-                    </div>
-                    <div *ngFor="let check of check_list;">
-                        <div class="border-check-red p-2">
-                            <input
-                                class="form-check-input appearance-none h-5 w-5 border border-blue-600 rounded-md bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
-                                type="checkbox" value="check" [attr.id]="check" (change)="onChange(check,fppe_cat)"
-                                [checked]="fppe_strings.includes(check)" (keyup.escape)="uncheck(fppe_cat)"
-                                (keyup.enter)="saveModule(fp_pe_cat[i+1], i+1)"
-                                >
-                            <label class="text-gray-800 cursor-pointer" name="check" [attr.for]="check" value="check.id">
-                                {{ check }}
-                            </label>
+                <div class="grid sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 mb-2 bg-white rounded-lg border m-2"
+                    [style]="module_strings.includes(i) && !saved? 'border-color: rgb(96 165 250); filter: drop-shadow(0 10px 8px rgb(0 0 0 / 0.04)) drop-shadow(0 4px 3px rgb(0 0 0 / 0.1)); margin-bottom: 1.25rem;' : ' '"
+                    [class]="saved? 'hover:drop-shadow-lg drop-shadow-md hover:border border-gray-300 hover:border-blue-400':'hover:border-blue-300 border-gray-200'">
+                    
+                    <div (click)="showModule(fppe_cat, i)" (keyup.tab)="nextModule(fp_pe_cat[i+1], i+1);"
+                        (keyup.enter)="selectAll('select' + fppe_cat)"
+                        class="text-blue-500 form-check sm:col-span-1 md:col-span-3 lg:col-span-4 p-2 font-semibold"
+                        [style]="module_strings.includes(i)? 'border-bottom-width: 1px; border-style: dashed; border-color: rgb(96 165 250); border-top-width: 0px; border-left-width: 0px; border-right-width: 0px;' : ''">
+                        <div *ngFor="let cat_name of lib_cat_name" class="normal-case">
+                            <h1 class="select-none" *ngIf="fppe_cat == cat_name.pe_cat_id">
+                                {{cat_name.pe_cat_name}}
+                            </h1>
                         </div>
-                    </div>
-                    <div class="col-span-3">
-                        <div class="relative ">
-                            <div class="inline-flex m-2 float-right"
-                                *ngIf="cat_strings.includes(fppe_cat) && fppe_strings.length > 0">
-                                <div class="flex hover:animate-bounce border-check bg-white hover:bg-gray-400 text-gray-400 py-1 rounded-full hover:text-white px-2"
-                                    (click)="uncheck(fppe_cat)" (mouseover)="buttonShow('cancel')">
-                                    <fa-icon [icon]="faTimes" size="lg" class="mr-2">
-                                    </fa-icon>
-                                    <button type="button" class="font-bold button-out border-check-red"
-                                        *ngIf="buttons.includes('cancel')">Cancel</button>
-                                </div>
-                                <div class="flex hover:animate-bounce border-check bg-white hover:bg-green-400 py-1 rounded-full text-green-500 hover:text-white px-2"
-                                    (click)="saveModule(fp_pe_cat[i+1], i+1)" (mouseover)="buttonShow('save')">
-                                    <fa-icon [icon]="faSave" size="lg" class="mr-2 ">
-                                    </fa-icon>
-                                    <button type="submit" class="font-bold button-out border-check-red"
-                                        *ngIf="buttons.includes('save')">Save</button>
+                        
+                  
+                        <div *ngFor="let fppe of fp_pe_symptoms">
+                            <div *ngFor="let string of fppe_strings; let x = index">
+                                <div *ngIf="fppe_cat == fppe.pe_cat && fppe.pe_name == string">
+                                    <h1 class="group select-none m-0.5 border-check px-2 rounded-full text-blue-400 font-medium typed-out hover:bg-gray-100 hover:text-gray-500 hover:font-semibold"
+                                        style="margin-top: 0;" *ngIf="!module_strings.includes(i)" id="test">
+                                        <fa-icon [icon]="faCaretRight" *ngIf="!module_strings.includes(i)"
+                                            class="group-hover:text-blue-400 text-gray-300"></fa-icon>
+                                        {{fppe.pe_name}}
+                                    </h1>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </form>
-            <div class=" rounded-lg mb-1 " (click)="showModule(fppe_cat, i)"
-                *ngIf="!module_strings.includes(i)">
-                <div
-                    class="relative flex text-blue-500 form-check col-span-3 p-2 rounded-lg border border-gray-200 hover:drop-shadow-md bg-white hover:border-blue-300">
-                    <h1 class="select-none font-semibold">{{fppe_cat}}</h1>
-                    <div *ngFor="let fppe of fp_pe_symptoms">
-                        <div *ngIf="fppe_cat == fppe.pe_cat">
-                            <h1 *ngIf="fppe.x"
-                                class="bg-gray-100 select-none m-0.5 border-check px-2 rounded-full text-gray-500 font-medium"
-                                style="margin-top: 0;" (mouseover)="hoverPill(fppe.id)"
-                                [hidden]="pill_box.includes(fppe.id)" id="test">{{fppe.id}}</h1>
-                            <h1 *ngIf="fppe.x"
-                                class="select-none m-0.5 border-check px-2 rounded-full text-blue-400 font-medium typed-out"
-                                style="margin-top: 0;" [hidden]="!pill_box.includes(fppe.id)"
-                                (mouseout)="leavePill()" id="test">{{fppe.pe_name}}</h1>
+                    <div class="absolute right-1 top-1 hover:text-white text-green-400"
+                        *ngIf="module_strings.includes(i)">
+                        <div class="inline-flex float-right" *ngIf="!cat_strings.includes(fppe_cat)">
+                            <div class="flex hover:animate-bounce border-check bg-white hover:bg-gray-400 text-gray-300 py-1 rounded-full hover:text-white px-2"
+                                (click)="selectAll('select' + fppe_cat)" (mouseover)="buttonShow('select')"
+                                (mouseleave)="buttonShow()">
+                                <fa-icon [icon]="faCircleCheck" size="lg" class="mr-2"
+                                    *ngIf="!cat_strings.includes(fppe_cat)">
+                                </fa-icon>
+                                <button type="button" class="font-bold button-out border-check-red"
+                                    *ngIf="buttons.includes('select') && !cat_strings.includes(fppe_cat)">Select
+                                    All</button>
+                            </div>
+                        </div>
+                        <div class="inline-flex float-right"
+                            *ngIf="cat_strings.includes(fppe_cat) && fppe_strings.length > 0">
+                            <div class="flex hover:animate-bounce border-check bg-white hover:bg-gray-400 text-gray-400 py-1 rounded-full hover:text-white px-2"
+                                (click)="uncheck(fppe_cat)" (mouseover)="buttonShow('cancel')"
+                                (mouseleave)="buttonShow()">
+                                <fa-icon [icon]="faTimes" size="lg" class="mr-2">
+                                </fa-icon>
+                                <button type="button" class="font-bold button-out border-check-red"
+                                    *ngIf="buttons.includes('cancel')">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngFor="let check of check_list;">
+                        <div class="border-check-red p-2 group" *ngIf="module_strings.includes(i)">
+                            <input
+                                class=" h-6 w-6 border border-gray-400 rounded-md group-hover:rounded-lg checked:rounded-full checked:border-2 bg-white checked:bg-blue-400 checked:border-blue-500 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                                type="checkbox" value="check" [attr.id]="check" (change)="onChange(check,fppe_cat)"
+                                [checked]="fppe_strings.includes(check)" (keyup.escape)="uncheck(fppe_cat)"
+                                (keyup.enter)="saveModule()" (keyup.tab)="nextModule(fp_pe_cat[i+1], i+1);">
+                            <label class="text-gray-800 cursor-pointer" name="check" [attr.for]="check"
+                                value="check.id">
+                                {{ check }}
+                            </label>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="w-max">
-                <p style="margin-top: -0.25rem;" class="mb-5 font-light text-red-400"
-                    *ngIf="cat_strings.includes(fppe_cat) && fppe_strings.length > 0 && !module_strings.includes(i) ">
-                    **You have unsaved stuff in {{fppe_cat}}</p>
+            </form>
+
+    </div>
+        <div class="col-span-3">
+            <div class="relative ">
+                <div class="inline-flex m-2 float-right" *ngIf="saved">
+                    <div class="flex hover:animate-bounce border-check bg-white hover:bg-orange-400 text-orange-400 py-1 rounded-full hover:text-white px-2"
+                        (click)="editModule()" (mouseover)="buttonShow('edit')" (mouseleave)="buttonShow()">
+                        <fa-icon [icon]="faPencil" size="lg" class="mr-2">
+                        </fa-icon>
+                        <button type="button" class="font-bold button-out border-check-red"
+                            *ngIf="buttons.includes('edit')">Edit</button>
+                    </div>
+                </div>
+                <div class="inline-flex m-2 float-right" *ngIf="fppe_strings.length > 0 && !saved">
+                    <div class="flex float-left hover:animate-bounce border-check bg-white hover:bg-green-400 py-1 rounded-full text-green-500 hover:text-white px-2"
+                        (click)="saveModule()" (mouseover)="buttonShow('save')" (keyup.enter)="saveModule()">
+                        <fa-icon [icon]="faSave" size="lg" class="mr-2 ">
+                        </fa-icon>
+                        <button type="submit" class="font-bold button-out border-check-red"
+                            *ngIf="buttons.includes('save')">Save</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

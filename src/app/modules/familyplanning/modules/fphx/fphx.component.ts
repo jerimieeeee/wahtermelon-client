@@ -36,12 +36,10 @@ export class FphxComponent implements OnInit {
   public fphx_strings = [];
   public cat_strings = [];
   public cat_strings2 = [];
-
-
   public check_list = [];
-
   public module_strings = [];
   public locations = [];
+
   public lib_cat_name = [
     {"history_cat_id":"ANY","history_cat_name":"History of any of the following"},
     {"history_cat_id":"CXHRT","history_cat_name":"Chest/Heart"},
@@ -94,9 +92,8 @@ export class FphxComponent implements OnInit {
 
   public fp_hx_cat = [];
   public fp_hx_name_cat = [];
-
-  public pill_box = [];
   public buttons = [];
+  
   ngOnInit(): void {
     this.focused = true;
     this.showCat();
