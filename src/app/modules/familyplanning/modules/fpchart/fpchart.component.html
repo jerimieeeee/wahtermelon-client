@@ -1,3 +1,4 @@
+<form [formGroup]="fp_form" (ngSubmit)="saveForm(fp_form.value)">
 <div class="grid gap-4 hover:bg-gray-100 cursor-pointer relative"
     style="grid-template-columns: repeat(16, minmax(0, 1fr));" (click)="flip()" *ngIf="focused">
     <div class=" border-check row-span-2 col-span-2  rounded-r"><button class="font-bold" type="button">FP
@@ -13,7 +14,6 @@
         </div>
     </div>
 </div>
-<form [formGroup]="fp_form" (ngSubmit)="saveForm(fp_form.value)">
     <div class="grid gap-4 relative" style="grid-template-columns: repeat(16, minmax(0, 1fr));" *ngIf="!focused">
         <div class="row-span-2 col-span-2 hover:bg-gray-100 rounded-r cursor-pointer" (click)="flip()"><button
                 class="font-bold" type="button">FP Chart</button>
@@ -39,7 +39,7 @@
                             <fa-icon [icon]="faCalendarDay" size="lg" class="text-blue-500" for="service_date">
                             </fa-icon>
                         </div>
-                        <input formControlName="service_date" id="service_date" name="service_date" type="date"
+                        <input formControlName="service_date" type="date"
                             class="col-span-8 rounded-r border-solid border border-l-0 border-zinc-300 focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none disabled:cursor-not-allowed"
                             width="auto"
                             (keyup.escape)="$event.target.value = ''; onKeyUp($event.target.value, $event.target.id)"

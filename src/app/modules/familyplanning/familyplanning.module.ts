@@ -3,15 +3,17 @@ import { CommonModule } from '@angular/common';
 
 
 import { FamilyplanningRoutingModule } from './familyplanning-routing.module';
+
 import { FamilyplanningComponent } from './familyplanning.component';
 import { SharedComponentsModule } from 'src/app/shared/shared-components/shared-components.module';
-// import { FirstvisitComponent } from './firstvisit/firstvisit.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 import * as angularFontawesome from '@fortawesome/angular-fontawesome';
+
 import { FpchartComponent } from './modules/fpchart/fpchart.component';
 import { FirsvisitComponent } from './modules/firsvisit/firsvisit.component';
 import { FppeComponent } from './modules/fppe/fppe.component';
 import { FphxComponent } from './modules/fphx/fphx.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ObshxComponent } from './modules/obshx/obshx.component';
 import { PelvicComponent } from './modules/pelvic/pelvic.component';
 import { MethodsComponent } from './modules/methods/methods.component';

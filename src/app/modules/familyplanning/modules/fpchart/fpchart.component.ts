@@ -28,8 +28,9 @@ export class FpchartComponent implements OnInit {
   next_service: '',
   remarks: '',
  };
+ date = new Date();
+
  fp_form : FormGroup;
- service_date : Date = new Date();
  source: String = new String();
  quantity: Number = new Number();
  next_service : Date = new Date();
@@ -42,14 +43,14 @@ export class FpchartComponent implements OnInit {
     
     this.focused = false;
     this.typing = true;
-    this.fp_form.reset();
+    // this.fp_form.reset();
   }
   createForm(){
     this.fp_form = new FormGroup({
-      service_date : new FormControl(this.service_date),
+      service_date: new FormControl(new Date().toISOString().substring(0,10)),
       source : new FormControl(this.source),
       quantity : new FormControl(this.quantity),
-      next_service : new FormControl(this.next_service),
+      next_service : new FormControl(),
       remarks : new FormControl(this.remarks),
     });
   }

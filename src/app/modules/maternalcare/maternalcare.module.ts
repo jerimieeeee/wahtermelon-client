@@ -5,14 +5,17 @@ import { MaternalcareRoutingModule } from './maternalcare-routing.module';
 
 import { MaternalcareComponent } from './maternalcare.component';
 import { SharedComponentsModule } from 'src/app/shared/shared-components/shared-components.module';
-import * as angularFontawesome from '@fortawesome/angular-fontawesome';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+import * as angularFontawesome from '@fortawesome/angular-fontawesome';
+
+import { McrComponent } from './modules/mcr/mcr.component';
+import { PostpartumComponent } from './modules/postpartum/postpartum.component';
 @NgModule({
-  declarations: [MaternalcareComponent],
+  declarations: [MaternalcareComponent, McrComponent, PostpartumComponent],
   imports: [
     CommonModule,
     MaternalcareRoutingModule,
-    CommonModule,
     SharedComponentsModule,
     angularFontawesome.FontAwesomeModule,
     FormsModule,
