@@ -11,5 +11,4 @@ export class DentalComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
 }

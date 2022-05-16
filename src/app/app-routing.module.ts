@@ -27,7 +27,9 @@ const routes: Routes = [
     path: 'registration',
     loadChildren: () => import('./modules/patient-registration/patient-registration.module').then(m => m.PatientRegistrationModule)
   },
-  { path: 'dental', loadChildren: () => import('./modules/dental/dental.module').then(m => m.DentalModule) }
+  {
+    path: 'dental',
+    loadChildren: () => import('./modules/dental/dental.module').then(m => m.DentalModule) }
 ];
 
 @NgModule({
