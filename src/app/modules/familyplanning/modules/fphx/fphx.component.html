@@ -14,7 +14,7 @@
     <!-- <div style="grid-column: span 14 / span 14;" class="">
     </div> -->
 </div>
-<div class="grid gap-4 max-h-fit relative" style="grid-template-columns: repeat(16, minmax(0, 1fr));" *ngIf="!focused">
+<div class="grid max-h-fit relative" style="grid-template-columns: repeat(16, minmax(0, 1fr));" *ngIf="!focused">
     <div class=" border-check row-span-2 col-span-2 hover:bg-gray-100 rounded-r cursor-pointer" (click)="flip()"><button
             class="font-bold" type="button">FP HX</button></div>
             <div class="absolute left-16 top-0">
@@ -102,7 +102,7 @@
     </div>
         <div class="col-span-3">
             <div class="relative ">
-                <div class="inline-flex m-2 float-right" *ngIf="saved">
+                <div class="inline-flex float-right" *ngIf="saved">
                     <div class="flex hover:animate-bounce border-check bg-white hover:bg-orange-400 text-orange-400 py-1 rounded-full hover:text-white px-2"
                         (click)="editModule()" (mouseover)="buttonShow('edit')" (mouseleave)="buttonShow()">
                         <fa-icon [icon]="faPencil" size="lg" class="mr-2">
@@ -111,7 +111,7 @@
                             *ngIf="buttons.includes('edit')">Edit</button>
                     </div>
                 </div>
-                <div class="inline-flex m-2 float-right" *ngIf="fphx_strings.length > 0 && !saved">
+                <div class="inline-flex float-right" *ngIf="fphx_strings.length > 0 && !saved">
                     <div class="flex float-left hover:animate-bounce border-check bg-white hover:bg-green-400 py-1 rounded-full text-green-500 hover:text-white px-2"
                         (click)="saveModule()" (mouseover)="buttonShow('save')" (keyup.enter)="saveModule()">
                         <fa-icon [icon]="faSave" size="lg" class="mr-2 ">

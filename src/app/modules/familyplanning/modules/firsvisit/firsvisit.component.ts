@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { faCalendarDay, faPlus, faSave, faTimes, faClose, faTimesCircle, faPencil, faCaretDown, faAngleDown, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
+import { faCalendarDay, faPlus, faSave, faTimes, faClose, faTimesCircle, faPencil, faCaretDown, faAngleDown, faInfoCircle, faCaretRight } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-firsvisit',
@@ -20,7 +20,8 @@ export class FirsvisitComponent implements OnInit {
   faPencil = faPencil;
   faAngleDown = faAngleDown;
   faInfoCircle = faInfoCircle;
-
+  faCaretRight = faCaretRight;
+  error_message = '';
   public buttons = [];
 
   public keyUp = [];
@@ -33,6 +34,7 @@ export class FirsvisitComponent implements OnInit {
   constructor(private router: Router) { }
 
   ngOnInit(): void {
+    this.error_message = '**please enter numbers only';
     this.createForm();
     !this.focused;
     this.fv_form.reset();
@@ -67,7 +69,7 @@ export class FirsvisitComponent implements OnInit {
     this.keyUp = [];
     this.buttons = [];
     this.buttons.push('save');
-    this.fv_form.reset();
+   // this.fv_form.reset();
   }
 
   edit() {

@@ -183,7 +183,7 @@
                     <fa-icon [icon]="faSave" size="lg" class="mr-2 ">
                     </fa-icon>
                     <button type="submit" class="font-bold button-out border-check-red"
-                        (keyup.enter)="uncheck($event.target.id + fphx_cat)"
+                        (keyup.enter)="saveForm(obshx_form.value)"
                         *ngIf="buttons.includes('save')">Save</button>
                 </div>
             </div>

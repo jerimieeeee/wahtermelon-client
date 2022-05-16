@@ -60,10 +60,11 @@
                 </div>
                 <div class="transitions col-span-5 relative" *ngIf="!focused">
                     <h3>Quantity</h3>
-                    <input formControlName="quantity" id="quantity" name="quantity" type="text"
+                    <input formControlName="quantity" id="quantity" name="quantity" type="number"
                         class="focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 disabled:cursor-not-allowed"
                         (keyup)="onKeyUp($event.target.value, $event.target.id)"
-                        (keyup.escape)="$event.target.value = ''; onKeyUp($event.target.value, $event.target.id)">
+                        (keyup.escape)="$event.target.value = ''; onKeyUp($event.target.value, $event.target.id)"
+                        pattern="[0-9]">
                     <fa-icon [icon]="faTimesCircle" (click)="clearForm('quantity')"
                         class="absolute right-0 py-1 px-2 text-gray-400 hover:text-gray-600"
                         *ngIf="keyUp.includes('quantity') && !fp_form.disabled">
