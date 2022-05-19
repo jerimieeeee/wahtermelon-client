@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { faCalendarDay, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
+import { faAngleDown, faCalendarDay, faCaretRight, faClose, faInfoCircle, faPencil, faSave, faTimes, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-mcr',
@@ -10,14 +10,21 @@ import { faCalendarDay, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 export class McrComponent implements OnInit {
  date = new Date();
   focused: boolean;
-  keyUp: any[];
-  buttons: any[];
-  faInfoCircle = faInfoCircle;
-  faCalendarDay = faCalendarDay;
 
+  faCalendarDay = faCalendarDay;
+  faTimes = faTimes;
+  faClose = faClose;
+  faTimesCircle = faTimesCircle;
+  faSave = faSave;
+  faPencil = faPencil;
+  faAngleDown = faAngleDown;
+  faInfoCircle = faInfoCircle;
+  faCaretRight = faCaretRight;
+  error_message = '';
+
+  public keyUp = [];
+  public buttons = [];
   mcr_form: FormGroup;
-  // reg_date: Date = new Date();
-  // lmp_date: Date = new Date();
   gravidity: Number = new Number();
   parity: Number = new Number();
   full_term: Number = new Number();
@@ -30,6 +37,7 @@ export class McrComponent implements OnInit {
   ngOnInit(): void {
     this.focused = false;
     this.createForm();
+    this.error_message = "**please enter numbers only!"
   }
   createForm() {
     this.mcr_form = new FormGroup({
@@ -65,4 +73,33 @@ export class McrComponent implements OnInit {
     
     this.mcr_form.disable();
   }
+  onKeyUp(data_input: string, id: string) {
+    // console.log(data_input + ' this is my data input');
+
+    if (this.keyUp.includes(id)) {
+      if (data_input == '') {
+        this.keyUp.splice(this.keyUp.indexOf(id), 1);
+      }
+    } else {
+      this.keyUp.push(id);
+
+    }
+
+  }
+  buttonShow(name) {
+    this.buttons = [];
+    if (!this.buttons.includes(name)) {
+      this.buttons.push(name);
+    }
+    // console.log(this.buttons);
+
+  }
+  cancel() {
+    this.keyUp = [];
+    this.mcr_form.reset();
+  }
+  edit() {
+    this.mcr_form.enable();
+  }
+
 }

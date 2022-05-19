@@ -45,7 +45,8 @@
                         <input formControlName="reg_date" type="date"
                             class="col-span-8 rounded-r border-solid border border-l-0 border-zinc-300 focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none disabled:cursor-not-allowed"
                             width="auto"
-                            >
+                            (keyup.escape)="$event.target.value = ''; onKeyUp($event.target.value, $event.target.id)"
+                            (change)="onKeyUp($event.target.value, $event.target.id)">
                     </div>
                 </div>
 
@@ -58,11 +59,143 @@
                         </div>
                         <input formControlName="lmp_date" id="lmp_date" name="lmp_date" type="date"
                             class="col-span-8 rounded-r border-solid border border-l-0 border-zinc-300 focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none disabled:cursor-not-allowed"
-                            width="auto">
+                            width="auto"
+                            (keyup.escape)="$event.target.value = ''; onKeyUp($event.target.value, $event.target.id)"
+                            (change)="onKeyUp($event.target.value, $event.target.id)">
                     </div>
                 </div>
             </div>
-            <button type="submit">save</button>
+            <div class="grid rounded-lg hover:drop-shadow-lg drop-shadow-md bg-white rounded-lg hover:border border-gray-300 hover:border-pink-400 m-2 border"
+                style="grid-template-columns: repeat(14, minmax(0, 1fr));">
+                <div class="text-pink-500 form-check p-2 font-semibold border border-dashed border-gray-300 border-t-0 border-l-0 border-r-0 "
+                    style="	grid-column: span 14 / span 14;">
+                    <h1 class="select-none">
+                        Obstetric Score
+                    </h1>
+                </div>
+                <div class="transitions col-span-4 border-check relative select-none group mx-2" *ngIf="!focused">
+                    <h3>Gravidity</h3>
+                    <fa-icon [icon]="faCaretRight"
+                        class="absolute bottom-1.5 left-2 text-gray-300 group-hover:text-pink-400"
+                        *ngIf="!focused && mcr_form.disabled">
+                    </fa-icon>
+                    <input type="number" formControlName="gravidity"
+                        class="font-medium disabled:group-hover:font-semibold peer invalid:border-red-500 border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed disabled:border-0  disabled:pl-5  disabled:typed-out disabled:group-hover:bg-gray-100 disabled:rounded-full"
+                        (keyup)="onKeyUp($event.target.value, $event.target.id)"
+                        (keyup.escape)="clearForm($event.target.id)" id="gravidity"
+                        (change)="onKeyUp($event.target.value, $event.target.id)">
+                    <small class="hidden peer-invalid:block text-red-400 ">error_message</small>
+
+                </div>
+                <div class="transitions col-span-4 row-start-3 border-check relative select-none group mx-2 mb-2" 
+                    *ngIf="!focused">
+                    <h3>Parity</h3>
+                    <fa-icon [icon]="faCaretRight"
+                        class="absolute bottom-1.5 left-2 text-gray-300 group-hover:text-pink-400"
+                        *ngIf="!focused && mcr_form.disabled">
+                    </fa-icon>
+                    <input type="number" formControlName="parity"
+                        class="font-medium disabled:group-hover:font-semibold peer invalid:border-red-500 border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed disabled:border-0  disabled:pl-5  disabled:typed-out disabled:group-hover:bg-gray-100 disabled:rounded-full"
+                        (keyup)="onKeyUp($event.target.value, $event.target.id)"
+                        (keyup.escape)="clearForm($event.target.id)" id="parity"
+                        (change)="onKeyUp($event.target.value, $event.target.id)">
+                    <small class="hidden peer-invalid:block text-red-400 ">error_message</small>
+
+                </div>
+
+               
+
+                <div class="transitions col-span-4 col-start-7 border-check relative select-none group mx-2" *ngIf="!focused">
+                    <h3>Full-Term</h3>
+                    <fa-icon [icon]="faCaretRight"
+                        class="absolute bottom-1.5 left-2 text-gray-300 group-hover:text-pink-400"
+                        *ngIf="!focused && mcr_form.disabled">
+                    </fa-icon>
+                    <input type="number" formControlName="full_term"
+                        class="font-medium disabled:group-hover:font-semibold peer invalid:border-red-500 border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed disabled:border-0  disabled:pl-5  disabled:typed-out disabled:group-hover:bg-gray-100 disabled:rounded-full"
+                        (keyup)="onKeyUp($event.target.value, $event.target.id)"
+                        (keyup.escape)="clearForm($event.target.id)" id="full_term"
+                        (change)="onKeyUp($event.target.value, $event.target.id)">
+                    <small class="hidden peer-invalid:block text-red-400 ">error_message</small>
+
+                </div>
+                <div class="transitions col-span-4 border-check relative select-none group mx-2" *ngIf="!focused">
+                    <h3>Pre-Term</h3>
+                    <fa-icon [icon]="faCaretRight"
+                        class="absolute bottom-1.5 left-2 text-gray-300 group-hover:text-pink-400"
+                        *ngIf="!focused && mcr_form.disabled">
+                    </fa-icon>
+                    <input type="number" formControlName="pre_term"
+                        class="font-medium disabled:group-hover:font-semibold peer invalid:border-red-500 border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed disabled:border-0  disabled:pl-5  disabled:typed-out disabled:group-hover:bg-gray-100 disabled:rounded-full"
+                        (keyup)="onKeyUp($event.target.value, $event.target.id)"
+                        (keyup.escape)="clearForm($event.target.id)" id="pre_term"
+                        (change)="onKeyUp($event.target.value, $event.target.id)">
+                    <small class="hidden peer-invalid:block text-red-400 ">error_message</small>
+
+                </div>
+                <div class="transitions col-span-4 col-start-7 border-check relative select-none group mx-2 mb-2" *ngIf="!focused">
+                    <h3>Abortions</h3>
+                    <fa-icon [icon]="faCaretRight"
+                        class="absolute bottom-1.5 left-2 text-gray-300 group-hover:text-pink-400"
+                        *ngIf="!focused && mcr_form.disabled">
+                    </fa-icon>
+                    <input type="number" formControlName="abortions"
+                        class="font-medium disabled:group-hover:font-semibold peer invalid:border-red-500 border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed disabled:border-0  disabled:pl-5  disabled:typed-out disabled:group-hover:bg-gray-100 disabled:rounded-full"
+                        (keyup)="onKeyUp($event.target.value, $event.target.id)"
+                        (keyup.escape)="clearForm($event.target.id)" id="abortions"
+                        (change)="onKeyUp($event.target.value, $event.target.id)">
+                    <small class="hidden peer-invalid:block text-red-400 ">error_message</small>
+
+                </div>
+                <div class="transitions col-span-4 border-check relative select-none group mx-2 mb-2" *ngIf="!focused">
+                    <h3>Live Births</h3>
+                    <fa-icon [icon]="faCaretRight"
+                        class="absolute bottom-1.5 left-2 text-gray-300 group-hover:text-pink-400"
+                        *ngIf="!focused && mcr_form.disabled">
+                    </fa-icon>
+                    <input type="number" formControlName="live_births"
+                        class="font-medium disabled:group-hover:font-semibold peer invalid:border-red-500 border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed disabled:border-0  disabled:pl-5  disabled:typed-out disabled:group-hover:bg-gray-100 disabled:rounded-full"
+                        (keyup)="onKeyUp($event.target.value, $event.target.id)"
+                        (keyup.escape)="clearForm($event.target.id)" id="live_births"
+                        (change)="onKeyUp($event.target.value, $event.target.id)">
+                    <small class="hidden peer-invalid:block text-red-400 ">error_message</small>
+
+                </div>
+            </div>
+
+
+        </div>
+        <div class="relative w-auto border-check mb-7" *ngIf="!focused && keyUp.length > 0 && !mcr_form.disabled"
+            style="grid-column: span 16 / span 16;">
+            <div class="absolute inline-flex right-0 top-0" style=" top: -0.85rem;">
+                <div class="flex hover:animate-bounce border-check bg-white hover:bg-gray-400 text-gray-400 py-1 rounded-full hover:text-white px-2"
+                    (click)="cancel()" (mouseover)="buttonShow('cancel')">
+                    <fa-icon [icon]="faTimes" size="lg" class="mr-2">
+                    </fa-icon>
+                    <button type="button" class="font-bold button-out border-check-red typed-out"
+                        *ngIf="buttons.includes('cancel')">Cancel</button>
+                </div>
+                <div class="flex hover:animate-bounce border-check bg-white hover:bg-green-400 py-1 rounded-full text-green-500 hover:text-white px-2"
+                    (mouseover)="buttonShow('save')">
+                    <fa-icon [icon]="faSave" size="lg" class="mr-2 ">
+                    </fa-icon>
+                    <button type="submit" class="font-bold button-out border-check-red" [disabled]="mcr_form.invalid"
+                        (keyup.enter)="saveForm(mcr_form.value)" *ngIf="buttons.includes('save')">Save</button>
+                </div>
+            </div>
+        </div>
+        <div class="relative w-auto border-check mb-7" *ngIf="!focused && mcr_form.disabled"
+            style="grid-column: span 16 / span 16;">
+            <div class="absolute inline-flex right-0 top-0" style=" top: -0.85rem;" (click)="edit()">
+                <div class="flex hover:animate-bounce border-check bg-white hover:bg-orange-400 py-1 rounded-full text-orange-500 hover:text-white px-2"
+                    (mouseover)="buttonShow('edit')" (mouseleave)="buttonShow()">
+                    <fa-icon [icon]="faPencil" size="lg" class="mr-2 ">
+                    </fa-icon>
+                    <button type="submit" class="font-bold button-out border-check-red typed-out"
+                        (keyup.enter)="uncheck($event.target.id + fphx_cat)"
+                        *ngIf="buttons.includes('edit')">Edit</button>
+                </div>
+            </div>
         </div>
     </div>
 </form>

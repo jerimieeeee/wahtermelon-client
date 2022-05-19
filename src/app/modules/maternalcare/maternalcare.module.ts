@@ -11,8 +11,9 @@ import * as angularFontawesome from '@fortawesome/angular-fontawesome';
 
 import { McrComponent } from './modules/mcr/mcr.component';
 import { PostpartumComponent } from './modules/postpartum/postpartum.component';
+import { RiskfactorsComponent } from './modules/riskfactors/riskfactors.component';
 @NgModule({
-  declarations: [MaternalcareComponent, McrComponent, PostpartumComponent],
+  declarations: [MaternalcareComponent, McrComponent, PostpartumComponent, RiskfactorsComponent],
   imports: [
     CommonModule,
     MaternalcareRoutingModule,

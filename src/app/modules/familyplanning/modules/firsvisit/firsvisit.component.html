@@ -57,10 +57,11 @@
                     </fa-icon>
                     <!-- <input type="number" class="border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300" *ngIf="!fv_form.alc" > -->
                     <input type="number" formControlName="alc"
-                        class="font-medium group-hover:font-semibold peer invalid:border-red-500 border-check  focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed disabled:border-0  disabled:pl-5  disabled:typed-out disabled:group-hover:bg-gray-100 disabled:rounded-full"
+                        class="font-medium group-hover:font-semibold peer invalid:border-red-500 border-check  focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed disabled:border-0  disabled:pl-5  disabled:typed-out disabled:group-hover:bg-gray-100 disabled:rounded-full disabled:text-blue-500 disabled:group-hover:text-gray-500"
                         (keyup)="onKeyUp($event.target.value, $event.target.id)"
+                        (change)="onKeyUp($event.target.value, $event.target.id)"
                         (keyup.escape)="clearForm($event.target.id)" id="alc" autofocus>
-                        <small class="hidden peer-invalid:block text-red-400 ">{{ error_message }}</small>
+                    <small class="hidden peer-invalid:block text-red-400 ">{{ error_message }}</small>
                     <!-- <fa-icon [icon]="faTimesCircle" (click)="clearForm('alc')"
                         class="absolute right-7 py-1 px-2 text-gray-400 hover:text-gray-600"
                         *ngIf="keyUp.includes('alc') && !fv_form.disabled">
@@ -75,10 +76,11 @@
                     </fa-icon>
                     <!-- <input type="number" class="border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300" *ngIf="!fv_form.dlc"> -->
                     <input type="number" formControlName="dlc"
-                        class="font-medium group-hover:font-semibold peer invalid:border-red-500 border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed disabled:border-0  disabled:pl-5  disabled:typed-out disabled:group-hover:bg-gray-100 disabled:rounded-full"
+                        class="font-medium group-hover:font-semibold peer invalid:border-red-500 border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed disabled:border-0  disabled:pl-5  disabled:typed-out disabled:group-hover:bg-gray-100 disabled:rounded-full disabled:text-blue-500 disabled:group-hover:text-gray-500"
                         (keyup)="onKeyUp($event.target.value, $event.target.id)"
+                        (change)="onKeyUp($event.target.value, $event.target.id)"
                         (keyup.escape)="clearForm($event.target.id)" id="dlc">
-                        <small class="hidden peer-invalid:block text-red-400 ">{{ error_message }}</small>
+                    <small class="hidden peer-invalid:block text-red-400 ">{{ error_message }}</small>
                     <!-- <fa-icon [icon]="faTimesCircle" (click)="clearForm('dlc')"
                         class="absolute right-7 py-1 px-2 text-gray-400 hover:text-gray-600"
                         *ngIf="keyUp.includes('dlc') && !fv_form.disabled">
@@ -92,10 +94,11 @@
                     </fa-icon>
                     <!-- <input type="number" class="border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300" *ngIf="!fv_form.bi"> -->
                     <input type="number" formControlName="bi"
-                        class="font-medium group-hover:font-semibold peer invalid:border-red-500 border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed disabled:border-0  disabled:pl-5  disabled:typed-out disabled:group-hover:bg-gray-100 disabled:rounded-full"
+                        class="font-medium group-hover:font-semibold peer invalid:border-red-500 border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed disabled:border-0  disabled:pl-5  disabled:typed-out disabled:group-hover:bg-gray-100 disabled:rounded-full disabled:text-blue-500 disabled:group-hover:text-gray-500"
                         (keyup)="onKeyUp($event.target.value, $event.target.id)"
+                        (change)="onKeyUp($event.target.value, $event.target.id)"
                         (keyup.escape)="clearForm($event.target.id)" id="bi">
-                        <small class="hidden peer-invalid:block text-red-400 ">{{ error_message }}</small>
+                    <small class="hidden peer-invalid:block text-red-400 ">{{ error_message }}</small>
                     <!-- <fa-icon [icon]="faTimesCircle" (click)="clearForm('bi')"
                         class="absolute right-7 py-1 px-2 text-gray-400 hover:text-gray-600"
                         *ngIf="keyUp.includes('bi') && !fv_form.disabled">
@@ -109,10 +112,11 @@
                     </fa-icon>
                     <!-- <input type="number" class="border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300" *ngIf="!fv_form.ami" > -->
                     <input type="number" formControlName="ami"
-                        class="font-medium group-hover:font-semibold peer invalid:border-red-500 border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed disabled:border-0  disabled:pl-5  disabled:typed-out disabled:group-hover:bg-gray-100 disabled:rounded-full"
+                        class="font-medium group-hover:font-semibold peer invalid:border-red-500 border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed disabled:border-0  disabled:pl-5  disabled:typed-out disabled:group-hover:bg-gray-100 disabled:rounded-full disabled:text-blue-500 disabled:group-hover:text-gray-500"
                         (keyup)="onKeyUp($event.target.value, $event.target.id)"
+                        (change)="onKeyUp($event.target.value, $event.target.id)"
                         (keyup.escape)="clearForm($event.target.id)" id="ami">
-                        <small class="hidden peer-invalid:block text-red-400 ">{{ error_message }}</small>
+                    <small class="hidden peer-invalid:block text-red-400 ">{{ error_message }}</small>
                     <!-- <fa-icon [icon]="faTimesCircle" (click)="clearForm('ami')"
                         class="absolute right-7 py-1 px-2 text-gray-400 hover:text-gray-600"
                         *ngIf="keyUp.includes('ami') && !fv_form.disabled">
@@ -135,8 +139,7 @@
                     (mouseover)="buttonShow('save')">
                     <fa-icon [icon]="faSave" size="lg" class="mr-2 ">
                     </fa-icon>
-                    <button type="submit" class="font-bold button-out border-check-red"
-                        [disabled]="fv_form.invalid"
+                    <button type="submit" class="font-bold button-out border-check-red" [disabled]="fv_form.invalid"
                         (keyup.enter)="saveForm(fv_form.value)" *ngIf="buttons.includes('save')">Save</button>
                 </div>
             </div>
