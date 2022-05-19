@@ -18,7 +18,7 @@
 
     <div class="grid gap-4 relative animates-dropdown " style="grid-template-columns: repeat(16, minmax(0, 1fr));"
         *ngIf="!focused">
-        <div class="border-check col-span-2 hover:bg-gray-100 rounded-r cursor-pointer" (click)="flip();"><button
+        <div class="border-check col-span-2 row-span-3 hover:bg-gray-100 rounded-r cursor-pointer" (click)="flip();"><button
                 class="font-bold text-left" type="button">Risk Factors</button>
             <div class="absolute top-0" style="left: 4.5rem;">
                 <fa-icon [icon]="faInfoCircle" class=" peer ml-5 text-gray-300 hover:text-gray-500 z-50"></fa-icon>
@@ -31,7 +31,7 @@
             </div>
         </div>
 
-        <div style="grid-column: span 14 / span 14;">
+        <div style="grid-column: span 14 / span 14; grid-column-start: 3;">
             <div class="grid gap-4 rounded-lg hover:drop-shadow-lg drop-shadow-md bg-white rounded-lg hover:border border-gray-300 hover:border-blue-400 p-2 m-2 border"
                 style="grid-template-columns: repeat(14, minmax(0, 1fr));">
 
@@ -52,7 +52,7 @@
                         </option>
                     </select>
                 </div>
-
+                   
                 <div class="transitions col-span-4" *ngIf="!focused">
                     <h3 for="date">Date Detected</h3>
                     <div class="grid grid-cols-10">
@@ -71,7 +71,7 @@
 
         </div>
         <div class="relative w-auto border-check mb-7" *ngIf="!focused && keyUp.length > 0 && !risk_form.disabled"
-            style="grid-column: span 16 / span 16;">
+            style="grid-column: span 14 / span 14; grid-column-start: 3;">
             <div class="absolute inline-flex right-0 top-0" style=" top: -0.85rem;">
                 <div class="flex hover:animate-bounce border-check bg-white hover:bg-gray-400 text-gray-400 py-1 rounded-full hover:text-white px-2 cursor-pointer"
                     (click)="cancel()" (mouseover)="buttonShow('cancel')">
@@ -121,13 +121,20 @@
                 </div>
                 <div style="grid-column: span 16 / span 16;">
                     <div *ngFor="let catch of risk_catch" >
-                        <div class="grid m-2" style="grid-template-columns: repeat(14, minmax(0, 1fr));">
-                            <div class="transitions col-span-8 border-check relative select-none">
-                                <p>{{catch.factor}}</p>
+                        <div class="grid m-2 group" style="grid-template-columns: repeat(14, minmax(0, 1fr));">
+                           
+                            <div class="transitions col-span-8 border-check relative select-none group-hover:bg-gray-100 flex rounded-l-full"
+                                [class]="hide.includes(catch.risk_id)?'bg-gray-200':''">
+                                <fa-icon [icon]="faCaretRight" class=" group-hover:text-blue-500 px-2"
+                                [class]="hide.includes(catch.risk_id)?'text-blue-500':'text-gray-300'"></fa-icon>
+                                <p class="group-hover:font-semibold group-hover:text-gray-500"
+                                [class]="hide.includes(catch.risk_id)?'text-gray-500 font-semibold':'font-medium text-blue-500'">{{catch.factor}}</p>
 
                             </div>
-                            <div class="transitions col-span-4 border-check relative select-none">
-                                <p>{{catch.date}}</p>
+                            <div class="transitions col-span-4 border-check relative select-none group-hover:bg-gray-100 rounded-r-full"
+                            [class]="hide.includes(catch.risk_id)?'bg-gray-200':''">
+                                <p class="group-hover:font-semibold group-hover:text-gray-500"
+                                [class]="hide.includes(catch.risk_id)?'text-gray-500 font-semibold':'font-medium text-blue-500'">{{catch.date}}</p>
                             </div>
                             <div class="transitions col-span-2 border-check relative select-none">
                                 <div class="grid grid-cols-2 relative w-auto border-check" *ngIf="!focused && risk_catch"

@@ -81,7 +81,18 @@ public risk_factors = [
   }
 
   saveForm(data) {
+    // const strs = ['valval', 'bal', 'gal', 'dalval'];
+    // const result = strs.filter(s => s.includes('val'));
+  
+    // console.log(strs);
+    // console.log(result); ------> good for filtering searches 
     data.factor =data.factor.split('_');
+    let index = this.risk_catch.findIndex(c => c.factor === data.factor[0]);
+    
+    if(index != -1){
+      this.risk_catch.splice(index, 1);
+    }
+ 
     this.risk_form.setValue({
       factor: data.factor[0],
       date: data.date,
@@ -91,7 +102,9 @@ public risk_factors = [
       factor: data.factor[0],
       date: data.date,
     });
-    console.log(this.risk_form.value, " vs ", this.risk_catch);
+   
+    
+    
     this.createForm();
     this.hide = [];
     //this.risk_form.disable();
@@ -132,12 +145,11 @@ public risk_factors = [
   }
   edit(id){
 
-    
     this.risk_form.reset();
     this.risk_catch.forEach(c => {
       if(c.risk_id == id){
         this.risk_form.setValue({
-          factor: c.factor,
+          factor: c.factor+"_"+c.risk_id,
           date: c.date,
         });
       }
