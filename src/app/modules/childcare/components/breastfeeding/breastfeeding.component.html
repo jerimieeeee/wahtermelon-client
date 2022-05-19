@@ -1,8 +1,17 @@
-<div>
-    <h4 class="font-bold text-gray-600 text-md mt-5">BREASTFEEDING</h4>
-  </div>
+<div class="flex mt-5 mb-5">
+  <h4 class="font-bold text-gray-600 text-md">BREASTFEEDING</h4>
+  <div class="relative">
+    <fa-icon [icon]="faInfoCircle" class="peer ml-3 text-gray-300 hover:text-gray-500 z-50"></fa-icon>
+    <div
+        class="absolute text-sm bg-gradient-to-b from-stone-500 to-gray-400 p-2 rounded-md border border-gray-500  text-white drop-shadow-lg opacity-90 border-check z-50 w-60 invisible peer-hover:visible">
+        <h1 class="font-bold drop-shadow-lg">IMPORTANT</h1>
+        <p class="font-light drop-shadow-lg">Once saved, the information will be displayed in the input boxes
+            and shall not be editable unless Edit button is pressed.</p>
+    </div>
+</div>
+</div>
 
-
+<!--Essential Newborn Care Section-->
   <div class="flex item-start flex-wrap shadow-md rounded-xl mt-5">
 
     <div class="flex justify-between w-full bg-orange-400 px-5 py-3 rounded-tl rounded-tr ">
@@ -10,6 +19,10 @@
       <button class="py-0 px-4 rounded-full bg-white text-gray-600 font-bold drop-shadow-md hover:border-white-600 hover:bg-blue-400 hover:text-white shadow-md inline-flex items-center" name="add-btn" (click)="toggleBreastfeedingModal()">
       <label> <fa-icon class="text-sm" [icon]="faPlus"></fa-icon> Add</label>
       </button>  
+    </div>
+
+    <div *ngFor="let m of month" class="relative w-full md:w-1/2 lg:w-1/2 px-5 mt-4 mb-4">
+      <label>{{m.name}} - {{m.date}}</label>
     </div>
 
     <!--Breastfeeding Modal-->
@@ -36,13 +49,26 @@
                       <th class="text-center p-3 px-5">Month</th>
                       <th class="text-center p-3 px-5">Status</th>
                   </tr>
+                  
+                    <tr *ngFor="let month of ccdev" class="border-b hover:bg-yellow-100 bg-transparent">
+                      
+                      <td class="p-3 px-5">{{month.name}} - ({{month.date}}) - {{month.ischecked}} </td>
+                      <td class="p-3 px-5 text-center">
+                        <input type="checkbox" name="" id="" (change)="changeSelection()" [(ngModel)]="month.ischecked" [checked]="month.ischecked">
+                      </td>
+                  <form [formGroup]="breastfedForm" (ngSubmit)="submit()">
 
-                  <tr *ngFor="let month of bfed_month" class="border-b hover:bg-yellow-100 bg-transparent">
-                    <td class="p-3 px-5">{{month.name}} - ({{month.date}})</td>
-                    <td class="p-3 text-center">
-                      <input type="checkbox" id="servicedate" name="servicedate" class="bg-transparent">
-                    </td>
-                </tr>
+                      <td class="p-3 text-center">
+                        <input class="items-center"
+                        type="date" name="date" formControlName="breastfedDate" *ngIf="month.ischecked">
+
+                    </form>
+                  </tr>
+                
+
+                 
+                  
+                  
 
               </tbody>
           </table>
@@ -52,7 +78,7 @@
             <button class="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1" type="button" style="transition: all .15s ease" (click)="toggleBreastfeedingModal()">
               Close
             </button>
-            <button class="bg-green-500 text-white active:bg-green-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1" type="button" style="transition: all .15s ease" (click)="save_breastfed()" (click)="toggleBreastfeedingModal()" >
+            <button class="bg-green-500 text-white active:bg-green-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1" type="button" style="transition: all .15s ease" (click)="submit()" (click)="toggleBreastfeedingModal()" >
               Save
             </button>
           </div>

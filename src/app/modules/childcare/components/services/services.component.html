@@ -1,10 +1,18 @@
-<div>
-    <h4 class="font-bold text-gray-600 text-md mt-5">SERVICES</h4>
-    <div class="px-5 py-2">
-  </div>
+<div class="flex mt-5 mb-5">
+  <h4 class="font-bold text-gray-600 text-md">SERVICES</h4>
+  <div class="relative">
+    <fa-icon [icon]="faInfoCircle" class="peer ml-3 text-gray-300 hover:text-gray-500 z-50"></fa-icon>
+    <div
+        class="absolute text-sm bg-gradient-to-b from-stone-500 to-gray-400 p-2 rounded-md border border-gray-500  text-white drop-shadow-lg opacity-90 border-check z-50 w-60 invisible peer-hover:visible">
+        <h1 class="font-bold drop-shadow-lg">IMPORTANT</h1>
+        <p class="font-light drop-shadow-lg">Once saved, the information will be displayed in the input boxes
+            and shall not be editable unless Edit button is pressed.</p>
+    </div>
+</div>
+</div>
   
   <!--Essential Newborn Care Section-->
-  <div class="flex item-start flex-wrap shadow-md rounded-xl mt-5">
+  <div class="flex item-start flex-wrap shadow-md rounded-xl">
 
     <div class="flex justify-between w-full bg-yellow-500 px-5 py-3 rounded-tl rounded-tr">
       <h4 class="font-bold text-white text-md mt-2 mb-2">Essential Newborn Care</h4>
@@ -13,8 +21,8 @@
       </button>  
     </div>
 
-    <div class="relative w-full md:w-1/2 lg:w-1/2 px-5 mt-4">
-      <label>{{z.name}}</label>
+    <div *ngFor="let y of x" class="relative w-full md:w-1/2 lg:w-1/2 px-5 mt-4 mb-4">
+      <label>{{y.name}}</label>
     </div>
 
 
@@ -44,7 +52,7 @@
                   <tr *ngFor="let item of eservices2" class="border-b hover:bg-blue-100 bg-transparent">
                     <td class="p-3 px-5">{{item.name}}</td>
                     <td class="p-3 px-5 text-center">
-                      <input type="checkbox" name="" id="" (change)="changeSelection()" [(ngModel)]="item.ischecked">
+                      <input type="checkbox" name="" id="" (change)="changeSelection()" [(ngModel)]="item.ischecked" [checked]="item.ischecked">
                     </td>
                     <td class="p-3 px-5 text-center">
                     <form [formGroup]="serviceForm" (ngSubmit)="submit()">
@@ -87,6 +95,10 @@
       </button>  
     </div>
 
+    <div *ngFor="let ccservice of ccservicename" class="relative w-full md:w-1/2 lg:w-1/2 px-5 mt-4 mb-4">
+      <label>{{ccservice.name}}</label>
+    </div>
+
     <!--Services Modal-->
     <div *ngIf="showServiceModal" class="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex">
       <div class="relative w-auto my-6 mx-auto max-w-6xl">
@@ -107,21 +119,31 @@
           
           <!--body-->
           <div class="relative flex-auto px-12">
+            
             <table class="w-full flex justify-between text-md bg-white rounded">
               <tbody>
                   <tr class="border-b items-center">
                       <th class="text-left p-3 px-5">Service</th>
+                      <th class="text-center p-3 px-5">Status</th>
                       <th class="text-center p-3 px-5">Date</th>
                   </tr>
 
-                  <tr *ngFor="let service of services2" class="border-b hover:bg-blue-100 bg-transparent">
+                  <tr *ngFor="let service of services" class="border-b hover:bg-blue-100 bg-transparent">
                     <td class="p-3 px-5">{{service.name}}</td>
-                    <td class="p-3 px-5">
-                      <input type="date" id="birthday" name="birthday" class="bg-transparent">
+                    <td class="p-3 px-5 text-center">
+                      <input type="checkbox" name="{{service.id}}" id="" (change)="changeSelection2()" [(ngModel)]="service.ischecked" [checked]="service.ischecked">
                     </td>
+                    <td class="p-3 px-5 text-center">
+                    <form [formGroup]="serviceForm2" (ngSubmit)="submit2()">
+                    
+                      <input class="items-center"
+                type="date" name="date" formControlName="serviceDate2" *ngIf="service.ischecked">
+                   
+                    </form>
+                  </td>
                 </tr>
               </tbody>
-          </table>
+          </table>   
           </div>
 
           <!--footer-->
@@ -129,7 +151,7 @@
             <button class="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1" type="button" style="transition: all .15s ease" (click)="toggleServiceModal()">
               Close
             </button>
-            <button class="bg-green-500 text-white active:bg-green-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1" type="button" style="transition: all .15s ease" (click)="toggleServiceModal()">
+            <button class="bg-green-500 text-white active:bg-green-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1" type="button" style="transition: all .15s ease" (click)="submit2()" (click)="toggleServiceModal()">
               Save
             </button>
           </div>

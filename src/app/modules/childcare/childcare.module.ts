@@ -12,6 +12,7 @@ import { BreastfeedingComponent } from './components/breastfeeding/breastfeeding
 import { StoreModule } from '@ngrx/store';
 import { reducer } from './reducers/birthinformation.reducer';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 
 
@@ -27,7 +28,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     CommonModule,
     ChildcareRoutingModule,
     SharedComponentsModule,
-    FontAwesomeModule,ReactiveFormsModule,
+    FontAwesomeModule,ReactiveFormsModule,HttpClientModule,
     FormsModule,StoreModule.forRoot({
       birthinfo: reducer
     })

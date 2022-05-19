@@ -1,5 +1,14 @@
-<div>
+<div class="flex">
       <h4 class="font-bold text-gray-600 text-md">FIRST VISIT</h4>
+      <div class="relative">
+        <fa-icon [icon]="faInfoCircle" class="peer ml-3 text-gray-300 hover:text-gray-500 z-50"></fa-icon>
+        <div
+            class="absolute text-sm bg-gradient-to-b from-stone-500 to-gray-400 p-2 rounded-md border border-gray-500  text-white drop-shadow-lg opacity-90 border-check z-50 w-60 invisible peer-hover:visible">
+            <h1 class="font-bold drop-shadow-lg">IMPORTANT</h1>
+            <p class="font-light drop-shadow-lg">Once saved, the information will be displayed in the input boxes
+                and shall not be editable unless Edit button is pressed.</p>
+        </div>
+    </div>
     </div>
     <!--Admission Date & Time Section-->
     <div class="flex item-start flex-wrap shadow-md rounded-xl pb-5 mt-5">
@@ -93,14 +102,19 @@
             <input type="text" formControlame="weight">
             <button type="submit">Save</button>
         </form> -->
-
-        <div class="relative w-full md:w-1/2 lg:w-1/2 px-5 py-2 mt-2" >
-          <input (keyup.enter)="addWeight(weight.value, mname.value)" class="w-full border-2 focus:border-2 focus:outline-none focus:border-red-300 border-gray-300 bg-white h-10 px-5 pr-2 rounded-lg text-sm mt-2 mb-2"
-          id= "weight" type="text" name="text" [placeholder]="x.weight.length>0 ? x.weight + ' kg' : 'Enter Weight'" #weight [disabled]="x.weight.length>0">
+        <div class="relative w-full md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
+         <label>Weight at birth</label> 
+      
+        
+          <input (keyup.enter)="addWeight(weight.value, mname.value)" class="w-full border-2 focus:border-2 focus:outline-none focus:border-red-300 border-gray-300 bg-white h-10 px-3 pr-2 rounded-lg mt-2"
+          id= "weight" type="text" name="text" [placeholder]="x.weight.length>0 ? x.weight + ' kg' : 'Enter Weight'" #weight> 
         </div>
 
+        <!-- [disabled]="x.weight.length>0" -->
+
         <div class="relative w-full md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
-          <input (keyup.enter)="addWeight(weight.value, mname.value)" class="select-none w-full border-2 focus:border-2 focus:outline-none focus:border-red-300 border-gray-300 bg-white h-10 px-5 pr-2 rounded-lg text-sm mt-2 mb-2"
+          <label>Mother's Name</label> 
+          <input (keyup.enter)="addWeight(weight.value, mname.value)" class="select-none w-full border-2 focus:border-2 focus:outline-none focus:border-red-300 border-gray-300 bg-white h-10 px-3 pr-2 rounded-lg mt-2"
           id="mname" type="text" name="search" [placeholder]="x.mname.length>0 ? x.mname : 'Search Mothers Name'" #mname [disabled]="x.mname.length>0">
           
       </div>

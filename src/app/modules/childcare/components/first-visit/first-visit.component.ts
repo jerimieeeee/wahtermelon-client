@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { faSearch,faBalanceScale,faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faSearch,faBalanceScale,faPlus, faCalendar, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { BirthInformation } from '../../models/birthinformation.model';
@@ -22,6 +22,8 @@ export class FirstVisitComponent implements OnInit {
   faSearch = faSearch;
   faBalanceScale = faBalanceScale;
   faPlus = faPlus;
+  faCalendar = faCalendar;
+  faInfoCircle = faInfoCircle;
 
   birthinfos: Observable<BirthInformation[]>;
 
@@ -66,6 +68,7 @@ export class FirstVisitComponent implements OnInit {
   console.log('Admission Date:' + this.mandoForm.get('admissionDate').value);
   console.log('Discharged Date:' + this.mandoForm.get('dischargedDate').value);
   localStorage.setItem('form-data', JSON.stringify(this.mandoForm.value));
+
   this.saved2 = true; 
   
 }

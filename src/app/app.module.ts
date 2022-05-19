@@ -8,6 +8,8 @@ import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { VitalsGraphComponent } from './components/vitals-graph/vitals-graph.component';
 import { VitalsComponent } from './components/vitals/vitals.component';
+import { HttpClientModule } from '@angular/common/http';
+
 
 @NgModule({
   declarations: [
@@ -20,7 +22,7 @@ import { VitalsComponent } from './components/vitals/vitals.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FontAwesomeModule
+    FontAwesomeModule, HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
