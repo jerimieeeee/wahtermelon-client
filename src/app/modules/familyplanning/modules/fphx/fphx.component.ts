@@ -17,7 +17,7 @@ export class FphxComponent implements OnInit {
   faCircleCheck = faCircleCheck;
   faCaretRight = faCaretRight;
   faInfoCircle = faInfoCircle;
-  
+
   typing: boolean;
   checked: boolean;
   focused: boolean;
@@ -41,59 +41,59 @@ export class FphxComponent implements OnInit {
   public locations = [];
 
   public lib_cat_name = [
-    {"history_cat_id":"ANY","history_cat_name":"History of any of the following"},
-    {"history_cat_id":"CXHRT","history_cat_name":"Chest/Heart"},
-    {"history_cat_id":"HEENT","history_cat_name":"HEENT"},
-    {"history_cat_id":"ABD","history_cat_name":"Abdomen"},
-    {"history_cat_id":"GEN","history_cat_name":"Genitals"},
-    {"history_cat_id":"EXT","history_cat_name":"Extremities"},
-    {"history_cat_id":"SKIN","history_cat_name":"Skin"},
+    { "history_cat_id": "ANY", "history_cat_name": "History of any of the following" },
+    { "history_cat_id": "CXHRT", "history_cat_name": "Chest/Heart" },
+    { "history_cat_id": "HEENT", "history_cat_name": "HEENT" },
+    { "history_cat_id": "ABD", "history_cat_name": "Abdomen" },
+    { "history_cat_id": "GEN", "history_cat_name": "Genitals" },
+    { "history_cat_id": "EXT", "history_cat_name": "Extremities" },
+    { "history_cat_id": "SKIN", "history_cat_name": "Skin" },
   ];
   public fp_hx_symptoms = [
-    { "history_id": "ALLERGY", "history_text": "Allergies", "history_cat": "ANY"},
-    { "history_id": "ANEMIA", "history_text": "Anemia", "history_cat": "ANY"},
-    { "history_id": "BLEEDING", "history_text": "Bleeding tendencies (nose, gums, etc.)", "history_cat": "ANY"},
-    { "history_id": "DIABETES", "history_text": "Diabetes", "history_cat": "ANY"},
-    { "history_id": "DRUGINTAKE", "history_text": "Drug intake (anti-TB, anti-diabetic, anticonvulsant)", "history_cat": "ANY"},
-    { "history_id": "ECTPREG", "history_text": "Ectopic pregnancy", "history_cat": "ANY"},
-    { "history_id": "HMOLE", "history_text": "Hydatidiform mole (w/in the last 12 mos.)", "history_cat": "ANY"},
-    { "history_id": "MPARTNERS", "history_text": "Multiple partners", "history_cat": "ANY"},
-    { "history_id": "SMOKING", "history_text": "Smoking", "history_cat": "ANY"},
-    { "history_id": "STD", "history_text": "STD", "history_cat": "ANY"},
+    { "history_id": "ALLERGY", "history_text": "Allergies", "history_cat": "ANY" },
+    { "history_id": "ANEMIA", "history_text": "Anemia", "history_cat": "ANY" },
+    { "history_id": "BLEEDING", "history_text": "Bleeding tendencies (nose, gums, etc.)", "history_cat": "ANY" },
+    { "history_id": "DIABETES", "history_text": "Diabetes", "history_cat": "ANY" },
+    { "history_id": "DRUGINTAKE", "history_text": "Drug intake (anti-TB, anti-diabetic, anticonvulsant)", "history_cat": "ANY" },
+    { "history_id": "ECTPREG", "history_text": "Ectopic pregnancy", "history_cat": "ANY" },
+    { "history_id": "HMOLE", "history_text": "Hydatidiform mole (w/in the last 12 mos.)", "history_cat": "ANY" },
+    { "history_id": "MPARTNERS", "history_text": "Multiple partners", "history_cat": "ANY" },
+    { "history_id": "SMOKING", "history_text": "Smoking", "history_cat": "ANY" },
+    { "history_id": "STD", "history_text": "STD", "history_cat": "ANY" },
 
-    { "history_id": "BRSTMASS", "history_text": "Breast/axillary masses", "history_cat": "CXHRT"},
-    { "history_id": "CVAHARHD", "history_text": "Family history of CVA (strokes), hypertension, asthma, rheumatic heart disease", "history_cat": "CXHRT"},
-    { "history_id": "CXPAIN", "history_text": "Severe chest pain", "history_cat": "CXHRT"},
-    { "history_id": "DIAS90", "history_text": "Diastolic of 90 & above", "history_cat": "CXHRT"},
-    { "history_id": "FATIGUE", "history_text": "Shortness of breath and easy fatiguability", "history_cat": "CXHRT"},
-    { "history_id": "NIPBLOOD", "history_text": "Nipple discharges (blood)", "history_cat": "CXHRT"},
-    { "history_id": "NIPPUS", "history_text": "Nipple discharges (pus)", "history_cat": "CXHRT"},
-    { "history_id": "SYS140", "history_text": "Systolic of 140 & above", "history_cat": "CXHRT"},
+    { "history_id": "BRSTMASS", "history_text": "Breast/axillary masses", "history_cat": "CXHRT" },
+    { "history_id": "CVAHARHD", "history_text": "Family history of CVA (strokes), hypertension, asthma, rheumatic heart disease", "history_cat": "CXHRT" },
+    { "history_id": "CXPAIN", "history_text": "Severe chest pain", "history_cat": "CXHRT" },
+    { "history_id": "DIAS90", "history_text": "Diastolic of 90 & above", "history_cat": "CXHRT" },
+    { "history_id": "FATIGUE", "history_text": "Shortness of breath and easy fatiguability", "history_cat": "CXHRT" },
+    { "history_id": "NIPBLOOD", "history_text": "Nipple discharges (blood)", "history_cat": "CXHRT" },
+    { "history_id": "NIPPUS", "history_text": "Nipple discharges (pus)", "history_cat": "CXHRT" },
+    { "history_id": "SYS140", "history_text": "Systolic of 140 & above", "history_cat": "CXHRT" },
 
-    { "history_id": "EPILEPSY", "history_text": "Epilepsy/Convulsion/Seizure", "history_cat": "HEENT"},
-    { "history_id": "ETHY", "history_text": "Enlarged thyroid", "history_cat": "HEENT"},
-    { "history_id": "HEADACHE", "history_text": "Severe headache/dizziness", "history_cat": "HEENT"},
-    { "history_id": "VISION", "history_text": "Visual disturbance/blurring of vision", "history_cat": "HEENT"},
-    { "history_id": "YCONJ", "history_text": "Yellowish conjunctive", "history_cat": "HEENT"},
+    { "history_id": "EPILEPSY", "history_text": "Epilepsy/Convulsion/Seizure", "history_cat": "HEENT" },
+    { "history_id": "ETHY", "history_text": "Enlarged thyroid", "history_cat": "HEENT" },
+    { "history_id": "HEADACHE", "history_text": "Severe headache/dizziness", "history_cat": "HEENT" },
+    { "history_id": "VISION", "history_text": "Visual disturbance/blurring of vision", "history_cat": "HEENT" },
+    { "history_id": "YCONJ", "history_text": "Yellowish conjunctive", "history_cat": "HEENT" },
 
-    { "history_id": "GALL", "history_text": "History of gallbladder disease", "history_cat": "ABD"},
-    { "history_id": "LIVER", "history_text": "History of liver disease", "history_cat": "ABD"},
-    { "history_id": "MASSABD", "history_text": "Mass in the abdomen", "history_cat": "ABD"},
+    { "history_id": "GALL", "history_text": "History of gallbladder disease", "history_cat": "ABD" },
+    { "history_id": "LIVER", "history_text": "History of liver disease", "history_cat": "ABD" },
+    { "history_id": "MASSABD", "history_text": "Mass in the abdomen", "history_cat": "ABD" },
 
-    { "history_id": "INTERBLEED", "history_text": "Intermenstrual bleeding", "history_cat": "GEN"},
-    { "history_id": "POSTBLEED", "history_text": "Postcoital bleeding", "history_cat": "GEN"},
-    { "history_id": "UTERUS", "history_text": "Mass in the uterus", "history_cat": "GEN"},
-    { "history_id": "VAGDISCH", "history_text": "Vaginal discharge", "history_cat": "GEN"},
+    { "history_id": "INTERBLEED", "history_text": "Intermenstrual bleeding", "history_cat": "GEN" },
+    { "history_id": "POSTBLEED", "history_text": "Postcoital bleeding", "history_cat": "GEN" },
+    { "history_id": "UTERUS", "history_text": "Mass in the uterus", "history_cat": "GEN" },
+    { "history_id": "VAGDISCH", "history_text": "Vaginal discharge", "history_cat": "GEN" },
 
-    { "history_id": "LEGPAIN", "history_text": "Swelling or severe pain in the legs not related to injuries", "history_cat": "EXT"},
-    { "history_id": "VARICOSE", "history_text": "Severe varicosities", "history_cat": "EXT"},
+    { "history_id": "LEGPAIN", "history_text": "Swelling or severe pain in the legs not related to injuries", "history_cat": "EXT" },
+    { "history_id": "VARICOSE", "history_text": "Severe varicosities", "history_cat": "EXT" },
 
-    { "history_id": "YELLOWSKIN", "history_text": "Yellowish skin", "history_cat": "SKIN"}];
+    { "history_id": "YELLOWSKIN", "history_text": "Yellowish skin", "history_cat": "SKIN" }];
 
   public fp_hx_cat = [];
   public fp_hx_name_cat = [];
   public buttons = [];
-  
+
   ngOnInit(): void {
     this.focused = true;
     this.showCat();
@@ -107,53 +107,53 @@ export class FphxComponent implements OnInit {
     console.log('flip');
     this.focused = !this.focused;
   }
-  showCat(){
+  showCat() {
     console.log("showCat");
 
     this.fp_hx_cat = [];
     this.fp_hx_name_cat = [];
 
-    if(this.saved && this.fphx_strings){
+    if (this.saved && this.fphx_strings) {
       this.fp_hx_symptoms.forEach(e => {
 
-        if(this.fphx_strings.includes(e.history_text)){
+        if (this.fphx_strings.includes(e.history_text)) {
 
           console.log(this.fp_hx_cat, " cat this is for showCat");
 
-          if(!this.fp_hx_cat.includes(e.history_cat)){
+          if (!this.fp_hx_cat.includes(e.history_cat)) {
             this.fp_hx_cat.push(e.history_cat);
           }
 
-          this.lib_cat_name.forEach(lib =>{
-            this.fp_hx_cat.forEach(fp =>{
-              if(lib.history_cat_id == fp){
-                if(!this.fp_hx_name_cat.includes(lib.history_cat_name)){
-                this.fp_hx_name_cat.push(lib.history_cat_name);
+          this.lib_cat_name.forEach(lib => {
+            this.fp_hx_cat.forEach(fp => {
+              if (lib.history_cat_id == fp) {
+                if (!this.fp_hx_name_cat.includes(lib.history_cat_name)) {
+                  this.fp_hx_name_cat.push(lib.history_cat_name);
                 }
               }
             });
-            
+
           });
         }
       });
-    }else{
-    this.fp_hx_symptoms.forEach(element => {
-      // if(element.x == 1){
-      if (!this.fp_hx_cat.includes(element.history_cat)) {
-        this.fp_hx_cat.push(element.history_cat);
-        this.lib_cat_name.forEach(lib =>{
-          if(lib.history_cat_id == element.history_cat){
-            if(!this.fp_hx_name_cat.includes(lib.history_cat_name)){
-            this.fp_hx_name_cat.push(lib.history_cat_name);
+    } else {
+      this.fp_hx_symptoms.forEach(element => {
+        // if(element.x == 1){
+        if (!this.fp_hx_cat.includes(element.history_cat)) {
+          this.fp_hx_cat.push(element.history_cat);
+          this.lib_cat_name.forEach(lib => {
+            if (lib.history_cat_id == element.history_cat) {
+              if (!this.fp_hx_name_cat.includes(lib.history_cat_name)) {
+                this.fp_hx_name_cat.push(lib.history_cat_name);
+              }
             }
-          }
-        });
-      }
-      // }
-    });
-  }
-  console.log(this.fp_hx_cat + ' ngeow');
-  console.log(this.fp_hx_name_cat + ' ngeow2');
+          });
+        }
+        // }
+      });
+    }
+    console.log(this.fp_hx_cat + ' ngeow');
+    console.log(this.fp_hx_name_cat + ' ngeow2');
   }
   uncheck(cat) {
     console.log('uncheck');
@@ -163,15 +163,12 @@ export class FphxComponent implements OnInit {
     this.fp_hx_symptoms.forEach(e => {
 
       if (e.history_cat == cat) {
-
         if (this.fphx_strings.includes(e.history_text)) {
           // console.log(this.fphx_strings.indexOf(e.history_text), " log for fphx_strings index");
           this.fphx_strings.splice(this.fphx_strings.indexOf(e.history_text), 1);
           // console.log(this.fphx_strings);
         }
-
       }
-
     });
 
   }

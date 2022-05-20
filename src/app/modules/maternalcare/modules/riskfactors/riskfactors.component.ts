@@ -102,9 +102,7 @@ public risk_factors = [
       factor: data.factor[0],
       date: data.date,
     });
-   
-    
-    
+
     this.createForm();
     this.hide = [];
     //this.risk_form.disable();
