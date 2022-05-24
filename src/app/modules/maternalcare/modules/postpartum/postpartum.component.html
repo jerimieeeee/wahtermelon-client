@@ -1,4 +1,4 @@
-<form action="">
+<form [formGroup]="postpartum_form" (submit)="saveForm(postpartum_form.value)">
     <div class="grid grid-rows-2 gap-4 cursor-pointer hover:bg-gray-100 relative"
         style="grid-template-columns: repeat(16, minmax(0, 1fr));" (click)="flip();" *ngIf="focused">
         <div class="border-check row-span-2 col-span-2 rounded-r">
@@ -16,10 +16,10 @@
         </div>
     </div>
 
-    <div class="grid gap-4 relative animates-dropdown " style="grid-template-columns: repeat(16, minmax(0, 1fr));"
+    <div class="grid gap-4 relative animates-dropdown" style="grid-template-columns: repeat(16, minmax(0, 1fr));"
         *ngIf="!focused">
-        <div class="border-check col-span-2 hover:bg-gray-100 rounded-r cursor-pointer" (click)="flip();"><button
-                class="font-bold" type="button">Postpartum</button>
+        <div class="border-check col-span-2 hover:bg-gray-100 rounded-r cursor-pointer relative" (click)="flip();">
+            <button class="font-bold sticky top-0" type="button">Postpartum</button>
             <div class="absolute top-0" style="left: 4.5rem;">
                 <fa-icon [icon]="faInfoCircle" class=" peer ml-5 text-gray-300 hover:text-gray-500 z-50"></fa-icon>
                 <div
@@ -32,22 +32,335 @@
         </div>
 
         <div style="grid-column: span 14 / span 14;">
-            <div class="grid gap-4 rounded-lg hover:drop-shadow-lg drop-shadow-md bg-white rounded-lg hover:border border-gray-300 hover:border-blue-400 p-2 m-2 border"
-                style="grid-template-columns: repeat(14, minmax(0, 1fr));">
+            <div class="grid gap-0" style="grid-template-columns: repeat(14, minmax(0, 1fr));">
+                <div style="grid-column: span 14 / span 14;">
+                    <div class="grid gap-4 rounded-lg hover:drop-shadow-lg drop-shadow-md bg-white rounded-lg hover:border border-gray-300 hover:border-blue-400 p-2 m-2 border"
+                        style="grid-template-columns: repeat(21, minmax(0, 1fr));">
 
-                <div class="transitions col-span-4" *ngIf="!focused">
-                    <h3 for="reg_date">Registration Date</h3>
-                    <div class="grid grid-cols-10">
-                        <div class="icon-height col-span-2 p-2 pt-1 rounded-l border-solid border border-zinc-300">
-                            <fa-icon [icon]="faCalendarDay" size="lg" class="text-blue-500" for="reg_date">
-                            </fa-icon>
+                        <div class="transitions col-span-6" *ngIf="!focused">
+                            <h3 for="registration_date">Registration </h3>
+                            <div class="grid grid-cols-10">
+                                <div
+                                    class="icon-height col-span-2 p-2 pt-1 rounded-l border-solid border border-zinc-300">
+                                    <fa-icon [icon]="faCalendarDay" size="lg" class="text-blue-500"
+                                        for="registration_date">
+                                    </fa-icon>
+                                </div>
+                                <input formControlName="registration_date" id="registration_date"
+                                    name="registration_date" type="date"
+                                    class="col-span-8 rounded-r border-solid border border-l-0 border-zinc-300 focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none disabled:cursor-not-allowed"
+                                    width="auto">
+                            </div>
                         </div>
-                        <input formControlName="reg_date" id="reg_date" name="reg_date" type="date"
-                            class="col-span-8 rounded-r border-solid border border-l-0 border-zinc-300 focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none disabled:cursor-not-allowed"
-                            width="auto">
+                        <div class="transitions col-span-7 col-start-1" *ngIf="!focused">
+                            <h3 for="delivery_date">Delivery </h3>
+                            <div class="grid" style="grid-template-columns: repeat(14, minmax(0, 1fr));">
+                                <div
+                                    class="icon-height col-span-2 p-2 pt-1 rounded-l border-solid border border-zinc-300">
+                                    <fa-icon [icon]="faCalendarDay" size="lg" class="text-orange-400" for="delivery_date">
+                                    </fa-icon>
+                                </div>
+                                <input formControlName="delivery_date" id="delivery_date" name="delivery_date"
+                                    type="datetime-local"
+                                    class="col-span-12 rounded-r border-solid border border-l-0 border-zinc-300 focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none disabled:cursor-not-allowed"
+                                    width="auto">
+                            </div>
+                        </div>
+
+                        <div class="transitions col-span-7" *ngIf="!focused">
+                            <h3 for="admission_date">Admission </h3>
+                            <div class="grid" style="grid-template-columns: repeat(14, minmax(0, 1fr));">
+                                <div
+                                    class="icon-height col-span-2 p-2 pt-1 rounded-l border-solid border border-zinc-300">
+                                    <fa-icon [icon]="faCalendarDay" size="lg" class="text-orange-400"
+                                        for="admission_date">
+                                    </fa-icon>
+                                </div>
+                                <input formControlName="admission_date" id="admission_date" name="admission_date"
+                                    type="datetime-local"
+                                    class="col-span-12 rounded-r border-solid border border-l-0 border-zinc-300 focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none disabled:cursor-not-allowed"
+                                    width="auto">
+
+                            </div>
+                        </div>
+
+                        <div class="transitions col-span-7" *ngIf="!focused">
+                            <h3 for="discharge_date">Discharge </h3>
+                            <div class="grid" style="grid-template-columns: repeat(14, minmax(0, 1fr));">
+                                <div
+                                    class="icon-height col-span-2 p-2 pt-1 rounded-l border-solid border border-zinc-300">
+                                    <fa-icon [icon]="faCalendarDay" size="lg" class="text-orange-400"
+                                        for="discharge_date">
+                                    </fa-icon>
+                                </div>
+                                <input formControlName="discharge_date" id="discharge_date" name="discharge_date"
+                                    type="datetime-local"
+                                    class="col-span-12 rounded-r border-solid border border-l-0 border-zinc-300 focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none disabled:cursor-not-allowed"
+                                    width="auto">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div style="grid-column: span 14 / span 14;">
+                    <div class="grid rounded-lg hover:drop-shadow-lg drop-shadow-md bg-white rounded-lg hover:border border-gray-300 hover:border-pink-400 m-2 border group"
+                        style="grid-template-columns: repeat(14, minmax(0, 1fr));">
+                        <div class="text-pink-500 form-check p-2 font-semibold border border-dashed border-gray-300 border-t-0 border-l-0 border-r-0 group-hover:border-pink-400"
+                            style="	grid-column: span 14 / span 14;">
+                            <h1 class="select-none">
+                                Obstetric Score
+                            </h1>
+                        </div>
+                        <div class="transitions col-span-4 border-check relative select-none group mx-2"
+                            *ngIf="!focused">
+                            <h3>Gravidity</h3>
+                            <fa-icon [icon]="faCaretRight"
+                                class="absolute bottom-1.5 left-2 text-gray-300 group-hover:text-pink-400"
+                                *ngIf="!focused && postpartum_form.disabled">
+                            </fa-icon>
+                            <input type="number" formControlName="gravidity"
+                                class="font-medium disabled:group-hover:font-semibold peer invalid:border-red-500 border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed disabled:border-0  disabled:pl-5  disabled:typed-out disabled:group-hover:bg-gray-100 disabled:rounded-full"
+                                (keyup)="onKeyUp($event.target.value, $event.target.id)"
+                                (keyup.escape)="clearForm($event.target.id)" id="gravidity"
+                                (change)="onKeyUp($event.target.value, $event.target.id)">
+                            <small class="hidden peer-invalid:block text-red-400 ">error_message</small>
+
+                        </div>
+                        <div class="transitions col-span-4 row-start-3 border-check relative select-none group mx-2 mb-2"
+                            *ngIf="!focused">
+                            <h3>Parity</h3>
+                            <fa-icon [icon]="faCaretRight"
+                                class="absolute bottom-1.5 left-2 text-gray-300 group-hover:text-pink-400"
+                                *ngIf="!focused && postpartum_form.disabled">
+                            </fa-icon>
+                            <input type="number" formControlName="parity"
+                                class="font-medium disabled:group-hover:font-semibold peer invalid:border-red-500 border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed disabled:border-0  disabled:pl-5  disabled:typed-out disabled:group-hover:bg-gray-100 disabled:rounded-full"
+                                (keyup)="onKeyUp($event.target.value, $event.target.id)"
+                                (keyup.escape)="clearForm($event.target.id)" id="parity"
+                                (change)="onKeyUp($event.target.value, $event.target.id)">
+                            <small class="hidden peer-invalid:block text-red-400 ">error_message</small>
+
+                        </div>
+
+
+
+                        <div class="transitions col-span-4 col-start-7 border-check relative select-none group mx-2"
+                            *ngIf="!focused">
+                            <h3>Full-Term</h3>
+                            <fa-icon [icon]="faCaretRight"
+                                class="absolute bottom-1.5 left-2 text-gray-300 group-hover:text-pink-400"
+                                *ngIf="!focused && postpartum_form.disabled">
+                            </fa-icon>
+                            <input type="number" formControlName="full_term"
+                                class="font-medium disabled:group-hover:font-semibold peer invalid:border-red-500 border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed disabled:border-0  disabled:pl-5  disabled:typed-out disabled:group-hover:bg-gray-100 disabled:rounded-full"
+                                (keyup)="onKeyUp($event.target.value, $event.target.id)"
+                                (keyup.escape)="clearForm($event.target.id)" id="full_term"
+                                (change)="onKeyUp($event.target.value, $event.target.id)">
+                            <small class="hidden peer-invalid:block text-red-400 ">error_message</small>
+
+                        </div>
+                        <div class="transitions col-span-4 border-check relative select-none group mx-2"
+                            *ngIf="!focused">
+                            <h3>Pre-Term</h3>
+                            <fa-icon [icon]="faCaretRight"
+                                class="absolute bottom-1.5 left-2 text-gray-300 group-hover:text-pink-400"
+                                *ngIf="!focused && postpartum_form.disabled">
+                            </fa-icon>
+                            <input type="number" formControlName="pre_term"
+                                class="font-medium disabled:group-hover:font-semibold peer invalid:border-red-500 border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed disabled:border-0  disabled:pl-5  disabled:typed-out disabled:group-hover:bg-gray-100 disabled:rounded-full"
+                                (keyup)="onKeyUp($event.target.value, $event.target.id)"
+                                (keyup.escape)="clearForm($event.target.id)" id="pre_term"
+                                (change)="onKeyUp($event.target.value, $event.target.id)">
+                            <small class="hidden peer-invalid:block text-red-400 ">error_message</small>
+
+                        </div>
+                        <div class="transitions col-span-4 col-start-7 border-check relative select-none group mx-2 mb-2"
+                            *ngIf="!focused">
+                            <h3>Abortions</h3>
+                            <fa-icon [icon]="faCaretRight"
+                                class="absolute bottom-1.5 left-2 text-gray-300 group-hover:text-pink-400"
+                                *ngIf="!focused && postpartum_form.disabled">
+                            </fa-icon>
+                            <input type="number" formControlName="abortions"
+                                class="font-medium disabled:group-hover:font-semibold peer invalid:border-red-500 border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed disabled:border-0  disabled:pl-5  disabled:typed-out disabled:group-hover:bg-gray-100 disabled:rounded-full"
+                                (keyup)="onKeyUp($event.target.value, $event.target.id)"
+                                (keyup.escape)="clearForm($event.target.id)" id="abortions"
+                                (change)="onKeyUp($event.target.value, $event.target.id)">
+                            <small class="hidden peer-invalid:block text-red-400 ">error_message</small>
+
+                        </div>
+                        <div class="transitions col-span-4 border-check relative select-none group mx-2 mb-2"
+                            *ngIf="!focused">
+                            <h3>Live Births</h3>
+                            <fa-icon [icon]="faCaretRight"
+                                class="absolute bottom-1.5 left-2 text-gray-300 group-hover:text-pink-400"
+                                *ngIf="!focused && postpartum_form.disabled">
+                            </fa-icon>
+                            <input type="number" formControlName="live_births"
+                                class="font-medium disabled:group-hover:font-semibold peer invalid:border-red-500 border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed disabled:border-0  disabled:pl-5  disabled:typed-out disabled:group-hover:bg-gray-100 disabled:rounded-full"
+                                (keyup)="onKeyUp($event.target.value, $event.target.id)"
+                                (keyup.escape)="clearForm($event.target.id)" id="live_births"
+                                (change)="onKeyUp($event.target.value, $event.target.id)">
+                            <small class="hidden peer-invalid:block text-red-400 ">error_message</small>
+
+                        </div>
+                    </div>
+                </div>
+                <div style="grid-column: span 14 / span 14;">
+                    <div class="grid rounded-lg hover:drop-shadow-lg drop-shadow-md bg-white rounded-lg hover:border border-gray-300 hover:border-blue-400 m-2 border group"
+                        style="grid-template-columns: repeat(14, minmax(0, 1fr));">
+                        <div class=" form-check p-2 font-semibold border border-dashed border-gray-300 group-hover:border-blue-400 border-t-0 border-l-0 border-r-0 "
+                            style="	grid-column: span 14 / span 14;">
+                            <h1 class="select-none">
+                                Place of Occurence
+                            </h1>
+                        </div>
+                        <div class="transitions col-span-4 border-check relative mx-2" *ngIf="!focused">
+                            <h3>Delivery Location</h3>
+                            <!-- <input type="text" class="border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300" *ngIf="!obshx_form.alc" > -->
+                            <select formControlName="delivery_location"
+                                class="text-ellipsis bg-white text-align-left drop_btn border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed">
+                                <option *ngFor="let loc of delivery_location">
+                                    {{loc.loc}}
+                                </option>
+                            </select>
+                            
+                        </div>
+                        <div class="transitions col-span-4  border-check relative mx-2" *ngIf="!focused">
+                            <h3>Region</h3>
+                            <!-- <input type="text" class="border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300" *ngIf="!obshx_form.alc" > -->
+                            <select formControlName="region"
+                                class="text-ellipsis bg-white text-align-left drop_btn border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed">
+                                <option *ngFor="let loc of delivery_location">
+                                    {{loc.loc}}
+                                </option>
+                            </select>
+                            
+                        </div>
+                        <div class="transitions col-span-4  border-check relative mx-2"  *ngIf="!focused">
+                            <h3>Province</h3>
+                            <!-- <input type="text" class="border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300" *ngIf="!obshx_form.alc" > -->
+                            <select formControlName="province"
+                                class="text-ellipsis bg-white text-align-left drop_btn border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed">
+                                <option *ngFor="let loc of delivery_location">
+                                    {{loc.loc}}
+                                </option>
+                            </select>
+                            
+                        </div>
+                        <div class="transitions col-span-4 border-check relative mx-2" *ngIf="!focused">
+                            <h3>Municipality</h3>
+                            <!-- <input type="text" class="border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300" *ngIf="!obshx_form.alc" > -->
+                            <select formControlName="muncity"
+                                class="text-ellipsis bg-white text-align-left drop_btn border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed">
+                                <option *ngFor="let loc of delivery_location">
+                                    {{loc.loc}}
+                                </option>
+                            </select>
+                            
+                        </div>
+                        <div class="transitions col-span-4  border-check relative mx-2 mb-2" *ngIf="!focused">
+                            <h3>Barangay</h3>
+                            <!-- <input type="text" class="border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300" *ngIf="!obshx_form.alc" > -->
+                            <select formControlName="barangay"
+                                class="text-ellipsis bg-white text-align-left drop_btn border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed">
+                                <option *ngFor="let loc of delivery_location">
+                                    {{loc.loc}}
+                                </option>
+                            </select>
+                            
+                        </div>
+                    </div>
+                </div>
+
+                <div style="grid-column: span 14 / span 14;">
+                    <div class="grid rounded-lg hover:drop-shadow-lg drop-shadow-md bg-white rounded-lg hover:border border-gray-300 hover:border-blue-400 m-2 border group"
+                        style="grid-template-columns: repeat(14, minmax(0, 1fr));">
+                        <div class=" form-check p-2 font-semibold border border-dashed border-gray-300 group-hover:border-blue-400 border-t-0 border-l-0 border-r-0 "
+                            style="	grid-column: span 14 / span 14;">
+                            <h1 class="select-none">
+                               Other Details
+                            </h1>
+                        </div>
+                        <div class="transitions col-span-4 border-check relative mx-2" *ngIf="!focused">
+                            <h3>Birth Attendant</h3>
+                            <!-- <input type="text" class="border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300" *ngIf="!obshx_form.alc" > -->
+                            <select formControlName="birth_attendant"
+                                class="text-ellipsis bg-white text-align-left drop_btn border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed">
+                                <option *ngFor="let attendant of attendants">
+                                    {{attendant.attendant}}
+                                </option>
+                            </select>
+                            
+                        </div>
+                        <div class="transitions col-span-4  border-check relative mx-2" *ngIf="!focused">
+                            <h3>Pregnancy Outcome</h3>
+                            <!-- <input type="text" class="border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300" *ngIf="!obshx_form.alc" > -->
+                            <select formControlName="pregnancy_outcome"
+                                class="text-ellipsis bg-white text-align-left drop_btn border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed">
+                                <option *ngFor="let outcome of preg_outcome">
+                                    {{outcome.outcome}}
+                                </option>
+                            </select>
+                            
+                        </div>
+                        
+                        <div class="transitions col-span-6 mx-2" *ngIf="!focused">
+                            <h3 for="breastfeeding_date">Mother initiated breastfeeding ASAP</h3>
+                            <div class="flex w-full mb-2">
+                                <label for="breastfeeding_asap" class="mx-2 flex items-center cursor-pointer w-max">
+                                  <!-- toggle -->
+                                  <div class="relative">
+                                    <!-- input -->
+                                    <input type="checkbox" formControlName="breastfeeding_asap" id="breastfeeding_asap" class="sr-only peer " (click)="bfdCheck()">
+                                    <!-- line -->
+                                    <div class="block bg-gray-200 w-12 h-7 rounded-full peer-checked:bg-green-400 border border-gray-300 peer-checked:border-green-500 hover:bg-gray-300"></div>
+                                    <!-- dot -->
+                                    <div class="dot absolute left-1 top-1 bg-white w-5 h-5 rounded-full transition drop-shadow-md"></div>
+                                  </div>
+                                  <!-- label -->
+                                  
+                                </label>
+                                <div class="grid grid-cols-10" [class]="bfd?'visible':'invisible'">
+                                    <div
+                                        class="icon-height col-span-2 p-2 pt-1 rounded-l border-solid border border-zinc-300">
+                                        <fa-icon [icon]="faCalendarDay" size="lg" class="text-blue-500"
+                                            for="breastfeeding_date">
+                                        </fa-icon>
+                                    </div>
+                                    <input formControlName="breastfeeding_date" id="breastfeeding_date"
+                                        name="breastfeeding_date" type="date"
+                                        class="col-span-8 rounded-r border-solid border border-l-0 border-zinc-300 focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none disabled:cursor-not-allowed"
+                                        width="auto">
+                                </div>
+                              </div>
+                        </div>
+
+                        <div class="transitions col-span-6 mx-2" *ngIf="!focused" hidden>
+                            <h3 for="breastfeeding_date">Check if the baby is healthy (no anomalies, congenital defects, etc.)</h3>
+                            <div class="flex w-full mb-2">
+                                <label for="baby_healthy" class="mx-2 flex items-center cursor-pointer w-max">
+                                  <!-- toggle -->
+                                  <div class="relative">
+                                    <!-- input -->
+                                    <input type="checkbox" formControlName="baby_healthy" id="baby_healthy" class="sr-only peer">
+                                    <!-- line -->
+                                    <div class="block bg-gray-200 w-12 h-7 rounded-full peer-checked:bg-green-400 border border-gray-300 peer-checked:border-green-500 hover:bg-gray-300"></div>
+                                    <!-- dot -->
+                                    <div class="dot absolute left-1 top-1 bg-white w-5 h-5 rounded-full transition drop-shadow-md"></div>
+                                  </div>
+                                  <!-- label -->
+                                  
+                                </label>
+                
+                              </div>
+                        </div>
+                        
                     </div>
                 </div>
             </div>
         </div>
+
+
     </div>
 </form>

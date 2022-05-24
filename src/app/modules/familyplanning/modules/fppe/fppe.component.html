@@ -15,8 +15,8 @@
     </div> -->
 </div>
 <div class="grid max-h-fit relative" style="grid-template-columns: repeat(16, minmax(0, 1fr));" *ngIf="!focused">
-    <div class=" border-check row-span-2 col-span-2 hover:bg-gray-100 rounded-r cursor-pointer" (click)="flip()"><button
-            class="font-bold" type="button">FP PE</button></div>
+    <div class=" border-check row-span-2 col-span-2 hover:bg-gray-100 rounded-r cursor-pointer relative" (click)="flip()"><button
+            class="font-bold sticky top-0" type="button">FP PE</button></div>
             <div class="absolute left-16 top-0">
                 <fa-icon [icon]="faInfoCircle" class=" peer ml-3 text-gray-300 hover:text-gray-500 z-50"></fa-icon>
             <div class="absolute text-sm bg-gradient-to-b from-stone-500 to-gray-400 p-2 rounded-md border border-gray-500  text-white drop-shadow-lg opacity-90 border-check z-50 w-64 invisible peer-hover:visible">

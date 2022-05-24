@@ -14,8 +14,8 @@
     </div>
     <div class="grid gap-4 relative animates-dropdown" style="grid-template-columns: repeat(16, minmax(0, 1fr));"
         *ngIf="!focused">
-        <div class="border-check row-span-3 col-span-2 hover:bg-gray-100 cursor-pointer rounded-r" (click)="flip()">
-            <button class="font-bold" type="button">OBS HX</button>
+        <div class="border-check row-span-3 col-span-2 hover:bg-gray-100 cursor-pointer rounded-r relative" (click)="flip()">
+            <button class="font-bold sticky top-0" type="button">OBS HX</button>
         </div>
         <div class="absolute left-16 top-0">
             <fa-icon [icon]="faInfoCircle" class=" peer ml-3 text-gray-300 hover:text-gray-500 z-50"></fa-icon>
@@ -95,7 +95,7 @@
                     <h3 for="dld">Date of Last Delivery</h3>
                     <div class="grid grid-cols-10">
                         <div class="icon-height col-span-2 p-2 pt-1 rounded-l border-solid border border-zinc-300">
-                            <fa-icon [icon]="faCalendarDay" size="lg" class="text-blue-500" for="dld"></fa-icon>
+                            <fa-icon [icon]="faCalendarDay" size="lg" class="text-orange-400" for="dld"></fa-icon>
                         </div>
                         <input id="dld" name="dld" type="date" formControlName="dld"
                             (change)="onKeyUp($event.target.value, $event.target.id)"
@@ -130,7 +130,7 @@
                     <h3 for="pmp">Past Menstrual Period</h3>
                     <div class="grid grid-cols-10">
                         <div class="icon-height col-span-2 p-2 pt-1 rounded-l border-solid border border-zinc-300">
-                            <fa-icon [icon]="faCalendarDay" size="lg" class="text-red-400" for="pmp"></fa-icon>
+                            <fa-icon [icon]="faCalendarDay" size="lg" class="text-orange-400" for="pmp"></fa-icon>
                         </div>
                         <input id="pmp" name="pmp" type="date" formControlName="pmp"
                             (change)="onKeyUp($event.target.value, $event.target.id)"
@@ -143,7 +143,7 @@
                     <h3 for="lmp">Last Menstrual Period</h3>
                     <div class="grid grid-cols-10">
                         <div class="icon-height col-span-2 p-2 pt-1 rounded-l border-solid border border-zinc-300">
-                            <fa-icon [icon]="faCalendarDay" size="lg" class="text-red-500" for="lmp"></fa-icon>
+                            <fa-icon [icon]="faCalendarDay" size="lg" class="text-orange-400" for="lmp"></fa-icon>
                         </div>
                         <input id="lmp" name="lmp" type="date" formControlName="lmp"
                             (change)="onKeyUp($event.target.value, $event.target.id)"
