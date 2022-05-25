@@ -5,96 +5,73 @@
       <app-patient-info></app-patient-info>
     </div>
     
-    <div class="flex-wrap w-9/12 h-full shadow px-8 py-4 ml-5 rounded-3xl text-gray-600">
-  
-      <ul class="nav nav-tabs flex flex-col md:flex-row flex-wrap list-none border-b-0 pl-0 mb-4" id="tabs-tab"
-      role="tablist">
-      <li class="nav-item" role="presentation">
-        <a href="#tabs-home" class="
-          nav-link
-          block
-          font-medium
-          text-xs
-          leading-tight
-          uppercase
-          border-x-0 border-t-0 border-b-2 border-transparent
-          px-6
-          py-3
-          my-2
-          hover:border-transparent hover:bg-gray-100
-          focus:border-transparent
-          active
-        " id="tabs-home-tab" data-bs-toggle="pill" data-bs-target="#tabs-home" role="tab" aria-controls="tabs-home"
-          aria-selected="true">NCD Archive</a>
-      </li>
-      <li class="nav-item" role="presentation">
-        <a href="#tabs-profile" class="
-          nav-link
-          block
-          font-medium
-          text-xs
-          leading-tight
-          uppercase
-          border-x-0 border-t-0 border-b-2 border-transparent
-          px-6
-          py-3
-          my-2
-          hover:border-transparent hover:bg-gray-100
-          focus:border-transparent
-        " id="tabs-profile-tab" data-bs-toggle="pill" data-bs-target="#tabs-profile" role="tab"
-          aria-controls="tabs-profile" aria-selected="false">NCD Consult</a>
-      </li>
-    </ul>
-    <div class="tab-content" id="tabs-tabContent">
-      <div class="tab-pane fade show active" id="tabs-home" role="tabpanel" aria-labelledby="tabs-home-tab">
+    <div class="flex-wrap w-9/12 h-full shadow-md px-8 py-4 ml-5 mr-1 border-gray-100 border-t-2 rounded-3xl text-gray-600">
+
+      <nav class="flex flex-col sm:flex-row">
+        <button (click)="switchTab(1)" class="    text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 border-b-2 border-gray-200 mr-6 pb-2"
+        [class]="module==1? 'text-blue-500 border-b-2 border-blue-500 font-bold' : 'hover:-translate-y-1 hover:scale-110 transition ease-in-out delay-400 duration-300' ">
+            RISK ASSESSMENT
+        </button>
+        <button (click)="switchTab(2)" class="transition ease-in-out delay-400 hover:-translate-y-1 hover:scale-110 duration-300 text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 focus:text-blue-500 focus:border-b-2 focus:border-blue-500 focus:font-bold mr-6 pb-2">
+            QUESTIONNAIRE
+        </button>
+        <button (click)="switchTab(3)" class="transition ease-in-out delay-400 hover:-translate-y-1 hover:scale-110 duration-300 text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 focus:text-blue-500 focus:border-b-2 focus:border-blue-500 focus:font-bold mr-6 pb-2">
+            RISK STRATIFICATION
+        </button>
+        <button (click)="switchTab(4)" class="transition ease-in-out delay-400 hover:-translate-y-1 hover:scale-110 duration-300 text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 focus:text-blue-500 focus:border-b-2 focus:border-blue-500 focus:font-bold mr-6 pb-2">
+            PATIENT RECORD
+        </button>
+        <button (click)="switchTab(5)" class="transition ease-in-out delay-400 hover:-translate-y-1 hover:scale-110 duration-300 text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 focus:text-blue-500 focus:border-b-2 focus:border-blue-500 focus:font-bold mr-6 pb-2">
+            CASDT
+      </button>
+    </nav>
+    
         <!--FIRST VISIT SECTION-->
       
-      <div class="grid grid-col-8">
+      <div class="grid grid-col-8" *ngIf="module==1">
         <app-risk-assessment></app-risk-assessment>
       </div>
   
       <!--border-->
-      <div class="border-b-2 py-4"></div>
+      <!-- <div class="border-b-2 py-4"></div> -->
   
-      <!--SERVICES SECTION-->
-    
-      <div class="grid grid-col-8">
-        <app-risk-stratification></app-risk-stratification>
-      </div>
+      
 
-       <!--border-->
-       <div class="border-b-2 py-4"></div>
-
-      <!--QUESTIONNAIRE SECTION-->
+       <!--QUESTIONNAIRE SECTION-->
     
-      <div class="grid grid-col-8">
+       <div class="grid grid-col-8" *ngIf="module==2">
         <app-questionnaire></app-questionnaire>
       </div>
+    
+      
+       <!--border-->
+       <!-- <div class="border-b-2 py-4"></div> -->
+
+     <!--RISK STRATIFICATION SECTION-->
+
+     <div class="grid grid-col-8" *ngIf="module==3">
+      <app-risk-stratification></app-risk-stratification>
+    </div>
+
 
        <!--border-->
-       <div class="border-b-2 py-4"></div>
+       <!-- <div class="border-b-2 py-4"></div> -->
 
       <!--PATIENT RECORD SECTION-->
     
-      <div class="grid grid-col-8">
+      <div class="grid grid-col-8" *ngIf="module==4">
         <app-patient-record></app-patient-record>
       </div>
 
        <!--border-->
-       <div class="border-b-2 py-4"></div>
+       <!-- <div class="border-b-2 py-4"></div> -->
 
       <!--CASDT SECTION-->
     
-      <div class="grid grid-col-8">
+      <div class="grid grid-col-8" *ngIf="module==5">
         <app-casdt></app-casdt>
       </div>
       
-      <div class="tab-pane fade" id="tabs-profile" role="tabpanel" aria-labelledby="tabs-profile-tab">
-       
-      </div>
-      <div class="tab-pane fade" id="tabs-messages" role="tabpanel" aria-labelledby="tabs-profile-tab">
-        
-      </div>
     </div>
   
   

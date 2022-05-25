@@ -7,9 +7,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NcdComponent implements OnInit {
 
+  module: Number;
   constructor() { }
 
   ngOnInit(): void {
+    this.module=1;
   }
 
+  switchTab(tab){
+    this.module = 0;
+    this.module = tab;
+  }
 }

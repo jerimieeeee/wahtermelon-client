@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import { NcdRoutingModule } from './ncd-routing.module';
 import { SharedComponentsModule } from 'src/app/shared/shared-components/shared-components.module';
@@ -14,7 +15,7 @@ import { CasdtComponent } from './components/casdt/casdt.component';
 @NgModule({
   declarations: [NcdComponent, RiskAssessmentComponent, RiskStratificationComponent, QuestionnaireComponent, PatientRecordComponent, CasdtComponent],
   imports: [
-    CommonModule,
+    CommonModule,FontAwesomeModule,
     NcdRoutingModule,SharedComponentsModule
   ]
 })
