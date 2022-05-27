@@ -3,17 +3,26 @@
     <app-patient-info></app-patient-info>
   </div>
 
-  <div class="w-9/12 h-screen shadow px-2 py-4 ml-5 rounded-3xl text-gray-600 shadow-md overflow-y-scroll">
+  <div class="relative w-9/12 h-screen shadow px-2 py-4 ml-5 rounded-3xl text-gray-600 shadow-md overflow-y-scroll">
     <div class="text-sm font-medium text-center text-gray-500 ">
       <ul class="flex flex-wrap -mb-px ">
         <li class="mr-2">
-          <a class="inline-block p-4 rounded-t-lg border-b-2 hover:text-blue-400 hover:font-semibold hover:border-blue-400"
+          <a class="select-none inline-block p-4 rounded-t-lg border-b-2 hover:text-blue-400 hover:font-semibold hover:border-blue-400"
             [class]="module != 1? '' : 'text-blue-400 font-semibold border-blue-400'" (click)="switchTab(1)">MCR</a>
         </li>
         <li class="mr-2">
-          <a class="inline-block p-4 rounded-t-lg border-b-2 hover:text-blue-400 hover:font-semibold hover:border-blue-400"
-            [class]="module != 2? '' : 'text-blue-400 font-semibold border-blue-400'" (click)="switchTab(2)">Post</a>
+          <a class="select-none inline-block p-4 rounded-t-lg border-b-2 hover:text-blue-400 hover:font-semibold hover:border-blue-400"
+            [class]="module != 2? '' : 'text-blue-400 font-semibold border-blue-400'" (click)="switchTab(2)">Pre/Post</a>
         </li>
+        <li class="mr-2">
+          <a class="select-none inline-block p-4 rounded-t-lg border-b-2 hover:text-blue-400 hover:font-semibold hover:border-blue-400"
+            [class]="module != 3? '' : 'text-blue-400 font-semibold border-blue-400'" (click)="switchTab(3)">Services</a>
+        </li>
+        <li class="absolute right-0 ">
+          <a class="select-none text-base inline-block p-2 bg-gray-300 mt-3 mr-3 text-gray-400 hover:text-white rounded-md font-bold hover:bg-orange-400"
+            (click)="switchTab(4)">
+            <fa-icon [icon]="faPersonWalking" size="lg" class="mx-2"></fa-icon>End Visit</a>
+        </li> 
       </ul>
     </div>
     <!-- [class]="module != 2? '' : 'active'" (click)="switchTab(2)" -->
@@ -21,17 +30,27 @@
       <div class="w-12/12 px-8 py-5 border-solid border-2 border-zinc-100 border-l-0 border-r-0 border-t-0 p-3">
         <app-mcr></app-mcr>
       </div>
-      <div class="w-12/12 px-8 py-5 border-solid border-2 border-zinc-100 border-l-0 border-r-0 border-t-0 p-3">
+      <div class="w-12/12 mb-10 px-8 py-5 border-solid border-2 border-zinc-100 border-l-0 border-r-0 border-t-0 p-3">
         <app-riskfactors></app-riskfactors>
       </div>
-      <div class="w-12/12 mb-10 px-8 py-5 border-solid border-2 border-zinc-100 border-l-0 border-r-0 border-t-0 p-3">
-        <app-prenatal></app-prenatal>
-      </div>
+     
     </div>
 
     <div *ngIf="module == 2">
+      <div class="w-12/12 px-8 py-5 border-solid border-2 border-zinc-100 border-l-0 border-r-0 border-t-0 p-3">
+        <app-prenatal></app-prenatal>
+      </div>
+      <div  *ngIf="post_value" class="w-12/12 px-8 py-5 border-solid border-2 border-zinc-100 border-l-0 border-r-0 border-t-0 p-3">
+        <app-postvisits></app-postvisits>
+      </div>
       <div class="w-12/12 mb-10 px-8 py-5 border-solid border-2 border-zinc-100 border-l-0 border-r-0 border-t-0 p-3">
-        <app-postpartum></app-postpartum>
+        <app-postpartum (postpartum_bool)="postValue($event)" ></app-postpartum>
+      </div>
+    </div>
+
+    <div *ngIf="module == 3">
+      <div class="w-12/12 mb-10 px-8 py-5 border-solid border-2 border-zinc-100 border-l-0 border-r-0 border-t-0 p-3">
+        <app-services></app-services>
       </div>
     </div>
   </div>

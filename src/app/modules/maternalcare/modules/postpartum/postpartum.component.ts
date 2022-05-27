@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { faCalendarDay, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
+import { faAngleDown, faCalendarDay, faCaretRight, faClose, faInfoCircle, faPencil, faSave, faTimes, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
+
 
 @Component({
   selector: 'app-postpartum',
@@ -11,8 +12,17 @@ export class PostpartumComponent implements OnInit {
   focused: boolean;
   public keyUp = [];
   public buttons = [];
-  faInfoCircle = faInfoCircle;
+  
   faCalendarDay = faCalendarDay;
+  faTimes = faTimes;
+  faClose = faClose;
+  faTimesCircle = faTimesCircle;
+  faSave = faSave;
+  faPencil = faPencil;
+  faAngleDown = faAngleDown;
+  faInfoCircle = faInfoCircle;
+  faCaretRight = faCaretRight;
+
   postpartum_form: FormGroup;
   gravidity: Number = new Number();
   parity: Number = new Number();
@@ -22,6 +32,7 @@ export class PostpartumComponent implements OnInit {
   pre_term: Number = new Number();
   bfd: boolean;
 
+  @Output() postpartum_bool = new EventEmitter<string>();
   constructor() { }
 
   public delivery_location = [
@@ -89,14 +100,61 @@ export class PostpartumComponent implements OnInit {
   }
  saveForm(data){
   this.postpartum_form.setValue({
-    delivery_location: data.delivery,
+    registration_date: data.registration_date,
+    delivery_date: data.delivery_date,
+    admission_date: data.admission_date,
+    discharge_date: data.discharge_date,
+    gravidity: data.gravidity,
+    parity: data.parity,
+    full_term: data.full_term,
+    pre_term: data.pre_term,
+    abortions: data.abortions,
+    live_births: data.live_births,
+    delivery_location:data.delivery_location,
+    region: data.region,
+    province: data.province,
+    muncity:data.muncity,
+    barangay:data.barangay,
+    birth_attendant: data.birth_attendant,
+    pregnancy_outcome: data.pregnancy_outcome,
+    breastfeeding_asap:data.breastfeeding_asap,
+    baby_healthy:data.baby_healthy,
+    breastfeeding_date: data.breastfeeding_date,
     // region:  ,
     // province: ,
     // muncity: ,
     // barangay: 
-  })
+  });
+  console.log(this.postpartum_form.value, " data value");
+  this.postpartum_bool.emit(this.postpartum_form.value);
  }
- bfdCheck(){
+ bfdCheck(value){
   this.bfd = !this.bfd;
  }
+
+ onKeyUp(data_input: string, id: string) {
+  // console.log(data_input + ' this is my data input');
+
+  if (this.keyUp.includes(id)) {
+    if (data_input == '') {
+      this.keyUp.splice(this.keyUp.indexOf(id), 1);
+    }
+  } else {
+    this.keyUp.push(id);
+  }
+}
+
+buttonShow(name) {
+  this.buttons = [];
+  if (!this.buttons.includes(name)) {
+    this.buttons.push(name);
+  }
+  // console.log(this.buttons);
+
+}
+cancel() {
+  this.bfd = false;
+  this.keyUp = [];
+  this.createForm();
+}
 }

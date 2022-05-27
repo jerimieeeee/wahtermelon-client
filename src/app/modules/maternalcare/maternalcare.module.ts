@@ -13,8 +13,10 @@ import { McrComponent } from './modules/mcr/mcr.component';
 import { PostpartumComponent } from './modules/postpartum/postpartum.component';
 import { RiskfactorsComponent } from './modules/riskfactors/riskfactors.component';
 import { PrenatalComponent } from './modules/prenatal/prenatal.component';
+import { ServicesComponent } from './modules/services/services.component';
+import { PostvisitsComponent } from './modules/postvisits/postvisits.component';
 @NgModule({
-  declarations: [MaternalcareComponent, McrComponent, PostpartumComponent, RiskfactorsComponent, PrenatalComponent],
+  declarations: [MaternalcareComponent, McrComponent, PostpartumComponent, RiskfactorsComponent, PrenatalComponent, ServicesComponent, PostvisitsComponent],
   imports: [
     CommonModule,
     MaternalcareRoutingModule,

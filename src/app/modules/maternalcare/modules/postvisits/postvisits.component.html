@@ -1,0 +1,305 @@
+<form [formGroup]="postpartum_visit_form" (ngSubmit)="saveForm(postpartum_visit_form.value)">
+    <div class="grid grid-rows-2 gap-2 cursor-pointer hover:bg-gray-100 relative"
+        style="grid-template-columns: repeat(16, minmax(0, 1fr));" (click)="flip();" *ngIf="focused">
+        <div class="border-check row-span-2 col-span-2 rounded-r">
+            <button class="font-bold" type="button">Visits<h1 class="text-sm font-semibold"> (Postpartum)</h1></button>
+        </div>
+
+        <div class="absolute right-0 top-0">
+            <fa-icon [icon]="faInfoCircle" class="peer ml-3 text-gray-300 hover:text-gray-500 z-50"></fa-icon>
+            <div
+                class="absolute text-sm bg-gradient-to-b from-stone-500 to-gray-400 p-2 rounded-md border border-gray-500  text-white drop-shadow-lg opacity-90 border-check z-50 w-64 right-0 invisible peer-hover:visible">
+                <h1 class="font-bold drop-shadow-lg">IMPORTANT</h1>
+                <p class="font-light drop-shadow-lg">Once saved, the information will be displayed in the input boxes
+                    and shall not be editable unless Edit button is pressed.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid gap-2 relative animates-dropdown " style="grid-template-columns: repeat(16, minmax(0, 1fr));"
+        *ngIf="!focused">
+        <div class="border-check col-span-2 row-span-5 hover:bg-gray-100 rounded-r cursor-pointer relative"
+            (click)="flip();">
+            <button class="font-bold sticky top-0" type="button">Visits<h1 class="text-sm font-semibold "> (Postpartum)
+                </h1></button>
+            <div class="absolute top-0" style="left: 4.5rem;">
+                <fa-icon [icon]="faInfoCircle" class=" peer ml-5 text-gray-300 hover:text-gray-500 z-50"></fa-icon>
+                <div
+                    class="absolute text-sm bg-gradient-to-b from-stone-500 to-gray-400 p-2 rounded-md border border-gray-500  text-white drop-shadow-lg opacity-90 border-check z-50 w-64 invisible peer-hover:visible">
+                    <h1 class="font-bold drop-shadow-lg">IMPORTANT</h1>
+                    <p class="font-light drop-shadow-lg">Once saved, the information will be displayed in the input
+                        boxes and shall not be editable unless Edit button is pressed.</p>
+                </div>
+            </div>
+        </div>
+
+        <div style="grid-column: span 14 / span 14;">
+            <div class="grid gap-4 rounded-lg hover:drop-shadow-lg drop-shadow-md bg-white rounded-lg hover:border border-gray-300 hover:border-pink-400 p-2 m-2 border"
+                style="grid-template-columns: repeat(14, minmax(0, 1fr));">
+
+                <div class="transitions col-span-2 row-span-2 border-check relative select-none group mx-2"
+                    *ngIf="!focused">
+                    <h3 for="visit_sequence" class="whitespace-nowrap">Visit Count</h3>
+                    <fa-icon [icon]="faCaretRight"
+                        class="absolute bottom-1.5 left-2 text-gray-300 group-hover:text-pink-300"
+                        *ngIf="!focused && 1 == 0">
+                    </fa-icon>
+                    <input type="text" formControlName="visit_sequence"
+                        class="text-lg font-medium disabled:group-hover:font-semibold peer border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed disabled:border-0  disabled:pl-5  disabled:typed-out disabled:group-hover:bg-gray-100 disabled:rounded-full"
+                        id="visit_sequence" [value]="value" hidden>
+                    <div class="text-center text-2xl font-bold py-2 border-gray-300 border rounded-lg"
+                        *ngIf="!edit_bool">{{ value }}</div>
+                    <div class="text-center text-2xl font-bold py-2 border-gray-300 border rounded-lg"
+                        *ngIf="edit_bool">{{ postpartum_visit_form.get('visit_sequence').value }}</div>
+                </div>
+
+                <div class="transitions col-span-4 col-start-3 border-check relative select-none" *ngIf="!focused">
+                    <h3 for="fetal_presentation_id">Registry ID</h3>
+                    <!-- <input type="text" id="registry_id" formControlName="registry_id"> -->
+                    <input type="text" formControlName="registry_id"
+                        class="font-medium invalid:border-red-500 border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100"
+                        id="registry_id" disabled>
+                </div>
+                <div class="transitions col-span-4 col-start-7 border-check relative select-none" *ngIf="!focused">
+                    <h3 for="fetal_presentation_id">Postpartum Week</h3>
+                    <input type="text" formControlName="postpartum_week"
+                        class="font-medium invalid:border-red-500 border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100"
+                        id="postpartum_week" disabled>
+                </div>
+            </div>
+        </div>
+        <div style="grid-column: span 6 / span 6;">
+            <div
+                class="grid gap-2 grid-cols-6 rounded-lg hover:drop-shadow-lg drop-shadow-md bg-white rounded-lg hover:border border-gray-300 hover:border-pink-400 mx-2  border group">
+                <div
+                    class="col-span-6 text-pink-500 form-check px-2 py-1 font-semibold border border-dashed border-gray-300 border-t-0 border-l-0 border-r-0 group-hover:border-pink-400">
+                    <h1 class="select-none">
+                        Vitals
+                    </h1>
+                </div>
+                <div class="transitions col-span-2 border-check relative select-none group mx-2" *ngIf="!focused">
+                    <h3 [hidden]="cm_value" for="patient_height">Height</h3>
+                    <h3 *ngIf="cm_value">({{ cm_value }})</h3>
+                    <fa-icon [icon]="faCaretRight"
+                        class="absolute bottom-1.5 left-2 text-gray-300 group-hover:text-pink-300"
+                        *ngIf="!focused && 1 == 0">
+                    </fa-icon>
+                    <input type="text" formControlName="patient_height"
+                        class="font-medium disabled:group-hover:font-semibold peer invalid:border-red-500 border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed disabled:border-0  disabled:pl-5  disabled:typed-out disabled:group-hover:bg-gray-100 disabled:rounded-full"
+                        (keyup)="onKeyUp($event.target.value, $event.target.id)"
+                        (keyup.escape)="clearForm($event.target.id)" id="patient_height"
+                        (change)="onKeyUp($event.target.value, $event.target.id); cmCatcher($event.target.value)">
+                    <small class="hidden peer-invalid:block text-red-400 ">error_message</small>
+                </div>
+
+                <div class="transitions col-span-2 border-check relative select-none group ml-2 mb-2" *ngIf="!focused">
+                    <h3 for="bp_systolic">Systolic</h3>
+                    <fa-icon [icon]="faCaretRight"
+                        class="absolute bottom-1.5 left-2 text-gray-300 group-hover:text-pink-300"
+                        *ngIf="!focused && 1 == 0">
+                    </fa-icon>
+                    <input type="number" formControlName="bp_systolic"
+                        class="font-medium disabled:group-hover:font-semibold peer invalid:border-red-500 border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed disabled:border-0  disabled:pl-5  disabled:typed-out disabled:group-hover:bg-gray-100 disabled:rounded-full"
+                        (keyup)="onKeyUp($event.target.value, $event.target.id)"
+                        (keyup.escape)="clearForm($event.target.id)" id="bp_systolic"
+                        (change)="onKeyUp($event.target.value, $event.target.id)">
+                    <small class="hidden peer-invalid:block text-red-400 ">error_message</small>
+                </div>
+
+                <div class="transitions col-span-2 border-check relative select-none group mr-2 mb-2" *ngIf="!focused">
+                    <h3 for="bp_diastolic">Diastolic</h3>
+                    <fa-icon [icon]="faCaretRight"
+                        class="absolute bottom-1.5 left-2 text-gray-300 group-hover:text-pink-300"
+                        *ngIf="!focused && 1 == 0">
+                    </fa-icon>
+                    <input type="number" formControlName="bp_diastolic"
+                        class="font-medium disabled:group-hover:font-semibold peer invalid:border-red-500 border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed disabled:border-0  disabled:pl-5  disabled:typed-out disabled:group-hover:bg-gray-100 disabled:rounded-full"
+                        (keyup)="onKeyUp($event.target.value, $event.target.id)"
+                        (keyup.escape)="clearForm($event.target.id)" id="bp_diastolic"
+                        (change)="onKeyUp($event.target.value, $event.target.id)">
+                    <small class="hidden peer-invalid:block text-red-400 ">error_message</small>
+                </div>
+
+                <div class="transitions col-span-2 col-start-1 border-check relative select-none group mx-2"
+                    *ngIf="!focused">
+                    <h3 for="patient_weight">Weight</h3>
+                    <fa-icon [icon]="faCaretRight"
+                        class="absolute bottom-1.5 left-2 text-gray-300 group-hover:text-pink-300"
+                        *ngIf="!focused && 1 == 0">
+                    </fa-icon>
+                    <input type="number" formControlName="patient_weight"
+                        class="font-medium disabled:group-hover:font-semibold peer invalid:border-red-500 border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed disabled:border-0  disabled:pl-5  disabled:typed-out disabled:group-hover:bg-gray-100 disabled:rounded-full"
+                        (keyup)="onKeyUp($event.target.value, $event.target.id)"
+                        (keyup.escape)="clearForm($event.target.id)" id="patient_weight"
+                        (change)="onKeyUp($event.target.value, $event.target.id)">
+                    <small class="hidden peer-invalid:block text-red-400 ">error_message</small>
+                </div>
+
+                <div class="transitions col-span-4 col-start-3 mb-2 mx-2" *ngIf="!focused">
+                    <h3 for="postpartum_visit_date">Date</h3>
+                    <div class="grid grid-cols-10">
+                        <div class="icon-height col-span-2 p-2 pt-1 rounded-l border-solid border border-zinc-300">
+                            <fa-icon [icon]="faCalendarDay" size="lg" class="text-blue-500" for="postpartum_visit_date">
+                            </fa-icon>
+                        </div>
+                        <input formControlName="postpartum_visit_date" id="postpartum_visit_date"
+                            name="postpartum_visit_date" type="date"
+                            class="col-span-8 rounded-r border-solid border border-l-0 border-zinc-300 focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none disabled:cursor-not-allowed"
+                            width="auto"
+                            (keyup.escape)="$event.target.value = ''; onKeyUp($event.target.value, $event.target.id)"
+                            (change)="onKeyUp($event.target.value, $event.target.id)">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div style="grid-column: span 8 / span 8;">
+            <div
+                class="grid grid-cols-8 rounded-lg hover:drop-shadow-lg drop-shadow-md bg-white rounded-lg hover:border border-gray-300 hover:border-blue-400 mr-2  border">
+                <div
+                    class="col-span-9 text-gray-500 form-check px-2 py-1 font-semibold border border-dashed border-gray-300 border-t-0 border-l-0 border-r-0 group-hover:border-pink-400">
+                    <h1 class="select-none">
+                        Postpartum Events
+                    </h1>
+                </div>
+                <div class="transitions col-span-3 mx-2" *ngIf="!focused">
+                    <div class="border-check-red pt-2 group">
+                        <input
+                            class="check-style h-6 w-6 border border-gray-400 rounded-md group-hover:rounded-lg checked:rounded-full checked:border-2 bg-white checked:bg-blue-400 checked:border-blue-500 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                            type="checkbox" value="toggle_questionaire[0].name" [attr.id]="toggle_questionaire[0].name"
+                            (change)="postpartum_visit_form.get('vi').setValue(toggle_questionaire[0].name); onKeyUp($event.target.value, $event.target.id)"
+                            [checked]="postpartum_visit_form.get('vi').value == toggle_questionaire[0].name"
+                            (keyup.escape)="postpartum_visit_form.get('vi').setValue('')">
+                        <label class="text-gray-800 cursor-pointer" name="check"
+                            [attr.for]="toggle_questionaire[0].name" value="toggle_questionaire[0].name">
+                            {{toggle_questionaire[0].name}}
+                        </label>
+                    </div>
+                </div>
+                <div class="transitions col-span-3 mx-2" *ngIf="!focused">
+                    <div class="border-check-red pt-2 group">
+                        <input
+                            class="check-style h-6 w-6 border border-gray-400 rounded-md group-hover:rounded-lg checked:rounded-full checked:border-2 bg-white checked:bg-blue-400 checked:border-blue-500 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                            type="checkbox" value="toggle_questionaire[1].name" [attr.id]="toggle_questionaire[1].name"
+                            (change)="postpartum_visit_form.get('vb').setValue(toggle_questionaire[1].name); onKeyUp($event.target.value, $event.target.id)"
+                            [checked]="postpartum_visit_form.get('vb').value == toggle_questionaire[1].name"
+                            (keyup.escape)="postpartum_visit_form.get('vb').setValue('')">
+                        <label class="text-gray-800 cursor-pointer" name="check"
+                            [attr.for]="toggle_questionaire[1].name" value="toggle_questionaire[1].name">
+                            {{toggle_questionaire[1].name}}
+                        </label>
+                    </div>
+                </div>
+                <div class="transitions col-span-3 mx-2 col-start-1" *ngIf="!focused">
+                    <div class="border-check-red   group">
+                        <input
+                            class="check-style h-6 w-6 border border-gray-400 rounded-md group-hover:rounded-lg checked:rounded-full checked:border-2 bg-white checked:bg-blue-400 checked:border-blue-500 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                            type="checkbox" value="toggle_questionaire[2].name" [attr.id]="toggle_questionaire[2].name"
+                            (change)="postpartum_visit_form.get('f').setValue(toggle_questionaire[2].name); onKeyUp($event.target.value, $event.target.id)"
+                            [checked]="postpartum_visit_form.get('f').value == toggle_questionaire[2].name"
+                            (keyup.escape)="postpartum_visit_form.get('f').setValue('')">
+                        <label class="text-gray-800 cursor-pointer" name="check"
+                            [attr.for]="toggle_questionaire[2].name" value="toggle_questionaire[2].name">
+                            {{toggle_questionaire[2].name}}
+                        </label>
+                    </div>
+                </div>
+                <div class="transitions col-span-3 mx-2 col-start-7 row-start-2" *ngIf="!focused">
+                    <div class="border-check-red pt-2 group">
+                        <input
+                            class="check-style h-6 w-6 border border-gray-400 rounded-md group-hover:rounded-lg checked:rounded-full checked:border-2 bg-white checked:bg-blue-400 checked:border-blue-500 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                            type="checkbox" value="toggle_questionaire[3].name" [attr.id]="toggle_questionaire[3].name"
+                            (change)="postpartum_visit_form.get('p').setValue(toggle_questionaire[3].name); onKeyUp($event.target.value, $event.target.id)"
+                            [checked]="postpartum_visit_form.get('p').value == toggle_questionaire[3].name"
+                            (keyup.escape)="postpartum_visit_form.get('p').setValue('')">
+                        <label class="text-gray-800 cursor-pointer" name="check"
+                            [attr.for]="toggle_questionaire[3].name" value="toggle_questionaire[3].name">
+                            {{toggle_questionaire[3].name}}
+                        </label>
+                    </div>
+                </div>
+                <div class="transitions col-span-3 mx-2" *ngIf="!focused">
+                    <div class="border-check-red   group">
+                        <input
+                            class="check-style h-6 w-6 border border-gray-400 rounded-md group-hover:rounded-lg checked:rounded-full checked:border-2 bg-white checked:bg-blue-400 checked:border-blue-500 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                            type="checkbox" value="toggle_questionaire[4].name" [attr.id]="toggle_questionaire[4].name"
+                            (change)="postpartum_visit_form.get('b').setValue(toggle_questionaire[4].name); onKeyUp($event.target.value, $event.target.id)"
+                            [checked]="postpartum_visit_form.get('b').value == toggle_questionaire[4].name"
+                            (keyup.escape)="postpartum_visit_form.get('b').setValue('')">
+                        <label class="text-gray-800 cursor-pointer" name="check"
+                            [attr.for]="toggle_questionaire[4].name" value="toggle_questionaire[4].name">
+                            {{toggle_questionaire[4].name}}
+                        </label>
+                    </div>
+                </div>
+                <div class="transitions col-span-4 mx-2" *ngIf="!focused">
+                    <div class="border-check-red pt-4 pb-2 group">
+                        <input
+                            class="check-style h-6 w-6 border border-gray-400 rounded-md group-hover:rounded-lg checked:rounded-full checked:border-2 bg-white checked:bg-blue-400 checked:border-blue-500 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                            type="checkbox" value="toggle_questionaire[5].name" [attr.id]="toggle_questionaire[5].name"
+                            (change)="postpartum_visit_form.get('pb').setValue(toggle_questionaire[5].name); onKeyUp($event.target.value, $event.target.id)"
+                            [checked]="postpartum_visit_form.get('pb').value == toggle_questionaire[5].name"
+                            (keyup.escape)="postpartum_visit_form.get('pb').setValue('')">
+                        <label class="text-gray-800 cursor-pointer" name="check"
+                            [attr.for]="toggle_questionaire[5].name" value="toggle_questionaire[5].name">
+                            {{toggle_questionaire[5].name}}
+                        </label>
+                    </div>
+                </div>
+                <div class="transitions col-span-4 mx-2" *ngIf="!focused">
+                    <div class="border-check-red pt-4 pb-2 group">
+                        <input
+                            class="check-style h-6 w-6 border border-gray-400 rounded-md group-hover:rounded-lg checked:rounded-full checked:border-2 bg-white checked:bg-blue-400 checked:border-blue-500 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                            type="checkbox" value="toggle_questionaire[6].name" [attr.id]="toggle_questionaire[6].name"
+                            (change)="postpartum_visit_form.get('fp').setValue(toggle_questionaire[6].name); onKeyUp($event.target.value, $event.target.id)"
+                            [checked]="postpartum_visit_form.get('fp').value == toggle_questionaire[6].name"
+                            (keyup.escape)="postpartum_visit_form.get('fp').setValue('')">
+                        <label class="text-gray-800 cursor-pointer" name="check"
+                            [attr.for]="toggle_questionaire[6].name" value="toggle_questionaire[6].name">
+                            {{toggle_questionaire[6].name}}
+                        </label>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div style="grid-column: span 16 / span 16;">
+            <div class="relative w-auto border-check mb-7"
+                *ngIf="!focused && keyUp.length > 0 && ! postpartum_visit_form.disabled"
+                style="grid-column: span 16 / span 16;">
+                <div class="absolute inline-flex right-0 top-0" style=" top: -0.85rem;">
+                    <div class="flex hover:animate-bounce border-check bg-white hover:bg-gray-400 text-gray-400 py-1 rounded-full hover:text-white px-2"
+                        (click)="cancel()" (mouseover)="buttonShow('cancel')">
+                        <fa-icon [icon]="faTimes" size="lg" class="mr-2">
+                        </fa-icon>
+                        <button type="button" class="font-bold button-out border-check-red typed-out"
+                            *ngIf="buttons.includes('cancel')">Cancel</button>
+                    </div>
+                    <div class="flex hover:animate-bounce border-check bg-white hover:bg-green-400 py-1 rounded-full text-green-500 hover:text-white px-2"
+                        (mouseover)="buttonShow('save')">
+                        <fa-icon [icon]="faSave" size="lg" class="mr-2 ">
+                        </fa-icon>
+                        <button type="submit" class="font-bold button-out border-check-red"
+                            [disabled]=" postpartum_visit_form.invalid"
+                            (keyup.enter)="saveForm( postpartum_visit_form.value)"
+                            *ngIf="buttons.includes('save')">Save</button>
+                    </div>
+                </div>
+            </div>
+            <div class="relative w-auto border-check mb-7" *ngIf="!focused &&  postpartum_visit_form.disabled"
+                style="grid-column: span 16 / span 16;">
+                <div class="absolute inline-flex right-0 top-0" style=" top: -0.85rem;" (click)="edit()">
+                    <div class="flex hover:animate-bounce border-check bg-white hover:bg-orange-400 py-1 rounded-full text-orange-500 hover:text-white px-2"
+                        (mouseover)="buttonShow('edit')" (mouseleave)="buttonShow()">
+                        <fa-icon [icon]="faPencil" size="lg" class="mr-2 ">
+                        </fa-icon>
+                        <button type="button" class="font-bold button-out border-check-red typed-out"
+                            (keyup.enter)="uncheck($event.target.id + fphx_cat)"
+                            *ngIf="buttons.includes('edit')">Edit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

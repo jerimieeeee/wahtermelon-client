@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { faPersonWalking } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-maternalcare',
@@ -7,10 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MaternalcareComponent implements OnInit {
 
+  faPersonWalking = faPersonWalking;
+
   constructor() { }
   module: number;
   ngOnInit(): void {
     this.module = 2;
+    this.post_value =false;
   }
 
   switchTab(tab) {
@@ -18,4 +22,11 @@ export class MaternalcareComponent implements OnInit {
     this.module = tab;
     console.log(this.module);
   }
+  post_value: boolean;
+ postValue(post_data) {
+   
+  if(post_data){
+    this.post_value =true;
+  }
+ }
 }

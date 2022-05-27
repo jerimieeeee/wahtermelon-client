@@ -4,7 +4,6 @@
         <div class="border-check row-span-2 col-span-2 rounded-r">
             <button class="font-bold" type="button">Postpartum</button>
         </div>
-
         <div class="absolute right-0 top-0">
             <fa-icon [icon]="faInfoCircle" class="peer ml-3 text-gray-300 hover:text-gray-500 z-50"></fa-icon>
             <div
@@ -15,7 +14,6 @@
             </div>
         </div>
     </div>
-
     <div class="grid gap-4 relative animates-dropdown" style="grid-template-columns: repeat(16, minmax(0, 1fr));"
         *ngIf="!focused">
         <div class="border-check col-span-2 hover:bg-gray-100 rounded-r cursor-pointer relative" (click)="flip();">
@@ -30,7 +28,6 @@
                 </div>
             </div>
         </div>
-
         <div style="grid-column: span 14 / span 14;">
             <div class="grid gap-0" style="grid-template-columns: repeat(14, minmax(0, 1fr));">
                 <div style="grid-column: span 14 / span 14;">
@@ -48,6 +45,9 @@
                                 </div>
                                 <input formControlName="registration_date" id="registration_date"
                                     name="registration_date" type="date"
+                                    (keyup)="onKeyUp($event.target.value, $event.target.id)"
+                                    (keyup.escape)="clearForm($event.target.id)"
+                                    (change)="onKeyUp($event.target.value, $event.target.id)"
                                     class="col-span-8 rounded-r border-solid border border-l-0 border-zinc-300 focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none disabled:cursor-not-allowed"
                                     width="auto">
                             </div>
@@ -57,16 +57,18 @@
                             <div class="grid" style="grid-template-columns: repeat(14, minmax(0, 1fr));">
                                 <div
                                     class="icon-height col-span-2 p-2 pt-1 rounded-l border-solid border border-zinc-300">
-                                    <fa-icon [icon]="faCalendarDay" size="lg" class="text-orange-400" for="delivery_date">
+                                    <fa-icon [icon]="faCalendarDay" size="lg" class="text-orange-400"
+                                        for="delivery_date">
                                     </fa-icon>
                                 </div>
                                 <input formControlName="delivery_date" id="delivery_date" name="delivery_date"
-                                    type="datetime-local"
+                                    (keyup)="onKeyUp($event.target.value, $event.target.id)"
+                                    (keyup.escape)="clearForm($event.target.id)"
+                                    (change)="onKeyUp($event.target.value, $event.target.id)" type="datetime-local"
                                     class="col-span-12 rounded-r border-solid border border-l-0 border-zinc-300 focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none disabled:cursor-not-allowed"
                                     width="auto">
                             </div>
                         </div>
-
                         <div class="transitions col-span-7" *ngIf="!focused">
                             <h3 for="admission_date">Admission </h3>
                             <div class="grid" style="grid-template-columns: repeat(14, minmax(0, 1fr));">
@@ -77,13 +79,13 @@
                                     </fa-icon>
                                 </div>
                                 <input formControlName="admission_date" id="admission_date" name="admission_date"
-                                    type="datetime-local"
+                                    (keyup)="onKeyUp($event.target.value, $event.target.id)"
+                                    (keyup.escape)="clearForm($event.target.id)"
+                                    (change)="onKeyUp($event.target.value, $event.target.id)" type="datetime-local"
                                     class="col-span-12 rounded-r border-solid border border-l-0 border-zinc-300 focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none disabled:cursor-not-allowed"
                                     width="auto">
-
                             </div>
                         </div>
-
                         <div class="transitions col-span-7" *ngIf="!focused">
                             <h3 for="discharge_date">Discharge </h3>
                             <div class="grid" style="grid-template-columns: repeat(14, minmax(0, 1fr));">
@@ -94,10 +96,11 @@
                                     </fa-icon>
                                 </div>
                                 <input formControlName="discharge_date" id="discharge_date" name="discharge_date"
-                                    type="datetime-local"
+                                    (keyup)="onKeyUp($event.target.value, $event.target.id)"
+                                    (keyup.escape)="clearForm($event.target.id)"
+                                    (change)="onKeyUp($event.target.value, $event.target.id)" type="datetime-local"
                                     class="col-span-12 rounded-r border-solid border border-l-0 border-zinc-300 focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none disabled:cursor-not-allowed"
                                     width="auto">
-
                             </div>
                         </div>
                     </div>
@@ -124,7 +127,6 @@
                                 (keyup.escape)="clearForm($event.target.id)" id="gravidity"
                                 (change)="onKeyUp($event.target.value, $event.target.id)">
                             <small class="hidden peer-invalid:block text-red-400 ">error_message</small>
-
                         </div>
                         <div class="transitions col-span-4 row-start-3 border-check relative select-none group mx-2 mb-2"
                             *ngIf="!focused">
@@ -139,11 +141,7 @@
                                 (keyup.escape)="clearForm($event.target.id)" id="parity"
                                 (change)="onKeyUp($event.target.value, $event.target.id)">
                             <small class="hidden peer-invalid:block text-red-400 ">error_message</small>
-
                         </div>
-
-
-
                         <div class="transitions col-span-4 col-start-7 border-check relative select-none group mx-2"
                             *ngIf="!focused">
                             <h3>Full-Term</h3>
@@ -157,7 +155,6 @@
                                 (keyup.escape)="clearForm($event.target.id)" id="full_term"
                                 (change)="onKeyUp($event.target.value, $event.target.id)">
                             <small class="hidden peer-invalid:block text-red-400 ">error_message</small>
-
                         </div>
                         <div class="transitions col-span-4 border-check relative select-none group mx-2"
                             *ngIf="!focused">
@@ -217,58 +214,58 @@
                         </div>
                         <div class="transitions col-span-4 border-check relative mx-2" *ngIf="!focused">
                             <h3>Delivery Location</h3>
-                            <!-- <input type="text" class="border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300" *ngIf="!obshx_form.alc" > -->
-                            <select formControlName="delivery_location"
+                            <select formControlName="delivery_location" (keyup.escape)="clearForm($event.target.id)"
+                                (change)="onKeyUp($event.target.value, $event.target.id)" id="delivery_location"
                                 class="text-ellipsis bg-white text-align-left drop_btn border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed">
                                 <option *ngFor="let loc of delivery_location">
                                     {{loc.loc}}
                                 </option>
                             </select>
-                            
+
                         </div>
                         <div class="transitions col-span-4  border-check relative mx-2" *ngIf="!focused">
                             <h3>Region</h3>
-                            <!-- <input type="text" class="border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300" *ngIf="!obshx_form.alc" > -->
-                            <select formControlName="region"
+                            <select formControlName="region" (keyup.escape)="clearForm($event.target.id)"
+                                (change)="onKeyUp($event.target.value, $event.target.id)" id="region"
                                 class="text-ellipsis bg-white text-align-left drop_btn border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed">
                                 <option *ngFor="let loc of delivery_location">
                                     {{loc.loc}}
                                 </option>
                             </select>
-                            
+
                         </div>
-                        <div class="transitions col-span-4  border-check relative mx-2"  *ngIf="!focused">
+                        <div class="transitions col-span-4  border-check relative mx-2" *ngIf="!focused">
                             <h3>Province</h3>
-                            <!-- <input type="text" class="border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300" *ngIf="!obshx_form.alc" > -->
-                            <select formControlName="province"
+                            <select formControlName="province" (keyup.escape)="clearForm($event.target.id)"
+                                (change)="onKeyUp($event.target.value, $event.target.id)" id="province"
                                 class="text-ellipsis bg-white text-align-left drop_btn border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed">
                                 <option *ngFor="let loc of delivery_location">
                                     {{loc.loc}}
                                 </option>
                             </select>
-                            
+
                         </div>
                         <div class="transitions col-span-4 border-check relative mx-2" *ngIf="!focused">
                             <h3>Municipality</h3>
-                            <!-- <input type="text" class="border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300" *ngIf="!obshx_form.alc" > -->
-                            <select formControlName="muncity"
+                            <select formControlName="muncity" (keyup.escape)="clearForm($event.target.id)"
+                                (change)="onKeyUp($event.target.value, $event.target.id)" id="muncity"
                                 class="text-ellipsis bg-white text-align-left drop_btn border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed">
                                 <option *ngFor="let loc of delivery_location">
                                     {{loc.loc}}
                                 </option>
                             </select>
-                            
+
                         </div>
                         <div class="transitions col-span-4  border-check relative mx-2 mb-2" *ngIf="!focused">
                             <h3>Barangay</h3>
-                            <!-- <input type="text" class="border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300" *ngIf="!obshx_form.alc" > -->
-                            <select formControlName="barangay"
+                            <select formControlName="barangay" (keyup.escape)="clearForm($event.target.id)"
+                                (change)="onKeyUp($event.target.value, $event.target.id)" id="barangay"
                                 class="text-ellipsis bg-white text-align-left drop_btn border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed">
                                 <option *ngFor="let loc of delivery_location">
                                     {{loc.loc}}
                                 </option>
                             </select>
-                            
+
                         </div>
                     </div>
                 </div>
@@ -279,47 +276,47 @@
                         <div class=" form-check p-2 font-semibold border border-dashed border-gray-300 group-hover:border-blue-400 border-t-0 border-l-0 border-r-0 "
                             style="	grid-column: span 14 / span 14;">
                             <h1 class="select-none">
-                               Other Details
+                                Other Details
                             </h1>
                         </div>
                         <div class="transitions col-span-4 border-check relative mx-2" *ngIf="!focused">
                             <h3>Birth Attendant</h3>
-                            <!-- <input type="text" class="border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300" *ngIf="!obshx_form.alc" > -->
-                            <select formControlName="birth_attendant"
+                            <select formControlName="birth_attendant" (keyup.escape)="clearForm($event.target.id)"
+                                (change)="onKeyUp($event.target.value, $event.target.id)" id="birth_attendant"
                                 class="text-ellipsis bg-white text-align-left drop_btn border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed">
                                 <option *ngFor="let attendant of attendants">
                                     {{attendant.attendant}}
                                 </option>
                             </select>
-                            
+
                         </div>
                         <div class="transitions col-span-4  border-check relative mx-2" *ngIf="!focused">
                             <h3>Pregnancy Outcome</h3>
-                            <!-- <input type="text" class="border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300" *ngIf="!obshx_form.alc" > -->
-                            <select formControlName="pregnancy_outcome"
+                            <select formControlName="pregnancy_outcome" (keyup.escape)="clearForm($event.target.id)"
+                                (change)="onKeyUp($event.target.value, $event.target.id)" id="pregnancy_outcome"
                                 class="text-ellipsis bg-white text-align-left drop_btn border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed">
                                 <option *ngFor="let outcome of preg_outcome">
                                     {{outcome.outcome}}
                                 </option>
                             </select>
-                            
+
                         </div>
-                        
+
                         <div class="transitions col-span-6 mx-2" *ngIf="!focused">
                             <h3 for="breastfeeding_date">Mother initiated breastfeeding ASAP</h3>
                             <div class="flex w-full mb-2">
                                 <label for="breastfeeding_asap" class="mx-2 flex items-center cursor-pointer w-max">
-                                  <!-- toggle -->
-                                  <div class="relative">
-                                    <!-- input -->
-                                    <input type="checkbox" formControlName="breastfeeding_asap" id="breastfeeding_asap" class="sr-only peer " (click)="bfdCheck()">
-                                    <!-- line -->
-                                    <div class="block bg-gray-200 w-12 h-7 rounded-full peer-checked:bg-green-400 border border-gray-300 peer-checked:border-green-500 hover:bg-gray-300"></div>
-                                    <!-- dot -->
-                                    <div class="dot absolute left-1 top-1 bg-white w-5 h-5 rounded-full transition drop-shadow-md"></div>
-                                  </div>
-                                  <!-- label -->
-                                  
+                                    <div class="relative">
+                                        <input type="checkbox" formControlName="breastfeeding_asap"
+                                            id="breastfeeding_asap" class="sr-only peer "
+                                            (click)="bfdCheck($event.target.value)">
+                                        <div
+                                            class="block bg-gray-200 w-12 h-7 rounded-full peer-checked:bg-green-400 border border-gray-300 peer-checked:border-green-500 hover:bg-gray-300">
+                                        </div>
+                                        <div
+                                            class="dot absolute left-1 top-1 bg-white w-5 h-5 rounded-full transition drop-shadow-md">
+                                        </div>
+                                    </div>
                                 </label>
                                 <div class="grid grid-cols-10" [class]="bfd?'visible':'invisible'">
                                     <div
@@ -329,38 +326,73 @@
                                         </fa-icon>
                                     </div>
                                     <input formControlName="breastfeeding_date" id="breastfeeding_date"
-                                        name="breastfeeding_date" type="date"
+                                        name="breastfeeding_date"
+                                        (keyup)="onKeyUp($event.target.value, $event.target.id)"
+                                        (keyup.escape)="clearForm($event.target.id)"
+                                        (change)="onKeyUp($event.target.value, $event.target.id)" type="date"
                                         class="col-span-8 rounded-r border-solid border border-l-0 border-zinc-300 focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none disabled:cursor-not-allowed"
                                         width="auto">
                                 </div>
-                              </div>
+                            </div>
                         </div>
 
                         <div class="transitions col-span-6 mx-2" *ngIf="!focused" hidden>
-                            <h3 for="breastfeeding_date">Check if the baby is healthy (no anomalies, congenital defects, etc.)</h3>
+                            <h3 for="breastfeeding_date">Check if the baby is healthy (no anomalies, congenital defects,
+                                etc.)</h3>
                             <div class="flex w-full mb-2">
                                 <label for="baby_healthy" class="mx-2 flex items-center cursor-pointer w-max">
-                                  <!-- toggle -->
-                                  <div class="relative">
-                                    <!-- input -->
-                                    <input type="checkbox" formControlName="baby_healthy" id="baby_healthy" class="sr-only peer">
-                                    <!-- line -->
-                                    <div class="block bg-gray-200 w-12 h-7 rounded-full peer-checked:bg-green-400 border border-gray-300 peer-checked:border-green-500 hover:bg-gray-300"></div>
-                                    <!-- dot -->
-                                    <div class="dot absolute left-1 top-1 bg-white w-5 h-5 rounded-full transition drop-shadow-md"></div>
-                                  </div>
-                                  <!-- label -->
-                                  
+                                    <div class="relative">
+                                        <input type="checkbox" formControlName="baby_healthy" id="baby_healthy"
+                                            class="sr-only peer">
+                                        <div
+                                            class="block bg-gray-200 w-12 h-7 rounded-full peer-checked:bg-green-400 border border-gray-300 peer-checked:border-green-500 hover:bg-gray-300">
+                                        </div>
+                                        <div
+                                            class="dot absolute left-1 top-1 bg-white w-5 h-5 rounded-full transition drop-shadow-md">
+                                        </div>
+                                    </div>
                                 </label>
-                
-                              </div>
+                            </div>
                         </div>
-                        
                     </div>
                 </div>
             </div>
         </div>
-
-
+        <div style="grid-column: span 16 / span 16;">
+            <div class="relative w-auto border-check mb-7"
+                *ngIf="!focused && keyUp.length > 0 && !postpartum_form.disabled"
+                style="grid-column: span 16 / span 16;">
+                <div class="absolute inline-flex right-0 top-0" style=" top: -0.85rem;">
+                    <div class="flex hover:animate-bounce border-check bg-white hover:bg-gray-400 text-gray-400 py-1 rounded-full hover:text-white px-2"
+                        (click)="cancel()" (mouseover)="buttonShow('cancel')">
+                        <fa-icon [icon]="faTimes" size="lg" class="mr-2">
+                        </fa-icon>
+                        <button type="button" class="font-bold button-out border-check-red typed-out"
+                            *ngIf="buttons.includes('cancel')">Cancel</button>
+                    </div>
+                    <div class="flex hover:animate-bounce border-check bg-white hover:bg-green-400 py-1 rounded-full text-green-500 hover:text-white px-2"
+                        (mouseover)="buttonShow('save')">
+                        <fa-icon [icon]="faSave" size="lg" class="mr-2 ">
+                        </fa-icon>
+                        <button type="submit" class="font-bold button-out border-check-red"
+                            [disabled]="postpartum_form.invalid" (keyup.enter)="saveForm(postpartum_form.value)"
+                            *ngIf="buttons.includes('save')">Save</button>
+                    </div>
+                </div>
+            </div>
+            <div class="relative w-auto border-check mb-7" *ngIf="!focused && postpartum_form.disabled"
+                style="grid-column: span 16 / span 16;">
+                <div class="absolute inline-flex right-0 top-0" style=" top: -0.85rem;" (click)="edit()">
+                    <div class="flex hover:animate-bounce border-check bg-white hover:bg-orange-400 py-1 rounded-full text-orange-500 hover:text-white px-2"
+                        (mouseover)="buttonShow('edit')" (mouseleave)="buttonShow()">
+                        <fa-icon [icon]="faPencil" size="lg" class="mr-2 ">
+                        </fa-icon>
+                        <button type="button" class="font-bold button-out border-check-red typed-out"
+                            (keyup.enter)="uncheck($event.target.id + fphx_cat)"
+                            *ngIf="buttons.includes('edit')">Edit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </form>

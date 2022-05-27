@@ -18,8 +18,9 @@
 
     <div class="grid gap-2 relative animates-dropdown " style="grid-template-columns: repeat(16, minmax(0, 1fr));"
         *ngIf="!focused">
-        <div class="border-check col-span-2 row-span-6 hover:bg-gray-100 rounded-r cursor-pointer" (click)="flip();">
-            <button class="font-bold" type="button">Prenatal</button>
+        <div class="border-check col-span-2 row-span-6 hover:bg-gray-100 rounded-r cursor-pointer relative"
+            (click)="flip();">
+            <button class="font-bold sticky top-0" type="button">Prenatal</button>
             <div class="absolute top-0" style="left: 4.5rem;">
                 <fa-icon [icon]="faInfoCircle" class=" peer ml-5 text-gray-300 hover:text-gray-500 z-50"></fa-icon>
                 <div
@@ -39,7 +40,7 @@
                     *ngIf="!focused">
                     <h3 for="visit_sequence" class="whitespace-nowrap">Visit Count</h3>
                     <fa-icon [icon]="faCaretRight"
-                        class="absolute bottom-1.5 left-2 text-gray-300 group-hover:text-pink-400"
+                        class="absolute bottom-1.5 left-2 text-gray-300 group-hover:text-pink-300"
                         *ngIf="!focused && 1 == 0">
                     </fa-icon>
                     <input type="text" formControlName="visit_sequence"
@@ -87,7 +88,7 @@
                 <div class="transitions col-span-4 border-check relative select-none group mx-2 mt-2" *ngIf="!focused">
                     <h3 for="fundic_height">Fundic Height</h3>
                     <fa-icon [icon]="faCaretRight"
-                        class="absolute bottom-1.5 left-2 text-gray-300 group-hover:text-pink-400"
+                        class="absolute bottom-1.5 left-2 text-gray-300 group-hover:text-pink-300"
                         *ngIf="!focused && 1 == 0">
                     </fa-icon>
                     <input type="number" formControlName="fundic_height"
@@ -101,7 +102,7 @@
                 <div class="transitions col-span-4 border-check relative select-none group mx-2" *ngIf="!focused">
                     <h3 for="fhr">FHR</h3>
                     <fa-icon [icon]="faCaretRight"
-                        class="absolute bottom-1.5 left-2 text-gray-300 group-hover:text-pink-400"
+                        class="absolute bottom-1.5 left-2 text-gray-300 group-hover:text-pink-300"
                         *ngIf="!focused && 1 == 0 ">
                     </fa-icon>
                     <input type="number" formControlName="fhr"
@@ -127,37 +128,51 @@
             </div>
         </div>
 
-        <div class="col-span-4 relative w-max h-max">
-            <div class="absolute top-0 z-50  w-1/2 h-1/2 hover:border hover:border-pink-400 rounded-md">
-                <input type="checkbox" class="hover:border-0 opacity-25 checked:opacity-50 rounded-md fhr_chart "
-                    (change)="onKeyUp($event.target.value, $event.target.id); quadrant('LUQ')"
-                    [checked]="prenatal_form.get('fhr_location_id').value == 'LUQ' && prenatal_form.get('fhr').value != ''"
-                    [disabled]="0 >= prenatal_form.get('fhr').value" id="LUQ" value="LUQ">
-            </div>
+        <div class="col-span-4 relative w-max h-max border border-gray-300 drop-shadow-md hover:drop-shadow-lg rounded-md">
+            <label for="LUQ">
+                <div class="absolute top-0 z-40  w-1/2 h-1/2 hover:bg-gray-400/75 rounded-tl-md border-t border-l  cursor-pointer group">
 
-            <div class="absolute bottom-0 z-50  w-1/2 h-1/2 hover:border hover:border-pink-400 rounded-md">
-                <input type="checkbox" class="hover:border-0 opacity-25 checked:opacity-50 rounded-md fhr_chart"
-                    (change)="onKeyUp($event.target.value, $event.target.id); quadrant('LLQ')"
-                    [checked]="prenatal_form.get('fhr_location_id').value == 'LLQ' && prenatal_form.get('fhr').value != ''"
-                    [disabled]="0 >= prenatal_form.get('fhr').value" id="LLQ" value="LLQ">
-            </div>
+                    <input type="checkbox"
+                        class="z-50 rounded-md fhr_chart_u rounded-tl-full translate-x-full bg-white checked:text-pink-400/75 disabled:opacity-25 border-dashed border-2 border-gray-400 checked:border-dashed checked:border-2 checked:border-pink-300 focus:ring-1 focus:ring-pink-400 group-hover:bg-gray-300 group-hover:checked:bg-pink-400 focus:ring-offset-0"
+                        style="transform: translate(100%,233.33333%);"
+                        (change)="onKeyUp($event.target.value, $event.target.id); quadrant('LUQ')"
+                        [checked]="prenatal_form.get('fhr_location_id').value == 'LUQ' && prenatal_form.get('fhr').value != ''"
+                        [disabled]="0 >= prenatal_form.get('fhr').value" id="LUQ" value="LUQ">
 
-            <div class="absolute top-0 right-0 z-50  w-1/2 h-1/2 hover:border hover:border-pink-400 rounded-md">
-                <input type="checkbox" class="hover:border-0 opacity-25 checked:opacity-50 rounded-md fhr_chart"
-                    (change)="onKeyUp($event.target.value, $event.target.id); quadrant('RUQ')"
-                    [checked]="prenatal_form.get('fhr_location_id').value == 'RUQ' && prenatal_form.get('fhr').value != ''"
-                    [disabled]="0 >= prenatal_form.get('fhr').value" id="RUQ" value="RUQ">
-            </div>
-
-            <div class="absolute bottom-0 right-0 z-50  w-1/2 h-1/2 hover:border hover:border-pink-400 rounded-md">
-                <input type="checkbox" class="hover:border-0 opacity-25 checked:opacity-50 rounded-md fhr_chart"
-                    (change)="onKeyUp($event.target.value, $event.target.id); quadrant('RLQ');"
-                    [checked]="prenatal_form.get('fhr_location_id').value == 'RLQ' && prenatal_form.get('fhr').value != ''"
-                    [disabled]="0 >= prenatal_form.get('fhr').value" id="RLQ" value="RLQ">
-            </div>
+                </div>
+            </label>
+            <label for="LLQ">
+                <div class="absolute bottom-0 z-40  w-1/2 h-1/2 hover:bg-gray-400/75 rounded-bl-md border-b border-l  cursor-pointer group">
+                    <input type="checkbox"
+                        class="z-50 rounded-md fhr_chart rounded-bl-full translate-x-full bg-white checked:text-pink-400/75 disabled:opacity-25 border-dashed border-gray-400 border-2 checked:border-dashed checked:border-2 checked:border-pink-300 focus:ring-1 focus:ring-pink-400 group-hover:bg-gray-300 group-hover:checked:bg-pink-400 focus:ring-offset-0"
+                        (change)="onKeyUp($event.target.value, $event.target.id); quadrant('LLQ')"
+                        [checked]="prenatal_form.get('fhr_location_id').value == 'LLQ' && prenatal_form.get('fhr').value != ''"
+                        [disabled]="0 >= prenatal_form.get('fhr').value" id="LLQ" value="LLQ">
+                </div>
+            </label>
+            <label for="RUQ">
+                <div class="absolute top-0 right-0 z-40  w-1/2 h-1/2 hover:bg-gray-400/75 rounded-tr-md border-t border-r  cursor-pointer group">
+                    <input type="checkbox"
+                        class="z-50 rounded-md fhr_chart_u rounded-tr-full bg-white checked:text-pink-400/75 disabled:opacity-25 border-dashed border-gray-400 border-2 checked:border-dashed checked:border-2 checked:border-pink-300 focus:ring-1 focus:ring-pink-400 group-hover:bg-gray-300 group-hover:checked:bg-pink-400 focus:ring-offset-0"
+                        style="transform: translateY(233.33333%);"
+                        (change)="onKeyUp($event.target.value, $event.target.id); quadrant('RUQ')"
+                        [checked]="prenatal_form.get('fhr_location_id').value == 'RUQ' && prenatal_form.get('fhr').value != ''"
+                        [disabled]="0 >= prenatal_form.get('fhr').value" id="RUQ" value="RUQ">
+                </div>
+            </label>
+            <label for="RLQ">
+                <div class="absolute bottom-0 right-0 z-40  w-1/2 h-1/2 hover:bg-gray-400/75 rounded-br-md border-b border-r  cursor-pointer group">
+                    <input type="checkbox"
+                        class="z-50  bg-white checked:text-pink-400/75 disabled:opacity-25 border-dashed border-gray-400 border-2 checked:border-dashed checked:border-2 checked:border-pink-300 focus:ring-1 focus:ring-pink-400 rounded-md fhr_chart rounded-br-full group-hover:bg-gray-300 group-hover:checked:bg-pink-400 focus:ring-offset-0"
+                        (change)="onKeyUp($event.target.value, $event.target.id); quadrant('RLQ');"
+                        [checked]="prenatal_form.get('fhr_location_id').value == 'RLQ' && prenatal_form.get('fhr').value != ''"
+                        [disabled]="0 >= prenatal_form.get('fhr').value" id="RLQ" value="RLQ">
+                </div>
+            </label>
 
             <img src="assets\img\abdomen.png"
-                class="w-24 lg:w-44 md:w-32 sm:w-24 object-contain rounded-lg hover:drop-shadow-lg drop-shadow-md rounded-lg "
+                class="w-24 lg:w-44 md:w-32 sm:w-24 object-contain rounded-lg hover:drop-shadow-lg drop-shadow-md rounded-lg"
+                [class]="prenatal_form.get('fhr').value != ''? '': 'opacity-25'"
                 alt="...">
         </div>
 
@@ -174,7 +189,7 @@
                     <h3 [hidden]="cm_value" for="patient_height">Height</h3>
                     <h3 *ngIf="cm_value">({{ cm_value }})</h3>
                     <fa-icon [icon]="faCaretRight"
-                        class="absolute bottom-1.5 left-2 text-gray-300 group-hover:text-pink-400"
+                        class="absolute bottom-1.5 left-2 text-gray-300 group-hover:text-pink-300"
                         *ngIf="!focused && 1 == 0">
                     </fa-icon>
                     <input type="text" formControlName="patient_height"
@@ -188,7 +203,7 @@
                 <div class="transitions col-span-2 border-check relative select-none group ml-2 mb-2" *ngIf="!focused">
                     <h3 for="bp_systolic">Systolic</h3>
                     <fa-icon [icon]="faCaretRight"
-                        class="absolute bottom-1.5 left-2 text-gray-300 group-hover:text-pink-400"
+                        class="absolute bottom-1.5 left-2 text-gray-300 group-hover:text-pink-300"
                         *ngIf="!focused && 1 == 0">
                     </fa-icon>
                     <input type="number" formControlName="bp_systolic"
@@ -202,7 +217,7 @@
                 <div class="transitions col-span-2 border-check relative select-none group mr-2 mb-2" *ngIf="!focused">
                     <h3 for="bp_diastolic">Diastolic</h3>
                     <fa-icon [icon]="faCaretRight"
-                        class="absolute bottom-1.5 left-2 text-gray-300 group-hover:text-pink-400"
+                        class="absolute bottom-1.5 left-2 text-gray-300 group-hover:text-pink-300"
                         *ngIf="!focused && 1 == 0">
                     </fa-icon>
                     <input type="number" formControlName="bp_diastolic"
@@ -217,7 +232,7 @@
                     *ngIf="!focused">
                     <h3 for="patient_weight">Weight</h3>
                     <fa-icon [icon]="faCaretRight"
-                        class="absolute bottom-1.5 left-2 text-gray-300 group-hover:text-pink-400"
+                        class="absolute bottom-1.5 left-2 text-gray-300 group-hover:text-pink-300"
                         *ngIf="!focused && 1 == 0">
                     </fa-icon>
                     <input type="number" formControlName="patient_weight"
@@ -231,7 +246,7 @@
                 <div class="transitions col-span-4  border-check relative select-none group mx-2 mb-2" *ngIf="!focused">
                     <h3 for="remarks">Remarks</h3>
                     <fa-icon [icon]="faCaretRight"
-                        class="absolute bottom-1.5 left-2 text-gray-300 group-hover:text-pink-400"
+                        class="absolute bottom-1.5 left-2 text-gray-300 group-hover:text-pink-300"
                         *ngIf="!focused && 1 == 0">
                     </fa-icon>
                     <textarea type="text" formControlName="remarks"
@@ -245,17 +260,17 @@
 
             </div>
         </div>
-        <div class="relative w-auto border-check mb-2" *ngIf="!focused && keyUp.length > 0 && !prenatal_form.disabled"
+        <div class="relative w-auto border-check mb-2" 
             style="grid-column: span 14 / span 14; grid-column-start: 3;">
             <div class="absolute inline-flex right-0 top-0" style=" top: -0.85rem;">
-                <div class="flex hover:animate-bounce border-check bg-white hover:bg-gray-400 text-gray-400 py-1 rounded-full hover:text-white px-2 cursor-pointer"
+                <div *ngIf="!focused && keyUp.length > 0 || edit_bool" class="flex hover:animate-bounce border-check bg-white hover:bg-gray-400 text-gray-400 py-1 rounded-full hover:text-white px-2 cursor-pointer"
                     (click)="cancel()" (mouseover)="buttonShow('cancel')">
                     <fa-icon [icon]="faTimes" size="lg" class="mr-2">
                     </fa-icon>
                     <button type="button" class="font-bold button-out border-check-red typed-out"
                         *ngIf="buttons.includes('cancel')">Cancel</button>
                 </div>
-                <div class="flex hover:animate-bounce border-check bg-white hover:bg-green-400 py-1 rounded-full text-green-500 hover:text-white px-2 cursor-pointer"
+                <div *ngIf="!focused && keyUp.length > 0" class="flex hover:animate-bounce border-check bg-white hover:bg-green-400 py-1 rounded-full text-green-500 hover:text-white px-2 cursor-pointer"
                     (mouseover)="buttonShow('save')" (click)="saveForm(prenatal_form.value)">
                     <fa-icon [icon]="faSave" size="lg" class="mr-2 ">
                     </fa-icon>
@@ -340,7 +355,7 @@
                                     *ngIf="!focused && catch_array">
                                     <div (click)="edit(catch.visit_sequence)"
                                         class="flex bg-white hover:text-orange-400 text-gray-400 cursor-pointer"
-                                        [class]="hide.includes(catch.visit_sequence)?'hidden':''">
+                                        [class]="edit_bool?'hidden':''">
                                         <fa-icon [icon]="faPencil" size="lg" class="mr-2">
                                         </fa-icon>
                                     </div>

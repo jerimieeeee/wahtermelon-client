@@ -237,6 +237,7 @@ export class PrenatalComponent implements OnInit {
   cancel() {
     this.hide = [];
     this.keyUp = [];
+    this.edit_bool = false;
     this.createForm();
   }
   edit(id) {
