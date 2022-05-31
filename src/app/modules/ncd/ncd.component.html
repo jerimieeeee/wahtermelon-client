@@ -1,14 +1,9 @@
-<div class="flex w-full">
+<div class="flex w-full mt-4">
   
-
-    <div class="w-3/12">
-      <app-patient-info></app-patient-info>
-    </div>
-    
     <div class="flex-wrap w-9/12 h-full shadow-md px-8 py-4 ml-5 mr-1 border-gray-100 border-t-2 rounded-3xl text-gray-600">
 
       <nav class="flex flex-col sm:flex-row">
-        <button (click)="switchTab(1)" class="    text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 border-b-2 border-gray-200 mr-6 pb-2"
+        <button (click)="switchTab(1)" class="text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 border-b-2 border-gray-200 mr-6 pb-2"
         [class]="module==1? 'text-blue-500 border-b-2 border-blue-500 font-bold' : 'hover:-translate-y-1 hover:scale-110 transition ease-in-out delay-400 duration-300' ">
             RISK ASSESSMENT
         </button>
@@ -74,7 +69,9 @@
       
     </div>
   
-  
+    <div class="w-3/12">
+      <app-patient-info></app-patient-info>
+    </div>
       
   
   </div>

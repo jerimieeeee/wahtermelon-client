@@ -1,69 +1,22 @@
-<div class="flex w-full">
+<div class="flex w-full mt-4">
   
 
-  <div class="w-3/12">
-    <app-patient-info></app-patient-info>
-  </div>
   
-  <div class="flex-wrap w-9/12 h-full shadow px-8 py-4 ml-5 rounded-3xl text-gray-600">
+  
+  <div class="flex-wrap w-9/12 h-full shadow-md px-8 py-4 ml-5 mr-1 border-gray-100 border-t-2 rounded-3xl text-gray-600" *ngIf="module==1">
 
-    <ul class="nav nav-tabs flex flex-col md:flex-row flex-wrap list-none border-b-0 pl-0 mb-4" id="tabs-tab"
-    role="tablist">
-    <li class="nav-item" role="presentation">
-      <a href="ncd" class="
-        nav-link
-        block
-        font-medium
-        text-xs
-        leading-tight
-        uppercase
-        border-x-0 border-t-0 border-b-2 border-transparent
-        px-6
-        py-3
-        my-2
-        hover:border-transparent hover:bg-gray-100
-        focus:border-transparent
-        active
-      " id="tabs-home-tab" data-bs-toggle="pill" data-bs-target="#tabs-home" role="tab" aria-controls="tabs-home"
-        aria-selected="true">Visit History</a>
-    </li>
-    <li class="nav-item" role="presentation">
-      <a href="#tabs-profile" class="
-        nav-link
-        block
-        font-medium
-        text-xs
-        leading-tight
-        uppercase
-        border-x-0 border-t-0 border-b-2 border-transparent
-        px-6
-        py-3
-        my-2
-        hover:border-transparent hover:bg-gray-100
-        focus:border-transparent
-      " id="tabs-profile-tab" data-bs-toggle="pill" data-bs-target="#tabs-profile" role="tab"
-        aria-controls="tabs-profile" aria-selected="false">New Visit</a>
-    </li>
-    <li class="nav-item" role="presentation">
-      <a href="#tabs-messages" class="
-        nav-link
-        block
-        font-medium
-        text-xs
-        leading-tight
-        uppercase
-        border-x-0 border-t-0 border-b-2 border-transparent
-        px-6
-        py-3
-        my-2
-        hover:border-transparent hover:bg-gray-100
-        focus:border-transparent
-      " id="tabs-messages-tab" data-bs-toggle="pill" data-bs-target="#tabs-messages" role="tab"
-        aria-controls="tabs-messages" aria-selected="false">e-Claims</a>
-    </li>
-  </ul>
-  <div class="tab-content" id="tabs-tabContent">
-    <div class="tab-pane fade show active" id="tabs-home" role="tabpanel" aria-labelledby="tabs-home-tab">
+    <nav class="flex flex-col sm:flex-row">
+      <button (click)="switchTab(1)" class="text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 border-b-2 border-gray-200 mr-6 pb-2"
+      [class]="module==1? 'text-blue-500 border-b-2 border-blue-500 font-bold' : 'hover:-translate-y-1 hover:scale-110 transition ease-in-out delay-400 duration-300' ">
+         NEW VISIT
+      </button>
+      <button (click)="switchTab(2)" class="transition ease-in-out delay-400 hover:-translate-y-1 hover:scale-110 duration-300 text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 focus:text-blue-500 focus:border-b-2 focus:border-blue-500 focus:font-bold mr-6 pb-2">
+          E-CLAIMS
+      </button>
+      <button (click)="switchTab(3)" class="transition ease-in-out delay-400 hover:-translate-y-1 hover:scale-110 duration-300 text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 focus:text-blue-500 focus:border-b-2 focus:border-blue-500 focus:font-bold mr-6 pb-2">
+          VISIT HISTORY
+      </button>
+  </nav>
       <!--FIRST VISIT SECTION-->
     
     <div class="grid grid-col-8">
@@ -96,13 +49,11 @@
     <div class="grid grid-col-8">
       <app-breastfeeding ></app-breastfeeding>
     </div>
-    
-    <div class="tab-pane fade" id="tabs-profile" role="tabpanel" aria-labelledby="tabs-profile-tab">
-     
-    </div>
-    <div class="tab-pane fade" id="tabs-messages" role="tabpanel" aria-labelledby="tabs-profile-tab">
-      
-    </div>
+  
+  </div>
+
+  <div class="w-3/12">
+    <app-patient-info></app-patient-info>
   </div>
 
 

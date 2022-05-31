@@ -13,6 +13,8 @@ import { AppState } from './app.state';
 })
 export class ChildcareComponent implements OnInit {
 
+  module: Number;
+
   birthinfos: Observable<BirthInformation[]>;
 
   // Section 2
@@ -20,7 +22,12 @@ export class ChildcareComponent implements OnInit {
     this.birthinfos = store.select('birthinfo');
   }
 
-  ngOnInit() {}
+  ngOnInit(): void {
+    this.module=1;
+  }
 
+  switchTab(tab){
+    this.module = 0;
+    this.module = tab;
+  }
 }
-
