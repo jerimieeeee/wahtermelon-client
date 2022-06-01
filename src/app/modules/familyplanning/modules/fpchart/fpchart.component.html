@@ -1,21 +1,7 @@
 <form [formGroup]="fp_form" (ngSubmit)="saveForm(fp_form.value)">
-<div class="grid gap-4 hover:bg-gray-100 cursor-pointer relative"
-    style="grid-template-columns: repeat(16, minmax(0, 1fr));" (click)="flip()" *ngIf="focused">
-    <div class=" border-check row-span-2 col-span-2  rounded-r"><button class="font-bold" type="button">FP
-            Chart</button>
-    </div>
-    <div class="absolute right-0 top-0">
-        <fa-icon [icon]="faInfoCircle" class="peer ml-3 text-gray-300 hover:text-gray-500 z-50"></fa-icon>
-        <div
-            class="absolute text-sm bg-gradient-to-b from-stone-500 to-gray-400 p-2 rounded-md border border-gray-500  text-white drop-shadow-lg opacity-90 border-check z-50 w-64 right-0 invisible peer-hover:visible">
-            <h1 class="font-bold drop-shadow-lg">IMPORTANT</h1>
-            <p class="font-light drop-shadow-lg">Once saved, the information will be displayed in the input boxes and
-                shall not be editable unless Edit button is pressed.</p>
-        </div>
-    </div>
-</div>
+
     <div class="grid gap-4 relative" style="grid-template-columns: repeat(16, minmax(0, 1fr));" *ngIf="!focused">
-        <div class="row-span-2 col-span-2 hover:bg-gray-100 rounded-r cursor-pointer" (click)="flip()"><button
+        <div class="row-span-2 col-span-2 hover:bg-gray-100 rounded-r cursor-pointer"><button
                 class="font-bold" type="button">FP Chart</button>
             <div class="absolute left-16 top-0">
                 <fa-icon [icon]="faInfoCircle" class=" peer ml-3 text-gray-300 hover:text-gray-500 z-50"></fa-icon>
@@ -74,7 +60,7 @@
                     <h3>Next Service Given</h3>
                     <div class="grid grid-cols-10">
                         <div class="icon-height col-span-2 p-2 pt-1 rounded-l border-solid border border-zinc-300">
-                            <fa-icon [icon]="faCalendarDay" size="lg" class="text-orange-400"></fa-icon>
+                            <fa-icon [icon]="faCalendarDay" size="lg" class="text-blue-400"></fa-icon>
                         </div>
                         <input datepicker formControlName="next_service" name="next_service" type="date"
                             class="focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none col-span-8 rounded-r border-solid border border-l-0 border-zinc-300 disabled:cursor-not-allowed"
@@ -101,33 +87,30 @@
         <div class="relative w-auto border-check mb-7" *ngIf="!focused && keyUp.length > 0 && !fp_form.disabled"
             style="grid-column: span 14 / span 14;">
             <div class="absolute inline-flex m-2 right-0 top-0" style=" top: -0.85rem;">
-                <div class="flex hover:animate-bounce border-check bg-white hover:bg-gray-400 text-gray-400 py-1 rounded-full hover:text-white px-2"
-                    (click)="cancel()" (mouseover)="buttonShow('cancel')">
+                <div class="flex hover: border-check bg-white hover:bg-gray-400 text-gray-400 py-1 rounded-full hover:text-white px-2"
+                    (click)="cancel()">
                     <fa-icon [icon]="faTimes" size="lg" class="mr-2">
                     </fa-icon>
-                    <button type="button" class="font-bold button-out border-check-red"
-                        *ngIf="buttons.includes('cancel')">Cancel</button>
+                    <button type="button" class="font-bold button-out border-check-red">Cancel</button>
                 </div>
-                <div class="flex hover:animate-bounce border-check bg-white hover:bg-green-400 py-1 rounded-full text-green-500 hover:text-white px-2"
-                    (mouseover)="buttonShow('save')">
+                <div
+                    class="flex hover: border-check bg-white hover:bg-green-400 py-1 rounded-full text-green-500 hover:text-white px-2">
                     <fa-icon [icon]="faSave" size="lg" class="mr-2 ">
                     </fa-icon>
                     <button type="submit" class="font-bold button-out border-check-red"
-                        (keyup.enter)="uncheck($event.target.id + fphx_cat)"
-                        *ngIf="buttons.includes('save')">Save</button>
+                        (keyup.enter)="uncheck($event.target.id + fphx_cat)">Save</button>
                 </div>
             </div>
         </div>
         <div class="relative w-auto border-check mb-7" *ngIf="!focused && fp_form.disabled"
             style="grid-column: span 14 / span 14;">
             <div class="absolute inline-flex m-2 right-0 top-0" style=" top: -0.85rem;" (click)="edit()">
-                <div class="flex hover:animate-bounce border-check bg-white hover:bg-orange-400 py-1 rounded-full text-orange-500 hover:text-white px-2"
-                    (mouseover)="buttonShow('edit')" (mouseleave)="buttonShow()">
+                <div
+                    class="flex hover: border-check bg-white hover:bg-orange-400 py-1 rounded-full text-orange-500 hover:text-white px-2">
                     <fa-icon [icon]="faPencil" size="lg" class="mr-2 ">
                     </fa-icon>
                     <button type="submit" class="font-bold button-out border-check-red"
-                        (keyup.enter)="uncheck($event.target.id + fphx_cat)"
-                        *ngIf="buttons.includes('edit')">Edit</button>
+                        (keyup.enter)="uncheck($event.target.id + fphx_cat)">Edit</button>
                 </div>
             </div>
         </div>

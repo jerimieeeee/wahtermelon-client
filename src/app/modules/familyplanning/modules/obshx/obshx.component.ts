@@ -35,7 +35,7 @@ export class ObshxComponent implements OnInit {
   public buttons = [];
   public keyUp = [];
   ngOnInit(): void {
-    this.focused = true;
+    this.focused = false;
     this.createForm();
     this.obshx_form.reset();
   }

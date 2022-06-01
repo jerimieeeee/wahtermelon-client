@@ -33,7 +33,7 @@ export class MethodsComponent implements OnInit {
     {"id": 4, "method": "NA"},
   ];
   ngOnInit(): void {
-    this.focused = true;
+    this.focused = false;
     this.createForm();
     this.methods_form.enable();
   }

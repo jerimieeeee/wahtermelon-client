@@ -33,6 +33,7 @@ export class PostpartumComponent implements OnInit {
   bfd: boolean;
 
   @Output() postpartum_bool = new EventEmitter<string>();
+  filter: string;
   constructor() { }
 
   public delivery_location = [
@@ -67,6 +68,7 @@ export class PostpartumComponent implements OnInit {
   ]
   ngOnInit(): void {
    this.createForm();
+   this.filter = '';
   }
  createForm(){
   this.postpartum_form = new FormGroup({
@@ -133,7 +135,7 @@ export class PostpartumComponent implements OnInit {
  }
 
  onKeyUp(data_input: string, id: string) {
-  // console.log(data_input + ' this is my data input');
+  console.log(data_input + ' this is my data input');
 
   if (this.keyUp.includes(id)) {
     if (data_input == '') {

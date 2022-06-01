@@ -1,27 +1,17 @@
 <form [formGroup]="obshx_form" (ngSubmit)="saveForm(obshx_form.value)">
-    <div class="grid gap-4 hover:bg-gray-100 cursor-pointer relative" style="grid-template-columns: repeat(16, minmax(0, 1fr));"
-        (click)="flip()" *ngIf="focused">
-        <div class="border-check row-span-2 col-span-2 rounded-r">
-            <button class="font-bold" type="button">OBS HX</button>
-        </div>
-        <div class="absolute right-0 top-0">
-            <fa-icon [icon]="faInfoCircle" class="peer ml-3 text-gray-300 hover:text-gray-500 z-50"></fa-icon>
-            <div class="absolute text-sm bg-gradient-to-b from-stone-500 to-gray-400 p-2 rounded-md border border-gray-500  text-white drop-shadow-lg opacity-90 border-check z-50 w-64 right-0 invisible peer-hover:visible">
-                <h1 class="font-bold drop-shadow-lg">IMPORTANT</h1>
-                <p class="font-light drop-shadow-lg">Once saved, the information will be displayed in the input boxes and shall not be editable unless Edit button is pressed.</p>
-            </div>
-        </div>
-    </div>
+
     <div class="grid gap-4 relative animates-dropdown" style="grid-template-columns: repeat(16, minmax(0, 1fr));"
         *ngIf="!focused">
-        <div class="border-check row-span-3 col-span-2 hover:bg-gray-100 cursor-pointer rounded-r relative" (click)="flip()">
+        <div class="border-check row-span-3 col-span-2 hover:bg-gray-100 cursor-pointer rounded-r relative">
             <button class="font-bold sticky top-0" type="button">OBS HX</button>
         </div>
         <div class="absolute left-16 top-0">
             <fa-icon [icon]="faInfoCircle" class=" peer ml-3 text-gray-300 hover:text-gray-500 z-50"></fa-icon>
-            <div class="absolute text-sm bg-gradient-to-b from-stone-500 to-gray-400 p-2 rounded-md border border-gray-500  text-white drop-shadow-lg opacity-90 border-check z-50 w-64 invisible peer-hover:visible">
+            <div
+                class="absolute text-sm bg-gradient-to-b from-stone-500 to-gray-400 p-2 rounded-md border border-gray-500  text-white drop-shadow-lg opacity-90 border-check z-50 w-64 invisible peer-hover:visible">
                 <h1 class="font-bold drop-shadow-lg">IMPORTANT</h1>
-                <p class="font-light drop-shadow-lg">Once saved, the information will be displayed in the input boxes and shall not be editable unless Edit button is pressed.</p>
+                <p class="font-light drop-shadow-lg">Once saved, the information will be displayed in the input boxes
+                    and shall not be editable unless Edit button is pressed.</p>
             </div>
         </div>
         <div class="rounded-lg drop-shadow-md hover:drop-shadow-lg bg-white rounded-lg border border-gray-300 hover:border-blue-400 mx-2"
@@ -95,7 +85,7 @@
                     <h3 for="dld">Date of Last Delivery</h3>
                     <div class="grid grid-cols-10">
                         <div class="icon-height col-span-2 p-2 pt-1 rounded-l border-solid border border-zinc-300">
-                            <fa-icon [icon]="faCalendarDay" size="lg" class="text-orange-400" for="dld"></fa-icon>
+                            <fa-icon [icon]="faCalendarDay" size="lg" class="text-blue-400" for="dld"></fa-icon>
                         </div>
                         <input id="dld" name="dld" type="date" formControlName="dld"
                             (change)="onKeyUp($event.target.value, $event.target.id)"
@@ -130,7 +120,7 @@
                     <h3 for="pmp">Past Menstrual Period</h3>
                     <div class="grid grid-cols-10">
                         <div class="icon-height col-span-2 p-2 pt-1 rounded-l border-solid border border-zinc-300">
-                            <fa-icon [icon]="faCalendarDay" size="lg" class="text-orange-400" for="pmp"></fa-icon>
+                            <fa-icon [icon]="faCalendarDay" size="lg" class="text-blue-400" for="pmp"></fa-icon>
                         </div>
                         <input id="pmp" name="pmp" type="date" formControlName="pmp"
                             (change)="onKeyUp($event.target.value, $event.target.id)"
@@ -143,7 +133,7 @@
                     <h3 for="lmp">Last Menstrual Period</h3>
                     <div class="grid grid-cols-10">
                         <div class="icon-height col-span-2 p-2 pt-1 rounded-l border-solid border border-zinc-300">
-                            <fa-icon [icon]="faCalendarDay" size="lg" class="text-orange-400" for="lmp"></fa-icon>
+                            <fa-icon [icon]="faCalendarDay" size="lg" class="text-blue-400" for="lmp"></fa-icon>
                         </div>
                         <input id="lmp" name="lmp" type="date" formControlName="lmp"
                             (change)="onKeyUp($event.target.value, $event.target.id)"
@@ -171,33 +161,30 @@
         <div class="relative w-auto border-check mb-5" *ngIf="!focused && obshx_form.enabled && keyUp.length > 0"
             style="grid-column: span 16 / span 16;">
             <div class="absolute inline-flex m-2 right-0 top-0" style=" top: -0.85rem;">
-                <div class="flex hover:animate-bounce border-check bg-white hover:bg-gray-400 text-gray-400 py-1 rounded-full hover:text-white px-2"
-                    (click)="cancel()" (mouseover)="buttonShow('cancel')">
+                <div class="flex hover: border-check bg-white hover:bg-gray-400 text-gray-400 py-1 rounded-full hover:text-white px-2"
+                    (click)="cancel()">
                     <fa-icon [icon]="faTimes" size="lg" class="mr-2">
                     </fa-icon>
-                    <button type="button" class="font-bold button-out border-check-red"
-                        *ngIf="buttons.includes('cancel')">Cancel</button>
+                    <button type="button" class="font-bold button-out border-check-red">Cancel</button>
                 </div>
-                <div class="flex hover:animate-bounce border-check bg-white hover:bg-green-400 py-1 rounded-full text-green-500 hover:text-white px-2"
-                    (mouseover)="buttonShow('save')">
+                <div
+                    class="flex hover: border-check bg-white hover:bg-green-400 py-1 rounded-full text-green-500 hover:text-white px-2">
                     <fa-icon [icon]="faSave" size="lg" class="mr-2 ">
                     </fa-icon>
                     <button type="submit" class="font-bold button-out border-check-red"
-                        (keyup.enter)="saveForm(obshx_form.value)"
-                        *ngIf="buttons.includes('save')">Save</button>
+                        (keyup.enter)="saveForm(obshx_form.value)">Save</button>
                 </div>
             </div>
         </div>
         <div class="relative w-auto border-check mb-5" *ngIf="!focused && obshx_form.disabled"
             style="grid-column: span 16 / span 16;">
             <div class="absolute inline-flex m-2 right-0 top-0" style=" top: -0.85rem;" (click)="edit()">
-                <div class="flex hover:animate-bounce border-check bg-white hover:bg-orange-400 py-1 rounded-full text-orange-500 hover:text-white px-2"
-                    (mouseover)="buttonShow('edit')" (mouseleave)="buttonShow()">
+                <div
+                    class="flex hover: border-check bg-white hover:bg-orange-400 py-1 rounded-full text-orange-500 hover:text-white px-2">
                     <fa-icon [icon]="faPencil" size="lg" class="mr-2 ">
                     </fa-icon>
                     <button type="submit" class="font-bold button-out border-check-red"
-                        (keyup.enter)="uncheck($event.target.id + fphx_cat)"
-                        *ngIf="buttons.includes('edit')">Edit</button>
+                        (keyup.enter)="uncheck($event.target.id + fphx_cat)">Edit</button>
                 </div>
             </div>
         </div>

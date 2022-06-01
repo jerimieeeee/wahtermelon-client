@@ -26,12 +26,12 @@ export class FppeComponent implements OnInit {
   constructor() { }
 
   public lib_cat_name = [
-    {"pe_cat_id": "ABDOMEN","pe_cat_name": "ABDOMEN"},
-    {"pe_cat_id": "BREAST","pe_cat_name": "BREAST"},
-    {"pe_cat_id": "CONJUNCTIVA","pe_cat_name": "CONJUNCTIVA"},
-    {"pe_cat_id": "EXTREMITIES","pe_cat_name": "EXTREMITIES"},
-    {"pe_cat_id": "NECK","pe_cat_name": "NECK"},
-    {"pe_cat_id": "THORAX", "pe_cat_name": "THORAX"}];
+    { "pe_cat_id": "ABDOMEN", "pe_cat_name": "ABDOMEN" },
+    { "pe_cat_id": "BREAST", "pe_cat_name": "BREAST" },
+    { "pe_cat_id": "CONJUNCTIVA", "pe_cat_name": "CONJUNCTIVA" },
+    { "pe_cat_id": "EXTREMITIES", "pe_cat_name": "EXTREMITIES" },
+    { "pe_cat_id": "NECK", "pe_cat_name": "NECK" },
+    { "pe_cat_id": "THORAX", "pe_cat_name": "THORAX" }];
 
   public fp_pe_symptoms = [{ "id": "PALE", "pe_name": "Pale", "pe_cat": "CONJUNCTIVA", "x": 1 },
   { "id": "YELLOW", "pe_name": "Yellowish", "pe_cat": "CONJUNCTIVA", "x": 0 },
@@ -59,8 +59,8 @@ export class FppeComponent implements OnInit {
   public check_list = [];
 
 
-    ngOnInit(): void {
-    this.focused = true;
+  ngOnInit(): void {
+    this.focused = false;
     this.showCat();
 
     this.flippable = true;
@@ -72,73 +72,77 @@ export class FppeComponent implements OnInit {
     console.log('flip');
     this.focused = !this.focused;
   }
-  showCat(){
+  showCat() {
     console.log("showCat");
 
     this.fp_pe_cat = [];
     this.fp_pe_name_cat = [];
 
-    if(this.saved && this.fppe_strings){
+    if (this.saved && this.fppe_strings) {
       this.fp_pe_symptoms.forEach(e => {
 
-        if(this.fppe_strings.includes(e.pe_name)){
+        if (this.fppe_strings.includes(e.pe_name)) {
 
           console.log(this.fp_pe_cat, " cat this is for showCat");
 
-          if(!this.fp_pe_cat.includes(e.pe_cat)){
+          if (!this.fp_pe_cat.includes(e.pe_cat)) {
             this.fp_pe_cat.push(e.pe_cat);
           }
 
-          this.lib_cat_name.forEach(lib =>{
-            this.fp_pe_cat.forEach(fp =>{
-              if(lib.pe_cat_id == fp){
-                if(!this.fp_pe_name_cat.includes(lib.pe_cat_name)){
-                this.fp_pe_name_cat.push(lib.pe_cat_name);
+          this.lib_cat_name.forEach(lib => {
+            this.fp_pe_cat.forEach(fp => {
+              if (lib.pe_cat_id == fp) {
+                if (!this.fp_pe_name_cat.includes(lib.pe_cat_name)) {
+                  this.fp_pe_name_cat.push(lib.pe_cat_name);
                 }
               }
             });
-            
+
           });
         }
       });
-    }else{
-    this.fp_pe_symptoms.forEach(element => {
-      // if(element.x == 1){
-      if (!this.fp_pe_cat.includes(element.pe_cat)) {
-        this.fp_pe_cat.push(element.pe_cat);
-        this.lib_cat_name.forEach(lib =>{
-          if(lib.pe_cat_id == element.pe_cat){
-            if(!this.fp_pe_name_cat.includes(lib.pe_cat_name)){
-            this.fp_pe_name_cat.push(lib.pe_cat_name);
+    } else {
+      this.fp_pe_symptoms.forEach(element => {
+        // if(element.x == 1){
+        if (!this.fp_pe_cat.includes(element.pe_cat)) {
+          this.fp_pe_cat.push(element.pe_cat);
+          this.lib_cat_name.forEach(lib => {
+            if (lib.pe_cat_id == element.pe_cat) {
+              if (!this.fp_pe_name_cat.includes(lib.pe_cat_name)) {
+                this.fp_pe_name_cat.push(lib.pe_cat_name);
+              }
             }
-          }
-        });
-      }
-      // }
-    });
-  }
-  console.log(this.fp_pe_cat + ' ngeow');
-  console.log(this.fp_pe_name_cat + ' ngeow2');
+          });
+        }
+        // }
+      });
+    }
+    console.log(this.fp_pe_cat + ' ngeow');
+    console.log(this.fp_pe_name_cat + ' ngeow2');
   }
   uncheck(cat) {
     console.log('uncheck');
     // console.log(cat, ' this is my cat from uncheck');
-    this.cat_strings.splice(this.cat_strings.indexOf(cat), 1);
-    // console.log(this.cat_strings, " emtying out cat_strings");
-    this.fp_pe_symptoms.forEach(e => {
+    if (cat == '') {
+      this.cat_strings = [];
+      this.fppe_strings = [];
+    } else {
+      this.cat_strings.splice(this.cat_strings.indexOf(cat), 1);
+      // console.log(this.cat_strings, " emtying out cat_strings");
+      this.fp_pe_symptoms.forEach(e => {
 
-      if (e.pe_cat == cat) {
+        if (e.pe_cat == cat) {
 
-        if (this.fppe_strings.includes(e.pe_name)) {
-          // console.log(this.fppe_strings.indexOf(e.pe_name), " log for fppe_strings index");
-          this.fppe_strings.splice(this.fppe_strings.indexOf(e.pe_name), 1);
-          // console.log(this.fppe_strings);
+          if (this.fppe_strings.includes(e.pe_name)) {
+            // console.log(this.fppe_strings.indexOf(e.pe_name), " log for fppe_strings index");
+            this.fppe_strings.splice(this.fppe_strings.indexOf(e.pe_name), 1);
+            // console.log(this.fppe_strings);
+          }
+
         }
 
-      }
-
-    });
-
+      });
+    }
   }
 
   onChange(id_name, cat) {

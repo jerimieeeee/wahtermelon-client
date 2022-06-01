@@ -1,53 +1,41 @@
-<div class="grid gap-4 max-h-fit cursor-pointer hover:bg-gray-100 relative"
-    style="grid-template-columns: repeat(16, minmax(0, 1fr));" (click)="flip()" *ngIf="focused">
-    <div class="   row-span-2 col-span-2 rounded-r "><button class="font-bold" type="button">Pelvic</button>
-    </div>
-    <div class="absolute right-0 top-0">
-        <fa-icon [icon]="faInfoCircle" class="peer ml-3 text-gray-300 hover:text-gray-500 z-50"></fa-icon>
+
+<div class="grid max-h-fit relative border-check" style="grid-template-columns: repeat(16, minmax(0, 1fr));"
+    *ngIf="!focused">
+    <div class="   row-span-2 col-span-2 hover:bg-gray-100 rounded-r cursor-pointer relative"><button
+            class="font-bold sticky top-0" type="button">Pelvic</button></div>
+    <div class="absolute left-16 top-0">
+        <fa-icon [icon]="faInfoCircle" class=" peer ml-3 text-gray-300 hover:text-gray-500 z-50"></fa-icon>
         <div
-            class="absolute text-sm bg-gradient-to-b from-stone-500 to-gray-400 p-2 rounded-md border border-gray-500  text-white drop-shadow-lg opacity-90   z-50 w-64 right-0 invisible peer-hover:visible">
+            class="absolute text-sm bg-gradient-to-b from-stone-500 to-gray-400 p-2 rounded-md border border-gray-500  text-white drop-shadow-lg opacity-90   z-50 w-64 invisible peer-hover:visible">
             <h1 class="font-bold drop-shadow-lg">IMPORTANT</h1>
             <p class="font-light drop-shadow-lg">Once saved, the information will be displayed in the input boxes and
                 shall not be editable unless Edit button is pressed.</p>
         </div>
     </div>
-    <!-- <div style="grid-column: span 14 / span 14;" class="">
-    </div> -->
-</div>
-<div class="grid max-h-fit relative border-check" style="grid-template-columns: repeat(16, minmax(0, 1fr));" *ngIf="!focused">
-    <div class="   row-span-2 col-span-2 hover:bg-gray-100 rounded-r cursor-pointer relative" (click)="flip()"><button
-            class="font-bold sticky top-0" type="button">Pelvic</button></div>
-            <div class="absolute left-16 top-0">
-                <fa-icon [icon]="faInfoCircle" class=" peer ml-3 text-gray-300 hover:text-gray-500 z-50"></fa-icon>
-            <div class="absolute text-sm bg-gradient-to-b from-stone-500 to-gray-400 p-2 rounded-md border border-gray-500  text-white drop-shadow-lg opacity-90   z-50 w-64 invisible peer-hover:visible">
-                <h1 class="font-bold drop-shadow-lg">IMPORTANT</h1>
-                <p class="font-light drop-shadow-lg">Once saved, the information will be displayed in the input boxes and shall not be editable unless Edit button is pressed.</p>
-            </div>
-            </div>
     <div style="grid-column: span 14 / span 14;" class="">
 
         <div *ngFor="let fppelvic_cat of fp_pelvic_cat;  let i = index;">
 
             <form action="">
                 <div class="grid sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 mb-2 bg-white rounded-lg border m-2"
-                    [style]="module_strings.includes(i) && !saved? 'border-color: rgb(251 113 133); filter: drop-shadow(0 10px 8px rgb(0 0 0 / 0.04)) drop-shadow(0 4px 3px rgb(0 0 0 / 0.1)); margin-bottom: 1.25rem;' : ' '"
-                    [class]="saved? 'hover:drop-shadow-lg drop-shadow-md hover:border border-gray-300 hover:border-rose-400':'hover:border-rose-300 border-gray-200'">
-                    
+                    [style]="module_strings.includes(i) && !saved? 'border-color: rgb(244 114 182); filter: drop-shadow(0 10px 8px rgb(0 0 0 / 0.04)) drop-shadow(0 4px 3px rgb(0 0 0 / 0.1)); margin-bottom: 1.25rem; padding-bottom: 0.5rem;' : ' '"
+                    [class]="saved? 'hover:drop-shadow-lg drop-shadow-md hover:border border-gray-300 hover:border-gray-500':'hover:border-gray-400 border-gray-200'">
+
                     <div (click)="showModule(fppelvic_cat, i)" (keyup.tab)="nextModule(fp_pelvic_cat[i+1], i+1);"
                         (keyup.enter)="selectAll('select' + fppelvic_cat)"
-                        class="text-rose-500 form-check sm:col-span-1 md:col-span-3 lg:col-span-4 p-2 font-semibold"
-                        [style]="module_strings.includes(i)? 'border-bottom-width: 1px; border-style: dashed; border-color: rgb(251 113 133); border-top-width: 0px; border-left-width: 0px; border-right-width: 0px;' : ''">
+                        class="text-gray-500 form-check sm:col-span-1 md:col-span-3 lg:col-span-4 p-2 font-semibold"
+                        [style]="module_strings.includes(i)? 'border-bottom-width: 1px; border-style: dashed; border-color: rgb(244 114 182); border-top-width: 0px; border-left-width: 0px; border-right-width: 0px;' : ''">
                         <div *ngFor="let cat_name of lib_cat_name">
                             <h1 class="select-none" *ngIf="fppelvic_cat == cat_name.pelvic_cat_id">
                                 {{cat_name.pelvic_cat_name}}
                             </h1>
                         </div>
-                        
-                  
+
+
                         <div *ngFor="let fppelvic of pelvic_symptoms">
                             <div *ngFor="let string of fppelvic_strings; let x = index">
                                 <div *ngIf="fppelvic_cat == fppelvic.pelvic_cat_id && fppelvic.pelvic_name == string">
-                                    <h1 class="group select-none m-0.5   px-2 rounded-full text-rose-400 font-medium typed-out hover:bg-gray-100 hover:text-gray-500 hover:font-semibold"
+                                    <h1 class="group select-none m-0.5   px-2 rounded-full text-gray-400 font-medium typed-out hover:bg-gray-100 hover:text-gray-500 hover:font-semibold"
                                         style="margin-top: 0;" *ngIf="!module_strings.includes(i)" id="test">
                                         <fa-icon [icon]="faCaretRight" *ngIf="!module_strings.includes(i)"
                                             class="group-hover:text-rose-400 text-gray-300"></fa-icon>
@@ -60,26 +48,23 @@
                     <div class="absolute right-1 top-1 hover:text-white text-green-400"
                         *ngIf="module_strings.includes(i)">
                         <div class="inline-flex float-right" *ngIf="!cat_strings.includes(fppelvic_cat)">
-                            <div class="flex hover:animate-bounce   bg-white hover:bg-gray-400 text-gray-300 py-1 rounded-full hover:text-white px-2"
-                                (click)="selectAll('select' + fppelvic_cat)" (mouseover)="buttonShow('select')"
-                                (mouseleave)="buttonShow()">
+                            <div class="flex hover:   bg-white hover:bg-gray-400 text-gray-300 py-1 rounded-full hover:text-white px-2"
+                                (click)="selectAll('select' + fppelvic_cat)">
                                 <fa-icon [icon]="faCircleCheck" size="lg" class="mr-2"
                                     *ngIf="!cat_strings.includes(fppelvic_cat)">
                                 </fa-icon>
                                 <button type="button" class="font-bold button-out  -red"
-                                    *ngIf="buttons.includes('select') && !cat_strings.includes(fppelvic_cat)">Select
+                                    *ngIf="!cat_strings.includes(fppelvic_cat)">Select
                                     All</button>
                             </div>
                         </div>
                         <div class="inline-flex float-right"
                             *ngIf="cat_strings.includes(fppelvic_cat) && fppelvic_strings.length > 0">
-                            <div class="flex hover:animate-bounce   bg-white hover:bg-gray-400 text-gray-400 py-1 rounded-full hover:text-white px-2"
-                                (click)="uncheck(fppelvic_cat)" (mouseover)="buttonShow('cancel')"
-                                (mouseleave)="buttonShow()">
+                            <div class="flex hover:   bg-white hover:bg-gray-400 text-gray-400 py-1 rounded-full hover:text-white px-2"
+                                (click)="uncheck(fppelvic_cat)">
                                 <fa-icon [icon]="faTimes" size="lg" class="mr-2">
                                 </fa-icon>
-                                <button type="button" class="font-bold button-out  -red"
-                                    *ngIf="buttons.includes('cancel')">Cancel</button>
+                                <button type="button" class="font-bold button-out  -red">Cancel</button>
                             </div>
                         </div>
                     </div>
@@ -99,25 +84,29 @@
                 </div>
             </form>
 
-    </div>
+        </div>
         <div class="col-span-3 border-check">
             <div class="relative ">
                 <div class="inline-flex  float-right" *ngIf="saved">
-                    <div class="flex hover:animate-bounce   bg-white hover:bg-orange-400 text-orange-400 py-1 rounded-full hover:text-white px-2"
-                        (click)="editModule()" (mouseover)="buttonShow('edit')" (mouseleave)="buttonShow()">
+                    <div class="flex hover:   bg-white hover:bg-orange-400 text-orange-400 py-1 rounded-full hover:text-white px-2"
+                        (click)="editModule()">
                         <fa-icon [icon]="faPencil" size="lg" class="mr-2">
                         </fa-icon>
-                        <button type="button" class="font-bold button-out"
-                            *ngIf="buttons.includes('edit')">Edit</button>
+                        <button type="button" class="font-bold button-out">Edit</button>
                     </div>
                 </div>
                 <div class="inline-flex float-right border-check mb-0" *ngIf="fppelvic_strings.length > 0 && !saved">
-                    <div class="flex float-left hover:animate-bounce   bg-white hover:bg-green-400 py-1 rounded-full text-green-500 hover:text-white px-2"
-                        (click)="saveModule()" (mouseover)="buttonShow('save')" (keyup.enter)="saveModule()">
+                    <div class="flex float-left hover: border-check bg-white hover:bg-gray-400 py-1 rounded-full text-gray-400 hover:text-white px-2"
+                        (click)="uncheck('')">
+                        <fa-icon [icon]="faTimes" size="lg" class="mr-2">
+                        </fa-icon>
+                        <button type="button" class="font-bold button-out border-check-red">Cancel</button>
+                    </div>
+                    <div class="flex float-left hover:   bg-white hover:bg-green-400 py-1 rounded-full text-green-500 hover:text-white px-2"
+                        (click)="saveModule()" (keyup.enter)="saveModule()">
                         <fa-icon [icon]="faSave" size="lg" class="mr-2 ">
                         </fa-icon>
-                        <button type="submit" class="font-bold button-out"
-                            *ngIf="buttons.includes('save')">Save</button>
+                        <button type="submit" class="font-bold button-out">Save</button>
                     </div>
                 </div>
             </div>

@@ -72,7 +72,7 @@ export class PelvicComponent implements OnInit {
 ];
 
 ngOnInit(): void {
-  this.focused = true;
+  this.focused = false;
   this.showCat();
 
   this.flippable = true;
@@ -135,6 +135,10 @@ console.log(this.fp_pelvic_name_cat + ' ngeow2');
 uncheck(cat) {
   console.log('uncheck');
   // console.log(cat, ' this is my cat from uncheck');
+  if(cat == ''){
+    this.cat_strings = [];
+    this.fppelvic_strings = [];
+  }else{
   this.cat_strings.splice(this.cat_strings.indexOf(cat), 1);
   // console.log(this.cat_strings, " emtying out cat_strings");
   this.pelvic_symptoms.forEach(e => {
@@ -150,7 +154,7 @@ uncheck(cat) {
     }
 
   });
-
+  }
 }
 
 onChange(id_name, cat) {

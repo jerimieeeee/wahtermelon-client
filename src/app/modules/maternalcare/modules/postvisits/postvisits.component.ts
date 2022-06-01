@@ -27,6 +27,11 @@ export class PostvisitsComponent implements OnInit {
   patient_weight: Number = new Number();
   bp_systolic: Number = new Number();
   bp_diastolic: Number = new Number();
+
+  mc_id: Number = new Number();
+  user_id: Number = new Number();
+  patient_id: Number = new Number();
+
   focused: boolean;
 
   feet: number;
@@ -52,6 +57,14 @@ export class PostvisitsComponent implements OnInit {
   ngOnInit(): void {
     this.value = 1;
     this.registry_id = 1;
+    this.patient_height = 145;
+    this.patient_weight = 75;
+    this.patient_id = 1;
+    this.bp_systolic = 120;
+    this.bp_diastolic = 90;
+
+    this.mc_id = 2;
+    this.user_id = 1;
     this.postpartum_week = 1;
     this.createForm();
     this.focused = false;

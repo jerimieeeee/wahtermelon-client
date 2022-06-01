@@ -13,7 +13,7 @@ export class MaternalcareComponent implements OnInit {
   constructor() { }
   module: number;
   ngOnInit(): void {
-    this.module = 2;
+    this.module = 3;
     this.post_value =false;
   }
 

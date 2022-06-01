@@ -95,7 +95,7 @@ export class FphxComponent implements OnInit {
   public buttons = [];
 
   ngOnInit(): void {
-    this.focused = true;
+    this.focused = false;
     this.showCat();
 
     this.flippable = true;
@@ -157,7 +157,11 @@ export class FphxComponent implements OnInit {
   }
   uncheck(cat) {
     console.log('uncheck');
-    // console.log(cat, ' this is my cat from uncheck');
+   // console.log(cat, ' this is my cat from uncheck');
+    if(cat == ''){
+      this.cat_strings = [];
+      this.fphx_strings = [];
+    }else{
     this.cat_strings.splice(this.cat_strings.indexOf(cat), 1);
     // console.log(this.cat_strings, " emtying out cat_strings");
     this.fp_hx_symptoms.forEach(e => {
@@ -170,7 +174,7 @@ export class FphxComponent implements OnInit {
         }
       }
     });
-
+  }
   }
 
   onChange(id_name, cat) {
