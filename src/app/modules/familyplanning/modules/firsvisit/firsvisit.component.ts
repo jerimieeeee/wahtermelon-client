@@ -43,7 +43,7 @@ export class FirsvisitComponent implements OnInit {
   }
   cancel() {
     this.keyUp = [];
-    this.fv_form.reset();
+    this.createForm();
   }
   createForm() {
     this.fv_form = new FormGroup({

@@ -2,20 +2,20 @@
 
     <div class="grid gap-4 relative animates-dropdown" style="grid-template-columns: repeat(16, minmax(0, 1fr));"
         *ngIf="!focused">
-        <div class="border-check row-span-3 col-span-2 hover:bg-gray-100 cursor-pointer rounded-r relative">
-            <button class="font-bold sticky top-0" type="button">OBS HX</button>
-        </div>
-        <div class="absolute left-16 top-0">
-            <fa-icon [icon]="faInfoCircle" class=" peer ml-3 text-gray-300 hover:text-gray-500 z-50"></fa-icon>
-            <div
-                class="absolute text-sm bg-gradient-to-b from-stone-500 to-gray-400 p-2 rounded-md border border-gray-500  text-white drop-shadow-lg opacity-90 border-check z-50 w-64 invisible peer-hover:visible">
-                <h1 class="font-bold drop-shadow-lg">IMPORTANT</h1>
-                <p class="font-light drop-shadow-lg">Once saved, the information will be displayed in the input boxes
-                    and shall not be editable unless Edit button is pressed.</p>
+        <div class="sticky top-0 z-50 border hover:border border-gray-300 hover:border-blue-400 col-span-2 cursor-pointer relative mx-2 px-2 py-1 rounded-t-lg bg-blue-500 text-white"
+            style="grid-column: span 16 / span 16;"><button class="font-bold" type="button">Obstetical History</button>
+            <div class="absolute left-36 top-1">
+                <fa-icon [icon]="faInfoCircle" class=" peer ml-4 text-white hover:text-gray-500 z-50"></fa-icon>
+                <div
+                    class="absolute text-sm bg-gradient-to-b from-stone-500 to-gray-400 p-2 rounded-md border border-gray-500  text-white drop-shadow-lg opacity-90 border-check z-50 w-64 invisible peer-hover:visible">
+                    <h1 class="font-bold drop-shadow-lg">IMPORTANT</h1>
+                    <p class="font-light drop-shadow-lg">Once saved, the information will be displayed in the input
+                        boxes and shall not be editable unless Edit button is pressed.</p>
+                </div>
             </div>
         </div>
-        <div class="rounded-lg drop-shadow-md hover:drop-shadow-lg bg-white rounded-lg border border-gray-300 hover:border-blue-400 mx-2"
-            style="grid-column: span 14 / span 14 ; grid-column-start: 3;">
+        <div class="drop-shadow-md hover:drop-shadow-lg bg-white rounded-b-lg border border-gray-300 hover:border-blue-400 mx-2 -mt-5"
+            style="grid-column: span 16 / span 16 ;">
             <div class="grid m-2 gap-4" style="grid-template-columns: repeat(14, minmax(0, 1fr));">
                 <div class="transitions col-span-7 border-check relative" *ngIf="!focused">
                     <h3>Full Term</h3>
@@ -76,10 +76,10 @@
             </div>
         </div>
 
-        <!-- <div class="border border-gray-300 hover:border-blue-400 border-t-0 border-l-0 border-r-0" style="grid-column: span 14 / span 14 ; grid-column-start: 3;"></div> -->
+        <!-- <div class="border border-gray-300 hover:border-blue-400 border-t-0 border-l-0 border-r-0" style="grid-column: span 14 / span 14 ; "></div> -->
 
         <div class="rounded-lg drop-shadow-md hover:drop-shadow-lg bg-white rounded-lg border border-gray-300 hover:border-blue-400 mx-2"
-            style="grid-column: span 14 / span 14 ; grid-column-start: 3;">
+            style="grid-column: span 16 / span 16 ; ">
             <div class="grid m-2 gap-4 h-max" style="grid-template-columns: repeat(14, minmax(0, 1fr));">
                 <div class="transitions col-span-4" *ngIf="!focused">
                     <h3 for="dld">Date of Last Delivery</h3>
@@ -111,10 +111,10 @@
             </div>
         </div>
 
-        <!-- <div class="border border-gray-300 hover:border-blue-400 border-t-0 border-l-0 border-r-0" style="grid-column: span 14 / span 14 ; grid-column-start: 3;"></div> -->
+        <!-- <div class="border border-gray-300 hover:border-blue-400 border-t-0 border-l-0 border-r-0" style="grid-column: span 14 / span 14 ; "></div> -->
 
         <div class="rounded-lg drop-shadow-md hover:drop-shadow-lg bg-white rounded-lg border border-gray-300 hover:border-blue-400 mx-2"
-            style="grid-column: span 14 / span 14 ; grid-column-start: 3;">
+            style="grid-column: span 16 / span 16 ; ">
             <div class="grid m-2 gap-4" style="grid-template-columns: repeat(14, minmax(0, 1fr));">
                 <div class="transitions col-span-4" *ngIf="!focused">
                     <h3 for="pmp">Past Menstrual Period</h3>
@@ -158,34 +158,33 @@
                 </div>
             </div>
         </div>
-        <div class="relative w-auto border-check mb-5" *ngIf="!focused && obshx_form.enabled && keyUp.length > 0"
-            style="grid-column: span 16 / span 16;">
-            <div class="absolute inline-flex m-2 right-0 top-0" style=" top: -0.85rem;">
-                <div class="flex hover: border-check bg-white hover:bg-gray-400 text-gray-400 py-1 rounded-full hover:text-white px-2"
-                    (click)="cancel()">
-                    <fa-icon [icon]="faTimes" size="lg" class="mr-2">
-                    </fa-icon>
-                    <button type="button" class="font-bold button-out border-check-red">Cancel</button>
-                </div>
-                <div
-                    class="flex hover: border-check bg-white hover:bg-green-400 py-1 rounded-full text-green-500 hover:text-white px-2">
-                    <fa-icon [icon]="faSave" size="lg" class="mr-2 ">
-                    </fa-icon>
-                    <button type="submit" class="font-bold button-out border-check-red"
-                        (keyup.enter)="saveForm(obshx_form.value)">Save</button>
-                </div>
+
+    </div>
+    <div class="relative w-auto border-check mt-2 mb-7 w-12/12"
+        *ngIf="!focused && obshx_form.enabled">
+        <div class="absolute inline-flex right-0 ">
+            <div (click)="cancel()"
+                class="cursor-pointer flex border-check bg-white hover:drop-shadow-md hover:bg-gray-400 py-1 rounded-full text-gray-400 hover:text-white pl-2 pr-2 peer">
+                <fa-icon [icon]="faTimes" size="lg" class="mr-2">
+                </fa-icon>
+                <button type="button" class="font-bold button-out border-check-red">Cancel</button>
+            </div>
+            <div (click)="saveForm(obshx_form.value)"
+                class="cursor-pointer flex border-check hover:drop-shadow-md bg-green-300 hover:bg-green-400 py-1 rounded-full text-white px-3 peer-hover:bg-white peer-hover:text-green-400">
+                <fa-icon [icon]="faSave" size="lg" class="mr-2">
+                </fa-icon>
+                <button type="submit" class="font-bold button-out border-check-red"
+                    (keyup.enter)="saveForm(obshx_form.value)">Save</button>
             </div>
         </div>
-        <div class="relative w-auto border-check mb-5" *ngIf="!focused && obshx_form.disabled"
-            style="grid-column: span 16 / span 16;">
-            <div class="absolute inline-flex m-2 right-0 top-0" style=" top: -0.85rem;" (click)="edit()">
-                <div
-                    class="flex hover: border-check bg-white hover:bg-orange-400 py-1 rounded-full text-orange-500 hover:text-white px-2">
-                    <fa-icon [icon]="faPencil" size="lg" class="mr-2 ">
-                    </fa-icon>
-                    <button type="submit" class="font-bold button-out border-check-red"
-                        (keyup.enter)="uncheck($event.target.id + fphx_cat)">Edit</button>
-                </div>
+    </div>
+    <div class="relative w-auto border-check mt-2 mb-7 w-12/12" *ngIf="!focused && obshx_form.disabled">
+        <div class="absolute inline-flex right-0 cursor-pointer" (click)="edit()">
+            <div class="flex border-check bg-orange-300 hover:bg-orange-400 py-1 rounded-full  text-white px-2">
+                <fa-icon [icon]="faPencil" size="lg" class="mr-2 ">
+                </fa-icon>
+                <button type="submit" class="font-bold button-out border-check-red typed-out"
+                    (keyup.enter)="uncheck($event.target.id + fphx_cat)">Edit</button>
             </div>
         </div>
     </div>

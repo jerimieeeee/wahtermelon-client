@@ -1,16 +1,17 @@
 <div class="grid max-h-fit relative" style="grid-template-columns: repeat(16, minmax(0, 1fr));" *ngIf="!focused">
-    <div class=" border-check row-span-2 col-span-2 hover:bg-gray-100 rounded-r cursor-pointer relative"><button
-            class="font-bold sticky top-0" type="button">FP PE</button></div>
-    <div class="absolute left-16 top-0">
-        <fa-icon [icon]="faInfoCircle" class=" peer ml-3 text-gray-300 hover:text-gray-500 z-50"></fa-icon>
-        <div
-            class="absolute text-sm bg-gradient-to-b from-stone-500 to-gray-400 p-2 rounded-md border border-gray-500  text-white drop-shadow-lg opacity-90 border-check z-50 w-64 invisible peer-hover:visible">
-            <h1 class="font-bold drop-shadow-lg">IMPORTANT</h1>
-            <p class="font-light drop-shadow-lg">Once saved, the information will be displayed in the input boxes and
-                shall not be editable unless Edit button is pressed.</p>
+    <div class="sticky top-0 z-50 border hover:border border-gray-300 hover:border-blue-400 col-span-2 cursor-pointer relative mx-2 px-2 py-1 rounded-lg bg-blue-500 text-white"
+        style="grid-column: span 16 / span 16;"><button class="font-bold" type="button">FP PE</button>
+        <div class="absolute left-12 top-1">
+            <fa-icon [icon]="faInfoCircle" class=" peer ml-4 text-white hover:text-gray-500 z-50"></fa-icon>
+            <div
+                class="absolute text-sm bg-gradient-to-b from-stone-500 to-gray-400 p-2 rounded-md border border-gray-500  text-white drop-shadow-lg opacity-90 border-check z-50 w-64 invisible peer-hover:visible">
+                <h1 class="font-bold drop-shadow-lg">IMPORTANT</h1>
+                <p class="font-light drop-shadow-lg">Once saved, the information will be displayed in the input
+                    boxes and shall not be editable unless Edit button is pressed.</p>
+            </div>
         </div>
     </div>
-    <div style="grid-column: span 14 / span 14;" class="">
+    <div style="grid-column: span 16 / span 16;" class="">
 
         <div *ngFor="let fppe_cat of fp_pe_cat;  let i = index;">
 
@@ -83,30 +84,33 @@
             </form>
 
         </div>
-        <div class="col-span-3">
-            <div class="relative ">
-                <div class="inline-flex float-right" *ngIf="saved">
-                    <div class="flex hover: border-check bg-white hover:bg-orange-400 text-orange-400 py-1 rounded-full hover:text-white px-2"
-                        (click)="editModule()">
-                        <fa-icon [icon]="faPencil" size="lg" class="mr-2">
-                        </fa-icon>
-                        <button type="button" class="font-bold button-out border-check-red">Edit</button>
-                    </div>
-                </div>
-                <div class="inline-flex float-right" *ngIf="fppe_strings.length > 0 && !saved">
-                    <div class="flex float-left hover: border-check bg-white hover:bg-gray-400 py-1 rounded-full text-gray-400 hover:text-white px-2"
-                        (click)="uncheck('')">
-                        <fa-icon [icon]="faTimes" size="lg" class="mr-2">
-                        </fa-icon>
-                        <button type="button" class="font-bold button-out border-check-red">Cancel</button>
-                    </div>
-                    <div class="flex float-left hover: border-check bg-white hover:bg-green-400 py-1 rounded-full text-green-500 hover:text-white px-2"
-                        (click)="saveModule()" (keyup.enter)="saveModule()">
-                        <fa-icon [icon]="faSave" size="lg" class="mr-2 ">
-                        </fa-icon>
-                        <button type="submit" class="font-bold button-out border-check-red">Save</button>
-                    </div>
-                </div>
-            </div>
+        
+    </div>
+</div>
+<div class="relative w-auto border-check mt-2 mb-7 w-12/12" *ngIf="!saved">
+    <div class="absolute inline-flex right-0 ">
+        <div (click)="uncheck('')"
+            class="cursor-pointer flex border-check bg-white hover:drop-shadow-md hover:bg-gray-400 py-1 rounded-full text-gray-400 hover:text-white pl-2 pr-2 peer">
+            <fa-icon [icon]="faTimes" size="lg" class="mr-2">
+            </fa-icon>
+            <button type="button" class="font-bold button-out border-check-red">Cancel</button>
+        </div>
+        <div (click)="saveModule()"
+            class="cursor-pointer flex border-check hover:drop-shadow-md bg-green-300 hover:bg-green-400 py-1 rounded-full text-white px-3 peer-hover:bg-white peer-hover:text-green-400">
+            <fa-icon [icon]="faSave" size="lg" class="mr-2">
+            </fa-icon>
+            <button type="submit" class="font-bold button-out border-check-red"
+                (keyup.enter)="saveModule()">Save</button>
         </div>
     </div>
+</div>
+<div class="relative w-auto border-check mt-2 mb-7 w-12/12" *ngIf="saved">
+    <div class="absolute inline-flex right-0 cursor-pointer" (click)="editModule()">
+        <div class="flex border-check bg-orange-300 hover:bg-orange-400 py-1 rounded-full  text-white px-2">
+            <fa-icon [icon]="faPencil" size="lg" class="mr-2 ">
+            </fa-icon>
+            <button type="submit" class="font-bold button-out border-check-red typed-out"
+                (keyup.enter)="editModule()">Edit</button>
+        </div>
+    </div>
+</div>

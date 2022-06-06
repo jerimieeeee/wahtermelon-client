@@ -90,7 +90,7 @@ export class ObshxComponent implements OnInit {
   }
   cancel(){
     this.keyUp = [];
-    this.obshx_form.reset();
+    this.createForm();
   }
   onKeyUp(data_input: string, id: string){
     // console.log(data_input + ' this is my data input');
