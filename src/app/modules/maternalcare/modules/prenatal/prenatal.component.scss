@@ -11,9 +11,10 @@ input, .drop_btn, li{
   width: 100%;
 }
 .remarks{
-  height: 4rem;
+  min-height: 5rem;
+  max-height: 8rem;
   width: 100%;
-  resize: none;
+  //resize: none;
 }
 .fhr_chart{
   height: 60% !important;
