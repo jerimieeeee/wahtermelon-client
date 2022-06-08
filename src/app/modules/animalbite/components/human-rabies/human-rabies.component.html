@@ -1,0 +1,16 @@
+<div class="flex item-start flex-wrap shadow-md rounded-xl pb-5 mt-5 mb-4">
+
+    <div class=" flex justify-between w-full bg-blue-500 px-5 py-3 rounded-tl rounded-tr">
+      <h4 class="col-start-1 col-span-12 font-bold text-white text-md mt-2">Human Rabies Case</h4>
+    
+      <button class="py-2 px-4 rounded-full bg-white text-gray-600 font-bold drop-shadow-md hover:border-white-600 hover:bg-blue-400 hover:text-white shadow-md inline-flex items-center" name="add-btn">
+        <label> <fa-icon class="text-sm" [icon]="faPlus"></fa-icon> Add</label>
+      </button>  
+
+          <!-- <button type="submit" class="py-2 px-4 rounded-full bg-white text-gray-600 font-bold drop-shadow-md hover:border-white-600 hover:bg-blue-400 hover:text-white shadow-md inline-flex items-center" name="add-btn">
+            <label>Update</label>
+          </button> -->
+    </div>
+    <p class="mt-4 px-5" *ngIf="patientid==null">No Patient Record Found!</p>
+    <p class="mt-4 px-5" *ngIf="patientid==1">Patient Record Found!</p>
+</div>

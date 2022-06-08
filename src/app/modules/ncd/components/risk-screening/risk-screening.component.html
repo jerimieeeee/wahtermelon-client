@@ -1,0 +1,151 @@
+<div class="grid grid-cols-12 flex item-start flex-wrap shadow-md rounded-xl mb-8 mt-8 overflow-y-auto">
+
+    <div class="col-span-12 row-start-1 flex bg-blue-500 px-5 py-3 rounded-tl rounded-tr">
+      <h4 class="font-bold text-white text-md mt-2 mb-2">Blood Glucose Test</h4> 
+      <div class="py-2">
+        <fa-icon [icon]="faInfoCircle" class="peer text-white hover:text-white z-50 px-2"></fa-icon>
+        <div
+            class="absolute text-sm bg-gradient-to-b from-stone-500 to-gray-400 p-2 rounded border border-gray-500  text-white drop-shadow-lg opacity-90 border-check z-50 w-60 invisible peer-hover:visible">
+            <h1 class="font-bold drop-shadow-lg">IMPORTANT</h1>
+            <p class="font-light drop-shadow-lg">Once saved, the information will be displayed in the input boxes
+                and shall not be editable unless Edit button is pressed.</p>
+        </div>
+    </div>
+    </div>
+
+    <div class="col-start-1 col-span-6 row-start-2 px-5 mt-4 mb-4">
+        <h4 class="mb-2">Date Taken:</h4>
+        <input class="form-select border-gray-300 border-2 px-2 pt-1 pb-1 rounded-md w-full bg-white"
+                type="date" name="date" formControlName="aDate" required="true">
+    </div>
+  
+    <div class="col-start-7 col-span-6 row-start-2 px-5 mt-4 mb-4">
+      <h4 class="mb-2">If atleast 8 hours, record FBS (mg/dl):</h4>
+      <input class="border-2 border-gray-300 px-2 py-1 rounded bg-white w-full"
+              type="text" name="text" formControlName="meds" required="true">
+  </div>
+
+  <div class="col-start-1 col-span-6 row-start-3 px-5 mt-4 mb-6">
+    <h4 class="mb-2">If regardless when was the last meal, record RBS (mg/dl):</h4>
+    <input class="border-2 border-gray-300 px-2 py-1 rounded bg-white w-full"
+            type="text" name="text" formControlName="meds" required="true">
+</div>
+
+<div class="col-start-7 col-span-6 row-start-3 px-5 mt-4 mb-6">
+  <h4 class="mb-2">Raised Blood Glucose:</h4>
+  <input class="border-2 border-gray-300 px-2 py-1 rounded bg-white w-full"
+          type="text" name="text" formControlName="meds" required="true">
+</div>
+  
+  </div>
+
+  <div class="col-start-1 col-span-12 row-start-1 border-b-2 border-gray-300 mt-2 mb-2"></div>
+
+  <div class="grid grid-cols-12 flex item-start flex-wrap shadow-md rounded-xl mb-8 mt-8 overflow-y-auto">
+
+    <div class="col-span-12 flex bg-blue-500 px-5 py-3 rounded-tl rounded-tr">
+      <h4 class="font-bold text-white text-md mt-2 mb-2">Blood Lipid Test</h4> 
+      <div class="py-2">
+        <fa-icon [icon]="faInfoCircle" class="peer text-white hover:text-white z-50 px-2"></fa-icon>
+        <div
+            class="absolute text-sm bg-gradient-to-b from-stone-500 to-gray-400 p-2 rounded border border-gray-500  text-white drop-shadow-lg opacity-90 border-check z-50 w-60 invisible peer-hover:visible">
+            <h1 class="font-bold drop-shadow-lg">IMPORTANT</h1>
+            <p class="font-light drop-shadow-lg">Once saved, the information will be displayed in the input boxes
+                and shall not be editable unless Edit button is pressed.</p>
+        </div>
+    </div>
+    </div>
+  
+    <div class="col-start-1 col-span-6 row-start-2 px-5 mt-4 mb-4">
+      <h4 class="mb-2">Date Taken:</h4>
+      <input class="form-select border-gray-300 border-2 px-2 pt-1 pb-1 rounded-md w-full bg-white"
+              type="date" name="date" formControlName="aDate" required="true">
+  </div>
+
+  <div class="col-start-7 col-span-6 row-start-2 px-5 mt-4 mb-4">
+    <h4 class="mb-2">Total Cholesterol (mmol/l):</h4>
+    <input class="border-2 border-gray-300 px-2 py-1 rounded bg-white w-full"
+            type="text" name="text" formControlName="meds" required="true">
+</div>
+
+<div class="col-start-1 col-span-6 row-start-3 px-5 mt-4 mb-6">
+<h4 class="mb-2">Raised Blood Lipids:</h4>
+<input class="border-2 border-gray-300 px-2 py-1 rounded bg-white w-full"
+        type="text" name="text" formControlName="meds" required="true">
+</div>
+  
+  </div>
+
+  <div class="col-start-1 col-span-12 row-start-1 border-b-2 border-gray-300 mt-2 mb-2"></div>
+
+  <div class="grid grid-cols-12 flex item-start flex-wrap shadow-md rounded-xl mb-8 mt-8 overflow-y-auto">
+
+    <div class="col-span-12 flex bg-blue-500 px-5 py-3 rounded-tl rounded-tr">
+      <h4 class="font-bold text-white text-md mt-2 mb-2">Urine Test for Protein</h4> 
+      <div class="py-2">
+        <fa-icon [icon]="faInfoCircle" class="peer text-white hover:text-white z-50 px-2"></fa-icon>
+        <div
+            class="absolute text-sm bg-gradient-to-b from-stone-500 to-gray-400 p-2 rounded border border-gray-500  text-white drop-shadow-lg opacity-90 border-check z-50 w-60 invisible peer-hover:visible">
+            <h1 class="font-bold drop-shadow-lg">IMPORTANT</h1>
+            <p class="font-light drop-shadow-lg">Once saved, the information will be displayed in the input boxes
+                and shall not be editable unless Edit button is pressed.</p>
+        </div>
+    </div>
+    </div>
+  
+    <div class="col-start-1 col-span-6 row-start-2 px-5 mt-4 mb-4">
+      <h4 class="mb-2">Date Taken:</h4>
+      <input class="form-select border-gray-300 border-2 px-2 pt-1 pb-1 rounded-md w-full bg-white"
+              type="date" name="date" formControlName="aDate" required="true">
+  </div>
+
+  <div class="col-start-7 col-span-6 row-start-2 px-5 mt-4 mb-4">
+    <h4 class="mb-2">Urine Protein in g/L:</h4>
+    <input class="border-2 border-gray-300 px-2 py-1 rounded bg-white w-full"
+            type="text" name="text" formControlName="meds" required="true">
+</div>
+
+<div class="col-start-1 col-span-6 row-start-3 px-5 mt-4 mb-6">
+<h4 class="mb-2">Presence of Urine Protein:</h4>
+<input class="border-2 border-gray-300 px-2 py-1 rounded bg-white w-full"
+        type="text" name="text" formControlName="meds" required="true">
+</div>
+  
+  </div>
+
+  <div class="col-start-1 col-span-12 row-start-1 border-b-2 border-gray-300 mt-2 mb-2"></div>
+
+  <div class="grid grid-cols-12 flex item-start flex-wrap shadow-md rounded-xl mb-8 mt-8 overflow-y-auto">
+
+    <div class="col-span-12 flex bg-blue-500 px-5 py-3 rounded-tl rounded-tr">
+      <h4 class="font-bold text-white text-md mt-2 mb-2">Urine Test for Ketones</h4> 
+      <div class="py-2">
+        <fa-icon [icon]="faInfoCircle" class="peer text-white hover:text-white z-50 px-2"></fa-icon>
+        <div
+            class="absolute text-sm bg-gradient-to-b from-stone-500 to-gray-400 p-2 rounded border border-gray-500  text-white drop-shadow-lg opacity-90 border-check z-50 w-60 invisible peer-hover:visible">
+            <h1 class="font-bold drop-shadow-lg">IMPORTANT</h1>
+            <p class="font-light drop-shadow-lg">Once saved, the information will be displayed in the input boxes
+                and shall not be editable unless Edit button is pressed.</p>
+        </div>
+    </div>
+    </div>
+  
+    <div class="col-start-1 col-span-6 row-start-2 px-5 mt-4 mb-4">
+      <h4 class="mb-2">Date Taken:</h4>
+      <input class="form-select border-gray-300 border-2 px-2 pt-1 pb-1 rounded-md w-full bg-white"
+              type="date" name="date" formControlName="aDate" required="true">
+  </div>
+
+  <div class="col-start-7 col-span-6 row-start-2 px-5 mt-4 mb-4">
+    <h4 class="mb-2">Urine Ketone:</h4>
+    <input class="border-2 border-gray-300 px-2 py-1 rounded bg-white w-full"
+            type="text" name="text" formControlName="meds" required="true">
+</div>
+
+<div class="col-start-1 col-span-6 row-start-3 px-5 mt-4 mb-6">
+<h4 class="mb-2">Presence of Urine Ketone:</h4>
+<input class="border-2 border-gray-300 px-2 py-1 rounded bg-white w-full"
+        type="text" name="text" formControlName="meds" required="true">
+</div>
+  
+  </div>

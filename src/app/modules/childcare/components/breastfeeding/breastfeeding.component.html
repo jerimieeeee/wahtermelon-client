@@ -1,5 +1,5 @@
 <div class="flex mt-5 mb-5">
-  <h4 class="font-bold text-gray-600 text-md">BREASTFEEDING</h4>
+  <h4 class="font-bold text-gray-600 text-sm">BREASTFEEDING</h4>
   <div class="relative">
     <fa-icon [icon]="faInfoCircle" class="peer ml-3 text-gray-300 hover:text-gray-500 z-50"></fa-icon>
     <div
@@ -42,20 +42,33 @@
             </button>
           </div>
           <!--body-->
-          <div class="relative flex-auto px-12">
+          <div class="modal-body relative flex-auto px-12">
             <table class="w-full flex justify-between text-md bg-white rounded">
               <tbody>
                   <tr class="border-b items-center">
-                      <th class="text-center p-3 px-5">Month</th>
+                      <th class="text-center p-3 px-5">Select Month</th>
                       <th class="text-center p-3 px-5">Status</th>
+                      <th class="text-center p-3 px-5">Reason</th>
                   </tr>
                   
                     <tr *ngFor="let month of ccdev" class="border-b hover:bg-yellow-100 bg-transparent">
                       
-                      <td class="p-3 px-5">{{month.name}} - ({{month.date}}) - {{month.ischecked}} </td>
-                      <td class="p-3 px-5 text-center">
-                        <input type="checkbox" name="" id="" (change)="changeSelection()" [(ngModel)]="month.ischecked" [checked]="month.ischecked">
+                      <!-- <td class="p-3 px-5">{{month.name}} - ({{month.date}})</td> -->
+                      <td class="py-6">
+                        <input type="checkbox" class="rounded-full h-5 w-5" name="" id="" (change)="changeSelection()" [(ngModel)]="month.ischecked" [checked]="month.ischecked">
+                        <label class="ml-2">{{month.name}} - ({{month.date}})</label>
                       </td>
+
+                      <td class="text-center" *ngIf="month.ischecked"> 
+                      <select class="select rounded-md" name="" id="">
+                      <option  value="" *ngFor="let items of ebf">
+                        {{items.code}}
+                      </option>
+                      </select>
+                      </td>
+
+
+
                   <form [formGroup]="breastfedForm" (ngSubmit)="submit()">
 
                       <td class="p-3 text-center">

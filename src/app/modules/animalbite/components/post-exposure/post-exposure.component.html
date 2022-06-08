@@ -1,0 +1,272 @@
+<div class="flex item-start flex-wrap shadow-md rounded-xl pb-5 mt-5">
+
+  <div class="flex justify-between w-full bg-blue-500 px-5 py-3 rounded-tl rounded-tr">
+    <h4 class="col-start-1 col-span-12 font-bold text-white text-md mt-2">Post-Exposure Prophylaxis History</h4>
+  
+    <button class="py-2 px-4 rounded-full bg-white text-gray-600 font-bold drop-shadow-md hover:border-white-600 hover:bg-blue-400 hover:text-white shadow-md inline-flex items-center" name="add-btn" (click)="togglePreExpModal()">
+      <label> <fa-icon class="text-sm" [icon]="faPlus"></fa-icon> Add</label>
+    </button>  
+
+        <!-- <button type="submit" class="py-2 px-4 rounded-full bg-white text-gray-600 font-bold drop-shadow-md hoverborder-white-600 hoverbg-blue-400 hovertext-white shadow-md inline-flex items-center" name="add-btn">
+          <label>Update</label>
+        </button> -->
+  </div>
+  <p class="mt-4 px-5" *ngIf="patientid==null">No Patient Record Found!</p>
+    <p class="mt-4 px-5" *ngIf="patientid==1">Patient Record Found!</p>
+</div>
+
+<!-- Modal Header -->
+
+<div *ngIf="showPreExpModal" class="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focusoutline-none justify-center items-center flex">
+  <div class="relative w-auto my-6 mx-auto max-w-6xl">
+    <!--content-->
+    <div class="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focusoutline-none">
+      <!--header-->
+      <div class="flex items-start justify-between bg-blue-500 p-5 border-b border-solid border-gray-300 rounded-t">
+        <h4 class="font-bold text-white align-middle text-md mt-2">
+          Pre-Exposure Consultation
+        </h4>
+      </div>
+
+<!-- Modal Body -->
+
+<div class="grid grid-cols-12 modal-body mb-4">
+
+  <div class="relative col-start-1 col-span-4 px-5 mt-8">
+      <h4 class="mb-2 text-blue-500 font-semibold">Date of Consultation</h4>
+      <input class="border-gray-300 px-2 pt-1 pb-1 rounded-md w-full bg-white"
+      type="text" placeholder="SELECT DATE" onfocus="(this.type='date')" name="date" formControlName="aDate" required="true">
+      <span class="icon"><fa-icon [icon]="faCalendarDay" class="text-blue-500"></fa-icon></span>
+  </div>
+
+  <div class="relative col-start-5 col-span-4 px-5 mt-8">
+    <h4 class="mb-2 text-blue-500 font-semibold">Date of Exposure History</h4>
+    <input class="border-gray-300 px-2 pt-1 pb-1 rounded-md w-full bg-white"
+    type="text" placeholder="SELECT DATE" onfocus="(this.type='date')" name="date" formControlName="aDate" required="true">
+    <span class="icon"><fa-icon [icon]="faCalendarDay" class="text-blue-500"></fa-icon></span>
+</div>
+
+<div class=" col-start-9 col-span-4 px-5 mt-8">
+  <h4 class="mb-2 text-blue-500 font-semibold">Weight in kg</h4>
+  <input class="border-gray-300  px-2 pt-1 pb-1 rounded-md w-full bg-white"
+          type="date" name="date" formControlName="aDate" required="true">
+</div>
+
+<div class="row-start-2 col-start-1 col-span-6 w-full px-5  mt-8">
+  <h1 class="text-ellipsis mb-2 text-blue-500 font-semibold">Rabies Immunoglobulin Type</h1>
+  <select class="text-overflow: ellipsis bg-white  border-gray-300 px-2 pt-1 pb-1 rounded w-full" ng-model="vm.ncd.family_hx_hypertension" name="family_hx_hypertension">
+  <option  ng-value="ri.desc" *ngFor="let ri of ri_type">
+  {{ri.desc}}
+  </option>    
+  </select>
+</div>
+
+<div class="relative row-start-2 col-start-7 col-span-4 px-5 mt-8">
+  <h4 class="mb-2 text-blue-500 font-semibold">RIG Date</h4>
+  <input class="border-gray-300 px-2 pt-1 pb-1 rounded-md w-full bg-white"
+    type="text" placeholder="SELECT DATE" onfocus="(this.type='date')" name="date" formControlName="aDate" required="true">
+    <span class="icon"><fa-icon [icon]="faCalendarDay" class="text-blue-500"></fa-icon></span>
+</div>
+
+<div class="row-start-2 col-start-11 col-span-2 w-full px-5  mt-8">
+  <h1 class="mb-2 text-blue-500 font-semibold">Booster?</h1>
+  <select class="bg-white  border-gray-300 px-2 pt-1 pb-1 rounded w-full" ng-model="vm.ncd.family_hx_hypertension" name="family_hx_hypertension">
+  <option ng-value="boosts.desc" *ngFor="let boosts of booster">
+  {{boosts.desc}}
+  </option>    
+  </select>
+</div>
+
+<div class="row-start-3 col-start-1 col-span-6 w-full px-5  mt-8">
+  <h1 class="mb-2 text-blue-500 font-semibold">Status of Bitting Animal</h1>
+  <select class="bg-white  border-gray-300 px-2 pt-1 pb-1 rounded w-full" ng-model="vm.ncd.family_hx_hypertension" name="family_hx_hypertension">
+  <option ng-value="a_status.desc" *ngFor="let a_status of animal_status">
+  {{a_status.desc}}
+  </option>    
+  </select>
+</div>
+
+<div class="relative row-start-3 col-start-7 col-span-4 px-5 mt-8">
+  <h4 class="mb-2 text-blue-500 font-semibold">Date Killed / Death</h4>
+  <input class="border-gray-300 px-2 pt-1 pb-1 rounded-md w-full bg-white"
+    type="text" placeholder="SELECT DATE" onfocus="(this.type='date')" name="date" formControlName="aDate" required="true">
+    <span class="icon"><fa-icon [icon]="faCalendarDay" class="text-blue-500"></fa-icon></span>
+</div>
+
+  <div class="col-start-1 col-span-12 row-start-4 border-b-2 border-dashed border-gray-300 my-8 mx-5"></div>
+
+
+  <div class="relative row-start-5 col-start-1 col-span-4 w-full px-5">
+      <h4 class="mb-2 text-blue-500 font-semibold">Others</h4>
+      <input class="border-gray-300 px-2 pt-1 pb-1 rounded-md w-full bg-white"
+      type="text" placeholder="SELECT DATE" onfocus="(this.type='date')" name="date" formControlName="aDate" required="true">
+      <span class="icon"><fa-icon [icon]="faCalendarDay" class="text-blue-500"></fa-icon></span>
+  </div>
+
+  <div class="relative row-start-5 col-start-5 col-span-4 w-full px-5">
+    <h4 class="mb-2 text-blue-500 font-semibold">Others (Specify)</h4>
+    <input class="border-gray-300 px-2 pt-1 pb-1 rounded-md w-full bg-white"
+      type="text" placeholder="SELECT DATE" onfocus="(this.type='date')" name="date" formControlName="aDate" required="true">
+      <span class="icon"><fa-icon [icon]="faCalendarDay" class="text-blue-500"></fa-icon></span>
+</div>
+
+  <div class="  row-start-5 col-start-9 col-span-4 w-full px-5">
+      <h1 class="mb-2 text-blue-500 font-semibold">Type of Bite</h1>
+      <select class="text-ellipsis bg-white  border-gray-300 px-2 pt-1 pb-1 rounded w-full" ng-model="vm.ncd.family_hx_hypertension" name="family_hx_hypertension">
+      <option ng-value="icd.desc" *ngFor="let icd of icd10">
+      {{icd.desc}}
+      </option>    
+      </select>
+  </div>
+
+   <!-- Day 0 -->
+
+   <div class="relative row-start-6 col-start-1 col-span-4 w-full  px-5 mt-8">
+      <h4 class="mb-2 text-blue-500 font-semibold">Day 0</h4>
+      <input class="border-gray-300 px-2 pt-1 pb-1 rounded-md w-full bg-white"
+      type="text" placeholder="SELECT DATE" onfocus="(this.type='date')" name="date" formControlName="aDate" required="true">
+      <span class="icon"><fa-icon [icon]="faCalendarDay" class="text-blue-500"></fa-icon></span>
+  </div>
+
+  <div class="row-start-6 col-start-5 col-span-4 w-full  px-5 mt-8">
+      <h1 class="mb-2 text-blue-500 font-semibold">Brand Name</h1>
+      <select class="bg-white  border-gray-300 px-2 pt-1 pb-1 rounded w-full" ng-model="vm.ncd.family_hx_hypertension" name="family_hx_hypertension">
+      <option ng-value="brand.desc" *ngFor="let brand of brand_name">
+      {{brand.desc}}
+      </option>    
+      </select>
+  </div>
+
+  <div class="row-start-6 col-start-9 col-span-4 w-full  px-5 mt-8">
+      <h1 class="mb-2 text-blue-500 font-semibold">Vaccine Route</h1>
+      <select class="bg-white  border-gray-300 px-2 pt-1 pb-1 rounded w-full" ng-model="vm.ncd.family_hx_hypertension" name="family_hx_hypertension">
+      <option ng-value="route.desc" *ngFor="let route of vaccine_route">
+      {{route.desc}}
+      </option>    
+      </select>
+  </div>
+
+  <!-- Day 3 -->
+
+  <div class="relative row-start-7 col-start-1 col-span-4 w-full  px-5 mt-8">
+      <h4 class="mb-2 text-blue-500 font-semibold">Day 3</h4>
+      <input class="border-gray-300 px-2 pt-1 pb-1 rounded-md w-full bg-white"
+      type="text" placeholder="SELECT DATE" onfocus="(this.type='date')" name="date" formControlName="aDate" required="true">
+      <span class="icon"><fa-icon [icon]="faCalendarDay" class="text-blue-500"></fa-icon></span>
+  </div>
+
+  <div class="row-start-7 col-start-5 col-span-4 w-full  px-5 mt-8">
+      <h1 class="mb-2 text-blue-500 font-semibold">Brand Name</h1>
+      <select class="bg-white  border-gray-300 px-2 pt-1 pb-1 rounded w-full" ng-model="vm.ncd.family_hx_hypertension" name="family_hx_hypertension">
+      <option ng-value="brand.desc" *ngFor="let brand of brand_name">
+      {{brand.desc}}
+      </option>    
+      </select>
+  </div>
+
+  <div class="  row-start-7 col-start-9 col-span-4 w-full  px-5 mt-8">
+      <h1 class="mb-2 text-blue-500 font-semibold">Vaccine Route</h1>
+      <select class="bg-white  border-gray-300 px-2 pt-1 pb-1 rounded w-full" ng-model="vm.ncd.family_hx_hypertension" name="family_hx_hypertension">
+      <option ng-value="route.desc" *ngFor="let route of vaccine_route">
+      {{route.desc}}
+      </option>    
+      </select>
+  </div>
+
+  <!-- Day 7 -->
+
+  <div class="relative row-start-8 col-start-1 col-span-4 w-full  px-5 mt-8">
+    <h4 class="mb-2 text-blue-500 font-semibold">Day 7</h4>
+    <input class="border-gray-300 px-2 pt-1 pb-1 rounded-md w-full bg-white"
+    type="text" placeholder="SELECT DATE" onfocus="(this.type='date')" name="date" formControlName="aDate" required="true">
+    <span class="icon"><fa-icon [icon]="faCalendarDay" class="text-blue-500"></fa-icon></span>
+</div>
+
+<div class="row-start-8 col-start-5 col-span-4 w-full  px-5 mt-8">
+    <h1 class="mb-2 text-blue-500 font-semibold">Brand Name</h1>
+    <select class="bg-white  border-gray-300 px-2 pt-1 pb-1 rounded w-full" ng-model="vm.ncd.family_hx_hypertension" name="family_hx_hypertension">
+    <option ng-value="brand.desc" *ngFor="let brand of brand_name">
+    {{brand.desc}}
+    </option>    
+    </select>
+</div>
+
+<div class="  row-start-8 col-start-9 col-span-4 w-full  px-5 mt-8">
+    <h1 class="mb-2 text-blue-500 font-semibold">Vaccine Route</h1>
+    <select class="bg-white  border-gray-300 px-2 pt-1 pb-1 rounded w-full" ng-model="vm.ncd.family_hx_hypertension" name="family_hx_hypertension">
+    <option ng-value="route.desc" *ngFor="let route of vaccine_route">
+    {{route.desc}}
+    </option>    
+    </select>
+</div>
+
+<!-- Day 14 -->
+
+<div class="relative row-start-9 col-start-1 col-span-4 w-full  px-5 mt-8">
+  <h4 class="mb-2 text-blue-500 font-semibold">Day 14</h4>
+  <input class="border-gray-300 px-2 pt-1 pb-1 rounded-md w-full bg-white"
+    type="text" placeholder="SELECT DATE" onfocus="(this.type='date')" name="date" formControlName="aDate" required="true">
+    <span class="icon"><fa-icon [icon]="faCalendarDay" class="text-blue-500"></fa-icon></span>
+</div>
+
+<div class="row-start-9 col-start-5 col-span-4 w-full  px-5 mt-8">
+  <h1 class="mb-2 text-blue-500 font-semibold">Brand Name</h1>
+  <select class="bg-white  border-gray-300 px-2 pt-1 pb-1 rounded w-full" ng-model="vm.ncd.family_hx_hypertension" name="family_hx_hypertension">
+  <option ng-value="brand.desc" *ngFor="let brand of brand_name">
+  {{brand.desc}}
+  </option>    
+  </select>
+</div>
+
+<div class="  row-start-9 col-start-9 col-span-4 w-full  px-5 mt-8">
+  <h1 class="mb-2 text-blue-500 font-semibold">Vaccine Route</h1>
+  <select class="bg-white  border-gray-300 px-2 pt-1 pb-1 rounded w-full" ng-model="vm.ncd.family_hx_hypertension" name="family_hx_hypertension">
+  <option ng-value="route.desc" *ngFor="let route of vaccine_route">
+  {{route.desc}}
+  </option>    
+  </select>
+</div>
+
+<!-- Day 21/28 -->
+
+<div class="relative row-start-10 col-start-1 col-span-4 w-full  px-5 mt-8">
+  <h4 class="mb-2 text-blue-500 font-semibold">Day 28</h4>
+  <input class="border-gray-300 px-2 pt-1 pb-1 rounded-md w-full bg-white"
+    type="text" placeholder="SELECT DATE" onfocus="(this.type='date')" name="date" formControlName="aDate" required="true">
+    <span class="icon2"><fa-icon [icon]="faCalendarDay" class="text-blue-500"></fa-icon></span>
+</div>
+
+<div class="row-start-10 col-start-5 col-span-4 w-full  px-5 mt-8">
+  <h1 class="mb-2 text-blue-500 font-semibold">Brand Name</h1>
+  <select class="bg-white  border-gray-300 px-2 pt-1 pb-1 rounded w-full" ng-model="vm.ncd.family_hx_hypertension" name="family_hx_hypertension">
+  <option ng-value="brand.desc" *ngFor="let brand of brand_name">
+  {{brand.desc}}
+  </option>    
+  </select>
+</div>
+
+<div class="  row-start-10 col-start-9 col-span-4 w-full  px-5 mt-8 mb-4">
+  <h1 class="mb-2 text-blue-500 font-semibold">Vaccine Route</h1>
+  <select class="bg-white  border-gray-300 px-2 pt-1 pb-1 rounded w-full" ng-model="vm.ncd.family_hx_hypertension" name="family_hx_hypertension">
+  <option ng-value="route.desc" *ngFor="let route of vaccine_route">
+  {{route.desc}}
+  </option>    
+  </select>
+</div>
+
+
+</div>
+
+<!--footer-->
+<div class="flex items-center justify-end py-2 px-9 border-t-2 border-solid border-gray-300 rounded-b">
+  <button class="text-red-500 background-transparent font-bold uppercase px-6 py-6 text-sm outline-none focusoutline-none mr-1 mb-1" type="button" style="transition: all .15s ease" (click)="togglePreExpModal()">
+    Close
+  </button>
+  <button class="bg-blue-500 text-white activebg-green-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hovershadow-lg outline-none focusoutline-none mr-1 mb-1" type="button" style="transition :all .15s ease"  (click)="togglePreExpModal()">
+    Save
+  </button>
+</div>
+</div>
+</div>
+</div>
+<div *ngIf="showPreExpModal" class="opacity-75 fixed inset-0 z-40 bg-black"></div>

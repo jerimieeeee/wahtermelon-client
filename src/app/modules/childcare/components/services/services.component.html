@@ -1,5 +1,5 @@
 <div class="flex mt-5 mb-5">
-  <h4 class="font-bold text-gray-600 text-md">SERVICES</h4>
+  <h4 class="font-bold text-gray-600 text-sm">SERVICES</h4>
   <div class="relative">
     <fa-icon [icon]="faInfoCircle" class="peer ml-3 text-gray-300 hover:text-gray-500 z-50"></fa-icon>
     <div
@@ -39,7 +39,7 @@
           </div>
           <!--body-->
           
-          <div class="relative flex-auto px-12">
+          <div class="modal-body relative flex-auto px-12">
             
             <table class="w-full flex justify-between text-md bg-white rounded">
               <tbody>
@@ -52,7 +52,7 @@
                   <tr *ngFor="let item of eservices2" class="border-b hover:bg-blue-100 bg-transparent">
                     <td class="p-3 px-5">{{item.name}}</td>
                     <td class="p-3 px-5 text-center">
-                      <input type="checkbox" name="" id="" (change)="changeSelection()" [(ngModel)]="item.ischecked" [checked]="item.ischecked">
+                      <input type="checkbox" class="rounded-full" name="" id="" (change)="changeSelection()" [(ngModel)]="item.ischecked" [checked]="item.ischecked">
                     </td>
                     <td class="p-3 px-5 text-center">
                     <form [formGroup]="serviceForm" (ngSubmit)="submit()">
@@ -86,7 +86,7 @@
 
 
   <!--Services Section-->
-  <div class="flex item-start flex-wrap shadow-md rounded-xl mt-5">
+  <div class="flex item-start flex-wrap shadow-md rounded-xl mt-9">
 
     <div class="flex justify-between w-full bg-yellow-500 px-5 py-3 rounded-tl rounded-tr ">
       <h4 class="font-bold text-white text-md mt-2 mb-2">Services</h4>
@@ -113,7 +113,7 @@
 
           
           <!--body-->
-          <div class="relative flex-auto px-12">
+          <div class="modal-body relative flex-auto px-12">
             
             <table class="w-full flex justify-between text-md bg-white rounded">
               <tbody>
@@ -121,12 +121,14 @@
                       <th class="text-left p-3 px-5">Service</th>
                       <th class="text-center p-3 px-5">Status</th>
                       <th class="text-center p-3 px-5">Date</th>
+                      <th class="text-center p-3 px-5">Done Outside</th>
+
                   </tr>
 
                   <tr *ngFor="let service of services" class="border-b hover:bg-blue-100 bg-transparent">
                     <td class="p-3 px-5">{{service.name}}</td>
                     <td class="p-3 px-5 text-center">
-                      <input type="checkbox" name="{{service.id}}" id="" (change)="changeSelection2()" [(ngModel)]="service.ischecked" [checked]="service.ischecked">
+                      <input type="checkbox" class="rounded-full" name="{{service.id}}" id="" (change)="changeSelection2()" [(ngModel)]="service.ischecked" [checked]="service.ischecked">
                     </td>
                     <td class="p-3 px-5 text-center">
                     <form [formGroup]="serviceForm2" (ngSubmit)="submit2()">
@@ -135,6 +137,13 @@
                 type="date" name="date" formControlName="serviceDate2" *ngIf="service.ischecked">
                    
                     </form>
+                  </td>
+
+                  <td class="p-3 px-5 text-center">
+                    <select  *ngIf="service.ischecked">
+                      <option [value]="false">No</option>
+                      <option [value]="true">Yes</option>
+                    </select>
                   </td>
                 </tr>
               </tbody>

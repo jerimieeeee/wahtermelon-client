@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { faSearch,faBalanceScale,faPlus,faInfoCircle } from '@fortawesome/free-solid-svg-icons';
+import { faSearch,faBalanceScale,faPlus,faInfoCircle,faTimes,faSave } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-casdt',
@@ -9,6 +9,9 @@ import { faSearch,faBalanceScale,faPlus,faInfoCircle } from '@fortawesome/free-s
 export class CasdtComponent implements OnInit {
 
   faInfoCircle = faInfoCircle;
+  faTimes = faTimes;
+  faSave = faSave;
+  
 
   size = [
     {code: 'small', desc: 'Small'},

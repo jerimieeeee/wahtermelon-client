@@ -10,6 +10,8 @@ export class RiskStratificationComponent implements OnInit {
 
   faInfoCircle = faInfoCircle;
 
+  risk=15;
+
   constructor() { }
 
   ngOnInit(): void {

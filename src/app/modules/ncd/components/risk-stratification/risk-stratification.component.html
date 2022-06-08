@@ -1,6 +1,6 @@
 <div class="grid grid-cols-12 flex item-start flex-wrap shadow-md rounded-xl mb-4 mt-8">
 
-  <div class="col-span-12 flex bg-blue-500 px-5 py-3 rounded-tl rounded-tr">
+  <div class="col-span-12 flex px-5 py-3 rounded-tl rounded-tr" [ngStyle]="{'background-color': (risk < 10) ? '#6ec46e' : ((risk >= 10) ? '#f86b6b' : null) }">
     <h4 class="font-bold text-white text-md mt-2 mb-2">Risk Stratification Details</h4> 
     <div class="py-2">
       <fa-icon [icon]="faInfoCircle" class="peer text-white hover:text-white z-50 px-2"></fa-icon>
@@ -19,7 +19,7 @@
 
       <tr class="border-b-2 border-gray-200">
         <td class="px-5 py-3">Risk Level</td>
-        <td class="px-5 py-3 text-green-500 font-bold text-lg"><10%</td>
+        <td class="px-5 py-3 text-gray font-bold text-lg" [ngStyle]="{'color': (risk < 10) ? '#6ec46e' : ((risk >= 10) ? '#f86b6b' : null) }">{{risk}}%</td>
       </tr>
 
       <tr class="border-b-2 border-gray-200">
@@ -84,7 +84,7 @@
 </div>
 
 <!--border-->
-<div class="border-b-2 border-gray-200 mt-7 mb-7"></div>
+<!-- <div class="border-b-2 border-gray-200 mt-7 mb-7"></div>
 
 <div class="grid grid-cols-12 flex item-start flex-wrap shadow-md rounded-xl mb-4 mt-8">
 
@@ -126,4 +126,4 @@
 
   </div>
 
-</div>
+</div> -->

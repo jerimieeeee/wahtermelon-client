@@ -1,5 +1,5 @@
 <div class="flex mt-6">
-      <h4 class="font-bold text-gray-600 text-md">FIRST VISIT</h4>
+      <h4 class="font-bold text-gray-600 text-sm">FIRST VISIT</h4>
       <div class="relative">
         <fa-icon [icon]="faInfoCircle" class="peer ml-3 text-gray-300 hover:text-gray-500 z-50"></fa-icon>
         <div
@@ -13,7 +13,7 @@
     <!--Admission Date & Time Section-->
     <div class="flex item-start flex-wrap shadow-md rounded-xl pb-5 mt-5">
 
-      <div class="flex justify-between w-full bg-blue-300 px-5 py-3 rounded-tl rounded-tr">
+      <div class="flex justify-between w-full bg-blue-500 px-5 py-3 rounded-tl rounded-tr">
         <h4 class="font-bold text-white text-md mt-2">Admission Information</h4>
           <button *ngIf="saved2" type="submit" class="py-2 px-6 rounded-full bg-white text-gray-600 font-bold drop-shadow-md hover:border-white-600 hover:bg-blue-400 hover:text-white shadow-md inline-flex items-center" name="add-btn" (click)="toggleAdmissionModal()">
             <label>Add</label>
@@ -87,7 +87,7 @@
     <!--Birth Info Section-->
     <div class="flex item-start flex-wrap shadow-md rounded-xl pb-5 mt-5">
 
-      <div class="flex justify-between w-full bg-blue-300 px-5 py-3 rounded-tl rounded-tr">
+      <div class="flex justify-between w-full bg-blue-500 px-5 py-3 rounded-tl rounded-tr">
         <h4 class="font-bold text-white text-md mt-2">Birth Information</h4>
           <button  *ngIf="saved" type="submit" class="py-2 px-6 rounded-full bg-white text-gray-600 font-bold drop-shadow-md hover:border-white-600 hover:bg-blue-400 hover:text-white shadow-md inline-flex items-center" name="add-btn"  (click)="addWeight(weight.value, mname.value)">
             <label>Save</label>

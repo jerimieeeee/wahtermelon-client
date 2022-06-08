@@ -24,6 +24,10 @@ const routes: Routes = [
     loadChildren: () => import('./modules/ncd/ncd.module').then(m => m.NcdModule)
   },
   {
+    path: 'ab',
+    loadChildren: () => import('./modules/animalbite/animalbite.module').then(m => m.AnimalbiteModule)
+  },
+  {
     path: 'itr',
     loadChildren: () => import('./modules/patient-itr/patient-itr.module').then(m => m.PatientItrModule)
   }

@@ -30,6 +30,11 @@ export class BreastfeedingComponent implements OnInit {
     this.showBreastfeedingModal = !this.showBreastfeedingModal;
   }
 
+  ebf = [
+    {code: 'Y', desc: 'Yes'},
+    {code: 'N', desc: 'No'},
+  ];
+
   ccdev = [
     {"id" : "bfed_month1", "name" : "Month 1", "date" : moment(this.todaysDate).add(1, 'M').format('MMM DD, YYYY'), ischecked: false},
     {"id" : "bfed_month2", "name" : "Month 2", "date" : moment(this.todaysDate).add(2, 'M').format('MMM DD, YYYY'), ischecked: false},
@@ -42,6 +47,7 @@ export class BreastfeedingComponent implements OnInit {
   constructor() { 
 
   }
+  
   
   submit() {
 
@@ -92,6 +98,7 @@ export class BreastfeedingComponent implements OnInit {
 
   ngOnInit(){
     this.geteServiceName()
+    console.log(this.ebf)
   }
 
 }

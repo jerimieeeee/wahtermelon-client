@@ -2,29 +2,45 @@
   
     <div class="flex-wrap w-9/12 h-full shadow-md px-8 py-4 ml-5 mr-1 border-gray-100 border-t-2 rounded-3xl text-gray-600">
 
-      <nav class="flex flex-col sm:flex-row">
+      <nav class="flex flex-col sm:flex-row text-sm">
         <button (click)="switchTab(1)" class="text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 border-b-2 border-gray-200 mr-6 pb-2"
         [class]="module==1? 'text-blue-500 border-b-2 border-blue-500 font-bold' : 'hover:-translate-y-1 hover:scale-110 transition ease-in-out delay-400 duration-300' ">
             RISK ASSESSMENT
         </button>
-        <button (click)="switchTab(2)" class="transition ease-in-out delay-400 hover:-translate-y-1 hover:scale-110 duration-300 text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 focus:text-blue-500 focus:border-b-2 focus:border-blue-500 focus:font-bold mr-6 pb-2">
+        <button (click)="switchTab(2)" class="text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 border-b-2 border-gray-200 mr-6 pb-2"
+        [class]="module==2? 'text-blue-500 border-b-2 border-blue-500 font-bold' : 'hover:-translate-y-1 hover:scale-110 transition ease-in-out delay-400 duration-300' ">
+            RISK SCREENING
+        </button>
+        <button (click)="switchTab(3)" class="text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 border-b-2 border-gray-200 mr-6 pb-2"
+        [class]="module==3? 'text-blue-500 border-b-2 border-blue-500 font-bold' : 'hover:-translate-y-1 hover:scale-110 transition ease-in-out delay-400 duration-300' ">
             QUESTIONNAIRE
         </button>
-        <button (click)="switchTab(3)" class="transition ease-in-out delay-400 hover:-translate-y-1 hover:scale-110 duration-300 text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 focus:text-blue-500 focus:border-b-2 focus:border-blue-500 focus:font-bold mr-6 pb-2">
+        <button (click)="switchTab(4)" class="text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 border-b-2 border-gray-200 mr-6 pb-2"
+        [class]="module==4? 'text-blue-500 border-b-2 border-blue-500 font-bold' : 'hover:-translate-y-1 hover:scale-110 transition ease-in-out delay-400 duration-300' ">
             RISK STRATIFICATION
         </button>
-        <button (click)="switchTab(4)" class="transition ease-in-out delay-400 hover:-translate-y-1 hover:scale-110 duration-300 text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 focus:text-blue-500 focus:border-b-2 focus:border-blue-500 focus:font-bold mr-6 pb-2">
-            PATIENT RECORD
+        <button (click)="switchTab(5)" class="text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 border-b-2 border-gray-200 mr-6 pb-2"
+        [class]="module==5? 'text-blue-500 border-b-2 border-blue-500 font-bold' : 'hover:-translate-y-1 hover:scale-110 transition ease-in-out delay-400 duration-300' ">
+           PATIENT RECORD
         </button>
-        <button (click)="switchTab(5)" class="transition ease-in-out delay-400 hover:-translate-y-1 hover:scale-110 duration-300 text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 focus:text-blue-500 focus:border-b-2 focus:border-blue-500 focus:font-bold mr-6 pb-2">
+        <button (click)="switchTab(6)" class="text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 border-b-2 border-gray-200 mr-6 pb-2"
+        [class]="module==6? 'text-blue-500 border-b-2 border-blue-500 font-bold' : 'hover:-translate-y-1 hover:scale-110 transition ease-in-out delay-400 duration-300' ">
             CASDT
-      </button>
+        </button>
+        <button (click)="switchTab(7)" class="text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 border-b-2 border-gray-200 mr-6 pb-2"
+        [class]="module==7? 'text-blue-500 border-b-2 border-blue-500 font-bold' : 'hover:-translate-y-1 hover:scale-110 transition ease-in-out delay-400 duration-300' ">
+            CASDT 2
+        </button>
     </nav>
     
         <!--FIRST VISIT SECTION-->
       
       <div class="grid grid-col-8" *ngIf="module==1">
         <app-risk-assessment></app-risk-assessment>
+      </div>
+
+      <div class="grid grid-col-8" *ngIf="module==2">
+        <app-risk-screening></app-risk-screening>
       </div>
   
       <!--border-->
@@ -34,7 +50,7 @@
 
        <!--QUESTIONNAIRE SECTION-->
     
-       <div class="grid grid-col-8" *ngIf="module==2">
+       <div class="grid grid-col-8" *ngIf="module==3">
         <app-questionnaire></app-questionnaire>
       </div>
     
@@ -44,7 +60,7 @@
 
      <!--RISK STRATIFICATION SECTION-->
 
-     <div class="grid grid-col-8" *ngIf="module==3">
+     <div class="grid grid-col-8" *ngIf="module==4">
       <app-risk-stratification></app-risk-stratification>
     </div>
 
@@ -54,7 +70,7 @@
 
       <!--PATIENT RECORD SECTION-->
     
-      <div class="grid grid-col-8" *ngIf="module==4">
+      <div class="grid grid-col-8" *ngIf="module==5">
         <app-patient-record></app-patient-record>
       </div>
 
@@ -63,8 +79,12 @@
 
       <!--CASDT SECTION-->
     
-      <div class="grid grid-col-8" *ngIf="module==5">
+      <div class="grid grid-col-8" *ngIf="module==6">
         <app-casdt></app-casdt>
+      </div>
+
+      <div class="grid grid-col-8" *ngIf="module==7">
+        <app-casdt2></app-casdt2>
       </div>
       
     </div>
