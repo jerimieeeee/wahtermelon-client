@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import { DentalModalService } from '../../services/dental-modal.service';
 @Component({
   selector: 'app-adult-chart',
   templateUrl: './adult-chart.component.html',
@@ -46,10 +46,12 @@ export class AdultChartComponent implements OnInit {
     ]
   ];
 
-  constructor() { }
+  constructor(
+    private dentalModalService: DentalModalService
+  ) { }
 
   ngOnInit(): void {
-    console.log(this.adult_tooth_conditions);
+
   }
 
   onClick(id){
@@ -61,7 +63,7 @@ export class AdultChartComponent implements OnInit {
     return false;
   }
 
-  toggleModal(){
-    this.showModal = !this.showModal;
+  openModal(){
+    this.dentalModalService.open();
   }
 }

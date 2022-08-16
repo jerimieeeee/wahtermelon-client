@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./tooth-condition.component.scss']
 })
 export class ToothConditionComponent implements OnInit {
+  showModal: boolean = false;
 
   constructor() { }
 
@@ -19,5 +20,9 @@ export class ToothConditionComponent implements OnInit {
   onRightClick(){
     alert('right click');
     return false;
+  }
+
+  toggleModal(){
+    this.showModal = !this.showModal;
   }
 }
