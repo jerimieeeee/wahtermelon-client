@@ -33,7 +33,7 @@
         Medical Journal
       </span>
       <div class="grid grid-cols-5 gap-2 mb-2">
-        <div [ngClass]="{'col-span-3' : showDetails, 'col-span-5' : !showDetails}">
+        <div [ngClass]="{'col-span-3' : show_details, 'col-span-5' : !show_details}">
           <div class="last:border-0 border-b border-slate-200 pb-2" *ngFor="let journal of medical_journal">
             <div class="grid grid-cols-8 gap-2 mt-2">
               <div class="col-span-2 text-sm font-semibold h-full">
@@ -50,7 +50,7 @@
           </div>
         </div>
 
-        <div  *ngIf="showDetails" class="col-span-2 h-full mt-2 bg-blue-50/50 transition ease-in-out delay-1000">
+        <div [@openClose]="openCloseTrigger" *ngIf="show_details" class="col-span-2 h-full mt-2 bg-blue-50/50 transition ease-in-out delay-1000">
           <span class="block bg-blue-500 w-full p-2 font-semibold text-sm mb-1 text-white">VISIT DETAILS</span>
           <div class="flex mx-2 text-sm">
             <span class="flex-1 text-left font-semibold">

@@ -1,104 +1,36 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import {
-  ChartComponent,
-  ApexAxisChartSeries,
-  ApexChart,
-  ApexXAxis,
-  ApexDataLabels,
-  ApexTooltip,
-  ApexStroke,
-  ApexTitleSubtitle
-} from "ng-apexcharts";
-
-export type ChartOptions = {
-  series: ApexAxisChartSeries;
-  chart: ApexChart;
-  xaxis: ApexXAxis;
-  stroke: ApexStroke;
-  tooltip: ApexTooltip;
-  dataLabels: ApexDataLabels;
-  title: ApexTitleSubtitle;
-};
-
-export type WeightChart = {
-  series: ApexAxisChartSeries;
-  chart: ApexChart;
-  xaxis: ApexXAxis;
-  stroke: ApexStroke;
-  tooltip: ApexTooltip;
-  dataLabels: ApexDataLabels;
-  title: ApexTitleSubtitle;
-};
+import { ChartComponent } from "ng-apexcharts";
+import { openCloseTrigger } from './declarations/animation';
+import { ChartOptions, WeightChart } from './declarations/chart-options';
+import { MedicalJournal } from './data/sample-journal';
+import { NavigationEnd, Router } from '@angular/router';
+import { filter, tap } from "rxjs/operators";
 
 @Component({
   selector: 'app-patient-itr',
   templateUrl: './patient-itr.component.html',
-  styleUrls: ['./patient-itr.component.scss']
+  styleUrls: ['./patient-itr.component.scss'],
+  animations: [openCloseTrigger]
 })
 export class PatientItrComponent implements OnInit {
-  showDetails = true;
-  medical_journal = [
-    {
-      visit_date: "July 01, 2020",
-      visits: [
-        {
-          visit_type: "GENERAL CONSULTATION",
-          assessed_by: "John Doe",
-          diagnosed_by: "Dr. Moira Santos"
-        },
-        {
-          visit_type: "LABORATORY - URINALYSIS",
-          assessed_by: "John Doe",
-          diagnosed_by: "Dr. Francis Gamboa"
-        }
-      ]
-    },
-    {
-      visit_date: "March 09, 2020",
-      visits: [
-        {
-          visit_type: "FAMILY PLANNING",
-          assessed_by: "Midwife 1",
-          diagnosed_by: "Nurse 1"
-        }
-      ]
-    },
-    {
-      visit_date: "March 01, 2020",
-      visits: [
-        {
-          visit_type: "FAMILY PLANNING",
-          assessed_by: "Midwife 1",
-          diagnosed_by: "Nurse 1"
-        }
-      ]
-    },
-    {
-      visit_date: "Feb 14, 2020",
-      visits: [
-        {
-          visit_type: "GENERAL CONSULTATION",
-          assessed_by: "Procorpio Pepito",
-          diagnosed_by: "Pepito Sampu"
-        }
-      ]
-    }
-  ];
+  show_details = true;
+  medical_journal = MedicalJournal;
 
   open_details(){
-    if(this.showDetails == true){
-      this.showDetails = false;
-    }else{
-      this.showDetails = true;
-    }
+    this.show_details = !this.show_details;
   }
 
   @ViewChild("bp-chart") bp_chart: ChartComponent;
   @ViewChild("weight-chart") weight_chart: ChartComponent;
   public chartOptions: Partial<ChartOptions>;
   public WeightChart: Partial<WeightChart>;
+  get openCloseTrigger() {
+    return this.show_details ? "open" : "closed";
+  }
 
-  constructor() {
+  constructor(
+    private router: Router
+  ) {
     this.chartOptions = {
       series: [
         {
@@ -182,7 +114,12 @@ export class PatientItrComponent implements OnInit {
     };
   }
 
-  ngOnInit(): void {
-  }
+  navigationEnd$ = this.router.events.pipe(
+    filter(event => event instanceof NavigationEnd),
+    tap(() => (this.show_details = false))
+  );
 
+  ngOnInit(): void {
+    this.navigationEnd$.subscribe();
+  }
 }
