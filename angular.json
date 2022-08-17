@@ -13,9 +13,6 @@
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
-      "cli": {
-        "schematicCollections": ["@angular-eslint/schematics"]
-      },
       "architect": {
         "build": {
           "builder": "@angular-builders/custom-webpack:browser",
