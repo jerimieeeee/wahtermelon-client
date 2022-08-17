@@ -50,7 +50,7 @@
           </div>
         </div>
 
-        <div [@openClose]="openCloseTrigger" *ngIf="show_details" class="col-span-2 h-full mt-2 bg-blue-50/50 transition ease-in-out delay-1000">
+        <div @openCloseTrigger *ngIf="show_details" class="col-span-2 h-full mt-2 bg-blue-50/50 transition ease-in-out delay-1000">
           <span class="block bg-blue-500 w-full p-2 font-semibold text-sm mb-1 text-white">VISIT DETAILS</span>
           <div class="flex mx-2 text-sm">
             <span class="flex-1 text-left font-semibold">

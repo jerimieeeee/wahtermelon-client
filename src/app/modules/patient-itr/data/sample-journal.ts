@@ -43,5 +43,15 @@ export const MedicalJournal =[
         diagnosed_by: "Pepito Sampu"
       }
     ]
+  },
+  {
+    visit_date: "Feb 14, 2020",
+    visits: [
+      {
+        visit_type: "GENERAL CONSULTATION",
+        assessed_by: "Procorpio Pepito",
+        diagnosed_by: "Pepito Sampu"
+      }
+    ]
   }
 ]
