@@ -10,6 +10,7 @@ import { VitalsGraphComponent } from './components/vitals-graph/vitals-graph.com
 import { VitalsComponent } from './components/vitals/vitals.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule } from '@angular/forms';
+import { NgApexchartsModule } from 'ng-apexcharts';
 
 @NgModule({
   declarations: [
@@ -22,9 +23,10 @@ import { FormsModule } from '@angular/forms';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FontAwesomeModule,
     NgSelectModule,
-    FormsModule
+    FormsModule,
+    NgApexchartsModule,
+    FontAwesomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]

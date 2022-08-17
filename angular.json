@@ -17,6 +17,9 @@
         "build": {
           "builder": "@angular-builders/custom-webpack:browser",
           "options": {
+            "allowedCommonJsDependencies": [
+              "apexcharts"
+            ],
             "outputPath": "dist/wahtermelon-client",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -130,7 +133,6 @@
   },
   "cli": {
     "schematicCollections": [
-      "@angular-eslint/schematics",
       "@angular-eslint/schematics"
     ]
   }

@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { PatientItrComponent } from 'src/app/components/patient-itr/patient-itr.component';
-import { PatientInfoComponent } from 'src/app/components/patient-info/patient-info.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { PatientItrComponent } from 'app/modules/patient-itr/patient-itr.component';
+import { PatientInfoComponent } from 'app/components/patient-info/patient-info.component';
+import { NgApexchartsModule } from 'ng-apexcharts';
 
 
 
@@ -13,7 +14,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
   ],
   imports: [
     CommonModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    NgApexchartsModule
   ],
   exports: [
     PatientItrComponent,
