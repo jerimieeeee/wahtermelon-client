@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import { NcdRoutingModule } from './ncd-routing.module';
-import { SharedComponentsModule } from 'src/app/shared/shared-components/shared-components.module';
+import { SharedComponentsModule } from 'app/shared/shared-components/shared-components.module';
 import { NcdComponent } from './ncd.component';
 import { RiskAssessmentComponent } from './components/risk-assessment/risk-assessment.component';
 import { RiskStratificationComponent } from './components/risk-stratification/risk-stratification.component';

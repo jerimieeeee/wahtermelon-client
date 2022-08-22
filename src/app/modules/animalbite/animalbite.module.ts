@@ -1,8 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { AnimalbiteRoutingModule } from './animalbite-routing.module';
-import { SharedComponentsModule } from 'src/app/shared/shared-components/shared-components.module';
+import { SharedComponentsModule } from 'app/shared/shared-components/shared-components.module';
 import { AnimalbiteComponent } from './animalbite.component';
 import { PreExposureComponent } from './components/pre-exposure/pre-exposure.component';
 import { ExposureComponent } from './components/exposure/exposure.component';

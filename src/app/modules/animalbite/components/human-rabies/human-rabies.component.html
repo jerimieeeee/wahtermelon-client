@@ -17,7 +17,7 @@
 
 <!-- Modal Header -->
 
-<div *ngIf="showPreExpModal" class="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focusoutline-none justify-center items-center flex">
+<div *ngIf="showPreExpModal" class="overflow-x-hidden overflow-y-auto fixed inset-0 outline-none focusoutline-none justify-center items-center flex" style="z-index:60">
   <div class="relative w-auto my-6 mx-auto max-w-6xl">
     <!--content-->
     <div class="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focusoutline-none">
@@ -91,4 +91,4 @@
 </div>
 </div>
 </div>
-<div *ngIf="showPreExpModal" class="opacity-75 fixed inset-0 z-40 bg-black"></div>
+<div *ngIf="showPreExpModal" class="opacity-75 fixed inset-0 z-50 bg-black"></div>

@@ -6,7 +6,6 @@ import { Store } from '@ngrx/store';
 import { BirthInformation } from '../../models/birthinformation.model';
 import { AppState } from '../../app.state';
 import * as BirthInformationActions from '../../actions/birthinformation.action';
-import { localStorageSync } from 'ngrx-store-localstorage';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
