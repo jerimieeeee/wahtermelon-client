@@ -33,7 +33,7 @@
           <!--header-->
           <div class="flex items-start justify-between p-5 border-b border-solid border-gray-300 rounded-t">
             <h4 class="font-bold text-gray-600 text-md mt-2">
-              Breastfeeding Date
+              Breastfeeding Information
             </h4>
             <button class="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none" (click)="toggleBreastfeedingModal()">
               <span class="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
@@ -45,43 +45,38 @@
           <div class="modal-body relative flex-auto px-12">
             <table class="w-full flex justify-between text-md bg-white rounded">
               <tbody>
-                  <tr class="border-b items-center">
-                      <th class="text-center p-3 px-5">Select Month</th>
+                  <tr class="border-b">
+                      <th class="text-left p-3">Select Month</th>
                       <th class="text-center p-3 px-5">Status</th>
                       <th class="text-center p-3 px-5">Reason</th>
                   </tr>
                   
-                    <tr *ngFor="let month of ccdev" class="border-b hover:bg-yellow-100 bg-transparent">
+                    <tr *ngFor="let month of ccdev, index as i" class="border-b hover:bg-yellow-100 bg-transparent">
                       
                       <!-- <td class="p-3 px-5">{{month.name}} - ({{month.date}})</td> -->
                       <td class="py-6">
                         <input type="checkbox" class="rounded-full h-5 w-5" name="" id="" (change)="changeSelection()" [(ngModel)]="month.ischecked" [checked]="month.ischecked">
-                        <label class="ml-2">{{month.name}} - ({{month.date}})</label>
+                        <label class="ml-2 mb-2">{{month.name}} - {{month.date}}</label>
                       </td>
 
                       <td class="text-center" *ngIf="month.ischecked"> 
                       <select class="select rounded-md" name="" id="">
                       <option  value="" *ngFor="let items of ebf">
-                        {{items.code}}
+                      {{items.code}}
                       </option>
                       </select>
                       </td>
 
+                      <td class="text-center" *ngIf="month.ischecked"> 
+                        <select class="select rounded-md" name="" id="">
+                        <option value="" *ngFor="let reason of reasons">
+                        {{reason.desc}}
+                        </option>
+                        </select>
+                        </td>
 
-
-                  <form [formGroup]="breastfedForm" (ngSubmit)="submit()">
-
-                      <td class="p-3 text-center">
-                        <input class="items-center"
-                        type="date" name="date" formControlName="breastfedDate" *ngIf="month.ischecked">
-
-                    </form>
                   </tr>
                 
-
-                 
-                  
-                  
 
               </tbody>
           </table>

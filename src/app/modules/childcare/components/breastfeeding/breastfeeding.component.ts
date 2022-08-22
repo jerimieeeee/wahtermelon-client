@@ -35,6 +35,14 @@ export class BreastfeedingComponent implements OnInit {
     {code: 'N', desc: 'No'},
   ];
 
+  reasons = [
+    {code: '01', desc: 'Drinking water instead of milk'},
+    {code: '02', desc: 'Drinking water instead of milk'},
+    {code: '03', desc: 'Drinking water instead of milk'},
+    {code: '04', desc: 'Drinking water instead of milk'},
+    {code: '05', desc: 'Drinking water instead of milk'},
+  ];
+
   ccdev = [
     {"id" : "bfed_month1", "name" : "Month 1", "date" : moment(this.todaysDate).add(1, 'M').format('MMM DD, YYYY'), ischecked: false},
     {"id" : "bfed_month2", "name" : "Month 2", "date" : moment(this.todaysDate).add(2, 'M').format('MMM DD, YYYY'), ischecked: false},
@@ -101,4 +109,11 @@ export class BreastfeedingComponent implements OnInit {
     console.log(this.ebf)
   }
 
+}
+
+export class Person {
+
+  constructor(
+      public myCheckbox: boolean
+  ) {  }
 }
