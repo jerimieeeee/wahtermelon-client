@@ -19,6 +19,7 @@ import { FormsModule} from '@angular/forms';
     VitalsGraphComponent,
     VitalsComponent,
 
+
   ],
   imports: [
     BrowserModule,
