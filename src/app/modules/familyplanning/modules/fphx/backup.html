@@ -1,0 +1,131 @@
+<div class="grid gap-4 max-h-fit cursor-pointer hover:bg-gray-100"
+    style="grid-template-columns: repeat(16, minmax(0, 1fr));" (click)="flip()" *ngIf="focused">
+    <div class=" border-check row-span-2 col-span-2 rounded-r "><button class="font-bold" type="button">FP HX</button>
+    </div>
+    <div style="grid-column: span 14 / span 14;" class="">
+    </div>
+</div>
+<div class="grid gap-4 max-h-fit" style="grid-template-columns: repeat(16, minmax(0, 1fr));" *ngIf="!focused">
+    <div class=" border-check row-span-2 col-span-2 hover:bg-gray-100 rounded-r cursor-pointer" (click)="flip()"><button
+            class="font-bold" type="button">FP HX</button></div>
+    <div style="grid-column: span 14 / span 14;" class="">
+
+        <div *ngFor="let fphx_cat of fp_hx_cat;  let i = index">
+            <form action="">
+                <div class="grid grid-cols-4 mb-5 rounded-lg drop-shadow-lg bg-white rounded-lg border border-orange-400"
+                    *ngIf="module_strings.includes(i)">
+                    <div (click)="hideModule(i)"
+                        class="text-orange-500 form-check col-span-4 p-2 font-semibold rounded-tr-lg rounded-tl-lg border border-dashed border-orange-300 border-t-0 border-l-0 border-r-0">
+                        <h1 class="select-none">{{fphx_cat}}</h1>
+                    </div>
+                    <div class="absolute right-1 top-1 hover:text-white text-green-400">
+                        <!-- <button type="button" class=" hover:bg-green-400 font-semibold  py-0.5 px-2 rounded-full"
+                            (click)="selectAll('select' + fphx_cat)" [hidden]="cat_strings.includes(fphx_cat)">Select
+                            All</button> -->
+                            <div class="inline-flex float-right"
+                            *ngIf="!cat_strings.includes(fphx_cat)">
+                                <div class="flex hover:animate-bounce border-check bg-white hover:bg-gray-400 text-gray-300 py-1 rounded-full hover:text-white px-2"
+                                (click)="selectAll('select' + fphx_cat)" (mouseover)="buttonShow('select')" (mouseleave)="buttonShow()">
+                                    <fa-icon [icon]="faCircleCheck" size="lg" class="mr-2" *ngIf="!cat_strings.includes(fphx_cat)">
+                                    </fa-icon>
+                                    <button type="button" class="font-bold button-out border-check-red"
+                                        *ngIf="buttons.includes('select') && !cat_strings.includes(fphx_cat)">Select All</button>
+                                </div>
+                            </div>
+                            <div class="inline-flex float-right"
+                                *ngIf="cat_strings.includes(fphx_cat) && fphx_strings.length > 0">
+                                <div class="flex hover:animate-bounce border-check bg-white hover:bg-gray-400 text-gray-400 py-1 rounded-full hover:text-white px-2"
+                                    (click)="uncheck(fphx_cat)" (mouseover)="buttonShow('cancel')" (mouseleave)="buttonShow()">
+                                    <fa-icon [icon]="faTimes" size="lg" class="mr-2">
+                                    </fa-icon>
+                                    <button type="button" class="font-bold button-out border-check-red"
+                                        *ngIf="buttons.includes('cancel')">Cancel</button>
+                                </div>
+                            </div>
+                    </div>
+                    <div *ngFor="let check of check_list;">
+                        <div class="border-check-red p-2">
+                            <input
+                                class="form-check-input appearance-none h-5 w-5 border border-orange-600 rounded-md bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                                type="checkbox" value="check" [attr.id]="check" (change)="onChange(check,fphx_cat)"
+                                [checked]="fphx_strings.includes(check)" (keyup.escape)="uncheck(fphx_cat)"
+                                (keyup.enter)="saveModule()"
+                                (keyup.tab)="nextModule(fp_hx_cat[i+1], i+1);">
+                            <label class="text-gray-800 cursor-pointer" name="check" [attr.for]="check"
+                                value="check.history_id">
+                                {{ check }}
+                            </label>
+                        </div>
+                    </div>
+                    <!-- <div class="col-span-3">
+                        <div class="relative ">
+                            <div class="inline-flex m-2 float-right"
+                                *ngIf="cat_strings.includes(fphx_cat) && fphx_strings.length > 0">
+                                <div class="flex hover:animate-bounce border-check bg-white hover:bg-gray-400 text-gray-400 py-1 rounded-full hover:text-white px-2"
+                                    (click)="uncheck(fphx_cat)" (mouseover)="buttonShow('cancel')">
+                                    <fa-icon [icon]="faTimes" size="lg" class="mr-2">
+                                    </fa-icon>
+                                    <button type="button" class="font-bold button-out border-check-red"
+                                        *ngIf="buttons.includes('cancel')">Cancel</button>
+                                </div>
+                            </div>
+                            <div class="inline-flex m-2 float-right"
+                                *ngIf="cat_strings.includes(fphx_cat) && fphx_strings.length > 0">
+                                <div class="flex float-left hover:animate-bounce border-check bg-white hover:bg-green-400 py-1 rounded-full text-green-500 hover:text-white px-2"
+                                    (click)="nextModule(fp_hx_cat[i+1], i+1)" (mouseover)="buttonShow('save')">
+                                    <fa-icon [icon]="faSave" size="lg" class="mr-2 ">
+                                    </fa-icon>
+                                    <button type="submit" class="font-bold button-out border-check-red"
+                                        *ngIf="buttons.includes('save')">Save</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+                </div>
+            </form>
+            <div class=" rounded-lg mb-1 " (click)="showModule(fphx_cat, i)" *ngIf="!module_strings.includes(i)">
+                <div
+                    class="relative flex text-orange-500 form-check col-span-3 p-2 rounded-lg border border-gray-200 hover:drop-shadow-md bg-white hover:border-orange-300">
+                    <h1 class="select-none font-semibold">{{fphx_cat}}</h1>
+                    <div *ngFor="let fphx of fp_hx_symptoms">
+                        <div *ngFor="let string of fphx_strings">
+                            <div *ngIf="fphx_cat == fphx.history_cat && fphx.history_text == string">
+                                <h1 class="bg-gray-100 select-none m-0.5 border-check px-2 rounded-full text-gray-500 font-medium"
+                                    style="margin-top: 0;" (mouseover)="hoverPill(fphx.history_id)"
+                                    [hidden]="pill_box.includes(fphx.history_id)" id="test">{{fphx.history_id}}</h1>
+                                <h1 class="select-none m-0.5 border-check px-2 rounded-full text-orange-400 font-medium typed-out"
+                                    style="margin-top: 0;" [hidden]="!pill_box.includes(fphx.history_id)"
+                                    (mouseout)="leavePill()" id="test">{{fphx.history_text}}</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+                    <div class="col-span-3">
+                        <div class="relative ">
+                            <div class="inline-flex m-2 float-right"
+                                *ngIf="saved">
+                                <div class="flex hover:animate-bounce border-check bg-white hover:bg-orange-400 text-orange-400 py-1 rounded-full hover:text-white px-2"
+                                    (click)="editModule()" (mouseover)="buttonShow('edit')">
+                                    <fa-icon [icon]="faPencil" size="lg" class="mr-2">
+                                    </fa-icon>
+                                    <button type="button" class="font-bold button-out border-check-red"
+                                        *ngIf="buttons.includes('edit')">Edit</button>
+                                </div>
+                            </div>
+                            <div class="inline-flex m-2 float-right"
+                                *ngIf="fphx_strings.length > 0 && !saved">
+                                <div class="flex float-left hover:animate-bounce border-check bg-white hover:bg-green-400 py-1 rounded-full text-green-500 hover:text-white px-2"
+                                    (click)="saveModule()"
+                                    (mouseover)="buttonShow('save')"
+                                    (keyup.enter)="saveModule()">
+                                    <fa-icon [icon]="faSave" size="lg" class="mr-2 ">
+                                    </fa-icon>
+                                    <button type="submit" class="font-bold button-out border-check-red"
+                                        *ngIf="buttons.includes('save')">Save</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+    </div>

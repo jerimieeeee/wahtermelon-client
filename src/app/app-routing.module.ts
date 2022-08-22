@@ -16,8 +16,12 @@ const routes: Routes = [
     loadChildren: () => import('./modules/familyplanning/familyplanning.module').then(m => m.FamilyplanningModule)
   },
   {
-    path: 'cc',
-    loadChildren: () => import('./modules/childcare/childcare.module').then(m => m.ChildcareModule)
+    path: 'mc',
+    loadChildren: () => import('./modules/maternalcare/maternalcare.module').then(m => m.MaternalcareModule)
+  },
+  {
+    path: 'tb',
+    loadChildren: () => import('./modules/tbdots/tbdots.module').then(m => m.TbdotsModule)
   },
   {
     path: 'ncd',

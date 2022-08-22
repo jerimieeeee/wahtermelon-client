@@ -1,0 +1,100 @@
+<form [formGroup]="methods_form" (ngSubmit)="saveForm(methods_form.value)">
+
+    <div class="grid gap-4 relative animates-dropdown" style="grid-template-columns: repeat(16, minmax(0, 1fr));"
+        *ngIf="!focused">
+        <div class="sticky top-0 z-50 border hover:border border-gray-300 hover:border-blue-400 col-span-2 cursor-pointer relative mx-2 px-2 py-1 rounded-t-lg bg-blue-500 text-white"
+            style="grid-column: span 16 / span 16;"><button class="font-bold" type="button">Methods</button>
+            <div class="absolute left-16 top-1">
+                <fa-icon [icon]="faInfoCircle" class=" peer ml-4 text-white hover:text-gray-500 z-50"></fa-icon>
+                <div
+                    class="absolute text-sm bg-gradient-to-b from-stone-500 to-gray-400 p-2 rounded-md border border-gray-500  text-white drop-shadow-lg opacity-90 border-check z-50 w-64 invisible peer-hover:visible">
+                    <h1 class="font-bold drop-shadow-lg">IMPORTANT</h1>
+                    <p class="font-light drop-shadow-lg">Once saved, the information will be displayed in the input
+                        boxes and shall not be editable unless Edit button is pressed.</p>
+                </div>
+            </div>
+        </div>
+        <div style="grid-column: span 16 / span 16;">
+            <div class="grid gap-4 hover:drop-shadow-lg drop-shadow-md bg-white rounded-b-lg hover:border border-gray-300 hover:border-blue-400 p-2 m-2 border -mt-5"
+                style="grid-template-columns: repeat(14, minmax(0, 1fr));">
+                <div class="transitions col-span-4" *ngIf="!focused">
+                    <h3>Enrollment Date</h3>
+                    <div class="grid grid-cols-10">
+                        <div class="icon-height col-span-2 p-2 pt-1 rounded-l border-solid border border-zinc-300">
+                            <fa-icon [icon]="faCalendarDay" size="lg" class="text-blue-500"></fa-icon>
+                        </div>
+                        <input datepicker name="next_service" type="date" formControlName="date" id="date" name="date"
+                            class="focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none col-span-8 rounded-r border-solid border border-l-0 border-zinc-300 disabled:cursor-not-allowed"
+                            width="auto" id="next_service"
+                            (keyup.escape)="$event.target.value = ''; onKeyUp($event.target.value, $event.target.id)"
+                            (change)="onKeyUp($event.target.value, $event.target.id)">
+                    </div>
+                </div>
+                <div class="transitions col-span-4 border-check relative select-none" *ngIf="!focused">
+                    <h3>Family Planning Method</h3>
+                    <select formControlName="method" (change)="onKeyUp($event.target.value, $event.target.id)"
+                        (keyup)="onKeyUp($event.target.value, $event.target.id)"
+                        (keyup.escape)="$event.target.value = ''; onKeyUp($event.target.value, $event.target.id)"
+                        id="method"
+                        class="bg-white text-align-left drop_btn border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed">
+                        <option *ngFor="let fp_method of fp_methods" class="p-2" (click)="drop()">
+                            {{ fp_method.method }}
+                        </option>
+                    </select>
+                </div>
+                <div class="transitions col-span-6 border-check relative select-none" *ngIf="!focused">
+                    <h3>Treatment Partner</h3>
+                    <!-- <input type="text" class="border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300" *ngIf="!fv_form.alc" > -->
+                    <input type="text" formControlName="partner" id="partner"
+                        class="invalid:border-red-500 border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed"
+                        (keyup)="onKeyUp($event.target.value, $event.target.id)"
+                        (keyup.escape)="$event.target.value = ''; onKeyUp($event.target.value, $event.target.id)">
+                    <fa-icon [icon]="faTimesCircle" (click)="clearForm('partner')"
+                        class="absolute right-0 py-1 px-2 text-gray-400 hover:text-gray-600"
+                        *ngIf="keyUp.includes('partner') && !methods_form.disabled">
+                    </fa-icon>
+                    <!-- <span *ngIf="keyUp.includes('alc')" class="text-red-400">Error!!!!</span> -->
+                </div>
+                <div class="transitions col-span-4 border-check relative select-none" *ngIf="!focused">
+                    <h3>Client Type</h3>
+                    <select formControlName="type" (change)="onKeyUp($event.target.value, $event.target.id)"
+                        (keyup)="onKeyUp($event.target.value, $event.target.id)"
+                        (keyup.escape)="$event.target.value = ''; onKeyUp($event.target.value, $event.target.id)"
+                        id="type"
+                        class="bg-white text-align-left drop_btn border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed">
+                        <option *ngFor="let fp_method of fp_methods" class="p-2" (click)="drop()">
+                            {{ fp_method.method }}
+                        </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="relative w-auto border-check mt-2 mb-7 w-12/12" *ngIf="!focused && methods_form.enabled">
+        <div class="absolute inline-flex right-0 ">
+            <div (click)="cancel()"
+                class="cursor-pointer flex border-check bg-white hover:drop-shadow-md hover:bg-gray-400 py-1 rounded-full text-gray-400 hover:text-white pl-2 pr-2 peer">
+                <fa-icon [icon]="faTimes" size="lg" class="mr-2">
+                </fa-icon>
+                <button type="button" class="font-bold button-out border-check-red">Cancel</button>
+            </div>
+            <div (click)="saveForm(methods_form.value)"
+                class="cursor-pointer flex border-check hover:drop-shadow-md bg-green-300 hover:bg-green-400 py-1 rounded-full text-white px-3 peer-hover:bg-white peer-hover:text-green-400">
+                <fa-icon [icon]="faSave" size="lg" class="mr-2">
+                </fa-icon>
+                <button type="submit" class="font-bold button-out border-check-red"
+                    (keyup.enter)="saveForm(methods_form.value)">Save</button>
+            </div>
+        </div>
+    </div>
+    <div class="relative w-auto border-check mt-2 mb-7 w-12/12" *ngIf="!focused && methods_form.disabled">
+        <div class="absolute inline-flex right-0 cursor-pointer" (click)="edit()">
+            <div class="flex border-check bg-orange-300 hover:bg-orange-400 py-1 rounded-full  text-white px-2">
+                <fa-icon [icon]="faPencil" size="lg" class="mr-2 ">
+                </fa-icon>
+                <button type="submit" class="font-bold button-out border-check-red typed-out"
+                    (keyup.enter)="uncheck($event.target.id + fphx_cat)">Edit</button>
+            </div>
+        </div>
+    </div>
+</form>
