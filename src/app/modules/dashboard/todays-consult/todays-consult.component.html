@@ -1,6 +1,6 @@
-<div class="px-8 py-4 ml-5 rounded-3xl text-gray-600 h-100 shadow-md">
-    <div class="md:flex md:justify-between md:items-center pb-5">
-      <span class="font-semibold text-2xl">Todays Consult</span>
+<div class="px-4 py-2 rounded-xl text-gray-600 h-100 border border-slate-100">
+    <div class="md:flex md:justify-between md:items-center pb-2 border-b-2">
+      <span class="font-semibold text-xl pt-2">Todays Consult</span>
       <div class="flex items-center">
         <div>
           <button type="button" class="bg-orange-400 px-3 rounded-full mr-3 text-gray-800 hover:text-indigo-500">
@@ -14,15 +14,15 @@
       </div>
     </div>
 
-    <div>
+    <div class="pt-3">
       <div class="flex justify-between items-center mb-3" *ngFor="let profile of today_consults">
         <div class="flex">
-          <a href="{{ profile.id }}">
-            <img src="{{ './assets/img/' + profile.img_name }}" class="rounded-full w-20 h-20 mx-auto mr-2" />
+          <a class="flex justify-center mx-auto" href="{{ profile.id }}">
+            <img src="{{ './assets/img/' + profile.img_name }}" class="rounded-full w-16 h-16 mx-auto my-auto" />
           </a>
 
           <div class="flex justify-center md:block leading-tight mx-2 my-1">
-            <span class="block text-blue-500 font-medium text-lg">
+            <span class="block text-blue-500 font-medium text-lg my-0 py-0">
               {{ profile.last_name }}, {{ profile.first_name }}
             </span>
 

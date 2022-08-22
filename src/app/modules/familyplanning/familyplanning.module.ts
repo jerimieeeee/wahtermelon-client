@@ -5,10 +5,11 @@ import { CommonModule } from '@angular/common';
 import { FamilyplanningRoutingModule } from './familyplanning-routing.module';
 
 import { FamilyplanningComponent } from './familyplanning.component';
-import { SharedComponentsModule } from 'src/app/shared/shared-components/shared-components.module';
+
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import * as angularFontawesome from '@fortawesome/angular-fontawesome';
+import { SharedComponentsModule } from 'app/shared/shared-components/shared-components.module';
 
 import { FpchartComponent } from './modules/fpchart/fpchart.component';
 import { FirsvisitComponent } from './modules/firsvisit/firsvisit.component';

@@ -85,6 +85,35 @@
 
         </div>
     </div>
+    <div class="sticky top-0 z-50" style="grid-column: span 16 / span 16;">
+        <div class="relative w-auto border-check mt-2 mb-7 w-12/12" *ngIf="!saved">
+            <div class="absolute inline-flex right-0 ">
+                <div (click)="uncheck('')"
+                    class="cursor-pointer flex border-check bg-white hover:drop-shadow-md hover:bg-gray-400 py-1 rounded-full text-gray-400 hover:text-white pl-2 pr-2 peer">
+                    <fa-icon [icon]="faTimes" size="lg" class="mr-2">
+                    </fa-icon>
+                    <button type="button" class="font-bold button-out border-check-red">Cancel</button>
+                </div>
+                <div (click)="saveModule()"
+                    class="cursor-pointer flex border-check hover:drop-shadow-md bg-green-300 hover:bg-green-400 py-1 rounded-full text-white px-3 peer-hover:bg-white peer-hover:text-green-400">
+                    <fa-icon [icon]="faSave" size="lg" class="mr-2">
+                    </fa-icon>
+                    <button type="submit" class="font-bold button-out border-check-red"
+                        (keyup.enter)="saveModule()">Save</button>
+                </div>
+            </div>
+        </div>
+        <div class="relative w-auto border-check mt-2 mb-7 w-12/12" *ngIf="saved">
+            <div class="absolute inline-flex right-0 cursor-pointer" (click)="editModule()">
+                <div class="flex border-check bg-orange-300 hover:bg-orange-400 py-1 rounded-full  text-white px-2">
+                    <fa-icon [icon]="faPencil" size="lg" class="mr-2 ">
+                    </fa-icon>
+                    <button type="submit" class="font-bold button-out border-check-red typed-out"
+                        (keyup.enter)="editModule()">Edit</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <!-- <div class="">
         <div class="inline-flex float-right" *ngIf="saved">
@@ -110,31 +139,32 @@
             </div>
         </div>
     </div> -->
-
-<div class="relative w-auto border-check mt-2 mb-7 w-12/12" *ngIf="!saved">
-    <div class="absolute inline-flex right-0 ">
-        <div (click)="uncheck('')"
-            class="cursor-pointer flex border-check bg-white hover:drop-shadow-md hover:bg-gray-400 py-1 rounded-full text-gray-400 hover:text-white pl-2 pr-2 peer">
-            <fa-icon [icon]="faTimes" size="lg" class="mr-2">
-            </fa-icon>
-            <button type="button" class="font-bold button-out border-check-red">Cancel</button>
-        </div>
-        <div (click)="saveModule()"
-            class="cursor-pointer flex border-check hover:drop-shadow-md bg-green-300 hover:bg-green-400 py-1 rounded-full text-white px-3 peer-hover:bg-white peer-hover:text-green-400">
-            <fa-icon [icon]="faSave" size="lg" class="mr-2">
-            </fa-icon>
-            <button type="submit" class="font-bold button-out border-check-red"
-                (keyup.enter)="saveModule()">Save</button>
-        </div>
-    </div>
-</div>
-<div class="relative w-auto border-check mt-2 mb-7 w-12/12" *ngIf="saved">
-    <div class="absolute inline-flex right-0 cursor-pointer" (click)="editModule()">
-        <div class="flex border-check bg-orange-300 hover:bg-orange-400 py-1 rounded-full  text-white px-2">
-            <fa-icon [icon]="faPencil" size="lg" class="mr-2 ">
-            </fa-icon>
-            <button type="submit" class="font-bold button-out border-check-red typed-out"
-                (keyup.enter)="editModule()">Edit</button>
+<!-- <div class="sticky bottom-0" style="grid-column: span 16 / span 16;">
+    <div class="relative w-auto border-check mt-2 mb-7 w-12/12" *ngIf="!saved">
+        <div class="absolute inline-flex right-0 ">
+            <div (click)="uncheck('')"
+                class="cursor-pointer flex border-check bg-white hover:drop-shadow-md hover:bg-gray-400 py-1 rounded-full text-gray-400 hover:text-white pl-2 pr-2 peer">
+                <fa-icon [icon]="faTimes" size="lg" class="mr-2">
+                </fa-icon>
+                <button type="button" class="font-bold button-out border-check-red">Cancel</button>
+            </div>
+            <div (click)="saveModule()"
+                class="cursor-pointer flex border-check hover:drop-shadow-md bg-green-300 hover:bg-green-400 py-1 rounded-full text-white px-3 peer-hover:bg-white peer-hover:text-green-400">
+                <fa-icon [icon]="faSave" size="lg" class="mr-2">
+                </fa-icon>
+                <button type="submit" class="font-bold button-out border-check-red"
+                    (keyup.enter)="saveModule()">Save</button>
+            </div>
         </div>
     </div>
-</div>
+    <div class="relative w-auto border-check mt-2 mb-7 w-12/12" *ngIf="saved">
+        <div class="absolute inline-flex right-0 cursor-pointer" (click)="editModule()">
+            <div class="flex border-check bg-orange-300 hover:bg-orange-400 py-1 rounded-full  text-white px-2">
+                <fa-icon [icon]="faPencil" size="lg" class="mr-2 ">
+                </fa-icon>
+                <button type="submit" class="font-bold button-out border-check-red typed-out"
+                    (keyup.enter)="editModule()">Edit</button>
+            </div>
+        </div>
+    </div>
+</div> -->

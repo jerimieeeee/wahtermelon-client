@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PatientItrComponent } from './patient-itr.component';
+import { TempChartComponent } from './temp-chart.component';
 
-describe('PatientItrComponent', () => {
-  let component: PatientItrComponent;
-  let fixture: ComponentFixture<PatientItrComponent>;
+describe('TempChartComponent', () => {
+  let component: TempChartComponent;
+  let fixture: ComponentFixture<TempChartComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PatientItrComponent ]
+      declarations: [ TempChartComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PatientItrComponent);
+    fixture = TestBed.createComponent(TempChartComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

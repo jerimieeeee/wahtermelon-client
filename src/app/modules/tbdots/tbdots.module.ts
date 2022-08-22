@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { TbdotsRoutingModule } from './tbdots-routing.module';
 
 import { TbdotsComponent } from './tbdots.component';
-import { SharedComponentsModule } from 'src/app/shared/shared-components/shared-components.module';
+import { SharedComponentsModule } from 'app/shared/shared-components/shared-components.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import * as angularFontawesome from '@fortawesome/angular-fontawesome';

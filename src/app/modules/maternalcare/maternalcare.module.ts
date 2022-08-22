@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { MaternalcareRoutingModule } from './maternalcare-routing.module';
 
 import { MaternalcareComponent } from './maternalcare.component';
-import { SharedComponentsModule } from 'src/app/shared/shared-components/shared-components.module';
+import { SharedComponentsModule } from 'app/shared/shared-components/shared-components.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import * as angularFontawesome from '@fortawesome/angular-fontawesome';
