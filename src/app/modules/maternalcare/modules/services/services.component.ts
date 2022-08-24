@@ -10,6 +10,7 @@ export class ServicesComponent implements OnInit {
   focused: boolean;
   painting: boolean;
   erase: boolean;
+  check_bool: boolean;
   canvas: any;
   ctx: any;
   x: any
@@ -18,6 +19,11 @@ export class ServicesComponent implements OnInit {
   canvasWidth: any;
   canvasHeight: any;
   canvasData: any;
+
+  r = 8;
+  ar =  Math.ceil((this.r/2)) 
+
+  input_test = '';
   constructor() { }
    
   
@@ -28,11 +34,11 @@ export class ServicesComponent implements OnInit {
   public identity = [];
   public checker = [];
   ngOnInit(): void {
-
+    this.check_bool = true;
   }
 
   trackMouse(e){
-
+    
   this.canvas = document.getElementById("myCanvas");
   this.canvasWidth = this.canvas.width;
   this.canvasHeight = this.canvas.height;
@@ -44,13 +50,11 @@ export class ServicesComponent implements OnInit {
   console.log(test_identity);
   
   let evicted_dot = -1;
-  let r = 20;
-  let ar =  Math.ceil((r/2)) //Radius size for both dot and search 
   this.identity = [];
   this.checker = [];
-  for (let a = -ar; a <= ar; a++) {
+  for (let a = -this.ar; a <= this.ar; a++) {
     // identity.push((this.x + a) + ',' + (this.y + a));
-    for (let b = -ar; b <= ar; b++) {
+    for (let b = -this.ar; b <= this.ar; b++) {
       this.identity.push((this.x + a) + ',' + (this.y  + b));
     }
   }
@@ -59,8 +63,8 @@ export class ServicesComponent implements OnInit {
   for (let ide of this.identity) {
     this.checker.push(this.coords.map((el) => el.id).indexOf(ide));
   }
-  let check_bool =  this.checker.every((check)=>{ return check == -1; });
-  console.log(this.checker, ' checker', check_bool);
+  this.check_bool =  this.checker.every((check)=>{ return check == -1; });
+  console.log(this.checker, ' checker', this.check_bool);
   for (let check of this.checker) {
       if(check != -1){
         evicted_dot = this.checker.indexOf(check);
@@ -72,9 +76,10 @@ export class ServicesComponent implements OnInit {
   console.log(this.identity, ' identity');
   // let checker =  this.coords.map((el) => el.id).indexOf(identity);
   
-  this.updateCanvas(this.identity[evicted_dot] + '', check_bool, this.x + ',' + this.y, this.x, this.y, r, this.ctx);
+  this.updateCanvas(this.identity[evicted_dot] + '', this.check_bool, this.x + ',' + this.y, this.x, this.y, this.r, this.ctx);
   // // this.ctx.fillRect(this.x -5,this.y -5,10,10);
   console.log(this.coords, " coords");
+  this.check_bool = true;
 // 
 }
 
@@ -98,12 +103,32 @@ updateCanvas(evicted_dot, check_bool, i, x, y, r, canvas) {
   }else if(check_bool == true){
     console.log("pushing");
     
-    this.coords.push({id: i , x: x, y: y})
+    this.coords.push({id: i , x: x, y: y, r: r})
   } 
-  canvas.clearRect(0,0,600,400);
+  canvas.clearRect(0,0,1500,1500);
   for (let coord of this.coords) {
     
-    this.point(coord.x, coord.y,r,canvas)
+    this.point(coord.x, coord.y, coord.r,canvas)
   }
+}
+activeTrackMouse(e) {
+  this.identity = [];
+  this.checker = [];
+  this.y = e.layerY;
+  this.x = e.layerX;
+  for (let a = -this.ar; a <= this.ar; a++) {
+    // identity.push((this.x + a) + ',' + (this.y + a));
+    for (let b = -this.ar; b <= this.ar; b++) {
+      this.identity.push((this.x + a) + ',' + (this.y  + b));
+    }
+  }
+  // console.log(identity, ' identity');
+  // let identity = this.x + ',' + this.y + '';
+  for (let ide of this.identity) {
+    this.checker.push(this.coords.map((el) => el.id).indexOf(ide));
+  }
+  this.check_bool =  this.checker.every((check)=>{ return check == -1; });
+  console.log(this.check_bool, this.checker);
+  
 }
 }
