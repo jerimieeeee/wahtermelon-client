@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+// import { AnyNaptrRecord } from 'd/ns';
 
 @Component({
   selector: 'app-services',
@@ -11,95 +12,98 @@ export class ServicesComponent implements OnInit {
   erase: boolean;
   canvas: any;
   ctx: any;
-
+  x: any
+  y:any
+  i = 0;
+  canvasWidth: any;
+  canvasHeight: any;
+  canvasData: any;
   constructor() { }
+   
+  
+  
   public keyUp = [];
   public buttons = [];
-
+  public coords = [];
+  public identity = [];
+  public checker = [];
   ngOnInit(): void {
-    this.erase = true;
-    window.addEventListener("load", () => {
-      // const eraser = document.getElementById("eraser") as HTMLButtonElement;
-      const canvas = document.querySelector("#canvas") as HTMLCanvasElement;
 
-      //console.log(this.canvas);
-      const ctx = canvas.getContext("2d");
-      console.log(ctx, " this is my ctx ")
-      canvas.height = 384;
-      canvas.width = 384;
-
-      // var background = new Image();
-      // background.src = "assets/img/abdomen.png";
-
-      // // Make sure the image is loaded first otherwise nothing will draw.
-      // background.onload = function () {
-      //   ctx.drawImage(background, 0, 0);
-      // }
-
-      function startPosition(e) {
-        this.painting = true;
-      }
-
-      function finishedPosition() {
-        this.painting = false;
-        ctx.beginPath();
-      }
-
-      function flip() {
-        this.erase = !this.erase;
-        // console.log(this.erase);
-      }
-      function update(e) {
-        let Y = e.clientY - 180;
-        let X = e.clientX - 141;
-        
-        ctx.arc(X, Y, 10, 0, 2 * Math.PI, true);
-        ctx.stroke();
-        ctx.beginPath();
-        ctx.moveTo(X, Y);
-        //ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      }
-      function draw(e) {
-        let Y = e.clientY - 180;
-        let X = e.clientX - 141;
-
-        if (!this.painting) {
-          update(e);
-          return;
-        }
-      
-        if (!this.erase) {
-          
-          ctx.lineWidth = 20;
-          ctx.lineCap = "round";
-          ctx.strokeStyle = 'rgba(255,83,73,.25)';
-
-          ctx.lineTo(X, Y);
-          ctx.stroke();
-          ctx.beginPath();
-          ctx.moveTo(X, Y);
-
-        } else {
-          ctx.clearRect(X - 15, Y - 15, 30, 30);
-          return;
-        }
-      }
-
-      canvas.addEventListener("mousedown", startPosition);
-      canvas.addEventListener("mouseup", finishedPosition);
-      canvas.addEventListener("mousemove", draw);
-      // canvas.addEventListener("mousemove", update);
-      canvas.addEventListener("dblclick", flip);
-    });
   }
 
+  trackMouse(e){
 
+  this.canvas = document.getElementById("myCanvas");
+  this.canvasWidth = this.canvas.width;
+  this.canvasHeight = this.canvas.height;
+  this.ctx = this.canvas.getContext("2d");
 
-  // flip(): void{
-  //   this.erase = !this.erase;
-  //   this.keyUp = [];
-  //   this.buttons = [];
-  //   this.buttons.push('save');
-  // }
+  this.y = e.layerY;
+  this.x = e.layerX;
+  let test_identity = this.x + ',' + this.y + ''
+  console.log(test_identity);
+  
+  let evicted_dot = -1;
+  let r = 20;
+  let ar =  Math.ceil((r/2)) //Radius size for both dot and search 
+  this.identity = [];
+  this.checker = [];
+  for (let a = -ar; a <= ar; a++) {
+    // identity.push((this.x + a) + ',' + (this.y + a));
+    for (let b = -ar; b <= ar; b++) {
+      this.identity.push((this.x + a) + ',' + (this.y  + b));
+    }
+  }
+  // console.log(identity, ' identity');
+  // let identity = this.x + ',' + this.y + '';
+  for (let ide of this.identity) {
+    this.checker.push(this.coords.map((el) => el.id).indexOf(ide));
+  }
+  let check_bool =  this.checker.every((check)=>{ return check == -1; });
+  console.log(this.checker, ' checker', check_bool);
+  for (let check of this.checker) {
+      if(check != -1){
+        evicted_dot = this.checker.indexOf(check);
+      }
+  }
+  console.log(evicted_dot, this.identity[evicted_dot]);
+  
+  // this.coords.push({id: this.x + ',' + this.y, x: this.x, y: this.y});
+  console.log(this.identity, ' identity');
+  // let checker =  this.coords.map((el) => el.id).indexOf(identity);
+  
+  this.updateCanvas(this.identity[evicted_dot] + '', check_bool, this.x + ',' + this.y, this.x, this.y, r, this.ctx);
+  // // this.ctx.fillRect(this.x -5,this.y -5,10,10);
+  console.log(this.coords, " coords");
+// 
+}
+
+point(x, y, r, canvas) {
+    canvas.lineWidth = 2;
+    canvas.fillStyle = "rgba(69, 1, 124, 0.3)";
+    canvas.beginPath();
+    canvas.arc(x, y, r, 0, 2 * Math.PI, true);
+    canvas.stroke();
+    canvas.fill();
+  
+}
+
+updateCanvas(evicted_dot, check_bool, i, x, y, r, canvas) {
+  // console.log(evicted_dot == 'undefined');
+  
+  if(check_bool == false && evicted_dot != 'undefined'){
+    console.log("splicing");
+    
+    this.coords.splice(this.coords.map((el) => el.id).indexOf(evicted_dot),1);
+  }else if(check_bool == true){
+    console.log("pushing");
+    
+    this.coords.push({id: i , x: x, y: y})
+  } 
+  canvas.clearRect(0,0,600,400);
+  for (let coord of this.coords) {
+    
+    this.point(coord.x, coord.y,r,canvas)
+  }
+}
 }

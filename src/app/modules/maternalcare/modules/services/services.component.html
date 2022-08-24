@@ -30,14 +30,20 @@
                 </div>
             </div>
         </div>
-        <div style="grid-column: span 16 / span 16;" class="border border-red-500 relative">
-            <canvas id="canvas" class="border border-blue-500 w-96 h-96 opacity-75"
-                style="background-image: url('assets/img/human.jpg');background-repeat: no-repeat; background-size: 24rem"></canvas>
+        <div style="grid-column: span 16 / span 16;" class="relative">
+            <!-- <canvas id="canvas" class="border border-blue-500 w-96 h-96 opacity-75"
+                style="background-image: url('assets/img/human.jpg');background-repeat: no-repeat; background-size: 24rem"></canvas> -->
             <!-- <button id="eraser" class="absolute top-0" value="erase">{{erase}}</button> -->
-            <script src="../services/services.component.ts"></script>
+            <!-- <script src="../services/services.component.ts"></script> -->
             <!-- <img src="assets\img\abdomen.png"
                 class="z-10 absolute top-0 w-24 lg:w-44 md:w-32 sm:w-24 object-contain rounded-lg hover:drop-shadow-lg drop-shadow-md rounded-lg"
              alt="..."> -->
+             <canvas class="text-gray-300 relative border" id="myCanvas" (click)="trackMouse($event)" width="500" height="520" style="background-image: url('assets/img/human.jpg');background-repeat: no-repeat; background-size: 31rem">
+                <!-- <div *ngFor="let coord of coords" class="absolute top-0 w-max h-max border border-red-500">
+                    <div class="translate-y-{{coord.y}} w-5 h-5 bg-blue-500"></div>
+                 </div> -->
+            </canvas>
+             
         </div>
 
     </div>
