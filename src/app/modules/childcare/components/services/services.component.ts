@@ -8,11 +8,6 @@ import { FormBuilder, FormGroup,FormArray,FormControl,Validators,} from '@angula
   styleUrls: ['./services.component.scss']
 })
 export class ServicesComponent implements OnInit {
-
-  selectedServiceList = [];
-  selectedServiceList2 = [];
-  checkedIDs = [];
-  checkedIDs2 = [];
   
   x: any;
   z2: any;
@@ -24,14 +19,6 @@ export class ServicesComponent implements OnInit {
   faInfoCircle = faInfoCircle;
 
   defaultDate = new Date().toISOString().slice(0, 16);
-
-  serviceForm = new FormGroup({
-    serviceDate: new FormControl()
-  });
-
-  serviceForm2 = new FormGroup({
-    serviceDate2: new FormControl()
-  });
 
   services= [
     { id: 1, name: 'Complimentary Feeding', cc_id: 'FEED', ischecked: false},
@@ -57,7 +44,9 @@ export class ServicesComponent implements OnInit {
   
 
  showEssentialModal = false;
+
   ccservicename: any;
+
   toggleEssentialModal(){
     this.showEssentialModal = !this.showEssentialModal;
   }
@@ -72,124 +61,12 @@ export class ServicesComponent implements OnInit {
     this.showVaccineModal = !this.showVaccineModal;
   }
 
-  geteServiceName(){
-    this.x = JSON.parse(localStorage.getItem('eservice'));
-    console.log('retrievedeServices: ', this.x );
-    this.x.forEach(m =>{
-      let i = this.eservices2.findIndex(c => c.id === m.id);
-       if(i != -1){
-         this.eservices2.splice(i,1);
-       }
-         // this.ccdev= [];
-         this.eservices2.push({
-             id: m.id,
-             name: m.name,
-             cc_id :m.cc_id,
-             ischecked: m.ischecked,
-         });
-     });
-     this.eservices2.sort((m, c) => (m.id) - (c.id));this.eservices2.sort
-  }
-
-  geteServiceDate(){
-    this.z2 = JSON.parse(localStorage.getItem('eserviceDate'));
-    console.log('retrievedeServicesDate: ',this.z2 );
-  }
-
-  fetchSelectedItems() {
-    this.selectedServiceList = this.eservices2.filter((value, index) => {
-      return value.ischecked
-    });
-  }
-
-  submit() {
-    this.selectedServiceList = this.eservices2.filter((value, index) => {
-      return value.ischecked,
-      console.log('Service Date:' + this.serviceForm.get('serviceDate').value),
-      localStorage.setItem('eservice', JSON.stringify(this.selectedServiceList)),
-      localStorage.setItem('eserviceDate', JSON.stringify(this.serviceForm.value))
-      
-    });
-  }
-
-  fetchCheckedIDs() {
-    this.checkedIDs = []
-    this.eservices2.forEach((value, index) => {
-      if (value.ischecked) {
-        this.checkedIDs.push(value.id);
-      }
-    });
-  }
- 
-  changeSelection() {
-    this.fetchSelectedItems()
-  }
-
-  fetchSelectedItems2() {
-    this.selectedServiceList2 = this.services.filter((value, index) => {
-      return value.ischecked
-    });
-  }
-
-  submit2() {
-    this.selectedServiceList2 = this.services.filter((value, index) => {
-      return value.ischecked,
-      console.log('Service2 Date:' + this.serviceForm2.get('serviceDate2').value),
-      localStorage.setItem('service', JSON.stringify(this.selectedServiceList2)),
-      localStorage.setItem('serviceDate2', JSON.stringify(this.serviceForm2.value))
-      
-    });
-  }
-
-  fetchCheckedIDs2() {
-    this.checkedIDs2 = []
-    this.services.forEach((value, index) => {
-      if (value.ischecked) {
-        this.checkedIDs2.push(value.id);
-      }
-    });
-  }
- 
-  changeSelection2() {
-    this.fetchSelectedItems2()
-  }
-
-  geteServiceName2(){
-    this.ccservicename = JSON.parse(localStorage.getItem('service'));
-    console.log('retrievedServices: ', this.ccservicename );
-    this.ccservicename.forEach(m =>{
-      let i = this.services.findIndex(c => c.id === m.id);
-       if(i != -1){
-         this.services.splice(i,1);
-       }
-         // this.ccdev= [];
-         this.services.push({
-             id: m.id,
-             name: m.name,
-             cc_id :m.cc_id,
-             ischecked: m.ischecked,
-             
-         });
-     });
-     this.services.sort((m, c) => (m.id) - (c.id));this.services.sort
-  }
-
 
   constructor() { 
 
   }
 
   ngOnInit() {
-    this.geteServiceName()
-    this.geteServiceName2()
-    this.fetchSelectedItems()
-    this.fetchSelectedItems2()
-    this.fetchCheckedIDs()
-    this.serviceForm = new FormGroup({
-     serviceDate: new FormControl((new Date()).toISOString().substring(0,10))
-    }); 
-    this.serviceForm2 = new FormGroup({
-      serviceDate2: new FormControl((new Date()).toISOString().substring(0,10))
-    });
+    
   }
 }

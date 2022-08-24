@@ -21,8 +21,8 @@
       </button>  
     </div>
 
-    <div *ngFor="let m of month" class="relative w-full md:w-1/2 lg:w-1/2 px-5 mt-4 mb-4">
-      <label>{{m.name}} - {{m.date}}</label>
+    <div class="relative w-full md:w-1/2 lg:w-1/2 px-5 mt-4 mb-4">
+      
     </div>
 
     <!--Breastfeeding Modal-->
@@ -55,7 +55,7 @@
                       
                       <!-- <td class="p-3 px-5">{{month.name}} - ({{month.date}})</td> -->
                       <td class="py-6">
-                        <input type="checkbox" class="rounded-full h-5 w-5" name="" id="" (change)="changeSelection()" [(ngModel)]="month.ischecked" [checked]="month.ischecked">
+                        <input type="checkbox" class="rounded-full h-5 w-5" name="" id="" [(ngModel)]="month.ischecked" [checked]="month.ischecked">
                         <label class="ml-2 mb-2">{{month.name}} - {{month.date}}</label>
                       </td>
 
@@ -86,7 +86,7 @@
             <button class="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1" type="button" style="transition: all .15s ease" (click)="toggleBreastfeedingModal()">
               Close
             </button>
-            <button class="bg-green-500 text-white active:bg-green-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1" type="button" style="transition: all .15s ease" (click)="submit()" (click)="toggleBreastfeedingModal()" >
+            <button class="bg-green-500 text-white active:bg-green-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1" type="button" style="transition: all .15s ease" (click)="toggleBreastfeedingModal()" >
               Save
             </button>
           </div>
