@@ -23,16 +23,17 @@ export class ServicesComponent implements OnInit {
   services= [
     { id: 1, name: 'Complimentary Feeding', cc_id: 'FEED', ischecked: false},
     { id: 2, name: 'Dental Checkup', cc_id: 'DENTAL', ischecked: false},
-    { id: 3, name: 'Newborn Hearing Screening', cc_id: 'NBHS', ischecked: false},
+    { id: 3, name: 'Deworming', cc_id: 'DEWORM', ischecked: false},
     { id: 4, name: 'Iron Intake', cc_id: 'IRON', ischecked: false},
-    { id: 5, name: 'Received Micronutrient Powder', cc_id: 'MNP', ischecked: false},
+    { id: 5, name: 'Newborn Hearing Screening', cc_id: 'NBHS', ischecked: false},
     { id: 6, name: 'Newborn Screening Done', cc_id: 'NBSDONE', ishecked: false},
     { id: 7, name: 'Newborn Screening Referred', cc_id: 'NBSREF', ischecked: false},
-    { id: 8, name: 'Vitamin A', cc_id: 'VITA', ischecked: false},
-    { id: 9, name: 'Deworming', cc_id: 'DEWORM', ischecked: false},
+    { id: 8, name: 'Received Micronutrient Powder', cc_id: 'MNP', ischecked: false},
+    { id: 9, name: 'Vitamin A', cc_id: 'VITA', ischecked: false},
+    
   ];
 
-  eservices2= [
+ eservices2= [
     { id: 1, name: 'Cord Clamping', cc_id: 'CLAMP', ischecked: false},
     { id: 2, name: 'Drying', cc_id: 'DRYING', ischecked: false},
     { id: 3, name: 'Non-Separation', cc_id: 'NONSEP', ischecked: false},
@@ -41,6 +42,8 @@ export class ServicesComponent implements OnInit {
     { id: 6, name: 'Vitamin K', cc_id: 'VITK', ishecked: false},
     { id: 7, name: 'Weighing', cc_id: 'WEIGHT', ischecked: false},
   ];
+
+  // newarr = this.services.sort((a, b) => a.id - b.id);
   
 
  showEssentialModal = false;
@@ -59,6 +62,16 @@ export class ServicesComponent implements OnInit {
   showVaccineModal = false;
   toggleVaccineModal(){
     this.showVaccineModal = !this.showVaccineModal;
+  }
+
+  sortFunc(a, b) {
+    if ( a.index < b.index ){
+      return -1;
+    }
+    if ( a.index > b.index ){
+      return 1;
+    }
+    return 0;
   }
 
 
