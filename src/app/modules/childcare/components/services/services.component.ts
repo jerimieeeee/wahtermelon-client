@@ -12,6 +12,7 @@ export class ServicesComponent implements OnInit {
   x: any;
   z2: any;
 
+
   saved: boolean;
 
   faSearch = faSearch;
@@ -21,17 +22,19 @@ export class ServicesComponent implements OnInit {
   defaultDate = new Date().toISOString().slice(0, 16);
 
   services= [
-    { id: 1, name: 'Complimentary Feeding', cc_id: 'FEED', ischecked: false},
-    { id: 2, name: 'Dental Checkup', cc_id: 'DENTAL', ischecked: false},
-    { id: 3, name: 'Deworming', cc_id: 'DEWORM', ischecked: false},
-    { id: 4, name: 'Iron Intake', cc_id: 'IRON', ischecked: false},
-    { id: 5, name: 'Newborn Hearing Screening', cc_id: 'NBHS', ischecked: false},
-    { id: 6, name: 'Newborn Screening Done', cc_id: 'NBSDONE', ishecked: false},
-    { id: 7, name: 'Newborn Screening Referred', cc_id: 'NBSREF', ischecked: false},
-    { id: 8, name: 'Received Micronutrient Powder', cc_id: 'MNP', ischecked: false},
-    { id: 9, name: 'Vitamin A', cc_id: 'VITA', ischecked: false},
+    { id: 1, name: 'Complimentary Feeding', cc_id: 'FEED', date: 'Mar 24 2012 10:00:00 AM', ischecked: false},
+    { id: 2, name: 'Dental Checkup', cc_id: 'DENTAL', date: 'Mar 12 2012 10:00:00 AM', ischecked: false},
+    { id: 3, name: 'Deworming', cc_id: 'DEWORM', date: 'Mar 01 2012 10:00:00 AM', ischecked: false},
+    { id: 4, name: 'Iron Intake', cc_id: 'IRON', date: 'Mar 26 2012 10:00:00 AM', ischecked: false},
+    { id: 5, name: 'Newborn Hearing Screening',  cc_id: 'NBHS', date: 'Mar 14 2012 10:00:00 AM', ischecked: false},
+    { id: 6, name: 'Newborn Screening Done', cc_id: 'NBSDONE', date: 'Mar 12 2012 10:00:00 AM', ishecked: false},
+    { id: 7, name: 'Newborn Screening Referred', cc_id: 'NBSREF', date: 'Mar 15 2012 10:00:00 AM', ischecked: false},
+    { id: 8, name: 'Received Micronutrient Powder', cc_id: 'MNP', date: 'Mar 09 2012 10:00:00 AM', ischecked: false},
+    { id: 9, name: 'Vitamin A', cc_id: 'VITA', date: 'Mar 13 2012 10:00:00 AM', ischecked: false},
     
   ];
+
+ 
 
  eservices2= [
     { id: 1, name: 'Cord Clamping', cc_id: 'CLAMP', ischecked: false},
@@ -64,19 +67,13 @@ export class ServicesComponent implements OnInit {
     this.showVaccineModal = !this.showVaccineModal;
   }
 
-  sortFunc(a, b) {
-    if ( a.index < b.index ){
-      return -1;
-    }
-    if ( a.index > b.index ){
-      return 1;
-    }
-    return 0;
-  }
+  
 
 
   constructor() { 
-
+    this.services.sort(function(a,b){
+      return a.date.localeCompare(b.date);
+    })
   }
 
   ngOnInit() {
