@@ -41,7 +41,12 @@ const routes: Routes = [
   },
   {
     path: 'dental',
-    loadChildren: () => import('./modules/dental/dental.module').then(m => m.DentalModule) }
+    loadChildren: () => import('./modules/dental/dental.module').then(m => m.DentalModule) 
+  },
+  {
+    path: 'lep',
+    loadChildren: () => import('./modules/leprosy/leprosy.module').then(m => m.LeprosyModule)
+  }
 ];
 
 @NgModule({

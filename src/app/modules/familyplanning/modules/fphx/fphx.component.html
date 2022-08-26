@@ -25,7 +25,7 @@
                         class="text-gray-500 form-check sm:col-span-1 md:col-span-3 lg:col-span-4 p-2 font-semibold"
                         [style]="module_strings.includes(i)? 'border-bottom-width: 1px; border-style: dashed; border-color: rgb(96 165 250); border-top-width: 0px; border-left-width: 0px; border-right-width: 0px;' : ''">
                         <div *ngFor="let cat_name of lib_cat_name">
-                            <h1 class="select-none" *ngIf="fphx_cat == cat_name.history_cat_id">
+                            <h1 class="select-none" [class]="saved?'text-blue-500':''" *ngIf="fphx_cat == cat_name.history_cat_id">
                                 {{cat_name.history_cat_name}}
                             </h1>
                         </div>
@@ -34,10 +34,10 @@
                         <div *ngFor="let fphx of fp_hx_symptoms">
                             <div *ngFor="let string of fphx_strings; let x = index">
                                 <div *ngIf="fphx_cat == fphx.history_cat && fphx.history_text == string">
-                                    <h1 class="group select-none m-0.5 border-check px-2 rounded-full text-gray-400 font-medium typed-out hover:bg-gray-100 hover:text-gray-600 hover:font-semibold"
+                                    <h1 class="group select-none m-0.5 px-2 border-check font-normal text-sm rounded-full text-gray-600 typed-out hover:bg-blue-200 hover:text-gray-800"
                                         style="margin-top: 0;" *ngIf="!module_strings.includes(i)" id="test">
-                                        <fa-icon [icon]="faCaretRight" *ngIf="!module_strings.includes(i)"
-                                            class="group-hover:text-orange-400 text-gray-300"></fa-icon>
+                                        <!-- <fa-icon [icon]="faCaretRight" *ngIf="!module_strings.includes(i)"
+                                            class="group-hover:text-orange-400 text-gray-300"></fa-icon> -->
                                         {{fphx.history_text}}
                                     </h1>
                                 </div>
@@ -89,10 +89,8 @@
         <div class="relative w-auto border-check mt-2 mb-7 w-12/12" *ngIf="!saved">
             <div class="absolute inline-flex right-0 ">
                 <div (click)="uncheck('')"
-                    class="cursor-pointer flex border-check bg-white hover:drop-shadow-md hover:bg-gray-400 py-1 rounded-full text-gray-400 hover:text-white pl-2 pr-2 peer">
-                    <fa-icon [icon]="faTimes" size="lg" class="mr-2">
-                    </fa-icon>
-                    <button type="button" class="font-bold button-out border-check-red">Cancel</button>
+                class="cursor-pointer flex border-check bg-white hover:drop-shadow-md hover:bg-gray-400 py-1 rounded-full text-gray-300 hover:text-white peer">
+                    <button type="button" class="font-bold button-out border-check-red mx-2">Cancel</button>
                 </div>
                 <div (click)="saveModule()"
                     class="cursor-pointer flex border-check hover:drop-shadow-md bg-green-300 hover:bg-green-400 py-1 rounded-full text-white px-3 peer-hover:bg-white peer-hover:text-green-400">

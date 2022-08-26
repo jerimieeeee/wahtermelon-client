@@ -1,0 +1,120 @@
+<div class="grid gap-4 relative animates-dropdown " style="grid-template-columns: repeat(16, minmax(0, 1fr));"
+    *ngIf="!focused">
+    <div class="sticky top-0 z-50 border hover:border border-gray-300 hover:border-blue-400 col-span-2 cursor-pointer relative mx-2 px-2 py-1 rounded-t-lg bg-blue-500 text-white"
+        style="grid-column: span 16 / span 16;"><button class="font-bold" type="button">Case Information</button>
+        <div class="absolute left-36 top-1">
+            <fa-icon [icon]="faInfoCircle" class="peer ml-4 text-white hover:text-gray-500 z-50"></fa-icon>
+            <div
+                class="absolute text-sm bg-gradient-to-b from-stone-500 to-gray-400 p-2 rounded-md border border-gray-500  text-white drop-shadow-lg opacity-90 border-check z-50 w-64 invisible peer-hover:visible">
+                <h1 class="font-bold drop-shadow-lg">IMPORTANT</h1>
+                <p class="font-light drop-shadow-lg">Once saved, the information will be displayed in the input
+                    boxes and shall not be editable unless Edit button is pressed.</p>
+            </div>
+        </div>
+    </div>
+
+    <div style="grid-column: span 16 / span 16;">
+        <div class="grid  relative animates-dropdown " style="grid-template-columns: repeat(16, minmax(0, 1fr));">
+
+            <div class="grid gap-4 hover:drop-shadow-lg drop-shadow-md bg-white rounded-b-lg hover:border border-gray-300 hover:border-blue-400 p-2 m-2 border -mt-5"
+                style="grid-column: span 16 / span 16; grid-template-columns: repeat(14, minmax(0, 1fr)); ">
+
+                <div class="transitions col-span-4" *ngIf="!focused">
+                    <h3 for="report_date">Report Date</h3>
+                    <div class="grid grid-cols-10">
+                        <div class="icon-height col-span-2 p-2 pt-1 rounded-l border-solid border border-zinc-300">
+                            <fa-icon [icon]="faCalendarDay" size="lg" class="text-blue-500" for="report_date">
+                            </fa-icon>
+                        </div>
+                        <input type="date"
+                            class="col-span-8 rounded-r border-solid border border-l-0 border-zinc-300 focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none disabled:cursor-not-allowed"
+                            width="auto"
+                            (keyup.escape)="$event.target.value = ''; onKeyUp($event.target.value, $event.target.id)"
+                            (change)="onKeyUp($event.target.value, $event.target.id)">
+                    </div>
+                </div>
+
+                <div class="transitions col-span-4 col-start-1 border-check relative select-none group "
+                    *ngIf="!focused">
+                    <h3>Case Number</h3>
+                    <!-- <fa-icon [icon]="faCaretRight"
+                    class="absolute bottom-1.5 left-2 text-gray-300 group-hover:text-pink-400"
+                    *ngIf="!focused && mcr_form.disabled">
+                </fa-icon> -->
+                    <input type="text"  id="case_number" (input)="patternMaker($event.target.value)"
+                        class="font-medium disabled:group-hover:font-semibold peer invalid:border-red-500 border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed disabled:border-0  disabled:pl-5  disabled:typed-out disabled:group-hover:bg-gray-100 disabled:rounded-full">
+                    <small class="hidden peer-invalid:block text-red-400 ">error_message</small>
+                </div>
+
+                <div class="transitions col-span-4 border-check relative select-none" *ngIf="!focused">
+                    <h3 for="case_type">Case Type</h3>
+                    <select id="case_type"
+                        class="text-ellipsis bg-white text-align-left drop_btn border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed">
+                        <option>
+                            XXXXX
+                        </option>
+                    </select>
+                </div>
+
+                <div class="transitions col-span-4 border-check relative select-none" *ngIf="!focused">
+                    <h3 for="case_type">Mode of Detection</h3>
+                    <select id="case_type"
+                        class="text-ellipsis bg-white text-align-left drop_btn border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed">
+                        <option>
+                            XXXXX
+                        </option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-span-6 grid rounded-lg hover:drop-shadow-lg drop-shadow-md bg-white rounded-lg hover:border border-gray-300 hover:border-blue-400 m-2 border"
+                style="grid-template-columns: repeat(14, minmax(0, 1fr));">
+                <div class="text-gray-500 form-check p-2 font-semibold border border-dashed border-gray-300 group-hover:border-blue-400 border-t-0 border-l-0 border-r-0 "
+                    style="	grid-column: span 14 / span 14;">
+                    <h1 class="select-none">
+                        Clinical Examination
+                    </h1>
+                </div>
+
+                <div class="transitions col-span-4 mx-2" *ngIf="!focused">
+                    <h3 for="breastfeeding_date">Slit Skin</h3>
+                    <div class="flex w-full mb-2">
+                        <label for="slit_skin" class="mx-2 flex items-center cursor-pointer w-max">
+                            <div class="relative">
+                                <input type="checkbox"
+                                    id="slit_skin" class="sr-only peer ">
+                                <div
+                                    class="block bg-gray-200 w-12 h-7 rounded-full peer-checked:bg-green-400 border border-gray-300 peer-checked:border-green-500 hover:bg-gray-300">
+                                </div>
+                                <div
+                                    class="dot absolute left-1 top-1 bg-white w-5 h-5 rounded-full transition drop-shadow-md">
+                                </div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="transitions col-span-4 col-start-1 mx-2" *ngIf="!focused">
+                    <h3 for="breastfeeding_date">Biopsy</h3>
+                    <div class="flex w-full mb-2">
+                        <label for="biopsy" class="mx-2 flex items-center cursor-pointer w-max">
+                            <div class="relative">
+                                <input type="checkbox"
+                                    id="biopsy" class="sr-only peer ">
+                                <div
+                                    class="block bg-gray-200 w-12 h-7 rounded-full peer-checked:bg-green-400 border border-gray-300 peer-checked:border-green-500 hover:bg-gray-300">
+                                </div>
+                                <div
+                                    class="dot absolute left-1 top-1 bg-white w-5 h-5 rounded-full transition drop-shadow-md">
+                                </div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+
+</div>

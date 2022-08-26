@@ -182,7 +182,7 @@
                         class="font-medium disabled:group-hover:font-semibold peer invalid:border-red-500 border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed disabled:border-0  disabled:pl-5  disabled:typed-out disabled:group-hover:bg-gray-100 disabled:rounded-full"
                         (keyup)="onKeyUp($event.target.value, $event.target.id)"
                         (keyup.escape)="clearForm($event.target.id)" id="patient_height"
-                        (change)="onKeyUp($event.target.value, $event.target.id); cmCatcher($event.target.value)">
+                        (input)="onKeyUp($event.target.value, $event.target.id); cmCatcher($event.target.value)">
                     <small class="hidden peer-invalid:block text-red-400 ">error_message</small>
                 </div>
 
