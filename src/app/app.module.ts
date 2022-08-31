@@ -14,13 +14,14 @@ import { FormsModule } from '@angular/forms';
 import { NgApexchartsModule } from 'ng-apexcharts';
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     SidenavComponent,
     VitalsGraphComponent,
-    VitalsComponent,
+    VitalsComponent
   ],
   imports: [
     BrowserModule,

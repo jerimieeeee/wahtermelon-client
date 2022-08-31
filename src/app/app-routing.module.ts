@@ -45,7 +45,10 @@ const routes: Routes = [
   },
   {
     path: 'dental',
-    loadChildren: () => import('./modules/dental/dental.module').then(m => m.DentalModule) }
+    loadChildren: () => import('./modules/dental/dental.module').then(m => m.DentalModule) },
+  {
+    path: 'deathrecord',
+    loadChildren: () => import('./modules/death/death.module').then(m => m.DeathModule) }
 ];
 
 @NgModule({

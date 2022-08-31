@@ -1,0 +1,52 @@
+<div class="flex w-full mt-4">
+  
+    <div class="flex-wrap w-9/12 h-full rounded-xl text-gray-600 border border-slate-100 px-4 py-4 ml-5 mr-1" *ngIf="module==1">
+  
+      <nav class="flex flex-col sm:flex-row text-sm">
+        <button (click)="switchTab(1)" class="text-gray-600 block hover:text-blue-500 hover:border-blue-500 border-b-2 border-gray-200 mr-6 pb-2"
+        [class]="module==1? 'text-blue-500 border-b-2 border-blue-500 font-bold' : 'hover:-translate-y-1 hover:scale-110 transition ease-in-out delay-400 duration-300' ">
+            CONSULTATION
+        </button>
+        <button (click)="switchTab(2)" class="transition ease-in-out delay-400 hover:-translate-y-1 hover:scale-110 duration-300 text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 focus:text-blue-500 focus:border-b-2 focus:border-blue-500 focus:font-bold mr-6 pb-2">
+            CASERATE
+        </button>
+        <button (click)="switchTab(3)" class="transition ease-in-out delay-400 hover:-translate-y-1 hover:scale-110 duration-300 text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 focus:text-blue-500 focus:border-b-2 focus:border-blue-500 focus:font-bold mr-6 pb-2">
+            E-CLAIMS
+        </button>
+    </nav>
+    
+        <!--FIRST VISIT SECTION-->
+      
+      <div class="grid grid-col-8">
+        <app-death-record></app-death-record>
+      </div>
+  
+       <!-- border-->
+      <!-- <div class="border-b-2 py-4"></div>
+  
+      <div class="grid grid-col-8">
+        <app-exposure></app-exposure>
+      </div> -->
+  
+      <!-- border-->
+      <!-- <div class="border-b-2 py-4"></div>
+  
+      <div class="grid grid-col-8">
+        <app-post-exposure></app-post-exposure>
+      </div> -->
+  
+      <!-- border-->
+      <!-- <div class="border-b-2 py-4"></div>
+  
+      <div class="grid grid-col-8">
+        <app-human-rabies></app-human-rabies>
+      </div> -->
+      
+    </div>
+  
+    <div class="w-3/12">
+      <app-patient-info></app-patient-info>
+    </div>
+      
+  
+  </div>

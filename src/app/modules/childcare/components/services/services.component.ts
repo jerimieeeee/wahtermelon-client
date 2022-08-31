@@ -67,9 +67,6 @@ export class ServicesComponent implements OnInit {
     this.showVaccineModal = !this.showVaccineModal;
   }
 
-  
-
-
   constructor() { 
     this.services.sort(function(a,b){
       return a.date.localeCompare(b.date);
