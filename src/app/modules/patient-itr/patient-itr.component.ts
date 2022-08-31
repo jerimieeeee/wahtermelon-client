@@ -24,9 +24,9 @@ export class PatientItrComponent implements OnInit {
   @ViewChild("weight-chart") weight_chart: ChartComponent;
   public chartOptions: Partial<ChartOptions>;
   public WeightChart: Partial<WeightChart>;
-  get openCloseTrigger() {
+  /* get openCloseTrigger() {
     return this.show_details ? "open" : "closed";
-  }
+  } */
 
   constructor(
     private router: Router
