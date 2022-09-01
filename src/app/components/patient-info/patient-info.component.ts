@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { faFlask, faHeart, faExclamationCircle, faNotesMedical, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+import { faFlask, faHeart, faExclamationCircle, faNotesMedical, faPlusCircle, faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-patient-info',
@@ -12,8 +12,10 @@ export class PatientInfoComponent implements OnInit {
   faHeart = faHeart;
   faExclamationCircle = faExclamationCircle;
   faPlusCircle = faPlusCircle;
+  faQuestionCircle = faQuestionCircle;
 
   showModal: boolean = false;
+  showDeathRecordModal: boolean = false;
 
   constructor() { }
 
@@ -22,5 +24,9 @@ export class PatientInfoComponent implements OnInit {
 
   toggleModal(){
     this.showModal = !this.showModal;
+  }
+
+  toggleDeathRecordModal(){
+    this.showDeathRecordModal = !this.showDeathRecordModal;
   }
 }

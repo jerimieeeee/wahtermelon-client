@@ -12,7 +12,6 @@ export class BreastfeedingComponent implements OnInit {
 
   
   month: any
-  ebfs: any
   
   faSearch = faSearch;
   faPlus = faPlus;
@@ -32,12 +31,12 @@ export class BreastfeedingComponent implements OnInit {
   ];
 
   reasons = [
-    {code: 'null', desc: '-'},
-    {code: '01', desc: 'Drinking water instead of milk 1'},
-    {code: '02', desc: 'Drinking water instead of milk 2'},
-    {code: '03', desc: 'Drinking water instead of milk 3'},
-    {code: '04', desc: 'Drinking water instead of milk 4'},
-    {code: '05', desc: 'Drinking water instead of milk 5'},
+    {code: '00', desc: '-'},
+    {code: '01', desc: 'Drinking water instead of milk'},
+    {code: '02', desc: 'Drinking water instead of milk'},
+    {code: '03', desc: 'Drinking water instead of milk'},
+    {code: '04', desc: 'Drinking water instead of milk'},
+    {code: '05', desc: 'Drinking water instead of milk'},
   ];
 
   ccdev = [
