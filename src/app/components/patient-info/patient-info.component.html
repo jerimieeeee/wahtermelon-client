@@ -319,7 +319,7 @@
               <h3 class="mt-2 text-sm font-bold text-white dark:text-white">
                   DEATH RECORD
               </h3>
-              <button type="button" class="px-3 py-1.5 bg-white text-gray-600 text-sm font-medium leading-normal rounded shadow-md focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-500 active:shadow-lg transition duration-150 ease-in-out flex align-center transform hover:scale-110">
+              <button type="button" class="px-3 py-1.5 bg-white text-gray-600 text-sm font-medium leading-normal rounded shadow-md focus:shadow-lg focus:outline-none hover:ring-4 hover:ring-gray-300 active:shadow-lg transition duration-150 ease-in-out flex align-center transform hover:scale-110">
                 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-printer mr-1" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                   <path d="M17 17h2a2 2 0 0 0 2 -2v-4a2 2 0 0 0 -2 -2h-14a2 2 0 0 0 -2 2v4a2 2 0 0 0 2 2h2"></path>
@@ -374,7 +374,7 @@
           
                 </div>
           
-                <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-10 py-2 mt-2">
+                <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-10 py-2">
                   <label>Type of Death</label> 
               
                 <div class="relative">
@@ -394,7 +394,7 @@
           
                 </div>
 
-                <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-10 py-2 mt-2">
+                <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-10 py-2">
                   <label>Place of Death</label> 
                  
                 <div class="relative">
@@ -422,7 +422,7 @@
                 <h4 class="font-bold text-blue-500 text-sm mt-2">Place of Occurence</h4>
                 </div>
           
-                <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-10 py-2 mt-2">
+                <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-10 py-2 mt-1">
                   <label>Region</label> 
    
                 <div class="relative">
@@ -432,7 +432,7 @@
           
                 </div>
           
-                <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-10 py-2 mt-2">
+                <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-10 py-2 mt-1">
                   <label>Province</label> 
     
                 <div class="relative">
@@ -442,7 +442,7 @@
           
                 </div>
 
-                <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-10 py-2 mt-2">
+                <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-10 py-2">
                   <label>Municipality</label> 
    
                 <div class="relative">
@@ -452,7 +452,7 @@
           
                 </div>
           
-                <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-10 py-2 mt-2">
+                <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-10 py-2">
                   <label>Barangay</label> 
        
                 <div class="relative">
@@ -490,7 +490,7 @@
               </div>
             </div>
           
-            <div class="relative w-full text-sm px-10 py-2 mt-2">
+            <div class="relative w-full text-sm px-10 py-2">
               <label>Antecedent Cause</label> 
             <div class="relative">
               <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
@@ -506,7 +506,7 @@
             </div>
           </div>
           
-          <div class="relative w-full text-sm px-10 py-2 mt-2">
+          <div class="relative w-full text-sm px-10 py-2">
             <label>Underlying Cause</label> 
           <div class="relative">
             <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
@@ -522,7 +522,7 @@
           </div>
           </div>
           
-          <div class="relative w-full text-sm px-10 py-2 mt-2">
+          <div class="relative w-full text-sm px-10 py-2">
             <label>Remarks</label> 
           <div class="relative">
             <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
@@ -542,9 +542,9 @@
         </div>
 
           <!-- Modal footer -->
-          <div class="flex justify-end py-4 px-5  space-x-2 rounded-b border-t border-gray-200 dark:border-gray-600">
-              <button  type="button" class="text-white bg-red-500 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 rounded text-sm font-medium px-6 py-2.5 hover:text-white focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600" (click)="toggleDeathRecordModal()">Close</button>
-              <button  type="button" class="text-white bg-blue-500 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded text-sm px-6 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" (click)="toggleDeathRecordModal()">Save</button>
+          <div class="flex justify-end py-4 px-5 space-x-4 rounded-b border-t border-gray-200 dark:border-gray-600">
+              <button  type="button" class="text-white bg-red-500 hover:ring-4 focus:outline-none hover:ring-red-300 rounded text-sm font-medium px-6 py-2.5 transition duration-150 ease-in-out transform hover:scale-110" (click)="toggleDeathRecordModal()">Close</button>
+              <button  type="button" class="text-white bg-blue-500 hover:ring-4 focus:outline-none hover:ring-blue-300 font-medium rounded text-sm px-6 py-2.5 text-center transition duration-150 ease-in-out transform hover:scale-110" (click)="toggleDeathRecordModal()">Save</button>
           </div>
       </div>
   </div>
