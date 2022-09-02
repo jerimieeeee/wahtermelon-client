@@ -1,40 +1,67 @@
 <div class="flex w-full mt-4">
   
-    <div class="flex-wrap w-9/12 h-full shadow-md px-8 py-4 ml-5 mr-1 border-gray-100 border-t-2 rounded-3xl text-gray-600">
-
-      <nav class="flex flex-col sm:flex-row text-sm">
-        <button (click)="switchTab(1)" class="text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 border-b-2 border-gray-200 mr-6 pb-2"
-        [class]="module==1? 'text-blue-500 border-b-2 border-blue-500 font-bold' : 'hover:-translate-y-1 hover:scale-110 transition ease-in-out delay-400 duration-300' ">
-            RISK ASSESSMENT
+    <div class="flex-wrap w-9/12 h-full rounded-xl text-gray-600 border border-slate-100 px-4 py-4 ml-5 mr-1">
+      <div class="flex">
+      <nav class="flex flex-row whitespace-nowrap text-sm max-w-xl">
+        <button (click)="switchTabs(1)" class="text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 border-b-2 border-gray-200 mr-6 pb-2"
+        [class]="modules==1? 'text-blue-500 border-b-2 border-blue-500 font-bold' : 'hover:-translate-y-1 hover:scale-110 transition ease-in-out delay-400 duration-300' ">
+            NCD HISTORY
         </button>
-        <button (click)="switchTab(2)" class="text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 border-b-2 border-gray-200 mr-6 pb-2"
-        [class]="module==2? 'text-blue-500 border-b-2 border-blue-500 font-bold' : 'hover:-translate-y-1 hover:scale-110 transition ease-in-out delay-400 duration-300' ">
-            RISK SCREENING
-        </button>
-        <button (click)="switchTab(3)" class="text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 border-b-2 border-gray-200 mr-6 pb-2"
-        [class]="module==3? 'text-blue-500 border-b-2 border-blue-500 font-bold' : 'hover:-translate-y-1 hover:scale-110 transition ease-in-out delay-400 duration-300' ">
-            QUESTIONNAIRE
-        </button>
-        <button (click)="switchTab(4)" class="text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 border-b-2 border-gray-200 mr-6 pb-2"
-        [class]="module==4? 'text-blue-500 border-b-2 border-blue-500 font-bold' : 'hover:-translate-y-1 hover:scale-110 transition ease-in-out delay-400 duration-300' ">
-            RISK STRATIFICATION
-        </button>
-        <button (click)="switchTab(5)" class="text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 border-b-2 border-gray-200 mr-6 pb-2"
-        [class]="module==5? 'text-blue-500 border-b-2 border-blue-500 font-bold' : 'hover:-translate-y-1 hover:scale-110 transition ease-in-out delay-400 duration-300' ">
-           PATIENT RECORD
-        </button>
-        <button (click)="switchTab(6)" class="text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 border-b-2 border-gray-200 mr-6 pb-2"
-        [class]="module==6? 'text-blue-500 border-b-2 border-blue-500 font-bold' : 'hover:-translate-y-1 hover:scale-110 transition ease-in-out delay-400 duration-300' ">
-            CASDT
-        </button>
-        <button (click)="switchTab(7)" class="text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 border-b-2 border-gray-200 mr-6 pb-2"
-        [class]="module==7? 'text-blue-500 border-b-2 border-blue-500 font-bold' : 'hover:-translate-y-1 hover:scale-110 transition ease-in-out delay-400 duration-300' ">
-            CASDT 2
+        <button (click)="switchTabs(2)" class="text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 border-b-2 border-gray-200 mr-6 pb-2"
+        [class]="modules==2? 'text-blue-500 border-b-2 border-blue-500 font-bold' : 'hover:-translate-y-1 hover:scale-110 transition ease-in-out delay-400 duration-300' ">
+            NCD CONSULT
         </button>
     </nav>
+    <div class="ml-auto" *ngIf="modules==2">
+      <button type="button" class="px-4 pt-2.5 pb-2 bg-red-500 text-white font-semibold text-md leading-normal rounded focus:shadow-lg focus:outline-none hover:ring-2 hover:ring-red-300 transition duration-150 ease-in-out transform hover:scale-110 flex align-center">
+      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-door-exit mr-1" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+        <path d="M13 12v.01"></path>
+        <path d="M3 21h18"></path>
+        <path d="M5 21v-16a2 2 0 0 1 2 -2h7.5m2.5 10.5v7.5"></path>
+        <path d="M14 7h7m-3 -3l3 3l-3 3"></path>
+     </svg>End Visit
+    </button>
+  </div>  
+  </div>
+
+  <div *ngIf="modules==2">
+
+  <div class="text-gray-600 border border-slate-100 mt-5"></div>
+  
+  <nav class="mt-4 flex flex-row whitespace-nowrap text-xs">
+    <button (click)="switchTab(1)" class="text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 border-b-2 border-gray-200 mr-6 pb-2"
+    [class]="module==1? 'text-blue-500 border-b-2 border-blue-500 font-bold' : 'hover:-translate-y-1 hover:scale-110 transition ease-in-out delay-400 duration-300' ">
+        RISK ASSESSMENT
+    </button>
+    <button (click)="switchTab(2)" class="text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 border-b-2 border-gray-200 mr-6 pb-2"
+    [class]="module==2? 'text-blue-500 border-b-2 border-blue-500 font-bold' : 'hover:-translate-y-1 hover:scale-110 transition ease-in-out delay-400 duration-300' ">
+        RISK SCREENING
+    </button>
+    <button (click)="switchTab(3)" class="text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 border-b-2 border-gray-200 mr-6 pb-2"
+    [class]="module==3? 'text-blue-500 border-b-2 border-blue-500 font-bold' : 'hover:-translate-y-1 hover:scale-110 transition ease-in-out delay-400 duration-300' ">
+        QUESTIONNAIRE
+    </button>
+    <button (click)="switchTab(4)" class="text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 border-b-2 border-gray-200 mr-6 pb-2"
+    [class]="module==4? 'text-blue-500 border-b-2 border-blue-500 font-bold' : 'hover:-translate-y-1 hover:scale-110 transition ease-in-out delay-400 duration-300' ">
+        RISK STRATIFICATION
+    </button>
+    <button (click)="switchTab(5)" class="text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 border-b-2 border-gray-200 mr-6 pb-2"
+    [class]="module==5? 'text-blue-500 border-b-2 border-blue-500 font-bold' : 'hover:-translate-y-1 hover:scale-110 transition ease-in-out delay-400 duration-300' ">
+       PATIENT RECORD
+    </button>
+    <button (click)="switchTab(6)" class="text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 border-b-2 border-gray-200 mr-6 pb-2"
+    [class]="module==6? 'text-blue-500 border-b-2 border-blue-500 font-bold' : 'hover:-translate-y-1 hover:scale-110 transition ease-in-out delay-400 duration-300' ">
+        CASDT
+    </button>
+    <button (click)="switchTab(7)" class="text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 border-b-2 border-gray-200 mr-6 pb-2"
+    [class]="module==7? 'text-blue-500 border-b-2 border-blue-500 font-bold' : 'hover:-translate-y-1 hover:scale-110 transition ease-in-out delay-400 duration-300' ">
+        CASDT 2
+    </button>
+</nav>
     
         <!--FIRST VISIT SECTION-->
-      
+
       <div class="grid grid-col-8" *ngIf="module==1">
         <app-risk-assessment></app-risk-assessment>
       </div>
@@ -86,6 +113,13 @@
       <div class="grid grid-col-8" *ngIf="module==7">
         <app-casdt2></app-casdt2>
       </div>
+  </div>
+
+  <div *ngIf="modules==1">
+  
+      <p class="mt-5 mb-2">No Patient Record Found!</p>
+      
+    </div>
       
     </div>
   

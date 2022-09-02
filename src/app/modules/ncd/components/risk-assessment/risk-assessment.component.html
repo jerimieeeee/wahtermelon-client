@@ -1,46 +1,46 @@
           <!--Patient have the following symptoms-->
 <div class="grid grid-cols-12 shadow-md rounded-xl mb-8 mt-8">
   <div class="col-span-12 flex justify-between w-full bg-yellow-500 px-5 py-3 rounded-tl rounded-tr">
-    <h4 class="font-bold text-white text-md mt-2 mb-2">Patient have the following symptoms:</h4> 
+    <h4 class="font-bold text-white text-md mt-2 mb-1">Patient have the following symptoms:</h4> 
     </div>
 
-    <div class=" col-span-3 w-full px-5 mt-4 mb-4 relative">
-        <h1 class="mb-2">Obesity:</h1>
+    <div class="text-sm col-span-3 w-full px-5 mt-5 mb-4 relative">
+        <h1 class="mb-1">Obesity:</h1>
         <label>N - Normal</label>
   
     </div>
-    <div class=" col-span-3 w-full px-5 mt-4 mb-4 relative">
+    <div class="text-sm col-span-3 w-full px-5 mt-5 mb-4 relative">
         <h1 class="mb-1">BMI:</h1>
         <label>21.66</label>
 
     </div>
-     <div class=" col-span-3 w-full px-5 mt-4 mb-4 relative">
+     <div class="text-sm col-span-3 w-full px-5 mt-5 mb-4 relative">
         <h1 class="mb-1">Central Adiposity:</h1>
         <label>Yes - at risk</label>
 
     </div>
-    <div class=" col-span-3 w-full px-5 mt-4 mb-4 relative">
+    <div class="text-sm col-span-3 w-full px-5 mt-5 mb-4 relative">
         <h1 class="mb-1">Waist Circumference:</h1>
         <label>32</label>
 
       </div>
-      <div class=" col-span-3 w-full px-5 mt-4 mb-4 relative">
+      <div class="text-sm col-span-3 w-full px-5 mb-5 relative">
           <h1 class="mb-1">BP 1st Reading:</h1>
           <label>120/50</label>
   
       </div>
-      <div class=" col-span-3 w-full px-5 mt-4 mb-4 relative">
+      <div class="text-sm col-span-3 w-full px-5 mb-5 relative">
           <h1 class="mb-1">BP 2nd Reading:</h1>
           <label>120/50</label>
   
       </div>
 
-      <div class=" col-span-3 w-full px-5 mt-4 mb-4 relative">
+      <div class="text-sm col-span-3 w-full px-5 mb-5 relative">
       <h1 class="mb-1">Average Blood Pressure:</h1>
       <label>120/50</label>
       </div>
 
-      <div class=" col-span-3 w-full px-5 mt-4 mb-6 relative">
+      <div class="text-sm col-span-3 w-full px-5 mb-5 relative">
         <h1 class="mb-1">Raised Blood Pressure (>=140/90): <label>120/50</label></h1>
       </div>
     
@@ -53,35 +53,26 @@
   <div class="grid grid-cols-12 flex item-start flex-wrap shadow-md rounded-xl mb-8 mt-8">
 
     <div class="col-span-12 flex bg-blue-500 px-5 py-3 rounded-tl rounded-tr">
-      <h4 class="font-bold text-white text-md mt-2 mb-2">NCD High Risk Assessment</h4> 
-      <div class="py-2">
-        <fa-icon [icon]="faInforCircle" class="peer text-white hover:text-white z-50 px-2"></fa-icon>
-        <div
-            class="absolute text-sm bg-gradient-to-b from-stone-500 to-gray-400 p-2 rounded border border-gray-500  text-white drop-shadow-lg opacity-90 border-check z-50 w-60 invisible peer-hover:visible">
-            <h1 class="font-bold drop-shadow-lg">IMPORTANT</h1>
-            <p class="font-light drop-shadow-lg">Once saved, the information will be displayed in the input boxes
-                and shall not be editable unless Edit button is pressed.</p>
-        </div>
-    </div>
+      <h4 class="font-bold text-white text-md mt-2 mb-1">NCD High Risk Assessment</h4> 
     </div>
 
-    <div class=" col-span-4 px-5 mt-4 mb-4">
-        <h4 class="mb-2">Location:</h4>
-        <select class="form-select border-gray-300 border-2 px-2 pt-1 pb-1 rounded-md w-full bg-white">
+    <div class="text-sm col-span-4 px-5 mt-4 mb-4">
+        <h4 class="mb-1">Location:</h4>
+        <select class="text-sm form-select border-gray-200 border p-2.5 rounded-md w-full bg-white">
         <option *ngFor="let loc of location">{{loc.desc}}</option>
         </select>
     </div>
 
-    <div class=" col-span-4 px-5 mt-4 mb-4" ng-if="location == 'facility'">
-        <h4 class="mb-2">Client Type:</h4>
-        <select class="form-select border-gray-300 border-2 px-2 pt-1 pb-1 rounded-md w-full bg-white">
+    <div class="text-sm col-span-4 px-5 mt-4 mb-4" ng-if="location == 'facility'">
+        <h4 class="mb-1">Client Type:</h4>
+        <select class="text-sm form-select border-gray-200 border p-2.5 rounded-md w-full bg-white">
         <option *ngFor="let clients of client">{{clients.desc}}</option>
         </select>
     </div>
 
-    <div class=" col-span-4 px-5 mt-4 mb-6">
-        <h4 class="mb-2">Assessment Date:</h4>
-        <input class="form-select border-gray-300 border-2 px-2 pt-1 pb-1 rounded-md w-full bg-white"
+    <div class="text-sm col-span-4 px-5 mt-4 mb-6">
+        <h4 class="mb-1">Assessment Date:</h4>
+        <input class="text-sm form-select border-gray-200 border p-2.5 rounded-md w-full bg-white"
                 type="date" name="date" formControlName="aDate" required="true">
     </div>
 
@@ -90,66 +81,66 @@
   <!--Family History Section-->
   <div class="grid grid-cols-12 shadow-md rounded-xl mb-8">
       <div class="col-span-12 flex justify-between w-full bg-blue-500 px-5 py-3 rounded-tl rounded-tr">
-        <h4 class="font-bold text-white text-md mt-2 mb-2">Family History:</h4> 
+        <h4 class="font-bold text-white text-md mt-2 mb-1">Family History:</h4> 
         </div>
 
-        <div class=" col-span-4 w-full px-5 mt-4 mb-4">
+        <div class="text-sm col-span-4 w-full px-5 mt-4 mb-4">
             <h1 class="mb-1">Hypertension:</h1>
-            <select class="form-select border-gray-300 border-2 px-2 pt-1 pb-1 rounded-md w-full bg-white" ng-model="vm.ncd.family_hx_hypertension" name="family_hx_hypertension">
+            <select class="text-sm form-select border-gray-200 border p-2.5 rounded-md w-full bg-white" ng-model="vm.ncd.family_hx_hypertension" name="family_hx_hypertension">
             <option ng-value="logical.code" *ngFor="let logic of logical" [selected]="logic.code == 'N'">
             {{logic.desc}}
             </option>    
             </select>
         </div>
 
-        <div class=" col-span-4 w-full px-5 mt-4 mb-4">
+        <div class="text-sm col-span-4 w-full px-5 mt-4 mb-4">
           <h1 class="mb-1">Stroke:</h1>
-            <select class="form-select border-gray-300 border-2 px-2 pt-1 pb-1 rounded-md w-full bg-white" ng-model="vm.ncd.family_hx_hypertension" name="family_hx_hypertension">
+            <select class="text-sm form-select border-gray-200 border p-2.5 rounded-md w-full bg-white" ng-model="vm.ncd.family_hx_hypertension" name="family_hx_hypertension">
             <option ng-value="logical.code" *ngFor="let logic of logical" [selected]="logic.code == 'N'">
             {{logic.desc}}
             </option>    
             </select>
         </div>
 
-        <div class=" col-span-4 w-full px-5 mt-4 mb-4">
+        <div class="text-sm col-span-4 w-full px-5 mt-4 mb-4">
           <h1 class="mb-1">Heart Attack:</h1>
-            <select class="form-select border-gray-300 border-2 px-2 pt-1 pb-1 rounded-md w-full bg-white" ng-model="vm.ncd.family_hx_hypertension" name="family_hx_hypertension">
+            <select class="text-sm form-select border-gray-200 border p-2.5 rounded-md w-full bg-white" ng-model="vm.ncd.family_hx_hypertension" name="family_hx_hypertension">
             <option ng-value="logical.code" *ngFor="let logic of logical" [selected]="logic.code == 'N'">
             {{logic.desc}}
             </option>    
             </select>
         </div>
 
-        <div class=" col-span-4 w-full px-5 mt-4 mb-4">
+        <div class="text-sm col-span-4 w-full px-5 mb-4">
           <h1 class="mb-1">Diabetes:</h1>
-            <select class="form-select border-gray-300 border-2 px-2 pt-1 pb-1 rounded-md w-full bg-white" ng-model="vm.ncd.family_hx_hypertension" name="family_hx_hypertension">
+            <select class="text-sm form-select border-gray-200 border p-2.5 rounded-md w-full bg-white" ng-model="vm.ncd.family_hx_hypertension" name="family_hx_hypertension">
             <option ng-value="logical.code" *ngFor="let logic of logical" [selected]="logic.code == 'N'">
             {{logic.desc}}
             </option>    
             </select>
         </div>
 
-        <div class=" col-span-4 w-full px-5 mt-4 mb-4">
+        <div class="text-sm col-span-4 w-full px-5 mb-4">
           <h1 class="mb-1">Asthma:</h1>
-          <select class="form-select border-gray-300 border-2 px-2 pt-1 pb-1 rounded-md w-full bg-white" ng-model="vm.ncd.family_hx_hypertension" name="family_hx_hypertension">
+          <select class="text-sm form-select border-gray-200 border p-2.5 rounded-md w-full bg-white" ng-model="vm.ncd.family_hx_hypertension" name="family_hx_hypertension">
           <option ng-value="logical.code" *ngFor="let logic of logical" [selected]="logic.code == 'N'">
           {{logic.desc}}
           </option>    
           </select>
         </div>
 
-        <div class=" col-span-4 w-full px-5 mt-4 mb-4">
+        <div class="text-sm col-span-4 w-full px-5 mb-4">
           <h1 class="mb-1">Cancer:</h1>
-          <select class="form-select border-gray-300 border-2 px-2 pt-1 pb-1 rounded-md w-full bg-white" ng-model="vm.ncd.family_hx_hypertension" name="family_hx_hypertension">
+          <select class="text-sm form-select border-gray-200 border p-2.5 rounded-md w-full bg-white" ng-model="vm.ncd.family_hx_hypertension" name="family_hx_hypertension">
           <option ng-value="logical.code" *ngFor="let logic of logical" [selected]="logic.code == 'N'">
           {{logic.desc}}
           </option>    
           </select>
         </div>
 
-        <div class=" col-span-4 w-full px-5 mt-4 mb-6">
+        <div class="text-sm col-span-4 w-full px-5 mb-6">
           <h1 class="mb-1">Kidney Disease:</h1>
-          <select class="form-select border-gray-300 border-2 px-2 pt-1 pb-1 rounded-md w-full bg-white" ng-model="vm.ncd.family_hx_hypertension" name="family_hx_hypertension">
+          <select class="text-sm form-select border-gray-200 border p-2.5 rounded-md w-full bg-white" ng-model="vm.ncd.family_hx_hypertension" name="family_hx_hypertension">
           <option ng-value="logical.code" *ngFor="let logic of logical" [selected]="logic.code == 'N'">
           {{logic.desc}}
           </option>    
@@ -164,66 +155,66 @@
   <!--Personal / Socio History Section-->
   <div class="grid grid-cols-12 shadow-md rounded-xl mb-8">
     <div class="col-span-12 flex justify-between w-full bg-blue-500 px-5 py-3 rounded-tl rounded-tr">
-      <h4 class="font-bold text-white text-md mt-2 mb-2">Personal / Socio History:</h4> 
+      <h4 class="font-bold text-white text-md mt-2 mb-1">Personal / Socio History:</h4> 
       </div>
 
-      <div class=" col-span-4 w-full px-5 mt-4 mb-4 relative">
-          <h1 class="mb-1">Smoking (Tobacco / Cigarette):</h1>
-          <select class="form-select border-gray-300 border-2 px-2 pt-1 pb-1 rounded-md w-full bg-white" ng-model="vm.ncd.family_hx_hypertension" name="family_hx_hypertension">
+      <div class="text-sm col-span-4 w-full px-5 mt-4 mb-4 relative">
+          <h1 class="mb-1">Smoking:</h1>
+          <select class="text-sm form-select border-gray-200 border p-2.5 rounded-md w-full bg-white" ng-model="vm.ncd.family_hx_hypertension" name="family_hx_hypertension">
           <option ng-value="smoke.code" *ngFor="let smoke of smoking" [selected]="smoke.code == '1'">
           {{smoke.desc}}
           </option>    
           </select>
       </div>
 
-      <div class=" col-span-4 w-full px-5 mt-4 mb-4 relative">
+      <div class="text-sm col-span-4 w-full px-5 mt-4 mb-4 relative">
         <h1 class="mb-1">Alcohol Intake:</h1>
-          <select class="form-select border-gray-300 border-2 px-2 pt-1 pb-1 rounded-md w-full bg-white" ng-model="vm.ncd.family_hx_hypertension" name="family_hx_hypertension">
+          <select class="text-sm -select border-gray-200 border p-2.5 rounded-md w-full bg-white" ng-model="vm.ncd.family_hx_hypertension" name="family_hx_hypertension">
           <option ng-value="alco.code" *ngFor="let alco of alcohol" [selected]="alco.code == 'N'">
           {{alco.desc}}
           </option>    
           </select>
       </div>
 
-      <div class=" col-span-4 w-full px-5 mt-4 mb-4 relative">
+      <div class="text-sm col-span-4 w-full px-5 mt-4 mb-4 relative">
         <h1 class="mb-1">Excessive Alcohol Intake:</h1>
-          <select class="form-select border-gray-300 border-2 px-2 pt-1 pb-1 rounded-md w-full bg-white" ng-model="vm.ncd.family_hx_hypertension" name="family_hx_hypertension">
+          <select class="text-sm form-select border-gray-200 border p-2.5 rounded-md w-full bg-white" ng-model="vm.ncd.family_hx_hypertension" name="family_hx_hypertension">
           <option ng-value="logical2.code" *ngFor="let logic2 of logical2" [selected]="logic2.code == 'N'">
           {{logic2.desc}}
           </option>    
           </select>
       </div>
 
-      <div class=" col-span-4 w-full px-5 mt-4 mb-4 relative">
+      <div class="text-sm col-span-4 w-full px-5 mt-4 mb-4 relative">
         <h1 class="mb-1">High Fat / High Salt Intake:</h1>
-          <select class="form-select border-gray-300 border-2 px-2 pt-1 pb-1 rounded-md w-full bg-white" ng-model="vm.ncd.family_hx_hypertension" name="family_hx_hypertension">
+          <select class="text-sm form-select border-gray-200 border p-2.5 rounded-md w-full bg-white" ng-model="vm.ncd.family_hx_hypertension" name="family_hx_hypertension">
           <option ng-value="logical2.code" *ngFor="let logic2 of logical2" [selected]="logic2.code == 'N'">
           {{logic2.desc}}
           </option>    
           </select>
       </div>
 
-      <div class=" col-span-4 w-full px-5 mt-4 mb-4 relative">
-        <h1 class="mb-1">Dietary Fiber Intake of Vegetables:</h1>
-        <select class="form-select border-gray-300 border-2 px-2 pt-1 pb-1 rounded-md w-full bg-white" ng-model="vm.ncd.family_hx_hypertension" name="family_hx_hypertension">
-        <option ng-value="logical2.code" *ngFor="let logic2 of logical2" [selected]="logic2.code == 'N'">
-        {{logic2.desc}}
-        </option>    
-        </select>
-      </div>
-
-      <div class=" col-span-4 w-full px-5 mt-4 mb-4 relative">
+      <div class="text-sm col-span-4 w-full px-5 mt-4 mb-4 relative">
         <h1 class="mb-1">Dietary Fiber Intake of Fruits:</h1>
-        <select class="form-select border-gray-300 border-2 px-2 pt-1 pb-1 rounded-md w-full bg-white" ng-model="vm.ncd.family_hx_hypertension" name="family_hx_hypertension">
+        <select class="text-sm form-select border-gray-200 border p-2.5 rounded-md w-full bg-white" ng-model="vm.ncd.family_hx_hypertension" name="family_hx_hypertension">
         <option ng-value="logical2.code" *ngFor="let logic2 of logical2" [selected]="logic2.code == 'N'">
         {{logic2.desc}}
         </option>    
         </select>
       </div>
 
-      <div class=" col-span-4 w-full px-5 mt-4 mb-6 relative">
+      <div class="text-sm col-span-4 w-full px-5 mt-4 mb-4 relative">
         <h1 class="mb-1">Physical Activity:</h1>
-        <select class="form-select border-gray-300 border-2 px-2 pt-1 pb-1 rounded-md w-full bg-white" ng-model="vm.ncd.family_hx_hypertension" name="family_hx_hypertension">
+        <select class="text-sm form-select border-gray-200 border p-2.5 rounded-md w-full bg-white" ng-model="vm.ncd.family_hx_hypertension" name="family_hx_hypertension">
+        <option ng-value="logical2.code" *ngFor="let logic2 of logical2" [selected]="logic2.code == 'N'">
+        {{logic2.desc}}
+        </option>    
+        </select>
+      </div>
+
+      <div class="text-sm col-span-4 w-full px-5 mt-4 mb-6 relative">
+        <h1 class="mb-1">Dietary Fiber Intake of Vegetables:</h1>
+        <select class="text-sm form-select border-gray-200 border p-2.5 rounded-md w-full bg-white" ng-model="vm.ncd.family_hx_hypertension" name="family_hx_hypertension">
         <option ng-value="logical2.code" *ngFor="let logic2 of logical2" [selected]="logic2.code == 'N'">
         {{logic2.desc}}
         </option>    
@@ -238,12 +229,12 @@
 <!--Presence or Absence of Diabetes Section-->
 <div class="grid grid-cols-12 shadow-md rounded-xl mb-8">
   <div class="col-span-12 flex justify-between w-full bg-blue-500 px-5 py-3 rounded-tl rounded-tr">
-    <h4 class="font-bold text-white text-md mt-2 mb-2">Presence or Absence of Diabetes:</h4> 
+    <h4 class="font-bold text-white text-md mt-2 mb-1">Presence or Absence of Diabetes:</h4> 
     </div>
 
-    <div class=" col-span-4 w-full px-5 mt-4 mb-6 relative">
+    <div class="text-sm col-span-4 w-full px-5 mt-4 mb-6 relative">
         <h1 class="mb-1">Diagnose with Diabetes:</h1>
-        <select class="form-select border-gray-300 border-2 px-2 pt-1 pb-1 rounded-md w-full bg-white" ng-model="vm.ncd.family_hx_hypertension" name="family_hx_hypertension">
+        <select class="text-sm form-select border-gray-200 border p-2.5 rounded-md w-full bg-white" ng-model="vm.ncd.family_hx_hypertension" name="family_hx_hypertension">
         <option ng-value="logical.code" *ngFor="let logic of logical" [selected]="logic.code == 'N'">
         {{logic.desc}}
         </option>    

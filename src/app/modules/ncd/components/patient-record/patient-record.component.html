@@ -2,7 +2,7 @@
 
   <div class="col-span-12 flex bg-blue-500 px-5 py-3 rounded-tl rounded-tr">
     <h4 class="font-bold text-white text-md mt-2 mb-2">Patient NCD Consulting Record</h4> 
-    <div class="py-2">
+    <div class="">
       <fa-icon [icon]="faInfoCircle" class="peer text-white hover:text-white z-50 px-2"></fa-icon>
       <div
           class="absolute text-sm bg-gradient-to-b from-stone-500 to-gray-400 p-2 rounded border border-gray-500  text-white drop-shadow-lg opacity-90 border-check z-50 w-60 invisible peer-hover:visible">
@@ -13,15 +13,15 @@
   </div>
   </div>
 
-  <div class="col-start-1 col-span-4 px-5 mt-4 mb-6">
-      <h4 class="mb-2">Consultation Date:</h4>
-      <input class="border-2 border-gray-300 px-2 py-1 rounded bg-white w-full"
+  <div class="text-sm col-start-1 col-span-4 px-5 mt-4 mb-6">
+      <h4 class="mb-1">Consultation Date:</h4>
+      <input class="text-sm border border-gray-200 p-2.5 rounded bg-white w-full"
               type="date" name="date" formControlName="aDate" required="true">
   </div>
 
-  <div class="col-start-7 col-span-4 px-5 mt-4 mb-6">
-    <h4 class="mb-2">Current Medication:</h4>
-    <input class="border-2 border-gray-300 px-2 py-1 rounded bg-white w-full"
+  <div class="text-sm col-start-7 col-span-4 px-5 mt-4 mb-6">
+    <h4 class="mb-1">Current Medication:</h4>
+    <input class="text-sm border border-gray-200 p-2.5 rounded bg-white w-full"
             type="text" name="text" formControlName="meds" required="true">
 </div>
 
@@ -31,7 +31,7 @@
 
   <div class="col-span-12 flex bg-blue-500 px-5 py-3 rounded-tl rounded-tr">
     <h4 class="font-bold text-white text-md mt-2 mb-2">Diagnosis & Associated Clinical Conditions</h4> 
-    <div class="py-2">
+    <div class="">
       <fa-icon [icon]="faInfoCircle" class="peer text-white hover:text-white z-50 px-2"></fa-icon>
       <div
           class="absolute text-sm bg-gradient-to-b from-stone-500 to-gray-400 p-2 rounded border border-gray-500  text-white drop-shadow-lg opacity-90 border-check z-50 w-60 invisible peer-hover:visible">
@@ -42,8 +42,8 @@
   </div>
   </div>
 
-<div *ngFor="let diag of diagnosis" class="col-span-4 w-full px-5 mt-4 mb-4">
-        <input type="checkbox" class="form-checkbox h-5 w-5 border-gray-400 text-blue-500 rounded-full"><span class="ml-1 align-middle"> {{diag.desc}}</span> 
+<div *ngFor="let diag of diagnosis" class="text-sm col-span-4 w-full px-5 mt-4 mb-4">
+        <input type="checkbox" id="diagnosiscond" class="form-checkbox h-4 w-4 border-gray-400 text-blue-500 rounded-full"><label for="diagnosiscond" class="ml-1 align-middle"> {{diag.desc}}</label> 
 </div>
 
 </div>
@@ -52,7 +52,7 @@
 
   <div class="col-span-12 flex bg-blue-500 px-5 py-3 rounded-tl rounded-tr">
     <h4 class="font-bold text-white text-md mt-2 mb-2">Target Organ Damage</h4> 
-    <div class="py-2">
+    <div class="">
       <fa-icon [icon]="faInfoCircle" class="peer text-white hover:text-white z-50 px-2"></fa-icon>
       <div
           class="absolute text-sm bg-gradient-to-b from-stone-500 to-gray-400 p-2 rounded border border-gray-500  text-white drop-shadow-lg opacity-90 border-check z-50 w-60 invisible peer-hover:visible">
@@ -63,8 +63,8 @@
   </div>
   </div>
 
-<div *ngFor="let organ of target_organ" class="col-span-4 w-full px-5 mt-4 mb-4">
-        <input type="checkbox" class="form-checkbox h-5 w-5 border-gray-400 border-2 text-blue-500 rounded-full"><span class="ml-1 align-middle"> {{organ.desc}}</span> 
+<div *ngFor="let organ of target_organ" class="text-sm col-span-4 w-full px-5 mt-4 mb-4">
+        <input type="checkbox" class="form-checkbox h-4 w-4 border-gray-400 border text-blue-500 rounded-full"><span class="ml-1 align-middle"> {{organ.desc}}</span> 
 </div>
 
 </div>
@@ -73,7 +73,7 @@
 
   <div class="col-span-12 flex bg-blue-500 px-5 py-3 rounded-tl rounded-tr">
     <h4 class="font-bold text-white text-md mt-2 mb-2">Physical Examination</h4> 
-    <div class="py-2">
+    <div class="">
       <fa-icon [icon]="faInfoCircle" class="peer text-white hover:text-white z-50 px-2"></fa-icon>
       <div
           class="absolute text-sm bg-gradient-to-b from-stone-500 to-gray-400 p-2 rounded border border-gray-500  text-white drop-shadow-lg opacity-90 border-check z-50 w-60 invisible peer-hover:visible">
@@ -84,54 +84,54 @@
   </div>
   </div>
 
-  <div class=" col-span-4 w-full px-5 mt-4 mb-4">
+  <div class="text-sm col-span-4 w-full px-5 mt-4 mb-4">
     <h1 class="mb-1">Palpatation of the Heart:</h1>
-    <select class="form-select bg-white border-gray-300 border-2 px-2 pt-1 pb-1 rounded-md w-full" ng-model="vm.ncd.family_hx_hypertension" name="family_hx_hypertension">
+    <select class="text-sm form-select bg-white border-gray-200 border p-2.5 rounded-md w-full" ng-model="vm.ncd.family_hx_hypertension" name="family_hx_hypertension">
     <option ng-value="pe.desc" *ngFor="let pe of physical_examination" [selected]="pe.desc == 'Normal'">
     {{pe.desc}}
     </option>    
     </select>
 </div>
 
-<div class=" col-span-4 w-full px-5 mt-4 mb-4">
+<div class="text-sm col-span-4 w-full px-5 mt-4 mb-4">
   <h1 class="mb-1">Palpatation of Peripherals Pulses:</h1>
-  <select class="form-select bg-white border-gray-300 border-2 px-2 pt-1 pb-1 rounded-md w-full" ng-model="vm.ncd.family_hx_hypertension" name="family_hx_hypertension">
+  <select class="text-sm form-select bg-white border-gray-200 border p-2.5 rounded-md w-full" ng-model="vm.ncd.family_hx_hypertension" name="family_hx_hypertension">
   <option ng-value="pe.desc" *ngFor="let pe of physical_examination" [selected]="pe.desc == 'Normal'">
   {{pe.desc}}
   </option>    
   </select>
 </div>
 
-<div class=" col-span-4 w-full px-5 mt-4 mb-4">
+<div class="text-sm col-span-4 w-full px-5 mt-4 mb-4">
   <h1 class="mb-1">Palpatation of Abdomen:</h1>
-  <select class="form-select bg-white border-gray-300 border-2 px-2 pt-1 pb-1 rounded-md w-full" ng-model="vm.ncd.family_hx_hypertension" name="family_hx_hypertension">
+  <select class="text-sm form-select bg-white border-gray-200 border p-2.5 rounded-md w-full" ng-model="vm.ncd.family_hx_hypertension" name="family_hx_hypertension">
   <option ng-value="pe.desc" *ngFor="let pe of physical_examination" [selected]="pe.desc == 'Normal'">
   {{pe.desc}}
   </option>    
   </select>
 </div>
 
-<div class=" col-span-4 w-full px-5 mt-4 mb-4">
+<div class="text-sm col-span-4 w-full px-5 mb-4">
   <h1 class="mb-1">Auscultation of Heart:</h1>
-  <select class="form-select bg-white border-gray-300 border-2 px-2 pt-1 pb-1 rounded-md w-full" ng-model="vm.ncd.family_hx_hypertension" name="family_hx_hypertension">
+  <select class="text-sm form-select bg-white border-gray-200 border p-2.5 rounded-md w-full" ng-model="vm.ncd.family_hx_hypertension" name="family_hx_hypertension">
   <option ng-value="pe.desc" *ngFor="let pe of physical_examination" [selected]="pe.desc == 'Normal'">
   {{pe.desc}}
   </option>    
   </select>
 </div>
 
-<div class=" col-span-4 w-full px-5 mt-4 mb-4">
+<div class="text-sm col-span-4 w-full px-5 mb-4">
   <h1 class="mb-1">Auscultation of Lungs:</h1>
-  <select class="form-select bg-white border-gray-300 border-2 px-2 pt-1 pb-1 rounded-md w-full" ng-model="vm.ncd.family_hx_hypertension" name="family_hx_hypertension">
+  <select class="text-sm form-select bg-white border-gray-200 border p-2.5 rounded-md w-full" ng-model="vm.ncd.family_hx_hypertension" name="family_hx_hypertension">
   <option ng-value="pe.desc" *ngFor="let pe of physical_examination" [selected]="pe.desc == 'Normal'">
   {{pe.desc}}
   </option>    
   </select>
 </div>
 
-<div class=" col-span-4 w-full px-5 mt-4 mb-4">
+<div class="text-sm col-span-4 w-full px-5 mb-4">
   <h1 class="mb-1">Sensation of Feet and Foot pulses:</h1>
-  <select class="form-select bg-white border-gray-300 border-2 px-2 pt-1 pb-1 rounded-md w-full" ng-model="vm.ncd.family_hx_hypertension" name="family_hx_hypertension">
+  <select class="text-sm form-select bg-white border-gray-200 border p-2.5 rounded-md w-full" ng-model="vm.ncd.family_hx_hypertension" name="family_hx_hypertension">
   <option ng-value="pe.desc" *ngFor="let pe of physical_examination" [selected]="pe.desc == 'Normal'">
   {{pe.desc}}
   </option>    
@@ -144,7 +144,7 @@
 
   <div class="col-span-12 flex bg-blue-500 px-5 py-3 rounded-tl rounded-tr">
     <h4 class="font-bold text-white text-md mt-2 mb-2">Provided Counselling On</h4> 
-    <div class="py-2">
+    <div class="">
       <fa-icon [icon]="faInfoCircle" class="peer text-white hover:text-white z-50 px-2"></fa-icon>
       <div
           class="absolute text-sm bg-gradient-to-b from-stone-500 to-gray-400 p-2 rounded border border-gray-500  text-white drop-shadow-lg opacity-90 border-check z-50 w-60 invisible peer-hover:visible">
@@ -155,8 +155,8 @@
   </div>
   </div>
 
-<div *ngFor="let coun of counselling" class="col-span-4 w-full px-5 mt-4 mb-4">
-        <input type="checkbox" class="form-checkbox h-5 w-5 border-gray-400 text-blue-500 rounded-full"><span class="ml-1 align-middle"> {{coun.desc}}</span> 
+<div *ngFor="let coun of counselling" class="text-sm col-span-4 w-full px-5 mt-4 mb-4">
+        <input type="checkbox" class="form-checkbox h-4 w-4 border-gray-300 text-blue-500 rounded-full"><span class="ml-1 align-middle"> {{coun.desc}}</span> 
 </div>
 
 </div>
@@ -176,8 +176,8 @@
   </div>
   </div>
 
-<div class="col-span-12 col-start-1 w-full px-5 mt-4 mb-4">
-      <input type="text" placeholder="Write here.." class="border-2 border-gray-300 px-5 py-1 rounded bg-white w-full">
+<div class="text sm col-span-12 col-start-1 w-full px-5 mt-4 mb-4">
+      <input type="text" placeholder="Write here.." class="text-sm border border-gray-200 p-2.5 rounded bg-white w-full">
 </div>
 
 </div>
