@@ -1,37 +1,20 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { ChartOptions, WeightChart } from '../patient-itr/declarations/chart-options';
 import { ChartComponent } from "ng-apexcharts";
-import { openCloseTrigger } from './declarations/animation';
-import { ChartOptions, WeightChart } from './declarations/chart-options';
-import { MedicalJournal } from './data/sample-journal';
-import { NavigationEnd, Router } from '@angular/router';
-import { filter, tap } from "rxjs/operators";
 
 @Component({
-  selector: 'app-patient-itr',
-  templateUrl: './patient-itr.component.html',
-  styleUrls: ['./patient-itr.component.scss'],
-  animations: [openCloseTrigger]
+  selector: 'app-consultation',
+  templateUrl: './consultation.component.html',
+  styleUrls: ['./consultation.component.scss']
 })
-export class PatientItrComponent implements OnInit {
-  show_details:boolean = true;
-  showModal:boolean = false;
-  medical_journal = MedicalJournal;
-
-  open_details(){
-    this.show_details = !this.show_details;
-  }
+export class ConsultationComponent implements OnInit {
+  public WeightChart: Partial<WeightChart>;
+  public chartOptions: Partial<ChartOptions>;
 
   @ViewChild("bp-chart") bp_chart: ChartComponent;
   @ViewChild("weight-chart") weight_chart: ChartComponent;
-  public chartOptions: Partial<ChartOptions>;
-  public WeightChart: Partial<WeightChart>;
-  /* get openCloseTrigger() {
-    return this.show_details ? "open" : "closed";
-  } */
 
-  constructor(
-    private router: Router
-  ) {
+  constructor() {
     this.chartOptions = {
       series: [
         {
@@ -115,16 +98,7 @@ export class PatientItrComponent implements OnInit {
     };
   }
 
-  toggleModal(){
-    this.showModal = !this.showModal;
-  }
-
-  navigationEnd$ = this.router.events.pipe(
-    filter(event => event instanceof NavigationEnd),
-    tap(() => (this.show_details = false))
-  );
-
   ngOnInit(): void {
-    this.navigationEnd$.subscribe();
   }
+
 }
