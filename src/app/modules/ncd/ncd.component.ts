@@ -9,7 +9,9 @@ export class NcdComponent implements OnInit {
 
   module: Number;
   modules: Number;
-  constructor() { }
+  constructor() {
+    
+   }
 
   ngOnInit(): void {
     this.module=1;
