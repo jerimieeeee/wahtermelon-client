@@ -29,8 +29,116 @@
       </div>
     </div>
 
-    <div class="block shadow px-2 py-2 mt-4 rounded-xl text-gray-600 border border-slate-100">
+    <div class="block shadow p-4 mt-4 rounded-xl text-gray-600 border border-slate-100">
       <span class="text-sky-500 font-bold">Consultation</span>
+
+      <div class="mt-4">
+        <div class="grid grid-cols-10">
+          <div class="col-span-2 pt-2">
+            Chief Complaint
+          </div>
+          <div class="col-span-8">
+            <div class="block mb-2 p-3 w-full rounded-md border-solid border bg-gray-50 border-gray-300">
+              <span class="p-2 bg-blue-400 rounded-full text-gray-50 cursor-pointer">Headache x</span>
+            </div>
+            <div class="block">
+              <textarea rows="3" id="complaint_notes" placeholder="Complaint Notes" class="w-full rounded-md border-gray-300 bg-gray-50"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-4">
+        <div class="grid grid-cols-10">
+          <div class="col-span-2 pt-2">
+            History of Current Illness
+          </div>
+          <div class="col-span-8">
+            <div class="block">
+              <textarea rows="3" id="complaint_notes" placeholder="Current Illness Notes" class="w-full rounded-md border-gray-300 bg-gray-50"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-4">
+        <div class="grid grid-cols-10">
+          <div class="col-span-2 pt-2">
+            Physical Exam
+          </div>
+          <div class="col-span-8">
+            <div class="block mb-2 p-3 w-full rounded-md border-solid border bg-gray-50 border-gray-300">
+              <span class="p-2 bg-blue-400 rounded-full text-gray-50 cursor-pointer">Headache x</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-4">
+        <div class="grid grid-cols-10">
+          <div class="col-span-2 pt-2">
+            Diagnosis History
+          </div>
+          <div class="col-span-8">
+            <div class="rounded-md border border-solid border-gray-300">
+              <span class="rounded-t-md m-0 p-2 font-semibold text-gray-50 block bg-teal-600">
+                Previous Diagnosis
+              </span>
+              <table class="w-full table-auto">
+                <thead>
+                  <tr class="border-b border-solid border-gray-200">
+                    <th>Date</th>
+                    <th>Initial Diagnosis</th>
+                    <th>Final Diagnosis</th>
+                    <th>Precription</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="text-center px-4">
+                    <td>09/01/2022</td>
+                    <td>Sample dx</td>
+                    <td>Sample dx</td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-4">
+        <div class="grid grid-cols-10">
+          <div class="col-span-2 pt-2">
+            Initial Diagnosis
+          </div>
+          <div class="col-span-8">
+            <div class="block mb-2 p-3 w-full rounded-md border-solid border bg-gray-50 border-gray-300">
+              <span class="p-2 bg-blue-400 rounded-full text-gray-50 cursor-pointer">Headache x</span>
+            </div>
+            <div class="block">
+              <textarea rows="3" id="intial_dx" placeholder="Initial Diagnosis" class="w-full rounded-md border-gray-300 bg-gray-50"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-4">
+        <div class="grid grid-cols-10">
+          <div class="col-span-2 pt-2">
+            Final Diagnosis
+          </div>
+          <div class="col-span-8">
+            <div class="block mb-2 p-3 w-full rounded-md border-solid border bg-gray-50 border-gray-300">
+              <span class="p-2 bg-blue-400 rounded-full text-gray-50 cursor-pointer">Headache x</span>
+            </div>
+            <div class="block">
+              <textarea rows="3" id="final_dx" placeholder="Final Diagnosis" class="w-full rounded-md border-gray-300 bg-gray-50"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 
