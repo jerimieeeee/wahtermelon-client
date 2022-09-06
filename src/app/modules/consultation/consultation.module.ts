@@ -5,6 +5,7 @@ import { ConsultationRoutingModule } from './consultation-routing.module';
 import { ConsultationComponent } from './consultation.component';
 import { SharedComponentsModule } from 'app/shared/shared-components/shared-components.module';
 import { NgApexchartsModule } from 'ng-apexcharts';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { NgApexchartsModule } from 'ng-apexcharts';
     CommonModule,
     ConsultationRoutingModule,
     SharedComponentsModule,
-    NgApexchartsModule
+    NgApexchartsModule,
+    FontAwesomeModule
   ]
 })
 export class ConsultationModule { }

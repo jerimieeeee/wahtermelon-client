@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ChartOptions, WeightChart } from '../patient-itr/declarations/chart-options';
 import { ChartComponent } from "ng-apexcharts";
+import { faExternalLinkSquare, faPlusSquare } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-consultation',
@@ -10,6 +11,8 @@ import { ChartComponent } from "ng-apexcharts";
 export class ConsultationComponent implements OnInit {
   public WeightChart: Partial<WeightChart>;
   public chartOptions: Partial<ChartOptions>;
+
+  faPlusSquare = faPlusSquare;
 
   @ViewChild("bp-chart") bp_chart: ChartComponent;
   @ViewChild("weight-chart") weight_chart: ChartComponent;
