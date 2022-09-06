@@ -7,13 +7,13 @@
         [class]="modules==1? 'text-blue-500 border-b-2 border-blue-500 font-bold' : 'hover:-translate-y-1 hover:scale-110 transition ease-in-out delay-400 duration-300' ">
             NCD HISTORY
         </button>
-        <button (click)="switchTabs(2)" class="text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 border-b-2 border-gray-200 mr-6 pb-2"
+        <button (click)="switchTabs(2)" class="text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 mr-6 pb-2"
         [class]="modules==2? 'text-blue-500 border-b-2 border-blue-500 font-bold' : 'hover:-translate-y-1 hover:scale-110 transition ease-in-out delay-400 duration-300' ">
             NCD CONSULT
         </button>
     </nav>
     <div class="ml-auto" *ngIf="modules==2">
-      <button type="button" class="px-3 pt-2.5 pb-2 bg-red-500 text-white font-semibold text-md leading-normal rounded focus:shadow-lg focus:outline-none hover:ring-2 hover:ring-red-300 transition duration-150 ease-in-out transform hover:scale-110 flex align-center">
+      <button type="button" class="px-3 pt-2.5 pb-2 bg-orange-500 text-white font-semibold text-md leading-normal rounded focus:shadow-lg focus:outline-none hover:ring-2 hover:ring-orange-300 transition duration-150 ease-in-out transform hover:scale-110 flex align-center">
       <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-door-exit mr-1" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
         <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
         <path d="M13 12v.01"></path>
@@ -29,7 +29,7 @@
 
   <div class="text-gray-600 border border-slate-100 mt-5"></div>
   
-  <nav class="mt-4 flex flex-row whitespace-nowrap md:text-xs overflow-x-auto no-scrollbar lg:text-sm">
+  <nav class="mt-4 flex flex-row whitespace-nowrap sm:text-xs md:text-xs overflow-x-auto no-scrollbar lg:text-xs">
     <button (click)="switchTab(1)" class="text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 border-b-2 border-gray-200 mr-6 pb-2"
     [class]="module==1? 'text-blue-500 border-b-2 border-blue-500 font-bold' : 'hover:-translate-y-1 hover:scale-110 transition ease-in-out delay-400 duration-300' ">
         RISK ASSESSMENT

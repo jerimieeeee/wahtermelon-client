@@ -48,3 +48,7 @@
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }
+
+select option:disabled {
+  display:none;
+}

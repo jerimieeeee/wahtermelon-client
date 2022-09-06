@@ -62,7 +62,7 @@
                      Month
                       </th>
                       <th scope="col" class="py-4 px-12">
-                      Status
+                      EBF Status
                       </th>
                       <th scope="col" class="py-4 pr-12">
                       Reason for Stopping
@@ -81,6 +81,7 @@
                       </td>
                       <td class="py-4 px-12 text-sm" *ngIf="month.ischecked">
                         <select class="select rounded-md text-sm" name="" id="" style="width:100%;">
+                          <option value="" disabled selected>Select Status</option>
                           <option class="" *ngFor="let items of ebf">
                           {{items.desc}}
                           </option>
@@ -88,6 +89,7 @@
                       </td>
                       <td class="py-4 pr-12 text-sm" *ngIf="month.ischecked">
                         <select class="select rounded-md text-sm" name="" id="" style="width:100%;">
+                          <option value="" disabled selected>Select Reason</option>
                           <option class="" value="" *ngFor="let reason of reasons">
                           {{reason.desc}}
                           </option>
