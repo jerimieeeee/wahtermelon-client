@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ChartOptions, WeightChart } from '../patient-itr/declarations/chart-options';
 import { ChartComponent } from "ng-apexcharts";
-import { faExternalLinkSquare, faPlusSquare } from '@fortawesome/free-solid-svg-icons';
+import { faCircleNotch, faExternalLinkSquare, faPlusSquare, faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-consultation',
@@ -11,8 +11,10 @@ import { faExternalLinkSquare, faPlusSquare } from '@fortawesome/free-solid-svg-
 export class ConsultationComponent implements OnInit {
   public WeightChart: Partial<WeightChart>;
   public chartOptions: Partial<ChartOptions>;
-
   faPlusSquare = faPlusSquare;
+  faSpinner = faCircleNotch;
+
+  is_saving: boolean = false;
 
   @ViewChild("bp-chart") bp_chart: ChartComponent;
   @ViewChild("weight-chart") weight_chart: ChartComponent;
@@ -99,6 +101,14 @@ export class ConsultationComponent implements OnInit {
         }
       }
     };
+  }
+
+  saveConsult(){
+    this.is_saving = true;
+
+    setTimeout(() => {
+      this.is_saving = false;
+    }, 5000);
   }
 
   ngOnInit(): void {
