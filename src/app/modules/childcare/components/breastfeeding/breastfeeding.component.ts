@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { faSearch,faBalanceScale,faPlus, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
+import { faSearch,faBalanceScale,faPlus, faInfoCircle, faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import { FormBuilder, FormGroup,FormArray,FormControl,Validators,} from '@angular/forms';
 import * as moment from 'moment';
 
@@ -16,6 +16,10 @@ export class BreastfeedingComponent implements OnInit {
   faSearch = faSearch;
   faPlus = faPlus;
   faInfoCircle = faInfoCircle;
+  faSpinner = faCircleNotch;
+
+  is_saving: boolean = false;
+
   todaysDate = new Date();
 
  
@@ -24,6 +28,15 @@ export class BreastfeedingComponent implements OnInit {
   toggleBreastfeedingModal(){
     this.showBreastfeedingModal = !this.showBreastfeedingModal;
   }
+
+  saveModal(){
+    this.is_saving = true;
+
+    setTimeout(() => {
+      this.is_saving = false;
+    }, 5000);
+  }
+
 
   ebf = [
     {code: 'Y', desc: 'Yes'},
