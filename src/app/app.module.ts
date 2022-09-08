@@ -12,6 +12,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule } from '@angular/forms';
 import { NgApexchartsModule } from 'ng-apexcharts';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 
 
@@ -30,7 +31,8 @@ import { NgApexchartsModule } from 'ng-apexcharts';
     HttpClientModule,
     NgSelectModule,
     FormsModule,
-    NgApexchartsModule,
+    NgApexchartsModule, 
+    Ng2SearchPipeModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

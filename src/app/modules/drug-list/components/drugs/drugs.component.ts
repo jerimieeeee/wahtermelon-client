@@ -19,6 +19,8 @@ export class DrugsComponent implements OnInit {
   is_searching3: boolean = true;
   is_searching4: boolean = false;
 
+  filterTerm!: string;
+
   showDrugListModal = false;
   showAddDrugModal = false;
   
