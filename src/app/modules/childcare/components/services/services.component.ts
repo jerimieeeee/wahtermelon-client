@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { faSearch,faBalanceScale,faPlus,faInfoCircle } from '@fortawesome/free-solid-svg-icons';
+import { faSearch,faBalanceScale,faPlus,faInfoCircle, faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import { FormBuilder, FormGroup,FormArray,FormControl,Validators,} from '@angular/forms';
 
 @Component({
@@ -18,6 +18,9 @@ export class ServicesComponent implements OnInit {
   faSearch = faSearch;
   faPlus = faPlus;
   faInfoCircle = faInfoCircle;
+  faSpinner = faCircleNotch;
+
+  is_saving: boolean = false;
 
   defaultDate = new Date().toISOString().slice(0, 16);
 
@@ -65,6 +68,14 @@ export class ServicesComponent implements OnInit {
   showVaccineModal = false;
   toggleVaccineModal(){
     this.showVaccineModal = !this.showVaccineModal;
+  }
+
+  saveModal(){
+    this.is_saving = true;
+
+    setTimeout(() => {
+      this.is_saving = false;
+    }, 5000);
   }
 
   constructor() { 
