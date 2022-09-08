@@ -3,14 +3,14 @@
   <!--Admission Date & Time Section-->
   <div class="flex item-start flex-wrap shadow-md rounded-xl pb-5 mb-5">
 
-    <div *ngIf="is_searching" class="flex justify-between w-full bg-blue-500 px-5 py-3 rounded-tl rounded-tr">
+    <div *ngIf="is_searching" class="flex justify-between w-full bg-blue-500 px-5 py-4 rounded-tl rounded-tr">
       <h4 class="font-bold text-white text-md mt-1">Drug List</h4>
       <button type="button" class="px-4 py-1.5 text-white hover:bg-white hover:text-gray-600 hover:rounded hover:shadow-md font-semibold text-md leading-normal hover:ring-2 hover:ring-gray-300 transition duration-150 ease-in-out flex align-center transform hover:scale-110" (click)="toggleSearch()">
         <fa-icon  [icon]="faSearch"></fa-icon>
       </button>  
     </div>
 
-    <div *ngIf="is_searching2" class="grid grid-cols-12 flex justify-between w-full bg-blue-500 px-5 py-3 rounded-tl rounded-tr">
+    <div *ngIf="is_searching2" class="grid grid-cols-12 flex justify-between w-full bg-blue-500 px-5 py-4 rounded-tl rounded-tr">
      
         <div class="relative w-full col-span-10">
             <div class="flex w-full absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
@@ -169,14 +169,14 @@
           <!-- Modal content -->
           <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
               <!-- Modal header -->
-              <div *ngIf="is_searching3" class="flex justify-between w-full bg-blue-500 px-5 py-3 rounded-tl rounded-tr">
+              <div *ngIf="is_searching3" class="flex justify-between w-full bg-blue-500 px-5 py-4 rounded-tl rounded-tr">
                 <h4 class="font-bold text-white text-md mt-1">Drug List</h4>
                 <button type="button" class="px-4 py-1.5 text-white hover:bg-white hover:text-gray-600 hover:rounded hover:shadow-md font-semibold text-md leading-normal hover:ring-2 hover:ring-gray-300 transition duration-150 ease-in-out flex align-center transform hover:scale-110" (click)="toggleSearch2()">
                   <fa-icon  [icon]="faSearch"></fa-icon>
                 </button>  
               </div>
 
-              <div *ngIf="is_searching4" class="grid grid-cols-12 flex justify-between w-full bg-blue-500 px-5 py-3 rounded-tl rounded-tr">
+              <div *ngIf="is_searching4" class="grid grid-cols-12 flex justify-between w-full bg-blue-500 px-5 py-4 rounded-tl rounded-tr">
      
                 <div class="relative w-full col-span-10">
                     <div class="flex w-full absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
@@ -241,7 +241,7 @@
                     </thead>
                     <tbody>
                         <tr *ngFor="let drug of lib_drugs" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                            <th scope="row" class="py-4 px-6 font-medium text-blue-500 whitespace-nowrap dark:text-white">
+                            <th scope="row" class="py-4 px-6 font-medium text-blue-500 whitespace-nowrap dark:text-white cursor-pointer">
                                {{drug.bname}}
                             </th>
                             <td class="py-4 px-6">
@@ -272,7 +272,7 @@
                                 <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
                             </td>
                             <td class="py-4 px-6 text-right">
-                              <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Delete</a>
+                              <a href="#" class="font-medium text-red-500 dark:text-blue-500 hover:underline">Delete</a>
                           </td>
                         </tr>
                     </tbody>
@@ -339,7 +339,7 @@
         <!-- Modal content -->
         <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
             <!-- Modal header -->
-            <div class="flex justify-between w-full bg-blue-500 px-5 py-3 rounded-tl rounded-tr">
+            <div class="flex justify-between w-full bg-blue-500 px-5 py-4 rounded-tl rounded-tr">
               <h4 class="font-bold text-white text-md mt-1">Add New Drug</h4>
               <button type="button" class="px-4 py-1.5 text-white hover:bg-white hover:text-gray-600 hover:rounded hover:shadow-md font-semibold text-md leading-normal hover:ring-2 hover:ring-gray-300 transition duration-150 ease-in-out flex align-center transform hover:scale-110" (click)="toggleCloseModal()">
                 <fa-icon  [icon]="faClose"></fa-icon>
