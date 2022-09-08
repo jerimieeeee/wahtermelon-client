@@ -3,15 +3,18 @@ import { CommonModule } from '@angular/common';
 
 import { DrugListRoutingModule } from './drug-list-routing.module';
 import { DrugListComponent } from './drug-list.component';
+import { DrugsComponent } from './components/drugs/drugs.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 
 @NgModule({
   declarations: [
-    DrugListComponent
+    DrugListComponent,
+    DrugsComponent
   ],
   imports: [
     CommonModule,
-    DrugListRoutingModule
+    DrugListRoutingModule,FontAwesomeModule
   ]
 })
 export class DrugListModule { }
