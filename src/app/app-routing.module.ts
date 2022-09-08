@@ -46,6 +46,9 @@ const routes: Routes = [
   {
     path: 'dental',
     loadChildren: () => import('./modules/dental/dental.module').then(m => m.DentalModule) },
+  {
+    path: 'drug-list',
+    loadChildren: () => import('./modules/drug-list/drug-list.module').then(m => m.DrugListModule) },
 ];
 
 @NgModule({

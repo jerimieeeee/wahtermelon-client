@@ -13,6 +13,7 @@ export class PostExposureComponent implements OnInit {
   faCalendarDay = faCalendarDay
 
   patientid=null;
+  
 
 booster = [
     {code: 'Y', desc: 'Yes'},
