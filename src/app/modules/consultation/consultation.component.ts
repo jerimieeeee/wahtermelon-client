@@ -1,20 +1,33 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ChartOptions, WeightChart } from '../patient-itr/declarations/chart-options';
 import { ChartComponent } from "ng-apexcharts";
-import { faCircleNotch, faExternalLinkSquare, faPlusSquare, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { faCircleNotch, faPlusSquare, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { trigger, transition, style, animate } from '@angular/animations';
 
 @Component({
   selector: 'app-consultation',
   templateUrl: './consultation.component.html',
-  styleUrls: ['./consultation.component.scss']
+  styleUrls: ['./consultation.component.scss'],
+  animations: [
+    trigger('closeChip', [
+    transition(':enter', [
+      style({ opacity: 0, visibility: 'hidden'}),
+      animate('250ms', style({ opacity: '100%', visibility: 'visible'})),
+    ]),
+    transition(':leave', [
+      animate('250ms', style({ opacity: 0, visibility: 'hidden', overflow: 'hidden' }))
+    ])
+  ])],
 })
 export class ConsultationComponent implements OnInit {
   public WeightChart: Partial<WeightChart>;
   public chartOptions: Partial<ChartOptions>;
   faPlusSquare = faPlusSquare;
   faSpinner = faCircleNotch;
+  faXmark = faXmark;
 
   is_saving: boolean = false;
+  show_item: boolean = true;
 
   @ViewChild("bp-chart") bp_chart: ChartComponent;
   @ViewChild("weight-chart") weight_chart: ChartComponent;
@@ -109,6 +122,10 @@ export class ConsultationComponent implements OnInit {
     setTimeout(() => {
       this.is_saving = false;
     }, 5000);
+  }
+
+  deleteItem(){
+    this.show_item = false;
   }
 
   ngOnInit(): void {

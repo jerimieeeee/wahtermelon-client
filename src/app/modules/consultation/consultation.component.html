@@ -39,11 +39,14 @@
           </div>
           <div class="col-span-8">
             <div class="flex mb-2">
-              <button type="submit" class="inline-flex p-3 items-center text-gray-50 bg-blue-400 rounded-l-md border border-gray-300">
+              <button type="submit" class="inline-flex p-3 items-center text-gray-50 bg-sky-400 rounded-l-md border border-gray-300">
                 <fa-icon class="text-white fa-xl" [icon]="faPlusSquare" ></fa-icon>
               </button>
-              <div class="flex border w-full border-solid rounded-r-md border-gray-300 border-l-0">
-                <span class="m-2 p-2 px-4 text-sm bg-blue-500 rounded-full text-gray-50 border cursor-pointer">Headache x</span>
+              <div class="chips-container">
+                <span [@closeChip] *ngIf="show_item" class="chips">
+                  Headache
+                  <fa-icon class="chips-close" [icon]="faXmark" (click)="deleteItem()"></fa-icon>
+                </span>
               </div>
             </div>
             <div class="flex">
@@ -75,11 +78,14 @@
           </div>
           <div class="col-span-8">
             <div class="flex mb-2">
-              <button type="submit" class="inline-flex items-center px-3 text-sm text-gray-50 bg-blue-400 rounded-l-md border border-gray-300">
+              <button type="submit" class="inline-flex p-3 items-center text-gray-50 bg-sky-400 rounded-l-md border border-gray-300">
                 <fa-icon class="text-white fa-xl" [icon]="faPlusSquare" ></fa-icon>
               </button>
-              <div class="flex border w-full border-solid rounded-r-md border-gray-300 border-l-0">
-                <span class="m-2 p-2 px-4 text-sm bg-blue-500 rounded-full text-gray-50 border cursor-pointer">Headache x</span>
+              <div class="chips-container">
+                <span [@closeChip] *ngIf="show_item" class="chips">
+                  Headache
+                  <fa-icon class="chips-close" [icon]="faXmark" (click)="deleteItem()"></fa-icon>
+                </span>
               </div>
             </div>
           </div>
@@ -107,7 +113,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr class="text-center px-4">
+                  <tr class="text-center">
                     <td>09/01/2022</td>
                     <td>Sample dx</td>
                     <td>Sample dx</td>
@@ -128,11 +134,14 @@
           </div>
           <div class="col-span-8">
             <div class="flex mb-2">
-              <button type="submit" class="inline-flex items-center px-3 text-sm text-gray-50 bg-blue-400 rounded-l-md border border-gray-300">
+              <button type="submit" class="inline-flex p-3 items-center text-gray-50 bg-sky-400 rounded-l-md border border-gray-300">
                 <fa-icon class="text-white fa-xl" [icon]="faPlusSquare" ></fa-icon>
               </button>
-              <div class="flex border w-full border-solid rounded-r-md border-gray-300 border-l-0">
-                <span class="m-2 p-2 px-4 text-sm bg-blue-500 rounded-full text-gray-50 border cursor-pointer">Headache x</span>
+              <div class="chips-container">
+                <span [@closeChip] *ngIf="show_item" class="chips">
+                  Headache
+                  <fa-icon class="chips-close" [icon]="faXmark" (click)="deleteItem()"></fa-icon>
+                </span>
               </div>
             </div>
             <div class="block">
@@ -150,11 +159,14 @@
           </div>
           <div class="col-span-8">
             <div class="flex mb-2">
-              <button type="submit" class="inline-flex items-center px-3 text-sm text-gray-50 bg-blue-400 rounded-l-md border border-gray-300">
+              <button type="submit" class="inline-flex p-3 items-center text-gray-50 bg-sky-400 rounded-l-md border border-gray-300">
                 <fa-icon class="text-white fa-xl" [icon]="faPlusSquare" ></fa-icon>
               </button>
-              <div class="flex border w-full border-solid rounded-r-md border-gray-300 border-l-0">
-                <span class="m-2 p-2 px-4 text-sm bg-blue-500 rounded-full text-gray-50 border cursor-pointer">Headache x</span>
+              <div class="chips-container">
+                <span [@closeChip] *ngIf="show_item" class="chips">
+                  Headache
+                  <fa-icon class="chips-close" [icon]="faXmark" (click)="deleteItem()"></fa-icon>
+                </span>
               </div>
             </div>
             <div class="block">
@@ -186,7 +198,7 @@
                 </thead> -->
                 <tbody>
                   <tr class="text-left align-top mx-2">
-                    <td class="pl-2 font-semibold">Amoxicillin</td>
+                    <td class="font-semibold text-center">Amoxicillin</td>
                     <td>
                       Table 500mg <br />
                       3x a day<br />

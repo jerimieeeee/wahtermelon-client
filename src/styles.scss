@@ -35,6 +35,20 @@
 .ng-select.search.ng-select-opened>.ng-select-container:hover {
   border-radius: 25px;
 }
+
+@layer components {
+  .chips {
+    @apply my-2 ml-2 p-1 px-4 text-sm bg-blue-500 rounded-full text-gray-50 border select-none;
+    overflow:hidden;
+    white-space: nowrap;
+  };
+  .chips-container {
+    @apply flex border w-full border-solid rounded-r-md border-gray-300 border-l-0;
+  };
+  .chips-close {
+    @apply text-white hover:text-gray-200 ml-3 cursor-pointer;
+  };
+}
 /* .ng-select.ng-select.search .ng-select-container  {
   min-height: 700px;
   border-radius: 24px;
