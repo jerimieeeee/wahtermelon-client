@@ -12,6 +12,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule } from '@angular/forms';
 import { NgApexchartsModule } from 'ng-apexcharts';
+import { FacilityaccreditationComponent } from './components/facilityaccreditation/facilityaccreditation.component';
 
 
 
@@ -21,7 +22,8 @@ import { NgApexchartsModule } from 'ng-apexcharts';
     HeaderComponent,
     SidenavComponent,
     VitalsGraphComponent,
-    VitalsComponent
+    VitalsComponent,
+    FacilityaccreditationComponent
   ],
   imports: [
     BrowserModule,

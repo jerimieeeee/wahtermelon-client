@@ -5,7 +5,7 @@
             <div class="sticky top-0 z-50 border hover:border border-gray-300 hover:border-blue-400 col-span-2 cursor-pointer relative mx-2 px-2 py-1 rounded-t-lg bg-blue-500 text-white"
                 style="grid-column: span 16 / span 16;"><button class="font-bold" type="button">Maternal Care
                     Record</button>
-                <div class="absolute left-40 top-1">
+                <div class="absolute left-44 top-1">
                     <fa-icon [icon]="faInfoCircle" class=" peer ml-4 text-white hover:text-gray-500 z-50"></fa-icon>
                     <div
                         class="absolute text-sm bg-gradient-to-b from-stone-500 to-gray-400 p-2 rounded-md border border-gray-500  text-white drop-shadow-lg opacity-90 border-check z-50 w-64 invisible peer-hover:visible">
@@ -174,7 +174,7 @@
                 <div class="flex border-check bg-orange-300 hover:bg-orange-400 py-1 rounded-full  text-white px-2">
                     <fa-icon [icon]="faPencil" size="lg" class="mr-2 ">
                     </fa-icon>
-                    <button type="submit" class="font-bold button-out border-check-red typed-out"
+                    <button type="button" class="font-bold button-out border-check-red typed-out"
                         (keyup.enter)="uncheck($event.target.id + fphx_cat)">Edit</button>
                 </div>
             </div>

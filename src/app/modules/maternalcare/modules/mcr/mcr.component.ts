@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { faAngleDown, faCalendarDay, faCaretRight, faClose, faInfoCircle, faPencil, faSave, faTimes, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
@@ -31,8 +32,9 @@ export class McrComponent implements OnInit {
   pre_term: Number = new Number();
   abortions: Number = new Number();
   live_births: Number = new Number();
+  response: any;
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   ngOnInit(): void {
     this.focused = false;
@@ -69,8 +71,10 @@ export class McrComponent implements OnInit {
       abortions: data.abortions != 0? data.abortions : 0,
       live_births: data.live_births != 0? data.live_births : 0,
     });
-    console.log(this.mcr_form.value);
-``    
+    let url = ''
+    this.response = this.http.get(url).subscribe();
+    console.log('mcr_form: ', this.mcr_form.value, ' vs response:', this.response);
+    
     this.mcr_form.disable();
   }
   onKeyUp(data_input: string, id: string) {

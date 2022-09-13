@@ -1,1 +1,44 @@
-<p>bodychart works!</p>
+<form>
+    <div class="grid grid-rows-2 gap-4 cursor-pointer hover:bg-gray-100 relative"
+        style="grid-template-columns: repeat(16, minmax(0, 1fr));" (click)="flip();" *ngIf="focused">
+        <div class="border-check row-span-2 col-span-2 rounded-r">
+            <button class="font-bold" type="button">Services</button>
+        </div>
+
+        <div class="absolute right-0 top-0">
+            <!-- <fa-icon [icon]="faInfoCircle" class="peer ml-3 text-gray-300 hover:text-gray-500 z-50"></fa-icon> -->
+            <div
+                class="absolute text-sm bg-gradient-to-b from-stone-500 to-gray-400 p-2 rounded-md border border-gray-500  text-white drop-shadow-lg opacity-90 border-check z-50 w-64 right-0 invisible peer-hover:visible">
+                <h1 class="font-bold drop-shadow-lg">IMPORTANT</h1>
+                <p class="font-light drop-shadow-lg">Once saved, the information will be displayed in the input boxes
+                    and shall not be editable unless Edit button is pressed.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid gap-4 relative animates-dropdown" style="grid-template-columns: repeat(16, minmax(0, 1fr));"
+        *ngIf="!focused">
+        <div class="border-check col-span-2 hover:bg-gray-100 rounded-r cursor-pointer relative" (click)="flip();">
+            <button class="font-bold sticky top-0" type="button">Services</button>
+            <div class="absolute top-0" style="left: 4.5rem;">
+                <!-- <fa-icon [icon]="faInfoCircle" class=" peer ml-5 text-gray-300 hover:text-gray-500 z-50"></fa-icon> -->
+                <div
+                    class="absolute text-sm bg-gradient-to-b from-stone-500 to-gray-400 p-2 rounded-md border border-gray-500  text-white drop-shadow-lg opacity-90 border-check z-50 w-64 invisible peer-hover:visible">
+                    <h1 class="font-bold drop-shadow-lg">IMPORTANT</h1>
+                    <p class="font-light drop-shadow-lg">Once saved, the information will be displayed in the input
+                        boxes and shall not be editable unless Edit button is pressed.</p>
+                </div>
+            </div>
+        </div>
+        <div style="grid-column: span 16 / span 16;" class="relative grid grid-cols-12 gap-4">
+            <canvas class="text-gray-300 relative border rounded-md col-span-6" [style]="check_bool?'cursor: copy;':'cursor: pointer;'" id="myCanvas1" (mouseup)="trackMouse($event)" (mousedown)="activeTrackMouse($event)" width="430" height="425" style="background-image: url('assets/img/human.jpg');background-repeat: no-repeat; background-size: 26.8rem">
+            </canvas>
+            <canvas class="text-gray-300 relative border col-span-6" [style]="check_bool?'cursor: copy;':'cursor: pointer;'" id="myCanvas2" (mouseup)="trackMouse($event)" (mousedown)="activeTrackMouse($event)" width="430" height="425" style="background-image: url('assets/img/human.jpg');background-repeat: no-repeat; background-size: 26.8rem">
+            </canvas>
+            <input type="number" class="border rounded-md w-16" [(ngModel)]="r" max="20" min="8">
+            INPUT: {{r}}
+             
+        </div>
+
+    </div>
+</form>

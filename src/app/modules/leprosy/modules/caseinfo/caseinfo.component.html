@@ -94,6 +94,16 @@
                     </div>
                 </div>
 
+                <div class="transitions col-span-10 border-check relative select-none mr-2" *ngIf="!focused">
+                    <h3 for="slit_skin_result">Result</h3>
+                    <select id="slit_skin_result"
+                        class="text-ellipsis bg-white text-align-left drop_btn border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed">
+                        <option>
+                            XXXXX
+                        </option>
+                    </select>
+                </div>
+
                 <div class="transitions col-span-4 col-start-1 mx-2" *ngIf="!focused">
                     <h3 for="breastfeeding_date">Biopsy</h3>
                     <div class="flex w-full mb-2">
@@ -110,6 +120,16 @@
                             </div>
                         </label>
                     </div>
+                </div>
+
+                <div class="transitions col-span-10 border-check relative select-none mr-2 mb-2" *ngIf="!focused">
+                    <h3 for="classification">Classification</h3>
+                    <select id="classification"
+                        class="text-ellipsis bg-white text-align-left drop_btn border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed">
+                        <option>
+                            XXXXX
+                        </option>
+                    </select>
                 </div>
             </div>
             

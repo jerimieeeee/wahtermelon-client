@@ -14,7 +14,7 @@ export class LeprosyComponent implements OnInit {
 
   module: number;
   ngOnInit(): void {
-    this.module = 1;
+    this.module = 2;
   }
 
   switchTab(tab) {
