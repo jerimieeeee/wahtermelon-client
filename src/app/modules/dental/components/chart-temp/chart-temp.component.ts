@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { DentalModalService } from '../../services/dental-modal.service';
+
 @Component({
-  selector: 'app-adult-chart',
-  templateUrl: './adult-chart.component.html',
-  styleUrls: ['./adult-chart.component.scss']
+  selector: 'app-chart-temp',
+  templateUrl: './chart-temp.component.html',
+  styleUrls: ['./chart-temp.component.scss']
 })
-export class AdultChartComponent implements OnInit {
-  showModal: boolean = false;
+export class TempChartComponent implements OnInit {
+
   adult_tooth_conditions = [
     [
       {tooth_number: 18, condition: {1: null, 2: null, 3: null, 4: null, 5: null}},
@@ -44,26 +44,11 @@ export class AdultChartComponent implements OnInit {
       {tooth_number: 37, condition: {1: null, 2: null, 3: null, 4: null, 5: null}},
       {tooth_number: 38, condition: {1: null, 2: null, 3: null, 4: null, 5: null}}
     ]
-  ];
+  ]
 
-  constructor(
-    private dentalModalService: DentalModalService
-  ) { }
+  constructor() { }
 
   ngOnInit(): void {
-
   }
 
-  onClick(id){
-    alert('click ' + id);
-  }
-
-  onRightClick(id){
-    alert('right click ' + id);
-    return false;
-  }
-
-  openModal(){
-    this.dentalModalService.open();
-  }
 }
