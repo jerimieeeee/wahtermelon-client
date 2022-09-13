@@ -25,11 +25,11 @@ import { NgApexchartsModule } from 'ng-apexcharts';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FontAwesomeModule, HttpClientModule,
+    FontAwesomeModule,
+    HttpClientModule,
     NgSelectModule,
     FormsModule,
     NgApexchartsModule,
-    FontAwesomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]
