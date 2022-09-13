@@ -70,7 +70,7 @@ export class McrComponent implements OnInit {
       live_births: data.live_births != 0? data.live_births : 0,
     });
     console.log(this.mcr_form.value);
-    
+``    
     this.mcr_form.disable();
   }
   onKeyUp(data_input: string, id: string) {

@@ -21,30 +21,30 @@ export class PreExposureComponent implements OnInit {
   }
 
   lib_ab_indication_option = [
-    {id: 'HRDC', desc: 'HIGH-RISK DOG CATCHER'},
-    {id: 'HRHCP', desc: 'HIGH-RISK HEALTH CARE PROVIDER'},
-    {id: 'HRVACC', desc: 'HIGH-RISK VACCINATOR'},
-    {id: 'HRVET', desc: 'HIGH-RISK VETERENARIAN'},
-    {id: 'HRVS', desc: 'HIGH-RISK VETERENARY STUDENT'},
-    {id: 'PSHRA', desc: 'PRE-SCHOOL IN HIGH-RISK AREAS'},
-    {id: 'OTHERS', desc: 'OTHERS'},
+    {id: 'HRDC', desc: 'High-risk Dog Catcher'},
+    {id: 'HRHCP', desc: 'High-risk Health Care Provider'},
+    {id: 'HRVACC', desc: 'High-risk Vaccinator'},
+    {id: 'HRVET', desc: 'High-risk Veterenarian'},
+    {id: 'HRVS', desc: 'High-risk Veterenary Student'},
+    {id: 'PSHRA', desc: 'Pre-school In High-risk Areas'},
+    {id: 'OTHERS', desc: 'Others'},
     
   ];
 
   brand_name = [
-    {id: 'PVRV', desc: 'VERORUB'},
-    {id: 'PCECV', desc: 'RABIPUR'},
-    {id: 'PVRV1', desc: 'SPEEDA'},
-    {id: 'PVRV2', desc: 'ABHAYRAB'},
-    {id: 'PVRV3', desc: 'VERORAB'},
-    {id: 'PVRV4', desc: 'INDIRAB'},
-    {id: 'PCECV1', desc: 'VAXIRAB-N'},
-    {id: 'PCECV2', desc: 'RABIPUR'}
+    {id: 'PVRV', desc: 'Verorub'},
+    {id: 'PCECV', desc: 'Rabipur'},
+    {id: 'PVRV1', desc: 'Speeda'},
+    {id: 'PVRV2', desc: 'Abhayrab'},
+    {id: 'PVRV3', desc: 'Verorab'},
+    {id: 'PVRV4', desc: 'Indirab'},
+    {id: 'PCECV1', desc: 'Vaxirab-N'},
+    {id: 'PCECV2', desc: 'Rabipur'}
 ];
 
 vaccine_route = [
-  {id: 'ID', desc: 'INTRADERMAL'},
-  {id: 'IM', desc: 'INTRAMUSCULAR'}
+  {id: 'ID', desc: 'Intradermal'},
+  {id: 'IM', desc: 'Intramascular'}
 ];
 
 

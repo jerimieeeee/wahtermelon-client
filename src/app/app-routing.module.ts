@@ -20,6 +20,10 @@ const routes: Routes = [
     loadChildren: () => import('./modules/maternalcare/maternalcare.module').then(m => m.MaternalcareModule)
   },
   {
+    path: 'cc',
+    loadChildren: () => import('./modules/childcare/childcare.module').then(m => m.ChildcareModule)
+  },
+  {
     path: 'tb',
     loadChildren: () => import('./modules/tbdots/tbdots.module').then(m => m.TbdotsModule)
   },
@@ -46,7 +50,10 @@ const routes: Routes = [
   {
     path: 'lep',
     loadChildren: () => import('./modules/leprosy/leprosy.module').then(m => m.LeprosyModule)
-  }
+  },
+  {
+    path: 'drug-list',
+    loadChildren: () => import('./modules/drug-list/drug-list.module').then(m => m.DrugListModule) },
 ];
 
 @NgModule({

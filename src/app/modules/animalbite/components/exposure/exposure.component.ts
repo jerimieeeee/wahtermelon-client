@@ -20,57 +20,57 @@ export class ExposureComponent implements OnInit {
   }
 
 animal_type = [
-    {id: 'BAT', desc: 'BAT'},
-    {id: 'CAT', desc: 'CAT'},
-    {id: 'DOG', desc: 'DOG'},
-    {id: 'Monkey', desc: 'MONKEY'},
-    {id: 'Others', desc: 'OTHERS'},
+    {id: 'Bat', desc: 'Bat'},
+    {id: 'Cat', desc: 'Cat'},
+    {id: 'Dog', desc: 'Dog'},
+    {id: 'Monkey', desc: 'Monkey'},
+    {id: 'Others', desc: 'Others'},
 ];
 
 ownership = [
-  {code: 'PET', desc: 'PET'},
-  {code: 'STRAY', desc: 'STRAY'},
-  {code: 'WILD', desc: 'WILD'}
+  {code: 'Pet', desc: 'Pet'},
+  {code: 'Stray', desc: 'Stray'},
+  {code: 'Wild', desc: 'Wild'}
 ];
 
 wash = [
-  {code: 'Y', desc: 'YES'},
-  {code: 'N', desc: 'NO'}
+  {code: 'Y', desc: 'Yes'},
+  {code: 'N', desc: 'No'}
 ];
 
 abnb = [
-  {code: 'B', desc: 'BITE'},
-  {code: 'NB', desc: 'NON BITE'}
+  {code: 'B', desc: 'Bite'},
+  {code: 'NB', desc: 'Non Bite'}
 ];
 
 withpep = [
-  {code: 'Y', desc: 'YES'},
-  {code: 'N', desc: 'NO'}
+  {code: 'Y', desc: 'Yes'},
+  {code: 'N', desc: 'No'}
 ];
 
 exposure_type = [
-  {id: 'BATS', desc: 'EXPOSURE TO BATS'},
-  {id: 'CASUAL', desc: 'CASUAL CONTACT AND ROUTINE DELIVERY OF HEALTH CARE TO PATIENT WITH SIGNS AND SYMPTOMS OF RABIES'},
-  {id: 'CONTAM', desc: 'CONTAMINATION OF MUCOUS MEMBRANES OR OPEN SKIN LESIONS WITH BODY FLUIDS THROUGH SPLATTERING AND MOUTH-TOMOUTH RESUCITATION'},
-  {id: 'EXPOSE', desc: 'EXPOSURE TO PATIENT WITH SIGNS AND SYMPTOMS OF RABIES BY SHARING OF EATING OR DRINKING UTENSILS'},
-  {id: 'FEED', desc: 'FEEDING/TOUCHING AN ANIMAL'},
-  {id: 'INGESTION', desc: 'INGESTION OF RAW INFECTED MEAT'},
-  {id: 'LICK', desc: 'LICKING OF INTACT SKIN '},
-  {id: 'MINOR', desc: 'MINOR /SUPERFICIAL SCRATCHES/ABRASIONS WITHOUT BLEEDING, INCLUDING THOSE INDUCED TO BLEED'},
-  {id: 'NIBB', desc: 'NIBBLING OF UNCOVERED SKIN WITH OR WITHOUT BRUISING/HEMATOMA'},
-  {id: 'TRANS', desc: 'EXPOSURE TO BATSTRANSDERMAL BITES (PUNCTURE WOUNDS, LACERATIONS, AVULSIONS) OR SCRATCHES/ABRASIONS WITH SPONTANEOUS BLEEDING'},
-  {id: 'UNPROC', desc: 'UNPROTECTED HANDLING OF INFECTED CARCASS'},
+  {id: 'BATS', desc: 'Exposure To Bats'},
+  {id: 'CASUAL', desc: 'Casual Contact And Routine Delivery Of Health Care To Patient With Signs And Symptoms Of Rabies'},
+  {id: 'CONTAM', desc: 'Contamination Of Mucous Membranes Or Open Skin Lesions With Body Fluids Through Splattering And Mouth-tomouth Resucitation'},
+  {id: 'EXPOSE', desc: 'Exposure To Patient With Signs And Symptoms Of Rabies By Sharing Of Eating Or Drinking Utensils'},
+  {id: 'FEED', desc: 'Feeding / Touching An Animal'},
+  {id: 'INGESTION', desc: 'Ingestion Of Raw Infected Meat'},
+  {id: 'LICK', desc: 'Licking Of Intact Skin'},
+  {id: 'MINOR', desc: 'Minor / Superficial Scratches/ Abrasions Without Bleeding, Including Those Induced To Bleed'},
+  {id: 'NIBB', desc: 'Nibbling Of Uncovered Skin With Or Without Bruising/ Hematoma'},
+  {id: 'TRANS', desc: 'Exposure To Batstransdermal Bites (Puncture Wounds, Lacerations, Avulsions) Or Scratches/Abrasions With Spontaneous Bleeding'},
+  {id: 'UNPROC', desc: 'Unprotected Handling Of Infected Carcass'},
 ];
 
 anatomical_loc = [
-  {id: 'ARMS', desc: 'ARMS'},
-  {d: 'FEET', desc: 'FEET'},
-  {d: 'HAND', desc: 'HAND'},
-  {d: 'HEAD', desc: 'HEAD'},
-  {d: 'KNEE', desc: 'KNEE'},
-  {d: 'LEG', desc: 'LEG'},
-  {d: 'NECK', desc: 'NECK'},
-  {d: 'OTHERS', desc: 'OTHERS'},
+  {id: 'ARMS', desc: 'Arms'},
+  {d: 'FEET', desc: 'Feet'},
+  {d: 'HAND', desc: 'Hand'},
+  {d: 'HEAD', desc: 'Head'},
+  {d: 'KNEE', desc: 'Knee'},
+  {d: 'LEG', desc: 'Leg'},
+  {d: 'NECK', desc: 'Neck'},
+  {d: 'OTHERS', desc: 'Others'},
 ];
 
 

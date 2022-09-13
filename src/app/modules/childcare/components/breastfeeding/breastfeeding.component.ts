@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { faSearch,faBalanceScale,faPlus, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
+import { faSearch,faBalanceScale,faPlus, faInfoCircle, faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import { FormBuilder, FormGroup,FormArray,FormControl,Validators,} from '@angular/forms';
 import * as moment from 'moment';
 
@@ -10,25 +10,33 @@ import * as moment from 'moment';
 })
 export class BreastfeedingComponent implements OnInit {
 
-  selectedMonths = [];
-  checkedIDs=[];
-
+  
   month: any
   
   faSearch = faSearch;
   faPlus = faPlus;
   faInfoCircle = faInfoCircle;
+  faSpinner = faCircleNotch;
+
+  is_saving: boolean = false;
+
   todaysDate = new Date();
 
-  breastfedForm = new FormGroup({
-    breastfedDate: new FormControl()
-  });
-
+ 
   showBreastfeedingModal = false;
   
   toggleBreastfeedingModal(){
     this.showBreastfeedingModal = !this.showBreastfeedingModal;
   }
+
+  saveModal(){
+    this.is_saving = true;
+
+    setTimeout(() => {
+      this.is_saving = false;
+    }, 5000);
+  }
+
 
   ebf = [
     {code: 'Y', desc: 'Yes'},
@@ -36,6 +44,7 @@ export class BreastfeedingComponent implements OnInit {
   ];
 
   reasons = [
+    {code: '00', desc: '-'},
     {code: '01', desc: 'Drinking water instead of milk'},
     {code: '02', desc: 'Drinking water instead of milk'},
     {code: '03', desc: 'Drinking water instead of milk'},
@@ -57,63 +66,11 @@ export class BreastfeedingComponent implements OnInit {
   }
   
   
-  submit() {
-
-    this.selectedMonths = this.ccdev.filter((value, index) => {
-      return value.ischecked,
-      localStorage.setItem('Breastfed Months', JSON.stringify(this.selectedMonths))
-    });
-  }
-
-  changeSelection() {
-    this.fetchSelectedItems()
-  }
-
-  fetchSelectedItems() {
-    this.selectedMonths= this.ccdev.filter((value, index) => {
-      return value.ischecked
-    });
-  }
-
-  fetchCheckedIDs() {
-    this.checkedIDs = []
-    this.ccdev.forEach((value, index) => {
-      if (value.ischecked) {
-        this.checkedIDs.push(value.id);
-      }
-    });
-  }
-
-  geteServiceName(){
-    this.month = JSON.parse(localStorage.getItem('Breastfed Months'));
-    console.log('retrievedBreastfedMonths: ', this.month );
-    this.month.forEach(m =>{
-     let i = this.ccdev.findIndex(c => c.id === m.id);
-      if(i != -1){
-        this.ccdev.splice(i,1);
-      }
-        // this.ccdev= [];
-        this.ccdev.push({
-            id: m.id,
-            name: m.name,
-            date: m.date,
-            ischecked: m.ischecked
-        });
-    });
-    this.ccdev.sort((m, c) => new Date(m.date).getTime() - new Date(c.date).getTime());this.ccdev.sort
-  }
+  
 
 
   ngOnInit(){
-    this.geteServiceName()
-    console.log(this.ebf)
+    
   }
 
-}
-
-export class Person {
-
-  constructor(
-      public myCheckbox: boolean
-  ) {  }
 }
