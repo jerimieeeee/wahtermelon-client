@@ -25,15 +25,7 @@
             <div class="col-span-6 sm:col-span-2">
               <label for="country" class="input-label">Suffix Name</label>
               <select id="country" name="country" class="input">
-                <option>N/A</option>
-                <option>Sr.</option>
-                <option>Jr.</option>
-                <option>III</option>
-                <option>IV</option>
-                <option>V</option>
-                <option>VI</option>
-                <option>VII</option>
-                <option>VIII</option>
+                <option *ngFor="let suffix_name of suffix_names" [value]="code">{{ suffix_name.suffix_desc }}</option>
               </select>
             </div>
 
@@ -48,23 +40,14 @@
             <div class="col-span-6 sm:col-span-2">
               <label for="civil_status" class="input-label">Civil Status</label>
               <select id="civil_status" name="civil_status" class="input">
-                <option>Single</option>
-                <option>Married</option>
+                <option *ngFor="let civil_status of civil_statuses" [value]="civil_status.code">{{ civil_status.status_desc}}</option>
               </select>
             </div>
 
             <div class="col-span-6 sm:col-span-2">
               <label for="blood_type" class="input-label">Blood Type</label>
               <select id="blood_type" name="blood_type" class="input">
-                <option>N/A</option>
-                <option>A-</option>
-                <option>A+</option>
-                <option>AB-</option>
-                <option>AB+</option>
-                <option>B-</option>
-                <option>B+</option>
-                <option>O-</option>
-                <option>O+</option>
+                <option *ngFor="let blood_type of blood_types" [value]="blood_type.code">{{ blood_type.code }}</option>
               </select>
             </div>
 
@@ -86,21 +69,21 @@
             <div class="col-span-6 sm:col-span-2">
               <label for="education" class="input-label">Education</label>
               <select id="education" name="education" class="input">
-                <option>N/A</option>
+                <option *ngFor="let education of educations" [value]="education.code">{{ education.education_desc }}</option>
               </select>
             </div>
 
             <div class="col-span-6 sm:col-span-2">
               <label for="religion" class="input-label">Religion</label>
               <select id="religion" name="religion" class="input">
-                <option>N/A</option>
+                <option *ngFor="let religion of religions" [value]="religion.code">{{ religion.religion_desc }}</option>
               </select>
             </div>
 
             <div class="col-span-6 sm:col-span-2">
               <label for="occupation" class="input-label">Occupation</label>
               <select id="occupation" name="occupation" class="input">
-                <option>N/A</option>
+                <option *ngFor="let occupation of occupations" [value]="occupation.code">{{ occupation.occupation_desc }}</option>
               </select>
             </div>
 
@@ -132,8 +115,8 @@
 
             <div class="col-span-6 sm:col-span-2">
               <label for="region" class="input-label">Region</label>
-              <select id="region" name="region" class="input">
-                <option>-</option>
+              <select id="region" name="region" class="input" (click)="loadProvince()" >
+                <option *ngFor="let region of regions" [value]="region.code" >{{ region.name }}</option>
               </select>
             </div>
 
