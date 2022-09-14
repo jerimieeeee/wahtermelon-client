@@ -216,7 +216,7 @@
 
 
       <div class="text-right border-t border-solid border-gray-200 -mx-4 -mb-4 mt-8 rounded-b-xl">
-        <button type="button" (click)="saveConsult()" class="mr-4 md:w-36 text-white bg-blue-500 hover:bg-blue-700 font-medium rounded-lg text-sm py-3 my-4">
+        <button type="button" (click)="saveConsult()" class="btn-save">
           <fa-icon *ngIf="is_saving" class="mr-3" [icon]="faSpinner" [spin]="true"></fa-icon>
           {{ is_saving ? 'Saving' : 'Save' }}
         </button>
