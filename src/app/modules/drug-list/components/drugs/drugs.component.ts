@@ -20,6 +20,7 @@ export class DrugsComponent implements OnInit {
   is_searching4: boolean = false;
 
   filterTerm!: string;
+  filterTerm2!: string;
 
   showDrugListModal = false;
   showAddDrugModal = false;
@@ -34,7 +35,9 @@ export class DrugsComponent implements OnInit {
   }
 
   toggleCloseModal(){
-    this.showAddDrugModal = !this.showAddDrugModal;
+    this.showAddDrugModal = !this.showAddDrugModal
+    this.toggleSearchRev();
+    this.toggleSearchRev2();
   }
 
   toggleSearch(){
@@ -42,14 +45,21 @@ export class DrugsComponent implements OnInit {
     this.is_searching2= true;
   }
 
-  toggleSearchRev(){
-    this.is_searching = true;
-    this.is_searching2= false;
-  }
-
   toggleSearch2(){
     this.is_searching3 = false;
     this.is_searching4= true;
+  }
+
+  toggleSearchRev(){
+    this.is_searching = true;
+    this.is_searching2= false;
+    this.filterTerm = null;
+  }
+
+  toggleSearchRev2(){
+    this.is_searching3 = true;
+    this.is_searching4= false;
+    this.filterTerm2 = null;
   }
 
   lib_drugs = [
@@ -85,7 +95,16 @@ export class DrugsComponent implements OnInit {
     {code: '31', bname: 'Citirizin', gname:'Vitamin B', drugstr:'250mg', drugf:'Capsule', dosage:'2.00', dosageuom:'mG', dosagereg:'OD', duration:'2', frequency: 'Week'},
   ];
 
-  constructor() { }
+  constructor() { 
+
+    document.addEventListener('keydown', evt => {
+      if (evt.key === 'Escape') {
+        this.showDrugListModal = false;
+        this.showAddDrugModal = false;
+      }
+  });
+  
+  }
 
   ngOnInit(): void {
   }
