@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class HttpService {
-  baseUrl = '';
+  baseUrl = 'https://apiwahtermelon-staging.wah.ph/api/v1/';
 
   // public options = new HttpHeaders({
   //   'Content-Type' : 'application/json; charset=utf-8',
@@ -15,7 +15,11 @@ export class HttpService {
 
   constructor(private http: HttpClient) { }
 
-  get(loc, data?) {
+  getLib(loc){
+    return this.http.get(`${this.baseUrl}` + loc)
+  }
+
+  get(loc, data) {
     return this.http.get(`${this.baseUrl}` + loc + data)
   }
 
