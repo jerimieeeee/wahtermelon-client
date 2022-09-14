@@ -15,12 +15,8 @@ export class HttpService {
 
   constructor(private http: HttpClient) { }
 
-  getLib(loc){
-    return this.http.get(`${this.baseUrl}` + loc)
-  }
-
-  get(loc, data) {
-    return this.http.get(`${this.baseUrl}` + loc + data)
+  get(loc, data?) {
+    return this.http.get(`${this.baseUrl}` + loc, data ? data : '')
   }
 
   post(loc, data) {

@@ -52,7 +52,7 @@ export class PatientRegistrationComponent implements OnInit {
 
   loadLibraries(){
     this.libraries.forEach(obj => {
-      this.http.getLib('libraries/'+obj.location).subscribe({
+      this.http.get('libraries/'+obj.location).subscribe({
         next: (data: any) => this[obj.var_name] = data.data,
         error: err => console.log(err)
       })
