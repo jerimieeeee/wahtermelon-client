@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
   selector: 'app-patient-registration',
@@ -11,7 +12,9 @@ export class PatientRegistrationComponent implements OnInit {
 
   is_saving: boolean = false;
 
-  constructor() { }
+  constructor(
+    private http: HttpService
+  ) { }
 
   savePatient(){
     this.is_saving = true;
@@ -21,7 +24,15 @@ export class PatientRegistrationComponent implements OnInit {
     }, 5000);
   }
 
-  ngOnInit(): void {
+  loadLibraries(){
+    this.http.get('blood_type').subscribe({
+      next: data => {console.log(data)},
+      error: err => {console.log(err)},
+      complete: () => {console.log('done')}
+    });
   }
 
+  ngOnInit(): void {
+    // this.loadLibraries();
+  }
 }

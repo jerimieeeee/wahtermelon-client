@@ -15,7 +15,7 @@ export class HttpService {
 
   constructor(private http: HttpClient) { }
 
-  get(loc, data) {
+  get(loc, data?) {
     return this.http.get(`${this.baseUrl}` + loc + data)
   }
 
