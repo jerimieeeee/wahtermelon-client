@@ -101,6 +101,10 @@ export class DrugsComponent implements OnInit {
       if (evt.key === 'Escape') {
         this.showDrugListModal = false;
         this.showAddDrugModal = false;
+        this.filterTerm = null;
+        this.filterTerm2 = null;
+        this.toggleSearchRev();
+        this.toggleSearchRev2();
       }
   });
   

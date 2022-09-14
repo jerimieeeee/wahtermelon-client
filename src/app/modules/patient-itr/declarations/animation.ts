@@ -1,11 +1,20 @@
 import { animate, state, style, transition, trigger } from "@angular/animations";
 
-export const openCloseTrigger = trigger('myInsertRemoveTrigger', [
-  transition(':enter', [
-    style({ opacity: 0 }),
-    animate('100ms', style({ opacity: 1 })),
+export const openCloseTrigger = [
+  trigger('myInsertRemoveTrigger', [
+    transition(':enter', [
+      style({width: 0, opacity: 0, visibility: 'hidden'}),
+      animate('250ms', style({ width: '50%', opacity: '100%', visibility: 'visible'})),
+    ]),
+    transition(':leave', [
+      animate('250ms', style({ width: 0, opacity: 0, visibility: 'hidden', overflow: 'hidden' }))
+    ])
   ]),
-  transition(':leave', [
-    animate('100ms', style({ opacity: 0 }))
+  trigger('halfFull', [
+    state('half', style({width: '50%'})),
+    state('full', style({width: '100%'})),
+    transition('* => *', [
+      animate('250ms')
+    ])
   ])
-])
+]

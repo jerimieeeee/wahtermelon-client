@@ -6,9 +6,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./dental.component.scss']
 })
 export class DentalComponent implements OnInit {
+  module: number = 0;
 
   constructor() { }
 
+  switchTab(tab){
+    this.module = tab;
+  }
+
   ngOnInit(): void {
+    this.module = 1;
   }
 }

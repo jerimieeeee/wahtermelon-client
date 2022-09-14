@@ -1,20 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AdultChartComponent } from './adult-chart.component';
+import { ConditionComponent } from './condition.component';
 
-describe('AdultChartComponent', () => {
-  let component: AdultChartComponent;
-  let fixture: ComponentFixture<AdultChartComponent>;
+describe('ConditionComponent', () => {
+  let component: ConditionComponent;
+  let fixture: ComponentFixture<ConditionComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AdultChartComponent ]
+      declarations: [ ConditionComponent ]
     })
     .compileComponents();
-  });
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(AdultChartComponent);
+    fixture = TestBed.createComponent(ConditionComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

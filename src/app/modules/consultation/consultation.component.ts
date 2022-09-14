@@ -1,37 +1,38 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { ChartOptions, WeightChart } from '../patient-itr/declarations/chart-options';
 import { ChartComponent } from "ng-apexcharts";
-import { openCloseTrigger } from './declarations/animation';
-import { ChartOptions, WeightChart } from './declarations/chart-options';
-import { MedicalJournal } from './data/sample-journal';
-import { NavigationEnd, Router } from '@angular/router';
-import { filter, tap } from "rxjs/operators";
+import { faCircleNotch, faPlusSquare, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { trigger, transition, style, animate } from '@angular/animations';
 
 @Component({
-  selector: 'app-patient-itr',
-  templateUrl: './patient-itr.component.html',
-  styleUrls: ['./patient-itr.component.scss'],
-  animations: [openCloseTrigger]
+  selector: 'app-consultation',
+  templateUrl: './consultation.component.html',
+  styleUrls: ['./consultation.component.scss'],
+  animations: [
+    trigger('closeChip', [
+    transition(':enter', [
+      style({ opacity: 0, visibility: 'hidden'}),
+      animate('250ms', style({ opacity: '100%', visibility: 'visible'})),
+    ]),
+    transition(':leave', [
+      animate('250ms', style({ opacity: 0, visibility: 'hidden', overflow: 'hidden' }))
+    ])
+  ])],
 })
-export class PatientItrComponent implements OnInit {
-  show_details:boolean = true;
-  showModal:boolean = false;
-  medical_journal = MedicalJournal;
+export class ConsultationComponent implements OnInit {
+  public WeightChart: Partial<WeightChart>;
+  public chartOptions: Partial<ChartOptions>;
+  faPlusSquare = faPlusSquare;
+  faSpinner = faCircleNotch;
+  faXmark = faXmark;
 
-  open_details(){
-    this.show_details = !this.show_details;
-  }
+  is_saving: boolean = false;
+  show_item: boolean = true;
 
   @ViewChild("bp-chart") bp_chart: ChartComponent;
   @ViewChild("weight-chart") weight_chart: ChartComponent;
-  public chartOptions: Partial<ChartOptions>;
-  public WeightChart: Partial<WeightChart>;
-  /* get openCloseTrigger() {
-    return this.show_details ? "open" : "closed";
-  } */
 
-  constructor(
-    private router: Router
-  ) {
+  constructor() {
     this.chartOptions = {
       series: [
         {
@@ -115,16 +116,19 @@ export class PatientItrComponent implements OnInit {
     };
   }
 
-  toggleModal(){
-    this.showModal = !this.showModal;
+  saveConsult(){
+    this.is_saving = true;
+
+    setTimeout(() => {
+      this.is_saving = false;
+    }, 5000);
   }
 
-  navigationEnd$ = this.router.events.pipe(
-    filter(event => event instanceof NavigationEnd),
-    tap(() => (this.show_details = false))
-  );
+  deleteItem(){
+    this.show_item = false;
+  }
 
   ngOnInit(): void {
-    this.navigationEnd$.subscribe();
   }
+
 }
