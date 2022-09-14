@@ -25,7 +25,7 @@ export class PatientRegistrationComponent implements OnInit {
   }
 
   loadLibraries(){
-    this.http.get('blood_type').subscribe({
+    this.http.getLib('libraries/blood-types').subscribe({
       next: data => {console.log(data)},
       error: err => {console.log(err)},
       complete: () => {console.log('done')}
@@ -33,6 +33,6 @@ export class PatientRegistrationComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.loadLibraries();
+    this.loadLibraries();
   }
 }
