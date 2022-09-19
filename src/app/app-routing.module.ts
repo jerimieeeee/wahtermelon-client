@@ -58,6 +58,11 @@ const routes: Routes = [
   {
     path: 'accred',
     loadChildren: () => import('../app/components/facilityaccreditation/facilityaccreditation.module').then(m => m.FacilityaccreditationModule) },
+    // loadChildren: () => import('./modules/dental/dental.module').then(m => m.DentalModule) },
+  {
+    path: 'consultation',
+    loadChildren: () => import('./modules/consultation/consultation.module').then(m => m.ConsultationModule)
+  }
 ];
 
 @NgModule({

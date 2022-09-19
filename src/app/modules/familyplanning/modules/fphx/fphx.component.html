@@ -1,8 +1,8 @@
 <div class="grid max-h-fit relative" style="grid-template-columns: repeat(16, minmax(0, 1fr));" *ngIf="!focused">
-    <div class="sticky top-0 z-50 border hover:border border-gray-300 hover:border-blue-400 col-span-2 cursor-pointer relative mx-2 px-2 py-1 rounded-lg bg-blue-500 text-white"
+    <div class="sticky top-0 z-50 border hover:border border-gray-300 hover:border-blue-400 col-span-2 relative mx-2 px-2 py-1 rounded-lg bg-white text-blue-500 text-sm hover:bg-blue-500 hover:text-white"
         style="grid-column: span 16 / span 16;"><button class="font-bold" type="button">FP History</button>
-        <div class="absolute left-20 top-1">
-            <fa-icon [icon]="faInfoCircle" class=" peer ml-4 text-white hover:text-gray-500 z-50"></fa-icon>
+        <div class="absolute top-1" style="	left: 4.5rem;">
+            <fa-icon [icon]="faInfoCircle" class=" peer ml-4 text-white hover:text-gray-500 z-50" ></fa-icon>
             <div
                 class="absolute text-sm bg-gradient-to-b from-stone-500 to-gray-400 p-2 rounded-md border border-gray-500  text-white drop-shadow-lg opacity-90 border-check z-50 w-64 invisible peer-hover:visible">
                 <h1 class="font-bold drop-shadow-lg">IMPORTANT</h1>
@@ -70,7 +70,7 @@
                     <div *ngFor="let check of check_list;">
                         <div class="border-check-red p-2 group" *ngIf="module_strings.includes(i)">
                             <input
-                                class=" h-6 w-6 border border-gray-400 rounded-md group-hover:rounded-lg checked:rounded-full checked:border-2 bg-white checked:bg-blue-400 checked:border-blue-500 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                                class=" h-6 w-6 border border-gray-400 rounded-md checked:border-2 bg-white checked:bg-blue-400 checked:border-blue-500 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
                                 type="checkbox" value="check" [attr.id]="check" (change)="onChange(check,fphx_cat)"
                                 [checked]="fphx_strings.includes(check)" (keyup.escape)="uncheck(fphx_cat)"
                                 (keyup.enter)="saveModule()" (keyup.tab)="nextModule(fp_hx_cat[i+1], i+1);">

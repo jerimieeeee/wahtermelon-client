@@ -35,6 +35,29 @@
 .ng-select.search.ng-select-opened>.ng-select-container:hover {
   border-radius: 25px;
 }
+
+@layer components {
+  .chips {
+    @apply my-2 ml-2 p-1 px-4 text-sm bg-blue-500 rounded-full text-gray-50 border select-none;
+    overflow:hidden;
+    white-space: nowrap;
+  };
+  .chips-container {
+    @apply flex border w-full border-solid rounded-r-md border-gray-300 border-l-0;
+  };
+  .chips-close {
+    @apply text-white hover:text-gray-200 ml-3 cursor-pointer;
+  };
+  .input {
+    @apply mt-1 py-2 px-3 focus:ring-blue-500 focus:border-indigo-500 block w-full border-gray-300 border rounded-md sm:text-sm
+  };
+  .input-label {
+    @apply block text-sm font-medium text-gray-700
+  };
+  .btn-save {
+    @apply mr-4 md:w-36 text-white bg-blue-500 hover:bg-blue-700 font-medium rounded-lg text-sm py-3 my-4
+  };
+}
 /* .ng-select.ng-select.search .ng-select-container  {
   min-height: 700px;
   border-radius: 24px;

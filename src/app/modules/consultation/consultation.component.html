@@ -1,0 +1,231 @@
+<div class="grid grid-cols-11 mt-4 gap-4">
+  <div class="mb-16 col-span-8">
+    <div class="flex">
+      <div class="w-1/2 shadow px-2 mr-2 py-4 rounded-xl text-gray-600 border border-slate-100">
+        <div id="bp-chart">
+          <apx-chart
+            [series]="chartOptions.series"
+            [chart]="chartOptions.chart"
+            [xaxis]="chartOptions.xaxis"
+            [stroke]="chartOptions.stroke"
+            [tooltip]="chartOptions.tooltip"
+            [dataLabels]="chartOptions.dataLabels"
+            [title]="chartOptions.title"
+          ></apx-chart>
+        </div>
+      </div>
+      <div class="w-1/2 shadow px-2 ml-2  py-4 rounded-xl text-gray-600 border border-slate-100">
+        <div id="weight-chart">
+          <apx-chart
+            [series]="WeightChart.series"
+            [chart]="WeightChart.chart"
+            [xaxis]="WeightChart.xaxis"
+            [stroke]="WeightChart.stroke"
+            [tooltip]="WeightChart.tooltip"
+            [dataLabels]="WeightChart.dataLabels"
+            [title]="WeightChart.title"
+          ></apx-chart>
+        </div>
+      </div>
+    </div>
+
+    <div class="block shadow p-4 mt-4 rounded-xl text-gray-600 border border-slate-100">
+      <span class="text-sky-500 font-bold">Consultation</span>
+
+      <div class="mt-4">
+        <div class="grid grid-cols-10">
+          <div class="col-span-2 pt-2">
+            Chief Complaint
+          </div>
+          <div class="col-span-8">
+            <div class="flex mb-2">
+              <button type="submit" class="inline-flex p-3 items-center text-gray-50 bg-sky-400 rounded-l-md border border-gray-300">
+                <fa-icon class="text-white fa-xl" [icon]="faPlusSquare" ></fa-icon>
+              </button>
+              <div class="chips-container">
+                <span [@closeChip] *ngIf="show_item" class="chips">
+                  Headache
+                  <fa-icon class="chips-close" [icon]="faXmark" (click)="deleteItem()"></fa-icon>
+                </span>
+              </div>
+            </div>
+            <div class="flex">
+              <textarea rows="3" id="complaint_notes" placeholder="Complaint Notes" class="placeholder-slate-400 w-full rounded-md border-gray-300 bg-gray-50"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <hr class="my-4">
+      <div>
+        <div class="grid grid-cols-10">
+          <div class="col-span-2 pt-2">
+            History of Current Illness
+          </div>
+          <div class="col-span-8">
+            <div class="block">
+              <textarea rows="3" id="complaint_notes" placeholder="Current Illness Notes" class="placeholder-slate-400 w-full rounded-md border-gray-300 bg-gray-50"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <hr class="my-4">
+      <div>
+        <div class="grid grid-cols-10">
+          <div class="col-span-2 pt-2">
+            Physical Exam
+          </div>
+          <div class="col-span-8">
+            <div class="flex mb-2">
+              <button type="submit" class="inline-flex p-3 items-center text-gray-50 bg-sky-400 rounded-l-md border border-gray-300">
+                <fa-icon class="text-white fa-xl" [icon]="faPlusSquare" ></fa-icon>
+              </button>
+              <div class="chips-container">
+                <span [@closeChip] *ngIf="show_item" class="chips">
+                  Headache
+                  <fa-icon class="chips-close" [icon]="faXmark" (click)="deleteItem()"></fa-icon>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <hr class="my-4">
+      <div>
+        <div class="grid grid-cols-10">
+          <div class="col-span-2 pt-2">
+            Diagnosis History
+          </div>
+          <div class="col-span-8">
+            <div class="rounded-md border border-solid border-gray-300">
+              <span class="rounded-t-md m-0 p-2 font-semibold text-gray-50 block bg-teal-500">
+                Previous Diagnosis
+              </span>
+              <table class="w-full table-auto">
+                <thead>
+                  <tr class="border-b border-solid border-gray-200">
+                    <th>Date</th>
+                    <th>Initial Diagnosis</th>
+                    <th>Final Diagnosis</th>
+                    <th>Precription</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="text-center">
+                    <td>09/01/2022</td>
+                    <td>Sample dx</td>
+                    <td>Sample dx</td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <hr class="my-4">
+      <div>
+        <div class="grid grid-cols-10">
+          <div class="col-span-2 pt-2">
+            Initial Diagnosis
+          </div>
+          <div class="col-span-8">
+            <div class="flex mb-2">
+              <button type="submit" class="inline-flex p-3 items-center text-gray-50 bg-sky-400 rounded-l-md border border-gray-300">
+                <fa-icon class="text-white fa-xl" [icon]="faPlusSquare" ></fa-icon>
+              </button>
+              <div class="chips-container">
+                <span [@closeChip] *ngIf="show_item" class="chips">
+                  Headache
+                  <fa-icon class="chips-close" [icon]="faXmark" (click)="deleteItem()"></fa-icon>
+                </span>
+              </div>
+            </div>
+            <div class="block">
+              <textarea rows="3" id="intial_dx" placeholder="Initial Diagnosis" class="placeholder-slate-400 w-full rounded-md border-gray-300 bg-gray-50"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <hr class="my-4">
+      <div>
+        <div class="grid grid-cols-10">
+          <div class="col-span-2 pt-2">
+            Final Diagnosis
+          </div>
+          <div class="col-span-8">
+            <div class="flex mb-2">
+              <button type="submit" class="inline-flex p-3 items-center text-gray-50 bg-sky-400 rounded-l-md border border-gray-300">
+                <fa-icon class="text-white fa-xl" [icon]="faPlusSquare" ></fa-icon>
+              </button>
+              <div class="chips-container">
+                <span [@closeChip] *ngIf="show_item" class="chips">
+                  Headache
+                  <fa-icon class="chips-close" [icon]="faXmark" (click)="deleteItem()"></fa-icon>
+                </span>
+              </div>
+            </div>
+            <div class="block">
+              <textarea rows="3" id="final_dx" placeholder="Final Diagnosis" class="placeholder-slate-400 w-full rounded-md border-gray-300 bg-gray-50"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <hr class="my-4">
+      <div>
+        <div class="grid grid-cols-10">
+          <div class="col-span-2 pt-2">
+            Prescription
+          </div>
+          <div class="col-span-8">
+            <div class="rounded-md border border-solid border-gray-300">
+              <span class="rounded-t-md m-0 p-2 font-semibold text-gray-50 block bg-orange-400">
+                Prescription
+              </span>
+              <table class="w-full table-auto">
+                <!-- <thead>
+                  <tr class="border-b border-solid border-gray-200">
+                    <th class="font-semibold">Name</th>
+                    <th>Notes</th>
+                    <th>Treatment Notes</th>
+                    <th>Action</th>
+                  </tr>
+                </thead> -->
+                <tbody>
+                  <tr class="text-left align-top mx-2">
+                    <td class="font-semibold text-center">Amoxicillin</td>
+                    <td>
+                      Table 500mg <br />
+                      3x a day<br />
+                      Sample <br />
+                    </td>
+                    <td>Increase Fluid intake</td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="text-right border-t border-solid border-gray-200 -mx-4 -mb-4 mt-8 rounded-b-xl">
+        <button type="button" (click)="saveConsult()" class="btn-save">
+          <fa-icon *ngIf="is_saving" class="mr-3" [icon]="faSpinner" [spin]="true"></fa-icon>
+          {{ is_saving ? 'Saving' : 'Save' }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="col-span-3">
+    <app-patient-info></app-patient-info>
+  </div>
+</div>
