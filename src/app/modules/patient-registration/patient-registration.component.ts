@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { Family, Patient } from './model/model';
@@ -29,28 +29,29 @@ export class PatientRegistrationComponent implements OnInit {
     civil_status_code: '',
     consent_flag: false
   } */
-  patientForm = new FormGroup({
-    last_name: new FormControl('', {nonNullable: true}),
-    first_name: new FormControl('', {nonNullable: true}),
-    middle_name: new FormControl(''),
-    suffix_name: new FormControl('', {nonNullable: true}),
-    birthdate: new FormControl('', {nonNullable: true}),
-    mothers_name: new FormControl('', {nonNullable: true}),
-    gender: new FormControl('', {nonNullable: true}),
-    mobile_number: new FormControl('', {nonNullable: true}),
-    pwd_type_code: new FormControl(''),
-    indegenous_flag: new FormControl(false),
-    blood_type_code: new FormControl(''),
-    religion_code: new FormControl(''),
-    occupation_code: new FormControl(''),
-    education_code: new FormControl(''),
-    civil_status_code: new FormControl(''),
-    consent_flag: new FormControl(false),
+  patientForm: FormGroup = new FormGroup({
+    last_name: new FormControl<string| null>(''),
+    first_name: new FormControl<string| null>(''),
+    middle_name: new FormControl<string| null>(''),
+    suffix_name: new FormControl<string| null>(''),
+    birthdate: new FormControl<string| null>(''),
+    mothers_name: new FormControl<string| null>(''),
+    gender: new FormControl<string| null>(''),
+    mobile_number: new FormControl<string| null>(''),
+    pwd_type_code: new FormControl<string| null>(''),
+    indegenous_flag: new FormControl<boolean>(false),
+    blood_type_code: new FormControl<string| null>(''),
+    religion_code: new FormControl<string| null>(''),
+    occupation_code: new FormControl<string| null>(''),
+    education_code: new FormControl<string| null>(''),
+    civil_status_code: new FormControl<string| null>(''),
+    consent_flag: new FormControl<boolean>(false),
     family: new FormGroup({
-      region: new FormControl(''),
-      province: new FormControl(''),
-      municipality: new FormControl(''),
-      brgy: new FormControl(''),
+      region: new FormControl<string| null>(''),
+      province: new FormControl<string| null>(''),
+      municipality: new FormControl<string| null>(''),
+      brgy: new FormControl<string| null>(''),
+      address: new FormControl<string| null>(''),
     })
   });
 
@@ -67,10 +68,10 @@ export class PatientRegistrationComponent implements OnInit {
   provinces: object;
   municipalities: object;
   barangays: object;
-  selectedRegion: string;
-  selectedProvince: string;
-  selectedMunicipality: string;
-  selelectedBarangay: string;
+  selectedRegion: string| null;
+  selectedProvince: string| null;
+  selectedMunicipality: string| null;
+  selelectedBarangay: string| null;
 
   libraries = [
     {var_name: 'blood_types', location: 'blood-types'},
@@ -86,18 +87,24 @@ export class PatientRegistrationComponent implements OnInit {
   is_saving: boolean = false;
 
   constructor(
-    private http: HttpService
+    private http: HttpService,
+    private formBuilder: FormBuilder
   ) { }
 
-  savePatient(){
-    console.log(this.patientForm);
-    /* this.is_saving = true;
+  get f(): { [key: string]: AbstractControl } {
+    return this.patientForm.controls;
+  }
 
+  onSubmit(){
+    console.log(this.patientForm);
+    this.is_saving = true;
+    /*
     this.http.post('patient', this.patientForm).subscribe({
       next: (data: any) => console.log(data),
       error: err => console.log(err),
       complete: () => this.is_saving = false
-    }) */
+    })
+    */
   }
 
   newPatient(){
@@ -128,6 +135,32 @@ export class PatientRegistrationComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.patientForm = this.formBuilder.group({
+      last_name: ['', [Validators.required, Validators.minLength(2)]],
+      first_name: ['', [Validators.required, Validators.minLength(2)]],
+      middle_name: ['', [Validators.required, Validators.minLength(2)]],
+      suffix_name: [''],
+      birthdate: ['', Validators.required],
+      mothers_name: ['', [Validators.required, Validators.minLength(2)]],
+      gender: ['', Validators.required],
+      mobile_number: ['', Validators.required],
+      pwd_type_code: ['', Validators.required],
+      indegenous_flag: [false],
+      blood_type_code: ['', Validators.required],
+      religion_code: ['', Validators.required],
+      occupation_code: ['', Validators.required],
+      education_code: ['', Validators.required],
+      civil_status_code: ['', Validators.required],
+      consent_flag: [false],
+      family: {
+        region: ['', Validators.required],
+        province: ['', Validators.required],
+        municipality: ['', Validators.required],
+        brgy: ['', Validators.required],
+        address: ['', [Validators.required, Validators.minLength(2)]],
+      }
+    });
+
     this.loadLibraries();
   }
 }

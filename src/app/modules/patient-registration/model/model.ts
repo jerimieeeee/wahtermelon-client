@@ -19,6 +19,12 @@ export interface Patient {
   civil_status_code: FormControl<string>;
   consent_flag: FormControl<boolean>;
   image_url?: FormControl<string>;
+  family?: {
+    region: FormControl<string>;
+    province: FormControl<string>;
+    municipality: FormControl<string>;
+    brgy: FormControl<string>;
+  }
 }
 
 export interface Family {

@@ -3,23 +3,50 @@
     <div class="border border-solid border-slate-100 rounded-t-xl bg-blue-500 text-white text-lg p-3 font-semibold">
       Patient Registration
     </div>
-    <form [formGroup]="patientForm" (ngSubmit)="savePatient()">
+    <form [formGroup]="patientForm" (ngSubmit)="onSubmit()">
       <div class="m-10">
         <div class="px-4 py-5 bg-white sm:p-6">
           <div class="grid grid-cols-8 gap-x-4 gap-y-6">
             <div class="col-span-6 sm:col-span-2">
-              <label for="last_name" class="input-label">Last name</label>
-              <input type="text" name="last_name" id="last_name" class="input" formControlName="last_name">
+              <label for="last_name" class="input-label" [ngClass]="{'text-red-500': is_saving && f.last_name.errors}">Last name</label>
+              <input type="text" name="last_name" id="last_name" class="input" [ngClass]="{'invalid-input': is_saving && f.last_name.errors}" formControlName="last_name" required>
+
+              <div *ngIf="is_saving && f.last_name.errors" class="invalid-alert">
+                <div *ngIf="f.last_name.errors?.['required']">
+                  Last name is required.
+                </div>
+                <div *ngIf="f.last_name.errors?.['minlength']">
+                  Minumum of 2 character.
+                </div>
+              </div>
             </div>
 
             <div class="col-span-6 sm:col-span-2">
-              <label for="first_name" class="input-label">First name</label>
-              <input type="text" name="first_name" id="first_name" class="input" formControlName="first_name">
+              <label for="first_name" class="input-label" [ngClass]="{'text-red-500': is_saving && f.first_name.errors}">First name</label>
+              <input type="text" name="first_name" id="first_name" class="input" [ngClass]="{'invalid-input': is_saving && f.first_name.errors}" formControlName="first_name">
+
+              <div *ngIf="is_saving && f.first_name.errors" class="invalid-alert">
+                <div *ngIf="f.first_name.errors?.['required']">
+                  First name is required.
+                </div>
+                <div *ngIf="f.first_name.errors?.['minlength']">
+                  Minumum of 2 character.
+                </div>
+              </div>
             </div>
 
             <div class="col-span-6 sm:col-span-2">
-              <label for="middle_name" class="input-label">Middle name</label>
-              <input type="text" name="middle_name" id="middle_name" class="input" formControlName="middle_name">
+              <label for="middle_name" class="input-label" [ngClass]="{'text-red-500': is_saving && f.middle_name.errors}">Middle name</label>
+              <input type="text" name="middle_name" id="middle_name" class="input" [ngClass]="{'invalid-input': is_saving && f.middle_name.errors}" formControlName="middle_name">
+
+              <div *ngIf="is_saving && f.middle_name.errors" class="invalid-alert">
+                <div *ngIf="f.middle_name.errors?.['required']">
+                  Middle name is required.
+                </div>
+                <div *ngIf="f.middle_name.errors?.['minlength']">
+                  Minumum of 2 character.
+                </div>
+              </div>
             </div>
 
             <div class="col-span-6 sm:col-span-2">
