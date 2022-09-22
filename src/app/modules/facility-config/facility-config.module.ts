@@ -12,6 +12,7 @@ import { BhsComponent } from './components/bhs/bhs.component';
 import { MorbidityCalendarComponent } from './components/morbidity-calendar/morbidity-calendar.component';
 import { PhieComponent } from './components/phie/phie.component';
 import { RetrievePhicComponent } from './components/retrieve-phic/retrieve-phic.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { RetrievePhicComponent } from './components/retrieve-phic/retrieve-phic.
   ],
   imports: [
     CommonModule,
-    FacilityConfigRoutingModule,SharedComponentsModule,FontAwesomeModule
+    FacilityConfigRoutingModule,SharedComponentsModule,FontAwesomeModule,
+    FormsModule,ReactiveFormsModule
   ]
 })
 export class FacilityConfigModule { }

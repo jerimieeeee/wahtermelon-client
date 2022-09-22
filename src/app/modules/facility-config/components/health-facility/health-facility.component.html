@@ -13,74 +13,88 @@
     </div>
     </div>
   
-  
-    <table class="text-sm col-span-6 col-start-1 table-auto border-r-2 border-gray-200">
+    <form class="text-sm col-span-6 col-start-1 table-auto border-r-2 border-gray-200" [formGroup]="facilityForm" (ngSubmit)="saveFacility()">
+    <table class="w-full">
+      
       <tbody>
-  
+        
         <tr class="">
             <div class="relative col-start-1 col-span-6 px-5 mt-5">
-                <select class="text-sm form-select border-gray-200 border p-2.5 rounded-md w-full bg-white">
-                <option *ngFor="let loc of location">{{loc.desc}}</option>
+                <select class="text-sm form-select border-gray-200 border p-2.5 rounded-md w-full bg-white"  id="region" name="region" class="input" (change)="loadDemog('regions', facilityForm.value.region, 'provinces')" formControlName="region">
+                  <option value="" disabled selected>Select Region</option>
+                  <option *ngFor="let region of regions" [value]="region.code" >{{ region.name }}</option>
                 </select>
             </div>
 
             <div class="relative col-start-1 col-span-6 px-5 mt-5">
-                <select class="text-sm form-select border-gray-200 border p-2.5 rounded-md w-full bg-white">
-                <option *ngFor="let loc of location">{{loc.desc}}</option>
-                </select>
+              <select class="text-sm form-select border-gray-200 border p-2.5 rounded-md w-full bg-white"  id="province" name="province" class="input" (change)="loadDemog('provinces', facilityForm.value.province, 'municipalities')" formControlName="province">
+                <option value="" disabled selected>Select Province</option>
+                <option *ngFor="let province of provinces" [value]="province.code" >{{ province.name }}</option>
+              </select>
+            </div>
+
+            <div class="relative col-start-1 col-span-6 px-5 mt-5">
+              <select class="text-sm form-select border-gray-200 border p-2.5 rounded-md w-full bg-white"  id="municipality" name="municipality" class="input" (change)="loadDemog('municipalities', facilityForm.value.municipality, 'barangays')" formControlName="municipality">
+                <option value="" disabled selected>Select Municipality</option>
+                <option *ngFor="let municipality of municipalities" [value]="municipality.code" >{{ municipality.name }}</option>
+              </select>
+            </div>
+
+            <div class="relative col-start-1 col-span-6 px-5 mt-5">
+              <select class="text-sm form-select border-gray-200 border p-2.5 rounded-md w-full bg-white" id="brgy" name="brgy" class="input" formControlName="brgy">
+                <option value="" disabled selected>Select Barangay</option>
+                <option *ngFor="let barangay of barangays" [value]="barangay.code" >{{ barangay.name }}</option>
+              </select>
             </div>
 
             <div class="relative col-start-1 col-span-6 px-5 mt-5">
                 <select class="text-sm form-select border-gray-200 border p-2.5 rounded-md w-full bg-white">
-                <option *ngFor="let loc of location">{{loc.desc}}</option>
-                </select>
-            </div>
-
-            <div class="relative col-start-1 col-span-6 px-5 mt-5">
-                <select class="text-sm form-select border-gray-200 border p-2.5 rounded-md w-full bg-white">
-                <option *ngFor="let loc of location">{{loc.desc}}</option>
-                </select>
-            </div>
-
-            <div class="relative col-start-1 col-span-6 px-5 mt-5">
-                <select class="text-sm form-select border-gray-200 border p-2.5 rounded-md w-full bg-white">
+                  <option value="" disabled selected>Select Health Facility</option>
                 <option *ngFor="let loc of location">{{loc.desc}}</option>
                 </select>
             </div>
 
             <div class="relative col-start-1 col-span-6 px-5 mt-5 mb-5">
                 <select class="text-sm form-select border-gray-200 border p-2.5 rounded-md w-full bg-white">
+                  <option value="" disabled selected>Select Health Facility Classification</option>
                 <option *ngFor="let loc of location">{{loc.desc}}</option>
                 </select>
             </div>
         </tr>
-  
+      
       </tbody>
+    
     </table>
+  </form>
   
     <div class="text-sm col-span-6 col-start-7 table-auto overflow-y-auto h-96">
-      <h1 class="px-5 py-5 font-bold">Health Information</h1>
-          <ul class="list-disc px-8">
-            <li class="py-3">All individuals with persistent raised BP ≥ 160/100 mmHg should be given antihypertensive treatment.</li>
-            <li class="py-3">All patients with established diabetes and cardiovascular disease (coronary heart disease, myocardial infarction, transient ischaemic attacks, cerebrovascular disease or peripheral vascular disease); if stable, should continue the treatment already prescribed and be considered as with risk > 30%.</li>
-            <li class="py-3">All individuals with total cholesterol at or above 8 mmol/l (320mg/dl) should be given lifestyle advise and statins.</li>
-          </ul>
-          <ul class="list-disc px-8">
-            <li class="py-3">Counsel on diet, physical activity, smoking cessation, (Protocol 3P and 4P).</li>
-            <li class="py-3">If risk < 10%, follow up in 12 months.</li>
-            <li class="py-3">If risk 10 to < 20%, follow up every 3 months until the targets are met, then 6-9 months thereafter.</li>
-          </ul>
-          <ul class="list-disc px-8">
-            <li class="py-3">Counsel on diet, physical activity, smoking cessation, (Protocols 3P and 4P).</li>
-            <li class="py-3">Persistent BP ≥ 140/90 mmHg (in DM ≥ 130/80 mmHg) consider a low dose of one of the drugs. Hydrochlorthiazide 25-50 mg daily. Enalapril 5-20 mg daily. Atenolol 50-100 mg daily. Amiodipine 5-10 mg daily</li>
-            <li class="py-3">Follow-up every 3-6 months.</li>
-          </ul>
-          <ul class="list-disc px-8 mb-4">
-            <li class="py-3">Counsel on diet, physical activity, smoking cessation.</li>
-            <li class="py-3">Persistent BP ≥ 130/80 should be given one of the drugs: thiazide, ACE inhibitor, beta blocker, calcium channel blocker. </li>
-            <li class="py-3">Give a statin.</li>
-            <li class="py-3">Follow-up every three months.</li>
-          </ul>
+      <table class="w-full max-w-4xl text-left text-gray-500 dark:text-gray-400">
+        <thead class="text-sm text-gray-700 dark:bg-gray-700 dark:text-gray-400">
+          <tr class="sticky top-0 z-50 bg-gray-50">
+              <th scope="col" class="p-4 pl-12">
+                <div class="flex items-center">
+                  <input id="checkbox-all-search" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 rounded-full border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                  <label for="checkbox-all-search" class="sr-only">checkbox</label>
+                </div>
+              </th>
+              <th scope="col" class="py-4">
+              Barangay Name
+              </th>
+          </tr>
+        </thead>
+          <tbody>
+            <tr *ngFor="let item of barangays" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+              <td class="p-4 w-4 pl-12">
+                <div class="flex items-center">
+                  <input id="{{item.id}}" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 rounded-full border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                </div>
+              </td>
+              <td scope="row" class="text-sm py-4 text-gray-900 whitespace-nowrap dark:text-white select-none">
+                <label for="{{item.id}}">{{item.name}}</label>
+              </td>
+            </tr>
+          </tbody>
+      </table>
   
     </div>
   
