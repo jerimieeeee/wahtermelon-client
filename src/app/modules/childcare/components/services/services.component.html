@@ -130,7 +130,7 @@
   <!--Essential Newborn Care Modal-->
    <!-- Main modal -->
    <div *ngIf="showServiceModal" id="defaultModal" tabindex="-1" class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 w-full md:inset-0 h-modal md:h-full justify-center items-center flex" aria-modal="true" role="dialog" style="z-index:60">
-    <div class="relative p-4 w-full max-w-3xl h-auto md:h-auto">
+    <div class="relative p-4 w-full max-w-4xl h-auto md:h-auto">
         <!-- Modal content -->
         <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
             <!-- Modal header -->
@@ -145,7 +145,7 @@
             </div>
             <!-- Modal body -->
           <div class="overflow-y-auto h-96 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
-            <table class="w-full max-w-3xl text-left text-gray-500 dark:text-gray-400">
+            <table class="w-full max-w-4xl text-left text-gray-500 dark:text-gray-400">
               <thead class="text-sm text-gray-700 dark:bg-gray-700 dark:text-gray-400">
                 <tr class="sticky top-0 z-50 bg-gray-50">
                     <th scope="col" class="p-4 pl-12">
@@ -161,7 +161,7 @@
                     Service Date
                     </th>
                     <th scope="col" class="py-4 pr-12">
-                    Done Outside
+                    Done Outside Facility
                     </th>
               
                 </tr>
@@ -177,9 +177,9 @@
                       <label for="{{item.id}}">{{item.name}}</label>
                     </td>
                     <td class="py-4 px-10">
-                      <input type="text" placeholder="Select Date" onfocus="(this.type='date')"
+                      <input type="text" placeholder="Select Date"
                       class="form-control block w-full px-3 py-1.5 text-sm text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                      placeholder="Select a date" />
+                      placeholder="Select service date" onfocus="(this.type='date')"/>
                     </td>
                     <td class="text-sm py-4 pr-12">
                       <select class="w-full text-sm">
