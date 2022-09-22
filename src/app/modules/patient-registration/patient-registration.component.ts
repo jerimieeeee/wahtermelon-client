@@ -12,23 +12,7 @@ import { Family, Patient } from './model/model';
 export class PatientRegistrationComponent implements OnInit {
   faSpinner = faSpinner;
 
-  /* patient: Patient = {
-    last_name: '',
-    first_name: '',
-    suffix_name: '',
-    birthdate: '',
-    mothers_name: '',
-    gender: '',
-    mobile_number: '',
-    pwd_type_code: '',
-    indegenous_flag: false,
-    blood_type_code: '',
-    religion_code: '',
-    occupation_code: '',
-    education_code: '',
-    civil_status_code: '',
-    consent_flag: false
-  } */
+  required_message = 'This is required.';
   patientForm: FormGroup = new FormGroup({
     last_name: new FormControl<string| null>(''),
     first_name: new FormControl<string| null>(''),
@@ -139,7 +123,7 @@ export class PatientRegistrationComponent implements OnInit {
       last_name: ['', [Validators.required, Validators.minLength(2)]],
       first_name: ['', [Validators.required, Validators.minLength(2)]],
       middle_name: ['', [Validators.required, Validators.minLength(2)]],
-      suffix_name: [''],
+      suffix_name: ['NA'],
       birthdate: ['', Validators.required],
       mothers_name: ['', [Validators.required, Validators.minLength(2)]],
       gender: ['', Validators.required],
@@ -152,13 +136,13 @@ export class PatientRegistrationComponent implements OnInit {
       education_code: ['', Validators.required],
       civil_status_code: ['', Validators.required],
       consent_flag: [false],
-      family: {
+      family: this.formBuilder.group({
         region: ['', Validators.required],
         province: ['', Validators.required],
         municipality: ['', Validators.required],
         brgy: ['', Validators.required],
         address: ['', [Validators.required, Validators.minLength(2)]],
-      }
+      })
     });
 
     this.loadLibraries();
