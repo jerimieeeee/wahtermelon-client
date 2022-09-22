@@ -11,7 +11,7 @@ import { VitalsGraphComponent } from './components/vitals-graph/vitals-graph.com
 import { VitalsComponent } from './components/vitals/vitals.component';
 import { HttpClientModule } from '@angular/common/http';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgApexchartsModule } from 'ng-apexcharts';
 
 
@@ -32,6 +32,7 @@ import { NgApexchartsModule } from 'ng-apexcharts';
     NgSelectModule,
     FormsModule,
     NgApexchartsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
