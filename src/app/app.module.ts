@@ -11,7 +11,7 @@ import { VitalsGraphComponent } from './components/vitals-graph/vitals-graph.com
 import { VitalsComponent } from './components/vitals/vitals.component';
 import { HttpClientModule } from '@angular/common/http';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
@@ -35,6 +35,8 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
     FormsModule,
     NgApexchartsModule, 
     Ng2SearchPipeModule,
+    NgApexchartsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

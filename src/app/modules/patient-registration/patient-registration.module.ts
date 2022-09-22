@@ -3,7 +3,8 @@ import { CommonModule } from '@angular/common';
 
 import { PatientRegistrationRoutingModule } from './patient-registration-routing.module';
 import { PatientRegistrationComponent } from './patient-registration.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 
 @NgModule({
@@ -13,8 +14,9 @@ import { FormsModule } from '@angular/forms';
   imports: [
     CommonModule,
     PatientRegistrationRoutingModule,
-    FormsModule
-
+    FormsModule,
+    FontAwesomeModule,
+    ReactiveFormsModule
   ]
 })
 export class PatientRegistrationModule { }
