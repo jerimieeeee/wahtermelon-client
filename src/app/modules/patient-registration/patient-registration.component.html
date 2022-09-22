@@ -109,33 +109,34 @@
                 <option value="true">Y</option>
               </select>
             </div>
+          </div>
 
+          <div class="grid grid-cols-8 gap-x-4 gap-y-6" formGroupName="family">
             <div class="col-span-8 border-b-2 border-slate-100"></div>
-
             <div class="col-span-6 sm:col-span-2">
               <label for="region" class="input-label">Region</label>
-              <select id="region" name="region" class="input" (change)="loadDemog('regions', selectedRegion, 'provinces')">
+              <select id="region" name="region" class="input" (change)="loadDemog('regions', patientForm.value.family.region, 'provinces')" formControlName="region">
                 <option *ngFor="let region of regions" [value]="region.code" >{{ region.name }}</option>
               </select>
             </div>
 
             <div class="col-span-6 sm:col-span-2">
               <label for="province" class="input-label">Province</label>
-              <select id="province" name="province" class="input" (change)="loadDemog('provinces', selectedProvince, 'municipalities')">
+              <select id="province" name="province" class="input" (change)="loadDemog('provinces', patientForm.value.family.province, 'municipalities')" formControlName="province">
                 <option *ngFor="let province of provinces" [value]="province.code">{{ province.name }}</option>
               </select>
             </div>
 
             <div class="col-span-6 sm:col-span-2">
               <label for="muncity" class="input-label">Municipality/City</label>
-              <select id="muncity" name="muncity" class="input" (change)="loadDemog('municipalities', selectedMunicipality, 'barangays')">
+              <select id="muncity" name="muncity" class="input" (change)="loadDemog('municipalities', patientForm.value.family.municipality, 'barangays')" formControlName="municipality">
                 <option *ngFor="let municipality of municipalities" [value]="municipality.code">{{ municipality.name }}</option>
               </select>
             </div>
 
             <div class="col-span-6 sm:col-span-2">
               <label for="brgy" class="input-label">Brgy</label>
-              <select id="brgy" name="brgy" class="input">
+              <select id="brgy" name="brgy" class="input" formControlName="brgy">
                 <option *ngFor="let barangay of barangays" [value]="barangay.code">{{ barangay.name }}</option>
               </select>
             </div>

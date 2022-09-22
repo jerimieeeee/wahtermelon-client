@@ -12,8 +12,25 @@ import { Family, Patient } from './model/model';
 export class PatientRegistrationComponent implements OnInit {
   faSpinner = faSpinner;
 
-  patientForm = new FormGroup<Patient>({
-    last_name: new FormControl<string>('', {nonNullable: true}),
+  /* patient: Patient = {
+    last_name: '',
+    first_name: '',
+    suffix_name: '',
+    birthdate: '',
+    mothers_name: '',
+    gender: '',
+    mobile_number: '',
+    pwd_type_code: '',
+    indegenous_flag: false,
+    blood_type_code: '',
+    religion_code: '',
+    occupation_code: '',
+    education_code: '',
+    civil_status_code: '',
+    consent_flag: false
+  } */
+  patientForm = new FormGroup({
+    last_name: new FormControl('', {nonNullable: true}),
     first_name: new FormControl('', {nonNullable: true}),
     middle_name: new FormControl(''),
     suffix_name: new FormControl('', {nonNullable: true}),
@@ -28,7 +45,13 @@ export class PatientRegistrationComponent implements OnInit {
     occupation_code: new FormControl(''),
     education_code: new FormControl(''),
     civil_status_code: new FormControl(''),
-    consent_flag: new FormControl(false)
+    consent_flag: new FormControl(false),
+    family: new FormGroup({
+      region: new FormControl(''),
+      province: new FormControl(''),
+      municipality: new FormControl(''),
+      brgy: new FormControl(''),
+    })
   });
 
   family: Family;
@@ -90,7 +113,7 @@ export class PatientRegistrationComponent implements OnInit {
     }
 
     this.http.get('libraries/'+loc+'/'+code,{params:{'include':include}}).subscribe({
-      next: (data: any) => this[include] = data.data[include],
+      next: (data: any) => {console.log(data.data); this[include] = data.data[include]},
       error: err => console.log(err)
     });
   }
