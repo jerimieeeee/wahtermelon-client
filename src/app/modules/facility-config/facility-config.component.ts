@@ -12,10 +12,12 @@ export class FacilityConfigComponent implements OnInit {
   constructor() { }
 
   switchTabs(tab){
+    this.modules = 0
     this.modules = tab;
   }
 
   ngOnInit(): void {
     this.modules = 1;
+    
   }
 }

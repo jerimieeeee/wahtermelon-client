@@ -48,18 +48,12 @@
             </div>
 
             <div class="relative col-start-1 col-span-6 px-5 mt-5">
-                <select class="text-sm form-select border-gray-200 border p-2.5 rounded-md w-full bg-white">
-                  <option value="" disabled selected>Select Health Facility</option>
-                <option *ngFor="let loc of location">{{loc.desc}}</option>
-                </select>
+              <select class="text-sm form-select border-gray-200 border p-2.5 rounded-md w-full bg-white" id="hfname" name="hfname" class="input" formControlName="hfname">
+                <option value="" disabled selected>Select Health Facility</option>
+                <option *ngFor="let facility of facilities" [value]="facility.code" >{{ facility.code }}</option>
+              </select>
             </div>
 
-            <div class="relative col-start-1 col-span-6 px-5 mt-5 mb-5">
-                <select class="text-sm form-select border-gray-200 border p-2.5 rounded-md w-full bg-white">
-                  <option value="" disabled selected>Select Health Facility Classification</option>
-                <option *ngFor="let loc of location">{{loc.desc}}</option>
-                </select>
-            </div>
         </tr>
       
       </tbody>

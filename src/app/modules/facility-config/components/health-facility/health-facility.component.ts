@@ -12,17 +12,14 @@ export class HealthFacilityComponent implements OnInit {
   
   faInfoCircle = faInfoCircle;
 
-  location = [
-    {code: 'community', desc: 'Community Level'},
-    {code: 'facility', desc: 'Health Facility'}];
-
     facilityForm = new FormGroup({
      
         region: new FormControl(''),
         province: new FormControl(''),
         municipality: new FormControl(''),
         brgy: new FormControl(''),
-    
+        hfname: new FormControl(''),
+       
     });
   
   
@@ -30,13 +27,12 @@ export class HealthFacilityComponent implements OnInit {
     provinces: object;
     municipalities: object;
     barangays: object;
-    selectedRegion: string;
-    selectedProvince: string;
-    selectedMunicipality: string;
-    selelectedBarangay: string;
-  
+    facilities: Object;
+    
+   
     libraries = [
       {var_name: 'regions', location: 'regions'},
+      {var_name: 'facilities', location: 'facilities'},
     ]
   
     is_saving: boolean = false;
@@ -64,14 +60,13 @@ export class HealthFacilityComponent implements OnInit {
         this.barangays = null;
       }else if (loc == 'provinces') {
         this.barangays = null;
+        
       }
   
       this.http.get('libraries/'+loc+'/'+code,{params:{'include':include}}).subscribe({
         next: (data: any) => {console.log(data.data); this[include] = data.data[include]},
         error: err => console.log(err)
       });
-
-      console.log(this.facilityForm);
     }
   
     loadLibraries(){

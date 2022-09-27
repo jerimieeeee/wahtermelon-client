@@ -1,25 +1,26 @@
 <div class="flex w-full mt-4">
   
-  <div class="flex-wrap w-full h-full rounded-xl text-gray-600 border border-slate-100 px-4 py-4 ml-5 mr-1" *ngIf="modules==1">
+  <div class="flex-wrap w-full h-full rounded-xl text-gray-600 border border-slate-100 px-4 py-4 ml-5 mr-1">
 
     <nav class="flex w-full flex-col sm:flex-row text-sm">
-      <button (click)="switchTab(1)" class="text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 mr-6 pb-2"
+      <button (click)="switchTabs(1)" class="text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 mr-6 pb-2"
       [class]="modules==1? 'text-blue-500 border-b-2 border-blue-500 font-bold' : 'hover:-translate-y-1 hover:scale-110 transition ease-in-out delay-400 duration-300' ">
           Setup Health Facility
       </button>
-      <button (click)="switchTab(2)" class="transition ease-in-out delay-400 hover:-translate-y-1 hover:scale-110 duration-300 text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 focus:text-blue-500 focus:border-b-2 focus:border-blue-500 focus:font-bold mr-6 pb-2">
+      <button (click)="switchTabs(2)" class="transition ease-in-out delay-400 hover:-translate-y-1 hover:scale-110 duration-300 text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 focus:text-blue-500 focus:border-b-2 focus:border-blue-500 focus:font-bold mr-6 pb-2"
+      [class]="modules==2? 'text-blue-500 border-b-2 border-blue-500 font-bold' : 'hover:-translate-y-1 hover:scale-110 transition ease-in-out delay-400 duration-300' ">
           Setup Catchment Population
       </button>
-      <button (click)="switchTab(3)" class="transition ease-in-out delay-400 hover:-translate-y-1 hover:scale-110 duration-300 text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 focus:text-blue-500 focus:border-b-2 focus:border-blue-500 focus:font-bold mr-6 pb-2">
+      <button (click)="switchTabs(3)" class="transition ease-in-out delay-400 hover:-translate-y-1 hover:scale-110 duration-300 text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 focus:text-blue-500 focus:border-b-2 focus:border-blue-500 focus:font-bold mr-6 pb-2">
           Setup BHS
       </button>
-      <button (click)="switchTab(3)" class="transition ease-in-out delay-400 hover:-translate-y-1 hover:scale-110 duration-300 text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 focus:text-blue-500 focus:border-b-2 focus:border-blue-500 focus:font-bold mr-6 pb-2">
+      <button (click)="switchTabs(3)" class="transition ease-in-out delay-400 hover:-translate-y-1 hover:scale-110 duration-300 text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 focus:text-blue-500 focus:border-b-2 focus:border-blue-500 focus:font-bold mr-6 pb-2">
           Setup Morbidity Week Calendar
       </button>
-      <button (click)="switchTab(3)" class="transition ease-in-out delay-400 hover:-translate-y-1 hover:scale-110 duration-300 text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 focus:text-blue-500 focus:border-b-2 focus:border-blue-500 focus:font-bold mr-6 pb-2">
+      <button (click)="switchTabs(3)" class="transition ease-in-out delay-400 hover:-translate-y-1 hover:scale-110 duration-300 text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 focus:text-blue-500 focus:border-b-2 focus:border-blue-500 focus:font-bold mr-6 pb-2">
           Setup PHIE Account
       </button>
-      <button (click)="switchTab(3)" class="transition ease-in-out delay-400 hover:-translate-y-1 hover:scale-110 duration-300 text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 focus:text-blue-500 focus:border-b-2 focus:border-blue-500 focus:font-bold mr-6 pb-2">
+      <button (click)="switchTabs(3)" class="transition ease-in-out delay-400 hover:-translate-y-1 hover:scale-110 duration-300 text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 focus:text-blue-500 focus:border-b-2 focus:border-blue-500 focus:font-bold mr-6 pb-2">
           Retrieve PHIC Patient Number
       </button>
     </nav>
@@ -28,8 +29,14 @@
 
       <!--FIRST SECTION-->
     
-    <div class="grid grid-col-8">
+    <div class="grid grid-col-8" *ngIf="modules==1">
     <app-health-facility></app-health-facility>
+    </div>
+
+    <!--FIRST SECTION-->
+    
+    <div class="grid grid-col-8" *ngIf="modules==2">
+      <app-catchment-population></app-catchment-population>
     </div>
 
   </div>
