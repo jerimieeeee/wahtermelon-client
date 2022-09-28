@@ -115,6 +115,10 @@
                 <div *ngIf="f.mobile_number.errors?.['required']">
                   {{ required_message }}
                 </div>
+
+                <div *ngIf="f.mobile_number.errors">
+                  {{ f.mobile_number.errors }}
+                </div>
               </div>
             </div>
 
@@ -214,9 +218,9 @@
           </div>
 
           <div class="grid grid-cols-8 gap-x-4 gap-y-6" formGroupName="family">
-            <div class="col-span-8 border-b-2 border-slate-100"></div>
+            <!-- <div class="col-span-8 border-b-2 border-slate-100"></div>
             <div class="col-span-6 sm:col-span-2">
-              <label for="region" class="input-label" [ngClass]="{'text-red-500': is_saving && f['family']['controls']['region'].errors}">Region</label><!-- patientForm.value.family.region -->
+              <label for="region" class="input-label" [ngClass]="{'text-red-500': is_saving && f['family']['controls']['region'].errors}">Region</label>
               <select id="region" name="region" class="input" (change)="loadDemog('regions', patientForm.value.family.region, 'provinces')" [ngClass]="{'invalid-input': is_saving && f['family']['controls']['region'].errors}" formControlName="region">
                 <option *ngFor="let region of regions" [value]="region.code" >{{ region.name }}</option>
               </select>
@@ -279,7 +283,7 @@
                   Minimum of 2 character.
                 </div>
               </div>
-            </div>
+            </div> -->
 
             <!-- <div class="col-span-8 sm:col-span-2">
               <label for="head" class="input-label" [ngClass]="{'text-red-500': is_saving && f.is_head.errors}">Head of the family</label>
