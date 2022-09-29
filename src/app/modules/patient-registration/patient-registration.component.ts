@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { faSave, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { Family, Patient } from './model/model';
 
@@ -11,7 +11,7 @@ import { Family, Patient } from './model/model';
 })
 export class PatientRegistrationComponent implements OnInit {
   faSpinner = faSpinner;
-
+  faSave = faSave;
   required_message = 'Required field';
   patientForm: FormGroup = new FormGroup({
     last_name: new FormControl<string| null>(''),

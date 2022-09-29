@@ -108,7 +108,7 @@
             </div>
 
             <div class="col-span-6  sm:col-span-2">
-              <label for="mobile_number" class="input-label" [ngClass]="{'text-red-500': is_saving && f.mobile_number.errors}">Mobile Number (0912) 354-6789)</label>
+              <label for="mobile_number" class="input-label" [ngClass]="{'text-red-500': is_saving && f.mobile_number.errors}">Mobile Number (0912) 354-6789</label>
               <input type="text" mask="(9999) 999-9999" [showMaskTyped]="true" name="mobile_number" id="mobile_number" class="input" [ngClass]="{'invalid-input': is_saving && f.mobile_number.errors}" formControlName="mobile_number">
 
               <div *ngIf="is_saving && f.mobile_number.errors" class="invalid-alert">
