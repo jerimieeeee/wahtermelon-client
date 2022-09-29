@@ -5,7 +5,9 @@ import { PatientRegistrationRoutingModule } from './patient-registration-routing
 import { PatientRegistrationComponent } from './patient-registration.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { NgxMaskModule, IConfig } from 'ngx-mask'
 
+export const options: Partial<null|IConfig> | (() => Partial<IConfig>) = null;
 
 @NgModule({
   declarations: [
@@ -16,7 +18,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     PatientRegistrationRoutingModule,
     FormsModule,
     FontAwesomeModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgxMaskModule.forRoot(),
   ]
 })
 export class PatientRegistrationModule { }

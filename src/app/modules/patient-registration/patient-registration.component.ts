@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { faSave, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { Family, Patient } from './model/model';
 
@@ -11,8 +11,8 @@ import { Family, Patient } from './model/model';
 })
 export class PatientRegistrationComponent implements OnInit {
   faSpinner = faSpinner;
-
-  required_message = 'This is required.';
+  faSave = faSave;
+  required_message = 'Required field';
   patientForm: FormGroup = new FormGroup({
     last_name: new FormControl<string| null>(''),
     first_name: new FormControl<string| null>(''),
@@ -30,13 +30,13 @@ export class PatientRegistrationComponent implements OnInit {
     education_code: new FormControl<string| null>(''),
     civil_status_code: new FormControl<string| null>(''),
     consent_flag: new FormControl<boolean>(false),
-    family: new FormGroup({
+    /* family: new FormGroup({
       region: new FormControl<string| null>(''),
       province: new FormControl<string| null>(''),
       municipality: new FormControl<string| null>(''),
       brgy: new FormControl<string| null>(''),
       address: new FormControl<string| null>(''),
-    })
+    }) */
   });
 
   family: Family;
@@ -82,13 +82,12 @@ export class PatientRegistrationComponent implements OnInit {
   onSubmit(){
     console.log(this.patientForm);
     this.is_saving = true;
-    /*
+
     this.http.post('patient', this.patientForm).subscribe({
       next: (data: any) => console.log(data),
       error: err => console.log(err),
       complete: () => this.is_saving = false
     })
-    */
   }
 
   newPatient(){

@@ -60,6 +60,12 @@
   .btn-save {
     @apply text-white bg-blue-500 hover:ring-2 hover:ring-blue-300 focus:outline-none font-medium rounded text-sm px-6 py-2.5 text-center transition duration-100 ease-in-out transform active:scale-90
   };
+  .btn-cancel {
+    @apply text-white bg-red-500 hover:ring-2 hover:ring-red-300 focus:outline-none font-medium rounded text-sm px-6 py-2.5 text-center transition duration-100 ease-in-out transform active:scale-90
+  };
+  .btn-end-visit {
+    @apply text-white bg-orange-500 hover:ring-2 hover:ring-orange-300 focus:outline-none font-medium rounded text-sm px-6 py-2.5 text-center transition duration-100 ease-in-out transform active:scale-90
+  };
   .invalid-input {
     @apply border-red-500 text-red-500 focus:border-red-500 focus:ring-red-600
   };
