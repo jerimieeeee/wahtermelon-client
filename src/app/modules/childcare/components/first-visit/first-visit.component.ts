@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { faSearch,faBalanceScale,faPlus, faCalendar, faInfoCircle, faCircleNotch } from '@fortawesome/free-solid-svg-icons';
+import { faSearch,faBalanceScale,faPlus, faCalendar, faInfoCircle, faCircleNotch, faFloppyDisk, faSave } from '@fortawesome/free-solid-svg-icons';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { BirthInformation } from '../../models/birthinformation.model';
@@ -24,6 +24,7 @@ export class FirstVisitComponent implements OnInit {
   faCalendar = faCalendar;
   faInfoCircle = faInfoCircle;
   faSpinner = faCircleNotch;
+  faFloppyDisk = faFloppyDisk;
 
   is_saving: boolean = false;
   is_saving2: boolean = true;
