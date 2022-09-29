@@ -1,149 +1,149 @@
 <div class="mt-10  flex justify-center w-full">
   <div class="w-5/6 bg-white border border-solid border-slate-100 rounded-xl shadow-md">
-    <div class="border border-solid border-slate-100 rounded-t-xl bg-blue-400 text-white text-lg p-3 font-semibold">
+    <div class="border border-solid border-slate-100 rounded-t-xl bg-blue-500 text-white text-lg p-3 font-semibold">
       Patient Registration
     </div>
-    <form action="#" method="POST">
+    <form [formGroup]="patientForm" (ngSubmit)="savePatient()">
       <div class="m-10">
         <div class="px-4 py-5 bg-white sm:p-6">
           <div class="grid grid-cols-8 gap-x-4 gap-y-6">
             <div class="col-span-6 sm:col-span-2">
-              <label for="last-name" class="input-label">Last name</label>
-              <input type="text" name="last-name" id="last-name" class="input">
+              <label for="last_name" class="input-label">Last name</label>
+              <input type="text" name="last_name" id="last_name" class="input" formControlName="last_name">
             </div>
 
             <div class="col-span-6 sm:col-span-2">
-              <label for="first-name" class="input-label">First name</label>
-              <input type="text" name="first-name" id="first-name" class="input">
+              <label for="first_name" class="input-label">First name</label>
+              <input type="text" name="first_name" id="first_name" class="input" formControlName="first_name">
             </div>
 
             <div class="col-span-6 sm:col-span-2">
-              <label for="first-name" class="input-label">Middle name</label>
-              <input type="text" name="first-name" id="first-name" class="input">
+              <label for="middle_name" class="input-label">Middle name</label>
+              <input type="text" name="middle_name" id="middle_name" class="input" formControlName="middle_name">
             </div>
 
             <div class="col-span-6 sm:col-span-2">
-              <label for="country" class="input-label">Suffix Name</label>
-              <select id="country" name="country" class="input">
-                <option *ngFor="let suffix_name of suffix_names" [value]="code">{{ suffix_name.suffix_desc }}</option>
+              <label for="suffix_name" class="input-label">Suffix Name</label>
+              <select id="suffix_name" name="suffix_name" class="input" formControlName="suffix_name">
+                <option *ngFor="let suffix_name of suffix_names" [value]="suffix_name.code">{{ suffix_name.suffix_desc }}</option>
               </select>
             </div>
 
             <div class="col-span-6 sm:col-span-2">
               <label for="gender" class="input-label">Gender</label>
-              <select id="gender" name="gender" class="input">
-                <option>Male</option>
-                <option>Female</option>
+              <select id="gender" name="gender" class="input" formControlName="gender">
+                <option value="M">Male</option>
+                <option value="F">Female</option>
               </select>
             </div>
 
             <div class="col-span-6 sm:col-span-2">
-              <label for="civil_status" class="input-label">Civil Status</label>
-              <select id="civil_status" name="civil_status" class="input">
+              <label for="civil_status_code" class="input-label">Civil Status</label>
+              <select id="civil_status_code" name="civil_status_code" class="input" formControlName="civil_status_code">
                 <option *ngFor="let civil_status of civil_statuses" [value]="civil_status.code">{{ civil_status.status_desc}}</option>
               </select>
             </div>
 
             <div class="col-span-6 sm:col-span-2">
-              <label for="blood_type" class="input-label">Blood Type</label>
-              <select id="blood_type" name="blood_type" class="input">
+              <label for="blood_type_code" class="input-label">Blood Type</label>
+              <select id="blood_type_code" name="blood_type_code" class="input" formControlName="blood_type_code">
                 <option *ngFor="let blood_type of blood_types" [value]="blood_type.code">{{ blood_type.code }}</option>
               </select>
             </div>
 
             <div class="col-span-6  sm:col-span-2">
               <label for="birthdate" class="input-label">Birthdate</label>
-              <input type="date" name="birthdate" id="birthdate" class="input">
+              <input type="date" name="birthdate" id="birthdate" class="input" formControlName="birthdate">
             </div>
 
             <div class="col-span-6  sm:col-span-2">
               <label for="mobile_number" class="input-label">Mobile Number (0912-354-6789)</label>
-              <input type="text" pattern="[0-9]{4}-[0-9]{3}-[0-9]{4}" name="mobile_number" id="mobile_number" class="input">
+              <input type="text" pattern="[0-9]{4}-[0-9]{3}-[0-9]{4}" name="mobile_number" id="mobile_number" class="input" formControlName="mobile_number">
             </div>
 
             <div class="col-span-6  sm:col-span-2">
-              <label for="mothers_maiden_name" class="input-label">Mothers Maiden Name</label>
-              <input type="text" name="mothers_maiden_name" id="mothers_maiden_name" class="input">
+              <label for="mothers_name" class="input-label">Mothers Maiden Name</label>
+              <input type="text" name="mothers_name" id="mothers_name" class="input" formControlName="mothers_name">
             </div>
 
             <div class="col-span-6 sm:col-span-2">
-              <label for="education" class="input-label">Education</label>
-              <select id="education" name="education" class="input">
+              <label for="education_code" class="input-label">Education</label>
+              <select id="education_code" name="education_code" class="input" formControlName="education_code">
                 <option *ngFor="let education of educations" [value]="education.code">{{ education.education_desc }}</option>
               </select>
             </div>
 
             <div class="col-span-6 sm:col-span-2">
-              <label for="religion" class="input-label">Religion</label>
-              <select id="religion" name="religion" class="input">
+              <label for="religion_code" class="input-label">Religion</label>
+              <select id="religion_code" name="religion_code" class="input" formControlName="religion_code">
                 <option *ngFor="let religion of religions" [value]="religion.code">{{ religion.religion_desc }}</option>
               </select>
             </div>
 
             <div class="col-span-6 sm:col-span-2">
-              <label for="occupation" class="input-label">Occupation</label>
-              <select id="occupation" name="occupation" class="input">
+              <label for="occupation_code" class="input-label">Occupation</label>
+              <select id="occupation_code" name="occupation_code" class="input" formControlName="occupation_code">
                 <option *ngFor="let occupation of occupations" [value]="occupation.code">{{ occupation.occupation_desc }}</option>
               </select>
             </div>
 
             <div class="col-span-6 sm:col-span-2">
-              <label for="pwd" class="input-label">Person with Disabililties</label>
-              <select id="pwd" name="pwd" class="input">
-                <option>N</option>
-                <option>Y</option>
+              <label for="pwd_type_code" class="input-label">Person with Disabililties</label>
+              <select id="pwd_type_code" name="pwd_type_code" class="input" formControlName="pwd_type_code">
+                <option *ngFor="let pwd_type of pwd_types" [value]="pwd_type.code">{{ pwd_type.type_desc }}</option>
               </select>
             </div>
 
             <div class="col-span-6 sm:col-span-2">
-              <label for="ind_flag" class="input-label">Indigenous People</label>
-              <select id="ind_flag" name="ind_flag" class="input">
-                <option>N</option>
-                <option>Y</option>
+              <label for="indegenous_flag" class="input-label">Indigenous People</label>
+              <select id="indegenous_flag" name="indegenous_flag" class="input" formControlName="indegenous_flag">
+                <option value="false">N</option>
+                <option value="true">Y</option>
               </select>
             </div>
 
             <div class="col-span-6 sm:col-span-2">
-              <label for="consent" class="input-label">Has Consent</label>
-              <select id="consent" name="consent" class="input">
-                <option>N</option>
-                <option>Y</option>
+              <label for="consent_flag" class="input-label">Has Consent</label>
+              <select id="consent_flag" name="consent_flag" class="input" formControlName="consent_flag">
+                <option value="false">N</option>
+                <option value="true">Y</option>
               </select>
             </div>
+          </div>
 
+          <div class="grid grid-cols-8 gap-x-4 gap-y-6" formGroupName="family">
             <div class="col-span-8 border-b-2 border-slate-100"></div>
-
             <div class="col-span-6 sm:col-span-2">
               <label for="region" class="input-label">Region</label>
-              <select id="region" name="region" class="input" (click)="loadProvince()" >
+              <select id="region" name="region" class="input" (change)="loadDemog('regions', patientForm.value.family.region, 'provinces')" formControlName="region">
                 <option *ngFor="let region of regions" [value]="region.code" >{{ region.name }}</option>
               </select>
             </div>
 
             <div class="col-span-6 sm:col-span-2">
               <label for="province" class="input-label">Province</label>
-              <select id="province" name="province" class="input">
-                <option>-</option>
+              <select id="province" name="province" class="input" (change)="loadDemog('provinces', patientForm.value.family.province, 'municipalities')" formControlName="province">
+                <option *ngFor="let province of provinces" [value]="province.code">{{ province.name }}</option>
               </select>
             </div>
 
             <div class="col-span-6 sm:col-span-2">
               <label for="muncity" class="input-label">Municipality/City</label>
-              <select id="muncity" name="muncity" class="input">
-                <option>-</option>
+              <select id="muncity" name="muncity" class="input" (change)="loadDemog('municipalities', patientForm.value.family.municipality, 'barangays')" formControlName="municipality">
+                <option *ngFor="let municipality of municipalities" [value]="municipality.code">{{ municipality.name }}</option>
               </select>
             </div>
 
             <div class="col-span-6 sm:col-span-2">
               <label for="brgy" class="input-label">Brgy</label>
-              <select id="brgy" name="brgy" class="input">
-                <option>-</option>
+              <select id="brgy" name="brgy" class="input" formControlName="brgy">
+                <option *ngFor="let barangay of barangays" [value]="barangay.code">{{ barangay.name }}</option>
               </select>
             </div>
 
             <div class="col-span-6">
               <label for="address" class="input-label">Address</label>
-              <input type="text" name="address" id="address" class="input">
+              <input type="text" name="address" id="address" class="input" >
             </div>
 
             <div class="col-span-8 sm:col-span-2">
@@ -156,8 +156,8 @@
           </div>
         </div>
 
-        <div class="bg-gray-50 text-right">
-          <button type="button" (click)="savePatient()" class="btn-save">
+        <div class="text-right">
+          <button type="submit" class="btn-save">
             <fa-icon *ngIf="is_saving" class="mr-3" [icon]="faSpinner" [spin]="true"></fa-icon>
             {{ is_saving ? 'Saving' : 'Save' }}
           </button>
