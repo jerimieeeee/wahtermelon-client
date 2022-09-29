@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { faSave, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { faSpinner, faFolderPlus } from '@fortawesome/free-solid-svg-icons';
+import { faClipboard } from '@fortawesome/free-regular-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
-import { Family, Patient } from './model/model';
 
 @Component({
   selector: 'app-patient-registration',
@@ -11,7 +11,9 @@ import { Family, Patient } from './model/model';
 })
 export class PatientRegistrationComponent implements OnInit {
   faSpinner = faSpinner;
-  faSave = faSave;
+  faClipboard = faClipboard;
+  faFolderPlus = faFolderPlus;
+
   required_message = 'Required field';
   patientForm: FormGroup = new FormGroup({
     last_name: new FormControl<string| null>(''),
@@ -39,7 +41,6 @@ export class PatientRegistrationComponent implements OnInit {
     }) */
   });
 
-  family: Family;
   blood_types: object;
   civil_statuses: object;
   suffix_names: object;
@@ -68,7 +69,12 @@ export class PatientRegistrationComponent implements OnInit {
     {var_name: 'pwd_types', location: 'pwd-types'},
   ]
 
+  showModal:boolean = false;
   is_saving: boolean = false;
+
+  toggleModal(){
+    this.showModal = !this.showModal;
+  }
 
   constructor(
     private http: HttpService,
@@ -82,16 +88,26 @@ export class PatientRegistrationComponent implements OnInit {
   onSubmit(){
     console.log(this.patientForm);
     this.is_saving = true;
-
-    this.http.post('patient', this.patientForm).subscribe({
+    this.showModal = true;
+    /* this.http.post('patient', this.patientForm.value).subscribe({
       next: (data: any) => console.log(data),
       error: err => console.log(err),
-      complete: () => this.is_saving = false
-    })
+      complete: () => {
+        this.is_saving = false;
+        this.showModal = true;
+      }
+    }) */
   }
 
   newPatient(){
+    this.patientForm.reset();
+    console.log(this.patientForm);
+    this.showModal = false;
+    this.is_saving = false;
+  }
 
+  proceedItr(){
+    this.showModal = false;
   }
 
   loadDemog(loc, code, include){
@@ -118,6 +134,24 @@ export class PatientRegistrationComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    /* this.patientForm = this.formBuilder.group({
+      last_name: ['Santos', [Validators.required, Validators.minLength(2)]],
+      first_name: ['Mark', [Validators.required, Validators.minLength(2)]],
+      middle_name: ['Bautista', [Validators.required, Validators.minLength(2)]],
+      suffix_name: ['NA'],
+      birthdate: ['', Validators.required],
+      mothers_name: ['', [Validators.required, Validators.minLength(2)]],
+      gender: ['', Validators.required],
+      mobile_number: ['', Validators.required],
+      pwd_type_code: ['', Validators.required],
+      indegenous_flag: [false],
+      blood_type_code: ['', Validators.required],
+      religion_code: ['', Validators.required],
+      occupation_code: ['', Validators.required],
+      education_code: ['', Validators.required],
+      civil_status_code: ['', Validators.required],
+      consent_flag: [false]
+    }); */
     this.patientForm = this.formBuilder.group({
       last_name: ['', [Validators.required, Validators.minLength(2)]],
       first_name: ['', [Validators.required, Validators.minLength(2)]],
@@ -135,15 +169,16 @@ export class PatientRegistrationComponent implements OnInit {
       education_code: ['', Validators.required],
       civil_status_code: ['', Validators.required],
       consent_flag: [false],
-      family: this.formBuilder.group({
+      /* family: this.formBuilder.group({
         region: ['', Validators.required],
         province: ['', Validators.required],
         municipality: ['', Validators.required],
         brgy: ['', Validators.required],
         address: ['', [Validators.required, Validators.minLength(2)]],
-      })
+      }) */
     });
 
+    console.log(this.patientForm);
     this.loadLibraries();
   }
 }
