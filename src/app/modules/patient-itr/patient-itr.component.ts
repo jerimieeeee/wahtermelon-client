@@ -3,7 +3,7 @@ import { ChartComponent } from "ng-apexcharts";
 import { openCloseTrigger } from './declarations/animation';
 import { ChartOptions, WeightChart } from './declarations/chart-options';
 import { MedicalJournal } from './data/sample-journal';
-import { NavigationEnd, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { filter, tap } from "rxjs/operators";
 
 @Component({
@@ -30,7 +30,8 @@ export class PatientItrComponent implements OnInit {
   } */
 
   constructor(
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {
     this.chartOptions = {
       series: [
@@ -126,5 +127,7 @@ export class PatientItrComponent implements OnInit {
 
   ngOnInit(): void {
     this.navigationEnd$.subscribe();
+    const id = this.route.snapshot.paramMap.get('id');
+    console.log(id);
   }
 }
