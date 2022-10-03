@@ -15,7 +15,7 @@
         </div>
 
         <div style="grid-column: span 16 / span 16;">
-            <div class="grid gap-4 hover:drop-shadow-lg drop-shadow-md bg-white rounded-b-lg hover:border border-gray-300 hover:border-pink-400 p-2 m-2 border -mt-5"
+            <div class="grid gap-4 hover:drop-shadow-lg drop-shadow-md bg-white rounded-b-lg hover:border border-gray-300 hover:border-pink-400 p-2 pt-4 m-2 border -mt-5"
                 style="grid-template-columns: repeat(14, minmax(0, 1fr));">
 
                 <div class="transitions col-span-2 row-span-2 border-check relative select-none group mx-2"
@@ -147,7 +147,7 @@
                 <div class="transitions col-span-3 mx-2" *ngIf="!focused">
                     <div class="border-check-red pt-2 group">
                         <input
-                            class="check-style h-6 w-6 border border-gray-400 rounded-md group-hover:rounded-lg checked:rounded-full checked:border-2 bg-white checked:bg-blue-400 checked:border-blue-500 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                            class="check-style h-6 w-6 border border-gray-400 rounded-md 1 bg-white checked:bg-blue-400 checked:border-blue-500 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
                             type="checkbox" value="toggle_questionaire[0].name" [attr.id]="toggle_questionaire[0].name"
                             (change)="postpartum_visit_form.get('vi').setValue(toggle_questionaire[0].name); onKeyUp($event.target.value, $event.target.id)"
                             [checked]="postpartum_visit_form.get('vi').value == toggle_questionaire[0].name"
@@ -161,7 +161,7 @@
                 <div class="transitions col-span-3 mx-2" *ngIf="!focused">
                     <div class="border-check-red pt-2 group">
                         <input
-                            class="check-style h-6 w-6 border border-gray-400 rounded-md group-hover:rounded-lg checked:rounded-full checked:border-2 bg-white checked:bg-blue-400 checked:border-blue-500 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                            class="check-style h-6 w-6 border border-gray-400 rounded-md   bg-white checked:bg-blue-400 checked:border-blue-500 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
                             type="checkbox" value="toggle_questionaire[1].name" [attr.id]="toggle_questionaire[1].name"
                             (change)="postpartum_visit_form.get('vb').setValue(toggle_questionaire[1].name); onKeyUp($event.target.value, $event.target.id)"
                             [checked]="postpartum_visit_form.get('vb').value == toggle_questionaire[1].name"
@@ -175,7 +175,7 @@
                 <div class="transitions col-span-3 mx-2 col-start-1" *ngIf="!focused">
                     <div class="border-check-red   group">
                         <input
-                            class="check-style h-6 w-6 border border-gray-400 rounded-md group-hover:rounded-lg checked:rounded-full checked:border-2 bg-white checked:bg-blue-400 checked:border-blue-500 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                            class="check-style h-6 w-6 border border-gray-400 rounded-md   bg-white checked:bg-blue-400 checked:border-blue-500 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
                             type="checkbox" value="toggle_questionaire[2].name" [attr.id]="toggle_questionaire[2].name"
                             (change)="postpartum_visit_form.get('f').setValue(toggle_questionaire[2].name); onKeyUp($event.target.value, $event.target.id)"
                             [checked]="postpartum_visit_form.get('f').value == toggle_questionaire[2].name"
@@ -189,7 +189,7 @@
                 <div class="transitions col-span-3 mx-2 col-start-7 row-start-2" *ngIf="!focused">
                     <div class="border-check-red pt-2 group">
                         <input
-                            class="check-style h-6 w-6 border border-gray-400 rounded-md group-hover:rounded-lg checked:rounded-full checked:border-2 bg-white checked:bg-blue-400 checked:border-blue-500 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                            class="check-style h-6 w-6 border border-gray-400 rounded-md   bg-white checked:bg-blue-400 checked:border-blue-500 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
                             type="checkbox" value="toggle_questionaire[3].name" [attr.id]="toggle_questionaire[3].name"
                             (change)="postpartum_visit_form.get('p').setValue(toggle_questionaire[3].name); onKeyUp($event.target.value, $event.target.id)"
                             [checked]="postpartum_visit_form.get('p').value == toggle_questionaire[3].name"
@@ -203,7 +203,7 @@
                 <div class="transitions col-span-3 mx-2" *ngIf="!focused">
                     <div class="border-check-red   group">
                         <input
-                            class="check-style h-6 w-6 border border-gray-400 rounded-md group-hover:rounded-lg checked:rounded-full checked:border-2 bg-white checked:bg-blue-400 checked:border-blue-500 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                            class="check-style h-6 w-6 border border-gray-400 rounded-md   bg-white checked:bg-blue-400 checked:border-blue-500 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
                             type="checkbox" value="toggle_questionaire[4].name" [attr.id]="toggle_questionaire[4].name"
                             (change)="postpartum_visit_form.get('b').setValue(toggle_questionaire[4].name); onKeyUp($event.target.value, $event.target.id)"
                             [checked]="postpartum_visit_form.get('b').value == toggle_questionaire[4].name"
@@ -217,7 +217,7 @@
                 <div class="transitions col-span-4 mx-2" *ngIf="!focused">
                     <div class="border-check-red py-5 group">
                         <input
-                            class="check-style h-6 w-6 border border-gray-400 rounded-md group-hover:rounded-lg checked:rounded-full checked:border-2 bg-white checked:bg-blue-400 checked:border-blue-500 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                            class="check-style h-6 w-6 border border-gray-400 rounded-md   bg-white checked:bg-blue-400 checked:border-blue-500 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
                             type="checkbox" value="toggle_questionaire[5].name" [attr.id]="toggle_questionaire[5].name"
                             (change)="postpartum_visit_form.get('pb').setValue(toggle_questionaire[5].name); onKeyUp($event.target.value, $event.target.id)"
                             [checked]="postpartum_visit_form.get('pb').value == toggle_questionaire[5].name"
@@ -231,7 +231,7 @@
                 <div class="transitions col-span-4 mx-2" *ngIf="!focused">
                     <div class="border-check-red py-5 group">
                         <input
-                            class="check-style h-6 w-6 border border-gray-400 rounded-md group-hover:rounded-lg checked:rounded-full checked:border-2 bg-white checked:bg-blue-400 checked:border-blue-500 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                            class="check-style h-6 w-6 border border-gray-400 rounded-md   bg-white checked:bg-blue-400 checked:border-blue-500 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
                             type="checkbox" value="toggle_questionaire[6].name" [attr.id]="toggle_questionaire[6].name"
                             (change)="postpartum_visit_form.get('fp').setValue(toggle_questionaire[6].name); onKeyUp($event.target.value, $event.target.id)"
                             [checked]="postpartum_visit_form.get('fp').value == toggle_questionaire[6].name"

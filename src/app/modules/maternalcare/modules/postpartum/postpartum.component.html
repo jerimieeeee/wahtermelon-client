@@ -202,8 +202,8 @@
                             <select formControlName="delivery_location" (keyup.escape)="clearForm($event.target.id)"
                                 (change)="onKeyUp($event.target.value, $event.target.id)" id="delivery_location"
                                 class="text-ellipsis bg-white text-align-left drop_btn border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed">
-                                <option *ngFor="let loc of delivery_location">
-                                    {{loc.loc}}
+                                <option *ngFor="let loc of delivery_location" value="loc.code" [selected]="loc.code === 'HOME'">
+                                    {{loc.desc}}
                                 </option>
                             </select>
 
@@ -269,8 +269,8 @@
                             <select formControlName="birth_attendant" (keyup.escape)="clearForm($event.target.id)"
                                 (change)="onKeyUp($event.target.value, $event.target.id)" id="birth_attendant"
                                 class="text-ellipsis bg-white text-align-left drop_btn border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed">
-                                <option *ngFor="let attendant of attendants">
-                                    {{attendant.attendant}}
+                                <option *ngFor="let attendant of attendants" value="attendant.code">
+                                    {{attendant.desc}}
                                 </option>
                             </select>
 
@@ -280,8 +280,8 @@
                             <select formControlName="pregnancy_outcome" (keyup.escape)="clearForm($event.target.id)"
                                 (change)="onKeyUp($event.target.value, $event.target.id)" id="pregnancy_outcome"
                                 class="text-ellipsis bg-white text-align-left drop_btn border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed">
-                                <option *ngFor="let outcome of preg_outcome">
-                                    {{outcome.outcome}}
+                                <option *ngFor="let outcome of preg_outcome" value="outcome.code">
+                                    {{outcome.desc}}
                                 </option>
                             </select>
 

@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { faAngleDown, faCalendarDay, faCaretRight, faClose, faInfoCircle, faPencil, faSave, faTimes, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 
@@ -34,38 +34,11 @@ export class PostpartumComponent implements OnInit {
 
   @Output() postpartum_bool = new EventEmitter<string>();
   filter: string;
+  @Input() delivery_location;
+  @Input() attendants;
+  @Input() preg_outcome;
   constructor() { }
 
-  public delivery_location = [
-    {id:'1', loc:'Home'},
-    {id:'2', loc:'Public Hospital'},
-    {id:'3', loc:'Private Hospital'},
-    {id:'4', loc:'Public Lying-In Clinic'},
-    {id:'5', loc:'Private Lying-In Clinic'},
-    {id:'6', loc:'Health Center'},
-    {id:'7', loc:'Barangay Health Station'},
-    {id:'8', loc:'DOH-Licensed Ambulance'},
-    {id:'9', loc:'Others'},
-  ];
-  public attendants = [
-    {id:'1', attendant:'Physician'},
-    {id:'2', attendant:'Midwife'},
-    {id:'3', attendant:'Nurse'},
-    {id:'4', attendant:'Trained Hilot'},
-    {id:'5', attendant:'Untrained Hilot'},
-    {id:'6', attendant:'Other'},
-  ];
-  public preg_outcome = [
-    {id:'1', outcome:'Fetal Death in Utero - Male'},
-    {id:'2', outcome:'Fetal Death in Utero - Male'},
-    {id:'3', outcome:'Live baby girl LSCS'},
-    {id:'4', outcome:'Live baby boy LSCS'},
-    {id:'5', outcome:'Live baby girl NSD'},
-    {id:'6', outcome:'Live baby boy NSD'},
-    {id:'7', outcome:'Stillbirth - Male'},
-    {id:'8', outcome:'Stillbirth - Female'},
-    {id:'9', outcome:'Twin'},
-  ]
   ngOnInit(): void {
    this.createForm();
    this.filter = '';

@@ -15,7 +15,7 @@
         </div>
 
         <div style="grid-column: span 16 / span 16;">
-            <div class="grid gap-4 hover:drop-shadow-lg drop-shadow-md bg-white rounded-b-lg hover:border border-gray-300 hover:border-pink-400 p-2 m-2 border -mt-5"
+            <div class="grid gap-4 hover:drop-shadow-lg drop-shadow-md bg-white rounded-b-lg hover:border border-gray-300 hover:border-pink-400 p-2 pt-4 m-2 border -mt-5"
                 style="grid-template-columns: repeat(14, minmax(0, 1fr));">
 
                 <div class="transitions col-span-2 row-span-2 border-check relative select-none group mx-2"
@@ -55,8 +55,9 @@
                         class="text-ellipsis bg-white text-align-left drop_btn border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed"
                         (change)="onKeyUp($event.target.value, $event.target.id);">
                         <option *ngFor="let fetal of fetals" class="p-2 flex-wrap"
-                            [selected]="fetal === 'Mass Palpable - NA'">
-                            {{ fetal }}
+                            [selected]="fetal.desc === 'Mass Palpable - NA'"
+                            value="fetal.code">
+                            {{ fetal.desc }}
                         </option>
                     </select>
                 </div>
@@ -102,8 +103,8 @@
                     <select formControlName="fhr_location_id" id="fhr_location_id"
                         class="text-ellipsis bg-white text-align-left drop_btn border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed"
                         (change)="onKeyUp($event.target.value, $event.target.id)">
-                        <option *ngFor="let fhr of fhr_lib" class="p-2 flex-wrap" [selected]="fhr === 'N/A'">
-                            {{ fhr }}
+                        <option *ngFor="let fhr of fhr_lib" class="p-2 flex-wrap" [selected]="fhr.desc === 'N/A'" [value]="fhr.code">
+                            {{ fhr.code }} - {{ fhr.desc }}
                         </option>
                     </select>
                 </div>

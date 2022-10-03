@@ -20,11 +20,11 @@
                 <div class="transitions col-span-7 border-check relative" *ngIf="!focused">
                     <h3>Full Term</h3>
                     <!-- <input type="text" class="border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300" *ngIf="!obshx_form.alc" > -->
-                    <input type="text" formControlName="full_term"
+                    <input type="number" formControlName="full_term"
                         class="border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100"
                         (keyup)="onKeyUp($event.target.value, $event.target.id)"
                         (keyup.escape)="clearForm($event.target.id); onKeyUp($event.target.value, $event.target.id)"
-                        id="full_term">
+                        id="full_term" min="0">
                     <fa-icon [icon]="faTimesCircle" (click)="clearForm('full_term')"
                         class="absolute right-0 py-1 px-2 text-gray-400 hover:text-gray-500"
                         *ngIf="keyUp.includes('full_term') && !obshx_form.disabled">
@@ -34,11 +34,11 @@
                 <div class="transitions col-span-7 border-check relative" *ngIf="!focused">
                     <h3>Pre-Term</h3>
                     <!-- <input type="text" class="border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300" *ngIf="!obshx_form.alc" > -->
-                    <input type="text" formControlName="pre_term"
+                    <input type="number" formControlName="pre_term"
                         class="border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100"
                         (keyup)="onKeyUp($event.target.value, $event.target.id)"
                         (keyup.escape)="clearForm($event.target.id); onKeyUp($event.target.value, $event.target.id)"
-                        id="pre_term">
+                        id="pre_term" min="0">
                     <fa-icon [icon]="faTimesCircle" (click)="clearForm('pre_term')"
                         class="absolute right-0 py-1 px-2 text-gray-400 hover:text-gray-500"
                         *ngIf="keyUp.includes('pre_term') && !obshx_form.disabled">
@@ -48,11 +48,11 @@
                 <div class="transitions col-span-7 border-check relative" *ngIf="!focused">
                     <h3>Abortion</h3>
                     <!-- <input type="text" class="border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300" *ngIf="!obshx_form.alc" > -->
-                    <input type="text" formControlName="abortion"
+                    <input type="number" formControlName="abortion"
                         class="border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100"
                         (keyup)="onKeyUp($event.target.value, $event.target.id)"
                         (keyup.escape)="clearForm($event.target.id); onKeyUp($event.target.value, $event.target.id)"
-                        id="abortion">
+                        id="abortion" min="0">
                     <fa-icon [icon]="faTimesCircle" (click)="clearForm('abortion')"
                         class="absolute right-0 py-1 px-2 text-gray-400 hover:text-gray-500"
                         *ngIf="keyUp.includes('abortion') && !obshx_form.disabled">
@@ -62,11 +62,11 @@
                 <div class="transitions col-span-7 border-check relative" *ngIf="!focused">
                     <h3>Livebirths</h3>
                     <!-- <input type="text" class="border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300" *ngIf="!obshx_form.alc" > -->
-                    <input type="text" formControlName="livebirths"
+                    <input type="number" formControlName="livebirths"
                         class="border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100"
                         (keyup)="onKeyUp($event.target.value, $event.target.id)"
                         (keyup.escape)="clearForm($event.target.id); onKeyUp($event.target.value, $event.target.id)"
-                        id="livebirths">
+                        id="livebirths" min="0">
                     <fa-icon [icon]="faTimesCircle" (click)="clearForm('livebirths')"
                         class="absolute right-0 py-1 px-2 text-gray-400 hover:text-gray-500"
                         *ngIf="keyUp.includes('livebirths') && !obshx_form.disabled">

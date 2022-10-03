@@ -67,7 +67,7 @@
                         <input type="number" formControlName="gravidity"
                             class="font-medium disabled:group-hover:font-semibold peer invalid:border-red-500 border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed disabled:border-0  disabled:pl-5  disabled:typed-out disabled:group-hover:bg-gray-100 disabled:rounded-full"
                             (keyup)="onKeyUp($event.target.value, $event.target.id)"
-                            (keyup.escape)="clearForm($event.target.id)" id="gravidity"
+                            (keyup.escape)="clearForm($event.target.id)" id="gravidity" min="0"
                             (change)="onKeyUp($event.target.value, $event.target.id)">
                         <small class="hidden peer-invalid:block text-red-400 ">error_message</small>
 
@@ -82,7 +82,7 @@
                         <input type="number" formControlName="parity"
                             class="font-medium disabled:group-hover:font-semibold peer invalid:border-red-500 border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed disabled:border-0  disabled:pl-5  disabled:typed-out disabled:group-hover:bg-gray-100 disabled:rounded-full"
                             (keyup)="onKeyUp($event.target.value, $event.target.id)"
-                            (keyup.escape)="clearForm($event.target.id)" id="parity"
+                            (keyup.escape)="clearForm($event.target.id)" id="parity" min="0"
                             (change)="onKeyUp($event.target.value, $event.target.id)">
                         <small class="hidden peer-invalid:block text-red-400 ">error_message</small>
 
@@ -100,7 +100,7 @@
                         <input type="number" formControlName="full_term"
                             class="font-medium disabled:group-hover:font-semibold peer invalid:border-red-500 border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed disabled:border-0  disabled:pl-5  disabled:typed-out disabled:group-hover:bg-gray-100 disabled:rounded-full"
                             (keyup)="onKeyUp($event.target.value, $event.target.id)"
-                            (keyup.escape)="clearForm($event.target.id)" id="full_term"
+                            (keyup.escape)="clearForm($event.target.id)" id="full_term" min="0"
                             (change)="onKeyUp($event.target.value, $event.target.id)">
                         <small class="hidden peer-invalid:block text-red-400 ">error_message</small>
 
@@ -114,7 +114,7 @@
                         <input type="number" formControlName="pre_term"
                             class="font-medium disabled:group-hover:font-semibold peer invalid:border-red-500 border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed disabled:border-0  disabled:pl-5  disabled:typed-out disabled:group-hover:bg-gray-100 disabled:rounded-full"
                             (keyup)="onKeyUp($event.target.value, $event.target.id)"
-                            (keyup.escape)="clearForm($event.target.id)" id="pre_term"
+                            (keyup.escape)="clearForm($event.target.id)" id="pre_term" min="0"
                             (change)="onKeyUp($event.target.value, $event.target.id)">
                         <small class="hidden peer-invalid:block text-red-400 ">error_message</small>
 
@@ -129,7 +129,7 @@
                         <input type="number" formControlName="abortions"
                             class="font-medium disabled:group-hover:font-semibold peer invalid:border-red-500 border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed disabled:border-0  disabled:pl-5  disabled:typed-out disabled:group-hover:bg-gray-100 disabled:rounded-full"
                             (keyup)="onKeyUp($event.target.value, $event.target.id)"
-                            (keyup.escape)="clearForm($event.target.id)" id="abortions"
+                            (keyup.escape)="clearForm($event.target.id)" id="abortions" min="0"
                             (change)="onKeyUp($event.target.value, $event.target.id)">
                         <small class="hidden peer-invalid:block text-red-400 ">error_message</small>
 
@@ -144,7 +144,7 @@
                         <input type="number" formControlName="live_births"
                             class="font-medium disabled:group-hover:font-semibold peer invalid:border-red-500 border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed disabled:border-0  disabled:pl-5  disabled:typed-out disabled:group-hover:bg-gray-100 disabled:rounded-full"
                             (keyup)="onKeyUp($event.target.value, $event.target.id)"
-                            (keyup.escape)="clearForm($event.target.id)" id="live_births"
+                            (keyup.escape)="clearForm($event.target.id)" id="live_births" min="0"
                             (change)="onKeyUp($event.target.value, $event.target.id)">
                         <small class="hidden peer-invalid:block text-red-400 ">error_message</small>
 

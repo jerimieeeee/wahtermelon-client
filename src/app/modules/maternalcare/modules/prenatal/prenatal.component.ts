@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { faAngleDown, faCalendarDay, faCaretRight, faClose, faInfoCircle, faPencil, faSave, faTimes, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 
@@ -50,10 +50,10 @@ export class PrenatalComponent implements OnInit {
   vitals_modal: boolean;
   max_value: number;
 
-
+  @Input() fetals;
+  @Input() fhr_lib;
   constructor() { }
-  public fetals = ["Cephalic", "Breech", "Transverse", "Mass Palpable - NA"];
-  public fhr_lib = ["LLQ", "RLQ", "LUQ", "RUQ", "N/A"];
+
   public keyUp = [];
   public buttons = [];
   public catch_array = [];
