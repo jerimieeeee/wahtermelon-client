@@ -3,11 +3,13 @@ import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from
 import { faSpinner, faFolderPlus } from '@fortawesome/free-solid-svg-icons';
 import { faClipboard } from '@fortawesome/free-regular-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
+import { openCloseTrigger } from './declarations/animation';
 
 @Component({
   selector: 'app-patient-registration',
   templateUrl: './patient-registration.component.html',
-  styleUrls: ['./patient-registration.component.scss']
+  styleUrls: ['./patient-registration.component.scss'],
+  animations: [openCloseTrigger]
 })
 export class PatientRegistrationComponent implements OnInit {
   faSpinner = faSpinner;
@@ -72,10 +74,6 @@ export class PatientRegistrationComponent implements OnInit {
   showModal:boolean = false;
   is_saving: boolean = false;
 
-  toggleModal(){
-    this.showModal = !this.showModal;
-  }
-
   constructor(
     private http: HttpService,
     private formBuilder: FormBuilder
@@ -133,25 +131,11 @@ export class PatientRegistrationComponent implements OnInit {
     });
   }
 
+  toggleModal(){
+    this.showModal = !this.showModal;
+  }
+
   ngOnInit(): void {
-    /* this.patientForm = this.formBuilder.group({
-      last_name: ['Santos', [Validators.required, Validators.minLength(2)]],
-      first_name: ['Mark', [Validators.required, Validators.minLength(2)]],
-      middle_name: ['Bautista', [Validators.required, Validators.minLength(2)]],
-      suffix_name: ['NA'],
-      birthdate: ['', Validators.required],
-      mothers_name: ['', [Validators.required, Validators.minLength(2)]],
-      gender: ['', Validators.required],
-      mobile_number: ['', Validators.required],
-      pwd_type_code: ['', Validators.required],
-      indegenous_flag: [false],
-      blood_type_code: ['', Validators.required],
-      religion_code: ['', Validators.required],
-      occupation_code: ['', Validators.required],
-      education_code: ['', Validators.required],
-      civil_status_code: ['', Validators.required],
-      consent_flag: [false]
-    }); */
     this.patientForm = this.formBuilder.group({
       last_name: ['', [Validators.required, Validators.minLength(2)]],
       first_name: ['', [Validators.required, Validators.minLength(2)]],
