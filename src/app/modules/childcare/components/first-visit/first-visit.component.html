@@ -1,4 +1,4 @@
-<div class="flex mt-6">
+<div class="flex mt-5 mb-3">
       <h4 class="font-bold text-gray-600 text-sm">FIRST VISIT</h4>
       <div class="relative">
         <fa-icon [icon]="faInfoCircle" class="peer ml-3 text-gray-300 hover:text-gray-500 z-50"></fa-icon>
@@ -9,25 +9,17 @@
                 and shall not be editable unless Edit button is pressed.</p>
         </div>
     </div>
-    </div>
+</div>
     <!--Admission Date & Time Section-->
-    <div class="flex item-start flex-wrap shadow-md rounded-xl pb-5 mt-5">
+<div class="card mb-6">
 
-      <div class="flex justify-between w-full bg-blue-500 px-5 py-3 rounded-tl rounded-tr">
-        <h4 class="font-bold text-white text-md mt-2">Admission Information</h4>
-        <button type="button" class="btn-add" (click)="saveAdmission()">
-          <fa-icon *ngIf="is_saving2" class="mr-1" [icon]="faSave"></fa-icon>
-          <fa-icon *ngIf="is_saving" class="mr-1" [icon]="faSpinner" [spin]="true"></fa-icon>
-         {{ is_saving ? 'Saving' : 'Save' }}
-        </button>
-            
-        </div>
+      <div class="card-header bg-blue-500">
+        <h4 class="font-semibold text-white text-sm uppercase">Admission Information</h4>
+      </div>
 
-        <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
+      <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-10 py-2 mt-2">
           <label>Admission Date & Time</label> 
        
-         
-           
         <div class="relative">
           <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time text-blue-500" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -43,10 +35,10 @@
          <input type="text" placeholder="Select Date and Time" onfocus="(this.type='datetime-local')" class="mt-1 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input" placeholder="Select date">
         </div>
 
-        </div>
+      </div>
 
  
-        <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
+        <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-10 py-2 mt-2">
           <label>Discharge Date & Time</label> 
        
          
@@ -67,21 +59,61 @@
         </div>
 
         </div>
+
+        <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-10 py-2">
+          <label>Weight at Birth (kg)</label> 
+       
+         
+           
+        <div class="relative">
+          <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-scale-outline text-blue-500" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+              <rect x="3" y="3" width="18" height="18" rx="4"></rect>
+              <path d="M12 7c1.956 0 3.724 .802 4.994 2.095l-2.956 2.904a3 3 0 0 0 -2.038 -.799a3 3 0 0 0 -2.038 .798l-2.956 -2.903a6.979 6.979 0 0 1 4.994 -2.095z"></path>
+           </svg>
+          </div>
+         <input type="text" class="mt-1 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input" placeholder="Input weight">
+        </div>
+
+        </div>
+
+        <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-10 py-2">
+          <label>Mother's Name</label> 
+       
+         
+           
+        <div class="relative">
+          <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user-search text-blue-500" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+              <path d="M6 21v-2a4 4 0 0 1 4 -4h1"></path>
+              <circle cx="16.5" cy="17.5" r="2.5"></circle>
+              <path d="M18.5 19.5l2.5 2.5"></path>
+           </svg>
+          </div>
+         <input type="text" class="mt-1 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input" placeholder="Search Mother's Name">
+        </div>
+
+        </div>
       
+        <div class="flex w-full flex-col px-5 pt-3">
+          <button type="button" class="btn-add ml-auto mr-5" (click)="saveAdmission()">
+            <fa-icon *ngIf="is_saving2" class="mr-1" [icon]="faSave"></fa-icon>
+            <fa-icon *ngIf="is_saving" class="mr-1" [icon]="faSpinner" [spin]="true"></fa-icon>
+           {{ is_saving ? 'Saving' : 'Save' }}
+          </button>
+        </div>
     
-    </div>
+</div>
 
     <!--Birth Info Section-->
-    <div class="flex item-start flex-wrap shadow-md rounded-xl pb-5 mt-5">
+<!-- <div class="card mt-5 mb-7">
 
-      <div class="flex justify-between w-full bg-blue-500 px-5 py-3 rounded-tl rounded-tr">
-        <h4 class="font-bold text-white text-md mt-2">Birth Information</h4>
-        <button type="button" class="btn-add" (click)="saveBirth()">
-        <fa-icon *ngIf="is_saving4" class="mr-1" [icon]="faSave"></fa-icon>
-         <fa-icon *ngIf="is_saving3" class="mr-1" [icon]="faSpinner" [spin]="true"></fa-icon>
-         {{ is_saving3 ? 'Saving' : 'Save' }}
-        </button>
-        </div>
+      <div class="card-header">
+        <h4 class="font-semibold text-white text-sm uppercase">Birth Information</h4>  
+      </div>
 
         <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
           <label>Weight at Birth (kg)</label> 
@@ -121,4 +153,12 @@
 
         </div>
 
-    </div>
+        <div class="flex w-full flex-col px-5 pt-4">
+          <button type="button" class="btn-add ml-auto" (click)="saveBirth()">
+            <fa-icon *ngIf="is_saving2" class="mr-1" [icon]="faSave"></fa-icon>
+            <fa-icon *ngIf="is_saving" class="mr-1" [icon]="faSpinner" [spin]="true"></fa-icon>
+           {{ is_saving ? 'Saving' : 'Save' }}
+          </button>
+        </div>
+
+</div> -->

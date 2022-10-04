@@ -55,16 +55,28 @@
     @apply block text-sm font-medium text-gray-700 select-none
   };
   .btn-add {
-    @apply text-gray-600 bg-white hover:ring-2 hover:ring-gray-300 focus:outline-none font-medium rounded text-sm px-6 py-2.5 text-center transition duration-100 ease-in-out transform active:scale-90
+    @apply text-white bg-blue-500 hover:ring-2 hover:ring-blue-300 focus:outline-none font-medium rounded text-sm px-6 py-2.5 text-center transition duration-100 ease-in-out transform active:scale-90
+  };
+  .btn-icon {
+    @apply text-white transition duration-100 ease-in-out transform active:scale-90
   };
   .btn-save {
     @apply text-white bg-blue-500 hover:ring-2 hover:ring-blue-300 focus:outline-none font-medium rounded text-sm px-6 py-2.5 text-center transition duration-100 ease-in-out transform active:scale-90
   };
   .btn-cancel {
-    @apply text-white bg-red-500 hover:ring-2 hover:ring-red-300 focus:outline-none font-medium rounded text-sm px-6 py-2.5 text-center transition duration-100 ease-in-out transform active:scale-90
+    @apply text-white bg-rose-500 hover:ring-2 hover:ring-rose-300 focus:outline-none font-medium rounded text-sm px-6 py-2.5 text-center transition duration-100 ease-in-out transform active:scale-90
   };
   .btn-end-visit {
-    @apply text-white bg-orange-500 hover:ring-2 hover:ring-orange-300 focus:outline-none font-medium rounded text-sm px-6 py-2.5 text-center transition duration-100 ease-in-out transform active:scale-90
+    @apply text-white bg-amber-500 hover:ring-2 hover:ring-amber-300 focus:outline-none font-medium rounded text-sm px-6 py-2.5 text-center transition duration-100 ease-in-out transform active:scale-90
+  };
+  .card {
+    @apply flex flex-wrap shadow-md rounded-xl pb-5
+  };
+  .card-header {
+    @apply w-full pl-5 px-5 py-2 rounded-tl rounded-tr
+  };
+  .card-header-services {
+    @apply w-full pl-5 py-2 rounded-tl rounded-tr
   };
   .invalid-input {
     @apply border-red-500 text-red-500 focus:border-red-500 focus:ring-red-600
