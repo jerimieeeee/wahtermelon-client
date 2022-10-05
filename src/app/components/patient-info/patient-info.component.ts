@@ -9,7 +9,7 @@ import { HttpService } from 'app/shared/services/http.service';
   templateUrl: './patient-info.component.html',
   styleUrls: ['./patient-info.component.scss']
 })
-export class PatientInfoComponent implements OnInit {
+export class PatientInfoComponent {
   patient_info: any;
 
   faNotesMedical = faNotesMedical;
