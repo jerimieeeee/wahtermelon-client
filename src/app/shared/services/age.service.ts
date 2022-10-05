@@ -19,10 +19,10 @@ export class AgeService {
         let age = Math.floor(timeDiff / (1000 * 3600 * 24));
         age_value={age: age, type: 'day'};
       }else{
-        age_value=[age, 'month'];
+        age_value={age: age, type: 'month'};
       }
     } else {
-      age_value=[age, 'year'];
+      age_value={age: age, type: 'year'};
     }
 
     return age_value;

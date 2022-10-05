@@ -34,7 +34,7 @@ export class PatientInfoComponent {
   }
 
   getAge(){
-    let age_value = this.ageService.calcuateAge(this.patient_info.birthdate)
+    let age_value = this.ageService.calcuateAge(this.patient_info.birthdate);
     return age_value.age + ' ' + age_value.type+(age_value.age>1 ? 's old' : ' old' );
   }
 
