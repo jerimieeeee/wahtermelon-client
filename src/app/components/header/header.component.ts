@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { faChevronCircleDown, faBell, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { catchError, debounceTime, distinctUntilChanged, switchMap, tap, map, filter } from 'rxjs/operators';
@@ -11,6 +11,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
+  // @ViewChild(NgSelectComponent) ngSelectComponent: NgSelectComponent;
+
   faChevronCircleDown = faChevronCircleDown;
   faBell = faBell;
   faSearch = faSearch;
@@ -27,7 +29,6 @@ export class HeaderComponent implements OnInit {
   ) { }
 
   loadPatients() {
-    console.log('fired'+this.patients$);
     this.patients$ = concat(
       of([]), // default items
       this.searchInput$.pipe(
@@ -48,9 +49,11 @@ export class HeaderComponent implements OnInit {
   }
 
   onSelect(selectedPatient){
-    console.log(selectedPatient);
-    // this.selectedPatient = '';
-    this.router.navigate(['/itr', {id: selectedPatient}])
+    /* this.searchInput$.next(null);
+    // this.loadPatients(); */
+    if(selectedPatient) this.router.navigate(['/itr', {id: selectedPatient.id}]);
+    this.selectedPatient = null;
+    this.loadPatients();
   }
 
   getPatient(term: string = null): Observable<any> {
@@ -62,7 +65,7 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loadPatients()
+    this.loadPatients();
   }
 
 }
