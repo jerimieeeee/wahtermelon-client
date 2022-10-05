@@ -2,7 +2,7 @@
 
   <div class="col-span-12 flex px-5 py-3 rounded-tl rounded-tr" [ngStyle]="{'background-color': (risk < 10) ? '#6ec46e' : ((risk >= 10) ? '#f86b6b' : null) }">
     <h4 class="font-bold text-white text-md mt-2 mb-2">Risk Stratification Details</h4> 
-    <div class="py-2">
+    <div class="">
       <fa-icon [icon]="faInfoCircle" class="peer text-white hover:text-white z-50 px-2"></fa-icon>
       <div
           class="absolute text-sm bg-gradient-to-b from-stone-500 to-gray-400 p-2 rounded border border-gray-500  text-white drop-shadow-lg opacity-90 border-check z-50 w-60 invisible peer-hover:visible">
@@ -14,7 +14,7 @@
   </div>
 
 
-  <table class="col-span-6 col-start-1 table-auto border-r-2 border-gray-200">
+  <table class="text-sm col-span-6 col-start-1 table-auto border-r-2 border-gray-200">
     <tbody>
 
       <tr class="border-b-2 border-gray-200">
@@ -55,7 +55,7 @@
     </tbody>
   </table>
 
-  <div class="col-span-6 col-start-7 table-auto overflow-y-auto h-96">
+  <div class="text-sm col-span-6 col-start-7 table-auto overflow-y-auto h-96">
     <h1 class="px-5 py-5 font-bold">Health Information</h1>
         <ul class="list-disc px-8">
           <li class="py-3">All individuals with persistent raised BP ≥ 160/100 mmHg should be given antihypertensive treatment.</li>

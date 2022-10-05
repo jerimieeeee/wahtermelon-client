@@ -2,7 +2,7 @@
 
   <div class="col-span-12 flex bg-blue-500 px-5 py-3 rounded-tl rounded-tr">
       <h4 class="font-bold text-white text-md mt-2 mb-2">Angina or Heart Attack</h4> 
-      <div class="py-2">
+      <div class="">
         <fa-icon [icon]="faInfoCircle" class="peer text-white hover:text-white z-50 px-2"></fa-icon>
           <div class="absolute text-sm bg-gradient-to-b from-stone-500 to-gray-400 p-2 rounded border border-gray-500  text-white drop-shadow-lg opacity-90 border-check z-50 w-60 invisible peer-hover:visible">
             <h1 class="font-bold drop-shadow-lg">IMPORTANT</h1>
@@ -11,84 +11,84 @@
       </div>
   </div>
 
-  <div class="col-start-1 col-span-9 w-full px-5 mt-4 mb-4">
+  <div class="text-sm col-start-1 col-span-9 w-full px-5 mt-4 mb-4">
     <h1 class="mb-1">1. Have you felt any pain or discomfort, or any pressure or heaviness in your chest? Nakakaramdam ka ba ng pananakit o kabigatan ng iyong dibdib?</h1>
   </div>
 
   <div class="col-start-10 col-span-3 px-5">
-    <select class="bg-white border-gray-300 border-2 px-2 pt-1 pb-1 mt-6 rounded-md w-full" ng-model="vm.ncd.family_hx_hypertension" name="family_hx_hypertension">
+    <select class="text-sm mt-4 bg-white border-gray-300 border px-2 p-2.5 rounded-md w-full" ng-model="vm.ncd.family_hx_hypertension" name="family_hx_hypertension">
       <option ng-value="logical2.code" *ngFor="let logic2 of logical2 " [selected]="logic2.code == 'N'">
       {{logic2.desc}}
       </option>    
     </select>
   </div>
 
-  <div class="col-start-1 col-span-9 w-full px-5 mt-4 mb-4">
+  <div class="text-sm  col-start-1 col-span-9 w-full px-5 mt-4 mb-4">
     <h1 class="mb-1">2. Do you feel pain in the center or left chest or left arm? Ang pananakit ba ay nararanasan sa gitna o kaliwang bahagi ng dibdib, o sa kaliwang braso?</h1>
   </div>
 
   <div class="col-start-10 col-span-3 px-5">
-    <select class="bg-white border-gray-300 border-2 px-2 pt-1 pb-1 mt-6 rounded-md w-full" ng-model="vm.ncd.family_hx_hypertension" name="family_hx_hypertension">
+    <select class="text-sm mt-4 bg-white border-gray-300 border px-2 p-2.5 rounded-md w-full" ng-model="vm.ncd.family_hx_hypertension" name="family_hx_hypertension">
       <option ng-value="logical2.code" *ngFor="let logic2 of logical2" [selected]="logic2.code == 'N'">
       {{logic2.desc}}
       </option>    
     </select>
   </div>
 
-  <div class="col-start-1 col-span-9 w-full px-5 mt-4 mb-4">
+  <div class="text-sm  col-start-1 col-span-9 w-full px-5 mt-4 mb-4">
     <h1 class="mb-1">3. Do you feel chest pain when you're walking uphill or in a hurry? Nararamdaman mo ba ito kapag ikaw ay nagmamadali o naglalakad nang mabilis o paakyat?</h1>
   </div>
 
   <div class="col-start-10 col-span-3 px-5">
-    <select class="bg-white border-gray-300 border-2 px-2 pt-1 pb-1 mt-6 rounded-md w-full" ng-model="vm.ncd.family_hx_hypertension" name="family_hx_hypertension">
+    <select class="text-sm mt-4 bg-white border-gray-300 border px-2 p-2.5 rounded-md w-full" ng-model="vm.ncd.family_hx_hypertension" name="family_hx_hypertension">
       <option ng-value="logical2.code" *ngFor="let logic2 of logical2" [selected]="logic2.code == 'N'">
       {{logic2.desc}}
       </option>    
     </select>
   </div>
 
-  <div class="col-start-1 col-span-9 w-full px-5 mt-4 mb-4">
+  <div class="text-sm  col-start-1 col-span-9 w-full px-5 mt-4 mb-4">
     <h1 class="mb-1">4. Do you sit down when you feel the pain while walking? Tumitigil ka ba sa paglalakad kapag sumasakit ang iyong dibdib?</h1>
   </div>
 
   <div class="col-start-10 col-span-3 px-5">
-    <select class="bg-white border-gray-300 border-2 px-2 pt-1 pb-1 mt-6 rounded-md w-full" ng-model="vm.ncd.family_hx_hypertension" name="family_hx_hypertension">
+    <select class="text-sm mt-4 bg-white border-gray-300 border px-2 p-2.5 rounded-md w-full" ng-model="vm.ncd.family_hx_hypertension" name="family_hx_hypertension">
       <option ng-value="logical2.code" *ngFor="let logic2 of logical2" [selected]="logic2.code == 'N'">
       {{logic2.desc}}
       </option>    
     </select>
   </div>
 
-  <div class="col-start-1 col-span-9 w-full px-5 mt-4 mb-4">
+  <div class="text-sm  col-start-1 col-span-9 w-full px-5 mt-4 mb-4">
     <h1 class="mb-1">5. Does the pain go away when you stand still or when you place a tablet under your tongue? Nawawala ba ang sakit kapag ikaw ay hindi kumilos o kapag naglagay ka ng gamot sa ilalim ng iyong dila?</h1>
   </div>
 
   <div class="col-start-10 col-span-3 px-5">
-    <select class="bg-white border-gray-300 border-2 px-2 pt-1 pb-1 mt-6 rounded-md w-full" ng-model="vm.ncd.family_hx_hypertension" name="family_hx_hypertension">
+    <select class="text-sm mt-4 bg-white border-gray-300 border px-2 p-2.5 rounded-md w-full" ng-model="vm.ncd.family_hx_hypertension" name="family_hx_hypertension">
       <option ng-value="logical2.code" *ngFor="let logic2 of logical2" [selected]="logic2.code == 'N'">
       {{logic2.desc}}
       </option>    
     </select>
   </div>
 
-  <div class="col-start-1 col-span-9 w-full px-5 mt-4 mb-4">
+  <div class="text-sm  col-start-1 col-span-9 w-full px-5 mt-4 mb-4">
     <h1 class="mb-1">6. Does the pain go away in less than 10 minutes? Nawawala ba ang sakit sa loob ng 10 minuto?</h1>
   </div>
 
   <div class="col-start-10 col-span-3 px-5">
-    <select class="bg-white border-gray-300 border-2 px-2 pt-1 pb-1 mt-6 rounded-md w-full" ng-model="vm.ncd.family_hx_hypertension" name="family_hx_hypertension">
+    <select class="text-sm mt-4 bg-white border-gray-300 border px-2 p-2.5 rounded-md w-full" ng-model="vm.ncd.family_hx_hypertension" name="family_hx_hypertension">
       <option ng-value="logical2.code" *ngFor="let logic2 of logical2" [selected]="logic2.code == 'N'">
       {{logic2.desc}}
       </option>    
     </select>
   </div>
 
-  <div class="col-start-1 col-span-9 w-full px-5 mt-4 mb-4">
+  <div class="text-sm ol-start-1 col-span-9 w-full px-5 mt-4 mb-4">
     <h1 class="mb-1">7. Have you ever had a severe chest pain which lasted for half an hour or more? Nakakaramdam ka ba ng pananakit ng dibdib na tumatagal ng kalahating oras o higit pa?</h1>
   </div>
 
   <div class="col-start-10 col-span-3 px-5">
-    <select class="bg-white border-gray-300 border-2 px-2 pt-1 pb-1 mt-6 rounded-md w-full" ng-model="vm.ncd.family_hx_hypertension" name="family_hx_hypertension">
+    <select class="text-sm mt-4 bg-white border-gray-300 border px-2 p-2.5 rounded-md w-full" ng-model="vm.ncd.family_hx_hypertension" name="family_hx_hypertension">
       <option ng-value="logical2.code" *ngFor="let logic2 of logical2" [selected]="logic2.code == 'N'">
       {{logic2.desc}}
       </option>    
@@ -96,9 +96,9 @@
   </div>
 
   <!--border-->
-  <div class="col-start-1 col-span-12 border-b-2 border-gray-200 mt-2 mb-4"></div>
+  <div class="text-sm col-start-1 col-span-12 border-b-2 border-gray-200 mt-2 mb-4"></div>
 
-  <p class="col-start-1 col-span-12 w-full px-5 mt-2 mb-4"><b>Note:</b> If the answer is <b>YES</b> to either questions 3, 4, 5, 6, or 7, the patient may have angina or heart attack, and must see a doctor.</p>
+  <p class="text-sm col-start-1 col-span-12 w-full px-5 mt-2 mb-4"><b>Note:</b> If the answer is <b>YES</b> to either questions 3, 4, 5, 6, or 7, the patient may have angina or heart attack, and must see a doctor.</p>
 
 
 
@@ -108,7 +108,7 @@
 
   <div class="col-span-12 flex bg-blue-500 px-5 py-3 rounded-tl rounded-tr">
       <h4 class="font-bold text-white text-md mt-2 mb-2">Stroke or Transient Ischemic Attack</h4> 
-      <div class="py-2">
+      <div class="">
         <fa-icon [icon]="faInfoCircle" class="peer text-white hover:text-white z-50 px-2"></fa-icon>
           <div class="absolute text-sm bg-gradient-to-b from-stone-500 to-gray-400 p-2 rounded border border-gray-500  text-white drop-shadow-lg opacity-90 border-check z-50 w-60 invisible peer-hover:visible">
             <h1 class="font-bold drop-shadow-lg">IMPORTANT</h1>
@@ -117,7 +117,7 @@
       </div>
   </div>
 
-  <div class="col-start-1 col-span-9 w-full px-5 mt-4 mb-4">
+  <div class="text-sm col-start-1 col-span-9 w-full px-5 mt-4 mb-4">
       <h1 class="mb-1">
         8. Have you experienced any of the following:
       </h1>
@@ -135,7 +135,7 @@
   </div>
 
   <div class="col-start-10 col-span-3 px-5">
-    <select class="bg-white border-gray-300 border-2 px-2 pt-1 pb-1 mt-6 rounded-md w-full" ng-model="vm.ncd.family_hx_hypertension" name="family_hx_hypertension">
+    <select class="text-sm mt-4 bg-white border-gray-300 border px-2 p-2.5 rounded-md w-full" ng-model="vm.ncd.family_hx_hypertension" name="family_hx_hypertension">
       <option ng-value="logical2.code" *ngFor="let logic2 of logical2" [selected]="logic2.code == 'N'">
       {{logic2.desc}}
       </option>    
@@ -145,6 +145,6 @@
   <!--border-->
   <div class="col-start-1 col-span-12 border-b-2 border-gray-200 mt-2 mb-1"></div>
 
-  <p class="col-start-1 col-span-12 w-full px-5 mt-2 mb-4"><b>Note:</b> If the answer to question 8 is <b>YES</b>, the patient may be having TIA or stroke, and must see a doctor.</p>
+  <p class="text-sm col-start-1 col-span-12 w-full px-5 mt-2 mb-4"><b>Note:</b> If the answer to question 8 is <b>YES</b>, the patient may be having TIA or stroke, and must see a doctor.</p>
 
   </div>

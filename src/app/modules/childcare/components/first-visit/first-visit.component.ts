@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { faSearch,faBalanceScale,faPlus, faCalendar, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
+import { faSearch,faBalanceScale,faPlus, faCalendar, faInfoCircle, faCircleNotch, faFloppyDisk,} from '@fortawesome/free-solid-svg-icons';
+import { faSave} from '@fortawesome/free-regular-svg-icons';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { BirthInformation } from '../../models/birthinformation.model';
@@ -23,74 +24,55 @@ export class FirstVisitComponent implements OnInit {
   faPlus = faPlus;
   faCalendar = faCalendar;
   faInfoCircle = faInfoCircle;
+  faSpinner = faCircleNotch;
+  faFloppyDisk = faFloppyDisk;
+  faSave = faSave;
 
-  birthinfos: Observable<BirthInformation[]>;
+  is_saving: boolean = false;
+  is_saving2: boolean = true;
+
+  is_saving3: boolean = false;
+  is_saving4: boolean = true;
 
   saved: boolean;
-  saved2: boolean;
 
-  minDate: Date;
-  maxDate: Date;
-
-  x: any;
-  y: any;
-
-  mandoForm = new FormGroup({
-    admissionDate: new FormControl(),
-    dischargedDate: new FormControl()
-  });
 
   // Section 2
-  constructor(private store: Store<AppState>) { 
-    this.birthinfos = store.select('birthinfo');
+  constructor() { 
+    
   }
 
-
-  addWeight(weight, mname) {
-    this.store.dispatch(new BirthInformationActions.AddWeight({weight: weight, mname: mname}) )
-    localStorage.setItem('keyset', JSON.stringify({weight,mname}));
-    console.log({weight: weight, mname: mname});
-    this.saved = true;
-  }
-
-  getName(){
-    this.x = JSON.parse(localStorage.getItem('keyset'));
-    console.log('retrievedObject: ', this.x);
-  }
-
-  doubleFunction() {
-    this.onFormSubmit();
-    this.toggleAdmissionModal();
- }
-
- onFormSubmit(): void {
-  console.log('Admission Date:' + this.mandoForm.get('admissionDate').value);
-  console.log('Discharged Date:' + this.mandoForm.get('dischargedDate').value);
-  localStorage.setItem('form-data', JSON.stringify(this.mandoForm.value));
-
-  this.saved2 = true; 
-  
-}
-
-getDate(){
-  this.y = JSON.parse(localStorage.getItem('form-data'));
-  console.log('retrievedDate: ', this.y);
-}
+ 
 
   showAdmissionModal = false;
+
   toggleAdmissionModal(){
     this.showAdmissionModal = !this.showAdmissionModal;
   }
 
-  
+  saveAdmission(){
+    this.is_saving = true;
+    this.is_saving2 = false;
+    setTimeout(() => {
+      this.is_saving = false;
+      this.is_saving2 = true;
+    }, 5000);
+  }
+
+  saveBirth(){
+    this.is_saving3 = true;
+    this.is_saving4 = false;
+    setTimeout(() => {
+      this.is_saving3 = false;
+      this.is_saving4 = true;
+    }, 5000);
+  }
 
   
 
   ngOnInit() {
-    this.getName();
-    this.getDate();
-    this.saved = false;
-    this.saved2 = false;
+    this.saved = true;
+ 
   }
  
 }

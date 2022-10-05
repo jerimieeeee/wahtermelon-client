@@ -1,6 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { faFlask, faHeart, faExclamationCircle, faNotesMedical, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+import { faFlask, faHeart, faExclamationCircle, faNotesMedical, faPlusCircle, faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
 import { AgeService } from 'app/shared/services/age.service';
 import { HttpService } from 'app/shared/services/http.service';
 
@@ -17,9 +17,11 @@ export class PatientInfoComponent implements OnInit {
   faHeart = faHeart;
   faExclamationCircle = faExclamationCircle;
   faPlusCircle = faPlusCircle;
+  faQuestionCircle = faQuestionCircle;
 
   showModal: boolean = false;
   show_form: boolean = false;
+  showDeathRecordModal: boolean = false;
 
   constructor(
     private activeRoute: ActivatedRoute,
@@ -47,7 +49,7 @@ export class PatientInfoComponent implements OnInit {
     this.showModal = !this.showModal;
   }
 
-  ngOnInit(): void {
-
+  toggleDeathRecordModal(){
+    this.showDeathRecordModal = !this.showDeathRecordModal;
   }
 }

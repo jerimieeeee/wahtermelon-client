@@ -17,17 +17,17 @@ export class HumanRabiesComponent implements OnInit {
   showRecord = false;
 
   death_place = [
-    {code: '01', desc: 'FACILITY BASED'},
-    {code: '02', desc: 'NON-FACILITY BASED'}
+    {code: '01', desc: 'Facility Based'},
+    {code: '02', desc: 'Non-Facility Based'}
 ];
   
   toggleRecord(){
     this.showRecord = !this.showRecord;
   }
 
-  showPreExpModal = false;
-  togglePreExpModal(){
-    this.showPreExpModal = !this.showPreExpModal;
+  showCaseModal = false;
+  toggleCaseModal(){
+    this.showCaseModal = !this.showCaseModal;
   }
   
   constructor() { }
