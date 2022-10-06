@@ -11,7 +11,12 @@ import { faPenToSquare, faPlusSquare } from '@fortawesome/free-regular-svg-icons
 export class ServicesComponent implements OnInit {
   
   x: any;
-  z2: any;
+  cservices: any;
+
+  selectedServiceList = [];
+  selectedServiceList2 = [];
+  checkedIDs = [];
+  checkedIDs2 = [];
 
 
   saved: boolean;
@@ -78,8 +83,104 @@ export class ServicesComponent implements OnInit {
 
     setTimeout(() => {
       this.is_saving = false;
-    }, 5000);
+    }, 1500);
   }
+
+  geteServiceName(){
+    this.x = JSON.parse(localStorage.getItem('eservice'));
+    console.log('retrievedeServices: ', this.x );
+    this.x.forEach(m =>{
+      let i = this.eservices2.findIndex(c => c.id === m.id);
+       if(i != -1){
+         this.eservices2.splice(i,1);
+       }
+         // this.ccdev= [];
+         this.eservices2.push({
+           id: m.id,
+           name: m.name,
+           cc_id: m.cc_id,
+           ischecked: m.ischecked,
+           service_date: m.service_date
+         });
+     });
+     this.eservices2.sort((m, c) => (m.id) - (c.id));this.eservices2.sort
+  }
+
+  getServices(){
+    this.cservices = JSON.parse(localStorage.getItem('service'));
+    console.log('retrievedServices: ', this.cservices );
+    this.cservices.forEach(m =>{
+      let i = this.services.findIndex(c => c.id === m.id);
+       if(i != -1){
+         this.services.splice(i,1);
+       }
+         // this.ccdev= [];
+         this.services.push({
+           id: m.id,
+           name: m.name,
+           cc_id: m.cc_id,
+           ischecked: m.ischecked,
+           service_date: m.service_date,
+           date: m.date
+         });
+     });
+     this.services.sort((m, c) => (m.id) - (c.id));this.services.sort
+  }
+
+  fetchSelectedItems() {
+    this.selectedServiceList = this.eservices2.filter((value, index) => {
+      return value.ischecked
+    });
+  }
+  
+  fetchSelectedItems2() {
+    this.selectedServiceList2 = this.services.filter((value, index) => {
+      return value.ischecked
+    });
+  }
+
+  submit() {
+    this.selectedServiceList = this.eservices2.filter((value, index) => {
+      return value.ischecked,
+      localStorage.setItem('eservice', JSON.stringify(this.selectedServiceList)),
+     this.x = this.selectedServiceList 
+    });
+  }
+
+  submit2() {
+    this.selectedServiceList2 = this.services.filter((value, index) => {
+      return value.ischecked,
+      localStorage.setItem('service', JSON.stringify(this.selectedServiceList2)),
+     this.cservices = this.selectedServiceList2
+    });
+  }
+
+  fetchCheckedIDs() {
+    this.checkedIDs = []
+    this.eservices2.forEach((value, index) => {
+      if (value.ischecked) {
+        this.checkedIDs.push(value.id);
+      }
+    });
+  }
+
+  fetchCheckedIDs2() {
+    this.checkedIDs = []
+    this.services.forEach((value, index) => {
+      if (value.ischecked) {
+        this.checkedIDs.push(value.id);
+      }
+    });
+  }
+ 
+  changeSelection() {
+    this.fetchSelectedItems()
+  }
+
+  changeSelection2() {
+    this.fetchSelectedItems2()
+  }
+
 
   constructor() { 
     this.services.sort(function(a,b){
@@ -88,6 +189,11 @@ export class ServicesComponent implements OnInit {
   }
 
   ngOnInit() {
-    
+    this.geteServiceName()
+    this.getServices()
+    this.fetchSelectedItems()
+    this.fetchSelectedItems2()
+    this.fetchCheckedIDs()
+    this.fetchCheckedIDs2()
   }
 }
