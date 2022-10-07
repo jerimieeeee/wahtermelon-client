@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { faSearch,faBalanceScale,faPlus,faInfoCircle, faCircleNotch } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faPlus, faInfoCircle, faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import { FormBuilder, FormGroup,FormArray,FormControl,Validators,} from '@angular/forms';
 import { faPenToSquare, faPlusSquare } from '@fortawesome/free-regular-svg-icons';
 
@@ -25,8 +25,8 @@ export class ServicesComponent implements OnInit {
   faPlus = faPlus;
   faInfoCircle = faInfoCircle;
   faSpinner = faCircleNotch;
-  faPlusSquare = faPlusSquare
-  faPenToSquare = faPenToSquare
+  faPlusSquare = faPlusSquare;
+  faPenToSquare = faPenToSquare;
 
   is_saving: boolean = false;
 

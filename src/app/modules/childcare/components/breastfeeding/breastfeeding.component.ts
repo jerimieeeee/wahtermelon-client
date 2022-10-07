@@ -23,7 +23,7 @@ export class BreastfeedingComponent implements OnInit {
   faPlus = faPlus;
   faInfoCircle = faInfoCircle;
   faSpinner = faCircleNotch;
-  faPenToSquare = faPenToSquare
+  faPenToSquare = faPenToSquare;
 
   is_saving: boolean = false;
 
@@ -149,7 +149,6 @@ export class BreastfeedingComponent implements OnInit {
   ngOnInit(){
     this.fetchSelectedItems()
     this.geteServiceName()
-    console.log(this.ebf)
   }
 
 }

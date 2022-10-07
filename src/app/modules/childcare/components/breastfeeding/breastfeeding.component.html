@@ -15,7 +15,7 @@
 <div class="card">
     <div class="flex bg-orange-500 card-header-services">
       <h4 class="font-semibold text-white text-sm uppercase">Breastfeeding Information</h4>
-      <button  type="button" class="-mt-0.5 relative ml-auto px-5" (click)="toggleBreastfeedingModal()">
+      <button  type="button" class="-mt-0.5 relative ml-auto px-5" (click)="toggleBreastfeedingModal()" *ngIf="month.length >= 1">
         <fa-icon class=" text-white" size="md" [icon]="faPenToSquare"></fa-icon>
         </button>
     </div>
@@ -26,8 +26,15 @@
       </div>
 
       <div class="flex w-full item-start flex-wrap" *ngIf="month.length === 0">
-        <div *ngFor="let ccmonths of ccdev" class=" md:w-1/2 lg:w-1/2 px-10 text-sm">
-          <p class="py-1">{{ccmonths.name}} - {{ccmonths.isDefault}}</p>
+        <!-- <div *ngFor="let ccmonths of ccdev" class=" md:w-1/2 lg:w-1/2 px-10 text-sm">
+          <p class="py-1">{{ccmonths.name}} - {{ccmonths.isDefault}}</p> -->
+          <p class="px-10 py-1 text-sm mt-1">No Recorded Breastfeeding Months!</p>
+          
+            <button type="button" class="flex btn-add ml-auto mr-5" (click)="toggleBreastfeedingModal()">
+              <fa-icon class="mr-1" [icon]="faSave"></fa-icon>
+             Add
+            </button>
+          
       </div>
     </div>
 
