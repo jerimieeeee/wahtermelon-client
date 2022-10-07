@@ -115,6 +115,10 @@
                 <div *ngIf="f.mobile_number.errors?.['required']">
                   {{ required_message }}
                 </div>
+
+                <div *ngIf="f.mobile_number.errors">
+                  {{ f.mobile_number.errors }}
+                </div>
               </div>
             </div>
 

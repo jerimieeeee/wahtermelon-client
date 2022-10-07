@@ -14,6 +14,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { FacilityaccreditationComponent } from './components/facilityaccreditation/facilityaccreditation.component';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 
 
@@ -34,6 +35,8 @@ import { FacilityaccreditationComponent } from './components/facilityaccreditati
     HttpClientModule,
     NgSelectModule,
     FormsModule,
+    NgApexchartsModule, 
+    Ng2SearchPipeModule,
     NgApexchartsModule,
     ReactiveFormsModule
   ],

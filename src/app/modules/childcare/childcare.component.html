@@ -1,4 +1,4 @@
-<div class="body-up flex w-full mt-4">
+<div class="body-up flex w-full mt-4 mb-4">
   
   <div class="flex-wrap w-9/12 h-full rounded-xl text-gray-600 border border-slate-100 px-4 py-4 ml-5 mr-1" *ngIf="module==1">
 
@@ -14,14 +14,9 @@
           VISIT HISTORY
       </button>
     
-      <button type="button" class="ml-auto px-4 pt-2.5 pb-2 bg-orange-500 text-white font-semibold text-md leading-normal rounded focus:shadow-lg focus:outline-none hover:ring-2 hover:ring-orange-300 transition duration-150 ease-in-out transform hover:scale-110 flex align-center" (click)="toggleBreastfeedingModal()">
-        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-door-exit mr-1" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-          <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-          <path d="M13 12v.01"></path>
-          <path d="M3 21h18"></path>
-          <path d="M5 21v-16a2 2 0 0 1 2 -2h7.5m2.5 10.5v7.5"></path>
-          <path d="M14 7h7m-3 -3l3 3l-3 3"></path>
-       </svg>End Visit
+      <button type="button" class="btn-end-visit ml-auto" (click)="toggleBreastfeedingModal()">
+        <fa-icon class="mr-1" [icon]="faDoorClosed"></fa-icon>
+        End Visit
       </button>
     
   </nav>
@@ -35,7 +30,7 @@
     </div>
 
     <!--border-->
-    <div class="border-b-2 py-4"></div>
+    <div class="border-b-2"></div>
 
     <!--SERVICES SECTION-->
   
@@ -44,7 +39,7 @@
     </div>
     
     <!--border-->
-    <div class="border-b-2 py-4"></div>
+    <div class="border-b-2"></div>
 
     <!--VACCINNE SECTION-->
     

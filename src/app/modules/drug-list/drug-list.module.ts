@@ -5,7 +5,8 @@ import { DrugListRoutingModule } from './drug-list-routing.module';
 import { DrugListComponent } from './drug-list.component';
 import { DrugsComponent } from './components/drugs/drugs.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-
+import { FormsModule } from '@angular/forms';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
   ],
   imports: [
     CommonModule,
-    DrugListRoutingModule,FontAwesomeModule
+    DrugListRoutingModule,FontAwesomeModule, Ng2SearchPipeModule, FormsModule
   ]
 })
 export class DrugListModule { }

@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { BirthInformation } from './models/birthinformation.model'
 import { AppState } from './app.state';
+import { faDoorClosed } from '@fortawesome/free-solid-svg-icons';
 
 
 
@@ -13,6 +14,8 @@ import { AppState } from './app.state';
 })
 export class ChildcareComponent implements OnInit {
 
+  faDoorClosed = faDoorClosed;
+  
   module: Number;
 
   birthinfos: Observable<BirthInformation[]>;

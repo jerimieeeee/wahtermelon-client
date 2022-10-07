@@ -1,22 +1,22 @@
 
 
-  <!--Admission Date & Time Section-->
-  <div class="flex item-start flex-wrap shadow-md rounded-xl pb-5 mb-5">
+  <!--Drug List Section-->
+  <div class="flex item-start flex-wrap shadow-md rounded-xl pb-5">
 
-    <div *ngIf="is_searching" class="flex justify-between w-full bg-blue-500 px-5 py-4 rounded-tl rounded-tr">
+    <div *ngIf="is_searching" id="page1" class="flex justify-between w-full bg-blue-500 px-5 py-4 rounded-tl rounded-tr">
       <h4 class="font-bold text-white text-md mt-1">Drug List</h4>
       <button type="button" class="px-4 py-1.5 text-white hover:bg-white hover:text-gray-600 hover:rounded hover:shadow-md font-semibold text-md leading-normal hover:ring-2 hover:ring-gray-300 transition duration-150 ease-in-out flex align-center transform hover:scale-110" (click)="toggleSearch()">
         <fa-icon  [icon]="faSearch"></fa-icon>
       </button>  
     </div>
 
-    <div *ngIf="is_searching2" class="grid grid-cols-12 flex justify-between w-full bg-blue-500 px-5 py-4 rounded-tl rounded-tr">
+    <div *ngIf="is_searching2" id="page2" class="grid grid-cols-12 flex justify-between w-full bg-blue-500 px-5 py-4 rounded-tl rounded-tr animate-out slide-out-to-top slide-out-to-left">
      
         <div class="relative w-full col-span-10">
             <div class="flex w-full absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
                 <svg aria-hidden="true" class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
             </div>
-            <input type="search" id="default-search" class="block p-2 pl-10 w-full text-sm text-gray-900 bg-gray-50 rounded border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search Drugs..." required>
+            <input type="search" id="default-search" [(ngModel)]="filterTerm" class="block p-2 pl-10 w-full text-sm text-gray-900 bg-gray-50 rounded border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search Drugs..." required>
         </div>
 
         <div class="flex col-start-11 col-span-2 ml-auto space-x-4">
@@ -33,11 +33,11 @@
     
     </div>
 
-<div class="w-full relative">
+<div class="w-full max-w-8xl relative">
       
-<div class="relative sm:rounded-lg overflow-y-auto overflow-x-auto h-96 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
+<div class="sm:rounded-lg overflow-x-auto h-96 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
   <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-      <thead class="text-xs w-full text-gray-700 uppercase bg-gray-50 p dark:bg-gray-700 dark:text-gray-400 sticky top-0">
+      <thead class="text-xs w-full text-gray-700 uppercase whitespace-nowrap bg-gray-50 p dark:bg-gray-700 dark:text-gray-400 sticky top-0">
           <tr>
               <th scope="col" class="py-5 px-6">
                   Brand Name
@@ -67,15 +67,12 @@
                   Duration Frequency
               </th>
               <th scope="col" class="py-3 px-6">
-                  <span class="sr-only">Edit</span>
+                Action
               </th>
-              <th scope="col" class="py-3 px-6">
-                <span class="sr-only">Delete</span>
-            </th>
           </tr>
       </thead>
-      <tbody>
-          <tr *ngFor="let drug of lib_drugs" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+      <tbody  *ngIf="( lib_drugs | filter : filterTerm) as result">
+          <tr *ngFor="let drug of lib_drugs | filter: filterTerm ; let i = index" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
               <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                  {{drug.bname}}
               </th>
@@ -103,13 +100,12 @@
               <td class="py-4 px-6">
                 {{drug.frequency}}
               </td>
-              <td class="py-4 px-6 text-right">
+              <td class="py-4 px-6 space-x-4">
                   <a href="#" class="font-medium text-blue-500 dark:text-blue-500 hover:underline">Edit</a>
+                  <a href="#" class="font-medium text-red-500 dark:text-blue-500 hover:underline">Delete</a>
               </td>
-              <td class="py-4 px-6 text-right">
-                <a href="#" class="font-medium text-red-500 dark:text-blue-500 hover:underline">Delete</a>
-            </td>
           </tr>
+            <p class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white" *ngIf="result.length === 0">No Records Found!</p>  
       </tbody>
   </table>
 </div>
@@ -165,7 +161,7 @@
 
     <!-- Drug Library Modal -->
     <div *ngIf="showDrugListModal" id="defaultModal" tabindex="-1" class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 w-full md:inset-0 h-modal md:h-full justify-center items-center flex" aria-modal="true" role="dialog" style="z-index:60">
-      <div class="relative p-4 w-full max-w-7xl h-auto md:h-auto">
+      <div class="relative p-4 w-full max-w-5xl h-auto md:h-auto">
           <!-- Modal content -->
           <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
               <!-- Modal header -->
@@ -182,12 +178,12 @@
                     <div class="flex w-full absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
                         <svg aria-hidden="true" class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                     </div>
-                    <input type="search" id="default-search" class="block p-2 pl-10 w-full text-sm text-gray-900 bg-gray-50 rounded border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search Drugs..." required>
+                    <input type="search" id="default-search" [(ngModel)]="filterTerm2" class="block p-2 pl-10 w-full text-sm text-gray-900 bg-gray-50 rounded border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search Drugs..." required>
                 </div>
         
                 <div class="flex col-start-11 col-span-2 ml-auto space-x-4">
                   
-                  <button type="button" class="px-4 py-1.5 text-white hover:bg-white hover:text-gray-600 hover:rounded hover:shadow-md font-semibold text-md leading-normal hover:ring-2 hover:ring-gray-300 transition duration-150 ease-in-out flex align-center transform hover:scale-110" (click)="toggleSearch2()">
+                  <button type="button" class="px-4 py-1.5 text-white hover:bg-white hover:text-gray-600 hover:rounded hover:shadow-md font-semibold text-md leading-normal hover:ring-2 hover:ring-gray-300 transition duration-150 ease-in-out flex align-center transform hover:scale-110" (click)="toggleSearchRev2()">
                     <fa-icon  [icon]="faClose"></fa-icon>
                   </button>  
         
@@ -218,8 +214,8 @@
                             </th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr *ngFor="let drug of lib_drugs" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <tbody  *ngIf="( lib_drugs | filter : filterTerm2) as result">
+                        <tr *ngFor="let drug of lib_drugs | filter: filterTerm2 ; let i = index" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                             <th scope="row" class="py-4 px-6 font-medium text-blue-500 whitespace-nowrap dark:text-white cursor-pointer">
                                {{drug.bname}}
                             </th>
@@ -233,6 +229,7 @@
                               {{drug.drugf}}
                             </td>
                         </tr>
+                        <p class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white" *ngIf="result.length === 0">No Records Found!</p> 
                     </tbody>
                 </table>
               </div>
@@ -293,7 +290,7 @@
 
   <!-- Add Drug Modal -->
   <div *ngIf="showAddDrugModal" id="defaultModal" tabindex="-1" class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 w-full md:inset-0 h-modal md:h-full justify-center items-center flex" aria-modal="true" role="dialog" style="z-index:60">
-    <div class="relative p-4 w-full max-w-6xl h-auto md:h-auto">
+    <div class="relative p-4 w-full max-w-4xl h-auto md:h-auto">
         <!-- Modal content -->
         <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
             <!-- Modal header -->
@@ -303,14 +300,99 @@
                 <fa-icon  [icon]="faClose"></fa-icon>
               </button>  
             </div>
+
             <!-- Modal body -->
-          
-            <p class="px-5 py-48 text-center align-center">Add New Drug Here!</p>
+            <div class="grid grid-cols-12 mt-7 mb-7">
+
+              <!-- <div class="relative col-start-1 col-span-6 px-5 mt-5 mb-5">
+                <h4 class="mb-2 text-sm">Brand Name</h4>
+               <input type="text" class="mt-1 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input cursor-pointer" placeholder="Input Brand Name">
+              </div> -->
+
+              <div class="relative col-start-1 col-span-6 px-5">
+                <input type="text" id="floating_outlined" class="block px-3 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
+                <label for="floating_outlined" class="absolute ml-5 text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-7 scale-100 top-5 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-5 peer-focus:scale-100 peer-focus:-translate-y-7 left-1">Brand Name</label>
+              </div>
+
+              <!-- <div class="relative col-start-7 col-span-6 px-5 mt-5 mb-5">
+                <h4 class="mb-2 text-sm">Medicine Name</h4>
+               <input type="text" class="mt-1 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input cursor-pointer" placeholder="Input Medicine Name">
+              </div> -->
+
+              <div class="relative col-start-7 col-span-6 px-5">
+                <input type="text" id="floating_outlined2" class="block px-3 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
+                <label for="floating_outlined2" class="absolute ml-5 text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-7 scale-100 top-5 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-5 peer-focus:scale-100 peer-focus:-translate-y-7 left-1">Medicine Name</label>
+              </div>
+
+              <!-- <div class="relative row-start-2 col-start-1 col-span-2 px-5 mb-5">
+                <h4 class="mb-2 text-sm">Dosage</h4>
+               <input type="text" class="mt-1 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input cursor-pointer" placeholder="Input Dosage">
+              </div> -->
+              
+              <div class="relative row-start-2 col-start-1 col-span-2 px-5">
+                <input type="text" id="floating_outlined3" class="block px-3 pt-4 w-full mt-7 text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
+                <label for="floating_outlined3" class="absolute ml-5 mt-3.5 text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-100 top-5 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-5 peer-focus:scale-100 peer-focus:-translate-y-4 left-1">Dosage</label>
+              </div>
+
+              <!-- <div class="relative row-start-2 col-start-3 col-span-4 px-5 mb-5">
+                <h4 class="mb-2 text-sm">Unit of Measurement</h4>
+               <input type="text" class="mt-1 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input cursor-pointer" placeholder="Input Measurement">
+              </div> -->
+
+              <div class="relative row-start-2 col-start-3 col-span-4 px-5">
+                <input type="text" id="floating_outlined4" class="block px-3 pt-4 w-full mt-7 text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
+                <label for="floating_outlined4" class="absolute ml-5 mt-3.5 text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-100 top-5 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-5 peer-focus:scale-100 peer-focus:-translate-y-4 left-1">Unit of Measurement</label>
+              </div>
+
+              <!-- <div class="relative row-start-2 col-start-7 col-span-6 px-5 mb-5">
+                <h4 class="mb-2 text-sm">Dose Regimen</h4>
+               <input type="text" class="mt-1 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input cursor-pointer" placeholder="Input Regimen">
+              </div> -->
+
+              <div class="relative row-start-2 col-start-7 col-span-6 px-5">
+                <input type="text" id="floating_outlined5" class="block px-3 pt-4 w-full mt-7 text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
+                <label for="floating_outlined5" class="absolute ml-5 mt-3.5 text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-100 top-5 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-5 peer-focus:scale-100 peer-focus:-translate-y-4 left-1">Dose Regimen</label>
+              </div>
+
+              <!-- <div class="relative row-start-3 col-start-1 col-span-2 px-5 mb-5">
+                <h4 class="mb-2 text-sm">Duration</h4>
+               <input type="text" class="mt-1 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input cursor-pointer" placeholder="Input Duration">
+              </div> -->
+
+              <div class="relative row-start-3 col-start-1 col-span-2 px-5">
+                <input type="text" id="floating_outlined6" class="block px-3 pt-4 w-full mt-7 text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
+                <label for="floating_outlined6" class="absolute ml-5 mt-3.5 text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-100 top-5 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-5 peer-focus:scale-100 peer-focus:-translate-y-4 left-1">Duration</label>
+              </div>
+
+              <!-- <div class="relative row-start-3 col-start-3 col-span-4 px-5 mb-5">
+                <h4 class="mb-2 text-sm">Duration Frequency</h4>
+               <input type="text" class="mt-1 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input cursor-pointer" placeholder="Input Frequency">
+              </div> -->
+
+              <div class="relative row-start-3 col-start-3 col-span-4 px-5">
+                <input type="text" id="floating_outlined7" class="block px-3 pt-4 w-full mt-7 text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
+                <label for="floating_outlined7" class="absolute ml-5 mt-3.5 text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-100 top-5 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-5 peer-focus:scale-100 peer-focus:-translate-y-4 left-1">Duration Frequency</label>
+              </div>
+
+              <!-- <div class="relative row-start-3 col-start-7 col-span-6 px-5 mb-7">
+                <h4 class="mb-2 text-sm">Medicine Purpose</h4>
+               <input type="text" class="mt-1 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input cursor-pointer" placeholder="Input Purpose">
+              </div> -->
+
+              <div class="relative row-start-3 col-start-7 col-span-6 px-5">
+                <input type="text" id="floating_outlined8" class="block px-3 pt-4 w-full mt-7 text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
+                <label for="floating_outlined8" class="absolute ml-5 mt-3.5 text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-100 top-5 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-5 peer-focus:scale-100 peer-focus:-translate-y-4 left-1">Medicine Purpose</label>
+              </div>
+
+            </div>
 
             <!-- Modal footer -->
             <div class="flex justify-end py-4 px-6 space-x-4 rounded-b border-t border-gray-200 dark:border-gray-600">
-                
-            </div>
+              <button  type="button" class="text-white bg-red-500 hover:ring-2 hover:ring-red-300 focus:outline-none rounded text-sm font-medium px-6 py-2.5 transition duration-150 ease-in-out transform hover:scale-110" (click)="toggleCloseModal()">Close</button>
+              <button  type="button" class="text-white bg-blue-500 hover:ring-2 hover:ring-blue-300 focus:outline-none font-medium rounded text-sm px-6 py-2.5 text-center transition duration-150 ease-in-out transform hover:scale-110" (click)="saveModal()">
+                <fa-icon *ngIf="is_saving" class="pl-0" [icon]="faSpinner" [spin]="true"></fa-icon>
+                {{ is_saving ? 'Saving' : 'Save' }}</button>
+          </div>
         </div>
     </div>
   </div>

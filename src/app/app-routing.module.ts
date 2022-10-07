@@ -60,6 +60,11 @@ const routes: Routes = [
     loadChildren: () => import('../app/components/facilityaccreditation/facilityaccreditation.module').then(m => m.FacilityaccreditationModule) },
     // loadChildren: () => import('./modules/dental/dental.module').then(m => m.DentalModule) },
   {
+    loadChildren: () => import('./modules/drug-list/drug-list.module').then(m => m.DrugListModule) },
+   {
+    path: 'facility-config',
+    loadChildren: () => import('./modules/facility-config/facility-config.module').then(m => m.FacilityConfigModule) },
+   {
     path: 'consultation',
     loadChildren: () => import('./modules/consultation/consultation.module').then(m => m.ConsultationModule)
   }

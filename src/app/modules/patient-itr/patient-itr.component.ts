@@ -5,6 +5,7 @@ import { ChartOptions, WeightChart } from './declarations/chart-options';
 import { MedicalJournal } from './data/sample-journal';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { filter, tap } from "rxjs/operators";
+import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
   selector: 'app-patient-itr',
@@ -30,8 +31,7 @@ export class PatientItrComponent implements OnInit {
   } */
 
   constructor(
-    private router: Router,
-    private route: ActivatedRoute
+    private router: Router
   ) {
     this.chartOptions = {
       series: [
@@ -122,12 +122,12 @@ export class PatientItrComponent implements OnInit {
 
   navigationEnd$ = this.router.events.pipe(
     filter(event => event instanceof NavigationEnd),
-    tap(() => (this.show_details = false))
+    tap(() => {
+      this.show_details = false;
+    })
   );
 
   ngOnInit(): void {
     this.navigationEnd$.subscribe();
-    const id = this.route.snapshot.paramMap.get('id');
-    console.log(id);
   }
 }

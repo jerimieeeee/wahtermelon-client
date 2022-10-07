@@ -1,4 +1,4 @@
-<div class="rounded-xl text-gray-600 border border-slate-100">
+<div class="rounded-xl text-gray-600 border border-slate-100" *ngIf="show_form">
   <div class="block m-0 p-0 divide-y-2 divide-gray-200 divide-solid">
     <div class="flex justify-items-start">
       <div class="m-3">
@@ -6,11 +6,11 @@
       </div>
       <div class="mt-4 leading-tight">
         <span class="block text-blue-500 font-medium">
-          Seo, Dal-mi
+          {{ patient_info?.last_name }}, {{ patient_info?.first_name }} {{ patient_info?.middle_name }}
         </span>
 
         <span class="block text-xs">
-          10/10/1994 [26 years old]
+          {{ patient_info?.birthdate | date: 'M/dd/Y' }} [{{ getAge() }}]
         </span>
 
         <div class="flex pt-2">
@@ -37,7 +37,7 @@
           CONTACT NUMBER
         </span>
         <span class="block text-xs">
-          +63917-777-7777
+          {{ patient_info?.mobile_number }}
         </span>
       </div>
 
