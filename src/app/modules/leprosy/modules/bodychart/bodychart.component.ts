@@ -18,11 +18,12 @@ export class BodychartComponent implements OnInit {
   canvasWidth: any;
   canvasHeight: any;
   canvasData: any;
-
+  try = '';
   r = 8;
   ar =  Math.ceil((this.r/2)) 
 
   input_test = '';
+  canvas_bank = [];
   constructor() { }
   public keyUp = [];
   public buttons = [];
@@ -31,15 +32,25 @@ export class BodychartComponent implements OnInit {
   public checker = [];
   ngOnInit(): void {
     this.check_bool = true;
+    this.canvas_bank.push("myCanvas1");
+    this.canvas_bank.push("myCanvas2");
+    this.canvas_bank.push("myCanvas3");
   }
-
-  trackMouse(e){
+  tries() {
+    console.log(this.try);
     
-  this.canvas = document.getElementById("myCanvas1");
+  }
+  trackMouse(e, id: any){
+    
+  this.canvas = document.getElementById(id);
+
+  if(!this.canvas_bank.includes(id)){
+    this.canvas_bank.push(id);
+  }
   this.canvasWidth = this.canvas.width;
   this.canvasHeight = this.canvas.height;
   this.ctx = this.canvas.getContext("2d");
-
+    
   this.y = e.layerY;
   this.x = e.layerX;
   let test_identity = this.x + ',' + this.y + ''
@@ -51,12 +62,14 @@ export class BodychartComponent implements OnInit {
   for (let a = -this.ar; a <= this.ar; a++) {
     // identity.push((this.x + a) + ',' + (this.y + a));
     for (let b = -this.ar; b <= this.ar; b++) {
-      this.identity.push((this.x + a) + ',' + (this.y  + b));
+      this.identity.push((this.x + a) + ',' + (this.y  + b) + '-' + id);
     }
   }
   // console.log(identity, ' identity');
   // let identity = this.x + ',' + this.y + '';
   for (let ide of this.identity) {
+    // console.log("*******", this.coords.map((el) => el.id).indexOf(ide));
+    
     this.checker.push(this.coords.map((el) => el.id).indexOf(ide));
   }
   this.check_bool =  this.checker.every((check)=>{ return check == -1; });
@@ -66,13 +79,14 @@ export class BodychartComponent implements OnInit {
         evicted_dot = this.checker.indexOf(check);
       }
   }
-  console.log(evicted_dot, this.identity[evicted_dot]);
+  console.log(evicted_dot, this.identity[evicted_dot], " MY EVICTED DOTS");
   
   // this.coords.push({id: this.x + ',' + this.y, x: this.x, y: this.y});
   console.log(this.identity, ' identity');
   // let checker =  this.coords.map((el) => el.id).indexOf(identity);
-  
-  this.updateCanvas(this.identity[evicted_dot] + '', this.check_bool, this.x + ',' + this.y, this.x, this.y, this.r, this.ctx);
+
+  this.updateCanvas(this.identity[evicted_dot] + '', this.check_bool, this.x + ',' + this.y + '-' + id, this.x, this.y, this.r, this.ctx);
+
   // // this.ctx.fillRect(this.x -5,this.y -5,10,10);
   console.log(this.coords, " coords");
   this.check_bool = true;
@@ -99,12 +113,20 @@ updateCanvas(evicted_dot, check_bool, i, x, y, r, canvas) {
   }else if(check_bool == true){
     console.log("pushing");
     
-    this.coords.push({id: i , x: x, y: y, r: r})
+    this.coords.push({id: i , x: x, y: y, r: r, canvas: canvas})
   } 
-  canvas.clearRect(0,0,1500,1500);
+  console.log(this.canvas_bank);
+  
+  for(let bank of this.canvas_bank){
+    this.canvas = document.getElementById(bank);
+    this.canvasWidth = this.canvas.width;
+    this.canvasHeight = this.canvas.height;
+    this.ctx = this.canvas.getContext("2d");   
+    this.ctx.clearRect(0,0,1500,1500);
+  }
   for (let coord of this.coords) {
     
-    this.point(coord.x, coord.y, coord.r,canvas)
+    this.point(coord.x, coord.y, coord.r,coord.canvas)
   }
 }
 activeTrackMouse(e) {

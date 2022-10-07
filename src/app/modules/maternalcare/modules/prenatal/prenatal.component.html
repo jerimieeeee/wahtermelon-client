@@ -104,7 +104,7 @@
                         class="text-ellipsis bg-white text-align-left drop_btn border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed"
                         (change)="onKeyUp($event.target.value, $event.target.id)">
                         <option *ngFor="let fhr of fhr_lib" class="p-2 flex-wrap" [selected]="fhr.desc === 'N/A'" [value]="fhr.code">
-                            {{ fhr.code }} - {{ fhr.desc }}
+                            {{ fhr.desc }}
                         </option>
                     </select>
                 </div>
