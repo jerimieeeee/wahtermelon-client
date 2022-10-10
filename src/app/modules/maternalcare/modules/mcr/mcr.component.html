@@ -2,7 +2,7 @@
     <form [formGroup]="mcr_form" (ngSubmit)="saveForm(mcr_form.value)">
         <div class="grid gap-4 relative animates-dropdown " style="grid-template-columns: repeat(16, minmax(0, 1fr));"
             *ngIf="!focused">
-            <div class="sticky top-0 z-50 border hover:border border-gray-300 hover:border-blue-400 col-span-2 cursor-pointer relative mx-2 px-2 py-1 rounded-t-lg bg-white text-blue-500 text-sm hover:bg-blue-500 hover:text-white"
+            <div class="sticky top-0 z-50 border hover:border border-gray-300 hover:border-blue-400 col-span-2 relative mx-2 px-2 py-1 rounded-t-lg bg-white text-blue-500 text-sm hover:bg-blue-500 hover:text-white"
                 style="grid-column: span 16 / span 16;"><button class="font-bold" type="button">Maternal Care
                     Record</button>
                 <div class="absolute left-40 top-1">
@@ -52,7 +52,7 @@
                 </div>
                 <div class="grid rounded-lg hover:drop-shadow-lg drop-shadow-md bg-white rounded-lg hover:border border-gray-300 hover:border-pink-400 m-2 border"
                     style="grid-template-columns: repeat(14, minmax(0, 1fr));">
-                    <div class="text-pink-500 form-check p-2 font-semibold border border-dashed border-gray-300 group-hover:border-pink-400 border-t-0 border-l-0 border-r-0 "
+                    <div class="text-sm font-bold text-pink-500 form-check p-2 font-semibold border border-dashed border-gray-300 group-hover:border-pink-400 border-t-0 border-l-0 border-r-0 "
                         style="	grid-column: span 14 / span 14;">
                         <h1 class="select-none">
                             Obstetric Score
