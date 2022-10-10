@@ -1,25 +1,31 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { PatientItrComponent } from 'app/modules/patient-itr/patient-itr.component';
 import { PatientInfoComponent } from 'app/components/patient-info/patient-info.component';
 import { NgApexchartsModule } from 'ng-apexcharts';
+import { VitalsModalComponent } from 'app/components/patient-info/modals/vitals-modal/vitals-modal.component';
+import { DeathModalComponent } from 'app/components/patient-info/modals/death-modal/death-modal.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 
 @NgModule({
   declarations: [
-    PatientItrComponent,
-    PatientInfoComponent
+    PatientInfoComponent,
+    VitalsModalComponent,
+    DeathModalComponent
   ],
   imports: [
     CommonModule,
     FontAwesomeModule,
-    NgApexchartsModule
+    NgApexchartsModule,
+    ReactiveFormsModule,
+    FormsModule
   ],
   exports: [
-    PatientItrComponent,
-    PatientInfoComponent
+    PatientInfoComponent,
+    VitalsModalComponent,
+    DeathModalComponent
   ]
 })
 export class SharedComponentsModule { }

@@ -40,7 +40,11 @@ export class PatientInfoComponent {
 
   getPatient(id){
     this.http.get('patient/'+id).subscribe({
-      next: (data: any) => { this.patient_info = data.data; this.show_form = true; console.log(data.data) },
+      next: (data: any) => {
+        this.patient_info = data.data;
+        this.show_form = true;
+        console.log(data.data)
+      },
       error: err => console.log(err)
     });
   }

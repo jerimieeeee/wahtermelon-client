@@ -1,0 +1,168 @@
+<div id="defaultModal" tabindex="-1" class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 w-full md:inset-0 h-modal md:h-full justify-center items-center flex" aria-modal="true" role="dialog" style="z-index:60">
+  <div class="relative p-4 w-full max-w-3xl h-auto md:h-auto">
+    <!-- Modal content -->
+    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+      <!-- Modal header -->
+      <div class="flex justify-between items-start py-3 px-5 rounded-t border-b bg-blue-500 dark:border-gray-600">
+        <h3 class="mt-2 text-sm font-bold text-white dark:text-white">
+            VITAL SIGNS
+        </h3>
+      </div>
+      <!-- Modal body -->
+      <div class="overflow-y-auto h-96 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
+        <form [formGroup]="vitalsForm" class="w-full max-w-3xl text-left text-gray-500 dark:text-gray-400">
+          <div class="flex item-start flex-wrap pb-5">
+            <div class="flex justify-between w-full px-5 mt-3 rounded-tl rounded-tr">
+              <h4 class="font-bold text-blue-500 text-sm mt-2">Date & Time</h4>
+            </div>
+
+            <div class="flex px-5 w-full">
+              <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
+                <label for="vitals_date">Date</label>
+                <input name="vitals_date" id="vitals_date" formControlName="vitals_date" type="date" placeholder="Select Date" class="mt-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input">
+              </div>
+
+              <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
+                <label for="vitals_time">Time</label>
+                <input name="vitals_time" id="vitals_time" formControlName="vitals_time" type="time" placeholder="Input Time"  class="mt-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input">
+              </div>
+            </div>
+          </div>
+          <div class="text-gray-600 border border-slate-100 mx-5"></div><!-- border -->
+
+          <div class="flex item-start flex-wrap pb-5">
+            <div class="flex justify-between w-full px-5 mt-3 rounded-tl rounded-tr">
+              <h4 class="font-bold text-blue-500 text-sm mt-2">Details</h4>
+            </div>
+
+            <div class="flex px-5 w-full">
+              <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
+                <label for="vitals_weight">Weight (Kilograms)</label>
+                <input name="vitals_weight" id="vitals_weight" formControlName="vitals_weight" type="number" placeholder="Enter weight in kilograms" class="mt-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+
+                <div *ngIf="f.vitals_weight.errors" class="invalid-alert">
+                  <div *ngIf="f.vitals_weight.errors?.['max']">
+                    {{ error_message + ' (' + f.vitals_weight.errors.max.max + ')'}}
+                  </div>
+                </div>
+              </div>
+
+              <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
+                <label for="vitals_temp">Temperature (Celcius)</label>
+                <input name="vitals_temp" id="vitals_temp" formControlName="vitals_temp" type="number" placeholder="Enter temperature in celcius" class="mt-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+
+                <div *ngIf="f.vitals_temp.errors" class="invalid-alert">
+                  <div *ngIf="f.vitals_temp.errors?.['max']">
+                    {{ error_message + ' (' + f.vitals_temp.errors.max.max + ')'}}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex px-5 w-full">
+              <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
+                <label>Height in ft</label>
+                <div class="flex">
+                  <input name="vitals_height_ft" id="vitals_height_ft" formControlName="vitals_height_ft" type="number" (input)="ftChange()" placeholder="Feet" max="8" class="md:w-1/2 lg:w-1/2 mt-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                  <input name="vitals_height_in" id="vitals_height_in" formControlName="vitals_height_in" type="number" (input)="ftChange()" placeholder="Inches" max="11" class="md:w-1/2 lg:w-1/2 mt-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                </div>
+              </div>
+
+              <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
+                <label for="vitals_height">Height in cm</label>
+                <input name="vitals_height" id="vitals_height" formControlName="vitals_height" type="number" (input)="cmChange()" placeholder="Centimeters" max="272" class="mt-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+
+                <div *ngIf="f.vitals_height.errors" class="invalid-alert">
+                  <div *ngIf="f.vitals_height.errors?.['max']">
+                    {{ error_message + ' (' + f.vitals_height.errors.max.max + ')'}}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex px-5 w-full">
+              <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
+                <label for="vitals_waist_in">Waist Circumference (Inches)</label>
+                <input name="vitals_waist_in" id="vitals_waist_in" formControlName="vitals_waist_in" (input)="inchToCm()" type="number" placeholder="Inches" class="mt-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+
+                <div *ngIf="f.vitals_waist_in.errors" class="invalid-alert">
+                  <div *ngIf="f.vitals_waist_in.errors?.['max']">
+                    {{ error_message + ' (' + f.vitals_waist_in.errors.max.max + ')'}}
+                  </div>
+                </div>
+              </div>
+
+              <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
+                <label for="vitals_waist">Waist Circumference (Centimeters)</label>
+                <input name="vitals_waist" id="vitals_waist" formControlName="vitals_waist" (input)="cmToInch()" type="number" placeholder="Centimeters" class="mt-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+
+                <div *ngIf="f.vitals_waist.errors" class="invalid-alert">
+                  <div *ngIf="f.vitals_waist.errors?.['max']">
+                    {{ error_message + ' (' + f.vitals_waist.errors.max.max + ')'}}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex px-5 w-full">
+              <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
+                <label>Blood Pressure (Systolic/Diastolic)</label>
+                <div class="relative">
+                  <input type="text" placeholder="Systolic/Diastolic" class="mt-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input">
+                </div>
+              </div>
+
+              <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
+                <label for="vitals_heart_rate">Heart Rate</label>
+                <input name="vitals_heart_rate" id="vitals_heart_rate" formControlName="vitals_heart_rate" type="number" placeholder="Beats per minute" class="mt-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input">
+
+                <div *ngIf="f.vitals_heart_rate.errors" class="invalid-alert">
+                  <div *ngIf="f.vitals_heart_rate.errors?.['max']">
+                    {{ error_message + ' (' + f.vitals_heart_rate.errors.max.max + ')'}}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex px-5 w-full">
+              <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
+                <label for="vitals_pulse_rate">Pulse Rate</label>
+                <input name="vitals_pulse_rate" id="vitals_pulse_rate" formControlName="vitals_pulse_rate" type="text" placeholder="Systolic/Diastolic" class="mt-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input">
+
+                <div *ngIf="f.vitals_pulse_rate.errors" class="invalid-alert">
+                  <div *ngIf="f.vitals_pulse_rate.errors?.['max']">
+                    {{ error_message + ' (' + f.vitals_pulse_rate.errors.max.max + ')'}}
+                  </div>
+                </div>
+              </div>
+
+              <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
+                <label for="vitals_resp_rate">Respiratory Rate</label>
+                <input name="vitals_resp_rate" id="vitals_resp_rate" formControlName="vitals_resp_rate" type="number" placeholder="Beats per minute" class="mt-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input">
+
+                <div *ngIf="f.vitals_resp_rate.errors" class="invalid-alert">
+                  <div *ngIf="f.vitals_resp_rate.errors?.['max']">
+                    {{ error_message + ' (' + f.vitals_resp_rate.errors.max.max + ')'}}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="text-gray-600 border border-slate-100 mx-5"></div><!-- border -->
+
+
+        </form>
+
+
+      </div>
+
+      <!-- Modal footer -->
+      <div class="flex justify-end py-4 px-5 space-x-4 rounded-b border-t border-gray-200 dark:border-gray-600">
+        <button  type="button" class="text-white bg-red-500 hover:ring-2 focus:outline-none hover:ring-red-300 rounded text-sm font-medium px-6 py-2.5 transition duration-150 ease-in-out transform hover:scale-110 " (click)="closeModal()">Close</button>
+        <button  type="button" class="text-white bg-blue-500 hover:ring-2 focus:outline-none hover:ring-blue-300 font-medium rounded text-sm px-6 py-2.5 text-center transition duration-150 ease-in-out transform hover:scale-110" (click)="onSubmit()" >Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="opacity-50 fixed inset-0 z-50 bg-black"></div>
