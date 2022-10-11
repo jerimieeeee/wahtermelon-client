@@ -115,10 +115,6 @@
                 <div *ngIf="f.mobile_number.errors?.['required']">
                   {{ required_message }}
                 </div>
-
-                <div *ngIf="f.mobile_number.errors">
-                  {{ f.mobile_number.errors }}
-                </div>
               </div>
             </div>
 
@@ -303,11 +299,31 @@
 
         <div class="text-right">
           <button type="submit" class="btn-save">
-            <fa-icon *ngIf="is_saving" class="mr-3" [icon]="faSpinner" [spin]="true"></fa-icon>
-            {{ is_saving ? 'Saving' : 'Save' }}
+            <fa-icon *ngIf="loading" class="mr-3" [icon]="faSpinner" [spin]="true"></fa-icon>
+            {{ loading ? 'Saving' : 'Save' }}
           </button>
         </div>
       </div>
     </form>
   </div>
 </div>
+
+<div [@myInsertRemoveTrigger] *ngIf="showModal" class="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex">
+  <div class="relative w-auto my-6 mx-auto max-w-6xl">
+    <div class="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+      <div class="relative p-6 pb-10 pr-40 flex-auto">
+          <span>Record was saved/updated succesfully.</span>
+      </div>
+      <div class="flex items-center justify-end p-3 rounded-b">
+        <button class="bg-blue-500 text-white active:bg-blue-500 hover:bg-blue-600 text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button" (click)="newPatient()">
+          <fa-icon class="mr-3" [icon]="faFolderPlus"></fa-icon>New Patient
+        </button>
+        <button class="bg-amber-500 text-white active:bg-amber-500 hover:bg-amber-600 text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button" (click)="proceedItr()">
+          <fa-icon class="mr-3" [icon]="faClipboard"></fa-icon>Open ITR
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="showModal" class="opacity-25 fixed inset-0 z-40 bg-black"></div>

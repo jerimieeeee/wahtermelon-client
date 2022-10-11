@@ -3,8 +3,9 @@ import { ChartComponent } from "ng-apexcharts";
 import { openCloseTrigger } from './declarations/animation';
 import { ChartOptions, WeightChart } from './declarations/chart-options';
 import { MedicalJournal } from './data/sample-journal';
-import { NavigationEnd, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { filter, tap } from "rxjs/operators";
+import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
   selector: 'app-patient-itr',
@@ -121,7 +122,9 @@ export class PatientItrComponent implements OnInit {
 
   navigationEnd$ = this.router.events.pipe(
     filter(event => event instanceof NavigationEnd),
-    tap(() => (this.show_details = false))
+    tap(() => {
+      this.show_details = false;
+    })
   );
 
   ngOnInit(): void {

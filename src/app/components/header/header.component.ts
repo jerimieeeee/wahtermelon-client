@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { faChevronCircleDown, faBell, faSearch } from '@fortawesome/free-solid-svg-icons';
-import { catchError, concat, debounceTime, distinctUntilChanged, filter, Observable, of, Subject, switchMap, tap } from 'rxjs';
+import { HttpService } from 'app/shared/services/http.service';
+import { catchError, debounceTime, distinctUntilChanged, switchMap, tap, map, filter } from 'rxjs/operators';
+import { concat, Observable, of, Subject, throwError } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -8,50 +11,22 @@ import { catchError, concat, debounceTime, distinctUntilChanged, filter, Observa
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
+  // @ViewChild(NgSelectComponent) ngSelectComponent: NgSelectComponent;
+
   faChevronCircleDown = faChevronCircleDown;
   faBell = faBell;
   faSearch = faSearch;
 
-  selectedPatient: any;
-  searchInput$ = new Subject<string>();
-
   patients$: Observable<any>;
-  moviesLoading = false;
+  patientLoading = false;
+  searchInput$ = new Subject<string>();
+  selectedPatient: any;
   minLengthTerm = 3;
-  patient_list = [
-    {
-        id: 1,
-        last_name: 'Santos',
-        first_name: 'Mark Christian',
-        birthdate: '07/23/1989',
-        brgy: 'San Rafael',
-        muncity: 'Tarlac'
-    },
-    {
-      id: 2,
-      last_name: 'Garcia',
-      first_name: 'Ian',
-      birthdate: '07/23/1989',
-      brgy: 'San Rafael',
-      muncity: 'Tarlac'
-    },
-    {
-      id: 3,
-      last_name: 'Mercado',
-      first_name: 'Gio',
-      birthdate: '07/23/1989',
-      brgy: 'San Rafael',
-      muncity: 'Tarlac'
-    },
-    {
-      id: 4,
-      last_name: 'Perez',
-      first_name: 'Emmanuel',
-      birthdate: '07/23/1989',
-      brgy: 'San Rafael',
-      muncity: 'Tarlac'
-    },
-  ];
+
+  constructor(
+    private http: HttpService,
+    private router: Router
+  ) { }
 
   loadPatients() {
     this.patients$ = concat(
@@ -62,28 +37,32 @@ export class HeaderComponent implements OnInit {
         }),
         distinctUntilChanged(),
         debounceTime(800),
-        tap(() => this.moviesLoading = true),
+        tap(() => this.patientLoading = true),
         switchMap(term => {
-          return this.patients$ = this.getPatient(term).pipe(
+          return this.getPatient(term).pipe(
             catchError(() => of([])),
-            tap(() =>  this.moviesLoading = false)
-          );
+            tap(() => this.patientLoading = false)
+          )
         })
       )
     );
   }
 
   onSelect(selectedPatient){
-    console.log(selectedPatient);
-    this.selectedPatient = '';
+    /* this.searchInput$.next(null);
+    // this.loadPatients(); */
+    if(selectedPatient) this.router.navigate(['/itr', {id: selectedPatient.id}]);
+    this.selectedPatient = null;
+    this.loadPatients();
   }
 
-  getPatient(term: string = null) {
-    console.log(term)
-    return of(this.patient_list);
+  getPatient(term: string = null): Observable<any> {
+    return this.http.get('patient', {params:{'filter[search]':term}})
+    .pipe(map((resp:any) => {
+      console.log(resp.data);
+      return resp.data;
+    }))
   }
-
-  constructor() { }
 
   ngOnInit(): void {
     this.loadPatients();

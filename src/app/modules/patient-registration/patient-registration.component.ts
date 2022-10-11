@@ -1,17 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { faSave, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { faSpinner, faFolderPlus, faSave } from '@fortawesome/free-solid-svg-icons';
+import { faClipboard } from '@fortawesome/free-regular-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
-import { Family, Patient } from './model/model';
+import { openCloseTrigger } from './declarations/animation';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-patient-registration',
   templateUrl: './patient-registration.component.html',
-  styleUrls: ['./patient-registration.component.scss']
+  styleUrls: ['./patient-registration.component.scss'],
+  animations: [openCloseTrigger]
 })
 export class PatientRegistrationComponent implements OnInit {
   faSpinner = faSpinner;
+  faClipboard = faClipboard;
+  faFolderPlus = faFolderPlus;
   faSave = faSave;
+
   required_message = 'Required field';
   patientForm: FormGroup = new FormGroup({
     last_name: new FormControl<string| null>(''),
@@ -39,7 +45,6 @@ export class PatientRegistrationComponent implements OnInit {
     }) */
   });
 
-  family: Family;
   blood_types: object;
   civil_statuses: object;
   suffix_names: object;
@@ -68,30 +73,50 @@ export class PatientRegistrationComponent implements OnInit {
     {var_name: 'pwd_types', location: 'pwd-types'},
   ]
 
+  showModal:boolean = false;
   is_saving: boolean = false;
+  loading: boolean = false;
 
   constructor(
     private http: HttpService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private router: Router
   ) { }
 
   get f(): { [key: string]: AbstractControl } {
     return this.patientForm.controls;
   }
 
+  new_patient_id: string;
   onSubmit(){
-    console.log(this.patientForm);
+    console.log(this.patientForm.invalid);
     this.is_saving = true;
-
-    this.http.post('patient', this.patientForm).subscribe({
-      next: (data: any) => console.log(data),
-      error: err => console.log(err),
-      complete: () => this.is_saving = false
-    })
+    this.loading = true;
+    // this.showModal = true;
+    if(!this.patientForm.invalid){
+      this.http.post('patient', this.patientForm.value).subscribe({
+        next: (data: any) => this.new_patient_id = data.data.id,
+        error: err => console.log(err),
+        complete: () => {
+          this.is_saving = false;
+          this.loading = false;
+          this.showModal = true;
+        }
+      })
+    } else {
+      this.loading = false;
+    }
   }
 
   newPatient(){
+    this.patientForm.reset();
+    console.log(this.patientForm);
+    this.showModal = false;
+    this.is_saving = false;
+  }
 
+  proceedItr(){
+    this.router.navigate(['/itr', {id: this.new_patient_id}])
   }
 
   loadDemog(loc, code, include){
@@ -117,11 +142,15 @@ export class PatientRegistrationComponent implements OnInit {
     });
   }
 
+  toggleModal(){
+    this.showModal = !this.showModal;
+  }
+
   ngOnInit(): void {
-    this.patientForm = this.formBuilder.group({
+    this.patientForm = this.formBuilder.nonNullable.group({
       last_name: ['', [Validators.required, Validators.minLength(2)]],
       first_name: ['', [Validators.required, Validators.minLength(2)]],
-      middle_name: ['', [Validators.required, Validators.minLength(2)]],
+      middle_name: ['', [Validators.required, Validators.minLength(1)]],
       suffix_name: ['NA'],
       birthdate: ['', Validators.required],
       mothers_name: ['', [Validators.required, Validators.minLength(2)]],
@@ -135,15 +164,16 @@ export class PatientRegistrationComponent implements OnInit {
       education_code: ['', Validators.required],
       civil_status_code: ['', Validators.required],
       consent_flag: [false],
-      family: this.formBuilder.group({
+      /* family: this.formBuilder.group({
         region: ['', Validators.required],
         province: ['', Validators.required],
         municipality: ['', Validators.required],
         brgy: ['', Validators.required],
         address: ['', [Validators.required, Validators.minLength(2)]],
-      })
+      }) */
     });
 
+    console.log(this.patientForm);
     this.loadLibraries();
   }
 }
