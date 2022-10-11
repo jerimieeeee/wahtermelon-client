@@ -125,7 +125,7 @@ export class PrenatalComponent implements OnInit {
       this.max_value = this.max_value + 1;
     }
     this.edit_bool = false;
-    console.log(this.value);
+    console.log(this.value, "this value");
     
     //this.prenatal_form.disable();
     this.createForm();

@@ -30,8 +30,8 @@
                         id="visit_sequence" [value]="value" hidden>
                     <div class="text-center text-2xl font-bold py-2 border-gray-300 border rounded-lg"
                         *ngIf="!edit_bool">{{ value }}</div>
-                    <div class="text-center text-2xl font-bold py-2 border-gray-300 border rounded-lg"
-                        *ngIf="edit_bool">{{ prenatal_form.get('visit_sequence').value }}</div>
+                    <!-- <div class="text-center text-2xl font-bold py-2 border-gray-300 border rounded-lg"
+                        *ngIf="edit_bool">{{ prenatal_form.get('visit_sequence').value }}</div> -->
                 </div>
 
                 <div class="transitions col-span-4 col-start-3" *ngIf="!focused">
@@ -271,7 +271,7 @@
             <div class="flex border-check bg-orange-300 hover:bg-orange-400 py-1 rounded-full  text-white px-2">
                 <fa-icon [icon]="faPencil" size="lg" class="mr-2 ">
                 </fa-icon>
-                <button type="submit" class="font-bold button-out border-check-red typed-out"
+                <button type="button" class="font-bold button-out border-check-red typed-out"
                     (keyup.enter)="uncheck($event.target.id + fphx_cat)">Edit</button>
             </div>
         </div>
