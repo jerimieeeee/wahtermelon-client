@@ -4,6 +4,7 @@ import { faSpinner, faFolderPlus, faSave } from '@fortawesome/free-solid-svg-ico
 import { faClipboard } from '@fortawesome/free-regular-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { openCloseTrigger } from './declarations/animation';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-patient-registration',
@@ -74,28 +75,37 @@ export class PatientRegistrationComponent implements OnInit {
 
   showModal:boolean = false;
   is_saving: boolean = false;
+  loading: boolean = false;
 
   constructor(
     private http: HttpService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private router: Router
   ) { }
 
   get f(): { [key: string]: AbstractControl } {
     return this.patientForm.controls;
   }
 
+  new_patient_id: string;
   onSubmit(){
-    console.log(this.patientForm);
+    console.log(this.patientForm.invalid);
     this.is_saving = true;
-    this.showModal = true;
-    /* this.http.post('patient', this.patientForm.value).subscribe({
-      next: (data: any) => console.log(data),
-      error: err => console.log(err),
-      complete: () => {
-        this.is_saving = false;
-        this.showModal = true;
-      }
-    }) */
+    this.loading = true;
+    // this.showModal = true;
+    if(!this.patientForm.invalid){
+      this.http.post('patient', this.patientForm.value).subscribe({
+        next: (data: any) => this.new_patient_id = data.data.id,
+        error: err => console.log(err),
+        complete: () => {
+          this.is_saving = false;
+          this.loading = false;
+          this.showModal = true;
+        }
+      })
+    } else {
+      this.loading = false;
+    }
   }
 
   newPatient(){
@@ -106,7 +116,7 @@ export class PatientRegistrationComponent implements OnInit {
   }
 
   proceedItr(){
-    this.showModal = false;
+    this.router.navigate(['/itr', {id: this.new_patient_id}])
   }
 
   loadDemog(loc, code, include){
@@ -137,7 +147,7 @@ export class PatientRegistrationComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.patientForm = this.formBuilder.group({
+    this.patientForm = this.formBuilder.nonNullable.group({
       last_name: ['', [Validators.required, Validators.minLength(2)]],
       first_name: ['', [Validators.required, Validators.minLength(2)]],
       middle_name: ['', [Validators.required, Validators.minLength(2)]],
