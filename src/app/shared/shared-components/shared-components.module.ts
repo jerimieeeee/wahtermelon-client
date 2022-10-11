@@ -6,6 +6,7 @@ import { NgApexchartsModule } from 'ng-apexcharts';
 import { VitalsModalComponent } from 'app/components/patient-info/modals/vitals-modal/vitals-modal.component';
 import { DeathModalComponent } from 'app/components/patient-info/modals/death-modal/death-modal.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { VaccineModalComponent } from 'app/components/patient-info/modals/vaccine-modal/vaccine-modal.component';
 
 
 
@@ -13,7 +14,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   declarations: [
     PatientInfoComponent,
     VitalsModalComponent,
-    DeathModalComponent
+    DeathModalComponent,
+    VaccineModalComponent
   ],
   imports: [
     CommonModule,
@@ -25,7 +27,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   exports: [
     PatientInfoComponent,
     VitalsModalComponent,
-    DeathModalComponent
+    DeathModalComponent,
+    VaccineModalComponent
   ]
 })
 export class SharedComponentsModule { }

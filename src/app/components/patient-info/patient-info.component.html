@@ -143,7 +143,7 @@
         <span class="block text-blue-500 font-medium text-sm">
           VACCINES
         </span>
-        <fa-icon class="mx-0 my-0 text-blue-500 mr-2" [icon]="faPlusCircle"></fa-icon>
+        <fa-icon (click)="vaccineModal()" class="mx-0 my-0 text-blue-500 mr-2 hover:cursor-pointer" [icon]="faPlusCircle"></fa-icon>
       </div>
 
       <div class="block">
@@ -268,11 +268,15 @@
   </div>
 </div>
 
+<!-- MODALS -->
 <div *ngIf="showModal">
   <app-vitals-modal (toggleModal)="toggleModal()"></app-vitals-modal>
 </div>
 
-
 <div *ngIf="showDeathRecordModal">
   <app-death-modal (toggleDeathRecordModal)="toggleDeathRecordModal()"></app-death-modal>
+</div>
+
+<div *ngIf="showVaccineModal">
+  <app-vaccine-modal (vaccineModal)="vaccineModal()"></app-vaccine-modal>
 </div>

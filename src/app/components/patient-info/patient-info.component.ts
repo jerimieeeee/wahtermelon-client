@@ -22,6 +22,7 @@ export class PatientInfoComponent {
   showModal: boolean = false;
   show_form: boolean = false;
   showDeathRecordModal: boolean = false;
+  showVaccineModal:boolean = false;
 
   constructor(
     private activeRoute: ActivatedRoute,
@@ -55,5 +56,9 @@ export class PatientInfoComponent {
 
   toggleDeathRecordModal(){
     this.showDeathRecordModal = !this.showDeathRecordModal;
+  }
+
+  vaccineModal(){
+    this.showVaccineModal = !this.showVaccineModal;
   }
 }

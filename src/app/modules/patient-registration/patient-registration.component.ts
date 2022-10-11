@@ -150,7 +150,7 @@ export class PatientRegistrationComponent implements OnInit {
     this.patientForm = this.formBuilder.nonNullable.group({
       last_name: ['', [Validators.required, Validators.minLength(2)]],
       first_name: ['', [Validators.required, Validators.minLength(2)]],
-      middle_name: ['', [Validators.required, Validators.minLength(2)]],
+      middle_name: ['', [Validators.required, Validators.minLength(1)]],
       suffix_name: ['NA'],
       birthdate: ['', Validators.required],
       mothers_name: ['', [Validators.required, Validators.minLength(2)]],

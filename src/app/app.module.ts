@@ -15,8 +15,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
-
-
 @NgModule({
   declarations: [
     AppComponent,
