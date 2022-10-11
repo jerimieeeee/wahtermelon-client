@@ -22,6 +22,7 @@ export class PatientInfoComponent {
   showModal: boolean = false;
   show_form: boolean = false;
   showDeathRecordModal: boolean = false;
+  showVaccineModal:boolean = false;
 
   constructor(
     private activeRoute: ActivatedRoute,
@@ -40,7 +41,11 @@ export class PatientInfoComponent {
 
   getPatient(id){
     this.http.get('patient/'+id).subscribe({
-      next: (data: any) => { this.patient_info = data.data; this.show_form = true; console.log(data.data) },
+      next: (data: any) => {
+        this.patient_info = data.data;
+        this.show_form = true;
+        console.log(data.data)
+      },
       error: err => console.log(err)
     });
   }
@@ -51,5 +56,9 @@ export class PatientInfoComponent {
 
   toggleDeathRecordModal(){
     this.showDeathRecordModal = !this.showDeathRecordModal;
+  }
+
+  vaccineModal(){
+    this.showVaccineModal = !this.showVaccineModal;
   }
 }

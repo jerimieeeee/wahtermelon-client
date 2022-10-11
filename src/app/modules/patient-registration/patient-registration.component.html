@@ -115,10 +115,6 @@
                 <div *ngIf="f.mobile_number.errors?.['required']">
                   {{ required_message }}
                 </div>
-
-                <div *ngIf="f.mobile_number.errors">
-                  {{ f.mobile_number.errors }}
-                </div>
               </div>
             </div>
 
@@ -303,8 +299,8 @@
 
         <div class="text-right">
           <button type="submit" class="btn-save">
-            <fa-icon *ngIf="is_saving" class="mr-3" [icon]="faSpinner" [spin]="true"></fa-icon>
-            {{ is_saving ? 'Saving' : 'Save' }}
+            <fa-icon *ngIf="loading" class="mr-3" [icon]="faSpinner" [spin]="true"></fa-icon>
+            {{ loading ? 'Saving' : 'Save' }}
           </button>
         </div>
       </div>

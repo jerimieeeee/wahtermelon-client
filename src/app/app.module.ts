@@ -16,8 +16,6 @@ import { NgApexchartsModule } from 'ng-apexcharts';
 import { FacilityaccreditationComponent } from './components/facilityaccreditation/facilityaccreditation.component';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
-
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -35,7 +33,7 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
     HttpClientModule,
     NgSelectModule,
     FormsModule,
-    NgApexchartsModule, 
+    NgApexchartsModule,
     Ng2SearchPipeModule,
     NgApexchartsModule,
     ReactiveFormsModule
