@@ -82,12 +82,12 @@ export class BreastfeedingComponent implements OnInit {
   ];
 
   ccdev = [
-    {"id" : "bfed_month1", "name" : "Month 1", "date" : moment(this.todaysDate).add(1, 'M').format('MMM DD, YYYY'), ischecked: false, isDefault: 'N/A'},
-    {"id" : "bfed_month2", "name" : "Month 2", "date" : moment(this.todaysDate).add(2, 'M').format('MMM DD, YYYY'), ischecked: false, isDefault: 'N/A'},
-    {"id" : "bfed_month3", "name" : "Month 3", "date" : moment(this.todaysDate).add(3, 'M').format('MMM DD, YYYY'), ischecked: false, isDefault: 'N/A'},
-    {"id" : "bfed_month4", "name" : "Month 4", "date" : moment(this.todaysDate).add(4, 'M').format('MMM DD, YYYY'), ischecked: false, isDefault: 'N/A'},
-    {"id" : "bfed_month5", "name" : "Month 5", "date" : moment(this.todaysDate).add(5, 'M').format('MMM DD, YYYY'), ischecked: false, isDefault: 'N/A'},
-    {"id" : "bfed_month6", "name" : "Month 6", "date" : moment(this.todaysDate).add(6, 'M').format('MMM DD, YYYY'), ischecked: false, isDefault: 'N/A'},
+    {"id" : "bfed_month1", "name" : "Month 1", "date" : moment(this.todaysDate).add(1, 'M').format('MMM DD, YYYY'), ischecked: false, isDefault: 'N/A', ebf_status: ''},
+    {"id" : "bfed_month2", "name" : "Month 2", "date" : moment(this.todaysDate).add(2, 'M').format('MMM DD, YYYY'), ischecked: false, isDefault: 'N/A', ebf_status: ''},
+    {"id" : "bfed_month3", "name" : "Month 3", "date" : moment(this.todaysDate).add(3, 'M').format('MMM DD, YYYY'), ischecked: false, isDefault: 'N/A', ebf_status: ''},
+    {"id" : "bfed_month4", "name" : "Month 4", "date" : moment(this.todaysDate).add(4, 'M').format('MMM DD, YYYY'), ischecked: false, isDefault: 'N/A', ebf_status: ''},
+    {"id" : "bfed_month5", "name" : "Month 5", "date" : moment(this.todaysDate).add(5, 'M').format('MMM DD, YYYY'), ischecked: false, isDefault: 'N/A', ebf_status: ''},
+    {"id" : "bfed_month6", "name" : "Month 6", "date" : moment(this.todaysDate).add(6, 'M').format('MMM DD, YYYY'), ischecked: false, isDefault: 'N/A', ebf_status: ''},
   ];
   
 
@@ -139,7 +139,8 @@ export class BreastfeedingComponent implements OnInit {
             name: m.name,
             date: m.date,
             ischecked: m.ischecked,
-            isDefault: m.isDefault
+            isDefault: m.isDefault,
+            ebf_status: m.ebf_status
         });
     });
     this.ccdev.sort((m, c) => new Date(m.date).getTime() - new Date(c.date).getTime());this.ccdev.sort

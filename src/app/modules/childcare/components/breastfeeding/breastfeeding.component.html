@@ -31,7 +31,7 @@
           <p class="px-10 py-1 text-sm mt-1">No Recorded Breastfeeding Months!</p>
           
             <button type="button" class="flex btn-add ml-auto mr-5" (click)="toggleBreastfeedingModal()">
-              <fa-icon class="mr-1" [icon]="faSave"></fa-icon>
+              <fa-icon class="mr-1"></fa-icon>
              Add
             </button>
           
@@ -83,8 +83,7 @@
                         <label id="{{month.id}}" for="{{month.id}}">{{month.date}}</label>
                       </td>
                       <td class="py-4 px-12 text-sm">
-                        <select class="select rounded-md text-sm" name="" id="" style="width:100%;" ([ngModel])="selectedFields" (change)="getSelected($event)">
-                          <option value="" disabled selected>Select Status</option>
+                        <select [(ngModel)]="month.ebf_status" (change)="getSelected($event)" class="select rounded-md text-sm" name="" id="" style="width:100%;">
                           <option class="select-none" *ngFor="let items of ebf" [value]="items.code">
                           {{items.desc}}
                           </option>

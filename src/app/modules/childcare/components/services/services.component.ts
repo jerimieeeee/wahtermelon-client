@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { faSearch, faPlus, faInfoCircle, faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import { FormBuilder, FormGroup,FormArray,FormControl,Validators,} from '@angular/forms';
 import { faPenToSquare, faPlusSquare } from '@fortawesome/free-regular-svg-icons';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-services',
@@ -33,32 +34,46 @@ export class ServicesComponent implements OnInit {
   defaultDate = new Date().toISOString().slice(0, 16);
 
   services= [
-    { id: 1, name: 'Complimentary Feeding', cc_id: 'FEED', date: 'Mar 24 2012 10:00:00 AM', ischecked: false, service_date: 'N/A'},
-    { id: 2, name: 'Dental Checkup', cc_id: 'DENTAL', date: 'Mar 12 2012 10:00:00 AM', ischecked: false, service_date: 'N/A'},
-    { id: 3, name: 'Deworming', cc_id: 'DEWORM', date: 'Mar 01 2012 10:00:00 AM', ischecked: false, service_date: 'N/A'},
-    { id: 4, name: 'Iron Intake', cc_id: 'IRON', date: 'Mar 26 2012 10:00:00 AM', ischecked: false, service_date: 'N/A'},
-    { id: 5, name: 'Newborn Hearing Screening',  cc_id: 'NBHS', date: 'Mar 14 2012 10:00:00 AM', ischecked: false, service_date: 'N/A'},
-    { id: 6, name: 'Newborn Screening Done', cc_id: 'NBSDONE', date: 'Mar 12 2012 10:00:00 AM', ishecked: false, service_date: 'N/A'},
-    { id: 7, name: 'Newborn Screening Referred', cc_id: 'NBSREF', date: 'Mar 15 2012 10:00:00 AM', ischecked: false, service_date: 'N/A'},
-    { id: 8, name: 'Received Micronutrient Powder', cc_id: 'MNP', date: 'Mar 09 2012 10:00:00 AM', ischecked: false, service_date: 'N/A'},
-    { id: 9, name: 'Vitamin A', cc_id: 'VITA', date: 'Mar 13 2012 10:00:00 AM', ischecked: false, service_date: 'N/A'},
+    { id: 1, name: 'Complimentary Feeding', cc_id: 'FEED', date: 'Mar 24 2012 10:00:00 AM', ischecked: false, service_date: '', done_outside: 'N/A'},
+    { id: 2, name: 'Dental Checkup', cc_id: 'DENTAL', date: 'Mar 12 2012 10:00:00 AM', ischecked: false, service_date: '', done_outside: 'N/A'},
+    { id: 3, name: 'Deworming', cc_id: 'DEWORM', date: 'Mar 01 2012 10:00:00 AM', ischecked: false, service_date: '', done_outside: 'N/A'},
+    { id: 4, name: 'Iron Intake', cc_id: 'IRON', date: 'Mar 26 2012 10:00:00 AM', ischecked: false, service_date: '', done_outside: 'N/A'},
+    { id: 5, name: 'Newborn Hearing Screening',  cc_id: 'NBHS', date: 'Mar 14 2012 10:00:00 AM', ischecked: false, service_date: '', done_outside: 'N/A'},
+    { id: 6, name: 'Newborn Screening Done', cc_id: 'NBSDONE', date: 'Mar 12 2012 10:00:00 AM', ishecked: false, service_date: '', done_outside: 'N/A'},
+    { id: 7, name: 'Newborn Screening Referred', cc_id: 'NBSREF', date: 'Mar 15 2012 10:00:00 AM', ischecked: false, service_date: '', done_outside: 'N/A'},
+    { id: 8, name: 'Received Micronutrient Powder', cc_id: 'MNP', date: 'Mar 09 2012 10:00:00 AM', ischecked: false, service_date: '', done_outside: 'N/A'},
+    { id: 9, name: 'Vitamin A', cc_id: 'VITA', date: 'Mar 13 2012 10:00:00 AM', ischecked: false, service_date: '', done_outside: 'N/A'},
     
   ];
 
  
 
  eservices2= [
-    { id: 1, name: 'Cord Clamping', cc_id: 'CLAMP', ischecked: false, service_date: 'October 3,2022'},
-    { id: 2, name: 'Drying', cc_id: 'DRYING', ischecked: false, service_date: 'October 3,2022'},
-    { id: 3, name: 'Non-Separation', cc_id: 'NONSEP', ischecked: false, service_date: 'October 3,2022'},
-    { id: 4, name: 'Prophylaxis', cc_id: 'PROP', ischecked: false, service_date: 'N/A'},
-    { id: 5, name: 'Skin to Skin', cc_id: 'SKIN', ischecked: false, service_date: 'N/A'},
-    { id: 6, name: 'Vitamin K', cc_id: 'VITK', ishecked: false, service_date: 'October 3,2022'},
-    { id: 7, name: 'Weighing', cc_id: 'WEIGHT', ischecked: false, service_date: 'N/A'},
+    { id: 1, name: 'Cord Clamping', cc_id: 'CLAMP', ischecked: false, service_date: ''},
+    { id: 2, name: 'Drying', cc_id: 'DRYING', ischecked: false, service_date: ''},
+    { id: 3, name: 'Non-Separation', cc_id: 'NONSEP', ischecked: false, service_date: ''},
+    { id: 4, name: 'Prophylaxis', cc_id: 'PROP', ischecked: false, service_date: ''},
+    { id: 5, name: 'Skin to Skin', cc_id: 'SKIN', ischecked: false, service_date: ''},
+    { id: 6, name: 'Vitamin K', cc_id: 'VITK', ishecked: false, service_date: ''},
+    { id: 7, name: 'Weighing', cc_id: 'WEIGHT', ischecked: false, service_date: ''},
   ];
 
   // newarr = this.services.sort((a, b) => a.id - b.id);
-  
+  libReasons = [
+    {value: 'R', id: '1', desc:'infant nutrition'},
+    {value: 'W', id: '2', desc:'maternal illness'},
+    {value: 'W', id: '2', desc:'infant illness'},
+    {value: 'W', id: '2', desc:'lactation and milk-pumping problems'},
+    {value: 'W', id: '2', desc:'mother returns to work'},
+    {value: 'W', id: '2', desc:'introduced water or solid food'},
+    ];
+
+    libOptions = [
+      {value: 'YPR', id: '1', desc:'Yes - Private'},
+      {value: 'YPB', id: '2', desc:'Yes - Public'},
+      {value: 'N', id: '3', desc:'No'},
+      
+      ];
 
  showEssentialModal = false;
 
@@ -121,7 +136,8 @@ export class ServicesComponent implements OnInit {
            cc_id: m.cc_id,
            ischecked: m.ischecked,
            service_date: m.service_date,
-           date: m.date
+           date: m.date,
+           done_outside : m.done_outside
          });
      });
      this.services.sort((m, c) => (m.id) - (c.id));this.services.sort

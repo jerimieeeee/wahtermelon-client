@@ -75,8 +75,8 @@ export class FirstVisitComponent implements OnInit {
     this.visitForm = this.formBuilder.group({
       admission_date: ['', [Validators.required]],
       discharged_date: ['', [Validators.required]],
-      weight: ['', [Validators.required, Validators.minLength(2)]],
-      mothers_name: ['', [Validators.required, Validators.minLength(2)]],
+      weight: ['', [Validators.required, Validators.minLength(3)]],
+      mothers_name: ['', [Validators.required, Validators.minLength(3)]],
     });
   }
 
