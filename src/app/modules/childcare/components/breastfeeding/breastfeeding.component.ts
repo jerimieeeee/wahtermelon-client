@@ -74,11 +74,12 @@ export class BreastfeedingComponent implements OnInit {
 
   reasons = [
     {code: '00', desc: '-'},
-    {code: '01', desc: 'Drinking water instead of milk'},
-    {code: '02', desc: 'Drinking water instead of milk'},
-    {code: '03', desc: 'Drinking water instead of milk'},
-    {code: '04', desc: 'Drinking water instead of milk'},
-    {code: '05', desc: 'Drinking water instead of milk'},
+    {code: '01', desc:'Infant nutrition'},
+    {code: '02', desc:'Maternal illness'},
+    {code: '03', desc:'Infant illness'},
+    {code: '04', desc:'Lactation and milk-pumping problems'},
+    {code: '05', desc:'Mother returns to work'},
+    {code: '06', desc:'Introduced water or solid food'},
   ];
 
   ccdev = [
@@ -108,12 +109,17 @@ export class BreastfeedingComponent implements OnInit {
 
   changeSelection() {
     this.fetchSelectedItems()
+    console.log(this.selectedMonths)
   }
 
   fetchSelectedItems() {
     this.selectedMonths= this.ccdev.filter((value, index) => {
+      if(!value.ischecked){
+        this.ccdev[index].ebf_status=''
+      }
       return value.ischecked
     });
+    
   }
 
   fetchCheckedIDs() {
@@ -126,6 +132,12 @@ export class BreastfeedingComponent implements OnInit {
   }
 
   geteServiceName(){
+
+    if(!localStorage.getItem('Breastfeeding Months'))
+    {
+      localStorage.setItem('Breastfeeding Months', JSON.stringify([]))
+    }
+    
     this.month = JSON.parse(localStorage.getItem('Breastfeeding Months'));
     console.log('retrievedBreastfedMonths: ', this.month );
     this.month.forEach(m =>{

@@ -106,7 +106,7 @@
        
          
            
-        <div class="relative">
+        <!-- <div class="relative">
           <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user-search text-blue-500" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
               <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -117,7 +117,39 @@
            </svg>
           </div>
          <input type="text" class="mt-1 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input" placeholder="Search Mother's Name" formControlName="mothers_name" required>
-        </div>
+        </div> -->
+
+        <ng-select class="search-custom mt-1" placeholder="Search Mother"
+          [items]="patients$ | async"
+          [minTermLength]="minLengthTerm"
+          [loading]="patientLoading"
+          typeToSearchText="Search Mother's Name"
+          [typeahead]="searchInput$"
+          [clearable]="false"
+          formControlName="mothers_name">
+          <ng-template ng-label-tmp let-item="item">
+            <p class="">{{item.first_name}} {{item.middle_name}} {{item.last_name}}</p>
+        </ng-template>
+          <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
+            <!-- <a href="itr"> -->
+              <div class="grid grid-flow-col auto-cols-max">
+
+                  <div class="my-auto mr-3">
+                    <img src="./assets/img/profile_1.jpg" alt="profile_img" class="rounded-full w-14 h-14 mx-auto mr-2" />
+                  </div>
+                  <div>
+                    <h5 class="text-blue-400" [ngOptionHighlight]="search">{{ item.last_name }}, {{ item.first_name }}</h5>
+                    <h6 class="text-muted">{{ item.birthdate }}</h6>
+                    <h6 class="text-muted">{{ item.brgy }}, {{ item.muncity }}</h6>
+                  </div>
+              </div>
+            <!-- </a> -->
+          </ng-template>
+
+          <ng-template ng-footer-tmp>
+            <a class="text-blue-600" href="registration"> Create a new record</a>
+          </ng-template>
+        </ng-select>
 
         <div *ngIf="form_saving && f.mothers_name.errors" class="invalid-alert mt-1">
           <div *ngIf="f.mothers_name.errors?.['required']">

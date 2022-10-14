@@ -1,13 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { faSearch, faPlus, faCalendar, faInfoCircle, faCircleNotch, faFloppyDisk,} from '@fortawesome/free-solid-svg-icons';
 import { faSave, faPenToSquare, faPlusSquare } from '@fortawesome/free-regular-svg-icons';
-import { Observable } from 'rxjs';
-import { Store } from '@ngrx/store';
-import { BirthInformation } from '../../models/birthinformation.model';
-import { AppState } from '../../app.state';
-import * as BirthInformationActions from '../../actions/birthinformation.action';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpService } from 'app/shared/services/http.service';
+import { catchError, debounceTime, distinctUntilChanged, switchMap, tap, map, filter } from 'rxjs/operators';
+import { concat, Observable, of, Subject, throwError } from 'rxjs';
+import { Router } from '@angular/router';
 
 
 
@@ -27,6 +25,12 @@ export class FirstVisitComponent implements OnInit {
   faFloppyDisk = faFloppyDisk;
   faSave = faSave;
 
+  patients$: Observable<any>;
+  patientLoading = false;
+  searchInput$ = new Subject<string>();
+  selectedPatient: any;
+  minLengthTerm = 3;
+
   is_saving: boolean = false;
   is_saving2: boolean = true;
 
@@ -39,6 +43,7 @@ export class FirstVisitComponent implements OnInit {
 
   required_message = 'This field is required.';
 
+
   visitForm: FormGroup = new FormGroup({
     admission_date: new FormControl<string| null>(''),
     discharged_date: new FormControl<string| null>(''),
@@ -48,7 +53,8 @@ export class FirstVisitComponent implements OnInit {
 
 
   // Section 2
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder, private http: HttpService,
+    private router: Router) { }
 
   get f(): { [key: string]: AbstractControl } {
     return this.visitForm.controls;
@@ -75,8 +81,8 @@ export class FirstVisitComponent implements OnInit {
     this.visitForm = this.formBuilder.group({
       admission_date: ['', [Validators.required]],
       discharged_date: ['', [Validators.required]],
-      weight: ['', [Validators.required, Validators.minLength(3)]],
-      mothers_name: ['', [Validators.required, Validators.minLength(3)]],
+      weight: ['', [Validators.required, Validators.minLength(1)]],
+      mothers_name: ['', [Validators.required, Validators.minLength(2)]],
     });
   }
 
@@ -91,6 +97,46 @@ export class FirstVisitComponent implements OnInit {
     console.log(values)
   }
 
+  // onSelect(selectedPatient){
+  //   /* this.searchInput$.next(null);
+  //   // this.loadPatients(); */
+  //   if(selectedPatient) this.router.navigate(['/itr', {id: selectedPatient.id}]);
+  //   this.selectedPatient = null;
+  //   this.loadPatients();
+  // }
+
+  getPatient(term: string = null): Observable<any> {
+    return this.http.get('patient', {params:{'filter[search]':term}})
+    .pipe(map((resp:any) => {
+      console.log(resp.data);
+      return resp.data;
+    }))
+  }
+  
+  changeFn(val) {
+    console.log(val);
+}
+
+  loadPatients() {
+    this.patients$ = concat(
+      of([]), // default items
+      this.searchInput$.pipe(
+        filter(res => {
+          return res !== null && res.length >= this.minLengthTerm
+        }),
+        distinctUntilChanged(),
+        debounceTime(800),
+        tap(() => this.patientLoading = true),
+        switchMap(term => {
+          return this.getPatient(term).pipe(
+            catchError(() => of([])),
+            tap(() => this.patientLoading = false)
+          )
+        })
+      )
+    );
+  }
+
   // saveBirth(){
   //   console.log(this.visitForm);
   //   this.is_saving3 = true;
@@ -103,10 +149,11 @@ export class FirstVisitComponent implements OnInit {
 
   
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.validateForm();
     this.getData();
     this.saved = true;
+    this.loadPatients();
    
   }
 
