@@ -1,6 +1,6 @@
 <form [formGroup]="risk_form" (ngSubmit)="saveForm(risk_form.value)">
     <div class="grid gap-4 relative" style="grid-template-columns: repeat(16, minmax(0, 1fr));" *ngIf="!focused">
-        <div class="sticky top-0 z-50 border hover:border border-gray-300 hover:border-blue-400 col-span-2 cursor-pointer relative mx-2 px-2 py-1 rounded-t-lg bg-white text-blue-500 text-sm hover:bg-blue-500 hover:text-white"
+        <div class="sticky top-0 z-50 border border-blue-400 col-span-2 relative mx-2 px-2 py-1 rounded-t-lg text-sm bg-blue-500 text-white"
             style="grid-column: span 16 / span 16;"><button class="font-bold" type="button">Risk Factors</button>
             <div class="absolute top-1" style="left: 5.5rem;">
                 <fa-icon [icon]="faInfoCircle" class=" peer ml-4 text-white hover:text-gray-500 z-50"></fa-icon>
@@ -17,24 +17,26 @@
             <div class=" drop-modal grid gap-4 hover:drop-shadow-lg drop-shadow-md bg-white rounded-b-lg hover:border border-gray-300 hover:border-blue-400 p-2 m-2 border -mt-5"
                 style="grid-template-columns: repeat(14, minmax(0, 1fr));">
 
-                <div class="transitions col-span-10 border-check relative select-none" *ngIf="!focused">
+                <div class=" col-span-10 border-check relative select-none" *ngIf="!focused">
                     <h3 for="factor">Risk Factors</h3>
                     <select formControlName="factor" (change)="onKeyUp($event.target.value, $event.target.id)"
+    
                         (keyup)="onKeyUp($event.target.value, $event.target.id)"
                         (keyup.escape)="$event.target.value = ''; onKeyUp($event.target.value, $event.target.id)"
                         id="factor"
-                        class="text-ellipsis bg-white text-align-left drop_btn border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed">
+                        class="z-50 peer text-ellipsis bg-white text-align-left drop_btn border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed">
+                    <!-- <input type="text" id="searchbar" placeholder="search.." value="a" (blur)="searchblur()" class="z-40 absolute left-0 top-10 text-ellipsis bg-white text-align-left drop_btn border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed"> -->     
                         <option *ngFor="let factors of risk_factors" class="p-2 flex-wrap"
                             [class]="factors.hospital_flag == false && factors.monitor_flag == true? 'text-blue-500' : ''"
                             [style]="factors.hospital_flag == true && factors.monitor_flag == false?'color: rgb(220 38 38);':''"
-                            value="{{factors.risk_name}}_{{factors.risk_id}}"
+                            value="{{factors.risk_name}}_{{factors.id}}_{{factors.hospital_flag}}_{{factors.monitor_flag}}"
                             [selected]="risk_form.get('factor').value == factors.risk_name">
                             {{ factors.risk_name }} 
                         </option>
-                    </select>
+                    </select> 
                 </div>
 
-                <div class="transitions col-span-4" *ngIf="!focused">
+                <div class=" col-span-4" *ngIf="!focused">
                     <h3 for="date">Date Detected</h3>
                     <div class="grid grid-cols-10">
                         <div class="icon-height col-span-2 p-2 pt-1 rounded-l border-solid border border-zinc-300">
@@ -89,27 +91,54 @@
                 </div>
             </div>
         </div>
-        <div *ngIf="risk_catch.length > 0" style="grid-column: span 16 / span 16;"
+        <div *ngIf="risk_catch.length > 0" style="grid-column: span 16 / span 16;">
+            <div class="mb-5 grid rounded-lg hover:drop-shadow-lg drop-shadow-md bg-white rounded-lg hover:border border-gray-300 hover:border-blue-400 mx-2  border group"
+                style="grid-template-columns: repeat(11, minmax(0, 1fr));">
+                <div class=" px-2 py-1 text-sm font-bold border border-dashed border-gray-300 border-t-0 border-l-0 border-r-0 group-hover:border-blue-400"
+                    style="grid-column: span 11 / span 11;">
+                    <h1 class="select-none">
+                       Summary
+                    </h1>
+                </div>
+
+                <div class="text-sm grid grid-cols-11 pb-1 font-medium" style="grid-column: span 11 / span 11;">
+                    <div class=" col-span-8 relative select-none mx-2"><h3>Factors</h3></div>
+                    <div class=" col-span-2 relative select-none mx-2"><h3>Date</h3></div>
+                    <div class=" relative select-none mx-2"><h3>Action</h3></div>
+                </div>
+
+                <div class="text-sm grid grid-cols-11 hover:bg-blue-100 hover:font-medium" style="grid-column: span 11 / span 11;" *ngFor="let catch of risk_catch">
+                    <div class=" col-span-8 relative select-none mx-2 {{catch.hospital_flag == 'false' && catch.monitor_flag == 'true'? 'text-blue-500' : ''}} {{catch.hospital_flag == 'true' && catch.monitor_flag == 'false'?'text-red-500':''}}">{{catch.factor}}</div>
+                    <div class=" col-span-2 relative select-none mx-2"><h3>{{catch.date}}</h3></div>
+                    <div class=" relative select-none mx-2">
+                        <button type="button" class="w-full">
+                            <fa-icon [icon]="faPencil" size="lg" class="mr-2 hover:text-orange-300"></fa-icon>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- <div *ngIf="risk_catch.length > 0" style="grid-column: span 16 / span 16;"
             class=" drop-modal">
             <div class=" grid  rounded-lg hover:drop-shadow-lg drop-shadow-md bg-white rounded-lg hover:border border-gray-300 hover:border-blue-400 p-2 m-2 border"
                 style="grid-template-columns: repeat(14, minmax(0, 1fr));">
 
-                <div class="transitions col-span-8 border-check relative select-none">
+                <div class=" col-span-8 border-check relative select-none">
                     <h3>Risk Factor</h3>
 
                 </div>
-                <div class="transitions col-span-4 border-check relative select-none">
+                <div class=" col-span-4 border-check relative select-none">
                     <h3>Date</h3>
 
                 </div>
-                <div class="transitions col-span-2 border-check relative select-none">
+                <div class=" col-span-2 border-check relative select-none">
                     <h3>Action</h3>
                 </div>
                 <div style="grid-column: span 16 / span 16;">
                     <div *ngFor="let catch of risk_catch">
                         <div class="grid m-2 group" style="grid-template-columns: repeat(14, minmax(0, 1fr));">
 
-                            <div class="transitions col-span-8 border-check relative select-none group-hover:bg-gray-100 flex rounded-l-full"
+                            <div class=" col-span-8 border-check relative select-none group-hover:bg-gray-100 flex rounded-l-full"
                                 [class]="hide.includes(catch.risk_id)?'bg-gray-200':''">
                                 <fa-icon [icon]="faCaretRight" class=" group-hover:text-blue-500 px-2"
                                     [class]="hide.includes(catch.risk_id)?'text-blue-500':'text-gray-300'"></fa-icon>
@@ -118,13 +147,13 @@
                                     {{catch.factor}}</p>
 
                             </div>
-                            <div class="transitions col-span-4 border-check relative select-none group-hover:bg-gray-100 rounded-r-full"
+                            <div class=" col-span-4 border-check relative select-none group-hover:bg-gray-100 rounded-r-full"
                                 [class]="hide.includes(catch.risk_id)?'bg-gray-200':''">
                                 <p class="group-hover:font-semibold group-hover:text-gray-500 typed-out"
                                     [class]="hide.includes(catch.risk_id)?'text-gray-500 font-semibold':'font-medium text-blue-500'">
                                     {{catch.date}}</p>
                             </div>
-                            <div class="transitions col-span-2 border-check relative select-none">
+                            <div class=" col-span-2 border-check relative select-none">
                                 <div class="grid grid-cols-2 relative w-auto border-check"
                                     *ngIf="!focused && risk_catch">
 
@@ -141,7 +170,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
 
     </div>
 </form>

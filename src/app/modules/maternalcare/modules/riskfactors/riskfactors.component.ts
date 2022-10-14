@@ -30,11 +30,12 @@ export class RiskfactorsComponent implements OnInit {
   public risk_catch = [];
   show: boolean;
   @Input() risk_factors;
+  searching: boolean;
   constructor(private http: HttpService) { }
   
   ngOnInit(): void {
     this.createForm();
-
+    this.searching = false;
   }
 
   createForm() {
@@ -44,13 +45,24 @@ export class RiskfactorsComponent implements OnInit {
     });
   }
 
+searchfocus() {
+  document.getElementById("searchbar").focus();
+  this.searching = true;
+}
+searchblur() {
+  this.searching = false;
+}
   saveForm(data) {
     // const strs = ['valval', 'bal', 'gal', 'dalval'];
     // const result = strs.filter(s => s.includes('val'));
   
     // console.log(strs);
     // console.log(result); ------> good for filtering searches 
-    data.factor =data.factor.split('_');
+    console.log(data, "data");
+    console.log(data.factor, " factor");
+    
+    
+    data.factor = data.factor.split('_');
     let index = this.risk_catch.findIndex(c => c.factor === data.factor[0]);
     
     if(index != -1){
@@ -64,6 +76,8 @@ export class RiskfactorsComponent implements OnInit {
     this.risk_catch.push({
       risk_id: data.factor[1],
       factor: data.factor[0],
+      hospital_flag: data.factor[2],
+      monitor_flag: data.factor[3],
       date: data.date,
     });
 

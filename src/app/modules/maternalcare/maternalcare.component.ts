@@ -18,7 +18,7 @@ export class MaternalcareComponent implements OnInit {
     {var_name: 'risk_factors', location: 'mc-risk-factors'},
     {var_name: 'fetals', location: 'mc-presentations'},
     {var_name: 'fhr_lib', location: 'mc-locations'},
-    {var_name: 'delivery_location', location: 'mc-delivery-locations'},
+    {var_name: 'delivery_location', location: 'regions'},
     {var_name: 'attendants', location: 'mc-attendants'},
     {var_name: 'preg_outcome', location: 'mc-outcomes'},
   ]

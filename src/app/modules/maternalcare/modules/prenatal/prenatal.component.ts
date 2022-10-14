@@ -91,6 +91,8 @@ export class PrenatalComponent implements OnInit {
   }
   saveForm(data) {
     //console.log(this.value, ' this is my value b4 saving seq and edit is ', this.edit_bool );
+    
+    
     let index = this.catch_array.findIndex(c => c.visit_sequence === data.visit_sequence);
     if(index != -1){
       this.catch_array.splice(index, 1);
@@ -122,7 +124,7 @@ export class PrenatalComponent implements OnInit {
     console.log(this.catch_array);
     if(!this.edit_bool){
       this.value = this.value + 1;
-      this.max_value = this.max_value + 1;
+      // this.max_value = this.max_value + 1;
     }
     this.edit_bool = false;
     console.log(this.value, "this value");
