@@ -73,7 +73,7 @@ export class VaccineModalComponent implements OnInit {
     let date = new Date();
 
     this.vaccineForm = this.formBuilder.group({
-      vitals_date: [formatDate(date,'Y-M-dd','en'), Validators.required],
+      vitals_date: [null, Validators.required],
       vitals_time: [formatDate(date,'H:mm','en'), Validators.required],
       vitals_weight: [null, Validators.max(200)],
       vitals_temp: [null, Validators.max(50)],

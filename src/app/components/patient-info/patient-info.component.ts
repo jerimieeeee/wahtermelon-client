@@ -19,10 +19,17 @@ export class PatientInfoComponent {
   faPlusCircle = faPlusCircle;
   faQuestionCircle = faQuestionCircle;
 
-  showModal: boolean = false;
   show_form: boolean = false;
-  showDeathRecordModal: boolean = false;
-  showVaccineModal:boolean = false;
+
+  // MODALS
+  vitalsModal: boolean = false;
+  allergiesModal: boolean = false;
+  medicationModal: boolean = false;
+  vaccineModal: boolean = false;
+  historyModal: boolean = false;
+  famHistoryModal: boolean = false;
+  lifestyleModal: boolean = false;
+  deathRecordModal: boolean = false;
 
   constructor(
     private activeRoute: ActivatedRoute,
@@ -50,15 +57,43 @@ export class PatientInfoComponent {
     });
   }
 
-  toggleModal(){
-    this.showModal = !this.showModal;
+  toggleModal(modal_name){
+    console.log(modal_name);
+    switch (modal_name){
+      case 'vitals-modal':
+        this.vitalsModal = !this.vitalsModal;
+        break;
+      case 'allergies-modal':
+        this.allergiesModal = !this.allergiesModal;
+        break;
+      case 'medication-modal':
+        this.medicationModal = !this.medicationModal;
+        break;
+      case 'vaccine-modal':
+        this.vaccineModal = !this.vaccineModal;
+        break;
+      case 'history-modal':
+        this.historyModal = !this.historyModal;
+        break;
+      case 'fam-history-modal':
+        this.famHistoryModal = !this.famHistoryModal;
+        break;
+      case 'lifestyle-modal':
+        this.lifestyleModal = !this.lifestyleModal;
+        break;
+      case 'death-modal':
+        this.deathRecordModal = !this.deathRecordModal;
+        break;
+      default:
+        break;
+    }
   }
 
-  toggleDeathRecordModal(){
+  /* toggleDeathRecordModal(){
     this.showDeathRecordModal = !this.showDeathRecordModal;
-  }
-
-  vaccineModal(){
+  } */
+/*
+  vaccineModals(){
     this.showVaccineModal = !this.showVaccineModal;
-  }
+  } */
 }

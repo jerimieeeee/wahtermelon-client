@@ -64,7 +64,7 @@ export class VitalsModalComponent implements OnInit {
   }
 
   closeModal(){
-    this.toggleModal.emit();
+    this.toggleModal.emit('vitals-modal');
   }
 
   ngOnInit(): void {

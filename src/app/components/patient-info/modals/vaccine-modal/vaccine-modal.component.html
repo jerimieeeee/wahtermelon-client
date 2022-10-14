@@ -18,14 +18,15 @@
               <h4 class="font-bold text-blue-500 text-sm mt-2">{{ list.group }}</h4>
             </div>
 
-            <div class="grid grid-cols-2 gap-4 w-full mx-10">
-              <div class="col-span-1 mb-5" *ngFor="let vaccine of list.vaccines">
-                <div class="flex">
-                  <input type="checkbox" class="rounded flex-none border border-gray-300 p-2 mr-2 mt-1">
-                  <label class="flex-1" for="vitals_date">{{ vaccine.vaccine_desc }}</label>
-                </div>
-                <input name="vitals_date" id="vitals_date" formControlName="vitals_date" type="date" placeholder="Enter vaccine date" class="mt-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-              </div>
+            <div class="grid grid-cols-3 gap-4 w-full mx-10" *ngFor="let vaccine of list.vaccines">
+              <label class="col-span-1 pt-2" for="vitals_date">{{ vaccine.vaccine_desc }}</label>
+              <select id="vaccine.vaccine_id" name="vaccine.vaccine_id" class="col-span-1 mt-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option>-</option>
+                <option value="D">Done</option>
+                <option value="DPR">Done Outside - Private</option>
+                <option value="DPU">Done Outside - Public</option>
+              </select>
+              <input name="vitals_date" id="vitals_date" formControlName="vitals_date" type="date" placeholder="Enter vaccine date" class="col-span-1 mt-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
             </div>
 
             <!-- <div class="flex px-5 w-full" *ngFor="let vaccine of list.vaccines">
