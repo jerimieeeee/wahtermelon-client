@@ -9,7 +9,7 @@ import { Vaccines } from './data/vaccine';
   styleUrls: ['./vaccine-modal.component.scss']
 })
 export class VaccineModalComponent implements OnInit {
-  @Output() vaccineModal = new EventEmitter<any>();
+  @Output() toggleModal = new EventEmitter<any>();
 
   error_message = "exceeded maximum value";
   vaccine_list = Vaccines;
@@ -66,7 +66,7 @@ export class VaccineModalComponent implements OnInit {
   }
 
   closeModal(){
-    this.vaccineModal.emit();
+    this.toggleModal.emit('vaccine-moodal');
   }
 
   ngOnInit(): void {

@@ -12,7 +12,7 @@
       <div class="overflow-y-auto h-96 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
         <form class="w-full max-w-3xl text-left text-gray-500 dark:text-gray-400">
           <div class="grid grid-cols-2 gap-4 mx-10" *ngFor="let allergy of allergies">
-            <label class="col-span-1 pt-2" for="vitals_date">{{ allergy.name }}</label>
+            <label class="col-span-1 pt-2" for="vitals_date">{{ allergy.name }} Allergy</label>
             <select id="vaccine.vaccine_id" name="vaccine.vaccine_id" class="col-span-1 mt-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
               <option>-</option>
               <option value="true">Yes</option>
