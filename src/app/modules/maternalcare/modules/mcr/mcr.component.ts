@@ -123,29 +123,46 @@ export class McrComponent implements OnInit {
     this.edc_date.setDate(this.edc_date.getDate() + 280)
 
     this.first_tri = new Date(this.lmp_date);
-    this.first_tri.setDate(this.edc_date.getDate() + 73);
+    this.first_tri.setDate(this.first_tri.getDate() + (7 * 12));
 
     this.second_tri = new Date(this.lmp_date);
-    this.second_tri.setDate(this.edc_date.getDate() + 181);
-
+    this.second_tri.setDate(this.second_tri.getDate() + (7 * 27));
     this.third_tri = this.edc_date;
 
-
     this.aog_date = new Date();
+    this.aog_date.setHours(0,0,0,0);
+    
     var lmp = new Date(this.lmp_date);
-    // this.aog_date = this.aog_date.setDate(this.aog_date.getTime() - lmp.getTime() )
+    lmp.setHours(0,0,0,0);
+    
     const msInWeek = 1000 * 60 * 60 * 24 * 7;
     var aggregate = ((this.aog_date.getTime() - lmp.getTime()) / msInWeek).toFixed(2);
-    if(Number(aggregate) > 1){
-      var suffix = ' weeks';
+    var aggre_decimal = Number(aggregate) - Math.trunc(Number(aggregate));
+   
+    if(Number(aggregate) > 1){ //1.4
+      if(Math.trunc(Number(aggregate)) > 1){
+        if(aggre_decimal > 0){
+          var suffix = Math.trunc(Number(aggregate)) + ' weeks and ' + (aggre_decimal * 7).toFixed(0) + ' days';
+        }else if(aggre_decimal == 0){
+          var suffix = Math.trunc(Number(aggregate)) + ' weeks';
+        }
+      }else if(Math.trunc(Number(aggregate)) == 1){
+        if(aggre_decimal > 0){
+          var suffix = Math.trunc(Number(aggregate)).toFixed(0) + ' week and ' + (aggre_decimal * 7).toFixed(0) + ' days';
+        }
+      }
     }else if (Number(aggregate) == 1){
-      var suffix = ' week';
+      var suffix = Number(aggregate).toFixed(0) +  ' week';
     }else if (Number(aggregate) < 1){
       aggregate = JSON.stringify(Math.round(((this.aog_date.getTime() - lmp.getTime()) / msInWeek) * 7))
-      suffix = ' days'
+      if(Number(aggregate) > 1 || Number(aggregate) <= 0){
+        var suffix = aggregate +  ' days'
+      }else if(Number(aggregate) == 1){
+        var suffix = aggregate +  ' day'
+      }
     }
-    
-    this.aog_date = aggregate + suffix;
+    // console.log(suffix, " suffix");
+      this.aog_date = suffix;
 
   }
 }
