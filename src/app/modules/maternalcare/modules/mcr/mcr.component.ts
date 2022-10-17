@@ -35,6 +35,10 @@ export class McrComponent implements OnInit {
   abortions: Number = new Number();
   live_births: Number = new Number();
   response: any;
+  first_tri: Date;
+  second_tri: Date;
+  third_tri: Date;
+  today: Date;
 
   constructor(private http: HttpClient) { }
 
@@ -42,7 +46,12 @@ export class McrComponent implements OnInit {
     this.focused = false;
     this.createForm();
     this.error_message = "**please enter numbers only!"
+    this.today = new Date();
     this.edc_date = new Date();
+    this.aog_date = "No Date";
+    this.first_tri = new Date();
+    this.second_tri = new Date();
+    this.third_tri = new Date();
   }
   createForm() {
     this.mcr_form = new FormGroup({
@@ -112,6 +121,16 @@ export class McrComponent implements OnInit {
   getEDC(){
     this.edc_date = new Date(this.lmp_date);
     this.edc_date.setDate(this.edc_date.getDate() + 280)
+
+    this.first_tri = new Date(this.lmp_date);
+    this.first_tri.setDate(this.edc_date.getDate() + 73);
+
+    this.second_tri = new Date(this.lmp_date);
+    this.second_tri.setDate(this.edc_date.getDate() + 181);
+
+    this.third_tri = this.edc_date;
+
+
     this.aog_date = new Date();
     var lmp = new Date(this.lmp_date);
     // this.aog_date = this.aog_date.setDate(this.aog_date.getTime() - lmp.getTime() )

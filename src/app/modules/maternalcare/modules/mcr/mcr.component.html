@@ -50,15 +50,30 @@
                                 (change)="getEDC()">
                         </div>
                     </div>
-                    <div class="transitions col-span-3" *ngIf="!focused">
+                    <!-- <div class="transitions col-span-3" *ngIf="!focused">
                         <h3>EDC Date</h3>
-                        <input type="date" [value]="edc_date.toLocaleDateString('en-CA')" class=" rounded border-solid border border-zinc-300 focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none disabled:cursor-not-allowed" width="auto" disabled>
+                        <input type="date" [value]="edc_date.toLocaleDateString('en-CA')!= today.toLocaleDateString('en-CA')?third_tri.toLocaleDateString('en-CA'):'No Date'" class=" rounded border-solid border border-zinc-300 focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none disabled:cursor-not-allowed" width="auto" disabled>
                     </div>
                     <div class="transitions col-span-3" *ngIf="!focused">
                         <h3>AOG (Weeks)</h3>
                         <input type="text" [value]="aog_date" class=" rounded border-solid border border-zinc-300 focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none disabled:cursor-not-allowed" width="auto" disabled>
-                    </div>
+                    </div> -->
                 </div>
+
+                <div class="grid rounded-lg drop-shadow-md bg-white rounded-lg border-gray-300 m-2 border" style="grid-template-columns: repeat(13, minmax(0, 1fr));">
+                   <h3 class="bg-white col-span-2 rounded-md mx-2 font-semibold">EDC Date<p class="font-medium">{{edc_date.toLocaleDateString('en-CA') | date: 'MM/dd/yyyy'}}</p></h3>
+                   <h3 class="bg-white col-span-2 rounded-md mx-2 font-semibold relative">AOG (Weeks)
+                        <p class="font-medium">{{aog_date}}
+                            <button class="absolute bottom-0 right-0 group" type="button">
+                                <fa-icon [icon]="faPencil" class="inline-flex group-hover:text-orange-400 mx-2"></fa-icon>
+                            </button>
+                        </p>
+                    </h3>
+                   <h3 class="bg-white col-span-3 rounded-md mx-2 font-semibold">End of 1st Trimester<p class="font-medium">{{first_tri.toLocaleDateString('en-CA') != today.toLocaleDateString('en-CA')?(first_tri.toLocaleDateString('en-CA')  | date: 'MM/dd/yyyy'):"No Date"}}</p></h3>
+                   <h3 class="bg-white col-span-3 rounded-md mx-2 font-semibold">End of 2nd Trimester<p class="font-medium">{{second_tri.toLocaleDateString('en-CA') != today.toLocaleDateString('en-CA')?(second_tri.toLocaleDateString('en-CA')  | date: 'MM/dd/yyyy'):"No Date"}}</p></h3>
+                   <h3 class="bg-white col-span-3 rounded-md mx-2 font-semibold">End of 3rd Trimester<p class="font-medium">{{third_tri.toLocaleDateString('en-CA') != today.toLocaleDateString('en-CA')?(third_tri.toLocaleDateString('en-CA')  | date: 'MM/dd/yyyy'):"No Date"}}</p></h3>
+                </div>
+      
                 <div class="grid rounded-lg hover:drop-shadow-lg drop-shadow-md bg-white rounded-lg hover:border border-gray-300 hover:border-pink-400 m-2 border"
                     style="grid-template-columns: repeat(14, minmax(0, 1fr));">
                     <div class="text-sm font-bold text-pink-500 form-check p-2 font-semibold border border-dashed border-gray-300 group-hover:border-pink-400 border-t-0 border-l-0 border-r-0 "
