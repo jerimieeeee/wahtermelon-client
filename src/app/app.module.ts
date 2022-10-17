@@ -13,6 +13,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgApexchartsModule } from 'ng-apexcharts';
+import { FacilityaccreditationComponent } from './components/facilityaccreditation/facilityaccreditation.component';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 @NgModule({
@@ -21,7 +22,8 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
     HeaderComponent,
     SidenavComponent,
     VitalsGraphComponent,
-    VitalsComponent
+    VitalsComponent,
+    FacilityaccreditationComponent
   ],
   imports: [
     BrowserModule,

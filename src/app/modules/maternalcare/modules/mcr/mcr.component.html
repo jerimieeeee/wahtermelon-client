@@ -2,7 +2,7 @@
     <form [formGroup]="mcr_form" (ngSubmit)="saveForm(mcr_form.value)">
         <div class="grid gap-4 relative animates-dropdown " style="grid-template-columns: repeat(16, minmax(0, 1fr));"
             *ngIf="!focused">
-            <div class="sticky top-0 z-50 border hover:border border-gray-300 hover:border-blue-400 col-span-2 cursor-pointer relative mx-2 px-2 py-1 rounded-t-lg bg-blue-500 text-white"
+            <div class="sticky top-14 z-50 border border-blue-400 col-span-2 relative mx-2 px-2 py-1 rounded-t-lg text-sm bg-blue-500 text-white"
                 style="grid-column: span 16 / span 16;"><button class="font-bold" type="button">Maternal Care
                     Record</button>
                 <div class="absolute left-40 top-1">
@@ -24,10 +24,10 @@
                         <h3 for="reg_date">Registration Date</h3>
                         <div class="grid grid-cols-10">
                             <div class="icon-height col-span-2 p-2 pt-1 rounded-l border-solid border border-zinc-300">
-                                <fa-icon [icon]="faCalendarDay" size="lg" class="text-blue-500" for="reg_date">
+                                <fa-icon [icon]="faCalendarDay" size="lg" class="text-blue-400" for="reg_date">
                                 </fa-icon>
                             </div>
-                            <input formControlName="reg_date" type="date"
+                            <input formControlName="reg_date" id="reg_date" name="reg_date" type="date"
                                 class="col-span-8 rounded-r border-solid border border-l-0 border-zinc-300 focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none disabled:cursor-not-allowed"
                                 width="auto"
                                 (keyup.escape)="$event.target.value = ''; onKeyUp($event.target.value, $event.target.id)"
@@ -42,17 +42,26 @@
                                 <fa-icon [icon]="faCalendarDay" size="lg" class="text-blue-400" for="lmp_date">
                                 </fa-icon>
                             </div>
-                            <input formControlName="lmp_date" id="lmp_date" name="lmp_date" type="date"
+                            <input formControlName="lmp_date" id="lmp_date" name="lmp_date" type="date" [(ngModel)]="lmp_date"
                                 class="col-span-8 rounded-r border-solid border border-l-0 border-zinc-300 focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none disabled:cursor-not-allowed"
                                 width="auto"
                                 (keyup.escape)="$event.target.value = ''; onKeyUp($event.target.value, $event.target.id)"
-                                (change)="onKeyUp($event.target.value, $event.target.id)">
+                                (change)="onKeyUp($event.target.value, $event.target.id)"
+                                (change)="getEDC()">
                         </div>
+                    </div>
+                    <div class="transitions col-span-3" *ngIf="!focused">
+                        <h3>EDC Date</h3>
+                        <input type="date" [value]="edc_date.toLocaleDateString('en-CA')" class=" rounded border-solid border border-zinc-300 focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none disabled:cursor-not-allowed" width="auto" disabled>
+                    </div>
+                    <div class="transitions col-span-3" *ngIf="!focused">
+                        <h3>AOG (Weeks)</h3>
+                        <input type="text" [value]="aog_date" class=" rounded border-solid border border-zinc-300 focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none disabled:cursor-not-allowed" width="auto" disabled>
                     </div>
                 </div>
                 <div class="grid rounded-lg hover:drop-shadow-lg drop-shadow-md bg-white rounded-lg hover:border border-gray-300 hover:border-pink-400 m-2 border"
                     style="grid-template-columns: repeat(14, minmax(0, 1fr));">
-                    <div class="text-pink-500 form-check p-2 font-semibold border border-dashed border-gray-300 group-hover:border-pink-400 border-t-0 border-l-0 border-r-0 "
+                    <div class="text-sm font-bold text-pink-500 form-check p-2 font-semibold border border-dashed border-gray-300 group-hover:border-pink-400 border-t-0 border-l-0 border-r-0 "
                         style="	grid-column: span 14 / span 14;">
                         <h1 class="select-none">
                             Obstetric Score
@@ -67,7 +76,7 @@
                         <input type="number" formControlName="gravidity"
                             class="font-medium disabled:group-hover:font-semibold peer invalid:border-red-500 border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed disabled:border-0  disabled:pl-5  disabled:typed-out disabled:group-hover:bg-gray-100 disabled:rounded-full"
                             (keyup)="onKeyUp($event.target.value, $event.target.id)"
-                            (keyup.escape)="clearForm($event.target.id)" id="gravidity"
+                            (keyup.escape)="clearForm($event.target.id)" id="gravidity" min="0"
                             (change)="onKeyUp($event.target.value, $event.target.id)">
                         <small class="hidden peer-invalid:block text-red-400 ">error_message</small>
 
@@ -82,7 +91,7 @@
                         <input type="number" formControlName="parity"
                             class="font-medium disabled:group-hover:font-semibold peer invalid:border-red-500 border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed disabled:border-0  disabled:pl-5  disabled:typed-out disabled:group-hover:bg-gray-100 disabled:rounded-full"
                             (keyup)="onKeyUp($event.target.value, $event.target.id)"
-                            (keyup.escape)="clearForm($event.target.id)" id="parity"
+                            (keyup.escape)="clearForm($event.target.id)" id="parity" min="0"
                             (change)="onKeyUp($event.target.value, $event.target.id)">
                         <small class="hidden peer-invalid:block text-red-400 ">error_message</small>
 
@@ -100,7 +109,7 @@
                         <input type="number" formControlName="full_term"
                             class="font-medium disabled:group-hover:font-semibold peer invalid:border-red-500 border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed disabled:border-0  disabled:pl-5  disabled:typed-out disabled:group-hover:bg-gray-100 disabled:rounded-full"
                             (keyup)="onKeyUp($event.target.value, $event.target.id)"
-                            (keyup.escape)="clearForm($event.target.id)" id="full_term"
+                            (keyup.escape)="clearForm($event.target.id)" id="full_term" min="0"
                             (change)="onKeyUp($event.target.value, $event.target.id)">
                         <small class="hidden peer-invalid:block text-red-400 ">error_message</small>
 
@@ -114,7 +123,7 @@
                         <input type="number" formControlName="pre_term"
                             class="font-medium disabled:group-hover:font-semibold peer invalid:border-red-500 border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed disabled:border-0  disabled:pl-5  disabled:typed-out disabled:group-hover:bg-gray-100 disabled:rounded-full"
                             (keyup)="onKeyUp($event.target.value, $event.target.id)"
-                            (keyup.escape)="clearForm($event.target.id)" id="pre_term"
+                            (keyup.escape)="clearForm($event.target.id)" id="pre_term" min="0"
                             (change)="onKeyUp($event.target.value, $event.target.id)">
                         <small class="hidden peer-invalid:block text-red-400 ">error_message</small>
 
@@ -129,7 +138,7 @@
                         <input type="number" formControlName="abortions"
                             class="font-medium disabled:group-hover:font-semibold peer invalid:border-red-500 border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed disabled:border-0  disabled:pl-5  disabled:typed-out disabled:group-hover:bg-gray-100 disabled:rounded-full"
                             (keyup)="onKeyUp($event.target.value, $event.target.id)"
-                            (keyup.escape)="clearForm($event.target.id)" id="abortions"
+                            (keyup.escape)="clearForm($event.target.id)" id="abortions" min="0"
                             (change)="onKeyUp($event.target.value, $event.target.id)">
                         <small class="hidden peer-invalid:block text-red-400 ">error_message</small>
 
@@ -144,7 +153,7 @@
                         <input type="number" formControlName="live_births"
                             class="font-medium disabled:group-hover:font-semibold peer invalid:border-red-500 border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed disabled:border-0  disabled:pl-5  disabled:typed-out disabled:group-hover:bg-gray-100 disabled:rounded-full"
                             (keyup)="onKeyUp($event.target.value, $event.target.id)"
-                            (keyup.escape)="clearForm($event.target.id)" id="live_births"
+                            (keyup.escape)="clearForm($event.target.id)" id="live_births" min="0"
                             (change)="onKeyUp($event.target.value, $event.target.id)">
                         <small class="hidden peer-invalid:block text-red-400 ">error_message</small>
 
@@ -174,7 +183,7 @@
                 <div class="flex border-check bg-orange-300 hover:bg-orange-400 py-1 rounded-full  text-white px-2">
                     <fa-icon [icon]="faPencil" size="lg" class="mr-2 ">
                     </fa-icon>
-                    <button type="submit" class="font-bold button-out border-check-red typed-out"
+                    <button type="button" class="font-bold button-out border-check-red typed-out"
                         (keyup.enter)="uncheck($event.target.id + fphx_cat)">Edit</button>
                 </div>
             </div>

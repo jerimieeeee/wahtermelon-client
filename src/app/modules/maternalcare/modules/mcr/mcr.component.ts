@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { faAngleDown, faCalendarDay, faCaretRight, faClose, faInfoCircle, faPencil, faSave, faTimes, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
@@ -21,7 +22,9 @@ export class McrComponent implements OnInit {
   faInfoCircle = faInfoCircle;
   faCaretRight = faCaretRight;
   error_message = '';
-
+  lmp_date: any;
+  edc_date: any;
+  aog_date: any;
   public keyUp = [];
   public buttons = [];
   mcr_form: FormGroup;
@@ -31,13 +34,15 @@ export class McrComponent implements OnInit {
   pre_term: Number = new Number();
   abortions: Number = new Number();
   live_births: Number = new Number();
+  response: any;
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   ngOnInit(): void {
     this.focused = false;
     this.createForm();
     this.error_message = "**please enter numbers only!"
+    this.edc_date = new Date();
   }
   createForm() {
     this.mcr_form = new FormGroup({
@@ -69,7 +74,9 @@ export class McrComponent implements OnInit {
       abortions: data.abortions != 0? data.abortions : 0,
       live_births: data.live_births != 0? data.live_births : 0,
     });
-    console.log(this.mcr_form.value);
+    let url = ''
+    this.response = this.http.get(url).subscribe();
+    console.log('mcr_form: ', this.mcr_form.value, ' vs response:', this.response);
     
     this.mcr_form.disable();
   }
@@ -102,4 +109,24 @@ export class McrComponent implements OnInit {
     this.mcr_form.enable();
   }
 
+  getEDC(){
+    this.edc_date = new Date(this.lmp_date);
+    this.edc_date.setDate(this.edc_date.getDate() + 280)
+    this.aog_date = new Date();
+    var lmp = new Date(this.lmp_date);
+    // this.aog_date = this.aog_date.setDate(this.aog_date.getTime() - lmp.getTime() )
+    const msInWeek = 1000 * 60 * 60 * 24 * 7;
+    var aggregate = ((this.aog_date.getTime() - lmp.getTime()) / msInWeek).toFixed(2);
+    if(Number(aggregate) > 1){
+      var suffix = ' weeks';
+    }else if (Number(aggregate) == 1){
+      var suffix = ' week';
+    }else if (Number(aggregate) < 1){
+      aggregate = JSON.stringify(Math.round(((this.aog_date.getTime() - lmp.getTime()) / msInWeek) * 7))
+      suffix = ' days'
+    }
+    
+    this.aog_date = aggregate + suffix;
+
+  }
 }

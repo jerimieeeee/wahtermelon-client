@@ -45,9 +45,21 @@ const routes: Routes = [
   },
   {
     path: 'dental',
-    loadChildren: () => import('./modules/dental/dental.module').then(m => m.DentalModule) },
+    loadChildren: () => import('./modules/dental/dental.module').then(m => m.DentalModule) 
+  },
+  {
+    path: 'lep',
+    loadChildren: () => import('./modules/leprosy/leprosy.module').then(m => m.LeprosyModule)
+  },
   {
     path: 'drug-list',
+    loadChildren: () => import('./modules/drug-list/drug-list.module').then(m => m.DrugListModule) 
+  },
+  {
+    path: 'accred',
+    loadChildren: () => import('../app/components/facilityaccreditation/facilityaccreditation.module').then(m => m.FacilityaccreditationModule) },
+    // loadChildren: () => import('./modules/dental/dental.module').then(m => m.DentalModule) },
+  {
     loadChildren: () => import('./modules/drug-list/drug-list.module').then(m => m.DrugListModule) },
    {
     path: 'facility-config',

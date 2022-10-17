@@ -2,9 +2,9 @@
 
     <div class="grid gap-4 relative animates-dropdown" style="grid-template-columns: repeat(16, minmax(0, 1fr));"
         *ngIf="!focused">
-        <div class="sticky top-0 z-50 border hover:border border-gray-300 hover:border-blue-400 col-span-2 cursor-pointer relative mx-2 px-2 py-1 rounded-t-lg bg-blue-500 text-white"
+        <div class="sticky top-0 z-50 border hover:border border-gray-300 hover:border-blue-400 col-span-2 relative mx-2 px-2 py-1 rounded-t-lg bg-white text-blue-500 text-sm hover:bg-blue-500 hover:text-white"
             style="grid-column: span 16 / span 16;"><button class="font-bold" type="button">Obstetical History</button>
-            <div class="absolute left-36 top-1">
+            <div class="absolute left-32 top-1">
                 <fa-icon [icon]="faInfoCircle" class=" peer ml-4 text-white hover:text-gray-500 z-50"></fa-icon>
                 <div
                     class="absolute text-sm bg-gradient-to-b from-stone-500 to-gray-400 p-2 rounded-md border border-gray-500  text-white drop-shadow-lg opacity-90 border-check z-50 w-64 invisible peer-hover:visible">
@@ -20,11 +20,11 @@
                 <div class="transitions col-span-7 border-check relative" *ngIf="!focused">
                     <h3>Full Term</h3>
                     <!-- <input type="text" class="border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300" *ngIf="!obshx_form.alc" > -->
-                    <input type="text" formControlName="full_term"
+                    <input type="number" formControlName="full_term"
                         class="border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100"
                         (keyup)="onKeyUp($event.target.value, $event.target.id)"
                         (keyup.escape)="clearForm($event.target.id); onKeyUp($event.target.value, $event.target.id)"
-                        id="full_term">
+                        id="full_term" min="0">
                     <fa-icon [icon]="faTimesCircle" (click)="clearForm('full_term')"
                         class="absolute right-0 py-1 px-2 text-gray-400 hover:text-gray-500"
                         *ngIf="keyUp.includes('full_term') && !obshx_form.disabled">
@@ -34,11 +34,11 @@
                 <div class="transitions col-span-7 border-check relative" *ngIf="!focused">
                     <h3>Pre-Term</h3>
                     <!-- <input type="text" class="border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300" *ngIf="!obshx_form.alc" > -->
-                    <input type="text" formControlName="pre_term"
+                    <input type="number" formControlName="pre_term"
                         class="border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100"
                         (keyup)="onKeyUp($event.target.value, $event.target.id)"
                         (keyup.escape)="clearForm($event.target.id); onKeyUp($event.target.value, $event.target.id)"
-                        id="pre_term">
+                        id="pre_term" min="0">
                     <fa-icon [icon]="faTimesCircle" (click)="clearForm('pre_term')"
                         class="absolute right-0 py-1 px-2 text-gray-400 hover:text-gray-500"
                         *ngIf="keyUp.includes('pre_term') && !obshx_form.disabled">
@@ -48,11 +48,11 @@
                 <div class="transitions col-span-7 border-check relative" *ngIf="!focused">
                     <h3>Abortion</h3>
                     <!-- <input type="text" class="border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300" *ngIf="!obshx_form.alc" > -->
-                    <input type="text" formControlName="abortion"
+                    <input type="number" formControlName="abortion"
                         class="border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100"
                         (keyup)="onKeyUp($event.target.value, $event.target.id)"
                         (keyup.escape)="clearForm($event.target.id); onKeyUp($event.target.value, $event.target.id)"
-                        id="abortion">
+                        id="abortion" min="0">
                     <fa-icon [icon]="faTimesCircle" (click)="clearForm('abortion')"
                         class="absolute right-0 py-1 px-2 text-gray-400 hover:text-gray-500"
                         *ngIf="keyUp.includes('abortion') && !obshx_form.disabled">
@@ -62,11 +62,11 @@
                 <div class="transitions col-span-7 border-check relative" *ngIf="!focused">
                     <h3>Livebirths</h3>
                     <!-- <input type="text" class="border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300" *ngIf="!obshx_form.alc" > -->
-                    <input type="text" formControlName="livebirths"
+                    <input type="number" formControlName="livebirths"
                         class="border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100"
                         (keyup)="onKeyUp($event.target.value, $event.target.id)"
                         (keyup.escape)="clearForm($event.target.id); onKeyUp($event.target.value, $event.target.id)"
-                        id="livebirths">
+                        id="livebirths" min="0">
                     <fa-icon [icon]="faTimesCircle" (click)="clearForm('livebirths')"
                         class="absolute right-0 py-1 px-2 text-gray-400 hover:text-gray-500"
                         *ngIf="keyUp.includes('livebirths') && !obshx_form.disabled">

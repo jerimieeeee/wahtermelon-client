@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { faAngleDown, faCalendarDay, faCaretRight, faClose, faInfoCircle, faPencil, faSave, faTimes, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 
@@ -50,10 +50,10 @@ export class PrenatalComponent implements OnInit {
   vitals_modal: boolean;
   max_value: number;
 
-
+  @Input() fetals;
+  @Input() fhr_lib;
   constructor() { }
-  public fetals = ["Cephalic", "Breech", "Transverse", "Mass Palpable - NA"];
-  public fhr_lib = ["LLQ", "RLQ", "LUQ", "RUQ", "N/A"];
+
   public keyUp = [];
   public buttons = [];
   public catch_array = [];
@@ -91,6 +91,8 @@ export class PrenatalComponent implements OnInit {
   }
   saveForm(data) {
     //console.log(this.value, ' this is my value b4 saving seq and edit is ', this.edit_bool );
+    
+    
     let index = this.catch_array.findIndex(c => c.visit_sequence === data.visit_sequence);
     if(index != -1){
       this.catch_array.splice(index, 1);
@@ -122,10 +124,10 @@ export class PrenatalComponent implements OnInit {
     console.log(this.catch_array);
     if(!this.edit_bool){
       this.value = this.value + 1;
-      this.max_value = this.max_value + 1;
+      // this.max_value = this.max_value + 1;
     }
     this.edit_bool = false;
-    console.log(this.value);
+    console.log(this.value, "this value");
     
     //this.prenatal_form.disable();
     this.createForm();
