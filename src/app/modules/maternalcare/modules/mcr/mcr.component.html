@@ -42,12 +42,21 @@
                                 <fa-icon [icon]="faCalendarDay" size="lg" class="text-blue-400" for="lmp_date">
                                 </fa-icon>
                             </div>
-                            <input formControlName="lmp_date" id="lmp_date" name="lmp_date" type="date"
+                            <input formControlName="lmp_date" id="lmp_date" name="lmp_date" type="date" [(ngModel)]="lmp_date"
                                 class="col-span-8 rounded-r border-solid border border-l-0 border-zinc-300 focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none disabled:cursor-not-allowed"
                                 width="auto"
                                 (keyup.escape)="$event.target.value = ''; onKeyUp($event.target.value, $event.target.id)"
-                                (change)="onKeyUp($event.target.value, $event.target.id)">
+                                (change)="onKeyUp($event.target.value, $event.target.id)"
+                                (change)="getEDC()">
                         </div>
+                    </div>
+                    <div class="transitions col-span-3" *ngIf="!focused">
+                        <h3>EDC Date</h3>
+                        <input type="date" [value]="edc_date.toLocaleDateString('en-CA')" class=" rounded border-solid border border-zinc-300 focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none disabled:cursor-not-allowed" width="auto" disabled>
+                    </div>
+                    <div class="transitions col-span-3" *ngIf="!focused">
+                        <h3>AOG (Weeks)</h3>
+                        <input type="text" [value]="aog_date" class=" rounded border-solid border border-zinc-300 focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none disabled:cursor-not-allowed" width="auto" disabled>
                     </div>
                 </div>
                 <div class="grid rounded-lg hover:drop-shadow-lg drop-shadow-md bg-white rounded-lg hover:border border-gray-300 hover:border-pink-400 m-2 border"

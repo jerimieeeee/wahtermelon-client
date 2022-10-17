@@ -247,8 +247,23 @@
 
             </div>
         </div>
-
-        <div style="grid-column: span 16 / span 16;">
+        <div class="relative w-auto  mb-7 w-12/12" *ngIf="!focused && prenatal_form.enabled" style="grid-column: span 16 / span 16;">
+            <div class="absolute inline-flex right-0 ">
+                <div (click)="cancel()"
+                    class="cursor-pointer flex  bg-white hover:drop-shadow-md hover:bg-gray-400 py-1 rounded-full text-gray-400 hover:text-white pl-2 pr-2 peer">
+                    <fa-icon [icon]="faTimes" size="lg" class="mr-2">
+                    </fa-icon>
+                    <button type="button" class="font-bold button-out -red">Cancel</button>
+                </div>
+                <div (click)="saveForm(prenatal_form.value)"
+                    class="cursor-pointer flex  hover:drop-shadow-md bg-green-300 hover:bg-green-400 py-1 rounded-full text-white px-3 peer-hover:bg-white peer-hover:text-green-400">
+                    <fa-icon [icon]="faSave" size="lg" class="mr-2">
+                    </fa-icon>
+                    <button type="button" class="font-bold button-out -red">Save</button>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="catch_array.length > 0" style="grid-column: span 16 / span 16;">
             <div class="mb-5 grid rounded-lg hover:drop-shadow-lg drop-shadow-md bg-white rounded-lg hover:border border-gray-300 hover:border-blue-400 mx-2  border group"
                 style="grid-template-columns: repeat(11, minmax(0, 1fr));">
                 <div class=" px-2 py-1 text-sm font-bold border border-dashed border-gray-300 border-t-0 border-l-0 border-r-0 group-hover:border-blue-400"
@@ -285,22 +300,7 @@
         </div>
         
     </div>
-    <div class="relative w-auto  mb-7 w-12/12" *ngIf="!focused && prenatal_form.enabled">
-        <div class="absolute inline-flex right-0 ">
-            <div (click)="cancel()"
-                class="cursor-pointer flex  bg-white hover:drop-shadow-md hover:bg-gray-400 py-1 rounded-full text-gray-400 hover:text-white pl-2 pr-2 peer">
-                <fa-icon [icon]="faTimes" size="lg" class="mr-2">
-                </fa-icon>
-                <button type="button" class="font-bold button-out -red">Cancel</button>
-            </div>
-            <div (click)="saveForm(prenatal_form.value)"
-                class="cursor-pointer flex  hover:drop-shadow-md bg-green-300 hover:bg-green-400 py-1 rounded-full text-white px-3 peer-hover:bg-white peer-hover:text-green-400">
-                <fa-icon [icon]="faSave" size="lg" class="mr-2">
-                </fa-icon>
-                <button type="button" class="font-bold button-out -red">Save</button>
-            </div>
-        </div>
-    </div>
+    
     <!-- <div class="relative w-auto  mt-2 mb-7 w-12/12" *ngIf="!focused && prenatal_form.disabled">
         <div class="absolute inline-flex right-0 cursor-pointer" (click)="edit()">
             <div class="flex  bg-orange-300 hover:bg-orange-400 py-1 rounded-full  text-white px-2">

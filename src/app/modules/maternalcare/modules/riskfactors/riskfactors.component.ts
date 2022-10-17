@@ -123,9 +123,9 @@ searchblur() {
 
     this.risk_form.reset();
     this.risk_catch.forEach(c => {
-      if(c.risk_id == id){
+      if(c.risk_id === id){
         this.risk_form.setValue({
-          factor: c.factor+"_"+c.risk_id,
+          factor: c.factor,
           date: c.date,
         });
       }
