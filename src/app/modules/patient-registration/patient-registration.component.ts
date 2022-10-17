@@ -42,6 +42,8 @@ export class PatientRegistrationComponent implements OnInit {
       municipality: new FormControl<string| null>(''),
       brgy: new FormControl<string| null>(''),
       address: new FormControl<string| null>(''),
+      cct_id: new FormControl<string| null>(''),
+      is_head: new FormControl<string| null>(''),
     })
   });
 
