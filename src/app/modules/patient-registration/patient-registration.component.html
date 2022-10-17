@@ -267,7 +267,7 @@
               </div>
             </div>
 
-            <div class="col-span-6 sm:col-span-4">
+            <div class="col-span-6 sm:col-span-2">
               <label for="address" class="input-label" [ngClass]="{'text-red-500': is_saving && f['family']['controls']['address'].errors}">Address</label>
               <input type="text" name="address" id="address" class="input" [ngClass]="{'invalid-input': is_saving && f['family']['controls']['address'].errors}" formControlName="address">
 
@@ -285,10 +285,23 @@
               <label for="cct_id" class="input-label" [ngClass]="{'text-red-500': is_saving && f.cct_id.errors}">CCT ID</label>
               <input type="text" name="cct_id" id="cct_id" class="input" [ngClass]="{'invalid-input': is_saving && f['family']['controls']['cct_id'].errors}" formControlName="cct_id">
 
-
               <div *ngIf="is_saving && f.cct_id.errors" class="invalid-alert">
                 <div *ngIf="f.cct_id.errors?.['required']">
                   {{ required_message }}
+                </div>
+              </div>
+            </div>
+
+            <div class="col-span-6 sm:col-span-2">
+              <label for="cct_date" class="input-label" [ngClass]="{'text-red-500': is_saving && f['family']['controls']['address'].errors}">CCT Registration date</label>
+              <input type="text" name="cct_date" id="cct_date" class="input" [ngClass]="{'invalid-input': is_saving && f['family']['controls']['address'].errors}" formControlName="cct_date">
+
+              <div *ngIf="is_saving && f['family']['controls']['cct_date'].errors" class="invalid-alert">
+                <div *ngIf="f['family']['controls']['cct_date'].errors?.['required']">
+                  {{ required_message }}
+                </div>
+                <div *ngIf="f['family']['controls']['cct_date'].errors?.['minlength']">
+                  Minimum of 2 character.
                 </div>
               </div>
             </div>
