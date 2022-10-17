@@ -87,6 +87,10 @@ export class FirstVisitComponent implements OnInit {
   }
 
   getData(){
+    if(!localStorage.getItem('form-data'))
+    {
+      localStorage.setItem('form-data', JSON.stringify([]))
+    }
     const values = JSON.parse(localStorage.getItem("form-data"));
     this.visitForm = new FormGroup({
       admission_date: new FormControl(values['admission_date']),
