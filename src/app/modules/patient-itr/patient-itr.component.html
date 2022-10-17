@@ -256,35 +256,43 @@
 </div>
 
 <div *ngIf="showModal" class="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex">
-  <div class="relative w-auto my-6 mx-auto max-w-6xl">
-    <!--content-->
-    <div class="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
-      <!--header-->
-      <div class="flex items-start justify-between p-3 border-b border-solid border-slate-200 rounded-t">
-        <h3 class="font-semibold">
-          Choose a program
-        </h3>
-        <button class="ml-auto bg-transparent border-0 text-black opacity-50 float-right leading-none font-semibold outline-none focus:outline-none" (click)="toggleModal()">
-          <!-- <span class="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none"> -->
-            x
-          <!-- </span> -->
-        </button>
-      </div>
-      <!--body-->
-      <div class="relative p-6 flex-auto">
-        <div>
-          <span>Main Modules</span>
-          <div class="grid grid-cols-3"></div>
+  <div id="defaultModal" tabindex="-1" class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 w-full md:inset-0 h-modal md:h-full justify-center items-center flex" aria-modal="true" role="dialog" style="z-index:60">
+    <div class="relative p-4 w-full max-w-3xl h-auto md:h-auto">
+      <!-- Modal content -->
+      <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+        <!-- Modal header -->
+        <div class="flex justify-between items-start py-3 px-5 rounded-t border-b bg-blue-500 dark:border-gray-600">
+          <h3 class="mt-2 text-sm font-bold text-white dark:text-white">
+              Health Programs
+          </h3>
         </div>
-      </div>
-      <!--footer-->
-      <div class="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
-        <button class="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button" (click)="toggleModal()">
-          Close
-        </button>
-        <button class="bg-blue-500 text-white active:bg-blue-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button" (click)="toggleModal()">
+        <!-- Modal body -->
+        <div class="overflow-y-auto h-96 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
 
-        </button>
+            <div class="flex item-start flex-wrap pb-5" *ngFor="let list of list_modules">
+              <div class="flex justify-between w-full px-5 mt-3 rounded-tl rounded-tr">
+                <h4 class="font-bold text-blue-500 text-sm mt-2">{{ list.group }}</h4>
+              </div>
+
+              <div class="grid grid-cols-3 gap-4 w-full mx-10" *ngFor="let module of list.modules">
+                <!-- <label class="col-span-1 pt-2" for="vitals_date">{{ module.module_desc }}</label>
+                <select id="module.module_id" name="module.module_id" class="col-span-1 mt-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                  <option>-</option>
+                  <option value="D">Done</option>
+                  <option value="DPR">Done Outside - Private</option>
+                  <option value="DPU">Done Outside - Public</option>
+                </select> -->
+                <button  type="button" class="text-white bg-blue-500 hover:ring-2 focus:outline-none hover:ring-blue-300 font-medium rounded text-sm px-6 py-2.5 text-center transition duration-150 ease-in-out transform hover:scale-110" (click)="onSubmit(module.location)" >
+                  {{ module.name }}
+                </button>
+              </div>
+            </div>
+        </div>
+        <!-- Modal footer -->
+        <div class="flex justify-end py-4 px-5 space-x-4 rounded-b border-t border-gray-200 dark:border-gray-600">
+          <button  type="button" class="text-white bg-red-500 hover:ring-2 focus:outline-none hover:ring-red-300 rounded text-sm font-medium px-6 py-2.5 transition duration-150 ease-in-out transform hover:scale-110 " (click)="toggleModal()">Close</button>
+          <!-- <button  type="button" class="text-white bg-blue-500 hover:ring-2 focus:outline-none hover:ring-blue-300 font-medium rounded text-sm px-6 py-2.5 text-center transition duration-150 ease-in-out transform hover:scale-110" (click)="onSubmit()" >Save</button> -->
+        </div>
       </div>
     </div>
   </div>
