@@ -14,6 +14,7 @@ import { reducer } from './reducers/birthinformation.reducer';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { SharedComponentsModule } from 'app/shared/shared-components/shared-components.module';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 
 @NgModule({
@@ -27,7 +28,7 @@ import { SharedComponentsModule } from 'app/shared/shared-components/shared-comp
     CommonModule,
     ChildcareRoutingModule,
     SharedComponentsModule,
-    FontAwesomeModule,ReactiveFormsModule,HttpClientModule,
+    FontAwesomeModule,ReactiveFormsModule,HttpClientModule,NgSelectModule,
     FormsModule,StoreModule.forRoot({
       birthinfo: reducer
     })
