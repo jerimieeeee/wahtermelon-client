@@ -18,13 +18,15 @@ export class PatientItrComponent implements OnInit {
   showModal:boolean = false;
   medical_journal = MedicalJournal;
 
+  patient_details: any;
+
   open_details(){
     this.show_details = !this.show_details;
   }
 
   list_modules = [
     {
-      group: 'general',
+      group: 'General',
       modules: [
         {
           name: 'Consultation',
@@ -49,7 +51,7 @@ export class PatientItrComponent implements OnInit {
       ]
     },
     {
-      group: 'others',
+      group: 'Others',
       modules: [
         {
           name: 'Laboratory',
@@ -166,10 +168,17 @@ export class PatientItrComponent implements OnInit {
 
   onSubmit(loc){
     console.log(loc);
+    console.log('/'+loc, {id: this.patient_details.id});
+    this.router.navigate(['/'+loc, {id: this.patient_details.id}])
   }
 
   toggleModal(){
     this.showModal = !this.showModal;
+  }
+
+  patientInfo(info){
+    console.log(info);
+    this.patient_details = info;
   }
 
   navigationEnd$ = this.router.events.pipe(

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { faFlask, faHeart, faExclamationCircle, faNotesMedical, faPlusCircle, faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
 import { AgeService } from 'app/shared/services/age.service';
@@ -10,6 +10,7 @@ import { HttpService } from 'app/shared/services/http.service';
   styleUrls: ['./patient-info.component.scss']
 })
 export class PatientInfoComponent {
+  @Output() patientInfo = new EventEmitter<any>();
   patient_info: any;
 
   faNotesMedical = faNotesMedical;
@@ -51,6 +52,7 @@ export class PatientInfoComponent {
       next: (data: any) => {
         this.patient_info = data.data;
         this.show_form = true;
+        this.patientInfo.emit(data.data);
         console.log(data.data)
       },
       error: err => console.log(err)
