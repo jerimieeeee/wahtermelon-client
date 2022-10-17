@@ -294,7 +294,7 @@
 
             <div class="col-span-6 sm:col-span-2">
               <label for="cct_date" class="input-label" [ngClass]="{'text-red-500': is_saving && f['family']['controls']['address'].errors}">CCT Registration date</label>
-              <input type="text" name="cct_date" id="cct_date" class="input" [ngClass]="{'invalid-input': is_saving && f['family']['controls']['address'].errors}" formControlName="cct_date">
+              <input type="date" name="cct_date" id="cct_date" class="input" [ngClass]="{'invalid-input': is_saving && f['family']['controls']['address'].errors}" formControlName="cct_date">
 
               <div *ngIf="is_saving && f['family']['controls']['cct_date'].errors" class="invalid-alert">
                 <div *ngIf="f['family']['controls']['cct_date'].errors?.['required']">
