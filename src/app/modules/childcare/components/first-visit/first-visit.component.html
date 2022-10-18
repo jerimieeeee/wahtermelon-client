@@ -11,6 +11,8 @@
     </div>
 </div>
     <!--Admission Date & Time Section-->
+<form [formGroup]="visitForm" (submit)="saveAdmission()">
+
 <div class="card mb-6">
 
       <div class="card-header bg-blue-500">
@@ -32,7 +34,13 @@
               <path d="M18 16.496v1.504l1 1"></path>
            </svg>
           </div>
-         <input type="text" placeholder="Select Date and Time" onfocus="(this.type='datetime-local')" class="mt-1 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input" placeholder="Select date">
+         <input type="text" placeholder="Select Date and Time" onfocus="(this.type='datetime-local')" class="mt-1 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input" placeholder="Select date" formControlName="admission_date" required>
+        </div>
+
+        <div *ngIf="form_saving && f.admission_date.errors" class="invalid-alert mt-1">
+          <div *ngIf="f.admission_date.errors?.['required']">
+            {{ required_message }}
+          </div>
         </div>
 
       </div>
@@ -55,7 +63,13 @@
               <path d="M18 16.496v1.504l1 1"></path>
            </svg>
           </div>
-         <input type="text" placeholder="Select Date and Time" onfocus="(this.type='datetime-local')" class="mt-1 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input" placeholder="Select date">
+         <input type="text" placeholder="Select Date and Time" onfocus="(this.type='datetime-local')" class="mt-1 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input" placeholder="Select date" formControlName="discharged_date" required>
+        </div>
+
+        <div *ngIf="form_saving && f.discharged_date.errors" class="invalid-alert mt-1">
+          <div *ngIf="f.discharged_date.errors?.['required']">
+            {{ required_message }}
+          </div>
         </div>
 
         </div>
@@ -73,7 +87,16 @@
               <path d="M12 7c1.956 0 3.724 .802 4.994 2.095l-2.956 2.904a3 3 0 0 0 -2.038 -.799a3 3 0 0 0 -2.038 .798l-2.956 -2.903a6.979 6.979 0 0 1 4.994 -2.095z"></path>
            </svg>
           </div>
-         <input type="text" class="mt-1 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input" placeholder="Input weight">
+         <input type="text" class="mt-1 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input" placeholder="Input weight" [ngClass]="{'invalid-input': form_saving && f.weight.errors}" formControlName="weight" required>
+        </div>
+
+        <div *ngIf="form_saving && f.weight.errors" class="invalid-alert mt-1">
+          <div *ngIf="f.weight.errors?.['required']">
+            {{ required_message }}
+          </div>
+          <div *ngIf="f.weight.errors?.['minlength']">
+            Minimum of 2 character.
+          </div>
         </div>
 
         </div>
@@ -83,7 +106,7 @@
        
          
            
-        <div class="relative">
+        <!-- <div class="relative">
           <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user-search text-blue-500" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
               <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -93,7 +116,48 @@
               <path d="M18.5 19.5l2.5 2.5"></path>
            </svg>
           </div>
-         <input type="text" class="mt-1 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input" placeholder="Search Mother's Name">
+         <input type="text" class="mt-1 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input" placeholder="Search Mother's Name" formControlName="mothers_name" required>
+        </div> -->
+
+        <ng-select class="search-custom mt-1" placeholder="Search Mother"
+          [items]="patients$ | async"
+          [minTermLength]="minLengthTerm"
+          [loading]="patientLoading"
+          typeToSearchText="Search Mother's Name"
+          [typeahead]="searchInput$"
+          [clearable]="false"
+          formControlName="mothers_name">
+          <ng-template ng-label-tmp let-item="item">
+            <p class="">{{item.first_name}} {{item.middle_name}} {{item.last_name}}</p>
+        </ng-template>
+          <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
+            <!-- <a href="itr"> -->
+              <div class="grid grid-flow-col auto-cols-max">
+
+                  <div class="my-auto mr-3">
+                    <img src="./assets/img/profile_1.jpg" alt="profile_img" class="rounded-full w-14 h-14 mx-auto mr-2" />
+                  </div>
+                  <div>
+                    <h5 class="text-blue-400" [ngOptionHighlight]="search">{{ item.last_name }}, {{ item.first_name }}</h5>
+                    <h6 class="text-muted">{{ item.birthdate }}</h6>
+                    <h6 class="text-muted">{{ item.brgy }}, {{ item.muncity }}</h6>
+                  </div>
+              </div>
+            <!-- </a> -->
+          </ng-template>
+
+          <ng-template ng-footer-tmp>
+            <a class="text-blue-600" href="registration"> Create a new record</a>
+          </ng-template>
+        </ng-select>
+
+        <div *ngIf="form_saving && f.mothers_name.errors" class="invalid-alert mt-1">
+          <div *ngIf="f.mothers_name.errors?.['required']">
+            {{ required_message }}
+          </div>
+          <div *ngIf="f.mothers_name.errors?.['minlength']">
+            Minimum of 2 character.
+          </div>
         </div>
 
         </div>
@@ -107,6 +171,7 @@
         </div>
     
 </div>
+</form>
 
     <!--Birth Info Section-->
 <!-- <div class="card mt-5 mb-7">

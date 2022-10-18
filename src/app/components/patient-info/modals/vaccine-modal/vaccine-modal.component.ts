@@ -9,7 +9,7 @@ import { Vaccines } from './data/vaccine';
   styleUrls: ['./vaccine-modal.component.scss']
 })
 export class VaccineModalComponent implements OnInit {
-  @Output() vaccineModal = new EventEmitter<any>();
+  @Output() toggleModal = new EventEmitter<any>();
 
   error_message = "exceeded maximum value";
   vaccine_list = Vaccines;
@@ -66,14 +66,14 @@ export class VaccineModalComponent implements OnInit {
   }
 
   closeModal(){
-    this.vaccineModal.emit();
+    this.toggleModal.emit('vaccine-moodal');
   }
 
   ngOnInit(): void {
     let date = new Date();
 
     this.vaccineForm = this.formBuilder.group({
-      vitals_date: [formatDate(date,'Y-M-dd','en'), Validators.required],
+      vitals_date: [null, Validators.required],
       vitals_time: [formatDate(date,'H:mm','en'), Validators.required],
       vitals_weight: [null, Validators.max(200)],
       vitals_temp: [null, Validators.max(50)],

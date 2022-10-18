@@ -29,7 +29,7 @@
           ADDRESS
         </span>
         <span class="block text-xs">
-          Gwangju, South Korea
+          San Rafael, Tarlac City
         </span>
       </div>
 
@@ -57,7 +57,7 @@
         <span class="block text-blue-500 font-medium text-sm">
           VITALS
         </span>
-        <fa-icon (click)="toggleModal()" class="mx-0 my-0 text-blue-500 mr-2 hover:cursor-pointer" [icon]="faPlusCircle"></fa-icon>
+        <fa-icon (click)="toggleModal('vitals-modal')" class="mx-0 my-0 text-blue-500 mr-2 hover:cursor-pointer" [icon]="faPlusCircle"></fa-icon>
       </div>
 
       <div class="block">
@@ -66,7 +66,7 @@
             Weight
           </span>
           <span class="block text-xs">
-            56 kg
+            -
           </span>
         </div>
 
@@ -75,7 +75,7 @@
             Height
           </span>
           <span class="block text-xs">
-            168 cm (5ft 6in)
+            -
           </span>
         </div>
 
@@ -84,7 +84,7 @@
             BMI
           </span>
           <span class="block text-xs">
-            19.8 (Normal)
+            -
           </span>
         </div>
 
@@ -105,12 +105,13 @@
         <span class="block text-blue-500 font-medium text-sm">
           ALLERGIES
         </span>
+        <fa-icon (click)="toggleModal('allergies-modal')" class="mx-0 my-0 text-blue-500 mr-2 hover:cursor-pointer" [icon]="faPlusCircle"></fa-icon>
       </div>
 
       <div class="block">
         <div class="flex pl-3 justify-between items-center">
           <span class="block text-gray-800 font-medium text-xs">
-            Peanuts (direct contact)
+            No Records
           </span>
           <span class="block text-xs">
             -
@@ -124,16 +125,16 @@
         <span class="block text-blue-500 font-medium text-sm">
           MEDICATION
         </span>
-        <fa-icon class="mx-0 my-0 text-blue-500 mr-2" [icon]="faPlusCircle"></fa-icon>
+        <fa-icon (click)="toggleModal('medication-modal')" class="mx-0 my-0 text-blue-500 mr-2 hover:cursor-pointer" [icon]="faPlusCircle"></fa-icon>
       </div>
 
       <div class="block">
         <div class="flex pl-3 justify-between items-center">
           <span class="block text-gray-800 font-medium text-xs">
-            Lozartan
+            No Records
           </span>
           <span class="block text-xs">
-            3x a day
+
           </span>
         </div>
       </div>
@@ -144,16 +145,16 @@
         <span class="block text-blue-500 font-medium text-sm">
           VACCINES
         </span>
-        <fa-icon (click)="vaccineModal()" class="mx-0 my-0 text-blue-500 mr-2 hover:cursor-pointer" [icon]="faPlusCircle"></fa-icon>
+        <fa-icon (click)="toggleModal('vaccine-modal')" class="mx-0 my-0 text-blue-500 mr-2 hover:cursor-pointer" [icon]="faPlusCircle"></fa-icon>
       </div>
 
       <div class="block">
         <div class="flex pl-3 justify-between items-center">
           <span class="block text-gray-800 font-medium text-xs">
-            IPV
+            No Records
           </span>
           <span class="block text-xs">
-            01/01/2019
+
           </span>
         </div>
       </div>
@@ -164,13 +165,13 @@
         <span class="block text-blue-500 font-medium text-sm">
           MEDICAL HISTORY
         </span>
-        <fa-icon class="mx-0 my-0 text-blue-500 mr-2" [icon]="faPlusCircle"></fa-icon>
+        <fa-icon (click)="toggleModal('history-modal')" class="mx-0 my-0 text-blue-500 mr-2 hover:cursor-pointer" [icon]="faPlusCircle"></fa-icon>
       </div>
 
       <div class="block">
         <div class="flex pl-3 justify-between items-center">
           <span class="block text-gray-800 font-medium text-xs">
-            -
+            No Records
           </span>
           <span class="block text-xs">
             -
@@ -184,25 +185,16 @@
         <span class="block text-blue-500 font-medium text-sm">
           FAMILY MEDICAL HISTORY
         </span>
-        <fa-icon class="mx-0 my-0 text-blue-500 mr-2" [icon]="faPlusCircle"></fa-icon>
+        <fa-icon (click)="toggleModal('fam-history-modal')" class="mx-0 my-0 text-blue-500 mr-2 hover:cursor-pointer" [icon]="faPlusCircle"></fa-icon>
       </div>
 
       <div class="block">
         <div class="flex pl-3 justify-between items-center">
           <span class="block text-gray-800 font-medium text-xs">
-            HYPERTENSION
+            No Records
           </span>
           <span class="block text-xs">
-            150/100
-          </span>
-        </div>
 
-        <div class="flex pl-3 justify-between items-center">
-          <span class="block text-gray-800 font-medium text-xs">
-            DIABETES
-          </span>
-          <span class="block text-xs">
-            TYPE II
           </span>
         </div>
       </div>
@@ -213,7 +205,7 @@
         <span class="block text-blue-500 font-medium text-sm">
           LIFESTYLE
         </span>
-        <fa-icon class="mx-0 my-0 text-blue-500 mr-2" [icon]="faPlusCircle"></fa-icon>
+        <fa-icon (click)="toggleModal('lifestyle-modal')" class="mx-0 my-0 text-blue-500 mr-2 hover:cursor-pointer" [icon]="faPlusCircle"></fa-icon>
       </div>
 
       <div class="block">
@@ -222,7 +214,7 @@
             SMOKER
           </span>
           <span class="block text-xs">
-            No
+            -
           </span>
         </div>
 
@@ -231,7 +223,7 @@
             ALCOHOL
           </span>
           <span class="block text-xs">
-            1
+            -
           </span>
         </div>
 
@@ -240,7 +232,7 @@
             ILLICIT DRUGS
           </span>
           <span class="block text-xs">
-            No
+            -
           </span>
         </div>
       </div>
@@ -251,7 +243,7 @@
         <span class="block text-blue-500 font-medium text-sm">
           DEATH RECORD
         </span>
-        <fa-icon (click)="toggleDeathRecordModal()" class="mx-0 my-0 text-blue-500 mr-2 hover:cursor-pointer" [icon]="faPlusCircle"></fa-icon>
+        <fa-icon (click)="toggleModal('death-modal')" class="mx-0 my-0 text-blue-500 mr-2 hover:cursor-pointer" [icon]="faPlusCircle"></fa-icon>
       </div>
 
       <div class="block">
@@ -270,14 +262,35 @@
 </div>
 
 <!-- MODALS -->
-<div *ngIf="showModal">
-  <app-vitals-modal (toggleModal)="toggleModal()"></app-vitals-modal>
+<div *ngIf="vitalsModal">
+  <app-vitals-modal (toggleModal)="toggleModal('vitals-modal')"></app-vitals-modal>
 </div>
 
-<div *ngIf="showDeathRecordModal">
-  <app-death-modal (toggleDeathRecordModal)="toggleDeathRecordModal()"></app-death-modal>
+<div *ngIf="allergiesModal">
+  <app-allergies-modal (toggleModal)="toggleModal('allergies-modal')"></app-allergies-modal>
 </div>
 
-<div *ngIf="showVaccineModal">
-  <app-vaccine-modal (vaccineModal)="vaccineModal()"></app-vaccine-modal>
+<div *ngIf="medicationModal">
+  <app-medication-modal (toggleModal)="toggleModal('medication-modal')"></app-medication-modal>
 </div>
+
+<div *ngIf="vaccineModal">
+  <app-vaccine-modal (toggleModal)="toggleModal('vaccine-modal')"></app-vaccine-modal>
+</div>
+
+<div *ngIf="historyModal">
+  <app-history-modal (toggleModal)="toggleModal('history-modal')"></app-history-modal>
+</div>
+
+<div *ngIf="famHistoryModal">
+  <app-fam-history-modal (toggleModal)="toggleModal('fam-history-modal')"></app-fam-history-modal>
+</div>
+
+<div *ngIf="lifestyleModal">
+  <app-lifestyle-modal (toggleModal)="toggleModal('lifestyle-modal')"></app-lifestyle-modal>
+</div>
+
+<div *ngIf="deathRecordModal">
+  <app-death-modal (toggleModal)="toggleModal('death-modal')"></app-death-modal>
+</div>
+

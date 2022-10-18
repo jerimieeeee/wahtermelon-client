@@ -6,7 +6,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
   styleUrls: ['./death-modal.component.scss']
 })
 export class DeathModalComponent implements OnInit {
-  @Output() toggleDeathRecordModal = new EventEmitter<any>();
+  @Output() toggleModal = new EventEmitter<any>();
 
   constructor() { }
 
@@ -14,6 +14,6 @@ export class DeathModalComponent implements OnInit {
   }
 
   closeModal(){
-    this.toggleDeathRecordModal.emit();
+    this.toggleModal.emit('death-modal');
   }
 }
