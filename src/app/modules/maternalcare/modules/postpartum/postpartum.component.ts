@@ -35,6 +35,7 @@ export class PostpartumComponent implements OnInit {
   @Output() postpartum_bool = new EventEmitter<string>();
   filter: string;
   @Input() delivery_location;
+  @Input() regions;
   @Input() attendants;
   @Input() preg_outcome;
   constructor() { }
@@ -117,6 +118,11 @@ export class PostpartumComponent implements OnInit {
   } else {
     this.keyUp.push(id);
   }
+
+  // if(id == 'region'){
+  //   console.log("modes are regions");
+  //   this.regions.filter(reg => (reg.id === id));
+  // }
 }
 
 buttonShow(name) {

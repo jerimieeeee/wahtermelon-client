@@ -37,7 +37,7 @@
         <app-prenatal [fetals]="fetals" [fhr_lib]="fhr_lib"></app-prenatal>
       </div>
       <div class="w-12/12 px-8 pb-10 border-solid border-2 border-zinc-100 border-l-0 border-r-0 border-t-0 p-3">
-        <app-postpartum (postpartum_bool)="postValue($event)" [delivery_location]="delivery_location" [attendants]="attendants" [preg_outcome]="preg_outcome"></app-postpartum>
+        <app-postpartum (postpartum_bool)="postValue($event)" [delivery_location]="delivery_location" [regions]="regions" [attendants]="attendants" [preg_outcome]="preg_outcome"></app-postpartum>
       </div>
       <div  *ngIf="post_value" class="w-12/12 px-8 pb-10 border-solid border-2 border-zinc-100 border-l-0 border-r-0 border-t-0 p-3">
         <app-postvisits></app-postvisits>
