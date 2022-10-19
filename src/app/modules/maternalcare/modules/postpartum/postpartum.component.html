@@ -208,50 +208,18 @@
                             </select>
 
                         </div>
-                        <div class="transitions col-span-4  border-check relative mx-2" *ngIf="!focused">
-                            <h3>Region</h3>
+                        <div class="transitions col-span-4  border-check relative mx-2 last-of-type:mb-2" *ngFor="let demo of demog">
+                            <h3 class="text-capitalize">{{demo.loc}}</h3>
                             <select formControlName="region" (keyup.escape)="clearForm($event.target.id)"
-                                (change)="onKeyUp($event.target.value, $event.target.id)" id="region"
+                                (change)="onKeyUp($event.target.value, $event.target.id)" id="regions"
+                                (change)="loadDemog(demo.loc, $event.target.value , demo.includes)"
                                 class="text-ellipsis bg-white text-align-left drop_btn border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed">
-                                <option *ngFor="let reg of regions" [value]="reg.code">
-                                    {{reg.name}}
+                                <option *ngFor="let opt of this[demo.loc]" [value]="opt.code">
+                                    {{opt.name}}
                                 </option>
                             </select>
-
                         </div>
-                        <div class="transitions col-span-4  border-check relative mx-2" *ngIf="!focused">
-                            <h3>Province</h3>
-                            <select formControlName="province" (keyup.escape)="clearForm($event.target.id)"
-                                (change)="onKeyUp($event.target.value, $event.target.id)" id="province"
-                                class="text-ellipsis bg-white text-align-left drop_btn border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed">
-                                <option *ngFor="let loc of delivery_location">
-                                    {{loc.loc}}
-                                </option>
-                            </select>
-
-                        </div>
-                        <div class="transitions col-span-4 border-check relative mx-2" *ngIf="!focused">
-                            <h3>Municipality</h3>
-                            <select formControlName="muncity" (keyup.escape)="clearForm($event.target.id)"
-                                (change)="onKeyUp($event.target.value, $event.target.id)" id="muncity"
-                                class="text-ellipsis bg-white text-align-left drop_btn border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed">
-                                <option *ngFor="let loc of delivery_location">
-                                    {{loc.loc}}
-                                </option>
-                            </select>
-
-                        </div>
-                        <div class="transitions col-span-4  border-check relative mx-2 mb-2" *ngIf="!focused">
-                            <h3>Barangay</h3>
-                            <select formControlName="barangay" (keyup.escape)="clearForm($event.target.id)"
-                                (change)="onKeyUp($event.target.value, $event.target.id)" id="barangay"
-                                class="text-ellipsis bg-white text-align-left drop_btn border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed">
-                                <option *ngFor="let loc of delivery_location">
-                                    {{loc.loc}}
-                                </option>
-                            </select>
-
-                        </div>
+                       
                     </div>
                 </div>
 
