@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { faSearch, faPlus, faCalendar, faInfoCircle, faCircleNotch, faFloppyDisk,} from '@fortawesome/free-solid-svg-icons';
 import { faSave, faPenToSquare, faPlusSquare } from '@fortawesome/free-regular-svg-icons';
@@ -14,6 +14,7 @@ import { Router } from '@angular/router';
   templateUrl: './first-visit.component.html',
   styleUrls: ['./first-visit.component.scss']
 })
+
 
 export class FirstVisitComponent implements OnInit {
 
@@ -51,7 +52,7 @@ export class FirstVisitComponent implements OnInit {
     mothers_name: new FormControl<string| null>(''),
   });
 
-
+  @Input() module;
   // Section 2
   constructor(private formBuilder: FormBuilder, private http: HttpService,
     private router: Router) { }
