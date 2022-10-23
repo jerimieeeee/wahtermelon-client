@@ -3,6 +3,7 @@ import { faSearch,faBalanceScale,faPlus, faInfoCircle, faCircleNotch } from '@fo
 import { FormBuilder, FormGroup,FormArray,FormControl,Validators,} from '@angular/forms';
 import * as moment from 'moment';
 import { faPenToSquare } from '@fortawesome/free-regular-svg-icons';
+import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
   selector: 'app-breastfeeding',
@@ -31,6 +32,7 @@ export class BreastfeedingComponent implements OnInit {
 
  
   showBreastfeedingModal = false;
+  lib_reasons: any;
   
   toggleBreastfeedingModal(){
     this.showBreastfeedingModal = !this.showBreastfeedingModal;
@@ -72,15 +74,15 @@ export class BreastfeedingComponent implements OnInit {
     {code: 'N', desc: 'No'},
   ];
 
-  reasons = [
-    {code: '00', desc: '-'},
-    {code: '01', desc:'Infant nutrition'},
-    {code: '02', desc:'Maternal illness'},
-    {code: '03', desc:'Infant illness'},
-    {code: '04', desc:'Lactation and milk-pumping problems'},
-    {code: '05', desc:'Mother returns to work'},
-    {code: '06', desc:'Introduced water or solid food'},
-  ];
+  // reasons = [
+  //   {code: '00', desc: '-'},
+  //   {code: '01', desc:'Infant nutrition'},
+  //   {code: '02', desc:'Maternal illness'},
+  //   {code: '03', desc:'Infant illness'},
+  //   {code: '04', desc:'Lactation and milk-pumping problems'},
+  //   {code: '05', desc:'Mother returns to work'},
+  //   {code: '06', desc:'Introduced water or solid food'},
+  // ];
 
   ccdev = [
     {"id" : "bfed_month1", "name" : "Month 1", "date" : moment(this.todaysDate).add(1, 'M').format('MMM DD, YYYY'), ischecked: false, isDefault: 'N/A', ebf_status: ''},
@@ -92,7 +94,7 @@ export class BreastfeedingComponent implements OnInit {
   ];
   
 
-  constructor() { 
+  constructor(private http: HttpService) { 
 
 
     
@@ -158,10 +160,19 @@ export class BreastfeedingComponent implements OnInit {
     this.ccdev.sort((m, c) => new Date(m.date).getTime() - new Date(c.date).getTime());this.ccdev.sort
   }
 
+  loadLibraries(){
+   
+  this.http.get('libraries/reason').subscribe((data: any) => {
+    this.lib_reasons = data.data
+    console.log(data);
+  });
+}
+
 
   ngOnInit(){
     this.fetchSelectedItems()
     this.geteServiceName()
+    this.loadLibraries();
   }
 
 }
