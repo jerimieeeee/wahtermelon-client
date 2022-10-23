@@ -47,9 +47,10 @@ export class FirstVisitComponent implements OnInit {
 
   visitForm: FormGroup = new FormGroup({
     admission_date: new FormControl<string| null>(''),
-    discharged_date: new FormControl<string| null>(''),
-    weight: new FormControl<string| null>(''),
-    mothers_name: new FormControl<string| null>(''),
+    discharge_date: new FormControl<string| null>(''),
+    birth_weight: new FormControl<string| null>(''),
+    mothers_id: new FormControl<string| null>(''),
+    patient_id: new FormControl<string| null>(''),
   });
 
   @Input() module;
@@ -67,40 +68,62 @@ export class FirstVisitComponent implements OnInit {
     this.showAdmissionModal = !this.showAdmissionModal;
   }
 
-  saveAdmission(){
-    this.form_saving = true;
+  // saveAdmission(){
+  //   this.form_saving = true;
+  //   this.is_saving = true;
+  //   this.is_saving2 = false;
+  //   localStorage.setItem('form-data', JSON.stringify(this.visitForm.value));
+  //   setTimeout(() => {
+  //     this.is_saving = false;
+  //     this.is_saving2 = true;
+  //   }, 5000);
+  // }
+
+  onSubmit(){
+    console.log(this.visitForm.value);
+    console.log(this.visitForm.invalid);
     this.is_saving = true;
     this.is_saving2 = false;
-    localStorage.setItem('form-data', JSON.stringify(this.visitForm.value));
-    setTimeout(() => {
+    // this.showModal = true;
+    if(!this.visitForm.invalid){
+      this.http.post('childcare-patient', this.visitForm.value).subscribe({
+        error: err => console.log(err),
+        complete: () => {
+          this.is_saving = false;
+          this.is_saving2 = true;
+        }
+      })
+    } else {
       this.is_saving = false;
-      this.is_saving2 = true;
-    }, 5000);
+    }
   }
 
   validateForm(){
     this.visitForm = this.formBuilder.group({
       admission_date: ['', [Validators.required]],
-      discharged_date: ['', [Validators.required]],
-      weight: ['', [Validators.required, Validators.minLength(1)]],
-      mothers_name: ['', [Validators.required, Validators.minLength(2)]],
+      discharge_date: ['', [Validators.required]],
+      birth_weight: ['', [Validators.required, Validators.minLength(1)]],
+      mothers_id: ['', [Validators.required, Validators.minLength(2)]],
+      patient_id: ['97794d18-dd8d-4656-8da7-4368d5a735e9', [Validators.required, Validators.minLength(2)]],
+      user_id: ['5', [Validators.required, Validators.minLength(2)]],
+      ccdev_ended: ['N', [Validators.required, Validators.minLength(2)]],
     });
   }
 
-  getData(){
-    if(!localStorage.getItem('form-data'))
-    {
-      localStorage.setItem('form-data', JSON.stringify([]))
-    }
-    const values = JSON.parse(localStorage.getItem("form-data"));
-    this.visitForm = new FormGroup({
-      admission_date: new FormControl(values['admission_date']),
-      discharged_date: new FormControl(values['discharged_date']),
-      weight: new FormControl(values['weight']),
-      mothers_name: new FormControl(values['mothers_name'])
-    });
-    console.log(values)
-  }
+  // getData(){
+  //   if(!localStorage.getItem('form-data'))
+  //   {
+  //     localStorage.setItem('form-data', JSON.stringify([]))
+  //   }
+  //   const values = JSON.parse(localStorage.getItem("form-data"));
+  //   this.visitForm = new FormGroup({
+  //     admission_date: new FormControl(values['admission_date']),
+  //     discharge_date: new FormControl(values['discharged_date']),
+  //     birth_weight: new FormControl(values['weight']),
+  //     mothers_id: new FormControl(values['mothers_name'])
+  //   });
+  //   console.log(values)
+  // }
 
   // onSelect(selectedPatient){
   //   /* this.searchInput$.next(null);
@@ -156,7 +179,7 @@ export class FirstVisitComponent implements OnInit {
 
   ngOnInit(): void {
     this.validateForm();
-    this.getData();
+    // this.getData();
     this.saved = true;
     this.loadPatients();
    
