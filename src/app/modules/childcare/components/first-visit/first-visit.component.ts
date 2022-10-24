@@ -42,10 +42,13 @@ export class FirstVisitComponent implements OnInit {
 
   saved: boolean;
 
-  variablechange: any;
-
   required_message = 'This field is required.';
 
+  patient_info: any;
+  patient_info2: any;
+ 
+  patientccdev_id= 5;
+  
 
   visitForm: FormGroup = new FormGroup({
     admission_date: new FormControl<string| null>(''),
@@ -109,7 +112,7 @@ export class FirstVisitComponent implements OnInit {
       discharge_date: ['', [Validators.required]],
       birth_weight: ['', [Validators.required, Validators.minLength(1)]],
       mothers_id: ['', [Validators.required, Validators.minLength(2)]],
-      patient_id: [this.patient_details, [Validators.required, Validators.minLength(2)]],
+      patient_id: [this.patient_details.id, [Validators.required, Validators.minLength(2)]],
       user_id: ['97936f41-dd26-43e7-ba37-259ef5ffc9f2', [Validators.required, Validators.minLength(2)]],
       ccdev_ended: ['1', [Validators.required, Validators.minLength(2)]],
       nbs_filter: ['5500815323', [Validators.required, Validators.minLength(2)]],
@@ -147,9 +150,36 @@ export class FirstVisitComponent implements OnInit {
     }))
   }
   
+  getccdevDetails() {
+    this.http.get('childcare-patient/'+this.patientccdev_id)
+    .subscribe({
+      next: (data: any) => {
+        this.patient_info = data.data;
+        console.log(this.patient_info, 'info ccdev')
+        this.getccdevDetails2()
+        this.visitForm.setValue(this.patient_info);
+      },
+      error: err => console.log(err)
+    });
+  }
+
+  getccdevDetails2() {
+    this.http.get('patient/'+this.patient_info.mothers_id)
+    .subscribe({
+      next: (data: any) => {
+        this.patient_info2 = data.data;
+        console.log(this.patient_info2, 'info ccdev 2')
+      },
+      error: err => console.log(err)
+    });
+  }
+
+  
+  
   changeFn(val) {
     console.log(val);
 }
+
 
   loadPatients() {
     this.patients$ = concat(
@@ -184,12 +214,12 @@ export class FirstVisitComponent implements OnInit {
   
 
   ngOnInit(): void {
-    this.patient_details
     this.validateForm();
     // this.getData();
     this.saved = true;
     this.loadPatients();
-    
+    this.getccdevDetails();
+    this.getccdevDetails2();
   }
 
 }

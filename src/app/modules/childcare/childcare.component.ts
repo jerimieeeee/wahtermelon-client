@@ -23,7 +23,7 @@ export class ChildcareComponent implements OnInit {
   }
 
   patientInfo(info){
-   this.patient_details = info.id;
+   this.patient_details = info;
     console.log(this.patient_details);
   }
 
