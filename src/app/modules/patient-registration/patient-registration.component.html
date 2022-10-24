@@ -187,8 +187,8 @@
             <div class="col-span-6 sm:col-span-2">
               <label for="indegenous_flag" class="input-label" [ngClass]="{'text-red-500': is_saving && f.indegenous_flag.errors}">Indigenous People</label>
               <select id="indegenous_flag" name="indegenous_flag" class="input" [ngClass]="{'invalid-input': is_saving && f.indegenous_flag.errors}" formControlName="indegenous_flag">
-                <option value="false">N</option>
-                <option value="true">Y</option>
+                <option [ngValue]="false">N</option>
+                <option [ngValue]="true">Y</option>
               </select>
 
               <div *ngIf="is_saving && f.indegenous_flag.errors" class="invalid-alert">
@@ -201,8 +201,8 @@
             <div class="col-span-6 sm:col-span-2">
               <label for="consent_flag" class="input-label" [ngClass]="{'text-red-500': is_saving && f.consent_flag.errors}">Has Consent</label>
               <select id="consent_flag" name="consent_flag" class="input" [ngClass]="{'invalid-input': is_saving && f.consent_flag.errors}" formControlName="consent_flag">
-                <option value="false">N</option>
-                <option value="true">Y</option>
+                <option [ngValue]="false">N</option>
+                <option [ngValue]="true">Y</option>
               </select>
             </div>
 
@@ -213,7 +213,7 @@
             </div>
           </div>
 
-          <div class="grid grid-cols-8 gap-x-4 gap-y-6" formGroupName="family">
+          <!-- <div class="grid grid-cols-8 gap-x-4 gap-y-6" formGroupName="family">
             <div class="col-span-8 border-b-2 border-slate-100"></div>
             <div class="col-span-6 sm:col-span-2">
               <label for="region" class="input-label" [ngClass]="{'text-red-500': is_saving && f['family']['controls']['region'].errors}">Region</label>
@@ -319,7 +319,7 @@
                 </div>
               </div>
             </div>
-          </div>
+          </div> -->
         </div>
 
         <div class="text-right">
