@@ -90,12 +90,4 @@ export class PatientInfoComponent {
         break;
     }
   }
-
-  /* toggleDeathRecordModal(){
-    this.showDeathRecordModal = !this.showDeathRecordModal;
-  } */
-/*
-  vaccineModals(){
-    this.showVaccineModal = !this.showVaccineModal;
-  } */
 }
