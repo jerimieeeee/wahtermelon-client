@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { faSearch, faPlus, faCalendar, faInfoCircle, faCircleNotch, faFloppyDisk,} from '@fortawesome/free-solid-svg-icons';
 import { faSave, faPenToSquare, faPlusSquare } from '@fortawesome/free-regular-svg-icons';
@@ -42,6 +42,8 @@ export class FirstVisitComponent implements OnInit {
 
   saved: boolean;
 
+  variablechange: any;
+
   required_message = 'This field is required.';
 
 
@@ -51,12 +53,17 @@ export class FirstVisitComponent implements OnInit {
     birth_weight: new FormControl<string| null>(''),
     mothers_id: new FormControl<string| null>(''),
     patient_id: new FormControl<string| null>(''),
+    nbs_filter: new FormControl<string| null>(''),
   });
 
-  @Input() module;
+  @Input() patient_details: any;
+  
+  
   // Section 2
   constructor(private formBuilder: FormBuilder, private http: HttpService,
     private router: Router) { }
+
+  
 
   get f(): { [key: string]: AbstractControl } {
     return this.visitForm.controls;
@@ -85,7 +92,7 @@ export class FirstVisitComponent implements OnInit {
     this.is_saving = true;
     this.is_saving2 = false;
     // this.showModal = true;
-    if(!this.visitForm.invalid){
+  
       this.http.post('childcare-patient', this.visitForm.value).subscribe({
         error: err => console.log(err),
         complete: () => {
@@ -93,10 +100,8 @@ export class FirstVisitComponent implements OnInit {
           this.is_saving2 = true;
         }
       })
-    } else {
-      this.is_saving = false;
     }
-  }
+    
 
   validateForm(){
     this.visitForm = this.formBuilder.group({
@@ -104,9 +109,10 @@ export class FirstVisitComponent implements OnInit {
       discharge_date: ['', [Validators.required]],
       birth_weight: ['', [Validators.required, Validators.minLength(1)]],
       mothers_id: ['', [Validators.required, Validators.minLength(2)]],
-      patient_id: ['97794d18-dd8d-4656-8da7-4368d5a735e9', [Validators.required, Validators.minLength(2)]],
-      user_id: ['5', [Validators.required, Validators.minLength(2)]],
-      ccdev_ended: ['N', [Validators.required, Validators.minLength(2)]],
+      patient_id: [this.patient_details, [Validators.required, Validators.minLength(2)]],
+      user_id: ['97936f41-dd26-43e7-ba37-259ef5ffc9f2', [Validators.required, Validators.minLength(2)]],
+      ccdev_ended: ['1', [Validators.required, Validators.minLength(2)]],
+      nbs_filter: ['5500815323', [Validators.required, Validators.minLength(2)]],
     });
   }
 
@@ -174,15 +180,16 @@ export class FirstVisitComponent implements OnInit {
   //     this.is_saving4 = true;
   //   }, 5000);
   // }
-
+  
   
 
   ngOnInit(): void {
+    this.patient_details
     this.validateForm();
     // this.getData();
     this.saved = true;
     this.loadPatients();
-   
+    
   }
 
 }
