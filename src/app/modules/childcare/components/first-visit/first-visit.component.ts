@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { faSearch, faPlus, faCalendar, faInfoCircle, faCircleNotch, faFloppyDisk,} from '@fortawesome/free-solid-svg-icons';
 import { faSave, faPenToSquare, faPlusSquare } from '@fortawesome/free-regular-svg-icons';
@@ -14,6 +14,7 @@ import { Router } from '@angular/router';
   templateUrl: './first-visit.component.html',
   styleUrls: ['./first-visit.component.scss']
 })
+
 
 export class FirstVisitComponent implements OnInit {
 
@@ -43,18 +44,29 @@ export class FirstVisitComponent implements OnInit {
 
   required_message = 'This field is required.';
 
+  patient_info: any;
+  patient_info2: any;
+ 
+  patientccdev_id= 5;
+  
 
   visitForm: FormGroup = new FormGroup({
     admission_date: new FormControl<string| null>(''),
-    discharged_date: new FormControl<string| null>(''),
-    weight: new FormControl<string| null>(''),
-    mothers_name: new FormControl<string| null>(''),
+    discharge_date: new FormControl<string| null>(''),
+    birth_weight: new FormControl<string| null>(''),
+    mothers_id: new FormControl<string| null>(''),
+    patient_id: new FormControl<string| null>(''),
+    nbs_filter: new FormControl<string| null>(''),
   });
 
-
+  @Input() patient_details: any;
+  
+  
   // Section 2
   constructor(private formBuilder: FormBuilder, private http: HttpService,
     private router: Router) { }
+
+  
 
   get f(): { [key: string]: AbstractControl } {
     return this.visitForm.controls;
@@ -66,40 +78,61 @@ export class FirstVisitComponent implements OnInit {
     this.showAdmissionModal = !this.showAdmissionModal;
   }
 
-  saveAdmission(){
-    this.form_saving = true;
+  // saveAdmission(){
+  //   this.form_saving = true;
+  //   this.is_saving = true;
+  //   this.is_saving2 = false;
+  //   localStorage.setItem('form-data', JSON.stringify(this.visitForm.value));
+  //   setTimeout(() => {
+  //     this.is_saving = false;
+  //     this.is_saving2 = true;
+  //   }, 5000);
+  // }
+
+  onSubmit(){
+    console.log(this.visitForm.value);
+    console.log(this.visitForm.invalid);
     this.is_saving = true;
     this.is_saving2 = false;
-    localStorage.setItem('form-data', JSON.stringify(this.visitForm.value));
-    setTimeout(() => {
-      this.is_saving = false;
-      this.is_saving2 = true;
-    }, 5000);
-  }
+    // this.showModal = true;
+  
+      this.http.post('childcare-patient', this.visitForm.value).subscribe({
+        error: err => console.log(err),
+        complete: () => {
+          this.is_saving = false;
+          this.is_saving2 = true;
+        }
+      })
+    }
+    
 
   validateForm(){
     this.visitForm = this.formBuilder.group({
       admission_date: ['', [Validators.required]],
-      discharged_date: ['', [Validators.required]],
-      weight: ['', [Validators.required, Validators.minLength(1)]],
-      mothers_name: ['', [Validators.required, Validators.minLength(2)]],
+      discharge_date: ['', [Validators.required]],
+      birth_weight: ['', [Validators.required, Validators.minLength(1)]],
+      mothers_id: ['', [Validators.required, Validators.minLength(2)]],
+      patient_id: [this.patient_details.id, [Validators.required, Validators.minLength(2)]],
+      user_id: ['97936f41-dd26-43e7-ba37-259ef5ffc9f2', [Validators.required, Validators.minLength(2)]],
+      ccdev_ended: ['1', [Validators.required, Validators.minLength(2)]],
+      nbs_filter: ['5500815323', [Validators.required, Validators.minLength(2)]],
     });
   }
 
-  getData(){
-    if(!localStorage.getItem('form-data'))
-    {
-      localStorage.setItem('form-data', JSON.stringify([]))
-    }
-    const values = JSON.parse(localStorage.getItem("form-data"));
-    this.visitForm = new FormGroup({
-      admission_date: new FormControl(values['admission_date']),
-      discharged_date: new FormControl(values['discharged_date']),
-      weight: new FormControl(values['weight']),
-      mothers_name: new FormControl(values['mothers_name'])
-    });
-    console.log(values)
-  }
+  // getData(){
+  //   if(!localStorage.getItem('form-data'))
+  //   {
+  //     localStorage.setItem('form-data', JSON.stringify([]))
+  //   }
+  //   const values = JSON.parse(localStorage.getItem("form-data"));
+  //   this.visitForm = new FormGroup({
+  //     admission_date: new FormControl(values['admission_date']),
+  //     discharge_date: new FormControl(values['discharged_date']),
+  //     birth_weight: new FormControl(values['weight']),
+  //     mothers_id: new FormControl(values['mothers_name'])
+  //   });
+  //   console.log(values)
+  // }
 
   // onSelect(selectedPatient){
   //   /* this.searchInput$.next(null);
@@ -117,9 +150,36 @@ export class FirstVisitComponent implements OnInit {
     }))
   }
   
+  getccdevDetails() {
+    this.http.get('childcare-patient/'+this.patientccdev_id)
+    .subscribe({
+      next: (data: any) => {
+        this.patient_info = data.data;
+        console.log(this.patient_info, 'info ccdev')
+        this.getccdevDetails2()
+        this.visitForm.setValue(this.patient_info);
+      },
+      error: err => console.log(err)
+    });
+  }
+
+  getccdevDetails2() {
+    this.http.get('patient/'+this.patient_info.mothers_id)
+    .subscribe({
+      next: (data: any) => {
+        this.patient_info2 = data.data;
+        console.log(this.patient_info2, 'info ccdev 2')
+      },
+      error: err => console.log(err)
+    });
+  }
+
+  
+  
   changeFn(val) {
     console.log(val);
 }
+
 
   loadPatients() {
     this.patients$ = concat(
@@ -150,15 +210,16 @@ export class FirstVisitComponent implements OnInit {
   //     this.is_saving4 = true;
   //   }, 5000);
   // }
-
+  
   
 
   ngOnInit(): void {
     this.validateForm();
-    this.getData();
+    // this.getData();
     this.saved = true;
     this.loadPatients();
-   
+    this.getccdevDetails();
+    this.getccdevDetails2();
   }
 
 }

@@ -11,7 +11,7 @@
     </div>
 </div>
     <!--Admission Date & Time Section-->
-<form [formGroup]="visitForm" (submit)="saveAdmission()">
+<form [formGroup]="visitForm" (submit)="onSubmit()">
 
 <div class="card mb-6">
 
@@ -34,7 +34,7 @@
               <path d="M18 16.496v1.504l1 1"></path>
            </svg>
           </div>
-         <input type="text" placeholder="Select Date and Time" onfocus="(this.type='datetime-local')" class="mt-1 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input" placeholder="Select date" formControlName="admission_date" required>
+         <input type="date" placeholder="Select Date and Time" onfocus="(this.type='date')" class="mt-1 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input" placeholder="Select date" formControlName="admission_date" required>
         </div>
 
         <div *ngIf="form_saving && f.admission_date.errors" class="invalid-alert mt-1">
@@ -63,7 +63,7 @@
               <path d="M18 16.496v1.504l1 1"></path>
            </svg>
           </div>
-         <input type="text" placeholder="Select Date and Time" onfocus="(this.type='datetime-local')" class="mt-1 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input" placeholder="Select date" formControlName="discharged_date" required>
+         <input type="date" placeholder="Select Date and Time" onfocus="(this.type='date')" class="mt-1 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input" placeholder="Select date" formControlName="discharge_date" required>
         </div>
 
         <div *ngIf="form_saving && f.discharged_date.errors" class="invalid-alert mt-1">
@@ -87,7 +87,7 @@
               <path d="M12 7c1.956 0 3.724 .802 4.994 2.095l-2.956 2.904a3 3 0 0 0 -2.038 -.799a3 3 0 0 0 -2.038 .798l-2.956 -2.903a6.979 6.979 0 0 1 4.994 -2.095z"></path>
            </svg>
           </div>
-         <input type="text" class="mt-1 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input" placeholder="Input weight" [ngClass]="{'invalid-input': form_saving && f.weight.errors}" formControlName="weight" required>
+         <input type="text" class="mt-1 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input" placeholder="Input weight" [ngClass]="{'invalid-input': form_saving && f.weight.errors}" formControlName="birth_weight" required>
         </div>
 
         <div *ngIf="form_saving && f.weight.errors" class="invalid-alert mt-1">
@@ -126,9 +126,14 @@
           typeToSearchText="Search Mother's Name"
           [typeahead]="searchInput$"
           [clearable]="false"
-          formControlName="mothers_name">
-          <ng-template ng-label-tmp let-item="item">
-            <p class="">{{item.first_name}} {{item.middle_name}} {{item.last_name}}</p>
+          bindValue="id"
+          formControlName="mothers_id">
+          <ng-template ng-label-tmp let-item="item" class="">
+            <div class="flex">
+              <img src="./assets/img/profile_1.jpg" alt="profile_img" class="rounded-full w-8 h-8 mr-2" />
+              <p class="mt-1.5">{{patient_info2.first_name}} {{patient_info2.middle_name}} {{patient_info2.last_name}}</p>
+            </div>
+            
         </ng-template>
           <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
             <!-- <a href="itr"> -->
@@ -163,7 +168,7 @@
         </div>
       
         <div class="flex w-full flex-col px-5 pt-3">
-          <button type="button" class="btn-add ml-auto mr-5" (click)="saveAdmission()">
+          <button type="button" class="btn-add ml-auto mr-5" (click)="onSubmit()">
             <fa-icon *ngIf="is_saving2" class="mr-1" [icon]="faSave"></fa-icon>
             <fa-icon *ngIf="is_saving" class="mr-1" [icon]="faSpinner" [spin]="true"></fa-icon>
            {{ is_saving ? 'Saving' : 'Save' }}
