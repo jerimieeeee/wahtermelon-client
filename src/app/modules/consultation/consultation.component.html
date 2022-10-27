@@ -39,7 +39,7 @@
           </div>
           <div class="col-span-8">
             <div class="flex mb-2">
-              <button type="submit" class="inline-flex p-3 items-center text-gray-50 bg-sky-400 rounded-l-md border border-gray-300">
+              <button type="submit" class="inline-flex p-1 items-center text-gray-50 bg-sky-400 rounded-l-md border border-gray-300">
                 <fa-icon class="text-white fa-xl" [icon]="faPlusSquare" ></fa-icon>
               </button>
               <div class="chips-container">
@@ -47,7 +47,7 @@
                   Headache
                   <fa-icon class="chips-close" [icon]="faXmark" (click)="deleteItem()"></fa-icon>
                 </span> -->
-                <ng-select placeholder="search"
+                <ng-select class="select-chips" placeholder="search"
                   [items]="complaints$ | async"
                   [multiple]="true"
                   [closeOnSelect]="false"
@@ -80,7 +80,7 @@
         </div>
       </div>
 
-      <hr class="my-4">
+      <!-- <hr class="my-4">
       <div>
         <div class="grid grid-cols-10">
           <div class="col-span-2 pt-2">
@@ -97,6 +97,50 @@
                   <fa-icon class="chips-close" [icon]="faXmark" (click)="deleteItem()"></fa-icon>
                 </span>
               </div>
+            </div>
+          </div>
+        </div>
+      </div> -->
+
+      <hr class="my-4">
+      <div>
+        <div class="grid grid-cols-10">
+          <div class="col-span-2 pt-2">
+            Physical Exam
+          </div>
+          <div class="col-span-8">
+            <div class="rounded-md border border-solid border-gray-300">
+              <span class="rounded-t-md m-0 p-2 font-semibold text-gray-50 block bg-teal-500">
+                Findings
+              </span>
+              <div class="w-full p-3">
+                <div class="grid grid-cols-4">
+                  <div class="col-span-1">
+test
+                  </div>
+                  <div class="col-span-3">
+sample
+                  </div>
+                </div>
+              </div>
+              <!-- <table class="w-full table-auto">
+                <thead>
+                  <tr class="border-b border-solid border-gray-200">
+                    <th>Date</th>
+                    <th>Initial Diagnosis</th>
+                    <th>Final Diagnosis</th>
+                    <th>Precription</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="text-center">
+                    <td>09/01/2022</td>
+                    <td>Sample dx</td>
+                    <td>Sample dx</td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table> -->
             </div>
           </div>
         </div>

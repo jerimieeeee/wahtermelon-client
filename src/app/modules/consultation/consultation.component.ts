@@ -6,6 +6,7 @@ import { trigger, transition, style, animate } from '@angular/animations';
 import { HttpService } from 'app/shared/services/http.service';
 import { delay, map, Observable, of } from 'rxjs';
 import { Complaints  } from './model/complaint';
+import { Pe  } from './model/pe';
 
 @Component({
   selector: 'app-consultation',
@@ -146,6 +147,8 @@ export class ConsultationComponent implements OnInit {
     this.show_item = false;
   }
 
+  pe_grouped = [];
+  pe: Pe;
   loadLibraries() {
     let value: any;
     /* return this.http.get('libraries/complaint').pipe(
@@ -158,6 +161,19 @@ export class ConsultationComponent implements OnInit {
     this.http.get('libraries/complaint').subscribe(
       (data: any) => {
         this.complaints$ = of(data.data)
+      }
+    );
+
+    this.http.get('libraries/pe').subscribe(
+      (data: any) => {
+        console.log(data.data)
+        this.pe = {...data.data};
+        console.log(this.pe)
+        // this.pe_grouped = this.pe.group(({ category_id }) => category_id);
+        /* this.pe_grouped = result.groupBy(pe => {
+          return pe.category_id
+        }) */
+        // console.log(this.pe_grouped);
       }
     );
     /* return this.http.get('libraries/complaint').subscribe({
