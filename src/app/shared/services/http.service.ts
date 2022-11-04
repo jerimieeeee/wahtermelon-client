@@ -26,4 +26,8 @@ export class HttpService {
   update(loc, id, data) {
     return this.http.patch(`${this.baseUrl}` + loc + id, data)
   }
+
+  test(loc, data?) {
+    return this.http.get('https://apiwahtermelon-staging.wah.ph/api/' + loc, data ? data : '')
+  }
 }
