@@ -1,6 +1,9 @@
+import { analytics } from '@angular-devkit/core';
 import { formatDate } from '@angular/common';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { emptyObjectsAreNotAllowedInProps } from '@ngrx/store/src/models';
+import { HttpService } from 'app/shared/services/http.service';
 import { Vaccines } from './data/vaccine';
 
 @Component({
@@ -13,6 +16,7 @@ export class VaccineModalComponent implements OnInit {
 
   error_message = "exceeded maximum value";
   vaccine_list = Vaccines;
+  vaccines: any;
 
   vaccineForm: FormGroup = new FormGroup({
     vitals_date: new FormControl<string| null>(''),
@@ -31,7 +35,8 @@ export class VaccineModalComponent implements OnInit {
   });
 
   constructor(
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private http: HttpService
   ) { }
 
   onSubmit(){
@@ -68,6 +73,29 @@ export class VaccineModalComponent implements OnInit {
   closeModal(){
     this.toggleModal.emit('vaccine-moodal');
   }
+  vaccine_grouped = [];
+
+  loadLibraries() {
+    let value: any;
+
+    this.http.get('libraries/vaccine').subscribe(
+      (data: any) => {
+        const list = data.data;
+        console.log(list)
+        const groups = list.reduce((groups, item) => {
+          const group = (groups[item.vaccine_module] || []);
+          group.push(item);
+          groups[item.vaccine_module] = group;
+          return groups;
+        }, {});
+
+        this.vaccine_grouped = groups;
+        console.log(this.vaccine_grouped);
+        console.log(this.vaccine_list);
+      }
+    );
+    return value;
+  }
 
   ngOnInit(): void {
     let date = new Date();
@@ -88,6 +116,15 @@ export class VaccineModalComponent implements OnInit {
       vitals_resp_rate: [null, Validators.max(300)]
     });
 
+    /* this.http.get('libraries/vaccine').subscribe(
+      (data: any) => {
+        this.vaccines = data.data;
+        console.log(this.vaccines)
+      }
+    ); */
+    this.loadLibraries();
     console.log(this.vaccineForm);
+
+
   }
 }

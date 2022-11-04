@@ -1,12 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ChartOptions, WeightChart } from '../patient-itr/declarations/chart-options';
 import { ChartComponent } from "ng-apexcharts";
-import { faCircleNotch, faPlusSquare, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faCircleNotch, faPlus, faPlusSquare, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { trigger, transition, style, animate } from '@angular/animations';
 import { HttpService } from 'app/shared/services/http.service';
 import { delay, map, Observable, of } from 'rxjs';
 import { Complaints  } from './model/complaint';
-import { Pe  } from './model/pe';
 
 @Component({
   selector: 'app-consultation',
@@ -32,6 +31,7 @@ export class ConsultationComponent implements OnInit {
   faPlusSquare = faPlusSquare;
   faSpinner = faCircleNotch;
   faXmark = faXmark;
+  faPlus = faPlus;
 
   is_saving: boolean = false;
   show_item: boolean = true;
@@ -148,7 +148,6 @@ export class ConsultationComponent implements OnInit {
   }
 
   pe_grouped = [];
-  pe: Pe;
   loadLibraries() {
     let value: any;
     /* return this.http.get('libraries/complaint').pipe(
@@ -166,9 +165,17 @@ export class ConsultationComponent implements OnInit {
 
     this.http.get('libraries/pe').subscribe(
       (data: any) => {
-        console.log(data.data)
-        this.pe = {...data.data};
-        console.log(this.pe)
+        const list = data.data;
+
+        const groups = list.reduce((groups, item) => {
+          const group = (groups[item.category_id] || []);
+          group.push(item);
+          groups[item.category_id] = group;
+          return groups;
+        }, {});
+
+        this.pe_grouped = groups;
+        console.log(this.pe_grouped)
         // this.pe_grouped = this.pe.group(({ category_id }) => category_id);
         /* this.pe_grouped = result.groupBy(pe => {
           return pe.category_id

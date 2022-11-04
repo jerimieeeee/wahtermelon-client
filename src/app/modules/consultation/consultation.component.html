@@ -110,18 +110,32 @@
           </div>
           <div class="col-span-8">
             <div class="rounded-md border border-solid border-gray-300">
-              <span class="rounded-t-md m-0 p-2 font-semibold text-gray-50 block bg-teal-500">
-                Findings
+              <span class="rounded-t-md m-0 p-2 font-semibold text-gray-50 block bg-cyan-500">
+                Observations
               </span>
-              <div class="w-full p-3">
-                <div class="grid grid-cols-4">
-                  <div class="col-span-1">
-test
+              <div class="w-full p-5">
+                <div class="grid grid-cols-4 gap-3 mb-3 border-b border-slate-200 pb-3 last:border-b-0" *ngFor="let pe of pe_grouped | keyvalue">
+                  <div class="col-span-1 font-bold">
+                    {{ pe.key }}
                   </div>
-                  <div class="col-span-3">
-sample
+                  <div class="col-span-3 grid grid-cols-3 gap-4">
+                    <div *ngFor="let val of pe.value">
+                      {{ val.pe_desc }}
+                    </div>
+
+                    <div class="col-span-3">
+                      <span class="font-semibold">Notes: </span>
+                      <span>-</span>
+                    </div>
                   </div>
                 </div>
+              </div>
+
+              <div class="flex text-right">
+                <button type="button" class="flex btn-add ml-auto mr-5 mb-5">
+                  <fa-icon class="mr-2" [icon]="faPlus"></fa-icon>
+                 Add
+                </button>
               </div>
               <!-- <table class="w-full table-auto">
                 <thead>

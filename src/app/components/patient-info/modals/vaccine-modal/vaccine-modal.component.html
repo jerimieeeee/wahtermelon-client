@@ -13,31 +13,21 @@
         <form [formGroup]="vaccineForm" class="w-full max-w-3xl text-left text-gray-500 dark:text-gray-400">
           <div class="text-gray-600 border border-slate-100 mx-5"></div><!-- border -->
 
-          <div class="flex item-start flex-wrap pb-5" *ngFor="let list of vaccine_list">
+          <div class="flex item-start flex-wrap pb-5" *ngFor="let list of vaccine_grouped | keyvalue">
             <div class="flex justify-between w-full px-5 mt-3 rounded-tl rounded-tr">
-              <h4 class="font-bold text-blue-500 text-sm mt-2">{{ list.group }}</h4>
+              <h4 class="font-bold text-blue-500 text-sm mt-2">{{ list.key }}</h4>
             </div>
 
-            <div class="grid grid-cols-3 gap-4 w-full mx-10" *ngFor="let vaccine of list.vaccines">
-              <label class="col-span-1 pt-2" for="vitals_date">{{ vaccine.vaccine_desc }}</label>
-              <select id="vaccine.vaccine_id" name="vaccine.vaccine_id" class="col-span-1 mt-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <div class="grid grid-cols-3 gap-4 w-full mx-10" *ngFor="let vaccine of list.value">
+              <label class="col-span-1 pt-2" for="vaccine_status">{{ vaccine.vaccine_id }}</label>
+              <select id="vaccines[list.vaccine_id].vaccine_status" name="vaccine.vaccine_status" class="col-span-1 mt-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                 <option>-</option>
-                <option value="D">Done</option>
-                <option value="DPR">Done Outside - Private</option>
-                <option value="DPU">Done Outside - Public</option>
+                <option value="1">Done</option>
+                <option value="2">Done Outside - Private</option>
+                <option value="3">Done Outside - Public</option>
               </select>
-              <input name="vitals_date" id="vitals_date" formControlName="vitals_date" type="date" placeholder="Enter vaccine date" class="col-span-1 mt-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+              <input name="vaccines[list.vaccine_id].date" [id]="'vaccines.'+list.vaccine_id+'.date'" type="date" placeholder="Enter vaccine date" class="col-span-1 mt-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
             </div>
-
-            <!-- <div class="flex px-5 w-full" *ngFor="let vaccine of list.vaccines">
-              <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
-                <label for="vitals_date">{{ vaccine.vaccine_desc }}</label>
-                <div class="flex">
-                  <input type="checkbox" class="rounded flex-none border border-gray-300 m-5 p-2">
-                  <input name="vitals_date" id="vitals_date" formControlName="vitals_date" type="date" placeholder="Enter vaccine date" class="flex-1 mt-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                </div>
-              </div>
-            </div> -->
           </div>
           <div class="text-gray-600 border border-slate-100 mx-5"></div><!-- border -->
 
