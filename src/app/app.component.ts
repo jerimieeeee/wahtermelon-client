@@ -26,8 +26,8 @@ export class AppComponent implements OnInit{
     private router: Router,
     private location: Location
   ) {
-    console.log(this.router.url);
-   }
+
+  }
 
   loginForm: FormGroup = new FormGroup({
     email: new FormControl<string| null>(''),
@@ -37,10 +37,9 @@ export class AppComponent implements OnInit{
   onSubmit(){
     this.http.post('login', this.loginForm.value).subscribe({
       next: (data: any) => {
-        console.log(data.access_token);
         // this.decode(data.access_token);
         localStorage.setItem('access_token', data.access_token);
-        localStorage.setItem('name', data.user.last_name + ', ' + data.user.first_name + ' ' + data.user.middle_name + ' ' + data.user.suffix_name);
+        localStorage.setItem('name', data.user.last_name + ', ' + data.user.first_name + ' ' + data.user.middle_name + ' ' + (data.user.suffix_name == 'NA' ? '' : data.user.suffix_name));
         this.checkAuth();
       },
       error: err => console.log(err),
@@ -59,29 +58,32 @@ export class AppComponent implements OnInit{
 
   checkAuth(){
     const url = this.location.path();
-    console.log(url)
     if(localStorage.getItem('access_token')){
       this.isAuthenticated = true;
+    } else {
+      this.isAuthenticated = false;
     }
 
-    if(this.isAuthenticated == false && url != '/login') {
+    if(this.isAuthenticated == false) {
       this.showLogin = true;
       this.router.navigate(['/login']);
     }
 
-    if(this.isAuthenticated == false && url == '/login') {
+    /* if(this.isAuthenticated == false && url == '/login') {
       this.showLogin = true;
-    }
+    } */
 
-    if(this.isAuthenticated == true && url == '/login') {
+    if(this.isAuthenticated == true) {
       this.showLogin = false;
-      this.router.navigate(['/home']);
+      if(url == '/login' || url == '/' || url == ''){
+        this.router.navigate(['/home']);
+      }
     }
 
-    if(this.isAuthenticated == true && url != '/login') {
+    /* if(this.isAuthenticated == true && url != '/login') {
       console.log(4);
       this.showLogin = false;
-    }
+    } */
   }
 
   ngOnInit(): void {

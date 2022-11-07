@@ -64,8 +64,13 @@ export class HeaderComponent implements OnInit {
     }))
   }
 
+  user_info: any;
+
   ngOnInit(): void {
     this.loadPatients();
+
+    this.user_info = localStorage.getItem('name');
+    console.log(this.user_info)
   }
 
 }
