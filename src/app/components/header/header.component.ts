@@ -1,9 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { faChevronCircleDown, faBell, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faChevronCircleDown, faBell, faSearch, faGear } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { catchError, debounceTime, distinctUntilChanged, switchMap, tap, map, filter } from 'rxjs/operators';
 import { concat, Observable, of, Subject, throwError } from 'rxjs';
 import { Router } from '@angular/router';
+import { ToothServicesComponent } from 'app/modules/dental/modals/tooth-services/tooth-services.component';
 
 @Component({
   selector: 'app-header',
@@ -16,6 +17,7 @@ export class HeaderComponent implements OnInit {
   faChevronCircleDown = faChevronCircleDown;
   faBell = faBell;
   faSearch = faSearch;
+  faGear = faGear;
 
   patients$: Observable<any>;
   patientLoading = false;
@@ -46,6 +48,11 @@ export class HeaderComponent implements OnInit {
         })
       )
     );
+  }
+
+  showMenu: boolean = false;
+  toggleMenu(){
+    this.showMenu = !this.showMenu;
   }
 
   onSelect(selectedPatient){

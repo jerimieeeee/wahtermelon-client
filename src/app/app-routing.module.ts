@@ -70,6 +70,10 @@ const routes: Routes = [
   {
     path: 'consultation',
     loadChildren: () => import('./modules/consultation/consultation.module').then(m => m.ConsultationModule)
+  },
+  {
+    path: 'user-registration',
+    loadChildren: () => import('./modules/user-registration/user-registration.module').then(m => m.UserRegistrationModule)
   }
 ];
 
