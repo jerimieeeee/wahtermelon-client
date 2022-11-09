@@ -96,8 +96,8 @@ export class AppComponent implements OnInit{
     this.checkAuth();
 
     this.loginForm = this.formBuilder.nonNullable.group({
-      email: ['christian.santos37@gmail.com', [Validators.required, Validators.minLength(2), Validators.email]],
-      password: ['Ellechir_55', [Validators.required, Validators.minLength(2)]],
+      email: ['', [Validators.required, Validators.minLength(2), Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(2)]],
     });
   }
 }
