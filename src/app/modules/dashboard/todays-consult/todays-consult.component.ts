@@ -15,7 +15,7 @@ export class TodaysConsultComponent implements OnInit {
   faNotesMedical = faNotesMedical;
   faExclamationCircle = faExclamationCircle;
 
-  today_consults = [
+  today_consults = [/*
     {
       id: "/itr",
       first_name: "Dal-mi",
@@ -76,7 +76,7 @@ export class TodaysConsultComponent implements OnInit {
       duration: "1 hour 12 mins",
       img_name: "007.jpg"
     },
-  ]
+   */]
   constructor() { }
 
   ngOnInit(): void {
