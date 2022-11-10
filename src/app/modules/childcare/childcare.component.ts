@@ -24,7 +24,7 @@ export class ChildcareComponent implements OnInit {
 
   patientInfo(info){
    this.patient_details = info;
-    console.log(this.patient_details);
+    console.log(this.patient_details, 'get patient');
   }
 
   ngOnInit(): void {

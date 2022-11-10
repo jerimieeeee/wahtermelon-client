@@ -36,6 +36,7 @@ export class BreastfeedingComponent implements OnInit {
   
   toggleBreastfeedingModal(){
     this.showBreastfeedingModal = !this.showBreastfeedingModal;
+    this.geteServiceName();
   }
 
   saveModal(){
@@ -70,8 +71,8 @@ export class BreastfeedingComponent implements OnInit {
 
 
   ebf = [
-    {code: 'Y', desc: 'Yes'},
-    {code: 'N', desc: 'No'},
+    {code: '1', desc: 'Yes'},
+    {code: '0', desc: 'No'},
   ];
 
   // reasons = [
@@ -85,13 +86,16 @@ export class BreastfeedingComponent implements OnInit {
   // ];
 
   ccdev = [
-    {"id" : "bfed_month1", "name" : "Month 1", "date" : moment(this.todaysDate).add(1, 'M').format('MMM DD, YYYY'), ischecked: false, isDefault: 'N/A', ebf_status: ''},
-    {"id" : "bfed_month2", "name" : "Month 2", "date" : moment(this.todaysDate).add(2, 'M').format('MMM DD, YYYY'), ischecked: false, isDefault: 'N/A', ebf_status: ''},
-    {"id" : "bfed_month3", "name" : "Month 3", "date" : moment(this.todaysDate).add(3, 'M').format('MMM DD, YYYY'), ischecked: false, isDefault: 'N/A', ebf_status: ''},
-    {"id" : "bfed_month4", "name" : "Month 4", "date" : moment(this.todaysDate).add(4, 'M').format('MMM DD, YYYY'), ischecked: false, isDefault: 'N/A', ebf_status: ''},
-    {"id" : "bfed_month5", "name" : "Month 5", "date" : moment(this.todaysDate).add(5, 'M').format('MMM DD, YYYY'), ischecked: false, isDefault: 'N/A', ebf_status: ''},
-    {"id" : "bfed_month6", "name" : "Month 6", "date" : moment(this.todaysDate).add(6, 'M').format('MMM DD, YYYY'), ischecked: false, isDefault: 'N/A', ebf_status: ''},
+    {"id" : "bfed_month1", "name" : "Month 1", "date" : moment(this.todaysDate).add(1, 'M').format('MMM DD, YYYY'), selected: false, isDefault: 'N/A'},
+    {"id" : "bfed_month2", "name" : "Month 2", "date" : moment(this.todaysDate).add(2, 'M').format('MMM DD, YYYY'), selected: false, isDefault: 'N/A'},
+    {"id" : "bfed_month3", "name" : "Month 3", "date" : moment(this.todaysDate).add(3, 'M').format('MMM DD, YYYY'), selected: false, isDefault: 'N/A'},
+    {"id" : "bfed_month4", "name" : "Month 4", "date" : moment(this.todaysDate).add(4, 'M').format('MMM DD, YYYY'), selected: false, isDefault: 'N/A'},
+    {"id" : "bfed_month5", "name" : "Month 5", "date" : moment(this.todaysDate).add(5, 'M').format('MMM DD, YYYY'), selected: false, isDefault: 'N/A'},
+    {"id" : "bfed_month6", "name" : "Month 6", "date" : moment(this.todaysDate).add(6, 'M').format('MMM DD, YYYY'), selected: false, isDefault: 'N/A'},
   ];
+
+  groupList = [];
+  arrayVal:any;
   
 
   constructor(private http: HttpService) { 
@@ -101,33 +105,57 @@ export class BreastfeedingComponent implements OnInit {
   }
   
   submit() {
-
     this.selectedMonths = this.ccdev.filter((value, index) => {
-      return value.ischecked,
+      return value.selected,
       localStorage.setItem('Breastfeeding Months', JSON.stringify(this.selectedMonths)),
       this.month = this.selectedMonths
     });
+    
   }
 
   changeSelection() {
     this.fetchSelectedItems()
+    this.getPrev()
     console.log(this.selectedMonths)
   }
 
   fetchSelectedItems() {
     this.selectedMonths= this.ccdev.filter((value, index) => {
-      if(!value.ischecked){
-        this.ccdev[index].ebf_status=''
-      }
-      return value.ischecked
+      this.selectedMonths.push(value.selected)
+      return value.selected
     });
-    
   }
+
+  getPrev(){
+    this.groupList = [];
+    this.ccdev.forEach((item, index) => {
+
+    this.groupList.push(item.selected);
+
+    });
+
+    console.log(this.groupList);
+    var bfedmonths ={
+      patient_ccdevs_id: '',
+      patient_id: '',
+      user_id: '',
+      bfed_month1: this.groupList[0] == 1 ? 1:0,
+      bfed_month2: this.groupList[1] == 1 ? 1:0,
+      bfed_month3: this.groupList[2] == 1 ? 1:0,
+      bfed_month4: this.groupList[3] == 1 ? 1:0,
+      bfed_month5: this.groupList[4] == 1 ? 1:0,
+      bfed_month6: this.groupList[5] == 1 ? 1:0,
+      reason_id: '',
+      ebf_date: '',
+    }
+
+    console.log(bfedmonths); 
+}
 
   fetchCheckedIDs() {
     this.checkedIDs = []
     this.ccdev.forEach((value, index) => {
-      if (value.ischecked) {
+      if (value.selected) {
         this.checkedIDs.push(value.id);
       }
     });
@@ -152,9 +180,8 @@ export class BreastfeedingComponent implements OnInit {
             id: m.id,
             name: m.name,
             date: m.date,
-            ischecked: m.ischecked,
+            selected: m.selected,
             isDefault: m.isDefault,
-            ebf_status: m.ebf_status
         });
     });
     this.ccdev.sort((m, c) => new Date(m.date).getTime() - new Date(c.date).getTime());this.ccdev.sort
