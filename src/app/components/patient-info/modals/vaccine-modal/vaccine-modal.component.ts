@@ -1,8 +1,4 @@
-import { analytics } from '@angular-devkit/core';
-import { formatDate } from '@angular/common';
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { emptyObjectsAreNotAllowedInProps } from '@ngrx/store/src/models';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { HttpService } from 'app/shared/services/http.service';
 import { Vaccines } from './data/vaccine';
 
@@ -13,7 +9,7 @@ import { Vaccines } from './data/vaccine';
 })
 export class VaccineModalComponent implements OnInit {
   @Output() toggleModal = new EventEmitter<any>();
-
+  @Input() patient_info;
   error_message = "exceeded maximum value";
   vaccine_list = Vaccines;
   vaccines: any;
@@ -25,12 +21,10 @@ export class VaccineModalComponent implements OnInit {
   // vaccineForm: any = [];
 
   constructor(
-    private formBuilder: FormBuilder,
     private http: HttpService
   ) { }
 
   onSubmit(){
-    console.log(this.vaccineForm);
     var vax_arr = [];
 
     Object.entries(this.vaccineForm.vaccine_status).forEach(([key, value], index) => {
@@ -45,18 +39,27 @@ export class VaccineModalComponent implements OnInit {
       }
     })
 
-    var vax_form ={
-      patient_id: '',
-      user_id: '',
-      vaccines: vax_arr
+    if(vax_arr.length > 0){
+      let user_id = localStorage.getItem('user_id');
+      let patient_id = this.patient_info.id
+      var vax_form ={
+        patient_id: patient_id,
+        user_id: user_id,
+        vaccines: vax_arr
+      }
+
+      console.log(vax_form)
+
+
+    /*   this.http.post('patient/vaccines', vax_form).subscribe({
+        next: (data: any) => { console.log(data.data) },
+        error: err => console.log(err),
+        complete: () => console.log('success')
+      }) */
+    }else{
+
     }
 
-    console.log(vax_form)
-    /* this.http.post('patient/vaccines', vax_form).subscribe({
-      next: (data: any) => { console.log(data.data) },
-      error: err => console.log(err),
-      complete: () => console.log('success')
-    }) */
   }
 
 
@@ -87,17 +90,6 @@ export class VaccineModalComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    let date = new Date();
-
-
-    /* this.http.get('libraries/vaccine').subscribe(
-      (data: any) => {
-        this.vaccines = data.data;
-        console.log(this.vaccines)
-      }
-    ); */
     this.loadLibraries();
-
-
   }
 }

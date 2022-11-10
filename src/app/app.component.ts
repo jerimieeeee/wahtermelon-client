@@ -38,8 +38,10 @@ export class AppComponent implements OnInit{
     this.http.post('login', this.loginForm.value).subscribe({
       next: (data: any) => {
         // this.decode(data.access_token);
+        console.log(data.user);
         localStorage.setItem('access_token', data.access_token);
         localStorage.setItem('name', data.user.last_name + ', ' + data.user.first_name + ' ' + data.user.middle_name + ' ' + (data.user.suffix_name == 'NA' ? '' : data.user.suffix_name));
+        localStorage.setItem('user_id', data.user.id);
         this.checkAuth();
       },
       error: err => console.log(err),
@@ -71,7 +73,7 @@ export class AppComponent implements OnInit{
         this.router.navigate(['/user-registration']);
       }else{
         this.showLogin = true;
-        // this.router.navigate(['/login']);
+        this.router.navigate(['/']);
       }
     }
 
@@ -96,8 +98,8 @@ export class AppComponent implements OnInit{
     this.checkAuth();
 
     this.loginForm = this.formBuilder.nonNullable.group({
-      email: ['', [Validators.required, Validators.minLength(2), Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(2)]],
+      email: ['christian.santos37@gmail.com', [Validators.required, Validators.minLength(2), Validators.email]],
+      password: ['Ellechir_55', [Validators.required, Validators.minLength(2)]],
     });
   }
 }

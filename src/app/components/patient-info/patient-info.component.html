@@ -275,7 +275,7 @@
 </div>
 
 <div *ngIf="vaccineModal">
-  <app-vaccine-modal (toggleModal)="toggleModal('vaccine-modal')"></app-vaccine-modal>
+  <app-vaccine-modal (toggleModal)="toggleModal('vaccine-modal')" [patient_info]="patient_info"></app-vaccine-modal>
 </div>
 
 <div *ngIf="historyModal">
