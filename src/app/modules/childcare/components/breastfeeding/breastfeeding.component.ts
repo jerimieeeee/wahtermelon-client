@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { faSearch,faBalanceScale,faPlus, faInfoCircle, faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import { FormBuilder, FormGroup,FormArray,FormControl,Validators,} from '@angular/forms';
 import * as moment from 'moment';
@@ -96,7 +96,11 @@ export class BreastfeedingComponent implements OnInit {
 
   groupList = [];
   arrayVal:any;
+
+  patient_info: any;
   
+
+  @Input() patient_details: any;
 
   constructor(private http: HttpService) { 
 
@@ -136,8 +140,8 @@ export class BreastfeedingComponent implements OnInit {
 
     console.log(this.groupList);
     var bfedmonths ={
-      patient_ccdevs_id: '',
-      patient_id: '',
+      patient_ccdevs_id: this.patient_info.patient_ccdev_id,
+      patient_id: this.patient_info.patient_id,
       user_id: '',
       bfed_month1: this.groupList[0] == 1 ? 1:0,
       bfed_month2: this.groupList[1] == 1 ? 1:0,
@@ -150,6 +154,18 @@ export class BreastfeedingComponent implements OnInit {
     }
 
     console.log(bfedmonths); 
+}
+
+getccdevDetails() {
+  this.http.get('child-care/cc-records/'+this.patient_details.id)
+  .subscribe({
+    next: (data: any) => {
+      this.patient_info = data.data;
+      console.log(this.patient_info, 'ccdev breast')
+      
+    },
+    error: err => console.log(err)
+  });
 }
 
   fetchCheckedIDs() {
@@ -200,6 +216,7 @@ export class BreastfeedingComponent implements OnInit {
     this.fetchSelectedItems()
     this.geteServiceName()
     this.loadLibraries();
+    this.getccdevDetails()
   }
 
 }
