@@ -3,20 +3,17 @@ import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from
 import { Router } from '@angular/router';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
+import { openCloseTrigger } from '../patient-registration/declarations/animation';
 
 @Component({
   selector: 'app-user-registration',
   templateUrl: './user-registration.component.html',
-  styleUrls: ['./user-registration.component.scss']
+  styleUrls: ['./user-registration.component.scss'],
+  animations: [openCloseTrigger]
 })
 
 export class UserRegistrationComponent implements OnInit {
-
-  constructor(
-    private http: HttpService,
-    private formBuilder: FormBuilder,
-    private router: Router
-  ) { }
+  suffix_names: any;
 
   showModal: boolean = false;
   is_saving: boolean = false;
@@ -24,6 +21,12 @@ export class UserRegistrationComponent implements OnInit {
 
   faSpinner = faSpinner;
   required_message: string = "Required field";
+
+  constructor(
+    private http: HttpService,
+    private formBuilder: FormBuilder,
+    private router: Router
+  ) { }
 
   userForm: FormGroup = new FormGroup({
     last_name: new FormControl<string| null>(''),
@@ -44,16 +47,22 @@ export class UserRegistrationComponent implements OnInit {
 
   onSubmit(){
     this.is_saving = true;
+    this.loading = true;
 
-    this.http.post('register', this.userForm.value).subscribe({
-      next: (data:any) => {
-        console.log(data.data);
-        this.router.navigate(['/login']);
-      },
-      error: err => console.log(err),
-      complete: () => console.log('complete')
-    })
-
+    if(!this.userForm.invalid){
+      this.http.post('register', this.userForm.value).subscribe({
+        next: (data:any) => {
+          console.log(data.data);
+          this.loading = false;
+          this.is_saving = false;
+          this.showModal = true;
+        },
+        error: err => console.log(err),
+        complete: () => console.log('complete')
+      })
+    } else {
+      this.loading = false;
+    }
   }
 
   get f(): { [key: string]: AbstractControl } {
@@ -62,13 +71,12 @@ export class UserRegistrationComponent implements OnInit {
 
   get passwordMatchError() {
     return ((this.userForm.controls.password.value != this.userForm.controls.password_confirmation.value) && this.userForm.get('password_confirmation')?.touched);
-    /* return (
-      this.userForm.getError('mismatch') &&
-      this.userForm.get('password_confirmation')?.touched
-    ); */
   }
 
-  suffix_names: any;
+  backToLogin(){
+    this.router.navigate(['/']);
+  }
+
   loadLibraries(){
     this.http.get('libraries/suffix-names').subscribe({
       next: (data: any) => {this.suffix_names = data.data},

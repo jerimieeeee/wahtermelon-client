@@ -66,7 +66,6 @@ export class AppComponent implements OnInit{
       this.isAuthenticated = false;
     }
 
-    console.log(url)
     if(this.isAuthenticated == false) {
       if(url == '/user-registration'){
         this.showLogin = false;
@@ -77,21 +76,12 @@ export class AppComponent implements OnInit{
       }
     }
 
-    /* if(this.isAuthenticated == false && url == '/login') {
-      this.showLogin = true;
-    } */
-
     if(this.isAuthenticated == true) {
       this.showLogin = false;
       if(url == '/login' || url == '/' || url == ''){
         this.router.navigate(['/home']);
       }
     }
-
-    /* if(this.isAuthenticated == true && url != '/login') {
-      console.log(4);
-      this.showLogin = false;
-    } */
   }
 
   ngOnInit(): void {
