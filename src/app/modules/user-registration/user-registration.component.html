@@ -1,11 +1,21 @@
+
 <div class="my-10  flex justify-center w-full">
+
   <div class="lg:w-3/6 md:w-5/6 bg-white border border-solid border-slate-100 rounded-xl shadow-md">
-    <div class="border border-solid border-slate-100 rounded-t-xl bg-blue-500 text-white text-lg p-3 font-semibold">
-      User Registration
+    <div class="flex border border-solid border-slate-100 rounded-t-xl p-3 font-semibold justify-between">
+      <div class="text-blue-500 text-lg pt-2 pl-5">
+        Create your account
+      </div>
+      <div>
+        <button class="bg-white-500 text-blue-500 active:bg-gray-100 hover:bg-gray-200 text-sm px-4 py-2 rounded hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button" (click)="backToLogin()">
+          <fa-icon class="mr-3" [icon]="faArrowLeft"></fa-icon>
+          Back to login
+        </button>
+      </div>
     </div>
     <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
-      <div class="m-10">
-        <div class="px-4 py-5 bg-white sm:p-6">
+      <div class="m-5">
+        <div class="md:px-6 sm:px-2 bg-white">
           <div class="grid grid-cols-8 gap-x-4 gap-y-4">
             <div class="col-span-8">
               <label for="last_name" class="input-label" [ngClass]="{'text-red-500': is_saving && f.last_name.errors}">Last name</label>
@@ -174,10 +184,10 @@
           </div>
         </div>
 
-        <div class="text-right ">
-          <button type="submit" class="btn-save mr-5 w-48">
+        <div class="text-right pt-5 ">
+          <button type="submit" class="btn-save mr-6 w-48 mb-10">
             <fa-icon *ngIf="loading" class="mr-3" [icon]="faSpinner" [spin]="true"></fa-icon>
-            {{ loading ? 'Saving' : 'Save' }}
+            {{ loading ? 'Saving' : 'Create Account' }}
           </button>
         </div>
       </div>

@@ -57,7 +57,7 @@ export class PatientInfoComponent {
         this.show_form = true;
         this.patientInfo.emit(data.data);
         this.loadVaccines();
-        console.log(data.data)
+        // console.log(data.data)
       },
       error: err => console.log(err)
     });
@@ -65,14 +65,13 @@ export class PatientInfoComponent {
 
   loadVaccines(){
     this.http.get('patient/vaccines-records/'+this.patient_info.id).subscribe({
-      next: (data: any) => { this.vaccine_list = data; console.log(this.vaccine_list) },
+      next: (data: any) => { this.vaccine_list = data; /* console.log(this.vaccine_list) */ },
       error: err => console.log(err),
       complete: () => console.log('complete')
     })
   }
 
   toggleModal(modal_name){
-    console.log(modal_name);
     switch (modal_name){
       case 'vitals-modal':
         this.vitalsModal = !this.vitalsModal;

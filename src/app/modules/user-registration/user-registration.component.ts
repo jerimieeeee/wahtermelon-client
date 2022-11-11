@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { openCloseTrigger } from '../patient-registration/declarations/animation';
 
@@ -20,6 +20,7 @@ export class UserRegistrationComponent implements OnInit {
   loading: boolean = false;
 
   faSpinner = faSpinner;
+  faArrowLeft = faArrowLeft;
   required_message: string = "Required field";
 
   constructor(
