@@ -19,7 +19,7 @@
             </div>
 
             <div class="grid grid-cols-3 gap-4 w-full mx-10" *ngFor="let vaccine of list.value">
-              <label class="col-span-1 pt-2" for="{{ 'vaccine_status.'+vaccine.vaccine_id }}">{{ vaccine.vaccine_id }} {{vaccineForm.vaccine_status[vaccine.vaccine_id]}}</label>
+              <label class="col-span-1 pt-2" for="{{ 'vaccine_status.'+vaccine.vaccine_id }}">{{ vaccine.vaccine_id }}</label>
               <select [(ngModel)]="vaccineForm.vaccine_status[vaccine.vaccine_id]"
                     id="{{ 'vaccine_status.'+vaccine.vaccine_id }}"
                     name="{{ 'vaccine_status.'+vaccine.vaccine_id }}"

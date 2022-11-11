@@ -1,6 +1,5 @@
-<div class="rounded-xl text-gray-600 border border-slate-100" *ngIf="show_form">
-  <div class="block m-0 relative p-0 divide-y-2 divide-gray-200 divide-solid overflow-y-scroll scrollbar-thin scrollbar-thumb-white hover:scrollbar-thumb-blue-300 scrollbar-track-white"
-  style="height: 38rem;">
+<div class="rounded-xl text-gray-600 border border-slate-100" *ngIf="show_form"> <!-- overflow-y-scroll scrollbar-thin  style="height: 38rem;" -->
+  <div class="block m-0 relative p-0 divide-y-2 divide-gray-200 divide-solid  scrollbar-thumb-white hover:scrollbar-thumb-blue-300 scrollbar-track-white">
     <div class="flex justify-items-start sticky top-0 bg-white">
       <div class="m-3">
         <img src="./assets/img/profile_2.jpg" class="rounded-full w-16 h-16 mx-auto m-2" />
@@ -149,12 +148,12 @@
       </div>
 
       <div class="block">
-        <div class="flex pl-3 justify-between items-center">
+        <div class="flex pl-3 justify-between items-center mb-3 border-b border-b-gray-100" *ngFor="let vaccine of vaccine_list">
           <span class="block text-gray-800 font-medium text-xs">
-            No Records
+            <span class="font-bold">{{ vaccine.vaccine_id }}</span> <br />({{ vaccine.status_id === 1 ? 'Done' : (vaccine.status_id === 2 ? 'Done Outside - Private' : 'Done Outside - Public') }})
           </span>
-          <span class="block text-xs">
-
+          <span class="block italic text-xs">
+            {{ vaccine.vaccine_date }}
           </span>
         </div>
       </div>

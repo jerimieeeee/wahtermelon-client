@@ -32,7 +32,7 @@ export class VaccineModalComponent implements OnInit {
         let vacc = {
           vaccine_id: key,
           vaccine_date: this.vaccineForm.vaccine_date[key] ? this.vaccineForm.vaccine_date[key] : null,
-          vaccine_status: value
+          status_id: value
         };
 
         vax_arr.push(vacc);
@@ -50,12 +50,11 @@ export class VaccineModalComponent implements OnInit {
 
       console.log(vax_form)
 
-
-    /*   this.http.post('patient/vaccines', vax_form).subscribe({
-        next: (data: any) => { console.log(data.data) },
+      this.http.post('patient/vaccines', vax_form).subscribe({
+        next: (data: any) => { console.log(data.data), this.closeModal() },
         error: err => console.log(err),
         complete: () => console.log('success')
-      }) */
+      })
     }else{
 
     }
