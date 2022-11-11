@@ -69,7 +69,7 @@ export class AppComponent implements OnInit{
     if(this.isAuthenticated == false) {
       if(url == '/user-registration'){
         this.showLogin = false;
-        this.router.navigate(['/user-registration']);
+        /* this.router.navigate(['/user-registration']); */
       }else{
         this.showLogin = true;
         this.router.navigate(['/']);
