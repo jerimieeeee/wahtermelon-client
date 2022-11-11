@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NavigationEnd, Router } from '@angular/router';
 import { faChevronCircleDown, faBell, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from './shared/services/http.service';
@@ -19,7 +19,9 @@ export class AppComponent implements OnInit{
 
   isAuthenticated: boolean = false;
   showLogin: boolean = true;
-
+  is_saving: boolean = false;
+  auth_error: boolean = false;
+  auth_error_message: string;
   constructor(
     private http: HttpService,
     private formBuilder: FormBuilder,
@@ -35,18 +37,23 @@ export class AppComponent implements OnInit{
   });
 
   onSubmit(){
-    this.http.post('login', this.loginForm.value).subscribe({
-      next: (data: any) => {
-        // this.decode(data.access_token);
-        // console.log(data.user);
-        localStorage.setItem('access_token', data.access_token);
-        localStorage.setItem('name', data.user.last_name + ', ' + data.user.first_name + ' ' + data.user.middle_name + ' ' + (data.user.suffix_name == 'NA' ? '' : data.user.suffix_name));
-        localStorage.setItem('user_id', data.user.id);
-        this.checkAuth();
-      },
-      error: err => console.log(err),
-      complete: () => { }
-    });
+    this.is_saving = true;
+    this.auth_error = false;
+    if(!this.loginForm.invalid){
+      this.http.post('login', this.loginForm.value).subscribe({
+        next: (data: any) => {
+          // this.decode(data.access_token);
+          // console.log(data.user);
+          localStorage.setItem('access_token', data.access_token);
+          localStorage.setItem('name', data.user.last_name + ', ' + data.user.first_name + ' ' + data.user.middle_name + ' ' + (data.user.suffix_name == 'NA' ? '' : data.user.suffix_name));
+          localStorage.setItem('user_id', data.user.id);
+          this.is_saving = false;
+          this.checkAuth();
+        },
+        error: err => { console.log(err); this.auth_error = true; this.auth_error_message = err.error.message },
+        complete: () => { }
+      });
+    }
   }
 
   decode(access_token){
@@ -90,6 +97,10 @@ export class AppComponent implements OnInit{
       this.checkAuth();
     })
   );
+
+  get f(): { [key: string]: AbstractControl } {
+    return this.loginForm.controls;
+  }
 
   ngOnInit(): void {
     this.checkAuth();
