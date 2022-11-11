@@ -156,7 +156,7 @@
 
             <div class="col-span-8">
               <label for="password_confirmation" class="input-label" [ngClass]="{'text-red-500': is_saving && f.password_confirmation.errors}">Password Confirmation</label>
-              <input type="text" name="password_confirmation" id="password_confirmation" class="input" [ngClass]="{'invalid-input': is_saving && f.password_confirmation.errors}" formControlName="password_confirmation">
+              <input type="password" name="password_confirmation" id="password_confirmation" class="input" [ngClass]="{'invalid-input': is_saving && f.password_confirmation.errors}" formControlName="password_confirmation">
 
               <div *ngIf="passwordMatchError" class="invalid-alert">
                 <div>
