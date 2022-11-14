@@ -22,6 +22,7 @@ export class UserRegistrationComponent implements OnInit {
   faSpinner = faSpinner;
   faArrowLeft = faArrowLeft;
   required_message: string = "Required field";
+  date;
 
   constructor(
     private http: HttpService,
@@ -104,6 +105,8 @@ export class UserRegistrationComponent implements OnInit {
       password: ['', [Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-_]).{6,}$')]],
       password_confirmation: ['', Validators.required],
     });
+
+    this.date = new Date().toISOString().slice(0,10);
   }
 
 }

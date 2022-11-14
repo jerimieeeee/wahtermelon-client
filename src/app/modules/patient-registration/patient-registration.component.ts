@@ -54,6 +54,7 @@ export class PatientRegistrationComponent implements OnInit {
   educations: object;
   religions: object;
   pwd_types: object;
+  date;
 
   regions: object;
   provinces: object;
@@ -175,6 +176,7 @@ export class PatientRegistrationComponent implements OnInit {
       }) */
     });
 
+    this.date = new Date().toISOString().slice(0,10);
     console.log(this.patientForm);
     this.loadLibraries();
   }
