@@ -28,6 +28,8 @@ export class VitalsModalComponent implements OnInit {
     vitals_resp_rate: new FormControl<number>(null)
   });
 
+  date;
+
   constructor(
     private formBuilder: FormBuilder
   ) { }
@@ -86,6 +88,7 @@ export class VitalsModalComponent implements OnInit {
       vitals_resp_rate: [null, Validators.max(300)]
     });
 
+    this.date = new Date().toISOString().slice(0,10);
     console.log(this.vitalsForm);
   }
 }

@@ -19,7 +19,7 @@
             <div class="flex px-5 w-full">
               <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
                 <label for="vitals_date">Date</label>
-                <input name="vitals_date" id="vitals_date" formControlName="vitals_date" type="date" placeholder="Select Date" class="mt-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input">
+                <input name="vitals_date" id="vitals_date" formControlName="vitals_date" max="{{ date | date: 'yyyy-MM-dd'}}" type="date" placeholder="mm/dd/yyyy" class="mt-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input">
               </div>
 
               <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
