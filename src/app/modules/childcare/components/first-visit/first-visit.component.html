@@ -66,8 +66,8 @@
          <input type="date" placeholder="Select Date and Time" onfocus="(this.type='date')" class="mt-1 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input" placeholder="Select date" formControlName="discharge_date" required>
         </div>
 
-        <div *ngIf="form_saving && f.discharged_date.errors" class="invalid-alert mt-1">
-          <div *ngIf="f.discharged_date.errors?.['required']">
+        <div *ngIf="form_saving && f.discharge_date.errors" class="invalid-alert mt-1">
+          <div *ngIf="f.discharge_date.errors?.['required']">
             {{ required_message }}
           </div>
         </div>
@@ -87,14 +87,14 @@
               <path d="M12 7c1.956 0 3.724 .802 4.994 2.095l-2.956 2.904a3 3 0 0 0 -2.038 -.799a3 3 0 0 0 -2.038 .798l-2.956 -2.903a6.979 6.979 0 0 1 4.994 -2.095z"></path>
            </svg>
           </div>
-         <input type="text" class="mt-1 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input" placeholder="Input weight" [ngClass]="{'invalid-input': form_saving && f.weight.errors}" formControlName="birth_weight" required>
+         <input type="text" class="mt-1 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input" placeholder="Input weight" [ngClass]="{'invalid-input': form_saving && f.birth_weight.errors}" formControlName="birth_weight" required>
         </div>
 
-        <div *ngIf="form_saving && f.weight.errors" class="invalid-alert mt-1">
-          <div *ngIf="f.weight.errors?.['required']">
+        <div *ngIf="form_saving && f.birth_weight.errors" class="invalid-alert mt-1">
+          <div *ngIf="f.birth_weight.errors?.['required']">
             {{ required_message }}
           </div>
-          <div *ngIf="f.weight.errors?.['minlength']">
+          <div *ngIf="f.birth_weight.errors?.['minlength']">
             Minimum of 2 character.
           </div>
         </div>
@@ -130,8 +130,9 @@
           formControlName="mothers_id">
           <ng-template ng-label-tmp let-item="item" class="">
             <div class="flex">
-              <img src="./assets/img/profile_1.jpg" alt="profile_img" class="rounded-full w-8 h-8 mr-2" />
-              <p class="mt-1.5">{{patient_info2.first_name}} {{patient_info2.middle_name}} {{patient_info2.last_name}}</p>
+              <!-- <img src="./assets/img/profile_1.jpg" alt="profile_img" class="rounded-full w-8 h-8 mr-2" /> -->
+              <p class="">{{patient_info2?.first_name}} {{patient_info2?.middle_name}} {{patient_info2?.last_name}}</p>
+              <p class="">{{item.first_name}} {{item.middle_name}} {{item.last_name}}</p>
             </div>
             
         </ng-template>
@@ -156,11 +157,11 @@
           </ng-template>
         </ng-select>
 
-        <div *ngIf="form_saving && f.mothers_name.errors" class="invalid-alert mt-1">
-          <div *ngIf="f.mothers_name.errors?.['required']">
+        <div *ngIf="form_saving && f.mothers_id.errors" class="invalid-alert mt-1">
+          <div *ngIf="f.mothers_id.errors?.['required']">
             {{ required_message }}
           </div>
-          <div *ngIf="f.mothers_name.errors?.['minlength']">
+          <div *ngIf="f.mothers_id.errors?.['minlength']">
             Minimum of 2 character.
           </div>
         </div>
@@ -169,7 +170,7 @@
       
         <div class="flex w-full flex-col px-5 pt-3">
           <button type="button" class="btn-add ml-auto mr-5" (click)="onSubmit()">
-            <fa-icon *ngIf="is_saving2" class="mr-1" [icon]="faSave"></fa-icon>
+            <fa-icon *ngIf="!is_saving" class="mr-1" [icon]="faSave"></fa-icon>
             <fa-icon *ngIf="is_saving" class="mr-1" [icon]="faSpinner" [spin]="true"></fa-icon>
            {{ is_saving ? 'Saving' : 'Save' }}
           </button>

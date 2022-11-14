@@ -53,7 +53,7 @@
     <!--BREASTFEEDING SECTION-->
 
     <div class="grid grid-col-8">
-      <app-breastfeeding ></app-breastfeeding>
+      <app-breastfeeding *ngIf="patient_details" [patient_details]="patient_details"></app-breastfeeding>
     </div>
   
   </div>

@@ -46,11 +46,11 @@ export class FirstVisitComponent implements OnInit {
 
   patient_info: any;
   patient_info2: any;
- 
-  patientccdev_id= 5;
+  curr_name: any;
   
 
   visitForm: FormGroup = new FormGroup({
+    id: new FormControl<string| null>(''),
     admission_date: new FormControl<string| null>(''),
     discharge_date: new FormControl<string| null>(''),
     birth_weight: new FormControl<string| null>(''),
@@ -92,15 +92,16 @@ export class FirstVisitComponent implements OnInit {
   onSubmit(){
     console.log(this.visitForm.value);
     console.log(this.visitForm.invalid);
+    this.form_saving = true;
     this.is_saving = true;
-    this.is_saving2 = false;
+    
     // this.showModal = true;
   
-      this.http.post('childcare-patient', this.visitForm.value).subscribe({
+      this.http.post('child-care/cc-records', this.visitForm.value).subscribe({
+        // next: (data: any) => console.log(data.status, 'check status'),
         error: err => console.log(err),
         complete: () => {
           this.is_saving = false;
-          this.is_saving2 = true;
         }
       })
     }
@@ -108,13 +109,14 @@ export class FirstVisitComponent implements OnInit {
 
   validateForm(){
     this.visitForm = this.formBuilder.group({
+      id: ['', [Validators.required]],
       admission_date: ['', [Validators.required]],
       discharge_date: ['', [Validators.required]],
       birth_weight: ['', [Validators.required, Validators.minLength(1)]],
       mothers_id: ['', [Validators.required, Validators.minLength(2)]],
       patient_id: [this.patient_details.id, [Validators.required, Validators.minLength(2)]],
-      user_id: ['97936f41-dd26-43e7-ba37-259ef5ffc9f2', [Validators.required, Validators.minLength(2)]],
-      ccdev_ended: ['1', [Validators.required, Validators.minLength(2)]],
+      user_id: ['97b320d5-1017-409b-b8be-754afe2849ca', [Validators.required, Validators.minLength(2)]],
+      ccdev_ended: ['0', [Validators.required, Validators.minLength(2)]],
       nbs_filter: ['5500815323', [Validators.required, Validators.minLength(2)]],
     });
   }
@@ -151,34 +153,29 @@ export class FirstVisitComponent implements OnInit {
   }
   
   getccdevDetails() {
-    this.http.get('childcare-patient/'+this.patientccdev_id)
+    this.http.get('child-care/cc-records/'+this.patient_details.id)
     .subscribe({
       next: (data: any) => {
-        this.patient_info = data.data;
-        console.log(this.patient_info, 'info ccdev')
-        this.getccdevDetails2()
-        this.visitForm.setValue(this.patient_info);
+        this.patient_info = data;
+        console.log(this.patient_info[0], 'info ccdev')
+        console.log(this.patient_info[0].mothers_id, 'info ccdev 2')
+        this.getccdevMama()
+        this.visitForm.setValue(this.patient_info[0]);
       },
       error: err => console.log(err)
     });
   }
 
-  getccdevDetails2() {
-    this.http.get('patient/'+this.patient_info.mothers_id)
+  getccdevMama() {
+    this.http.get('patient/'+this.patient_info[0].mothers_id)
     .subscribe({
       next: (data: any) => {
         this.patient_info2 = data.data;
-        console.log(this.patient_info2, 'info ccdev 2')
+        console.log(this.patient_info2, 'info ccdev mama')
       },
       error: err => console.log(err)
     });
   }
-
-  
-  
-  changeFn(val) {
-    console.log(val);
-}
 
 
   loadPatients() {
@@ -219,7 +216,6 @@ export class FirstVisitComponent implements OnInit {
     this.saved = true;
     this.loadPatients();
     this.getccdevDetails();
-    this.getccdevDetails2();
   }
 
 }
