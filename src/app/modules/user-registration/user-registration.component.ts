@@ -40,8 +40,8 @@ export class UserRegistrationComponent implements OnInit {
     email: new FormControl<string| null>(''),
     is_active: new FormControl<number| null>(null),
     photo_url: new FormControl<string| null>(''),
-    tin_number: new FormControl<number| null>(null),
-    accreditation_number: new FormControl<string| null>(''),
+    /* tin_number: new FormControl<number| null>(null),
+    accreditation_number: new FormControl<string| null>(''), */
     password: new FormControl<string| null>(''),
     password_confirmation: new FormControl<string| null>(''),
   });
@@ -99,8 +99,8 @@ export class UserRegistrationComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       is_active: [1],
       photo_url: [''],
-      tin_number: ['', Validators.maxLength(9)],
-      accreditation_number: ['',Validators.maxLength(14)],
+      /* tin_number: ['', Validators.maxLength(9)],
+      accreditation_number: ['',Validators.maxLength(14)], */
       password: ['', [Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-_]).{6,}$')]],
       password_confirmation: ['', Validators.required],
     });
