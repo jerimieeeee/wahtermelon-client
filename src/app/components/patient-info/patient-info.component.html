@@ -6,7 +6,7 @@
       </div>
       <div class="mt-4 leading-tight">
         <span class="block text-blue-500 font-medium">
-          {{ patient_info?.last_name }}, {{ patient_info?.first_name }} {{ patient_info?.middle_name }}
+          {{ patient_info?.last_name }}, {{ patient_info?.first_name }} {{ patient_info?.middle_name }} {{ patient_info?.suffix_code === "NA" ? "" : patient_info?.suffix_code }}
         </span>
 
         <span class="block text-xs">
@@ -150,7 +150,7 @@
       <div class="block">
         <div class="flex pl-3 justify-between items-center mb-3 border-b border-b-gray-100" *ngFor="let vaccine of vaccine_list">
           <span class="block text-gray-800 font-medium text-xs">
-            <span class="font-bold">{{ vaccine.vaccine_id }}</span> <br />({{ vaccine.status_id === 1 ? 'Done' : (vaccine.status_id === 2 ? 'Done Outside - Private' : 'Done Outside - Public') }})
+            <span class="font-bold">{{ vaccine.vaccine_id }} - {{ vaccine.dose }} Dose</span> <br />({{ vaccine.status_id === 1 ? 'Done' : (vaccine.status_id === 2 ? 'Done Outside - Private' : 'Done Outside - Public') }})
           </span>
           <span class="block italic text-xs">
             {{ vaccine.vaccine_date }}

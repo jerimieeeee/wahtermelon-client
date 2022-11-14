@@ -57,7 +57,7 @@ export class PatientInfoComponent {
         this.show_form = true;
         this.patientInfo.emit(data.data);
         this.loadVaccines();
-        // console.log(data.data)
+        console.log(data.data)
       },
       error: err => console.log(err)
     });
@@ -65,10 +65,54 @@ export class PatientInfoComponent {
 
   loadVaccines(){
     this.http.get('patient/vaccines-records/'+this.patient_info.id).subscribe({
-      next: (data: any) => { this.vaccine_list = data; /* console.log(this.vaccine_list) */ },
+      next: (data: any) => { this.vaccine_list = data; this.checkVaccineStatus(data)/* console.log(this.vaccine_list) */ },
       error: err => console.log(err),
       complete: () => console.log('complete')
     })
+  }
+
+  checkVaccineStatus(vaccines){
+    var new_vax = [];
+    Object.entries(vaccines).reverse().forEach(([key, value], index) => {
+      var val:any = value
+      if(!new_vax[val.vaccine_id]) new_vax[val.vaccine_id] = []
+
+      let vax = {
+        id: val.id,
+        vaccine_id: val.vaccine_id,
+        vaccine_date: val.vaccine_date,
+        dose: this.getNumberSuffix(Object.keys(new_vax[val.vaccine_id]).length + 1)
+      }
+
+      new_vax[val.vaccine_id][val.id] = vax
+    })
+
+    this.addDose(new_vax)
+  }
+
+  getNumberSuffix(i){
+    var j = i % 10,
+    k = i % 100;
+    if (j == 1 && k != 11) {
+        return i + "st";
+    }
+    if (j == 2 && k != 12) {
+        return i + "nd";
+    }
+    if (j == 3 && k != 13) {
+        return i + "rd";
+    }
+    return i + "th";
+  }
+
+  addDose(new_vax){
+    Object.entries(this.vaccine_list).forEach(([key, value], index) => {
+      var val:any = value;
+
+      this.vaccine_list[key]['dose'] = new_vax[val.vaccine_id][val.id].dose;
+    });
+
+    console.log(this.vaccine_list)
   }
 
   toggleModal(modal_name){
