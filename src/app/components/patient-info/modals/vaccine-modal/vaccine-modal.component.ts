@@ -81,6 +81,7 @@ export class VaccineModalComponent implements OnInit {
         this.vaccine_grouped = groups;
       }
     );
+
     return value;
   }
 

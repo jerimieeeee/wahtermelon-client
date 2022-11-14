@@ -5,8 +5,13 @@
     </div>
     <form [formGroup]="patientForm" (ngSubmit)="onSubmit()">
       <div class="m-10">
+        <!-- <div class="text-red-500">
+          All fields are required.
+        </div> -->
         <div class="px-4 py-5 bg-white sm:p-6">
+
           <div class="grid grid-cols-8 gap-x-4 gap-y-6">
+
             <div class="col-span-6 sm:col-span-2">
               <label for="last_name" class="input-label" [ngClass]="{'text-red-500': is_saving && f.last_name.errors}">Last name</label>
               <input type="text" name="last_name" id="last_name" class="input capitalize" [ngClass]="{'invalid-input': is_saving && f.last_name.errors}" formControlName="last_name" required>
@@ -61,6 +66,7 @@
               <select id="gender" name="gender" class="input" [ngClass]="{'invalid-input': is_saving && f.gender.errors}" formControlName="gender">
                 <option value="M">Male</option>
                 <option value="F">Female</option>
+                <option value="I">Intersex</option>
               </select>
 
               <div *ngIf="is_saving && f.gender.errors" class="invalid-alert">
