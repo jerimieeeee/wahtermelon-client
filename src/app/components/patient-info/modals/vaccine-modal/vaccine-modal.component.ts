@@ -17,8 +17,7 @@ export class VaccineModalComponent implements OnInit {
     vaccine_status: [],
     vaccine_date: []
   };
-
-  // vaccineForm: any = [];
+  vaccine_grouped = [];
 
   constructor(
     private http: HttpService
@@ -61,12 +60,9 @@ export class VaccineModalComponent implements OnInit {
 
   }
 
-
-
   closeModal(){
     this.toggleModal.emit('vaccine-moodal');
   }
-  vaccine_grouped = [];
 
   loadLibraries() {
     let value: any;
