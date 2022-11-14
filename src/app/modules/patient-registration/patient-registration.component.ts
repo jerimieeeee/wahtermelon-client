@@ -36,7 +36,7 @@ export class PatientRegistrationComponent implements OnInit {
     education_code: new FormControl<string| null>(''),
     civil_status_code: new FormControl<string| null>(''),
     consent_flag: new FormControl<boolean>(false),
-    family: new FormGroup({
+    /* family: new FormGroup({
       region: new FormControl<string| null>(''),
       province: new FormControl<string| null>(''),
       municipality: new FormControl<string| null>(''),
@@ -44,7 +44,7 @@ export class PatientRegistrationComponent implements OnInit {
       address: new FormControl<string| null>(''),
       cct_id: new FormControl<string| null>(''),
       is_head: new FormControl<string| null>(''),
-    })
+    }) */
   });
 
   blood_types: object;
@@ -91,7 +91,7 @@ export class PatientRegistrationComponent implements OnInit {
 
   new_patient_id: string;
   onSubmit(){
-    console.log(this.patientForm.invalid);
+    console.log(this.patientForm);
     this.is_saving = true;
     this.loading = true;
     // this.showModal = true;
@@ -166,13 +166,13 @@ export class PatientRegistrationComponent implements OnInit {
       education_code: ['', Validators.required],
       civil_status_code: ['', Validators.required],
       consent_flag: [false],
-      family: this.formBuilder.group({
+      /* family: this.formBuilder.group({
         region: ['', Validators.required],
         province: ['', Validators.required],
         municipality: ['', Validators.required],
         brgy: ['', Validators.required],
         address: ['', [Validators.required, Validators.minLength(2)]],
-      })
+      }) */
     });
 
     console.log(this.patientForm);

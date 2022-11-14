@@ -1,8 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ChartOptions, WeightChart } from '../patient-itr/declarations/chart-options';
 import { ChartComponent } from "ng-apexcharts";
-import { faCircleNotch, faPlusSquare, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faCircleNotch, faPlus, faPlusSquare, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { trigger, transition, style, animate } from '@angular/animations';
+import { HttpService } from 'app/shared/services/http.service';
+import { delay, map, Observable, of } from 'rxjs';
+import { Complaints  } from './model/complaint';
 
 @Component({
   selector: 'app-consultation',
@@ -22,17 +25,33 @@ import { trigger, transition, style, animate } from '@angular/animations';
 export class ConsultationComponent implements OnInit {
   public WeightChart: Partial<WeightChart>;
   public chartOptions: Partial<ChartOptions>;
+  @ViewChild("bp-chart") bp_chart: ChartComponent;
+  @ViewChild("weight-chart") weight_chart: ChartComponent;
+
   faPlusSquare = faPlusSquare;
   faSpinner = faCircleNotch;
   faXmark = faXmark;
+  faPlus = faPlus;
 
   is_saving: boolean = false;
   show_item: boolean = true;
 
-  @ViewChild("bp-chart") bp_chart: ChartComponent;
-  @ViewChild("weight-chart") weight_chart: ChartComponent;
+  complaints$: Observable<any[]>;
+  selectedComplaint = [];
+  list_complaints: any;
 
-  constructor() {
+  /* async getComplaint(term: string = null): Observable<Complaints[]> {
+    console.log(term)
+    let items = this.complaints$;
+    if(term) {
+      items = items.filter(x => x.complaint_desc.toLocaleLowerCase().indexOf(term.toLocaleLowerCase()) > -1);
+    }
+    return of(items).pipe(delay(500))
+  } */
+
+  constructor(
+    private http: HttpService
+  ) {
     this.chartOptions = {
       series: [
         {
@@ -128,7 +147,56 @@ export class ConsultationComponent implements OnInit {
     this.show_item = false;
   }
 
+  pe_grouped = [];
+  loadLibraries() {
+    let value: any;
+    /* return this.http.get('libraries/complaint').pipe(
+      map((res:any) => {
+        return {
+          ...res.data
+        } as Complaints
+      })
+    ); */
+    this.http.get('libraries/complaint').subscribe(
+      (data: any) => {
+        this.complaints$ = of(data.data)
+      }
+    );
+
+    this.http.get('libraries/pe').subscribe(
+      (data: any) => {
+        const list = data.data;
+
+        const groups = list.reduce((groups, item) => {
+          const group = (groups[item.category_id] || []);
+          group.push(item);
+          groups[item.category_id] = group;
+          return groups;
+        }, {});
+
+        this.pe_grouped = groups;
+        console.log(this.pe_grouped)
+        // this.pe_grouped = this.pe.group(({ category_id }) => category_id);
+        /* this.pe_grouped = result.groupBy(pe => {
+          return pe.category_id
+        }) */
+        // console.log(this.pe_grouped);
+      }
+    );
+    /* return this.http.get('libraries/complaint').subscribe({
+      next: (data: any) =>  {return data.data} ,
+      error: (err) => console.log(err)
+    }); */
+    /* const res$ = this.http.get('libraries/complaint')
+                .map(res => { return res});
+
+    value = await lastValueFrom(res$);
+    console.log(value); */
+    return value;
+  }
+
   ngOnInit(): void {
+    this.loadLibraries();
   }
 
 }

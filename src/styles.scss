@@ -60,6 +60,13 @@
   border-radius: 25px;
 }
 
+.ng-select.select-chips {
+  border:0px;
+  border-style: none;
+  height: 100%;
+  width: 100%;
+}
+
 @layer components {
   .chips {
     @apply my-2 ml-2 p-1 px-4 text-sm bg-blue-500 rounded-full text-gray-50 border select-none;

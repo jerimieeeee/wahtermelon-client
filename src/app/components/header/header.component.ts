@@ -1,9 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { faChevronCircleDown, faBell, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faChevronCircleDown, faBell, faSearch, faGear } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { catchError, debounceTime, distinctUntilChanged, switchMap, tap, map, filter } from 'rxjs/operators';
 import { concat, Observable, of, Subject, throwError } from 'rxjs';
 import { Router } from '@angular/router';
+import { ToothServicesComponent } from 'app/modules/dental/modals/tooth-services/tooth-services.component';
+import { AuthService } from 'app/shared/services/auth/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -16,16 +18,19 @@ export class HeaderComponent implements OnInit {
   faChevronCircleDown = faChevronCircleDown;
   faBell = faBell;
   faSearch = faSearch;
+  faGear = faGear;
 
   patients$: Observable<any>;
   patientLoading = false;
   searchInput$ = new Subject<string>();
   selectedPatient: any;
   minLengthTerm = 3;
+  user_info: any;
 
   constructor(
     private http: HttpService,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) { }
 
   loadPatients() {
@@ -48,6 +53,11 @@ export class HeaderComponent implements OnInit {
     );
   }
 
+  showMenu: boolean = false;
+  toggleMenu(){
+    this.showMenu = !this.showMenu;
+  }
+
   onSelect(selectedPatient){
     /* this.searchInput$.next(null);
     // this.loadPatients(); */
@@ -59,13 +69,22 @@ export class HeaderComponent implements OnInit {
   getPatient(term: string = null): Observable<any> {
     return this.http.get('patient', {params:{'filter[search]':term}})
     .pipe(map((resp:any) => {
-      console.log(resp.data);
       return resp.data;
     }))
   }
 
+  logout(){
+    localStorage.removeItem('access_token');
+    window.location.reload();
+    /* this.authService.logout().subscribe({
+      next: res => this.router.navigate(['/login']),
+      error: err => console.log(err)
+    }); */
+  }
+
   ngOnInit(): void {
     this.loadPatients();
+    this.user_info = localStorage.getItem('name');
   }
 
 }

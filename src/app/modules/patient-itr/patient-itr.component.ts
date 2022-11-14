@@ -167,8 +167,6 @@ export class PatientItrComponent implements OnInit {
   }
 
   onSubmit(loc){
-    console.log(loc);
-    console.log('/'+loc, {id: this.patient_details.id});
     this.router.navigate(['/'+loc, {id: this.patient_details.id}])
   }
 
@@ -177,7 +175,6 @@ export class PatientItrComponent implements OnInit {
   }
 
   patientInfo(info){
-    console.log(info);
     this.patient_details = info;
   }
 

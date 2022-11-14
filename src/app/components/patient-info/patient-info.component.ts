@@ -32,6 +32,9 @@ export class PatientInfoComponent {
   lifestyleModal: boolean = false;
   deathRecordModal: boolean = false;
 
+
+  vaccine_list: any = [];
+
   constructor(
     private activeRoute: ActivatedRoute,
     private http: HttpService,
@@ -53,14 +56,22 @@ export class PatientInfoComponent {
         this.patient_info = data.data;
         this.show_form = true;
         this.patientInfo.emit(data.data);
-        console.log(data.data)
+        this.loadVaccines();
+        // console.log(data.data)
       },
       error: err => console.log(err)
     });
   }
 
+  loadVaccines(){
+    this.http.get('patient/vaccines-records/'+this.patient_info.id).subscribe({
+      next: (data: any) => { this.vaccine_list = data; /* console.log(this.vaccine_list) */ },
+      error: err => console.log(err),
+      complete: () => console.log('complete')
+    })
+  }
+
   toggleModal(modal_name){
-    console.log(modal_name);
     switch (modal_name){
       case 'vitals-modal':
         this.vitalsModal = !this.vitalsModal;
@@ -72,6 +83,7 @@ export class PatientInfoComponent {
         this.medicationModal = !this.medicationModal;
         break;
       case 'vaccine-modal':
+        this.loadVaccines();
         this.vaccineModal = !this.vaccineModal;
         break;
       case 'history-modal':
@@ -90,12 +102,4 @@ export class PatientInfoComponent {
         break;
     }
   }
-
-  /* toggleDeathRecordModal(){
-    this.showDeathRecordModal = !this.showDeathRecordModal;
-  } */
-/*
-  vaccineModals(){
-    this.showVaccineModal = !this.showVaccineModal;
-  } */
 }
