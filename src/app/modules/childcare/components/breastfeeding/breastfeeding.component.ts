@@ -94,6 +94,9 @@ export class BreastfeedingComponent implements OnInit {
     {"id" : "bfed_month6", "name" : "Month 6", "date" : moment(this.todaysDate).add(6, 'M').format('MMM DD, YYYY'), selected: false, isDefault: 'N/A'},
   ];
 
+  ccdevbreast = 12;
+  patient_breastfed: any;
+
   groupList = [];
   arrayVal:any;
 
@@ -119,7 +122,8 @@ export class BreastfeedingComponent implements OnInit {
 
   changeSelection() {
     this.fetchSelectedItems()
-    this.getPrev()
+    // this.getPrev()
+    console.log(this.selectedMonths)
     console.log(this.selectedMonths)
   }
 
@@ -130,7 +134,7 @@ export class BreastfeedingComponent implements OnInit {
     });
   }
 
-  getPrev(){
+  onSubmit(){
     this.groupList = [];
     this.ccdev.forEach((item, index) => {
 
@@ -140,9 +144,9 @@ export class BreastfeedingComponent implements OnInit {
 
     console.log(this.groupList);
     var bfedmonths ={
-      patient_ccdevs_id: this.patient_info.patient_ccdev_id,
-      patient_id: this.patient_info.patient_id,
-      user_id: '',
+      patient_ccdevs_id: this.patient_info[0].id,
+      patient_id: this.patient_info[0].patient_id,
+      user_id: '97b320d5-1017-409b-b8be-754afe2849ca',
       bfed_month1: this.groupList[0] == 1 ? 1:0,
       bfed_month2: this.groupList[1] == 1 ? 1:0,
       bfed_month3: this.groupList[2] == 1 ? 1:0,
@@ -154,14 +158,22 @@ export class BreastfeedingComponent implements OnInit {
     }
 
     console.log(bfedmonths); 
-}
+
+    this.http.post('child-care/cc-breastfed', bfedmonths).subscribe({
+      // next: (data: any) => console.log(data.status, 'check status'),
+      error: err => console.log(err),
+      complete: () => {
+        this.is_saving = false;
+      }
+    })
+  }
 
 getccdevDetails() {
   this.http.get('child-care/cc-records/'+this.patient_details.id)
   .subscribe({
     next: (data: any) => {
-      this.patient_info = data.data;
-      console.log(this.patient_info, 'ccdev breast')
+      this.patient_info = data;
+      console.log(this.patient_info[0], 'ccdev breast')
       
     },
     error: err => console.log(err)
@@ -211,11 +223,21 @@ getccdevDetails() {
   });
 }
 
+loadBreastfed(){
+   
+  this.http.get('child-care/cc-breastfed/'+this.ccdevbreast)
+    .subscribe((data: any) => {
+    this.patient_breastfed = data.data
+    console.log(this.patient_breastfed, 'data ng breast fed');
+  });
+}
+
 
   ngOnInit(){
     this.fetchSelectedItems()
     this.geteServiceName()
     this.loadLibraries();
+    this.loadBreastfed()
     this.getccdevDetails()
   }
 
