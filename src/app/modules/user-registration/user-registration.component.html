@@ -148,6 +148,16 @@
               <label for="password" class="input-label" [ngClass]="{'text-red-500': is_saving && f.password.errors}">Password</label>
               <input type="password" name="password" id="password" class="input" [ngClass]="{'invalid-input': is_saving && f.password.errors}" formControlName="password">
 
+              <div *ngIf="!is_saving ">
+                <ol class="list-disc pl-5 text-sm">
+                  <li>Password must have at least 6 characters</li>
+                  <li>Password must have at least 1 capital letter</li>
+                  <li>Password must have at least 1 small letter</li>
+                  <li>Password must have at least 1 number</li>
+                  <li>Password must have at least 1 special character</li>
+                </ol>
+              </div>
+
               <div *ngIf="is_saving && f.password.errors" class="invalid-alert">
                 <div *ngIf="f.password.errors?.['required']">
                   {{ required_message }}
