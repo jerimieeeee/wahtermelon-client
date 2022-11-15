@@ -9,7 +9,6 @@ import { faAngleDown, faCalendarDay, faCaretRight, faClose, faInfoCircle, faPenc
 })
 export class PrenatalComponent implements OnInit {
   focused: boolean;
-
   faCalendarDay = faCalendarDay;
   faTimes = faTimes;
   faClose = faClose;
@@ -52,6 +51,7 @@ export class PrenatalComponent implements OnInit {
 
   @Input() fetals;
   @Input() fhr_lib;
+  today: Date;
   constructor() { }
 
   public keyUp = [];
@@ -69,7 +69,7 @@ export class PrenatalComponent implements OnInit {
     this.consult_id = 1;
     this.mc_id = 2;
     this.user_id = 1;
-
+    this.today = new Date();
     this.createForm();
 
   }
@@ -91,14 +91,14 @@ export class PrenatalComponent implements OnInit {
   }
   saveForm(data) {
     //console.log(this.value, ' this is my value b4 saving seq and edit is ', this.edit_bool );
+    console.log(data);
     
-    
-    let index = this.catch_array.findIndex(c => c.visit_sequence === data.visit_sequence);
+    let index = this.catch_array.findIndex(c => c.visit_sequence === this.value);
     if(index != -1){
       this.catch_array.splice(index, 1);
     }
     this.prenatal_form.setValue({
-      visit_sequence: data.visit_sequence == '' ? 1 : data.visit_sequence,
+      visit_sequence: data.visit_sequence == '' ? 1 : this.value,
       fhr: data.fhr == '' ? 0 : data.fhr,
       fundic_height: data.fundic_height == '' ? 0 : data.fundic_height,
       fhr_location_id: data.fhr_location_id == '' ? 'N/A' : data.fhr_location_id,
@@ -115,13 +115,14 @@ export class PrenatalComponent implements OnInit {
       remarks: data.remarks == '' ? '' : data.remarks,
       prenatal_date: data.prenatal_date,
     });
-    console.log(this.prenatal_form.value);
+    console.log(this.prenatal_form.value, " prenatal form");
    
     this.catch_array.push(this.prenatal_form.value);
     this.catch_array.sort(function (x, y) {
       return x.visit_sequence - y.visit_sequence;
   });
-    console.log(this.catch_array);
+
+    console.log(this.catch_array, "after pushing and sorting");
     if(!this.edit_bool){
       this.value = this.value + 1;
       // this.max_value = this.max_value + 1;
@@ -130,9 +131,9 @@ export class PrenatalComponent implements OnInit {
     console.log(this.value, "this value");
     
     //this.prenatal_form.disable();
-    this.createForm();
-    this.hide = []; 
-    this.keyUp = [];
+    // this.createForm();
+    // this.hide = []; 
+    // this.keyUp = [];
 
   }
   createForm() {

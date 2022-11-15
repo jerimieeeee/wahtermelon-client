@@ -27,7 +27,7 @@
                                 <fa-icon [icon]="faCalendarDay" size="lg" class="text-blue-400" for="reg_date">
                                 </fa-icon>
                             </div>
-                            <input formControlName="reg_date" id="reg_date" name="reg_date" type="date"
+                            <input formControlName="reg_date" id="reg_date" name="reg_date" type="date" max="{{today.toLocaleDateString('en-CA')}}"
                                 class="col-span-8 rounded-r border-solid border border-l-0 border-zinc-300 focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none disabled:cursor-not-allowed"
                                 width="auto"
                                 (keyup.escape)="$event.target.value = ''; onKeyUp($event.target.value, $event.target.id)"
@@ -42,7 +42,7 @@
                                 <fa-icon [icon]="faCalendarDay" size="lg" class="text-blue-400" for="lmp_date">
                                 </fa-icon>
                             </div>
-                            <input formControlName="lmp_date" id="lmp_date" name="lmp_date" type="date" [(ngModel)]="lmp_date"
+                            <input formControlName="lmp_date" id="lmp_date" name="lmp_date" type="date" max="{{today.toLocaleDateString('en-CA')}}" [(ngModel)]="lmp_date"
                                 class="col-span-8 rounded-r border-solid border border-l-0 border-zinc-300 focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none disabled:cursor-not-allowed"
                                 width="auto"
                                 (keyup.escape)="$event.target.value = ''; onKeyUp($event.target.value, $event.target.id)"
@@ -52,7 +52,7 @@
                     </div>
                     <!-- <div class="transitions col-span-3" *ngIf="!focused">
                         <h3>EDC Date</h3>
-                        <input type="date" [value]="edc_date.toLocaleDateString('en-CA')!= today.toLocaleDateString('en-CA')?third_tri.toLocaleDateString('en-CA'):'No Date'" class=" rounded border-solid border border-zinc-300 focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none disabled:cursor-not-allowed" width="auto" disabled>
+                        <input type="date" max="{{today.toLocaleDateString('en-CA')}}" [value]="edc_date.toLocaleDateString('en-CA')!= today.toLocaleDateString('en-CA')?third_tri.toLocaleDateString('en-CA'):'No Date'" class=" rounded border-solid border border-zinc-300 focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none disabled:cursor-not-allowed" width="auto" disabled>
                     </div>
                     <div class="transitions col-span-3" *ngIf="!focused">
                         <h3>AOG (Weeks)</h3>
@@ -63,16 +63,13 @@
                 <div class="grid rounded-lg drop-shadow-md bg-white rounded-lg border-gray-300 m-2 border mb-4" style="grid-template-columns: repeat(13, minmax(0, 1fr));">
                     <div class="text-sm font-bold form-check p-2 font-semibold border border-dashed border-gray-300 group-hover:border-pink-400 border-t-0 border-l-0 border-r-0 "
                         style="	grid-column: span 13 / span 13;">
-                        <h1 class="select-none">
+                        <h1 class="select-none text-pink-500">
                             Important Dates
                         </h1>
                     </div>
                     <h3 class="bg-white col-span-2 rounded-md mx-2 font-semibold text-center">EDC Date<p class="font-medium">{{edc_date.toLocaleDateString('en-CA') == today.toLocaleDateString('en-CA')?'No Date':edc_date.toLocaleDateString('en-CA') | date: 'MM/dd/yyyy'}}</p></h3>
                     <h3 class="bg-white col-span-2 rounded-md mx-2 font-semibold text-center relative">AOG (Weeks)
                         <p class="font-medium {{aog_date.includes('-')?'text-red-500':''}}">{{aog_date}}
-                            <!-- <button class="absolute top-2 -right-3 group" type="button">
-                                <fa-icon [icon]="faPencil" class="inline-flex group-hover:text-orange-400 mx-2"></fa-icon>
-                            </button> -->
                         </p>
                     </h3>
                    <h3 class="bg-white col-span-3 rounded-md mx-2 font-semibold text-center">End of 1st Trimester<p class="font-medium">{{first_tri.toLocaleDateString('en-CA') != today.toLocaleDateString('en-CA')?(first_tri.toLocaleDateString('en-CA')  | date: 'MM/dd/yyyy'):"No Date"}}</p></h3>

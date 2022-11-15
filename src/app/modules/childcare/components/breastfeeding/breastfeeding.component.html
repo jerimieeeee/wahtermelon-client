@@ -15,17 +15,17 @@
 <div class="card">
     <div class="flex bg-orange-500 card-header-services">
       <h4 class="font-semibold text-white text-sm uppercase">Breastfeeding And Complementary Feeding Information</h4>
-      <button  type="button" class="-mt-0.5 relative ml-auto px-5" (click)="toggleBreastfeedingModal()" *ngIf="month.length >= 1">
+      <button  type="button" class="-mt-0.5 relative ml-auto px-5" (click)="toggleBreastfeedingModal()" *ngIf="groupList2.includes(1)">
         <fa-icon class=" text-white" size="md" [icon]="faPenToSquare"></fa-icon>
         </button>
     </div>
 
     <div class="flex w-full item-start flex-wrap pt-4">
-      <div *ngFor="let months of month" class=" md:w-1/2 lg:w-1/2 px-10 text-sm">
-        <p class="py-1">{{months.name}} - {{months.date}}</p>
+      <div *ngFor="let months of ccdev, index as i" class=" md:w-1/2 lg:w-1/2 px-10 text-sm">
+        <p *ngIf="months.selected == 1" class="py-1">{{months.name}} - {{months.date}}</p>
       </div>
 
-      <div class="flex w-full item-start flex-wrap" *ngIf="month.length === 0">
+      <div class="flex w-full item-start flex-wrap" *ngIf="!groupList2.includes(1)">
         <!-- <div *ngFor="let ccmonths of ccdev" class=" md:w-1/2 lg:w-1/2 px-10 text-sm">
           <p class="py-1">{{ccmonths.name}} - {{ccmonths.isDefault}}</p> -->
           <p class="px-10 py-1 text-sm mt-1">No Recorded Breastfeeding / Complementary Feeding!</p>
@@ -75,10 +75,9 @@
                         <label id="{{month.id}}" for="{{month.id}}">{{month.date}}</label>
                       </td>
                       <td class="py-4 px-12 text-sm">
-                        <select (change)="changeSelection()" [(ngModel)]="month.selected" name="" id="" style="width:100%;">
-                          <option class="select-none" *ngFor="let items of ebf" [value]="items.code">
-                          {{items.desc}}
-                          </option>
+                        <select (change)="changeSelection(i,$event.target.value)" [(ngModel)]="month.selected" name="" id="" style="width:100%;">
+                          <option value="1" >Yes</option>
+                          <option value="0" >No</option>
                         </select>
                       </td>
                       <!-- <td class="py-4 pr-12 text-sm" *ngIf="month.ischecked">
@@ -118,7 +117,7 @@
             <div class="flex justify-end py-4 px-6 space-x-4 rounded-b border-t border-gray-200 dark:border-gray-600">
               <p>{{checkedIDs}}</p>
               <button  type="button" class="btn-cancel" (click)="toggleBreastfeedingModal()">Close</button>
-              <button  type="button" class="btn-save" (click)="submit()" (click)="saveModal()">
+              <button  type="button" class="btn-save" (click)="onSubmit()" (click)="saveModal()">
                 <fa-icon *ngIf="is_saving" class="pl-0" [icon]="faSpinner" [spin]="true"></fa-icon>
                   {{ is_saving ? 'Saving' : 'Save' }}</button>
             </div>

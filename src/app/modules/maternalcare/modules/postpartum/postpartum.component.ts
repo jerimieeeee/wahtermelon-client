@@ -1,6 +1,7 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { faAngleDown, faCalendarDay, faCaretRight, faClose, faInfoCircle, faPencil, faSave, faTimes, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
+import { HttpService } from 'app/shared/services/http.service';
 
 
 @Component({
@@ -31,17 +32,29 @@ export class PostpartumComponent implements OnInit {
   abortions: Number = new Number();
   pre_term: Number = new Number();
   bfd: boolean;
-
+  demog = [
+    {loc: 'regions', includes: 'provinces'},
+    {loc: 'provinces', includes: 'municipalities'},
+    {loc: 'municipalities', includes: 'barangays'},
+    {loc: 'barangays', includes: ''}
+  ];
   @Output() postpartum_bool = new EventEmitter<string>();
   filter: string;
   @Input() delivery_location;
+  @Input() regions;
   @Input() attendants;
   @Input() preg_outcome;
-  constructor() { }
+  provinces: any;
+  municipalities: any;
+  barangays: any;
+  today: Date;
+
+  constructor(private http: HttpService) { }
 
   ngOnInit(): void {
    this.createForm();
    this.filter = '';
+   this.today = new Date();
   }
  createForm(){
   this.postpartum_form = new FormGroup({
@@ -117,7 +130,32 @@ export class PostpartumComponent implements OnInit {
   } else {
     this.keyUp.push(id);
   }
-}
+
+  
+// this.demog.forEach((demo, index) => {
+//   if (demo == id){
+//     this.http.get('libraries/'+demo+'/'+data_input,{params:{'include':this.demog[index + 1]}}).subscribe({
+//       next: (data: any) => {console.log(data.data); this[this.demog[index + 1]] = data.data[this.demog[index + 1]]},
+//       error: err => console.log(err)
+//     });   
+//   }
+//   console.log(this.demog[index + 1]);
+// }); 
+  } 
+
+  loadDemog(loc, code, include){
+    if(loc == 'regions') {
+      this.municipalities = null;
+      this.barangays = null;
+    }else if (loc == 'provinces') {
+      this.barangays = null;
+    }
+
+    this.http.get('libraries/'+loc+'/'+code,{params:{'include':include}}).subscribe({
+      next: (data: any) => {console.log(data.data); this[include] = data.data[include]},
+      error: err => console.log(err)
+    });
+  }
 
 buttonShow(name) {
   this.buttons = [];

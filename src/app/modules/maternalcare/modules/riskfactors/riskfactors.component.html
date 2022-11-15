@@ -43,7 +43,7 @@
                             <fa-icon [icon]="faCalendarDay" size="lg" class="text-blue-500" for="lmp_date">
                             </fa-icon>
                         </div>
-                        <input formControlName="date" id="date" name="date" type="date"
+                        <input formControlName="date" id="date" name="date" type="date" max="{{today.toLocaleDateString('en-CA')}}"
                             class="col-span-8 rounded-r border-solid border border-l-0 border-zinc-300 focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none disabled:cursor-not-allowed"
                             width="auto"
                             (keyup.escape)="$event.target.value = ''; onKeyUp($event.target.value, $event.target.id)"
