@@ -31,11 +31,13 @@ export class RiskfactorsComponent implements OnInit {
   show: boolean;
   @Input() risk_factors;
   searching: boolean;
+  today: Date;
   constructor(private http: HttpService) { }
   
   ngOnInit(): void {
     this.createForm();
     this.searching = false;
+    this.today = new Date();
   }
 
   createForm() {

@@ -41,13 +41,13 @@
                             <fa-icon [icon]="faCalendarDay" size="lg" class="text-blue-500" for="prenatal_date">
                             </fa-icon>
                         </div>
-                        <input formControlName="prenatal_date" id="prenatal_date" name="prenatal_date" type="date"
+                        <input formControlName="prenatal_date" id="prenatal_date" name="prenatal_date" type="date" max="{{today.toLocaleDateString('en-CA')}}"
                             class="col-span-8 rounded-r border-solid border border-l-0 border-zinc-300 focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none disabled:cursor-not-allowed"
                             width="auto"
                             (keyup.escape)="$event.target.value = ''; onKeyUp($event.target.value, $event.target.id)"
                             (change)="onKeyUp($event.target.value, $event.target.id)">
                     </div>
-                </div>
+                </div> 
 
                 <div class="transitions col-span-4 col-start-7  relative select-none" *ngIf="!focused">
                     <h3 for="fetal_presentation_id">Fetal Presentation</h3>
@@ -111,53 +111,19 @@
             </div>
         </div>
 
-        <div
-            class="col-span-4 relative h-max border border-gray-300 drop-shadow-md hover:drop-shadow-lg rounded-md">
-            <label for="LUQ">
-                <div class="absolute top-0 z-40  w-1/2 hover:bg-gray-400/75 rounded-tl-md border-t border-l  cursor-pointer group"
-                    style="height: 62.5%">
-
+        <div class="col-span-4 relative h-max border border-gray-300 drop-shadow-md hover:drop-shadow-lg rounded-md">
+            <label *ngFor="let lib of fhr_lib" for="{{lib.code}}" class="{{lib.code == 'NA'?'hidden':''}}">
+                <div class="absolute {{lib.code == 'NA'?'hidden':''}} {{lib.code == 'LUQ'?'top-0 z-40':''}} {{lib.code == 'LLQ'?'bottom-0 z-40':''}} {{lib.code == 'RUQ'?'top-0 right-0 z-40':''}} {{lib.code == 'RLQ'?'bottom-0 right-0 z-40':''}} w-1/2 hover:bg-gray-400/75 rounded-tl-md border-t border-l  cursor-pointer group"
+                   [style]="lib.code == 'LUQ' || lib.code == 'RUQ'?'height: 62.5%':'height: 37.5%'" >
                     <input type="checkbox"
-                        class="z-50 rounded-md fhr_chart_u rounded-tl-full translate-x-full bg-white/25 checked:text-pink-400/75 disabled:opacity-25 border-dashed border border-pink-500 checked:border-dashed checked:border checked:border-pink-300 focus:ring-1 focus:ring-pink-400 group-hover:bg-gray-300 group-hover:checked:bg-pink-400 focus:ring-offset-0"
-                        style="transform: translate(100%,150%);"
-                        (change)="onKeyUp($event.target.value, $event.target.id); quadrant('LUQ')"
-                        [checked]="prenatal_form.get('fhr_location_id').value == 'LUQ' && prenatal_form.get('fhr').value != ''"
-                        [disabled]="0 >= prenatal_form.get('fhr').value" id="LUQ" value="LUQ">
-
+                        class="z-50 rounded-md {{lib.code == 'NA'?'hidden':''}} {{lib.code == 'LUQ'?'fhr_chart_u translate-x-full rounded-tl-full':''}} {{lib.code == 'LLQ'?'fhr_chart rounded-bl-full translate-x-full':''}} {{lib.code == 'RUQ'?'rounded-tr-full fhr_chart_u':''}} {{lib.code == 'RLQ'?'fhr_chart rounded-br-full':''}} bg-white/25 checked:text-pink-400/75 disabled:opacity-25 border-dashed border border-pink-500 checked:border-dashed checked:border checked:border-pink-300 focus:ring-1 focus:ring-pink-400 group-hover:bg-gray-300 group-hover:checked:bg-pink-400 focus:ring-offset-0"
+                        [style]="lib.code == 'LUQ'?'transform: translate(100%,150%);':lib.code == 'RUQ'?'transform: translateY(150%);':''"
+                        (change)="onKeyUp($event.target.value, $event.target.id); quadrant(lib.code)"
+                        [checked]="prenatal_form.get('fhr_location_id').value == lib.code && prenatal_form.get('fhr').value != ''"
+                        [disabled]="0 >= prenatal_form.get('fhr').value" id="{{lib.code}}" [value]="lib.code">
+ 
                 </div>
             </label>
-            <label for="LLQ">
-                <div class="absolute bottom-0 z-40  w-1/2 hover:bg-gray-400/75 rounded-bl-md border-b border-l  cursor-pointer group"
-                    style="height: 37.5%">
-                    <input type="checkbox"
-                        class="z-50 rounded-md fhr_chart rounded-bl-full translate-x-full bg-white/25 checked:text-pink-400/75 disabled:opacity-25 border-dashed border-pink-500 border checked:border-dashed checked:border checked:border-pink-300 focus:ring-1 focus:ring-pink-400 group-hover:bg-gray-300 group-hover:checked:bg-pink-400 focus:ring-offset-0"
-                        (change)="onKeyUp($event.target.value, $event.target.id); quadrant('LLQ')"
-                        [checked]="prenatal_form.get('fhr_location_id').value == 'LLQ' && prenatal_form.get('fhr').value != ''"
-                        [disabled]="0 >= prenatal_form.get('fhr').value" id="LLQ" value="LLQ">
-                </div>
-            </label>
-            <label for="RUQ">
-                <div class="absolute top-0 right-0 z-40  w-1/2 hover:bg-gray-400/75 rounded-tr-md border-t border-r  cursor-pointer group"
-                    style="height: 62.5%">
-                    <input type="checkbox"
-                        class="z-50 rounded-md fhr_chart_u rounded-tr-full bg-white/25 checked:text-pink-400/75 disabled:opacity-25 border-dashed border-pink-500 border checked:border-dashed checked:border checked:border-pink-300 focus:ring-1 focus:ring-pink-400 group-hover:bg-gray-300 group-hover:checked:bg-pink-400 focus:ring-offset-0"
-                        style="transform: translateY(150%);"
-                        (change)="onKeyUp($event.target.value, $event.target.id); quadrant('RUQ')"
-                        [checked]="prenatal_form.get('fhr_location_id').value == 'RUQ' && prenatal_form.get('fhr').value != ''"
-                        [disabled]="0 >= prenatal_form.get('fhr').value" id="RUQ" value="RUQ">
-                </div>
-            </label>
-            <label for="RLQ">
-                <div class="absolute bottom-0 right-0 z-40  w-1/2 hover:bg-gray-400/75 rounded-br-md border-b border-r  cursor-pointer group"
-                    style="height: 37.5%">
-                    <input type="checkbox"
-                        class="z-50  bg-white/25 checked:text-pink-400/75 disabled:opacity-25 border-dashed border-pink-500 border checked:border-dashed checked:border checked:border-pink-300 focus:ring-1 focus:ring-pink-400 rounded-md fhr_chart rounded-br-full group-hover:bg-gray-300 group-hover:checked:bg-pink-400 focus:ring-offset-0"
-                        (change)="onKeyUp($event.target.value, $event.target.id); quadrant('RLQ');"
-                        [checked]="prenatal_form.get('fhr_location_id').value == 'RLQ' && prenatal_form.get('fhr').value != ''"
-                        [disabled]="0 >= prenatal_form.get('fhr').value" id="RLQ" value="RLQ">
-                </div>
-            </label>
-
             <img src="assets\img\abdomen.png"
                 class="w-24 lg:w-60 md:w-40 sm:w-24 object-contain rounded-lg hover:drop-shadow-lg drop-shadow-md rounded-lg"
                 [class]="prenatal_form.get('fhr').value != ''? '': 'opacity-25'" alt="...">
@@ -247,7 +213,7 @@
 
             </div>
         </div>
-        <div class="relative w-auto  mb-7 w-12/12" *ngIf="!focused && prenatal_form.enabled" style="grid-column: span 16 / span 16;">
+        <div class="relative w-auto  mb-10 w-12/12" *ngIf="!focused && prenatal_form.enabled" style="grid-column: span 16 / span 16;">
             <div class="absolute inline-flex right-0 ">
                 <div (click)="cancel()"
                     class="cursor-pointer flex  bg-white hover:drop-shadow-md hover:bg-gray-400 py-1 rounded-full text-gray-400 hover:text-white pl-2 pr-2 peer">
@@ -300,15 +266,5 @@
         </div>
         
     </div>
-    
-    <!-- <div class="relative w-auto  mt-2 mb-7 w-12/12" *ngIf="!focused && prenatal_form.disabled">
-        <div class="absolute inline-flex right-0 cursor-pointer" (click)="edit()">
-            <div class="flex  bg-orange-300 hover:bg-orange-400 py-1 rounded-full  text-white px-2">
-                <fa-icon [icon]="faPencil" size="lg" class="mr-2 ">
-                </fa-icon>
-                <button type="button" class="font-bold button-out -red typed-out"
-                    (keyup.enter)="uncheck($event.target.id + fphx_cat)">Edit</button>
-            </div>
-        </div>
-    </div> -->
+
 </form>
