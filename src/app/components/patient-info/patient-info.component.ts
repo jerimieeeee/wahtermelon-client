@@ -32,7 +32,7 @@ export class PatientInfoComponent {
   lifestyleModal: boolean = false;
   deathRecordModal: boolean = false;
 
-
+  vaccines_given: any;
   vaccine_list: any = [];
 
   constructor(
@@ -87,6 +87,7 @@ export class PatientInfoComponent {
       new_vax[val.vaccine_id][val.id] = vax
     })
 
+    this.vaccines_given = new_vax;
     this.addDose(new_vax)
   }
 
@@ -111,8 +112,6 @@ export class PatientInfoComponent {
 
       this.vaccine_list[key]['dose'] = new_vax[val.vaccine_id][val.id].dose;
     });
-
-    console.log(this.vaccine_list)
   }
 
   toggleModal(modal_name){

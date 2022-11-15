@@ -153,7 +153,7 @@
             <span class="font-bold">{{ vaccine.vaccine_id }} - {{ vaccine.dose }} Dose</span> <br />({{ vaccine.status_id === 1 ? 'Done' : (vaccine.status_id === 2 ? 'Done Outside - Private' : 'Done Outside - Public') }})
           </span>
           <span class="block italic text-xs">
-            {{ vaccine.vaccine_date }}
+            {{ !vaccine.vaccine_date ? '-' : vaccine.vaccine_date}}
           </span>
         </div>
       </div>
@@ -274,7 +274,7 @@
 </div>
 
 <div *ngIf="vaccineModal">
-  <app-vaccine-modal (toggleModal)="toggleModal('vaccine-modal')" [patient_info]="patient_info"></app-vaccine-modal>
+  <app-vaccine-modal (toggleModal)="toggleModal('vaccine-modal')" [patient_info]="patient_info" [vaccines_given]="vaccines_given"></app-vaccine-modal>
 </div>
 
 <div *ngIf="historyModal">
