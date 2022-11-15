@@ -150,11 +150,12 @@
       <div class="block">
         <div class="flex pl-3 justify-between items-center mb-3 border-b border-b-gray-100" *ngFor="let vaccine of vaccine_list">
 
-          <!-- <fa-icon (click)="toggleModal('history-modal')" class="mx-0 my-0 text-blue-500 mr-2 hover:cursor-pointer flex-none " [icon]="faPlusCircle"></fa-icon> -->
-          <span class="text-gray-800 font-medium text-xs ">
+          <fa-icon (click)="toggleActionModal('vaccine-action-modal', vaccine)" class="mx-0 my-0 text-amber-400 hover:cursor-pointer flex-none mr-2" [icon]="faPenToSquare"></fa-icon>
+          <!-- <fa-icon (click)="toggleModal('delete-vaccine-modal')" class="mx-0 my-0 text-red-400 hover:cursor-pointer flex-none mr-2" [icon]="faTrash"></fa-icon> -->
+          <span class="text-gray-800 font-medium text-xs flex-auto">
             <span class="font-bold">{{ vaccine.vaccine_id }} - {{ vaccine.dose }} Dose</span> <br />({{ vaccine.status_id === 1 ? 'Done' : (vaccine.status_id === 2 ? 'Done Outside - Private' : 'Done Outside - Public') }})
           </span>
-          <span class="italic text-xs">
+          <span class="italic text-xs flex-auto text-right">
             {{ !vaccine.vaccine_date ? '-' : vaccine.vaccine_date}}
           </span>
         </div>
@@ -277,6 +278,10 @@
 
 <div *ngIf="vaccineModal">
   <app-vaccine-modal (toggleModal)="toggleModal('vaccine-modal')" [patient_info]="patient_info" [vaccines_given]="vaccines_given"></app-vaccine-modal>
+</div>
+
+<div *ngIf="vaccineActionModal">
+  <app-vaccine-action-modal (toggleModal)="toggleModal('vaccine-action-modal')" [vaccine_to_edit]="vaccine_to_edit"></app-vaccine-action-modal>
 </div>
 
 <div *ngIf="historyModal">

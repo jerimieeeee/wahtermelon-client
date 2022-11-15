@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { faFlask, faHeart, faExclamationCircle, faNotesMedical, faPlusCircle, faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
+import { faFlask, faHeart, faExclamationCircle, faNotesMedical, faPlusCircle, faQuestionCircle, faPenToSquare, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { AgeService } from 'app/shared/services/age.service';
 import { HttpService } from 'app/shared/services/http.service';
 
@@ -19,6 +19,8 @@ export class PatientInfoComponent {
   faExclamationCircle = faExclamationCircle;
   faPlusCircle = faPlusCircle;
   faQuestionCircle = faQuestionCircle;
+  faPenToSquare = faPenToSquare;
+  faTrash = faTrash;
 
   show_form: boolean = false;
 
@@ -27,6 +29,7 @@ export class PatientInfoComponent {
   allergiesModal: boolean = false;
   medicationModal: boolean = false;
   vaccineModal: boolean = false;
+  vaccineActionModal: boolean = false;
   historyModal: boolean = false;
   famHistoryModal: boolean = false;
   lifestyleModal: boolean = false;
@@ -34,6 +37,7 @@ export class PatientInfoComponent {
 
   vaccines_given: any;
   vaccine_list: any = [];
+  vaccine_to_edit: any;
 
   constructor(
     private activeRoute: ActivatedRoute,
@@ -114,6 +118,12 @@ export class PatientInfoComponent {
     });
   }
 
+  toggleActionModal(modal_name, vaccine){
+    this.vaccine_to_edit = vaccine;
+    this.vaccineActionModal = !this.vaccineActionModal;
+    if(this.vaccineActionModal == false) this.loadVaccines();
+  }
+
   toggleModal(modal_name){
     switch (modal_name){
       case 'vitals-modal':
@@ -128,6 +138,10 @@ export class PatientInfoComponent {
       case 'vaccine-modal':
         this.loadVaccines();
         this.vaccineModal = !this.vaccineModal;
+        break;
+      case 'vaccine-action-modal':
+        this.loadVaccines();
+        this.vaccineActionModal = !this.vaccineActionModal;
         break;
       case 'history-modal':
         this.historyModal = !this.historyModal;
