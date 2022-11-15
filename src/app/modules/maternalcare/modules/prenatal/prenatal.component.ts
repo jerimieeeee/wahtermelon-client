@@ -9,7 +9,6 @@ import { faAngleDown, faCalendarDay, faCaretRight, faClose, faInfoCircle, faPenc
 })
 export class PrenatalComponent implements OnInit {
   focused: boolean;
-
   faCalendarDay = faCalendarDay;
   faTimes = faTimes;
   faClose = faClose;
@@ -52,6 +51,7 @@ export class PrenatalComponent implements OnInit {
 
   @Input() fetals;
   @Input() fhr_lib;
+  today: Date;
   constructor() { }
 
   public keyUp = [];
@@ -69,7 +69,7 @@ export class PrenatalComponent implements OnInit {
     this.consult_id = 1;
     this.mc_id = 2;
     this.user_id = 1;
-
+    this.today = new Date();
     this.createForm();
 
   }

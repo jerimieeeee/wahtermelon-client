@@ -29,7 +29,7 @@
                                     </fa-icon>
                                 </div>
                                 <input formControlName="registration_date" id="registration_date"
-                                    name="registration_date" type="date"
+                                    name="registration_date" type="date" max="{{today.toLocaleDateString('en-CA')}}"
                                     (keyup)="onKeyUp($event.target.value, $event.target.id)"
                                     (keyup.escape)="clearForm($event.target.id)"
                                     (change)="onKeyUp($event.target.value, $event.target.id)"
@@ -38,7 +38,7 @@
                             </div>
                         </div>
                         <div class="transitions col-span-7 col-start-1" *ngIf="!focused">
-                            <h3 for="delivery_date">Delivery </h3>
+                            <h3 for="delivery_date">Delivery</h3>
                             <div class="grid" style="grid-template-columns: repeat(14, minmax(0, 1fr));">
                                 <div
                                     class="icon-height col-span-2 p-2 pt-1 rounded-l border-solid border border-zinc-300">
@@ -49,7 +49,7 @@
                                 <input formControlName="delivery_date" id="delivery_date" name="delivery_date"
                                     (keyup)="onKeyUp($event.target.value, $event.target.id)"
                                     (keyup.escape)="clearForm($event.target.id)"
-                                    (change)="onKeyUp($event.target.value, $event.target.id)" type="datetime-local"
+                                    (change)="onKeyUp($event.target.value, $event.target.id)" type="datetime-local" max="{{today | date: 'YYYY-MM-ddThh:mm:ss'}}"
                                     class="col-span-12 rounded-r border-solid border border-l-0 border-zinc-300 focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none disabled:cursor-not-allowed"
                                     width="auto">
                             </div>
@@ -66,7 +66,7 @@
                                 <input formControlName="admission_date" id="admission_date" name="admission_date"
                                     (keyup)="onKeyUp($event.target.value, $event.target.id)"
                                     (keyup.escape)="clearForm($event.target.id)"
-                                    (change)="onKeyUp($event.target.value, $event.target.id)" type="datetime-local"
+                                    (change)="onKeyUp($event.target.value, $event.target.id)" type="datetime-local" max="{{today | date: 'YYYY-MM-ddThh:mm:ss'}}"
                                     class="col-span-12 rounded-r border-solid border border-l-0 border-zinc-300 focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none disabled:cursor-not-allowed"
                                     width="auto">
                             </div>
@@ -83,7 +83,7 @@
                                 <input formControlName="discharge_date" id="discharge_date" name="discharge_date"
                                     (keyup)="onKeyUp($event.target.value, $event.target.id)"
                                     (keyup.escape)="clearForm($event.target.id)"
-                                    (change)="onKeyUp($event.target.value, $event.target.id)" type="datetime-local"
+                                    (change)="onKeyUp($event.target.value, $event.target.id)" type="datetime-local" max="{{today | date: 'YYYY-MM-ddThh:mm:ss'}}"
                                     class="col-span-12 rounded-r border-solid border border-l-0 border-zinc-300 focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none disabled:cursor-not-allowed"
                                     width="auto">
                             </div>
@@ -209,7 +209,7 @@
 
                         </div>
                         <div class="transitions col-span-4  border-check relative mx-2 last-of-type:mb-2" *ngFor="let demo of demog">
-                            <h3 class="text-capitalize">{{demo.loc}}</h3>
+                            <h3 class="capitalize">{{demo.loc}}</h3>
                             <select formControlName="region" (keyup.escape)="clearForm($event.target.id)"
                                 (change)="onKeyUp($event.target.value, $event.target.id)" id="regions"
                                 (change)="loadDemog(demo.loc, $event.target.value , demo.includes)"
@@ -282,7 +282,7 @@
                                         name="breastfeeding_date"
                                         (keyup)="onKeyUp($event.target.value, $event.target.id)"
                                         (keyup.escape)="clearForm($event.target.id)"
-                                        (change)="onKeyUp($event.target.value, $event.target.id)" type="date"
+                                        (change)="onKeyUp($event.target.value, $event.target.id)" type="date" max="{{today.toLocaleDateString('en-CA')}}"
                                         class="col-span-8 rounded-r border-solid border border-l-0 border-zinc-300 focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none disabled:cursor-not-allowed"
                                         width="auto">
                                 </div>

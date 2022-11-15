@@ -62,6 +62,7 @@ export class FirsvisitComponent implements OnInit {
       ami: data.ami
     });
     this.fv_form.disable();
+   
   }
 
   flip(): void {

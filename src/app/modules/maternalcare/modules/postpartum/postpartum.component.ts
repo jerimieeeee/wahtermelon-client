@@ -47,12 +47,14 @@ export class PostpartumComponent implements OnInit {
   provinces: any;
   municipalities: any;
   barangays: any;
+  today: Date;
 
   constructor(private http: HttpService) { }
 
   ngOnInit(): void {
    this.createForm();
    this.filter = '';
+   this.today = new Date();
   }
  createForm(){
   this.postpartum_form = new FormGroup({
