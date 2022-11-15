@@ -21,7 +21,7 @@
                     <img src="./assets/img/profile_1.jpg" alt="profile_img" class="rounded-full w-14 h-14 mx-auto mr-2" />
                   </div>
                   <div>
-                    <h5 class="text-blue-400" [ngOptionHighlight]="search">{{ item.last_name }}, {{ item.first_name }}</h5>
+                    <h5 class="text-blue-400" [ngOptionHighlight]="search">{{ item.last_name }}, {{ item.first_name }} {{ item.middle_name }}</h5>
                     <h6 class="text-muted">{{ item.birthdate }}</h6>
                     <h6 class="text-muted">{{ item.brgy }}, {{ item.muncity }}</h6>
                   </div>
@@ -29,7 +29,7 @@
             <!-- </a> -->
           </ng-template>
 
-          <ng-template ng-footer-tmp>
+          <ng-template *ngIf="showCreate" ng-footer-tmp>
             <a class="text-blue-600" routerLink="/registration"> Create a new record</a>
           </ng-template>
         </ng-select>
