@@ -157,8 +157,7 @@ export class FirstVisitComponent implements OnInit {
     .subscribe({
       next: (data: any) => {
         this.patient_info = data;
-        console.log(this.patient_info[0], 'info ccdev')
-        console.log(this.patient_info[0].mothers_id, 'info ccdev 2')
+        console.log(this.patient_info, 'info ccdev')
         this.getccdevMama()
         this.visitForm.setValue(this.patient_info[0]);
       },

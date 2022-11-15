@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup,FormArray,FormControl,Validators,} from '@angula
 import * as moment from 'moment';
 import { faPenToSquare } from '@fortawesome/free-regular-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
+import { runInThisContext } from 'vm';
 
 @Component({
   selector: 'app-breastfeeding',
@@ -94,10 +95,11 @@ export class BreastfeedingComponent implements OnInit {
     {"id" : "bfed_month6", "name" : "Month 6", "date" : moment(this.todaysDate).add(6, 'M').format('MMM DD, YYYY'), selected: false, isDefault: 'N/A'},
   ];
 
-  ccdevbreast = 12;
+  ccdevbreast = 21;
   patient_breastfed: any;
 
   groupList = [];
+  groupList2 = [];
   arrayVal:any;
 
   patient_info: any;
@@ -120,11 +122,13 @@ export class BreastfeedingComponent implements OnInit {
     
   }
 
-  changeSelection() {
-    this.fetchSelectedItems()
-    // this.getPrev()
-    console.log(this.selectedMonths)
-    console.log(this.selectedMonths)
+  changeSelection(i: any, value: any) {
+   
+    
+    this.ccdev[i].selected = value;
+    // this.fetchSelectedItems()
+    this.getPrev()
+    console.log(this.groupList)
   }
 
   fetchSelectedItems() {
@@ -132,6 +136,42 @@ export class BreastfeedingComponent implements OnInit {
       this.selectedMonths.push(value.selected)
       return value.selected
     });
+  }
+
+  getPrev(){
+    this.groupList = [];
+    this.ccdev.forEach((item, index) => {
+
+    this.groupList.push(item.selected);
+
+    });
+
+    console.log(this.groupList);
+    let user_id = localStorage.getItem('user_id');
+    var bfedmonths ={
+      patient_ccdevs_id: this.patient_info[0].id,
+      patient_id: this.patient_info[0].patient_id,
+      user_id: user_id,
+      bfed_month1: this.groupList[0] == 1 ? 1:0,
+      bfed_month2: this.groupList[1] == 1 ? 1:0,
+      bfed_month3: this.groupList[2] == 1 ? 1:0,
+      bfed_month4: this.groupList[3] == 1 ? 1:0,
+      bfed_month5: this.groupList[4] == 1 ? 1:0,
+      bfed_month6: this.groupList[5] == 1 ? 1:0,
+      reason_id: '',
+      ebf_date: '',
+    }
+
+    console.log(bfedmonths); 
+
+    // this.http.post('child-care/cc-breastfed', bfedmonths).subscribe({
+    //   // next: (data: any) => console.log(data.status, 'check status'),
+    //   error: err => console.log(err),
+    //   complete: () => {
+    //     console.log('bfed data saved')
+    //     this.is_saving = false;
+    //   }
+    // })
   }
 
   onSubmit(){
@@ -143,10 +183,11 @@ export class BreastfeedingComponent implements OnInit {
     });
 
     console.log(this.groupList);
+    let user_id = localStorage.getItem('user_id');
     var bfedmonths ={
       patient_ccdevs_id: this.patient_info[0].id,
       patient_id: this.patient_info[0].patient_id,
-      user_id: '97b320d5-1017-409b-b8be-754afe2849ca',
+      user_id: user_id,
       bfed_month1: this.groupList[0] == 1 ? 1:0,
       bfed_month2: this.groupList[1] == 1 ? 1:0,
       bfed_month3: this.groupList[2] == 1 ? 1:0,
@@ -163,6 +204,7 @@ export class BreastfeedingComponent implements OnInit {
       // next: (data: any) => console.log(data.status, 'check status'),
       error: err => console.log(err),
       complete: () => {
+        console.log('bfed data saved')
         this.is_saving = false;
       }
     })
@@ -173,7 +215,7 @@ getccdevDetails() {
   .subscribe({
     next: (data: any) => {
       this.patient_info = data;
-      console.log(this.patient_info[0], 'ccdev breast')
+      console.log(this.patient_info[0], 'load ccdev info on breastfeeding')
       
     },
     error: err => console.log(err)
@@ -208,7 +250,7 @@ getccdevDetails() {
             id: m.id,
             name: m.name,
             date: m.date,
-            selected: m.selected,
+            selected: this.groupList2[i],
             isDefault: m.isDefault,
         });
     });
@@ -224,20 +266,39 @@ getccdevDetails() {
 }
 
 loadBreastfed(){
-   
+  this.groupList2 = [];
+  var lib = ['bfed_month1','bfed_month2','bfed_month3','bfed_month4','bfed_month5','bfed_month6'];
+  console.log(lib[0], " try lib");
+  
   this.http.get('child-care/cc-breastfed/'+this.ccdevbreast)
     .subscribe((data: any) => {
     this.patient_breastfed = data.data
     console.log(this.patient_breastfed, 'data ng breast fed');
+  
+    // this.groupList2.push(this.patient_breastfed.bfed_month1);
+    // this.groupList2.push(this.patient_breastfed.bfed_month2);
+    // this.groupList2.push(this.patient_breastfed.bfed_month3);
+    // this.groupList2.push(this.patient_breastfed.bfed_month4);
+    // this.groupList2.push(this.patient_breastfed.bfed_month5);
+    // this.groupList2.push(this.patient_breastfed.bfed_month6);
+
+    lib.forEach((obj, index) => {
+      this.groupList2.push(this.patient_breastfed[obj]);
+      this.ccdev[index].selected = this.patient_breastfed[obj];
+      console.log(this.ccdev[index].selected, " try ccdev");
+      
+    })
+    console.log(this.groupList2, 'data ng breast fed v2')
   });
 }
 
 
   ngOnInit(){
-    this.fetchSelectedItems()
-    this.geteServiceName()
-    this.loadLibraries();
+    // this.fetchSelectedItems()
     this.loadBreastfed()
+    // this.geteServiceName()
+    this.loadLibraries();
+    
     this.getccdevDetails()
   }
 
