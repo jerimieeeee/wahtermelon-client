@@ -10,11 +10,12 @@ import { Vaccines } from './data/vaccine';
 export class VaccineModalComponent implements OnInit {
   @Output() toggleModal = new EventEmitter<any>();
   @Input() patient_info;
+  @Input() vaccines_given;
   error_message = "exceeded maximum value";
   vaccine_list = Vaccines;
   vaccines: any;
   vaccineForm: any = {
-    vaccine_status: [],
+    vaccine_status: [] ,
     vaccine_date: []
   };
   vaccine_grouped = [];
@@ -26,6 +27,7 @@ export class VaccineModalComponent implements OnInit {
   onSubmit(){
     var vax_arr = [];
 
+    console.log(this.vaccineForm)
     Object.entries(this.vaccineForm.vaccine_status).forEach(([key, value], index) => {
       if(value != '-'){
         let vacc = {
@@ -57,7 +59,6 @@ export class VaccineModalComponent implements OnInit {
     }else{
 
     }
-
   }
 
   closeModal(){
@@ -70,19 +71,50 @@ export class VaccineModalComponent implements OnInit {
     this.http.get('libraries/vaccine').subscribe(
       (data: any) => {
         const list = data.data;
-        console.log(list)
         const groups = list.reduce((groups, item) => {
+          item.vaccine_module = this.getName(item.vaccine_module);
           const group = (groups[item.vaccine_module] || []);
           group.push(item);
           groups[item.vaccine_module] = group;
           return groups;
         }, {});
 
-        this.vaccine_grouped = groups;
+        let sort = ["Child Care", "General", "Animal Bite", "NCD", "Maternal Care"]
+        let arranged_group = [];
+
+        sort.forEach((item) => {
+          arranged_group.push({name : item, items: groups[item]})
+        })
+
+        this.vaccine_grouped = arranged_group;
       }
     );
 
     return value;
+  }
+
+  getName(module){
+    let new_name;
+
+    switch(module){
+      case 'animalbite':
+        new_name = 'Animal Bite';
+        break;
+      case 'ccdev':
+        new_name = 'Child Care'
+        break
+      case 'gen':
+        new_name = 'General'
+        break
+      case 'mc':
+        new_name = 'Maternal Care'
+        break
+      case 'ncd':
+        new_name = 'NCD'
+        break
+    }
+
+    return new_name;
   }
 
   ngOnInit(): void {
