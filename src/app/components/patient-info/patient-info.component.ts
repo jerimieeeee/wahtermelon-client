@@ -38,6 +38,7 @@ export class PatientInfoComponent {
   vaccines_given: any;
   vaccine_list: any = [];
   vaccine_to_edit: any;
+  age = {};
 
   constructor(
     private activeRoute: ActivatedRoute,
@@ -51,6 +52,8 @@ export class PatientInfoComponent {
 
   getAge(){
     let age_value = this.ageService.calcuateAge(this.patient_info.birthdate);
+    this.age = age_value;
+    console.log(age_value);
     return age_value.age + ' ' + age_value.type+(age_value.age>1 ? 's old' : ' old' );
   }
 
@@ -68,8 +71,8 @@ export class PatientInfoComponent {
   }
 
   loadVaccines(){
-    this.http.get('patient/vaccines-records/'+this.patient_info.id).subscribe({
-      next: (data: any) => { this.vaccine_list = data; this.checkVaccineStatus(data)/* console.log(this.vaccine_list) */ },
+    this.http.get('patient-vaccines/vaccines-records/'+this.patient_info.id).subscribe({
+      next: (data: any) => { console.log(data); this.vaccine_list = data.data; this.checkVaccineStatus(data.data)/* console.log(this.vaccine_list) */ },
       error: err => console.log(err),
       complete: () => console.log('complete')
     })
@@ -79,16 +82,17 @@ export class PatientInfoComponent {
     var new_vax = [];
     Object.entries(vaccines).reverse().forEach(([key, value], index) => {
       var val:any = value
-      if(!new_vax[val.vaccine_id]) new_vax[val.vaccine_id] = []
+      console.log(val)
+      if(!new_vax[val.vaccines.vaccine_id]) new_vax[val.vaccines.vaccine_id] = []
 
       let vax = {
         id: val.id,
-        vaccine_id: val.vaccine_id,
+        vaccine_id: val.vaccines.vaccine_id,
         vaccine_date: val.vaccine_date,
-        dose: this.getNumberSuffix(Object.keys(new_vax[val.vaccine_id]).length + 1)
+        dose: this.getNumberSuffix(Object.keys(new_vax[val.vaccines.vaccine_id]).length + 1)
       }
 
-      new_vax[val.vaccine_id][val.id] = vax
+      new_vax[val.vaccines.vaccine_id][val.id] = vax
     })
 
     this.vaccines_given = new_vax;
@@ -114,7 +118,7 @@ export class PatientInfoComponent {
     Object.entries(this.vaccine_list).forEach(([key, value], index) => {
       var val:any = value;
 
-      this.vaccine_list[key]['dose'] = new_vax[val.vaccine_id][val.id].dose;
+      this.vaccine_list[key]['dose'] = new_vax[val.vaccines.vaccine_id][val.id].dose;
     });
   }
 

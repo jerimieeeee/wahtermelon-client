@@ -48,7 +48,7 @@ export class VaccineActionModalComponent implements OnInit {
   }
 
   onUpdate(){
-    this.http.post('patient/vaccines/'+this.vaccine.id, this.vaccine).subscribe({
+    this.http.post('patient-vaccines/vaccines/'+this.vaccine.id, this.vaccine).subscribe({
       next: (data: any) => { this.showAlert = true;
         setTimeout(() => {
           this.showAlert = false;
@@ -61,7 +61,7 @@ export class VaccineActionModalComponent implements OnInit {
 
   onDelete(){
     if(this.confirm_code === this.confirmation_code){
-      this.http.delete('patient/vaccines/', this.vaccine.id).subscribe({
+      this.http.delete('patient-vaccines/vaccines/', this.vaccine.id).subscribe({
         next: (data: any) => {
           this.disableSave = true;
           this.showAlertDelete = true;

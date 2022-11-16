@@ -51,7 +51,7 @@ export class VaccineModalComponent implements OnInit {
 
       console.log(vax_form)
 
-      this.http.post('patient/vaccines', vax_form).subscribe({
+      this.http.post('patient-vaccines/vaccines', vax_form).subscribe({
         next: (data: any) => { console.log(data.data), this.closeModal() },
         error: err => console.log(err),
         complete: () => console.log('success')
