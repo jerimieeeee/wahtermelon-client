@@ -11,8 +11,8 @@ export class AgeService {
     let age_value: any;
     let birthdate = new Date(birthday);
     let timeDiff = Math.abs(Date.now() - birthdate.getTime());
-    let age = Math.floor((timeDiff / (1000 * 3600 * 24))/365.25);
-
+    // let age = Math.floor((timeDiff / (1000 * 3600 * 24))/365.25);
+    let age = Number(Math.round(parseFloat(((timeDiff / (1000 * 3600 * 24))/365.25) + 'e' + 2)) + 'e-' + 2)
     if(age < 1){
       let age = Math.floor((timeDiff / (1000 * 3600 * 24))/30);
       if(age < 1){

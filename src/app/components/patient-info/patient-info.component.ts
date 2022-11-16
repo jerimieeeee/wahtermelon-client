@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, ComponentFactoryResolver, EventEmitter, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { faFlask, faHeart, faExclamationCircle, faNotesMedical, faPlusCircle, faQuestionCircle, faPenToSquare, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { AgeService } from 'app/shared/services/age.service';
@@ -38,7 +38,7 @@ export class PatientInfoComponent {
   vaccines_given: any;
   vaccine_list: any = [];
   vaccine_to_edit: any;
-  age = {};
+  patient_age: any;
 
   constructor(
     private activeRoute: ActivatedRoute,
@@ -52,8 +52,7 @@ export class PatientInfoComponent {
 
   getAge(){
     let age_value = this.ageService.calcuateAge(this.patient_info.birthdate);
-    this.age = age_value;
-    console.log(age_value);
+    this.patient_age = age_value;
     return age_value.age + ' ' + age_value.type+(age_value.age>1 ? 's old' : ' old' );
   }
 
@@ -64,25 +63,17 @@ export class PatientInfoComponent {
         this.show_form = true;
         this.patientInfo.emit(data.data);
         this.loadVaccines();
+        this.loadVitals();
         console.log(data.data)
       },
       error: err => console.log(err)
     });
   }
 
-  loadVaccines(){
-    this.http.get('patient-vaccines/vaccines-records/'+this.patient_info.id).subscribe({
-      next: (data: any) => { console.log(data); this.vaccine_list = data.data; this.checkVaccineStatus(data.data)/* console.log(this.vaccine_list) */ },
-      error: err => console.log(err),
-      complete: () => console.log('complete')
-    })
-  }
-
   checkVaccineStatus(vaccines){
     var new_vax = [];
     Object.entries(vaccines).reverse().forEach(([key, value], index) => {
       var val:any = value
-      console.log(val)
       if(!new_vax[val.vaccines.vaccine_id]) new_vax[val.vaccines.vaccine_id] = []
 
       let vax = {
@@ -126,6 +117,35 @@ export class PatientInfoComponent {
     this.vaccine_to_edit = vaccine;
     this.vaccineActionModal = !this.vaccineActionModal;
     if(this.vaccineActionModal == false) this.loadVaccines();
+  }
+
+  loadVaccines(){
+    this.http.get('patient-vaccines/vaccines-records/'+this.patient_info.id).subscribe({
+      next: (data: any) => { this.vaccine_list = data.data; this.checkVaccineStatus(data.data)/* console.log(this.vaccine_list) */ },
+      error: err => console.log(err),
+      complete: () => console.log('vaccines loaded')
+    })
+  }
+
+  latest_vitals: any;
+  loadVitals(){
+    let query = {
+      patient_id: this.patient_info.id,
+      sort: '-vitals_date'
+    }
+    this.http.get('patient-vitals/vitals', query).subscribe({
+      next: (data: any) => {
+        console.log(data);
+        if(data.data.length > 1){
+          this.latest_vitals = data.data[0]
+        }else{
+          this.latest_vitals = data.data
+        }
+        console.log(this.latest_vitals);
+      },
+      error: err => console.log(err),
+      complete: () => console.log('vitals loaded')
+    })
   }
 
   toggleModal(modal_name){
