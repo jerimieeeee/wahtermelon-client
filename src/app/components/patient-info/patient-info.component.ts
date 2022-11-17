@@ -36,6 +36,7 @@ export class PatientInfoComponent {
   lifestyleModal: boolean = false;
   deathRecordModal: boolean = false;
   vitalsListModal: boolean = false;
+  moduleModal: boolean = false;
 
   vaccines_given: any;
   vaccine_list: any = [];
@@ -163,6 +164,7 @@ export class PatientInfoComponent {
   }
 
   toggleModal(modal_name){
+    console.log(modal_name)
     switch (modal_name){
       case 'vitals-modal':
         this.vitalsModal = !this.vitalsModal;
@@ -197,6 +199,9 @@ export class PatientInfoComponent {
         break;
       case 'death-modal':
         this.deathRecordModal = !this.deathRecordModal;
+        break;
+      case 'module-modal':
+        this.moduleModal = !this.moduleModal;
         break;
       default:
         break;

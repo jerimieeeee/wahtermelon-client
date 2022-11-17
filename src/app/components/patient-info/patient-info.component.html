@@ -22,7 +22,14 @@
       </div>
     </div>
 
+
+
     <div class="block justify-items-start mx-5 mb-5">
+      <div class="mt-4 flex justify-center">
+        <button type="button" class="w-48 inline-flex justify-center px-5 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-sky-500 hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500" (click)="toggleModal('module-modal')">Navigate Programs</button>
+      </div>
+
+
       <div class="mt-4 leading-tight">
         <span class="block text-blue-500 font-medium text-sm">
           ADDRESS
@@ -349,5 +356,9 @@
 
 <div *ngIf="deathRecordModal">
   <app-death-modal (toggleModal)="toggleModal('death-modal')"></app-death-modal>
+</div>
+
+<div *ngIf="moduleModal">
+  <app-module-modal (toggleModal)="toggleModal('module-modal')" [patient_info]="patient_info" ></app-module-modal>
 </div>
 
