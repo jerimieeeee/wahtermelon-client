@@ -108,6 +108,7 @@ export class FirstVisitComponent implements OnInit {
     
 
   validateForm(){
+    let user_id = localStorage.getItem('user_id');
     this.visitForm = this.formBuilder.group({
       id: ['', [Validators.required]],
       admission_date: ['', [Validators.required]],
@@ -115,7 +116,7 @@ export class FirstVisitComponent implements OnInit {
       birth_weight: ['', [Validators.required, Validators.minLength(1)]],
       mothers_id: ['', [Validators.required, Validators.minLength(2)]],
       patient_id: [this.patient_details.id, [Validators.required, Validators.minLength(2)]],
-      user_id: ['97b320d5-1017-409b-b8be-754afe2849ca', [Validators.required, Validators.minLength(2)]],
+      user_id: [user_id, [Validators.required, Validators.minLength(2)]],
       ccdev_ended: ['0', [Validators.required, Validators.minLength(2)]],
       nbs_filter: ['5500815323', [Validators.required, Validators.minLength(2)]],
     });
@@ -156,21 +157,21 @@ export class FirstVisitComponent implements OnInit {
     this.http.get('child-care/cc-records/'+this.patient_details.id)
     .subscribe({
       next: (data: any) => {
-        this.patient_info = data;
-        console.log(this.patient_info, 'info ccdev')
+        this.patient_info = data.data;
+        console.log(this.patient_info, 'info ccdev first visit')
         this.getccdevMama()
-        this.visitForm.setValue(this.patient_info[0]);
+        this.visitForm.setValue(this.patient_info);
       },
       error: err => console.log(err)
     });
   }
 
   getccdevMama() {
-    this.http.get('patient/'+this.patient_info[0].mothers_id)
+    this.http.get('patient/'+this.patient_info.mothers_id)
     .subscribe({
       next: (data: any) => {
         this.patient_info2 = data.data;
-        console.log(this.patient_info2, 'info ccdev mama')
+        console.log(this.patient_info2, 'info ccdev mama first visit')
       },
       error: err => console.log(err)
     });
