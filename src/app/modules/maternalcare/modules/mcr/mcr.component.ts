@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { faAngleDown, faCalendarDay, faCaretRight, faClose, faInfoCircle, faPencil, faSave, faTimes, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
+import { faAngleDown, faCalendarDay, faCaretRight, faCircleNotch, faClose, faInfoCircle, faPencil, faSave, faTimes, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 
 
@@ -19,6 +19,7 @@ export class McrComponent implements OnInit {
   faClose = faClose;
   faTimesCircle = faTimesCircle;
   faSave = faSave;
+  faSpinner = faCircleNotch;
   faPencil = faPencil;
   faAngleDown = faAngleDown;
   faInfoCircle = faInfoCircle;
@@ -32,7 +33,6 @@ export class McrComponent implements OnInit {
   public mcr_data: any
 
   mcr_form: FormGroup = new FormGroup({
-    patient_id: new FormControl<string | null>(''),
     pre_registration_date: new FormControl<string | null>(''),
     lmp_date: new FormControl<string | null>(''),
     initial_gravidity: new FormControl<string | null>(''),
@@ -51,6 +51,7 @@ export class McrComponent implements OnInit {
 
   @Input() patient_details;
   is_saving: boolean;
+  saved: boolean;
 
   constructor(private http: HttpService, private formBuilder: FormBuilder) { }
 
@@ -59,14 +60,9 @@ export class McrComponent implements OnInit {
   ngOnInit() {
     this.getMCR('latest', this.patient_details.id);
     this.focused = false;
-
+    this.saved = false;
     this.error_message = "**please enter numbers only!"
     this.today = new Date();
-    // this.edc_date = new Date();
-    // this.aog_date = "No Date";
-    // this.first_tri = new Date();
-    // this.second_tri = new Date();
-    // this.third_tri = new Date();
   }
 
   getMCR(type: any, id: any) {
@@ -89,11 +85,14 @@ export class McrComponent implements OnInit {
 
   createForm() {
     let user_id = localStorage.getItem('user_id');
+    let facility_code = 'DOH000000000005672';
     this.mcr_form = this.formBuilder.group({
       patient_id: [this.patient_details.id,
       [Validators.required, Validators.minLength(2)]],
       user_id: [user_id,
-      [Validators.required, Validators.minLength(2)]],
+        [Validators.required, Validators.minLength(2)]],
+      facility_code: [facility_code,
+        [Validators.required, Validators.minLength(2)]],
       pre_registration_date: [(this.mcr_data == -1 ? new Date().toISOString().substring(0, 10) : new Date(this.mcr_data.pre_registration_date).toISOString().substring(0, 10)),
       [Validators.required]],
       lmp_date: [(this.mcr_data == -1 ? null : new Date(this.mcr_data.lmp_date).toISOString().substring(0, 10)),
@@ -118,7 +117,7 @@ export class McrComponent implements OnInit {
     this.buttons = [];
     this.buttons.push('save');
   }
-  saveForm(data) {
+  saveForm() {
     // this.mcr_form.setValue({
     console.log(this.mcr_form.value, " validation check");
     this.is_saving = true;
@@ -126,10 +125,14 @@ export class McrComponent implements OnInit {
     // this.showModal = true;
     if (this.mcr_form.valid) {
       this.http.post('maternal-care/mc-preregistrations', this.mcr_form.value).subscribe({
-        next: (data: any) => console.log(data.data, " data from saving"),
+        next: (data: any) => console.log(data, " data from saving"),
         error: err => console.log(err),
         complete: () => {
           this.is_saving = false;
+          this.saved = true;
+          setTimeout(()=>{
+            this.saved = false;
+        }, 1500);
           // this.loading = false;
           // this.showModal = true;
         }
@@ -137,25 +140,9 @@ export class McrComponent implements OnInit {
     } else {
       // this.loading = false;
     }
-
-    //   reg_date: data.reg_date,
-    //   lmp_date: data.lmp_date,
-    //   gravidity: data.gravidity != 0 ? data.gravidity : 0,
-    //   parity: data.parity != 0 ? data.parity : 0,
-    //   full_term: data.full_term != 0 ? data.full_term : 0,
-    //   pre_term: data.pre_term != 0 ? data.pre_term : 0,
-    //   abortions: data.abortions != 0 ? data.abortions : 0,
-    //   live_births: data.live_births != 0 ? data.live_births : 0,
-    // });
-    // let url = ''
-    // this.response = this.http.get(url).subscribe();
-    // console.log('mcr_form: ', this.mcr_form.value, ' vs response:', this.response);
-
-    // this.mcr_form.disable();
-    // this.getMCR('all', '97bf679c-bcde-4073-af71-9cfdc65ace51');
     console.log(this.mcr_data, " try mcr_dat afrom save");
-
   }
+
   onKeyUp(data_input: string, id: string) {
     // console.log(data_input + ' this is my data input');
 
