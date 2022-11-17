@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
 import { faPersonWalking } from '@fortawesome/free-solid-svg-icons';
+import { PatientInfoComponent } from 'app/components/patient-info/patient-info.component';
 import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
@@ -10,25 +11,25 @@ import { HttpService } from 'app/shared/services/http.service';
 export class MaternalcareComponent implements OnInit {
 
   faPersonWalking = faPersonWalking;
-
+  patient_details: any;
+  public mcr_data: any;
   constructor(private http: HttpService) { }
   module: number;
 
   libraries = [
-    {var_name: 'risk_factors', location: 'mc-risk-factors'},
-    {var_name: 'fetals', location: 'mc-presentations'},
-    {var_name: 'fhr_lib', location: 'mc-locations'},
-    {var_name: 'delivery_location', location: 'mc-delivery-locations'},
-    {var_name: 'regions', location: 'regions?include=provinces'},
-    {var_name: 'attendants', location: 'mc-attendants'},
-    {var_name: 'preg_outcome', location: 'mc-outcomes'},
+    { var_name: 'risk_factors', location: 'mc-risk-factors' },
+    { var_name: 'fetals', location: 'mc-presentations' },
+    { var_name: 'fhr_lib', location: 'mc-locations' },
+    { var_name: 'delivery_location', location: 'mc-delivery-locations' },
+    { var_name: 'regions', location: 'regions?include=provinces' },
+    { var_name: 'attendants', location: 'mc-attendants' },
+    { var_name: 'preg_outcome', location: 'mc-outcomes' },
   ]
 
   ngOnInit(): void {
     this.module = 1;
-    this.post_value =false;
+    this.post_value = false;
     this.loadLibraries();
-    
   }
 
   switchTab(tab) {
@@ -37,22 +38,23 @@ export class MaternalcareComponent implements OnInit {
     console.log(this.module);
   }
   post_value: boolean;
- postValue(post_data) {
-   
-  if(post_data){
-    this.post_value =true;
+  postValue(post_data) {
+
+    if (post_data) {
+      this.post_value = true;
+    }
   }
- }
 
- loadLibraries(){
-  this.libraries.forEach(obj => {
-    this.http.get('libraries/'+obj.location).subscribe({
-      next: (data: any) => this[obj.var_name] = data.data,
-      error: err => console.log(err),
-    })
-  });
-  
-}
-
-  
+  loadLibraries() {
+    this.libraries.forEach(obj => {
+      this.http.get('libraries/' + obj.location).subscribe({
+        next: (data: any) => this[obj.var_name] = data.data,
+        error: err => console.log(err),
+      })
+    });
+  }
+  patientInfo(info) {
+  this.patient_details = info;
+  // console.log(this.patient_details, " pantient info");
+  }
 }

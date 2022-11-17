@@ -1,7 +1,9 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { Component, OnInit, Input } from '@angular/core';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { faAngleDown, faCalendarDay, faCaretRight, faClose, faInfoCircle, faPencil, faSave, faTimes, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
+import { HttpService } from 'app/shared/services/http.service';
+
+
 
 @Component({
   selector: 'app-mcr',
@@ -9,7 +11,7 @@ import { faAngleDown, faCalendarDay, faCaretRight, faClose, faInfoCircle, faPenc
   styleUrls: ['./mcr.component.scss']
 })
 export class McrComponent implements OnInit {
- date = new Date();
+  date = new Date();
   focused: boolean;
 
   faCalendarDay = faCalendarDay;
@@ -27,67 +29,132 @@ export class McrComponent implements OnInit {
   aog_date: any;
   public keyUp = [];
   public buttons = [];
-  mcr_form: FormGroup;
-  gravidity: Number = new Number();
-  parity: Number = new Number();
-  full_term: Number = new Number();
-  pre_term: Number = new Number();
-  abortions: Number = new Number();
-  live_births: Number = new Number();
+  public mcr_data: any
+
+  mcr_form: FormGroup = new FormGroup({
+    patient_id: new FormControl<string | null>(''),
+    pre_registration_date: new FormControl<string | null>(''),
+    lmp_date: new FormControl<string | null>(''),
+    initial_gravidity: new FormControl<string | null>(''),
+    initial_parity: new FormControl<string | null>(''),
+    initial_full_term: new FormControl<string | null>(''),
+    initial_preterm: new FormControl<string | null>(''),
+    initial_abortion: new FormControl<string | null>(''),
+    initial_livebirths: new FormControl<string | null>(''),
+  });
+
   response: any;
   first_tri: Date;
   second_tri: Date;
   third_tri: Date;
   today: Date;
 
-  constructor(private http: HttpClient) { }
+  @Input() patient_details;
+  is_saving: boolean;
 
-  ngOnInit(): void {
+  constructor(private http: HttpService, private formBuilder: FormBuilder) { }
+
+
+
+  ngOnInit() {
+    this.getMCR('latest', this.patient_details.id);
     this.focused = false;
-    this.createForm();
+
     this.error_message = "**please enter numbers only!"
     this.today = new Date();
-    this.edc_date = new Date();
-    this.aog_date = "No Date";
-    this.first_tri = new Date();
-    this.second_tri = new Date();
-    this.third_tri = new Date();
+    // this.edc_date = new Date();
+    // this.aog_date = "No Date";
+    // this.first_tri = new Date();
+    // this.second_tri = new Date();
+    // this.third_tri = new Date();
   }
+
+  getMCR(type: any, id: any) {
+    this.http.get('maternal-care/mc-records?type=' + type + '&patient_id=' + id).subscribe({
+      next: (data: any) => {
+        if (!data.data) {
+          console.log(data.message);
+          this.mcr_data = -1;
+          this.getEDC(this.today, 'any');
+        } else {
+          this.mcr_data = data.data.pre_registration;
+          console.log(this.mcr_data, " mcr data pre_registration");
+          this.getEDC(this.mcr_data.lmp_date, 'db');
+        }
+        this.createForm();
+      },
+      error: err => console.log(err),
+    })
+  }
+
   createForm() {
-    this.mcr_form = new FormGroup({
-      reg_date: new FormControl(new Date().toISOString().substring(0,10)),
-      lmp_date: new FormControl(),
-      gravidity: new FormControl(this.gravidity),
-      parity: new FormControl(this.parity),
-      full_term: new FormControl(this.full_term),
-      pre_term: new FormControl(this.pre_term),
-      abortions: new FormControl(this.abortions),
-      live_births: new FormControl(this.live_births),
+    let user_id = localStorage.getItem('user_id');
+    this.mcr_form = this.formBuilder.group({
+      patient_id: [this.patient_details.id,
+      [Validators.required, Validators.minLength(2)]],
+      user_id: [user_id,
+      [Validators.required, Validators.minLength(2)]],
+      pre_registration_date: [(this.mcr_data == -1 ? new Date().toISOString().substring(0, 10) : new Date(this.mcr_data.pre_registration_date).toISOString().substring(0, 10)),
+      [Validators.required]],
+      lmp_date: [(this.mcr_data == -1 ? null : new Date(this.mcr_data.lmp_date).toISOString().substring(0, 10)),
+      [Validators.required]],
+      initial_gravidity: [(this.mcr_data == -1 ? null : this.mcr_data.initial_gravidity),
+      [Validators.required]],
+      initial_parity: [(this.mcr_data == -1 ? null : this.mcr_data.initial_parity),
+      [Validators.required]],
+      initial_full_term: [(this.mcr_data == -1 ? 0 : this.mcr_data.initial_full_term),
+      [Validators.required]],
+      initial_preterm: [(this.mcr_data == -1 ? 0 : this.mcr_data.initial_preterm),
+      [Validators.required]],
+      initial_abortion: [(this.mcr_data == -1 ? 0 : this.mcr_data.initial_abortion),
+      [Validators.required]],
+      initial_livebirths: [(this.mcr_data == -1 ? 0 : this.mcr_data.initial_livebirths),
+      [Validators.required]],
     });
   }
-  flip(): void{
+  flip(): void {
     this.focused = !this.focused;
     this.keyUp = [];
     this.buttons = [];
     this.buttons.push('save');
   }
   saveForm(data) {
-    this.mcr_form.setValue({
-    
-       reg_date: data.reg_date,
-      lmp_date: data.lmp_date,
-      gravidity: data.gravidity != 0? data.gravidity : 0,
-      parity: data.parity != 0? data.parity : 0,
-      full_term: data.full_term != 0? data.full_term : 0,
-      pre_term: data.pre_term != 0? data.pre_term : 0,
-      abortions: data.abortions != 0? data.abortions : 0,
-      live_births: data.live_births != 0? data.live_births : 0,
-    });
-    let url = ''
-    this.response = this.http.get(url).subscribe();
-    console.log('mcr_form: ', this.mcr_form.value, ' vs response:', this.response);
-    
-    this.mcr_form.disable();
+    // this.mcr_form.setValue({
+    console.log(this.mcr_form.value, " validation check");
+    this.is_saving = true;
+    // this.loading = true;
+    // this.showModal = true;
+    if (this.mcr_form.valid) {
+      this.http.post('maternal-care/mc-preregistrations', this.mcr_form.value).subscribe({
+        next: (data: any) => console.log(data.data, " data from saving"),
+        error: err => console.log(err),
+        complete: () => {
+          this.is_saving = false;
+          // this.loading = false;
+          // this.showModal = true;
+        }
+      })
+    } else {
+      // this.loading = false;
+    }
+
+    //   reg_date: data.reg_date,
+    //   lmp_date: data.lmp_date,
+    //   gravidity: data.gravidity != 0 ? data.gravidity : 0,
+    //   parity: data.parity != 0 ? data.parity : 0,
+    //   full_term: data.full_term != 0 ? data.full_term : 0,
+    //   pre_term: data.pre_term != 0 ? data.pre_term : 0,
+    //   abortions: data.abortions != 0 ? data.abortions : 0,
+    //   live_births: data.live_births != 0 ? data.live_births : 0,
+    // });
+    // let url = ''
+    // this.response = this.http.get(url).subscribe();
+    // console.log('mcr_form: ', this.mcr_form.value, ' vs response:', this.response);
+
+    // this.mcr_form.disable();
+    // this.getMCR('all', '97bf679c-bcde-4073-af71-9cfdc65ace51');
+    console.log(this.mcr_data, " try mcr_dat afrom save");
+
   }
   onKeyUp(data_input: string, id: string) {
     // console.log(data_input + ' this is my data input');
@@ -107,62 +174,68 @@ export class McrComponent implements OnInit {
     if (!this.buttons.includes(name)) {
       this.buttons.push(name);
     }
-    // console.log(this.buttons);
-
   }
+
   cancel() {
     this.keyUp = [];
     this.mcr_form.reset();
   }
+
   edit() {
     this.mcr_form.enable();
   }
 
-  getEDC(){
-    this.edc_date = new Date(this.lmp_date);
-    this.edc_date.setDate(this.edc_date.getDate() + 280)
+  getEDC(value: any, from: any) {
+    console.log('fetching Important dates from ' + from);
 
-    this.first_tri = new Date(this.lmp_date);
-    this.first_tri.setDate(this.first_tri.getDate() + (7 * 12));
+    this.edc_date = from == 'db' ? new Date(this.mcr_data.edc_date) : new Date(value);
 
-    this.second_tri = new Date(this.lmp_date);
-    this.second_tri.setDate(this.second_tri.getDate() + (7 * 27));
-    this.third_tri = this.edc_date;
+    this.first_tri = from == 'db' ? new Date(this.mcr_data.trimester1_date) : new Date(value);
+
+    this.second_tri = from == 'db' ? new Date(this.mcr_data.trimester2_date) : new Date(value);
+
+    this.third_tri = from == 'db' ? new Date(this.mcr_data.trimester3_date) : this.edc_date;
+
+    if (from == 'input') {
+      this.edc_date.setDate(this.edc_date.getDate() + 280);
+      this.first_tri.setDate(this.first_tri.getDate() + (7 * 12));
+      this.second_tri.setDate(this.second_tri.getDate() + (7 * 27));
+    }
 
     this.aog_date = new Date();
-    this.aog_date.setHours(0,0,0,0);
-    
-    var lmp = new Date(this.lmp_date);
-    lmp.setHours(0,0,0,0);
-    
+    this.aog_date.setHours(0, 0, 0, 0);
+
+    var lmp = new Date(value);
+    lmp.setHours(0, 0, 0, 0);
+
     const msInWeek = 1000 * 60 * 60 * 24 * 7;
     var aggregate = ((this.aog_date.getTime() - lmp.getTime()) / msInWeek).toFixed(2);
     var aggre_decimal = Number(aggregate) - Math.trunc(Number(aggregate));
-   
-    if(Number(aggregate) > 1){ //1.4
-      if(Math.trunc(Number(aggregate)) > 1){
-        if(aggre_decimal > 0){
+
+    if (Number(aggregate) > 1) { //1.4
+      if (Math.trunc(Number(aggregate)) > 1) {
+        if (aggre_decimal > 0) {
           var suffix = Math.trunc(Number(aggregate)) + ' weeks and ' + (aggre_decimal * 7).toFixed(0) + ' days';
-        }else if(aggre_decimal == 0){
+        } else if (aggre_decimal == 0) {
           var suffix = Math.trunc(Number(aggregate)) + ' weeks';
         }
-      }else if(Math.trunc(Number(aggregate)) == 1){
-        if(aggre_decimal > 0){
+      } else if (Math.trunc(Number(aggregate)) == 1) {
+        if (aggre_decimal > 0) {
           var suffix = Math.trunc(Number(aggregate)).toFixed(0) + ' week and ' + (aggre_decimal * 7).toFixed(0) + ' days';
         }
       }
-    }else if (Number(aggregate) == 1){
-      var suffix = Number(aggregate).toFixed(0) +  ' week';
-    }else if (Number(aggregate) < 1){
+    } else if (Number(aggregate) == 1) {
+      var suffix = Number(aggregate).toFixed(0) + ' week';
+    } else if (Number(aggregate) < 1) {
       aggregate = JSON.stringify(Math.round(((this.aog_date.getTime() - lmp.getTime()) / msInWeek) * 7))
-      if(Number(aggregate) > 1 || Number(aggregate) <= 0){
-        var suffix = aggregate +  ' days'
-      }else if(Number(aggregate) == 1){
-        var suffix = aggregate +  ' day'
+      if (Number(aggregate) > 1 || Number(aggregate) <= 0) {
+        var suffix = aggregate + ' days'
+      } else if (Number(aggregate) == 1) {
+        var suffix = aggregate + ' day'
       }
     }
     // console.log(suffix, " suffix");
-      this.aog_date = suffix;
+    this.aog_date = suffix;
 
   }
 }

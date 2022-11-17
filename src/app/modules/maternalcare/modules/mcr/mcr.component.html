@@ -1,5 +1,5 @@
-<div class="fade-in">
-    <form [formGroup]="mcr_form" (ngSubmit)="saveForm(mcr_form.value)">
+<div class="fade-in" >
+    <form [formGroup]="mcr_form" (ngSubmit)="saveForm(mcr_form.value)" *ngIf="mcr_data">
         <div class="grid gap-4 relative animates-dropdown " style="grid-template-columns: repeat(16, minmax(0, 1fr));"
             *ngIf="!focused">
             <div class="sticky top-14 z-50 border border-blue-400 col-span-2 relative mx-2 px-2 py-1 rounded-t-lg text-sm bg-blue-500 text-white"
@@ -21,17 +21,22 @@
                     style="grid-template-columns: repeat(14, minmax(0, 1fr));">
 
                     <div class="transitions col-span-4" *ngIf="!focused">
-                        <h3 for="reg_date">Registration Date</h3>
+                        <h3 for="pre_registration_date">Registration Date</h3>
                         <div class="grid grid-cols-10">
                             <div class="icon-height col-span-2 p-2 pt-1 rounded-l border-solid border border-zinc-300">
-                                <fa-icon [icon]="faCalendarDay" size="lg" class="text-blue-400" for="reg_date">
+                                <fa-icon [icon]="faCalendarDay" size="lg" class="text-blue-400" for="pre_registration_date">
                                 </fa-icon>
                             </div>
-                            <input formControlName="reg_date" id="reg_date" name="reg_date" type="date" max="{{today.toLocaleDateString('en-CA')}}"
-                                class="col-span-8 rounded-r border-solid border border-l-0 border-zinc-300 focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none disabled:cursor-not-allowed"
+                            <input formControlName="pre_registration_date" id="pre_registration_date" name="pre_registration_date" type="date" max="{{today.toLocaleDateString('en-CA')}}"
+                                class="col-span-8 rounded-r border-solid border border-l-0 border-zinc-300 focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none disabled:cursor-not-allowed invalid:border-red-400 "
                                 width="auto"
                                 (keyup.escape)="$event.target.value = ''; onKeyUp($event.target.value, $event.target.id)"
                                 (change)="onKeyUp($event.target.value, $event.target.id)">
+                        </div>
+                        <div *ngIf="is_saving && mcr_form.controls.pre_registration_date.errors" class="invalid-alert">
+                            <div *ngIf="mcr_form.controls.pre_registration_date.errors?.['required']">
+                                Required field
+                            </div>
                         </div>
                     </div>
 
@@ -42,22 +47,20 @@
                                 <fa-icon [icon]="faCalendarDay" size="lg" class="text-blue-400" for="lmp_date">
                                 </fa-icon>
                             </div>
-                            <input formControlName="lmp_date" id="lmp_date" name="lmp_date" type="date" max="{{today.toLocaleDateString('en-CA')}}" [(ngModel)]="lmp_date"
+                            <input formControlName="lmp_date" id="lmp_date" name="lmp_date" type="date" max="{{today.toLocaleDateString('en-CA')}}"
                                 class="col-span-8 rounded-r border-solid border border-l-0 border-zinc-300 focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none disabled:cursor-not-allowed"
                                 width="auto"
                                 (keyup.escape)="$event.target.value = ''; onKeyUp($event.target.value, $event.target.id)"
                                 (change)="onKeyUp($event.target.value, $event.target.id)"
-                                (change)="getEDC()">
+                                (change)="getEDC($event.target.value, 'input')">
+                        </div>
+                        <div *ngIf="is_saving && mcr_form.controls.lmp_date.errors" class="invalid-alert">
+                            <div *ngIf="mcr_form.controls.lmp_date.errors?.['required']">
+                                Required field
+                            </div>
                         </div>
                     </div>
-                    <!-- <div class="transitions col-span-3" *ngIf="!focused">
-                        <h3>EDC Date</h3>
-                        <input type="date" max="{{today.toLocaleDateString('en-CA')}}" [value]="edc_date.toLocaleDateString('en-CA')!= today.toLocaleDateString('en-CA')?third_tri.toLocaleDateString('en-CA'):'No Date'" class=" rounded border-solid border border-zinc-300 focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none disabled:cursor-not-allowed" width="auto" disabled>
-                    </div>
-                    <div class="transitions col-span-3" *ngIf="!focused">
-                        <h3>AOG (Weeks)</h3>
-                        <input type="text" [value]="aog_date" class=" rounded border-solid border border-zinc-300 focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none disabled:cursor-not-allowed" width="auto" disabled>
-                    </div> -->
+                
                 </div>
 
                 <div class="grid rounded-lg drop-shadow-md bg-white rounded-lg border-gray-300 m-2 border mb-4" style="grid-template-columns: repeat(13, minmax(0, 1fr));">
@@ -91,13 +94,16 @@
                             class="absolute bottom-1.5 left-2 text-gray-300 group-hover:text-pink-400"
                             *ngIf="!focused && mcr_form.disabled">
                         </fa-icon>
-                        <input type="number" formControlName="gravidity"
+                        <input type="number" formControlName="initial_gravidity"
                             class="font-medium disabled:group-hover:font-semibold peer invalid:border-red-500 border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed disabled:border-0  disabled:pl-5  disabled:typed-out disabled:group-hover:bg-gray-100 disabled:rounded-full"
                             (keyup)="onKeyUp($event.target.value, $event.target.id)"
-                            (keyup.escape)="clearForm($event.target.id)" id="gravidity" min="0"
+                            (keyup.escape)="clearForm($event.target.id)" id="initial_gravidity" min="0"
                             (change)="onKeyUp($event.target.value, $event.target.id)">
-                        <small class="hidden peer-invalid:block text-red-400 ">error_message</small>
-
+                            <div *ngIf="is_saving && mcr_form.controls.initial_gravidity.errors" class="invalid-alert">
+                                <div *ngIf="mcr_form.controls.initial_gravidity.errors?.['required']">
+                                    Required field
+                                </div>
+                            </div>
                     </div>
                     <div class="transitions col-span-4 row-start-3 border-check relative select-none group mx-2 mb-2"
                         *ngIf="!focused">
@@ -106,13 +112,16 @@
                             class="absolute bottom-1.5 left-2 text-gray-300 group-hover:text-pink-400"
                             *ngIf="!focused && mcr_form.disabled">
                         </fa-icon>
-                        <input type="number" formControlName="parity"
+                        <input type="number" formControlName="initial_parity"
                             class="font-medium disabled:group-hover:font-semibold peer invalid:border-red-500 border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed disabled:border-0  disabled:pl-5  disabled:typed-out disabled:group-hover:bg-gray-100 disabled:rounded-full"
                             (keyup)="onKeyUp($event.target.value, $event.target.id)"
-                            (keyup.escape)="clearForm($event.target.id)" id="parity" min="0"
+                            (keyup.escape)="clearForm($event.target.id)" id="initial_parity" min="0"
                             (change)="onKeyUp($event.target.value, $event.target.id)">
-                        <small class="hidden peer-invalid:block text-red-400 ">error_message</small>
-
+                            <div *ngIf="is_saving && mcr_form.controls.initial_parity.errors" class="invalid-alert">
+                                <div *ngIf="mcr_form.controls.initial_parity.errors?.['required']">
+                                    Required field
+                                </div>
+                            </div>
                     </div>
 
 
@@ -124,13 +133,16 @@
                             class="absolute bottom-1.5 left-2 text-gray-300 group-hover:text-pink-400"
                             *ngIf="!focused && mcr_form.disabled">
                         </fa-icon>
-                        <input type="number" formControlName="full_term"
+                        <input type="number" formControlName="initial_full_term"
                             class="font-medium disabled:group-hover:font-semibold peer invalid:border-red-500 border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed disabled:border-0  disabled:pl-5  disabled:typed-out disabled:group-hover:bg-gray-100 disabled:rounded-full"
                             (keyup)="onKeyUp($event.target.value, $event.target.id)"
-                            (keyup.escape)="clearForm($event.target.id)" id="full_term" min="0"
+                            (keyup.escape)="clearForm($event.target.id)" id="initial_full_term" min="0"
                             (change)="onKeyUp($event.target.value, $event.target.id)">
-                        <small class="hidden peer-invalid:block text-red-400 ">error_message</small>
-
+                            <div *ngIf="is_saving && mcr_form.controls.initial_full_term.errors" class="invalid-alert">
+                                <div *ngIf="mcr_form.controls.initial_full_term.errors?.['required']">
+                                    Required field
+                                </div>
+                            </div>
                     </div>
                     <div class="transitions col-span-4 border-check relative select-none group mx-2" *ngIf="!focused">
                         <h3>Pre-Term</h3>
@@ -138,14 +150,19 @@
                             class="absolute bottom-1.5 left-2 text-gray-300 group-hover:text-pink-400"
                             *ngIf="!focused && mcr_form.disabled">
                         </fa-icon>
-                        <input type="number" formControlName="pre_term"
+                        <input type="number" formControlName="initial_preterm"
                             class="font-medium disabled:group-hover:font-semibold peer invalid:border-red-500 border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed disabled:border-0  disabled:pl-5  disabled:typed-out disabled:group-hover:bg-gray-100 disabled:rounded-full"
                             (keyup)="onKeyUp($event.target.value, $event.target.id)"
-                            (keyup.escape)="clearForm($event.target.id)" id="pre_term" min="0"
+                            (keyup.escape)="clearForm($event.target.id)" id="initial_preterm" min="0"
                             (change)="onKeyUp($event.target.value, $event.target.id)">
-                        <small class="hidden peer-invalid:block text-red-400 ">error_message</small>
+                            <div *ngIf="is_saving && mcr_form.controls.initial_preterm.errors" class="invalid-alert">
+                                <div *ngIf="mcr_form.controls.initial_preterm.errors?.['required']">
+                                    Required field
+                                </div>
+                            </div>
 
                     </div>
+
                     <div class="transitions col-span-4 col-start-7 border-check relative select-none group mx-2 mb-2"
                         *ngIf="!focused">
                         <h3>Abortions</h3>
@@ -153,14 +170,18 @@
                             class="absolute bottom-1.5 left-2 text-gray-300 group-hover:text-pink-400"
                             *ngIf="!focused && mcr_form.disabled">
                         </fa-icon>
-                        <input type="number" formControlName="abortions"
+                        <input type="number" formControlName="initial_abortion"
                             class="font-medium disabled:group-hover:font-semibold peer invalid:border-red-500 border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed disabled:border-0  disabled:pl-5  disabled:typed-out disabled:group-hover:bg-gray-100 disabled:rounded-full"
                             (keyup)="onKeyUp($event.target.value, $event.target.id)"
-                            (keyup.escape)="clearForm($event.target.id)" id="abortions" min="0"
+                            (keyup.escape)="clearForm($event.target.id)" id="initial_abortion" min="0"
                             (change)="onKeyUp($event.target.value, $event.target.id)">
-                        <small class="hidden peer-invalid:block text-red-400 ">error_message</small>
-
+                            <div *ngIf="is_saving && mcr_form.controls.initial_abortion.errors" class="invalid-alert">
+                                <div *ngIf="mcr_form.controls.initial_abortion.errors?.['required']">
+                                    Required field
+                                </div>
+                            </div>
                     </div>
+
                     <div class="transitions col-span-4 border-check relative select-none group mx-2 mb-2"
                         *ngIf="!focused">
                         <h3>Live Births</h3>
@@ -168,13 +189,16 @@
                             class="absolute bottom-1.5 left-2 text-gray-300 group-hover:text-pink-400"
                             *ngIf="!focused && mcr_form.disabled">
                         </fa-icon>
-                        <input type="number" formControlName="live_births"
+                        <input type="number" formControlName="initial_livebirths"
                             class="font-medium disabled:group-hover:font-semibold peer invalid:border-red-500 border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed disabled:border-0  disabled:pl-5  disabled:typed-out disabled:group-hover:bg-gray-100 disabled:rounded-full"
                             (keyup)="onKeyUp($event.target.value, $event.target.id)"
-                            (keyup.escape)="clearForm($event.target.id)" id="live_births" min="0"
+                            (keyup.escape)="clearForm($event.target.id)" id="initial_livebirths" min="0"
                             (change)="onKeyUp($event.target.value, $event.target.id)">
-                        <small class="hidden peer-invalid:block text-red-400 ">error_message</small>
-
+                            <div *ngIf="is_saving && mcr_form.controls.initial_livebirths.errors" class="invalid-alert">
+                                <div *ngIf="mcr_form.controls.initial_livebirths.errors?.['required']">
+                                    Required field
+                                </div>
+                            </div>
                     </div>
                 </div>
             </div>
@@ -191,7 +215,7 @@
                     class="cursor-pointer flex border-check hover:drop-shadow-md bg-green-300 hover:bg-green-400 py-1 rounded-full text-white px-3 peer-hover:bg-white peer-hover:text-green-400">
                     <fa-icon [icon]="faSave" size="lg" class="mr-2">
                     </fa-icon>
-                    <button type="submit" class="font-bold button-out border-check-red"
+                    <button type="button" class="font-bold button-out border-check-red"
                         (keyup.enter)="saveForm(mcr_form.value)">Save</button>
                 </div>
             </div>
