@@ -1,8 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { Store } from '@ngrx/store';
-import { BirthInformation } from './models/birthinformation.model'
-import { AppState } from './app.state';
 import { faDoorClosed } from '@fortawesome/free-solid-svg-icons';
 
 
@@ -18,11 +14,17 @@ export class ChildcareComponent implements OnInit {
   
   module: Number;
 
-  birthinfos: Observable<BirthInformation[]>;
+  patient_details: any;
+
 
   // Section 2
-  constructor(private store: Store<AppState>) { 
-    this.birthinfos = store.select('birthinfo');
+  constructor() { 
+   
+  }
+
+  patientInfo(info){
+   this.patient_details = info;
+    console.log(this.patient_details, 'get patient');
   }
 
   ngOnInit(): void {

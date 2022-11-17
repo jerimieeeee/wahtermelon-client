@@ -32,7 +32,8 @@ export class ServicesComponent implements OnInit {
 
   is_saving: boolean = false;
 
-  defaultDate = new Date().toISOString().slice(0, 16);
+  // defaultDate = new Date().toISOString().slice(0, 16);
+  defaultDate = new Date().toLocaleDateString('en-CA')
 
   services= [
     { id: 1, name: 'Complementary Feeding', cc_id: 'FEED', date: 'Mar 24 2012 10:00:00 AM', ischecked: false, service_date: '', done_outside: ''},
@@ -81,12 +82,15 @@ export class ServicesComponent implements OnInit {
   ccservicename: any;
 
   toggleEssentialModal(){
+    console.log('toggleEssentialModal');
     this.showEssentialModal = !this.showEssentialModal;
+    this.geteServiceName();
   }
 
   showServiceModal = false;
   toggleServiceModal(){
     this.showServiceModal = !this.showServiceModal;
+    this.getServices();
   }
 
   showVaccineModal = false;
@@ -158,10 +162,37 @@ export class ServicesComponent implements OnInit {
   }
 
   fetchSelectedItems() {
+
     this.selectedServiceList = this.eservices2.filter((value, index) => {
       
       if(!value.ischecked){
         this.eservices2[index].service_date=''
+      }
+      console.log('fetchSelectedItems');
+      
+      return value.ischecked
+    });
+    
+  }
+
+  setDate(i: any) {
+    this.selectedServiceList = this.eservices2.filter((value, index) => {
+      if(value.ischecked && index == i){
+        this.eservices2[index].service_date=this.defaultDate
+      }else if(!value.ischecked && index == i){
+        this.eservices2[index].service_date=''
+      }
+      return value.ischecked
+    });
+    
+  }
+
+  setDate2(i: any) {
+    this.selectedServiceList = this.services.filter((value, index) => {
+      if(value.ischecked && index == i){
+        this.services[index].service_date=this.defaultDate
+      }else if(!value.ischecked && index == i){
+        this.services[index].service_date=''
       }
       return value.ischecked
     });
@@ -213,12 +244,14 @@ export class ServicesComponent implements OnInit {
     });
   }
  
-  changeSelection() {
-    this.fetchSelectedItems()
-    console.log(this.selectedServiceList)
+  changeSelection(i: any) {
+    // this.fetchSelectedItems()
+    this.setDate(i)
+    console.log(this.selectedServiceList, 'sadsad')
   }
 
-  changeSelection2() {
+  changeSelection2(i:any) {
+    this.setDate2(i)
     this.fetchSelectedItems2()
   }
 

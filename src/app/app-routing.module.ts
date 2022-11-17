@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { AppComponent } from './app.component';
 
 const routes: Routes = [
   {
@@ -8,8 +9,7 @@ const routes: Routes = [
   },
   {
     path:'',
-    redirectTo:'/home',
-    pathMatch:'full'
+    component: AppComponent
   },
   {
     path: 'fp',
@@ -70,11 +70,15 @@ const routes: Routes = [
   {
     path: 'consultation',
     loadChildren: () => import('./modules/consultation/consultation.module').then(m => m.ConsultationModule)
+  },
+  {
+    path: 'user-registration',
+    loadChildren: () => import('./modules/user-registration/user-registration.module').then(m => m.UserRegistrationModule)
   }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' })],
+  imports: [RouterModule.forRoot(routes, { useHash: true  })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

@@ -26,7 +26,7 @@
       <!--FIRST VISIT SECTION-->
     
     <div class="grid grid-col-8">
-      <app-first-visit></app-first-visit>
+      <app-first-visit *ngIf="patient_details" [patient_details]="patient_details"></app-first-visit>
     </div>
 
     <!--border-->
@@ -53,14 +53,14 @@
     <!--BREASTFEEDING SECTION-->
 
     <div class="grid grid-col-8">
-      <app-breastfeeding ></app-breastfeeding>
+      <app-breastfeeding *ngIf="patient_details" [patient_details]="patient_details"></app-breastfeeding>
     </div>
   
   </div>
 
 
   <div class="w-3/12">
-    <app-patient-info></app-patient-info>
+    <app-patient-info (patientInfo)="patientInfo($event)"></app-patient-info>
   </div>
   
 </div>

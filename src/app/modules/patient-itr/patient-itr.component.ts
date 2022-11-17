@@ -40,17 +40,17 @@ export class PatientItrComponent implements OnInit {
           name: 'Maternal Care',
           location: 'mc'
         },
-        {
+        /* {
           name: 'Family Planning',
           location: 'fp'
-        },
-        {
+        }, */
+       /*  {
           name: 'Dental',
           location: 'dental'
-        },
+        }, */
       ]
     },
-    {
+    /* {
       group: 'Others',
       modules: [
         {
@@ -70,7 +70,7 @@ export class PatientItrComponent implements OnInit {
           location: 'consultation'
         },
       ]
-    }
+    } */
   ]
   @ViewChild("bp-chart") bp_chart: ChartComponent;
   @ViewChild("weight-chart") weight_chart: ChartComponent;
@@ -167,8 +167,6 @@ export class PatientItrComponent implements OnInit {
   }
 
   onSubmit(loc){
-    console.log(loc);
-    console.log('/'+loc, {id: this.patient_details.id});
     this.router.navigate(['/'+loc, {id: this.patient_details.id}])
   }
 
@@ -177,7 +175,6 @@ export class PatientItrComponent implements OnInit {
   }
 
   patientInfo(info){
-    console.log(info);
     this.patient_details = info;
   }
 
