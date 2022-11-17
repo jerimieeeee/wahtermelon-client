@@ -125,8 +125,7 @@ export class PatientInfoComponent {
   }
 
   loadVaccines(){
-    let params = { 'patient_id': this.patient_info.id, 'sort': '-vaccine_date' }
-    this.http.get('patient-vaccines/vaccines-records', params).subscribe({
+    this.http.get('patient-vaccines/vaccines-records', {params:{'patient_id': this.patient_info.id, 'sort': '-vaccine_date' }}).subscribe({
       next: (data: any) => {
         this.vaccine_list = data.data;
         console.log(this.vaccine_list)
@@ -144,14 +143,13 @@ export class PatientInfoComponent {
       patient_id: this.patient_info.id,
       sort: '-vitals_date'
     }
-    this.http.get('patient-vitals/vitals', query).subscribe({
+
+    console.log(query)
+    this.http.get('patient-vitals/vitals', {params:{patient_id: this.patient_info.id, sort: '-vitals_date'}}).subscribe({
       next: (data: any) => {
+        console.log(data)
         this.patientVitals.emit(data.data);
-        if(data.data.length > 1){
-          this.latest_vitals = data.data[0]
-        }else{
-          this.latest_vitals = data.data
-        }
+        this.latest_vitals = data.data[0]
       },
       error: err => console.log(err),
       complete: () => console.log('vitals loaded')
