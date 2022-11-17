@@ -56,7 +56,10 @@
         <span class="block text-blue-500 font-medium text-sm">
           VITALS ({{ latest_vitals?.vitals_date }})
         </span>
-        <fa-icon (click)="toggleModal('vitals-modal')" class="mx-0 my-0 text-blue-500 mr-2 hover:cursor-pointer" [icon]="faPlusCircle"></fa-icon>
+        <span>
+          <fa-icon (click)="toggleModal('vitals-list-modal')" class="mx-0 my-0 text-green-500 mr-2 hover:cursor-pointer" [icon]="faTableList" *ngIf="latest_vitals" ></fa-icon>
+          <fa-icon (click)="toggleModal('vitals-modal')" class="mx-0 my-0 text-blue-500 mr-2 hover:cursor-pointer" [icon]="faPlusCircle"></fa-icon>
+        </span>
       </div>
 
       <div class="block">
@@ -127,7 +130,7 @@
             Pulse Rate
           </span>
           <span class="block text-xs">
-            {{ latest_vitals?.patient_pulse_rate ? latest_vitals?.patient_pulse_rate : '-' }}
+            {{ latest_vitals?.patient_pulse_rate ? latest_vitals?.patient_pulse_rate  : '-' }}
           </span>
         </div>
 
@@ -143,7 +146,7 @@
     </div>
 
 
-    <div class="block pt-4 justify-items-start mx-5 mb-5">
+    <!-- <div class="block pt-4 justify-items-start mx-5 mb-5">
       <div class="flex justify-between items-center">
         <span class="block text-blue-500 font-medium text-sm">
           ALLERGIES
@@ -161,9 +164,9 @@
           </span>
         </div>
       </div>
-    </div>
+    </div> -->
 
-    <div class="block pt-4 justify-items-start mx-5 mb-5">
+    <!-- <div class="block pt-4 justify-items-start mx-5 mb-5">
       <div class="flex justify-between items-center">
         <span class="block text-blue-500 font-medium text-sm">
           MEDICATION
@@ -181,7 +184,7 @@
           </span>
         </div>
       </div>
-    </div>
+    </div> -->
 
     <div class="block pt-4 justify-items-start mx-5 mb-5">
       <div class="flex justify-between items-center">
@@ -206,7 +209,7 @@
       </div>
     </div>
 
-    <div class="block pt-4 justify-items-start mx-5 mb-5">
+    <!-- <div class="block pt-4 justify-items-start mx-5 mb-5">
       <div class="flex justify-between items-center">
         <span class="block text-blue-500 font-medium text-sm">
           MEDICAL HISTORY
@@ -224,9 +227,9 @@
           </span>
         </div>
       </div>
-    </div>
+    </div> -->
 
-    <div class="block pt-4 justify-items-start mx-5 mb-5">
+    <!-- <div class="block pt-4 justify-items-start mx-5 mb-5">
       <div class="flex justify-between items-center">
         <span class="block text-blue-500 font-medium text-sm">
           FAMILY MEDICAL HISTORY
@@ -244,9 +247,9 @@
           </span>
         </div>
       </div>
-    </div>
+    </div> -->
 
-    <div class="block pt-4 justify-items-start mx-5 mb-5">
+    <!-- <div class="block pt-4 justify-items-start mx-5 mb-5">
       <div class="flex justify-between items-center">
         <span class="block text-blue-500 font-medium text-sm">
           LIFESTYLE
@@ -282,9 +285,9 @@
           </span>
         </div>
       </div>
-    </div>
+    </div> -->
 
-    <div class="block pt-4 justify-items-start mx-5 mb-5">
+    <!-- <div class="block pt-4 justify-items-start mx-5 mb-5">
       <div class="flex justify-between items-center">
         <span class="block text-blue-500 font-medium text-sm">
           DEATH RECORD
@@ -302,14 +305,18 @@
           </span>
         </div>
       </div>
-    </div>
+    </div> -->
 
   </div>
 </div>
 
 <!-- MODALS -->
 <div *ngIf="vitalsModal">
-  <app-vitals-modal (toggleModal)="toggleModal('vitals-modal')" [patient_age]="patient_age" [patient_info]="patient_info"></app-vitals-modal>
+  <app-vitals-modal (toggleModal)="toggleModal('vitals-modal')" [patient_age]="patient_age" [patient_info]="patient_info" [vitals_to_edit]="vitals_to_edit"></app-vitals-modal>
+</div>
+
+<div *ngIf="vitalsListModal">
+  <app-vitals-list-modal (toggleModal)="toggleModal('vitals-list-modal')" (vitalsEdit)="vitalsEdit($event)" [patient_info]="patient_info"></app-vitals-list-modal>
 </div>
 
 <div *ngIf="allergiesModal">

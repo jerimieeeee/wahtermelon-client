@@ -1,6 +1,6 @@
 import { Component, ComponentFactoryResolver, EventEmitter, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { faFlask, faHeart, faExclamationCircle, faNotesMedical, faPlusCircle, faQuestionCircle, faPenToSquare, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faFlask, faHeart, faExclamationCircle, faNotesMedical, faPlusCircle, faQuestionCircle, faPenToSquare, faTrash, faTableList } from '@fortawesome/free-solid-svg-icons';
 import { AgeService } from 'app/shared/services/age.service';
 import { HttpService } from 'app/shared/services/http.service';
 
@@ -21,7 +21,7 @@ export class PatientInfoComponent {
   faQuestionCircle = faQuestionCircle;
   faPenToSquare = faPenToSquare;
   faTrash = faTrash;
-
+  faTableList = faTableList;
   show_form: boolean = false;
 
   // MODALS
@@ -34,11 +34,14 @@ export class PatientInfoComponent {
   famHistoryModal: boolean = false;
   lifestyleModal: boolean = false;
   deathRecordModal: boolean = false;
+  vitalsListModal: boolean = false;
 
   vaccines_given: any;
   vaccine_list: any = [];
   vaccine_to_edit: any;
   patient_age: any;
+  latest_vitals: any;
+  vitals_to_edit: any;
 
   constructor(
     private activeRoute: ActivatedRoute,
@@ -120,14 +123,18 @@ export class PatientInfoComponent {
   }
 
   loadVaccines(){
-    this.http.get('patient-vaccines/vaccines-records/'+this.patient_info.id).subscribe({
-      next: (data: any) => { this.vaccine_list = data.data; this.checkVaccineStatus(data.data)/* console.log(this.vaccine_list) */ },
+    let params = { 'patient_id': this.patient_info.id, 'sort': '-vaccine_date' }
+    this.http.get('patient-vaccines/vaccines-records', params).subscribe({
+      next: (data: any) => {
+        this.vaccine_list = data.data;
+        console.log(this.vaccine_list)
+        this.checkVaccineStatus(data.data);
+      },
       error: err => console.log(err),
       complete: () => console.log('vaccines loaded')
     })
   }
 
-  latest_vitals: any;
   loadVitals(){
     let query = {
       patient_id: this.patient_info.id,
@@ -148,10 +155,20 @@ export class PatientInfoComponent {
     })
   }
 
+  vitalsEdit(e){
+    this.vitals_to_edit = e;
+    this.toggleModal('vitals-modal');
+  }
+
   toggleModal(modal_name){
     switch (modal_name){
       case 'vitals-modal':
         this.vitalsModal = !this.vitalsModal;
+        if(this.vitalsModal == false)  this.vitals_to_edit = null;
+        this.loadVitals();
+        break;
+      case 'vitals-list-modal':
+        this.vitalsListModal = !this.vitalsListModal;
         break;
       case 'allergies-modal':
         this.allergiesModal = !this.allergiesModal;

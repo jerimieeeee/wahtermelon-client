@@ -1,3 +1,4 @@
+import { animate, style, transition, trigger } from '@angular/animations';
 import { formatDate } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
@@ -6,12 +7,24 @@ import { HttpService } from 'app/shared/services/http.service';
 @Component({
   selector: 'app-vitals-modal',
   templateUrl: './vitals-modal.component.html',
-  styleUrls: ['./vitals-modal.component.scss']
+  styleUrls: ['./vitals-modal.component.scss'],
+  animations: [
+    trigger('openCloseTrigger', [
+      transition(':enter', [
+        style({width: 0, opacity: 0}),
+        animate('200ms', style({ opacity: '100%'})),
+      ]),
+      transition(':leave', [
+        animate('100ms', style({ opacity: 0 }))
+      ])
+    ]),
+  ]
 })
 export class VitalsModalComponent implements OnInit {
   @Output() toggleModal = new EventEmitter<any>();
   @Input() patient_age;
   @Input() patient_info;
+  @Input() vitals_to_edit;
 
   error_message = "exceeded maximum value";
 
@@ -43,6 +56,7 @@ export class VitalsModalComponent implements OnInit {
 
   date;
   showChildVitals: boolean = false;
+  showAlert: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -52,8 +66,20 @@ export class VitalsModalComponent implements OnInit {
   onSubmit(){
     this.vitalsForm.patchValue({vitals_date: this.vitalsForm.value.vitals_date_temp+' '+this.vitalsForm.value.vitals_time_temp+':00'});
     console.log(this.vitalsForm.value);
-    this.http.post('patient-vitals/vitals', this.vitalsForm.value).subscribe({
-      next: (data: any) => { console.log(data.data) },
+    let query;
+    if(this.vitals_to_edit){
+      query = this.http.update('patient-vitals/vitals/', this.vitals_to_edit.id, this.vitalsForm.value);
+    } else {
+      query = this.http.post('patient-vitals/vitals', this.vitalsForm.value);
+    }
+    query.subscribe({
+      next: (data: any) => {
+        this.showAlert = true;
+        setTimeout(() => {
+          this.showAlert = false;
+        }, 3000);
+        console.log(data)
+      },
       error: err => console.log(err),
       complete: () => console.log('vitals saved')
     })
@@ -69,7 +95,7 @@ export class VitalsModalComponent implements OnInit {
   }
 
   cmChange(){
-    let height_real_ft = ((this.vitalsForm.value.vitals_height*0.393701) / 12);
+    let height_real_ft = ((this.vitalsForm.value.patient_height*0.393701) / 12);
     let height_ft = Math.floor(height_real_ft);
     let height_in = Math.round((height_real_ft - height_ft) * 12);
     this.vitalsForm.patchValue({vitals_height_ft: height_ft});
@@ -77,7 +103,7 @@ export class VitalsModalComponent implements OnInit {
   }
 
   cmToInch(){
-    let waist_in = this.vitalsForm.value.vitals_waist*0.393701;
+    let waist_in = this.vitalsForm.value.patient_waist*0.393701;
     this.vitalsForm.patchValue({vitals_waist_in: waist_in.toFixed(2)});
   }
 
@@ -102,6 +128,7 @@ export class VitalsModalComponent implements OnInit {
     let date = new Date();
     let user_id = localStorage.getItem('user_id');
     let facility_code = "DOH000000000005672";
+
     this.vitalsForm = this.formBuilder.group({
       facility_code: [facility_code, Validators.required],
       patient_id: [this.patient_info.id, Validators.required],
@@ -125,9 +152,21 @@ export class VitalsModalComponent implements OnInit {
       vitals_height_ft: [null, Validators.max(8)],
       vitals_height_in: [null, Validators.max(11)],
       vitals_date_temp: [formatDate(date,'Y-M-dd','en'), Validators.required],
-      vitals_time_temp: [formatDate(date,'H:mm','en'), Validators.required],
+      vitals_time_temp: [formatDate(date,'HH:mm','en'), Validators.required],
     });
 
+    if(this.vitals_to_edit){
+      this.vitalsForm.patchValue({...this.vitals_to_edit});
+      this.vitalsForm.patchValue({vitals_date_temp: formatDate(this.vitalsForm.value.vitals_date,'Y-M-dd','en')});
+      this.vitalsForm.patchValue({vitals_time_temp: formatDate(this.vitalsForm.value.vitals_date,'HH:mm','en')});
+
+      console.log(this.vitalsForm);
+      this.cmChange();
+    }else{
+      console.log('new vitals')
+    }
+
+    console.log(this.vitalsForm.value);
     this.date = new Date().toISOString().slice(0,10);
     this.checkIfChild();
   }
