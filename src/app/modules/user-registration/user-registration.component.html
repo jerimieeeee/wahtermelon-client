@@ -82,7 +82,7 @@
 
             <div class="col-span-8">
               <label for="birthdate" class="input-label" [ngClass]="{'text-red-500': is_saving && f.birthdate.errors}">Birthdate</label>
-              <input type="date" name="birthdate" id="birthdate" class="input" placeholder="mm/dd/yyyy" max="{{ date | date: 'yyyy-MM-dd }} " [ngClass]="{'invalid-input': is_saving && f.birthdate.errors}" formControlName="birthdate">
+              <input type="date" name="birthdate" id="birthdate" class="input" placeholder="mm/dd/yyyy" max="{{ date | date: 'yyyy-MM-dd' }} " [ngClass]="{'invalid-input': is_saving && f.birthdate.errors}" formControlName="birthdate">
 
               <div *ngIf="is_saving && f.birthdate.errors" class="invalid-alert">
                 <div *ngIf="f.birthdate.errors?.['required']">
@@ -115,34 +115,6 @@
                 </div>
               </div>
             </div>
-
-            <!-- <div class="col-span-8">
-              <label for="tin_number" class="input-label" [ngClass]="{'text-red-500': is_saving && f.tin_number.errors}">Tin Number <span class="text-sm">(optional)</span></label>
-              <input type="number" name="tin_number" id="tin_number" class="input" [ngClass]="{'invalid-input': is_saving && f.tin_number.errors}" formControlName="tin_number">
-
-              <div *ngIf="is_saving && f.tin_number.errors" class="invalid-alert">
-                <div *ngIf="f.tin_number.errors?.['required']">
-                  {{ required_message }}
-                </div>
-                <div *ngIf="f.tin_number.errors?.['minlength']">
-                  Minimum of 2 character.
-                </div>
-              </div>
-            </div>
-
-            <div class="col-span-8">
-              <label for="accreditation_number" class="input-label" [ngClass]="{'text-red-500': is_saving && f.accreditation_number.errors}">Accreditation Number <span class="text-sm">(optional)</span></label>
-              <input type="text" name="accreditation_number" id="accreditation_number" class="input" [ngClass]="{'invalid-input': is_saving && f.accreditation_number.errors}" formControlName="accreditation_number">
-
-              <div *ngIf="is_saving && f.accreditation_number.errors" class="invalid-alert">
-                <div *ngIf="f.accreditation_number.errors?.['required']">
-                  {{ required_message }}
-                </div>
-                <div *ngIf="f.accreditation_number.errors?.['minlength']">
-                  Minimum of 2 character.
-                </div>
-              </div>
-            </div> -->
 
             <div class="col-span-8">
               <label for="password" class="input-label" [ngClass]="{'text-red-500': is_saving && f.password.errors}">Password</label>
@@ -191,6 +163,17 @@
               </div>
 
             </div>
+
+            <div class="col-span-8">
+              <div class="flex items-start">
+                <div class="flex items-center h-5">
+                  <input id="terms" aria-describedby="terms" type="checkbox" [ngClass]="{'border-red-500': is_saving && f.privacy.errors}" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300">
+                </div>
+                <div class="ml-3 text-sm">
+                  <span class="text-gray-500" [ngClass]="{'text-red-500': is_saving && f.privacy.errors}" >I accept the <span class="font-medium text-sky-600 hover:underline cursor-pointer" [ngClass]="{'text-red-500': is_saving && f.privacy.errors}" (click)="showPrivacyStatement = !showPrivacyStatement">Terms and Conditions</span></span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -225,3 +208,30 @@
 
 
 <div *ngIf="showModal" class="opacity-25 fixed inset-0 z-40 bg-black"></div>
+
+<div [@myInsertRemoveTrigger]  *ngIf="showPrivacyStatement" id="defaultModal" tabindex="-1" class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 w-full md:inset-0 h-modal md:h-full justify-center items-center flex" aria-modal="true" role="dialog" style="z-index:60">
+  <div class="relative p-4 w-full max-w-3xl h-auto md:h-auto">
+    <!-- Modal content -->
+    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+      <!-- Modal header -->
+      <div class="flex justify-between items-start py-3 px-5 rounded-t border-b bg-blue-500 dark:border-gray-600">
+        <h3 class="mt-2 text-sm font-bold text-white dark:text-white">
+            Social/Personal History
+        </h3>
+      </div>
+      <!-- Modal body -->
+      <div class="overflow-y-auto h-96 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
+
+      </div>
+
+      <!-- Modal footer -->
+      <div class="flex justify-end py-4 px-5 space-x-4 rounded-b border-t border-gray-200 dark:border-gray-600">
+        <!-- <button  type="button" class="text-white bg-red-500 hover:ring-2 focus:outline-none hover:ring-red-300 rounded text-sm font-medium px-6 py-2.5 transition duration-150 ease-in-out transform hover:scale-110 " (click)="closeModal()">Ok</button> -->
+        <button  type="button" class="text-white bg-blue-500 hover:ring-2 focus:outline-none hover:ring-blue-300 font-medium rounded text-sm px-6 py-2.5 text-center transition duration-150 ease-in-out transform hover:scale-110" (click)="showPrivacyStatement = !showPrivacyStatement" >Ok</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div *ngIf="showPrivacyStatement" class="opacity-25 fixed inset-0 z-40 bg-black"></div>
