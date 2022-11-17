@@ -11,6 +11,7 @@ import { HttpService } from 'app/shared/services/http.service';
 })
 export class PatientInfoComponent {
   @Output() patientInfo = new EventEmitter<any>();
+  @Output() patientVitals = new EventEmitter<any>();
   patient_info: any;
 
   faNotesMedical = faNotesMedical;
@@ -135,6 +136,8 @@ export class PatientInfoComponent {
     })
   }
 
+  patient_vitals: any;
+
   loadVitals(){
     let query = {
       patient_id: this.patient_info.id,
@@ -142,13 +145,12 @@ export class PatientInfoComponent {
     }
     this.http.get('patient-vitals/vitals', query).subscribe({
       next: (data: any) => {
-        console.log(data);
+        this.patientVitals.emit(data.data);
         if(data.data.length > 1){
           this.latest_vitals = data.data[0]
         }else{
           this.latest_vitals = data.data
         }
-        console.log(this.latest_vitals);
       },
       error: err => console.log(err),
       complete: () => console.log('vitals loaded')

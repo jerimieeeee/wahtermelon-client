@@ -83,15 +83,79 @@ export class PatientItrComponent implements OnInit {
   constructor(
     private router: Router
   ) {
+
+  }
+
+  onSubmit(loc){
+    this.router.navigate(['/'+loc, {id: this.patient_details.id}])
+  }
+
+  toggleModal(){
+    this.showModal = !this.showModal;
+  }
+
+  patientInfo(info){
+    this.patient_details = info;
+  }
+
+  vitals_graph = {
+    systolic: [],
+    diastolic: [],
+    weight: [],
+    bp_date: [],
+    weight_date: [],
+  }
+
+  showChart: boolean = false;
+
+
+  patientVitals(vitals){
+    this.vitals_graph.systolic = [];
+    this.vitals_graph.diastolic = [];
+    this.vitals_graph.bp_date = [];
+    this.vitals_graph.weight = [];
+    this.vitals_graph.weight_date = [];
+
+    Object.entries(vitals).forEach(([key, value], index) => {
+      let val: any = value;
+      if(val.bp_systolic){
+        this.vitals_graph.systolic.push(val.bp_systolic);
+        this.vitals_graph.diastolic.push(val.bp_diastolic);
+        this.vitals_graph.bp_date.push(val.vitals_date);
+      }
+
+      if(val.patient_weight){
+        this.vitals_graph.weight.push(val.patient_weight);
+        this.vitals_graph.weight_date.push(val.vitals_date);
+      }
+    })
+
+    console.log(this.vitals_graph);
+    if(this.vitals_graph.systolic.length > 0 || this.vitals_graph.diastolic.length > 0){
+      this.showChart = true;
+      this.generateChart();
+    } else {
+      this.showChart = false;
+    }
+  }
+
+  navigationEnd$ = this.router.events.pipe(
+    filter(event => event instanceof NavigationEnd),
+    tap(() => {
+      this.show_details = false;
+    })
+  );
+
+  generateChart(){
     this.chartOptions = {
       series: [
         {
           name: "Systolic",
-          data: [120, 120, 110, 120, 140, 120, 120]
+          data: this.vitals_graph.systolic
         },
         {
           name: "Diastolic",
-          data: [90, 80, 80, 84, 92, 70, 80]
+          data: this.vitals_graph.diastolic
         }
       ],
       chart: {
@@ -109,15 +173,7 @@ export class PatientItrComponent implements OnInit {
       },
       xaxis: {
         type: "datetime",
-        categories: [
-          "2018-09-19T00:00:00.000Z",
-          "2018-09-19T01:30:00.000Z",
-          "2018-09-19T02:30:00.000Z",
-          "2018-09-19T03:30:00.000Z",
-          "2018-09-19T04:30:00.000Z",
-          "2018-09-19T05:30:00.000Z",
-          "2018-09-19T06:30:00.000Z"
-        ]
+        categories: this.vitals_graph.bp_date
       },
       tooltip: {
         x: {
@@ -130,7 +186,7 @@ export class PatientItrComponent implements OnInit {
       series: [
         {
           name: "Weight",
-          data: [120, 120, 110, 120, 140, 120, 120]
+          data: this.vitals_graph.weight
         }
       ],
       chart: {
@@ -148,15 +204,7 @@ export class PatientItrComponent implements OnInit {
       },
       xaxis: {
         type: "datetime",
-        categories: [
-          "2018-09-19T00:00:00.000Z",
-          "2018-09-19T01:30:00.000Z",
-          "2018-09-19T02:30:00.000Z",
-          "2018-09-19T03:30:00.000Z",
-          "2018-09-19T04:30:00.000Z",
-          "2018-09-19T05:30:00.000Z",
-          "2018-09-19T06:30:00.000Z"
-        ]
+        categories: this.vitals_graph.weight_date
       },
       tooltip: {
         x: {
@@ -165,25 +213,6 @@ export class PatientItrComponent implements OnInit {
       }
     };
   }
-
-  onSubmit(loc){
-    this.router.navigate(['/'+loc, {id: this.patient_details.id}])
-  }
-
-  toggleModal(){
-    this.showModal = !this.showModal;
-  }
-
-  patientInfo(info){
-    this.patient_details = info;
-  }
-
-  navigationEnd$ = this.router.events.pipe(
-    filter(event => event instanceof NavigationEnd),
-    tap(() => {
-      this.show_details = false;
-    })
-  );
 
   ngOnInit(): void {
     this.navigationEnd$.subscribe();

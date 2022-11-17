@@ -16,5 +16,14 @@ export const openCloseTrigger = [
     transition('* => *', [
       animate('250ms')
     ])
+  ]),
+  trigger('chartOpenClose', [
+    transition(':enter', [
+      style({width: 0, opacity: 0}),
+      animate('200ms', style({ opacity: '100%'})),
+    ]),
+    transition(':leave', [
+      animate('100ms', style({ opacity: 0 }))
+    ])
   ])
 ]

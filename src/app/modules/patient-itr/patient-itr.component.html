@@ -1,29 +1,29 @@
 <div class="grid grid-cols-11 mt-4 gap-4">
   <div class="col-span-8">
-    <div class="flex">
+    <div *ngIf="showChart" class="flex">
       <div class="w-1/2 shadow px-2 mr-2 py-4 rounded-xl text-gray-600 border border-slate-100">
         <div id="bp-chart">
           <apx-chart
-            [series]="chartOptions.series"
-            [chart]="chartOptions.chart"
-            [xaxis]="chartOptions.xaxis"
-            [stroke]="chartOptions.stroke"
-            [tooltip]="chartOptions.tooltip"
-            [dataLabels]="chartOptions.dataLabels"
-            [title]="chartOptions.title"
+            [series]="chartOptions?.series"
+            [chart]="chartOptions?.chart"
+            [xaxis]="chartOptions?.xaxis"
+            [stroke]="chartOptions?.stroke"
+            [tooltip]="chartOptions?.tooltip"
+            [dataLabels]="chartOptions?.dataLabels"
+            [title]="chartOptions?.title"
           ></apx-chart>
         </div>
       </div>
       <div class="w-1/2 shadow px-2 ml-2  py-4 rounded-xl text-gray-600 border border-slate-100">
         <div id="weight-chart">
           <apx-chart
-            [series]="WeightChart.series"
-            [chart]="WeightChart.chart"
-            [xaxis]="WeightChart.xaxis"
-            [stroke]="WeightChart.stroke"
-            [tooltip]="WeightChart.tooltip"
-            [dataLabels]="WeightChart.dataLabels"
-            [title]="WeightChart.title"
+            [series]="WeightChart?.series"
+            [chart]="WeightChart?.chart"
+            [xaxis]="WeightChart?.xaxis"
+            [stroke]="WeightChart?.stroke"
+            [tooltip]="WeightChart?.tooltip"
+            [dataLabels]="WeightChart?.dataLabels"
+            [title]="WeightChart?.title"
           ></apx-chart>
         </div>
       </div>
@@ -251,7 +251,7 @@
   </div>
 
   <div class="col-span-3">
-    <app-patient-info (patientInfo)="patientInfo($event)"></app-patient-info>
+    <app-patient-info (patientInfo)="patientInfo($event)" (patientVitals)="patientVitals($event)"></app-patient-info>
   </div>
 </div>
 
