@@ -150,13 +150,6 @@ export class ConsultationComponent implements OnInit {
   pe_grouped = [];
   loadLibraries() {
     let value: any;
-    /* return this.http.get('libraries/complaint').pipe(
-      map((res:any) => {
-        return {
-          ...res.data
-        } as Complaints
-      })
-    ); */
     this.http.get('libraries/complaint').subscribe(
       (data: any) => {
         this.complaints$ = of(data.data)
@@ -175,23 +168,9 @@ export class ConsultationComponent implements OnInit {
         }, {});
 
         this.pe_grouped = groups;
-        console.log(this.pe_grouped)
-        // this.pe_grouped = this.pe.group(({ category_id }) => category_id);
-        /* this.pe_grouped = result.groupBy(pe => {
-          return pe.category_id
-        }) */
-        // console.log(this.pe_grouped);
+        console.log(this.pe_grouped);
       }
     );
-    /* return this.http.get('libraries/complaint').subscribe({
-      next: (data: any) =>  {return data.data} ,
-      error: (err) => console.log(err)
-    }); */
-    /* const res$ = this.http.get('libraries/complaint')
-                .map(res => { return res});
-
-    value = await lastValueFrom(res$);
-    console.log(value); */
     return value;
   }
 
