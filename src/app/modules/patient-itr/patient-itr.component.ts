@@ -24,54 +24,7 @@ export class PatientItrComponent implements OnInit {
     this.show_details = !this.show_details;
   }
 
-  list_modules = [
-    {
-      group: 'General',
-      modules: [
-        {
-          name: 'Consultation',
-          location: 'consultation'
-        },
-        {
-          name: 'Child Care',
-          location: 'cc'
-        },
-        {
-          name: 'Maternal Care',
-          location: 'mc'
-        },
-        /* {
-          name: 'Family Planning',
-          location: 'fp'
-        }, */
-       /*  {
-          name: 'Dental',
-          location: 'dental'
-        }, */
-      ]
-    },
-    /* {
-      group: 'Others',
-      modules: [
-        {
-          name: 'Laboratory',
-          location: 'consultation'
-        },
-        {
-          name: 'Animal Bite',
-          location: 'consultation'
-        },
-        {
-          name: 'Tuberculosis',
-          location: 'consultation'
-        },
-        {
-          name: 'NCD',
-          location: 'consultation'
-        },
-      ]
-    } */
-  ]
+
   @ViewChild("bp-chart") bp_chart: ChartComponent;
   @ViewChild("weight-chart") weight_chart: ChartComponent;
   public chartOptions: Partial<ChartOptions>;
@@ -88,10 +41,6 @@ export class PatientItrComponent implements OnInit {
 
   onSubmit(loc){
     this.router.navigate(['/'+loc, {id: this.patient_details.id}])
-  }
-
-  toggleModal(){
-    this.showModal = !this.showModal;
   }
 
   patientInfo(info){
