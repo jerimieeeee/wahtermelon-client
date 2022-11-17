@@ -112,7 +112,7 @@
         </div>
 
         <div class="col-span-4 relative h-max border border-gray-300 drop-shadow-md hover:drop-shadow-lg rounded-md">
-            <label *ngFor="let lib of fhr_lib" for="{{lib.code}}" class="{{lib.code == 'NA'?'hidden':''}}">
+            <label *ngFor="let lib of fhr_lib" for="{{lib.code}}" class="{{lib.code == 'NA'?'hidden':''}} w-24 lg:w-60 md:w-40 sm:w-24">
                 <div class="absolute {{lib.code == 'NA'?'hidden':''}} {{lib.code == 'LUQ'?'top-0 z-40':''}} {{lib.code == 'LLQ'?'bottom-0 z-40':''}} {{lib.code == 'RUQ'?'top-0 right-0 z-40':''}} {{lib.code == 'RLQ'?'bottom-0 right-0 z-40':''}} w-1/2 hover:bg-gray-400/75 rounded-tl-md border-t border-l  cursor-pointer group"
                    [style]="lib.code == 'LUQ' || lib.code == 'RUQ'?'height: 62.5%':'height: 37.5%'" >
                     <input type="checkbox"
