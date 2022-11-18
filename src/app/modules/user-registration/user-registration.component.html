@@ -170,7 +170,7 @@
                   <input id="terms" aria-describedby="terms" type="checkbox" [ngClass]="{'border-red-500': is_saving && f.privacy.errors}" formControlName="privacy" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300">
                 </div>
                 <div class="ml-3 text-sm">
-                  <span class="text-gray-500" [ngClass]="{'text-red-500': is_saving && f.privacy.errors}" >I accept the <span class="font-medium text-sky-600 hover:underline cursor-pointer" [ngClass]="{'text-red-500': is_saving && f.privacy.errors}" (click)="showPrivacyStatement = !showPrivacyStatement">Terms and Conditions</span></span>
+                  <span class="text-gray-500" [ngClass]="{'text-red-500': is_saving && f.privacy.errors}" >I agree with the <span class="font-medium text-sky-600 hover:underline cursor-pointer" [ngClass]="{'text-red-500': is_saving && f.privacy.errors}" (click)="showPrivacyStatement = !showPrivacyStatement">Data Privacy Statement</span></span>
                 </div>
               </div>
             </div>
