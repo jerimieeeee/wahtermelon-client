@@ -33,17 +33,24 @@
         <div class="col-span-1">Medical Journal</div>
         <div class="col-auto"></div>
       </div>
-      <div class="flex">
+
+      <div class="pt-15 mt-15" *ngIf="visit_list?.length === 0">
+        <div class="text-center items-center mb-3 mt-15 italic" >
+          No record to show
+        </div>
+      </div>
+
+      <div *ngIf="visit_list?.length >= 1" class="flex">
         <div [@halfFull]="show_details ? 'half' : 'full'" class="mr-2 flex-auto">
           <div class="last:border-0 border-b border-slate-200 pb-2" *ngFor="let visit of visit_list">
             <div class="grid grid-cols-8 gap-2 mt-2">
               <div class="col-span-2 text-sm font-semibold h-full">
-                {{ visit.created_at | date:'MM/dd/yyyy'}}
+                {{ visit?.created_at | date:'MM/dd/yyyy'}}
               </div>
               <div class="col-span-6 bg-blue-50 hover:bg-blue-200 hover:cursor-pointer p-2 text-sm col-start-3" (click)="open_details()">
-                <span class="text-cyan-700 text-base font-semibold">{{ getVisitType(visit.pt_group) }}</span><br />
-                  Attended by: {{ visit.user_id.last_name }}, {{ visit.user_id.first_name }} {{ visit.user_id.middle_name === 'NA' ? ' ' : visit.user_id.middle_name }} {{ visit.user_id.suffix_name === 'NA' ? ' ' : visit.user_id.suffix_name }}<br />
-                  Referred to: <span *ngIf="visit.physician_id">{{ visit.physician_id?.last_name }}, {{ visit.physician_id?.first_name }} {{ visit.physician_id?.middle_name === 'NA' ? ' ' : visit.physician_id?.middle_name }} {{ visit.physician_id?.suffix_name === 'NA' ? ' ' : visit.physician_id?.suffix_name }}</span>
+                <span class="text-cyan-700 text-base font-semibold">{{ getVisitType(visit?.pt_group) }}</span><br />
+                  Attended by: <span *ngIf="visit?.user_id">{{ visit?.user_id?.last_name }}, {{ visit?.user_id?.first_name }} {{ visit?.user_id?.middle_name === 'NA' ? ' ' : visit?.user_id?.middle_name }} {{ visit?.user_id?.suffix_name === 'NA' ? ' ' : visit?.user_id?.suffix_name }}</span><br />
+                  Referred to: <span *ngIf="visit?.physician_id">{{ visit?.physician_id?.last_name }}, {{ visit?.physician_id?.first_name }} {{ visit?.physician_id?.middle_name === 'NA' ? ' ' : visit?.physician_id?.middle_name }} {{ visit?.physician_id?.suffix_name === 'NA' ? ' ' : visit?.physician_id?.suffix_name }}</span>
               </div>
             </div>
           </div>

@@ -20,13 +20,13 @@
           <a class="flex justify-center mx-auto" href="{{ profile.id }}">
 
             <div (click)="openItr(profile.patient_id)" class="inline-flex overflow-hidden relative justify-center items-center w-16 h-16 bg-gray-100 rounded-full dark:bg-gray-600">
-              <span class="font-medium text-gray-600 dark:text-gray-300">{{ getInitials(profile?.first_name+' '+profile?.last_name) }}</span>
+              <span class="font-medium text-gray-600 dark:text-gray-300">{{ getInitials(profile?.patient?.first_name+' '+profile?.patient?.last_name) }}</span>
             </div>
           </a>
 
           <div class="flex justify-center md:block leading-tight mx-2 my-1">
             <span class="block text-blue-500 font-medium text-lg my-0 py-0">
-              {{ profile.last_name }}, {{ profile.first_name }}
+              {{ profile?.patient?.last_name }}, {{ profile?.patient?.first_name }} {{ profile?.patient?.middle_name === 'NA' ? '' : profile?.patient?.middle_name  }} {{ profile?.patient?.suffix_name === 'NA' ? '' : profile?.patient?.suffix_name }}
             </span>
 
             <span class="block text-xs">
