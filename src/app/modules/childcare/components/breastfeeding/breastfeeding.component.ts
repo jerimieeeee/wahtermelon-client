@@ -33,6 +33,7 @@ export class BreastfeedingComponent implements OnInit {
 
   showBreastfeedingModal = false;
   lib_reasons: any;
+  ebf_date: any;
 
   toggleBreastfeedingModal(){
     this.showBreastfeedingModal = !this.showBreastfeedingModal;
@@ -200,8 +201,8 @@ export class BreastfeedingComponent implements OnInit {
       bfed_month5: this.groupList[4],
       // bfed_month6: this.groupList[5] == 1 ? 1:0,
       bfed_month6: this.groupList[5],
-      reason_id: this.lib_reasons.reason_id,
-      ebf_date: '',
+      reason_id: this.patient_breastfed.ebfreasons.reason_id,
+      ebf_date: this.ebf_date,
     }
 
     console.log(bfedmonths);
@@ -210,7 +211,7 @@ export class BreastfeedingComponent implements OnInit {
       // next: (data: any) => console.log(data.status, 'check status'),
       error: err => console.log(err),
       complete: () => {
-        this.loadLibraries();
+        // this.loadLibraries();
         console.log('bfed data saved')
         this.is_saving = false;
       }
