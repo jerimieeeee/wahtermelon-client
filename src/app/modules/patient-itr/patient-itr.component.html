@@ -49,8 +49,8 @@
               </div>
               <div class="col-span-6 bg-blue-50 hover:bg-blue-200 hover:cursor-pointer p-2 text-sm col-start-3" (click)="open_details()">
                 <span class="text-cyan-700 text-base font-semibold">{{ getVisitType(visit?.pt_group) }}</span><br />
-                  Attended by: <span *ngIf="visit?.user_id">{{ visit?.user_id?.last_name }}, {{ visit?.user_id?.first_name }} {{ visit?.user_id?.middle_name === 'NA' ? ' ' : visit?.user_id?.middle_name }} {{ visit?.user_id?.suffix_name === 'NA' ? ' ' : visit?.user_id?.suffix_name }}</span><br />
-                  Referred to: <span *ngIf="visit?.physician_id">{{ visit?.physician_id?.last_name }}, {{ visit?.physician_id?.first_name }} {{ visit?.physician_id?.middle_name === 'NA' ? ' ' : visit?.physician_id?.middle_name }} {{ visit?.physician_id?.suffix_name === 'NA' ? ' ' : visit?.physician_id?.suffix_name }}</span>
+                  Attended by: <span *ngIf="visit?.user">{{ visit?.user?.last_name }}, {{ visit?.user?.first_name }} {{ visit?.user?.middle_name === 'NA' ? ' ' : visit?.user?.middle_name }} {{ visit?.user?.suffix_name === 'NA' ? ' ' : visit?.user?.suffix_name }}</span><br />
+                  Referred to: <span *ngIf="visit?.physician">{{ visit?.physician?.last_name }}, {{ visit?.physician?.first_name }} {{ visit?.physician?.middle_name === 'NA' ? ' ' : visit?.physician?.middle_name }} {{ visit?.physician?.suffix_name === 'NA' ? ' ' : visit?.physician?.suffix_name }}</span>
               </div>
             </div>
           </div>
