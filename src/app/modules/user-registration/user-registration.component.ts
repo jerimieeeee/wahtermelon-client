@@ -47,10 +47,12 @@ export class UserRegistrationComponent implements OnInit {
     privacy: new FormControl<boolean| null>(false),
   });
 
+  submit_errors: any;
   onSubmit(){
     this.is_saving = true;
     this.loading = true;
 
+    console.log(this.userForm)
     if(!this.userForm.invalid){
       this.http.post('register', this.userForm.value).subscribe({
         next: (data:any) => {
@@ -59,7 +61,11 @@ export class UserRegistrationComponent implements OnInit {
           this.is_saving = false;
           this.showModal = true;
         },
-        error: err => console.log(err),
+        error: err => {
+          this.submit_errors = err.error.errors;
+          this.loading = false;
+          this.is_saving = false;
+        },
         complete: () => console.log('complete')
       })
     } else {
