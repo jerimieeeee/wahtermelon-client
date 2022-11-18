@@ -168,7 +168,7 @@ export class PatientItrComponent implements OnInit {
 
   loadVisitHistory(){
     console.log(this.patient_details);
-    this.http.get('consultation/cn-records/'+this.patient_details.id).subscribe({
+    this.http.get('consultation/cn-records',{params:{patient_id: this.patient_details.id}}).subscribe({
       next: (data: any) => {
         this.visit_list = data.data;
         console.log(data);

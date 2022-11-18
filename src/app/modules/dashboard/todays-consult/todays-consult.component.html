@@ -1,13 +1,13 @@
-<div class="px-4 py-2 rounded-xl text-gray-600 h-100 border border-slate-100">
+<div class="px-4 py-2 mb-10 rounded-xl text-gray-600 h-100 border border-slate-100">
     <div class="md:flex md:justify-between md:items-center pb-2 border-b-2">
       <span class="font-semibold text-xl pt-2 " [ngClass]="{'text-blue-500':today_consults.length === 0}">Todays Consult</span>
       <div class="flex items-center">
-        <div>
+        <!-- <div>
           <button type="button" class="bg-orange-400 px-3 rounded-full mr-3 text-gray-800 hover:text-indigo-500">
             all
           <fa-icon class="ml-2 my-0" [icon]="faChevronDown"></fa-icon>
           </button>
-        </div>
+        </div> -->
         <button type="button" class="text-gray-700 hover:text-indigo-500">
           <fa-icon class="mx-0 my-0" [icon]="faQuestionCircle"></fa-icon>
         </button>
@@ -15,10 +15,13 @@
     </div>
 
     <div class="pt-3" *ngIf="today_consults.length >= 1">
-      <div class="flex justify-between items-center mb-3" *ngFor="let profile of today_consults">
+      <div class="flex justify-between items-center mb-3  pb-3 border-b border-gray-200" *ngFor="let profile of today_consults"> <!-- added pb-3 -->
         <div class="flex">
           <a class="flex justify-center mx-auto" href="{{ profile.id }}">
-            <img src="{{ './assets/img/' + profile.img_name }}" class="rounded-full w-16 h-16 mx-auto my-auto" />
+
+            <div (click)="openItr(profile.patient_id)" class="inline-flex overflow-hidden relative justify-center items-center w-16 h-16 bg-gray-100 rounded-full dark:bg-gray-600">
+              <span class="font-medium text-gray-600 dark:text-gray-300">{{ getInitials(profile?.first_name+' '+profile?.last_name) }}</span>
+            </div>
           </a>
 
           <div class="flex justify-center md:block leading-tight mx-2 my-1">
@@ -27,34 +30,34 @@
             </span>
 
             <span class="block text-xs">
-              {{ profile.address }}
+              -<!-- {{ profile.address }} -->
             </span>
 
-            <div class="flex pt-2">
+            <!-- <div class="flex pt-2">
               <fa-icon class="mx-0 my-0 text-gray-500 mr-2" [icon]="faHeart" size="lg"></fa-icon>
               <fa-icon class="mx-0 my-0 text-green-500 mr-2" [icon]="faFlask" size="lg"></fa-icon>
               <fa-icon class="mx-0 my-0 text-blue-500 mr-2" [icon]="faNotesMedical" size="lg"></fa-icon>
               <fa-icon class="mx-0 my-0 text-red-500 mr-2" [icon]="faExclamationCircle" size="lg"></fa-icon>
-            </div>
+            </div> -->
           </div>
         </div>
 
-        <div class="flex">
-          <div class="flex items-center">
-            <div class="px-5">
-              <button type="button" class="text-gray-700 hover:text-indigo-500">
+        <!-- <div class="flex"> -->
+          <div class="grid grid-cols-12 text-left w-3/5">
+            <div class="col-span-6 px-5w-full">
+              <button type="button" class="text-gray-700 hover:text-indigo-500" (click)="openItr(profile.patient_id)">
                 <fa-icon class="mx-0 my-0" [icon]="faFolderOpen"></fa-icon>
+                {{ getVisitType(profile.pt_group) }}
               </button>
-              {{ profile.visit_type }}
             </div>
-            <div class="px-5">
-              {{ profile.location }}
+            <div class="col-span-3 px-5">
+              -<!-- {{ profile.pt_group }} --> <!-- location -->
             </div>
-            <div class="px-5">
-              {{ profile.duration }}
+            <div class="col-span-3 px-5">
+              {{ getDataDiff(profile.consult_date) }} <!-- duration -->
             </div>
           </div>
-        </div>
+        <!-- </div> -->
       </div>
     </div>
 
@@ -64,7 +67,7 @@
       </div>
     </div>
 
-    <div *ngIf="today_consults.length >= 1">
+    <!-- <div *ngIf="today_consults.length >= 1">
       <div class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
         <div class="flex-1 flex justify-between sm:hidden">
           <a href="#" class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:text-gray-500">
@@ -90,7 +93,6 @@
             <nav class="relative z-0 inline-flex shadow-sm -space-x-px" aria-label="Pagination">
               <a href="#" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
                 <span class="sr-only">Previous</span>
-                <!-- Heroicon name: chevron-left -->
                 <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                   <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
                 </svg>
@@ -118,7 +120,6 @@
               </a>
               <a href="#" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
                 <span class="sr-only">Next</span>
-                <!-- Heroicon name: chevron-right -->
                 <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                   <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
                 </svg>
@@ -127,5 +128,5 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
 </div>

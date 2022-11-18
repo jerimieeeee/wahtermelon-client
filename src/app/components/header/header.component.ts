@@ -100,7 +100,6 @@ export class HeaderComponent implements OnInit {
     this.user_last_name = localStorage.getItem('user_last_name');
     this.user_first_name = localStorage.getItem('user_first_name');
     this.user_middle_name = localStorage.getItem('user_middle_name');
-    console.log(this.user_info)
   }
 
 }
