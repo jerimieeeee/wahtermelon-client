@@ -177,7 +177,7 @@ export class PatientRegistrationComponent implements OnInit {
     });
 
     this.date = new Date().toISOString().slice(0,10);
-    console.log(this.patientForm);
+   /*  console.log(this.patientForm); */
     this.loadLibraries();
   }
 }

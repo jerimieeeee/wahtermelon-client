@@ -79,7 +79,6 @@ export class PatientItrComponent implements OnInit {
       }
     })
 
-    console.log(this.vitals_graph);
     if(this.vitals_graph.systolic.length > 0 || this.vitals_graph.diastolic.length > 0){
       this.showChart = true;
       this.generateChart();
