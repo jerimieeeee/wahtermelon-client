@@ -35,17 +35,15 @@
       </div>
       <div class="flex">
         <div [@halfFull]="show_details ? 'half' : 'full'" class="mr-2 flex-auto">
-          <div class="last:border-0 border-b border-slate-200 pb-2" *ngFor="let journal of medical_journal">
+          <div class="last:border-0 border-b border-slate-200 pb-2" *ngFor="let visit of visit_list">
             <div class="grid grid-cols-8 gap-2 mt-2">
               <div class="col-span-2 text-sm font-semibold h-full">
-                {{ journal.visit_date | date:'MM/dd/yyyy'}} {{ journal.index}}
+                {{ visit.created_at | date:'MM/dd/yyyy'}}
               </div>
-              <div class="col-span-6 bg-blue-50 hover:bg-blue-200 hover:cursor-pointer p-2 text-sm col-start-3"
-                *ngFor="let visit of journal.visits"
-                (click)="open_details()">
-                <span class="text-cyan-700 text-base font-semibold">{{ visit.visit_type }}</span><br />
-                  Attended by: {{ visit.assessed_by }} <br />
-                  Diagnosed by: {{ visit.diagnosed_by }}
+              <div class="col-span-6 bg-blue-50 hover:bg-blue-200 hover:cursor-pointer p-2 text-sm col-start-3" (click)="open_details()">
+                <span class="text-cyan-700 text-base font-semibold">{{ getVisitType(visit.pt_group) }}</span><br />
+                  Attended by: {{ visit.user_id.last_name }}, {{ visit.user_id.first_name }} {{ visit.user_id.middle_name === 'NA' ? ' ' : visit.user_id.middle_name }} {{ visit.user_id.suffix_name === 'NA' ? ' ' : visit.user_id.suffix_name }}<br />
+                  Referred to: <span *ngIf="visit.physician_id">{{ visit.physician_id?.last_name }}, {{ visit.physician_id?.first_name }} {{ visit.physician_id?.middle_name === 'NA' ? ' ' : visit.physician_id?.middle_name }} {{ visit.physician_id?.suffix_name === 'NA' ? ' ' : visit.physician_id?.suffix_name }}</span>
               </div>
             </div>
           </div>

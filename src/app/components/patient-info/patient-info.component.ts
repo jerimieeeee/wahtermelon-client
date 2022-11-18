@@ -155,6 +155,10 @@ export class PatientInfoComponent {
     this.toggleModal('vitals-modal');
   }
 
+  getInitials(string) {
+    return [...string.matchAll(/\b\w/g)].join('')
+  }
+
   toggleModal(modal_name){
     // console.log(modal_name)
     switch (modal_name){

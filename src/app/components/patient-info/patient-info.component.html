@@ -2,7 +2,15 @@
   <div class="block m-0 relative p-0 divide-y-2 divide-gray-200 divide-solid  scrollbar-thumb-white hover:scrollbar-thumb-blue-300 scrollbar-track-white">
     <div class="flex justify-items-start sticky top-0 bg-white">
       <div class="m-3">
-        <img src="./assets/img/profile_2.jpg" class="rounded-full w-16 h-16 mx-auto m-2" />
+        <!-- <img src="./assets/img/profile_2.jpg" class="rounded-full w-16 h-16 mx-auto m-2" /> -->
+
+        <!-- <div class="overflow-hidden relative w-16 h-16 bg-gray-100 rounded-full dark:bg-gray-600">
+          <svg class="absolute left-1 w-14 h-14 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path></svg>
+        </div> -->
+
+        <div class="inline-flex overflow-hidden relative justify-center items-center w-16 h-16 bg-gray-100 rounded-full dark:bg-gray-600">
+          <span class="font-medium text-gray-600 dark:text-gray-300">{{ getInitials(patient_info?.first_name+' '+patient_info?.last_name) }}</span>
+        </div>
       </div>
       <div class="mt-4 leading-tight">
         <span class="block text-blue-500 font-medium">

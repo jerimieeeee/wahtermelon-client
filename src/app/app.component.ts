@@ -45,7 +45,9 @@ export class AppComponent implements OnInit{
           // this.decode(data.access_token);
           // console.log(data.user);
           localStorage.setItem('access_token', data.access_token);
-          localStorage.setItem('name', data.user.last_name + ', ' + data.user.first_name + ' ' + data.user.middle_name + ' ' + (data.user.suffix_name == 'NA' ? '' : data.user.suffix_name));
+          localStorage.setItem('user_last_name', data.user.last_name);
+          localStorage.setItem('user_first_name', data.user.first_name);
+          localStorage.setItem('user_middle_name', data.user.middle_name);
           localStorage.setItem('user_id', data.user.id);
           this.is_saving = false;
           this.checkAuth();
