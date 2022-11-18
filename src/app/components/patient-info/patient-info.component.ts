@@ -69,7 +69,7 @@ export class PatientInfoComponent {
         this.patientInfo.emit(data.data);
         this.loadVaccines();
         this.loadVitals();
-        console.log(data.data)
+        // console.log(data.data)
       },
       error: err => console.log(err)
     });
@@ -128,7 +128,7 @@ export class PatientInfoComponent {
     this.http.get('patient-vaccines/vaccines-records', {params:{'patient_id': this.patient_info.id, 'sort': '-vaccine_date' }}).subscribe({
       next: (data: any) => {
         this.vaccine_list = data.data;
-        console.log(this.vaccine_list)
+        // console.log(this.vaccine_list)
         this.checkVaccineStatus(data.data);
       },
       error: err => console.log(err),
@@ -139,15 +139,9 @@ export class PatientInfoComponent {
   patient_vitals: any;
 
   loadVitals(){
-    let query = {
-      patient_id: this.patient_info.id,
-      sort: '-vitals_date'
-    }
-
-    console.log(query)
     this.http.get('patient-vitals/vitals', {params:{patient_id: this.patient_info.id, sort: '-vitals_date'}}).subscribe({
       next: (data: any) => {
-        console.log(data)
+        // console.log(data)
         this.patientVitals.emit(data.data);
         this.latest_vitals = data.data[0]
       },
@@ -162,7 +156,7 @@ export class PatientInfoComponent {
   }
 
   toggleModal(modal_name){
-    console.log(modal_name)
+    // console.log(modal_name)
     switch (modal_name){
       case 'vitals-modal':
         this.vitalsModal = !this.vitalsModal;
