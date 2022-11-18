@@ -46,6 +46,7 @@ export class FirstVisitComponent implements OnInit {
 
   patient_info: any;
   patient_info2: any;
+
   curr_name: any;
   
 
@@ -60,6 +61,7 @@ export class FirstVisitComponent implements OnInit {
   });
 
   @Input() patient_details: any;
+  
   
   
   // Section 2
@@ -177,7 +179,7 @@ export class FirstVisitComponent implements OnInit {
     });
   }
 
-
+  
   loadPatients() {
     this.patients$ = concat(
       of([]), // default items
@@ -216,6 +218,7 @@ export class FirstVisitComponent implements OnInit {
     this.saved = true;
     this.loadPatients();
     this.getccdevDetails();
+
   }
 
 }
