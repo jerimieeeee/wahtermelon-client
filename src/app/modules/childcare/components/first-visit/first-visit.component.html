@@ -169,10 +169,15 @@
         </div>
       
         <div class="flex w-full flex-col px-5 pt-3">
-          <button type="button" class="btn-add ml-auto mr-5" (click)="onSubmit()">
+          <button type="button" class="btn-add ml-auto mr-5" (click)="onSubmit()" *ngIf="!patient_info">
             <fa-icon *ngIf="!is_saving" class="mr-1" [icon]="faSave"></fa-icon>
             <fa-icon *ngIf="is_saving" class="mr-1" [icon]="faSpinner" [spin]="true"></fa-icon>
            {{ is_saving ? 'Saving' : 'Save' }}
+          </button>
+          <button type="button" class="btn-add ml-auto mr-5" (click)="onSubmit()" *ngIf="patient_info">
+            <fa-icon *ngIf="!is_saving" class="mr-1" [icon]="faSave"></fa-icon>
+            <fa-icon *ngIf="is_saving" class="mr-1" [icon]="faSpinner" [spin]="true"></fa-icon>
+           {{ is_saving ? 'Updating' : 'Update' }}
           </button>
         </div>
     
