@@ -33,11 +33,13 @@ export class BreastfeedingComponent implements OnInit {
 
   showBreastfeedingModal = false;
   lib_reasons: any;
+  ebf_date: any;
 
   toggleBreastfeedingModal(){
     this.showBreastfeedingModal = !this.showBreastfeedingModal;
     // this.geteServiceName();
     this.loadBreastfed();
+    this.groupList = []
   }
 
   saveModal(){
@@ -199,8 +201,8 @@ export class BreastfeedingComponent implements OnInit {
       bfed_month5: this.groupList[4],
       // bfed_month6: this.groupList[5] == 1 ? 1:0,
       bfed_month6: this.groupList[5],
-      reason_id: this.lib_reasons.reason_id,
-      ebf_date: '',
+      reason_id: this.patient_breastfed.ebfreasons.reason_id,
+      ebf_date: this.ebf_date,
     }
 
     console.log(bfedmonths);
@@ -209,7 +211,7 @@ export class BreastfeedingComponent implements OnInit {
       // next: (data: any) => console.log(data.status, 'check status'),
       error: err => console.log(err),
       complete: () => {
-        this.loadLibraries();
+        // this.loadLibraries();
         console.log('bfed data saved')
         this.is_saving = false;
       }
@@ -237,31 +239,31 @@ getccdevDetails() {
     });
   }
 
-  geteServiceName(){
+  // geteServiceName(){
 
-    if(!localStorage.getItem('Breastfeeding Months'))
-    {
-      localStorage.setItem('Breastfeeding Months', JSON.stringify([]))
-    }
+  //   if(!localStorage.getItem('Breastfeeding Months'))
+  //   {
+  //     localStorage.setItem('Breastfeeding Months', JSON.stringify([]))
+  //   }
 
-    this.month = JSON.parse(localStorage.getItem('Breastfeeding Months'));
-    console.log('retrievedBreastfedMonths: ', this.month );
-    this.month.forEach(m =>{
-     let i = this.ccdev.findIndex(c => c.id === m.id);
-      if(i != -1){
-        this.ccdev.splice(i,1);
-      }
-        // this.ccdev= [];
-        this.ccdev.push({
-            id: m.id,
-            name: m.name,
-            date: m.date,
-            selected: this.groupList2[i],
-            isDefault: m.isDefault,
-        });
-    });
-    this.ccdev.sort((m, c) => new Date(m.date).getTime() - new Date(c.date).getTime());this.ccdev.sort
-  }
+  //   this.month = JSON.parse(localStorage.getItem('Breastfeeding Months'));
+  //   console.log('retrievedBreastfedMonths: ', this.month );
+  //   this.month.forEach(m =>{
+  //    let i = this.ccdev.findIndex(c => c.id === m.id);
+  //     if(i != -1){
+  //       this.ccdev.splice(i,1);
+  //     }
+  //       // this.ccdev= [];
+  //       this.ccdev.push({
+  //           id: m.id,
+  //           name: m.name,
+  //           date: m.date,
+  //           selected: this.groupList2[i],
+  //           isDefault: m.isDefault,
+  //       });
+  //   });
+  //   this.ccdev.sort((m, c) => new Date(m.date).getTime() - new Date(c.date).getTime());this.ccdev.sort
+  // }
 
   loadLibraries(){
 
@@ -276,11 +278,11 @@ loadBreastfed(){
   var lib = ['bfed_month1','bfed_month2','bfed_month3','bfed_month4','bfed_month5','bfed_month6'];
   console.log(lib[0], " try lib");
 
-  this.http.get('child-care/cc-breastfed/'+this.ccdevbreast)
+  this.http.get('child-care/cc-breastfed/'+this.patient_details.id)
     .subscribe((data: any) => {
     this.patient_breastfed = data.data
     console.log(this.patient_breastfed, 'data ng breast fed');
-
+    
     // this.groupList2.push(this.patient_breastfed.bfed_month1);
     // this.groupList2.push(this.patient_breastfed.bfed_month2);
     // this.groupList2.push(this.patient_breastfed.bfed_month3);
@@ -298,6 +300,8 @@ loadBreastfed(){
     console.log(this.groupList2, 'data ng breast fed v2')
     this.getSelected()
     console.log(this.groupList, 'grouplist data')
+    let reasoning = this.patient_breastfed.ebfreasons.desc;
+    console.log(reasoning, 'para sa reason')
   });
 
 }

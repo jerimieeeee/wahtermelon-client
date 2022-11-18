@@ -96,17 +96,17 @@
 
             <div *ngIf="showData" class="flex py-4 px-5 rounded-b border-t border-gray-200">
               <label class="mt-2.5 text-sm text-gray-900 w-full">Reason for Stopping</label>
-              <select class="select rounded-md text-sm -pl-10" [(ngModel)]="lib_reasons.reason_id" name="" id="" style="width:100%;">
+              <select class="select rounded-md text-sm -pl-10" [(ngModel)]="patient_breastfed.ebfreasons.reason_id" name="" id="" style="width:100%;">
                 <option  disabled selected>Select Reason</option>
-                <option value="{{reason.reason_id}}" *ngFor="let reason of lib_reasons" [selected]="reason.reason_id">
+                <option value="{{reason.reason_id}}" *ngFor="let reason of lib_reasons">
                 {{reason.desc}}
                 </option>
               </select>
             </div>
 
-            <div *ngIf="!showData && !groupList.includes('0') && !groupList.includes('null') && !groupList.includes('') && groupList.length != 0" class="flex py-4 px-5 rounded-b border-t border-gray-200">
+            <div *ngIf="!showData && !groupList.includes('0') && !groupList.includes('null') && !groupList.includes('') " class="flex py-4 px-5 rounded-b border-t border-gray-200">
               <label class="mt-2.5 text-sm text-gray-900 w-full">EBF Date</label>
-              <input type="date" placeholder="Enter EBF Date">
+              <input type="date" placeholder="Enter EBF Date" style="width:100%;" [(ngModel)]="patient_breastfed.ebf_date" value="patient_breastfed.ebf_date">
             </div>
 
             <!-- <div *ngIf="showData===true" class="flex py-4 px-5 rounded-b border-t border-gray-200">
@@ -121,7 +121,7 @@
 
               <!-- Modal footer -->
             <div class="flex justify-end py-4 px-6 space-x-4 rounded-b border-t border-gray-200 dark:border-gray-600">
-              <p>{{checkedIDs}}</p>
+              <p>{{this.patient_breastfed.reasoning}}</p>
               <button  type="button" class="btn-cancel" (click)="toggleBreastfeedingModal()">Close</button>
               <button  type="button" class="btn-save" (click)="onSubmit()" (click)="saveModal()" *ngIf="!groupList2.includes(1) && groupList.length === 0">
                 <fa-icon *ngIf="is_saving" class="pl-0" [icon]="faSpinner" [spin]="true"></fa-icon>
