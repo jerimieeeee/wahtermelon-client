@@ -5,11 +5,13 @@ import { faChevronCircleDown, faBell, faSearch } from '@fortawesome/free-solid-s
 import { HttpService } from './shared/services/http.service';
 import { Location } from '@angular/common';
 import { filter, tap } from 'rxjs/operators';
+import { openCloseTrigger } from './modules/patient-registration/declarations/animation';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
+  animations: [openCloseTrigger]
 })
 export class AppComponent implements OnInit{
   title = 'wahtermelon-client';
@@ -21,6 +23,8 @@ export class AppComponent implements OnInit{
   showLogin: boolean = true;
   is_saving: boolean = false;
   auth_error: boolean = false;
+  showPrivacyStatement: boolean = false;
+
   auth_error_message: string;
   constructor(
     private http: HttpService,
