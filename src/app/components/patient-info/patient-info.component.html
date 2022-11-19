@@ -99,12 +99,39 @@
           </span>
         </div>
 
-        <div class="flex pl-3 justify-between items-center" [ngClass]="{'text-red-500': latest_vitals?.patient_bmi_class !== 'Normal'}">
+        <div *ngIf="!latest_vitals?.patient_weight_for_age" class="flex pl-3 justify-between items-center" [ngClass]="{'text-red-500': latest_vitals?.patient_bmi ? (latest_vitals?.patient_bmi_class !== 'Normal') : false}">
           <span class="block font-medium text-xs" >
             BMI
           </span>
           <span class="block text-xs" >
             {{ latest_vitals?.patient_bmi ? latest_vitals?.patient_bmi : '-' }} {{ latest_vitals?.patient_bmi_class ? '('+latest_vitals?.patient_bmi_class+')' : '' }}
+          </span>
+        </div>
+
+        <div *ngIf="latest_vitals?.patient_weight_for_age" class="flex pl-3 justify-between items-center" [ngClass]="{'text-red-500': latest_vitals?.patient_weight_for_age ? (latest_vitals?.patient_weight_for_age !== 'Normal') : false}">
+          <span class="block font-medium text-xs" >
+            Weight for age
+          </span>
+          <span class="block text-xs" >
+            {{ latest_vitals?.patient_weight_for_age ? latest_vitals?.patient_weight_for_age : '' }}
+          </span>
+        </div>
+
+        <div *ngIf="latest_vitals?.patient_height_for_age" class="flex pl-3 justify-between items-center" [ngClass]="{'text-red-500': latest_vitals?.patient_height_for_age ? (latest_vitals?.patient_height_for_age !== 'Normal') : false}">
+          <span class="block font-medium text-xs" >
+            Height for age
+          </span>
+          <span class="block text-xs" >
+            {{ latest_vitals?.patient_height_for_age ? latest_vitals?.patient_height_for_age : '' }}
+          </span>
+        </div>
+
+        <div *ngIf="latest_vitals?.patient_weight_for_height" class="flex pl-3 justify-between items-center" [ngClass]="{'text-red-500': latest_vitals?.patient_weight_for_height ? (latest_vitals?.patient_weight_for_height !== 'Normal') : false}">
+          <span class="block font-medium text-xs" >
+            Weight for Heigh
+          </span>
+          <span class="block text-xs" >
+            {{ latest_vitals?.patient_weight_for_height ? latest_vitals?.patient_weight_for_height : '' }}
           </span>
         </div>
 
