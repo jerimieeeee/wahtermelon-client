@@ -79,7 +79,7 @@ export class VitalsModalComponent implements OnInit {
         setTimeout(() => {
           this.showAlert = false;
         }, 3000);
-        console.log(data)
+        // console.log(data)
       },
       error: err => console.log(err),
       complete: () => console.log('vitals saved')
@@ -161,13 +161,13 @@ export class VitalsModalComponent implements OnInit {
       this.vitalsForm.patchValue({vitals_date_temp: formatDate(this.vitalsForm.value.vitals_date,'Y-M-dd','en')});
       this.vitalsForm.patchValue({vitals_time_temp: formatDate(this.vitalsForm.value.vitals_date,'HH:mm:ss','en')});
 
-      console.log(this.vitalsForm);
+      // console.log(this.vitalsForm);
       this.cmChange();
     }else{
-      console.log('new vitals')
+      // console.log('new vitals')
     }
 
-    console.log(this.vitalsForm.value);
+    // console.log(this.vitalsForm.value);
     this.date = new Date().toISOString().slice(0,10);
     this.checkIfChild();
   }

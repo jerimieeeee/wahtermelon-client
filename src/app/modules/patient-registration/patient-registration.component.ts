@@ -160,13 +160,13 @@ export class PatientRegistrationComponent implements OnInit {
 
 
   loadPatient(id){
-    console.log(id);
+    // console.log(id);
     this.http.get('patient/'+id).subscribe({
       next: (data: any) => {
-        console.log(data);
+        // console.log(data);
         this.patientForm.patchValue({...data.data});
         this.patient_to_update = data.data.id;
-        console.log(this.patientForm);
+        // console.log(this.patientForm);
         this.button_function = 'Update';
       },
       error: err => console.log(err)

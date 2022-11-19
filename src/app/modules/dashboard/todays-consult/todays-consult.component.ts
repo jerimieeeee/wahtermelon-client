@@ -88,7 +88,7 @@ export class TodaysConsultComponent implements OnInit {
     this.http.get('consultation/cn-records',{params:{consult_done: 0}}).subscribe({
       next: (data: any) => {
         this.today_consults = data.data;
-        console.log(data);
+        // console.log(data);
       },
       error: err => console.log(err)
     })

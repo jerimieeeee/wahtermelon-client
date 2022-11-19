@@ -32,7 +32,7 @@ export class VitalsListModalComponent implements OnInit {
 
   loadVaccines(){
     this.http.get('patient-vitals/vitals', {params:{'patient_id': this.patient_info.id, 'sort': '-vitals_date'}}).subscribe({
-      next: (data: any) => { console.log(data.data); this.vitals_list = data.data },
+      next: (data: any) => { /* console.log(data.data); */ this.vitals_list = data.data },
       error: err => console.log(err),
       complete: () => console.log('Vitals signs loaded')
     })
