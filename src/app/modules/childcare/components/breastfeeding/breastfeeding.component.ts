@@ -33,11 +33,13 @@ export class BreastfeedingComponent implements OnInit {
 
   showBreastfeedingModal = false;
   lib_reasons: any;
+  ebf_date: any;
 
   toggleBreastfeedingModal(){
     this.showBreastfeedingModal = !this.showBreastfeedingModal;
     // this.geteServiceName();
     this.loadBreastfed();
+    this.groupList = []
   }
 
   saveModal(){
@@ -121,7 +123,9 @@ export class BreastfeedingComponent implements OnInit {
 
     this.ccdev[i].selected = value;
     // this.fetchSelectedItems()
-    if(this.groupList.includes(0))
+    this.getPrev()
+    console.log(this.groupList, 'naktputa')
+    if(this.groupList.includes('0'))
     {
      console.log('open ang reason')
      this.showData = true
@@ -130,8 +134,7 @@ export class BreastfeedingComponent implements OnInit {
       this.showData = false
       console.log('close ang reason')
     }
-    this.getPrev()
-    console.log(this.groupList)
+
   }
 
   fetchSelectedItems() {
@@ -198,8 +201,8 @@ export class BreastfeedingComponent implements OnInit {
       bfed_month5: this.groupList[4],
       // bfed_month6: this.groupList[5] == 1 ? 1:0,
       bfed_month6: this.groupList[5],
-      reason_id: this.lib_reasons.reason_id,
-      ebf_date: '',
+      reason_id: this.patient_breastfed.ebfreasons.reason_id,
+      ebf_date: this.ebf_date,
     }
 
     console.log(bfedmonths);
@@ -208,7 +211,7 @@ export class BreastfeedingComponent implements OnInit {
       // next: (data: any) => console.log(data.status, 'check status'),
       error: err => console.log(err),
       complete: () => {
-        this.loadLibraries();
+        // this.loadLibraries();
         console.log('bfed data saved')
         this.is_saving = false;
       }
@@ -221,7 +224,6 @@ getccdevDetails() {
     next: (data: any) => {
       this.patient_info = data.data;
       console.log(this.patient_info, 'load ccdev info on breastfeeding')
-      
     },
     error: err => console.log(err)
   });
@@ -242,7 +244,7 @@ getccdevDetails() {
   //   {
   //     localStorage.setItem('Breastfeeding Months', JSON.stringify([]))
   //   }
-    
+
   //   this.month = JSON.parse(localStorage.getItem('Breastfeeding Months'));
   //   console.log('retrievedBreastfedMonths: ', this.month );
   //   this.month.forEach(m =>{
@@ -274,12 +276,11 @@ loadBreastfed(){
   this.groupList2 = [];
   var lib = ['bfed_month1','bfed_month2','bfed_month3','bfed_month4','bfed_month5','bfed_month6'];
   console.log(lib[0], " try lib");
-  
   this.http.get('child-care/cc-breastfed/'+this.patient_details.id)
     .subscribe((data: any) => {
     this.patient_breastfed = data.data
     console.log(this.patient_breastfed, 'data ng breast fed');
-
+    
     // this.groupList2.push(this.patient_breastfed.bfed_month1);
     // this.groupList2.push(this.patient_breastfed.bfed_month2);
     // this.groupList2.push(this.patient_breastfed.bfed_month3);
@@ -289,28 +290,31 @@ loadBreastfed(){
 
     lib.forEach((obj, index) => {
       this.groupList2.push(this.patient_breastfed[obj]);
-      this.ccdev[index].selected = this.patient_breastfed[obj];
+      // this.groupList.push(String(this.patient_breastfed[obj]));
+      this.ccdev[index].selected = String(this.patient_breastfed[obj]);
       console.log(this.ccdev[index].selected, " try ccdev");
 
     })
     console.log(this.groupList2, 'data ng breast fed v2')
     this.getSelected()
     console.log(this.groupList, 'grouplist data')
+    let reasoning = this.patient_breastfed.ebfreasons.desc;
+    console.log(reasoning, 'para sa reason')
   });
-  
+
 }
 
 
   ngOnInit(){
     this.ccdev = [
-    {"id" : "bfed_month1", "name" : "Month 1", "date" : moment(this.patient_details.birthdate).add(1, 'M').format('MMM DD, YYYY'), selected: false, isDefault: 'N/A'},
-    {"id" : "bfed_month2", "name" : "Month 2", "date" : moment(this.patient_details.birthdate).add(2, 'M').format('MMM DD, YYYY'), selected: false, isDefault: 'N/A'},
-    {"id" : "bfed_month3", "name" : "Month 3", "date" : moment(this.patient_details.birthdate).add(3, 'M').format('MMM DD, YYYY'), selected: false, isDefault: 'N/A'},
-    {"id" : "bfed_month4", "name" : "Month 4", "date" : moment(this.patient_details.birthdate).add(4, 'M').format('MMM DD, YYYY'), selected: false, isDefault: 'N/A'},
-    {"id" : "bfed_month5", "name" : "Month 5", "date" : moment(this.patient_details.birthdate).add(5, 'M').format('MMM DD, YYYY'), selected: false, isDefault: 'N/A'},
-    {"id" : "bfed_month6", "name" : "Month 6", "date" : moment(this.patient_details.birthdate).add(6, 'M').format('MMM DD, YYYY'), selected: false, isDefault: 'N/A'},
+    {"id" : "bfed_month1", "name" : "Month 1", "date" : moment(this.patient_details.birthdate).add(1, 'M').format('MMM DD, YYYY'), selected: '', isDefault: 'N/A'},
+    {"id" : "bfed_month2", "name" : "Month 2", "date" : moment(this.patient_details.birthdate).add(2, 'M').format('MMM DD, YYYY'), selected: '', isDefault: 'N/A'},
+    {"id" : "bfed_month3", "name" : "Month 3", "date" : moment(this.patient_details.birthdate).add(3, 'M').format('MMM DD, YYYY'), selected: '', isDefault: 'N/A'},
+    {"id" : "bfed_month4", "name" : "Month 4", "date" : moment(this.patient_details.birthdate).add(4, 'M').format('MMM DD, YYYY'), selected: '', isDefault: 'N/A'},
+    {"id" : "bfed_month5", "name" : "Month 5", "date" : moment(this.patient_details.birthdate).add(5, 'M').format('MMM DD, YYYY'), selected: '', isDefault: 'N/A'},
+    {"id" : "bfed_month6", "name" : "Month 6", "date" : moment(this.patient_details.birthdate).add(6, 'M').format('MMM DD, YYYY'), selected: '', isDefault: 'N/A'},
   ];
-  
+
     // this.fetchSelectedItems()
     this.loadBreastfed()
     // this.geteServiceName()

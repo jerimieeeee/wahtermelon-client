@@ -24,7 +24,7 @@ export class HttpService {
   }
 
   update(loc, id, data) {
-    return this.http.patch(`${this.baseUrl}` + loc + id, data)
+    return this.http.put(`${this.baseUrl}` + loc + id, data)
   }
 
   test(loc, data?) {

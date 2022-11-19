@@ -1,6 +1,6 @@
 import { Component, ComponentFactoryResolver, EventEmitter, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { faFlask, faHeart, faExclamationCircle, faNotesMedical, faPlusCircle, faQuestionCircle, faPenToSquare, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faFlask, faHeart, faExclamationCircle, faNotesMedical, faPlusCircle, faQuestionCircle, faPenToSquare, faTrash, faTableList } from '@fortawesome/free-solid-svg-icons';
 import { AgeService } from 'app/shared/services/age.service';
 import { HttpService } from 'app/shared/services/http.service';
 
@@ -11,6 +11,7 @@ import { HttpService } from 'app/shared/services/http.service';
 })
 export class PatientInfoComponent {
   @Output() patientInfo = new EventEmitter<any>();
+  @Output() patientVitals = new EventEmitter<any>();
   patient_info: any;
 
   faNotesMedical = faNotesMedical;
@@ -21,7 +22,7 @@ export class PatientInfoComponent {
   faQuestionCircle = faQuestionCircle;
   faPenToSquare = faPenToSquare;
   faTrash = faTrash;
-
+  faTableList = faTableList;
   show_form: boolean = false;
 
   // MODALS
@@ -34,11 +35,15 @@ export class PatientInfoComponent {
   famHistoryModal: boolean = false;
   lifestyleModal: boolean = false;
   deathRecordModal: boolean = false;
+  vitalsListModal: boolean = false;
+  moduleModal: boolean = false;
 
   vaccines_given: any;
   vaccine_list: any = [];
   vaccine_to_edit: any;
   patient_age: any;
+  latest_vitals: any;
+  vitals_to_edit: any;
 
   constructor(
     private activeRoute: ActivatedRoute,
@@ -64,7 +69,7 @@ export class PatientInfoComponent {
         this.patientInfo.emit(data.data);
         this.loadVaccines();
         this.loadVitals();
-        console.log(data.data)
+        // console.log(data.data)
       },
       error: err => console.log(err)
     });
@@ -120,38 +125,46 @@ export class PatientInfoComponent {
   }
 
   loadVaccines(){
-    this.http.get('patient-vaccines/vaccines-records/'+this.patient_info.id).subscribe({
-      next: (data: any) => { this.vaccine_list = data.data; this.checkVaccineStatus(data.data)/* console.log(this.vaccine_list) */ },
+    this.http.get('patient-vaccines/vaccines-records', {params:{'patient_id': this.patient_info.id, 'sort': '-vaccine_date' }}).subscribe({
+      next: (data: any) => {
+        this.vaccine_list = data.data;
+        // console.log(this.vaccine_list)
+        this.checkVaccineStatus(data.data);
+      },
       error: err => console.log(err),
       complete: () => console.log('vaccines loaded')
     })
   }
 
-  latest_vitals: any;
+  patient_vitals: any;
+
   loadVitals(){
-    let query = {
-      patient_id: this.patient_info.id,
-      sort: '-vitals_date'
-    }
-    this.http.get('patient-vitals/vitals', query).subscribe({
+    this.http.get('patient-vitals/vitals', {params:{patient_id: this.patient_info.id, sort: '-vitals_date'}}).subscribe({
       next: (data: any) => {
-        console.log(data);
-        if(data.data.length > 1){
-          this.latest_vitals = data.data[0]
-        }else{
-          this.latest_vitals = data.data
-        }
-        console.log(this.latest_vitals);
+        // console.log(data)
+        this.patientVitals.emit(data.data);
+        this.latest_vitals = data.data[0]
       },
       error: err => console.log(err),
       complete: () => console.log('vitals loaded')
     })
   }
 
+  vitalsEdit(e){
+    this.vitals_to_edit = e;
+    this.toggleModal('vitals-modal');
+  }
+
   toggleModal(modal_name){
+    // console.log(modal_name)
     switch (modal_name){
       case 'vitals-modal':
         this.vitalsModal = !this.vitalsModal;
+        if(this.vitalsModal == false)  this.vitals_to_edit = null;
+        this.loadVitals();
+        break;
+      case 'vitals-list-modal':
+        this.vitalsListModal = !this.vitalsListModal;
         break;
       case 'allergies-modal':
         this.allergiesModal = !this.allergiesModal;
@@ -178,6 +191,9 @@ export class PatientInfoComponent {
         break;
       case 'death-modal':
         this.deathRecordModal = !this.deathRecordModal;
+        break;
+      case 'module-modal':
+        this.moduleModal = !this.moduleModal;
         break;
       default:
         break;
