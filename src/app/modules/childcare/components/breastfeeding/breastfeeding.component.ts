@@ -224,7 +224,6 @@ getccdevDetails() {
     next: (data: any) => {
       this.patient_info = data.data;
       console.log(this.patient_info, 'load ccdev info on breastfeeding')
-
     },
     error: err => console.log(err)
   });
@@ -277,7 +276,6 @@ loadBreastfed(){
   this.groupList2 = [];
   var lib = ['bfed_month1','bfed_month2','bfed_month3','bfed_month4','bfed_month5','bfed_month6'];
   console.log(lib[0], " try lib");
-
   this.http.get('child-care/cc-breastfed/'+this.patient_details.id)
     .subscribe((data: any) => {
     this.patient_breastfed = data.data
