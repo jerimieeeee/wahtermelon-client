@@ -331,7 +331,8 @@
         <div class="text-right">
           <button type="submit" class="btn-save mr-5 w-48">
             <fa-icon *ngIf="loading" class="mr-3" [icon]="faSpinner" [spin]="true"></fa-icon>
-            {{ loading ? 'Saving' : 'Save' }}
+            <fa-icon *ngIf="!loading" class="mr-3" [icon]="faSave"></fa-icon>
+            {{ loading ? (button_function === 'Save' ? 'Saving' : 'Updating') : button_function }}
           </button>
         </div>
       </div>
