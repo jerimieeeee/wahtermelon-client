@@ -97,6 +97,9 @@
           <div *ngIf="f.birth_weight.errors?.['minlength']">
             Minimum of 2 character.
           </div>
+          <div *ngIf="f.birth_weight.errors?.['pattern']">
+            Input number only.
+          </div>
         </div>
 
         </div>
@@ -153,7 +156,7 @@
           </ng-template>
 
           <ng-template ng-footer-tmp>
-            <a class="text-blue-600" href="registration"> Create a new record</a>
+            <a class="text-blue-600" routerLink="/registration"> Create a new record</a>
           </ng-template>
         </ng-select>
 
