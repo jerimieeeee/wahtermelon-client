@@ -27,6 +27,7 @@ export class VitalsModalComponent implements OnInit {
   @Input() vitals_to_edit;
 
   error_message = "exceeded maximum value";
+  error_message_min = "exceeded minimum value";
 
   vitalsForm: FormGroup = new FormGroup({
     facility_code: new FormControl<string| null>(''),
@@ -65,7 +66,7 @@ export class VitalsModalComponent implements OnInit {
 
   onSubmit(){
     this.vitalsForm.patchValue({vitals_date: this.vitalsForm.value.vitals_date_temp+' '+this.vitalsForm.value.vitals_time_temp});
-    console.log(this.vitalsForm.value);
+    console.log(this.vitalsForm);
     let query;
     if(this.vitals_to_edit){
       query = this.http.update('patient-vitals/vitals/', this.vitals_to_edit.id, this.vitalsForm.value);
@@ -135,8 +136,8 @@ export class VitalsModalComponent implements OnInit {
       vitals_date: [null, Validators.required],
       user_id: [user_id, Validators.required],
       patient_temp: [null, Validators.max(50)],
-      patient_height: [null, Validators.max(272)],
-      patient_weight: [null, Validators.max(200)],
+      patient_height: [null, [Validators.min(10), Validators.max(272)]],
+      patient_weight: [null, [Validators.min(1), Validators.max(200)]],
       patient_head_circumference: [null, Validators.max(200)],
       patient_skinfold_thickness: [null, Validators.max(200)],
       bp_systolic: [null],
