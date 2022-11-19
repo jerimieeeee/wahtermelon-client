@@ -65,12 +65,12 @@ export class PatientInfoComponent {
   getPatient(id){
     this.http.get('patient/'+id).subscribe({
       next: (data: any) => {
-        this.patient_info = data.data;
         this.show_form = true;
+        this.patient_info = data.data;
         this.patientInfo.emit(data.data);
         this.loadVaccines();
         this.loadVitals();
-        // console.log(data.data)
+        console.log(data.data)
       },
       error: err => {
         // feature: add prompt that patient is not found. for now redirect to home
@@ -146,7 +146,7 @@ export class PatientInfoComponent {
   loadVitals(){
     this.http.get('patient-vitals/vitals', {params:{patient_id: this.patient_info.id, sort: '-vitals_date'}}).subscribe({
       next: (data: any) => {
-        // console.log(data)
+        console.log(data)
         this.patientVitals.emit(data.data);
         this.latest_vitals = data.data[0]
       },

@@ -64,7 +64,7 @@ export class VitalsModalComponent implements OnInit {
   ) { }
 
   onSubmit(){
-    this.vitalsForm.patchValue({vitals_date: this.vitalsForm.value.vitals_date_temp+' '+this.vitalsForm.value.vitals_time_temp+':00'});
+    this.vitalsForm.patchValue({vitals_date: this.vitalsForm.value.vitals_date_temp+' '+this.vitalsForm.value.vitals_time_temp});
     console.log(this.vitalsForm.value);
     let query;
     if(this.vitals_to_edit){
@@ -152,13 +152,13 @@ export class VitalsModalComponent implements OnInit {
       vitals_height_ft: [null, Validators.max(8)],
       vitals_height_in: [null, Validators.max(11)],
       vitals_date_temp: [formatDate(date,'Y-M-dd','en'), Validators.required],
-      vitals_time_temp: [formatDate(date,'HH:mm','en'), Validators.required],
+      vitals_time_temp: [formatDate(date,'HH:mm:ss','en'), Validators.required],
     });
 
     if(this.vitals_to_edit){
       this.vitalsForm.patchValue({...this.vitals_to_edit});
       this.vitalsForm.patchValue({vitals_date_temp: formatDate(this.vitalsForm.value.vitals_date,'Y-M-dd','en')});
-      this.vitalsForm.patchValue({vitals_time_temp: formatDate(this.vitalsForm.value.vitals_date,'HH:mm','en')});
+      this.vitalsForm.patchValue({vitals_time_temp: formatDate(this.vitalsForm.value.vitals_date,'HH:mm:ss','en')});
 
       console.log(this.vitalsForm);
       this.cmChange();

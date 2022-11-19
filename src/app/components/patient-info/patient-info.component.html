@@ -69,7 +69,7 @@
     <div class="block pt-4 justify-items-start mx-5 mb-5">
       <div class="flex justify-between items-center">
         <span class="block text-blue-500 font-medium text-sm">
-          VITALS ({{ latest_vitals?.vitals_date }})
+          VITAL SIGNS ({{ latest_vitals?.vitals_date }})
         </span>
         <span>
           <fa-icon (click)="toggleModal('vitals-list-modal')" class="mx-0 my-0 text-green-500 mr-2 hover:cursor-pointer" [icon]="faTableList" *ngIf="latest_vitals" ></fa-icon>
@@ -79,7 +79,7 @@
 
       <div class="block">
         <div class="flex pl-3 justify-between items-center">
-          <span class="block text-gray-800 font-medium text-xs">
+          <span class="block font-medium text-xs">
             Weight
           </span>
           <span class="block text-xs">
@@ -88,7 +88,7 @@
         </div>
 
         <div class="flex pl-3 justify-between items-center">
-          <span class="block text-gray-800 font-medium text-xs">
+          <span class="block font-medium text-xs">
             Height
           </span>
           <span class="block text-xs">
@@ -96,8 +96,17 @@
           </span>
         </div>
 
+        <div class="flex pl-3 justify-between items-center" [ngClass]="{'text-red-500': (latest_vitals?.patient_bmi >= 18.5 && latest_vitals?.patient_bmi < 25)}">
+          <span class="block font-medium text-xs" >
+            BMI
+          </span>
+          <span class="block text-xs" >
+            {{ latest_vitals?.patient_bmi ? latest_vitals?.patient_bmi : '-' }} {{ latest_vitals?.patient_bmi_class ? '('+latest_vitals?.patient_bmi_class+')' : '' }}
+          </span>
+        </div>
+
         <div class="flex pl-3 justify-between items-center">
-          <span class="block text-gray-800 font-medium text-xs">
+          <span class="block font-medium text-xs">
             Blood Pressure
           </span>
           <span class="block text-xs">
@@ -105,7 +114,7 @@
           </span>
         </div>
         <!-- <div class="flex pl-3 justify-between items-center">
-          <span class="block text-gray-800 font-medium text-xs">
+          <span class="block font-medium text-xs">
             BMI
           </span>
           <span class="block text-xs">
@@ -113,8 +122,8 @@
           </span>
         </div> -->
 
-        <div class="flex pl-3 justify-between items-center">
-          <span class="block text-gray-800 font-medium text-xs">
+        <div class="flex pl-3 justify-between items-center" [ngClass]="{'text-red-500': (latest_vitals?.patient_temp >= 37.6)}">
+          <span class="block font-medium text-xs">
             Temparature
           </span>
           <span class="block text-xs">
@@ -123,35 +132,35 @@
         </div>
 
         <div class="flex pl-3 justify-between items-center">
-          <span class="block text-gray-800 font-medium text-xs">
+          <span class="block font-medium text-xs">
             Heart Rate
           </span>
           <span class="block text-xs">
-            {{ latest_vitals?.patient_heart_rate ? latest_vitals?.patient_heart_rate : '-' }}
+            {{ (latest_vitals?.patient_heart_rate ? (latest_vitals?.patient_heart_rate | number: '1.0-0' )  : '-') }}
           </span>
         </div>
 
         <div class="flex pl-3 justify-between items-center">
-          <span class="block text-gray-800 font-medium text-xs">
+          <span class="block font-medium text-xs">
             Respiratory Rate
           </span>
           <span class="block text-xs">
-            {{ latest_vitals?.patient_respiratory_rate ? latest_vitals?.patient_respiratory_rate : '-' }}
+            {{ (latest_vitals?.patient_respiratory_rate ? (latest_vitals?.patient_respiratory_rate | number: '1.0-0') : '-')}}
           </span>
         </div>
 
         <div class="flex pl-3 justify-between items-center">
-          <span class="block text-gray-800 font-medium text-xs">
+          <span class="block font-medium text-xs">
             Pulse Rate
           </span>
           <span class="block text-xs">
-            {{ latest_vitals?.patient_pulse_rate ? latest_vitals?.patient_pulse_rate  : '-' }}
+            {{ (latest_vitals?.patient_pulse_rate ? (latest_vitals?.patient_pulse_rate | number: '1.0-0') : '-') }}
           </span>
         </div>
 
         <div class="flex pl-3 justify-between items-center">
-          <span class="block text-gray-800 font-medium text-xs">
-            Waist
+          <span class="block font-medium text-xs">
+            Waist Circumference
           </span>
           <span class="block text-xs">
             {{ latest_vitals?.patient_waist ? latest_vitals?.patient_waist : '-' }}
@@ -171,7 +180,7 @@
 
       <div class="block">
         <div class="flex pl-3 justify-between items-center">
-          <span class="block text-gray-800 font-medium text-xs">
+          <span class="block font-medium text-xs">
             No Records
           </span>
           <span class="block text-xs">
@@ -191,7 +200,7 @@
 
       <div class="block">
         <div class="flex pl-3 justify-between items-center">
-          <span class="block text-gray-800 font-medium text-xs">
+          <span class="block font-medium text-xs">
             No Records
           </span>
           <span class="block text-xs">
@@ -214,7 +223,7 @@
 
           <fa-icon (click)="toggleActionModal('vaccine-action-modal', vaccine)" class="mx-0 my-0 text-amber-400 hover:cursor-pointer flex-none mr-2" [icon]="faPenToSquare"></fa-icon>
           <!-- <fa-icon (click)="toggleModal('delete-vaccine-modal')" class="mx-0 my-0 text-red-400 hover:cursor-pointer flex-none mr-2" [icon]="faTrash"></fa-icon> -->
-          <span class="text-gray-800 font-medium text-xs flex-auto">
+          <span class="font-medium text-xs flex-auto">
             <span class="font-bold">{{ vaccine.vaccine_id }} - {{ vaccine.dose }} Dose</span> <br />({{ vaccine.status_id === 1 ? 'Done' : (vaccine.status_id === 2 ? 'Done Outside - Private' : 'Done Outside - Public') }})
           </span>
           <span class="italic text-xs flex-auto text-right">
@@ -234,7 +243,7 @@
 
       <div class="block">
         <div class="flex pl-3 justify-between items-center">
-          <span class="block text-gray-800 font-medium text-xs">
+          <span class="block font-medium text-xs">
             No Records
           </span>
           <span class="block text-xs">
@@ -254,7 +263,7 @@
 
       <div class="block">
         <div class="flex pl-3 justify-between items-center">
-          <span class="block text-gray-800 font-medium text-xs">
+          <span class="block font-medium text-xs">
             No Records
           </span>
           <span class="block text-xs">
@@ -274,7 +283,7 @@
 
       <div class="block">
         <div class="flex pl-3 justify-between items-center">
-          <span class="block text-gray-800 font-medium text-xs">
+          <span class="block font-medium text-xs">
             SMOKER
           </span>
           <span class="block text-xs">
@@ -283,7 +292,7 @@
         </div>
 
         <div class="flex pl-3 justify-between items-center">
-          <span class="block text-gray-800 font-medium text-xs">
+          <span class="block font-medium text-xs">
             ALCOHOL
           </span>
           <span class="block text-xs">
@@ -292,7 +301,7 @@
         </div>
 
         <div class="flex pl-3 justify-between items-center">
-          <span class="block text-gray-800 font-medium text-xs">
+          <span class="block font-medium text-xs">
             ILLICIT DRUGS
           </span>
           <span class="block text-xs">
@@ -312,7 +321,7 @@
 
       <div class="block">
         <div class="flex pl-3 justify-between items-center">
-          <span class="block text-gray-800 font-medium text-xs">
+          <span class="block font-medium text-xs">
             -
           </span>
           <span class="block text-xs">
