@@ -1,5 +1,5 @@
 import { Component, ComponentFactoryResolver, EventEmitter, OnInit, Output } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { faFlask, faHeart, faExclamationCircle, faNotesMedical, faPlusCircle, faQuestionCircle, faPenToSquare, faTrash, faTableList } from '@fortawesome/free-solid-svg-icons';
 import { AgeService } from 'app/shared/services/age.service';
 import { HttpService } from 'app/shared/services/http.service';
@@ -47,6 +47,7 @@ export class PatientInfoComponent {
 
   constructor(
     private activeRoute: ActivatedRoute,
+    private router: Router,
     private http: HttpService,
     private ageService: AgeService
   ) {
@@ -71,7 +72,11 @@ export class PatientInfoComponent {
         this.loadVitals();
         // console.log(data.data)
       },
-      error: err => console.log(err)
+      error: err => {
+        // feature: add prompt that patient is not found. for now redirect to home
+        this.router.navigate(['/home'])
+        //  console.log(err)
+      }
     });
   }
 
