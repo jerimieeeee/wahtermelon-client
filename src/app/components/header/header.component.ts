@@ -66,9 +66,13 @@ export class HeaderComponent implements OnInit {
     this.loadPatients();
   }
 
+  showCreate:boolean = false;
+
   getPatient(term: string = null): Observable<any> {
     return this.http.get('patient', {params:{'filter[search]':term}})
     .pipe(map((resp:any) => {
+      this.showCreate = resp.data.length == 0 ? true : false;
+      console.log(this.showCreate)
       return resp.data;
     }))
   }

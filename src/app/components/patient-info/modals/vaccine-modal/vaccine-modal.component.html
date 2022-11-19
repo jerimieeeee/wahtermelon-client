@@ -1,5 +1,5 @@
-<div id="defaultModal" tabindex="-1" class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 w-full md:inset-0 h-modal md:h-full justify-center items-center flex" aria-modal="true" role="dialog" style="z-index:60">
-  <div class="relative p-4 w-full max-w-3xl h-auto md:h-auto">
+<div id="defaultModal" tabindex="-1" class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 w-full md:inset-0 h-modal md:h-full justify-center items-center flex" aria-hidden="true" role="dialog" style="z-index:60">
+  <div class="relative p-4 w-full max-w-3xl h-full md:h-auto">
     <!-- Modal content -->
     <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
       <!-- Modal header -->
@@ -9,35 +9,55 @@
         </h3>
       </div>
       <!-- Modal body -->
-      <div class="overflow-y-auto h-96 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
+      <div class="overflow-y-auto scrollbar-thin h-96 scrollbar-thumb-gray-400 scrollbar-track-gray-100">
         <form class="w-full max-w-3xl text-left text-gray-500 dark:text-gray-400">
           <div class="text-gray-600 border border-slate-100 mx-5"></div><!-- border -->
 
           <div class="flex item-start flex-wrap pb-5" *ngFor="let list of vaccine_grouped | keyvalue">
             <div class="flex justify-between w-full px-5 mt-3 rounded-tl rounded-tr">
-              <h4 class="font-bold text-blue-500 text-sm mt-2">{{ list.key }}</h4>
+              <h4 class="font-bold text-blue-500 text-sm mt-2">{{ list.value.name }}</h4>
             </div>
 
-            <div class="grid grid-cols-3 gap-4 w-full mx-10" *ngFor="let vaccine of list.value">
-              <label class="col-span-1 pt-2" for="{{ 'vaccine_status.'+vaccine.vaccine_id }}">{{ vaccine.vaccine_id }}</label>
-              <select [(ngModel)]="vaccineForm.vaccine_status[vaccine.vaccine_id]"
-                    id="{{ 'vaccine_status.'+vaccine.vaccine_id }}"
-                    name="{{ 'vaccine_status.'+vaccine.vaccine_id }}"
-                    class="col-span-1 mt-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                <option>-</option>
-                <option value="1">Done</option>
-                <option value="2">Done Outside - Private</option>
-                <option value="3">Done Outside - Public</option>
-              </select>
-              <div *ngIf="vaccineForm.vaccine_status[vaccine.vaccine_id] !== '-' && vaccineForm.vaccine_status[vaccine.vaccine_id] !== '' && vaccineForm.vaccine_status[vaccine.vaccine_id] !== undefined">
-                <input  [(ngModel)]="vaccineForm.vaccine_date[vaccine.vaccine_id]"
-                  name="{{ 'vaccine_date.'+vaccine.vaccine_id }}" id="{{ 'vaccine_date.'+vaccine.vaccine_id }}" type="date" placeholder="Enter vaccine date" class="col-span-1 mt-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <div *ngFor="let vaccine of list.value.items" class="w-full mx-10">
+              <div class="grid grid-cols-3 gap-4">
+                <label class="col-span-1 pt-2" for="{{ 'vaccine_status.'+vaccine.vaccine_id }}">{{ vaccine.vaccine_desc }} ({{ vaccine.vaccine_id }})</label>
+
+                <div class="col-span-2">
+                  <select [(ngModel)]="vaccineForm.vaccine_status[vaccine.vaccine_id]"
+                        id="{{ 'vaccine_status.'+vaccine.vaccine_id }}"
+                        name="{{ 'vaccine_status.'+vaccine.vaccine_id }}"
+                        class="col-span-1 mt-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    <option>-</option>
+                    <option value="1">Done</option>
+                    <option value="2">Done Outside - Private</option>
+                    <option value="3">Done Outside - Public</option>
+                  </select>
+                  <div *ngIf="vaccineForm.vaccine_status[vaccine.vaccine_id] !== '-' && vaccineForm.vaccine_status[vaccine.vaccine_id] !== '' && vaccineForm.vaccine_status[vaccine.vaccine_id] !== undefined">
+                    <input  [(ngModel)]="vaccineForm.vaccine_date[vaccine.vaccine_id]"
+                      name="{{ 'vaccine_date.'+vaccine.vaccine_id }}" id="{{ 'vaccine_date.'+vaccine.vaccine_id }}" type="date" placeholder="Enter vaccine date" class="col-span-1 mt-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                  </div>
+
+                  <div class="border border-slate-200 rounded-lg my-3 bg-slate-100" *ngIf="vaccines_given[vaccine.vaccine_id]">
+                    <table class="table-auto w-full m-3">
+                      <thead>
+                        <tr >
+                          <th>{{ vaccine.vaccine_id }}</th>
+                          <th>Date Administered</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let vax of vaccines_given[vaccine.vaccine_id] | keyvalue ; let i = index">
+                          <td>{{ vax.value.dose }} Dose </td>
+                          <td class="pl-5" >: {{ !vax.value.vaccine_date ? '-' : vax.value.vaccine_date }}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
           <div class="text-gray-600 border border-slate-100 mx-5"></div><!-- border -->
-
-
         </form>
 
 
@@ -45,7 +65,7 @@
 
       <!-- Modal footer -->
       <div class="flex justify-end py-4 px-5 space-x-4 rounded-b border-t border-gray-200 dark:border-gray-600">
-        <button  type="button" class="text-white bg-red-500 hover:ring-2 focus:outline-none hover:ring-red-300 rounded text-sm font-medium px-6 py-2.5 transition duration-150 ease-in-out transform hover:scale-110 " (click)="closeModal()">Close</button>
+        <button  type="button" class="text-white bg-orange-500 hover:ring-2 focus:outline-none hover:ring-orange-300 rounded text-sm font-medium px-6 py-2.5 transition duration-150 ease-in-out transform hover:scale-110 " (click)="closeModal()">Close</button>
         <button  type="button" class="text-white bg-blue-500 hover:ring-2 focus:outline-none hover:ring-blue-300 font-medium rounded text-sm px-6 py-2.5 text-center transition duration-150 ease-in-out transform hover:scale-110" (click)="onSubmit()" >Save</button>
       </div>
     </div>

@@ -1,6 +1,6 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, ComponentFactoryResolver, EventEmitter, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { faFlask, faHeart, faExclamationCircle, faNotesMedical, faPlusCircle, faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
+import { faFlask, faHeart, faExclamationCircle, faNotesMedical, faPlusCircle, faQuestionCircle, faPenToSquare, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { AgeService } from 'app/shared/services/age.service';
 import { HttpService } from 'app/shared/services/http.service';
 
@@ -19,6 +19,8 @@ export class PatientInfoComponent {
   faExclamationCircle = faExclamationCircle;
   faPlusCircle = faPlusCircle;
   faQuestionCircle = faQuestionCircle;
+  faPenToSquare = faPenToSquare;
+  faTrash = faTrash;
 
   show_form: boolean = false;
 
@@ -27,13 +29,16 @@ export class PatientInfoComponent {
   allergiesModal: boolean = false;
   medicationModal: boolean = false;
   vaccineModal: boolean = false;
+  vaccineActionModal: boolean = false;
   historyModal: boolean = false;
   famHistoryModal: boolean = false;
   lifestyleModal: boolean = false;
   deathRecordModal: boolean = false;
 
-
+  vaccines_given: any;
   vaccine_list: any = [];
+  vaccine_to_edit: any;
+  patient_age: any;
 
   constructor(
     private activeRoute: ActivatedRoute,
@@ -47,6 +52,7 @@ export class PatientInfoComponent {
 
   getAge(){
     let age_value = this.ageService.calcuateAge(this.patient_info.birthdate);
+    this.patient_age = age_value;
     return age_value.age + ' ' + age_value.type+(age_value.age>1 ? 's old' : ' old' );
   }
 
@@ -57,17 +63,88 @@ export class PatientInfoComponent {
         this.show_form = true;
         this.patientInfo.emit(data.data);
         this.loadVaccines();
-        // console.log(data.data)
+        this.loadVitals();
+        console.log(data.data)
       },
       error: err => console.log(err)
     });
   }
 
+  checkVaccineStatus(vaccines){
+    var new_vax = [];
+    Object.entries(vaccines).reverse().forEach(([key, value], index) => {
+      var val:any = value
+      if(!new_vax[val.vaccines.vaccine_id]) new_vax[val.vaccines.vaccine_id] = []
+
+      let vax = {
+        id: val.id,
+        vaccine_id: val.vaccines.vaccine_id,
+        vaccine_date: val.vaccine_date,
+        dose: this.getNumberSuffix(Object.keys(new_vax[val.vaccines.vaccine_id]).length + 1)
+      }
+
+      new_vax[val.vaccines.vaccine_id][val.id] = vax
+    })
+
+    this.vaccines_given = new_vax;
+    this.addDose(new_vax)
+  }
+
+  getNumberSuffix(i){
+    var j = i % 10,
+    k = i % 100;
+    if (j == 1 && k != 11) {
+        return i + "st";
+    }
+    if (j == 2 && k != 12) {
+        return i + "nd";
+    }
+    if (j == 3 && k != 13) {
+        return i + "rd";
+    }
+    return i + "th";
+  }
+
+  addDose(new_vax){
+    Object.entries(this.vaccine_list).forEach(([key, value], index) => {
+      var val:any = value;
+
+      this.vaccine_list[key]['dose'] = new_vax[val.vaccines.vaccine_id][val.id].dose;
+    });
+  }
+
+  toggleActionModal(modal_name, vaccine){
+    this.vaccine_to_edit = vaccine;
+    this.vaccineActionModal = !this.vaccineActionModal;
+    if(this.vaccineActionModal == false) this.loadVaccines();
+  }
+
   loadVaccines(){
-    this.http.get('patient/vaccines-records/'+this.patient_info.id).subscribe({
-      next: (data: any) => { this.vaccine_list = data; /* console.log(this.vaccine_list) */ },
+    this.http.get('patient-vaccines/vaccines-records/'+this.patient_info.id).subscribe({
+      next: (data: any) => { this.vaccine_list = data.data; this.checkVaccineStatus(data.data)/* console.log(this.vaccine_list) */ },
       error: err => console.log(err),
-      complete: () => console.log('complete')
+      complete: () => console.log('vaccines loaded')
+    })
+  }
+
+  latest_vitals: any;
+  loadVitals(){
+    let query = {
+      patient_id: this.patient_info.id,
+      sort: '-vitals_date'
+    }
+    this.http.get('patient-vitals/vitals', query).subscribe({
+      next: (data: any) => {
+        console.log(data);
+        if(data.data.length > 1){
+          this.latest_vitals = data.data[0]
+        }else{
+          this.latest_vitals = data.data
+        }
+        console.log(this.latest_vitals);
+      },
+      error: err => console.log(err),
+      complete: () => console.log('vitals loaded')
     })
   }
 
@@ -85,6 +162,10 @@ export class PatientInfoComponent {
       case 'vaccine-modal':
         this.loadVaccines();
         this.vaccineModal = !this.vaccineModal;
+        break;
+      case 'vaccine-action-modal':
+        this.loadVaccines();
+        this.vaccineActionModal = !this.vaccineActionModal;
         break;
       case 'history-modal':
         this.historyModal = !this.historyModal;

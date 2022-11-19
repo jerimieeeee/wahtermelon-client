@@ -82,7 +82,7 @@
 
             <div class="col-span-8">
               <label for="birthdate" class="input-label" [ngClass]="{'text-red-500': is_saving && f.birthdate.errors}">Birthdate</label>
-              <input type="date" name="birthdate" id="birthdate" class="input" [ngClass]="{'invalid-input': is_saving && f.birthdate.errors}" formControlName="birthdate">
+              <input type="date" name="birthdate" id="birthdate" class="input" placeholder="mm/dd/yyyy" max="{{ date | date: 'yyyy-MM-dd }} " [ngClass]="{'invalid-input': is_saving && f.birthdate.errors}" formControlName="birthdate">
 
               <div *ngIf="is_saving && f.birthdate.errors" class="invalid-alert">
                 <div *ngIf="f.birthdate.errors?.['required']">
@@ -116,7 +116,7 @@
               </div>
             </div>
 
-            <div class="col-span-8">
+            <!-- <div class="col-span-8">
               <label for="tin_number" class="input-label" [ngClass]="{'text-red-500': is_saving && f.tin_number.errors}">Tin Number <span class="text-sm">(optional)</span></label>
               <input type="number" name="tin_number" id="tin_number" class="input" [ngClass]="{'invalid-input': is_saving && f.tin_number.errors}" formControlName="tin_number">
 
@@ -142,11 +142,21 @@
                   Minimum of 2 character.
                 </div>
               </div>
-            </div>
+            </div> -->
 
             <div class="col-span-8">
               <label for="password" class="input-label" [ngClass]="{'text-red-500': is_saving && f.password.errors}">Password</label>
               <input type="password" name="password" id="password" class="input" [ngClass]="{'invalid-input': is_saving && f.password.errors}" formControlName="password">
+
+              <div *ngIf="!is_saving ">
+                <ol class="list-disc pl-5 text-sm">
+                  <li>Password must have at least 6 characters</li>
+                  <li>Password must have at least 1 capital letter</li>
+                  <li>Password must have at least 1 small letter</li>
+                  <li>Password must have at least 1 number</li>
+                  <li>Password must have at least 1 special character</li>
+                </ol>
+              </div>
 
               <div *ngIf="is_saving && f.password.errors" class="invalid-alert">
                 <div *ngIf="f.password.errors?.['required']">

@@ -4,7 +4,6 @@ import { FormBuilder, FormGroup,FormArray,FormControl,Validators,} from '@angula
 import * as moment from 'moment';
 import { faPenToSquare } from '@fortawesome/free-regular-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
-import { runInThisContext } from 'vm';
 
 @Component({
   selector: 'app-breastfeeding',
@@ -13,14 +12,14 @@ import { runInThisContext } from 'vm';
 })
 export class BreastfeedingComponent implements OnInit {
 
-  
+
   month: any
   selectedItem: any
   selectedItemsList = [];
   selectedMonths = [];
   checkedIDs = [];
   showData: any
-  
+
   faSearch = faSearch;
   faPlus = faPlus;
   faInfoCircle = faInfoCircle;
@@ -31,10 +30,10 @@ export class BreastfeedingComponent implements OnInit {
 
   todaysDate = new Date();
 
- 
+
   showBreastfeedingModal = false;
   lib_reasons: any;
-  
+
   toggleBreastfeedingModal(){
     this.showBreastfeedingModal = !this.showBreastfeedingModal;
     // this.geteServiceName();
@@ -99,27 +98,27 @@ export class BreastfeedingComponent implements OnInit {
   arrayVal:any;
 
   patient_info: any;
-  
 
 
-  constructor(private http: HttpService) { 
+
+  constructor(private http: HttpService) {
 
 
-    
+
   }
-  
+
   submit() {
     this.selectedMonths = this.ccdev.filter((value, index) => {
       return value.selected,
       localStorage.setItem('Breastfeeding Months', JSON.stringify(this.selectedMonths)),
       this.month = this.selectedMonths
     });
-    
+
   }
 
   changeSelection(i: any, value: any) {
-   
-    
+
+
     this.ccdev[i].selected = value;
     // this.fetchSelectedItems()
     if(this.groupList.includes(0))
@@ -166,7 +165,7 @@ export class BreastfeedingComponent implements OnInit {
       ebf_date: '',
     }
 
-    console.log(bfedmonths); 
+    console.log(bfedmonths);
 
     // this.http.post('child-care/cc-breastfed', bfedmonths).subscribe({
     //   // next: (data: any) => console.log(data.status, 'check status'),
@@ -203,7 +202,7 @@ export class BreastfeedingComponent implements OnInit {
       ebf_date: '',
     }
 
-    console.log(bfedmonths); 
+    console.log(bfedmonths);
 
     this.http.post('child-care/cc-breastfed', bfedmonths).subscribe({
       // next: (data: any) => console.log(data.status, 'check status'),
@@ -264,7 +263,7 @@ getccdevDetails() {
   // }
 
   loadLibraries(){
-   
+
   this.http.get('libraries/reason').subscribe((data: any) => {
     this.lib_reasons = data.data
     console.log(data);
@@ -280,7 +279,7 @@ loadBreastfed(){
     .subscribe((data: any) => {
     this.patient_breastfed = data.data
     console.log(this.patient_breastfed, 'data ng breast fed');
-  
+
     // this.groupList2.push(this.patient_breastfed.bfed_month1);
     // this.groupList2.push(this.patient_breastfed.bfed_month2);
     // this.groupList2.push(this.patient_breastfed.bfed_month3);
@@ -292,7 +291,7 @@ loadBreastfed(){
       this.groupList2.push(this.patient_breastfed[obj]);
       this.ccdev[index].selected = this.patient_breastfed[obj];
       console.log(this.ccdev[index].selected, " try ccdev");
-      
+
     })
     console.log(this.groupList2, 'data ng breast fed v2')
     this.getSelected()
@@ -316,7 +315,7 @@ loadBreastfed(){
     this.loadBreastfed()
     // this.geteServiceName()
     this.loadLibraries();
-    
+
     this.getccdevDetails()
   }
 

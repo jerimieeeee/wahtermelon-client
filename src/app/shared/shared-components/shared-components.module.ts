@@ -12,6 +12,7 @@ import { HistoryModalComponent } from 'app/components/patient-info/modals/histor
 import { FamHistoryModalComponent } from 'app/components/patient-info/modals/fam-history-modal/fam-history-modal.component';
 import { LifestyleModalComponent } from 'app/components/patient-info/modals/lifestyle-modal/lifestyle-modal.component';
 import { AllergiesModalComponent } from 'app/components/patient-info/modals/allergies-modal/allergies-modal.component';
+import { VaccineActionModalComponent } from 'app/components/patient-info/modals/vaccine-action-modal/vaccine-action-modal.component';
 
 
 
@@ -25,7 +26,8 @@ import { AllergiesModalComponent } from 'app/components/patient-info/modals/alle
     HistoryModalComponent,
     FamHistoryModalComponent,
     LifestyleModalComponent,
-    AllergiesModalComponent
+    AllergiesModalComponent,
+    VaccineActionModalComponent
   ],
   imports: [
     CommonModule,
@@ -43,7 +45,8 @@ import { AllergiesModalComponent } from 'app/components/patient-info/modals/alle
     HistoryModalComponent,
     FamHistoryModalComponent,
     LifestyleModalComponent,
-    AllergiesModalComponent
+    AllergiesModalComponent,
+    VaccineActionModalComponent
   ]
 })
 export class SharedComponentsModule { }

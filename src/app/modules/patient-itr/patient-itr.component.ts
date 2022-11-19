@@ -40,17 +40,17 @@ export class PatientItrComponent implements OnInit {
           name: 'Maternal Care',
           location: 'mc'
         },
-        {
+        /* {
           name: 'Family Planning',
           location: 'fp'
-        },
-        {
+        }, */
+       /*  {
           name: 'Dental',
           location: 'dental'
-        },
+        }, */
       ]
     },
-    {
+    /* {
       group: 'Others',
       modules: [
         {
@@ -70,7 +70,7 @@ export class PatientItrComponent implements OnInit {
           location: 'consultation'
         },
       ]
-    }
+    } */
   ]
   @ViewChild("bp-chart") bp_chart: ChartComponent;
   @ViewChild("weight-chart") weight_chart: ChartComponent;

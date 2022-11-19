@@ -30,4 +30,8 @@ export class HttpService {
   test(loc, data?) {
     return this.http.get('https://apiwahtermelon-staging.wah.ph/api/' + loc, data ? data : '')
   }
+
+  delete(loc, id) {
+    return this.http.delete(`${this.baseUrl}` + loc + id)
+  }
 }
