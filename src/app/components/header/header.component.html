@@ -13,6 +13,7 @@
           [typeahead]="searchInput$"
           [(ngModel)]="selectedPatient"
           (change)="onSelect(selectedPatient)"
+          notFoundText="No records found"
           [clearSearchOnAdd]>
           <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
             <!-- <a href="itr"> -->

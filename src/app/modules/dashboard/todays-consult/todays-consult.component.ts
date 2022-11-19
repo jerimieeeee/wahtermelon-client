@@ -95,6 +95,7 @@ export class TodaysConsultComponent implements OnInit {
   }
 
   openItr(patient_id){
+    console.log(patient_id)
     this.router.navigate(['/itr', {id: patient_id}]);
   }
 
