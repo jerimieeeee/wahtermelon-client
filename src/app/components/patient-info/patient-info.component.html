@@ -22,10 +22,13 @@
         </span>
 
         <div class="flex pt-2">
+          <button type="button">
+            <fa-icon class="mx-0 my-0 text-amber-500 mr-2" (click)="editPatient(patient_info?.id)" [icon]="faPenSquare" size="lg"></fa-icon>
+          </button>
           <fa-icon class="mx-0 my-0 text-gray-500 mr-2" [icon]="faHeart" size="lg"></fa-icon>
-          <fa-icon class="mx-0 my-0 text-green-500 mr-2" [icon]="faFlask" size="lg"></fa-icon>
-          <fa-icon class="mx-0 my-0 text-blue-500 mr-2" [icon]="faNotesMedical" size="lg"></fa-icon>
-          <fa-icon class="mx-0 my-0 text-red-500 mr-2" [icon]="faExclamationCircle" size="lg"></fa-icon>
+          <fa-icon class="mx-0 my-0 text-gray-500 mr-2" [icon]="faFlask" size="lg"></fa-icon>
+          <fa-icon class="mx-0 my-0 text-gray-500 mr-2" [icon]="faNotesMedical" size="lg"></fa-icon>
+          <fa-icon class="mx-0 my-0 text-gray-500 mr-2" [icon]="faExclamationCircle" size="lg"></fa-icon>
         </div>
       </div>
     </div>
@@ -96,7 +99,7 @@
           </span>
         </div>
 
-        <div class="flex pl-3 justify-between items-center" [ngClass]="{'text-red-500': (latest_vitals?.patient_bmi >= 18.5 && latest_vitals?.patient_bmi < 25)}">
+        <div class="flex pl-3 justify-between items-center" [ngClass]="{'text-red-500': latest_vitals?.patient_bmi_class !== 'Normal'}">
           <span class="block font-medium text-xs" >
             BMI
           </span>
