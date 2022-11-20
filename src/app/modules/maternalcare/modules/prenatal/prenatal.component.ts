@@ -151,21 +151,35 @@ export class PrenatalComponent implements OnInit {
   getMCR(type: any, id: any) {
     console.log(this.patient_mc_record[0], " from getMCR - prenatal;");
 
-    this.createForm(this.patient_mc_record[0]);
+
+    console.log(this.patient_mc_record[0].prenatal_visit[0]?this.patient_mc_record[0].prenatal_visit[0]:this.patient_mc_record[0].prenatal_visit, " try getmcr");
+   
+    if(this.patient_mc_record[0].prenatal_visit[0]?this.patient_mc_record[0].prenatal_visit[0]:this.patient_mc_record[0].prenatal_visit.length == 1){
+      console.log("it went true");
+      
     this.value = this.patient_mc_record[0].prenatal_visit[0].visit_sequence + 1;
     this.patient_mc_record[0].prenatal_visit.forEach(p => {
       this.prenatal_data.push(p);
     });
   }
+  this.createForm(this.patient_mc_record[0]);
+  }
   createForm(mc_record: any) {
-    let prenatal_visit = mc_record.prenatal_visit[0];
+    let prenatal_visit: any
+    if(this.patient_mc_record[0].prenatal_visit[0]?this.patient_mc_record[0].prenatal_visit[0]:this.patient_mc_record[0].prenatal_visit.length == 1){
+        console.log("it went true again");
+        prenatal_visit = mc_record.prenatal_visit[0];
+    }else{
+      console.log(" its false coz prenatal is 0");
+      prenatal_visit = mc_record.prenatal_visit;
+    }
+   
     let user_id = localStorage.getItem('user_id');
     let facility_code = 'DOH000000000005672';
-
-    console.log(prenatal_visit.length != 0);
-
+    console.log(prenatal_visit, " log prenatal_visit");
+    
     this.prenatal_form = this.formBuilder.group({
-      patient_mc_id: [this.patient_mc_record[0].id, [Validators.required, Validators.minLength(2)]],
+      patient_mc_id: [mc_record.id, [Validators.required, Validators.minLength(2)]],
       facility_code: [facility_code, [Validators.required, Validators.minLength(2)]],
       patient_id: [this.patient_details.id, [Validators.required, Validators.minLength(2)]],
       user_id: [user_id, [Validators.required, Validators.minLength(2)]],
