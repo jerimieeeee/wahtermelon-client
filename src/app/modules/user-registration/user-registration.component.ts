@@ -24,6 +24,7 @@ export class UserRegistrationComponent implements OnInit {
   faArrowLeft = faArrowLeft;
   required_message: string = "Required field";
   date;
+  submit_errors: any;
 
   constructor(
     private http: HttpService,
@@ -47,12 +48,11 @@ export class UserRegistrationComponent implements OnInit {
     privacy: new FormControl<boolean| null>(false),
   });
 
-  submit_errors: any;
   onSubmit(){
     this.is_saving = true;
     this.loading = true;
 
-    console.log(this.userForm)
+    // console.log(this.userForm)
     if(!this.userForm.invalid){
       this.http.post('register', this.userForm.value).subscribe({
         next: (data:any) => {

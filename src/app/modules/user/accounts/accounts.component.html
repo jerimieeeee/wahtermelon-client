@@ -1,1 +1,60 @@
-<p>accounts works!</p>
+
+<div class="my-10  flex justify-center w-full">
+
+  <div class="lg:w-4/6 md:w-5/6 bg-white border border-solid border-slate-100 rounded-xl shadow-md">
+    <div class="border border-solid border-slate-100 rounded-t-xl font-semibold justify-between">
+      <div class="block text-blue-500 text-lg py-3 pl-5">
+        Account List
+      </div>
+      <div>
+        <!-- <div class="overflow-x-auto relative shadow-md sm:rounded-lg m-4"> -->
+          <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 mb-5">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+              <tr>
+                <th scope="col" class="py-3 px-6">Name</th>
+                <th scope="col" class="py-3 px-6">Birthdate</th>
+                <th scope="col" class="py-3 px-6">Gender</th>
+                <th scope="col" class="py-3 px-6">Contact Number</th>
+                <th scope="col" class="py-3 px-6">Email Address</th>
+                <th scope="col" class="py-3 px-6">Active Status</th>
+                <th scope="col" class="py-3 px-6">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let account of account_list; let odd = odd" class="bg-white border-t" [ngClass]="{'bg-gray-50': odd}">
+                <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
+                  {{ account.last_name }}, {{ account.first_name }} {{ account.middle_name === 'NA' ? '' : account.middle_name }} {{ account.suffix_name === 'NA' ? '' : account.suffix_name}}
+                </th>
+                <td class="py-4 px-6">
+                  {{ account.birtdate | date: 'MM/dd/yyyy' }}
+                </td>
+                <td class="py-4 px-6">
+                  {{ account.gender }}
+                </td>
+                <td class="py-4 px-6">
+                  {{ account.contact_number }}
+                </td>
+                <td class="py-4 px-6">
+                  {{ account.email }}
+                </td>
+                <td class="py-4 px-6">
+                  {{ account.is_active }}
+                </td>
+                <td class="py-4 px-6">
+                  <!-- <fa-icon (click)="editVitals(vitals)" class="mx-0 my-0 text-amber-500 hover:cursor-pointer flex-none mr-2" [icon]="faPenToSquare"></fa-icon> -->
+
+                  <!-- <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a> -->
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        <!-- </div> -->
+        <!-- <button [ngClass]="{'bg-red-500 active:bg-red-300 hover:bg-red-600': userForm.enabled}" class="text-white-500 bg-amber-500 active:bg-amber-300 hover:bg-amber-600 text-sm px-4 py-2 rounded hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button" (click)="enbaleEdit()">
+          <fa-icon class="mr-3" [icon]="faPenToSquare"></fa-icon>
+          {{ userForm.enabled ? 'Cancel' : 'Edit' }}
+        </button> -->
+      </div>
+    </div>
+
+  </div>
+</div>
