@@ -303,49 +303,49 @@ export class BreastfeedingComponent implements OnInit {
 
 // }
 
-loadBreastfed() {
-  this.groupList2 = [];
-  var lib = ['bfed_month1','bfed_month2','bfed_month3','bfed_month4','bfed_month5','bfed_month6'];
-  this.http.get('child-care/cc-breastfed/'+this.patient_details.id)
-  .subscribe({
-    next: (data: any) => {
-      this.patient_breastfed = data.data;
-      this.patient_breastfed.ebfreasons =  this.patient_breastfed.ebfreasons.reason_id;
-      console.log(this.patient_breastfed, 'data ng breast fedzxc');
+  loadBreastfed() {
+    this.groupList2 = [];
+    var lib = ['bfed_month1','bfed_month2','bfed_month3','bfed_month4','bfed_month5','bfed_month6'];
+    this.http.get('child-care/cc-breastfed/'+this.patient_details.id)
+    .subscribe({
+      next: (data: any) => {
+        this.patient_breastfed = data.data;
+        this.patient_breastfed.ebfreasons =  this.patient_breastfed.ebfreasons.reason_id;
+        console.log(this.patient_breastfed, 'data ng breast fedzxc');
 
-      lib.forEach((obj, index) => {
-        this.groupList2.push(this.patient_breastfed[obj]);
-        // this.groupList.push(String(this.patient_breastfed[obj]));
-        this.ccdev[index].selected = String(this.patient_breastfed[obj]);
-        console.log(this.ccdev[index].selected, " try ccdev");
+        lib.forEach((obj, index) => {
+          this.groupList2.push(this.patient_breastfed[obj]);
+          // this.groupList.push(String(this.patient_breastfed[obj]));
+          this.ccdev[index].selected = String(this.patient_breastfed[obj]);
+          console.log(this.ccdev[index].selected, " try ccdev");
 
-      })
+        })
 
-      console.log(this.groupList2, 'data ng breast fed v2')
-      this.getSelected()
-      console.log(this.groupList, 'grouplist data')
+        console.log(this.groupList2, 'data ng breast fed v2')
+        this.getSelected()
+        console.log(this.groupList, 'grouplist data')
 
-    },
-    error: err => {console.log(err)
-      if(err.status == 404) {
-        this.patient_breastfed ={
-          patient_ccdev_id: '',
-          patient_id: '',
-          user_id: '',
-          bfed_month1: '',
-          bfed_month2: '',
-          bfed_month3: '',
-          bfed_month4: '',
-          bfed_month5: '',
-          // bfed_month6: this.groupList[5] == 1 ? 1:0,
-          bfed_month6: '',
-          ebf_date: '',
-          ebfreasons: ''
+      },
+      error: err => {console.log(err)
+        if(err.status == 404) {
+          this.patient_breastfed ={
+            patient_ccdev_id: '',
+            patient_id: '',
+            user_id: '',
+            bfed_month1: '',
+            bfed_month2: '',
+            bfed_month3: '',
+            bfed_month4: '',
+            bfed_month5: '',
+            // bfed_month6: this.groupList[5] == 1 ? 1:0,
+            bfed_month6: '',
+            ebf_date: '',
+            ebfreasons: ''
+          }
         }
       }
-    }
-  });
-}
+    });
+  }
 
 
   ngOnInit(){
