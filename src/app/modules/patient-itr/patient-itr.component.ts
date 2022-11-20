@@ -34,7 +34,8 @@ export class PatientItrComponent implements OnInit {
   } */
 
   constructor(
-    private router: Router
+    private router: Router,
+    private http: HttpService
   ) {
 
   }
@@ -45,6 +46,7 @@ export class PatientItrComponent implements OnInit {
 
   patientInfo(info){
     this.patient_details = info;
+    this.loadVisitHistory();
   }
 
   vitals_graph = {
@@ -160,6 +162,39 @@ export class PatientItrComponent implements OnInit {
         }
       }
     };
+  }
+
+  visit_list: any;
+
+  loadVisitHistory(){
+    // console.log(this.patient_details);
+    this.http.get('consultation/cn-records',{params:{patient_id: this.patient_details.id}}).subscribe({
+      next: (data: any) => {
+        this.visit_list = data.data;
+        // console.log(data);
+      },
+      error: err => console.log(err),
+    })
+  }
+
+  getVisitType(group){
+    switch(group){
+      case 'cn':
+        return 'Consultation';
+        break;
+      case 'cc':
+        return 'Child Care';
+        break;
+      case 'mc':
+        return 'Maternal Care';
+        break;
+      case 'dn':
+        return 'Dental';
+        break;
+      case 'ncd':
+        return 'Non Communicable Disease';
+        break;
+    }
   }
 
   ngOnInit(): void {

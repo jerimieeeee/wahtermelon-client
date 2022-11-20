@@ -24,7 +24,7 @@
 
               <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
                 <label class="font-semibold" for="vitals_time_temp">Time</label>
-                <input name="vitals_time_temp" id="vitals_time_temp" formControlName="vitals_time_temp" type="time" placeholder="Input Time"  class="mt-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input">
+                <input name="vitals_time_temp" id="vitals_time_temp" formControlName="vitals_time_temp" type="time" step="1" placeholder="Input Time"  class="mt-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input">
               </div>
             </div>
           </div>
@@ -44,6 +44,10 @@
                   <div *ngIf="f.patient_weight.errors?.['max']">
                     {{ error_message + ' (' + f.patient_weight.errors.max.max + ')'}}
                   </div>
+
+                  <div *ngIf="f.patient_weight.errors?.['min']">
+                    {{ error_message_min + ' (' + f.patient_weight.errors.min.min + ')'}}
+                  </div>
                 </div>
               </div>
 
@@ -61,20 +65,30 @@
 
             <div class="flex px-5 w-full">
               <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
-                <label class="font-semibold" for="vitals_height_ft">Height in ft</label>
+                <label class="font-semibold" for="vitals_height_ft">
+                  <span *ngIf="showChildVitals">Length in ft</span>
+                  <span *ngIf="!showChildVitals">Height in ft</span>
+                </label>
                 <div class="flex">
-                  <input name="vitals_height_ft" id="vitals_height_ft" formControlName="vitals_height_ft" type="number" (input)="ftChange()" placeholder="Feet" max="8" class="md:w-1/2 lg:w-1/2 mt-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                  <input name="vitals_height_in" id="vitals_height_in" formControlName="vitals_height_in" type="number" (input)="ftChange()" placeholder="Inches" max="11" class="md:w-1/2 lg:w-1/2 mt-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                  <input name="vitals_height_ft" id="vitals_height_ft" formControlName="vitals_height_ft" type="number" (input)="ftChange()" placeholder="Feet" class="md:w-1/2 lg:w-1/2 mt-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                  <input name="vitals_height_in" id="vitals_height_in" formControlName="vitals_height_in" type="number" (input)="ftChange()" placeholder="Inches" class="md:w-1/2 lg:w-1/2 mt-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                 </div>
               </div>
 
               <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
-                <label class="font-semibold" for="patient_height">Height in cm</label>
-                <input name="patient_height" id="patient_height" formControlName="patient_height" type="number" (input)="cmChange()" placeholder="Centimeters" max="272" class="mt-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <label class="font-semibold" for="patient_height">
+                  <span *ngIf="showChildVitals">Length in cm</span>
+                  <span *ngIf="!showChildVitals">Height in cm</span>
+                </label>
+                <input name="patient_height" id="patient_height" formControlName="patient_height" type="number" (input)="cmChange()" placeholder="Centimeters" class="mt-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
 
                 <div *ngIf="f.patient_height.errors" class="invalid-alert">
                   <div *ngIf="f.patient_height.errors?.['max']">
                     {{ error_message + ' (' + f.patient_height.errors.max.max + ')'}}
+                  </div>
+
+                  <div *ngIf="f.patient_height.errors?.['min']">
+                    {{ error_message_min + ' (' + f.patient_height.errors.min.min + ')'}}
                   </div>
                 </div>
               </div>
@@ -140,11 +154,35 @@
             </div>
 
             <div class="flex px-5 w-full">
+              <div *ngIf="showChildVitals" class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
+                <label class="font-semibold" for="patient_head_circumference">Head Circumference (Centimeters)</label>
+                <input name="patient_head_circumference" id="patient_head_circumference" formControlName="patient_head_circumference" (input)="cmToInch()" type="number" placeholder="Centimeters" class="mt-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+
+                <div *ngIf="f.patient_head_circumference.errors" class="invalid-alert">
+                  <div *ngIf="f.patient_head_circumference.errors?.['max']">
+                    {{ error_message + ' (' + f.patient_head_circumference.errors.max.max + ')'}}
+                  </div>
+                </div>
+              </div>
+
+              <div *ngIf="showChildVitals" class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
+                <label class="font-semibold" for="patient_skinfold_thickness">Skinfold Thickness (Centimeters)</label>
+                <input name="patient_skinfold_thickness" id="patient_skinfold_thickness" formControlName="patient_skinfold_thickness" (input)="cmToInch()" type="number" placeholder="Centimeters" class="mt-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+
+                <div *ngIf="f.patient_skinfold_thickness.errors" class="invalid-alert">
+                  <div *ngIf="f.patient_skinfold_thickness.errors?.['max']">
+                    {{ error_message + ' (' + f.patient_skinfold_thickness.errors.max.max + ')'}}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex px-5 w-full">
               <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
                 <label class="font-semibold" for="bp_systolic">Blood Pressure</label>
                 <div class="flex">
-                  <input name="bp_systolic" id="bp_systolic" formControlName="bp_systolic" type="number" (input)="ftChange()" placeholder="Systolic" max="8" class="md:w-1/2 lg:w-1/2 mt-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                  <input name="bp_diastolic" id="bp_diastolic" formControlName="bp_diastolic" type="number" (input)="ftChange()" placeholder="Diastolic" max="11" class="md:w-1/2 lg:w-1/2 mt-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                  <input name="bp_systolic" id="bp_systolic" formControlName="bp_systolic" type="number" placeholder="Systolic" class="md:w-1/2 lg:w-1/2 mt-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                  <input name="bp_diastolic" id="bp_diastolic" formControlName="bp_diastolic" type="number" placeholder="Diastolic" class="md:w-1/2 lg:w-1/2 mt-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                 </div>
               </div>
 

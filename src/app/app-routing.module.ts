@@ -44,6 +44,10 @@ const routes: Routes = [
     loadChildren: () => import('./modules/patient-registration/patient-registration.module').then(m => m.PatientRegistrationModule)
   },
   {
+    path: 'edit-patient',
+    loadChildren: () => import('./modules/patient-registration/patient-registration.module').then(m => m.PatientRegistrationModule)
+  },
+  {
     path: 'dental',
     loadChildren: () => import('./modules/dental/dental.module').then(m => m.DentalModule)
   },

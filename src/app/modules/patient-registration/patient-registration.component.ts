@@ -19,6 +19,8 @@ export class PatientRegistrationComponent implements OnInit {
   faSave = faSave;
 
   required_message = 'Required field';
+  button_function: string = 'Save';
+
   patientForm: FormGroup = new FormGroup({
     last_name: new FormControl<string| null>(''),
     first_name: new FormControl<string| null>(''),
@@ -46,6 +48,9 @@ export class PatientRegistrationComponent implements OnInit {
       is_head: new FormControl<string| null>(''),
     }) */
   });
+
+  new_patient_id: string;
+  patient_to_update: string;
 
   blood_types: object;
   civil_statuses: object;
@@ -90,14 +95,19 @@ export class PatientRegistrationComponent implements OnInit {
     return this.patientForm.controls;
   }
 
-  new_patient_id: string;
   onSubmit(){
     console.log(this.patientForm);
     this.is_saving = true;
     this.loading = true;
     // this.showModal = true;
     if(!this.patientForm.invalid){
-      this.http.post('patient', this.patientForm.value).subscribe({
+      let query;
+      if(this.button_function === 'Update') {
+        query = this.http.update('patient/', this.patient_to_update, this.patientForm.value);
+      } else {
+        query = this.http.post('patient', this.patientForm.value);
+      }
+      query.subscribe({
         next: (data: any) => this.new_patient_id = data.data.id,
         error: err => console.log(err),
         complete: () => {
@@ -113,7 +123,6 @@ export class PatientRegistrationComponent implements OnInit {
 
   newPatient(){
     this.patientForm.reset();
-    console.log(this.patientForm);
     this.showModal = false;
     this.is_saving = false;
   }
@@ -149,6 +158,21 @@ export class PatientRegistrationComponent implements OnInit {
     this.showModal = !this.showModal;
   }
 
+
+  loadPatient(id){
+    // console.log(id);
+    this.http.get('patient/'+id).subscribe({
+      next: (data: any) => {
+        // console.log(data);
+        this.patientForm.patchValue({...data.data});
+        this.patient_to_update = data.data.id;
+        // console.log(this.patientForm);
+        this.button_function = 'Update';
+      },
+      error: err => console.log(err)
+    })
+  }
+
   ngOnInit(): void {
     this.patientForm = this.formBuilder.nonNullable.group({
       last_name: ['', [Validators.required, Validators.minLength(2)]],
@@ -177,7 +201,9 @@ export class PatientRegistrationComponent implements OnInit {
     });
 
     this.date = new Date().toISOString().slice(0,10);
-   /*  console.log(this.patientForm); */
     this.loadLibraries();
+   /*  console.log(this.patientForm); */
+
+   if(this.router.url.split(';')[0] === '/edit-patient') this.loadPatient(this.router.url.split('=')[1]);
   }
 }
