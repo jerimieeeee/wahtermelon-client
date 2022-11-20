@@ -30,13 +30,16 @@ export class AccountsComponent implements OnInit {
     this.is_updating = true;
     console.log(val);
     let params = val;
-      params.birthdate = formatDate(params.birthdate,'Y-MM-dd','en');
-      delete params.email;
+    params.birthdate = formatDate(params.birthdate,'Y-MM-dd','en');
+    let temp_email = params.email
+    delete params.email;
 
     this.http.update('users/', val.id, params).subscribe({
       next: (data: any) => {
         console.log(data);
+        // this.loadAccount()
         this.is_updating = false;
+        params.email = temp_email;
       },
       error: err => {
         this.account_list[i].is_active = !params.is_active;
