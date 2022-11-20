@@ -64,6 +64,8 @@ export class MyAccountComponent implements OnInit {
       this.http.update('users/', user_id, this.userForm.value).subscribe({
         next: (data:any) => {
           console.log(data.data);
+
+          this.loadUser();
           this.loading = false;
           this.is_saving = false;
           this.showModal = true;
@@ -92,6 +94,7 @@ export class MyAccountComponent implements OnInit {
     this.showModal = !this.showModal;
     this.userForm.disable();
     this.userForm.markAsPristine();
+    window.location.reload();
     // this.router.navigate(['/home']);
   }
 
@@ -111,6 +114,10 @@ export class MyAccountComponent implements OnInit {
         this.orig_value = data.data;
         this.orig_value.birthdate = formatDate(this.orig_value.birthdate,'Y-MM-dd','en')
         this.userForm.patchValue({...this.orig_value});
+
+        localStorage.setItem('user_last_name', this.orig_value.last_name);
+        localStorage.setItem('user_first_name', this.orig_value.first_name);
+        localStorage.setItem('user_middle_name', this.orig_value.middle_name);
 
         // this.orig_value = this.userForm.value;
         this.userForm.disable();
