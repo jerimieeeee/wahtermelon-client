@@ -25,9 +25,9 @@
                         class="absolute bottom-1.5 left-2 text-gray-300 group-hover:text-pink-300"
                         *ngIf="!focused && 1 == 0">
                     </fa-icon>
-                    <input type="text" formControlName="visit_sequence"
+                    <!-- <input type="text"
                         class="text-lg font-medium disabled:group-hover:font-semibold peer  focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed disabled:border-0  disabled:pl-5  disabled:typed-out disabled:group-hover:bg-gray-100 disabled:rounded-full"
-                        id="visit_sequence" [value]="value" hidden>
+                        id="visit_sequence" [value]="value" hidden> -->
                     <div class="text-center text-2xl font-bold py-2 border-gray-300 border rounded-lg"
                         *ngIf="!edit_bool">{{ value }}</div>
                     <!-- <div class="text-center text-2xl font-bold py-2 border-gray-300 border rounded-lg"
@@ -47,19 +47,29 @@
                             (keyup.escape)="$event.target.value = ''; onKeyUp($event.target.value, $event.target.id)"
                             (change)="onKeyUp($event.target.value, $event.target.id)">
                     </div>
+                    <div *ngIf="is_saving && prenatal_form.controls.prenatal_date.errors" class="invalid-alert">
+                        <div *ngIf="prenatal_form.controls.prenatal_date.errors?.['required']">
+                            Required field
+                        </div>
+                    </div>
                 </div> 
 
                 <div class="transitions col-span-4 col-start-7  relative select-none" *ngIf="!focused">
-                    <h3 for="fetal_presentation_id">Fetal Presentation</h3>
-                    <select formControlName="fetal_presentation_id" id="fetal_presentation_id"
+                    <h3 for="presentation_code">Fetal Presentation</h3>
+                    <select formControlName="presentation_code" id="presentation_code"
                         class="text-ellipsis bg-white text-align-left drop_btn  focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed"
                         (change)="onKeyUp($event.target.value, $event.target.id);">
                         <option *ngFor="let fetal of fetals" class="p-2 flex-wrap"
                             [selected]="fetal.desc === 'Mass Palpable - NA'"
-                            value="{{fetal.desc}}">
+                            value="{{fetal.code}}">
                             {{ fetal.desc }}
                         </option>
                     </select>
+                    <div *ngIf="is_saving && prenatal_form.controls.presentation_code.errors" class="invalid-alert">
+                        <div *ngIf="prenatal_form.controls.presentation_code.errors?.['required']">
+                            Required field
+                        </div>
+                    </div>
                 </div>
 
             </div>
@@ -99,8 +109,8 @@
                 </div>
                 <div class="transitions col-span-4  relative select-none mx-2 mb-2" *ngIf="!focused"
                     [hidden]="0 >= prenatal_form.get('fhr').value">
-                    <h3 for="fhr_location_id">FHR Location</h3>
-                    <select formControlName="fhr_location_id" id="fhr_location_id"
+                    <h3 for="location_code">FHR Location</h3>
+                    <select formControlName="location_code" id="location_code"
                         class="text-ellipsis bg-white text-align-left drop_btn  focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed"
                         (change)="onKeyUp($event.target.value, $event.target.id)">
                         <option *ngFor="let fhr of fhr_lib" class="p-2 flex-wrap" [selected]="fhr.desc === 'N/A'" [value]="fhr.code">
@@ -119,7 +129,7 @@
                         class="z-50 rounded-md {{lib.code == 'NA'?'hidden':''}} {{lib.code == 'LUQ'?'fhr_chart_u translate-x-full rounded-tl-full':''}} {{lib.code == 'LLQ'?'fhr_chart rounded-bl-full translate-x-full':''}} {{lib.code == 'RUQ'?'rounded-tr-full fhr_chart_u':''}} {{lib.code == 'RLQ'?'fhr_chart rounded-br-full':''}} bg-white/25 checked:text-pink-400/75 disabled:opacity-25 border-dashed border border-pink-500 checked:border-dashed checked:border checked:border-pink-300 focus:ring-1 focus:ring-pink-400 group-hover:bg-gray-300 group-hover:checked:bg-pink-400 focus:ring-offset-0"
                         [style]="lib.code == 'LUQ'?'transform: translate(100%,150%);':lib.code == 'RUQ'?'transform: translateY(150%);':''"
                         (change)="onKeyUp($event.target.value, $event.target.id); quadrant(lib.code)"
-                        [checked]="prenatal_form.get('fhr_location_id').value == lib.code && prenatal_form.get('fhr').value != ''"
+                        [checked]="prenatal_form.get('location_code').value == lib.code && prenatal_form.get('fhr').value != ''"
                         [disabled]="0 >= prenatal_form.get('fhr').value" id="{{lib.code}}" [value]="lib.code">
  
                 </div>
@@ -149,8 +159,13 @@
                         class="font-medium disabled:group-hover:font-semibold peer invalid:border-red-500  focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed disabled:border-0  disabled:pl-5  disabled:typed-out disabled:group-hover:bg-gray-100 disabled:rounded-full"
                         (keyup)="onKeyUp($event.target.value, $event.target.id)"
                         (keyup.escape)="clearForm($event.target.id)" id="patient_height"
-                        (input)="onKeyUp($event.target.value, $event.target.id); cmCatcher($event.target.value)">
-                    <small class="hidden peer-invalid:block text-red-400 ">error_message</small>
+                        (input)="onKeyUp($event.target.value, $event.target.id); cmCatcher($event.target.value)"
+                        >
+                        <div *ngIf="is_saving && prenatal_form.controls.patient_height.errors" class="invalid-alert">
+                            <div *ngIf="prenatal_form.controls.patient_height.errors?.['required']">
+                                Required field
+                            </div>
+                        </div>
                 </div>
 
                 <div class="transitions col-span-2  relative select-none group ml-2 mb-2" *ngIf="!focused">
@@ -164,7 +179,11 @@
                         (keyup)="onKeyUp($event.target.value, $event.target.id)"
                         (keyup.escape)="clearForm($event.target.id)" id="bp_systolic"
                         (change)="onKeyUp($event.target.value, $event.target.id)">
-                    <small class="hidden peer-invalid:block text-red-400 ">error_message</small>
+                        <div *ngIf="is_saving && prenatal_form.controls.bp_systolic.errors" class="invalid-alert">
+                            <div *ngIf="prenatal_form.controls.bp_systolic.errors?.['required']">
+                                Required field
+                            </div>
+                        </div>
                 </div>
 
                 <div class="transitions col-span-2  relative select-none group mr-2 mb-2" *ngIf="!focused">
@@ -178,7 +197,11 @@
                         (keyup)="onKeyUp($event.target.value, $event.target.id)"
                         (keyup.escape)="clearForm($event.target.id)" id="bp_diastolic"
                         (change)="onKeyUp($event.target.value, $event.target.id)">
-                    <small class="hidden peer-invalid:block text-red-400 ">error_message</small>
+                        <div *ngIf="is_saving && prenatal_form.controls.bp_diastolic.errors" class="invalid-alert">
+                            <div *ngIf="prenatal_form.controls.bp_diastolic.errors?.['required']">
+                                Required field
+                            </div>
+                        </div>
                 </div>
 
                 <div class="transitions col-span-2 col-start-1  relative select-none group mx-2"
@@ -193,7 +216,11 @@
                         (keyup)="onKeyUp($event.target.value, $event.target.id)"
                         (keyup.escape)="clearForm($event.target.id)" id="patient_weight"
                         (change)="onKeyUp($event.target.value, $event.target.id)">
-                    <small class="hidden peer-invalid:block text-red-400 ">error_message</small>
+                        <div *ngIf="is_saving && prenatal_form.controls.patient_weight.errors" class="invalid-alert">
+                            <div *ngIf="prenatal_form.controls.patient_weight.errors?.['required']">
+                                Required field
+                            </div>
+                        </div>
                 </div>
 
                 <div class="transitions col-span-4   relative select-none group mx-2 mb-2" *ngIf="!focused">
@@ -202,7 +229,7 @@
                         class="absolute bottom-1.5 left-2 text-gray-300 group-hover:text-pink-300"
                         *ngIf="!focused && 1 == 0">
                     </fa-icon>
-                    <textarea type="text" formControlName="remarks"
+                    <textarea type="text"
                         class=" remarks font-medium disabled:group-hover:font-semibold peer invalid:border-red-500  focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed disabled:border-0  disabled:pl-5  disabled:typed-out disabled:group-hover:bg-gray-100 disabled:rounded-full"
                         (keyup)="onKeyUp($event.target.value, $event.target.id)"
                         (keyup.escape)="clearForm($event.target.id)" id="remarks"
@@ -229,8 +256,8 @@
                 </div>
             </div>
         </div>
-        <div *ngIf="catch_array.length > 0" style="grid-column: span 16 / span 16;">
-            <div class="mb-5 grid rounded-lg hover:drop-shadow-lg drop-shadow-md bg-white rounded-lg hover:border border-gray-300 hover:border-blue-400 mx-2  border group"
+        <div *ngIf="prenatal_data.length != 0" style="grid-column: span 16 / span 16;">
+            <div class="mb-5 grid rounded-lg hover:drop-shadow-lg drop-shadow-md bg-white rounded-lg hover:border border-gray-300 hover:border-blue-400 mx-2  border group h-56 overflow-x-hidden overflow-y-scroll scrollbar-thin scrollbar-thumb-white hover:scrollbar-thumb-blue-300 scrollbar-track-white"
                 style="grid-template-columns: repeat(11, minmax(0, 1fr));">
                 <div class=" px-2 py-1 text-sm font-bold border border-dashed border-gray-300 border-t-0 border-l-0 border-r-0 group-hover:border-blue-400"
                     style="grid-column: span 11 / span 11;">
@@ -253,17 +280,17 @@
                     <!-- <div class="transitions mx-2 select-none"><h3>Action</h3></div> -->
                 </div>
 
-                <div class="text-sm grid hover:bg-blue-100 hover:font-medium" style="grid-template-columns: repeat(24, minmax(0, 1fr)); grid-column: span 11 / span 11;" *ngFor="let prenatal of catch_array">
+                <div class="text-sm grid hover:bg-blue-100 hover:font-medium" style="grid-template-columns: repeat(24, minmax(0, 1fr)); grid-column: span 11 / span 11;" *ngFor="let prenatal of prenatal_data">
                     <div class="transitions relative select-none mx-2"><h3>{{prenatal.visit_sequence}}</h3></div>
-                    <div class="transitions col-span-2 relative select-none mx-2"><h3>5</h3></div>
+                    <div class="transitions col-span-2 relative select-none mx-2"><h3>{{prenatal.trimester}}</h3></div>
                     <div class="transitions col-span-3 relative select-none ml-3"><h3>{{prenatal.prenatal_date}}</h3></div>
-                    <div class="transitions col-span-2 relative select-none mx-2"><h3>75 kg</h3></div>
-                    <div class="transitions col-span-2 relative select-none mx-2"><h3>120/90</h3></div>
+                    <div class="transitions col-span-2 relative select-none mx-2"><h3>{{prenatal.patient_weight}}</h3></div>
+                    <div class="transitions col-span-2 relative select-none mx-2"><h3>{{prenatal.bp_systolic}}/{{prenatal.bp_diastolic}}</h3></div>
                     <div class="transitions col-span-2 relative select-none mx-2 whitespace-normal"><h3>{{prenatal.fundic_height}}</h3></div>
                     <div class="transitions col-span-2 relative select-none mx-2"><h3>{{prenatal.fhr}}</h3></div>
-                    <div class="transitions col-span-2  relative select-none mx-2 whitespace-normal"><h3>{{prenatal.fhr_location_id}}</h3></div>
-                    <div class="transitions col-span-4  relative select-none mx-2 whitespace-normal"><h3>{{prenatal.fetal_presentation_id}}</h3></div>
-                    <div class="transitions col-span-3 relative select-none mx-2 whitespace-normal"><h3>The patient suffers from high anxiety dear God help us all.</h3></div>
+                    <div class="transitions col-span-2  relative select-none mx-2 whitespace-normal"><h3>{{prenatal.location_code}}</h3></div>
+                    <div class="transitions col-span-4  relative select-none mx-2 whitespace-normal"><h3>{{prenatal.presentation_code}}</h3></div>
+                    <div class="transitions col-span-3 relative select-none mx-2 whitespace-normal"><h3>NONE</h3></div>
                     <div class="transitions relative select-none mx-2">
                         <button type="button" class="w-full">
                             <fa-icon [icon]="faPencil" size="lg" class="mr-2 hover:text-orange-300"></fa-icon>

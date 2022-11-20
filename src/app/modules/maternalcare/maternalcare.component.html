@@ -4,21 +4,25 @@
       <ul class="flex flex-wrap ">
         <li class="mr-2">
           <a class="select-none inline-block p-4 rounded-t-lg border-b-2 hover:text-blue-400 hover:font-semibold hover:border-blue-400"
-            [class]="module != 4? '' : 'text-blue-400 font-semibold border-blue-400'" (click)="switchTab(4)">History</a>
+            [class]="module != 5? '' : 'text-blue-400 font-semibold border-blue-400'" (click)="switchTab(5)">History</a>
         </li>
-        <li class="mr-2">
+        <li class="mr-2"  *ngIf="patient_details && patient_mc_record">
           <a class="select-none inline-block p-4 rounded-t-lg border-b-2 hover:text-blue-400 hover:font-semibold hover:border-blue-400"
-            [class]="module != 1? '' : 'text-blue-400 font-semibold border-blue-400'" (click)="switchTab(1)">Maternal Care Record</a>
+            [class]="module != 1? '' : 'text-blue-400 font-semibold border-blue-400'" (click)="switchTab(1)" >Maternal Care Record</a>
         </li>
-        <li class="mr-2">
+        <li class="mr-2" *ngIf="patient_details && patient_mc_record && prenatal">
           <a class="select-none inline-block p-4 rounded-t-lg border-b-2 hover:text-blue-400 hover:font-semibold hover:border-blue-400"
             [class]="module != 2? '' : 'text-blue-400 font-semibold border-blue-400'" (click)="switchTab(2)">Prenatal</a>
         </li>
-        <li class="mr-2">
+        <li class="mr-2" *ngIf="patient_details && patient_mc_record">
           <a class="select-none inline-block p-4 rounded-t-lg border-b-2 hover:text-blue-400 hover:font-semibold hover:border-blue-400"
             [class]="module != 3? '' : 'text-blue-400 font-semibold border-blue-400'" (click)="switchTab(3)">Postpartum</a>
         </li>
-        <li class="absolute right-0 ">
+        <li class="mr-2" *ngIf="patient_details && patient_mc_record">
+          <a class="select-none inline-block p-4 rounded-t-lg border-b-2 hover:text-blue-400 hover:font-semibold hover:border-blue-400"
+            [class]="module != 4? '' : 'text-blue-400 font-semibold border-blue-400'" (click)="switchTab(4)">Services</a>
+        </li>
+        <li class="absolute right-0 " *ngIf="patient_details && patient_mc_record">
           <a class="select-none text-base inline-block p-2 bg-gray-300 mt-3 mr-3 text-gray-400 hover:text-white rounded-md font-bold hover:bg-orange-400"
             (click)="switchTab(5)">
             <fa-icon [icon]="faPersonWalking" size="lg" class="mx-2"></fa-icon>End Visit</a>
@@ -28,7 +32,7 @@
     <!-- [class]="module != 2? '' : 'active'" (click)="switchTab(2)" -->
     <div class="fade-in mb-20" *ngIf="module == 1">
       <div class="w-12/12 px-8 pb-10 border-solid border-2 border-zinc-100 border-l-0 border-r-0 border-t-0 p-3">
-        <app-mcr *ngIf="patient_details" [patient_details]="patient_details"></app-mcr>
+        <app-mcr *ngIf="patient_details" [patient_mc_record]="patient_mc_record" [patient_details]="patient_details"></app-mcr>
       </div>
       <div class="w-12/12 px-8 pb-10 border-solid border-2 border-zinc-100 border-l-0 border-r-0 border-t-0 p-3">
         <app-riskfactors [risk_factors]="risk_factors"></app-riskfactors>
@@ -37,7 +41,7 @@
 
     <div class="fade-in mb-20" *ngIf="module == 2">
       <div class="w-12/12 px-8 pb-10 border-solid border-2 border-zinc-100 border-l-0 border-r-0 border-t-0 p-3">
-        <app-prenatal [fetals]="fetals" [fhr_lib]="fhr_lib"></app-prenatal>
+        <app-prenatal [fetals]="fetals" [fhr_lib]="fhr_lib" [patient_mc_record]="patient_mc_record" [patient_details]="patient_details"></app-prenatal>
       </div>
     </div>
 
@@ -46,13 +50,22 @@
         <app-postvisits></app-postvisits>
       </div>
       <div class="w-12/12 px-8 pb-10 border-solid border-2 border-zinc-100 border-l-0 border-r-0 border-t-0 p-3">
-        <app-postpartum (postpartum_bool)="postValue($event)" [delivery_location]="delivery_location" [regions]="regions" [attendants]="attendants" [preg_outcome]="preg_outcome"></app-postpartum>
+        <app-postpartum (postpartum_bool)="postValue($event)" [patient_mc_record]="patient_mc_record" [delivery_location]="delivery_location" [regions]="regions" [attendants]="attendants" [preg_outcome]="preg_outcome" [patient_details]="patient_details"></app-postpartum>
       </div>
     </div>
 
     <div class="fade-in mb-20" *ngIf="module == 4">
       <div class="w-12/12 px-8 pb-10 border-solid border-2 border-zinc-100 border-l-0 border-r-0 border-t-0 p-3">
         <app-services></app-services>
+      </div>
+    </div>
+
+    <div class="fade-in mb-20" *ngIf="module == 5">
+      <div class="w-12/12 px-8 pb-10 border-solid border-2 border-zinc-100 border-l-0 border-r-0 border-t-0 p-3">
+        <!-- <app-services></app-services> -->
+        <div class="text-sm font-light">
+          No records found.
+         </div>
       </div>
     </div>
   </div>

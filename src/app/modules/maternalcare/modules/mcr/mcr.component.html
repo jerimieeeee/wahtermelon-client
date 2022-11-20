@@ -1,5 +1,5 @@
 <div class="fade-in" >
-    <form [formGroup]="mcr_form" (ngSubmit)="saveForm(mcr_form.value)" *ngIf="mcr_data">
+    <form [formGroup]="mcr_form" (ngSubmit)="saveForm()">
         <div class="grid gap-4 relative animates-dropdown " style="grid-template-columns: repeat(16, minmax(0, 1fr));"
             *ngIf="!focused">
             <div class="sticky top-14 z-50 border border-blue-400 col-span-2 relative mx-2 px-2 py-1 rounded-t-lg text-sm bg-blue-500 text-white"

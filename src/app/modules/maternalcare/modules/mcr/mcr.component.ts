@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { faAngleDown, faCalendarDay, faCaretRight, faCircleNotch, faClose, faInfoCircle, faPencil, faSave, faTimes, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
@@ -50,6 +50,8 @@ export class McrComponent implements OnInit {
   today: Date;
 
   @Input() patient_details;
+  @Input() patient_mc_record;
+  @Output() patient_mc_id = new EventEmitter<string>();
   is_saving: boolean;
   saved: boolean;
 
@@ -58,29 +60,33 @@ export class McrComponent implements OnInit {
 
 
   ngOnInit() {
+    this.today = new Date();
     this.getMCR('latest', this.patient_details.id);
     this.focused = false;
     this.saved = false;
     this.error_message = "**please enter numbers only!"
-    this.today = new Date();
+   
   }
 
   getMCR(type: any, id: any) {
-    this.http.get('maternal-care/mc-records?type=' + type + '&patient_id=' + id).subscribe({
-      next: (data: any) => {
-        if (!data.data) {
-          console.log(data.message);
+    // this.http.get('maternal-care/mc-records?type=' + type + '&patient_id=' + id).subscribe({
+    //   next: (data: any) => {
+      console.log(this.patient_mc_record, " from getmcr");
+      
+        if (this.patient_mc_record.length == 0) {
+          // console.log(this.patient_mc_record.message);
           this.mcr_data = -1;
           this.getEDC(this.today, 'any');
         } else {
-          this.mcr_data = data.data.pre_registration;
-          console.log(this.mcr_data, " mcr data pre_registration");
+     
+          this.mcr_data = this.patient_mc_record[0].pre_registration;
+          // console.log(this.mcr_data, " mcr data pre_registration");
           this.getEDC(this.mcr_data.lmp_date, 'db');
         }
         this.createForm();
-      },
-      error: err => console.log(err),
-    })
+    //   },
+    //   error: err => console.log(err),
+    // })
   }
 
   createForm() {
@@ -125,7 +131,7 @@ export class McrComponent implements OnInit {
     // this.showModal = true;
     if (this.mcr_form.valid) {
       this.http.post('maternal-care/mc-preregistrations', this.mcr_form.value).subscribe({
-        next: (data: any) => console.log(data, " data from saving"),
+        next: (data: any) => {console.log(data, " data from saving"), this.patient_mc_id.emit(data.patient_mc_id)},
         error: err => console.log(err),
         complete: () => {
           this.is_saving = false;
@@ -140,7 +146,7 @@ export class McrComponent implements OnInit {
     } else {
       // this.loading = false;
     }
-    console.log(this.mcr_data, " try mcr_dat afrom save");
+    // console.log(this.mcr_data, " try mcr_dat afrom save");
   }
 
   onKeyUp(data_input: string, id: string) {
@@ -173,7 +179,7 @@ export class McrComponent implements OnInit {
   }
 
   getEDC(value: any, from: any) {
-    console.log('fetching Important dates from ' + from);
+    console.log('fetching Important dates from ' + from, ' using ' + value);
 
     this.edc_date = from == 'db' ? new Date(this.mcr_data.edc_date) : new Date(value);
 
