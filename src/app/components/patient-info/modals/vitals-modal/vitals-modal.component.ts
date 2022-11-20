@@ -68,6 +68,7 @@ export class VitalsModalComponent implements OnInit {
     this.vitalsForm.patchValue({vitals_date: this.vitalsForm.value.vitals_date_temp+' '+this.vitalsForm.value.vitals_time_temp});
     console.log(this.vitalsForm);
     let query;
+
     if(this.vitals_to_edit){
       query = this.http.update('patient-vitals/vitals/', this.vitals_to_edit.id, this.vitalsForm.value);
     } else {
@@ -76,6 +77,8 @@ export class VitalsModalComponent implements OnInit {
     query.subscribe({
       next: (data: any) => {
         this.showAlert = true;
+        this.vitalsForm.markAsPristine();
+        this.vitalsForm.disable();
         setTimeout(() => {
           this.showAlert = false;
         }, 3000);
@@ -166,6 +169,7 @@ export class VitalsModalComponent implements OnInit {
     }else{
       // console.log('new vitals')
     }
+
 
     // console.log(this.vitalsForm.value);
     this.date = new Date().toISOString().slice(0,10);
