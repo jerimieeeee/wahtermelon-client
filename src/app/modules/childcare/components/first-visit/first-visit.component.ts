@@ -92,6 +92,7 @@ export class FirstVisitComponent implements OnInit {
   // }
 
   onSubmit(){
+  
     console.log(this.visitForm.value);
     console.log(this.visitForm.invalid);
     this.form_saving = true;
@@ -101,9 +102,13 @@ export class FirstVisitComponent implements OnInit {
   
       this.http.post('child-care/cc-records', this.visitForm.value).subscribe({
         // next: (data: any) => console.log(data.status, 'check status'),
-        error: err => console.log(err),
+        error: err => {console.log(err), 
+          this.is_saving = false; 
+          alert('Update patient details or input the required fields')},
         complete: () => {
           this.is_saving = false;
+          this.getccdevDetails()
+      alert('saving success!')
         }
       })
     }
