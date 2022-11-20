@@ -165,7 +165,7 @@ export class PatientInfoComponent {
   }
 
   getHeightWeight(vitals){
-    console.log(vitals)
+    // console.log(vitals)
     Object.entries(vitals).every(([keys, values], indexes) => {
       let val:any = values;
       if(!this.latest_vitals.patient_height && val.patient_height){

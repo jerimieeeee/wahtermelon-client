@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { faChevronCircleDown, faBell, faSearch, faGear, faHome } from '@fortawesome/free-solid-svg-icons';
+import { faChevronCircleDown, faBell, faSearch, faGear, faHome, faRightFromBracket, faAddressBook, faUser } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { catchError, debounceTime, distinctUntilChanged, switchMap, tap, map, filter } from 'rxjs/operators';
 import { concat, Observable, of, Subject } from 'rxjs';
@@ -21,15 +21,39 @@ export class HeaderComponent implements OnInit {
   faSearch = faSearch;
   faGear = faGear;
   faHome = faHome;
+  faRightFromBracket = faRightFromBracket;
+  faAddressBook = faAddressBook;
+  faUser = faUser;
 
   patients$: Observable<any>;
-  patientLoading = false;
   searchInput$ = new Subject<string>();
   selectedPatient: any;
   minLengthTerm = 3;
   user_last_name: string;
   user_first_name: string;
   user_middle_name: string;
+
+  showMenu: boolean = false;
+  patientLoading:boolean = false;
+  showCreate:boolean = false;
+
+  user_menu = [
+    {
+      name: 'My Account',
+      location: 'my-account',
+      icon: faUser
+    },
+    {
+      name: 'Account List',
+      location: 'account-list',
+      icon: faAddressBook
+    },
+    {
+      name: 'Settings',
+      location: 'home',
+      icon: faGear
+    },
+  ]
 
   constructor(
     private http: HttpService,
@@ -57,7 +81,6 @@ export class HeaderComponent implements OnInit {
     );
   }
 
-  showMenu: boolean = false;
   toggleMenu(){
     this.showMenu = !this.showMenu;
   }
@@ -70,8 +93,6 @@ export class HeaderComponent implements OnInit {
     this.loadPatients();
   }
 
-  showCreate:boolean = false;
-
   getPatient(term: string = null): Observable<any> {
     return this.http.get('patient', {params:{'filter[search]':term}})
     .pipe(map((resp:any) => {
@@ -79,6 +100,11 @@ export class HeaderComponent implements OnInit {
       console.log(this.showCreate)
       return resp.data;
     }))
+  }
+
+  navigateTo(loc){
+    console.log(loc)
+    this.router.navigate(['/'+loc]);
   }
 
   getInitials(string) {

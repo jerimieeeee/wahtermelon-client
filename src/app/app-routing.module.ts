@@ -78,6 +78,14 @@ const routes: Routes = [
   {
     path: 'user-registration',
     loadChildren: () => import('./modules/user-registration/user-registration.module').then(m => m.UserRegistrationModule)
+  },
+  {
+    path: 'my-account',
+    loadChildren: () => import('./modules/user/my-account/my-account.module').then(m => m.MyAccountModule)
+  },
+  {
+    path: 'account-list',
+    loadChildren: () => import('./modules/user/accounts/accounts.module').then(m => m.AccountsModule)
   }
 ];
 
