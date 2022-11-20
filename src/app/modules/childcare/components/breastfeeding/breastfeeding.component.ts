@@ -194,14 +194,14 @@ export class BreastfeedingComponent implements OnInit {
       patient_ccdev_id: this.patient_info.id,
       patient_id: this.patient_info.patient_id,
       user_id: user_id,
-      bfed_month1: this.groupList[0],
-      bfed_month2: this.groupList[1],
-      bfed_month3: this.groupList[2],
-      bfed_month4: this.groupList[3],
-      bfed_month5: this.groupList[4],
+      bfed_month1: this.groupList[0] == 'null' ? null:this.groupList[0],
+      bfed_month2: this.groupList[1] == 'null' ? null:this.groupList[1],
+      bfed_month3: this.groupList[2] == 'null' ? null:this.groupList[2],
+      bfed_month4: this.groupList[3] == 'null' ? null:this.groupList[3],
+      bfed_month5: this.groupList[4] == 'null' ? null:this.groupList[4],
       // bfed_month6: this.groupList[5] == 1 ? 1:0,
-      bfed_month6: this.groupList[5],
-      reason_id: this.patient_breastfed.ebfreasons.reason_id,
+      bfed_month6: this.groupList[5] == 'null' ? null:this.groupList[5],
+      reason_id: this.patient_breastfed.ebfreasons == null ? this.lib_reasons.reason_id:this.patient_breastfed.ebfreasons.reason_id,
       ebf_date: this.patient_breastfed.ebf_date,
     }
 
@@ -268,26 +268,51 @@ getccdevDetails() {
 
   this.http.get('libraries/reason').subscribe((data: any) => {
     this.lib_reasons = data.data
-    console.log(data);
+    console.log(data, 'reason library');
   });
 }
 
-loadBreastfed(){
+// loadBreastfed(){
+//   this.groupList2 = [];
+//   var lib = ['bfed_month1','bfed_month2','bfed_month3','bfed_month4','bfed_month5','bfed_month6'];
+//   console.log(lib[0], " try lib");
+//   this.http.get('child-care/cc-breastfed/'+this.patient_details.id)
+//     .subscribe((data: any) => {
+//     this.patient_breastfed = data.data
+//     console.log(this.patient_breastfed, 'data ng breast fed');
+    
+//     // this.groupList2.push(this.patient_breastfed.bfed_month1);
+//     // this.groupList2.push(this.patient_breastfed.bfed_month2);
+//     // this.groupList2.push(this.patient_breastfed.bfed_month3);
+//     // this.groupList2.push(this.patient_breastfed.bfed_month4);
+//     // this.groupList2.push(this.patient_breastfed.bfed_month5);
+//     // this.groupList2.push(this.patient_breastfed.bfed_month6);
+
+//     lib.forEach((obj, index) => {
+//       this.groupList2.push(this.patient_breastfed[obj]);
+//       // this.groupList.push(String(this.patient_breastfed[obj]));
+//       this.ccdev[index].selected = String(this.patient_breastfed[obj]);
+//       console.log(this.ccdev[index].selected, " try ccdev");
+
+//     })
+//     console.log(this.groupList2, 'data ng breast fed v2')
+//     this.getSelected()
+//     console.log(this.groupList, 'grouplist data')
+//     let reasoning = this.patient_breastfed.ebfreasons.desc;
+//     console.log(reasoning, 'para sa reason')
+//   });
+
+// }
+
+loadBreastfed() {
   this.groupList2 = [];
   var lib = ['bfed_month1','bfed_month2','bfed_month3','bfed_month4','bfed_month5','bfed_month6'];
-  console.log(lib[0], " try lib");
   this.http.get('child-care/cc-breastfed/'+this.patient_details.id)
-    .subscribe((data: any) => {
-    this.patient_breastfed = data.data
-    console.log(this.patient_breastfed, 'data ng breast fed');
+  .subscribe({
+    next: (data: any) => {
+      this.patient_breastfed = data.data
+    console.log(this.patient_breastfed, 'data ng breast fedzxc');
     
-    // this.groupList2.push(this.patient_breastfed.bfed_month1);
-    // this.groupList2.push(this.patient_breastfed.bfed_month2);
-    // this.groupList2.push(this.patient_breastfed.bfed_month3);
-    // this.groupList2.push(this.patient_breastfed.bfed_month4);
-    // this.groupList2.push(this.patient_breastfed.bfed_month5);
-    // this.groupList2.push(this.patient_breastfed.bfed_month6);
-
     lib.forEach((obj, index) => {
       this.groupList2.push(this.patient_breastfed[obj]);
       // this.groupList.push(String(this.patient_breastfed[obj]));
@@ -295,13 +320,31 @@ loadBreastfed(){
       console.log(this.ccdev[index].selected, " try ccdev");
 
     })
+
     console.log(this.groupList2, 'data ng breast fed v2')
     this.getSelected()
     console.log(this.groupList, 'grouplist data')
-    let reasoning = this.patient_breastfed.ebfreasons.desc;
-    console.log(reasoning, 'para sa reason')
+    
+    },
+    error: err => {console.log(err)
+      if(err.status == 404) {
+    this.patient_breastfed ={
+      patient_ccdev_id: '',
+      patient_id: '',
+      user_id: '',
+      bfed_month1: '',
+      bfed_month2: '',
+      bfed_month3: '',
+      bfed_month4: '',
+      bfed_month5: '',
+      // bfed_month6: this.groupList[5] == 1 ? 1:0,
+      bfed_month6: '',
+      ebf_date: '',
+      ebfreasons: {reason_id: '', desc: ''}
+    }
+      } 
+    }
   });
-
 }
 
 
