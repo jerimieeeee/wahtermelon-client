@@ -16,9 +16,9 @@
               <tr>
                 <th scope="col" class="py-3 px-6">Date & Time</th>
                 <th scope="col" class="py-3 px-6">Blood Pressure</th>
-                <th scope="col" class="py-3 px-6">Height</th>
-                <th scope="col" class="py-3 px-6">Weight</th>
-                <th scope="col" class="py-3 px-6">Temp</th>
+                <th scope="col" class="py-3 px-6">Height (cm)</th>
+                <th scope="col" class="py-3 px-6">Weight (kg)</th>
+                <th scope="col" class="py-3 px-6">Temp (C)</th>
                 <th scope="col" class="py-3 px-6">Heart Rate</th>
                 <th scope="col" class="py-3 px-6">Pulse Rate</th>
                 <th scope="col" class="py-3 px-6">Resp Rate</th>
@@ -44,16 +44,16 @@
                   {{ vitals.patient_temp ?? '-' }}
                 </td>
                 <td class="py-4 px-6">
-                  {{ vitals.patient_heart_rate ?? '-' }}
+                  {{ vitals.patient_heart_rate | number: '1.0-0' ?? '-' }}
                 </td>
                 <td class="py-4 px-6">
-                  {{ vitals.patient_pulse_rate ?? '-' }}
+                  {{ vitals.patient_pulse_rate | number: '1.0-0' ?? '-' }}
                 </td>
                 <td class="py-4 px-6">
-                  {{ vitals.patient_resp_rate ?? '-' }}
+                  {{ vitals.patient_resp_rate | number: '1.0-0' ?? '-' }}
                 </td>
                 <td class="py-4 px-6">
-                  {{ vitals.patient_respiratory_rate ?? '-' }}
+                  {{ vitals.patient_respiratory_rate | number: '1.0-0' ?? '-' }}
                 </td>
                 <td class="py-4 px-6">
                   <fa-icon (click)="editVitals(vitals)" class="mx-0 my-0 text-amber-500 hover:cursor-pointer flex-none mr-2" [icon]="faPenToSquare"></fa-icon>
