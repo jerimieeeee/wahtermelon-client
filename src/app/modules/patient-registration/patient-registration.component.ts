@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { faSpinner, faFolderPlus, faSave } from '@fortawesome/free-solid-svg-icons';
+import { faSpinner, faFolderPlus, faSave, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { faClipboard } from '@fortawesome/free-regular-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { openCloseTrigger } from './declarations/animation';
@@ -17,6 +17,7 @@ export class PatientRegistrationComponent implements OnInit {
   faClipboard = faClipboard;
   faFolderPlus = faFolderPlus;
   faSave = faSave;
+  faSearch = faSearch;
 
   required_message = 'Required field';
   button_function: string = 'Save';
@@ -38,15 +39,16 @@ export class PatientRegistrationComponent implements OnInit {
     education_code: new FormControl<string| null>(''),
     civil_status_code: new FormControl<string| null>(''),
     consent_flag: new FormControl<boolean>(false),
-    /* family: new FormGroup({
+    family: new FormGroup({
       region: new FormControl<string| null>(''),
       province: new FormControl<string| null>(''),
       municipality: new FormControl<string| null>(''),
       brgy: new FormControl<string| null>(''),
       address: new FormControl<string| null>(''),
       cct_id: new FormControl<string| null>(''),
+      cct_date: new FormControl<string| null>(''),
       is_head: new FormControl<string| null>(''),
-    }) */
+    })
   });
 
   new_patient_id: string;
@@ -84,6 +86,8 @@ export class PatientRegistrationComponent implements OnInit {
   showModal:boolean = false;
   is_saving: boolean = false;
   loading: boolean = false;
+  address_disabled: boolean = true;
+  familyFolderModal: boolean = false;
 
   constructor(
     private http: HttpService,
@@ -95,11 +99,13 @@ export class PatientRegistrationComponent implements OnInit {
     return this.patientForm.controls;
   }
 
+  submit_errors: any;
+
   onSubmit(){
     console.log(this.patientForm);
     this.is_saving = true;
     this.loading = true;
-    // this.showModal = true;
+
     if(!this.patientForm.invalid){
       let query;
       if(this.button_function === 'Update') {
@@ -108,17 +114,54 @@ export class PatientRegistrationComponent implements OnInit {
         query = this.http.post('patient', this.patientForm.value);
       }
       query.subscribe({
-        next: (data: any) => this.new_patient_id = data.data.id,
-        error: err => console.log(err),
-        complete: () => {
-          this.is_saving = false;
+        next: (data: any) => {
+          this.new_patient_id = data.data.id;
+          this.saveFolder(this.new_patient_id);
+        },
+        error: err => {
           this.loading = false;
-          this.showModal = true;
-        }
+          this.submit_errors = err.error.errors;
+          console.log(err)
+        },
+        complete: () => {}
       })
     } else {
       this.loading = false;
     }
+  }
+
+  saveFolder(id){
+    let user_id = localStorage.getItem('user_id')
+    let params = {
+      facility_code: this.show_demog_input ? 'DOH000000000005672' : this.selected_facility,
+      user_id: user_id,
+      patient_id: id,
+      address: this.show_demog_input ? this.patientForm.value.family.address : this.selected_address,
+      barangay_code: this.show_demog_input ? this.patientForm.value.family.brgy : this.selected_barangay_code,
+      cct_date: this.show_demog_input ? this.patientForm.value.family.cct_date : this.selected_cct_date,
+      cct_id: this.show_demog_input ? this.patientForm.value.family.cct_id : this.selected_cct_id,
+      family_role_code: this.patientForm.value.family.is_head
+    }
+
+    let query;
+    if(this.show_demog_input) {
+      query = this.http.post('households/household-folders', params);
+    } else {
+      query = this.http.update('households/household-folders/', this.selected_family_folder, params);
+    }
+    query.subscribe({
+      next: (data: any) => {
+        console.log(data);
+        this.is_saving = false;
+        this.loading = false;
+        this.showModal = true;
+      },
+      error: err => {
+        this.loading = false;
+        this.submit_errors = err.error.errors;
+        console.log(err)
+      }
+    })
   }
 
   newPatient(){
@@ -154,10 +197,48 @@ export class PatientRegistrationComponent implements OnInit {
     });
   }
 
-  toggleModal(){
-    this.showModal = !this.showModal;
+  toggleModal(modal){
+    console.log(modal);
+    switch (modal){
+      case 'family-folder-modal':
+        this.familyFolderModal = !this.familyFolderModal;
+        break;
+      case 'save-modal':
+        this.showModal = !this.showModal;
+        break;
+    }
+    // this.showModal = !this.showModal;
   }
 
+  selected_family_folder: string;
+  selected_barangay_code: string;
+  selected_address: string;
+  selected_cct_date: string;
+  selected_cct_id: string;
+  selected_facility: string;
+  selected_members: any;
+  show_demog_input: boolean = true;
+
+  transaction(data){
+    console.log(data);
+    this.selected_family_folder = data.data ? data.data.id : null;
+    this.selected_barangay_code = data.data ? data.data.barangay_code : null;
+    this.selected_address = data.data ? data.data.address : null;
+    this.selected_cct_date = data.data ? data.data.cct_date : null;
+    this.selected_cct_id = data.data ? data.data.cct_id : null;
+    this.selected_facility = data.data ? data.data.facility_code : null;
+    this.selected_members = data.data ? data.data.household_member : null;
+
+    if (data.type === 'new'){
+      console.log('new');
+      this.isDisabled(false);
+      this.show_demog_input = true;
+    } else {
+      this.patientForm.controls['family']['controls']['is_head'].enable();
+      this.show_demog_input = false;
+      console.log(this.patientForm);
+    }
+  }
 
   loadPatient(id){
     // console.log(id);
@@ -171,6 +252,18 @@ export class PatientRegistrationComponent implements OnInit {
       },
       error: err => console.log(err)
     })
+  }
+
+  isDisabled(value: boolean){
+    if(value) {
+      this.patientForm.controls['family'].disable();
+    } else {
+      this.patientForm.controls['family'].enable();
+    }
+  }
+
+  openFolder(){
+    this.isDisabled(false);
   }
 
   ngOnInit(): void {
@@ -191,19 +284,26 @@ export class PatientRegistrationComponent implements OnInit {
       education_code: ['6', Validators.required],
       civil_status_code: ['', Validators.required],
       consent_flag: [false],
-      /* family: this.formBuilder.group({
+      family: this.formBuilder.group({
         region: ['', Validators.required],
         province: ['', Validators.required],
         municipality: ['', Validators.required],
         brgy: ['', Validators.required],
         address: ['', [Validators.required, Validators.minLength(2)]],
-      }) */
+        cct_id: ['', [Validators.minLength(2)]],
+        cct_date: [''],
+        is_head: [false, [Validators.required]],
+      })
     });
 
     this.date = new Date().toISOString().slice(0,10);
     this.loadLibraries();
    /*  console.log(this.patientForm); */
 
-   if(this.router.url.split(';')[0] === '/edit-patient') this.loadPatient(this.router.url.split('=')[1]);
+    if(this.router.url.split(';')[0] === '/edit-patient') {
+      this.loadPatient(this.router.url.split('=')[1]);
+    } else{
+      this.isDisabled(this.address_disabled);
+    }
   }
 }

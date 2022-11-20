@@ -72,7 +72,7 @@
     <div class="block pt-4 justify-items-start mx-5 mb-5">
       <div class="flex justify-between items-center">
         <span class="block text-blue-500 font-medium text-sm">
-          VITAL SIGNS ({{ latest_vitals?.vitals_date }})
+          VITAL SIGNS ({{ latest_vitals?.vitals_date | date : 'M/d/Y hh:mm:ss a' }})
         </span>
         <span>
           <fa-icon (click)="toggleModal('vitals-list-modal')" class="mx-0 my-0 text-green-500 mr-2 hover:cursor-pointer" [icon]="faTableList" *ngIf="latest_vitals" ></fa-icon>
@@ -92,7 +92,7 @@
 
         <div class="flex pl-3 justify-between items-center">
           <span class="block font-medium text-xs">
-            Height
+            {{ latest_vitals?.patient_weight_for_age || latest_vitals?.patient_height_for_age || latest_vitals?.patient_weight_for_height ? 'Length' : 'Height' }}
           </span>
           <span class="block text-xs">
             {{ latest_vitals?.patient_height ? latest_vitals?.patient_height+' cm' : '-' }}
@@ -135,6 +135,42 @@
           </span>
         </div>
 
+        <div *ngIf="latest_vitals?.patient_muac" class="flex pl-3 justify-between items-center">
+          <span class="block font-medium text-xs" >
+            MUAC
+          </span>
+          <span class="block text-xs" >
+            {{ latest_vitals?.patient_muac ? latest_vitals?.patient_muac+' cm' : '' }}
+          </span>
+        </div>
+
+        <div *ngIf="latest_vitals?.patient_head_circumference" class="flex pl-3 justify-between items-center">
+          <span class="block font-medium text-xs" >
+            Head Circumference
+          </span>
+          <span class="block text-xs" >
+            {{ latest_vitals?.patient_head_circumference ? latest_vitals?.patient_head_circumference+' cm' : '' }}
+          </span>
+        </div>
+
+        <div *ngIf="latest_vitals?.patient_limbs" class="flex pl-3 justify-between items-center">
+          <span class="block font-medium text-xs" >
+            Limbs
+          </span>
+          <span class="block text-xs" >
+            {{ latest_vitals?.patient_limbs ? latest_vitals?.patient_limbs+' cm' : '' }}
+          </span>
+        </div>
+
+        <div *ngIf="latest_vitals?.patient_skinfold_thickness" class="flex pl-3 justify-between items-center">
+          <span class="block font-medium text-xs" >
+            Skinfold Thickness
+          </span>
+          <span class="block text-xs" >
+            {{ latest_vitals?.patient_skinfold_thickness ? latest_vitals?.patient_skinfold_thickness+' cm' : '' }}
+          </span>
+        </div>
+
         <div class="flex pl-3 justify-between items-center">
           <span class="block font-medium text-xs">
             Blood Pressure
@@ -154,7 +190,7 @@
 
         <div class="flex pl-3 justify-between items-center" [ngClass]="{'text-red-500': (latest_vitals?.patient_temp >= 37.6)}">
           <span class="block font-medium text-xs">
-            Temparature
+            Temperature
           </span>
           <span class="block text-xs">
             {{ latest_vitals?.patient_temp ? latest_vitals?.patient_temp + ' C': '-' }}
