@@ -86,7 +86,7 @@
             Weight
           </span>
           <span class="block text-xs">
-            {{ latest_vitals?.patient_weight ? latest_vitals?.patient_weight : '-' }}
+            {{ latest_vitals?.patient_weight ? latest_vitals?.patient_weight+' kg' : '-' }}
           </span>
         </div>
 
@@ -95,7 +95,7 @@
             Height
           </span>
           <span class="block text-xs">
-            {{ latest_vitals?.patient_height ? latest_vitals?.patient_height : '-' }}
+            {{ latest_vitals?.patient_height ? latest_vitals?.patient_height+' cm' : '-' }}
           </span>
         </div>
 
@@ -128,7 +128,7 @@
 
         <div *ngIf="latest_vitals?.patient_weight_for_height" class="flex pl-3 justify-between items-center" [ngClass]="{'text-red-500': latest_vitals?.patient_weight_for_height ? (latest_vitals?.patient_weight_for_height !== 'Normal') : false}">
           <span class="block font-medium text-xs" >
-            Weight for Heigh
+            Weight for Height
           </span>
           <span class="block text-xs" >
             {{ latest_vitals?.patient_weight_for_height ? latest_vitals?.patient_weight_for_height : '' }}
