@@ -124,15 +124,15 @@ export class BreastfeedingComponent implements OnInit {
     this.ccdev[i].selected = value;
     // this.fetchSelectedItems()
     this.getPrev()
-    console.log(this.groupList, 'naktputa')
+    console.log(this.groupList, 'selected bfed_months')
     if(this.groupList.includes('0'))
     {
-     console.log('open ang reason')
+     console.log('open ang reason for stopping')
      this.showData = true
     }
     else{
       this.showData = false
-      console.log('close ang reason')
+      console.log('close ang reason for stopping')
     }
 
   }
@@ -164,11 +164,11 @@ export class BreastfeedingComponent implements OnInit {
       bfed_month4: this.groupList[3],
       bfed_month5: this.groupList[4],
       bfed_month6: this.groupList[5],
-      reason_id: this.lib_reasons.id,
-      ebf_date: '',
+      reason_id: this.patient_breastfed.ebfreasons,
+      ebf_date: this.patient_breastfed.ebf_date,
     }
 
-    console.log(bfedmonths);
+    console.log(bfedmonths, 'patient_breasfed currently selected');
 
     // this.http.post('child-care/cc-breastfed', bfedmonths).subscribe({
     //   // next: (data: any) => console.log(data.status, 'check status'),
@@ -342,6 +342,9 @@ export class BreastfeedingComponent implements OnInit {
             ebf_date: '',
             ebfreasons: ''
           }
+          console.log(this.patient_breastfed, 'fake response')
+          console.log(this.groupList2, 'fake response group list 2')
+          this.getSelected()
         }
       }
     });
