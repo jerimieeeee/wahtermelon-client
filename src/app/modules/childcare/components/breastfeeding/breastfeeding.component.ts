@@ -188,7 +188,7 @@ export class BreastfeedingComponent implements OnInit {
 
     });
 
-    console.log(this.groupList);
+    console.log(this.patient_breastfed);
     let user_id = localStorage.getItem('user_id');
     var bfedmonths ={
       patient_ccdev_id: this.patient_info.id,
@@ -201,7 +201,7 @@ export class BreastfeedingComponent implements OnInit {
       bfed_month5: this.groupList[4] == 'null' ? null:this.groupList[4],
       // bfed_month6: this.groupList[5] == 1 ? 1:0,
       bfed_month6: this.groupList[5] == 'null' ? null:this.groupList[5],
-      reason_id: this.patient_breastfed.ebfreasons == null ? this.lib_reasons.reason_id:this.patient_breastfed.ebfreasons.reason_id,
+      reason_id: this.patient_breastfed.ebfreasons,
       ebf_date: this.patient_breastfed.ebf_date,
     }
 
@@ -218,16 +218,16 @@ export class BreastfeedingComponent implements OnInit {
     })
   }
 
-getccdevDetails() {
-  this.http.get('child-care/cc-records/'+this.patient_details.id)
-  .subscribe({
-    next: (data: any) => {
-      this.patient_info = data.data;
-      console.log(this.patient_info, 'load ccdev info on breastfeeding')
-    },
-    error: err => console.log(err)
-  });
-}
+  getccdevDetails() {
+    this.http.get('child-care/cc-records/'+this.patient_details.id)
+    .subscribe({
+      next: (data: any) => {
+        this.patient_info = data.data;
+        console.log(this.patient_info, 'load ccdev info on breastfeeding')
+      },
+      error: err => console.log(err)
+    });
+  }
 
   fetchCheckedIDs() {
     this.checkedIDs = []
@@ -265,12 +265,11 @@ getccdevDetails() {
   // }
 
   loadLibraries(){
-
-  this.http.get('libraries/reason').subscribe((data: any) => {
-    this.lib_reasons = data.data
-    console.log(data, 'reason library');
-  });
-}
+    this.http.get('libraries/reason').subscribe((data: any) => {
+      this.lib_reasons = data.data
+      console.log(data, 'reason library');
+    });
+  }
 
 // loadBreastfed(){
 //   this.groupList2 = [];
@@ -280,7 +279,7 @@ getccdevDetails() {
 //     .subscribe((data: any) => {
 //     this.patient_breastfed = data.data
 //     console.log(this.patient_breastfed, 'data ng breast fed');
-    
+
 //     // this.groupList2.push(this.patient_breastfed.bfed_month1);
 //     // this.groupList2.push(this.patient_breastfed.bfed_month2);
 //     // this.groupList2.push(this.patient_breastfed.bfed_month3);
@@ -310,39 +309,40 @@ loadBreastfed() {
   this.http.get('child-care/cc-breastfed/'+this.patient_details.id)
   .subscribe({
     next: (data: any) => {
-      this.patient_breastfed = data.data
-    console.log(this.patient_breastfed, 'data ng breast fedzxc');
-    
-    lib.forEach((obj, index) => {
-      this.groupList2.push(this.patient_breastfed[obj]);
-      // this.groupList.push(String(this.patient_breastfed[obj]));
-      this.ccdev[index].selected = String(this.patient_breastfed[obj]);
-      console.log(this.ccdev[index].selected, " try ccdev");
+      this.patient_breastfed = data.data;
+      this.patient_breastfed.ebfreasons =  this.patient_breastfed.ebfreasons.reason_id;
+      console.log(this.patient_breastfed, 'data ng breast fedzxc');
 
-    })
+      lib.forEach((obj, index) => {
+        this.groupList2.push(this.patient_breastfed[obj]);
+        // this.groupList.push(String(this.patient_breastfed[obj]));
+        this.ccdev[index].selected = String(this.patient_breastfed[obj]);
+        console.log(this.ccdev[index].selected, " try ccdev");
 
-    console.log(this.groupList2, 'data ng breast fed v2')
-    this.getSelected()
-    console.log(this.groupList, 'grouplist data')
-    
+      })
+
+      console.log(this.groupList2, 'data ng breast fed v2')
+      this.getSelected()
+      console.log(this.groupList, 'grouplist data')
+
     },
     error: err => {console.log(err)
       if(err.status == 404) {
-    this.patient_breastfed ={
-      patient_ccdev_id: '',
-      patient_id: '',
-      user_id: '',
-      bfed_month1: '',
-      bfed_month2: '',
-      bfed_month3: '',
-      bfed_month4: '',
-      bfed_month5: '',
-      // bfed_month6: this.groupList[5] == 1 ? 1:0,
-      bfed_month6: '',
-      ebf_date: '',
-      ebfreasons: {reason_id: '', desc: ''}
-    }
-      } 
+        this.patient_breastfed ={
+          patient_ccdev_id: '',
+          patient_id: '',
+          user_id: '',
+          bfed_month1: '',
+          bfed_month2: '',
+          bfed_month3: '',
+          bfed_month4: '',
+          bfed_month5: '',
+          // bfed_month6: this.groupList[5] == 1 ? 1:0,
+          bfed_month6: '',
+          ebf_date: '',
+          ebfreasons: ''
+        }
+      }
     }
   });
 }

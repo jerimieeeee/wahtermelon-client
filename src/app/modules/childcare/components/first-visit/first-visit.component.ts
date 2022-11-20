@@ -48,7 +48,7 @@ export class FirstVisitComponent implements OnInit {
   patient_info2: any;
 
   curr_name: any;
-  
+
 
   visitForm: FormGroup = new FormGroup({
     id: new FormControl<string| null>(''),
@@ -61,14 +61,14 @@ export class FirstVisitComponent implements OnInit {
   });
 
   @Input() patient_details: any;
-  
-  
-  
+
+
+
   // Section 2
   constructor(private formBuilder: FormBuilder, private http: HttpService,
     private router: Router) { }
 
-  
+
 
   get f(): { [key: string]: AbstractControl } {
     return this.visitForm.controls;
@@ -92,18 +92,18 @@ export class FirstVisitComponent implements OnInit {
   // }
 
   onSubmit(){
-  
+
     console.log(this.visitForm.value);
     console.log(this.visitForm.invalid);
     this.form_saving = true;
     this.is_saving = true;
-    
+
     // this.showModal = true;
-  
+
       this.http.post('child-care/cc-records', this.visitForm.value).subscribe({
         // next: (data: any) => console.log(data.status, 'check status'),
-        error: err => {console.log(err), 
-          this.is_saving = false; 
+        error: err => {console.log(err),
+          this.is_saving = false;
           alert('Update patient details or input the required fields')},
         complete: () => {
           this.is_saving = false;
@@ -112,7 +112,7 @@ export class FirstVisitComponent implements OnInit {
         }
       })
     }
-    
+
 
   validateForm(){
     let user_id = localStorage.getItem('user_id');
@@ -159,7 +159,7 @@ export class FirstVisitComponent implements OnInit {
       return resp.data;
     }))
   }
-  
+
   getccdevDetails() {
     this.http.get('child-care/cc-records/'+this.patient_details.id)
     .subscribe({
@@ -167,7 +167,7 @@ export class FirstVisitComponent implements OnInit {
         this.patient_info = data.data;
         console.log(this.patient_info, 'info ccdev first visit')
         this.getccdevMama()
-        this.visitForm.setValue(this.patient_info);
+        this.visitForm.patchValue({...this.patient_info});
       },
       error: err => console.log(err)
     });
@@ -184,7 +184,7 @@ export class FirstVisitComponent implements OnInit {
     });
   }
 
-  
+
   loadPatients() {
     this.patients$ = concat(
       of([]), // default items
@@ -214,8 +214,8 @@ export class FirstVisitComponent implements OnInit {
   //     this.is_saving4 = true;
   //   }, 5000);
   // }
-  
-  
+
+
 
   ngOnInit(): void {
     this.validateForm();

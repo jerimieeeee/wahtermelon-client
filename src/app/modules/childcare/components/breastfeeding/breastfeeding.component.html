@@ -29,12 +29,12 @@
         <!-- <div *ngFor="let ccmonths of ccdev" class=" md:w-1/2 lg:w-1/2 px-10 text-sm">
           <p class="py-1">{{ccmonths.name}} - {{ccmonths.isDefault}}</p> -->
           <p class="px-10 py-1 text-sm mt-1">No Recorded Breastfeeding / Complementary Feeding!</p>
-          
+
           <button type="button" class="flex btn-add ml-auto mr-10" (click)="toggleBreastfeedingModal()">
             <fa-icon class="mr-2" [icon]="faPlus"></fa-icon>
            Add
           </button>
-          
+
       </div>
     </div>
 
@@ -96,10 +96,10 @@
 
             <div *ngIf="showData" class="flex py-4 px-5 rounded-b border-t border-gray-200">
               <label class="mt-2.5 text-sm text-gray-900 w-full">Reason for Stopping</label>
-              <select class="select rounded-md text-sm -pl-10" [(ngModel)]="patient_breastfed.ebfreasons == null ? lib_reasons.reason_id:patient_breastfed.ebfreasons.reason_id" value="patient_breastfed.ebfreasons.reason_id" name="" id="" style="width:100%;">
+              <select class="select rounded-md text-sm -pl-10" [(ngModel)]="patient_breastfed.ebfreasons" name="" id="" style="width:100%;">
                 <option  disabled selected>Select Reason</option>
                 <option value="{{reason.reason_id}}" *ngFor="let reason of lib_reasons">
-                {{reason.desc}}
+                  {{reason.desc}}
                 </option>
               </select>
             </div>
@@ -134,5 +134,5 @@
       </div>
     </div>
 </div>
-  
+
 <div *ngIf="showBreastfeedingModal" class="opacity-50 fixed inset-0 z-50 bg-black"></div>
