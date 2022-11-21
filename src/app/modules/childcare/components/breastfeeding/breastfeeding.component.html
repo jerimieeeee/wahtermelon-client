@@ -15,7 +15,7 @@
 <div class="card">
     <div class="flex bg-orange-500 card-header-services">
       <h4 class="font-semibold text-white text-sm uppercase">Breastfeeding And Complementary Feeding Information</h4>
-      <button  type="button" class="-mt-0.5 relative ml-auto px-5" (click)="toggleBreastfeedingModal()" *ngIf="groupList2.includes(1) || groupList2.includes(0) || groupList.length === 6">
+      <button  type="button" class="-mt-0.5 relative ml-auto px-5" (click)="toggleBreastfeedingModal()" *ngIf="groupList2.includes(1) || groupList2.includes(0) || groupList2.length === 6 ||  groupList.length === 6">
         <fa-icon class=" text-white" size="md" [icon]="faPenToSquare"></fa-icon>
         </button>
     </div>
@@ -96,7 +96,7 @@
 
             <div *ngIf="showData" class="flex py-4 px-5 rounded-b border-t border-gray-200">
               <label class="mt-2.5 text-sm text-gray-900 w-full">Reason for Stopping</label>
-              <select class="select rounded-md text-sm -pl-10" [(ngModel)]="patient_breastfed.ebfreasons.reason_id" name="" id="" style="width:100%;">
+              <select class="select rounded-md text-sm -pl-10" [(ngModel)]="patient_breastfed.ebfreasons" name="" id="" style="width:100%;">
                 <option  disabled selected>Select Reason</option>
                 <option value="{{reason.reason_id}}" *ngFor="let reason of lib_reasons">
                 {{reason.desc}}
@@ -104,7 +104,7 @@
               </select>
             </div>
 
-            <div *ngIf="!showData && !groupList.includes('0') && !groupList.includes('null') && !groupList.includes('') " class="flex py-4 px-5 rounded-b border-t border-gray-200">
+            <div *ngIf="!showData && !groupList.includes('0') && !groupList.includes('null') && !groupList.includes('')" class="flex py-4 px-5 rounded-b border-t border-gray-200">
               <label class="mt-2.5 text-sm text-gray-900 w-full">EBF Date</label>
               <input type="date" placeholder="Enter EBF Date" style="width:100%;" [(ngModel)]="patient_breastfed.ebf_date" >
             </div>

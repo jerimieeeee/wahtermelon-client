@@ -1,8 +1,8 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { faChevronCircleDown, faBell, faSearch, faGear } from '@fortawesome/free-solid-svg-icons';
+import { Component, OnInit, Input } from '@angular/core';
+import { faChevronCircleDown, faBell, faSearch, faGear, faHome, faRightFromBracket, faAddressBook, faUser } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { catchError, debounceTime, distinctUntilChanged, switchMap, tap, map, filter } from 'rxjs/operators';
-import { concat, Observable, of, Subject, throwError } from 'rxjs';
+import { concat, Observable, of, Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { ToothServicesComponent } from 'app/modules/dental/modals/tooth-services/tooth-services.component';
 import { AuthService } from 'app/shared/services/auth/auth.service';
@@ -14,18 +14,46 @@ import { AuthService } from 'app/shared/services/auth/auth.service';
 })
 export class HeaderComponent implements OnInit {
   // @ViewChild(NgSelectComponent) ngSelectComponent: NgSelectComponent;
+  @Input() user_info;
 
   faChevronCircleDown = faChevronCircleDown;
   faBell = faBell;
   faSearch = faSearch;
   faGear = faGear;
+  faHome = faHome;
+  faRightFromBracket = faRightFromBracket;
+  faAddressBook = faAddressBook;
+  faUser = faUser;
 
   patients$: Observable<any>;
-  patientLoading = false;
   searchInput$ = new Subject<string>();
   selectedPatient: any;
   minLengthTerm = 3;
-  user_info: any;
+  user_last_name: string;
+  user_first_name: string;
+  user_middle_name: string;
+
+  showMenu: boolean = false;
+  patientLoading:boolean = false;
+  showCreate:boolean = false;
+
+  user_menu = [
+    {
+      name: 'My Account',
+      location: 'my-account',
+      icon: faUser
+    },
+    {
+      name: 'Account List',
+      location: 'account-list',
+      icon: faAddressBook
+    },
+    {
+      name: 'Settings',
+      location: 'home',
+      icon: faGear
+    },
+  ]
 
   constructor(
     private http: HttpService,
@@ -53,7 +81,6 @@ export class HeaderComponent implements OnInit {
     );
   }
 
-  showMenu: boolean = false;
   toggleMenu(){
     this.showMenu = !this.showMenu;
   }
@@ -66,8 +93,6 @@ export class HeaderComponent implements OnInit {
     this.loadPatients();
   }
 
-  showCreate:boolean = false;
-
   getPatient(term: string = null): Observable<any> {
     return this.http.get('patient', {params:{'filter[search]':term}})
     .pipe(map((resp:any) => {
@@ -75,6 +100,15 @@ export class HeaderComponent implements OnInit {
       console.log(this.showCreate)
       return resp.data;
     }))
+  }
+
+  navigateTo(loc){
+    console.log(loc)
+    this.router.navigate(['/'+loc]);
+  }
+
+  getInitials(string) {
+    return [...string.matchAll(/\b\w/g)].join('')
   }
 
   logout(){
@@ -86,9 +120,12 @@ export class HeaderComponent implements OnInit {
     }); */
   }
 
+
   ngOnInit(): void {
     this.loadPatients();
-    this.user_info = localStorage.getItem('name');
+    this.user_last_name = localStorage.getItem('user_last_name');
+    this.user_first_name = localStorage.getItem('user_first_name');
+    this.user_middle_name = localStorage.getItem('user_middle_name');
   }
 
 }

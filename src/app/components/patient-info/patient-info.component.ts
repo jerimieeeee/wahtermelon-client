@@ -1,6 +1,6 @@
 import { Component, ComponentFactoryResolver, EventEmitter, OnInit, Output } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { faFlask, faHeart, faExclamationCircle, faNotesMedical, faPlusCircle, faQuestionCircle, faPenToSquare, faTrash, faTableList } from '@fortawesome/free-solid-svg-icons';
+import { ActivatedRoute, Router } from '@angular/router';
+import { faFlask, faHeart, faExclamationCircle, faNotesMedical, faPlusCircle, faQuestionCircle, faPenToSquare, faTrash, faTableList, faPenSquare } from '@fortawesome/free-solid-svg-icons';
 import { AgeService } from 'app/shared/services/age.service';
 import { HttpService } from 'app/shared/services/http.service';
 
@@ -23,6 +23,7 @@ export class PatientInfoComponent {
   faPenToSquare = faPenToSquare;
   faTrash = faTrash;
   faTableList = faTableList;
+  faPenSquare = faPenSquare;
   show_form: boolean = false;
 
   // MODALS
@@ -47,12 +48,17 @@ export class PatientInfoComponent {
 
   constructor(
     private activeRoute: ActivatedRoute,
+    private router: Router,
     private http: HttpService,
     private ageService: AgeService
   ) {
     this.activeRoute.params.subscribe(params => {
       this.getPatient(params.id);
     });
+  }
+
+  editPatient(id){
+    if(id) this.router.navigate(['/edit-patient', {id: id}]);
   }
 
   getAge(){
@@ -64,14 +70,18 @@ export class PatientInfoComponent {
   getPatient(id){
     this.http.get('patient/'+id).subscribe({
       next: (data: any) => {
-        this.patient_info = data.data;
         this.show_form = true;
+        this.patient_info = data.data;
         this.patientInfo.emit(data.data);
         this.loadVaccines();
         this.loadVitals();
         // console.log(data.data)
       },
-      error: err => console.log(err)
+      error: err => {
+        // feature: add prompt that patient is not found. for now redirect to home
+        this.router.navigate(['/home'])
+        //  console.log(err)
+      }
     });
   }
 
@@ -141,18 +151,45 @@ export class PatientInfoComponent {
   loadVitals(){
     this.http.get('patient-vitals/vitals', {params:{patient_id: this.patient_info.id, sort: '-vitals_date'}}).subscribe({
       next: (data: any) => {
-        // console.log(data)
+        this.latest_vitals = data.data[0];
+        // console.log(this.latest_vitals);
+        if(this.latest_vitals && (!this.latest_vitals.patient_height || !this.latest_vitals.patient_weight)){
+          //iterate thru previous vitals if height is not present on latest vitals.
+          this.getHeightWeight(data.data);
+        }
         this.patientVitals.emit(data.data);
-        this.latest_vitals = data.data[0]
       },
       error: err => console.log(err),
       complete: () => console.log('vitals loaded')
     })
   }
 
+  getHeightWeight(vitals){
+    // console.log(vitals)
+    Object.entries(vitals).every(([keys, values], indexes) => {
+      let val:any = values;
+      if(!this.latest_vitals.patient_height && val.patient_height){
+        this.latest_vitals.patient_height = val.patient_height;
+      }
+
+      if(!this.latest_vitals.patient_weight && val.patient_weight){
+        this.latest_vitals.patient_weight = val.patient_weight;
+      }
+
+      if(this.latest_vitals.patient_height > 0 && this.latest_vitals.patient_weight > 0){
+        return false;
+      }
+      return true;
+    })
+  }
+
   vitalsEdit(e){
     this.vitals_to_edit = e;
     this.toggleModal('vitals-modal');
+  }
+
+  getInitials(string) {
+    return [...string.matchAll(/\b\w/g)].join('')
   }
 
   toggleModal(modal_name){
