@@ -266,7 +266,7 @@
                                 (change)="onKeyUp($event.target.value, $event.target.id)" id="regions"
                                 (change)="loadDemog('regions', $event.target.value , 'provinces')"
                                 class="text-ellipsis bg-white text-align-left drop_btn border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed">
-                                <option *ngFor="let reg of regions" [value]="reg.code">
+                                <option *ngFor="let reg of regions" [value]="reg.code" [selected]="reg.code === selected_regions">
                                     {{reg.name}}
                                 </option>
                             </select>
@@ -281,7 +281,7 @@
                                     (change)="loadDemog(demo.loc, $event.target.value , demo.includes)"
                                     class="text-ellipsis bg-white text-align-left drop_btn border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed">
                                     <option 
-                                    *ngFor="let opt of this[demo.loc]" 
+                                    *ngFor="let opt of this[demo.loc]"
                                     [value]="opt.code">
                                         {{opt.name}}
                                     </option>
@@ -403,7 +403,7 @@
                 class="cursor-pointer flex border-check hover:drop-shadow-md bg-green-300 hover:bg-green-400 py-1 rounded-full text-white px-3 peer-hover:bg-white peer-hover:text-green-400">
                 <fa-icon [icon]="faSave" size="lg" class="mr-2">
                 </fa-icon>
-                <button type="submit" class="font-bold button-out border-check-red"
+                <button type="button" class="font-bold button-out border-check-red"
                     (keyup.enter)="saveForm(postpartum_form.value)">Save</button>
             </div>
         </div>
