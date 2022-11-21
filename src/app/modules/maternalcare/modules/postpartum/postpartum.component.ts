@@ -157,7 +157,7 @@ export class PostpartumComponent implements OnInit {
 
       this.http.post('maternal-care/mc-postregistrations', this.postpartum_form.value).subscribe({
         next: (data: any) => {
-          console.log(data.data, " data from saving postpartum")        
+          console.log(data, " data from saving postpartum")        
         },
         error: err => console.log(err),
         complete: () => {
