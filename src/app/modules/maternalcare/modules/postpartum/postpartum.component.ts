@@ -25,19 +25,26 @@ export class PostpartumComponent implements OnInit {
   faCaretRight = faCaretRight;
 
   postpartum_form: FormGroup = new FormGroup({
-    postpartum_date: new FormControl<string | null>(''),
-    visit_type: new FormControl<string | null>(''),
-    patient_height: new FormControl<string | null>(''),
-    patient_weight: new FormControl<string | null>(''),
-    bp_systolic: new FormControl<string | null>(''),
-    bp_diastolic: new FormControl<string | null>(''),
+    post_registration_date: new FormControl<string | null>(''),
+    admission_date: new FormControl<string | null>(''),
+    discharge_date: new FormControl<string | null>(''),
+    delivery_date: new FormControl<string | null>(''),
+    delivery_location_code: new FormControl<string | null>(''),
+    barangay_code: new FormControl<string | null>(''),
+    gravidity: new FormControl<boolean | null>(false),
+    parity: new FormControl<boolean | null>(false),
+    full_term: new FormControl<boolean | null>(false),
+    preterm: new FormControl<boolean | null>(false),
+    abortion: new FormControl<boolean | null>(false),
+    livebirths: new FormControl<boolean | null>(false),
+    outcome_code: new FormControl<boolean | null>(false),
+    healthy_baby: new FormControl<boolean | null>(false),
+    birth_weight: new FormControl<boolean | null>(false),
+    attendant_code: new FormControl<boolean | null>(false),
     breastfeeding: new FormControl<boolean | null>(false),
-    family_planning: new FormControl<boolean | null>(false),
-    fever: new FormControl<boolean | null>(false),
-    vaginal_infection: new FormControl<boolean | null>(false),
-    vaginal_bleeding: new FormControl<boolean | null>(false),
-    pallor: new FormControl<boolean | null>(false),
-    cord_ok: new FormControl<boolean | null>(false),
+    breastfed_date: new FormControl<boolean | null>(false),
+    end_pregnancy: new FormControl<boolean | null>(false),
+    postpartum_remarks: new FormControl<boolean | null>(false),
   });
 
   gravidity: Number = new Number();
@@ -48,10 +55,9 @@ export class PostpartumComponent implements OnInit {
   pre_term: Number = new Number();
   bfd: boolean;
   demog = [
-    { loc: 'regions', includes: 'provinces' },
-    { loc: 'provinces', includes: 'municipalities' },
-    { loc: 'municipalities', includes: 'barangays' },
-    { loc: 'barangays', includes: '' }
+    { name: 'Province', loc: 'provinces', includes: 'municipalities', fname: 'p_code' },
+    { name: 'Municipality', loc: 'municipalities', includes: 'barangays', fname: 'm_code' },
+    { name: 'Barangay', loc: 'barangays', includes: '', fname: 'barangay_code' }
   ];
   @Output() postpartum_bool = new EventEmitter<string>();
   filter: string;
@@ -66,6 +72,7 @@ export class PostpartumComponent implements OnInit {
   barangays: any;
   today: Date;
   public mcr_data: any;
+  is_saving: boolean;
   
   constructor(private http: HttpService, private formBuilder: FormBuilder) { }
 
@@ -75,6 +82,7 @@ export class PostpartumComponent implements OnInit {
     // this.getMCR()
     this.filter = '';
     this.today = new Date();
+    this.is_saving = false;
   }
 
   getMCR(type: any, id: any) {
@@ -94,49 +102,43 @@ export class PostpartumComponent implements OnInit {
   }
 
   createForm(mc_record: any) {
-    let postpartum_visit = mc_record.postpartum_visit[0];
+    let postpartum_visit: any;
+    if(this.patient_mc_record[0].postpartum_visit[0]?this.patient_mc_record[0].postpartum_visit[0]:this.patient_mc_record[0].postpartum_visit.length == 1){
+      console.log("it went true again");
+      postpartum_visit = mc_record.postpartum_visit[0];
+  }else{
+    console.log(" its false coz postpartum_visit is 0");
+    postpartum_visit = mc_record.postpartum_visit;
+  }
     let user_id = localStorage.getItem('user_id');
     let facility_code = 'DOH000000000005672';
     console.log(mc_record, " mc_record createForm Post");
     
     this.postpartum_form = this.formBuilder.group({
-     postpartum_date: [mc_record.postpartum_visit.length != 0?new Date(postpartum_visit.postpartum_date).toISOString().substring(0, 10) : new Date().toISOString().substring(0, 10),[Validators.required]],
-    visit_type:  [mc_record.postpartum_visit.length != 0 ? postpartum_visit.postpartum_date : '', [Validators.required, Validators.minLength(2)]],
-    // patient_height: new FormControl<string | null>(''),
-    // patient_weight: new FormControl<string | null>(''),
-    // bp_systolic: new FormControl<string | null>(''),
-    // bp_diastolic: new FormControl<string | null>(''),
-    // breastfeeding: new FormControl<boolean | null>(false),
-    // family_planning: new FormControl<boolean | null>(false),
-    // fever: new FormControl<boolean | null>(false),
-    // vaginal_infection: new FormControl<boolean | null>(false),
-    // vaginal_bleeding: new FormControl<boolean | null>(false),
-    // pallor: new FormControl<boolean | null>(false),
-    // cord_ok: new FormControl<boolean | null>(false),
+    facility_code: [facility_code],
+    patient_id: [this.patient_details.id],
+    user_id: [user_id],
+    post_registration_date:[postpartum_visit.length != 0?new Date(postpartum_visit.postpartum_date).toISOString().substring(0, 10) : new Date().toISOString().substring(0, 10),[Validators.required]],
+    admission_date: [postpartum_visit.length != 0?new Date(postpartum_visit.admission_date).toISOString().substring(0, 10) : '',[Validators.required]],
+    discharge_date: [postpartum_visit.length != 0?new Date(postpartum_visit.discharge_date).toISOString().substring(0, 10) : '',[Validators.required]],
+    delivery_date: [postpartum_visit.length != 0?new Date(postpartum_visit.delivery_date).toISOString().substring(0, 10) : '',[Validators.required]],
+    delivery_location_code: [postpartum_visit.length != 0?postpartum_visit.delivery_location_code:'',[Validators.required]],
+    barangay_code: [postpartum_visit.length != 0?postpartum_visit.barangay_code:'',[Validators.required]],
+    gravidity:[postpartum_visit.length != 0?postpartum_visit.gravidity:'',[Validators.required]],
+    parity: [postpartum_visit.length != 0?postpartum_visit.parity:'',[Validators.required]],
+    full_term: [postpartum_visit.length != 0?postpartum_visit.full_term:'',[Validators.required]],
+    preterm: [postpartum_visit.length != 0?postpartum_visit.preterm:'',[Validators.required]],
+    abortion: [postpartum_visit.length != 0?postpartum_visit.abortion:'',[Validators.required]],
+    livebirths: [postpartum_visit.length != 0?postpartum_visit.livebirths:'',[Validators.required]],
+    outcome_code: [postpartum_visit.length != 0?postpartum_visit.outcome_code:'',[Validators.required]],
+    healthy_baby: [postpartum_visit.length != 0?postpartum_visit.healthy_baby:true],
+    birth_weight: [postpartum_visit.length != 0?postpartum_visit.birth_weight:0],
+    attendant_code: [postpartum_visit.length != 0?postpartum_visit.attendant_code:'',[Validators.required]],
+    breastfeeding:[postpartum_visit.length != 0?postpartum_visit.breastfeeding:''],
+    breastfed_date: [postpartum_visit.length != 0?postpartum_visit.breastfed_date:'',[Validators.required]],
+    end_pregnancy: [postpartum_visit.length != 0?postpartum_visit.end_pregnancy:false],
+    postpartum_remarks:[postpartum_visit.length != 0?postpartum_visit.postpartum_remarks:''],
     });
-
-    // this.postpartum_form = new FormGroup({
-    //   registration_date: new FormControl(new Date().toISOString().substring(0, 10)),
-    //   delivery_date: new FormControl(new Date().toISOString().substring(0, 10)),
-    //   admission_date: new FormControl(new Date().toISOString().substring(0, 10)),
-    //   discharge_date: new FormControl(new Date().toISOString().substring(0, 10)),
-    //   gravidity: new FormControl(this.gravidity),
-    //   parity: new FormControl(this.parity),
-    //   full_term: new FormControl(this.full_term),
-    //   pre_term: new FormControl(this.pre_term),
-    //   abortions: new FormControl(this.abortions),
-    //   live_births: new FormControl(this.live_births),
-    //   delivery_location: new FormControl(),
-    //   region: new FormControl(),
-    //   province: new FormControl(),
-    //   muncity: new FormControl(),
-    //   barangay: new FormControl(),
-    //   birth_attendant: new FormControl(),
-    //   pregnancy_outcome: new FormControl(),
-    //   breastfeeding_asap: new FormControl(),
-    //   baby_healthy: new FormControl(),
-    //   breastfeeding_date: new FormControl(new Date().toISOString().substring(0, 10)),
-    // });
   }
   flip(): void {
     this.focused = !this.focused;
@@ -145,35 +147,39 @@ export class PostpartumComponent implements OnInit {
     this.buttons.push('save');
   }
   saveForm(data) {
-    this.postpartum_form.setValue({
-      registration_date: data.registration_date,
-      delivery_date: data.delivery_date,
-      admission_date: data.admission_date,
-      discharge_date: data.discharge_date,
-      gravidity: data.gravidity,
-      parity: data.parity,
-      full_term: data.full_term,
-      pre_term: data.pre_term,
-      abortions: data.abortions,
-      live_births: data.live_births,
-      delivery_location: data.delivery_location,
-      region: data.region,
-      province: data.province,
-      muncity: data.muncity,
-      barangay: data.barangay,
-      birth_attendant: data.birth_attendant,
-      pregnancy_outcome: data.pregnancy_outcome,
-      breastfeeding_asap: data.breastfeeding_asap,
-      baby_healthy: data.baby_healthy,
-      breastfeeding_date: data.breastfeeding_date,
-      // region:  ,
-      // province: ,
-      // muncity: ,
-      // barangay: 
-    });
+    this.is_saving = true;
+    this.postpartum_form.value.delivery_date = this.postpartum_form.value.delivery_date.replace("T", " ") + ':00';
+    this.postpartum_form.value.admission_date = this.postpartum_form.value.admission_date.replace("T", " ") + ':00';
+    this.postpartum_form.value.discharge_date = this.postpartum_form.value.discharge_date.replace("T", " ") + ':00';
+  console.log(this.postpartum_form.value.discharge_date);
+  
+    if (this.postpartum_form.valid) {
+
+      this.http.post('maternal-care/mc-postregistrations', this.postpartum_form.value).subscribe({
+        next: (data: any) => {
+          console.log(data.data, " data from saving postpartum")        
+        },
+        error: err => console.log(err),
+        complete: () => {
+          this.is_saving = false;
+          // this.saved = true;
+          setTimeout(() => {
+            // this.saved = false;
+          }, 1500);
+          // this.loading = false;
+          // this.showModal = true;
+        }
+      })
+    } else {
+      // this.loading = false;
+      console.log( "post partum form invalid");
+      
+    }
+
     console.log(this.postpartum_form.value, " data value");
     this.postpartum_bool.emit(this.postpartum_form.value);
   }
+
   bfdCheck(value) {
     this.bfd = !this.bfd;
   }
@@ -210,7 +216,7 @@ export class PostpartumComponent implements OnInit {
     }
 
     this.http.get('libraries/' + loc + '/' + code, { params: { 'include': include } }).subscribe({
-      next: (data: any) => { console.log(data.data); this[include] = data.data[include] },
+      next: (data: any) => { this[include] = data.data[include] },
       error: err => console.log(err)
     });
   }
