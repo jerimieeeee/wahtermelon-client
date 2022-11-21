@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { faSpinner, faFolderPlus, faSave, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faSpinner, faFolderPlus, faSave, faSearch, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 import { faClipboard } from '@fortawesome/free-regular-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { openCloseTrigger } from './declarations/animation';
@@ -18,6 +18,7 @@ export class PatientRegistrationComponent implements OnInit {
   faFolderPlus = faFolderPlus;
   faSave = faSave;
   faSearch = faSearch;
+  faPenToSquare = faPenToSquare;
 
   required_message = 'Required field';
   button_function: string = 'Save';
@@ -86,8 +87,16 @@ export class PatientRegistrationComponent implements OnInit {
   showModal:boolean = false;
   is_saving: boolean = false;
   loading: boolean = false;
-  address_disabled: boolean = true;
   familyFolderModal: boolean = false;
+
+  selected_family_folder: string;
+  selected_barangay_code: string;
+  selected_address: string;
+  selected_cct_date: string;
+  selected_cct_id: string;
+  selected_facility: string;
+  selected_members: any;
+  show_demog_input: boolean = true;
 
   constructor(
     private http: HttpService,
@@ -103,6 +112,7 @@ export class PatientRegistrationComponent implements OnInit {
 
   onSubmit(){
     console.log(this.patientForm);
+    this.patientForm.controls['family'].disable();
     this.is_saving = true;
     this.loading = true;
 
@@ -115,13 +125,14 @@ export class PatientRegistrationComponent implements OnInit {
       }
       query.subscribe({
         next: (data: any) => {
-          this.new_patient_id = data.data.id;
+          console.log(data)
+          this.new_patient_id = this.button_function === 'Update' ? this.patient_to_update : data.data.id;
           this.saveFolder(this.new_patient_id);
         },
         error: err => {
+          console.log(err)
           this.loading = false;
           this.submit_errors = err.error.errors;
-          console.log(err)
         },
         complete: () => {}
       })
@@ -136,14 +147,18 @@ export class PatientRegistrationComponent implements OnInit {
       facility_code: this.show_demog_input ? 'DOH000000000005672' : this.selected_facility,
       user_id: user_id,
       patient_id: id,
-      address: this.show_demog_input ? this.patientForm.value.family.address : this.selected_address,
-      barangay_code: this.show_demog_input ? this.patientForm.value.family.brgy : this.selected_barangay_code,
-      cct_date: this.show_demog_input ? this.patientForm.value.family.cct_date : this.selected_cct_date,
-      cct_id: this.show_demog_input ? this.patientForm.value.family.cct_id : this.selected_cct_id,
-      family_role_code: this.patientForm.value.family.is_head
+      address: this.show_demog_input ? this.patientForm.controls.family['controls'].address.value : this.selected_address,
+      barangay_code: this.show_demog_input ? this.patientForm.controls.family['controls'].brgy.value : this.selected_barangay_code,
+      cct_date: this.show_demog_input ? this.patientForm.controls.family['controls'].cct_date.value : this.selected_cct_date,
+      cct_id: this.show_demog_input ? this.patientForm.controls.family['controls'].cct_id.value : this.selected_cct_id,
+      family_role_code: this.patientForm.controls.family['controls'].is_head.value
     }
 
+    console.log(params);
+    console.log(this.selected_family_folder);
+    console.log(this.show_demog_input);
     let query;
+
     if(this.show_demog_input) {
       query = this.http.post('households/household-folders', params);
     } else {
@@ -157,11 +172,42 @@ export class PatientRegistrationComponent implements OnInit {
         this.showModal = true;
       },
       error: err => {
+        console.log(err)
         this.loading = false;
         this.submit_errors = err.error.errors;
-        console.log(err)
       }
     })
+  }
+
+
+  transaction(data){
+    console.log(data);
+    this.selected_family_folder = data.data ? data.data.id : null;
+    this.selected_barangay_code = data.data ? data.data.barangay_code : null;
+    this.selected_address = data.data ? data.data.address : null;
+    this.selected_cct_date = data.data ? data.data.cct_date : null;
+    this.selected_cct_id = data.data ? data.data.cct_id : null;
+    this.selected_facility = data.data ? data.data.facility_code : null;
+    this.selected_members = data.data ? data.data.household_member : null;
+
+    if (data.type === 'new'){
+      console.log('new');
+      this.isDisabled(false);
+      this.show_demog_input = true;
+    } else {
+      this.patientForm.controls['family']['controls']['is_head'].enable();
+      this.show_demog_input = false;
+    }
+  }
+
+  isDisabled(value: boolean, data?){
+    if(value) {
+      this.patientForm.controls['family'].disable();
+      if(data === 'edit_folder') this.selected_family_folder = null;
+    } else {
+      this.patientForm.controls['family'].enable();
+      if(data === 'edit_folder') this.selected_family_folder = '1';
+    }
   }
 
   newPatient(){
@@ -172,6 +218,18 @@ export class PatientRegistrationComponent implements OnInit {
 
   proceedItr(){
     this.router.navigate(['/itr', {id: this.new_patient_id}])
+  }
+
+  toggleModal(modal){
+    console.log(modal);
+    switch (modal){
+      case 'family-folder-modal':
+        this.familyFolderModal = !this.familyFolderModal;
+        break;
+      case 'save-modal':
+        this.showModal = !this.showModal;
+        break;
+    }
   }
 
   loadDemog(loc, code, include){
@@ -197,54 +255,10 @@ export class PatientRegistrationComponent implements OnInit {
     });
   }
 
-  toggleModal(modal){
-    console.log(modal);
-    switch (modal){
-      case 'family-folder-modal':
-        this.familyFolderModal = !this.familyFolderModal;
-        break;
-      case 'save-modal':
-        this.showModal = !this.showModal;
-        break;
-    }
-    // this.showModal = !this.showModal;
-  }
-
-  selected_family_folder: string;
-  selected_barangay_code: string;
-  selected_address: string;
-  selected_cct_date: string;
-  selected_cct_id: string;
-  selected_facility: string;
-  selected_members: any;
-  show_demog_input: boolean = true;
-
-  transaction(data){
-    console.log(data);
-    this.selected_family_folder = data.data ? data.data.id : null;
-    this.selected_barangay_code = data.data ? data.data.barangay_code : null;
-    this.selected_address = data.data ? data.data.address : null;
-    this.selected_cct_date = data.data ? data.data.cct_date : null;
-    this.selected_cct_id = data.data ? data.data.cct_id : null;
-    this.selected_facility = data.data ? data.data.facility_code : null;
-    this.selected_members = data.data ? data.data.household_member : null;
-
-    if (data.type === 'new'){
-      console.log('new');
-      this.isDisabled(false);
-      this.show_demog_input = true;
-    } else {
-      this.patientForm.controls['family']['controls']['is_head'].enable();
-      this.show_demog_input = false;
-      console.log(this.patientForm);
-    }
-  }
-
   loadPatient(id){
-    // console.log(id);
     this.http.get('patient/'+id).subscribe({
       next: (data: any) => {
-        // console.log(data);
+        console.log(data);
         this.patientForm.patchValue({...data.data});
         this.patient_to_update = data.data.id;
         // console.log(this.patientForm);
@@ -252,18 +266,6 @@ export class PatientRegistrationComponent implements OnInit {
       },
       error: err => console.log(err)
     })
-  }
-
-  isDisabled(value: boolean){
-    if(value) {
-      this.patientForm.controls['family'].disable();
-    } else {
-      this.patientForm.controls['family'].enable();
-    }
-  }
-
-  openFolder(){
-    this.isDisabled(false);
   }
 
   ngOnInit(): void {
@@ -298,12 +300,12 @@ export class PatientRegistrationComponent implements OnInit {
 
     this.date = new Date().toISOString().slice(0,10);
     this.loadLibraries();
-   /*  console.log(this.patientForm); */
 
     if(this.router.url.split(';')[0] === '/edit-patient') {
       this.loadPatient(this.router.url.split('=')[1]);
+      this.isDisabled(true);
     } else{
-      this.isDisabled(this.address_disabled);
+      this.isDisabled(true);
     }
   }
 }

@@ -15,6 +15,9 @@ import { AllergiesModalComponent } from 'app/components/patient-info/modals/alle
 import { VaccineActionModalComponent } from 'app/components/patient-info/modals/vaccine-action-modal/vaccine-action-modal.component';
 import { VitalsListModalComponent } from 'app/components/patient-info/modals/vitals-list-modal/vitals-list-modal.component';
 import { ModuleModalComponent } from 'app/components/patient-info/modals/module-modal/module-modal.component';
+import { PhilhealthModalComponent } from 'app/components/patient-info/modals/philhealth-modal/philhealth-modal.component';
+import { PhilhealthListModalComponent } from 'app/components/patient-info/modals/philhealth-list-modal/philhealth-list-modal.component';
+import { NgxMaskModule } from 'ngx-mask';
 
 
 
@@ -31,14 +34,17 @@ import { ModuleModalComponent } from 'app/components/patient-info/modals/module-
     AllergiesModalComponent,
     VaccineActionModalComponent,
     VitalsListModalComponent,
-    ModuleModalComponent
+    ModuleModalComponent,
+    PhilhealthModalComponent,
+    PhilhealthListModalComponent
   ],
   imports: [
     CommonModule,
     FontAwesomeModule,
     NgApexchartsModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    NgxMaskModule.forRoot()
   ],
   exports: [
     PatientInfoComponent,
@@ -52,7 +58,9 @@ import { ModuleModalComponent } from 'app/components/patient-info/modals/module-
     AllergiesModalComponent,
     VaccineActionModalComponent,
     VitalsListModalComponent,
-    ModuleModalComponent
+    ModuleModalComponent,
+    PhilhealthModalComponent,
+    PhilhealthListModalComponent
   ]
 })
 export class SharedComponentsModule { }

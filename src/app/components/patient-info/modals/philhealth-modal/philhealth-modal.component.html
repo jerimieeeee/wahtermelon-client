@@ -1,0 +1,226 @@
+<!-- <div id="defaultModal" tabindex="-1" class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 w-full md:inset-0 h-modal md:h-full justify-center items-center flex" aria-modal="true" role="dialog" style="z-index:60">
+  <div class="relative p-4 w-full max-w-3xl h-auto md:h-auto">
+    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+      <div class="flex justify-between items-start py-3 px-5 rounded-t border-b bg-blue-500 dark:border-gray-600">
+        <h3 class="mt-2 text-sm font-bold text-white dark:text-white">
+            Philhealth Information
+        </h3>
+      </div>
+      <div class="overflow-y-auto h-96 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
+        <form [formGroup]="philhealthForm" class="w-full max-w-3xl text-left text-gray-500 dark:text-gray-400">
+          <div class="flex item-start flex-wrap pb-5">
+            <div class="flex justify-between w-full px-5 mt-3 rounded-tl rounded-tr">
+              <h4 class="font-bold text-blue-500 text-sm mt-2">Enlistment Date</h4>
+            </div>
+
+            <div class="flex px-5 w-full  justify-center">
+              <div class="flex text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
+                <input name="vitals_date_temp" id="vitals_date_temp" formControlName="vitals_date_temp" max="{{ date | date: 'yyyy-MM-dd'}}" type="date" placeholder="mm/dd/yyyy" class="mt-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input">
+              </div>
+            </div>
+          </div>
+          <div class="text-gray-600 border border-slate-100 mx-5"></div>
+
+          <div class="flex item-start flex-wrap pb-5">
+            <div class="flex justify-between w-full px-5 mt-3 rounded-tl rounded-tr">
+              <h4 class="font-bold text-blue-500 text-sm mt-2">Details</h4>
+            </div>
+
+            <div class="flex px-5 w-full">
+              <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
+                <label class="font-semibold" for="philhealth_number">Philhealth number</label>
+                <input name="philhealth_number" id="philhealth_number" formControlName="philhealth_number" mask="99-999999999-9" [showMaskTyped]="true" type="text" class="mt-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+
+                <div *ngIf="is_saving && f.philhealth_number.errors" class="invalid-alert">
+                  <div *ngIf="f.philhealth_number.errors?.['required']">
+                    {{ required_message }}
+                  </div>
+
+                  <div *ngIf="is_saving && f.philhealth_number.errors?.['minLength']">
+                    Philhealth number must be 12 characters
+                  </div>
+                </div>
+              </div>
+
+              <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
+                <label class="font-semibold" for="philhealth_number_confirmation">Confirm philhealth number</label>
+                <input name="philhealth_number_confirmation" id="philhealth_number_confirmation" formControlName="philhealth_number_confirmation" mask="99-999999999-9" [showMaskTyped]="true" type="text" class="mt-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+
+                <div *ngIf="philhealthMatchError" class="invalid-alert">
+                  <div>
+                    Philhealth number does not match
+                  </div>
+                </div>
+
+                <div *ngIf="is_saving && f.philhealth_number_confirmation.errors" class="invalid-alert">
+                  <div *ngIf="f.philhealth_number_confirmation.errors?.['required']">
+                    {{ required_message }}
+                  </div>
+
+                  <div *ngIf="f.philhealth_number.errors?.['minLength']">
+                    Philhealth number must be 12 characters
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex px-5 w-full">
+              <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
+                <label class="font-semibold" for="patient_height">Member Type</label>
+                <select id="member_type" name="member_type" class="member_type" [ngClass]="{'invalid-input': is_saving && f.member_type.errors}" formControlName="gender">
+                  <option value="1">Member</option>
+                  <option value="2">Dependent</option>
+                  <option value="3">Non-member</option>
+                </select>
+
+                <div *ngIf="is_saving && f.member_type.errors" class="invalid-alert">
+                  <div *ngIf="f.member_type.errors?.['required']">
+                    {{ required_message }}
+                  </div>
+                </div>
+              </div>
+
+              <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
+                <label class="font-semibold" for="patient_height">Member Cat</label>
+                <select id="member_cat" name="member_cat" class="member_cat" [ngClass]="{'invalid-input': is_saving && f.member_cat.errors}" formControlName="gender">
+                  <option value="1">Private</option>
+                  <option value="2">Employed</option>
+                </select>
+
+                <div *ngIf="is_saving && f.member_cat.errors" class="invalid-alert">
+                  <div *ngIf="f.member_cat.errors?.['required']">
+                    {{ required_message }}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex px-5 w-full">
+              <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
+                <label class="font-semibold" for="patient_waist">Waist Circumference (Centimeters)</label>
+                <input name="patient_waist" id="patient_waist" formControlName="patient_waist" type="number" placeholder="Centimeters" class="mt-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+
+                <div *ngIf="is_saving && f.patient_waist.errors" class="invalid-alert">
+                  <div *ngIf="is_saving && f.patient_waist.errors?.['max']">
+                    {{ error_message + ' (' + f.patient_waist.errors.max.max + ')'}}
+                  </div>
+                </div>
+              </div>
+
+              <div *ngIf="showChildVitals" class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
+                <label class="font-semibold" for="patient_head_circumference">Head Circumference(Centimeters)</label>
+                <input name="patient_head_circumference" id="patient_head_circumference" formControlName="patient_head_circumference" (input)="cmToInch()" type="number" placeholder="Centimeters" class="mt-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+
+                <div *ngIf="is_saving && f.patient_head_circumference.errors" class="invalid-alert">
+                  <div *ngIf="is_saving && f.patient_head_circumference.errors?.['max']">
+                    {{ error_message + ' (' + f.patient_head_circumference.errors.max.max + ')'}}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex px-5 w-full">
+              <div *ngIf="showChildVitals" class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
+                <label class="font-semibold" for="patient_muac">MUAC (Centimeters)</label>
+                <input name="patient_muac" id="patient_muac" formControlName="patient_muac" (input)="cmToInch()" type="number" placeholder="Centimeters" class="mt-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+
+                <div *ngIf="is_saving && f.patient_muac.errors" class="invalid-alert">
+                  <div *ngIf="is_saving && f.patient_muac.errors?.['max']">
+                    {{ error_message + ' (' + f.patient_muac.errors.max.max + ')'}}
+                  </div>
+                </div>
+              </div>
+
+              <div *ngIf="showChildVitals" class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
+                <label class="font-semibold" for="patient_limbs">Limbs (Centimeters)</label>
+                <input name="patient_limbs" id="patient_limbs" formControlName="patient_limbs" (input)="cmToInch()" type="number" placeholder="Centimeters" class="mt-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+
+                <div *ngIf="is_saving && f.patient_limbs.errors" class="invalid-alert">
+                  <div *ngIf="is_saving && f.patient_limbs.errors?.['max']">
+                    {{ error_message + ' (' + f.patient_limbs.errors.max.max + ')'}}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex px-5 w-full">
+
+              <div *ngIf="showChildVitals" class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
+                <label class="font-semibold" for="patient_skinfold_thickness">Skinfold Thickness (Centimeters)</label>
+                <input name="patient_skinfold_thickness" id="patient_skinfold_thickness" formControlName="patient_skinfold_thickness" (input)="cmToInch()" type="number" placeholder="Centimeters" class="mt-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+
+                <div *ngIf="is_saving && f.patient_skinfold_thickness.errors" class="invalid-alert">
+                  <div *ngIf="is_saving && f.patient_skinfold_thickness.errors?.['max']">
+                    {{ error_message + ' (' + f.patient_skinfold_thickness.errors.max.max + ')'}}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex px-5 w-full">
+              <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
+                <label class="font-semibold" for="bp_systolic">Blood Pressure</label>
+                <div class="flex">
+                  <input name="bp_systolic" id="bp_systolic" formControlName="bp_systolic" type="number" placeholder="Systolic" class="md:w-1/2 lg:w-1/2 mt-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                  <input name="bp_diastolic" id="bp_diastolic" formControlName="bp_diastolic" type="number" placeholder="Diastolic" class="md:w-1/2 lg:w-1/2 mt-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                </div>
+              </div>
+
+
+              <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
+                <label class="font-semibold" for="patient_heart_rate">Heart Rate</label>
+                <input name="patient_heart_rate" id="patient_heart_rate" formControlName="patient_heart_rate" type="number" placeholder="Beats per minute" class="mt-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input">
+
+                <div *ngIf="is_saving && f.patient_heart_rate.errors" class="invalid-alert">
+                  <div *ngIf="is_saving && f.patient_heart_rate.errors?.['max']">
+                    {{ error_message + ' (' + f.patient_heart_rate.errors.max.max + ')'}}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex px-5 w-full">
+              <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
+                <label class="font-semibold" for="patient_pulse_rate">Pulse Rate</label>
+                <input name="patient_pulse_rate" id="patient_pulse_rate" formControlName="patient_pulse_rate" type="text" placeholder="Beats per minute" class="mt-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input">
+
+                <div *ngIf="is_saving && f.patient_pulse_rate.errors" class="invalid-alert">
+                  <div *ngIf="is_saving && f.patient_pulse_rate.errors?.['max']">
+                    {{ error_message + ' (' + f.patient_pulse_rate.errors.max.max + ')'}}
+                  </div>
+                </div>
+              </div>
+
+              <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
+                <label class="font-semibold" for="patient_respiratory_rate">Respiratory Rate</label>
+                <input name="patient_respiratory_rate" id="patient_respiratory_rate" formControlName="patient_respiratory_rate" type="number" placeholder="Breaths per minute" class="mt-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input">
+
+                <div *ngIf="is_saving && f.patient_respiratory_rate.errors" class="invalid-alert">
+                  <div *ngIf="is_saving && f.patient_respiratory_rate.errors?.['max']">
+                    {{ error_message + ' (' + f.patient_respiratory_rate.errors.max.max + ')'}}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="text-gray-600 border border-slate-100 mx-5"></div>
+
+
+        </form>
+
+
+      </div>
+      <div class="flex justify-end py-4 px-5 space-x-4 rounded-b border-t border-gray-200 dark:border-gray-600">
+        <div [@openCloseTrigger] *ngIf="showAlert" class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 my-1 rounded h-11 relative w-64 justify-start" role="alert">
+          <span class="block sm:inline">Record was updated.</span>
+        </div>
+
+        <button  type="button" class="text-white bg-orange-500 hover:ring-2 focus:outline-none hover:ring-orange-300 rounded text-sm font-medium my-2 px-6 py-2.5 transition duration-150 ease-in-out" (click)="closeModal()">Close</button>
+        <button  [disabled]="philhealthForm.pristine" type="button" class="text-white bg-blue-500 enabled:hover:ring-2 enabled:focus:outline-none enabled:hover:ring-blue-300 disabled:opacity-75 font-medium rounded text-sm my-2 px-6 py-2.5 text-center transition duration-150 ease-in-out" (click)="onSubmit()" >Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="opacity-50 fixed inset-0 z-50 bg-black"></div>
+ -->

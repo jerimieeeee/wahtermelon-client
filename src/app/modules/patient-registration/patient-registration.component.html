@@ -232,9 +232,13 @@
             <div class="col-span-8 font-semibold text-blue-500">
               <span class="-ml-5 mr-5">Address Information</span>
 
-              <button type="button" class="col-span-8 rounded-full text-white bg-sky-500 hover:bg-sky-600 active:bg-sky-400 focus:bg-sky-600 px-2 py-1 text-sm" (click)="toggleModal('family-folder-modal')">
+              <button type="button" class="col-span-8 w-24 rounded-md text-white bg-sky-500 hover:bg-sky-600 active:bg-sky-400 focus:bg-sky-600 px-2 py-1 text-sm" (click)="toggleModal('family-folder-modal')">
                 <fa-icon class="mr-1" [icon]="faSearch"></fa-icon>
                 Search
+              </button>
+              <button type="button" class="ml-2 w-24 col-span-8 rounded-md text-white bg-amber-500 hover:bg-amber-600 active:bg-amber-400 focus:bg-amber-600 px-2 py-1 text-sm" (click)="isDisabled((f['family'].enabled ? true : false), 'edit_folder')">
+                <fa-icon class="mr-1" [icon]="faPenToSquare"></fa-icon>
+                {{ f['family'].enabled ? 'Cancel' : 'Edit'}}
               </button>
             </div>
 
@@ -388,11 +392,14 @@
           <span>Record was saved/updated succesfully.</span>
       </div>
       <div class="flex items-center justify-end p-3 rounded-b">
-        <button class="bg-blue-500 text-white active:bg-blue-500 hover:bg-blue-600 text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button" (click)="newPatient()">
+        <button *ngIf="!patient_to_update" class="bg-blue-500 text-white active:bg-blue-500 hover:bg-blue-600 text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button" (click)="newPatient()">
           <fa-icon class="mr-3" [icon]="faFolderPlus"></fa-icon>New Patient
         </button>
-        <button class="bg-amber-500 text-white active:bg-amber-500 hover:bg-amber-600 text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button" (click)="proceedItr()">
+        <button *ngIf="!patient_to_update" class="bg-amber-500 text-white active:bg-amber-500 hover:bg-amber-600 text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button" (click)="proceedItr()">
           <fa-icon class="mr-3" [icon]="faClipboard"></fa-icon>Open ITR
+        </button>
+        <button *ngIf="patient_to_update" class="bg-blue-500 text-white active:bg-blue-500 hover:bg-blue-600 text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button" (click)="toggleModal('save-modal')">
+          Ok
         </button>
       </div>
     </div>

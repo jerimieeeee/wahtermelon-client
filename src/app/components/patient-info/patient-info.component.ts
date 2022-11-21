@@ -39,6 +39,8 @@ export class PatientInfoComponent {
   deathRecordModal: boolean = false;
   vitalsListModal: boolean = false;
   moduleModal: boolean = false;
+  philhealthModal: boolean = false;
+  philhealthListModal: boolean = false;
 
   vaccines_given: any;
   vaccine_list: any = [];
@@ -46,6 +48,7 @@ export class PatientInfoComponent {
   patient_age: any;
   latest_vitals: any;
   vitals_to_edit: any;
+  philhealth_to_edit: any;
 
   constructor(
     private activeRoute: ActivatedRoute,
@@ -76,6 +79,7 @@ export class PatientInfoComponent {
         this.patientInfo.emit(data.data);
         this.loadVaccines();
         this.loadVitals();
+        this.toggleModal('philhealth-modal');//open sample modal
         // console.log(data.data)
       },
       error: err => {
@@ -221,6 +225,11 @@ export class PatientInfoComponent {
     this.toggleModal('vitals-modal');
   }
 
+  philhealthEdit(e){
+    this.philhealth_to_edit = e;
+    this.toggleModal('philhealth-modal');
+  }
+
   getInitials(string) {
     return [...string.matchAll(/\b\w/g)].join('')
   }
@@ -264,6 +273,14 @@ export class PatientInfoComponent {
         break;
       case 'module-modal':
         this.moduleModal = !this.moduleModal;
+        break;
+      case 'philhealth-modal':
+        this.philhealthModal = !this.philhealthModal;
+        if(this.philhealthModal == false)  this.philhealth_to_edit = null;
+        this.loadVitals();
+        break;
+      case 'philhealth-list-modal':
+        this.philhealthListModal = !this.philhealthListModal;
         break;
       default:
         break;

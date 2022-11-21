@@ -60,11 +60,17 @@
       </div>
 
       <div class="mt-4 leading-tight">
-        <span class="block text-blue-500 font-medium text-sm">
-          PHILHEALTH
-        </span>
+        <div class="flex justify-between items-center">
+          <span class="block text-blue-500 font-medium text-sm">
+            PHILHEALTH
+          </span>
+          <span>
+            <!-- <fa-icon (click)="toggleModal('philhealth-modal')" class="mx-0 my-0 text-green-500 mr-2 hover:cursor-pointer" [icon]="faTableList"></fa-icon> -->
+            <!-- <fa-icon (click)="toggleModal('vitals-modal')" class="mx-0 my-0 text-blue-500 mr-2 hover:cursor-pointer" [icon]="faPlusCircle"></fa-icon> -->
+          </span>
+        </div>
         <span class="block text-xs text-red-500">
-          00-000000000-0 (12/31/2019)
+          -
         </span>
       </div>
     </div>
@@ -443,5 +449,13 @@
 
 <div *ngIf="moduleModal">
   <app-module-modal (toggleModal)="toggleModal('module-modal')" [patient_info]="patient_info" ></app-module-modal>
+</div>
+
+<div *ngIf="philhealthModal">
+  <app-philhealth-modal (toggleModal)="toggleModal('philhealth-modal')" [patient_info]="patient_info" ></app-philhealth-modal>
+</div>
+
+<div *ngIf="philhealthListModal">
+  <app-philhealth-list-modal (toggleModal)="toggleModal('philhealth-list-modal')" [patient_info]="patient_info" ></app-philhealth-list-modal>
 </div>
 
