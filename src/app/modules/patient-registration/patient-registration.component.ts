@@ -111,7 +111,7 @@ export class PatientRegistrationComponent implements OnInit {
   submit_errors: any;
 
   onSubmit(){
-    console.log(this.patientForm);
+    // console.log(this.patientForm);
     this.patientForm.controls['family'].disable();
     this.is_saving = true;
     this.loading = true;
@@ -125,7 +125,7 @@ export class PatientRegistrationComponent implements OnInit {
       }
       query.subscribe({
         next: (data: any) => {
-          console.log(data)
+          // console.log(data)
           this.new_patient_id = this.button_function === 'Update' ? this.patient_to_update : data.data.id;
           this.saveFolder(this.new_patient_id);
         },
@@ -154,19 +154,17 @@ export class PatientRegistrationComponent implements OnInit {
       family_role_code: this.patientForm.controls.family['controls'].is_head.value
     }
 
-    console.log(params);
-    console.log(this.selected_family_folder);
-    console.log(this.show_demog_input);
     let query;
 
-    if(this.show_demog_input) {
+    if(this.show_demog_input && !this.selected_family_folder) {
+      params['status'] = 'new';
       query = this.http.post('households/household-folders', params);
     } else {
       query = this.http.update('households/household-folders/', this.selected_family_folder, params);
     }
     query.subscribe({
       next: (data: any) => {
-        console.log(data);
+        // console.log(data);
         this.is_saving = false;
         this.loading = false;
         this.showModal = true;
@@ -179,9 +177,10 @@ export class PatientRegistrationComponent implements OnInit {
     })
   }
 
+  show_edit: boolean = false;
 
   transaction(data){
-    console.log(data);
+    // console.log(data);
     this.selected_family_folder = data.data ? data.data.id : null;
     this.selected_barangay_code = data.data ? data.data.barangay_code : null;
     this.selected_address = data.data ? data.data.address : null;
@@ -191,10 +190,11 @@ export class PatientRegistrationComponent implements OnInit {
     this.selected_members = data.data ? data.data.household_member : null;
 
     if (data.type === 'new'){
-      console.log('new');
       this.isDisabled(false);
+      this.show_edit = false;
       this.show_demog_input = true;
     } else {
+      this.show_edit = false;
       this.patientForm.controls['family']['controls']['is_head'].enable();
       this.show_demog_input = false;
     }
@@ -203,10 +203,13 @@ export class PatientRegistrationComponent implements OnInit {
   isDisabled(value: boolean, data?){
     if(value) {
       this.patientForm.controls['family'].disable();
-      if(data === 'edit_folder') this.selected_family_folder = null;
+      if(data === 'edit_folder') {
+        this.selected_family_folder = null;
+        this.patchAddress(this.orig_data.household_folder, this.orig_data.household_member);
+      }
     } else {
       this.patientForm.controls['family'].enable();
-      if(data === 'edit_folder') this.selected_family_folder = '1';
+      // if(data === 'edit_folder') this.selected_family_folder = '1';
     }
   }
 
@@ -221,7 +224,7 @@ export class PatientRegistrationComponent implements OnInit {
   }
 
   toggleModal(modal){
-    console.log(modal);
+    // console.log(modal);
     switch (modal){
       case 'family-folder-modal':
         this.familyFolderModal = !this.familyFolderModal;
@@ -241,7 +244,7 @@ export class PatientRegistrationComponent implements OnInit {
     }
 
     this.http.get('libraries/'+loc+'/'+code,{params:{'include':include}}).subscribe({
-      next: (data: any) => {console.log(data.data); this[include] = data.data[include]},
+      next: (data: any) => {/* console.log(data.data); */ this[include] = data.data[include]},
       error: err => console.log(err)
     });
   }
@@ -255,6 +258,7 @@ export class PatientRegistrationComponent implements OnInit {
     });
   }
 
+  orig_data: any;
   loadPatient(id){
     this.http.get('patient/'+id).subscribe({
       next: (data: any) => {
@@ -263,16 +267,18 @@ export class PatientRegistrationComponent implements OnInit {
         this.patient_to_update = data.data.id;
         // console.log(this.patientForm);
         this.button_function = 'Update';
-
+        this.orig_data = data.data;
         //load demog
-        this.patchAddress(data.data.address);
+        this.patchAddress(this.orig_data.household_folder, this.orig_data.household_member);
 
       },
       error: err => console.log(err)
     })
   }
 
-  patchAddress(address){
+  member_count: number;
+  patchAddress(address, member){
+    // console.log(address);
     this.patientForm.patchValue({family:{address: address.address}});
 
     this.loadDemog('regions', address.barangay.region.code, 'provinces');
@@ -285,6 +291,12 @@ export class PatientRegistrationComponent implements OnInit {
     this.patientForm.patchValue({family:{municipality: address.barangay.municipality.code}});
 
     this.patientForm.patchValue({family:{brgy: address.barangay.code}});
+    this.patientForm.patchValue({family:{cct_id: address.cct_id}});
+    if(address.cct_id) this.patientForm.patchValue({family:{cct_date: address.cct_date}});
+    this.patientForm.patchValue({family:{brgy: address.barangay.code}});
+    this.patientForm.patchValue({family:{is_head: member.family_role_code}});
+
+    this.selected_family_folder = address.id;
     this.isDisabled(true);
   }
 
@@ -322,6 +334,7 @@ export class PatientRegistrationComponent implements OnInit {
     this.loadLibraries();
 
     if(this.router.url.split(';')[0] === '/edit-patient') {
+      this.show_edit = true;
       this.loadPatient(this.router.url.split('=')[1]);
     } else{
       this.isDisabled(true);
