@@ -263,9 +263,29 @@ export class PatientRegistrationComponent implements OnInit {
         this.patient_to_update = data.data.id;
         // console.log(this.patientForm);
         this.button_function = 'Update';
+
+        //load demog
+        this.patchAddress(data.data.address);
+
       },
       error: err => console.log(err)
     })
+  }
+
+  patchAddress(address){
+    this.patientForm.patchValue({family:{address: address.address}});
+
+    this.loadDemog('regions', address.barangay.region.code, 'provinces');
+    this.patientForm.patchValue({family:{region: address.barangay.region.code}});
+
+    this.loadDemog('provinces', address.barangay.province.code, 'municipalities');
+    this.patientForm.patchValue({family:{province: address.barangay.province.code}});
+
+    this.loadDemog('municipalities', address.barangay.municipality.code, 'barangays');
+    this.patientForm.patchValue({family:{municipality: address.barangay.municipality.code}});
+
+    this.patientForm.patchValue({family:{brgy: address.barangay.code}});
+    this.isDisabled(true);
   }
 
   ngOnInit(): void {
@@ -303,7 +323,6 @@ export class PatientRegistrationComponent implements OnInit {
 
     if(this.router.url.split(';')[0] === '/edit-patient') {
       this.loadPatient(this.router.url.split('=')[1]);
-      this.isDisabled(true);
     } else{
       this.isDisabled(true);
     }
