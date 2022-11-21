@@ -1,3 +1,4 @@
+import { formatDate } from '@angular/common';
 import { Component, ComponentFactoryResolver, EventEmitter, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { faFlask, faHeart, faExclamationCircle, faNotesMedical, faPlusCircle, faQuestionCircle, faPenToSquare, faTrash, faTableList, faPenSquare } from '@fortawesome/free-solid-svg-icons';
@@ -176,7 +177,39 @@ export class PatientInfoComponent {
         this.latest_vitals.patient_weight = val.patient_weight;
       }
 
-      if(this.latest_vitals.patient_height > 0 && this.latest_vitals.patient_weight > 0){
+      let vitals_date = formatDate(val.vitals_date, 'Y-M-dd','en', 'en')
+      let date_today = formatDate(new Date(), 'Y-M-dd','en', 'en')
+      console.log(vitals_date, date_today)
+      if(vitals_date === date_today){
+        if(!this.latest_vitals.bp_systolic && val.bp_systolic){
+          this.latest_vitals.bp_systolic = val.bp_systolic;
+          this.latest_vitals.bp_diastolic = val.bp_diastolic;
+        }
+
+        if(!this.latest_vitals.patient_temp && val.patient_temp){
+          this.latest_vitals.patient_temp = val.patient_temp;
+        }
+
+        if(!this.latest_vitals.patient_heart_rate && val.patient_heart_rate){
+          this.latest_vitals.patient_heart_rate = val.patient_heart_rate;
+        }
+
+        if(!this.latest_vitals.patient_respiratory_rate && val.patient_respiratory_rate){
+          this.latest_vitals.patient_respiratory_rate = val.patient_respiratory_rate;
+        }
+
+        if(!this.latest_vitals.patient_pulse_rate && val.patient_pulse_rate){
+          this.latest_vitals.patient_pulse_rate = val.patient_pulse_rate;
+        }
+
+        if(!this.latest_vitals.patient_waist && val.patient_waist){
+          this.latest_vitals.patient_waist = val.patient_waist;
+        }
+      }
+      if(this.latest_vitals.patient_height > 0 && this.latest_vitals.patient_weight > 0 &&
+        this.latest_vitals.bp_systolic > 0 && this.latest_vitals.patient_heart_rate > 0 &&
+        this.latest_vitals.patient_respiratory_rate > 0 && this.latest_vitals.patient_pulse_rate > 0 &&
+        this.latest_vitals.patient_waist > 0){
         return false;
       }
       return true;
