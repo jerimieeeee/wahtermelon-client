@@ -15,6 +15,7 @@ export class MaternalcareComponent implements OnInit {
   public mcr_data: any;
   patient_mc_record: any;
   prenatal: boolean;
+  services: boolean;
   constructor(private http: HttpService) { }
   module: number;
 
@@ -58,6 +59,7 @@ export class MaternalcareComponent implements OnInit {
           if (this.patient_mc_record.length != 0) {
             // if (this.patient_mc_record[0].pre_registration) {
               this.prenatal = true;
+              this.services = true;
             // }
           }
           // this.module = 2;

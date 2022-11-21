@@ -18,7 +18,7 @@
           <a class="select-none inline-block p-4 rounded-t-lg border-b-2 hover:text-blue-400 hover:font-semibold hover:border-blue-400"
             [class]="module != 4? '' : 'text-blue-400 font-semibold border-blue-400'" (click)="switchTab(4)">Postpartum</a>
         </li>
-        <li class="mr-2" *ngIf="patient_details && patient_mc_record">
+        <li class="mr-2" *ngIf="patient_details && patient_mc_record && services">
           <a class="select-none inline-block p-4 rounded-t-lg border-b-2 hover:text-blue-400 hover:font-semibold hover:border-blue-400"
             [class]="module != 5? '' : 'text-blue-400 font-semibold border-blue-400'" (click)="switchTab(5)">Services</a>
         </li>
