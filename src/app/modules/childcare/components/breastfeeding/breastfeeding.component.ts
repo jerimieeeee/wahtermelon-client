@@ -202,7 +202,7 @@ export class BreastfeedingComponent implements OnInit {
       // bfed_month6: this.groupList[5] == 1 ? 1:0,
       bfed_month6: this.groupList[5],
       reason_id: this.patient_breastfed.ebfreasons.reason_id,
-      ebf_date: this.ebf_date,
+      ebf_date: this.patient_breastfed.ebf_date,
     }
 
     console.log(bfedmonths);

@@ -35,8 +35,8 @@ export class ChildcareComponent implements OnInit {
   
     let endbutton = {
       consult_done: 1,
-      patient_id : this.consult_details[0].patient_id,
-      user_id : this.consult_details[0].user_id.id,
+      patient_id : this.consult_details[0].patient.id,
+      user_id : this.consult_details[0].user.id,
       consult_date : this.consult_details[0].consult_date,
       pt_group : this.consult_details[0].pt_group
     }
