@@ -37,20 +37,21 @@
             </thead>
             <tbody>
               <tr *ngFor="let household of household_list; let odd = odd; let i = index" class="bg-white border-t">
-                <th *ngIf="household.household_member.length > 0" scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
-                  {{ household.address }}
+                <th *ngIf="household.household_member.length > 0" scope="row" class="py-4 px-6 font-medium text-gray-900 align-top w-4/12">
+                  {{ household.address }}, {{ 'Brgy. '+household.barangay.name }}, {{ household.barangay.municipality.name }}
+                  {{ household.barangay.province.name }}
                 </th>
-                <td *ngIf="household.household_member.length > 0" class="py-4 px-6">
+                <td *ngIf="household.household_member.length > 0" class="py-4 px-6 w-4/12">
                   <span class="block" *ngFor="let member of household.household_member">
                     {{ member.patient.last_name }}, {{ member.patient.first_name }} {{ member.patient.middle_name === 'NA' ? '' : member.patient.middle_name }} {{ member.patient.suffix_name === 'NA' ? '' : member.patient.suffix_name }}
                   </span>
                 </td>
-                <td *ngIf="household.household_member.length > 0" class="py-4 px-6">
+                <td *ngIf="household.household_member.length > 0" class="py-4 px-6 w-2/12">
                   <span class="block" *ngFor="let member of household.household_member">
-                    {{ member.patient.mobile_number }}
+                    {{ member.patient.mobile_number ? member.patient.mobile_number : '-' }}
                   </span>
                 </td>
-                <td *ngIf="household.household_member.length > 0" class="py-4 px-6">
+                <td *ngIf="household.household_member.length > 0" class="py-4 px-6 w-1/12 justify-center">
                   -
                 </td>
                 <!-- <td class="py-4 px-6">

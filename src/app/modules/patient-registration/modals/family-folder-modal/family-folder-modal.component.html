@@ -31,7 +31,7 @@
               <th colspan="3" class="italic text-center">No records found.</th>
             </tr>
             <tr class="bg-white border-b"*ngFor="let family of family_list" >
-              <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap align-top">
+              <th scope="row" class="py-4 px-6 font-medium text-gray-900 align-top">
                 {{ family.address }}, {{ 'Brgy. '+family.barangay.name }}, {{ family.barangay.municipality.name }}, {{ family.barangay.province.name }}
               </th>
               <td class="py-4 px-6">
