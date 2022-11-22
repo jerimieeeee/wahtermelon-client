@@ -68,7 +68,7 @@ export class MaternalcareComponent implements OnInit {
             // if (this.patient_mc_record[0].pre_registration) {
               this.prenatal = true;
               this.services = true;
-              if(this.patient_mc_record[0].postpartum_visit.length != 0){
+              if(this.patient_mc_record[0].post_registration.length != 0){
                 this.post_value = true;
               }
             // }
