@@ -42,7 +42,7 @@ export class PhilhealthModalComponent implements OnInit {
     member_gender: new FormControl<string| null>(''),
     member_relation_id: new FormControl<string| null>(''),
     employer_pin: new FormControl<string| null>(''),
-    // employer_name: new FormControl<string| null>(''),
+    employer_name: new FormControl<string| null>(''),
     employer_address: new FormControl<string| null>(''),
     member_pin_confirmation: new FormControl<string| null>(''),
     philhealth_id_confirmation: new FormControl<string| null>(''),
@@ -62,14 +62,27 @@ export class PhilhealthModalComponent implements OnInit {
   member_relationships: any;
   suffix_names: any;
 
-
   onSubmit(){
     this.is_saving = true;
-    console.log(this.philhealthForm)
     this.philhealthForm.patchValue({effectivity_year: formatDate(this.philhealthForm.value.enlistment_date, 'yyyy', 'en')})
-    this.http.post('patient-philhealth/philhealth', this.philhealthForm.value).subscribe({
+
+    let query;
+
+    if(this.philhealth_to_edit){
+      query = this.http.update('patient-philhealth/philhealth/', this.philhealth_to_edit.id, this.philhealthForm.value);
+    } else {
+      query = this.http.post('patient-philhealth/philhealth', this.philhealthForm.value);
+    }
+
+    query.subscribe({
       next: (data: any) => {
         console.log(data)
+        this.showAlert = true;
+        this.philhealthForm.markAsPristine();
+        this.philhealthForm.disable();
+        setTimeout(() => {
+          this.showAlert = false;
+        }, 3000);
       },
       error: err => console.log(err)
     })
@@ -95,7 +108,6 @@ export class PhilhealthModalComponent implements OnInit {
     private formBuilder: FormBuilder,
     private http: HttpService
   ) { }
-
 
   loadMainLibrary(){
     this.http.get('libraries/membership-types').subscribe({
@@ -189,7 +201,7 @@ export class PhilhealthModalComponent implements OnInit {
       member_gender: [null, Validators.required],
       member_relation_id: [null, Validators.required],
       employer_pin: [null],
-      // employer_name: [null],
+      employer_name: [null],
       employer_address: [null],
       member_pin_confirmation: [null, [Validators.required, Validators.minLength(12)]],
       philhealth_id_confirmation: [null, [Validators.required, Validators.minLength(12)]],
@@ -198,16 +210,17 @@ export class PhilhealthModalComponent implements OnInit {
 
     if(this.philhealth_to_edit){
       this.philhealthForm.patchValue({...this.philhealth_to_edit});
-      // this.philhealthForm.patchValue({vitals_date_temp: formatDate(this.philhealthForm.value.vitals_date,'Y-M-dd','en')});
-      // this.philhealthForm.patchValue({vitals_time_temp: formatDate(this.philhealthForm.value.vitals_date,'HH:mm:ss','en')});
+      this.philhealthForm.patchValue({philhealth_id_confirmation: this.philhealthForm.value.philhealth_id});
 
-      // console.log(this.philhealthForm);
+      if(this.philhealthForm.value.membership_type_id === "DD"){
+        this.philhealthForm.patchValue({member_birthdate: formatDate(this.philhealthForm.value.member_birthdate, 'Y-M-dd','en')});
+        this.philhealthForm.patchValue({member_pin_confirmation: this.philhealthForm.value.member_pin})
+      }
+      this.showMember();
     }else{
-      console.log('new vitals')
+      console.log('new philhealth')
     }
 
-
-    // console.log(this.philhealthForm.value);
     this.date = new Date().toISOString().slice(0,10);
   }
 

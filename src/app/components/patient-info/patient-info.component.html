@@ -68,20 +68,25 @@
             PHILHEALTH
           </span>
           <span>
-            <!-- <fa-icon (click)="toggleModal('philhealth-list-modal')" class="mx-0 my-0 text-green-500 mr-2 hover:cursor-pointer" [icon]="faTableList"></fa-icon> -->
-            <!-- <fa-icon (click)="toggleModal('philhealth-modal')" class="mx-0 my-0 text-blue-500 mr-2 hover:cursor-pointer" [icon]="faPlusCircle"></fa-icon> -->
+            <fa-icon (click)="toggleModal('philhealth-list-modal')" class="mx-0 my-0 text-green-500 mr-2 hover:cursor-pointer" [icon]="faTableList"></fa-icon>
+            <fa-icon (click)="toggleModal('philhealth-modal')" class="mx-0 my-0 text-blue-500 mr-2 hover:cursor-pointer" [icon]="faPlusCircle"></fa-icon>
           </span>
         </div>
-        <span class="block text-xs text-red-500">
-          -
-        </span>
+        <div class="flex pl-3 justify-between items-center" [ngClass]="{'text-red-500': philhealthColor}">
+          <span class="block text-xs">
+            {{ philhealth_info?.philhealth_id }}
+          </span>
+          <span class="block text-xs">
+            {{ philhealth_info?.enlistment_date | date: 'MM/dd/yyyy' }}
+          </span>
+        </div>
       </div>
     </div>
 
     <div class="block pt-4 justify-items-start mx-5 mb-5">
       <div class="flex justify-between items-center">
         <span class="block text-blue-500 font-medium text-sm">
-          VITAL SIGNS ({{ latest_vitals?.vitals_date | date : 'M/d/Y hh:mm:ss a' }})
+          VITAL SIGNS ({{ latest_vitals?.vitals_date | date: 'MM/dd/yyyy hh:mm:ss a' }})
         </span>
         <span>
           <fa-icon (click)="toggleModal('vitals-list-modal')" class="mx-0 my-0 text-green-500 mr-2 hover:cursor-pointer" [icon]="faTableList" *ngIf="latest_vitals" ></fa-icon>
@@ -455,10 +460,10 @@
 </div>
 
 <div *ngIf="philhealthModal">
-  <app-philhealth-modal (toggleModal)="toggleModal('philhealth-modal')" [patient_info]="patient_info" ></app-philhealth-modal>
+  <app-philhealth-modal (toggleModal)="toggleModal('philhealth-modal')" [patient_info]="patient_info" [philhealth_to_edit]="philhealth_to_edit"></app-philhealth-modal>
 </div>
 
 <div *ngIf="philhealthListModal">
-  <app-philhealth-list-modal (toggleModal)="toggleModal('philhealth-list-modal')" [patient_info]="patient_info" ></app-philhealth-list-modal>
+  <app-philhealth-list-modal (toggleModal)="toggleModal('philhealth-list-modal')" (philhealthEdit)="philhealthEdit($event)" [patient_info]="patient_info" ></app-philhealth-list-modal>
 </div>
 

@@ -5,7 +5,7 @@
       <!-- Modal header -->
       <div class="flex justify-between items-start py-3 px-5 rounded-t border-b bg-blue-500 dark:border-gray-600">
         <h3 class="mt-2 text-sm font-bold text-white dark:text-white">
-            Vitals Signs
+            Philhealth Information
         </h3>
       </div>
       <!-- Modal body -->
@@ -17,28 +17,30 @@
                 <th scope="col" class="py-3 px-6">Philhealth ID</th>
                 <th scope="col" class="py-3 px-6">Enlistment Date</th>
                 <th scope="col" class="py-3 px-6">Effectivity Year</th>
-                <th scope="col" class="py-3 px-6">Membership type - membership category</th>
+                <th scope="col" class="py-3 px-6">Membership type</th>
+                <th scope="col" class="py-3 px-6">Membership category</th>
                 <th scope="col" class="py-3 px-6">Action</th>
               </tr>
             </thead>
             <tbody>
-              <tr class="bg-white border-b">
+              <tr *ngFor="let philhealth of philhealth_infos" class="bg-white border-b">
+                <td class="py-4 px-6">
+                  {{ philhealth.philhealth_id }}
+                </td>
                 <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
-                  <!-- {{ vitals.vitals_date | date: 'MM/dd/yyyy h:mm:ss a' }} -->
+                  {{ philhealth.enlistment_date | date: 'MM/dd/yyyy' }}
                 </th>
                 <td class="py-4 px-6">
-                  <!-- {{ vitals.bp_systolic }}{{ vitals.bp_systolic ? '/' : '-' }}{{ vitals.bp_diastolic }} -->
+                  {{ philhealth.enlistment_date | date: 'yyyy' }}
                 </td>
                 <td class="py-4 px-6">
-                  <!-- {{ vitals.patient_height ?? '-' }} -->
+                  {{ philhealth.membership_type.desc }}
                 </td>
                 <td class="py-4 px-6">
-                  <!-- {{ vitals.patient_weight ?? '-' }} -->
+                  {{ philhealth.membership_category.desc }}
                 </td>
                 <td class="py-4 px-6">
-                  <fa-icon (click)="editPhilhealth()" class="mx-0 my-0 text-amber-500 hover:cursor-pointer flex-none mr-2" [icon]="faPenToSquare"></fa-icon>
-
-                  <!-- <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a> -->
+                  <fa-icon (click)="editPhilhealth(philhealth)" class="mx-0 my-0 text-amber-500 hover:cursor-pointer flex-none mr-2" [icon]="faPenToSquare"></fa-icon>
                 </td>
               </tr>
             </tbody>

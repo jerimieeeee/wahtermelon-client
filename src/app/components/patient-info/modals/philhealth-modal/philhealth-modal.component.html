@@ -136,7 +136,7 @@
               </div>
             </div>
 
-            <!-- <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
+            <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
               <label for="employer_name" class="font-semibold" [ngClass]="{'text-red-500': is_saving && f.employer_name.errors}">Employer name</label>
               <input name="employer_name" id="employer_name" formControlName="employer_name" type="text" [ngClass]="{'invalid-input': is_saving && f.employer_name.errors}" class="input">
 
@@ -145,7 +145,7 @@
                   {{ required_message }}
                 </div>
               </div>
-            </div> -->
+            </div>
 
             <div class="relative w-full text-sm px-5 py-2 mt-2">
               <label for="employer_address" class="font-semibold" [ngClass]="{'text-red-500': is_saving && f.employer_address.errors}">Employer address</label>
@@ -284,7 +284,7 @@
             </div>
 
             <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
-              <label  for="member_gender" class="font-semibold" [ngClass]="{'text-red-500': is_saving && f.member_gender.errors}">Member suffix name</label>
+              <label  for="member_gender" class="font-semibold" [ngClass]="{'text-red-500': is_saving && f.member_gender.errors}">Member gender</label>
               <select name="member_gender" id="member_gender" formControlName="member_gender" [ngClass]="{'invalid-input': is_saving && f.member_gender.errors}" class="input">
                 <option [value]="sex.id" *ngFor="let sex of sex_cat">{{ sex.desc}}</option>
               </select>

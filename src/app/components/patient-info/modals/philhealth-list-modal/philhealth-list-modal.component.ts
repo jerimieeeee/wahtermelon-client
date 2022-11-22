@@ -9,18 +9,24 @@ import { HttpService } from 'app/shared/services/http.service';
 })
 export class PhilhealthListModalComponent implements OnInit {
   @Output() toggleModal = new EventEmitter<any>();
+  @Output() philhealthEdit = new EventEmitter<any>();
   @Input() patient_info;
 
   faPenToSquare = faPenToSquare;
 
-  editPhilhealth(){
+  philhealth_infos: [];
 
+  editPhilhealth(philhealth){
+    // console.log(philhealth)
+    this.philhealthEdit.emit(philhealth);
+    this.closeModal();
   }
 
   loadPhilhealth(){
-    this.http.get('patient-philhealth/philhealth', {params:{'filter[philhealth_id]': this.patient_info.id}}).subscribe({
+    this.http.get('patient-philhealth/philhealth', {params:{'filter[patient_id]': this.patient_info.id,  per_page: 'all', sort: '-enlistment_date', include: 'membershipType,membershipCategory'}}).subscribe({
       next: (data: any) => {
-        console.log(data);
+        // console.log(data);
+        this.philhealth_infos = data.data
       },
       error: err => console.log(err)
     })

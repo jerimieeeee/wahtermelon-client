@@ -47,6 +47,8 @@ export class PatientInfoComponent {
   vaccine_to_edit: any;
   patient_age: any;
   latest_vitals: any;
+  philhealth_info: any;
+  patient_vitals: any;
   vitals_to_edit: any;
   philhealth_to_edit: any;
 
@@ -77,10 +79,11 @@ export class PatientInfoComponent {
         this.show_form = true;
         this.patient_info = data.data;
         this.patientInfo.emit(data.data);
-        this.loadVaccines();
+        this.loadPhilhealth();
         this.loadVitals();
+        this.loadVaccines();
         // this.toggleModal('philhealth-modal');//open sample modal
-        console.log(data.data)
+        // console.log(data.data)
       },
       error: err => {
         // feature: add prompt that patient is not found. for now redirect to home
@@ -139,6 +142,25 @@ export class PatientInfoComponent {
     if(this.vaccineActionModal == false) this.loadVaccines();
   }
 
+  get philhealthColor(){
+    if(this.philhealth_info){
+      return (formatDate(this.philhealth_info.enlistment_date, 'yyyy', 'en') < formatDate(new Date(), 'yyyy', 'en'))
+    } else {
+      return false;
+    }
+
+  }
+
+  loadPhilhealth(){
+    this.http.get('patient-philhealth/philhealth', {params:{'filter[patient_id]': this.patient_info.id,  per_page: '1', sort: '-enlistment_date'}}).subscribe({
+      next: (data: any) => {
+        // console.log(data);
+        this.philhealth_info = data.data[0];
+      },
+      error: err => console.log(err)
+    })
+  }
+
   loadVaccines(){
     this.http.get('patient-vaccines/vaccines-records', {params:{'patient_id': this.patient_info.id, 'sort': '-vaccine_date' }}).subscribe({
       next: (data: any) => {
@@ -151,13 +173,11 @@ export class PatientInfoComponent {
     })
   }
 
-  patient_vitals: any;
-
   loadVitals(){
     this.http.get('patient-vitals/vitals', {params:{patient_id: this.patient_info.id, sort: '-vitals_date'}}).subscribe({
       next: (data: any) => {
         this.latest_vitals = data.data[0];
-        console.log(this.latest_vitals);
+        // console.log(this.latest_vitals);
         if(this.latest_vitals && (!this.latest_vitals.patient_height || !this.latest_vitals.patient_weight)){
           //iterate thru previous vitals if height is not present on latest vitals.
           this.getHeightWeight(data.data);
@@ -277,7 +297,7 @@ export class PatientInfoComponent {
       case 'philhealth-modal':
         this.philhealthModal = !this.philhealthModal;
         if(this.philhealthModal == false)  this.philhealth_to_edit = null;
-        this.loadVitals();
+        this.loadPhilhealth();
         break;
       case 'philhealth-list-modal':
         this.philhealthListModal = !this.philhealthListModal;
