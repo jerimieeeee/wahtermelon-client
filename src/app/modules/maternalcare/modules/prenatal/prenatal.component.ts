@@ -107,7 +107,7 @@ export class PrenatalComponent implements OnInit {
       this.catch_array.splice(index, 1);
     }
     console.log(this.prenatal_form.valid, this.prenatal_form.value);
-    
+
     if (this.prenatal_form.valid) {
       if (this.actual_height) {
         this.prenatal_form.value.patient_height = this.actual_height;
@@ -116,16 +116,17 @@ export class PrenatalComponent implements OnInit {
       this.http.post('maternal-care/mc-prenatal', this.prenatal_form.value).subscribe({
         next: (data: any) => {
           console.log(data.data, " data from saving prenatal")
-          this.prenatal_data = [];
+          this.patient_mc_record[0].prenatal_visit = data.data;
+          this.getMCR('latest', this.patient_details.id);
           // this.updateMCR('latest', this.patient_details.id);
-          
-          data.data.forEach(d => {
+
+          /* data.data.forEach(d => {
             d.push({aog_count: d.aog_weeks + ' weeks and ' + d.aog_days + ' days'});
             this.prenatal_data.push(d)
             console.log(d, " the Ds");
 
           })
-          this.value = this.prenatal_data[0].visit_sequence + 1;
+          this.value = this.prenatal_data[0].visit_sequence + 1; */
         },
         error: err => console.log(err),
         complete: () => {
@@ -149,15 +150,20 @@ export class PrenatalComponent implements OnInit {
     });
   }
 
+  trackByFn(index, item) {
+    return index;
+  }
+
   getMCR(type: any, id: any) {
+    this.prenatal_data =[]
     console.log(this.patient_mc_record[0], " from getMCR - prenatal;");
 
 
     console.log(this.patient_mc_record[0].prenatal_visit[0]?this.patient_mc_record[0].prenatal_visit[0]:this.patient_mc_record[0].prenatal_visit, " try getmcr");
-   
+
     if(this.patient_mc_record[0].prenatal_visit[0]?this.patient_mc_record[0].prenatal_visit[0]:this.patient_mc_record[0].prenatal_visit.length == 1){
       console.log("it went true");
-      
+
     this.value = this.patient_mc_record[0].prenatal_visit[0].visit_sequence + 1;
     this.patient_mc_record[0].prenatal_visit.forEach((p, i) => {
       // p.push();
@@ -188,7 +194,7 @@ export class PrenatalComponent implements OnInit {
       this.prenatal_data.push(p);
       this.prenatal_data[i]["aog_count"] = final_statement;
       console.log(this.prenatal_data, " prenatal data");
-      
+
     });
   }
   this.createForm(this.patient_mc_record[0]);
@@ -202,11 +208,11 @@ export class PrenatalComponent implements OnInit {
       console.log(" its false coz prenatal is 0");
       prenatal_visit = mc_record.prenatal_visit;
     }
-   
+
     let user_id = localStorage.getItem('user_id');
     let facility_code = 'DOH000000000005672';
     console.log(prenatal_visit, " log prenatal_visit");
-    
+
     this.prenatal_form = this.formBuilder.group({
       patient_mc_id: [mc_record.id, [Validators.required, Validators.minLength(2)]],
       facility_code: [facility_code, [Validators.required, Validators.minLength(2)]],

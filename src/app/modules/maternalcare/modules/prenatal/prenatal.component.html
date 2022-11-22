@@ -52,7 +52,7 @@
                             Required field
                         </div>
                     </div>
-                </div> 
+                </div>
 
                 <div class="transitions col-span-4 col-start-7  relative select-none" *ngIf="!focused">
                     <h3 for="presentation_code">Fetal Presentation</h3>
@@ -141,7 +141,7 @@
                         (change)="onKeyUp($event.target.value, $event.target.id); quadrant(lib.code)"
                         [checked]="prenatal_form.get('location_code').value == lib.code && prenatal_form.get('fhr').value != ''"
                         [disabled]="0 >= prenatal_form.get('fhr').value" id="{{lib.code}}" [value]="lib.code">
- 
+
                 </div>
             </label>
             <img src="assets\img\abdomen.png"
@@ -291,7 +291,7 @@
                 </div>
 
                 <div class="overflow-x-hidden overflow-y-scroll scrollbar-thin scrollbar-thumb-white hover:scrollbar-thumb-blue-300 scrollbar-track-white" style="grid-column: span 11 / span 11;">
-                    <div class="text-sm grid hover:bg-blue-100 hover:font-medium" style="grid-template-columns: repeat(24, minmax(0, 1fr)); grid-column: span 11 / span 11;" *ngFor="let prenatal of prenatal_data">
+                    <div class="text-sm grid hover:bg-blue-100 hover:font-medium" style="grid-template-columns: repeat(24, minmax(0, 1fr)); grid-column: span 11 / span 11;" *ngFor="let prenatal of prenatal_data; trackBy: trackByFn">
                         <div class="transitions relative select-none mx-2"><h3>{{prenatal.visit_sequence}}</h3></div>
                         <div class="transitions col-span-2 relative select-none mx-2"><h3>{{prenatal.trimester}}</h3></div>
                         <div class="transitions col-span-3 relative select-none ml-3"><h3>{{prenatal.aog_count}}</h3></div>
@@ -309,10 +309,10 @@
                         </div>
                     </div>
                 </div>
-                
+
             </div>
         </div>
-        
+
     </div>
 
 </form>
