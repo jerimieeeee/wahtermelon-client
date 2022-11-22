@@ -180,9 +180,9 @@ export class PatientRegistrationComponent implements OnInit {
   show_edit: boolean = false;
 
   transaction(data){
-    // console.log(data);
+    console.log(data);
     this.selected_family_folder = data.data ? data.data.id : null;
-    this.selected_barangay_code = data.data ? data.data.barangay_code : null;
+    this.selected_barangay_code = data.data ? data.data.barangay.code : null;
     this.selected_address = data.data ? data.data.address : null;
     this.selected_cct_date = data.data ? data.data.cct_date : null;
     this.selected_cct_id = data.data ? data.data.cct_id : null;
