@@ -21,7 +21,7 @@ export class PhilhealthModalComponent implements OnInit {
     enlistment_date: new FormControl<string| null>(''),
     philhealth_number: new FormControl<string| null>(''),
     philhealth_number_confirmation: new FormControl<string| null>(''),
-    member_type: new FormControl<string| null>(''),
+    membership_type_id: new FormControl<string| null>(''),
     member_cat: new FormControl<string| null>(''),
     employer_pen: new FormControl<string| null>(''),
     employer_name: new FormControl<string| null>(''),
@@ -64,7 +64,25 @@ export class PhilhealthModalComponent implements OnInit {
     private http: HttpService
   ) { }
 
+  membership_types: any;
+  membership_categories: any;
+
+  loadMainLibrary(){
+    this.http.get('libraries/membership-types').subscribe({
+      next: (data: any) => {
+        console.log(data)
+        this.membership_types = data.data
+      },
+      error: err => console.log(err)
+    })
+  }
+
+  loadMemberLibrary(){
+
+  }
+
   ngOnInit(): void {
+    this.loadMainLibrary();
     let date = new Date();
     let user_id = localStorage.getItem('user_id');
     let facility_code = "DOH000000000005672";
@@ -74,7 +92,7 @@ export class PhilhealthModalComponent implements OnInit {
       enlistment_date: [this.patient_info.id, Validators.required],
       philhealth_number: [null, [Validators.required, Validators.minLength(12)]],
       philhealth_number_confirmation: [null, [Validators.required, Validators.minLength(12)]],
-      member_type: [null, Validators.required],
+      membership_type_id: [null, Validators.required],
       member_cat: [null, Validators.required],
       employer_pen: [null, [Validators.minLength(1), Validators.maxLength(30)]],
       employer_name: [null, Validators.max(200)],

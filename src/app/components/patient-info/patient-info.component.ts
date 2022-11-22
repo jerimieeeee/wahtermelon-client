@@ -79,7 +79,7 @@ export class PatientInfoComponent {
         this.patientInfo.emit(data.data);
         this.loadVaccines();
         this.loadVitals();
-        this.toggleModal('philhealth-modal');//open sample modal
+        // this.toggleModal('philhealth-modal');//open sample modal
         // console.log(data.data)
       },
       error: err => {
@@ -183,7 +183,7 @@ export class PatientInfoComponent {
 
       let vitals_date = formatDate(val.vitals_date, 'Y-M-dd','en', 'en')
       let date_today = formatDate(new Date(), 'Y-M-dd','en', 'en')
-      console.log(vitals_date, date_today)
+      // console.log(vitals_date, date_today)
       if(vitals_date === date_today){
         if(!this.latest_vitals.bp_systolic && val.bp_systolic){
           this.latest_vitals.bp_systolic = val.bp_systolic;

@@ -59,7 +59,5 @@ export class FamilyFolderModalComponent implements OnInit {
       this.search_item = this.last_name;
       this.searchFamily();
     }
-    console.log(this.last_name);
   }
-
 }
