@@ -39,6 +39,7 @@ export class BreastfeedingComponent implements OnInit {
     this.showBreastfeedingModal = !this.showBreastfeedingModal;
     // this.geteServiceName();
     this.loadBreastfed();
+    this.getccdevDetails()
     this.groupList = []
   }
 
@@ -54,11 +55,11 @@ export class BreastfeedingComponent implements OnInit {
     if(this.groupList2.includes(0))
     {
       this.showData=true;
-      console.log('get selected is true')
+      console.log('open ang reason for stopping 2')
     }
     else{
       this.showData=false;
-      console.log('get selected is false')
+      console.log('close ang reason for stopping 2')
     }
 }
 
@@ -303,6 +304,14 @@ export class BreastfeedingComponent implements OnInit {
 
 // }
 
+  checkGroupList(){
+    if(new Set(this.groupList).size === 1){
+      console.log('trueeee')
+    }else{
+      console.log('falseeee')
+    }
+  }
+
   loadBreastfed() {
     this.groupList2 = [];
     var lib = ['bfed_month1','bfed_month2','bfed_month3','bfed_month4','bfed_month5','bfed_month6'];
@@ -310,18 +319,23 @@ export class BreastfeedingComponent implements OnInit {
     .subscribe({
       next: (data: any) => {
         this.patient_breastfed = data.data;
-        this.patient_breastfed.ebfreasons =  this.patient_breastfed.ebfreasons.reason_id;
+       
         console.log(this.patient_breastfed, 'data ng breast fedzxc');
+
+        if(this.patient_breastfed.ebfreasons != null){
+          this.patient_breastfed.ebfreasons =  this.patient_breastfed.ebfreasons.reason_id;
+        }
+        
 
         lib.forEach((obj, index) => {
           this.groupList2.push(this.patient_breastfed[obj]);
           // this.groupList.push(String(this.patient_breastfed[obj]));
           this.ccdev[index].selected = String(this.patient_breastfed[obj]);
-          console.log(this.ccdev[index].selected, " try ccdev");
+          console.log(this.patient_breastfed[obj], "for each checker");
 
         })
 
-        console.log(this.groupList2, 'data ng breast fed v2')
+        console.log(this.groupList2, 'grouplist 2 data')
         this.getSelected()
         console.log(this.groupList, 'grouplist data')
 
@@ -332,15 +346,15 @@ export class BreastfeedingComponent implements OnInit {
             patient_ccdev_id: '',
             patient_id: '',
             user_id: '',
-            bfed_month1: '',
-            bfed_month2: '',
-            bfed_month3: '',
-            bfed_month4: '',
-            bfed_month5: '',
+            bfed_month1: null,
+            bfed_month2: null,
+            bfed_month3: null,
+            bfed_month4: null,
+            bfed_month5: null,
             // bfed_month6: this.groupList[5] == 1 ? 1:0,
-            bfed_month6: '',
+            bfed_month6: null,
             ebf_date: '',
-            ebfreasons: ''
+            ebfreasons: null
           }
           console.log(this.patient_breastfed, 'fake response')
           console.log(this.groupList2, 'fake response group list 2')
@@ -365,7 +379,7 @@ export class BreastfeedingComponent implements OnInit {
     this.loadBreastfed()
     // this.geteServiceName()
     this.loadLibraries();
-
+    this.checkGroupList();
     this.getccdevDetails()
   }
 

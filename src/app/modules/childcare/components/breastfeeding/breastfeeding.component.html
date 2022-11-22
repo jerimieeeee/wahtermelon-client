@@ -104,7 +104,7 @@
               </select>
             </div>
 
-            <div *ngIf="!showData && !groupList.includes('0') && !groupList.includes('null') && !groupList.includes('')" class="flex py-4 px-5 rounded-b border-t border-gray-200">
+            <div *ngIf="!showData && !groupList.includes('0') && !groupList.includes('null') && !groupList.includes(null) && !groupList.includes('')" class="flex py-4 px-5 rounded-b border-t border-gray-200">
               <label class="mt-2.5 text-sm text-gray-900 w-full">EBF Date</label>
               <input type="date" placeholder="Enter EBF Date" style="width:100%;" [(ngModel)]="patient_breastfed.ebf_date" >
             </div>

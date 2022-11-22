@@ -61,6 +61,8 @@ export class FirstVisitComponent implements OnInit {
   });
 
   @Input() patient_details: any;
+  patient_listing: any;
+  hideName: boolean;
 
 
 
@@ -101,13 +103,14 @@ export class FirstVisitComponent implements OnInit {
     // this.showModal = true;
 
       this.http.post('child-care/cc-records', this.visitForm.value).subscribe({
-        // next: (data: any) => console.log(data.status, 'check status'),
+        next: (data: any) =>  this.getccdevDetails(),
         error: err => {console.log(err),
           this.is_saving = false;
           alert('Update patient details or input the required fields')},
         complete: () => {
           this.is_saving = false;
-          this.getccdevDetails()
+          console.log(this.visitForm.value, 'visit form')
+         
       alert('saving success!')
         }
       })
@@ -155,7 +158,7 @@ export class FirstVisitComponent implements OnInit {
   getPatient(term: string = null): Observable<any> {
     return this.http.get('patient', {params:{'filter[search]':term}})
     .pipe(map((resp:any) => {
-      console.log(resp.data);
+      this.patient_listing = resp.data;
       return resp.data;
     }))
   }
@@ -174,7 +177,7 @@ export class FirstVisitComponent implements OnInit {
   }
 
   getccdevMama() {
-    this.http.get('patient/'+this.patient_info.mothers_id)
+    this.http.get('patient/'+this.patient_info?.mothers_id)
     .subscribe({
       next: (data: any) => {
         this.patient_info2 = data.data;
@@ -182,6 +185,16 @@ export class FirstVisitComponent implements OnInit {
       },
       error: err => console.log(err)
     });
+  }
+
+  hideItemName(){
+    if(this.patient_listing != 0){
+      this.hideName = true
+      console.log('name hidden')
+    }else{
+      this.hideName = false
+      console.log('name is visible')
+    }
   }
 
 

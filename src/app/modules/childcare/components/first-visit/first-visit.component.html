@@ -127,13 +127,17 @@
           [typeahead]="searchInput$"
           [clearable]="false"
           bindValue="id"
+          (change)="hideItemName()"
           formControlName="mothers_id">
           <ng-template ng-label-tmp let-item="item" class="">
             <div class="flex">
               <!-- <img src="./assets/img/profile_1.jpg" alt="profile_img" class="rounded-full w-8 h-8 mr-2" /> -->
-              <p class="">{{patient_info2?.first_name}} {{patient_info2?.middle_name}} {{patient_info2?.last_name}}</p>
-              <p class="">{{item.first_name}} {{item.middle_name}} {{item.last_name}}</p>
+              <div *ngIf="!hideName"><p class="" >{{patient_info2?.first_name}} {{patient_info2?.middle_name}} {{patient_info2?.last_name}}</p></div>
+              
+              <div ><p class="">{{item?.first_name}} {{item?.middle_name}} {{item?.last_name}}</p></div>
             </div>
+
+            
             
         </ng-template>
           <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
