@@ -120,6 +120,7 @@ export class PrenatalComponent implements OnInit {
           // this.updateMCR('latest', this.patient_details.id);
           
           data.data.forEach(d => {
+            d.push({aog_count: d.aog_weeks + ' weeks and ' + d.aog_days + ' days'});
             this.prenatal_data.push(d)
             console.log(d, " the Ds");
 
@@ -158,8 +159,36 @@ export class PrenatalComponent implements OnInit {
       console.log("it went true");
       
     this.value = this.patient_mc_record[0].prenatal_visit[0].visit_sequence + 1;
-    this.patient_mc_record[0].prenatal_visit.forEach(p => {
+    this.patient_mc_record[0].prenatal_visit.forEach((p, i) => {
+      // p.push();
+      let aog_days_unit;
+      let aog_weeks_unit;
+      let final_statement;
+
+      if(p.aog_days > 1){
+        aog_days_unit = 'days';
+      }else{
+        aog_days_unit = 'day';
+      }
+      if(p.aog_weeks > 1){
+        aog_weeks_unit = 'weeks';
+      }else{
+        aog_weeks_unit = 'week';
+      }
+
+      if(p.aog_weeks > 0){
+        if(p.aog_days > 0){
+          final_statement = p.aog_weeks + ' ' + aog_weeks_unit + ' and ' + p.aog_days + ' ' + aog_days_unit
+        }else{
+          final_statement = p.aog_weeks + ' ' + aog_weeks_unit
+        }
+      }else{
+        final_statement = p.aog_days + ' ' + aog_days_unit
+      }
       this.prenatal_data.push(p);
+      this.prenatal_data[i]["aog_count"] = final_statement;
+      console.log(this.prenatal_data, " prenatal data");
+      
     });
   }
   this.createForm(this.patient_mc_record[0]);
