@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 
 import { HouseholdsRoutingModule } from './households-routing.module';
 import { HouseholdsComponent } from './households.component';
+import { FormsModule } from '@angular/forms';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 
 @NgModule({
@@ -11,7 +13,9 @@ import { HouseholdsComponent } from './households.component';
   ],
   imports: [
     CommonModule,
-    HouseholdsRoutingModule
+    HouseholdsRoutingModule,
+    FormsModule,
+    FontAwesomeModule,
   ]
 })
 export class HouseholdsModule { }
