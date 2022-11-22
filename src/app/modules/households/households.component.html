@@ -1,0 +1,73 @@
+
+<div class="my-10  flex justify-center w-full">
+
+  <div class="lg:w-4/6 md:w-5/6 bg-white border border-solid border-slate-100 rounded-xl shadow-md">
+    <div class="border border-solid border-slate-100 rounded-t-xl font-semibold justify-between">
+      <div class="flex border border-solid border-slate-100 rounded-t-xl p-3 font-semibold justify-between">
+        <div class="text-blue-500 text-lg pt-2 pl-5">
+          Households
+        </div>
+        <div>
+          <!-- <button *ngIf="is_updating" class="text-white-500 bg-amber-500 active:bg-amber-300 hover:bg-amber-600 text-sm px-4 py-2 rounded hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button">
+            <fa-icon class="mr-3" [icon]="faSpinner" spin="true"></fa-icon>
+            Updating
+          </button> -->
+        </div>
+      </div>
+
+      <!-- <div *ngIf="submit_error" class="col-span-8 bg-red-200 rounded border border-red-300 text-red-900 text-sm">
+        <div class="block p-3 pl-10" >
+          <ul class="list-disc" >
+            <li *ngFor="let error of submit_error | keyvalue">{{ error.value }}</li>
+          </ul>
+        </div>
+      </div> -->
+
+      <div>
+        <div class="overflow-x-auto relative shadow-md sm:rounded-lg">
+          <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 mb-5">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+              <tr>
+                <th scope="col" class="py-3 px-6">Address</th>
+                <th scope="col" class="py-3 px-6">Household Member</th>
+                <th scope="col" class="py-3 px-6">Contact Number</th>
+                <th scope="col" class="py-3 px-6">Philhealth Info</th>
+                <!-- <th scope="col" class="py-3 px-6">Action</th> -->
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let household of household_list; let odd = odd; let i = index" class="bg-white border-t">
+                <th *ngIf="household.household_member.length > 0" scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
+                  {{ household.address }}
+                </th>
+                <td *ngIf="household.household_member.length > 0" class="py-4 px-6">
+                  <span class="block" *ngFor="let member of household.household_member">
+                    {{ member.patient.last_name }}, {{ member.patient.first_name }} {{ member.patient.middle_name === 'NA' ? '' : member.patient.middle_name }} {{ member.patient.suffix_name === 'NA' ? '' : member.patient.suffix_name }}
+                  </span>
+                </td>
+                <td *ngIf="household.household_member.length > 0" class="py-4 px-6">
+                  <span class="block" *ngFor="let member of household.household_member">
+                    {{ member.patient.mobile_number }}
+                  </span>
+                </td>
+                <td *ngIf="household.household_member.length > 0" class="py-4 px-6">
+                  -
+                </td>
+                <!-- <td class="py-4 px-6">
+                  <fa-icon class="mx-0 my-0 text-amber-500 hover:cursor-pointer flex-none mr-2" [icon]="faPenToSquare"></fa-icon>
+
+                  <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                </td> -->
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <!-- <button [ngClass]="{'bg-red-500 active:bg-red-300 hover:bg-red-600': userForm.enabled}" class="text-white-500 bg-amber-500 active:bg-amber-300 hover:bg-amber-600 text-sm px-4 py-2 rounded hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button" (click)="enbaleEdit()">
+          <fa-icon class="mr-3" [icon]="faPenToSquare"></fa-icon>
+          {{ userForm.enabled ? 'Cancel' : 'Edit' }}
+        </button> -->
+      </div>
+    </div>
+
+  </div>
+</div>
