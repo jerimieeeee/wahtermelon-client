@@ -15,7 +15,7 @@
 <div class="card">
     <div class="flex bg-orange-500 card-header-services">
       <h4 class="font-semibold text-white text-sm uppercase">Breastfeeding And Complementary Feeding Information</h4>
-      <button  type="button" class="-mt-0.5 relative ml-auto px-5" (click)="toggleBreastfeedingModal()" *ngIf="groupList2.includes(1) || groupList2.includes(0) || groupList.length === 6">
+      <button  type="button" class="-mt-0.5 relative ml-auto px-5" (click)="toggleBreastfeedingModal()" *ngIf="groupList2.includes(1) || groupList2.includes(0) || groupList2.length === 6 ||  groupList.length === 6">
         <fa-icon class=" text-white" size="md" [icon]="faPenToSquare"></fa-icon>
         </button>
     </div>
@@ -29,12 +29,12 @@
         <!-- <div *ngFor="let ccmonths of ccdev" class=" md:w-1/2 lg:w-1/2 px-10 text-sm">
           <p class="py-1">{{ccmonths.name}} - {{ccmonths.isDefault}}</p> -->
           <p class="px-10 py-1 text-sm mt-1">No Recorded Breastfeeding / Complementary Feeding!</p>
-
+          
           <button type="button" class="flex btn-add ml-auto mr-10" (click)="toggleBreastfeedingModal()">
             <fa-icon class="mr-2" [icon]="faPlus"></fa-icon>
            Add
           </button>
-
+          
       </div>
     </div>
 
@@ -99,14 +99,14 @@
               <select class="select rounded-md text-sm -pl-10" [(ngModel)]="patient_breastfed.ebfreasons" name="" id="" style="width:100%;">
                 <option  disabled selected>Select Reason</option>
                 <option value="{{reason.reason_id}}" *ngFor="let reason of lib_reasons">
-                  {{reason.desc}}
+                {{reason.desc}}
                 </option>
               </select>
             </div>
 
-            <div *ngIf="!showData && !groupList.includes('0') && !groupList.includes('null') && !groupList.includes('')" class="flex py-4 px-5 rounded-b border-t border-gray-200">
+            <div *ngIf="!showData && !groupList.includes('0') && !groupList.includes('null') && !groupList.includes(null) && !groupList.includes('')" class="flex py-4 px-5 rounded-b border-t border-gray-200">
               <label class="mt-2.5 text-sm text-gray-900 w-full">EBF Date</label>
-              <input type="date" placeholder="Enter EBF Date" style="width:100%;" [(ngModel)]="patient_breastfed.ebf_date" value="patient_breastfed.ebf_date">
+              <input type="date" placeholder="Enter EBF Date" style="width:100%;" [(ngModel)]="patient_breastfed.ebf_date" >
             </div>
 
             <!-- <div *ngIf="showData===true" class="flex py-4 px-5 rounded-b border-t border-gray-200">
@@ -134,5 +134,5 @@
       </div>
     </div>
 </div>
-
+  
 <div *ngIf="showBreastfeedingModal" class="opacity-50 fixed inset-0 z-50 bg-black"></div>
