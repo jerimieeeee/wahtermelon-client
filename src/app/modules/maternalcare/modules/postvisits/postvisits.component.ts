@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { faAngleDown, faCalendarDay, faCaretRight, faClose, faInfoCircle, faPencil, faSave, faTimes, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
+import { faAngleDown, faCalendarDay, faCaretRight, faCircleCheck, faClose, faInfoCircle, faPencil, faSave, faTimes, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
+import { LockChanges } from '@ngrx/store-devtools/src/actions';
 import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
@@ -18,6 +19,7 @@ export class PostvisitsComponent implements OnInit {
   faAngleDown = faAngleDown;
   faInfoCircle = faInfoCircle;
   faCaretRight = faCaretRight;
+  faCircleCheck = faCircleCheck;
 
   value: number;
   registry_id: number;
@@ -56,12 +58,15 @@ export class PostvisitsComponent implements OnInit {
   actual_height: any;
   @Input() patient_mc_record;
   @Input() patient_details;
+  is_saving: boolean;
   constructor(private http: HttpService, private formBuilder: FormBuilder) { }
 
   cm_value = '';
  
   public keyUp = [];
   public buttons = [];
+  public postpartum_data = [];
+
  public toggle_questionaire = [
    {name:"Vaginal infection",form_name:"vaginal_infection"},
    {name:"Vaginal bleeding",form_name:"vaginal_bleeding"},
@@ -73,16 +78,16 @@ export class PostvisitsComponent implements OnInit {
  ]
   ngOnInit(): void {
     this.value = 1;
-    this.registry_id = 1;
-    this.patient_height = 145;
-    this.patient_weight = 75;
-    this.patient_id = 1;
-    this.bp_systolic = 120;
-    this.bp_diastolic = 90;
+    // this.registry_id = 1;
+    // this.patient_height = 145;
+    // this.patient_weight = 75;
+    // this.patient_id = 1;
+    // this.bp_systolic = 120;
+    // this.bp_diastolic = 90;
     this.getMCR();
-    this.mc_id = 2;
-    this.user_id = 1;
-    this.postpartum_week = 1;
+    // this.mc_id = 2;
+    // this.user_id = 1;
+    // this.postpartum_week = 1;
     // this.createForm();
     this.focused = false;
   }
@@ -100,12 +105,14 @@ export class PostvisitsComponent implements OnInit {
     console.log(this.patient_mc_record[0].postpartum_visit[0]?this.patient_mc_record[0].postpartum_visit[0]:this.patient_mc_record[0].postpartum_visit, " try getmcr - post visit");
    
     if(this.patient_mc_record[0].postpartum_visit[0]?this.patient_mc_record[0].postpartum_visit[0]:this.patient_mc_record[0].postpartum_visit.length == 1){
-    //   console.log("it went true");
+      console.log("it went true");
       
     this.value = this.patient_mc_record[0].postpartum_visit[0].visit_sequence + 1;
-    // this.patient_mc_record[0].prenatal_visit.forEach(p => {
-    //   this.prenatal_data.push(p);
-    // });
+    this.patient_mc_record[0].postpartum_visit.forEach(p => {
+      this.postpartum_data.push(p);
+      console.log("pushing p's");
+      
+    });
      }
   this.createForm(this.patient_mc_record[0]);
   }
@@ -126,7 +133,7 @@ createForm(mc_record: any) {
   }
 
   this.postpartum_visit_form = this.formBuilder.group({
-    patient_mc_id: [this.patient_mc_record.id],
+    patient_mc_id: [mc_record.id],
     facility_code: [facility_code],
     patient_id: [this.patient_details.id],
     user_id: [user_id],
@@ -164,8 +171,45 @@ createForm(mc_record: any) {
   // });
 }
 saveForm(data){
+  this.is_saving = true;
+  
+  console.log(this.postpartum_visit_form.valid, this.postpartum_visit_form.value);
+  
+  if (this.postpartum_visit_form.valid) {
+    if (this.actual_height) {
+      this.postpartum_visit_form.value.patient_height = this.actual_height;
+    }
+    console.log(this.postpartum_visit_form, " this is my data for saving post vist");
+    this.http.post('maternal-care/mc-postpartum', this.postpartum_visit_form.value).subscribe({
+      next: (data: any) => {
+        console.log(data.data, " data from saving post visit")
+        this.postpartum_data = [];
+        // this.updateMCR('latest', this.patient_details.id);
+        
+        data.data.forEach(d => {
+          this.postpartum_data.push(d)
+          console.log(d, " the Ds");
 
+        })
+        this.value = this.postpartum_data[0].visit_sequence + 1;
+      },
+      error: err => console.log(err),
+      complete: () => {
+        this.is_saving = false;
+        // this.saved = true;
+        setTimeout(() => {
+          // this.saved = false;
+        }, 1500);
+        // this.loading = false;
+        // this.showModal = true;
+      }
+    })
+  } else {
+    // this.loading = false;
+  }
+    
 }
+
 onKeyUp(data_input: string, id: string) {
   console.log(data_input + ' this is my data input');
 

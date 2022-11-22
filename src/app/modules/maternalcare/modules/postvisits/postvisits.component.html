@@ -37,8 +37,8 @@
                     <h3 for="fetal_presentation_id">Visit Type</h3>
                     <select formControlName="visit_type" name="visit_type" id="visit_type"
                     class="text-ellipsis bg-white text-align-left drop_btn border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed">
-                        <option value="clinic">Clinic Visit</option>
-                        <option value="home">Home Visit</option>
+                        <option value="CLINIC">Clinic Visit</option>
+                        <option value="HOME">Home Visit</option>
                     </select>
                 </div>
             </div>
@@ -272,6 +272,58 @@
                 <button type="submit" class="font-bold button-out border-check-red typed-out"
                     (keyup.enter)="uncheck($event.target.id + fphx_cat)">Edit</button>
             </div>
+        </div>
+    </div>
+
+    <div  *ngIf="postpartum_data.length != 0" style="grid-column: span 16 / span 16;" class="mt-12">
+        <div class="mb-5 grid rounded-lg hover:drop-shadow-lg drop-shadow-md bg-white rounded-lg hover:border border-gray-300 hover:border-blue-400 mx-2  border group {{postpartum_data.length >= 6?'h-56':'h-max'}} "
+            style="grid-template-columns: repeat(11, minmax(0, 1fr));">
+            <div class=" px-2 py-1 text-sm font-bold border border-dashed border-gray-300 border-t-0 border-l-0 border-r-0 group-hover:border-blue-400"
+                style="grid-column: span 11 / span 11;">
+                <h1 class="select-none">
+                    Postpartum Visits
+                </h1>
+            </div>
+
+            <div class="text-sm grid pb-1 font-semibold h-max" style="grid-template-columns: repeat(24, minmax(0, 1fr)); grid-column: span 11 / span 11;">
+                <div class="transitions mx-2 select-none"><h3>No.</h3></div>
+                <div class="transitions col-span-2 mx-2 select-none whitespace-normal"><h3>Week</h3></div>
+                <div class="transitions col-span-2 mx-2 select-none"><h3>Height</h3></div>
+                <div class="transitions col-span-2 mx-2 select-none"><h3>Weight</h3></div>
+                <div class="transitions col-span-2 mx-2 select-none"><h3>BP</h3></div>
+                <div class="transitions col-span-2 mx-2 select-none whitespace-normal"><h3  class="w-full text-center">Fever > 38*C</h3></div>
+                <div class="transitions col-span-2 mx-2 select-none whitespace-normal"><h3  class="w-full text-center">Vaginal Infection</h3></div>
+                <div class="transitions col-span-2 mx-2 select-none whitespace-normal"><h3 class="w-full text-center">Vaginal Bleeding</h3></div>
+                <div class="transitions col-span-2 mx-2 select-none whitespace-normal"><h3 class="w-full text-center">Pallor</h3></div>
+                <div class="transitions col-span-2 mx-2 select-none whitespace-normal"><h3 class="w-full text-center">Baby's Cord OK</h3></div>
+                <div class="transitions col-span-3 mx-2 select-none whitespace-normal"><h3>Breastfeeding</h3></div>
+                <div class="transitions col-span-2 mx-2 select-none whitespace-normal"><h3 class="w-full text-center">FP Method</h3></div>
+                <!-- <div class="transitions mx-2 select-none"><h3>Action</h3></div> -->
+            </div>
+
+            <div class="overflow-x-hidden overflow-y-scroll scrollbar-thin scrollbar-thumb-white hover:scrollbar-thumb-blue-300 scrollbar-track-white" style="grid-column: span 11 / span 11;">
+                <div class="text-sm grid hover:bg-blue-100 hover:font-medium" style="grid-template-columns: repeat(24, minmax(0, 1fr)); grid-column: span 11 / span 11;" *ngFor="let post of postpartum_data">
+                    <div class="transitions relative select-none mx-2"><h3>{{post.visit_sequence}}</h3></div>
+                    <div class="transitions col-span-2 relative select-none mx-2"><h3>{{post.postpartum_week}}</h3></div>
+                    <div class="transitions col-span-2 relative select-none mx-2"><h3>{{post.patient_height}}</h3></div>
+                    <div class="transitions col-span-2 relative select-none mx-2"><h3>{{post.patient_height}}</h3></div>
+                    <div class="transitions col-span-2 relative select-none mx-2"><h3>{{post.bp_systolic}}/{{post.bp_diastolic}}</h3></div>
+                    <div class="transitions col-span-2 relative select-none mx-2 whitespace-normal"><h3 class="w-full text-center"><fa-icon *ngIf="post.fever" [icon]="faCircleCheck" size="md" class="text-green-400"></fa-icon><fa-icon *ngIf="!post.fever" [icon]="faTimesCircle" size="md" class="text-red-400"></fa-icon></h3></div>
+                    <div class="transitions col-span-2 relative select-none mx-2 whitespace-normal"><h3 class="w-full text-center"><fa-icon *ngIf="post.vaginal_infection" [icon]="faCircleCheck" size="md" class="text-green-400"></fa-icon><fa-icon *ngIf="!post.vaginal_infection" [icon]="faTimesCircle" size="md" class="text-red-400"></fa-icon></h3></div>
+                    <div class="transitions col-span-2 relative select-none mx-2 whitespace-normal"><h3 class="w-full text-center"><fa-icon *ngIf="post.vaginal_bleeding" [icon]="faCircleCheck" size="md" class="text-green-400"></fa-icon><fa-icon *ngIf="!post.vaginal_bleeding" [icon]="faTimesCircle" size="md" class="text-red-400"></fa-icon></h3></div>
+                    <div class="transitions col-span-2 relative select-none mx-2 whitespace-normal"><h3 class="w-full text-center"><fa-icon *ngIf="post.pallor" [icon]="faCircleCheck" size="md" class="text-green-400"></fa-icon><fa-icon *ngIf="!post.pallor" [icon]="faTimesCircle" size="md" class="text-red-400"></fa-icon></h3></div>
+                    <div class="transitions col-span-2 relative select-none mx-2 whitespace-normal"><h3 class="w-full text-center"><fa-icon *ngIf="post.cord_ok" [icon]="faCircleCheck" size="md" class="text-green-400"></fa-icon><fa-icon *ngIf="!post.cord_ok" [icon]="faTimesCircle" size="md" class="text-red-400"></fa-icon></h3></div>
+                    <div class="transitions col-span-3 relative select-none mx-2 whitespace-normal"><h3 class="w-full text-center"><fa-icon *ngIf="post.breastfeeding" [icon]="faCircleCheck" size="md" class="text-green-400"></fa-icon><fa-icon *ngIf="!post.breastfeeding" [icon]="faTimesCircle" size="md" class="text-red-400"></fa-icon></h3></div>
+                    <div class="transitions col-span-2 relative select-none mx-2 whitespace-normal"><h3 class="w-full text-center"><fa-icon *ngIf="post.family_planning" [icon]="faCircleCheck" size="md" class="text-green-400"></fa-icon><fa-icon *ngIf="!post.family_planning" [icon]="faTimesCircle" size="md" class="text-red-400"></fa-icon></h3></div>
+                    
+                    <!-- <div class="transitions relative select-none mx-2">
+                        <button type="button" class="w-full">
+                            <fa-icon [icon]="faPencil" size="lg" class="mr-2 hover:text-orange-300"></fa-icon>
+                        </button>
+                    </div> -->
+                </div>
+            </div>
+            
         </div>
     </div>
 </form>
