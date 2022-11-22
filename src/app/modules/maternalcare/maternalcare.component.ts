@@ -13,6 +13,9 @@ export class MaternalcareComponent implements OnInit {
   faPersonWalking = faPersonWalking;
   patient_details: any;
   public mcr_data: any;
+  patient_mc_record: any;
+  prenatal: boolean;
+  services: boolean;
   constructor(private http: HttpService) { }
   module: number;
 
@@ -30,6 +33,7 @@ export class MaternalcareComponent implements OnInit {
     this.module = 1;
     this.post_value = false;
     this.loadLibraries();
+
   }
 
   switchTab(tab) {
@@ -44,7 +48,27 @@ export class MaternalcareComponent implements OnInit {
       this.post_value = true;
     }
   }
+  mcrID(type: any, id: any) {
 
+    if (id) {
+
+      this.http.get('maternal-care/mc-records?type=' + type + '&patient_id=' + id).subscribe({
+        next: (data: any) => {
+          this.patient_mc_record = data.data;
+          console.log(this.patient_mc_record, " patient_mc_record");
+          if (this.patient_mc_record.length != 0) {
+            // if (this.patient_mc_record[0].pre_registration) {
+              this.prenatal = true;
+              this.services = true;
+            // }
+          }
+          // this.module = 2;
+        },
+        error: err => console.log(err),
+      });
+      // this.patient_mc_record = patient_mc_record
+    }
+  }
   loadLibraries() {
     this.libraries.forEach(obj => {
       this.http.get('libraries/' + obj.location).subscribe({
@@ -54,7 +78,8 @@ export class MaternalcareComponent implements OnInit {
     });
   }
   patientInfo(info) {
-  this.patient_details = info;
-  // console.log(this.patient_details, " pantient info");
+    this.patient_details = info;
+    this.mcrID('all', this.patient_details.id);
+    // console.log(this.patient_details, " pantient info");
   }
 }
