@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
+import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
   selector: 'app-philhealth-list-modal',
@@ -6,10 +8,28 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./philhealth-list-modal.component.scss']
 })
 export class PhilhealthListModalComponent implements OnInit {
+  @Output() toggleModal = new EventEmitter<any>();
+  @Input() patient_info;
 
-  constructor() { }
+  faPenToSquare = faPenToSquare;
 
-  ngOnInit(): void {
+  editPhilhealth(){
+
   }
 
+  loadPhilhealth(){
+    // this.http.get
+  }
+
+  closeModal(){
+    this.toggleModal.emit('philhealth-list-modal');
+  }
+
+  constructor(
+    private http: HttpService
+  ) { }
+
+  ngOnInit(): void {
+    this.loadPhilhealth();
+  }
 }

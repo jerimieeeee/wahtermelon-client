@@ -18,7 +18,7 @@
         </span>
 
         <span class="block text-xs">
-          {{ patient_info?.birthdate | date: 'M/dd/Y' }} [{{ getAge() }}]
+          {{ patient_info?.birthdate | date: 'MM/dd/yyyy' }} [{{ getAge() }}]
         </span>
 
         <div class="flex pt-2">
@@ -68,8 +68,8 @@
             PHILHEALTH
           </span>
           <span>
-            <!-- <fa-icon (click)="toggleModal('philhealth-modal')" class="mx-0 my-0 text-green-500 mr-2 hover:cursor-pointer" [icon]="faTableList"></fa-icon> -->
-            <!-- <fa-icon (click)="toggleModal('vitals-modal')" class="mx-0 my-0 text-blue-500 mr-2 hover:cursor-pointer" [icon]="faPlusCircle"></fa-icon> -->
+            <!-- <fa-icon (click)="toggleModal('philhealth-list-modal')" class="mx-0 my-0 text-green-500 mr-2 hover:cursor-pointer" [icon]="faTableList"></fa-icon> -->
+            <!-- <fa-icon (click)="toggleModal('philhealth-modal')" class="mx-0 my-0 text-blue-500 mr-2 hover:cursor-pointer" [icon]="faPlusCircle"></fa-icon> -->
           </span>
         </div>
         <span class="block text-xs text-red-500">

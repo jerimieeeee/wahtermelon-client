@@ -15,36 +15,64 @@ export class PhilhealthModalComponent implements OnInit {
 
   error_message = "exceeded maximum value";
   error_message_min = "does not meet minimum length";
+  required_message = "this field is required";
+
+  sex_cat = [
+    { id: 'M', desc: 'Male'},
+    { id: 'F', desc: 'Female'}
+  ];
 
   philhealthForm: FormGroup = new FormGroup({
+    philhealth_id: new FormControl<string| null>(''),
+    facility_code: new FormControl<string| null>(''),
     patient_id: new FormControl<string| null>(''),
+    user_id: new FormControl<string| null>(''),
     enlistment_date: new FormControl<string| null>(''),
-    philhealth_number: new FormControl<string| null>(''),
-    philhealth_number_confirmation: new FormControl<string| null>(''),
+    effectivity_year: new FormControl<string| null>(''),
+    enlistment_status_id: new FormControl<string| null>(''),
+    package_type_id: new FormControl<string| null>(''),
     membership_type_id: new FormControl<string| null>(''),
-    member_cat: new FormControl<string| null>(''),
-    employer_pen: new FormControl<string| null>(''),
-    employer_name: new FormControl<string| null>(''),
-    employer_address: new FormControl<string| null>(''),
-    expiration_date: new FormControl<string| null>(''),
+    membership_category_id: new FormControl<string| null>(''),
     member_pin: new FormControl<string| null>(''),
-    member_pin_confirmation: new FormControl<string| null>(''),
-    member_relation: new FormControl<string| null>(''),
-    member_birthdate: new FormControl<string| null>(''),
     member_last_name: new FormControl<string| null>(''),
     member_first_name: new FormControl<string| null>(''),
     member_middle_name: new FormControl<string| null>(''),
     member_suffix_name: new FormControl<string| null>(''),
-    member_gender: new FormControl<string| null>('')
+    member_birthdate: new FormControl<string| null>(''),
+    member_gender: new FormControl<string| null>(''),
+    member_relation_id: new FormControl<string| null>(''),
+    employer_pin: new FormControl<string| null>(''),
+    // employer_name: new FormControl<string| null>(''),
+    employer_address: new FormControl<string| null>(''),
+    member_pin_confirmation: new FormControl<string| null>(''),
+    philhealth_id_confirmation: new FormControl<string| null>(''),
   });
 
   date;
   showChildVitals: boolean = false;
   showAlert: boolean = false;
   is_saving: boolean = false;
+  loading: boolean = false;
+  show_member_form: boolean = false;
+
+  membership_types: any;
+  membership_categories: any;
+  package_types: any;
+  enlistment_status: any;
+  member_relationships: any;
+  suffix_names: any;
+
 
   onSubmit(){
+    this.is_saving = true;
     console.log(this.philhealthForm)
+    this.philhealthForm.patchValue({effectivity_year: formatDate(this.philhealthForm.value.enlistment_date, 'yyyy', 'en')})
+    this.http.post('patient-philhealth/philhealth', this.philhealthForm.value).subscribe({
+      next: (data: any) => {
+        console.log(data)
+      },
+      error: err => console.log(err)
+    })
   }
 
   get f(): { [key: string]: AbstractControl } {
@@ -52,7 +80,11 @@ export class PhilhealthModalComponent implements OnInit {
   }
 
   get philhealthMatchError() {
-    return ((this.philhealthForm.controls.philhealth_number.value != this.philhealthForm.controls.philhealth_number_confirmation.value) && this.philhealthForm.get('philhealth_number_confirmation')?.touched);
+    return ((this.philhealthForm.controls.philhealth_id.value != this.philhealthForm.controls.philhealth_id_confirmation.value) && this.philhealthForm.get('philhealth_id_confirmation')?.touched);
+  }
+
+  get philhealthMemberMatchError() {
+    return ((this.philhealthForm.controls.member_pin.value != this.philhealthForm.controls.member_pin_confirmation.value) && this.philhealthForm.get('member_pin_confirmation')?.touched);
   }
 
   closeModal(){
@@ -64,49 +96,103 @@ export class PhilhealthModalComponent implements OnInit {
     private http: HttpService
   ) { }
 
-  membership_types: any;
-  membership_categories: any;
 
   loadMainLibrary(){
     this.http.get('libraries/membership-types').subscribe({
-      next: (data: any) => {
-        console.log(data)
-        this.membership_types = data.data
-      },
+      next: (data: any) => this.membership_types = data.data,
+      error: err => console.log(err)
+    });
+
+    this.http.get('libraries/membership-categories').subscribe({
+      next: (data: any) =>  this.membership_categories = data.data,
+      error: err => console.log(err)
+    });
+
+    this.http.get('libraries/enlistment-status').subscribe({
+      next: (data: any) =>  this.enlistment_status = data.data,
+      error: err => console.log(err)
+    });
+
+    this.http.get('libraries/package-types').subscribe({
+      next: (data: any) => this.package_types = data.data,
+      error: err => console.log(err)
+    });
+
+    this.http.get('libraries/member-relationships').subscribe({
+      next: (data: any) => this.member_relationships = data.data,
+      error: err => console.log(err)
+    });
+
+    this.http.get('libraries/suffix-names').subscribe({
+      next: (data: any) =>  this.suffix_names = data.data,
       error: err => console.log(err)
     })
   }
 
-  loadMemberLibrary(){
+  showMember(){
+    if(this.philhealthForm.value.membership_type_id === 'DD'){
+      this.show_member_form = true;
+    } else {
+      this.show_member_form = false;
+    }
 
+    this.enableMemberForm(this.show_member_form);
+  }
+
+  enableMemberForm(value: boolean){
+    console.log(value)
+    if(value === true){
+      this.philhealthForm.controls.member_pin.enable();
+      this.philhealthForm.controls.member_pin_confirmation.enable();
+      this.philhealthForm.controls.member_last_name.enable();
+      this.philhealthForm.controls.member_first_name.enable();
+      this.philhealthForm.controls.member_middle_name.enable();
+      this.philhealthForm.controls.member_suffix_name.enable();
+      this.philhealthForm.controls.member_birthdate.enable();
+      this.philhealthForm.controls.member_gender.enable();
+      this.philhealthForm.controls.member_relation_id.enable();
+    } else {
+      this.philhealthForm.controls.member_pin.disable();
+      this.philhealthForm.controls.member_pin_confirmation.disable();
+      this.philhealthForm.controls.member_last_name.disable();
+      this.philhealthForm.controls.member_first_name.disable();
+      this.philhealthForm.controls.member_middle_name.disable();
+      this.philhealthForm.controls.member_suffix_name.disable();
+      this.philhealthForm.controls.member_birthdate.disable();
+      this.philhealthForm.controls.member_gender.disable();
+      this.philhealthForm.controls.member_relation_id.disable();
+    }
   }
 
   ngOnInit(): void {
     this.loadMainLibrary();
-    let date = new Date();
     let user_id = localStorage.getItem('user_id');
     let facility_code = "DOH000000000005672";
 
     this.philhealthForm = this.formBuilder.group({
+      philhealth_id: [null, [Validators.required, Validators.minLength(12)]],
+      facility_code: [facility_code, Validators.required],
       patient_id: [this.patient_info.id, Validators.required],
-      enlistment_date: [this.patient_info.id, Validators.required],
-      philhealth_number: [null, [Validators.required, Validators.minLength(12)]],
-      philhealth_number_confirmation: [null, [Validators.required, Validators.minLength(12)]],
+      user_id: [user_id, Validators.required],
+      enlistment_date: [null, Validators.required],
+      effectivity_year: [null, Validators.required],
+      enlistment_status_id: ["1", Validators.required],
+      package_type_id: ["K", Validators.required],
       membership_type_id: [null, Validators.required],
-      member_cat: [null, Validators.required],
-      employer_pen: [null, [Validators.minLength(1), Validators.maxLength(30)]],
-      employer_name: [null, Validators.max(200)],
-      employer_address: [null, Validators.max(200)],
-      expiration_date: [null, Validators.required],
+      membership_category_id: [null, Validators.required],
       member_pin: [null, [Validators.required, Validators.minLength(12)]],
-      member_pin_confirmation: [null, [Validators.required, Validators.minLength(12)]],
-      member_relation: [null, Validators.required],
-      member_birthdate: [null, Validators.required],
-      member_last_name: [null, Validators.required],
-      member_first_name: [null, Validators.required],
-      member_middle_name: [null, Validators.required],
+      member_last_name: [null, [Validators.required, Validators.minLength(2)]],
+      member_first_name: [null, [Validators.required, Validators.minLength(2)]],
+      member_middle_name: [null, [Validators.required, Validators.minLength(2)]],
       member_suffix_name: [null, Validators.required],
+      member_birthdate: [null, Validators.required],
       member_gender: [null, Validators.required],
+      member_relation_id: [null, Validators.required],
+      employer_pin: [null],
+      // employer_name: [null],
+      employer_address: [null],
+      member_pin_confirmation: [null, [Validators.required, Validators.minLength(12)]],
+      philhealth_id_confirmation: [null, [Validators.required, Validators.minLength(12)]],
 
     });
 
