@@ -72,6 +72,16 @@
                     </div>
                 </div>
 
+                <div class="transitions col-span-3 mx-2" *ngIf="!focused">
+                    <div class="border-check-red group">
+                        <h3 for="private">Seen Outside RHU</h3>
+                        <input
+                        class="check-style h-6 w-6 border border-gray-400 rounded-md bg-white checked:bg-blue-400 checked:border-blue-500 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                        type="checkbox" formControlName="private"
+                        >
+                    </div>
+                </div>
+
             </div>
         </div>
 
