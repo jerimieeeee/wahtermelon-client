@@ -27,17 +27,15 @@ export class PhilhealthModalComponent implements OnInit {
     employer_name: new FormControl<string| null>(''),
     employer_address: new FormControl<string| null>(''),
     expiration_date: new FormControl<string| null>(''),
-    member: new FormGroup({
-      member_pin: new FormControl<string| null>(''),
-      member_pin_confirmation: new FormControl<string| null>(''),
-      member_relation: new FormControl<string| null>(''),
-      member_birthdate: new FormControl<string| null>(''),
-      member_last_name: new FormControl<string| null>(''),
-      member_first_name: new FormControl<string| null>(''),
-      member_middle_name: new FormControl<string| null>(''),
-      member_suffix_name: new FormControl<string| null>(''),
-      member_gender: new FormControl<string| null>('')
-    })
+    member_pin: new FormControl<string| null>(''),
+    member_pin_confirmation: new FormControl<string| null>(''),
+    member_relation: new FormControl<string| null>(''),
+    member_birthdate: new FormControl<string| null>(''),
+    member_last_name: new FormControl<string| null>(''),
+    member_first_name: new FormControl<string| null>(''),
+    member_middle_name: new FormControl<string| null>(''),
+    member_suffix_name: new FormControl<string| null>(''),
+    member_gender: new FormControl<string| null>('')
   });
 
   date;
@@ -82,23 +80,22 @@ export class PhilhealthModalComponent implements OnInit {
       employer_name: [null, Validators.max(200)],
       employer_address: [null, Validators.max(200)],
       expiration_date: [null, Validators.required],
-      family: this.formBuilder.group({
-        member_pin: [null, [Validators.required, Validators.minLength(12)]],
-        member_pin_confirmation: [null, [Validators.required, Validators.minLength(12)]],
-        member_relation: [null, Validators.required],
-        member_birthdate: [null, Validators.required],
-        member_last_name: [null, Validators.required],
-        member_first_name: [null, Validators.required],
-        member_middle_name: [null, Validators.required],
-        member_suffix_name: [null, Validators.required],
-        member_gender: [null, Validators.required],
-      })
+      member_pin: [null, [Validators.required, Validators.minLength(12)]],
+      member_pin_confirmation: [null, [Validators.required, Validators.minLength(12)]],
+      member_relation: [null, Validators.required],
+      member_birthdate: [null, Validators.required],
+      member_last_name: [null, Validators.required],
+      member_first_name: [null, Validators.required],
+      member_middle_name: [null, Validators.required],
+      member_suffix_name: [null, Validators.required],
+      member_gender: [null, Validators.required],
+
     });
 
     if(this.philhealth_to_edit){
       this.philhealthForm.patchValue({...this.philhealth_to_edit});
-      this.philhealthForm.patchValue({vitals_date_temp: formatDate(this.philhealthForm.value.vitals_date,'Y-M-dd','en')});
-      this.philhealthForm.patchValue({vitals_time_temp: formatDate(this.philhealthForm.value.vitals_date,'HH:mm:ss','en')});
+      // this.philhealthForm.patchValue({vitals_date_temp: formatDate(this.philhealthForm.value.vitals_date,'Y-M-dd','en')});
+      // this.philhealthForm.patchValue({vitals_time_temp: formatDate(this.philhealthForm.value.vitals_date,'HH:mm:ss','en')});
 
       // console.log(this.philhealthForm);
     }else{
