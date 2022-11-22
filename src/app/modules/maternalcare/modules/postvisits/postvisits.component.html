@@ -40,6 +40,11 @@
                         <option value="CLINIC">Clinic Visit</option>
                         <option value="HOME">Home Visit</option>
                     </select>
+                    <div *ngIf="is_saving && postpartum_visit_form.controls.visit_type.errors" class="invalid-alert">
+                        <div *ngIf="prenatal_form.controls.visit_type.errors?.['required']">
+                            Required field
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -64,7 +69,11 @@
                         (keyup)="onKeyUp($event.target.value, $event.target.id)"
                         (keyup.escape)="clearForm($event.target.id)" id="patient_height"
                         (change)="onKeyUp($event.target.value, $event.target.id); cmCatcher($event.target.value)">
-                    <small class="hidden peer-invalid:block text-red-400 ">error_message</small>
+                        <div *ngIf="is_saving && postpartum_visit_form.controls.patient_height.errors" class="invalid-alert">
+                            <div *ngIf="prenatal_form.controls.patient_height.errors?.['required']">
+                                Required field
+                            </div>
+                        </div>
                 </div>
 
                 <div class="transitions col-span-2 border-check relative select-none group ml-2 mb-2" *ngIf="!focused">
@@ -78,7 +87,11 @@
                         (keyup)="onKeyUp($event.target.value, $event.target.id)"
                         (keyup.escape)="clearForm($event.target.id)" id="bp_systolic"
                         (change)="onKeyUp($event.target.value, $event.target.id)">
-                    <small class="hidden peer-invalid:block text-red-400 ">error_message</small>
+                        <div *ngIf="is_saving && postpartum_visit_form.controls.bp_systolic.errors" class="invalid-alert">
+                            <div *ngIf="prenatal_form.controls.bp_systolic.errors?.['required']">
+                                Required field
+                            </div>
+                        </div>
                 </div>
 
                 <div class="transitions col-span-2 border-check relative select-none group mr-2 mb-2" *ngIf="!focused">
@@ -92,7 +105,11 @@
                         (keyup)="onKeyUp($event.target.value, $event.target.id)"
                         (keyup.escape)="clearForm($event.target.id)" id="bp_diastolic"
                         (change)="onKeyUp($event.target.value, $event.target.id)">
-                    <small class="hidden peer-invalid:block text-red-400 ">error_message</small>
+                        <div *ngIf="is_saving && postpartum_visit_form.controls.bp_diastolic.errors" class="invalid-alert">
+                            <div *ngIf="prenatal_form.controls.bp_diastolic.errors?.['required']">
+                                Required field
+                            </div>
+                        </div>
                 </div>
 
                 <div class="transitions col-span-2 col-start-1 border-check relative select-none group mx-2"
@@ -107,7 +124,11 @@
                         (keyup)="onKeyUp($event.target.value, $event.target.id)"
                         (keyup.escape)="clearForm($event.target.id)" id="patient_weight"
                         (change)="onKeyUp($event.target.value, $event.target.id)">
-                    <small class="hidden peer-invalid:block text-red-400 ">error_message</small>
+                        <div *ngIf="is_saving && postpartum_visit_form.controls.patient_weight.errors" class="invalid-alert">
+                            <div *ngIf="prenatal_form.controls.patient_weight.errors?.['required']">
+                                Required field
+                            </div>
+                        </div>
                 </div>
 
                 <div class="transitions col-span-4 col-start-3 mb-2 mx-2" *ngIf="!focused">
@@ -123,6 +144,11 @@
                             width="auto"
                             (keyup.escape)="$event.target.value = ''; onKeyUp($event.target.value, $event.target.id)"
                             (change)="onKeyUp($event.target.value, $event.target.id)">
+                    </div>
+                    <div *ngIf="is_saving && postpartum_visit_form.controls.postpartum_date.errors" class="invalid-alert">
+                        <div *ngIf="prenatal_form.controls.postpartum_date.errors?.['required']">
+                            Required field
+                        </div>
                     </div>
                 </div>
 
