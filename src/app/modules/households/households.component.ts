@@ -13,7 +13,7 @@ export class HouseholdsComponent implements OnInit {
   faPenToSquare = faPenToSquare;
 
   loadHouseholds(){
-    this.http.get('households/household-folders').subscribe({
+    this.http.get('households/household-folders',{params:{per_page:'all' }}).subscribe({
       next: (data: any) => {
         console.log(data);
         this.household_list = data.data;
