@@ -46,7 +46,10 @@
           ADDRESS
         </span>
         <span class="block text-xs">
-          San Rafael, Tarlac City
+          {{ patient_info?.household_folder?.address }}, {{ patient_info?.household_folder?.barangay.name }}
+          {{ patient_info?.household_folder?.barangay.municipality.name }}
+          {{ patient_info?.household_folder?.barangay.province.name }} <br />
+          {{ patient_info?.household_folder?.barangay.region.name }}
         </span>
       </div>
 
