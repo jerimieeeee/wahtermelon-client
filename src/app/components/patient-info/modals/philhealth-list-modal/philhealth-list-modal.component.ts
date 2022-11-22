@@ -18,7 +18,12 @@ export class PhilhealthListModalComponent implements OnInit {
   }
 
   loadPhilhealth(){
-    // this.http.get
+    this.http.get('patient-philhealth/philhealth', {params:{'filter[philhealth_id]': this.patient_info.id}}).subscribe({
+      next: (data: any) => {
+        console.log(data);
+      },
+      error: err => console.log(err)
+    })
   }
 
   closeModal(){
