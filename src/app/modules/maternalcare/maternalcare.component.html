@@ -16,7 +16,9 @@
         </li>
         <li class="mr-2" *ngIf="patient_details && patient_mc_record">
           <a class="select-none inline-block p-4 rounded-t-lg border-b-2 hover:text-blue-400 hover:font-semibold hover:border-blue-400"
-            [class]="module != 4? '' : 'text-blue-400 font-semibold border-blue-400'" (click)="switchTab(4)">Postpartum</a>
+            [class]="module != 4? '' : 'text-blue-400 font-semibold border-blue-400'" 
+            (click)="switchTab(4)"
+            >Postpartum</a>
         </li>
         <li class="mr-2" *ngIf="patient_details && patient_mc_record && services">
           <a class="select-none inline-block p-4 rounded-t-lg border-b-2 hover:text-blue-400 hover:font-semibold hover:border-blue-400"
@@ -41,7 +43,7 @@
 
     <div class="fade-in mb-20" *ngIf="module == 2">
       <div class="w-12/12 px-8 pb-10 border-solid border-2 border-zinc-100 border-l-0 border-r-0 border-t-0 p-3">
-        <app-mcr *ngIf="patient_details" [patient_mc_record]="patient_mc_record" [patient_details]="patient_details"></app-mcr>
+        <app-mcr *ngIf="patient_details" (patient_mc_id)="showPreServ($event)" [patient_mc_record]="patient_mc_record" [patient_details]="patient_details"></app-mcr>
       </div>
       <div class="w-12/12 px-8 pb-10 border-solid border-2 border-zinc-100 border-l-0 border-r-0 border-t-0 p-3">
         <app-riskfactors [risk_factors]="risk_factors"></app-riskfactors>
@@ -55,8 +57,8 @@
     </div>
 
     <div class="fade-in mb-20" *ngIf="module == 4">
-      <div  *ngIf="post_value" class="w-12/12 px-8 pb-10 border-solid border-2 border-zinc-100 border-l-0 border-r-0 border-t-0 p-3">
-        <app-postvisits></app-postvisits>
+      <div  *ngIf="!post_value" class="w-12/12 px-8 pb-10 border-solid border-2 border-zinc-100 border-l-0 border-r-0 border-t-0 p-3">
+        <app-postvisits *ngIf="patient_details" [patient_mc_record]="patient_mc_record" [patient_details]="patient_details"></app-postvisits>
       </div>
       <div class="w-12/12 px-8 pb-10 border-solid border-2 border-zinc-100 border-l-0 border-r-0 border-t-0 p-3">
         <app-postpartum (postpartum_bool)="postValue($event)" [patient_mc_record]="patient_mc_record" [delivery_location]="delivery_location" [regions]="regions" [attendants]="attendants" [preg_outcome]="preg_outcome" [patient_details]="patient_details"></app-postpartum>

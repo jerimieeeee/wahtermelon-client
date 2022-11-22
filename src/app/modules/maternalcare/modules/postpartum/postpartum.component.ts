@@ -104,7 +104,7 @@ export class PostpartumComponent implements OnInit {
 
   createForm(mc_record: any) {
     let post_registration: any;
-    post_registration = mc_record.post_registration;
+    post_registration = mc_record.post_registration?mc_record.post_registration:'';
   console.log(post_registration, " this is my post reg get");
   
     let user_id = localStorage.getItem('user_id');
@@ -114,7 +114,7 @@ export class PostpartumComponent implements OnInit {
     let barangays;
 
     console.log(mc_record, " mc_record createForm Post");
-
+    if(post_registration){
     if(post_registration.barangay.code != ''){
       console.log(post_registration.barangay.code, " you have brgy code good");
 
@@ -128,7 +128,7 @@ export class PostpartumComponent implements OnInit {
       this.loadDemog('municipalities', municipalities, 'barangays');
       this.loadDemog('barangays', barangays, '');
     }
-    
+  }
     this.postpartum_form = this.formBuilder.group({
     facility_code: [facility_code],
     patient_id: [this.patient_details.id],

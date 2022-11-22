@@ -31,7 +31,7 @@ export class MaternalcareComponent implements OnInit {
 
   ngOnInit(): void {
     this.module = 1;
-    this.post_value = false;
+    this.post_value = true;
     this.loadLibraries();
 
   }
@@ -46,6 +46,13 @@ export class MaternalcareComponent implements OnInit {
 
     if (post_data) {
       this.post_value = true;
+    }
+  }
+
+  showPreServ(id: any){
+    if(id){
+      this.prenatal = true;
+      this.services = true;
     }
   }
   mcrID(type: any, id: any) {
