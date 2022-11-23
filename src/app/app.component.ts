@@ -53,7 +53,7 @@ export class AppComponent implements OnInit{
           localStorage.setItem('user_first_name', data.user.first_name);
           localStorage.setItem('user_middle_name', data.user.middle_name);
           localStorage.setItem('user_id', data.user.id);
-          localStorage.setItem('facility_code', data.user.facility.code);
+          localStorage.setItem('facility_code', data.user.facility?.code);
           this.is_saving = false;
           this.checkAuth();
         },
