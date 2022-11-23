@@ -161,10 +161,12 @@ export class PatientInfoComponent {
     })
   }
 
+  immunization_status: any;
   loadVaccines(){
     this.http.get('patient-vaccines/vaccines-records', {params:{'patient_id': this.patient_info.id, 'sort': '-vaccine_date' }}).subscribe({
       next: (data: any) => {
         this.vaccine_list = data.data;
+        this.immunization_status = data.status;
         // console.log(this.vaccine_list)
         this.checkVaccineStatus(data.data);
       },
