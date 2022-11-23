@@ -69,7 +69,7 @@ export class UserRegistrationComponent implements OnInit {
     if(!this.userForm.invalid){
       this.http.post('register', this.userForm.value).subscribe({
         next: (data:any) => {
-          console.log(data.data);
+          console.log(data);
           this.loading = false;
           this.is_saving = false;
           this.showModal = true;
@@ -155,7 +155,7 @@ export class UserRegistrationComponent implements OnInit {
       gender: ['', Validators.required],
       contact_number: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      is_active: [1],
+      is_active: [0],
       photo_url: [''],
       password: ['', [Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-_]).{6,}$')]],
       password_confirmation: ['', Validators.required],
