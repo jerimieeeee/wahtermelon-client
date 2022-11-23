@@ -15,7 +15,7 @@ export class AccountsComponent implements OnInit {
   is_updating: boolean = false;
 
   loadAccount(){
-    this.http.get('users').subscribe({
+    this.http.get('users',{params:{per_page:'all'}}).subscribe({
       next: (data: any) => {
         console.log(data.data);
         this.account_list = data.data;
