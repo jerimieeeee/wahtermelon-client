@@ -181,7 +181,7 @@ export class PrenatalComponent implements OnInit {
     }
 
     let user_id = localStorage.getItem('user_id');
-    let facility_code = 'DOH000000000005672';
+    let facility_code = localStorage.getItem('facility_code');
     console.log(prenatal_visit, " log prenatal_visit");
 
     this.prenatal_form = this.formBuilder.group({

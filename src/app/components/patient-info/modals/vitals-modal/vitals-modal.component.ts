@@ -131,7 +131,7 @@ export class VitalsModalComponent implements OnInit {
   ngOnInit(): void {
     let date = new Date();
     let user_id = localStorage.getItem('user_id');
-    let facility_code = "DOH000000000005672";
+    let facility_code = localStorage.getItem('facility_code');
 
     this.vitalsForm = this.formBuilder.group({
       facility_code: [facility_code, Validators.required],

@@ -74,7 +74,7 @@ export class PostpartumComponent implements OnInit {
   public mcr_data: any;
   is_saving: boolean;
   selected_regions: string;
-  
+
   constructor(private http: HttpService, private formBuilder: FormBuilder) { }
 
 
@@ -106,9 +106,9 @@ export class PostpartumComponent implements OnInit {
     let post_registration: any;
     post_registration = mc_record.post_registration?mc_record.post_registration:'';
   console.log(post_registration, " this is my post reg get");
-  
+
     let user_id = localStorage.getItem('user_id');
-    let facility_code = 'DOH000000000005672';
+    let facility_code = localStorage.getItem('facility_code');
     let provinces;
     let municipalities;
     let barangays;
@@ -157,7 +157,7 @@ export class PostpartumComponent implements OnInit {
     postpartum_remarks:[post_registration.length != 0?post_registration.postpartum_remarks:''],
     });
 
-  
+
     this.bfd = post_registration.breastfeeding;
     console.log(this.postpartum_form.value, ' p_form after create');
 
@@ -171,17 +171,17 @@ export class PostpartumComponent implements OnInit {
   saveForm(data) {
     this.is_saving = true;
     console.log(this.postpartum_form.value.delivery_date.length, this.postpartum_form.value.admission_date.length);
-    
+
     this.postpartum_form.value.delivery_date = this.postpartum_form.value.delivery_date.length == 16? this.postpartum_form.value.delivery_date.replace("T", " ") + ':00':this.postpartum_form.value.delivery_date.replace("T", " ");
     this.postpartum_form.value.admission_date = this.postpartum_form.value.admission_date.length == 16? this.postpartum_form.value.admission_date.replace("T", " ") + ':00':this.postpartum_form.value.admission_date.replace("T", " ");
     this.postpartum_form.value.discharge_date = this.postpartum_form.value.discharge_date.length == 16? this.postpartum_form.value.discharge_date.replace("T", " ") + ':00':this.postpartum_form.value.discharge_date.replace("T", " ");
   console.log(this.postpartum_form.value.discharge_date);
-  
+
     if (this.postpartum_form.valid) {
 
       this.http.post('maternal-care/mc-postregistrations', this.postpartum_form.value).subscribe({
         next: (data: any) => {
-          console.log(data, " data from saving postpartum")        
+          console.log(data, " data from saving postpartum")
         },
         error: err => console.log(err),
         complete: () => {
@@ -197,7 +197,7 @@ export class PostpartumComponent implements OnInit {
     } else {
       // this.loading = false;
       console.log( "post partum form invalid");
-      
+
     }
 
     console.log(this.postpartum_form.value, " data value");
@@ -225,10 +225,10 @@ export class PostpartumComponent implements OnInit {
     //     this.http.get('libraries/'+demo+'/'+data_input,{params:{'include':this.demog[index + 1]}}).subscribe({
     //       next: (data: any) => {console.log(data.data); this[this.demog[index + 1]] = data.data[this.demog[index + 1]]},
     //       error: err => console.log(err)
-    //     });   
+    //     });
     //   }
     //   console.log(this.demog[index + 1]);
-    // }); 
+    // });
   }
 
   loadDemog(loc, code, include) {
@@ -239,13 +239,13 @@ export class PostpartumComponent implements OnInit {
       this.barangays = null;
     }
     console.log(loc, ' ', code, ' ', include);
-    
+
     this.http.get('libraries/' + loc + '/' + code, { params: { 'include': include } }).subscribe({
-      next: (data: any) => { 
+      next: (data: any) => {
         this[include] = data.data[include];
          if(loc == 'regions'){
          console.log(this.regions, ' vs ', data.data);
-         
+
          }
         },
       error: err => console.log(err)

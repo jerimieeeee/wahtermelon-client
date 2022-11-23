@@ -62,30 +62,33 @@ export class PhilhealthModalComponent implements OnInit {
   member_relationships: any;
   suffix_names: any;
 
+  submit_errors: [];
+
   onSubmit(){
     this.is_saving = true;
+    console.log(this.philhealthForm)
     this.philhealthForm.patchValue({effectivity_year: formatDate(this.philhealthForm.value.enlistment_date, 'yyyy', 'en')})
+    if(this.philhealthForm.valid){
+      let query;
+      if(this.philhealth_to_edit){
+        query = this.http.update('patient-philhealth/philhealth/', this.philhealth_to_edit.id, this.philhealthForm.value);
+      } else {
+        query = this.http.post('patient-philhealth/philhealth', this.philhealthForm.value);
+      }
 
-    let query;
-
-    if(this.philhealth_to_edit){
-      query = this.http.update('patient-philhealth/philhealth/', this.philhealth_to_edit.id, this.philhealthForm.value);
-    } else {
-      query = this.http.post('patient-philhealth/philhealth', this.philhealthForm.value);
+      query.subscribe({
+        next: (data: any) => {
+          console.log(data)
+          this.showAlert = true;
+          this.philhealthForm.markAsPristine();
+          this.philhealthForm.disable();
+          setTimeout(() => {
+            this.showAlert = false;
+          }, 3000);
+        },
+        error: err => {console.log(err); this.submit_errors = err.error.errors}
+      })
     }
-
-    query.subscribe({
-      next: (data: any) => {
-        console.log(data)
-        this.showAlert = true;
-        this.philhealthForm.markAsPristine();
-        this.philhealthForm.disable();
-        setTimeout(() => {
-          this.showAlert = false;
-        }, 3000);
-      },
-      error: err => console.log(err)
-    })
   }
 
   get f(): { [key: string]: AbstractControl } {
@@ -179,7 +182,7 @@ export class PhilhealthModalComponent implements OnInit {
   ngOnInit(): void {
     this.loadMainLibrary();
     let user_id = localStorage.getItem('user_id');
-    let facility_code = "DOH000000000005672";
+    let facility_code = localStorage.getItem('facility_code');
 
     this.philhealthForm = this.formBuilder.group({
       philhealth_id: [null, [Validators.required, Validators.minLength(12)]],
@@ -196,7 +199,7 @@ export class PhilhealthModalComponent implements OnInit {
       member_last_name: [null, [Validators.required, Validators.minLength(2)]],
       member_first_name: [null, [Validators.required, Validators.minLength(2)]],
       member_middle_name: [null, [Validators.required, Validators.minLength(2)]],
-      member_suffix_name: [null, Validators.required],
+      member_suffix_name: ['NA', Validators.required],
       member_birthdate: [null, Validators.required],
       member_gender: [null, Validators.required],
       member_relation_id: [null, Validators.required],
@@ -209,12 +212,15 @@ export class PhilhealthModalComponent implements OnInit {
     });
 
     if(this.philhealth_to_edit){
+      console.log(this.philhealth_to_edit)
       this.philhealthForm.patchValue({...this.philhealth_to_edit});
-      this.philhealthForm.patchValue({philhealth_id_confirmation: this.philhealthForm.value.philhealth_id});
+      this.philhealthForm.patchValue({philhealth_id_confirmation: this.philhealth_to_edit.philhealth_id});
+      this.philhealthForm.patchValue({membership_type_id: this.philhealth_to_edit.membership_type.id});
+      this.philhealthForm.patchValue({membership_category_id: this.philhealth_to_edit.membership_category.id});
 
       if(this.philhealthForm.value.membership_type_id === "DD"){
-        this.philhealthForm.patchValue({member_birthdate: formatDate(this.philhealthForm.value.member_birthdate, 'Y-M-dd','en')});
-        this.philhealthForm.patchValue({member_pin_confirmation: this.philhealthForm.value.member_pin})
+        this.philhealthForm.patchValue({member_birthdate: formatDate(this.philhealth_to_edit.member_birthdate, 'Y-M-dd','en')});
+        this.philhealthForm.patchValue({member_pin_confirmation: this.philhealth_to_edit.member_pin});
       }
       this.showMember();
     }else{

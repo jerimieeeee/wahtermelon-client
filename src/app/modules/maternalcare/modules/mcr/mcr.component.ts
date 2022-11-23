@@ -65,20 +65,20 @@ export class McrComponent implements OnInit {
     this.focused = false;
     this.saved = false;
     this.error_message = "**please enter numbers only!"
-   
+
   }
 
   getMCR(type: any, id: any) {
     // this.http.get('maternal-care/mc-records?type=' + type + '&patient_id=' + id).subscribe({
     //   next: (data: any) => {
       console.log(this.patient_mc_record, " from getmcr");
-      
+
         if (this.patient_mc_record.length == 0) {
           // console.log(this.patient_mc_record.message);
           this.mcr_data = -1;
           this.getEDC(this.today, 'any');
         } else {
-     
+
           this.mcr_data = this.patient_mc_record[0].pre_registration;
           // console.log(this.mcr_data, " mcr data pre_registration");
           this.getEDC(this.mcr_data.lmp_date, 'db');
@@ -91,7 +91,7 @@ export class McrComponent implements OnInit {
 
   createForm() {
     let user_id = localStorage.getItem('user_id');
-    let facility_code = 'DOH000000000005672';
+    let facility_code = localStorage.getItem('facility_code');
     this.mcr_form = this.formBuilder.group({
       patient_id: [this.patient_details.id,
       [Validators.required, Validators.minLength(2)]],
