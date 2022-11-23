@@ -1,0 +1,168 @@
+<div class="grid max-h-fit relative" style="grid-template-columns: repeat(16, minmax(0, 1fr));" *ngIf="!focused">
+    <div class="sticky top-0 z-50 border border-blue-400 col-span-2 relative mx-2 px-2 py-1 rounded-lg text-sm bg-blue-500 text-white"
+        style="grid-column: span 16 / span 16;"><button class="font-bold" type="button">FP History</button>
+        <div class="absolute top-1" style="	left: 4.5rem;">
+            <fa-icon [icon]="faInfoCircle" class=" peer ml-4 text-white hover:text-gray-500 z-50" ></fa-icon>
+            <div
+                class="absolute text-sm bg-gradient-to-b from-stone-500 to-gray-400 p-2 rounded-md border border-gray-500  text-white drop-shadow-lg opacity-90 border-check z-50 w-64 invisible peer-hover:visible">
+                <h1 class="font-bold drop-shadow-lg">IMPORTANT</h1>
+                <p class="font-light drop-shadow-lg">Once saved, the information will be displayed in the input
+                    boxes and shall not be editable unless Edit button is pressed.</p>
+            </div>
+        </div>
+    </div>
+    <div style="grid-column: span 16 / span 16;" class="relative">
+
+        <div *ngFor="let fphx_cat of fp_hx_cat;  let i = index;">
+
+            <form action="">
+                <div class="grid sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 mb-2 bg-white rounded-lg border m-2"
+                    [style]="module_strings.includes(i) && !saved? 'border-color: rgb(96 165 250); filter: drop-shadow(0 10px 8px rgb(0 0 0 / 0.04)) drop-shadow(0 4px 3px rgb(0 0 0 / 0.1)); padding-bottom: 0.5rem; margin-bottom: 1.25rem' : ' '"
+                    [class]="saved? 'hover:drop-shadow-lg drop-shadow-md hover:border border-gray-300 hover:border-gray-500':'hover:border-gray-400 border-gray-200'">
+
+                    <div (click)="showModule(fphx_cat, i)" (keyup.tab)="nextModule(fp_hx_cat[i+1], i+1);"
+                        (keyup.enter)="selectAll('select' + fphx_cat)"
+                        class="text-gray-500 form-check sm:col-span-1 md:col-span-3 lg:col-span-4 p-2 font-semibold"
+                        [style]="module_strings.includes(i)? 'border-bottom-width: 1px; border-style: dashed; border-color: rgb(96 165 250); border-top-width: 0px; border-left-width: 0px; border-right-width: 0px;' : ''">
+                        <div *ngFor="let cat_name of lib_cat_name">
+                            <h1 class="select-none" *ngIf="fphx_cat == cat_name.history_cat_id">
+                                {{cat_name.history_cat_name}}
+                            </h1>
+                        </div>
+
+
+                        <div *ngFor="let fphx of fp_hx_symptoms">
+                            <div *ngFor="let string of fphx_strings; let x = index">
+                                <div *ngIf="fphx_cat == fphx.history_cat && fphx.history_text == string">
+                                    <h1 class="group select-none m-0.5 px-2 border-check font-normal text-sm rounded-full text-gray-600 typed-out hover:bg-blue-200 hover:text-gray-800"
+                                        style="margin-top: 0;" *ngIf="!module_strings.includes(i)" id="test">
+                                        <!-- <fa-icon [icon]="faCaretRight" *ngIf="!module_strings.includes(i)"
+                                            class="group-hover:text-orange-400 text-gray-300"></fa-icon> -->
+                                        {{fphx.history_text}}
+                                    </h1>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="absolute right-1 top-1 hover:text-white text-green-400"
+                        *ngIf="module_strings.includes(i)">
+                        <div class="inline-flex float-right" *ngIf="!cat_strings.includes(fphx_cat)">
+                            <div class="flex hover: border-check bg-white hover:bg-gray-400 text-gray-300 py-1 rounded-full hover:text-white px-2"
+                                (click)="selectAll('select' + fphx_cat)">
+                                <fa-icon [icon]="faCircleCheck" size="lg" class="mr-2"
+                                    *ngIf="!cat_strings.includes(fphx_cat)">
+                                </fa-icon>
+                                <button type="button" class="font-bold button-out border-check-red"
+                                    *ngIf="!cat_strings.includes(fphx_cat)">Select
+                                    All</button>
+                            </div>
+                        </div>
+                        <div class="inline-flex float-right"
+                            *ngIf="cat_strings.includes(fphx_cat) && fphx_strings.length > 0">
+                            <div class="flex hover: border-check bg-white hover:bg-gray-400 text-gray-400 py-1 rounded-full hover:text-white px-2"
+                                (click)="uncheck(fphx_cat)">
+                                <fa-icon [icon]="faTimes" size="lg" class="mr-2">
+                                </fa-icon>
+                                <button type="button" class="font-bold button-out border-check-red">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngFor="let check of check_list;">
+                        <div class="border-check-red p-2 group" *ngIf="module_strings.includes(i)">
+                            <input
+                                class=" h-6 w-6 border border-gray-400 rounded-md checked:border-2 bg-white checked:bg-blue-400 checked:border-blue-500 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                                type="checkbox" value="check" [attr.id]="check" (change)="onChange(check,fphx_cat)"
+                                [checked]="fphx_strings.includes(check)" (keyup.escape)="uncheck(fphx_cat)"
+                                (keyup.enter)="saveModule()" (keyup.tab)="nextModule(fp_hx_cat[i+1], i+1);">
+                            <label class="text-gray-800 cursor-pointer" name="check" [attr.for]="check"
+                                value="check.history_id">
+                                {{ check }}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+    <div class="sticky bottom-0 z-50" style="grid-column: span 16 / span 16;">
+        <div class="relative w-auto border-check mt-2 mb-7 w-12/12" *ngIf="!saved">
+            <div class="absolute inline-flex right-0 ">
+                <div (click)="uncheck('')"
+                class="cursor-pointer flex border-check bg-white hover:drop-shadow-md hover:bg-gray-400 py-1 rounded-full text-gray-300 hover:text-white peer">
+                    <button type="button" class="font-bold button-out border-check-red mx-2">Cancel</button>
+                </div>
+                <div (click)="saveModule()"
+                    class="cursor-pointer flex border-check hover:drop-shadow-md bg-green-300 hover:bg-green-400 py-1 rounded-full text-white px-3 peer-hover:bg-white peer-hover:text-green-400">
+                    <fa-icon [icon]="faSave" size="lg" class="mr-2">
+                    </fa-icon>
+                    <button type="submit" class="font-bold button-out border-check-red"
+                        (keyup.enter)="saveModule()">Save</button>
+                </div>
+            </div>
+        </div>
+        <div class="relative w-auto border-check mt-2 mb-7 w-12/12" *ngIf="saved">
+            <div class="absolute inline-flex right-0 cursor-pointer" (click)="editModule()">
+                <div class="flex border-check bg-orange-300 hover:bg-orange-400 py-1 rounded-full  text-white px-2">
+                    <fa-icon [icon]="faPencil" size="lg" class="mr-2 ">
+                    </fa-icon>
+                    <button type="submit" class="font-bold button-out border-check-red typed-out"
+                        (keyup.enter)="editModule()">Edit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- <div class="">
+        <div class="inline-flex float-right" *ngIf="saved">
+            <div class="flex hover: border-check bg-white hover:bg-orange-400 text-orange-400 py-1 rounded-full hover:text-white px-2"
+                (click)="editModule()">
+                <fa-icon [icon]="faPencil" size="lg" class="mr-2">
+                </fa-icon>
+                <button type="button" class="font-bold button-out border-check-red">Edit</button>
+            </div>
+        </div>
+        <div class="inline-flex float-right" *ngIf="fphx_strings.length > 0 && !saved">
+            <div class="flex float-left hover: border-check bg-white hover:bg-gray-400 py-1 rounded-full text-gray-400 hover:text-white px-2"
+                (click)="uncheck('')">
+                <fa-icon [icon]="faTimes" size="lg" class="mr-2">
+                </fa-icon>
+                <button type="button" class="font-bold button-out border-check-red">Cancel</button>
+            </div>
+            <div class="flex float-left hover: border-check bg-white hover:bg-green-400 py-1 rounded-full text-green-500 hover:text-white px-2"
+                (click)="saveModule()" (keyup.enter)="saveModule()">
+                <fa-icon [icon]="faSave" size="lg" class="mr-2 ">
+                </fa-icon>
+                <button type="submit" class="font-bold button-out border-check-red">Save</button>
+            </div>
+        </div>
+    </div> -->
+<!-- <div class="sticky bottom-0" style="grid-column: span 16 / span 16;">
+    <div class="relative w-auto border-check mt-2 mb-7 w-12/12" *ngIf="!saved">
+        <div class="absolute inline-flex right-0 ">
+            <div (click)="uncheck('')"
+                class="cursor-pointer flex border-check bg-white hover:drop-shadow-md hover:bg-gray-400 py-1 rounded-full text-gray-400 hover:text-white pl-2 pr-2 peer">
+                <fa-icon [icon]="faTimes" size="lg" class="mr-2">
+                </fa-icon>
+                <button type="button" class="font-bold button-out border-check-red">Cancel</button>
+            </div>
+            <div (click)="saveModule()"
+                class="cursor-pointer flex border-check hover:drop-shadow-md bg-green-300 hover:bg-green-400 py-1 rounded-full text-white px-3 peer-hover:bg-white peer-hover:text-green-400">
+                <fa-icon [icon]="faSave" size="lg" class="mr-2">
+                </fa-icon>
+                <button type="submit" class="font-bold button-out border-check-red"
+                    (keyup.enter)="saveModule()">Save</button>
+            </div>
+        </div>
+    </div>
+    <div class="relative w-auto border-check mt-2 mb-7 w-12/12" *ngIf="saved">
+        <div class="absolute inline-flex right-0 cursor-pointer" (click)="editModule()">
+            <div class="flex border-check bg-orange-300 hover:bg-orange-400 py-1 rounded-full  text-white px-2">
+                <fa-icon [icon]="faPencil" size="lg" class="mr-2 ">
+                </fa-icon>
+                <button type="submit" class="font-bold button-out border-check-red typed-out"
+                    (keyup.enter)="editModule()">Edit</button>
+            </div>
+        </div>
+    </div>
+</div> -->

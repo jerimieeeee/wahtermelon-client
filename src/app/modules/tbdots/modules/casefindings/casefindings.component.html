@@ -1,0 +1,377 @@
+<!-- <div class="flex justify-center">
+    <div class="form-check">
+      <input [indeterminate]="true" class="w-6 h-6 bg-red-400 checked:bg-green-400 peer border border-gray-300 rounded-sm bg-white focus:outline-none transition duration-200 mt-1  mr-2 cursor-pointer" type="checkbox" value="" id="flexCheckIndeterminate">
+      <label class="form-check-label inline-block text-gray-800 peer-indeterminate:inline-block hidden" for="flexCheckIndeterminate" >
+        Not Done
+      </label>
+      <label class="form-check-label inline-block text-gray-800 peer-checked:inline-block hidden" for="flexCheckIndeterminate" >
+        Normal
+      </label>
+      <label class="form-check-label inline-block text-gray-800 peer-checked:hidden peer-indeterminate:hidden" for="flexCheckIndeterminate" >
+        Abnormal
+      </label>
+    </div>
+  </div>
+   -->
+<div class="fade-in">
+  <form [formGroup]="cf_form" (ngSubmit)="saveForm(cf_form.value)">
+    <div class="grid relative animates-dropdown " style="grid-template-columns: repeat(16, minmax(0, 1fr));">
+      <div
+        class="sticky top-0 z-50 border hover:border border-gray-300 hover:border-blue-400 col-span-2 cursor-pointer relative mx-2 px-2 py-1 rounded-t-lg bg-white text-blue-500 text-sm hover:bg-blue-500 hover:text-white"
+        style="grid-column: span 16 / span 16;"><button class="font-bold" type="button">Case Findings</button>
+        <div class="absolute left-28 top-1">
+          <fa-icon [icon]="faInfoCircle" class=" peer ml-4 text-white hover:text-gray-500 z-50"></fa-icon>
+          <div
+            class="absolute text-sm bg-gradient-to-b from-stone-500 to-gray-400 p-2 rounded-md border border-gray-500  text-white drop-shadow-lg opacity-90 border-check z-50 w-64 invisible peer-hover:visible">
+            <h1 class="font-bold drop-shadow-lg">IMPORTANT</h1>
+            <p class="font-light drop-shadow-lg">Once saved, the information will be displayed in the input
+              boxes and shall not be editable unless Edit button is pressed.</p>
+          </div>
+        </div>
+      </div>
+
+      <div style="grid-column: span 16 / span 16;">
+        <div
+          class="grid gap-4 hover:drop-shadow-lg drop-shadow-md bg-white rounded-b-lg hover:border border-gray-300 hover:border-blue-400 p-2 m-2  border -mt-2"
+          style="grid-template-columns: repeat(14, minmax(0, 1fr));">
+
+          <div class="transitions col-span-4 border-check relative select-none">
+            <h3>Source of Patient</h3>
+            <select formControlName="source_of_patient" id="type"
+              class="bg-white text-align-left drop_btn border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed">
+              <option *ngFor="let fp_method of fp_methods" class="p-2">
+                {{ fp_method.method }}
+              </option>
+            </select>
+          </div>
+
+          <div class="transitions col-span-5 border-check relative select-none">
+            <h3>Registration Group</h3>
+            <select formControlName="reg_group" id="type"
+              class="bg-white text-align-left drop_btn border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed">
+              <option *ngFor="let fp_method of fp_methods" class="p-2">
+                {{ fp_method.method }}
+              </option>
+            </select>
+          </div>
+
+          <div class="transitions col-span-4">
+            <h3 for="consult_date">Consultation Date</h3>
+            <div class="grid grid-cols-10 date-style">
+              <div class="icon-height col-span-2 p-2 pt-1 rounded-l border-solid border border-zinc-300">
+                <fa-icon [icon]="faCalendarDay" size="lg" class="text-blue-500" for="consult_date">
+                </fa-icon>
+              </div>
+              <input formControlName="consult_date" type="date"
+                class="col-span-8 rounded-r border-solid border border-l-0 border-zinc-300 focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none disabled:cursor-not-allowed"
+                width="auto">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-span-5">
+        <div
+          class="grid gap-x-5 rounded-lg hover:drop-shadow-lg drop-shadow-md bg-white rounded-lg hover:border border-gray-300 hover:border-blue-400 m-2 border"
+          style="grid-template-columns: repeat(5, minmax(0, 1fr));">
+          <div
+            class="p-2 font-semibold border border-dashed border-gray-300 group-hover:border-blue-400 border-t-0 border-l-0 border-r-0 "
+            style="	grid-column: span 5 / span 5;">
+            <h1 class="select-none">
+              Screening Data
+            </h1>
+          </div>
+
+          <div class="transitions col-span-5 p-2">
+            <h3>Previous TB Treatment:</h3>
+
+            <label class="ml-2 block p-2 rounded-full hover:bg-gray-100 group">
+              <input
+                class="h-6 w-6 m-1 border border-gray-400 rounded-full checked:border-2 bg-white checked:bg-blue-400 checked:border-blue-500 focus:outline-none transition duration-200 cursor-pointer"
+                type="radio" name="radio" id="first_line_drugs">
+              <h2 class="inline text-gray-800 font-medium group-hover:font-semibold" for="first_line_drugs">
+                First line drugs only
+              </h2>
+            </label>
+
+            <label class="ml-2 block p-2 rounded-full hover:bg-gray-100 group">
+              <input
+                class="h-6 w-6 m-1 border border-gray-400 rounded-full checked:border-2 bg-white checked:bg-blue-400 checked:border-blue-500 focus:outline-none transition duration-200 cursor-pointer"
+                type="radio" name="radio" id="first_and_second-line_drugs">
+              <h2 class="inline text-gray-800 font-medium group-hover:font-semibold" for="first_and_second-line_drugs">
+                First and second-line drugs
+              </h2>
+            </label>
+
+            <label class="ml-2 block p-2 rounded-full hover:bg-gray-100 group">
+              <input
+                class="h-6 w-6 m-1 border border-gray-400 rounded-full checked:border-2 bg-white checked:bg-blue-400 checked:border-blue-500 focus:outline-none transition duration-200 cursor-pointer"
+                type="radio" name="radio" id="new">
+              <h2 class="inline text-gray-800 font-medium group-hover:font-semibold" for="new">
+                New
+              </h2>
+            </label>
+
+            <label class="ml-2 block p-2 rounded-full hover:bg-gray-100 group">
+              <input
+                class="h-6 w-6 m-1 border border-gray-400 rounded-full checked:border-2 bg-white checked:bg-blue-400 checked:border-blue-500 focus:outline-none transition duration-200 cursor-pointer"
+                type="radio" name="radio" id="not_applicable">
+              <h2 class="inline text-gray-800 font-medium group-hover:font-semibold" for="not_applicable">
+                Not Applicable
+              </h2>
+            </label>
+
+          </div>
+
+          <label class="transitions col-span-5 p-2 border-t hover:bg-gray-100">
+            <input
+              class="w-6 h-6 peer border border-gray-300 rounded-md bg-white checked:bg-pink-400 checked:focus:bg-pink-400 focus:bg-pink-400  focus:outline-none transition duration-200 mt-1  mr-2 cursor-pointer"
+              type="checkbox" value="" id="exposure_to_tb">
+            <h2 class="form-check-label inline-block text-gray-800" for="exposure_to_tb">
+              Exposure to TB
+            </h2>
+          </label>
+
+          <label class="transitions col-span-5 p-2 border-t rounded-b-md block hover:bg-gray-100">
+            <input
+              class="w-6 h-6 peer border border-gray-300 rounded-md bg-white checked:bg-pink-400 checked:focus:bg-pink-400 focus:bg-pink-400  focus:outline-none transition duration-200 mt-1  mr-2 cursor-pointer"
+              type="checkbox" value="" id="dr_tb">
+            <h2 class="form-check-label inline-block text-gray-800" for="dr_tb">
+              Presumptive DR-TB
+            </h2>
+          </label>
+
+        </div>
+      </div>
+
+      <div class="col-span-11">
+        <div
+          class="grid gap-x-5 rounded-lg hover:drop-shadow-lg drop-shadow-md bg-white rounded-lg hover:border border-gray-300 hover:border-blue-400 m-2 border"
+          style="grid-template-columns: repeat(3, minmax(0, 1fr));">
+          <div
+            class="p-2 font-semibold border border-dashed border-gray-300 group-hover:border-blue-400 border-t-0 border-l-0 border-r-0 "
+            style="	grid-column: span 3/ span 3;">
+            <h1 class="select-none">
+              Symptoms
+            </h1>
+          </div>
+
+          <label class="transitions p-2 mb-3 hover:bg-gray-100 rounded-md">
+            <input
+              class="w-6 h-6 peer border border-gray-300 rounded-md bg-white checked:bg-pink-400 checked:focus:bg-pink-400 focus:bg-pink-400  focus:outline-none transition duration-200 mt-1  mr-2 cursor-pointer"
+              type="checkbox" value="" id="exposure_to_tb">
+            <h2 class="form-check-label inline-block text-gray-800" for="exposure_to_tb">
+              Cough
+            </h2>
+          </label>
+          <label class="transitions p-2 mb-3 hover:bg-gray-100 rounded-md">
+            <input
+              class="w-6 h-6 peer border border-gray-300 rounded-md bg-white checked:bg-pink-400 checked:focus:bg-pink-400 focus:bg-pink-400  focus:outline-none transition duration-200 mt-1  mr-2 cursor-pointer"
+              type="checkbox" value="" id="exposure_to_tb">
+            <h2 class="form-check-label inline-block text-gray-800" for="exposure_to_tb">
+              Fever
+            </h2>
+          </label>
+          <label class="transitions p-2 mb-3 hover:bg-gray-100 rounded-md">
+            <input
+              class="w-6 h-6 peer border border-gray-300 rounded-md bg-white checked:bg-pink-400 checked:focus:bg-pink-400 focus:bg-pink-400  focus:outline-none transition duration-200 mt-1  mr-2 cursor-pointer"
+              type="checkbox" value="" id="exposure_to_tb">
+            <h2 class="form-check-label inline-block text-gray-800" for="exposure_to_tb">
+              Back/Chest Pain
+            </h2>
+          </label>
+          <label class="transitions p-2 mb-3 hover:bg-gray-100 rounded-md">
+            <input
+              class="w-6 h-6 peer border border-gray-300 rounded-md bg-white checked:bg-pink-400 checked:focus:bg-pink-400 focus:bg-pink-400  focus:outline-none transition duration-200 mt-1  mr-2 cursor-pointer"
+              type="checkbox" value="" id="exposure_to_tb">
+            <h2 class="form-check-label inline-block text-gray-800" for="exposure_to_tb">
+              Hemoptysis
+            </h2>
+          </label>
+          <label class="transitions p-2 mb-3 hover:bg-gray-100 rounded-md">
+            <input
+              class="w-6 h-6 peer border border-gray-300 rounded-md bg-white checked:bg-pink-400 checked:focus:bg-pink-400 focus:bg-pink-400  focus:outline-none transition duration-200 mt-1  mr-2 cursor-pointer"
+              type="checkbox" value="" id="exposure_to_tb">
+            <h2 class="form-check-label inline-block text-gray-800" for="exposure_to_tb">
+              Weight Loss
+            </h2>
+          </label>
+          <label class="transitions p-2 mb-3 hover:bg-gray-100 rounded-md">
+            <input
+              class="w-6 h-6 peer border border-gray-300 rounded-md bg-white checked:bg-pink-400 checked:focus:bg-pink-400 focus:bg-pink-400  focus:outline-none transition duration-200 mt-1  mr-2 cursor-pointer"
+              type="checkbox" value="" id="exposure_to_tb">
+            <h2 class="form-check-label inline-block text-gray-800" for="exposure_to_tb">
+              Night Sweats
+            </h2>
+          </label>
+          <label class="transitions p-2 mb-3 hover:bg-gray-100 rounded-md">
+            <input
+              class="w-6 h-6 peer border border-gray-300 rounded-md bg-white checked:bg-pink-400 checked:focus:bg-pink-400 focus:bg-pink-400  focus:outline-none transition duration-200 mt-1  mr-2 cursor-pointer"
+              type="checkbox" value="" id="exposure_to_tb">
+            <h2 class="form-check-label inline-block text-gray-800" for="exposure_to_tb">
+              Dyspnea at rest
+            </h2>
+          </label>
+          <label class="transitions p-2 mb-3 hover:bg-gray-100 w-max">
+            <input
+              class="w-6 h-6 peer border border-gray-300 rounded-md bg-white checked:bg-pink-400 checked:focus:bg-pink-400 focus:bg-pink-400  focus:outline-none transition duration-200 mt-1 mr-2 cursor-pointer"
+              type="checkbox" value="" id="exposure_to_tb">
+            <h2 class="form-check-label inline-block text-gray-800" for="exposure_to_tb">
+              Dyspnea on exertion
+            </h2>
+          </label>
+          <label class="transitions p-2 mb-3 hover:bg-gray-100 rounded-md">
+            <input
+              class="w-6 h-6 peer border border-gray-300 rounded-md bg-white checked:bg-pink-400 checked:focus:bg-pink-400 focus:bg-pink-400  focus:outline-none transition duration-200 mt-1  mr-2 cursor-pointer"
+              type="checkbox" value="" id="exposure_to_tb">
+            <h2 class="form-check-label inline-block text-gray-800" for="exposure_to_tb">
+              Pedal Edema
+            </h2>
+          </label>
+
+          <div class="transitions col-span-3 relative select-none group mx-2 mb-2">
+            <h3 for="remarks">Remarks</h3>
+            <textarea type="text" formControlName="remarks"
+              class="remarks font-medium disabled:group-hover:font-semibold peer invalid:border-red-500 border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed disabled:border-0  disabled:pl-5  disabled:typed-out disabled:group-hover:bg-gray-100 disabled:rounded-full"
+              id="remarks">
+            </textarea>
+            <small class="hidden peer-invalid:block text-red-400 ">error_message</small>
+          </div>
+
+        </div>
+      </div>
+
+      <div style="grid-column: span 16 / span 16;">
+        <div
+          class="grid gap-x-2 rounded-lg hover:drop-shadow-lg drop-shadow-md bg-white rounded-lg hover:border border-gray-300 hover:border-blue-400 m-2 border"
+          style="grid-template-columns: repeat(3, minmax(0, 1fr));">
+          <div
+            class="p-2 font-semibold border border-dashed border-gray-300 group-hover:border-blue-400 border-t-0 border-l-0 border-r-0 "
+            style="	grid-column: span 3/ span 3;">
+            <h1 class="select-none">
+              Physical Exam
+            </h1>
+          </div>
+
+          <div class="cursor-pointer p-2 relative mx-2 mb-2 mt-2 hover:bg-gray-100 rounded-md hover:border-gray-300 border-white border">
+            <!-- <fa-icon [icon]="faTimesCircle" class="absolute top-2 left-28 text-gray-400 hover:text-gray-500" size="lg"></fa-icon> -->
+            <label class="pb-5 block">
+              <h2>General Health</h2>
+              <input [indeterminate]="pe.gen_hlt == 'indeterminate'" class="w-6 h-6 peer rounded-md focus:outline-none transition duration-200 mt-1 ml-3 mr-2 cursor-pointer
+            bg-red-500 hover:bg-red-400 focus:bg-red-400
+            checked:bg-green-500 checked:hover:bg-green-400 checked:focus:bg-green-400
+            indeterminate:bg-gray-500 indeterminate:hover:bg-gray-400 indeterminate:focus:bg-gray-400" type="checkbox"
+                 id="gen_hlt" formControlName="gen_hlt" (change)="logCheck($event.target.id, 0)">
+              <p
+                class="font-light form-check-label text-gray-800 peer-indeterminate:inline-block hidden">
+                Not Done
+              </p>
+              <p class="font-light form-check-label text-gray-800 peer-checked:inline-block peer-indeterminate:hidden hidden">
+                Normal
+              </p>
+              <p class="font-light form-check-label text-gray-800 inline-block peer-checked:hidden peer-indeterminate:hidden">
+                Abnormal
+              </p>
+            </label>
+          </div>
+
+          <div class="cursor-pointer p-2 relative mx-2 mb-2 mt-2 hover:bg-gray-100 rounded-md hover:border-gray-300 border-white border">
+            <!-- <fa-icon [icon]="faTimesCircle" class="absolute top-2 left-28 text-gray-400 hover:text-gray-500" size="lg"></fa-icon> -->
+            <label class="pb-5 block">
+              <h2>Skin</h2>
+              <input [indeterminate]="pe.skin == 'indeterminate'" class="w-6 h-6 peer rounded-md focus:outline-none transition duration-200 mt-1 ml-3 mr-2 cursor-pointer
+            bg-red-500 hover:bg-red-400 focus:bg-red-400
+            checked:bg-green-500 checked:hover:bg-green-400 checked:focus:bg-green-400
+            indeterminate:bg-gray-500 indeterminate:hover:bg-gray-400 indeterminate:focus:bg-gray-400" type="checkbox"
+                 id="skin" formControlName="skin" (change)="logCheck($event.target.id, 1)">
+              <p
+                class="font-light form-check-label text-gray-800 peer-indeterminate:inline-block hidden">
+                Not Done
+              </p>
+              <p class="font-light form-check-label text-gray-800 peer-checked:inline-block peer-indeterminate:hidden hidden">
+                Normal
+              </p>
+              <p class="font-light form-check-label text-gray-800 inline-block peer-checked:hidden peer-indeterminate:hidden">
+                Abnormal
+              </p>
+            </label>
+          </div>
+         
+          <div class="cursor-pointer p-2 relative mx-2 mb-2 mt-2 hover:bg-gray-100 rounded-md hover:border-gray-300 border-white border">
+            <!-- <fa-icon [icon]="faTimesCircle" class="absolute top-2 left-28 text-gray-400 hover:text-gray-500" size="lg"></fa-icon> -->
+            <label class="pb-5 block">
+              <h2>BCG Scar</h2>
+              <input [indeterminate]="pe.bcg_scar == 'indeterminate'" class="w-6 h-6 peer rounded-md focus:outline-none transition duration-200 mt-1 ml-3 mr-2 cursor-pointer
+            bg-red-500 hover:bg-red-400 focus:bg-red-400
+            checked:bg-green-500 checked:hover:bg-green-400 checked:focus:bg-green-400
+            indeterminate:bg-gray-500 indeterminate:hover:bg-gray-400 indeterminate:focus:bg-gray-400" type="checkbox"
+                 id="bcg_scar" formControlName="bcg_scar" (change)="logCheck($event.target.id, 2)">
+              <p
+                class="font-light form-check-label text-gray-800 peer-indeterminate:inline-block hidden">
+                Doubtful
+              </p>
+              <p class="font-light form-check-label text-gray-800 peer-checked:inline-block peer-indeterminate:hidden hidden">
+                None
+              </p>
+              <p class="font-light form-check-label text-gray-800 inline-block peer-checked:hidden peer-indeterminate:hidden">
+                Yes
+              </p>
+            </label>
+          </div>
+
+          <div class="cursor-pointer p-2 relative mx-2 mb-2 mt-2 hover:bg-gray-100 rounded-md hover:border-gray-300 border-white border">
+            <!-- <fa-icon [icon]="faTimesCircle" class="absolute top-2 left-28 text-gray-400 hover:text-gray-500" size="lg"></fa-icon> -->
+            <label class="pb-5 block">
+              <h2>Oropharynx</h2>
+              <input [indeterminate]="pe.oropharynx == 'indeterminate'" class="w-6 h-6 peer rounded-md focus:outline-none transition duration-200 mt-1 ml-3 mr-2 cursor-pointer
+            bg-red-500 hover:bg-red-400 focus:bg-red-400
+            checked:bg-green-500 checked:hover:bg-green-400 checked:focus:bg-green-400
+            indeterminate:bg-gray-500 indeterminate:hover:bg-gray-400 indeterminate:focus:bg-gray-400" type="checkbox"
+                 id="oropharynx" formControlName="oropharynx" (change)="logCheck($event.target.id, 3)">
+              <p
+                class="font-light form-check-label text-gray-800 peer-indeterminate:inline-block hidden">
+                Not Done
+              </p>
+              <p class="font-light form-check-label text-gray-800 peer-checked:inline-block peer-indeterminate:hidden hidden">
+                Normal
+              </p>
+              <p class="font-light form-check-label text-gray-800 inline-block peer-checked:hidden peer-indeterminate:hidden">
+                Abnormal
+              </p>
+            </label>
+          </div>
+
+  
+
+          
+
+          <div class="cursor-pointer p-2 relative mx-2 mb-2 mt-2 hover:bg-gray-100 rounded-md hover:border-gray-300 border-white border">
+            <!-- <fa-icon [icon]="faTimesCircle" class="absolute top-2 left-28 text-gray-400 hover:text-gray-500" size="lg"></fa-icon> -->
+            <label class="pb-5 block">
+              <h2>Thorax & Lungs</h2>
+              <input [indeterminate]="pe.thorax_and_lungs == 'indeterminate'" class="w-6 h-6 peer rounded-md focus:outline-none transition duration-200 mt-1 ml-3 mr-2 cursor-pointer
+            bg-red-500 hover:bg-red-400 focus:bg-red-400
+            checked:bg-green-500 checked:hover:bg-green-400 checked:focus:bg-green-400
+            indeterminate:bg-gray-500 indeterminate:hover:bg-gray-400 indeterminate:focus:bg-gray-400" type="checkbox"
+                 id="thorax_and_lungs" formControlName="thorax_and_lungs" (change)="logCheck($event.target.id, 5)">
+              <p
+                class="font-light form-check-label text-gray-800 peer-indeterminate:inline-block hidden">
+                Not Done
+              </p>
+              <p class="font-light form-check-label text-gray-800 peer-checked:inline-block peer-indeterminate:hidden hidden">
+                Normal
+              </p>
+              <p class="font-light form-check-label text-gray-800 inline-block peer-checked:hidden peer-indeterminate:hidden">
+                Abnormal
+              </p>
+            </label>
+          </div>
+          <!-- <button (click)="logCheck(cf_form.get('gen_hlt').value)" type="button">dsdsdsd</button> -->
+
+        
+
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

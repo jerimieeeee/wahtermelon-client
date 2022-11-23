@@ -1,104 +1,111 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import {
-  ChartComponent,
-  ApexAxisChartSeries,
-  ApexChart,
-  ApexXAxis,
-  ApexDataLabels,
-  ApexTooltip,
-  ApexStroke,
-  ApexTitleSubtitle
-} from "ng-apexcharts";
-
-export type ChartOptions = {
-  series: ApexAxisChartSeries;
-  chart: ApexChart;
-  xaxis: ApexXAxis;
-  stroke: ApexStroke;
-  tooltip: ApexTooltip;
-  dataLabels: ApexDataLabels;
-  title: ApexTitleSubtitle;
-};
-
-export type WeightChart = {
-  series: ApexAxisChartSeries;
-  chart: ApexChart;
-  xaxis: ApexXAxis;
-  stroke: ApexStroke;
-  tooltip: ApexTooltip;
-  dataLabels: ApexDataLabels;
-  title: ApexTitleSubtitle;
-};
+import { ChartComponent } from "ng-apexcharts";
+import { openCloseTrigger } from './declarations/animation';
+import { ChartOptions, WeightChart } from './declarations/chart-options';
+import { MedicalJournal } from './data/sample-journal';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { filter, tap } from "rxjs/operators";
+import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
   selector: 'app-patient-itr',
   templateUrl: './patient-itr.component.html',
-  styleUrls: ['./patient-itr.component.scss']
+  styleUrls: ['./patient-itr.component.scss'],
+  animations: [openCloseTrigger]
 })
 export class PatientItrComponent implements OnInit {
-  medical_journal = [
-    {
-      visit_date: "July 01, 2020",
-      visits: [
-        {
-          visit_type: "GENERAL CONSULTATION",
-          assessed_by: "John Doe",
-          diagnosed_by: "Dr. Moira Santos"
-        },
-        {
-          visit_type: "LABORATORY - URINALYSIS",
-          assessed_by: "John Doe",
-          diagnosed_by: "Dr. Francis Gamboa"
-        }
-      ]
-    },
-    {
-      visit_date: "March 09, 2020",
-      visits: [
-        {
-          visit_type: "FAMILY PLANNING",
-          assessed_by: "Midwife 1",
-          diagnosed_by: "Nurse 1"
-        }
-      ]
-    },
-    {
-      visit_date: "March 01, 2020",
-      visits: [
-        {
-          visit_type: "FAMILY PLANNING",
-          assessed_by: "Midwife 1",
-          diagnosed_by: "Nurse 1"
-        }
-      ]
-    },
-    {
-      visit_date: "Feb 14, 2020",
-      visits: [
-        {
-          visit_type: "GENERAL CONSULTATION",
-          assessed_by: "Procorpio Pepito",
-          diagnosed_by: "Pepito Sampu"
-        }
-      ]
-    }
-  ];
+  show_details:boolean = true;
+  showModal:boolean = false;
+  medical_journal = MedicalJournal;
+
+  patient_details: any;
+
+  open_details(){
+    this.show_details = !this.show_details;
+  }
+
 
   @ViewChild("bp-chart") bp_chart: ChartComponent;
   @ViewChild("weight-chart") weight_chart: ChartComponent;
   public chartOptions: Partial<ChartOptions>;
   public WeightChart: Partial<WeightChart>;
+  /* get openCloseTrigger() {
+    return this.show_details ? "open" : "closed";
+  } */
 
-  constructor() {
+  constructor(
+    private router: Router,
+    private http: HttpService
+  ) {
+
+  }
+
+  onSubmit(loc){
+    this.router.navigate(['/'+loc, {id: this.patient_details.id}])
+  }
+
+  patientInfo(info){
+    this.patient_details = info;
+    this.loadVisitHistory();
+  }
+
+  vitals_graph = {
+    systolic: [],
+    diastolic: [],
+    weight: [],
+    bp_date: [],
+    weight_date: [],
+  }
+
+  showChart: boolean = false;
+
+
+  patientVitals(vitals){
+    this.vitals_graph.systolic = [];
+    this.vitals_graph.diastolic = [];
+    this.vitals_graph.bp_date = [];
+    this.vitals_graph.weight = [];
+    this.vitals_graph.weight_date = [];
+
+    Object.entries(vitals).forEach(([key, value], index) => {
+      let val: any = value;
+      if(val.bp_systolic){
+        this.vitals_graph.systolic.push(val.bp_systolic);
+        this.vitals_graph.diastolic.push(val.bp_diastolic);
+        this.vitals_graph.bp_date.push(val.vitals_date);
+      }
+
+      if(val.patient_weight){
+        this.vitals_graph.weight.push(val.patient_weight);
+        this.vitals_graph.weight_date.push(val.vitals_date);
+      }
+    })
+
+    if(this.vitals_graph.systolic.length > 0 || this.vitals_graph.diastolic.length > 0){
+      this.showChart = true;
+      this.generateChart();
+    } else {
+      this.showChart = false;
+    }
+  }
+
+  navigationEnd$ = this.router.events.pipe(
+    filter(event => event instanceof NavigationEnd),
+    tap(() => {
+      this.show_details = false;
+    })
+  );
+
+  generateChart(){
     this.chartOptions = {
       series: [
         {
           name: "Systolic",
-          data: [120, 120, 110, 120, 140, 120, 120]
+          data: this.vitals_graph.systolic
         },
         {
           name: "Diastolic",
-          data: [90, 80, 80, 84, 92, 70, 80]
+          data: this.vitals_graph.diastolic
         }
       ],
       chart: {
@@ -116,15 +123,7 @@ export class PatientItrComponent implements OnInit {
       },
       xaxis: {
         type: "datetime",
-        categories: [
-          "2018-09-19T00:00:00.000Z",
-          "2018-09-19T01:30:00.000Z",
-          "2018-09-19T02:30:00.000Z",
-          "2018-09-19T03:30:00.000Z",
-          "2018-09-19T04:30:00.000Z",
-          "2018-09-19T05:30:00.000Z",
-          "2018-09-19T06:30:00.000Z"
-        ]
+        categories: this.vitals_graph.bp_date
       },
       tooltip: {
         x: {
@@ -137,7 +136,7 @@ export class PatientItrComponent implements OnInit {
       series: [
         {
           name: "Weight",
-          data: [120, 120, 110, 120, 140, 120, 120]
+          data: this.vitals_graph.weight
         }
       ],
       chart: {
@@ -155,15 +154,7 @@ export class PatientItrComponent implements OnInit {
       },
       xaxis: {
         type: "datetime",
-        categories: [
-          "2018-09-19T00:00:00.000Z",
-          "2018-09-19T01:30:00.000Z",
-          "2018-09-19T02:30:00.000Z",
-          "2018-09-19T03:30:00.000Z",
-          "2018-09-19T04:30:00.000Z",
-          "2018-09-19T05:30:00.000Z",
-          "2018-09-19T06:30:00.000Z"
-        ]
+        categories: this.vitals_graph.weight_date
       },
       tooltip: {
         x: {
@@ -173,7 +164,40 @@ export class PatientItrComponent implements OnInit {
     };
   }
 
-  ngOnInit(): void {
+  visit_list: any;
+
+  loadVisitHistory(){
+    // console.log(this.patient_details);
+    this.http.get('consultation/cn-records',{params:{patient_id: this.patient_details.id}}).subscribe({
+      next: (data: any) => {
+        this.visit_list = data.data;
+        // console.log(data);
+      },
+      error: err => console.log(err),
+    })
   }
 
+  getVisitType(group){
+    switch(group){
+      case 'cn':
+        return 'Consultation';
+        break;
+      case 'cc':
+        return 'Child Care';
+        break;
+      case 'mc':
+        return 'Maternal Care';
+        break;
+      case 'dn':
+        return 'Dental';
+        break;
+      case 'ncd':
+        return 'Non Communicable Disease';
+        break;
+    }
+  }
+
+  ngOnInit(): void {
+    this.navigationEnd$.subscribe();
+  }
 }

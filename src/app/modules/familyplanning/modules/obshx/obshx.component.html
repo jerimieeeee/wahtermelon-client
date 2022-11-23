@@ -1,0 +1,191 @@
+<form [formGroup]="obshx_form" (ngSubmit)="saveForm(obshx_form.value)">
+
+    <div class="grid gap-4 relative animates-dropdown" style="grid-template-columns: repeat(16, minmax(0, 1fr));"
+        *ngIf="!focused">
+        <div class="sticky top-0 z-50 border border-blue-400 col-span-2 relative mx-2 text-sm px-2 py-1 rounded-t-lg bg-blue-500 text-white"
+            style="grid-column: span 16 / span 16;"><button class="font-bold" type="button">Obstetrical History</button>
+            <div class="absolute left-40 top-1">
+                <fa-icon [icon]="faInfoCircle" class=" peer ml-4 text-white hover:text-gray-500 z-50"></fa-icon>
+                <div
+                    class="absolute text-sm bg-gradient-to-b from-stone-500 to-gray-400 p-2 rounded-md border border-gray-500  text-white drop-shadow-lg opacity-90 border-check z-50 w-64 invisible peer-hover:visible">
+                    <h1 class="font-bold drop-shadow-lg">IMPORTANT</h1>
+                    <p class="font-light drop-shadow-lg">Once saved, the information will be displayed in the input
+                        boxes and shall not be editable unless Edit button is pressed.</p>
+                </div>
+            </div>
+        </div>
+        <div class="drop-shadow-md hover:drop-shadow-lg bg-white rounded-b-lg border border-gray-300 hover:border-blue-400 mx-2 -mt-5"
+            style="grid-column: span 16 / span 16 ;">
+            <div class="grid m-2 gap-4" style="grid-template-columns: repeat(14, minmax(0, 1fr));">
+                <div class="transitions col-span-7 border-check relative" *ngIf="!focused">
+                    <h3>Full Term</h3>
+                    <!-- <input type="text" class="border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300" *ngIf="!obshx_form.alc" > -->
+                    <input type="number" formControlName="full_term"
+                        class="border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100"
+                        (keyup)="onKeyUp($event.target.value, $event.target.id)"
+                        (keyup.escape)="clearForm($event.target.id); onKeyUp($event.target.value, $event.target.id)"
+                        id="full_term" min="0">
+                    <fa-icon [icon]="faTimesCircle" (click)="clearForm('full_term')"
+                        class="absolute right-0 py-1 px-2 text-gray-400 hover:text-gray-500"
+                        *ngIf="keyUp.includes('full_term') && !obshx_form.disabled">
+                    </fa-icon>
+                    <!-- <span *ngIf="keyUp.includes('alc')" class="text-red-400">Error!!!!</span> -->
+                </div>
+                <div class="transitions col-span-7 border-check relative" *ngIf="!focused">
+                    <h3>Pre-Term</h3>
+                    <!-- <input type="text" class="border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300" *ngIf="!obshx_form.alc" > -->
+                    <input type="number" formControlName="pre_term"
+                        class="border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100"
+                        (keyup)="onKeyUp($event.target.value, $event.target.id)"
+                        (keyup.escape)="clearForm($event.target.id); onKeyUp($event.target.value, $event.target.id)"
+                        id="pre_term" min="0">
+                    <fa-icon [icon]="faTimesCircle" (click)="clearForm('pre_term')"
+                        class="absolute right-0 py-1 px-2 text-gray-400 hover:text-gray-500"
+                        *ngIf="keyUp.includes('pre_term') && !obshx_form.disabled">
+                    </fa-icon>
+                    <!-- <span *ngIf="keyUp.includes('alc')" class="text-red-400">Error!!!!</span> -->
+                </div>
+                <div class="transitions col-span-7 border-check relative" *ngIf="!focused">
+                    <h3>Abortion</h3>
+                    <!-- <input type="text" class="border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300" *ngIf="!obshx_form.alc" > -->
+                    <input type="number" formControlName="abortion"
+                        class="border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100"
+                        (keyup)="onKeyUp($event.target.value, $event.target.id)"
+                        (keyup.escape)="clearForm($event.target.id); onKeyUp($event.target.value, $event.target.id)"
+                        id="abortion" min="0">
+                    <fa-icon [icon]="faTimesCircle" (click)="clearForm('abortion')"
+                        class="absolute right-0 py-1 px-2 text-gray-400 hover:text-gray-500"
+                        *ngIf="keyUp.includes('abortion') && !obshx_form.disabled">
+                    </fa-icon>
+                    <!-- <span *ngIf="keyUp.includes('alc')" class="text-red-400">Error!!!!</span> -->
+                </div>
+                <div class="transitions col-span-7 border-check relative" *ngIf="!focused">
+                    <h3>Livebirths</h3>
+                    <!-- <input type="text" class="border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300" *ngIf="!obshx_form.alc" > -->
+                    <input type="number" formControlName="livebirths"
+                        class="border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100"
+                        (keyup)="onKeyUp($event.target.value, $event.target.id)"
+                        (keyup.escape)="clearForm($event.target.id); onKeyUp($event.target.value, $event.target.id)"
+                        id="livebirths" min="0">
+                    <fa-icon [icon]="faTimesCircle" (click)="clearForm('livebirths')"
+                        class="absolute right-0 py-1 px-2 text-gray-400 hover:text-gray-500"
+                        *ngIf="keyUp.includes('livebirths') && !obshx_form.disabled">
+                    </fa-icon>
+                    <!-- <span *ngIf="keyUp.includes('alc')" class="text-red-400">Error!!!!</span> -->
+                </div>
+            </div>
+        </div>
+
+        <!-- <div class="border border-gray-300 hover:border-blue-400 border-t-0 border-l-0 border-r-0" style="grid-column: span 14 / span 14 ; "></div> -->
+
+        <div class="rounded-lg drop-shadow-md hover:drop-shadow-lg bg-white rounded-lg border border-gray-300 hover:border-blue-400 mx-2"
+            style="grid-column: span 16 / span 16 ; ">
+            <div class="grid m-2 gap-4 h-max" style="grid-template-columns: repeat(14, minmax(0, 1fr));">
+                <div class="transitions col-span-4" *ngIf="!focused">
+                    <h3 for="dld">Date of Last Delivery</h3>
+                    <div class="grid grid-cols-10">
+                        <div class="icon-height col-span-2 p-2 pt-1 rounded-l border-solid border border-zinc-300">
+                            <fa-icon [icon]="faCalendarDay" size="lg" class="text-blue-400" for="dld"></fa-icon>
+                        </div>
+                        <input id="dld" name="dld" type="date" formControlName="dld"
+                            (change)="onKeyUp($event.target.value, $event.target.id)"
+                            (keyup.escape)="clearForm($event.target.id); onKeyUp($event.target.value, $event.target.id)"
+                            class="col-span-8 rounded-r border-solid border border-l-0 border-zinc-300 focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none"
+                            width="auto">
+                    </div>
+                </div>
+                <div class="transitions col-span-7 border-check relative" *ngIf="!focused">
+                    <h3>Type of Last Delivery</h3>
+                    <!-- <input type="text" class="border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300" *ngIf="!obshx_form.alc" > -->
+                    <input type="text" formControlName="tld"
+                        class="border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100"
+                        (keyup)="onKeyUp($event.target.value, $event.target.id)"
+                        (keyup.escape)="clearForm($event.target.id); onKeyUp($event.target.value, $event.target.id)"
+                        id="tld">
+                    <fa-icon [icon]="faTimesCircle" (click)="clearForm('tld')"
+                        class="absolute right-0 py-1 px-2 text-gray-400 hover:text-gray-500"
+                        *ngIf="keyUp.includes('tld') && !obshx_form.disabled">
+                    </fa-icon>
+                    <!-- <span *ngIf="keyUp.includes('alc')" class="text-red-400">Error!!!!</span> -->
+                </div>
+            </div>
+        </div>
+
+        <!-- <div class="border border-gray-300 hover:border-blue-400 border-t-0 border-l-0 border-r-0" style="grid-column: span 14 / span 14 ; "></div> -->
+
+        <div class="rounded-lg drop-shadow-md hover:drop-shadow-lg bg-white rounded-lg border border-gray-300 hover:border-blue-400 mx-2"
+            style="grid-column: span 16 / span 16 ; ">
+            <div class="grid m-2 gap-4" style="grid-template-columns: repeat(14, minmax(0, 1fr));">
+                <div class="transitions col-span-4" *ngIf="!focused">
+                    <h3 for="pmp">Past Menstrual Period</h3>
+                    <div class="grid grid-cols-10">
+                        <div class="icon-height col-span-2 p-2 pt-1 rounded-l border-solid border border-zinc-300">
+                            <fa-icon [icon]="faCalendarDay" size="lg" class="text-blue-400" for="pmp"></fa-icon>
+                        </div>
+                        <input id="pmp" name="pmp" type="date" formControlName="pmp"
+                            (change)="onKeyUp($event.target.value, $event.target.id)"
+                            (keyup.escape)="clearForm($event.target.id); onKeyUp($event.target.value, $event.target.id)"
+                            class="col-span-8 rounded-r border-solid border border-l-0 border-zinc-300 focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none"
+                            width="auto">
+                    </div>
+                </div>
+                <div class="transitions col-span-4 " *ngIf="!focused">
+                    <h3 for="lmp">Last Menstrual Period</h3>
+                    <div class="grid grid-cols-10">
+                        <div class="icon-height col-span-2 p-2 pt-1 rounded-l border-solid border border-zinc-300">
+                            <fa-icon [icon]="faCalendarDay" size="lg" class="text-blue-400" for="lmp"></fa-icon>
+                        </div>
+                        <input id="lmp" name="lmp" type="date" formControlName="lmp"
+                            (change)="onKeyUp($event.target.value, $event.target.id)"
+                            (keyup.escape)="clearForm($event.target.id); onKeyUp($event.target.value, $event.target.id)"
+                            class="col-span-8 rounded-r border-solid border border-l-0 border-zinc-300 focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none"
+                            width="auto">
+                    </div>
+                </div>
+                <div class="transitions col-span-6 border-check relative" *ngIf="!focused">
+                    <h3>Duration of Menstrual Bleeding</h3>
+                    <!-- <input type="text" class="border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300" *ngIf="!obshx_form.alc" > -->
+                    <input type="text" formControlName="duration"
+                        class="border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100"
+                        (keyup)="onKeyUp($event.target.value, $event.target.id)"
+                        (keyup.escape)="clearForm($event.target.id); onKeyUp($event.target.value, $event.target.id)"
+                        id="duration">
+                    <fa-icon [icon]="faTimesCircle" (click)="clearForm('duration')"
+                        class="absolute right-0 py-1 px-2 text-gray-400 hover:text-gray-500"
+                        *ngIf="keyUp.includes('duration') && !obshx_form.disabled">
+                    </fa-icon>
+                    <!-- <span *ngIf="keyUp.includes('alc')" class="text-red-400">Error!!!!</span> -->
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="relative w-auto border-check mt-2 mb-7 w-12/12"
+        *ngIf="!focused && obshx_form.enabled">
+        <div class="absolute inline-flex right-0 ">
+            <div (click)="cancel()"
+                class="cursor-pointer flex border-check bg-white hover:drop-shadow-md hover:bg-gray-400 py-1 rounded-full text-gray-400 hover:text-white pl-2 pr-2 peer">
+                <fa-icon [icon]="faTimes" size="lg" class="mr-2">
+                </fa-icon>
+                <button type="button" class="font-bold button-out border-check-red">Cancel</button>
+            </div>
+            <div (click)="saveForm(obshx_form.value)"
+                class="cursor-pointer flex border-check hover:drop-shadow-md bg-green-300 hover:bg-green-400 py-1 rounded-full text-white px-3 peer-hover:bg-white peer-hover:text-green-400">
+                <fa-icon [icon]="faSave" size="lg" class="mr-2">
+                </fa-icon>
+                <button type="submit" class="font-bold button-out border-check-red"
+                    (keyup.enter)="saveForm(obshx_form.value)">Save</button>
+            </div>
+        </div>
+    </div>
+    <div class="relative w-auto border-check mt-2 mb-7 w-12/12" *ngIf="!focused && obshx_form.disabled">
+        <div class="absolute inline-flex right-0 cursor-pointer" (click)="edit()">
+            <div class="flex border-check bg-orange-300 hover:bg-orange-400 py-1 rounded-full  text-white px-2">
+                <fa-icon [icon]="faPencil" size="lg" class="mr-2 ">
+                </fa-icon>
+                <button type="submit" class="font-bold button-out border-check-red typed-out"
+                    (keyup.enter)="uncheck($event.target.id + fphx_cat)">Edit</button>
+            </div>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,90 @@
+<div class="flex w-full relative">
+    <div class="relative w-full h-screen px-2 mt-5 ml-5 rounded-3xl text-gray-600 shadow-md overflow-y-scroll scrollbar-thin scrollbar-thumb-blue-300 scrollbar-track-white">
+        <h1 class="text-lg font-semibold p-3">Facility Accreditation</h1>
+        <button class="absolute right-0 top-2" (click)="addCredentials()"><fa-icon [icon]="faCirclePlus" size="2x" class="text-green-400 hover:text-green-500"></fa-icon></button>
+        <div class="shadow-md group rounded-lg">
+            <div class="grid border border-gray-300 group-hover:border-blue-400 rounded-t-lg gap-4 p-1 text-blue-400 text-center font-semibold" style="grid-template-columns: repeat(16, minmax(0, 1fr));">
+                <h1 class="col-span-2">Accreditation</h1>
+                <h1 class="col-span-2">Hospital Code (PMCC)</h1>
+                <h1 class="col-span-2">Facility Code</h1>
+                <h1 class="col-span-3">Facility Name</h1>
+                <h1 class="col-span-3">Facility Address</h1>
+                <h1 class="col-span-3">Cypher Key</h1>
+                <h1 class="col-span-1">Action</h1>
+            </div>
+            <div class="grid border border-t-0 border-gray-300 group-hover:border-blue-400 rounded-b-lg gap-4 p-1 text-center" style="grid-template-columns: repeat(16, minmax(0, 1fr));">
+                <h1 class="col-span-2">MCP</h1>
+                <h1 class="col-span-2">Z05060</h1>
+                <h1 class="col-span-2">M05028439</h1>
+                <h1 class="col-span-3 text-ellipsis overflow-hidden">SAN FERNANDO RURAL HEALTH UNIT</h1>
+                <h1 class="col-span-3 text-ellipsis overflow-hidden">SAN FERNANDO, CAMARINES SUR</h1>
+                <h1 class="col-span-3 text-ellipsis overflow-hidden">dtDwdMVvWAnaXeOHcdvUoQdGO</h1>
+                <h1 class="col-span-1">
+                    <fa-icon [icon]="faPencil" size="lg" class="text-orange-500 w-9"></fa-icon>
+                </h1>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="modal" id="defaultModal" tabindex="-1" class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 w-full md:inset-0 h-modal md:h-full justify-center items-center flex bg-gray-800/25" aria-modal="true" role="dialog" style="z-index:60">
+        <div class="w-9/12 h-max bg-white rounded-lg shadow-lg grid grid-cols-12">
+            <div class="col-span-12 bg-blue-500 pl-4 py-2 rounded-t-lg text-white font-semibold">
+                Add New Credential
+            </div>
+            <div class="transitions col-span-2 border-check relative pl-4 py-2">
+                <h3>Program</h3>
+                <select id="delivery_location" class="text-ellipsis bg-white text-align-left drop_btn border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed">
+                    <option value="PCB">PCB</option>
+                    <option value="MCP">MCP</option>
+                    <option value="TB">TB</option>
+                    <option value="Animal Bite">Animal Bite</option>
+                    <option value="Malaria">Malaria</option>
+                    <option value="CIU">CIU</option>
+                </select>
+
+            </div>
+            <div class="transitions col-span-4 border-check relative select-none group pl-4 py-2">
+                <h3>Hospital Code (PMCC)</h3>
+                <input type="text"
+                    class="font-medium group-hover:font-semibold peer invalid:border-red-500 border-check  focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed disabled:border-0  disabled:pl-5  disabled:typed-out disabled:group-hover:bg-gray-100 disabled:rounded-full disabled:text-blue-500 disabled:group-hover:text-gray-500" id="alc" autofocus>
+                <small class="hidden peer-invalid:block text-red-400 ">error_message</small>
+            </div>
+            <div class="transitions col-span-4 border-check relative select-none group pl-4 py-2">
+                <h3>Facility Code</h3>
+                <input type="text"
+                    class="font-medium group-hover:font-semibold peer invalid:border-red-500 border-check  focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed disabled:border-0  disabled:pl-5  disabled:typed-out disabled:group-hover:bg-gray-100 disabled:rounded-full disabled:text-blue-500 disabled:group-hover:text-gray-500" id="alc" autofocus>
+                <small class="hidden peer-invalid:block text-red-400 ">error_message</small>
+            </div>
+            <div class="transitions col-span-6 border-check relative select-none group pl-4 py-2">
+                <h3>Facility Name</h3>
+                <input type="text"
+                    class="font-medium group-hover:font-semibold peer invalid:border-red-500 border-check  focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed disabled:border-0  disabled:pl-5  disabled:typed-out disabled:group-hover:bg-gray-100 disabled:rounded-full disabled:text-blue-500 disabled:group-hover:text-gray-500" id="alc" autofocus>
+                <small class="hidden peer-invalid:block text-red-400 ">error_message</small>
+            </div>
+            <div class="transitions col-span-6 border-check relative select-none group px-4 py-2">
+                <h3>Facility Address</h3>
+                <input type="text"
+                    class="font-medium group-hover:font-semibold peer invalid:border-red-500 border-check  focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed disabled:border-0  disabled:pl-5  disabled:typed-out disabled:group-hover:bg-gray-100 disabled:rounded-full disabled:text-blue-500 disabled:group-hover:text-gray-500" id="alc" autofocus>
+                <small class="hidden peer-invalid:block text-red-400 ">error_message</small>
+            </div>
+            <div class="transitions col-span-8 border-check relative select-none group pl-4 py-2">
+                <h3>Cypher Key</h3>
+                <input type="text"
+                    class="font-medium group-hover:font-semibold peer invalid:border-red-500 border-check  focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed disabled:border-0  disabled:pl-5  disabled:typed-out disabled:group-hover:bg-gray-100 disabled:rounded-full disabled:text-blue-500 disabled:group-hover:text-gray-500" id="alc" autofocus>
+                <small class="hidden peer-invalid:block text-red-400 ">error_message</small>
+            </div>
+            <div class="col-span-12 bg-transparent -mb-10 relative">
+                <div class="absolute inline-flex right-0 mt-4">
+                    <div (click)="addCredentials()"  class="cursor-pointer flex border-check hover:drop-shadow-md hover:bg-gray-400 py-1 rounded-full text-gray-400 hover:text-white peer">
+                        <button type="button" class="font-bold button-out border-check-red mx-2">Cancel</button>
+                    </div>
+                    <div class="cursor-pointer flex border-check hover:drop-shadow-md bg-green-400 hover:bg-green-500 py-1 rounded-full text-white px-3 peer-hover:bg-transparent peer-hover:text-green-400">
+                        <fa-icon [icon]="faSave" size="lg" class="mr-2">
+                        </fa-icon>
+                        <button type="submit" class="font-bold button-out border-check-red">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

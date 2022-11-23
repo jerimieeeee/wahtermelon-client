@@ -1,0 +1,95 @@
+<div class="grid grid-cols-12 flex item-start flex-wrap shadow-md rounded-xl mb-4 mt-5">
+
+    <div class="col-span-12 flex px-5 py-1 rounded-tl rounded-tr bg-blue-500">
+      <h4 class="font-bold text-white text-md mt-2 mb-2">Health Facility Details</h4> 
+      <div class="">
+        <fa-icon [icon]="faInfoCircle" class="peer text-white hover:text-white z-50 px-2"></fa-icon>
+        <div
+            class="absolute text-sm bg-gradient-to-b from-stone-500 to-gray-400 p-2 rounded border border-gray-500  text-white drop-shadow-lg opacity-90 border-check z-50 w-60 invisible peer-hover:visible">
+            <h1 class="font-bold drop-shadow-lg">IMPORTANT</h1>
+            <p class="font-light drop-shadow-lg">Once saved, the information will be displayed in the input boxes
+                and shall not be editable unless Edit button is pressed.</p>
+        </div>
+    </div>
+    </div>
+  
+    <form class="text-sm col-span-6 col-start-1 table-auto border-r-2 border-gray-200" [formGroup]="facilityForm" (ngSubmit)="saveFacility()">
+    <table class="w-full">
+      
+      <tbody>
+        
+        <tr class="">
+            <div class="relative col-start-1 col-span-6 px-5 mt-5">
+                <select class="text-sm form-select border-gray-200 border p-2.5 rounded-md w-full bg-white"  id="region" name="region" class="input" (change)="loadDemog('regions', facilityForm.value.region, 'provinces')" formControlName="region">
+                  <option value="" disabled selected>Select Region</option>
+                  <option *ngFor="let region of regions" [value]="region.code" >{{ region.name }}</option>
+                </select>
+            </div>
+
+            <div class="relative col-start-1 col-span-6 px-5 mt-5">
+              <select class="text-sm form-select border-gray-200 border p-2.5 rounded-md w-full bg-white"  id="province" name="province" class="input" (change)="loadDemog('provinces', facilityForm.value.province, 'municipalities')" formControlName="province">
+                <option value="" disabled selected>Select Province</option>
+                <option *ngFor="let province of provinces" [value]="province.code" >{{ province.name }}</option>
+              </select>
+            </div>
+
+            <div class="relative col-start-1 col-span-6 px-5 mt-5">
+              <select class="text-sm form-select border-gray-200 border p-2.5 rounded-md w-full bg-white"  id="municipality" name="municipality" class="input" (change)="loadDemog('municipalities', facilityForm.value.municipality, 'barangays')" formControlName="municipality">
+                <option value="" disabled selected>Select Municipality</option>
+                <option *ngFor="let municipality of municipalities" [value]="municipality.code" >{{ municipality.name }}</option>
+              </select>
+            </div>
+
+            <div class="relative col-start-1 col-span-6 px-5 mt-5">
+              <select class="text-sm form-select border-gray-200 border p-2.5 rounded-md w-full bg-white" id="brgy" name="brgy" class="input" formControlName="brgy">
+                <option value="" disabled selected>Select Barangay</option>
+                <option *ngFor="let barangay of barangays" [value]="barangay.code" >{{ barangay.name }}</option>
+              </select>
+            </div>
+
+            <div class="relative col-start-1 col-span-6 px-5 mt-5">
+              <select class="text-sm form-select border-gray-200 border p-2.5 rounded-md w-full bg-white" id="hfname" name="hfname" class="input" formControlName="hfname">
+                <option value="" disabled selected>Select Health Facility</option>
+                <option *ngFor="let facility of facilities" [value]="facility.code" >{{ facility.code }}</option>
+              </select>
+            </div>
+
+        </tr>
+      
+      </tbody>
+    
+    </table>
+  </form>
+  
+    <div class="text-sm col-span-6 col-start-7 table-auto overflow-y-auto h-96">
+      <table class="w-full max-w-4xl text-left text-gray-500 dark:text-gray-400">
+        <thead class="text-sm text-gray-700 dark:bg-gray-700 dark:text-gray-400">
+          <tr class="sticky top-0 z-50 bg-gray-50">
+              <th scope="col" class="p-4 pl-12">
+                <div class="flex items-center">
+                  <input id="checkbox-all-search" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 rounded-full border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                  <label for="checkbox-all-search" class="sr-only">checkbox</label>
+                </div>
+              </th>
+              <th scope="col" class="py-4">
+              Barangay Name
+              </th>
+          </tr>
+        </thead>
+          <tbody>
+            <tr *ngFor="let item of barangays" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+              <td class="p-4 w-4 pl-12">
+                <div class="flex items-center">
+                  <input id="{{item.id}}" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 rounded-full border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                </div>
+              </td>
+              <td scope="row" class="text-sm py-4 text-gray-900 whitespace-nowrap dark:text-white select-none">
+                <label for="{{item.id}}">{{item.name}}</label>
+              </td>
+            </tr>
+          </tbody>
+      </table>
+  
+    </div>
+  
+  </div>

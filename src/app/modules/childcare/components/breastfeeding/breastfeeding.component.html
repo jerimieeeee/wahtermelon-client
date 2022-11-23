@@ -1,0 +1,138 @@
+<div class="flex mt-4 mb-3">
+  <h4 class="font-bold text-gray-600 text-sm">BREASTFEEDING AND COMPLEMENTARY FEEDING</h4>
+  <div class="relative">
+    <fa-icon [icon]="faInfoCircle" class="peer ml-3 text-gray-300 hover:text-gray-500 z-50"></fa-icon>
+    <div
+        class="absolute text-sm bg-gradient-to-b from-stone-500 to-gray-400 p-2 rounded-md border border-gray-500  text-white drop-shadow-lg opacity-90 border-check z-50 w-60 invisible peer-hover:visible">
+        <h1 class="font-bold drop-shadow-lg">IMPORTANT</h1>
+        <p class="font-light drop-shadow-lg">Once saved, the information will be displayed in the input boxes
+            and shall not be editable unless Edit button is pressed.</p>
+    </div>
+  </div>
+</div>
+
+<!--Essential Newborn Care Section-->
+<div class="card">
+    <div class="flex bg-orange-500 card-header-services">
+      <h4 class="font-semibold text-white text-sm uppercase">Breastfeeding And Complementary Feeding Information</h4>
+      <button  type="button" class="-mt-0.5 relative ml-auto px-5" (click)="toggleBreastfeedingModal()" *ngIf="groupList2.includes(1) || groupList2.includes(0) || groupList2.length === 6 ||  groupList.length === 6">
+        <fa-icon class=" text-white" size="md" [icon]="faPenToSquare"></fa-icon>
+        </button>
+    </div>
+
+    <div class="flex w-full item-start flex-wrap pt-4">
+      <div *ngFor="let months of ccdev, index as i" class=" md:w-1/2 lg:w-1/2 px-10 text-sm">
+        <p *ngIf="months.selected == 1" class="py-1">{{months.name}} - {{months.date}}</p>
+      </div>
+
+      <div class="flex w-full item-start flex-wrap" *ngIf="!groupList2.includes(0) && !groupList2.includes(1) && groupList.length == 0">
+        <!-- <div *ngFor="let ccmonths of ccdev" class=" md:w-1/2 lg:w-1/2 px-10 text-sm">
+          <p class="py-1">{{ccmonths.name}} - {{ccmonths.isDefault}}</p> -->
+          <p class="px-10 py-1 text-sm mt-1">No Recorded Breastfeeding / Complementary Feeding!</p>
+          
+          <button type="button" class="flex btn-add ml-auto mr-10" (click)="toggleBreastfeedingModal()">
+            <fa-icon class="mr-2" [icon]="faPlus"></fa-icon>
+           Add
+          </button>
+          
+      </div>
+    </div>
+
+    <!--Breastfeeding Modal-->
+    <div *ngIf="showBreastfeedingModal" id="defaultModal" tabindex="-1" class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 w-full md:inset-0 h-modal md:h-full justify-center items-center flex" aria-modal="true" role="dialog" style="z-index:60">
+      <div class="relative p-4 w-full max-w-lg h-auto md:h-auto">
+          <!-- Modal content -->
+          <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+              <!-- Modal header -->
+              <div class="flex justify-between items-start p-4 rounded-t border-b dark:border-gray-600 bg-white">
+                  <h3 class="mt-1 font-bold text-blue-500 text-md dark:text-white">
+                      Exclusively Breastfeeding
+                  </h3>
+                  <button type="button" class="text-gray-500 bg-transparent hover:bg-red-500 hover:text-white rounded text-sm p-1.5 ml-auto inline-flex items-center" (click)="toggleBreastfeedingModal()">
+                      <svg aria-hidden="true" class="w-5 h-5 rounded" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                      <span class="sr-only">Close modal</span>
+                  </button>
+              </div>
+              <!-- Modal body -->
+            <div class="overflow-y-auto h-96 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
+              <table class="w-full max-w-lg text-sm text-left text-gray-500 dark:text-gray-400">
+                <thead class="text-sm text-gray-70 dark:bg-gray-700 dark:text-gray-400">
+                  <tr class="w-full py-2 sticky top-0 z-50 bg-gray-50">
+                      <th scope="col" class="py-4 pl-12">
+                     Month
+                      </th>
+                      <th scope="col" class="py-4 px-12">
+                      EBF Status
+                      </th>
+                      <!-- <th scope="col" class="py-4 pr-12">
+                      Reason for Stopping
+                      </th> -->
+                  </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let month of ccdev, index as i" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                      <td class="py-4 pl-12 text-sm text-gray-900 dark:text-white select-none">
+                        <label id="{{month.id}}" for="{{month.id}}">{{month.date}}</label>
+                      </td>
+                      <td class="py-4 px-12 text-sm">
+                        <select (change)="changeSelection(i,$event.target.value)" [(ngModel)]="month.selected" name="" id="" style="width:100%;">
+                          <option value='' ></option>
+                          <option value='1' >Yes</option>
+                          <option value='0' >No</option>
+                        </select>
+                      </td>
+                      <!-- <td class="py-4 pr-12 text-sm" *ngIf="month.ischecked">
+                        <select class="select rounded-md text-sm" name="" id="" style="width:100%;">
+                          <option value="" disabled selected>Select Reason</option>
+                          <option class="" value="" *ngFor="let reason of reasons">
+                          {{reason.desc}}
+                          </option>
+                        </select>
+                      </td> -->
+                    </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div *ngIf="showData" class="flex py-4 px-5 rounded-b border-t border-gray-200">
+              <label class="mt-2.5 text-sm text-gray-900 w-full">Reason for Stopping</label>
+              <select class="select rounded-md text-sm -pl-10" [(ngModel)]="patient_breastfed.ebfreasons" name="" id="" style="width:100%;">
+                <option  disabled selected>Select Reason</option>
+                <option value="{{reason.reason_id}}" *ngFor="let reason of lib_reasons">
+                {{reason.desc}}
+                </option>
+              </select>
+            </div>
+
+            <div *ngIf="!showData && !groupList.includes('0') && !groupList.includes('null') && !groupList.includes(null) && !groupList.includes('')" class="flex py-4 px-5 rounded-b border-t border-gray-200">
+              <label class="mt-2.5 text-sm text-gray-900 w-full">EBF Date</label>
+              <input type="date" placeholder="Enter EBF Date" style="width:100%;" [(ngModel)]="patient_breastfed.ebf_date" >
+            </div>
+
+            <!-- <div *ngIf="showData===true" class="flex py-4 px-5 rounded-b border-t border-gray-200">
+              <label class="mt-2.5 text-sm text-gray-900 w-full">Reason for Stopping</label>
+              <select class="select rounded-md text-sm -pl-10" name="" id="" style="width:100%;">
+                <option value="" disabled selected>Select Reason</option>
+                <option  *ngFor="let reason of reasons">
+                {{reason.desc}}
+                </option>
+              </select>
+            </div> -->
+
+              <!-- Modal footer -->
+            <div class="flex justify-end py-4 px-6 space-x-4 rounded-b border-t border-gray-200 dark:border-gray-600">
+              <p>{{this.patient_breastfed.reasoning}}</p>
+              <button  type="button" class="btn-cancel" (click)="toggleBreastfeedingModal()">Close</button>
+              <button  type="button" class="btn-save" (click)="onSubmit()" (click)="saveModal()" *ngIf="!groupList2.includes(1) && groupList.length === 0">
+                <fa-icon *ngIf="is_saving" class="pl-0" [icon]="faSpinner" [spin]="true"></fa-icon>
+                  {{ is_saving ? 'Saving' : 'Save' }}</button>
+              <button  type="button" class="btn-save" (click)="onSubmit()" (click)="saveModal()" *ngIf="groupList2.includes(1) || groupList.length === 6">
+                <fa-icon *ngIf="is_saving" class="pl-0" [icon]="faSpinner" [spin]="true"></fa-icon>
+                  {{ is_saving ? 'Updating' : 'Update' }}</button>
+            </div>
+          </div>
+      </div>
+    </div>
+</div>
+  
+<div *ngIf="showBreastfeedingModal" class="opacity-50 fixed inset-0 z-50 bg-black"></div>

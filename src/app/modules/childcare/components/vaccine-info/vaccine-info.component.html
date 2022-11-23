@@ -1,0 +1,71 @@
+<div>
+    <h4 class="font-bold text-gray-600 text-md mt-5">VACCINE</h4>
+  </div>
+
+
+  <div class="flex item-start flex-wrap shadow-md rounded-xl mt-5">
+
+    <div class="flex justify-between w-full bg-teal-400 px-5 py-3 rounded-tl rounded-tr ">
+      <h4 class="font-bold text-white text-md mt-2 mb-2">Vaccine Information</h4> 
+      <button class="py-0 px-4 rounded-full bg-white text-gray-600 font-bold drop-shadow-md hover:border-white-600 hover:bg-blue-400 hover:text-white shadow-md inline-flex items-center" name="add-btn" (click)="toggleVaccineModal()">
+        <label> <fa-icon class="text-sm " [icon]="faPlus"></fa-icon> Add</label>
+        </button> 
+    </div> 
+  
+  </div>
+
+   <!--Vaccine Modal-->
+   <div *ngIf="showVaccineModal" class="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex">
+    <div class="relative w-auto my-6 mx-auto max-w-6xl">
+      <!--content-->
+      <div class="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+        <!--header-->
+        <div class="flex items-start justify-between p-5 border-b border-solid border-gray-300 rounded-t">
+          <h4 class="font-bold text-gray-600 text-md mt-2">
+            Add Vaccine
+          </h4>
+        </div>
+        <!--body-->
+        
+        <div class="relative flex-auto px-12">
+          
+          <table class="w-full flex justify-between text-md bg-white rounded">
+            <tbody>
+                <tr class="border-b items-center">
+                    <th class="text-left p-3 px-5">Vaccine</th>
+                    <th class="text-center p-3 px-5">Status</th>
+                    <th class="text-center p-3 px-5">Date</th>
+                </tr>
+
+                <tr *ngFor="let item of eservices2" class="border-b hover:bg-blue-100 bg-transparent">
+                  <td class="p-3 px-5">{{item.name}}</td>
+                  <td class="p-3 px-5 text-center">
+                    <input type="checkbox" name="" id="" (change)="changeSelection()" [(ngModel)]="item.ischecked">
+                  </td>
+                  <td class="p-3 px-5 text-center">
+                  <form [formGroup]="serviceForm" (ngSubmit)="submit()">
+                  
+                    <input class="items-center"
+              type="date" name="date" formControlName="serviceDate" *ngIf="item.ischecked">
+                 
+                  </form>
+                </td>
+              </tr>
+            </tbody>
+        </table>   
+        </div>
+
+        
+        <!--footer-->
+        <div class="flex items-center justify-end p-6 border-t border-solid border-gray-300 rounded-b">
+          <button class="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1" type="button" style="transition: all .15s ease" (click)="toggleVaccineModal()">
+            Close
+          </button>
+          <button class="bg-green-500 text-white active:bg-green-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1" type="button" style="transition: all .15s ease" (click)="submit()" (click)="toggleEssentialModal()">
+            Save
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="showVaccineModal" class="opacity-25 fixed inset-0 z-40 bg-black"></div>
