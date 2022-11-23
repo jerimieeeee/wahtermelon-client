@@ -116,8 +116,9 @@ export class PrenatalComponent implements OnInit {
       this.http.post('maternal-care/mc-prenatal', this.prenatal_form.value).subscribe({
         next: (data: any) => {
           console.log(data.data, " data from saving prenatal")
-          this.patient_mc_record[0].prenatal_visit = data.data;
-          this.getMCR('latest', this.patient_details.id);
+          this.prenatal_data = data.data;
+          // this.patient_mc_record[0].prenatal_visit = data.data;
+          // this.getMCR('latest', this.patient_details.id);
           // this.updateMCR('latest', this.patient_details.id);
 
           /* data.data.forEach(d => {
@@ -165,7 +166,8 @@ export class PrenatalComponent implements OnInit {
       console.log("it went true");
 
     this.value = this.patient_mc_record[0].prenatal_visit[0].visit_sequence + 1;
-    this.patient_mc_record[0].prenatal_visit.forEach((p, i) => {
+    this.prenatal_data = this.patient_mc_record[0].prenatal_visit;
+    /* this.patient_mc_record[0].prenatal_visit.forEach((p, i) => {
       // p.push();
       let aog_days_unit;
       let aog_weeks_unit;
@@ -195,7 +197,7 @@ export class PrenatalComponent implements OnInit {
       this.prenatal_data[i]["aog_count"] = final_statement;
       console.log(this.prenatal_data, " prenatal data");
 
-    });
+    }); */
   }
   this.createForm(this.patient_mc_record[0]);
   }
