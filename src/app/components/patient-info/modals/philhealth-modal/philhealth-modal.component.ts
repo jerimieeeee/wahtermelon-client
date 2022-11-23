@@ -182,7 +182,7 @@ export class PhilhealthModalComponent implements OnInit {
   ngOnInit(): void {
     this.loadMainLibrary();
     let user_id = localStorage.getItem('user_id');
-    let facility_code = "DOH000000000005672";
+    let facility_code = localStorage.getItem('facility_code');
 
     this.philhealthForm = this.formBuilder.group({
       philhealth_id: [null, [Validators.required, Validators.minLength(12)]],

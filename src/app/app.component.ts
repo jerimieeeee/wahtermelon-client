@@ -53,6 +53,7 @@ export class AppComponent implements OnInit{
           localStorage.setItem('user_first_name', data.user.first_name);
           localStorage.setItem('user_middle_name', data.user.middle_name);
           localStorage.setItem('user_id', data.user.id);
+          localStorage.setItem('facility_code', data.data.facility.code);
           this.is_saving = false;
           this.checkAuth();
         },
@@ -75,6 +76,18 @@ export class AppComponent implements OnInit{
     const url = this.location.path();
     if(localStorage.getItem('access_token')){
       this.isAuthenticated = true;
+      this.http.get('users/'+localStorage.getItem('user_id')).subscribe({
+        next: (data: any) => {
+          console.log(data.data);
+          // localStorage.setItem('access_token', data.access_token);
+          localStorage.setItem('user_last_name', data.data.last_name);
+          localStorage.setItem('user_first_name', data.data.first_name);
+          localStorage.setItem('user_middle_name', data.data.middle_name);
+          localStorage.setItem('user_id', data.data.id);
+          localStorage.setItem('facility_code', data.data.facility.code);
+        },
+        error: err => console.log(err)
+      })
     } else {
       this.isAuthenticated = false;
     }

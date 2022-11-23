@@ -62,7 +62,7 @@ export class PostvisitsComponent implements OnInit {
   constructor(private http: HttpService, private formBuilder: FormBuilder) { }
 
   cm_value = '';
- 
+
   public keyUp = [];
   public buttons = [];
   public postpartum_data = [];
@@ -103,28 +103,28 @@ export class PostvisitsComponent implements OnInit {
 
 
     console.log(this.patient_mc_record[0].postpartum_visit[0]?this.patient_mc_record[0].postpartum_visit[0]:this.patient_mc_record[0].postpartum_visit, " try getmcr - post visit");
-   
+
     if(this.patient_mc_record[0].postpartum_visit[0]?this.patient_mc_record[0].postpartum_visit[0]:this.patient_mc_record[0].postpartum_visit.length == 1){
       console.log("it went true");
-      
+
     this.value = this.patient_mc_record[0].postpartum_visit[0].visit_sequence + 1;
     this.patient_mc_record[0].postpartum_visit.forEach(p => {
       this.postpartum_data.push(p);
       console.log("pushing p's");
-      
+
     });
      }
   this.createForm(this.patient_mc_record[0]);
   }
 createForm(mc_record: any) {
   let user_id = localStorage.getItem('user_id');
-  let facility_code = 'DOH000000000005672';
+  let facility_code = localStorage.getItem('facility_code');
   let post_visit: any
   console.log(this.patient_mc_record[0].postpartum_visit, " post visit true or false ?");
-  
+
   if(this.patient_mc_record[0].postpartum_visit[0]?this.patient_mc_record[0].postpartum_visit[0]:this.patient_mc_record[0].postpartum_visit.length == 1){
     console.log("post visit true");
-    
+
     post_visit = mc_record.postpartum_visit[0];
   }else{
     console.log("post visit false");
@@ -167,14 +167,14 @@ createForm(mc_record: any) {
   //     b: new FormControl(),
   //     pb: new FormControl(),
   //     fp: new FormControl(),
-      
+
   // });
 }
 saveForm(data){
   this.is_saving = true;
-  
+
   console.log(this.postpartum_visit_form.valid, this.postpartum_visit_form.value);
-  
+
   if (this.postpartum_visit_form.valid) {
     if (this.actual_height) {
       this.postpartum_visit_form.value.patient_height = this.actual_height;
@@ -185,7 +185,7 @@ saveForm(data){
         console.log(data.data, " data from saving post visit")
         this.postpartum_data = [];
         // this.updateMCR('latest', this.patient_details.id);
-        
+
         data.data.forEach(d => {
           this.postpartum_data.push(d)
           console.log(d, " the Ds");
@@ -207,7 +207,7 @@ saveForm(data){
   } else {
     // this.loading = false;
   }
-    
+
 }
 
 onKeyUp(data_input: string, id: string) {
@@ -222,7 +222,7 @@ onKeyUp(data_input: string, id: string) {
 
  }
  console.log(this.keyUp);
- 
+
 }
 clearForm(id) {
  this.postpartum_visit_form.get(id).reset();

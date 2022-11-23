@@ -144,7 +144,7 @@ export class PatientRegistrationComponent implements OnInit {
   saveFolder(id){
     let user_id = localStorage.getItem('user_id')
     let params = {
-      facility_code: this.show_demog_input ? 'DOH000000000005672' : this.selected_facility,
+      facility_code: this.show_demog_input ? localStorage.getItem('facility_code') : this.selected_facility,
       user_id: user_id,
       patient_id: id,
       address: this.show_demog_input ? this.patientForm.controls.family['controls'].address.value : this.selected_address,
