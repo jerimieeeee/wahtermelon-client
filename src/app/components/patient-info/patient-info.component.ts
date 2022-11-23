@@ -165,6 +165,7 @@ export class PatientInfoComponent {
   loadVaccines(){
     this.http.get('patient-vaccines/vaccines-records', {params:{'patient_id': this.patient_info.id, 'sort': '-vaccine_date' }}).subscribe({
       next: (data: any) => {
+        // console.log(data)
         this.vaccine_list = data.data;
         this.immunization_status = data.status;
         // console.log(this.vaccine_list)
