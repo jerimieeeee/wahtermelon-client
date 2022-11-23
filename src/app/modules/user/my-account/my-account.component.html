@@ -122,7 +122,7 @@
             </div>
 
             <div class="col-span-8">
-              <label for="designation_code" class="input-label" [ngClass]="{'text-red-500': is_saving && f.designation_code.errors}">Degination</label>
+              <label for="designation_code" class="input-label" [ngClass]="{'text-red-500': is_saving && f.designation_code.errors}">Designation</label>
               <select id="designation_code" name="designation_code" formControlName="designation_code" class="input disabled:bg-gray-300" [ngClass]="{'invalid-input': is_saving && f.designation_code.errors}" >
                 <option *ngFor="let designation of designations" [value]="designation.code" >{{ designation.desc }}</option>
               </select>

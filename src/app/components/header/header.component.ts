@@ -43,11 +43,11 @@ export class HeaderComponent implements OnInit {
       location: 'my-account',
       icon: faUser
     },
-    {
+    /* {
       name: 'Account List',
       location: 'account-list',
       icon: faAddressBook
-    },
+    }, */
     {
       name: 'Settings',
       location: 'home',
