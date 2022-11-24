@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { faQuestionCircle, faChevronDown, faFolderOpen, faHeart, faFlask, faNotesMedical, faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
+import { faQuestionCircle, faChevronDown, faFolderOpen, faHeart, faFlask, faNotesMedical, faExclamationCircle, faChevronRight, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
@@ -16,82 +16,45 @@ export class TodaysConsultComponent implements OnInit {
   faFlask = faFlask;
   faNotesMedical = faNotesMedical;
   faExclamationCircle = faExclamationCircle;
+  faChevronRight = faChevronRight;
+  faChevronLeft = faChevronLeft;
 
-  today_consults = [
-    {
-      id: "/itr",
-      first_name: "Dal-mi",
-      last_name: "Seo",
-      address: "Gwangju, South Korea",
-      visit_type: "General Consult",
-      location: "Physician",
-      duration: "1 hour 45 mins",
-      img_name: "profile_2.jpg"
-    },
-    {
-      id: "/itr",
-      first_name: "Ji-Pyeong",
-      last_name: "Han",
-      address: "Seoul, South Korea",
-      visit_type: "General Consult",
-      location: "Physician",
-      duration: "1 hour 38 mins",
-      img_name: "003.jpg"
-    },
-    {
-      id: "/itr",
-      first_name: "Do-san",
-      last_name: "Nam",
-      address: "Seoul, South Korea",
-      visit_type: "General Consult",
-      location: "Physician",
-      duration: "1 hour 25 mins",
-      img_name: "004.jpg"
-    },
-    {
-      id: "/itr",
-      first_name: "Chul-san",
-      last_name: "Lee",
-      address: "Seoul, South Korea",
-      visit_type: "General Consult",
-      location: "Physician",
-      duration: "1 hour 24 mins",
-      img_name: "005.jpg"
-    },
-    {
-      id: "/itr",
-      first_name: "Yong-san",
-      last_name: "Kim",
-      address: "Seoul, South Korea",
-      visit_type: "General Consult",
-      location: "Physician",
-      duration: "1 hour 23 mins",
-      img_name: "006.jpg"
-    },
-    {
-      id: "/itr",
-      first_name: "Sa-Ha",
-      last_name: "Jung",
-      address: "Seoul, South Korea",
-      visit_type: "General Consult",
-      location: "Physician",
-      duration: "1 hour 12 mins",
-      img_name: "007.jpg"
-    },
-  ]
+  today_consults: [];
 
-  getInitials(string) {
-    return [...string.matchAll(/\b\w/g)].join('')
-  }
 
-  getTodaysConsult(){
-    this.http.get('consultation/cn-records',{params:{consult_done: 0}}).subscribe({
+  per_page: number = 10;
+  current_page: number = 1;
+  last_page: number;
+  from: number;
+  to: number;
+  total: number;
+
+  getTodaysConsult(page?: number){
+    let params = {
+      params:{
+        consult_done: 0,
+        // per_page: this.per_page,
+        page: page ? page : this.current_page
+      }
+    };
+
+    this.http.get('consultation/cn-records', params).subscribe({
       next: (data: any) => {
         this.today_consults = data.data;
         // console.log(data);
+        let page = data.meta;
+        this.last_page = page.last_page;
+        this.current_page = page.current_page;
+        this.from = page.from;
+        this.to = page.to;
+        this.total = page.total;
       },
       error: err => console.log(err)
     })
+  }
+
+  onPageChange(page){
+
   }
 
   openItr(patient_id){
@@ -121,20 +84,19 @@ export class TodaysConsultComponent implements OnInit {
     switch(group){
       case 'cn':
         return 'Consultation';
-        break;
       case 'cc':
         return 'Child Care';
-        break;
       case 'mc':
         return 'Maternal Care';
-        break;
       case 'dn':
         return 'Dental';
-        break;
       case 'ncd':
         return 'Non Communicable Disease';
-        break;
     }
+  }
+
+  getInitials(string) {
+    return [...string.matchAll(/\b\w/g)].join('')
   }
 
   constructor(
