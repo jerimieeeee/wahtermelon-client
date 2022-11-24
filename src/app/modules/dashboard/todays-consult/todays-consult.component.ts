@@ -34,7 +34,7 @@ export class TodaysConsultComponent implements OnInit {
       params:{
         consult_done: 0,
         // per_page: this.per_page,
-        page: page ? page : this.current_page
+        // page: page ? page : this.current_page
       }
     };
 
