@@ -196,8 +196,12 @@
 
             <div class="col-span-8">
               <label for="password" class="input-label" [ngClass]="{'text-red-500': is_saving && f.password.errors}">Password</label>
-              <input type="password" name="password" id="password" class="input" [ngClass]="{'invalid-input': is_saving && f.password.errors}" formControlName="password">
-
+              <div class="relative rounded-md">
+                <input [type]="show_pass ? 'text' : 'password'" name="password" id="password" class="input" [ngClass]="{'invalid-input': is_saving && f.password.errors}" formControlName="password">
+                <button (click)="show_pass = !show_pass" class="absolute inset-y-0 right-0 flex items-center pr-2 text-gray-500" type="button">
+                  <fa-icon [icon]="show_pass ? faEyeSlash : faEye"></fa-icon>
+                </button>
+              </div>
               <div *ngIf="!is_saving ">
                 <ol class="list-disc pl-5 text-sm">
                   <li>Password must have at least 6 characters</li>
@@ -226,7 +230,7 @@
 
             <div class="col-span-8">
               <label for="password_confirmation" class="input-label" [ngClass]="{'text-red-500': is_saving && f.password_confirmation.errors}">Password Confirmation</label>
-              <input type="password" name="password_confirmation" id="password_confirmation" class="input" [ngClass]="{'invalid-input': is_saving && f.password_confirmation.errors}" formControlName="password_confirmation">
+              <input [type]="show_pass ? 'text' : 'password'" name="password_confirmation" id="password_confirmation" class="input" [ngClass]="{'invalid-input': is_saving && f.password_confirmation.errors}" formControlName="password_confirmation">
 
               <div *ngIf="passwordMatchError" class="invalid-alert">
                 <div>
