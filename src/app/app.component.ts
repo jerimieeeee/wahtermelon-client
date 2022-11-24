@@ -78,7 +78,7 @@ export class AppComponent implements OnInit{
       this.isAuthenticated = true;
       this.http.get('users/'+localStorage.getItem('user_id')).subscribe({
         next: (data: any) => {
-          console.log(data.data);
+          // console.log(data.data);
           // localStorage.setItem('access_token', data.access_token);
           localStorage.setItem('user_last_name', data.data.last_name);
           localStorage.setItem('user_first_name', data.data.first_name);
