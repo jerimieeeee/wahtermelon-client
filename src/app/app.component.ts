@@ -6,6 +6,7 @@ import { HttpService } from './shared/services/http.service';
 import { Location } from '@angular/common';
 import { filter, tap } from 'rxjs/operators';
 import { openCloseTrigger } from './modules/patient-registration/declarations/animation';
+import { faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons';
 
 @Component({
   selector: 'app-root',
@@ -18,12 +19,15 @@ export class AppComponent implements OnInit{
   faChevronCircleDown = faChevronCircleDown;
   faBell = faBell;
   faSearch = faSearch;
+  faEye = faEye;
+  faEyeSlash = faEyeSlash;
 
   isAuthenticated: boolean = false;
   showLogin: boolean = true;
   is_saving: boolean = false;
   auth_error: boolean = false;
   showPrivacyStatement: boolean = false;
+  show_pass: boolean = false;
 
   auth_error_message: string;
   constructor(
@@ -34,6 +38,10 @@ export class AppComponent implements OnInit{
   ) {
 
   }
+
+ /*  showPass(){
+    this.show_pass = !this
+  } */
 
   loginForm: FormGroup = new FormGroup({
     email: new FormControl<string| null>(''),
