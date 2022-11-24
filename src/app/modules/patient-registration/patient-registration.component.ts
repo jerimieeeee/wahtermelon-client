@@ -40,6 +40,8 @@ export class PatientRegistrationComponent implements OnInit {
     education_code: new FormControl<string| null>(''),
     civil_status_code: new FormControl<string| null>(''),
     consent_flag: new FormControl<boolean>(false),
+    user_id: new FormControl<string| null>(''),
+    facility_code: new FormControl<string| null>(''),
     family: new FormGroup({
       region: new FormControl<string| null>(''),
       province: new FormControl<string| null>(''),
@@ -143,6 +145,7 @@ export class PatientRegistrationComponent implements OnInit {
 
   saveFolder(id){
     let user_id = localStorage.getItem('user_id')
+
     let params = {
       facility_code: this.show_demog_input ? localStorage.getItem('facility_code') : this.selected_facility,
       user_id: user_id,
@@ -301,7 +304,12 @@ export class PatientRegistrationComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    let user_id = localStorage.getItem('user_id');
+    let facility_code = localStorage.getItem('facility_code');
+
     this.patientForm = this.formBuilder.nonNullable.group({
+      facility_code: [facility_code, Validators.required],
+      user_id: [user_id, Validators.required],
       last_name: ['', [Validators.required, Validators.minLength(2)]],
       first_name: ['', [Validators.required, Validators.minLength(2)]],
       middle_name: ['', [Validators.required, Validators.minLength(1)]],
@@ -327,7 +335,7 @@ export class PatientRegistrationComponent implements OnInit {
         cct_id: ['', [Validators.minLength(2)]],
         cct_date: [''],
         is_head: [false, [Validators.required]],
-      })
+      }),
     });
 
     this.date = new Date().toISOString().slice(0,10);
