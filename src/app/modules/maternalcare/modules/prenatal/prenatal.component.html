@@ -291,7 +291,7 @@
                 </div>
 
                 <div class="overflow-x-hidden overflow-y-scroll scrollbar-thin scrollbar-thumb-white hover:scrollbar-thumb-blue-300 scrollbar-track-white" style="grid-column: span 11 / span 11;">
-                    <div class="text-sm grid hover:bg-blue-100 hover:font-medium" style="grid-template-columns: repeat(24, minmax(0, 1fr)); grid-column: span 11 / span 11;" *ngFor="let prenatal of prenatal_data; trackBy: trackByFn">
+                    <div class="text-sm grid hover:bg-blue-100" style="grid-template-columns: repeat(24, minmax(0, 1fr)); grid-column: span 11 / span 11;" *ngFor="let prenatal of prenatal_data; trackBy: trackByFn">
                         <div class="transitions relative select-none mx-2"><h3>{{prenatal.visit_sequence}}</h3></div>
                         <div class="transitions col-span-3 relative select-none mx-2"><h3>{{prenatal.trimester}} - {{prenatal.prenatal_date}}</h3></div>
                         <div class="transitions col-span-3 relative select-none ml-3"><h3>
