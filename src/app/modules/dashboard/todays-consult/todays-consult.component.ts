@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { faQuestionCircle, faChevronDown, faFolderOpen, faHeart, faFlask, faNotesMedical, faExclamationCircle, faChevronRight, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import { faQuestionCircle, faChevronDown, faFolderOpen, faHeart, faFlask, faNotesMedical, faExclamationCircle, faChevronRight, faChevronLeft, faAnglesLeft, faAnglesRight } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
@@ -18,36 +18,35 @@ export class TodaysConsultComponent implements OnInit {
   faExclamationCircle = faExclamationCircle;
   faChevronRight = faChevronRight;
   faChevronLeft = faChevronLeft;
+  faAnglesLeft = faAnglesLeft;
+  faAnglesRight = faAnglesRight;
 
   today_consults: [];
 
-
   per_page: number = 10;
-  current_page: number = 1;
+  current_page: number;
   last_page: number;
   from: number;
   to: number;
   total: number;
 
   getTodaysConsult(page?: number){
-    let params = {
-      params:{
-        consult_done: 0,
-        // per_page: this.per_page,
-        // page: page ? page : this.current_page
-      }
-    };
+    let params = {params: { }};
+    if (page) params['params']['page'] = page;
+    params['params']['include'] = 'barangay';
+    params['params']['per_page'] = this.per_page;
+    params['params']['consult_done'] = 0;
 
     this.http.get('consultation/cn-records', params).subscribe({
       next: (data: any) => {
+        console.log(data);
         this.today_consults = data.data;
-        // console.log(data);
-        let page = data.meta;
-        this.last_page = page.last_page;
-        this.current_page = page.current_page;
-        this.from = page.from;
-        this.to = page.to;
-        this.total = page.total;
+
+        this.current_page = data.meta.current_page;
+        this.last_page = data.meta.last_page;
+        this.from = data.meta.from;
+        this.to = data.meta.to;
+        this.total = data.meta.total;
       },
       error: err => console.log(err)
     })
