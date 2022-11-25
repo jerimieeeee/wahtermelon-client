@@ -124,13 +124,21 @@ export class UserRegistrationComponent implements OnInit {
     {var_name: 'employers', location: 'employers'},
   ]
 
+  show_form: boolean = false;
   loadLibraries(){
-    this.libraries.forEach(obj => {
+    this.libraries.forEach((obj, key, arr) => {
       this.http.get('libraries/'+obj.location).subscribe({
-        next: (data: any) => {this[obj.var_name] = data.data; console.log(obj.var_name, data.data)},
+        next: (data: any) => {
+          this[obj.var_name] = data.data;
+          console.log(arr.length, key);
+          if((arr.length -1) === key)this.show_form = true;
+
+        },
         error: err => console.log(err)
       })
     });
+
+
   }
 
   loadFacilities(municipality){

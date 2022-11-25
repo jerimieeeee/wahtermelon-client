@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NavigationEnd, Router } from '@angular/router';
-import { faChevronCircleDown, faBell, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faChevronCircleDown, faBell, faSearch, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from './shared/services/http.service';
 import { Location } from '@angular/common';
 import { filter, tap } from 'rxjs/operators';
@@ -21,6 +21,7 @@ export class AppComponent implements OnInit{
   faSearch = faSearch;
   faEye = faEye;
   faEyeSlash = faEyeSlash;
+  faSpinner = faSpinner;
 
   isAuthenticated: boolean = false;
   showLogin: boolean = true;
@@ -63,9 +64,10 @@ export class AppComponent implements OnInit{
           localStorage.setItem('user_id', data.user.id);
           localStorage.setItem('facility_code', data.user.facility?.code);
           this.is_saving = false;
+          this.router.navigate(['/']);
           this.checkAuth();
         },
-        error: err => { console.log(err); this.auth_error = true; this.auth_error_message = err.error.message },
+        error: err => { console.log(err); this.auth_error = true; this.is_saving = false; this.auth_error_message = err.error.message },
         complete: () => { }
       });
     }
@@ -80,6 +82,7 @@ export class AppComponent implements OnInit{
     console.log(JSON.parse(window.atob(base64)));
   }
 
+  verify_url: {};
   checkAuth(){
     const url = this.location.path();
     if(localStorage.getItem('access_token')){
@@ -97,14 +100,20 @@ export class AppComponent implements OnInit{
         error: err => console.log(err)
       })
     } else {
+      console.log(url)
+      this.verify_url = this.location.path().split(';');
       this.isAuthenticated = false;
     }
 
     if(this.isAuthenticated == false) {
+      console.log(this.verify_url[0])
       if(url == '/user-registration'){
         this.showLogin = false;
-        // this.router.navigate(['/user-registration']);
-      }else{
+      } else if (this.verify_url[0] == '/verify') {
+        console.log('1')
+        this.showLogin = true;
+        this.activateUser(this.verify_url[1].slice(3));
+      } else {
         this.showLogin = true;
         this.router.navigate(['/']);
       }
@@ -116,6 +125,19 @@ export class AppComponent implements OnInit{
         this.router.navigate(['/home']);
       }
     }
+  }
+
+  show_activated: boolean = false;
+
+  activateUser(params){
+    console.log(params)
+    this.http.get('email/verify/'+params).subscribe({
+      next: (data:any) => {
+        this.show_activated = true;
+        console.log(data)
+      },
+      error: err => console.log(err)
+    })
   }
 
   navigationEnd$ = this.router.events.pipe(

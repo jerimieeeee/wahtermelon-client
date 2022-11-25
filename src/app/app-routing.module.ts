@@ -90,6 +90,10 @@ const routes: Routes = [
   {
     path: 'households',
     loadChildren: () => import('./modules/households/households.module').then(m => m.HouseholdsModule)
+  },
+  {
+    path: 'verify',
+    loadChildren: () => import('./modules/verify/verify.module').then(m => m.VerifyModule)
   }
 ];
 
