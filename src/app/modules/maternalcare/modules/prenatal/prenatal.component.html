@@ -278,14 +278,14 @@
 
                 <div class="text-sm grid pb-1 font-semibold h-max" style="grid-template-columns: repeat(24, minmax(0, 1fr)); grid-column: span 11 / span 11;">
                     <div class="transitions mx-2 select-none"><h3>No.</h3></div>
-                    <div class="transitions col-span-2 mx-2 select-none"><h3>Trimester</h3></div>
+                    <div class="transitions col-span-3 mx-2 select-none"><h3 class="w-full text-center">Trimester</h3></div>
                     <div class="transitions col-span-3 select-none"><h3 class="w-full text-center">AOG</h3></div>
                     <div class="transitions col-span-2 mx-2 select-none"><h3>Weight</h3></div>
-                    <div class="transitions col-span-2 mx-2 select-none"><h3>BP</h3></div>
+                    <div class="transitions col-span-2 mx-2 select-none"><h3 class="w-full text-center">BP</h3></div>
                     <div class="transitions col-span-2 mx-2 select-none whitespace-normal"><h3>Fundic Height</h3></div>
                     <div class="transitions col-span-2 mx-2 select-none"><h3>FHR</h3></div>
-                    <div class="transitions col-span-2 mx-2 select-none whitespace-normal"><h3>FHR Location</h3></div>
-                    <div class="transitions col-span-4 mx-2 select-none whitespace-normal"><h3>Fetal Presentation</h3></div>
+                    <div class="transitions col-span-2 mx-2 select-none whitespace-normal"><h3 class="w-full text-center">FHR Location</h3></div>
+                    <div class="transitions col-span-4 mx-2 select-none whitespace-normal"><h3 class="w-full text-center">Fetal Presentation</h3></div>
                     <div class="transitions col-span-3 mx-2 select-none"><h3>Remarks</h3></div>
                     <!-- <div class="transitions mx-2 select-none"><h3>Action</h3></div> -->
                 </div>
@@ -293,20 +293,23 @@
                 <div class="overflow-x-hidden overflow-y-scroll scrollbar-thin scrollbar-thumb-white hover:scrollbar-thumb-blue-300 scrollbar-track-white" style="grid-column: span 11 / span 11;">
                     <div class="text-sm grid hover:bg-blue-100 hover:font-medium" style="grid-template-columns: repeat(24, minmax(0, 1fr)); grid-column: span 11 / span 11;" *ngFor="let prenatal of prenatal_data; trackBy: trackByFn">
                         <div class="transitions relative select-none mx-2"><h3>{{prenatal.visit_sequence}}</h3></div>
-                        <div class="transitions col-span-2 relative select-none mx-2"><h3>{{prenatal.trimester}}</h3></div>
-                        <div class="transitions col-span-3 relative select-none ml-3"><h3>{{prenatal.aog_count}}</h3></div>
+                        <div class="transitions col-span-3 relative select-none mx-2"><h3>{{prenatal.trimester}} - {{prenatal.prenatal_date}}</h3></div>
+                        <div class="transitions col-span-3 relative select-none ml-3"><h3>
+                          {{prenatal.aog_weeks}}{{prenatal.aog_weeks?(prenatal.aog_weeks>1?' weeks':' week'):''}}
+                          {{prenatal.aog_days}}{{prenatal.aog_days?(prenatal.aog_days>1?' days':' day'):''}}
+                        </h3></div>
                         <div class="transitions col-span-2 relative select-none mx-2"><h3>{{prenatal.patient_weight}}</h3></div>
                         <div class="transitions col-span-2 relative select-none mx-2"><h3>{{prenatal.bp_systolic}}/{{prenatal.bp_diastolic}}</h3></div>
-                        <div class="transitions col-span-2 relative select-none mx-2 whitespace-normal"><h3>{{prenatal.fundic_height}}</h3></div>
-                        <div class="transitions col-span-2 relative select-none mx-2"><h3>{{prenatal.fhr}}</h3></div>
-                        <div class="transitions col-span-2  relative select-none mx-2 whitespace-normal"><h3>{{prenatal.location_code}}</h3></div>
-                        <div class="transitions col-span-4  relative select-none mx-2 whitespace-normal"><h3>{{prenatal.presentation_code}}</h3></div>
-                        <div class="transitions col-span-3 relative select-none mx-2 whitespace-normal"><h3>NONE</h3></div>
-                        <div class="transitions relative select-none mx-2">
+                        <div class="transitions col-span-2 relative select-none mx-2 whitespace-normal"><h3 class="w-full text-center">{{prenatal.fundic_height}}</h3></div>
+                        <div class="transitions col-span-2 relative select-none mx-2"><h3 class="w-full text-center">{{prenatal.fhr}}</h3></div>
+                        <div class="transitions col-span-2  relative select-none mx-2 whitespace-normal"><h3 class="w-full text-center">{{prenatal.location_code}}</h3></div>
+                        <div class="transitions col-span-4  relative select-none mx-2 whitespace-normal"><h3 class="w-full text-center">{{prenatal.presentation_code}}</h3></div>
+                        <div class="transitions col-span-3 relative select-none mx-2 whitespace-normal"><h3 class="w-full text-center">NA</h3></div>
+                        <!-- <div class="transitions relative select-none mx-2">
                             <button type="button" class="w-full">
                                 <fa-icon [icon]="faPencil" size="lg" class="mr-2 hover:text-orange-300"></fa-icon>
                             </button>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
 
