@@ -22,8 +22,8 @@
     </div>
 
     <div class="flex w-full item-start flex-wrap pt-4">
-      <div *ngFor="let y of x" class="md:w-1/2 lg:w-1/2 px-10 text-sm">
-        <p class="py-1">{{y.name}} - {{y.service_date | date:'mediumDate'}}</p>
+      <div *ngFor="let item of cc_newborn" class="md:w-1/2 lg:w-1/2 px-10 text-sm">
+        <p class="py-1">{{item.services.service_name}} - {{item.service_date | date:'mediumDate'}}</p>
       </div>
       
     </div>
@@ -38,7 +38,7 @@
     <!--Essential Newborn Care Modal-->
     <!-- Main modal -->
   <div *ngIf="showEssentialModal" id="defaultModal" tabindex="-1" class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 w-full md:inset-0 h-modal md:h-full justify-center items-center flex" aria-modal="true" role="dialog" style="z-index:60">
-    <div class="relative p-4 w-full max-w-lg h-auto md:h-auto">
+    <div class="relative p-4 w-full max-w-3xl h-auto md:h-auto">
         <!-- Modal content -->
         <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
             <!-- Modal header -->
@@ -54,14 +54,11 @@
             <!-- Modal body -->
           <form>
           <div class="overflow-y-auto h-96 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
-            <table class="w-full max-w-lg text-left text-gray-500 dark:text-gray-400">
+            <table class="w-full max-w-3xl text-left text-gray-500 dark:text-gray-400">
               <thead class="text-sm text-gray-700 dark:bg-gray-700 dark:text-gray-400">
                 <tr class="sticky top-0 z-50 bg-gray-50">
                     <th scope="col" class="p-4 pl-12">
-                      <div class="flex items-center">
-                        <input id="checkbox-all-search" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 rounded-full border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" [checked]="masterSelected" value="m1" (change)="checkUncheckAll($event)">
-                        <label for="checkbox-all-search" class="sr-only">checkbox</label>
-                      </div>
+      
                     </th>
                     <th scope="col" class="py-4">
                     Service Name
@@ -69,24 +66,35 @@
                     <th scope="col" class="py-4 px-12">
                     Service Date
                     </th>
-              
+                    <th scope="col" class="py-4 pr-12">
+                    Done Outside Facility
+                    </th>
                 </tr>
               </thead>
               
                 <tbody>
-                  <tr *ngFor="let item of eservices2; let i = index;" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                    <td class="p-4 w-4 pl-12">
+                  <tr *ngFor="let item of lib_ccservices; let i = index;" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <td *ngIf="item.service_cat == 'N'" class="p-4 w-4 pl-12">
                       <div class="flex items-center">
-                          <input id="{{item.id}}" name="services_{{i}}" type="checkbox" onselectstart="return false" class="w-4 h-4 text-blue-600 bg-gray-100 rounded-full border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" (change)="changeSelection(i)" [(ngModel)]="item.ischecked" [checked]="item.ischecked">
+                          <input id="{{item.service_id}}" name="" type="checkbox" onselectstart="return false" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" (change)="changeSelection(i)" [(ngModel)]="item.ischecked" [checked]="">
                       </div>
                     </td>
-                    <td scope="row" class="py-4 text-sm text-gray-900 whitespace-nowrap dark:text-white select-none">
-                      <label for="{{item.id}}">{{item.name}}</label>
+                    <td *ngIf="item.service_cat == 'N'" scope="row" class="py-4 text-sm text-gray-900 whitespace-nowrap dark:text-white select-none">
+                      <label for="{{item.service_id}}">{{item.service_name}}</label>
                     </td>
-                    <td class="py-4 px-12">
+                    <td *ngIf="item.service_cat == 'N'" class="py-4 px-12">
                       <input type="date" max="{{defaultDate}}" placeholder="Select Date" name="service_date_{{i}}"
                       class=" block w-full px-3 py-1.5 text-sm text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" [(ngModel)]="item.service_date"
                       placeholder="Select a date" />
+                    </td>
+                    <td *ngIf="item.service_cat == 'N'" class="text-sm py-4 pr-12">
+                      <select class="w-full text-sm" [(ngModel)]="item.status_id">
+                        <option>-</option>
+                        <option value="1">Done</option>
+                        <option value="2">Done Outside - Private</option>
+                        <option value="3">Done Outside - Public</option>
+                      </select>
+  
                     </td>
                   </tr>
                 </tbody>
@@ -96,7 +104,7 @@
             <!-- Modal footer -->
             <div class="flex justify-end py-4 px-6 space-x-4 rounded-b border-t border-gray-200 dark:border-gray-600">
               <button  type="button" class="btn-cancel" (click)="toggleEssentialModal()">Close</button>
-              <button  type="button" class="btn-save"  (click)="submit()" (click)="saveModal()">
+              <button  type="button" class="btn-save"  (click)="onSubmit()" (click)="saveModal()">
                 <fa-icon *ngIf="is_saving" class="pl-0" [icon]="faSpinner" [spin]="true"></fa-icon>
                 {{ is_saving ? 'Saving' : 'Save' }}</button>
             </div>
@@ -176,22 +184,22 @@
                 </tr>
               </thead>
                 <tbody>
-                  <tr *ngFor="let item of services" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                    <td class="p-4 w-4 pl-12">
+                  <tr *ngFor="let item of lib_ccservices" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <td *ngIf="item.service_cat == 'Y'" class="p-4 w-4 pl-12">
                       <div class="flex items-center">
                         <input id="{{item.id}}" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 rounded-full border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" (change)="changeSelection2()" [(ngModel)]="item.ischecked" [checked]="item.ischecked">
                       </div>
                     </td>
-                    <td scope="row" class="text-sm py-4 text-gray-900 whitespace-nowrap dark:text-white select-none">
-                      <label for="{{item.id}}">{{item.name}}</label>
+                    <td *ngIf="item.service_cat == 'Y'" scope="row" class="text-sm py-4 text-gray-900 whitespace-nowrap dark:text-white select-none">
+                      <label for="{{item.service_id}}">{{item.service_name}}</label>
                     </td>
-                    <td class="py-4 px-10">
+                    <td *ngIf="item.service_cat == 'Y'" class="py-4 px-10">
                       <input type="date"
                       class="form-control block w-full px-3 py-1.5 text-sm text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" [(ngModel)]="item.service_date"
                       placeholder="Select service date"/>
                       <!-- onfocus="(this.type='date')" -->
                     </td>
-                    <td class="text-sm py-4 pr-12">
+                    <td *ngIf="item.service_cat == 'Y'" class="text-sm py-4 pr-12">
                       <select class="w-full text-sm" [(ngModel)]="item.done_outside">
                         <option  *ngFor="let option of libOptions" [value]="option.value">{{option.desc}}</option>
                       </select>
