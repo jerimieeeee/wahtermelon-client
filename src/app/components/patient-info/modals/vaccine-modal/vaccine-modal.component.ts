@@ -71,12 +71,15 @@ export class VaccineModalComponent implements OnInit {
     this.http.get('libraries/vaccine').subscribe(
       (data: any) => {
         const list = data.data;
+        console.log(data.data)
         const groups = list.reduce((groups, item) => {
-          item.vaccine_module = this.getName(item.vaccine_module);
-          const group = (groups[item.vaccine_module] || []);
-          group.push(item);
-          groups[item.vaccine_module] = group;
-          return groups;
+          if(item.vaccine_id !== 'DPT'){
+            item.vaccine_module = this.getName(item.vaccine_module);
+            const group = (groups[item.vaccine_module] || []);
+            group.push(item);
+            groups[item.vaccine_module] = group;
+          }
+            return groups;
         }, {});
 
         let sort = ["Child Care", "General", "Animal Bite", "NCD", "Maternal Care"]
@@ -87,6 +90,7 @@ export class VaccineModalComponent implements OnInit {
         })
 
         this.vaccine_grouped = arranged_group;
+        console.log(this.vaccine_grouped)
       }
     );
 

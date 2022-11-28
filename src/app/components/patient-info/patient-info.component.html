@@ -18,7 +18,7 @@
         </span>
 
         <span class="block text-xs">
-          {{ patient_info?.birthdate | date: 'M/dd/Y' }} [{{ getAge() }}]
+          {{ patient_info?.birthdate | date: 'MM/dd/yyyy' }} [{{ getAge() }}]
         </span>
 
         <div class="flex pt-2">
@@ -46,7 +46,10 @@
           ADDRESS
         </span>
         <span class="block text-xs">
-          San Rafael, Tarlac City
+          {{ patient_info?.household_folder?.address }}, {{ 'Brgy. '+patient_info?.household_folder?.barangay.name }},
+          {{ patient_info?.household_folder?.barangay.municipality.name }},
+          {{ patient_info?.household_folder?.barangay.province.name }} <br />
+          {{ patient_info?.household_folder?.barangay.region.name }}
         </span>
       </div>
 
@@ -60,19 +63,30 @@
       </div>
 
       <div class="mt-4 leading-tight">
-        <span class="block text-blue-500 font-medium text-sm">
-          PHILHEALTH
-        </span>
-        <span class="block text-xs text-red-500">
-          00-000000000-0 (12/31/2019)
-        </span>
+        <div class="flex justify-between items-center">
+          <span class="block text-blue-500 font-medium text-sm">
+            PHILHEALTH
+          </span>
+          <span>
+            <fa-icon (click)="toggleModal('philhealth-list-modal')" class="mx-0 my-0 text-green-500 mr-2 hover:cursor-pointer" [icon]="faTableList" *ngIf="philhealth_info" ></fa-icon>
+            <fa-icon (click)="toggleModal('philhealth-modal')" class="mx-0 my-0 text-blue-500 mr-2 hover:cursor-pointer" [icon]="faPlusCircle"></fa-icon>
+          </span>
+        </div>
+        <div class="flex pl-3 justify-between items-center" [ngClass]="{'text-red-500': philhealthColor}">
+          <span class="block text-xs">
+            {{ philhealth_info?.philhealth_id }}
+          </span>
+          <span class="block text-xs">
+            {{ philhealth_info?.enlistment_date | date: 'MM/dd/yyyy' }}
+          </span>
+        </div>
       </div>
     </div>
 
     <div class="block pt-4 justify-items-start mx-5 mb-5">
       <div class="flex justify-between items-center">
         <span class="block text-blue-500 font-medium text-sm">
-          VITAL SIGNS ({{ latest_vitals?.vitals_date }})
+          VITAL SIGNS ({{ latest_vitals?.vitals_date | date: 'MM/dd/yyyy hh:mm:ss a' }})
         </span>
         <span>
           <fa-icon (click)="toggleModal('vitals-list-modal')" class="mx-0 my-0 text-green-500 mr-2 hover:cursor-pointer" [icon]="faTableList" *ngIf="latest_vitals" ></fa-icon>
@@ -92,7 +106,7 @@
 
         <div class="flex pl-3 justify-between items-center">
           <span class="block font-medium text-xs">
-            Height
+            {{ latest_vitals?.patient_weight_for_age || latest_vitals?.patient_height_for_age || latest_vitals?.patient_weight_for_height ? 'Length' : 'Height' }}
           </span>
           <span class="block text-xs">
             {{ latest_vitals?.patient_height ? latest_vitals?.patient_height+' cm' : '-' }}
@@ -135,6 +149,42 @@
           </span>
         </div>
 
+        <div *ngIf="latest_vitals?.patient_muac" class="flex pl-3 justify-between items-center">
+          <span class="block font-medium text-xs" >
+            MUAC
+          </span>
+          <span class="block text-xs" >
+            {{ latest_vitals?.patient_muac ? latest_vitals?.patient_muac+' cm' : '' }}
+          </span>
+        </div>
+
+        <div *ngIf="latest_vitals?.patient_head_circumference" class="flex pl-3 justify-between items-center">
+          <span class="block font-medium text-xs" >
+            Head Circumference
+          </span>
+          <span class="block text-xs" >
+            {{ latest_vitals?.patient_head_circumference ? latest_vitals?.patient_head_circumference+' cm' : '' }}
+          </span>
+        </div>
+
+        <div *ngIf="latest_vitals?.patient_limbs" class="flex pl-3 justify-between items-center">
+          <span class="block font-medium text-xs" >
+            Limbs
+          </span>
+          <span class="block text-xs" >
+            {{ latest_vitals?.patient_limbs ? latest_vitals?.patient_limbs+' cm' : '' }}
+          </span>
+        </div>
+
+        <div *ngIf="latest_vitals?.patient_skinfold_thickness" class="flex pl-3 justify-between items-center">
+          <span class="block font-medium text-xs" >
+            Skinfold Thickness
+          </span>
+          <span class="block text-xs" >
+            {{ latest_vitals?.patient_skinfold_thickness ? latest_vitals?.patient_skinfold_thickness+' cm' : '' }}
+          </span>
+        </div>
+
         <div class="flex pl-3 justify-between items-center">
           <span class="block font-medium text-xs">
             Blood Pressure
@@ -154,7 +204,7 @@
 
         <div class="flex pl-3 justify-between items-center" [ngClass]="{'text-red-500': (latest_vitals?.patient_temp >= 37.6)}">
           <span class="block font-medium text-xs">
-            Temparature
+            Temperature
           </span>
           <span class="block text-xs">
             {{ latest_vitals?.patient_temp ? latest_vitals?.patient_temp + ' C': '-' }}
@@ -249,6 +299,12 @@
       </div>
 
       <div class="block">
+        <div class="flex pl-3 justify-between items-center mb-5 border-b border-b-gray-100">
+          <span class="font-medium text-xs flex-auto">
+            <span class="font-semibold">IMMUNIZATION STATUS: </span> <br /><span class="font-bold text-l">{{ immunization_status?.immunization_status ?? '-' }}</span>
+          </span>
+          <span class="italic text-xs flex-auto text-right"><br />{{ immunization_status?.vaccine_date ?? '-' }}</span>
+        </div>
         <div class="flex pl-3 justify-between items-center mb-3 border-b border-b-gray-100" *ngFor="let vaccine of vaccine_list">
 
           <fa-icon (click)="toggleActionModal('vaccine-action-modal', vaccine)" class="mx-0 my-0 text-amber-400 hover:cursor-pointer flex-none mr-2" [icon]="faPenToSquare"></fa-icon>
@@ -407,5 +463,13 @@
 
 <div *ngIf="moduleModal">
   <app-module-modal (toggleModal)="toggleModal('module-modal')" [patient_info]="patient_info" ></app-module-modal>
+</div>
+
+<div *ngIf="philhealthModal">
+  <app-philhealth-modal (toggleModal)="toggleModal('philhealth-modal')" [patient_info]="patient_info" [philhealth_to_edit]="philhealth_to_edit"></app-philhealth-modal>
+</div>
+
+<div *ngIf="philhealthListModal">
+  <app-philhealth-list-modal (toggleModal)="toggleModal('philhealth-list-modal')" (philhealthEdit)="philhealthEdit($event)" [patient_info]="patient_info" ></app-philhealth-list-modal>
 </div>
 

@@ -86,6 +86,10 @@ const routes: Routes = [
   {
     path: 'account-list',
     loadChildren: () => import('./modules/user/accounts/accounts.module').then(m => m.AccountsModule)
+  },
+  {
+    path: 'households',
+    loadChildren: () => import('./modules/households/households.module').then(m => m.HouseholdsModule)
   }
 ];
 
