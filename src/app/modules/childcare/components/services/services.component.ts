@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { faSearch, faPlus, faInfoCircle, faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import { FormBuilder, FormGroup,FormArray,FormControl,Validators,} from '@angular/forms';
 import { faPenToSquare, faPlusSquare, faSave } from '@fortawesome/free-regular-svg-icons';
+import { HttpService } from 'app/shared/services/http.service';
 import { DatePipe } from '@angular/common';
 
 @Component({
@@ -80,6 +81,7 @@ export class ServicesComponent implements OnInit {
  showEssentialModal = false;
 
   ccservicename: any;
+  lib_ccservices: any;
 
   toggleEssentialModal(){
     console.log('toggleEssentialModal');
@@ -259,10 +261,17 @@ export class ServicesComponent implements OnInit {
     this.eservices2.forEach((c) => (c.ischecked = evt.target.checked));
   }
 
-  constructor() { 
+  constructor(private http: HttpService) { 
     this.services.sort(function(a,b){
       return a.date.localeCompare(b.date);
     })
+  }
+
+  loadCCLibraries(){
+    this.http.get('child-care/cc-services').subscribe((data: any) => {
+      this.lib_ccservices = data.data
+      console.log(this.lib_ccservices, 'cc dev services library');
+    });
   }
 
   ngOnInit() {
@@ -272,5 +281,6 @@ export class ServicesComponent implements OnInit {
     this.fetchSelectedItems2()
     this.fetchCheckedIDs()
     this.fetchCheckedIDs2()
+    this.loadCCLibraries()
   }
 }
