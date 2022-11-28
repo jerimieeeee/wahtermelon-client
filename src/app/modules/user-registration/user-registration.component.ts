@@ -130,9 +130,8 @@ export class UserRegistrationComponent implements OnInit {
       this.http.get('libraries/'+obj.location).subscribe({
         next: (data: any) => {
           this[obj.var_name] = data.data;
-          console.log(arr.length, key);
+          // console.log(arr.length, key);
           if((arr.length -1) === key)this.show_form = true;
-
         },
         error: err => console.log(err)
       })
