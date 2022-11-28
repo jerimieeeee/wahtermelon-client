@@ -284,9 +284,9 @@ export class PatientInfoComponent {
   toggleModal(modal_name){
     this.modals[modal_name] = !this.modals[modal_name];
 
-    if (modal_name === 'vitals') this.loadVitals();
-    if (modal_name === 'vaccine') this.loadVaccines();
-    if (modal_name === 'vaccine-action') this.loadVaccines();
-    if (modal_name === 'philhealth') this.loadVitals();
+    if (modal_name === 'vitals' && this.modals[modal_name] === false) this.loadVitals();
+    if (modal_name === 'vaccine' && this.modals[modal_name] === false) this.loadVaccines();
+    if (modal_name === 'vaccine-action' && this.modals[modal_name] === false) this.loadVaccines();
+    if (modal_name === 'philhealth' && this.modals[modal_name] === false) this.loadVitals();
   }
 }
