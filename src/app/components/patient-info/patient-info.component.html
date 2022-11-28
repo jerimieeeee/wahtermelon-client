@@ -313,7 +313,7 @@
             <span class="font-bold">{{ vaccine.vaccine_id }} - {{ vaccine.dose }} Dose</span> <br />({{ vaccine.status_id === 1 ? 'Done' : (vaccine.status_id === 2 ? 'Done Outside - Private' : 'Done Outside - Public') }})
           </span>
           <span class="italic text-xs flex-auto text-right">
-            {{ !vaccine.vaccine_date ? '-' : vaccine.vaccine_date}}
+            {{ !vaccine.vaccine_date ? '-' : vaccine.vaccine_date | date: 'MM/dd/yyyy'}}
           </span>
         </div>
       </div>
