@@ -33,13 +33,10 @@
       </div>
     </div>
 
-
-
     <div class="block justify-items-start mx-5 mb-5">
       <div class="mt-4 flex justify-center">
         <button type="button" class="w-48 inline-flex justify-center px-5 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-sky-500 hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500" (click)="toggleModal('module-modal')">Navigate Programs</button>
       </div>
-
 
       <div class="mt-4 leading-tight">
         <span class="block text-blue-500 font-medium text-sm">
@@ -86,6 +83,7 @@
     <div class="block pt-4 justify-items-start mx-5 mb-5">
       <div class="flex justify-between items-center">
         <span class="block text-blue-500 font-medium text-sm">
+          <fa-icon (click)="toggleAccordion('vitals')" class="mx-0 my-0 text-gray-500 mr-2 hover:cursor-pointer" [icon]="accordions.vitals ? faChevronUp : faChevronDown"></fa-icon>
           VITAL SIGNS ({{ latest_vitals?.vitals_date | date: 'MM/dd/yyyy hh:mm:ss a' }})
         </span>
         <span>
@@ -94,7 +92,7 @@
         </span>
       </div>
 
-      <div class="block">
+      <div [@openCloseAccordion] *ngIf="accordions.vitals" class="block">
         <div class="flex pl-3 justify-between items-center">
           <span class="block font-medium text-xs">
             Weight
@@ -293,17 +291,18 @@
     <div class="block pt-4 justify-items-start mx-5 mb-5">
       <div class="flex justify-between items-center">
         <span class="block text-blue-500 font-medium text-sm">
-          VACCINES
+          <fa-icon (click)="toggleAccordion('vaccines')" class="mx-0 my-0 text-gray-500 mr-2 hover:cursor-pointer" [icon]="accordions.vaccines ? faChevronUp : faChevronDown"></fa-icon>
+          VACCINES {{ vaccine_list ? '('+vaccine_list.length+')' : '' }}
         </span>
         <fa-icon (click)="toggleModal('vaccine-modal')" class="mx-0 my-0 text-blue-500 mr-2 hover:cursor-pointer" [icon]="faPlusCircle"></fa-icon>
       </div>
 
-      <div class="block">
+      <div [@openCloseAccordion] *ngIf="accordions.vaccines" class="block">
         <div class="flex pl-3 justify-between items-center mb-5 border-b border-b-gray-100">
           <span class="font-medium text-xs flex-auto">
             <span class="font-semibold">IMMUNIZATION STATUS: </span> <br /><span class="font-bold text-l">{{ immunization_status?.immunization_status ?? '-' }}</span>
           </span>
-          <span class="italic text-xs flex-auto text-right"><br />{{ immunization_status?.vaccine_date ?? '-' }}</span>
+          <span class="italic text-xs flex-auto text-right"><br />{{ immunization_status?.immunization_status ? immunization_status?.vaccine_date : '-' }}</span>
         </div>
         <div class="flex pl-3 justify-between items-center mb-3 border-b border-b-gray-100" *ngFor="let vaccine of vaccine_list">
 
