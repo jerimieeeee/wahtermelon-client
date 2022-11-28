@@ -56,13 +56,19 @@ export class AccountsComponent implements OnInit {
 
   updateActive(val, i){
     this.is_updating = true;
-    console.log(val);
     let params = val;
-    params.birthdate = formatDate(params.birthdate,'Y-MM-dd','en');
-    let temp_email = params.email
-    delete params.email;
+    const user_id = params.id
+    const temp_email = params.email
 
-    this.http.update('users/', val.id, params).subscribe({
+    params.birthdate = formatDate(params.birthdate,'Y-MM-dd','en');
+    params['employer_code'] = params.employer ? params.employer.code : null;
+    params['designation_code'] = params.designation ? params.designation.code : null;
+    params['facility_code'] = params.facility ? params.facility.code : null;
+
+    delete params.email;
+    delete params.id;
+
+    this.http.update('users/', user_id, params).subscribe({
       next: (data: any) => {
         console.log(data);
         // this.loadAccount()
@@ -72,6 +78,7 @@ export class AccountsComponent implements OnInit {
       error: err => {
         this.account_list[i].is_active = !params.is_active;
         this.submit_error = err.error.errors;
+        params.email = temp_email;
         this.is_updating = false;
       }
     })
