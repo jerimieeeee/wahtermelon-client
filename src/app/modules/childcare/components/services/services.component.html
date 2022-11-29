@@ -16,14 +16,14 @@
 
     <div class="flex bg-yellow-500 card-header-services">
       <h4 class="font-semibold text-white text-sm uppercase">Essential Newborn Care</h4>
-      <button  type="button" class="btn-icon -mt-0.5 relative ml-auto px-5" (click)="toggleEssentialModal()" *ngIf="x.length >= 1">
+      <button  type="button" class="btn-icon -mt-0.5 relative ml-auto px-5" (click)="toggleEssentialModal('N')" *ngIf="x.length >= 1">
         <fa-icon size="md" [icon]="faPenToSquare"></fa-icon>
         </button>
     </div>
 
     <div class="flex w-full item-start flex-wrap pt-4">
       <div *ngFor="let item of service_list" class="md:w-1/2 lg:w-1/2 px-10 text-sm">
-        <fa-icon (click)="toggleEssentialModal()" class="mx-0 my-0 text-amber-400 hover:cursor-pointer flex-none mr-2" [icon]="faPenToSquare"></fa-icon>
+       
           <!-- <fa-icon (click)="toggleModal('delete-vaccine-modal')" class="mx-0 my-0 text-red-400 hover:cursor-pointer flex-none mr-2" [icon]="faTrash"></fa-icon> -->
           <span class="font-medium text-xs flex-auto">
             <span class="font-bold">{{ item.services.service_name }} - {{ item.dose }} Service</span> <br />({{ item.status_id === 1 ? 'Done' : (item.status_id === 2 ? 'Done Outside - Private' : 'Done Outside - Public') }})
@@ -119,7 +119,7 @@
             </div>
 
             <div *ngFor="let item of lib_ccservices" class="w-full mx-10">
-              <div *ngIf="item.service_cat == 'N'" class="grid grid-cols-3 gap-4">
+              <div *ngIf="item.service_cat == modalFilter" class="grid grid-cols-3 gap-4">
                 <label class="col-span-1 pt-2" for="{{ item.service_id }}">{{ item.service_name}} ({{ item.service_id }})</label>
 
                 <!-- <div class="col-span-1"> -->
@@ -172,15 +172,22 @@
 
   <div class="flex bg-yellow-500 card-header-services">
     <h4 class="font-semibold text-white text-sm uppercase">Services</h4>
-    <button  type="button" class="btn-icon -mt-0.5 relative ml-auto px-5" (click)="toggleServiceModal()" *ngIf="cservices.length >= 1">
+    <button  type="button" class="btn-icon -mt-0.5 relative ml-auto px-5" (click)="toggleEssentialModal('Y')" *ngIf="cservices.length >= 1">
       <fa-icon size="md" [icon]="faPenToSquare"></fa-icon>
       </button>
   </div>
 
   <div class="flex w-full item-start flex-wrap pt-4">
-    <div *ngFor="let service of cservices" class=" md:w-1/2 lg:w-1/2 px-10 text-sm">
-      <p class="py-1">{{service.name}} - {{service.service_date | date: 'mediumDate'}}</p>
-    </div>
+    <div *ngFor="let item of service_list" class="md:w-1/2 lg:w-1/2 px-10 text-sm">
+       
+      <!-- <fa-icon (click)="toggleModal('delete-vaccine-modal')" class="mx-0 my-0 text-red-400 hover:cursor-pointer flex-none mr-2" [icon]="faTrash"></fa-icon> -->
+      <span  *ngIf="item.service_id == 'Y'" class="font-medium text-xs flex-auto">
+        <span class="font-bold">{{ item.services.service_name }} - {{ item.dose }} Service</span> <br />({{ item.status_id === 1 ? 'Done' : (item.status_id === 2 ? 'Done Outside - Private' : 'Done Outside - Public') }})
+      </span>
+      <span *ngIf="item.service_id == 'Y'" class="italic text-xs flex-auto text-right">
+        {{ !item.service_date ? '-' : item.service_date | date: 'MM/dd/yyyy'}}
+      </span>
+  </div>
   </div>
 
   <div class="flex w-full item-start flex-wrap" *ngIf="cservices.length === 0">

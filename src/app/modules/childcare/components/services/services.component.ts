@@ -92,9 +92,11 @@ export class ServicesComponent implements OnInit {
   };
   services_given= [];
   service_list = Services;
+  modalFilter: any;
 
-  toggleEssentialModal(){
+  toggleEssentialModal(value: any){
     console.log('toggleEssentialModal');
+    this.modalFilter = value;
     this.showEssentialModal = !this.showEssentialModal;
     this.geteServiceName();
   }
@@ -337,20 +339,19 @@ export class ServicesComponent implements OnInit {
       let user_id = localStorage.getItem('user_id');
       let patient_id = this.patient_details.id
       var serv_form ={
+        essential: this.modalFilter,
         patient_id: patient_id,
         user_id: user_id,
         services: service_arr
       }
 
-      console.log(serv_form)
+      console.log(serv_form, 'ito ung isusubmit')
 
       this.http.post('child-care/cc-services', serv_form).subscribe({
-        next: (data: any) => { console.log(data.data) },
+        next: (data: any) => { console.log(data.data, 'display lahat ng services') },
         error: err => console.log(err),
         complete: () => console.log('success')
       })
-    }else{
-
     }
   }
 
