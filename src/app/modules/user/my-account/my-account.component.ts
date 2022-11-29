@@ -172,9 +172,13 @@ export class MyAccountComponent implements OnInit {
         this.userForm.patchValue({designation_code: this.orig_value.designation.code})
         this.userForm.patchValue({employer_code: this.orig_value.employer.code})
 
-        localStorage.setItem('user_last_name', this.orig_value.last_name);
+        this.orig_value['facility_code'] = this.orig_value.facility?.code;
+
+        this.http.saveUserToLocalStorage(this.orig_value);
+        console.log(this.orig_value);
+        /* localStorage.setItem('user_last_name', this.orig_value.last_name);
         localStorage.setItem('user_first_name', this.orig_value.first_name);
-        localStorage.setItem('user_middle_name', this.orig_value.middle_name);
+        localStorage.setItem('user_middle_name', this.orig_value.middle_name); */
 
         // this.orig_value = this.userForm.value;
         this.userForm.disable();
