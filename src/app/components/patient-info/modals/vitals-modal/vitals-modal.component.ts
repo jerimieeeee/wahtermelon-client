@@ -15,7 +15,7 @@ import { HttpService } from 'app/shared/services/http.service';
         animate('200ms', style({ opacity: '100%'})),
       ]),
       transition(':leave', [
-        animate('100ms', style({ opacity: 0 }))
+        animate('100ms', style({ width: 'full', opacity: 0 }))
       ])
     ]),
   ]

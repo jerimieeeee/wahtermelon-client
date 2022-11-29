@@ -1,14 +1,26 @@
+import { animate, style, transition, trigger } from '@angular/animations';
 import { formatDate } from '@angular/common';
 import { Component, ComponentFactoryResolver, EventEmitter, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { faFlask, faHeart, faExclamationCircle, faNotesMedical, faPlusCircle, faQuestionCircle, faPenToSquare, faTrash, faTableList, faPenSquare } from '@fortawesome/free-solid-svg-icons';
+import { faFlask, faHeart, faExclamationCircle, faNotesMedical, faPlusCircle, faQuestionCircle, faPenToSquare, faTrash, faTableList, faPenSquare, faChevronRight, faChevronUp, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { AgeService } from 'app/shared/services/age.service';
 import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
   selector: 'app-patient-info',
   templateUrl: './patient-info.component.html',
-  styleUrls: ['./patient-info.component.scss']
+  styleUrls: ['./patient-info.component.scss'],
+  animations: [
+    trigger('openCloseAccordion', [
+      transition(':enter', [
+        style({height: 0, opacity: 0}),
+        animate('200ms', style({ height: 'full', opacity: '100%'})),
+      ]),
+      transition(':leave', [
+        animate('200ms', style({ height: 0, opacity: 0 }))
+      ])
+    ]),
+  ]
 })
 export class PatientInfoComponent {
   @Output() patientInfo = new EventEmitter<any>();
@@ -25,6 +37,10 @@ export class PatientInfoComponent {
   faTrash = faTrash;
   faTableList = faTableList;
   faPenSquare = faPenSquare;
+  faChevronRight = faChevronRight;
+  faChevronUp = faChevronUp;
+  faChevronDown = faChevronDown;
+
   show_form: boolean = false;
 
   // MODALS
@@ -52,6 +68,7 @@ export class PatientInfoComponent {
   vitals_to_edit: any;
   philhealth_to_edit: any;
 
+  accordions = [];
   constructor(
     private activeRoute: ActivatedRoute,
     private router: Router,
@@ -61,6 +78,11 @@ export class PatientInfoComponent {
     this.activeRoute.params.subscribe(params => {
       this.getPatient(params.id);
     });
+  }
+
+  toggleAccordion(id){
+    this.accordions[id] = !this.accordions[id];
+    console.log(this.accordions, this.accordions[id])
   }
 
   editPatient(id){
@@ -82,6 +104,7 @@ export class PatientInfoComponent {
         this.loadPhilhealth();
         this.loadVitals();
         this.loadVaccines();
+        this.accordions['vitals'] = true
         // this.toggleModal('philhealth-modal');//open sample modal
         // console.log(data.data)
       },
