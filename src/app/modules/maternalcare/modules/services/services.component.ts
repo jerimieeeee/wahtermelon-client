@@ -40,8 +40,8 @@ export class ServicesComponent implements OnInit {
 
   createForm() {
 
-    let user_id = localStorage.getItem('user_id');
-    let facility_code = localStorage.getItem('facility_code');
+    let user_id = this.http.getUserID();
+    let facility_code = this.http.getUserFacility();
 
     this.services_form = this.formBuilder.group({
       facility_code: [facility_code],
@@ -58,7 +58,7 @@ export class ServicesComponent implements OnInit {
 
   openModal(){
     console.log("opening modal");
-    
+
     this.modal = true;
   }
 }

@@ -15,6 +15,8 @@ export class HttpService {
 
   constructor(private http: HttpClient) { }
 
+  user_json: any;
+
   get(loc, data?) {
     return this.http.get(`${this.baseUrl}` + loc, data ? data : '')
   }
@@ -33,5 +35,51 @@ export class HttpService {
 
   delete(loc, id) {
     return this.http.delete(`${this.baseUrl}` + loc + id)
+  }
+
+  login(data) {
+    return this.http.post(`${this.baseUrl}`+'login', data)
+  }
+
+  logout() {
+    return this.http.post(`${this.baseUrl}`+'logout', localStorage.getItem('access_token'))
+  }
+
+  saveUserToLocalStorage(user) {
+    localStorage.setItem('user', JSON.stringify(user))
+  }
+
+  removeLocalStorageItem(){
+    localStorage.removeItem('user');
+    localStorage.removeItem('access_token');
+    return 'Items removed';
+  }
+
+  userToJSON(){
+    this.user_json = JSON.parse(localStorage.getItem('user'));
+  }
+
+  getUserID(){
+    if(!this.user_json) {
+      this.userToJSON()
+    }
+
+    return this.user_json.id;
+  }
+
+  getUserFromJSON() {
+    if(!this.user_json) {
+      this.userToJSON()
+    }
+
+    return this.user_json;
+  }
+
+  getUserFacility() {
+    if(!this.user_json) {
+      this.userToJSON()
+    }
+
+    return this.user_json.facility_code;
   }
 }

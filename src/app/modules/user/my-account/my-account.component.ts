@@ -72,7 +72,7 @@ export class MyAccountComponent implements OnInit {
     this.loading = true;
 
     console.log(this.userForm)
-    let user_id = localStorage.getItem('user_id');
+    let user_id = this.http.getUserID();
     if(!this.userForm.invalid){
       this.http.update('users/', user_id, this.userForm.value).subscribe({
         next: (data:any) => {
@@ -153,7 +153,8 @@ export class MyAccountComponent implements OnInit {
   }
 
   loadUser(){
-    this.http.get('users/'+localStorage.getItem('user_id')).subscribe({
+    let user_id = this.http.getUserID();
+    this.http.get('users/'+user_id).subscribe({
       next: (data: any) => {
         console.log(data)
         this.orig_value = data.data;
@@ -171,9 +172,13 @@ export class MyAccountComponent implements OnInit {
         this.userForm.patchValue({designation_code: this.orig_value.designation.code})
         this.userForm.patchValue({employer_code: this.orig_value.employer.code})
 
-        localStorage.setItem('user_last_name', this.orig_value.last_name);
+        this.orig_value['facility_code'] = this.orig_value.facility?.code;
+
+        this.http.saveUserToLocalStorage(this.orig_value);
+        console.log(this.orig_value);
+        /* localStorage.setItem('user_last_name', this.orig_value.last_name);
         localStorage.setItem('user_first_name', this.orig_value.first_name);
-        localStorage.setItem('user_middle_name', this.orig_value.middle_name);
+        localStorage.setItem('user_middle_name', this.orig_value.middle_name); */
 
         // this.orig_value = this.userForm.value;
         this.userForm.disable();

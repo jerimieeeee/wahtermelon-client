@@ -117,8 +117,8 @@ export class PostvisitsComponent implements OnInit {
   this.createForm(this.patient_mc_record[0]);
   }
 createForm(mc_record: any) {
-  let user_id = localStorage.getItem('user_id');
-  let facility_code = localStorage.getItem('facility_code');
+  let user_id = this.http.getUserID();
+  let facility_code = this.http.getUserFacility();
   let post_visit: any
   console.log(this.patient_mc_record[0].postpartum_visit, " post visit true or false ?");
 

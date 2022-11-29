@@ -107,8 +107,8 @@ export class PostpartumComponent implements OnInit {
     post_registration = mc_record.post_registration?mc_record.post_registration:'';
   console.log(post_registration, " this is my post reg get");
 
-    let user_id = localStorage.getItem('user_id');
-    let facility_code = localStorage.getItem('facility_code');
+    let user_id = this.http.getUserID();
+    let facility_code = this.http.getUserFacility();
     let provinces;
     let municipalities;
     let barangays;

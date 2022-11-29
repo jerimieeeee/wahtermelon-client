@@ -180,8 +180,8 @@ export class PrenatalComponent implements OnInit {
       prenatal_visit = mc_record.prenatal_visit;
     }
 
-    let user_id = localStorage.getItem('user_id');
-    let facility_code = localStorage.getItem('facility_code');
+    let user_id = this.http.getUserID();
+    let facility_code = this.http.getUserFacility();
     console.log(prenatal_visit, " log prenatal_visit");
 
     this.prenatal_form = this.formBuilder.group({

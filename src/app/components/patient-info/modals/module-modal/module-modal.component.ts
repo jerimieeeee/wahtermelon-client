@@ -128,9 +128,10 @@ export class ModuleModalComponent implements OnInit {
   }
 
   onCreateNew(selected_module){
+    let user_id = this.http.getUserID();
     let new_visit = {
       patient_id: this.patient_info.id,
-      user_id: localStorage.getItem('user_id'),
+      user_id: user_id,
       consult_date: this.consult_date+' '+this.consult_time+':00',
       consult_done: 0,
       pt_group: selected_module.group

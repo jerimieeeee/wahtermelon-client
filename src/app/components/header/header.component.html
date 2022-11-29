@@ -78,7 +78,7 @@
             Hello,
           </span>
           <span class="block text-blue-500 font-medium">
-            {{ user_first_name }} {{ user_middle_name === 'NA' ? '' : user_middle_name }} {{ user_last_name }}
+            {{ user?.first_name }} {{ user?.middle_name }} {{ user?.last_name }} {{ user?.suffix_name }}
           </span>
         </div>
 
