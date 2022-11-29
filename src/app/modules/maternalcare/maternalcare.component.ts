@@ -27,6 +27,8 @@ export class MaternalcareComponent implements OnInit {
     { var_name: 'regions', location: 'regions?include=provinces' },
     { var_name: 'attendants', location: 'mc-attendants' },
     { var_name: 'preg_outcome', location: 'mc-outcomes' },
+    { var_name: 'lib_services', location: 'mc-services' },
+    { var_name: 'visit_type', location: 'mc-visit-type' },
   ]
 
   ngOnInit(): void {
