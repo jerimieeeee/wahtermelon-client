@@ -1,29 +1,133 @@
-<button (change)="openModal()">OPEN ME</button>
-<div id="defaultModal" tabindex="-1"
-   class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 w-full md:inset-0 h-modal md:h-full justify-center items-center flex"
-   aria-modal="true" role="dialog" style="z-index:60" *ngIf="modal">
-   <div class="relative p-4 w-full max-w-3xl h-auto md:h-auto">
-      <!-- Modal content -->
-      <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-         <!-- Modal header -->
-         <div class="flex justify-between items-start py-3 px-5 rounded-t border-b bg-blue-500 dark:border-gray-600">
-            <h3 class="mt-2 text-sm font-bold text-white dark:text-white">
-               HEADER
-            </h3>
-         </div>
-         <!-- Modal body -->
-         <div class="overflow-y-auto h-96 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
-            <form [formGroup]="services_form" (submit)="saveForm(services_form.value)">
-               BODY
-            </form>
-         </div>
+<button (click)="openModal()">OPEN ME</button>
 
-         <!-- Modal footer -->
-         <div class="flex justify-end py-4 px-5 space-x-4 rounded-b border-t border-gray-200 dark:border-gray-600">
-            FOOTER
+<form [formGroup]="services_form" (submit)="saveForm(services_form.value)">
+   <div id="defaultModal" tabindex="-1"
+      class="modal-main overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 w-full md:inset-0 h-modal md:h-full justify-center items-center flex"
+      aria-modal="true" role="dialog" *ngIf="modal">
+      <div class="relative p-4 w-full max-w-3xl h-auto md:h-auto">
+
+         <div class="grid gap-4 relative animates-dropdown" style="grid-template-columns: repeat(16, minmax(0, 1fr));">
+
+            <div
+               class="sticky top-14 z-50 border border-blue-400 col-span-2 relative mx-2 px-2 py-1 rounded-t-lg text-sm bg-blue-500 text-white"
+               style="grid-column: span 16 / span 16;"><button class="font-bold" type="button">Services</button>
+               <div class="absolute left-24 top-1">
+                  <fa-icon [icon]="faInfoCircle" class=" peer ml-4 text-white hover:text-gray-500 z-50"></fa-icon>
+                  <div
+                     class="absolute text-sm bg-gradient-to-b from-stone-500 to-gray-400 p-2 rounded-md border border-gray-500  text-white drop-shadow-lg opacity-90 border-check z-50 w-64 invisible peer-hover:visible">
+                     <h1 class="font-bold drop-shadow-lg">IMPORTANT</h1>
+                     <p class="font-light drop-shadow-lg">Once saved, the information will be displayed in the input
+                        boxes and shall not be editable unless Edit button is pressed.</p>
+                  </div>
+               </div>
+            </div>
+
+
+            <div style="grid-column: span 16 / span 16;">
+               <div class="grid gap-0" style="grid-template-columns: repeat(14, minmax(0, 1fr));">
+                  <div style="grid-column: span 14 / span 14;">
+                     <div
+                        class="overflow-y-auto h-96 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100 grid gap-4 bg-white p-2 m-2 border -mt-5"
+                        style="grid-template-columns: repeat(16, minmax(0, 1fr));">
+
+
+                        <div style="grid-column: span 16 / span 16;" class=" sticky -top-2 relative bg-white z-40">
+                           <div class="grid gap-4 m-2 border-top-0 flex"
+                              style="grid-template-columns: repeat(14, minmax(0, 1fr));">
+                              <div class="transitions col-span-4" *ngIf="!focused">
+                                 <h3 for="service_date">Date</h3>
+                                 <input formControlName="service_date" id="service_date" name="service_date" type="date"
+                                    max="{{today.toLocaleDateString('en-CA')}}"
+                                    (keyup)="onKeyUp($event.target.value, $event.target.id)"
+                                    (keyup.escape)="clearForm($event.target.id)"
+                                    (change)="onKeyUp($event.target.value, $event.target.id)"
+                                    class="col-span-8 rounded border-solid border border-zinc-300 focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none disabled:cursor-not-allowed"
+                                    width="auto">
+                              </div>
+                              <h3 class="col-span-3 mx-2 mt-auto">Quantity</h3>
+                              <h3 class="col-span-2 mx-2 mt-auto">Postive</h3>
+                              <h3 class="col-span-2 mx-2 mt-auto">Penicillin</h3>
+                              <h3 class="col-span-3 mx-2 mt-auto">Visit Type</h3>
+                           </div>
+                        </div>
+                        <div style="grid-column: span 16 / span 16;" class="relative hover:bg-blue-100"
+                           *ngFor="let serve of lib_services">
+                           <div class="grid gap-4 p-2 border-top-0"
+                              style="grid-template-columns: repeat(14, minmax(0, 1fr));">
+
+                              <div class="transitions col-span-4 flex" *ngIf="!focused">
+                                 <h3 class="font-medium m-auto w-full">{{serve.desc | titlecase }}</h3>
+                              </div>
+
+                              <div class="transitions col-span-3 border-check relative select-none group mx-2"
+                                 *ngIf="!focused">
+                                 <!-- <h3>Quantity</h3> -->
+
+                                 <input type="number" formControlName="service_qty" min="0"
+                                    class="font-medium disabled:group-hover:font-semibold peer invalid:border-red-500 border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed disabled:border-0  disabled:pl-5  disabled:typed-out disabled:group-hover:bg-gray-100 disabled:rounded-full"
+                                    (keyup)="onKeyUp($event.target.value, $event.target.id)"
+                                    (keyup.escape)="clearForm($event.target.id)" id="service_qty"
+                                    (change)="onKeyUp($event.target.value, $event.target.id)">
+                              </div>
+
+                              <div class="transitions col-span-2 mx-2" *ngIf="!focused">
+                                 <div class="border-check-red group">
+                                    <!-- <h3 for="positive_result">Positive</h3> -->
+                                    <input
+                                       class="check-style h-6 w-6 border border-gray-400 rounded-md bg-white checked:bg-blue-400 checked:border-blue-500 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                                       type="checkbox" formControlName="positive_result">
+                                 </div>
+                              </div>
+
+                              <div class="transitions col-span-2 mx-2" *ngIf="!focused">
+                                 <div class="border-check-red group">
+                                    <!-- <h3 for="intake_penicillin">Penicillin</h3> -->
+                                    <input
+                                       class="check-style h-6 w-6 border border-gray-400 rounded-md bg-white checked:bg-blue-400 checked:border-blue-500 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                                       type="checkbox" formControlName="intake_penicillin">
+                                 </div>
+                              </div>
+
+                              <div class="transitions col-span-3 border-check relative mx-2" *ngIf="!focused">
+                                 <!-- <h3>Visit Type</h3> -->
+                                 <select formControlName="visit_type_code" id="visit_type_code"
+                                    class="text-ellipsis bg-white text-align-left drop_btn border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed">
+                                    <option *ngFor="let type of visit_type" [value]="type.code">
+                                       {{type.desc}}
+                                    </option>
+                                 </select>
+                              </div>
+                           </div>
+                        </div>
+
+                     </div>
+                  </div>
+               </div>
+            </div>
+
+
+            <div style="grid-column: span 16 / span 16;" class="-mt-6 m-2 pr-2 bg-white rounded-b-lg">
+               <div class="relative w-auto border-check mb-2 w-12/12 flex">
+                  <div class="inline-flex ml-auto mt-2">
+                     <div (click)="openModal()"
+                        class="mr-2 cursor-pointer flex border-check bg-white hover:drop-shadow-md hover:bg-gray-400 py-1 rounded-full text-gray-400 hover:text-white pl-2 pr-2 peer">
+                        <fa-icon [icon]="faTimes" size="lg" class="mr-2">
+                        </fa-icon>
+                        <button type="button" class="font-bold button-out border-check-red">Cancel</button>
+                     </div>
+                     <div (click)="saveForm(postpartum_form.value)"
+                        class="cursor-pointer flex border-check hover:drop-shadow-md bg-green-300 hover:bg-green-400 py-1 rounded-full text-white px-3 peer-hover:bg-white peer-hover:text-green-400">
+                        <fa-icon [icon]="faSave" size="lg" class="mr-2">
+                        </fa-icon>
+                        <button type="button" class="font-bold button-out border-check-red"
+                           (keyup.enter)="saveForm(postpartum_form.value)">Save</button>
+                     </div>
+                  </div>
+               </div>
+            </div>
          </div>
       </div>
    </div>
-</div>
+</form>
 
-<div class="opacity-50 fixed inset-0 z-50 bg-black"></div>
+<div class="modal opacity-50 fixed inset-0 bg-black" *ngIf="modal"></div>

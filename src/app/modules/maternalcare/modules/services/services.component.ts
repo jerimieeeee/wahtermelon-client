@@ -1,6 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
 // import { AnyNaptrRecord } from 'd/ns';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { faClose, faInfoCircle, faSave, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
@@ -21,12 +22,17 @@ export class ServicesComponent implements OnInit {
   @Input() lib_services;
   @Input() visit_type;
   @Input() patient_details;
+
+  @Output() modalStats  = new EventEmitter<boolean>();
+
   today: Date;
   // modal = false;
   modal: boolean;
 
   constructor(private http: HttpService, private formBuilder: FormBuilder) { }
-
+  faTimes = faTimes;
+  faSave = faSave;
+  faInfoCircle = faInfoCircle;
 
   ngOnInit() {
     console.log(this.visit_type);
@@ -59,6 +65,7 @@ export class ServicesComponent implements OnInit {
   openModal(){
     console.log("opening modal");
     
-    this.modal = true;
+    this.modal = !this.modal;
+    this.modalStats.emit(this.modal);
   }
 }
