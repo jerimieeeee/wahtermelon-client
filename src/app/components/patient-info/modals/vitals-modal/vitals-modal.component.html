@@ -94,18 +94,61 @@
               </div>
             </div>
 
-            <div class="flex px-5 w-full">
-              <!-- <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
-                <label class="font-semibold" for="vitals_waist_in">Waist Circumference (Inches)</label>
-                <input name="vitals_waist_in" id="vitals_waist_in" formControlName="vitals_waist_in" (input)="inchToCm()" type="number" placeholder="Inches" class="mt-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
 
-                <div *ngIf="f.vitals_waist_in.errors" class="invalid-alert">
-                  <div *ngIf="f.vitals_waist_in.errors?.['max']">
-                    {{ error_message + ' (' + f.vitals_waist_in.errors.max.max + ')'}}
+
+            <div class="flex px-5 w-full">
+              <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
+                <label class="font-semibold" for="bp_systolic">Blood Pressure</label>
+                <div class="flex">
+                  <input name="bp_systolic" id="bp_systolic" formControlName="bp_systolic" type="number" placeholder="Systolic" class="md:w-1/2 lg:w-1/2 mt-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                  <input name="bp_diastolic" id="bp_diastolic" formControlName="bp_diastolic" type="number" placeholder="Diastolic" class="md:w-1/2 lg:w-1/2 mt-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                </div>
+              </div>
+
+              <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
+                <label class="font-semibold" for="patient_heart_rate">Heart Rate</label>
+                <input name="patient_heart_rate" id="patient_heart_rate" formControlName="patient_heart_rate" type="number" placeholder="Beats per minute" class="mt-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input">
+
+                <div *ngIf="f.patient_heart_rate.errors" class="invalid-alert">
+                  <div *ngIf="f.patient_heart_rate.errors?.['max']">
+                    {{ error_message + ' (' + f.patient_heart_rate.errors.max.max + ')'}}
                   </div>
                 </div>
-              </div> -->
+              </div>
+            </div>
 
+            <div class="flex px-5 w-full">
+              <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
+                <label class="font-semibold" for="patient_pulse_rate">Pulse Rate</label>
+                <input name="patient_pulse_rate" id="patient_pulse_rate" formControlName="patient_pulse_rate" type="text" placeholder="Beats per minute" class="mt-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input">
+
+                <div *ngIf="f.patient_pulse_rate.errors" class="invalid-alert">
+                  <div *ngIf="f.patient_pulse_rate.errors?.['max']">
+                    {{ error_message + ' (' + f.patient_pulse_rate.errors.max.max + ')'}}
+                  </div>
+                </div>
+              </div>
+
+              <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
+                <label class="font-semibold" for="patient_respiratory_rate">Respiratory Rate</label>
+                <input name="patient_respiratory_rate" id="patient_respiratory_rate" formControlName="patient_respiratory_rate" type="number" placeholder="Breaths per minute" class="mt-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input">
+
+                <div *ngIf="f.patient_respiratory_rate.errors" class="invalid-alert">
+                  <div *ngIf="f.patient_respiratory_rate.errors?.['max']">
+                    {{ error_message + ' (' + f.patient_respiratory_rate.errors.max.max + ')'}}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="text-gray-600 border border-slate-100 mx-5"></div><!-- border -->
+
+          <div class="flex item-start flex-wrap pb-5">
+            <div class="flex justify-between w-full px-5 mt-3 rounded-tl rounded-tr">
+              <h4 class="font-bold text-blue-500 text-sm mt-2">Body Measurement</h4>
+            </div>
+
+            <div class="flex px-5 w-full">
               <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
                 <label class="font-semibold" for="patient_waist">Waist Circumference (Centimeters)</label>
                 <input name="patient_waist" id="patient_waist" formControlName="patient_waist" (input)="cmToInch()" type="number" placeholder="Centimeters" class="mt-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
@@ -154,17 +197,6 @@
             </div>
 
             <div class="flex px-5 w-full">
-              <!-- <div *ngIf="showChildVitals" class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
-                <label class="font-semibold" for="patient_head_circumference">Head Circumference (Centimeters)</label>
-                <input name="patient_head_circumference" id="patient_head_circumference" formControlName="patient_head_circumference" (input)="cmToInch()" type="number" placeholder="Centimeters" class="mt-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-
-                <div *ngIf="f.patient_head_circumference.errors" class="invalid-alert">
-                  <div *ngIf="f.patient_head_circumference.errors?.['max']">
-                    {{ error_message + ' (' + f.patient_head_circumference.errors.max.max + ')'}}
-                  </div>
-                </div>
-              </div> -->
-
               <div *ngIf="showChildVitals" class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
                 <label class="font-semibold" for="patient_skinfold_thickness">Skinfold Thickness (Centimeters)</label>
                 <input name="patient_skinfold_thickness" id="patient_skinfold_thickness" formControlName="patient_skinfold_thickness" (input)="cmToInch()" type="number" placeholder="Centimeters" class="mt-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
@@ -176,65 +208,8 @@
                 </div>
               </div>
             </div>
-
-            <div class="flex px-5 w-full">
-              <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
-                <label class="font-semibold" for="bp_systolic">Blood Pressure</label>
-                <div class="flex">
-                  <input name="bp_systolic" id="bp_systolic" formControlName="bp_systolic" type="number" placeholder="Systolic" class="md:w-1/2 lg:w-1/2 mt-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                  <input name="bp_diastolic" id="bp_diastolic" formControlName="bp_diastolic" type="number" placeholder="Diastolic" class="md:w-1/2 lg:w-1/2 mt-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                </div>
-              </div>
-
-              <!-- <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
-                <label>Blood Pressure (Systolic/Diastolic)</label>
-                <div class="relative">
-                  <input type="text" placeholder="Systolic/Diastolic" class="mt-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input">
-                </div>
-              </div> -->
-
-              <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
-                <label class="font-semibold" for="patient_heart_rate">Heart Rate</label>
-                <input name="patient_heart_rate" id="patient_heart_rate" formControlName="patient_heart_rate" type="number" placeholder="Beats per minute" class="mt-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input">
-
-                <div *ngIf="f.patient_heart_rate.errors" class="invalid-alert">
-                  <div *ngIf="f.patient_heart_rate.errors?.['max']">
-                    {{ error_message + ' (' + f.patient_heart_rate.errors.max.max + ')'}}
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="flex px-5 w-full">
-              <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
-                <label class="font-semibold" for="patient_pulse_rate">Pulse Rate</label>
-                <input name="patient_pulse_rate" id="patient_pulse_rate" formControlName="patient_pulse_rate" type="text" placeholder="Beats per minute" class="mt-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input">
-
-                <div *ngIf="f.patient_pulse_rate.errors" class="invalid-alert">
-                  <div *ngIf="f.patient_pulse_rate.errors?.['max']">
-                    {{ error_message + ' (' + f.patient_pulse_rate.errors.max.max + ')'}}
-                  </div>
-                </div>
-              </div>
-
-              <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
-                <label class="font-semibold" for="patient_respiratory_rate">Respiratory Rate</label>
-                <input name="patient_respiratory_rate" id="patient_respiratory_rate" formControlName="patient_respiratory_rate" type="number" placeholder="Breaths per minute" class="mt-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input">
-
-                <div *ngIf="f.patient_respiratory_rate.errors" class="invalid-alert">
-                  <div *ngIf="f.patient_respiratory_rate.errors?.['max']">
-                    {{ error_message + ' (' + f.patient_respiratory_rate.errors.max.max + ')'}}
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
-          <div class="text-gray-600 border border-slate-100 mx-5"></div><!-- border -->
-
-
         </form>
-
-
       </div>
 
       <!-- Modal footer -->

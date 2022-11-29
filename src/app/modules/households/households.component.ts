@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { faPenToSquare, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faPenToSquare, faSearch, faChevronLeft, faChevronRight, faAnglesLeft, faAnglesRight } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
@@ -13,24 +13,34 @@ export class HouseholdsComponent implements OnInit {
 
   faSearch = faSearch;
   faPenToSquare = faPenToSquare;
+  faChevronLeft = faChevronLeft;
+  faChevronRight = faChevronRight;
+  faAnglesLeft = faAnglesLeft;
+  faAnglesRight = faAnglesRight;
 
-  searchFamily(){
-    console.log('attempt search')
-    this.http.get('households/household-folders', {params:{'filter[search]': this.search_item, per_page: 'all', include: 'barangay'}}).subscribe({
+  per_page: number = 10;
+  current_page: number;
+  last_page: number;
+  from: number;
+  to: number;
+  total: number;
+
+  loadHouseholds(page?: number){
+    let params = {params: { }};
+    if (this.search_item) params['params']['filter[search]'] = this.search_item;
+    if (page) params['params']['page'] = page;
+    params['params']['include'] = 'barangay';
+    params['params']['per_page'] = this.per_page;
+
+    this.http.get('households/household-folders',params).subscribe({
       next: (data: any) => {
-        // console.log(data);
+        // console.log(data)
         this.household_list = data.data;
-      },
-      error: err => console.log(err)
-    })
-  }
-
-
-  loadHouseholds(){
-    this.http.get('households/household-folders',{params:{per_page:'all', include: 'barangay' }}).subscribe({
-      next: (data: any) => {
-        console.log(data);
-        this.household_list = data.data;
+        this.current_page = data.meta.current_page;
+        this.last_page = data.meta.last_page;
+        this.from = data.meta.from;
+        this.to = data.meta.to;
+        this.total = data.meta.total;
       },
       error: err => console.log(err)
     })

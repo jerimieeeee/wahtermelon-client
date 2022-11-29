@@ -18,32 +18,31 @@
                 style="grid-template-columns: repeat(14, minmax(0, 1fr));">
 
                 <div class=" col-span-10 border-check relative select-none" *ngIf="!focused">
-                    <h3 for="factor">Risk Factors</h3>
-                    <select formControlName="factor" (change)="onKeyUp($event.target.value, $event.target.id)"
+                    <h3 for="risk_id">Risk Factors</h3>
+                    <select formControlName="risk_id" (change)="onKeyUp($event.target.value, $event.target.id)"
     
                         (keyup)="onKeyUp($event.target.value, $event.target.id)"
                         (keyup.escape)="$event.target.value = ''; onKeyUp($event.target.value, $event.target.id)"
-                        id="factor"
+                        id="risk_id"
                         class="z-50 peer text-ellipsis bg-white text-align-left drop_btn border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed">
                     <!-- <input type="text" id="searchbar" placeholder="search.." value="a" (blur)="searchblur()" class="z-40 absolute left-0 top-10 text-ellipsis bg-white text-align-left drop_btn border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed"> -->     
                         <option *ngFor="let factors of risk_factors" class="p-2 flex-wrap"
                             [class]="factors.hospital_flag == false && factors.monitor_flag == true? 'text-blue-500' : ''"
                             [style]="factors.hospital_flag == true && factors.monitor_flag == false?'color: rgb(220 38 38);':''"
-                            value="{{factors.risk_name}}_{{factors.id}}_{{factors.hospital_flag}}_{{factors.monitor_flag}}"
-                            [selected]="risk_form.get('factor').value == factors.risk_name">
+                            value="{{factors.risk_name}}_{{factors.id}}_{{factors.hospital_flag}}_{{factors.monitor_flag}}">
                             {{ factors.risk_name }} 
                         </option>
                     </select> 
                 </div>
 
                 <div class=" col-span-4" *ngIf="!focused">
-                    <h3 for="date">Date Detected</h3>
+                    <h3 for="date_detected">Date Detected</h3>
                     <div class="grid grid-cols-10">
                         <div class="icon-height col-span-2 p-2 pt-1 rounded-l border-solid border border-zinc-300">
-                            <fa-icon [icon]="faCalendarDay" size="lg" class="text-blue-500" for="lmp_date">
+                            <fa-icon [icon]="faCalendarDay" size="lg" class="text-blue-500" for="date_detected">
                             </fa-icon>
                         </div>
-                        <input formControlName="date" id="date" name="date" type="date" max="{{today.toLocaleDateString('en-CA')}}"
+                        <input formControlName="date_detected" id="date_detected" name="date_detected" type="date" max="{{today.toLocaleDateString('en-CA')}}"
                             class="col-span-8 rounded-r border-solid border border-l-0 border-zinc-300 focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none disabled:cursor-not-allowed"
                             width="auto"
                             (keyup.escape)="$event.target.value = ''; onKeyUp($event.target.value, $event.target.id)"

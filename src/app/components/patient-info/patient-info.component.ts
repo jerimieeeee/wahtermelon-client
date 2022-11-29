@@ -1,14 +1,26 @@
+import { animate, style, transition, trigger } from '@angular/animations';
 import { formatDate } from '@angular/common';
 import { Component, ComponentFactoryResolver, EventEmitter, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { faFlask, faHeart, faExclamationCircle, faNotesMedical, faPlusCircle, faQuestionCircle, faPenToSquare, faTrash, faTableList, faPenSquare } from '@fortawesome/free-solid-svg-icons';
+import { faFlask, faHeart, faExclamationCircle, faNotesMedical, faPlusCircle, faQuestionCircle, faPenToSquare, faTrash, faTableList, faPenSquare, faChevronRight, faChevronUp, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { AgeService } from 'app/shared/services/age.service';
 import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
   selector: 'app-patient-info',
   templateUrl: './patient-info.component.html',
-  styleUrls: ['./patient-info.component.scss']
+  styleUrls: ['./patient-info.component.scss'],
+  animations: [
+    trigger('openCloseAccordion', [
+      transition(':enter', [
+        style({height: 0, opacity: 0}),
+        animate('200ms', style({ height: 'full', opacity: '100%'})),
+      ]),
+      transition(':leave', [
+        animate('200ms', style({ height: 0, opacity: 0 }))
+      ])
+    ]),
+  ]
 })
 export class PatientInfoComponent {
   @Output() patientInfo = new EventEmitter<any>();
@@ -25,6 +37,10 @@ export class PatientInfoComponent {
   faTrash = faTrash;
   faTableList = faTableList;
   faPenSquare = faPenSquare;
+  faChevronRight = faChevronRight;
+  faChevronUp = faChevronUp;
+  faChevronDown = faChevronDown;
+
   show_form: boolean = false;
 
   // MODALS
@@ -51,6 +67,9 @@ export class PatientInfoComponent {
   patient_vitals: any;
   vitals_to_edit: any;
   philhealth_to_edit: any;
+
+  accordions = [];
+  modals = [];
 
   constructor(
     private activeRoute: ActivatedRoute,
@@ -82,6 +101,7 @@ export class PatientInfoComponent {
         this.loadPhilhealth();
         this.loadVitals();
         this.loadVaccines();
+        this.accordions['vitals'] = true
         // this.toggleModal('philhealth-modal');//open sample modal
         // console.log(data.data)
       },
@@ -245,68 +265,28 @@ export class PatientInfoComponent {
 
   vitalsEdit(e){
     this.vitals_to_edit = e;
-    this.toggleModal('vitals-modal');
+    this.toggleModal('vitals');
   }
 
   philhealthEdit(e){
     this.philhealth_to_edit = e;
-    this.toggleModal('philhealth-modal');
+    this.toggleModal('philhealth');
   }
 
   getInitials(string) {
     return [...string.matchAll(/\b\w/g)].join('')
   }
 
+  toggleAccordion(id){
+    this.accordions[id] = !this.accordions[id];
+  }
+
   toggleModal(modal_name){
-    // console.log(modal_name)
-    switch (modal_name){
-      case 'vitals-modal':
-        this.vitalsModal = !this.vitalsModal;
-        if(this.vitalsModal == false)  this.vitals_to_edit = null;
-        this.loadVitals();
-        break;
-      case 'vitals-list-modal':
-        this.vitalsListModal = !this.vitalsListModal;
-        break;
-      case 'allergies-modal':
-        this.allergiesModal = !this.allergiesModal;
-        break;
-      case 'medication-modal':
-        this.medicationModal = !this.medicationModal;
-        break;
-      case 'vaccine-modal':
-        this.loadVaccines();
-        this.vaccineModal = !this.vaccineModal;
-        break;
-      case 'vaccine-action-modal':
-        this.loadVaccines();
-        this.vaccineActionModal = !this.vaccineActionModal;
-        break;
-      case 'history-modal':
-        this.historyModal = !this.historyModal;
-        break;
-      case 'fam-history-modal':
-        this.famHistoryModal = !this.famHistoryModal;
-        break;
-      case 'lifestyle-modal':
-        this.lifestyleModal = !this.lifestyleModal;
-        break;
-      case 'death-modal':
-        this.deathRecordModal = !this.deathRecordModal;
-        break;
-      case 'module-modal':
-        this.moduleModal = !this.moduleModal;
-        break;
-      case 'philhealth-modal':
-        this.philhealthModal = !this.philhealthModal;
-        if(this.philhealthModal == false)  this.philhealth_to_edit = null;
-        this.loadPhilhealth();
-        break;
-      case 'philhealth-list-modal':
-        this.philhealthListModal = !this.philhealthListModal;
-        break;
-      default:
-        break;
-    }
+    this.modals[modal_name] = !this.modals[modal_name];
+
+    if (modal_name === 'vitals' && this.modals[modal_name] === false) this.loadVitals();
+    if (modal_name === 'vaccine' && this.modals[modal_name] === false) this.loadVaccines();
+    if (modal_name === 'vaccine-action' && this.modals[modal_name] === false) this.loadVaccines();
+    if (modal_name === 'philhealth' && this.modals[modal_name] === false) this.loadVitals();
   }
 }

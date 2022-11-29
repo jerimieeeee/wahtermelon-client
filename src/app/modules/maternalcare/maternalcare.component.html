@@ -46,7 +46,7 @@
         <app-mcr *ngIf="patient_details" (patient_mc_id)="showPreServ($event)" [patient_mc_record]="patient_mc_record" [patient_details]="patient_details"></app-mcr>
       </div>
       <div class="w-12/12 px-8 pb-10 border-solid border-2 border-zinc-100 border-l-0 border-r-0 border-t-0 p-3">
-        <app-riskfactors [risk_factors]="risk_factors"></app-riskfactors>
+        <app-riskfactors [risk_factors]="risk_factors" [patient_mc_record]="patient_mc_record" [patient_details]="patient_details"></app-riskfactors>
       </div>
     </div>
 
@@ -57,17 +57,17 @@
     </div>
 
     <div class="fade-in mb-20" *ngIf="module == 4">
-      <div  *ngIf="post_value" class="w-12/12 px-8 pb-10 border-solid border-2 border-zinc-100 border-l-0 border-r-0 border-t-0 p-3">
-        <app-postvisits *ngIf="patient_details" [patient_mc_record]="patient_mc_record" [patient_details]="patient_details"></app-postvisits>
-      </div>
       <div class="w-12/12 px-8 pb-10 border-solid border-2 border-zinc-100 border-l-0 border-r-0 border-t-0 p-3">
         <app-postpartum (postpartum_bool)="postValue($event)" [patient_mc_record]="patient_mc_record" [delivery_location]="delivery_location" [regions]="regions" [attendants]="attendants" [preg_outcome]="preg_outcome" [patient_details]="patient_details"></app-postpartum>
+      </div>
+      <div  *ngIf="post_value" class="w-12/12 px-8 pb-10 border-solid border-2 border-zinc-100 border-l-0 border-r-0 border-t-0 p-3">
+        <app-postvisits *ngIf="patient_details" [patient_mc_record]="patient_mc_record" [patient_details]="patient_details"></app-postvisits>
       </div>
     </div>
 
     <div class="fade-in mb-20" *ngIf="module == 5">
       <div class="w-12/12 px-8 pb-10 border-solid border-2 border-zinc-100 border-l-0 border-r-0 border-t-0 p-3">
-        <app-services></app-services>
+        <app-services *ngIf="visit_type" [lib_services]="lib_services" [visit_type]="visit_type" [patient_details]="patient_details"></app-services>
       </div>
     </div>
   </div>

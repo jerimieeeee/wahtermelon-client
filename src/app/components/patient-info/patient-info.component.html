@@ -33,13 +33,10 @@
       </div>
     </div>
 
-
-
     <div class="block justify-items-start mx-5 mb-5">
       <div class="mt-4 flex justify-center">
-        <button type="button" class="w-48 inline-flex justify-center px-5 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-sky-500 hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500" (click)="toggleModal('module-modal')">Navigate Programs</button>
+        <button type="button" class="w-48 inline-flex justify-center px-5 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-sky-500 hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500" (click)="toggleModal('module')">Navigate Programs</button>
       </div>
-
 
       <div class="mt-4 leading-tight">
         <span class="block text-blue-500 font-medium text-sm">
@@ -68,8 +65,8 @@
             PHILHEALTH
           </span>
           <span>
-            <fa-icon (click)="toggleModal('philhealth-list-modal')" class="mx-0 my-0 text-green-500 mr-2 hover:cursor-pointer" [icon]="faTableList" *ngIf="philhealth_info" ></fa-icon>
-            <fa-icon (click)="toggleModal('philhealth-modal')" class="mx-0 my-0 text-blue-500 mr-2 hover:cursor-pointer" [icon]="faPlusCircle"></fa-icon>
+            <fa-icon (click)="toggleModal('philhealth-list')" class="mx-0 my-0 text-green-500 mr-2 hover:cursor-pointer" [icon]="faTableList" *ngIf="philhealth_info" ></fa-icon>
+            <fa-icon (click)="toggleModal('philhealth')" class="mx-0 my-0 text-blue-500 mr-2 hover:cursor-pointer" [icon]="faPlusCircle"></fa-icon>
           </span>
         </div>
         <div class="flex pl-3 justify-between items-center" [ngClass]="{'text-red-500': philhealthColor}">
@@ -86,15 +83,16 @@
     <div class="block pt-4 justify-items-start mx-5 mb-5">
       <div class="flex justify-between items-center">
         <span class="block text-blue-500 font-medium text-sm">
+          <fa-icon (click)="toggleAccordion('vitals')" class="mx-0 my-0 text-gray-500 mr-2 hover:cursor-pointer" [icon]="accordions.vitals ? faChevronUp : faChevronDown"></fa-icon>
           VITAL SIGNS ({{ latest_vitals?.vitals_date | date: 'MM/dd/yyyy hh:mm:ss a' }})
         </span>
         <span>
-          <fa-icon (click)="toggleModal('vitals-list-modal')" class="mx-0 my-0 text-green-500 mr-2 hover:cursor-pointer" [icon]="faTableList" *ngIf="latest_vitals" ></fa-icon>
-          <fa-icon (click)="toggleModal('vitals-modal')" class="mx-0 my-0 text-blue-500 mr-2 hover:cursor-pointer" [icon]="faPlusCircle"></fa-icon>
+          <fa-icon (click)="toggleModal('vitals-list')" class="mx-0 my-0 text-green-500 mr-2 hover:cursor-pointer" [icon]="faTableList" *ngIf="latest_vitals" ></fa-icon>
+          <fa-icon (click)="toggleModal('vitals')" class="mx-0 my-0 text-blue-500 mr-2 hover:cursor-pointer" [icon]="faPlusCircle"></fa-icon>
         </span>
       </div>
 
-      <div class="block">
+      <div [@openCloseAccordion] *ngIf="accordions.vitals" class="block">
         <div class="flex pl-3 justify-between items-center">
           <span class="block font-medium text-xs">
             Weight
@@ -255,7 +253,7 @@
         <span class="block text-blue-500 font-medium text-sm">
           ALLERGIES
         </span>
-        <fa-icon (click)="toggleModal('allergies-modal')" class="mx-0 my-0 text-blue-500 mr-2 hover:cursor-pointer" [icon]="faPlusCircle"></fa-icon>
+        <fa-icon (click)="toggleModal('allergies')" class="mx-0 my-0 text-blue-500 mr-2 hover:cursor-pointer" [icon]="faPlusCircle"></fa-icon>
       </div>
 
       <div class="block">
@@ -275,7 +273,7 @@
         <span class="block text-blue-500 font-medium text-sm">
           MEDICATION
         </span>
-        <fa-icon (click)="toggleModal('medication-modal')" class="mx-0 my-0 text-blue-500 mr-2 hover:cursor-pointer" [icon]="faPlusCircle"></fa-icon>
+        <fa-icon (click)="toggleModal('medication')" class="mx-0 my-0 text-blue-500 mr-2 hover:cursor-pointer" [icon]="faPlusCircle"></fa-icon>
       </div>
 
       <div class="block">
@@ -293,27 +291,28 @@
     <div class="block pt-4 justify-items-start mx-5 mb-5">
       <div class="flex justify-between items-center">
         <span class="block text-blue-500 font-medium text-sm">
-          VACCINES
+          <fa-icon (click)="toggleAccordion('vaccines')" class="mx-0 my-0 text-gray-500 mr-2 hover:cursor-pointer" [icon]="accordions.vaccines ? faChevronUp : faChevronDown"></fa-icon>
+          VACCINES {{ vaccine_list ? '('+vaccine_list.length+')' : '' }}
         </span>
-        <fa-icon (click)="toggleModal('vaccine-modal')" class="mx-0 my-0 text-blue-500 mr-2 hover:cursor-pointer" [icon]="faPlusCircle"></fa-icon>
+        <fa-icon (click)="toggleModal('vaccine')" class="mx-0 my-0 text-blue-500 mr-2 hover:cursor-pointer" [icon]="faPlusCircle"></fa-icon>
       </div>
 
-      <div class="block">
+      <div [@openCloseAccordion] *ngIf="accordions.vaccines" class="block">
         <div class="flex pl-3 justify-between items-center mb-5 border-b border-b-gray-100">
           <span class="font-medium text-xs flex-auto">
             <span class="font-semibold">IMMUNIZATION STATUS: </span> <br /><span class="font-bold text-l">{{ immunization_status?.immunization_status ?? '-' }}</span>
           </span>
-          <span class="italic text-xs flex-auto text-right"><br />{{ immunization_status?.vaccine_date ?? '-' }}</span>
+          <span class="italic text-xs flex-auto text-right"><br />{{ immunization_status?.immunization_status ? immunization_status?.vaccine_date : '-' }}</span>
         </div>
         <div class="flex pl-3 justify-between items-center mb-3 border-b border-b-gray-100" *ngFor="let vaccine of vaccine_list">
 
-          <fa-icon (click)="toggleActionModal('vaccine-action-modal', vaccine)" class="mx-0 my-0 text-amber-400 hover:cursor-pointer flex-none mr-2" [icon]="faPenToSquare"></fa-icon>
-          <!-- <fa-icon (click)="toggleModal('delete-vaccine-modal')" class="mx-0 my-0 text-red-400 hover:cursor-pointer flex-none mr-2" [icon]="faTrash"></fa-icon> -->
+          <fa-icon (click)="toggleActionModal('vaccine-action', vaccine)" class="mx-0 my-0 text-amber-400 hover:cursor-pointer flex-none mr-2" [icon]="faPenToSquare"></fa-icon>
+          <!-- <fa-icon (click)="toggleModal('delete-vaccine')" class="mx-0 my-0 text-red-400 hover:cursor-pointer flex-none mr-2" [icon]="faTrash"></fa-icon> -->
           <span class="font-medium text-xs flex-auto">
             <span class="font-bold">{{ vaccine.vaccine_id }} - {{ vaccine.dose }} Dose</span> <br />({{ vaccine.status_id === 1 ? 'Done' : (vaccine.status_id === 2 ? 'Done Outside - Private' : 'Done Outside - Public') }})
           </span>
           <span class="italic text-xs flex-auto text-right">
-            {{ !vaccine.vaccine_date ? '-' : vaccine.vaccine_date}}
+            {{ !vaccine.vaccine_date ? '-' : vaccine.vaccine_date | date: 'MM/dd/yyyy'}}
           </span>
         </div>
       </div>
@@ -324,7 +323,7 @@
         <span class="block text-blue-500 font-medium text-sm">
           MEDICAL HISTORY
         </span>
-        <fa-icon (click)="toggleModal('history-modal')" class="mx-0 my-0 text-blue-500 mr-2 hover:cursor-pointer" [icon]="faPlusCircle"></fa-icon>
+        <fa-icon (click)="toggleModal('history')" class="mx-0 my-0 text-blue-500 mr-2 hover:cursor-pointer" [icon]="faPlusCircle"></fa-icon>
       </div>
 
       <div class="block">
@@ -344,7 +343,7 @@
         <span class="block text-blue-500 font-medium text-sm">
           FAMILY MEDICAL HISTORY
         </span>
-        <fa-icon (click)="toggleModal('fam-history-modal')" class="mx-0 my-0 text-blue-500 mr-2 hover:cursor-pointer" [icon]="faPlusCircle"></fa-icon>
+        <fa-icon (click)="toggleModal('fam-history')" class="mx-0 my-0 text-blue-500 mr-2 hover:cursor-pointer" [icon]="faPlusCircle"></fa-icon>
       </div>
 
       <div class="block">
@@ -364,7 +363,7 @@
         <span class="block text-blue-500 font-medium text-sm">
           LIFESTYLE
         </span>
-        <fa-icon (click)="toggleModal('lifestyle-modal')" class="mx-0 my-0 text-blue-500 mr-2 hover:cursor-pointer" [icon]="faPlusCircle"></fa-icon>
+        <fa-icon (click)="toggleModal('lifestyle')" class="mx-0 my-0 text-blue-500 mr-2 hover:cursor-pointer" [icon]="faPlusCircle"></fa-icon>
       </div>
 
       <div class="block">
@@ -402,7 +401,7 @@
         <span class="block text-blue-500 font-medium text-sm">
           DEATH RECORD
         </span>
-        <fa-icon (click)="toggleModal('death-modal')" class="mx-0 my-0 text-blue-500 mr-2 hover:cursor-pointer" [icon]="faPlusCircle"></fa-icon>
+        <fa-icon (click)="toggleModal('death')" class="mx-0 my-0 text-blue-500 mr-2 hover:cursor-pointer" [icon]="faPlusCircle"></fa-icon>
       </div>
 
       <div class="block">
@@ -421,55 +420,55 @@
 </div>
 
 <!-- MODALS -->
-<div *ngIf="vitalsModal">
-  <app-vitals-modal (toggleModal)="toggleModal('vitals-modal')" [patient_age]="patient_age" [patient_info]="patient_info" [vitals_to_edit]="vitals_to_edit"></app-vitals-modal>
+<div *ngIf="modals['vitals']">
+  <app-vitals-modal (toggleModal)="toggleModal('vitals')" [patient_age]="patient_age" [patient_info]="patient_info" [vitals_to_edit]="vitals_to_edit"></app-vitals-modal>
 </div>
 
-<div *ngIf="vitalsListModal">
-  <app-vitals-list-modal (toggleModal)="toggleModal('vitals-list-modal')" (vitalsEdit)="vitalsEdit($event)" [patient_info]="patient_info"></app-vitals-list-modal>
+<div *ngIf="modals['vitals-list']">
+  <app-vitals-list-modal (toggleModal)="toggleModal('vitals-list')" (vitalsEdit)="vitalsEdit($event)" [patient_info]="patient_info"></app-vitals-list-modal>
 </div>
 
-<div *ngIf="allergiesModal">
-  <app-allergies-modal (toggleModal)="toggleModal('allergies-modal')"></app-allergies-modal>
+<div *ngIf="modals['app-allergies']">
+  <app-allergies-modal (toggleModal)="toggleModal('app-allergies')"></app-allergies-modal>
 </div>
 
-<div *ngIf="medicationModal">
-  <app-medication-modal (toggleModal)="toggleModal('medication-modal')"></app-medication-modal>
+<div *ngIf="modals['medication']">
+  <app-medication-modal (toggleModal)="toggleModal('medication')"></app-medication-modal>
 </div>
 
-<div *ngIf="vaccineModal">
-  <app-vaccine-modal (toggleModal)="toggleModal('vaccine-modal')" [patient_info]="patient_info" [vaccines_given]="vaccines_given"></app-vaccine-modal>
+<div *ngIf="modals['vaccine']">
+  <app-vaccine-modal (toggleModal)="toggleModal('vaccine')" [patient_info]="patient_info" [vaccines_given]="vaccines_given"></app-vaccine-modal>
 </div>
 
-<div *ngIf="vaccineActionModal">
-  <app-vaccine-action-modal (toggleModal)="toggleModal('vaccine-action-modal')" [vaccine_to_edit]="vaccine_to_edit"></app-vaccine-action-modal>
+<div *ngIf="modals['vaccine-action']">
+  <app-vaccine-action-modal (toggleModal)="toggleModal('vaccine-action')" [vaccine_to_edit]="vaccine_to_edit"></app-vaccine-action-modal>
 </div>
 
-<div *ngIf="historyModal">
-  <app-history-modal (toggleModal)="toggleModal('history-modal')"></app-history-modal>
+<div *ngIf="modals['history']">
+  <app-history-modal (toggleModal)="toggleModal('history')"></app-history-modal>
 </div>
 
-<div *ngIf="famHistoryModal">
-  <app-fam-history-modal (toggleModal)="toggleModal('fam-history-modal')"></app-fam-history-modal>
+<div *ngIf="modals['fam-history']">
+  <app-fam-history-modal (toggleModal)="toggleModal('fam-history')"></app-fam-history-modal>
 </div>
 
-<div *ngIf="lifestyleModal">
-  <app-lifestyle-modal (toggleModal)="toggleModal('lifestyle-modal')"></app-lifestyle-modal>
+<div *ngIf="modals['lifestyle']">
+  <app-lifestyle-modal (toggleModal)="toggleModal('lifestyle')"></app-lifestyle-modal>
 </div>
 
-<div *ngIf="deathRecordModal">
-  <app-death-modal (toggleModal)="toggleModal('death-modal')"></app-death-modal>
+<div *ngIf="modals['death']">
+  <app-death-modal (toggleModal)="toggleModal('death')"></app-death-modal>
 </div>
 
-<div *ngIf="moduleModal">
-  <app-module-modal (toggleModal)="toggleModal('module-modal')" [patient_info]="patient_info" ></app-module-modal>
+<div *ngIf="modals['module']">
+  <app-module-modal (toggleModal)="toggleModal('module')" [patient_info]="patient_info" ></app-module-modal>
 </div>
 
-<div *ngIf="philhealthModal">
-  <app-philhealth-modal (toggleModal)="toggleModal('philhealth-modal')" [patient_info]="patient_info" [philhealth_to_edit]="philhealth_to_edit"></app-philhealth-modal>
+<div *ngIf="modals['philhealth']">
+  <app-philhealth-modal (toggleModal)="toggleModal('philhealth')" [patient_info]="patient_info" [philhealth_to_edit]="philhealth_to_edit"></app-philhealth-modal>
 </div>
 
-<div *ngIf="philhealthListModal">
-  <app-philhealth-list-modal (toggleModal)="toggleModal('philhealth-list-modal')" (philhealthEdit)="philhealthEdit($event)" [patient_info]="patient_info" ></app-philhealth-list-modal>
+<div *ngIf="modals['philhealth-list']">
+  <app-philhealth-list-modal (toggleModal)="toggleModal('philhealth-list')" (philhealthEdit)="philhealthEdit($event)" [patient_info]="patient_info" ></app-philhealth-list-modal>
 </div>
 
