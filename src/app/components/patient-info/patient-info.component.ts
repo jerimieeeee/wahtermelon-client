@@ -43,21 +43,6 @@ export class PatientInfoComponent {
 
   show_form: boolean = false;
 
-  // MODALS
-  vitalsModal: boolean = false;
-  allergiesModal: boolean = false;
-  medicationModal: boolean = false;
-  vaccineModal: boolean = false;
-  vaccineActionModal: boolean = false;
-  historyModal: boolean = false;
-  famHistoryModal: boolean = false;
-  lifestyleModal: boolean = false;
-  deathRecordModal: boolean = false;
-  vitalsListModal: boolean = false;
-  moduleModal: boolean = false;
-  philhealthModal: boolean = false;
-  philhealthListModal: boolean = false;
-
   vaccines_given: any;
   vaccine_list: any = [];
   vaccine_to_edit: any;
@@ -158,8 +143,8 @@ export class PatientInfoComponent {
 
   toggleActionModal(modal_name, vaccine){
     this.vaccine_to_edit = vaccine;
-    this.vaccineActionModal = !this.vaccineActionModal;
-    if(this.vaccineActionModal == false) this.loadVaccines();
+    this.modals['vaccine-action'] = !this.modals['vaccine-action'];
+    if(this.modals['vaccine-action'] == false) this.loadVaccines();
   }
 
   get philhealthColor(){
