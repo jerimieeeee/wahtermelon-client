@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { faSearch, faPlus, faInfoCircle, faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import { FormBuilder, FormGroup,FormArray,FormControl,Validators,} from '@angular/forms';
 import { faPenToSquare, faPlusSquare, faSave } from '@fortawesome/free-regular-svg-icons';
+import { HttpService } from 'app/shared/services/http.service';
+import { Services } from './data/service'
 import { DatePipe } from '@angular/common';
 
 @Component({
@@ -80,6 +82,16 @@ export class ServicesComponent implements OnInit {
  showEssentialModal = false;
 
   ccservicename: any;
+  lib_ccservices: any;
+  patient_info: any;
+  cc_newborn: any;
+
+  serviceForm: any = {
+    service_status: [] ,
+    service_date: []
+  };
+  services_given= [];
+  service_list = Services;
 
   toggleEssentialModal(){
     console.log('toggleEssentialModal');
@@ -176,11 +188,11 @@ export class ServicesComponent implements OnInit {
   }
 
   setDate(i: any) {
-    this.selectedServiceList = this.eservices2.filter((value, index) => {
+    this.selectedServiceList = this.lib_ccservices.filter((value, index) => {
       if(value.ischecked && index == i){
-        this.eservices2[index].service_date=this.defaultDate
+        this.lib_ccservices[index].service_date=this.defaultDate
       }else if(!value.ischecked && index == i){
-        this.eservices2[index].service_date=''
+        this.lib_ccservices[index].service_date=''
       }
       return value.ischecked
     });
@@ -226,6 +238,8 @@ export class ServicesComponent implements OnInit {
     });
   }
 
+ 
+
   fetchCheckedIDs() {
     this.checkedIDs = []
     this.eservices2.forEach((value, index) => {
@@ -259,11 +273,161 @@ export class ServicesComponent implements OnInit {
     this.eservices2.forEach((c) => (c.ischecked = evt.target.checked));
   }
 
-  constructor() { 
+  @Input() patient_details: any;
+  
+  constructor(private http: HttpService) { 
     this.services.sort(function(a,b){
       return a.date.localeCompare(b.date);
     })
   }
+
+  loadCCLibraries(){
+    this.loadServices()
+    this.http.get('libraries/cc-services').subscribe((data: any) => {
+      this.lib_ccservices = data.data
+      console.log(this.lib_ccservices, 'cc dev services library');
+      console.log(this.patient_details.id, 'awaw')
+    });
+  }
+
+  // onSubmit(){
+  //   this.selectedServiceList = this.lib_ccservices.filter((value, index) => {
+  //     return value.ischecked
+  //   });
+
+  //   let user_id = localStorage.getItem('user_id');
+  //   var newborndata ={
+     
+  //     patient_id: this.patient_details.id,
+  //     user_id: user_id,
+  //     services: this.selectedServiceList
+  //   }
+
+  //   console.log(newborndata);
+
+  //   this.http.post('child-care/cc-services', newborndata).subscribe({
+  //     next: (data: any) => console.log(data.status, 'check status'),
+  //     error: err => console.log(err),
+  //     complete: () => {
+  //       // this.loadLibraries();
+  //       console.log('essential newborn data saved')
+  //       this.loadServices()
+  //     }
+  //   })
+
+  // }
+
+  onSubmit(){
+    var service_arr = [];
+
+    console.log(this.serviceForm)
+    Object.entries(this.serviceForm.service_status).forEach(([key, value], index) => {
+      if(value != '-'){
+        let service = {
+          service_id: key,
+          service_date: this.serviceForm.service_date[key] ? this.serviceForm.service_date[key] : null,
+          status_id: value
+        };
+
+        service_arr.push(service);
+      }
+    })
+
+    if(service_arr.length > 0){
+      let user_id = localStorage.getItem('user_id');
+      let patient_id = this.patient_details.id
+      var serv_form ={
+        patient_id: patient_id,
+        user_id: user_id,
+        services: service_arr
+      }
+
+      console.log(serv_form)
+
+      this.http.post('child-care/cc-services', serv_form).subscribe({
+        next: (data: any) => { console.log(data.data) },
+        error: err => console.log(err),
+        complete: () => console.log('success')
+      })
+    }else{
+
+    }
+  }
+
+  checkServiceStatus(services){
+    var new_serv = [];
+    Object.entries(services).reverse().forEach(([key, value], index) => {
+      var val:any = value
+      if(!new_serv[val.services.service_id]) new_serv[val.services.service_id] = []
+
+      let vax = {
+        id: val.id,
+        service_id: val.services.service_id,
+        service_date: val.service_date,
+        dose: this.getNumberSuffix(Object.keys(new_serv[val.services.service_id]).length + 1)
+      }
+
+      new_serv[val.services.service_id][val.id] = vax
+    })
+
+    this.services_given = new_serv;
+    this.addDose(new_serv)
+  }
+
+  getNumberSuffix(i){
+    var j = i % 10,
+    k = i % 100;
+    if (j == 1 && k != 11) {
+        return i + "st";
+    }
+    if (j == 2 && k != 12) {
+        return i + "nd";
+    }
+    if (j == 3 && k != 13) {
+        return i + "rd";
+    }
+    return i + "th";
+  }
+
+  addDose(new_serv){
+    Object.entries(this.service_list).forEach(([key, value], index) => {
+      var val:any = value;
+
+      this.service_list[key]['dose'] = new_serv[val.services.service_id][val.id].dose;
+    });
+  }
+
+  loadServicesTest(){
+    this.http.get('child-care/cc-services', {params:{patient_id: this.patient_details.id, sort:'service_date'}}).subscribe({
+      next: (data: any) => {
+        // console.log(data)
+        this.service_list = data.data;
+        
+        // console.log(this.vaccine_list)
+        this.checkServiceStatus(data.data);
+      },
+      error: err => console.log(err),
+      complete: () => console.log(this.service_list,'services loaded')
+    })
+  }
+ 
+
+
+  loadServices(){
+
+    this.http.get('child-care/cc-services', {params:{patient_id: this.patient_details.id, sort:'service_id'}}).subscribe({
+      next: (data: any) => {
+        this.cc_newborn = data.data;
+      },
+  
+      error: err => console.log(err),
+      complete: () => {
+        // this.loadLibraries();
+        console.log(this.cc_newborn, 'data ng cc new born');
+      }
+    })
+  }
+  
 
   ngOnInit() {
     this.geteServiceName()
@@ -272,5 +436,7 @@ export class ServicesComponent implements OnInit {
     this.fetchSelectedItems2()
     this.fetchCheckedIDs()
     this.fetchCheckedIDs2()
+    this.loadCCLibraries()
+    this.loadServicesTest()
   }
 }

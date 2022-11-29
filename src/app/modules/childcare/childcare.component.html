@@ -35,7 +35,7 @@
     <!--SERVICES SECTION-->
 
     <div class="grid grid-col-8">
-      <app-services></app-services>
+      <app-services *ngIf="patient_details" [patient_details]="patient_details"></app-services>
     </div>
 
     <!--border-->
