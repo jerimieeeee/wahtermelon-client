@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 // import { AnyNaptrRecord } from 'd/ns';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
   selector: 'app-services',
@@ -8,127 +10,55 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ServicesComponent implements OnInit {
   focused: boolean;
-  painting: boolean;
-  erase: boolean;
-  check_bool: boolean;
-  canvas: any;
-  ctx: any;
-  x: any
-  y:any
-  i = 0;
-  canvasWidth: any;
-  canvasHeight: any;
-  canvasData: any;
 
-  r = 8;
-  ar =  Math.ceil((this.r/2)) 
+  services_form: FormGroup = new FormGroup({
+    service_date: new FormControl<string | null>(''),
+    service_qty: new FormControl<string | null>(''),
+    intake_penicillin: new FormControl<string | null>(''),
+    positive_result: new FormControl<string | null>(''),
+  });
 
-  input_test = '';
-  constructor() { }
-   
-  
-  
-  public keyUp = [];
-  public buttons = [];
-  public coords = [];
-  public identity = [];
-  public checker = [];
-  ngOnInit(): void {
-    this.check_bool = true;
+  @Input() lib_services;
+  @Input() visit_type;
+  @Input() patient_details;
+  today: Date;
+  // modal = false;
+  modal: boolean;
+
+  constructor(private http: HttpService, private formBuilder: FormBuilder) { }
+
+
+  ngOnInit() {
+    console.log(this.visit_type);
+    this.createForm()
+    this.today = new Date();
+    this.modal = false;
+  }
+  saveForm(value: any) {
+
   }
 
-  trackMouse(e){
+  createForm() {
+
+    let user_id = localStorage.getItem('user_id');
+    let facility_code = localStorage.getItem('facility_code');
+
+    this.services_form = this.formBuilder.group({
+      facility_code: [facility_code],
+      patient_id: [this.patient_details.id],
+      user_id: [user_id],
+      service_date: [new Date().toISOString().substring(0, 10), [Validators.required]],
+      visit_type_code: ['', [Validators.required]],
+      visit_status: [''],
+      service_qty: [''],
+      positive_result: [''],
+      intake_penicillin: [''],
+    })
+  }
+
+  openModal(){
+    console.log("opening modal");
     
-  this.canvas = document.getElementById("myCanvas");
-  this.canvasWidth = this.canvas.width;
-  this.canvasHeight = this.canvas.height;
-  this.ctx = this.canvas.getContext("2d");
-
-  this.y = e.layerY;
-  this.x = e.layerX;
-  let test_identity = this.x + ',' + this.y + ''
-  console.log(test_identity);
-  
-  let evicted_dot = -1;
-  this.identity = [];
-  this.checker = [];
-  for (let a = -this.ar; a <= this.ar; a++) {
-    // identity.push((this.x + a) + ',' + (this.y + a));
-    for (let b = -this.ar; b <= this.ar; b++) {
-      this.identity.push((this.x + a) + ',' + (this.y  + b));
-    }
+    this.modal = true;
   }
-  // console.log(identity, ' identity');
-  // let identity = this.x + ',' + this.y + '';
-  for (let ide of this.identity) {
-    this.checker.push(this.coords.map((el) => el.id).indexOf(ide));
-  }
-  this.check_bool =  this.checker.every((check)=>{ return check == -1; });
-  console.log(this.checker, ' checker', this.check_bool);
-  for (let check of this.checker) {
-      if(check != -1){
-        evicted_dot = this.checker.indexOf(check);
-      }
-  }
-  console.log(evicted_dot, this.identity[evicted_dot]);
-  
-  // this.coords.push({id: this.x + ',' + this.y, x: this.x, y: this.y});
-  console.log(this.identity, ' identity');
-  // let checker =  this.coords.map((el) => el.id).indexOf(identity);
-  
-  this.updateCanvas(this.identity[evicted_dot] + '', this.check_bool, this.x + ',' + this.y, this.x, this.y, this.r, this.ctx);
-  // // this.ctx.fillRect(this.x -5,this.y -5,10,10);
-  console.log(this.coords, " coords");
-  this.check_bool = true;
-// 
-}
-
-point(x, y, r, canvas) {
-    canvas.lineWidth = 2;
-    canvas.fillStyle = "rgba(69, 1, 124, 0.3)";
-    canvas.beginPath();
-    canvas.arc(x, y, r, 0, 2 * Math.PI, true);
-    canvas.stroke();
-    canvas.fill();
-  
-}
-
-updateCanvas(evicted_dot, check_bool, i, x, y, r, canvas) {
-  // console.log(evicted_dot == 'undefined');
-  
-  if(check_bool == false && evicted_dot != 'undefined'){
-    console.log("splicing");
-    
-    this.coords.splice(this.coords.map((el) => el.id).indexOf(evicted_dot),1);
-  }else if(check_bool == true){
-    console.log("pushing");
-    
-    this.coords.push({id: i , x: x, y: y, r: r})
-  } 
-  canvas.clearRect(0,0,1500,1500);
-  for (let coord of this.coords) {
-    
-    this.point(coord.x, coord.y, coord.r,canvas)
-  }
-}
-activeTrackMouse(e) {
-  this.identity = [];
-  this.checker = [];
-  this.y = e.layerY;
-  this.x = e.layerX;
-  for (let a = -this.ar; a <= this.ar; a++) {
-    // identity.push((this.x + a) + ',' + (this.y + a));
-    for (let b = -this.ar; b <= this.ar; b++) {
-      this.identity.push((this.x + a) + ',' + (this.y  + b));
-    }
-  }
-  // console.log(identity, ' identity');
-  // let identity = this.x + ',' + this.y + '';
-  for (let ide of this.identity) {
-    this.checker.push(this.coords.map((el) => el.id).indexOf(ide));
-  }
-  this.check_bool =  this.checker.every((check)=>{ return check == -1; });
-  console.log(this.check_bool, this.checker);
-  
-}
 }

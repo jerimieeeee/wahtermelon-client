@@ -126,8 +126,8 @@ export class PrenatalComponent implements OnInit {
             this.prenatal_data.push(d)
             console.log(d, " the Ds");
 
-          })
-          this.value = this.prenatal_data[0].visit_sequence + 1; */
+          })*/
+          this.value = this.prenatal_data[0].visit_sequence + 1;
         },
         error: err => console.log(err),
         complete: () => {
