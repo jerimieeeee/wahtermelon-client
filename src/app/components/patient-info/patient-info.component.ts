@@ -69,6 +69,8 @@ export class PatientInfoComponent {
   philhealth_to_edit: any;
 
   accordions = [];
+  modals = [];
+
   constructor(
     private activeRoute: ActivatedRoute,
     private router: Router,
@@ -78,11 +80,6 @@ export class PatientInfoComponent {
     this.activeRoute.params.subscribe(params => {
       this.getPatient(params.id);
     });
-  }
-
-  toggleAccordion(id){
-    this.accordions[id] = !this.accordions[id];
-    console.log(this.accordions, this.accordions[id])
   }
 
   editPatient(id){
@@ -268,68 +265,28 @@ export class PatientInfoComponent {
 
   vitalsEdit(e){
     this.vitals_to_edit = e;
-    this.toggleModal('vitals-modal');
+    this.toggleModal('vitals');
   }
 
   philhealthEdit(e){
     this.philhealth_to_edit = e;
-    this.toggleModal('philhealth-modal');
+    this.toggleModal('philhealth');
   }
 
   getInitials(string) {
     return [...string.matchAll(/\b\w/g)].join('')
   }
 
+  toggleAccordion(id){
+    this.accordions[id] = !this.accordions[id];
+  }
+
   toggleModal(modal_name){
-    // console.log(modal_name)
-    switch (modal_name){
-      case 'vitals-modal':
-        this.vitalsModal = !this.vitalsModal;
-        if(this.vitalsModal == false)  this.vitals_to_edit = null;
-        this.loadVitals();
-        break;
-      case 'vitals-list-modal':
-        this.vitalsListModal = !this.vitalsListModal;
-        break;
-      case 'allergies-modal':
-        this.allergiesModal = !this.allergiesModal;
-        break;
-      case 'medication-modal':
-        this.medicationModal = !this.medicationModal;
-        break;
-      case 'vaccine-modal':
-        this.loadVaccines();
-        this.vaccineModal = !this.vaccineModal;
-        break;
-      case 'vaccine-action-modal':
-        this.loadVaccines();
-        this.vaccineActionModal = !this.vaccineActionModal;
-        break;
-      case 'history-modal':
-        this.historyModal = !this.historyModal;
-        break;
-      case 'fam-history-modal':
-        this.famHistoryModal = !this.famHistoryModal;
-        break;
-      case 'lifestyle-modal':
-        this.lifestyleModal = !this.lifestyleModal;
-        break;
-      case 'death-modal':
-        this.deathRecordModal = !this.deathRecordModal;
-        break;
-      case 'module-modal':
-        this.moduleModal = !this.moduleModal;
-        break;
-      case 'philhealth-modal':
-        this.philhealthModal = !this.philhealthModal;
-        if(this.philhealthModal == false)  this.philhealth_to_edit = null;
-        this.loadPhilhealth();
-        break;
-      case 'philhealth-list-modal':
-        this.philhealthListModal = !this.philhealthListModal;
-        break;
-      default:
-        break;
-    }
+    this.modals[modal_name] = !this.modals[modal_name];
+
+    if (modal_name === 'vitals' && this.modals[modal_name] === false) this.loadVitals();
+    if (modal_name === 'vaccine' && this.modals[modal_name] === false) this.loadVaccines();
+    if (modal_name === 'vaccine-action' && this.modals[modal_name] === false) this.loadVaccines();
+    if (modal_name === 'philhealth' && this.modals[modal_name] === false) this.loadVitals();
   }
 }
