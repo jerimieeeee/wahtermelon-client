@@ -10,7 +10,7 @@
     </div>
 </div>
 </div>
-  
+
   <!--Essential Newborn Care Section-->
 <div class="card">
 
@@ -29,10 +29,10 @@
             <span class="font-bold">{{ item.services.service_name }} - {{ item.dose }} Service</span> <br />({{ item.status_id === 1 ? 'Done' : (item.status_id === 2 ? 'Done Outside - Private' : 'Done Outside - Public') }})
           </span>
           <span class="italic text-xs flex-auto text-right">
-            {{ !item.service_date ? '-' : item.service_date}}
+            {{ !item.service_date ? '-' : item.service_date | date: 'MM/dd/yyyy'}}
           </span>
       </div>
-      
+
     </div>
 
     <div class="flex w-full item-start flex-wrap" *ngIf="x.length === 0">
@@ -65,7 +65,7 @@
               <thead class="text-sm text-gray-700 dark:bg-gray-700 dark:text-gray-400">
                 <tr class="sticky top-0 z-50 bg-gray-50">
                     <th scope="col" class="p-4 pl-12">
-      
+
                     </th>
                     <th scope="col" class="py-4">
                     Service Name
@@ -78,7 +78,7 @@
                     </th>
                 </tr>
               </thead>
-              
+
                 <tbody>
                   <tr *ngFor="let item of lib_ccservices; let i = index;" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                     <td *ngIf="item.service_cat == 'N'" class="p-4 w-4 pl-12">
@@ -101,7 +101,7 @@
                         <option value="2">Done Outside - Private</option>
                         <option value="3">Done Outside - Public</option>
                       </select>
-  
+
                     </td>
                   </tr>
                 </tbody>
@@ -122,7 +122,7 @@
               <div *ngIf="item.service_cat == 'N'" class="grid grid-cols-3 gap-4">
                 <label class="col-span-1 pt-2" for="{{ item.service_id }}">{{ item.service_name}} ({{ item.service_id }})</label>
 
-                <div class="col-span-2">
+                <!-- <div class="col-span-1"> -->
                   <select [(ngModel)]="serviceForm.service_status[item.service_id]"
                         id="{{ 'service_status.'+item.service_id }}"
                         name="{{ 'service_status.'+item.service_id }}"
@@ -132,28 +132,13 @@
                     <option value="2">Done Outside - Private</option>
                     <option value="3">Done Outside - Public</option>
                   </select>
+
                   <div *ngIf="serviceForm.service_status[item.service_id] !== '-' && serviceForm.service_status[item.service_id] !== '' && serviceForm.service_status[item.service_id] !== undefined">
                     <input  [(ngModel)]="serviceForm.service_date[item.service_id]"
                       name="{{ 'service_date.'+item.service_id }}" id="{{ 'service_date.'+item.service_id }}" type="date" placeholder="Enter vaccine date" class="col-span-1 mt-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                   </div>
 
-                  <div class="border border-slate-200 rounded-lg my-3 bg-slate-100" *ngIf="services_given[item.service_id]">
-                    <table class="table-auto w-full m-3">
-                      <thead>
-                        <tr >
-                          <th>{{ item.service_id }}</th>
-                          <th>Date Administered</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr *ngFor="let servx of services_given[item.service_id] | keyvalue ; let i = index">
-                          <td>{{ servx.value.dose }} Service </td>
-                          <td class="pl-5" >: {{ !servx.value.service_date ? '-' : servx.value.service_date }}</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
+                <!-- </div> -->
               </div>
             </div>
           </div>
@@ -189,7 +174,7 @@
     <h4 class="font-semibold text-white text-sm uppercase">Services</h4>
     <button  type="button" class="btn-icon -mt-0.5 relative ml-auto px-5" (click)="toggleServiceModal()" *ngIf="cservices.length >= 1">
       <fa-icon size="md" [icon]="faPenToSquare"></fa-icon>
-      </button> 
+      </button>
   </div>
 
   <div class="flex w-full item-start flex-wrap pt-4">
@@ -206,7 +191,7 @@
     </button>
   </div>
   </div>
-      
+
 
   <!--Essential Newborn Care Modal-->
    <!-- Main modal -->
@@ -244,7 +229,7 @@
                     <th scope="col" class="py-4 pr-12">
                     Done Outside Facility
                     </th>
-              
+
                 </tr>
               </thead>
                 <tbody>
@@ -267,7 +252,7 @@
                       <select class="w-full text-sm" [(ngModel)]="item.done_outside">
                         <option  *ngFor="let option of libOptions" [value]="option.value">{{option.desc}}</option>
                       </select>
-  
+
                     </td>
                   </tr>
                 </tbody>
@@ -288,4 +273,3 @@
 
 <div *ngIf="showServiceModal" class="opacity-50 fixed inset-0 z-50 bg-black"></div>
 
-  
