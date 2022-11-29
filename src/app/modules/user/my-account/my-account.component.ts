@@ -72,7 +72,7 @@ export class MyAccountComponent implements OnInit {
     this.loading = true;
 
     console.log(this.userForm)
-    let user_id = localStorage.getItem('user_id');
+    let user_id = this.http.getUserID();
     if(!this.userForm.invalid){
       this.http.update('users/', user_id, this.userForm.value).subscribe({
         next: (data:any) => {
@@ -153,7 +153,8 @@ export class MyAccountComponent implements OnInit {
   }
 
   loadUser(){
-    this.http.get('users/'+localStorage.getItem('user_id')).subscribe({
+    let user_id = this.http.getUserID();
+    this.http.get('users/'+user_id).subscribe({
       next: (data: any) => {
         console.log(data)
         this.orig_value = data.data;

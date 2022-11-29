@@ -110,7 +110,7 @@ export class FirstVisitComponent implements OnInit {
         complete: () => {
           this.is_saving = false;
           console.log(this.visitForm.value, 'visit form')
-         
+
       alert('saving success!')
         }
       })
@@ -118,7 +118,7 @@ export class FirstVisitComponent implements OnInit {
 
 
   validateForm(){
-    let user_id = localStorage.getItem('user_id');
+    let user_id = this.http.getUserID();
     this.visitForm = this.formBuilder.group({
       id: ['', [Validators.required]],
       admission_date: ['', [Validators.required]],

@@ -154,7 +154,7 @@ export class BreastfeedingComponent implements OnInit {
     });
 
     console.log(this.groupList);
-    let user_id = localStorage.getItem('user_id');
+    let user_id = this.http.getUserID();;
     var bfedmonths ={
       patient_ccdevs_id: '',
       patient_id: '',
@@ -190,7 +190,7 @@ export class BreastfeedingComponent implements OnInit {
     });
 
     console.log(this.patient_breastfed);
-    let user_id = localStorage.getItem('user_id');
+    let user_id = this.http.getUserID();;
     var bfedmonths ={
       patient_ccdev_id: this.patient_info.id,
       patient_id: this.patient_info.patient_id,
@@ -319,13 +319,13 @@ export class BreastfeedingComponent implements OnInit {
     .subscribe({
       next: (data: any) => {
         this.patient_breastfed = data.data;
-       
+
         console.log(this.patient_breastfed, 'data ng breast fedzxc');
 
         if(this.patient_breastfed.ebfreasons != null){
           this.patient_breastfed.ebfreasons =  this.patient_breastfed.ebfreasons.reason_id;
         }
-        
+
 
         lib.forEach((obj, index) => {
           this.groupList2.push(this.patient_breastfed[obj]);

@@ -41,7 +41,7 @@ export class VaccineModalComponent implements OnInit {
     })
 
     if(vax_arr.length > 0){
-      let user_id = localStorage.getItem('user_id');
+      let user_id = this.http.getUserID();
       let patient_id = this.patient_info.id
       var vax_form ={
         patient_id: patient_id,
