@@ -80,6 +80,6 @@ export class HttpService {
       this.userToJSON()
     }
 
-    return this.user_json.id;
+    return this.user_json.facility_code;
   }
 }
