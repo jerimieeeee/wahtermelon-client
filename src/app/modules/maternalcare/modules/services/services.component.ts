@@ -30,38 +30,62 @@ export class ServicesComponent implements OnInit {
   modal: boolean;
 
   constructor(private http: HttpService, private formBuilder: FormBuilder) { }
+
   faTimes = faTimes;
   faSave = faSave;
   faInfoCircle = faInfoCircle;
 
+  public serviceChanges = [];
+
   ngOnInit() {
     console.log(this.visit_type);
-    this.createForm()
+    this.createForm(0)
+
+    console.log(this.services_form, " this is my service form");
+    
     this.today = new Date();
     this.modal = false;
   }
   saveForm(value: any) {
-
+    console.log(value, " this is my services form values");
+    this.serviceChanges.forEach(s => {
+      console.log("commiting to save ", s);
+      
+    });
   }
 
-  createForm() {
+  createForm(i: any) {
 
     let user_id = localStorage.getItem('user_id');
     let facility_code = localStorage.getItem('facility_code');
 
-    this.services_form = this.formBuilder.group({
+    this.services_form[i] = this.formBuilder.group({
       facility_code: [facility_code],
       patient_id: [this.patient_details.id],
       user_id: [user_id],
+      service_id: [''],
       service_date: [new Date().toISOString().substring(0, 10), [Validators.required]],
       visit_type_code: ['', [Validators.required]],
       visit_status: [''],
       service_qty: [''],
-      positive_result: [''],
-      intake_penicillin: [''],
+      positive_result: [false],
+      intake_penicillin: [false],
     })
   }
+onChange(desc, id, i: any){
+  this.services_form.patchValue({service_id: id});
 
+  if(this.serviceChanges.map((s)=> s.service_id).indexOf(id) == -1){
+    this.serviceChanges.push(this.services_form[i].value)
+    this.createForm(i);
+  }else{
+    this.serviceChanges[this.serviceChanges.map((s)=> s.service_id).indexOf(id)] = this.services_form.value;
+    
+  }
+  console.log(this.serviceChanges, " these are the changes with the description: ", desc);
+
+  // if(this.serviceChanges.includes())
+}
   openModal(){
     console.log("opening modal");
     
