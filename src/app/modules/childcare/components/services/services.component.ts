@@ -319,6 +319,10 @@ export class ServicesComponent implements OnInit {
 
   // }
 
+  onChange(){
+    console.log(this.serviceForm.service_status, 'ng model check')
+  }
+
   onSubmit(){
     var service_arr = [];
 
@@ -346,11 +350,12 @@ export class ServicesComponent implements OnInit {
       }
 
       console.log(serv_form, 'ito ung isusubmit')
-
+      
       this.http.post('child-care/cc-services', serv_form).subscribe({
         next: (data: any) => { console.log(data.data, 'display lahat ng services') },
         error: err => console.log(err),
-        complete: () => console.log('success')
+        complete: () => {console.log('success'), this.loadServicesTest()}
+        
       })
     }
   }
@@ -403,7 +408,6 @@ export class ServicesComponent implements OnInit {
       next: (data: any) => {
         // console.log(data)
         this.service_list = data.data;
-
         // console.log(this.vaccine_list)
         this.checkServiceStatus(data.data);
       },
