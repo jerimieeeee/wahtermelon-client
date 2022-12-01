@@ -33,6 +33,13 @@ export class HeaderComponent implements OnInit {
   user_first_name: string;
   user_middle_name: string;
 
+  user = {
+    first_name: '',
+    middle_name: '',
+    last_name: '',
+    suffix_name: ''
+  };
+
   showMenu: boolean = false;
   patientLoading:boolean = false;
   showCreate:boolean = false;
@@ -57,8 +64,7 @@ export class HeaderComponent implements OnInit {
 
   constructor(
     private http: HttpService,
-    private router: Router,
-    private authService: AuthService
+    private router: Router
   ) { }
 
   loadPatients() {
@@ -86,8 +92,6 @@ export class HeaderComponent implements OnInit {
   }
 
   onSelect(selectedPatient){
-    /* this.searchInput$.next(null);
-    // this.loadPatients(); */
     if(selectedPatient) this.router.navigate(['/itr', {id: selectedPatient.id}]);
     this.selectedPatient = null;
     this.loadPatients();
@@ -104,7 +108,6 @@ export class HeaderComponent implements OnInit {
   }
 
   navigateTo(loc){
-    console.log(loc)
     this.router.navigate(['/'+loc]);
   }
 
@@ -113,20 +116,25 @@ export class HeaderComponent implements OnInit {
   }
 
   logout(){
-    localStorage.removeItem('access_token');
-    window.location.reload();
-    /* this.authService.logout().subscribe({
-      next: res => this.router.navigate(['/login']),
+    this.http.logout().subscribe({
+      next: () => {
+        console.log('gg')
+        this.http.removeLocalStorageItem();
+        this.router.navigate(['/']);
+      },
       error: err => console.log(err)
-    }); */
+    });
   }
 
 
   ngOnInit(): void {
     this.loadPatients();
-    this.user_last_name = localStorage.getItem('user_last_name');
-    this.user_first_name = localStorage.getItem('user_first_name');
-    this.user_middle_name = localStorage.getItem('user_middle_name');
+    let val = this.http.getUserFromJSON();
+
+    this.user.last_name = val.last_name;
+    this.user.first_name = val.first_name;
+    this.user.middle_name = val.middle_name === 'NA' ? '' : val.middle_name;
+    this.user.suffix_name = val.suffix_name === 'NA' ? '' : val.suffix_name;
   }
 
 }

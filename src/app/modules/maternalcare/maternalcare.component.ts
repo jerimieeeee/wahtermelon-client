@@ -33,7 +33,7 @@ export class MaternalcareComponent implements OnInit {
   ]
 
   ngOnInit(): void {
-    this.module = 5;
+    this.module = 3;
     this.post_value = false;
 
     this.loadLibraries();

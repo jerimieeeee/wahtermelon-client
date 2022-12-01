@@ -22,8 +22,8 @@ export class ServicesComponent implements OnInit {
   @Input() lib_services;
   @Input() visit_type;
   @Input() patient_details;
-
-  @Output() modalStats  = new EventEmitter<boolean>();
+  @Input() module;
+  @Output() modalStats = new EventEmitter<boolean>();
 
   today: Date;
   // modal = false;
@@ -34,61 +34,82 @@ export class ServicesComponent implements OnInit {
   faTimes = faTimes;
   faSave = faSave;
   faInfoCircle = faInfoCircle;
+  user_id: any
+  facility_code: any
 
   public serviceChanges = [];
+  public service_array = [];
 
   ngOnInit() {
+    this.user_id = this.http.getUserID();
+    this.facility_code = this.http.getUserFacility();
     console.log(this.visit_type);
-    this.createForm(0)
+    this.createForm()
+    this.serviceChanges.push(this.services_form.value);
+    this.serviceChanges.push(this.services_form.value);
+    this.serviceChanges.push(this.services_form.value);
+    this.serviceChanges.push(this.services_form.value);
+    this.serviceChanges.push(this.services_form.value);
+    this.serviceChanges.push(this.services_form.value);
+    this.serviceChanges.push(this.services_form.value);
+    this.serviceChanges.push(this.services_form.value);
+    this.serviceChanges.push(this.services_form.value);
+    this.serviceChanges.push(this.services_form.value);
+    this.serviceChanges.push(this.services_form.value);
 
-    console.log(this.services_form, " this is my service form");
-    
+    console.log(this.serviceChanges, " this are my init changes");
+
+
     this.today = new Date();
     this.modal = false;
   }
   saveForm(value: any) {
-    console.log(value, " this is my services form values");
+
     this.serviceChanges.forEach(s => {
-      console.log("commiting to save ", s);
-      
-    });
+      if (s.service_id != "") {
+        console.log(this.serviceChanges.map(z => z.service_id).indexOf(s.service_id), " logging index of with id")
+        console.log("commiting to save ", s);
+      }
+    })
   }
 
-  createForm(i: any) {
-
-    let user_id = localStorage.getItem('user_id');
-    let facility_code = localStorage.getItem('facility_code');
-
-    this.services_form[i] = this.formBuilder.group({
-      facility_code: [facility_code],
+  createForm() {
+    this.services_form = this.formBuilder.group({
+      facility_code: [this.facility_code],
       patient_id: [this.patient_details.id],
-      user_id: [user_id],
+      user_id: [this.user_id],
       service_id: [''],
       service_date: [new Date().toISOString().substring(0, 10), [Validators.required]],
       visit_type_code: ['', [Validators.required]],
-      visit_status: [''],
+      visit_status: [this.module == 3?'Prenatal':(this.module == 4?'Postpartum':'Services')],
       service_qty: [''],
       positive_result: [false],
       intake_penicillin: [false],
     })
-  }
-onChange(desc, id, i: any){
-  this.services_form.patchValue({service_id: id});
 
-  if(this.serviceChanges.map((s)=> s.service_id).indexOf(id) == -1){
-    this.serviceChanges.push(this.services_form[i].value)
-    this.createForm(i);
-  }else{
-    this.serviceChanges[this.serviceChanges.map((s)=> s.service_id).indexOf(id)] = this.services_form.value;
-    
-  }
-  console.log(this.serviceChanges, " these are the changes with the description: ", desc);
+    console.log(this.services_form, " service form");
 
-  // if(this.serviceChanges.includes())
-}
-  openModal(){
+  }
+  onChange(desc, id, i, item) {
+    this.serviceChanges[i] = {
+      facility_code: this.facility_code,
+      patient_id: this.patient_details.id,
+      user_id: this.user_id,
+      visit_type_code: item == 'visit_type_code' ? this.services_form.value[item] : this.serviceChanges[i].visit_type_code,
+      visit_status: this.services_form.value.visit_status,
+      intake_penicillin: item == 'intake_penicillin' ? this.services_form.value[item] : this.serviceChanges[i].intake_penicillin,
+      positive_result: item == 'positive_result' ? this.services_form.value[item] : this.serviceChanges[i].positive_result,
+      service_date: this.services_form.value.service_date,
+      service_qty: item == 'service_qty' ? this.services_form.value[item] : this.serviceChanges[i].service_qty,
+      service_id: id,
+    };
+
+    console.log(this.serviceChanges, " these are the changes with the description: ", desc);
+
+  }
+  openModal() {
     console.log("opening modal");
-    
+
     this.modal = !this.modal;
     this.modalStats.emit(this.modal);
   }

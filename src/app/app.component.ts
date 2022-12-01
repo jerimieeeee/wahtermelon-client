@@ -7,6 +7,7 @@ import { Location } from '@angular/common';
 import { filter, tap } from 'rxjs/operators';
 import { openCloseTrigger } from './modules/patient-registration/declarations/animation';
 import { faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons';
+import { AuthService } from './shared/services/auth/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -35,7 +36,8 @@ export class AppComponent implements OnInit{
     private http: HttpService,
     private formBuilder: FormBuilder,
     private router: Router,
-    private location: Location
+    private location: Location,
+    private auth: AuthService
   ) {
 
   }
@@ -52,17 +54,14 @@ export class AppComponent implements OnInit{
   onSubmit(){
     this.is_saving = true;
     this.auth_error = false;
-    if(!this.loginForm.invalid){
-      this.http.post('login', this.loginForm.value).subscribe({
+    if(this.loginForm.valid){
+      this.http.login(this.loginForm.value).subscribe({
         next: (data: any) => {
           // this.decode(data.access_token);
           // console.log(data.user);
           localStorage.setItem('access_token', data.access_token);
-          localStorage.setItem('user_last_name', data.user.last_name);
-          localStorage.setItem('user_first_name', data.user.first_name);
-          localStorage.setItem('user_middle_name', data.user.middle_name);
-          localStorage.setItem('user_id', data.user.id);
-          localStorage.setItem('facility_code', data.user.facility?.code);
+          this.http.saveUserToLocalStorage(data.user);
+
           this.is_saving = false;
           this.router.navigate(['/']);
           this.checkAuth();
@@ -87,18 +86,6 @@ export class AppComponent implements OnInit{
     const url = this.location.path();
     if(localStorage.getItem('access_token')){
       this.isAuthenticated = true;
-      this.http.get('users/'+localStorage.getItem('user_id')).subscribe({
-        next: (data: any) => {
-          // console.log(data.data);
-          // localStorage.setItem('access_token', data.access_token);
-          localStorage.setItem('user_last_name', data.data.last_name);
-          localStorage.setItem('user_first_name', data.data.first_name);
-          localStorage.setItem('user_middle_name', data.data.middle_name);
-          localStorage.setItem('user_id', data.data.id);
-          localStorage.setItem('facility_code', data.data.facility.code);
-        },
-        error: err => console.log(err)
-      })
     } else {
       console.log(url)
       this.verify_url = this.location.path().split(';');
@@ -161,3 +148,7 @@ export class AppComponent implements OnInit{
     });
   }
 }
+function swithMap(arg0: () => any): import("rxjs").OperatorFunction<Object, unknown> {
+  throw new Error('Function not implemented.');
+}
+

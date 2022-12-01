@@ -54,10 +54,10 @@ export class RiskfactorsComponent implements OnInit {
       console.log(" its false coz prenatal is 0");
       risk = mc_record.risk_factor;
     }
-    let user_id = localStorage.getItem('user_id');
+    let user_id = this.http.getUserID();
     let facility_code = 'DOH000000000005672';
     console.log(risk, " risk");
-    
+
     this.risk_form = this.formBuilder.group({
       patient_mc_id: [, [Validators.required]],
       facility_code: [facility_code, [Validators.required]],
@@ -88,7 +88,7 @@ export class RiskfactorsComponent implements OnInit {
       this.risk_catch.splice(index, 1);
     }
     console.log(data.risk_id[1], " risk_id");
-    
+
     // this.risk_form.setValue({
     //   factor: data.factor[0],
     //   date: data.date,
