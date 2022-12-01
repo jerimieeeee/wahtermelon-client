@@ -28,25 +28,34 @@
   <div class="mb-4 py-3 px-2 text-gray-600 border border-slate-100 rounded-xl">
     <div class="border-b-2 border-slate-200 font-semibold text-sm text-left ">Stats Summary</div>
 
-    <div class="mb-3">
-      <div class="mt-3 font-semibold text-sm text-left">
+    <div class="mb-3 flex justify-between">
+      <div class="text-lg font-semibold text-left">
         Patient
       </div>
-      <div class="mb-3 text-xl font-bold text-right text-orange-400">
-        0
+      <div class="text-xl font-bold text-right text-orange-400">
+        {{ side_stats?.patient_registered }}
       </div>
     </div>
 
-    <div class="mb-3">
-      <div class="mt-3 font-semibold text-sm text-left">
-        Consultation
+    <div class="flex justify-between">
+      <div class="font-semibold text-lg text-left">
+        All Visit
       </div>
-      <div class="mb-3 text-xl font-bold text-right text-cyan-400">
-        0
+      <div class="text-xl font-bold text-right text-cyan-400">
+        {{ side_stats?.consult_count }}
       </div>
     </div>
 
-    <div class="mb-3">
+    <div class="mb-3 flex justify-between" *ngFor="let programs of side_stats?.program_count">
+      <div class="font-semibold text-sm text-left uppercase ml-5">
+        {{ programs['Patient Group']}}
+      </div>
+      <div class="text-lg font-bold text-right text-cyan-400">
+        {{ programs?.count }}
+      </div>
+    </div>
+
+    <!-- <div class="mb-3">
       <div class="mt-3 font-semibold text-sm text-left">
         Claims
       </div>
@@ -62,6 +71,6 @@
       <div class="mb-3 text-xl font-bold text-right text-orange-400">
         0
       </div>
-    </div>
+    </div> -->
   </div>
 </div>
