@@ -6,6 +6,7 @@ import { NgApexchartsModule } from 'ng-apexcharts';
 import { SharedComponentsModule } from 'app/shared/shared-components/shared-components.module';
 import { PatientItrComponent } from './patient-itr.component';
 import { TakePhotoComponent } from './modals/take-photo/take-photo.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { TakePhotoComponent } from './modals/take-photo/take-photo.component';
     CommonModule,
     PatientItrRoutingModule,
     SharedComponentsModule,
-    NgApexchartsModule
+    NgApexchartsModule,
+    FormsModule
   ]
 })
 export class PatientItrModule { }

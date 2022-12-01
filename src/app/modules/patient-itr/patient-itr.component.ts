@@ -56,6 +56,8 @@ export class PatientItrComponent implements OnInit {
     weight: [],
     bp_date: [],
     weight_date: [],
+    bmi: [],
+    bmi_date: []
   }
 
   showChart: boolean = false;
@@ -81,11 +83,16 @@ export class PatientItrComponent implements OnInit {
         this.vitals_graph.weight.push(val.patient_weight);
         this.vitals_graph.weight_date.push(val.vitals_date);
       }
+
+      if(val.patient_bmi){
+        this.vitals_graph.bmi.push(val.patient_bmi);
+        this.vitals_graph.bmi_date.push(val.vitals_date);
+      }
     })
 
     if(this.vitals_graph.systolic.length > 0 || this.vitals_graph.diastolic.length > 0){
-      this.showChart = true;
-      this.generateChart();
+      this.selected_chart = 'bp_weight_chart';
+      this.loadChart();
     } else {
       this.showChart = false;
     }
@@ -98,7 +105,12 @@ export class PatientItrComponent implements OnInit {
     })
   );
 
-  generateChart(){
+  selected_chart: any;
+  show_bmi: boolean = false;
+  show_bp: boolean = false;
+  show_weight: boolean = false;
+
+  generateBPChart(){
     this.chartOptions = {
       series: [
         {
@@ -134,6 +146,12 @@ export class PatientItrComponent implements OnInit {
       }
     };
 
+    this.showChart = true;
+    this.show_bp = true;
+  }
+
+  generateWeightChart(){
+    // this.show_weight = true;
     this.WeightChart = {
       series: [
         {
@@ -164,6 +182,83 @@ export class PatientItrComponent implements OnInit {
         }
       }
     };
+
+    this.showChart = true;
+    this.show_weight = true;
+  }
+
+  generateBMIChart(){
+    this.BmiChart = {
+      series: [
+        {
+          name: "BMI",
+          data: this.vitals_graph.bmi
+        }
+      ],
+      chart: {
+        height: 200,
+        type: "line"
+      },
+      dataLabels: {
+        enabled: false
+      },
+      stroke: {
+        curve: "smooth"
+      },
+      title: {
+        text: "BMI History"
+      },
+      xaxis: {
+        type: "datetime",
+        categories: this.vitals_graph.bmi_date
+      },
+      tooltip: {
+        x: {
+          format: "dd/MM/yy HH:mm"
+        }
+      }
+    };
+
+    this.showChart = true;
+    this.show_bmi = true;
+  }
+
+
+  loadChart(){
+    this.show_bmi = false;
+    this.show_bp = false;
+    this.show_weight = false;
+
+    switch (this.selected_chart) {
+      case 'bp_chart':
+        this.generateBPChart();
+        break;
+      case 'weight_chart':
+        this.generateWeightChart();
+        break;
+      case 'bmi_chart':
+        this.generateBMIChart();
+        break;
+      case 'bmi_weight_chart':
+        this.generateWeightChart();
+        this.generateBMIChart();
+        break;
+      case 'bp_weight_chart':
+        this.generateBPChart();
+        this.generateWeightChart();
+        break;
+      case 'all':
+        this.generateBPChart();
+        this.generateWeightChart();
+        this.generateBMIChart();
+        break;
+    }
+  }
+
+  generateAllChart(){
+    this.generateBPChart();
+    this.generateWeightChart();
+    this.generateBMIChart();
   }
 
   visit_list: any;
