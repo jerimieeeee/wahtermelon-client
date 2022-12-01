@@ -182,11 +182,11 @@ export class PatientInfoComponent {
   }
 
   loadVitals(){
-    this.http.get('patient-vitals/vitals', {params:{patient_id: this.patient_info.id, sort: '-vitals_date'}}).subscribe({
+    this.http.get('patient-vitals/vitals', {params:{patient_id: this.patient_info.id, sort: '-vitals_date', per_page: 30}}).subscribe({
       next: (data: any) => {
         this.latest_vitals = data.data[0];
         // console.log(this.latest_vitals);
-        if(this.latest_vitals && (!this.latest_vitals.patient_height || !this.latest_vitals.patient_weight)){
+        if(this.latest_vitals){
           //iterate thru previous vitals if height is not present on latest vitals.
           this.getHeightWeight(data.data);
         }

@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ChartComponent } from "ng-apexcharts";
 import { openCloseTrigger } from './declarations/animation';
-import { ChartOptions, WeightChart } from './declarations/chart-options';
+import { BmiChart, ChartOptions, WeightChart } from './declarations/chart-options';
 import { MedicalJournal } from './data/sample-journal';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { filter, tap } from "rxjs/operators";
@@ -29,6 +29,7 @@ export class PatientItrComponent implements OnInit {
   @ViewChild("weight-chart") weight_chart: ChartComponent;
   public chartOptions: Partial<ChartOptions>;
   public WeightChart: Partial<WeightChart>;
+  public BmiChart: Partial<BmiChart>;
   /* get openCloseTrigger() {
     return this.show_details ? "open" : "closed";
   } */
@@ -67,6 +68,7 @@ export class PatientItrComponent implements OnInit {
     this.vitals_graph.weight = [];
     this.vitals_graph.weight_date = [];
 
+    console.log(vitals);
     Object.entries(vitals).forEach(([key, value], index) => {
       let val: any = value;
       if(val.bp_systolic){

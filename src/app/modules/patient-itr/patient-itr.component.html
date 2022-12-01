@@ -1,7 +1,18 @@
 <div class="grid grid-cols-11 mt-4 gap-4">
   <div class="col-span-8">
     <div *ngIf="showChart" class="flex">
-      <div class="w-1/2 shadow px-2 mr-2 py-4 rounded-xl text-gray-600 border border-slate-100">
+      <ul class="flex flex-wrap text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400">
+        <li class="mr-2">
+            <a href="#" aria-current="page" class="inline-block p-4 text-blue-600 bg-gray-100 rounded-t-lg active dark:bg-gray-800 dark:text-blue-500">Blood Pressure</a>
+        </li>
+        <li class="mr-2">
+            <a href="#" class="inline-block p-4 rounded-t-lg hover:text-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800 dark:hover:text-gray-300">Weight</a>
+        </li>
+        <li class="mr-2">
+            <a href="#" class="inline-block p-4 rounded-t-lg hover:text-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800 dark:hover:text-gray-300">BMI</a>
+        </li>
+    </ul>
+      <!-- <div class="w-1/2 shadow px-2 mr-2 py-4 rounded-xl text-gray-600 border border-slate-100">
         <div id="bp-chart">
           <apx-chart
             [series]="chartOptions?.series"
@@ -26,8 +37,9 @@
             [title]="WeightChart?.title"
           ></apx-chart>
         </div>
-      </div>
+      </div> -->
     </div>
+
     <div class="block shadow px-2 py-2 mt-4 rounded-xl text-gray-600 border border-slate-100">
       <div class="grid grid-cols-3 border-b-2">
         <div class="col-span-1">Medical Journal</div>
