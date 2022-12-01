@@ -156,7 +156,7 @@
           </span>
         </div>
 
-        <div class="flex pl-3 justify-between items-center" [ngClass]="{'text-amber-500': latest_vitals?.patient_spo2 ? (latest_vitals?.patient_spo2 < 95) : false }">
+        <div class="flex pl-3 justify-between items-center" [ngClass]="{'text-red-500': latest_vitals?.patient_spo2 ? (latest_vitals?.patient_spo2 < 95) : false }">
           <span class="block font-medium text-xs">
             Blood Oxygen (SpO2)
           </span>
