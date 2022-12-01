@@ -82,27 +82,33 @@ export class AppComponent implements OnInit{
   }
 
   verify_url: {};
+  reset_url: {};
+
   checkAuth(){
     const url = this.location.path();
+
     if(localStorage.getItem('access_token')){
       this.isAuthenticated = true;
     } else {
-      console.log(url)
       this.verify_url = this.location.path().split(';');
       this.isAuthenticated = false;
     }
 
     if(this.isAuthenticated == false) {
-      console.log(this.verify_url[0])
-      if(url == '/user-registration'){
+      console.log(this.verify_url)
+      if(url == '/user-registration' || url == '/forgot-password'){
         this.showLogin = false;
       } else if (this.verify_url[0] == '/verify') {
-        console.log('1')
         this.showLogin = true;
         this.activateUser(this.verify_url[1].slice(3));
       } else {
-        this.showLogin = true;
-        this.router.navigate(['/']);
+        this.reset_url = this.location.path().split('?');
+        if(this.reset_url[0] == '/reset-password'){
+          this.showLogin = false;
+        } else {
+          this.showLogin = true;
+          this.router.navigate(['/']);
+        }
       }
     }
 

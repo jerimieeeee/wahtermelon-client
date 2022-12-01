@@ -94,6 +94,14 @@ const routes: Routes = [
   {
     path: 'verify',
     loadChildren: () => import('./modules/verify/verify.module').then(m => m.VerifyModule)
+  },
+  {
+    path: 'forgot-password',
+    loadChildren: () => import('./modules/user/forgot-password/forgot-password.module').then(m => m.ForgotPasswordModule)
+  },
+  {
+    path: 'reset-password',
+    loadChildren: () => import('./modules/user/reset-password/reset-password.module').then(m => m.ResetPasswordModule)
   }
 ];
 
