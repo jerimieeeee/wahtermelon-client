@@ -12,7 +12,7 @@ import { DatePipe } from '@angular/common';
   styleUrls: ['./services.component.scss']
 })
 export class ServicesComponent implements OnInit {
-
+  
   x: any;
   cservices: any;
 
@@ -47,10 +47,10 @@ export class ServicesComponent implements OnInit {
     { id: 7, name: 'Newborn Screening Referred', cc_id: 'NBSREF', date: 'Mar 15 2012 10:00:00 AM', ischecked: false, service_date: '', done_outside: ''},
     { id: 8, name: 'Received Micronutrient Powder', cc_id: 'MNP', date: 'Mar 09 2012 10:00:00 AM', ischecked: false, service_date: '', done_outside: ''},
     { id: 9, name: 'Vitamin A', cc_id: 'VITA', date: 'Mar 13 2012 10:00:00 AM', ischecked: false, service_date: '', done_outside: ''},
-
+    
   ];
 
-
+ 
 
  eservices2= [
     { id: 1, name: 'Cord Clamping', cc_id: 'CLAMP', ischecked: false, service_date: ''},
@@ -76,7 +76,7 @@ export class ServicesComponent implements OnInit {
       {value: 'YPR', id: '1', desc:'Yes - Private'},
       {value: 'YPB', id: '2', desc:'Yes - Public'},
       {value: 'N', id: '3', desc:'No'},
-
+      
       ];
 
  showEssentialModal = false;
@@ -92,9 +92,11 @@ export class ServicesComponent implements OnInit {
   };
   services_given= [];
   service_list = Services;
+  modalFilter: any;
 
-  toggleEssentialModal(){
+  toggleEssentialModal(value: any){
     console.log('toggleEssentialModal');
+    this.modalFilter = value;
     this.showEssentialModal = !this.showEssentialModal;
     this.geteServiceName();
   }
@@ -119,12 +121,12 @@ export class ServicesComponent implements OnInit {
   }
 
   geteServiceName(){
-
+    
     if(!localStorage.getItem('eservice'))
     {
       localStorage.setItem('eservice', JSON.stringify([]))
     }
-
+      
     this.x = JSON.parse(localStorage.getItem('eservice'));
     console.log('retrievedeServices: ', this.x );
     this.x.forEach(m =>{
@@ -142,11 +144,11 @@ export class ServicesComponent implements OnInit {
           });
       });
       this.eservices2.sort((m, c) => (m.id) - (c.id));this.eservices2.sort
-
+    
   }
 
   getServices(){
-
+   
     if(!localStorage.getItem('service'))
     {
       localStorage.setItem('service', JSON.stringify([]))
@@ -176,15 +178,15 @@ export class ServicesComponent implements OnInit {
   fetchSelectedItems() {
 
     this.selectedServiceList = this.eservices2.filter((value, index) => {
-
+      
       if(!value.ischecked){
         this.eservices2[index].service_date=''
       }
       console.log('fetchSelectedItems');
-
+      
       return value.ischecked
     });
-
+    
   }
 
   setDate(i: any) {
@@ -196,7 +198,7 @@ export class ServicesComponent implements OnInit {
       }
       return value.ischecked
     });
-
+    
   }
 
   setDate2(i: any) {
@@ -208,9 +210,9 @@ export class ServicesComponent implements OnInit {
       }
       return value.ischecked
     });
-
+    
   }
-
+  
   fetchSelectedItems2() {
     this.selectedServiceList2 = this.services.filter((value, index) => {
       if(!value.ischecked){
@@ -219,14 +221,14 @@ export class ServicesComponent implements OnInit {
       }
       return value.ischecked
     });
-
+    
   }
 
   submit() {
     this.selectedServiceList = this.eservices2.filter((value, index) => {
       return value.ischecked,
       localStorage.setItem('eservice', JSON.stringify(this.selectedServiceList)),
-     this.x = this.selectedServiceList
+     this.x = this.selectedServiceList 
     });
   }
 
@@ -238,7 +240,7 @@ export class ServicesComponent implements OnInit {
     });
   }
 
-
+ 
 
   fetchCheckedIDs() {
     this.checkedIDs = []
@@ -257,7 +259,7 @@ export class ServicesComponent implements OnInit {
       }
     });
   }
-
+ 
   changeSelection(i: any) {
     // this.fetchSelectedItems()
     this.setDate(i)
@@ -274,8 +276,8 @@ export class ServicesComponent implements OnInit {
   }
 
   @Input() patient_details: any;
-
-  constructor(private http: HttpService) {
+  
+  constructor(private http: HttpService) { 
     this.services.sort(function(a,b){
       return a.date.localeCompare(b.date);
     })
@@ -295,9 +297,9 @@ export class ServicesComponent implements OnInit {
   //     return value.ischecked
   //   });
 
-  //   let user_id = this.http.getUserID();
+  //   let user_id = localStorage.getItem('user_id');
   //   var newborndata ={
-
+     
   //     patient_id: this.patient_details.id,
   //     user_id: user_id,
   //     services: this.selectedServiceList
@@ -316,6 +318,11 @@ export class ServicesComponent implements OnInit {
   //   })
 
   // }
+  onChange(){
+    console.log(this.serviceForm.service_status, 'ng model check')
+    console.log(this.serviceForm.service_date, 'ng model check')
+  }
+
 
   onSubmit(){
     var service_arr = [];
@@ -334,23 +341,22 @@ export class ServicesComponent implements OnInit {
     })
 
     if(service_arr.length > 0){
-      let user_id = this.http.getUserID();
+      let user_id = localStorage.getItem('user_id');
       let patient_id = this.patient_details.id
       var serv_form ={
+        essential: this.modalFilter,
         patient_id: patient_id,
         user_id: user_id,
         services: service_arr
       }
 
-      console.log(serv_form)
+      console.log(serv_form, 'ito ung isusubmit')
 
       this.http.post('child-care/cc-services', serv_form).subscribe({
-        next: (data: any) => { console.log(data.data) },
+        next: (data: any) => { console.log(data.data, 'display lahat ng services') },
         error: err => console.log(err),
         complete: () => console.log('success')
       })
-    }else{
-
     }
   }
 
@@ -398,19 +404,31 @@ export class ServicesComponent implements OnInit {
   }
 
   loadServicesTest(){
-    this.http.get('child-care/cc-services', {params:{patient_id: this.patient_details.id, sort:'service_date'}}).subscribe({
+    this.http.get('child-care/cc-services', {params:{patient_id: this.patient_details.id, sort:'service_id'}}).subscribe({
       next: (data: any) => {
-        // console.log(data)
+        console.log(data)
         this.service_list = data.data;
+        
+        this.serviceForm = {
+          service_status: [],
+          service_date: []
+        }
+        data.data.forEach((value) => {
+          console.log(value)
+          this.serviceForm.service_status[value.service_id] = value.status_id;
+          this.serviceForm.service_date[value.service_id] = value.service_date;
+          // serv2.service_date['value.status_id'] = value.s
+        })
 
-        // console.log(this.vaccine_list)
-        this.checkServiceStatus(data.data);
+        // this.serviceForm = serv2;
+        console.log(this.serviceForm.service_status.CC);
+        console.log(this.serviceForm, 'test serv 2')
       },
       error: err => console.log(err),
       complete: () => console.log(this.service_list,'services loaded')
     })
   }
-
+ 
 
 
   loadServices(){
@@ -419,7 +437,7 @@ export class ServicesComponent implements OnInit {
       next: (data: any) => {
         this.cc_newborn = data.data;
       },
-
+  
       error: err => console.log(err),
       complete: () => {
         // this.loadLibraries();
@@ -427,7 +445,7 @@ export class ServicesComponent implements OnInit {
       }
     })
   }
-
+  
 
   ngOnInit() {
     this.geteServiceName()
@@ -437,6 +455,6 @@ export class ServicesComponent implements OnInit {
     this.fetchCheckedIDs()
     this.fetchCheckedIDs2()
     this.loadCCLibraries()
-    this.loadServicesTest()
+    if(this.patient_details.id) this.loadServicesTest()
   }
 }

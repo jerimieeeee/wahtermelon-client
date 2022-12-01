@@ -155,6 +155,10 @@ export class FirstVisitComponent implements OnInit {
   //   this.loadPatients();
   // }
 
+  getInitials(string) {
+    return [...string.matchAll(/\b\w/g)].join('')
+  }
+
   getPatient(term: string = null): Observable<any> {
     return this.http.get('patient', {params:{'filter[search]':term}})
     .pipe(map((resp:any) => {
