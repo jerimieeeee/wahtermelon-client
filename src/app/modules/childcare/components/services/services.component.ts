@@ -403,21 +403,30 @@ export class ServicesComponent implements OnInit {
     });
   }
 
+  findEssential(service_list: any[]): any[] {
+    return service_list.filter(e => e.services.essential == 'Y');
+  }
+
+  findServices(service_list: any[]): any[] {
+    return service_list.filter(e => e.services.essential == 'N');
+  }
+
   loadServicesTest(){
     this.http.get('child-care/cc-services', {params:{patient_id: this.patient_details.id, sort:'service_id'}}).subscribe({
       next: (data: any) => {
         console.log(data)
         this.service_list = data.data;
-        data.data.sort(function(a, b) { 
-          return (a.services.service_id - b.services.service_id) || a.services.service_name.localeCompare(b.services.service_id); 
-      });
+      //   data.data.sort(function(a, b) { 
+      //     return (a.services.service_name - b.services.service_name) || a.services.service_name.localeCompare(b.services.service_id); 
+      // });
+      
         
         this.serviceForm = {
           service_status: [],
           service_date: []
         }
         data.data.forEach((value) => {
-          console.log(value)
+          // console.log(value)
           this.serviceForm.service_status[value.service_id] = value.status_id;
           this.serviceForm.service_date[value.service_id] = value.service_date;
           // serv2.service_date['value.status_id'] = value.s

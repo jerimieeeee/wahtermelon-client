@@ -57,7 +57,7 @@ export class ChildcareComponent implements OnInit {
 
     loadConsultDetails(){
 
-      this.http.get('consultation/cn-records/',{params: {patient_id: this.patient_details.id}}).subscribe((data: any) => {
+      this.http.get('consultation/cn-records',{params: {patient_id: this.patient_details.id}}).subscribe((data: any) => {
         this.consult_details = data.data
         console.log(this.consult_details[0], 'kunin mo consult');
       });
