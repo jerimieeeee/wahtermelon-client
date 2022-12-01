@@ -38,9 +38,11 @@ export class ChildcareComponent implements OnInit {
       patient_id : this.consult_details[0].patient.id,
       user_id : this.consult_details[0].user.id,
       consult_date : this.consult_details[0].consult_date,
-      pt_group : this.consult_details[0].pt_group
+      pt_group : this.consult_details[0].pt_group,
+      // physician_id : this.consult_details[0].physician.id,
+      // is_pregnant: this.consult_details[0].is_pregnant
     }
-      this.http.post('consultation/cn-records/'+this.consult_details[0].id, endbutton).subscribe({
+      this.http.update('consultation/cn-records/',this.consult_details[0].id, endbutton).subscribe({
         // next: (data: any) => console.log(data.status, 'check status'),
         error: err => console.log(err),
         complete: () => {
