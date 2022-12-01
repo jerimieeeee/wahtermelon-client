@@ -98,7 +98,7 @@ export class ServicesComponent implements OnInit {
     console.log('toggleEssentialModal');
     this.modalFilter = value;
     this.showEssentialModal = !this.showEssentialModal;
-    this.geteServiceName();
+    this.loadServicesTest()
   }
 
   showServiceModal = false;
@@ -408,6 +408,9 @@ export class ServicesComponent implements OnInit {
       next: (data: any) => {
         console.log(data)
         this.service_list = data.data;
+        data.data.sort(function(a, b) { 
+          return (a.services.service_id - b.services.service_id) || a.services.service_name.localeCompare(b.services.service_id); 
+      });
         
         this.serviceForm = {
           service_status: [],
@@ -426,6 +429,7 @@ export class ServicesComponent implements OnInit {
       },
       error: err => console.log(err),
       complete: () => console.log(this.service_list,'services loaded')
+      
     })
   }
  
