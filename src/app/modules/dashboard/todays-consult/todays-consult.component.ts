@@ -39,7 +39,7 @@ export class TodaysConsultComponent implements OnInit {
 
     this.http.get('consultation/cn-records', params).subscribe({
       next: (data: any) => {
-        console.log(data);
+        // console.log(data);
         this.today_consults = data.data;
 
         this.current_page = data.meta.current_page;
@@ -57,7 +57,7 @@ export class TodaysConsultComponent implements OnInit {
   }
 
   openItr(patient_id, ptgroup){
-    console.log(patient_id)
+    // console.log(patient_id)
     this.router.navigate(['/'+ptgroup, {id: patient_id}]);
   }
 
