@@ -100,7 +100,7 @@ export class HeaderComponent implements OnInit {
   getPatient(term: string = null): Observable<any> {
     return this.http.get('patient', {params:{'filter[search]':term, per_page: 'all'}})
     .pipe(map((resp:any) => {
-      console.log(resp);
+      // console.log(resp);
       this.showCreate = resp.data.length == 0 ? true : false;
       console.log(this.showCreate)
       return resp.data;
@@ -118,7 +118,6 @@ export class HeaderComponent implements OnInit {
   logout(){
     this.http.logout().subscribe({
       next: () => {
-        console.log('gg')
         this.http.removeLocalStorageItem();
         this.router.navigate(['/']);
       },
