@@ -29,7 +29,7 @@
                         <option *ngFor="let factors of risk_factors" class="p-2 flex-wrap"
                             [class]="factors.hospital_flag == false && factors.monitor_flag == true? 'text-blue-500' : ''"
                             [style]="factors.hospital_flag == true && factors.monitor_flag == false?'color: rgb(220 38 38);':''"
-                            value="{{factors.risk_name}}_{{factors.id}}_{{factors.hospital_flag}}_{{factors.monitor_flag}}">
+                            value="{{factors.id}}">
                             {{ factors.risk_name }} 
                         </option>
                     </select> 
@@ -107,8 +107,8 @@
                 </div>
 
                 <div class="text-sm grid grid-cols-11 hover:bg-blue-100 hover:font-medium" style="grid-column: span 11 / span 11;" *ngFor="let catch of risk_catch">
-                    <div class=" col-span-8 relative select-none mx-2 {{catch.hospital_flag == 'false' && catch.monitor_flag == 'true'? 'text-blue-500' : ''}} {{catch.hospital_flag == 'true' && catch.monitor_flag == 'false'?'text-red-500':''}}">{{catch.factor}}</div>
-                    <div class=" col-span-2 relative select-none mx-2"><h3>{{catch.date}}</h3></div>
+                    <div class=" col-span-8 relative select-none mx-2 {{catch.risk.hospital_flag == false && catch.risk.monitor_flag == true? 'text-blue-500' : (catch.risk.hospital_flag == true && catch.risk.monitor_flag == false?'text-red-500':'')}}">{{catch.risk.risk_name}}</div>
+                    <div class=" col-span-2 relative select-none mx-2"><h3>{{catch.date_detected}}</h3></div>
                     <div class=" relative select-none mx-2" (click)="edit(catch.risk_id)">
                         <button type="button" class="w-full">
                             <fa-icon [icon]="faPencil" size="lg" class="mr-2 hover:text-orange-300"></fa-icon>

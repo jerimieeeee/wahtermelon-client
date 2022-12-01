@@ -266,19 +266,19 @@
             </div>
         </div>
         <div *ngIf="prenatal_data.length != 0" style="grid-column: span 16 / span 16;">
-            <div class="mb-5 grid rounded-lg hover:drop-shadow-lg drop-shadow-md bg-white rounded-lg hover:border border-gray-300 hover:border-blue-400 mx-2  border group {{prenatal_data.length >= 6?'h-56':'h-max'}} "
+            <div class="mb-5 grid rounded-lg hover:drop-shadow-lg drop-shadow-md bg-white rounded-lg hover:border border-gray-300 hover:border-blue-400 mx-2  border group overflow-y-scroll scrollbar-thin scrollbar-thumb-white hover:scrollbar-thumb-blue-300 scrollbar-track-white {{4 > prenatal_data.length?'h-max':'h-96'}} relative"
                 style="grid-template-columns: repeat(11, minmax(0, 1fr));">
-                <div class=" px-2 py-1 text-sm font-bold border border-dashed border-gray-300 border-t-0 border-l-0 border-r-0 group-hover:border-blue-400"
+                <div class="px-2 py-1 text-sm font-bold border border-dashed border-gray-300 border-t-0 border-l-0 border-r-0 group-hover:border-blue-400"
                     style="grid-column: span 11 / span 11;">
                     <h1 class="select-none">
                         Visits
                     </h1>
                 </div>
 
-                <div class="overflow-y-scroll scrollbar-thin scrollbar-thumb-white hover:scrollbar-thumb-blue-300 scrollbar-track-white text-sm grid pb-1 font-semibold h-max"
-                    style="grid-template-columns: repeat(24, minmax(0, 1fr)); grid-column: span 11 / span 11;">
-                    <table class="table-auto">
-                        <thead>
+                <div class="text-sm pb-1 font-semibold h-max"
+                    style="grid-column: span 11 / span 11;">
+                    <table class="table-auto relative">
+                        <thead class="sticky top-0 bg-white">
                             <tr>
                                 <th class="px-2">No.</th>
                                 <th class="px-2">Trimester</th>
@@ -286,7 +286,7 @@
                                 <th class="px-2">AOG</th>
                                 <th class="px-2">Weight</th>
                                 <th class="px-2">BP</th>
-                                <th class="px-2">FUndic Height</th>
+                                <th class="px-2">Fundic Height</th>
                                 <th class="px-2">FHR</th>
                                 <th class="px-2">FHR Location</th>
                                 <th class="px-2">Fetal Presentation</th>
