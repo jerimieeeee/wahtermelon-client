@@ -82,6 +82,8 @@ export class ServicesComponent implements OnInit {
         this.http.post('maternal-care/mc-services', s).subscribe({
           next: (data: any) => {
             console.log(data.data, " data from saving services")
+
+            this.service_list.push(data.data)
             // this.services_form = data.data;
           },
           error: err => console.log(err),

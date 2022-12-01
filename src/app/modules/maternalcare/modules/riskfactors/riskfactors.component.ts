@@ -35,6 +35,7 @@ export class RiskfactorsComponent implements OnInit {
   show: boolean;
   @Input() risk_factors;
   @Input() patient_mc_record;
+  @Input() patient_details;
   searching: boolean;
   today: Date;
   constructor(private http: HttpService, private formBuilder: FormBuilder) { }
@@ -43,33 +44,43 @@ export class RiskfactorsComponent implements OnInit {
     this.createForm(this.patient_mc_record[0]);
     this.searching = false;
     this.today = new Date();
+    this.getRisk()
   }
 
   createForm(mc_record) {
-    let risk: any
-    if(this.patient_mc_record[0].risk_factor[0]?this.patient_mc_record[0].risk_factor[0]:this.patient_mc_record[0].risk_factor.length == 1){
-        console.log("it went true again");
-        risk = mc_record.risk_factor[0];
-    }else{
-      console.log(" its false coz prenatal is 0");
-      risk = mc_record.risk_factor;
-    }
+    // let risk: any
+    // if(this.patient_mc_record[0].risk_factor[0]?this.patient_mc_record[0].risk_factor[0]:this.patient_mc_record[0].risk_factor.length == 1){
+    //     console.log("it went true again");
+    //     risk = mc_record.risk_factor[0];
+    // }else{
+    //   console.log(" its false coz prenatal is 0");
+    //   risk = mc_record.risk_factor;
+    // }
     let user_id = this.http.getUserID();
-    let facility_code = 'DOH000000000005672';
-    console.log(risk, " risk");
+    let facility_code = this.http.getUserFacility();
+    // console.log(risk, " risk");
 
     this.risk_form = this.formBuilder.group({
-      patient_mc_id: [, [Validators.required]],
+      patient_mc_id: [this.patient_mc_record[0].id, [Validators.required]],
       facility_code: [facility_code, [Validators.required]],
-      patient_id: [, [Validators.required]],
+      patient_id: [this.patient_details.id, [Validators.required]],
       user_id: [user_id, [Validators.required]],
-      risk_id: [risk.length != 0?risk.risk_id:'',[Validators.required]],
-      date_detected: [risk.length != 0?new Date(risk.date_detected).toISOString().substring(0, 10):new Date().toISOString().substring(0, 10),[Validators.required]],
+      risk_id: ['',[Validators.required]],
+      date_detected: [new Date().toISOString().substring(0, 10),[Validators.required]],
     });
 
 
   }
-
+  getRisk(){
+    this.http.get('maternal-care/mc-risk-factors?patient_mc_id=' + this.patient_mc_record[0].id).subscribe({
+      next: (data: any) => {
+        console.log(data, " get risks");
+        this.risk_catch = data.data;
+      },
+      error: err => console.log(err),
+      
+    })
+  }
   searchfocus() {
     document.getElementById("searchbar").focus();
     this.searching = true;
@@ -78,32 +89,46 @@ export class RiskfactorsComponent implements OnInit {
     this.searching = false;
   }
   saveForm(data) {
-    console.log(data, "data");
-    console.log(data.risk_id, " factor");
 
-    data.risk_id = data.risk_id.split('_');
-    let index = this.risk_catch.findIndex(c => c.risk_id === data.risk_id[0]);
+    this.http.post('maternal-care/mc-risk-factors', data).subscribe({
+      next: (data: any) => {
+        console.log(data.data, " data from saving risks")
+        // this.services_form = data.data;
+        this.risk_catch = data.data
+      },
+      error: err => console.log(err),
+      complete: () => {
+        // this.is_saving = false;
+        // setTimeout(() => {
+        // }, 1500);
+      }
+    })
+    // console.log(data, "data");
+    // console.log(data.risk_id, " factor");
 
-    if (index != -1) {
-      this.risk_catch.splice(index, 1);
-    }
-    console.log(data.risk_id[1], " risk_id");
+    // data.risk_id = data.risk_id.split('_');
+    // let index = this.risk_catch.findIndex(c => c.risk_id === data.risk_id[0]);
 
-    // this.risk_form.setValue({
-    //   factor: data.factor[0],
+    // if (index != -1) {
+    //   this.risk_catch.splice(index, 1);
+    // }
+    // console.log(data.risk_id[1], " risk_id");
+
+    // // this.risk_form.setValue({
+    // //   factor: data.factor[0],
+    // //   date: data.date,
+    // // });
+    // this.risk_catch.push({
+    //   risk_id: data.risk_id[1],
+    //   factor: data.risk_id[0],
+    //   hospital_flag: data.risk_id[2],
+    //   monitor_flag: data.risk_id[3],
     //   date: data.date,
     // });
-    this.risk_catch.push({
-      risk_id: data.risk_id[1],
-      factor: data.risk_id[0],
-      hospital_flag: data.risk_id[2],
-      monitor_flag: data.risk_id[3],
-      date: data.date,
-    });
 
-    // this.createForm();
-    this.hide = [];
-    //this.risk_form.disable();
+    // // this.createForm();
+    // this.hide = [];
+    // //this.risk_form.disable();
   }
 
   flip(): void {
