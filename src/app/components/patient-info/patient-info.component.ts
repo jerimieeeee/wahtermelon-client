@@ -201,13 +201,9 @@ export class PatientInfoComponent {
     // console.log(vitals)
     Object.entries(vitals).every(([keys, values], indexes) => {
       let val:any = values;
-      if(!this.latest_vitals.patient_height && val.patient_height){
-        this.latest_vitals.patient_height = val.patient_height;
-      }
 
-      if(!this.latest_vitals.patient_weight && val.patient_weight){
-        this.latest_vitals.patient_weight = val.patient_weight;
-      }
+      if(!this.latest_vitals.patient_height && val.patient_height) this.latest_vitals.patient_height = val.patient_height;
+      if(!this.latest_vitals.patient_weight && val.patient_weight) this.latest_vitals.patient_weight = val.patient_weight;
 
       let vitals_date = formatDate(val.vitals_date, 'Y-M-dd','en', 'en')
       let date_today = formatDate(new Date(), 'Y-M-dd','en', 'en')
@@ -218,26 +214,22 @@ export class PatientInfoComponent {
           this.latest_vitals.bp_diastolic = val.bp_diastolic;
         }
 
-        if(!this.latest_vitals.patient_temp && val.patient_temp){
-          this.latest_vitals.patient_temp = val.patient_temp;
-        }
+        if(!this.latest_vitals.patient_spo2 && val.patient_spo2) this.latest_vitals.patient_spo2 = val.patient_spo2;
+        if(!this.latest_vitals.patient_temp && val.patient_temp) this.latest_vitals.patient_temp = val.patient_temp;
+        if(!this.latest_vitals.patient_heart_rate && val.patient_heart_rate) this.latest_vitals.patient_heart_rate = val.patient_heart_rate;
+        if(!this.latest_vitals.patient_respiratory_rate && val.patient_respiratory_rate) this.latest_vitals.patient_respiratory_rate = val.patient_respiratory_rate;
+        if(!this.latest_vitals.patient_pulse_rate && val.patient_pulse_rate) this.latest_vitals.patient_pulse_rate = val.patient_pulse_rate;
 
-        if(!this.latest_vitals.patient_heart_rate && val.patient_heart_rate){
-          this.latest_vitals.patient_heart_rate = val.patient_heart_rate;
-        }
-
-        if(!this.latest_vitals.patient_respiratory_rate && val.patient_respiratory_rate){
-          this.latest_vitals.patient_respiratory_rate = val.patient_respiratory_rate;
-        }
-
-        if(!this.latest_vitals.patient_pulse_rate && val.patient_pulse_rate){
-          this.latest_vitals.patient_pulse_rate = val.patient_pulse_rate;
-        }
-
-        if(!this.latest_vitals.patient_waist && val.patient_waist){
-          this.latest_vitals.patient_waist = val.patient_waist;
-        }
+        if(!this.latest_vitals.patient_head_circumference && val.patient_head_circumference) this.latest_vitals.patient_head_circumference = val.patient_head_circumference;
+        if(!this.latest_vitals.patient_muac && val.patient_muac) this.latest_vitals.patient_muac = val.patient_muac;
+        if(!this.latest_vitals.patient_chest && val.patient_chest) this.latest_vitals.patient_chest = val.patient_chest;
+        if(!this.latest_vitals.patient_abdomen && val.patient_abdomen) this.latest_vitals.patient_abdomen = val.patient_abdomen;
+        if(!this.latest_vitals.patient_waist && val.patient_waist) this.latest_vitals.patient_waist = val.patient_waist;
+        if(!this.latest_vitals.patient_hip && val.patient_hip) this.latest_vitals.patient_hip = val.patient_hip;
+        if(!this.latest_vitals.patient_limbs && val.patient_limbs) this.latest_vitals.patient_limbs = val.patient_limbs;
+        if(!this.latest_vitals.patient_skinfold_thickness && val.patient_skinfold_thickness) this.latest_vitals.patient_skinfold_thickness = val.patient_skinfold_thickness;
       }
+
       if(this.latest_vitals.patient_height > 0 && this.latest_vitals.patient_weight > 0 &&
         this.latest_vitals.bp_systolic > 0 && this.latest_vitals.patient_heart_rate > 0 &&
         this.latest_vitals.patient_respiratory_rate > 0 && this.latest_vitals.patient_pulse_rate > 0 &&
