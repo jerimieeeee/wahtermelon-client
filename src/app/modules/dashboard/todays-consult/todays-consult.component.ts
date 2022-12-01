@@ -56,9 +56,9 @@ export class TodaysConsultComponent implements OnInit {
 
   }
 
-  openItr(patient_id){
+  openItr(patient_id, ptgroup){
     console.log(patient_id)
-    this.router.navigate(['/itr', {id: patient_id}]);
+    this.router.navigate(['/'+ptgroup, {id: patient_id}]);
   }
 
   getDataDiff(consult_date) {
