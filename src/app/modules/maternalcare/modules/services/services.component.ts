@@ -22,6 +22,7 @@ export class ServicesComponent implements OnInit {
   @Input() lib_services;
   @Input() visit_type;
   @Input() patient_details;
+  @Input() patient_mc_record;
   @Input() module;
   @Output() modalStats = new EventEmitter<boolean>();
 
@@ -41,6 +42,8 @@ export class ServicesComponent implements OnInit {
   public service_array = [];
 
   ngOnInit() {
+    console.log(this.patient_mc_record, "mc record from services");
+    
     this.user_id = this.http.getUserID();
     this.facility_code = this.http.getUserFacility();
     console.log(this.visit_type);
@@ -64,21 +67,32 @@ export class ServicesComponent implements OnInit {
     this.modal = false;
   }
   saveForm(value: any) {
-
+    // maternal-care/mc-services
+  
     this.serviceChanges.forEach(s => {
       if (s.service_id != "") {
         console.log(this.serviceChanges.map(z => z.service_id).indexOf(s.service_id), " logging index of with id")
         console.log("commiting to save ", s);
+
+        this.http.post('maternal-care/mc-services', s).subscribe({
+          next: (data: any) => {
+            console.log(data.data, " data from saving services")
+            // this.services_form = data.data;
+          },
+          error: err => console.log(err),
+          complete: () => {
+            // this.is_saving = false;
+            // setTimeout(() => {
+            // }, 1500);
+          }
+        })
+
       }
     })
   }
 
   createForm() {
     this.services_form = this.formBuilder.group({
-      facility_code: [this.facility_code],
-      patient_id: [this.patient_details.id],
-      user_id: [this.user_id],
-      service_id: [''],
       service_date: [new Date().toISOString().substring(0, 10), [Validators.required]],
       visit_type_code: ['', [Validators.required]],
       visit_status: [this.module == 3?'Prenatal':(this.module == 4?'Postpartum':'Services')],
@@ -92,6 +106,7 @@ export class ServicesComponent implements OnInit {
   }
   onChange(desc, id, i, item) {
     this.serviceChanges[i] = {
+      patient_mc_id: this.patient_mc_record[0].id,
       facility_code: this.facility_code,
       patient_id: this.patient_details.id,
       user_id: this.user_id,

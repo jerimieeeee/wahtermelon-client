@@ -1,6 +1,6 @@
-<div class="flex w-full body-up ">
-  <div class="service-modal w-9/12 relative h-screen px-2 mt-5 ml-5 rounded-3xl text-gray-600 shadow-md overflow-y-scroll scrollbar-thin scrollbar-thumb-blue-300 scrollbar-track-white">
-    <div class="main-tab-z text-sm font-medium text-center text-gray-500 sticky top-0 bg-white {{modalStats?'z-0':'z-10'}}">
+<div class="flex w-full">
+  <div class="w-9/12 relative h-screen px-2 mt-5 ml-5 rounded-3xl text-gray-600 shadow-md overflow-y-scroll scrollbar-thin scrollbar-thumb-blue-300 scrollbar-track-white {{modalStats?'z-50':'z-0'}}">
+    <div class="text-sm font-medium text-center sticky top-0 text-gray-500 bg-white {{modalStats?'z-0':'z-10'}}">
       <!-- TEST -->
       <ul class="flex flex-wrap ">
         <li class="mr-2">
@@ -56,7 +56,7 @@
         <app-prenatal [fetals]="fetals" [fhr_lib]="fhr_lib" [patient_mc_record]="patient_mc_record" [patient_details]="patient_details"></app-prenatal>
       </div>
       <div class=" w-12/12 px-8 pb-10 border-solid border-2 border-zinc-100 border-l-0 border-r-0 border-t-0 p-3">
-        <app-services *ngIf="visit_type" [module]="module"(modalStats)="openModal($event)"  [lib_services]="lib_services" [visit_type]="visit_type" [patient_details]="patient_details"></app-services>
+        <app-services *ngIf="visit_type" [patient_mc_record]="patient_mc_record"  [module]="module"(modalStats)="openModal($event)"  [lib_services]="lib_services" [visit_type]="visit_type" [patient_details]="patient_details"></app-services>
       </div>
     </div>
 
@@ -68,18 +68,18 @@
         <app-postvisits *ngIf="patient_details" [patient_mc_record]="patient_mc_record" [patient_details]="patient_details"></app-postvisits>
       </div>
       <div class=" w-12/12 px-8 pb-10 border-solid border-2 border-zinc-100 border-l-0 border-r-0 border-t-0 p-3">
-        <app-services *ngIf="visit_type" [module]="module"(modalStats)="openModal($event)"  [lib_services]="lib_services" [visit_type]="visit_type" [patient_details]="patient_details"></app-services>
+        <app-services *ngIf="visit_type" [patient_mc_record]="patient_mc_record" [module]="module"(modalStats)="openModal($event)"  [lib_services]="lib_services" [visit_type]="visit_type" [patient_details]="patient_details"></app-services>
       </div>
     </div>
 
-    <div class="fade-in mb-20 service-tab-z z-20" *ngIf="module == 5">
+    <div class="fade-in mb-20 z-20" *ngIf="module == 5">
       <div class=" w-12/12 px-8 pb-10 border-solid border-2 border-zinc-100 border-l-0 border-r-0 border-t-0 p-3">
-        <app-services *ngIf="visit_type" [module]="module"(modalStats)="openModal($event)"  [lib_services]="lib_services" [visit_type]="visit_type" [patient_details]="patient_details"></app-services>
+        <app-services *ngIf="visit_type" [patient_mc_record]="patient_mc_record" [module]="module"(modalStats)="openModal($event)"  [lib_services]="lib_services" [visit_type]="visit_type" [patient_details]="patient_details"></app-services>
       </div>
     </div>
   </div>
 
-  <div class="w-3/12">
+  <div class="w-3/12 {{modalStats?'z-0':'z-50'}}">
     <app-patient-info (patientInfo)="patientInfo($event)"></app-patient-info>
   </div>
 </div>
