@@ -6,7 +6,8 @@ import { NavigationEnd, Router } from '@angular/router';
 import { filter, tap } from "rxjs/operators";
 import { HttpService } from 'app/shared/services/http.service';
 import { formatDate } from '@angular/common';
-import { faCircle } from '@fortawesome/free-solid-svg-icons';
+import { faCircle, faFolder, faStethoscope } from '@fortawesome/free-solid-svg-icons';
+import { faEye, faFolderOpen } from '@fortawesome/free-regular-svg-icons';
 
 @Component({
   selector: 'app-patient-itr',
@@ -34,6 +35,10 @@ export class PatientItrComponent implements OnInit {
   latest_vitals: any;
 
   faCircle = faCircle;
+  faEye = faEye;
+  faFolderOpen = faFolderOpen;
+  faFolder = faFolder;
+  faStethoscope = faStethoscope;
 
   vitals_graph = {
     systolic: [],
@@ -250,13 +255,19 @@ export class PatientItrComponent implements OnInit {
 
   loadVisitHistory(){
     // console.log(this.patient_details);
-    this.http.get('consultation/cn-records',{params:{patient_id: this.patient_details.id, per_page: 'all', sort: 'consult_date'}}).subscribe({
+    this.http.get('consultation/cn-records',{params:{patient_id: this.patient_details.id, per_page: 'all', sort: '-consult_date'}}).subscribe({
       next: (data: any) => {
         this.visit_list = data.data;
-        // console.log(data);
+        console.log(data);
       },
       error: err => console.log(err),
     })
+  }
+
+  openVisit(details: any){
+    console.log(details);
+    console.log(details.pt_group);
+    this.router.navigate(['/'+details.pt_group, {id:details.patient.id, consult_id: details.id}])
   }
 
   showConsult(details: any){
@@ -264,10 +275,13 @@ export class PatientItrComponent implements OnInit {
   }
 
   selected_id: number;
+  selected_visit: any;
 
   getLatestToday(details){
     // console.log(details)
     this.latest_vitals = details.vitals[0];
+    this.selected_visit = details;
+
     Object.entries(details.vitals).every(([keys, values], indexes) => {
       let val:any = values;
 

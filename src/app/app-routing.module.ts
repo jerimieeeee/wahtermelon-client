@@ -72,7 +72,7 @@ const routes: Routes = [
     loadChildren: () => import('./modules/facility-config/facility-config.module').then(m => m.FacilityConfigModule)
   },
   {
-    path: 'consultation',
+    path: 'cn',
     loadChildren: () => import('./modules/consultation/consultation.module').then(m => m.ConsultationModule)
   },
   {
