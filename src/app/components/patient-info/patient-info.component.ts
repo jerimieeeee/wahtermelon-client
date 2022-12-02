@@ -188,7 +188,7 @@ export class PatientInfoComponent {
         // console.log(this.latest_vitals);
         if(this.latest_vitals){
           //iterate thru previous vitals if height is not present on latest vitals.
-          this.getHeightWeight(data.data);
+          this.getLatestToday(data.data);
         }
         this.patientVitals.emit(data.data);
       },
@@ -197,7 +197,7 @@ export class PatientInfoComponent {
     })
   }
 
-  getHeightWeight(vitals){
+  getLatestToday(vitals){
     // console.log(vitals)
     Object.entries(vitals).every(([keys, values], indexes) => {
       let val:any = values;
