@@ -91,6 +91,7 @@ export class ModuleModalComponent implements OnInit {
   ]
 
   show_new: boolean = false;
+  is_loading: boolean = false;
   selected_module: string = '';
   consult_date;
   consult_time;
@@ -99,6 +100,7 @@ export class ModuleModalComponent implements OnInit {
   onModuleSelect(module){
     let loc = module.location;
     let group = module.group;
+    this.is_loading = true;
 
     if('/'+loc === this.router.url.split(';')[0]){
       this.closeModal();
@@ -109,14 +111,16 @@ export class ModuleModalComponent implements OnInit {
         this.http.get('consultation/cn-records', {params:{'pt_group': group, 'consult_done': 0, patient_id: this.patient_info.id}}).subscribe({
           next: (data: any) => {
             this.selected_module = module;
+            // console.log(data.data)
             if(data.data.length > 0){
-              this.router.navigate(['/'+loc, {id: this.patient_info.id, consult_id: data.data.id}])
+              this.router.navigate(['/'+loc, {id: this.patient_info.id, consult_id: data.data[0].id}])
             }else{
               console.log(this.selected_module);
               this.show_new = true;
             }
+            this.is_loading = false;
           },
-          error: err => console.log(err),
+          error: err => {console.log(err);this.is_loading = false},
           complete: () => console.log('loaded visits')
         });
       }
