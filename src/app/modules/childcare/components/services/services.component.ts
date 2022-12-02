@@ -93,6 +93,13 @@ export class ServicesComponent implements OnInit {
   services_given= [];
   service_list = Services;
   modalFilter: any;
+  alertFilter: any;
+  showAlert = false;
+
+  toggleAlertModal(value: any){
+    this.alertFilter = value;
+    this.showAlert = !this.showAlert;
+  }
 
   toggleEssentialModal(value: any){
     console.log('toggleEssentialModal');
@@ -376,8 +383,8 @@ export class ServicesComponent implements OnInit {
 
       this.http.post('child-care/cc-services', serv_form).subscribe({
         next: (data: any) => { console.log(data.data, 'display lahat ng services') },
-        error: err => console.log(err),
-        complete: () => console.log('success')
+        error: err => this.toggleAlertModal('E'),
+        complete: () => this.toggleAlertModal('S')
       })
     }
   }

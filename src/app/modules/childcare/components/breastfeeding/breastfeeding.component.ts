@@ -35,6 +35,14 @@ export class BreastfeedingComponent implements OnInit {
   lib_reasons: any;
   ebf_date: any;
 
+  alertFilter: any;
+  showAlert = false;
+
+  toggleAlertModal(value: any){
+    this.alertFilter = value;
+    this.showAlert = !this.showAlert;
+  }
+
   toggleBreastfeedingModal(){
     this.showBreastfeedingModal = !this.showBreastfeedingModal;
     // this.geteServiceName();
@@ -55,11 +63,11 @@ export class BreastfeedingComponent implements OnInit {
     if(this.groupList2.includes(0))
     {
       this.showData=true;
-      console.log('open ang reason for stopping 2')
+      // console.log('open ang reason for stopping 2')
     }
     else{
       this.showData=false;
-      console.log('close ang reason for stopping 2')
+      // console.log('close ang reason for stopping 2')
     }
 }
 
@@ -210,9 +218,11 @@ export class BreastfeedingComponent implements OnInit {
 
     this.http.post('child-care/cc-breastfed', bfedmonths).subscribe({
       // next: (data: any) => console.log(data.status, 'check status'),
-      error: err => console.log(err),
+      error: err => {console.log(err)
+        this.toggleAlertModal('E')},
       complete: () => {
         // this.loadLibraries();
+        this.toggleAlertModal('S')
         console.log('bfed data saved')
         this.is_saving = false;
       }

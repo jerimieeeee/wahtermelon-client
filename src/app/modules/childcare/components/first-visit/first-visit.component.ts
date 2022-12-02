@@ -49,6 +49,8 @@ export class FirstVisitComponent implements OnInit {
 
   curr_name: any;
 
+  modalFilter: any;
+
 
   visitForm: FormGroup = new FormGroup({
     id: new FormControl<string| null>(''),
@@ -76,10 +78,11 @@ export class FirstVisitComponent implements OnInit {
     return this.visitForm.controls;
   }
 
-  showAdmissionModal = false;
+  showAlert = false;
 
-  toggleAdmissionModal(){
-    this.showAdmissionModal = !this.showAdmissionModal;
+  toggleAlertModal(value: any){
+    this.modalFilter = value;
+    this.showAlert = !this.showAlert;
   }
 
   // saveAdmission(){
@@ -106,12 +109,11 @@ export class FirstVisitComponent implements OnInit {
         next: (data: any) =>  this.getccdevDetails(),
         error: err => {console.log(err),
           this.is_saving = false;
-          alert('Update patient details or input the required fields')},
+          this.toggleAlertModal('E')},
         complete: () => {
           this.is_saving = false;
           console.log(this.visitForm.value, 'visit form')
-
-      alert('saving success!')
+      this.toggleAlertModal('S')
         }
       })
     }
