@@ -1,8 +1,9 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { faClipboard, faCircleInfo } from '@fortawesome/free-solid-svg-icons';
+import { faClipboard, faCircleInfo, faHouse } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { formatDate } from '@angular/common';
+import { AgeService } from 'app/shared/services/age.service';
 
 @Component({
   selector: 'app-module-modal',
@@ -12,27 +13,28 @@ import { formatDate } from '@angular/common';
 export class ModuleModalComponent implements OnInit {
   @Output() toggleModal = new EventEmitter<any>();
   @Input() patient_info;
+  @Input() patient_age;
 
   faClipboard = faClipboard;
   faCircleInfo = faCircleInfo;
+  faHouse = faHouse;
 
-  list_modules = [
-    {
-      group: 'General',
+  list_modules = {
+    'General': {
       modules: {
-        itr:{
+       /*  itr:{
           name: 'Patient ITR',
           location: 'itr',
           group: '',
           consult_active: false
-        },
+        }, */
         /* cn: {
           name: 'Consultation',
           location: 'consultation',
           group: 'cn',
           consult_active: false
         }, */
-        cc: {
+        /* cc: {
           name: 'Child Care',
           location: 'cc',
           group: 'cc',
@@ -43,7 +45,7 @@ export class ModuleModalComponent implements OnInit {
           location: 'mc',
           group: 'mc',
           consult_active: false
-        },
+        }, */
 
         /* fp: {
           name: 'Family Planning',
@@ -59,8 +61,7 @@ export class ModuleModalComponent implements OnInit {
         }, */
       }
     },
-    /* {
-      group: 'Others',
+    /* 'Others': {
       modules: {
         cn: {
           name: 'Laboratory',
@@ -88,14 +89,30 @@ export class ModuleModalComponent implements OnInit {
         },
       }
     } */
-  ]
+  };
+
+  itr = { name: 'Patient ITR', location: 'itr', group: '', consult_active: false };
+  mc = { name: 'Maternal Care', location: 'mc', group: 'mc', consult_active: false };
+  cc = { name: 'Child Care', location: 'cc', group: 'cc', consult_active: false };
 
   show_new: boolean = false;
   is_loading: boolean = false;
+  show_form: boolean = false;
+
   selected_module: string = '';
   consult_date;
   consult_time;
   date;
+
+  selectPrograms(){
+    if(this.patient_info.gender == 'F' && (this.patient_age.type === 'year' && this.patient_age.age >= 9)) {
+      this.list_modules.General.modules['mc'] = this.mc;
+    }
+
+    if((this.patient_age.type === 'year' && this.patient_age.age < 7) || this.patient_age.type !== 'year') {
+      this.list_modules.General.modules['cc'] = this.cc;
+    }
+  }
 
   onModuleSelect(module){
     let loc = module.location;
@@ -159,7 +176,8 @@ export class ModuleModalComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private http: HttpService
+    private http: HttpService,
+    private ageService: AgeService
   ) { }
 
   checkOpenConsult(consults){
@@ -173,21 +191,20 @@ export class ModuleModalComponent implements OnInit {
         });
       });
     });
+
+    this.show_form = true;
   }
 
   ngOnInit(): void {
+    this.selectPrograms();
+
     this.http.get('consultation/cn-records', {params:{consult_done: 0, patient_id: this.patient_info.id}}).subscribe({
       next: (data: any) => {
         if(data.data.length > 0) this.checkOpenConsult(data.data);
       },
-      error: err => {
-        /* if(err.message = "No query results for model*"){
-
-        } */
-        console.log(err)
-      },
-      complete: () => console.log('loaded visits')
-    })
+      error: err => { console.log(err) },
+      complete: () => {console.log('loaded visits'); this.show_form = true;}
+    });
 
     let current_date =  new Date;
 
