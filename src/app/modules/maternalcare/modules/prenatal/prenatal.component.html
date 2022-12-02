@@ -1,6 +1,23 @@
+
 <form [formGroup]="prenatal_form" (ngSubmit)="saveForm(prenatal_form.value)">
     <div class="grid gap-2 relative animates-dropdown " style="grid-template-columns: repeat(16, minmax(0, 1fr));"
         *ngIf="!focused">
+        <div style="grid-column: span 16 / span 16;" >
+            <div class="grid rounded-lg drop-shadow-md bg-white rounded-lg border-gray-300 m-2 border" style="grid-template-columns: repeat(13, minmax(0, 1fr));">
+                <div class="text-sm font-bold form-check p-2 font-semibold border border-dashed border-gray-300 group-hover:border-pink-400 border-t-0 border-l-0 border-r-0 "
+                    style="	grid-column: span 13 / span 13;">
+                    <h1 class="select-none text-pink-500">
+                        Important Dates
+                    </h1>
+                </div>
+                <h3 class="bg-white col-span-2 rounded-md mx-2 font-semibold text-center">EDC Date<p class="font-medium">{{patient_mc_record[0].pre_registration.edc_date | date: 'MM/dd/yyyy'}}</p></h3>
+                <h3 class="bg-white col-span-2 rounded-md mx-2 font-semibold text-center">LMP Date<p class="font-medium">{{patient_mc_record[0].pre_registration.lmp_date | date: 'MM/dd/yyyy'}}</p></h3>
+                <h3 class="bg-white col-span-3 rounded-md mx-2 font-semibold text-center">End of 1st Trimester<p class="font-medium">{{patient_mc_record[0].pre_registration.trimester1_date | date: 'MM/dd/yyyy'}}</p></h3>
+                <h3 class="bg-white col-span-3 rounded-md mx-2 font-semibold text-center">End of 2nd Trimester<p class="font-medium">{{patient_mc_record[0].pre_registration.trimester2_date | date: 'MM/dd/yyyy'}}</p></h3>
+                <h3 class="bg-white col-span-3 rounded-md mx-2 font-semibold text-center">End of 3rd Trimester<p class="font-medium">{{patient_mc_record[0].pre_registration.trimester3_date | date: 'MM/dd/yyyy'}}</p></h3>
+            </div>
+        </div>
+
         <div class="sticky top-14 z-50 border border-blue-400 col-span-2 relative mx-2 px-2 py-1 rounded-t-lg text-sm bg-blue-500 text-white"
             style="grid-column: span 16 / span 16;"><button class="font-bold" type="button">Prenatal</button>
             <div class="absolute left-16 top-1">
