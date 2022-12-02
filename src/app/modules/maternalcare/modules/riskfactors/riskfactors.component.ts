@@ -39,26 +39,21 @@ export class RiskfactorsComponent implements OnInit {
   searching: boolean;
   today: Date;
   constructor(private http: HttpService, private formBuilder: FormBuilder) { }
-
+  is_saving: boolean;
+  saved: boolean;
   ngOnInit(): void {
     this.createForm(this.patient_mc_record[0]);
     this.searching = false;
     this.today = new Date();
     this.getRisk()
+    this.is_saving = false;
+    this.saved = false;
   }
 
   createForm(mc_record) {
-    // let risk: any
-    // if(this.patient_mc_record[0].risk_factor[0]?this.patient_mc_record[0].risk_factor[0]:this.patient_mc_record[0].risk_factor.length == 1){
-    //     console.log("it went true again");
-    //     risk = mc_record.risk_factor[0];
-    // }else{
-    //   console.log(" its false coz prenatal is 0");
-    //   risk = mc_record.risk_factor;
-    // }
+
     let user_id = this.http.getUserID();
     let facility_code = this.http.getUserFacility();
-    // console.log(risk, " risk");
 
     this.risk_form = this.formBuilder.group({
       patient_mc_id: [this.patient_mc_record[0].id, [Validators.required]],
@@ -89,46 +84,24 @@ export class RiskfactorsComponent implements OnInit {
     this.searching = false;
   }
   saveForm(data) {
+    this.is_saving = true;
 
     this.http.post('maternal-care/mc-risk-factors', data).subscribe({
       next: (data: any) => {
         console.log(data.data, " data from saving risks")
-        // this.services_form = data.data;
+
         this.risk_catch = data.data
       },
       error: err => console.log(err),
       complete: () => {
-        // this.is_saving = false;
-        // setTimeout(() => {
-        // }, 1500);
+        this.is_saving = false;
+        this.saved = true;
+        setTimeout(()=>{
+          this.saved = false;
+      }, 1500);
       }
     })
-    // console.log(data, "data");
-    // console.log(data.risk_id, " factor");
 
-    // data.risk_id = data.risk_id.split('_');
-    // let index = this.risk_catch.findIndex(c => c.risk_id === data.risk_id[0]);
-
-    // if (index != -1) {
-    //   this.risk_catch.splice(index, 1);
-    // }
-    // console.log(data.risk_id[1], " risk_id");
-
-    // // this.risk_form.setValue({
-    // //   factor: data.factor[0],
-    // //   date: data.date,
-    // // });
-    // this.risk_catch.push({
-    //   risk_id: data.risk_id[1],
-    //   factor: data.risk_id[0],
-    //   hospital_flag: data.risk_id[2],
-    //   monitor_flag: data.risk_id[3],
-    //   date: data.date,
-    // });
-
-    // // this.createForm();
-    // this.hide = [];
-    // //this.risk_form.disable();
   }
 
   flip(): void {
@@ -147,8 +120,6 @@ export class RiskfactorsComponent implements OnInit {
       this.keyUp.push(id);
     }
 
-    // console.log(this.keyUp.length);
-    // console.log(this.keyUp);
   }
 
   buttonShow(name) {

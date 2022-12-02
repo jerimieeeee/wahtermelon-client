@@ -237,13 +237,13 @@
                         class="absolute bottom-1.5 left-2 text-gray-300 group-hover:text-pink-300"
                         *ngIf="!focused && 1 == 0">
                     </fa-icon>
-                    <textarea type="text"
+                    <textarea type="text" formControlName="remarks"
                         class=" remarks font-medium disabled:group-hover:font-semibold peer invalid:border-red-500  focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed disabled:border-0  disabled:pl-5  disabled:typed-out disabled:group-hover:bg-gray-100 disabled:rounded-full"
                         (keyup)="onKeyUp($event.target.value, $event.target.id)"
                         (keyup.escape)="clearForm($event.target.id)" id="remarks"
                         (change)="onKeyUp($event.target.value, $event.target.id)">
                     </textarea>
-                    <small class="hidden peer-invalid:block text-red-400 ">error_message</small>
+                   
                 </div>
 
             </div>
@@ -251,6 +251,7 @@
         <div class="relative w-auto  mb-10 w-12/12" *ngIf="!focused && prenatal_form.enabled"
             style="grid-column: span 16 / span 16;">
             <div class="absolute inline-flex right-0 ">
+                <div *ngIf="saved" class="border rounded-md bg-green-200 text-green-400 px-2 ease-in-out duration-1000">Successfully Saved!</div>
                 <div (click)="cancel()"
                     class="cursor-pointer flex  bg-white hover:drop-shadow-md hover:bg-gray-400 py-1 rounded-full text-gray-400 hover:text-white pl-2 pr-2 peer">
                     <fa-icon [icon]="faTimes" size="lg" class="mr-2">
@@ -291,6 +292,7 @@
                                 <th class="px-2">FHR Location</th>
                                 <th class="px-2">Fetal Presentation</th>
                                 <th class="px-2">Remarks</th>
+                                <th class="px-2">Outside</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -306,9 +308,13 @@
                                 <td class="px-2 font-normal">{{prenatal.bp_systolic}}/{{prenatal.bp_diastolic}}</td>
                                 <td class="px-2 font-normal">{{prenatal.fundic_height}}</td>
                                 <td class="px-2 font-normal">{{prenatal.fhr}}</td>
-                                <td class="px-2 font-normal">{{prenatal.location_code}}</td>
+                                <td class="px-2 font-normal">{{prenatal.fhr == 0?'-':prenatal.location_code}}</td>
                                 <td class="px-2 font-normal">{{prenatal.presentation_code}}</td>
-                                <td class="px-2 font-normal">I found the verdict guilty</td>
+                                <td class="px-2 font-normal">{{prenatal.remarks?prenatal.remarks:'-'}}</td>
+                                <td class="px-2 font-normal">
+                                    <fa-icon *ngIf="prenatal.private" [icon]="faCircleCheck" size="md" class="text-green-400"></fa-icon>
+                                    <fa-icon *ngIf="!prenatal.private" [icon]="faTimesCircle" size="md" class="text-red-400"></fa-icon>
+                                </td>
                             </tr>
                         </tbody>
                     </table>

@@ -1,7 +1,7 @@
 import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
 // import { AnyNaptrRecord } from 'd/ns';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { faClose, faInfoCircle, faPencilSquare, faPenToSquare, faSave, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faCircleCheck, faClose, faInfoCircle, faPencilSquare, faPenToSquare, faSave, faTimes, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
@@ -29,6 +29,7 @@ export class ServicesComponent implements OnInit {
   today: Date;
   // modal = false;
   modal: boolean;
+  saved: boolean;
 
   constructor(private http: HttpService, private formBuilder: FormBuilder) { }
 
@@ -36,6 +37,8 @@ export class ServicesComponent implements OnInit {
   faSave = faSave;
   faInfoCircle = faInfoCircle;
   faPenToSquare = faPenToSquare;
+  faTimesCircle = faTimesCircle
+  faCircleCheck = faCircleCheck
   user_id: any
   facility_code: any
 
@@ -45,7 +48,7 @@ export class ServicesComponent implements OnInit {
 
   ngOnInit() {
     console.log(this.patient_mc_record, "mc record from services");
-    
+
     this.user_id = this.http.getUserID();
     this.facility_code = this.http.getUserFacility();
     console.log(this.visit_type);
@@ -70,11 +73,11 @@ export class ServicesComponent implements OnInit {
   }
   saveForm() {
     // maternal-care/mc-services
-  console.log(this.serviceChanges);
-  
+    console.log(this.serviceChanges);
+
     this.serviceChanges.forEach(s => {
       // console.log(s.service_id != "");
-      
+
       if (s.service_id != "") {
         console.log(this.serviceChanges.map(z => z.service_id).indexOf(s.service_id), " logging index of with id")
         console.log("commiting to save ", s);
@@ -82,36 +85,39 @@ export class ServicesComponent implements OnInit {
         this.http.post('maternal-care/mc-services', s).subscribe({
           next: (data: any) => {
             console.log(data.data, " data from saving services")
-
-            this.service_list.push(data.data)
+            this.getServices();
+            // this.service_list.push(data.data)
             // this.services_form = data.data;
           },
           error: err => console.log(err),
           complete: () => {
             // this.is_saving = false;
-            // setTimeout(() => {
-            // }, 1500);
+            this.saved = true
+            setTimeout(() => {
+              this.saved = false;
+              this.openModal();
+            }, 1500);
           }
         })
 
       }
     })
   }
-  getServices(){
+  getServices() {
     this.http.get('maternal-care/mc-services?filter[patient_mc_id]=' + this.patient_mc_record[0].id).subscribe({
       next: (data: any) => {
         console.log(data, " get services");
         this.service_list = data.data;
       },
       error: err => console.log(err),
-      
+
     })
   }
   createForm() {
     this.services_form = this.formBuilder.group({
       service_date: [new Date().toISOString().substring(0, 10), [Validators.required]],
       visit_type_code: ['', [Validators.required]],
-      visit_status: [this.module == 3?'Prenatal':(this.module == 4?'Postpartum':'Services')],
+      visit_status: [this.module == 3 ? 'Prenatal' : (this.module == 4 ? 'Postpartum' : 'Services')],
       service_qty: [''],
       positive_result: [false],
       intake_penicillin: [false],
