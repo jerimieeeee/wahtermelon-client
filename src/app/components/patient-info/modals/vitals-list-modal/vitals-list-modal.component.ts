@@ -25,7 +25,7 @@ export class VitalsListModalComponent implements OnInit {
   ) { }
 
   editVitals(vitals){
-    console.log(vitals)
+    // console.log(vitals)
     this.vitalsEdit.emit(vitals);
     this.closeModal();
   }
@@ -50,7 +50,7 @@ export class VitalsListModalComponent implements OnInit {
 
     this.http.get('patient-vitals/vitals', params).subscribe({
       next: (data: any) => {
-        /* console.log(data.data); */
+        // console.log(data.data);
         this.vitals_list = data.data
 
         this.current_page = data.meta.current_page;

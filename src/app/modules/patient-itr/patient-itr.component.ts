@@ -69,8 +69,10 @@ export class PatientItrComponent implements OnInit {
     this.vitals_graph.weight = [];
     this.vitals_graph.weight_date = [];
 
+    // console.log(vitals)
     Object.entries(vitals).forEach(([key, value], index) => {
       let val: any = value;
+      // console.log(val)
       if(val.bp_systolic){
         this.vitals_graph.systolic.push(val.bp_systolic);
         this.vitals_graph.diastolic.push(val.bp_diastolic);
@@ -78,6 +80,7 @@ export class PatientItrComponent implements OnInit {
       }
 
       if(val.patient_weight){
+        // console.log(val)
         this.vitals_graph.weight.push(val.patient_weight);
         this.vitals_graph.weight_date.push(val.vitals_date);
       }

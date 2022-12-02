@@ -88,7 +88,7 @@ export class PatientInfoComponent {
         this.loadVaccines();
         this.accordions['vitals'] = true
         // this.toggleModal('philhealth-modal');//open sample modal
-        console.log(data.data)
+        // console.log(data.data)
       },
       error: err => {
         // feature: add prompt that patient is not found. for now redirect to home
@@ -184,13 +184,14 @@ export class PatientInfoComponent {
   loadVitals(){
     this.http.get('patient-vitals/vitals', {params:{patient_id: this.patient_info.id, sort: '-vitals_date', per_page: 30}}).subscribe({
       next: (data: any) => {
+        // console.log(data.data)
+        this.patientVitals.emit(data.data);
         this.latest_vitals = data.data[0];
         // console.log(this.latest_vitals);
         if(this.latest_vitals){
           //iterate thru previous vitals if height is not present on latest vitals.
           this.getLatestToday(data.data);
         }
-        this.patientVitals.emit(data.data);
       },
       error: err => console.log(err),
       complete: () => console.log('vitals loaded')
