@@ -57,8 +57,6 @@ export class AppComponent implements OnInit{
     if(this.loginForm.valid){
       this.http.login(this.loginForm.value).subscribe({
         next: (data: any) => {
-          // this.decode(data.access_token);
-          // console.log(data.user);
           localStorage.setItem('access_token', data.access_token);
           this.http.saveUserToLocalStorage(data.user);
 
