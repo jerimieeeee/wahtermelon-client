@@ -1,5 +1,5 @@
 import { Component, OnInit, Output } from '@angular/core';
-import { faPersonWalking } from '@fortawesome/free-solid-svg-icons';
+import { faPenToSquare, faPersonWalking, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { PatientInfoComponent } from 'app/components/patient-info/patient-info.component';
 import { HttpService } from 'app/shared/services/http.service';
 
@@ -11,13 +11,22 @@ import { HttpService } from 'app/shared/services/http.service';
 export class MaternalcareComponent implements OnInit {
 
   faPersonWalking = faPersonWalking;
+  faPenToSquare = faPenToSquare;
+  faSpinner = faSpinner;
+
   patient_details: any;
   public mcr_data: any;
-  patient_mc_record: any;
+  public patient_mc_record: any;
+  public patient_mc_list: any;
   prenatal: boolean;
   services: boolean;
+  post_value: boolean;
+  loading: boolean;
+
   modalStats: any;
+
   constructor(private http: HttpService) { }
+
   module: number;
 
   libraries = [
@@ -35,54 +44,81 @@ export class MaternalcareComponent implements OnInit {
   ngOnInit(): void {
     this.module = 1;
     this.post_value = false;
-
-    this.loadLibraries();
+    this.loading = false
+    // this.loadLibraries();
 
   }
 
   switchTab(tab) {
     this.module = 0;
     this.module = tab;
+    if(this.module == 1){
+      this.patient_mc_record = '';
+    }
     console.log(this.module);
   }
-  post_value: boolean;
-  postValue(post_data) {
 
+  postValue(post_data) {
     if (post_data) {
       this.post_value = true;
     }
   }
 
-  showPreServ(id: any){
-    if(id){
-      this.prenatal = true;
-      this.services = true;
-    }
+  openNew(){
+    this.switchTab(2);
+    // this.patient_mc_record = this.patient_mc_record[0]
   }
+
+
+  patientInfo(info) {
+    this.patient_details = info;
+    this.mcrID('all', this.patient_details.id);
+  }
+  
   mcrID(type: any, id: any) {
-
     if (id) {
-
       this.http.get('maternal-care/mc-records?type=' + type + '&patient_id=' + id).subscribe({
         next: (data: any) => {
-          this.patient_mc_record = data.data;
-          console.log(this.patient_mc_record, " patient_mc_record");
-          if (this.patient_mc_record.length != 0) {
-            // if (this.patient_mc_record[0].pre_registration) {
-              this.prenatal = true;
-              this.services = true;
-              if(this.patient_mc_record[0].post_registration && this.patient_mc_record[0].post_registration.length != 0){
-                this.post_value = true;
-              }
-            // }
+          // console.log(data.data[0]);
+          if(data.data.length == 0){
+            this.patient_mc_list = ''
           }
-          // this.module = 2;
+          else{
+            console.log(data.data[0]);
+            this.patient_mc_list = data.data;
+          }
+          
+          // if (this.patient_mc_record.length != 0) {
+              //   this.prenatal = true;
+              //   this.services = true;
+              // if(this.patient_mc_record.post_registration && this.patient_mc_record.post_registration.length != 0){
+              //   this.post_value = true;
+              // }
+          // }
         },
         error: err => console.log(err),
       });
-      // this.patient_mc_record = patient_mc_record
     }
   }
+
+  openMCR(id: any){
+    this.loading = true;
+    console.log(id);
+    if (id) {
+      this.http.get('maternal-care/mc-records/' + id).subscribe({
+        next: (data: any) => {
+          console.log(data);
+          this.patient_mc_record = data.data;
+        },
+        error: err => console.log(err),
+        complete: () => {
+          this.loading = false;
+          this.module = 2;
+        }
+      });
+    }
+  }
+
   loadLibraries() {
     this.libraries.forEach(obj => {
       this.http.get('libraries/' + obj.location).subscribe({
@@ -91,16 +127,22 @@ export class MaternalcareComponent implements OnInit {
       })
     });
   }
+
+  showPreServ(id){
+    if(id){
+      this.prenatal = true;
+    }
+  }
+
   openModal(modal){
     console.log("Opening modal via emit mcr with ", this.modalStats);
     
     this.modalStats = modal;
   }
 
-  patientInfo(info) {
-    this.patient_details = info;
-    this.mcrID('all', this.patient_details.id);
-
-    // console.log(this.patient_details, " pantient info");
+  updatePrenatal(info){
+    this.patient_mc_record[0].prenatal_visit = info;
   }
+
+
 }

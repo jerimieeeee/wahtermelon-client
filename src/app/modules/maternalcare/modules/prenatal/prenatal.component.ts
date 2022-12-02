@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { faAngleDown, faCalendarDay, faCaretRight, faCircleCheck, faClose, faInfoCircle, faPencil, faSave, faTimes, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
@@ -68,6 +68,8 @@ export class PrenatalComponent implements OnInit {
   @Input() fhr_lib;
   @Input() patient_mc_record;
   @Input() patient_details;
+
+  @Output() prenatal_mc_data;
   is_saving: boolean;
   saved: boolean;
   today: Date;
@@ -120,6 +122,7 @@ export class PrenatalComponent implements OnInit {
         next: (data: any) => {
           console.log(data.data, " data from saving prenatal")
           this.prenatal_data = data.data;
+          this.prenatal_mc_data.emit(data.data);
           this.value = this.prenatal_data[0].visit_sequence + 1;
         },
         error: err => console.log(err),
