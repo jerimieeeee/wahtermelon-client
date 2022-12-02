@@ -125,15 +125,15 @@ export class BreastfeedingComponent implements OnInit {
     this.ccdev[i].selected = value;
     // this.fetchSelectedItems()
     this.getPrev()
-    console.log(this.groupList, 'selected bfed_months')
+    // console.log(this.groupList, 'selected bfed_months')
     if(this.groupList.includes('0'))
     {
-     console.log('open ang reason for stopping')
+    //  console.log('open ang reason for stopping')
      this.showData = true
     }
     else{
       this.showData = false
-      console.log('close ang reason for stopping')
+      // console.log('close ang reason for stopping')
     }
 
   }
@@ -169,7 +169,7 @@ export class BreastfeedingComponent implements OnInit {
       ebf_date: this.patient_breastfed.ebf_date,
     }
 
-    console.log(bfedmonths, 'patient_breasfed currently selected');
+    // console.log(bfedmonths, 'patient_breasfed currently selected');
 
     // this.http.post('child-care/cc-breastfed', bfedmonths).subscribe({
     //   // next: (data: any) => console.log(data.status, 'check status'),
@@ -224,7 +224,7 @@ export class BreastfeedingComponent implements OnInit {
     .subscribe({
       next: (data: any) => {
         this.patient_info = data.data;
-        console.log(this.patient_info, 'load ccdev info on breastfeeding')
+        // console.log(this.patient_info, 'load ccdev info on breastfeeding')
       },
       error: err => console.log(err)
     });
@@ -306,9 +306,9 @@ export class BreastfeedingComponent implements OnInit {
 
   checkGroupList(){
     if(new Set(this.groupList).size === 1){
-      console.log('trueeee')
+      // console.log('trueeee')
     }else{
-      console.log('falseeee')
+      // console.log('falseeee')
     }
   }
 
@@ -320,7 +320,7 @@ export class BreastfeedingComponent implements OnInit {
       next: (data: any) => {
         this.patient_breastfed = data.data;
 
-        console.log(this.patient_breastfed, 'data ng breast fedzxc');
+        // console.log(this.patient_breastfed, 'data ng breast fedzxc');
 
         if(this.patient_breastfed.ebfreasons != null){
           this.patient_breastfed.ebfreasons =  this.patient_breastfed.ebfreasons.reason_id;
@@ -331,13 +331,13 @@ export class BreastfeedingComponent implements OnInit {
           this.groupList2.push(this.patient_breastfed[obj]);
           // this.groupList.push(String(this.patient_breastfed[obj]));
           this.ccdev[index].selected = String(this.patient_breastfed[obj]);
-          console.log(this.patient_breastfed[obj], "for each checker");
+          // console.log(this.patient_breastfed[obj], "for each checker");
 
         })
 
-        console.log(this.groupList2, 'grouplist 2 data')
+        // console.log(this.groupList2, 'grouplist 2 data')
         this.getSelected()
-        console.log(this.groupList, 'grouplist data')
+        // console.log(this.groupList, 'grouplist data')
 
       },
       error: err => {console.log(err)
@@ -356,8 +356,8 @@ export class BreastfeedingComponent implements OnInit {
             ebf_date: '',
             ebfreasons: null
           }
-          console.log(this.patient_breastfed, 'fake response')
-          console.log(this.groupList2, 'fake response group list 2')
+          // console.log(this.patient_breastfed, 'fake response')
+          // console.log(this.groupList2, 'fake response group list 2')
           this.getSelected()
         }
       }

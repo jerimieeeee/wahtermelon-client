@@ -172,7 +172,7 @@ export class FirstVisitComponent implements OnInit {
     .subscribe({
       next: (data: any) => {
         this.patient_info = data.data;
-        console.log(this.patient_info, 'info ccdev first visit')
+        // console.log(this.patient_info, 'info ccdev first visit')
         this.getccdevMama()
         this.visitForm.patchValue({...this.patient_info});
       },
@@ -185,7 +185,7 @@ export class FirstVisitComponent implements OnInit {
     .subscribe({
       next: (data: any) => {
         this.patient_info2 = data.data;
-        console.log(this.patient_info2, 'info ccdev mama first visit')
+        // console.log(this.patient_info2, 'info ccdev mama first visit')
       },
       error: err => console.log(err)
     });

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { faDoorClosed } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 
@@ -13,26 +13,31 @@ import { HttpService } from 'app/shared/services/http.service';
 export class ChildcareComponent implements OnInit {
 
   faDoorClosed = faDoorClosed;
-
+  
   module: Number;
 
   patient_details: any;
 
   consult_details: any;
+  patient_consultdetails: any;
+
+  consult_id: any
 
 
   // Section 2
   constructor(private http: HttpService,
-    private router: Router) { }
+  private router: Router,
+  private route: ActivatedRoute) { }
 
   patientInfo(info){
    this.patient_details = info;
    this.loadConsultDetails()
-    console.log(this.patient_details, 'get patient');
+    console.log(this.patient_details, 'get patient from ccdev');
   }
 
-  endVisit(){
 
+  endVisit(){
+  
     let endbutton = {
       consult_done: 1,
       patient_id : this.consult_details[0].patient.id,
@@ -61,14 +66,18 @@ export class ChildcareComponent implements OnInit {
 
       this.http.get('consultation/cn-records',{params: {patient_id: this.patient_details.id}}).subscribe((data: any) => {
         this.consult_details = data.data
-        console.log(this.consult_details[0], 'kunin mo consult');
+        console.log(this.consult_details, 'kunin mo consult');
       });
     }
-
+    
 
   ngOnInit(): void {
     this.module=1;
+    this.consult_id = this.route.snapshot.paramMap.get('consult_id');
+    console.log(this.consult_id, 'test consult ids')
   }
+
+
 
   switchTab(tab){
     this.module = 0;
