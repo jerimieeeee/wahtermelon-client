@@ -1,6 +1,23 @@
 <form [formGroup]="postpartum_form" (submit)="saveForm(postpartum_form.value)">
-    <div class="grid gap-4 relative animates-dropdown" style="grid-template-columns: repeat(16, minmax(0, 1fr));"
+    <div class="grid gap-2 relative animates-dropdown" style="grid-template-columns: repeat(16, minmax(0, 1fr));"
         *ngIf="!focused">
+
+        <div style="grid-column: span 16 / span 16;" >
+            <div class="grid rounded-lg drop-shadow-md bg-white rounded-lg border-gray-300 m-2 border" style="grid-template-columns: repeat(13, minmax(0, 1fr));">
+                <div class="text-sm font-bold form-check p-2 font-semibold border border-dashed border-gray-300 group-hover:border-pink-400 border-t-0 border-l-0 border-r-0 "
+                    style="	grid-column: span 13 / span 13;">
+                    <h1 class="select-none text-pink-500">
+                        Important Dates
+                    </h1>
+                </div>
+                <h3 class="bg-white col-span-2 rounded-md mx-2 font-semibold text-center">EDC Date<p class="font-medium">{{patient_mc_record[0].pre_registration.edc_date | date: 'MM/dd/yyyy'}}</p></h3>
+                <h3 class="bg-white col-span-2 rounded-md mx-2 font-semibold text-center">LMP Date<p class="font-medium">{{patient_mc_record[0].pre_registration.lmp_date | date: 'MM/dd/yyyy'}}</p></h3>
+                <h3 class="bg-white col-span-3 rounded-md mx-2 font-semibold text-center">End of 1st Trimester<p class="font-medium">{{patient_mc_record[0].pre_registration.trimester1_date | date: 'MM/dd/yyyy'}}</p></h3>
+                <h3 class="bg-white col-span-3 rounded-md mx-2 font-semibold text-center">End of 2nd Trimester<p class="font-medium">{{patient_mc_record[0].pre_registration.trimester2_date | date: 'MM/dd/yyyy'}}</p></h3>
+                <h3 class="bg-white col-span-3 rounded-md mx-2 font-semibold text-center">End of 3rd Trimester<p class="font-medium">{{patient_mc_record[0].pre_registration.trimester3_date | date: 'MM/dd/yyyy'}}</p></h3>
+            </div>
+        </div>
+
         <div class="sticky top-14 z-50 border border-blue-400 col-span-2 relative mx-2 px-2 py-1 rounded-t-lg text-sm bg-blue-500 text-white"
             style="grid-column: span 16 / span 16;"><button class="font-bold" type="button">Postpartum</button>
             <div class="absolute left-24 top-1">
@@ -333,7 +350,7 @@
                             </div>
                         </div>
 
-                        <div class="transitions col-span-6 mx-2" *ngIf="!focused">
+                        <div class="transitions col-span-5 mx-2" *ngIf="!focused">
                             <h3 for="breastfeeding">Mother initiated breastfeeding ASAP</h3>
                             <div class="flex w-full mb-2">
                                 <label for="breastfeeding" class="mx-2 flex items-center cursor-pointer w-max">
@@ -386,13 +403,19 @@
                                 </label>
                             </div>
                         </div> -->
+                        
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="relative w-auto border-check mb-7 w-12/12" *ngIf="!focused && postpartum_form.enabled">
-        <div class="absolute inline-flex right-0 ">
+    <div class="flex w-auto border-check mb-7 w-12/12" *ngIf="!focused && postpartum_form.enabled">
+        <div class="inline-flex bg-white rounded-lg mr-auto border border-gray-400 hover:border-pink-400 drop-shadow-md hover:drop-shadow-lg w-full py-2 px-4 ml-2">
+            <input formControlName="end_pregnancy" id="end_pregnancy" type="checkbox" class="rounded-md check-style text-pink-400">
+            <label for="end_pregnancy" class="ml-2 font-bold text-sm m-auto text-pink-500">End Pregnancy Record</label>
+        </div>
+        <div class="inline-flex ml-auto h-max mt-2">
+            <div *ngIf="saved" class="border rounded-md bg-green-200 text-green-400 px-2 ease-in-out duration-1000">Successfully Saved!</div>
             <div (click)="cancel()"
                 class="cursor-pointer flex border-check bg-white hover:drop-shadow-md hover:bg-gray-400 py-1 rounded-full text-gray-400 hover:text-white pl-2 pr-2 peer">
                 <fa-icon [icon]="faTimes" size="lg" class="mr-2">

@@ -19,3 +19,13 @@ export type WeightChart = {
   dataLabels: ApexDataLabels;
   title: ApexTitleSubtitle;
 };
+
+export type BmiChart = {
+  series: ApexAxisChartSeries;
+  chart: ApexChart;
+  xaxis: ApexXAxis;
+  stroke: ApexStroke;
+  tooltip: ApexTooltip;
+  dataLabels: ApexDataLabels;
+  title: ApexTitleSubtitle;
+};

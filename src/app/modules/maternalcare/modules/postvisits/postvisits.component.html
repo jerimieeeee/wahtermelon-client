@@ -1,7 +1,7 @@
 <form [formGroup]="postpartum_visit_form" (ngSubmit)="saveForm(postpartum_visit_form.value)">
     <div class="grid gap-2 relative animates-dropdown " style="grid-template-columns: repeat(16, minmax(0, 1fr));"
         *ngIf="!focused">
-        <div class="sticky top-0 z-50 border border-blue-400 col-span-2 relative mx-2 px-2 py-1 rounded-t-lg text-sm bg-blue-500 text-white"
+        <div class="sticky top-14 z-50 border border-blue-400 col-span-2 relative mx-2 px-2 py-1 rounded-t-lg text-sm bg-blue-500 text-white"
             style="grid-column: span 16 / span 16;"><button class="font-bold" type="button">Visits (Postpartum)</button>
             <div class="absolute left-36 top-1">
                 <fa-icon [icon]="faInfoCircle" class=" peer ml-4 text-white hover:text-gray-500 z-50"></fa-icon>

@@ -73,6 +73,7 @@ export class PostpartumComponent implements OnInit {
   today: Date;
   public mcr_data: any;
   is_saving: boolean;
+  saved: boolean;
   selected_regions: string;
 
   constructor(private http: HttpService, private formBuilder: FormBuilder) { }
@@ -84,6 +85,7 @@ export class PostpartumComponent implements OnInit {
     this.filter = '';
     this.today = new Date();
     this.is_saving = false;
+    this.saved = false;
   }
 
   getMCR(type: any, id: any) {
@@ -186,9 +188,9 @@ export class PostpartumComponent implements OnInit {
         error: err => console.log(err),
         complete: () => {
           this.is_saving = false;
-          // this.saved = true;
+          this.saved = true;
           setTimeout(() => {
-            // this.saved = false;
+            this.saved = false;
           }, 1500);
           // this.loading = false;
           // this.showModal = true;

@@ -108,6 +108,7 @@ export class HeaderComponent implements OnInit {
   }
 
   navigateTo(loc){
+    this.toggleMenu();
     this.router.navigate(['/'+loc]);
   }
 

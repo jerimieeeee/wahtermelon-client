@@ -1,6 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
 // import { AnyNaptrRecord } from 'd/ns';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { faCircleCheck, faClose, faInfoCircle, faPencilSquare, faPenToSquare, faSave, faTimes, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
@@ -21,44 +22,133 @@ export class ServicesComponent implements OnInit {
   @Input() lib_services;
   @Input() visit_type;
   @Input() patient_details;
+  @Input() patient_mc_record;
+  @Input() module;
+  @Output() modalStats = new EventEmitter<boolean>();
+
   today: Date;
   // modal = false;
   modal: boolean;
+  saved: boolean;
 
   constructor(private http: HttpService, private formBuilder: FormBuilder) { }
 
+  faTimes = faTimes;
+  faSave = faSave;
+  faInfoCircle = faInfoCircle;
+  faPenToSquare = faPenToSquare;
+  faTimesCircle = faTimesCircle
+  faCircleCheck = faCircleCheck
+  user_id: any
+  facility_code: any
+
+  public serviceChanges = [];
+  public service_array = [];
+  public service_list = [];
 
   ngOnInit() {
+    console.log(this.patient_mc_record, "mc record from services");
+
+    this.user_id = this.http.getUserID();
+    this.facility_code = this.http.getUserFacility();
     console.log(this.visit_type);
     this.createForm()
+    this.serviceChanges.push(this.services_form.value);
+    this.serviceChanges.push(this.services_form.value);
+    this.serviceChanges.push(this.services_form.value);
+    this.serviceChanges.push(this.services_form.value);
+    this.serviceChanges.push(this.services_form.value);
+    this.serviceChanges.push(this.services_form.value);
+    this.serviceChanges.push(this.services_form.value);
+    this.serviceChanges.push(this.services_form.value);
+    this.serviceChanges.push(this.services_form.value);
+    this.serviceChanges.push(this.services_form.value);
+    this.serviceChanges.push(this.services_form.value);
+    this.getServices()
+    console.log(this.serviceChanges, " this are my init changes");
+
+
     this.today = new Date();
     this.modal = false;
   }
-  saveForm(value: any) {
+  saveForm() {
+    // maternal-care/mc-services
+    console.log(this.serviceChanges);
 
-  }
+    this.serviceChanges.forEach(s => {
+      // console.log(s.service_id != "");
 
-  createForm() {
+      if (s.service_id != "") {
+        console.log(this.serviceChanges.map(z => z.service_id).indexOf(s.service_id), " logging index of with id")
+        console.log("commiting to save ", s);
 
-    let user_id = this.http.getUserID();
-    let facility_code = this.http.getUserFacility();
+        this.http.post('maternal-care/mc-services', s).subscribe({
+          next: (data: any) => {
+            console.log(data.data, " data from saving services")
+            this.getServices();
+            // this.service_list.push(data.data)
+            // this.services_form = data.data;
+          },
+          error: err => console.log(err),
+          complete: () => {
+            // this.is_saving = false;
+            this.saved = true
+            setTimeout(() => {
+              this.saved = false;
+              this.openModal();
+            }, 1500);
+          }
+        })
 
-    this.services_form = this.formBuilder.group({
-      facility_code: [facility_code],
-      patient_id: [this.patient_details.id],
-      user_id: [user_id],
-      service_date: [new Date().toISOString().substring(0, 10), [Validators.required]],
-      visit_type_code: ['', [Validators.required]],
-      visit_status: [''],
-      service_qty: [''],
-      positive_result: [''],
-      intake_penicillin: [''],
+      }
     })
   }
+  getServices() {
+    this.http.get('maternal-care/mc-services?filter[patient_mc_id]=' + this.patient_mc_record[0].id).subscribe({
+      next: (data: any) => {
+        console.log(data, " get services");
+        this.service_list = data.data;
+      },
+      error: err => console.log(err),
 
-  openModal(){
+    })
+  }
+  createForm() {
+    this.services_form = this.formBuilder.group({
+      service_date: [new Date().toISOString().substring(0, 10), [Validators.required]],
+      visit_type_code: ['', [Validators.required]],
+      visit_status: [this.module == 3 ? 'Prenatal' : (this.module == 4 ? 'Postpartum' : 'Services')],
+      service_qty: [''],
+      positive_result: [false],
+      intake_penicillin: [false],
+      service_id: '',
+    })
+
+    console.log(this.services_form.value.visit_status, " service form");
+
+  }
+  onChange(desc, id, i, item) {
+    this.serviceChanges[i] = {
+      patient_mc_id: this.patient_mc_record[0].id,
+      facility_code: this.facility_code,
+      patient_id: this.patient_details.id,
+      user_id: this.user_id,
+      visit_type_code: item == 'visit_type_code' ? this.services_form.value[item] : this.serviceChanges[i].visit_type_code,
+      visit_status: this.services_form.value.visit_status,
+      intake_penicillin: item == 'intake_penicillin' ? this.services_form.value[item] : this.serviceChanges[i].intake_penicillin,
+      positive_result: item == 'positive_result' ? this.services_form.value[item] : this.serviceChanges[i].positive_result,
+      service_date: this.services_form.value.service_date,
+      service_qty: item == 'service_qty' ? this.services_form.value[item] : this.serviceChanges[i].service_qty,
+      service_id: id,
+    };
+
+    console.log(this.serviceChanges, " these are the changes with the description: ", desc);
+
+  }
+  openModal() {
     console.log("opening modal");
 
-    this.modal = true;
+    this.modal = !this.modal;
+    this.modalStats.emit(this.modal);
   }
 }

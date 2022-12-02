@@ -10,3 +10,15 @@
   .fade-in{
     animation: pulse-in .3s forwards ease-in;
   }
+
+  .service-modal{
+    z-index: 200 !important;
+  }
+
+  // .main-tab-z{
+  //   z-index: 10 !important;
+  // }
+
+  // .service-tab-z{
+  //   z-index: 20 !important;
+  // }

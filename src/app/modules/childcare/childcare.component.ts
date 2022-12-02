@@ -13,7 +13,7 @@ import { HttpService } from 'app/shared/services/http.service';
 export class ChildcareComponent implements OnInit {
 
   faDoorClosed = faDoorClosed;
-  
+
   module: Number;
 
   patient_details: any;
@@ -32,7 +32,7 @@ export class ChildcareComponent implements OnInit {
   }
 
   endVisit(){
-  
+
     let endbutton = {
       consult_done: 1,
       patient_id : this.consult_details[0].patient.id,
@@ -64,7 +64,7 @@ export class ChildcareComponent implements OnInit {
         console.log(this.consult_details[0], 'kunin mo consult');
       });
     }
-    
+
 
   ngOnInit(): void {
     this.module=1;

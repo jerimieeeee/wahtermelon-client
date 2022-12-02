@@ -16,6 +16,7 @@ export class MaternalcareComponent implements OnInit {
   patient_mc_record: any;
   prenatal: boolean;
   services: boolean;
+  modalStats: any;
   constructor(private http: HttpService) { }
   module: number;
 
@@ -90,6 +91,12 @@ export class MaternalcareComponent implements OnInit {
       })
     });
   }
+  openModal(modal){
+    console.log("Opening modal via emit mcr with ", this.modalStats);
+    
+    this.modalStats = modal;
+  }
+
   patientInfo(info) {
     this.patient_details = info;
     this.mcrID('all', this.patient_details.id);
