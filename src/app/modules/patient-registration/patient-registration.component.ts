@@ -90,6 +90,7 @@ export class PatientRegistrationComponent implements OnInit {
   is_saving: boolean = false;
   loading: boolean = false;
   familyFolderModal: boolean = false;
+  show_form = false;
 
   selected_family_folder: string;
   selected_barangay_code: string;
@@ -257,7 +258,8 @@ export class PatientRegistrationComponent implements OnInit {
     this.libraries.forEach(obj => {
       this.http.get('libraries/'+obj.location).subscribe({
         next: (data: any) => this[obj.var_name] = data.data,
-        error: err => console.log(err)
+        error: err => console.log(err),
+        complete: () => this.show_form = true
       })
     });
   }
