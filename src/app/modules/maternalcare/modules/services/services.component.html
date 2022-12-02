@@ -2,8 +2,8 @@
    *ngIf="!focused">
    <div
       class="sticky top-14 z-50 border border-blue-400 col-span-2 relative mx-2 px-2 py-1 rounded-t-lg text-sm bg-blue-500 text-white"
-      style="grid-column: span 16 / span 16;"><button class="font-bold" type="button">Services</button>
-      <div class="absolute left-16 top-1">
+      style="grid-column: span 16 / span 16;"><button class="font-bold" type="button">{{module == 3?'Prenatal':(module == 4?'Postpartum':'Services')}} Services</button>
+      <!-- <div class="absolute left-16 top-1">
          <fa-icon [icon]="faInfoCircle" class=" peer ml-4 text-white hover:text-gray-500 z-50"></fa-icon>
          <div
             class="absolute text-sm bg-gradient-to-b from-stone-500 to-gray-400 p-2 rounded-md border border-gray-500  text-white drop-shadow-lg opacity-90 border-check z-50 w-64 invisible peer-hover:visible">
@@ -11,7 +11,7 @@
             <p class="font-light drop-shadow-lg">Once saved, the information will be displayed in the input
                boxes and shall not be editable unless Edit button is pressed.</p>
          </div>
-      </div>
+      </div> -->
       <div class="absolute right-2 top-1">
          <fa-icon [icon]="faPenToSquare" size="md" class="text-white hover:text-gray-500 z-50 " (click)="openModal()"></fa-icon>
       </div>
@@ -30,7 +30,7 @@
                      <table class="table-auto relative">
                         <thead class="sticky top-0 ">
                            <tr>
-                              <th class="px-2">ID</th>
+                              <th class="px-2">Description</th>
                               <th class="px-2">Date</th>
                               <th class="px-2">Quantity</th>
                               <th class="px-2">Status</th>
@@ -41,12 +41,18 @@
                         </thead>
                         <tbody>
                            <tr *ngFor="let service of service_list" class="hover:bg-blue-100">
-                              <td class="px-2 font-normal">{{service.service_id}}</td>
+                              <td class="px-2 font-normal">{{service.service.desc}}</td>
                               <td class="px-2 font-normal">{{service.service_date}}</td>
-                              <td class="px-2 font-normal">{{service.service_qty}}</td>
+                              <td class="px-2 font-normal">{{service.service_qty?service.service_qty:'-'}}</td>
                               <td class="px-2 font-normal">{{service.visit_status}}</td>
-                              <td class="px-2 font-normal">{{service.positive_result}}</td>
-                              <td class="px-2 font-normal">{{service.intake_penicillin}}</td>
+                              <td class="px-2 font-normal">
+                                 <fa-icon *ngIf="service.positive_result" [icon]="faCircleCheck" size="md" class="text-green-400"></fa-icon>
+                                 <fa-icon *ngIf="!service.positive_result" [icon]="faTimesCircle" size="md" class="text-red-400"></fa-icon>
+                              </td>
+                              <td class="px-2 font-normal">
+                                 <fa-icon *ngIf="service.intake_penicillin" [icon]="faCircleCheck" size="md" class="text-green-400"></fa-icon>
+                                 <fa-icon *ngIf="!service.intake_penicillin" [icon]="faTimesCircle" size="md" class="text-red-400"></fa-icon>
+                              </td>
                               <td class="px-2 font-normal">{{service.visit_type_code}}</td>
                            </tr>
                         </tbody>
@@ -161,6 +167,7 @@
                <div style="grid-column: span 16 / span 16;" class="-mt-6 m-2 pr-2 bg-white rounded-b-lg">
                   <div class="relative w-auto border-check mb-2 w-12/12 flex">
                      <div class="inline-flex ml-auto mt-2">
+                        <div *ngIf="saved" class="border rounded-md bg-green-200 text-green-400 px-2 ease-in-out duration-1000">Successfully Saved!</div>
                         <div (click)="openModal()"
                            class="mr-2 cursor-pointer flex border-check bg-white hover:drop-shadow-md hover:bg-gray-400 py-1 rounded-full text-gray-400 hover:text-white pl-2 pr-2 peer">
                            <fa-icon [icon]="faTimes" size="lg" class="mr-2">

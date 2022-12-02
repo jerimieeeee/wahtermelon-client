@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { faAngleDown, faCalendarDay, faCaretRight, faClose, faInfoCircle, faPencil, faSave, faTimes, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
+import { faAngleDown, faCalendarDay, faCaretRight, faCircleCheck, faClose, faInfoCircle, faPencil, faSave, faTimes, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
@@ -19,6 +19,7 @@ export class PrenatalComponent implements OnInit {
   faAngleDown = faAngleDown;
   faInfoCircle = faInfoCircle;
   faCaretRight = faCaretRight;
+  faCircleCheck = faCircleCheck;
 
   prenatal_form: FormGroup = new FormGroup({
     prenatal_date: new FormControl<string | null>(''),
@@ -30,6 +31,7 @@ export class PrenatalComponent implements OnInit {
     presentation_code: new FormControl<string | null>(''),
     fhr: new FormControl<string | null>(''),
     location_code: new FormControl<string | null>(''),
+    remarks: new FormControl<string | null>(''),
     private: new FormControl<string | null>(''),
   });
 
@@ -67,6 +69,7 @@ export class PrenatalComponent implements OnInit {
   @Input() patient_mc_record;
   @Input() patient_details;
   is_saving: boolean;
+  saved: boolean;
   today: Date;
   public mcPrenatal_id = [];
   constructor(private http: HttpService, private formBuilder: FormBuilder) { }
@@ -117,27 +120,17 @@ export class PrenatalComponent implements OnInit {
         next: (data: any) => {
           console.log(data.data, " data from saving prenatal")
           this.prenatal_data = data.data;
-          // this.patient_mc_record[0].prenatal_visit = data.data;
-          // this.getMCR('latest', this.patient_details.id);
-          // this.updateMCR('latest', this.patient_details.id);
-
-          /* data.data.forEach(d => {
-            d.push({aog_count: d.aog_weeks + ' weeks and ' + d.aog_days + ' days'});
-            this.prenatal_data.push(d)
-            console.log(d, " the Ds");
-
-          })*/
           this.value = this.prenatal_data[0].visit_sequence + 1;
         },
         error: err => console.log(err),
         complete: () => {
           this.is_saving = false;
-          // this.saved = true;
+          this.saved = true;
+          this.createForm();
           setTimeout(() => {
-            // this.saved = false;
+            this.saved = false;
           }, 1500);
-          // this.loading = false;
-          // this.showModal = true;
+
         }
       })
     } else {
@@ -168,41 +161,41 @@ export class PrenatalComponent implements OnInit {
     this.value = this.patient_mc_record[0].prenatal_visit[0].visit_sequence + 1;
     this.prenatal_data = this.patient_mc_record[0].prenatal_visit;
   }
-  this.createForm(this.patient_mc_record[0]);
+  this.createForm();
   }
-  createForm(mc_record: any) {
+  createForm() {
     let prenatal_visit: any
     if(this.patient_mc_record[0].prenatal_visit[0]?this.patient_mc_record[0].prenatal_visit[0]:this.patient_mc_record[0].prenatal_visit.length == 1){
-        console.log("it went true again");
-        prenatal_visit = mc_record.prenatal_visit[0];
+        // console.log("it went true again");
+        prenatal_visit = this.patient_mc_record[0].prenatal_visit[0];
     }else{
       console.log(" its false coz prenatal is 0");
-      prenatal_visit = mc_record.prenatal_visit;
+      prenatal_visit = this.patient_mc_record[0].prenatal_visit;
     }
 
     let user_id = this.http.getUserID();
     let facility_code = this.http.getUserFacility();
-    console.log(prenatal_visit, " log prenatal_visit");
+    // console.log(prenatal_visit, " log prenatal_visit");
 
     this.prenatal_form = this.formBuilder.group({
-      patient_mc_id: [mc_record.id, [Validators.required, Validators.minLength(2)]],
+      patient_mc_id: [this.patient_mc_record[0].id, [Validators.required, Validators.minLength(2)]],
       facility_code: [facility_code, [Validators.required, Validators.minLength(2)]],
       patient_id: [this.patient_details.id, [Validators.required, Validators.minLength(2)]],
       user_id: [user_id, [Validators.required, Validators.minLength(2)]],
-      prenatal_date: [prenatal_visit.length != 0 ? new Date(prenatal_visit.prenatal_date).toISOString().substring(0, 10) : new Date().toISOString().substring(0, 10),
-      [Validators.required]],
+      prenatal_date: [new Date().toISOString().substring(0, 10),[Validators.required]],
       patient_height: [prenatal_visit.length != 0 ? prenatal_visit.patient_height : 0, [Validators.required, Validators.minLength(2)]],
       patient_weight: [prenatal_visit.length != 0 ? prenatal_visit.patient_weight : 0, [Validators.required, Validators.minLength(2)]],
-      bp_systolic: [prenatal_visit.bp_systolic ? prenatal_visit.bp_systolic : '', [Validators.required, Validators.minLength(2)]],
-      bp_diastolic: [prenatal_visit.bp_diastolic ? prenatal_visit.bp_diastolic : '', [Validators.required, Validators.minLength(2)]],
-      fundic_height: [prenatal_visit.fundic_height ? prenatal_visit.fundic_height : 0],
+      bp_systolic: ['', [Validators.required, Validators.minLength(2)]],
+      bp_diastolic: ['', [Validators.required, Validators.minLength(2)]],
+      fundic_height: [''],
       presentation_code: [prenatal_visit.presentation_code ? prenatal_visit.presentation_code : '', [Validators.required, Validators.minLength(2)]],
-      fhr: [prenatal_visit.fhr ? prenatal_visit.fhr : 0],
-      location_code: [prenatal_visit.location_code ? prenatal_visit.location_code : 'NA'],
+      fhr: [''],
+      location_code: ['NA'],
+      remarks: [''],
       private: [prenatal_visit.private ? prenatal_visit.private : 0],
     });
 
-    console.log(this.prenatal_form.value, " form prenatal creatform");
+    // console.log(this.prenatal_form.value, " form prenatal creatform
   }
 
   quadrant(id) {
@@ -286,7 +279,9 @@ export class PrenatalComponent implements OnInit {
     this.hide = [];
     this.keyUp = [];
     this.edit_bool = false;
-    this.createForm(0);
+    this.createForm();
+    console.log("canceling");
+    
   }
   edit(id) {
     this.edit_bool = true;
