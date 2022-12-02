@@ -270,6 +270,8 @@ export class PatientRegistrationComponent implements OnInit {
       next: (data: any) => {
         // console.log(data);
         this.patientForm.patchValue({...data.data});
+
+        this.patientForm.patchValue({suffix_name: data.data.suffix_code})
         this.patient_to_update = data.data.id;
         // console.log(this.patientForm);
         this.button_function = 'Update';

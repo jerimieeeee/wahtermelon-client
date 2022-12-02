@@ -123,7 +123,7 @@
                 Assessed By
               </span>
               <span class="flex-1 text-right">
-                {{ selected_visit?.user?.last_name+', ' }} {{ selected_visit?.user?.first_name }} {{ selected_visit?.user?.middle_name === 'NA' ? '' : selected_visit?.user?.middle_name }} {{ selected_visit?.user?.suffix_name === 'NA' ? '' : selected_visit?.user?.suffix_name }}
+                <span *ngIf="selected_visit?.user">{{ selected_visit?.user?.last_name+', ' }} {{ selected_visit?.user?.first_name }} {{ selected_visit?.user?.middle_name === 'NA' ? '' : selected_visit?.user?.middle_name }} {{ selected_visit?.user?.suffix_name === 'NA' ? '' : selected_visit?.user?.suffix_name }}</span>
               </span>
             </div>
             <div class="flex mx-2 text-sm">
@@ -131,7 +131,7 @@
                 Physician
               </span>
               <span class="flex-1 text-right">
-                {{ selected_visit?.physician?.last_name+', ' }} {{ selected_visit?.physician?.first_name }} {{ selected_visit?.physician?.middle_name === 'NA' ? '' : selected_visit?.physician?.middle_name }} {{ selected_visit?.physician?.suffix_name === 'NA' ? '' : selected_visit?.physician?.suffix_name }}
+                <span *ngIf="selected_visit?.physician">{{ selected_visit?.physician?.last_name+', ' }} {{ selected_visit?.physician?.first_name }} {{ selected_visit?.physician?.middle_name === 'NA' ? '' : selected_visit?.physician?.middle_name }} {{ selected_visit?.physician?.suffix_name === 'NA' ? '' : selected_visit?.physician?.suffix_name }}</span>
               </span>
             </div>
 

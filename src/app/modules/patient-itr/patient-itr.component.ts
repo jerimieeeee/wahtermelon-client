@@ -258,7 +258,7 @@ export class PatientItrComponent implements OnInit {
     this.http.get('consultation/cn-records',{params:{patient_id: this.patient_details.id, per_page: 'all', sort: '-consult_date'}}).subscribe({
       next: (data: any) => {
         this.visit_list = data.data;
-        console.log(data);
+        // console.log(data);
       },
       error: err => console.log(err),
     })
@@ -271,6 +271,7 @@ export class PatientItrComponent implements OnInit {
   }
 
   showConsult(details: any){
+    console.log(details)
     if(details.vitals) this.getLatestToday(details);
   }
 

@@ -88,7 +88,7 @@ export class PatientInfoComponent {
         this.loadVaccines();
         this.accordions['vitals'] = true
         // this.toggleModal('philhealth-modal');//open sample modal
-        // console.log(data.data)
+        console.log(data.data)
       },
       error: err => {
         // feature: add prompt that patient is not found. for now redirect to home
