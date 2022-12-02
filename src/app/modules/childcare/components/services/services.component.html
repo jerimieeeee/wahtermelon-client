@@ -22,7 +22,7 @@
     </div>
 
     <div class="flex w-full item-start flex-wrap pt-5">
-      <div *ngFor="let item of service_list" class="md:w-1/2 lg:w-1/2 px-10 text-sm pb-5">
+      <div *ngFor="let item of findEssential(service_list)" class="md:w-1/2 lg:w-1/2 px-10 text-sm pb-5">
        
           <!-- <fa-icon (click)="toggleModal('delete-vaccine-modal')" class="mx-0 my-0 text-red-400 hover:cursor-pointer flex-none mr-2" [icon]="faTrash"></fa-icon> -->
           <span class="text-sm flex-auto" *ngIf="item.services.essential == 'Y'">
@@ -181,7 +181,7 @@
   </div>
 
   <div class="flex w-full item-start flex-wrap pt-5">
-    <div *ngFor="let item of service_list" class="md:w-1/2 lg:w-1/2 px-10 text-sm pb-5">
+    <div *ngFor="let item of findServices(service_list)" class="md:w-1/2 lg:w-1/2 px-10 text-sm pb-5">
      
         <!-- <fa-icon (click)="toggleModal('delete-vaccine-modal')" class="mx-0 my-0 text-red-400 hover:cursor-pointer flex-none mr-2" [icon]="faTrash"></fa-icon> -->
         <span class="text-sm flex-auto" *ngIf="item.services.essential == 'N'">
