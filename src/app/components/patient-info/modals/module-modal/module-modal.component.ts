@@ -114,11 +114,12 @@ export class ModuleModalComponent implements OnInit {
             // console.log(data.data)
             if(data.data.length > 0){
               this.router.navigate(['/'+loc, {id: this.patient_info.id, consult_id: data.data[0].id}])
+              this.is_loading = false;
             }else{
               console.log(this.selected_module);
+              this.is_loading = false;
               this.show_new = true;
             }
-            this.is_loading = false;
           },
           error: err => {console.log(err);this.is_loading = false},
           complete: () => console.log('loaded visits')
@@ -132,6 +133,7 @@ export class ModuleModalComponent implements OnInit {
   }
 
   onCreateNew(selected_module){
+    this.is_loading = true;
     let user_id = this.http.getUserID();
     let new_visit = {
       patient_id: this.patient_info.id,
@@ -144,8 +146,9 @@ export class ModuleModalComponent implements OnInit {
     this.http.post('consultation/cn-records', new_visit).subscribe({
       next: (data: any) => {
         this.router.navigate(['/'+selected_module.location, {id: this.patient_info.id}]);
+        this.is_loading = false;
       },
-      error: (err) => console.log(err),
+      error: (err) => {console.log(err); this.is_loading = false;},
       complete: () => console.log('new visit saved')
     });
   }
