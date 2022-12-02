@@ -350,7 +350,7 @@
                             </div>
                         </div>
 
-                        <div class="transitions col-span-6 mx-2" *ngIf="!focused">
+                        <div class="transitions col-span-5 mx-2" *ngIf="!focused">
                             <h3 for="breastfeeding">Mother initiated breastfeeding ASAP</h3>
                             <div class="flex w-full mb-2">
                                 <label for="breastfeeding" class="mx-2 flex items-center cursor-pointer w-max">
@@ -403,13 +403,18 @@
                                 </label>
                             </div>
                         </div> -->
+                        
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="relative w-auto border-check mb-7 w-12/12" *ngIf="!focused && postpartum_form.enabled">
-        <div class="absolute inline-flex right-0 ">
+    <div class="flex w-auto border-check mb-7 w-12/12" *ngIf="!focused && postpartum_form.enabled">
+        <div class="inline-flex bg-white rounded-lg mr-auto border border-gray-400 hover:border-pink-400 drop-shadow-md hover:drop-shadow-lg w-full py-2 px-4 ml-2">
+            <input formControlName="end_pregnancy" id="end_pregnancy" type="checkbox" class="rounded-md check-style text-pink-400">
+            <label for="end_pregnancy" class="ml-2 font-bold text-sm m-auto text-pink-500">End Pregnancy Record</label>
+        </div>
+        <div class="inline-flex ml-auto h-max mt-2">
             <div *ngIf="saved" class="border rounded-md bg-green-200 text-green-400 px-2 ease-in-out duration-1000">Successfully Saved!</div>
             <div (click)="cancel()"
                 class="cursor-pointer flex border-check bg-white hover:drop-shadow-md hover:bg-gray-400 py-1 rounded-full text-gray-400 hover:text-white pl-2 pr-2 peer">
