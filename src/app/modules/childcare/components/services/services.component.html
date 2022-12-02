@@ -124,7 +124,7 @@
             <div *ngFor="let item of lib_ccservices" class="w-full mx-10">
               <div *ngIf="item.essential == modalFilter" class="grid grid-cols-3 gap-4 mt-5">
                 <label class="col-span-1" for="{{ item.service_id }}">{{ item.service_name}} ({{ item.service_id }})</label>
-
+                
                 <!-- <div class="col-span-1"> -->
                   <select (change)="onChange()" [(ngModel)]="serviceForm.service_status[item.service_id]"
                         id="{{ 'service_status.'+item.service_id }}"
@@ -141,9 +141,16 @@
                       name="{{ 'service_date.'+item.service_id }}" id="{{ 'service_date.'+item.service_id }}" type="date" placeholder="Enter vaccine date" class="col-span-1 mt-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                   </div>
 
+                  <div *ngIf="serviceForm.service_status['NBSDONE'] !== '-' && serviceForm.service_status['NBSDONE'] !== '' && serviceForm.service_status['NBSDONE'] !== undefined && item.service_id == 'NBSDONE'" class="col-start-2">
+                    <input  [ngModel]="patient_info.nbs_filter"
+                      name="" id="" type="text" placeholder="Enter NBS Filter" class="col-span-1 col-start-2 mt-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                  </div>
+
                 <!-- </div> -->
               </div>
+              
             </div>
+            
           </div>
           <div class="text-gray-600 border border-slate-100 mx-5 mt-5"></div><!-- border -->
         </form>

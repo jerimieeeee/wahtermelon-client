@@ -323,8 +323,30 @@ export class ServicesComponent implements OnInit {
     console.log(this.serviceForm.service_date, 'ng model check')
   }
 
+  submitNBS(){
+    
+  
+ 
+    var nbsfilter ={
+      nbs_filter: this.patient_info.nbs_filter,
+    }
+
+    console.log(nbsfilter);
+
+    this.http.update('child-care/cc-records/', this.patient_info.id, nbsfilter).subscribe({
+      // next: (data: any) => console.log(data.status, 'check status'),
+      error: err => console.log(err),
+      complete: () => {
+        // this.loadLibraries();
+        console.log(nbsfilter,'nbs filter data saved')
+        this.is_saving = false;
+      }
+    })
+  }
+
 
   onSubmit(){
+    this.submitNBS()
     var service_arr = [];
 
     console.log(this.serviceForm)
@@ -458,6 +480,18 @@ export class ServicesComponent implements OnInit {
       }
     })
   }
+
+  getccdevDetails() {
+    this.http.get('child-care/cc-records/'+this.patient_details.id)
+    .subscribe({
+      next: (data: any) => {
+        this.patient_info = data.data;
+        console.log(this.patient_info, 'info ccdev first visit')
+        
+      },
+      error: err => console.log(err)
+    });
+  }
   
 
   ngOnInit() {
@@ -468,6 +502,7 @@ export class ServicesComponent implements OnInit {
     this.fetchCheckedIDs()
     this.fetchCheckedIDs2()
     this.loadCCLibraries()
+    this.getccdevDetails()
     if(this.patient_details.id) this.loadServicesTest()
   }
 }

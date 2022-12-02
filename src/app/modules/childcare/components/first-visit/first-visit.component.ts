@@ -128,7 +128,7 @@ export class FirstVisitComponent implements OnInit {
       patient_id: [this.patient_details.id, [Validators.required, Validators.minLength(2)]],
       user_id: [user_id, [Validators.required, Validators.minLength(2)]],
       ccdev_ended: ['0', [Validators.required, Validators.minLength(2)]],
-      nbs_filter: ['5500815323', [Validators.required, Validators.minLength(2)]],
+      nbs_filter: ['', [Validators.required, Validators.minLength(2)]],
     });
   }
 
