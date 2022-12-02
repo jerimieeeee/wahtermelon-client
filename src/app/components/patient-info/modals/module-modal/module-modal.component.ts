@@ -110,7 +110,7 @@ export class ModuleModalComponent implements OnInit {
           next: (data: any) => {
             this.selected_module = module;
             if(data.data.length > 0){
-              this.router.navigate(['/'+loc, {id: this.patient_info.id}])
+              this.router.navigate(['/'+loc, {id: this.patient_info.id, consult_id: data.data.id}])
             }else{
               console.log(this.selected_module);
               this.show_new = true;
