@@ -126,20 +126,17 @@ export class McrComponent implements OnInit {
 
     console.log(this.mcr_form.value, " validation check");
     this.loading = true;
-    let url
-    let action
+    let http;
     if(this.updating){
-      url = 'maternal-care/mc-preregistrations/' + this.mcr_data.id
-      action = "http.put"
+      http = this.http.update('maternal-care/mc-preregistrations/', this.mcr_data.id, this.mcr_form.value)
     }else{
-      url = 'maternal-care/mc-preregistrations'
-      action = "http.post"
+      http = this.http.post('maternal-care/mc-preregistrations', this.mcr_form.value)
     }
 
-    console.log(url, " my url for saving or updating coz, ", this.updating);
+    // console.log(url, " my url for saving or updating coz, ", this.updating);
     
     if (this.mcr_form.valid) {
-      this[action](url, this.mcr_form.value).subscribe({
+      http.subscribe({
         next: (data: any) => {
           console.log(data, " data from saving");
           this.patient_mc_id.emit(data.patient_mc_id)
@@ -154,7 +151,7 @@ export class McrComponent implements OnInit {
         }
       })
     } else {
-
+      this.loading = false;
     }
   }
 
