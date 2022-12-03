@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { faAngleDown, faCalendarDay, faCaretRight, faClose, faInfoCircle, faPencil, faSave, faTimes, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
+import { faAngleDown, faCalendarDay, faCaretRight, faCircleNotch, faClose, faInfoCircle, faPencil, faSave, faTimes, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 
 
@@ -20,6 +20,7 @@ export class PostpartumComponent implements OnInit {
   faTimesCircle = faTimesCircle;
   faSave = faSave;
   faPencil = faPencil;
+  faSpinner = faCircleNotch;
   faAngleDown = faAngleDown;
   faInfoCircle = faInfoCircle;
   faCaretRight = faCaretRight;
@@ -77,6 +78,7 @@ export class PostpartumComponent implements OnInit {
   is_saving: boolean;
   saved: boolean;
   selected_regions: string;
+  updating: boolean;
 
   constructor(private http: HttpService, private formBuilder: FormBuilder) { }
 
@@ -98,6 +100,7 @@ export class PostpartumComponent implements OnInit {
           this.mcr_data = -1;
         } else {
           this.mcr_data = this.patient_mc_record;
+          this.updating = true;
           console.log(this.patient_mc_record, ' MCR SDATA DASOIDU');
         }
         this.createForm(this.mcr_data);
@@ -182,8 +185,15 @@ export class PostpartumComponent implements OnInit {
   console.log(this.postpartum_form.value.discharge_date);
 
     if (this.postpartum_form.valid) {
+      let http
+      if (this.updating) {
+        http = this.http.update('maternal-care/mc-postregistrations/', this.mcr_data.id, this.postpartum_form.value)
+      } else {
+        http = this.http.post('maternal-care/mc-postregistrations', this.postpartum_form.value)
+      }
+  
 
-      this.http.post('maternal-care/mc-postregistrations', this.postpartum_form.value).subscribe({
+      http.subscribe({
         next: (data: any) => {
           console.log(data, " data from saving postpartum")
           this.post_mc_data.emit(data.data);
@@ -200,7 +210,7 @@ export class PostpartumComponent implements OnInit {
         }
       })
     } else {
-      // this.loading = false;
+      this.is_saving = false;
       console.log( "post partum form invalid");
 
     }

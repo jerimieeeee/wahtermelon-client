@@ -1,4 +1,4 @@
-<form [formGroup]="postpartum_visit_form" (ngSubmit)="saveForm(postpartum_visit_form.value)">
+<form [formGroup]="postpartum_visit_form" (ngSubmit)="saveForm()">
     <div class="grid gap-2 relative animates-dropdown " style="grid-template-columns: repeat(16, minmax(0, 1fr));"
         *ngIf="!focused">
         <div class="sticky top-14 z-50 border border-blue-400 col-span-2 relative mx-2 px-2 py-1 rounded-t-lg text-sm bg-blue-500 text-white"
@@ -28,8 +28,9 @@
                     <input type="text" formControlName="visit_sequence"
                         class="text-lg font-medium disabled:group-hover:font-semibold peer border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed disabled:border-0  disabled:pl-5  disabled:typed-out disabled:group-hover:bg-gray-100 disabled:rounded-full"
                         id="visit_sequence" [value]="value" hidden>
-                    <div class="text-center text-2xl font-bold py-2 border-gray-300 border rounded-lg"
-                        *ngIf="!edit_bool">{{ value }}</div>
+                    <div class="text-center text-2xl font-bold py-2 border-gray-300 border rounded-lg">
+                        {{ value }}
+                    </div>
                     <!-- <div class="text-center text-2xl font-bold py-2 border-gray-300 border rounded-lg"
                         *ngIf="edit_bool">{{ postpartum_visit_form.get('visit_sequence').value }}</div> -->
                 </div>
@@ -275,18 +276,20 @@
     </div>
     <div class="relative w-auto border-check mt-2 mb-7 w-12/12" *ngIf="!focused && postpartum_visit_form.enabled">
         <div class="absolute inline-flex right-0 ">
+            <div *ngIf="saved" class="border rounded-md bg-green-200 text-green-400 px-2 ease-in-out duration-1000">Successfully Saved!</div>
             <div (click)="cancel()"
                 class="cursor-pointer flex border-check bg-white hover:drop-shadow-md hover:bg-gray-400 py-1 rounded-full text-gray-400 hover:text-white pl-2 pr-2 peer">
                 <fa-icon [icon]="faTimes" size="lg" class="mr-2">
                 </fa-icon>
                 <button type="button" class="font-bold button-out border-check-red">Cancel</button>
             </div>
-            <div (click)="saveForm(postpartum_visit_form.value)"
+            <div (click)="saveForm()"
                 class="cursor-pointer flex border-check hover:drop-shadow-md bg-green-300 hover:bg-green-400 py-1 rounded-full text-white px-3 peer-hover:bg-white peer-hover:text-green-400">
-                <fa-icon [icon]="faSave" size="lg" class="mr-2">
-                </fa-icon>
-                <button type="submit" class="font-bold button-out border-check-red"
-                    (keyup.enter)="saveForm(postpartum_visit_form.value)">Save</button>
+                <fa-icon *ngIf="!is_saving" [icon]="faSave" size="lg" class="mr-2"></fa-icon>
+                    <fa-icon *ngIf="is_saving" class="mr-2" [icon]="faSpinner" [spin]="true"></fa-icon>
+                    <button type="button" class="font-bold button-out border-check-red">
+                        {{this.is_saving?'Saving':'Save'}}
+                    </button>
             </div>
         </div>
     </div>

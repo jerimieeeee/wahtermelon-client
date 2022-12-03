@@ -114,9 +114,9 @@ export class MaternalcareComponent implements OnInit {
 
             this.prenatal = true;
             // this.services = true;
-            // if (this.patient_mc_record.post_registration && this.patient_mc_record.post_registration.length != 0) {
-            //   this.post_value = true;
-            // }
+            if (this.patient_mc_record.post_registration && this.patient_mc_record.post_registration.length != 0) {
+              this.post_value = true;
+            }
             // if (this.patient_mc_record.pre_registration.length == null && this.patient_mc_record.post_registration != null) {
             //   this.module = 4;
             // } else {
@@ -127,8 +127,9 @@ export class MaternalcareComponent implements OnInit {
         error: err => console.log(err),
         complete: () => {
           this.loading = false;
+console.log(!this.patient_mc_record.pre_registration , !this.patient_mc_record.post_registration.end_pregnancy, " openMCR");
 
-          if (!this.patient_mc_record.pre_registration && !this.patient_mc_record.post_registration.end_pregnancy) {
+          if (!this.patient_mc_record.pre_registration) {
             this.module = 4;        
           }else{
             this.module = 2;

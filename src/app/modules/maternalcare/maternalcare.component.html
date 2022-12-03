@@ -127,11 +127,11 @@
           [delivery_location]="delivery_location" [regions]="regions" [attendants]="attendants"
           [preg_outcome]="preg_outcome" [patient_details]="patient_details"></app-postpartum>
       </div>
-      <!-- <div *ngIf="post_value"
+      <div *ngIf="post_value"
         class="w-12/12 px-8 pb-10 border-solid border-2 border-zinc-100 border-l-0 border-r-0 border-t-0 p-3">
         <app-postvisits *ngIf="patient_details" [patient_mc_record]="patient_mc_record"
           [patient_details]="patient_details"></app-postvisits>
-      </div> -->
+      </div>
       <div class=" w-12/12 px-8 pb-10 border-solid border-2 border-zinc-100 border-l-0 border-r-0 border-t-0 p-3">
         <app-services *ngIf="visit_type" [patient_mc_record]="patient_mc_record" [module]="module"
           (modalStats)="openModal($event)" [lib_services]="lib_services" [visit_type]="visit_type"
