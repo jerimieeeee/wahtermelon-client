@@ -108,7 +108,7 @@ export class MaternalcareComponent implements OnInit {
     if (id) {
       this.http.get('maternal-care/mc-records/' + id).subscribe({
         next: (data: any) => {
-          console.log(data);
+          console.log(data, " openMCR");
           this.patient_mc_record = data.data;
           if (this.patient_mc_record.pre_registration != null) {
 
@@ -127,7 +127,8 @@ export class MaternalcareComponent implements OnInit {
         error: err => console.log(err),
         complete: () => {
           this.loading = false;
-          if (!this.patient_mc_list[0].pre_registration && !this.patient_mc_list[0].post_registration.end_pregnancy) {
+
+          if (!this.patient_mc_record.pre_registration && !this.patient_mc_record.post_registration.end_pregnancy) {
             this.module = 4;        
           }else{
             this.module = 2;
