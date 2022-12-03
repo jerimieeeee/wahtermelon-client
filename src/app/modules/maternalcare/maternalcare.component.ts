@@ -18,6 +18,7 @@ export class MaternalcareComponent implements OnInit {
   public mcr_data: any;
   public patient_mc_record: any = '';
   public patient_mc_list: any;
+  public view_id: any;
   prenatal: boolean;
   services: boolean;
   post_value: boolean;
@@ -97,6 +98,7 @@ export class MaternalcareComponent implements OnInit {
 
   openMCR(id: any) {
     this.loading = true;
+    this.view_id = id;
     console.log(id);
     if (id) {
       this.http.get('maternal-care/mc-records/' + id).subscribe({

@@ -45,25 +45,25 @@ export class ServicesComponent implements OnInit {
   public serviceChanges = [];
   public service_array = [];
   public service_list = [];
+  public array_form = [];
+  public group_list = [
+    { name: 'G1', qty: false, pos: false, pos_name: '', pen: false, service: [] },
+    { name: 'G2', qty: true, pos: false, pos_name: '', pen: false, service: []  },
+    { name: 'G3', qty: false, pos: true, pos_name: 'Positive', pen: true, service: []  },
+    { name: 'G4', qty: false, pos: true, pos_name: 'Positive', pen: false, service: []  },
+    { name: 'G5', qty: false, pos: true, pos_name: 'Anemia', pen: false, service: []  },
+  ];
 
   ngOnInit() {
-    console.log(this.patient_mc_record, "mc record from services");
+    console.log(this.lib_services);
 
     this.user_id = this.http.getUserID();
     this.facility_code = this.http.getUserFacility();
     console.log(this.visit_type);
     this.createForm()
-    this.serviceChanges.push(this.services_form.value);
-    this.serviceChanges.push(this.services_form.value);
-    this.serviceChanges.push(this.services_form.value);
-    this.serviceChanges.push(this.services_form.value);
-    this.serviceChanges.push(this.services_form.value);
-    this.serviceChanges.push(this.services_form.value);
-    this.serviceChanges.push(this.services_form.value);
-    this.serviceChanges.push(this.services_form.value);
-    this.serviceChanges.push(this.services_form.value);
-    this.serviceChanges.push(this.services_form.value);
-    this.serviceChanges.push(this.services_form.value);
+    for(let x = 0 ; x < 11 ; x++){
+      this.serviceChanges.push(this.services_form.value);
+    }
     this.getServices()
     console.log(this.serviceChanges, " this are my init changes");
 
@@ -104,41 +104,76 @@ export class ServicesComponent implements OnInit {
     })
   }
   getServices() {
-    this.http.get('maternal-care/mc-services?filter[patient_mc_id]=' + this.patient_mc_record[0].id).subscribe({
+    this.http.get('maternal-care/mc-services?filter[patient_mc_id]=' + this.patient_mc_record.id).subscribe({
       next: (data: any) => {
         console.log(data, " get services");
         this.service_list = data.data;
+        this.tagServiceGroup()
       },
       error: err => console.log(err),
 
     })
   }
+
+  tagServiceGroup() {
+    this.lib_services.forEach(s => {
+      if (s.id == 'DENT' || s.id == 'HIV') {
+        this.group_list[0].service.push(s)
+      } else if (s.id == 'IRON' || s.id == 'VITA' || s.id == 'CALC' || s.id == 'IODN' || s.id == 'DWRMG') {
+        this.group_list[1].service.push(s)
+      } else if (s.id == 'SYP') {
+        this.group_list[2].service.push(s)
+      } else if (s.id == 'HEPB' || s.id == 'DIBTS') {
+        this.group_list[3].service.push(s)
+      } else if (s.id == 'CBC') {
+        this.group_list[4].service.push(s)
+      }
+    })
+
+    console.log(this.group_list, ' after tagging groups');
+
+  }
+
   createForm() {
+   
+    this.lib_services.forEach(lib =>  this.array_form.push(
+      {
+        service_date: new Date().toISOString().substring(0, 10),
+        visit_type_code: '',
+        visit_status: this.module == 3 ? 'Prenatal' : (this.module == 4 ? 'Postpartum' : 'Services'),
+        service_qty:'',
+        positive_result: false,
+        intake_penicillin: false,
+        service_id: lib.id,
+      }
+    )
+      );
     this.services_form = this.formBuilder.group({
       service_date: [new Date().toISOString().substring(0, 10), [Validators.required]],
       visit_type_code: ['', [Validators.required]],
       visit_status: [this.module == 3 ? 'Prenatal' : (this.module == 4 ? 'Postpartum' : 'Services')],
-      service_qty: [''],
+      service_qty:[''],
       positive_result: [false],
       intake_penicillin: [false],
-      service_id: '',
-    })
+      service_id: [''],
+    });
+    
 
-    console.log(this.services_form.value.visit_status, " service form");
 
   }
-  onChange(desc, id, i, item) {
+  onChange(desc, id, item) {
+    let i = this.array_form.map(s => s.service_id).indexOf(id);
     this.serviceChanges[i] = {
-      patient_mc_id: this.patient_mc_record[0].id,
+      patient_mc_id: this.patient_mc_record.id,
       facility_code: this.facility_code,
       patient_id: this.patient_details.id,
       user_id: this.user_id,
-      visit_type_code: item == 'visit_type_code' ? this.services_form.value[item] : this.serviceChanges[i].visit_type_code,
+      visit_type_code: item == 'visit_type_code' ? this.services_form.value[item] : '',
       visit_status: this.services_form.value.visit_status,
-      intake_penicillin: item == 'intake_penicillin' ? this.services_form.value[item] : this.serviceChanges[i].intake_penicillin,
-      positive_result: item == 'positive_result' ? this.services_form.value[item] : this.serviceChanges[i].positive_result,
-      service_date: item == 'service_date' ? this.services_form.value[item] : this.serviceChanges[i].service_date,
-      service_qty: item == 'service_qty' ? this.services_form.value[item] : this.serviceChanges[i].service_qty,
+      intake_penicillin: item == 'intake_penicillin' ? this.services_form.value[item] :'',
+      positive_result: item == 'positive_result' ? this.services_form.value[item] :'',
+      service_date: item == 'service_date' ? this.services_form.value[item] : '',
+      service_qty: item == 'service_qty' ? this.services_form.value[item] : '',
       service_id: id,
     };
 

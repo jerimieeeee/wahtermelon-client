@@ -81,8 +81,8 @@
                           <th class="px-2 font-normal">{{mc.post_registration?(mc.post_registration.end_pregnancy?'Closed':'Open'):'Open'}}</th>
                           <th class="px-2 font-normal">
                             <button class=" px-2 py-1 bg-blue-400 text-white font-bold rounded hover:bg-blue-500" (click)="openMCR(mc.id)">
-                              <fa-icon *ngIf="loading" class="mr-3" [icon]="faSpinner" [spin]="true"></fa-icon>
-                              View
+                              <fa-icon *ngIf="loading && mc.id == view_id" class="mx-3" [icon]="faSpinner" [spin]="true"></fa-icon>
+                              {{loading && mc.id == view_id?'':'View'}}
                             </button>
                           </th>
                         </tr>
@@ -115,9 +115,9 @@
           [fetals]="fetals" [fhr_lib]="fhr_lib"></app-prenatal>      
       </div>
       <div class=" w-12/12 px-8 pb-10 border-solid border-2 border-zinc-100 border-l-0 border-r-0 border-t-0 p-3">
-        <!-- <app-services *ngIf="visit_type" [patient_mc_record]="patient_mc_record" [module]="module"
+        <app-services *ngIf="visit_type" [patient_mc_record]="patient_mc_record" [module]="module"
           (modalStats)="openModal($event)" [lib_services]="lib_services" [visit_type]="visit_type"
-          [patient_details]="patient_details"></app-services> -->
+          [patient_details]="patient_details"></app-services>
       </div>
     </div>
 
