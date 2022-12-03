@@ -102,6 +102,7 @@ export class ServicesComponent implements OnInit {
 
       }
     })
+    this.createForm();
   }
   getServices() {
     this.http.get('maternal-care/mc-services?filter[patient_mc_id]=' + this.patient_mc_record.id).subscribe({
@@ -170,10 +171,10 @@ export class ServicesComponent implements OnInit {
       user_id: this.user_id,
       visit_type_code: item == 'visit_type_code' ? this.services_form.value[item] : '',
       visit_status: this.services_form.value.visit_status,
-      intake_penicillin: item == 'intake_penicillin' ? this.services_form.value[item] :'',
-      positive_result: item == 'positive_result' ? this.services_form.value[item] :'',
-      service_date: item == 'service_date' ? this.services_form.value[item] : '',
-      service_qty: item == 'service_qty' ? this.services_form.value[item] : '',
+      intake_penicillin: item == 'intake_penicillin' ? this.services_form.value[item] : false,
+      positive_result: item == 'positive_result' ? this.services_form.value[item] : false,
+      service_date: item == 'service_date' ? this.services_form.value[item] : new Date().toISOString().substring(0, 10),
+      service_qty: item == 'service_qty' ? this.services_form.value[item] : 0,
       service_id: id,
     };
 
