@@ -123,12 +123,16 @@
             <div class="flex justify-end py-4 px-6 space-x-4 rounded-b border-t border-gray-200 dark:border-gray-600">
               <p>{{this.patient_breastfed.reasoning}}</p>
               <button  type="button" class="btn-cancel" (click)="toggleBreastfeedingModal()">Close</button>
-              <button  type="button" class="btn-save" (click)="onSubmit()" (click)="saveModal()" *ngIf="!groupList2.includes(1) && groupList.length === 0">
+              <button  type="button" class="btn-save" (click)="onSubmit()" (click)="saveModal()">
+                <fa-icon *ngIf="is_saving" class="pl-0" [icon]="faSpinner" [spin]="true"></fa-icon>
+                  {{ is_saving ? 'Saving' : 'Save' }}</button>
+
+              <!-- <button  type="button" class="btn-save" (click)="onSubmit()" (click)="saveModal()" *ngIf="!groupList2.includes(1) && groupList.length === 0">
                 <fa-icon *ngIf="is_saving" class="pl-0" [icon]="faSpinner" [spin]="true"></fa-icon>
                   {{ is_saving ? 'Saving' : 'Save' }}</button>
               <button  type="button" class="btn-save" (click)="onSubmit()" (click)="saveModal()" *ngIf="groupList2.includes(1) || groupList.length === 6">
                 <fa-icon *ngIf="is_saving" class="pl-0" [icon]="faSpinner" [spin]="true"></fa-icon>
-                  {{ is_saving ? 'Updating' : 'Update' }}</button>
+                  {{ is_saving ? 'Updating' : 'Update' }}</button> -->
             </div>
           </div>
       </div>

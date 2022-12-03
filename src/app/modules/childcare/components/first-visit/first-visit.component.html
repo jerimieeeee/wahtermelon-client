@@ -251,7 +251,7 @@
 
 <!--Essential Newborn Care Modal-->
    <!-- Main modal -->
-   <div *ngIf="showAlert" id="defaultModal" tabindex="-1" class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 w-full md:inset-0 h-modal md:h-full justify-center items-center flex" aria-modal="true" role="dialog" style="z-index:60">
+   <div *ngIf="showAlert" id="defaultModal" tabindex="-1" class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 w-full md:inset-0 h-modal md:h-full justify-center items-center flex" aria-modal="true" role="dialog" style="z-index:59">
     <div class="relative p-4 w-full max-w-sm h-auto md:h-auto">
         <!-- Modal content -->
         <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
@@ -294,4 +294,4 @@
   </div>
 
 
-<div *ngIf="showAlert" class="opacity-50 fixed inset-0 bg-black" style="z-index:60"></div>
+<div *ngIf="showAlert" class="opacity-50 fixed inset-0 z-50 bg-black"></div>
