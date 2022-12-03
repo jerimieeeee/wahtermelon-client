@@ -48,6 +48,9 @@ export class VitalsModalComponent implements OnInit {
     patient_hip: new FormControl<number| null>(null),
     patient_limbs: new FormControl<number| null>(null),
     patient_muac: new FormControl<number| null>(null),
+    patient_chest: new FormControl<number| null>(null),
+    patient_abdomen: new FormControl<number| null>(null),
+    patient_spo2: new FormControl<number| null>(null),
     vitals_height_ft: new FormControl<number| null>(null),
     vitals_height_in: new FormControl<number| null>(null),
     vitals_waist_in: new FormControl<number| null>(null),
@@ -152,19 +155,23 @@ export class VitalsModalComponent implements OnInit {
       patient_hip: [null, Validators.max(300)],
       patient_limbs: [null, Validators.max(300)],
       patient_muac: [null, Validators.max(300)],
+      patient_chest: [null, Validators.max(300)],
+      patient_abdomen: [null, Validators.max(300)],
+      patient_spo2: [null, Validators.max(100)],
       vitals_waist_in: [null],
       vitals_height_ft: [null, Validators.max(8)],
       vitals_height_in: [null, Validators.max(11)],
-      vitals_date_temp: [formatDate(date,'Y-M-dd','en'), Validators.required],
+      vitals_date_temp: [formatDate(date,'Y-MM-dd','en'), Validators.required],
       vitals_time_temp: [formatDate(date,'HH:mm:ss','en'), Validators.required],
     });
 
     if(this.vitals_to_edit){
+      console.log(this.vitals_to_edit)
       this.vitalsForm.patchValue({...this.vitals_to_edit});
-      this.vitalsForm.patchValue({vitals_date_temp: formatDate(this.vitalsForm.value.vitals_date,'Y-M-dd','en')});
+      this.vitalsForm.patchValue({vitals_date_temp: formatDate(this.vitalsForm.value.vitals_date,'Y-MM-dd','en')});
       this.vitalsForm.patchValue({vitals_time_temp: formatDate(this.vitalsForm.value.vitals_date,'HH:mm:ss','en')});
 
-      // console.log(this.vitalsForm);
+      console.log(this.vitalsForm);
       this.cmChange();
     }else{
       // console.log('new vitals')

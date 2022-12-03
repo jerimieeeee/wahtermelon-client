@@ -219,7 +219,7 @@ export class PhilhealthModalComponent implements OnInit {
       this.philhealthForm.patchValue({membership_category_id: this.philhealth_to_edit.membership_category.id});
 
       if(this.philhealthForm.value.membership_type_id === "DD"){
-        this.philhealthForm.patchValue({member_birthdate: formatDate(this.philhealth_to_edit.member_birthdate, 'Y-M-dd','en')});
+        this.philhealthForm.patchValue({member_birthdate: formatDate(this.philhealth_to_edit.member_birthdate, 'Y-MM-dd','en')});
         this.philhealthForm.patchValue({member_pin_confirmation: this.philhealth_to_edit.member_pin});
       }
       this.showMember();

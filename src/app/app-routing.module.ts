@@ -72,7 +72,7 @@ const routes: Routes = [
     loadChildren: () => import('./modules/facility-config/facility-config.module').then(m => m.FacilityConfigModule)
   },
   {
-    path: 'consultation',
+    path: 'cn',
     loadChildren: () => import('./modules/consultation/consultation.module').then(m => m.ConsultationModule)
   },
   {
@@ -94,6 +94,14 @@ const routes: Routes = [
   {
     path: 'verify',
     loadChildren: () => import('./modules/verify/verify.module').then(m => m.VerifyModule)
+  },
+  {
+    path: 'forgot-password',
+    loadChildren: () => import('./modules/user/forgot-password/forgot-password.module').then(m => m.ForgotPasswordModule)
+  },
+  {
+    path: 'reset-password',
+    loadChildren: () => import('./modules/user/reset-password/reset-password.module').then(m => m.ResetPasswordModule)
   }
 ];
 

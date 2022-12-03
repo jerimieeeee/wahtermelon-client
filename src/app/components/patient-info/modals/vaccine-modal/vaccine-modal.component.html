@@ -22,7 +22,7 @@
               <div class="grid grid-cols-3 gap-4">
                 <label class="col-span-1 pt-2" for="{{ 'vaccine_status.'+vaccine.vaccine_id }}">{{ vaccine.vaccine_desc }} ({{ vaccine.vaccine_id }})</label>
 
-                <div class="col-span-2">
+                <div class="col-span-2 grid grid-cols-2">
                   <select [(ngModel)]="vaccineForm.vaccine_status[vaccine.vaccine_id]"
                         id="{{ 'vaccine_status.'+vaccine.vaccine_id }}"
                         name="{{ 'vaccine_status.'+vaccine.vaccine_id }}"
@@ -32,12 +32,12 @@
                     <option value="2">Done Outside - Private</option>
                     <option value="3">Done Outside - Public</option>
                   </select>
-                  <div *ngIf="vaccineForm.vaccine_status[vaccine.vaccine_id] !== '-' && vaccineForm.vaccine_status[vaccine.vaccine_id] !== '' && vaccineForm.vaccine_status[vaccine.vaccine_id] !== undefined">
+                  <div *ngIf="vaccineForm.vaccine_status[vaccine.vaccine_id] !== '-' && vaccineForm.vaccine_status[vaccine.vaccine_id] !== '' && vaccineForm.vaccine_status[vaccine.vaccine_id] !== undefined" class="col-span-1">
                     <input  [(ngModel)]="vaccineForm.vaccine_date[vaccine.vaccine_id]"
                       name="{{ 'vaccine_date.'+vaccine.vaccine_id }}" id="{{ 'vaccine_date.'+vaccine.vaccine_id }}" type="date" placeholder="Enter vaccine date" class="col-span-1 mt-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                   </div>
 
-                  <div class="border border-slate-200 rounded-lg my-3 bg-slate-100" *ngIf="vaccines_given[vaccine.vaccine_id]">
+                  <div class="border border-slate-200 rounded-lg my-3 bg-slate-100 col-span-2" *ngIf="vaccines_given[vaccine.vaccine_id]">
                     <table class="table-auto w-full m-3">
                       <thead>
                         <tr >
@@ -48,7 +48,7 @@
                       <tbody>
                         <tr *ngFor="let vax of vaccines_given[vaccine.vaccine_id] | keyvalue ; let i = index">
                           <td>{{ vax.value.dose }} Dose </td>
-                          <td class="pl-5" >: {{ !vax.value.vaccine_date ? '-' : vax.value.vaccine_date }}</td>
+                          <td class="pl-5" >: {{ !vax.value.vaccine_date ? '-' : vax.value.vaccine_date | date : 'MM/dd/yyyy' }}</td>
                         </tr>
                       </tbody>
                     </table>
@@ -65,6 +65,10 @@
 
       <!-- Modal footer -->
       <div class="flex justify-end py-4 px-5 space-x-4 rounded-b border-t border-gray-200 dark:border-gray-600">
+        <div [@openCloseTrigger] *ngIf="showAlert" class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 my-1 rounded h-11 relative w-64 justify-start" role="alert">
+          <span class="block sm:inline">Record was updated.</span>
+        </div>
+
         <button  type="button" class="text-white bg-orange-500 hover:ring-2 focus:outline-none hover:ring-orange-300 rounded text-sm font-medium px-6 py-2.5 transition duration-150 ease-in-out transform hover:scale-110 " (click)="closeModal()">Close</button>
         <button  type="button" class="text-white bg-blue-500 hover:ring-2 focus:outline-none hover:ring-blue-300 font-medium rounded text-sm px-6 py-2.5 text-center transition duration-150 ease-in-out transform hover:scale-110" (click)="onSubmit()" >Save</button>
       </div>

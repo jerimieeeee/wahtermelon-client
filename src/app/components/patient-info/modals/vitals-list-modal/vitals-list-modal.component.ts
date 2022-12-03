@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
+import { faAnglesLeft, faAnglesRight, faChevronLeft, faChevronRight, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
@@ -13,6 +13,10 @@ export class VitalsListModalComponent implements OnInit {
   @Input() patient_info;
 
   faPenToSquare = faPenToSquare;
+  faChevronRight = faChevronRight;
+  faChevronLeft = faChevronLeft;
+  faAnglesLeft = faAnglesLeft;
+  faAnglesRight = faAnglesRight;
 
   vitals_list: any;
 
@@ -21,7 +25,7 @@ export class VitalsListModalComponent implements OnInit {
   ) { }
 
   editVitals(vitals){
-    console.log(vitals)
+    // console.log(vitals)
     this.vitalsEdit.emit(vitals);
     this.closeModal();
   }
@@ -30,9 +34,31 @@ export class VitalsListModalComponent implements OnInit {
 
   }
 
-  loadVaccines(){
-    this.http.get('patient-vitals/vitals', {params:{'patient_id': this.patient_info.id, 'sort': '-vitals_date'}}).subscribe({
-      next: (data: any) => { /* console.log(data.data); */ this.vitals_list = data.data },
+  per_page: number = 5;
+  current_page: number;
+  last_page: number;
+  from: number;
+  to: number;
+  total: number;
+
+  loadVitals(page?: string){
+    let params = {params: { }};
+    if (page) params['params']['page'] = page;
+    params['params']['per_page'] = this.per_page;
+    params['params']['patient_id'] = this.patient_info.id;
+    params['params']['sort'] = '-vitals_date';
+
+    this.http.get('patient-vitals/vitals', params).subscribe({
+      next: (data: any) => {
+        // console.log(data.data);
+        this.vitals_list = data.data
+
+        this.current_page = data.meta.current_page;
+        this.last_page = data.meta.last_page;
+        this.from = data.meta.from;
+        this.to = data.meta.to;
+        this.total = data.meta.total;
+      },
       error: err => console.log(err),
       complete: () => console.log('Vitals signs loaded')
     })
@@ -43,6 +69,6 @@ export class VitalsListModalComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loadVaccines();
+    this.loadVitals();
   }
 }

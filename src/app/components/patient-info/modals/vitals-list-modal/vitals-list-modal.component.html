@@ -19,39 +19,49 @@
                 <th scope="col" class="py-3 px-6">Height (cm)</th>
                 <th scope="col" class="py-3 px-6">Weight (kg)</th>
                 <th scope="col" class="py-3 px-6">Temp (C)</th>
-                <th scope="col" class="py-3 px-6">Heart Rate</th>
-                <th scope="col" class="py-3 px-6">Pulse Rate</th>
-                <th scope="col" class="py-3 px-6">Resp Rate</th>
+                <th scope="col" class="py-3 px-6">O2 sat, Heart/Pulse/Resp Rate</th>
+                <th scope="col" class="py-3 px-6">Body Measurement</th>
+                <!-- <th scope="col" class="py-3 px-6">Resp Rate</th> -->
                 <!-- <th scope="col" class="py-3 px-6">Others</th> -->
                 <th scope="col" class="py-3 px-6">Action</th>
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let vitals of vitals_list; let odd = odd" class="bg-white border-b" [ngClass]="{'bg-gray-50': odd}">
-                <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
+                <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap align-top">
                   {{ vitals.vitals_date | date: 'MM/dd/yyyy h:mm:ss a' }}
                 </th>
-                <td class="py-4 px-6">
+                <td class="py-4 px-6 align-top">
                   {{ vitals.bp_systolic }}{{ vitals.bp_systolic ? '/' : '-' }}{{ vitals.bp_diastolic }}
                 </td>
-                <td class="py-4 px-6">
+                <td class="py-4 px-6 align-top">
                   {{ vitals.patient_height ?? '-' }}
                 </td>
-                <td class="py-4 px-6">
+                <td class="py-4 px-6 align-top">
                   {{ vitals.patient_weight ?? '-' }}
                 </td>
-                <td class="py-4 px-6">
+                <td class="py-4 px-6 align-top">
                   {{ vitals.patient_temp ?? '-' }}
                 </td>
-                <td class="py-4 px-6">
-                  {{ vitals.patient_heart_rate | number: '1.0-0' ?? '-' }}
+                <td class="py-4 px-6 align-top">
+                  SpO2: {{ vitals.patient_spo2 | number: '1.0-0' ?? '-' }} <br />
+                 Heart Rate: {{ vitals.patient_heart_rate | number: '1.0-0' ?? '-' }} <br />
+                 Pulse Rate: {{ vitals.patient_pulse_rate | number: '1.0-0' ?? '-' }} <br />
+                 Resp Rate: {{ vitals.patient_respiratory_rate | number: '1.0-0' ?? '-' }}
                 </td>
-                <td class="py-4 px-6">
-                  {{ vitals.patient_pulse_rate | number: '1.0-0' ?? '-' }}
+                <td class="py-4 px-6 align-top">
+                  Head: {{ vitals.patient_head_circumference ?? '-' }} <br />
+                  MUAC: {{ vitals.patient_muac ?? '-' }} <br />
+                  Chest: {{ vitals.patient_chest ?? '-' }} <br />
+                  Abdmn: {{ vitals.patient_abdomen ?? '-' }} <br />
+                  Waist: {{ vitals.patient_waist ?? '-' }} <br />
+                  Hip: {{ vitals.patient_hip ?? '-' }} <br />
+                  Limbs: {{ vitals.patient_limbs ?? '-' }} <br />
+                  Skinfold: {{ vitals.patient_skinfold_thickness ?? '-' }}
                 </td>
-                <td class="py-4 px-6">
+                <!-- <td class="py-4 px-6">
                   {{ vitals.patient_respiratory_rate | number: '1.0-0' ?? '-' }}
-                </td>
+                </td> -->
                 <td class="py-4 px-6">
                   <fa-icon (click)="editVitals(vitals)" class="mx-0 my-0 text-amber-500 hover:cursor-pointer flex-none mr-2" [icon]="faPenToSquare"></fa-icon>
 
@@ -61,6 +71,39 @@
             </tbody>
           </table>
         </div>
+
+        <div *ngIf="vitals_list?.length >= 1">
+          <div class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
+            <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+              <div>
+                <p class="text-sm text-gray-700">
+                  Showing <span class="font-medium">{{ from }}</span>
+                  to <span class="font-medium">{{ to }}</span>
+                  of <span class="font-medium">{{ total }}</span> results
+                </p>
+              </div>
+              <div>
+                <nav class="relative z-0 inline-flex shadow-sm -space-x-px" aria-label="Pagination">
+                  <button [disabled]="current_page===1" (click)="loadVitals(1)" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 enabled:bg-white disabled:bg-gray-300 text-sm font-medium text-gray-500 hover:bg-gray-50">
+                    <fa-icon [icon]="faAnglesLeft" class="block h-15 w-15 text-gray-500 pr-1"></fa-icon>
+                  </button>
+
+                    <button [disabled]="current_page===1" (click)="loadVitals(current_page-1)" class="relative inline-flex items-center px-4 py-2 border border-gray-300 enabled:bg-white disabled:bg-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
+                      <fa-icon [icon]="faChevronLeft" class="block h-15 w-15 text-gray-500 pr-1"></fa-icon>Previous
+                    </button>
+                    <button [disabled]="current_page===last_page" (click)="loadVitals(current_page+1)" class="relative inline-flex items-center px-4 py-2 border border-gray-300 enabled:bg-white disabled:bg-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
+                      Next<fa-icon [icon]="faChevronRight" class="h-5 w-5 text-gray-500"></fa-icon>
+                    </button>
+
+                  <button [disabled]="current_page===last_page" (click)="loadVitals(last_page)" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 enabled:bg-white disabled:bg-gray-300 text-sm font-medium text-gray-500 hover:bg-gray-50">
+                    <fa-icon [icon]="faAnglesRight" class="h-5 w-5 text-gray-500"></fa-icon>
+                  </button>
+                </nav>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
 
 

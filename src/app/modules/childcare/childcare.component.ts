@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { faDoorClosed } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 
@@ -19,28 +19,35 @@ export class ChildcareComponent implements OnInit {
   patient_details: any;
 
   consult_details: any;
+  patient_consultdetails: any;
+
+  consult_id: any
 
 
   // Section 2
   constructor(private http: HttpService,
-    private router: Router) { }
+  private router: Router,
+  private route: ActivatedRoute) { }
 
   patientInfo(info){
    this.patient_details = info;
    this.loadConsultDetails()
-    console.log(this.patient_details, 'get patient');
+    console.log(this.patient_details, 'get patient from ccdev');
   }
 
+
   endVisit(){
-  
+
     let endbutton = {
       consult_done: 1,
       patient_id : this.consult_details[0].patient.id,
       user_id : this.consult_details[0].user.id,
       consult_date : this.consult_details[0].consult_date,
-      pt_group : this.consult_details[0].pt_group
+      pt_group : this.consult_details[0].pt_group,
+      // physician_id : this.consult_details[0].physician.id,
+      // is_pregnant: this.consult_details[0].is_pregnant
     }
-      this.http.post('consultation/cn-records/'+this.consult_details[0].id, endbutton).subscribe({
+      this.http.update('consultation/cn-records/',this.consult_id, endbutton).subscribe({
         // next: (data: any) => console.log(data.status, 'check status'),
         error: err => console.log(err),
         complete: () => {
@@ -57,16 +64,22 @@ export class ChildcareComponent implements OnInit {
 
     loadConsultDetails(){
 
-      this.http.get('consultation/cn-records/'+this.patient_details.id).subscribe((data: any) => {
+      this.http.get('consultation/cn-records',{params: {id: this.consult_id}}).subscribe((data: any) => {
         this.consult_details = data.data
         console.log(this.consult_details[0], 'kunin mo consult');
+        
+       
       });
     }
     
 
   ngOnInit(): void {
     this.module=1;
+    this.consult_id = this.route.snapshot.paramMap.get('consult_id');
+    console.log(this.consult_id, 'test consult ids')
   }
+
+
 
   switchTab(tab){
     this.module = 0;

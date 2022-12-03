@@ -12,7 +12,7 @@ import { DatePipe } from '@angular/common';
   styleUrls: ['./services.component.scss']
 })
 export class ServicesComponent implements OnInit {
-
+  
   x: any;
   cservices: any;
 
@@ -47,10 +47,10 @@ export class ServicesComponent implements OnInit {
     { id: 7, name: 'Newborn Screening Referred', cc_id: 'NBSREF', date: 'Mar 15 2012 10:00:00 AM', ischecked: false, service_date: '', done_outside: ''},
     { id: 8, name: 'Received Micronutrient Powder', cc_id: 'MNP', date: 'Mar 09 2012 10:00:00 AM', ischecked: false, service_date: '', done_outside: ''},
     { id: 9, name: 'Vitamin A', cc_id: 'VITA', date: 'Mar 13 2012 10:00:00 AM', ischecked: false, service_date: '', done_outside: ''},
-
+    
   ];
 
-
+ 
 
  eservices2= [
     { id: 1, name: 'Cord Clamping', cc_id: 'CLAMP', ischecked: false, service_date: ''},
@@ -76,7 +76,7 @@ export class ServicesComponent implements OnInit {
       {value: 'YPR', id: '1', desc:'Yes - Private'},
       {value: 'YPB', id: '2', desc:'Yes - Public'},
       {value: 'N', id: '3', desc:'No'},
-
+      
       ];
 
  showEssentialModal = false;
@@ -92,11 +92,21 @@ export class ServicesComponent implements OnInit {
   };
   services_given= [];
   service_list = Services;
+  modalFilter: any;
+  alertFilter: any;
+  showAlert = false;
 
-  toggleEssentialModal(){
+  toggleAlertModal(value: any){
+    this.alertFilter = value;
+    this.showAlert = !this.showAlert;
+  }
+
+  toggleEssentialModal(value: any){
     console.log('toggleEssentialModal');
+    this.modalFilter = value;
     this.showEssentialModal = !this.showEssentialModal;
-    this.geteServiceName();
+    this.loadServicesTest()
+    this.getccdevDetails()
   }
 
   showServiceModal = false;
@@ -119,12 +129,12 @@ export class ServicesComponent implements OnInit {
   }
 
   geteServiceName(){
-
+    
     if(!localStorage.getItem('eservice'))
     {
       localStorage.setItem('eservice', JSON.stringify([]))
     }
-
+      
     this.x = JSON.parse(localStorage.getItem('eservice'));
     console.log('retrievedeServices: ', this.x );
     this.x.forEach(m =>{
@@ -142,11 +152,11 @@ export class ServicesComponent implements OnInit {
           });
       });
       this.eservices2.sort((m, c) => (m.id) - (c.id));this.eservices2.sort
-
+    
   }
 
   getServices(){
-
+   
     if(!localStorage.getItem('service'))
     {
       localStorage.setItem('service', JSON.stringify([]))
@@ -176,15 +186,15 @@ export class ServicesComponent implements OnInit {
   fetchSelectedItems() {
 
     this.selectedServiceList = this.eservices2.filter((value, index) => {
-
+      
       if(!value.ischecked){
         this.eservices2[index].service_date=''
       }
       console.log('fetchSelectedItems');
-
+      
       return value.ischecked
     });
-
+    
   }
 
   setDate(i: any) {
@@ -196,7 +206,7 @@ export class ServicesComponent implements OnInit {
       }
       return value.ischecked
     });
-
+    
   }
 
   setDate2(i: any) {
@@ -208,9 +218,9 @@ export class ServicesComponent implements OnInit {
       }
       return value.ischecked
     });
-
+    
   }
-
+  
   fetchSelectedItems2() {
     this.selectedServiceList2 = this.services.filter((value, index) => {
       if(!value.ischecked){
@@ -219,14 +229,14 @@ export class ServicesComponent implements OnInit {
       }
       return value.ischecked
     });
-
+    
   }
 
   submit() {
     this.selectedServiceList = this.eservices2.filter((value, index) => {
       return value.ischecked,
       localStorage.setItem('eservice', JSON.stringify(this.selectedServiceList)),
-     this.x = this.selectedServiceList
+     this.x = this.selectedServiceList 
     });
   }
 
@@ -238,7 +248,7 @@ export class ServicesComponent implements OnInit {
     });
   }
 
-
+ 
 
   fetchCheckedIDs() {
     this.checkedIDs = []
@@ -257,11 +267,11 @@ export class ServicesComponent implements OnInit {
       }
     });
   }
-
+ 
   changeSelection(i: any) {
     // this.fetchSelectedItems()
     this.setDate(i)
-    console.log(this.selectedServiceList, 'sadsad')
+    // console.log(this.selectedServiceList, 'sadsad')
   }
 
   changeSelection2(i:any) {
@@ -274,8 +284,8 @@ export class ServicesComponent implements OnInit {
   }
 
   @Input() patient_details: any;
-
-  constructor(private http: HttpService) {
+  
+  constructor(private http: HttpService) { 
     this.services.sort(function(a,b){
       return a.date.localeCompare(b.date);
     })
@@ -285,8 +295,8 @@ export class ServicesComponent implements OnInit {
     this.loadServices()
     this.http.get('libraries/cc-services').subscribe((data: any) => {
       this.lib_ccservices = data.data
-      console.log(this.lib_ccservices, 'cc dev services library');
-      console.log(this.patient_details.id, 'awaw')
+      // console.log(this.lib_ccservices, 'cc dev services library');
+      // console.log(this.patient_details.id, 'awaw')
     });
   }
 
@@ -295,9 +305,9 @@ export class ServicesComponent implements OnInit {
   //     return value.ischecked
   //   });
 
-  //   let user_id = this.http.getUserID();
+  //   let user_id = localStorage.getItem('user_id');
   //   var newborndata ={
-
+     
   //     patient_id: this.patient_details.id,
   //     user_id: user_id,
   //     services: this.selectedServiceList
@@ -316,8 +326,35 @@ export class ServicesComponent implements OnInit {
   //   })
 
   // }
+  onChange(){
+    console.log(this.serviceForm.service_status, 'ng model check')
+    console.log(this.serviceForm.service_date, 'ng model check')
+  }
+
+  submitNBS(){
+    
+  
+ 
+    var nbsfilter ={
+      nbs_filter: this.patient_info.nbs_filter,
+    }
+
+    console.log(nbsfilter);
+
+    this.http.update('child-care/cc-records/', this.patient_info.id, nbsfilter).subscribe({
+      // next: (data: any) => console.log(data.status, 'check status'),
+      error: err => console.log(err),
+      complete: () => {
+        // this.loadLibraries();
+        console.log(nbsfilter,'nbs filter data saved')
+        this.is_saving = false;
+      }
+    })
+  }
+
 
   onSubmit(){
+    this.submitNBS()
     var service_arr = [];
 
     console.log(this.serviceForm)
@@ -334,23 +371,22 @@ export class ServicesComponent implements OnInit {
     })
 
     if(service_arr.length > 0){
-      let user_id = this.http.getUserID();
+      let user_id = localStorage.getItem('user_id');
       let patient_id = this.patient_details.id
       var serv_form ={
+        essential: this.modalFilter,
         patient_id: patient_id,
         user_id: user_id,
         services: service_arr
       }
 
-      console.log(serv_form)
+      console.log(serv_form, 'ito ung isusubmit')
 
       this.http.post('child-care/cc-services', serv_form).subscribe({
-        next: (data: any) => { console.log(data.data) },
-        error: err => console.log(err),
-        complete: () => console.log('success')
+        next: (data: any) => { console.log(data.data, 'display lahat ng services') },
+        error: err => this.toggleAlertModal('E'),
+        complete: () => this.toggleAlertModal('S')
       })
-    }else{
-
     }
   }
 
@@ -397,20 +433,45 @@ export class ServicesComponent implements OnInit {
     });
   }
 
-  loadServicesTest(){
-    this.http.get('child-care/cc-services', {params:{patient_id: this.patient_details.id, sort:'service_date'}}).subscribe({
-      next: (data: any) => {
-        // console.log(data)
-        this.service_list = data.data;
+  findEssential(service_list: any[]): any[] {
+    return service_list.filter(e => e.services.essential == 'Y');
+  }
 
-        // console.log(this.vaccine_list)
-        this.checkServiceStatus(data.data);
+  findServices(service_list: any[]): any[] {
+    return service_list.filter(e => e.services.essential == 'N');
+  }
+
+  loadServicesTest(){
+    this.http.get('child-care/cc-services', {params:{patient_id: this.patient_details.id, sort:'service_id'}}).subscribe({
+      next: (data: any) => {
+        console.log(data)
+        this.service_list = data.data;
+      //   data.data.sort(function(a, b) { 
+      //     return (a.services.service_name - b.services.service_name) || a.services.service_name.localeCompare(b.services.service_id); 
+      // });
+      
+        
+        this.serviceForm = {
+          service_status: [],
+          service_date: []
+        }
+        data.data.forEach((value) => {
+          // console.log(value)
+          this.serviceForm.service_status[value.service_id] = value.status_id;
+          this.serviceForm.service_date[value.service_id] = value.service_date;
+          // serv2.service_date['value.status_id'] = value.s
+        })
+
+        // this.serviceForm = serv2;
+        // console.log(this.serviceForm.service_status.CC);
+        // console.log(this.serviceForm, 'test serv 2')
       },
       error: err => console.log(err),
       complete: () => console.log(this.service_list,'services loaded')
+      
     })
   }
-
+ 
 
 
   loadServices(){
@@ -419,24 +480,37 @@ export class ServicesComponent implements OnInit {
       next: (data: any) => {
         this.cc_newborn = data.data;
       },
-
+  
       error: err => console.log(err),
       complete: () => {
         // this.loadLibraries();
-        console.log(this.cc_newborn, 'data ng cc new born');
+        // console.log(this.cc_newborn, 'data ng cc new born');
       }
     })
   }
 
+  getccdevDetails() {
+    this.http.get('child-care/cc-records/'+this.patient_details.id)
+    .subscribe({
+      next: (data: any) => {
+        this.patient_info = data.data;
+        // console.log(this.patient_info, 'info ccdev first visit')
+        
+      },
+      error: err => console.log(err)
+    });
+  }
+  
 
   ngOnInit() {
-    this.geteServiceName()
-    this.getServices()
-    this.fetchSelectedItems()
-    this.fetchSelectedItems2()
-    this.fetchCheckedIDs()
-    this.fetchCheckedIDs2()
+    // this.geteServiceName()
+    // this.getServices()
+    // this.fetchSelectedItems()
+    // this.fetchSelectedItems2()
+    // this.fetchCheckedIDs()
+    // this.fetchCheckedIDs2()
     this.loadCCLibraries()
-    this.loadServicesTest()
+    this.getccdevDetails()
+    if(this.patient_details.id) this.loadServicesTest()
   }
 }
