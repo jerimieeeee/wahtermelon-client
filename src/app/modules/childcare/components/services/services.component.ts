@@ -106,6 +106,7 @@ export class ServicesComponent implements OnInit {
     this.modalFilter = value;
     this.showEssentialModal = !this.showEssentialModal;
     this.loadServicesTest()
+    this.getccdevDetails()
   }
 
   showServiceModal = false;
