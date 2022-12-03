@@ -1,6 +1,6 @@
 <div class="rounded-xl text-gray-600 border border-slate-100" *ngIf="show_form"> <!-- overflow-y-scroll scrollbar-thin  style="height: 38rem;" -->
-  <div class="block m-0 relative p-0 divide-y-2 divide-gray-200 divide-solid  scrollbar-thumb-white hover:scrollbar-thumb-blue-300 scrollbar-track-white">
-    <div class="flex justify-items-start sticky top-0 bg-white">
+  <div class="block m-0 relative p-0  scrollbar-thumb-white hover:scrollbar-thumb-blue-300 scrollbar-track-white">
+    <div class="flex justify-items-start sticky top-0 bg-white rounded-lg border border-gray-200 shadow-md p-2">
       <div class="m-3">
         <!-- <img src="./assets/img/profile_2.jpg" class="rounded-full w-16 h-16 mx-auto m-2" /> -->
 
@@ -33,7 +33,7 @@
       </div>
     </div>
 
-    <div class="block justify-items-start mx-5 mb-5">
+    <div class="block justify-items-start mx-5 pb-5 border-b border-gray-200">
       <div class="mt-4 flex justify-center">
         <button type="button" class="w-48 inline-flex justify-center px-5 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-sky-500 hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500" (click)="toggleModal('module')">Navigate Programs</button>
       </div>
@@ -80,11 +80,11 @@
       </div>
     </div>
 
-    <div class="block pt-4 justify-items-start mx-5 mb-5">
+    <div class="block pt-4 justify-items-start mx-5 pb-5">
       <div class="flex justify-between items-center">
         <span class="block text-blue-500 font-medium text-sm">
           <fa-icon (click)="toggleAccordion('vitals')" class="mx-0 my-0 text-gray-500 mr-2 hover:cursor-pointer" [icon]="accordions.vitals ? faChevronUp : faChevronDown"></fa-icon>
-          VITAL SIGNS ({{ latest_vitals?.vitals_date | date: 'MM/dd/yyyy hh:mm:ss a' }})
+          VITAL SIGNS <span *ngIf="latest_vitals">({{ latest_vitals?.vitals_date | date: 'MM/dd/yyyy hh:mm:ss a' }})</span>
         </span>
         <span>
           <fa-icon (click)="toggleModal('vitals-list')" class="mx-0 my-0 text-green-500 mr-2 hover:cursor-pointer" [icon]="faTableList" *ngIf="latest_vitals" ></fa-icon>
@@ -317,11 +317,11 @@
       </div>
     </div> -->
 
-    <div class="block pt-4 justify-items-start mx-5 mb-5">
+    <div class="block justify-items-start mx-5 mb-5">
       <div class="flex justify-between items-center">
         <span class="block text-blue-500 font-medium text-sm">
           <fa-icon (click)="toggleAccordion('vaccines')" class="mx-0 my-0 text-gray-500 mr-2 hover:cursor-pointer" [icon]="accordions.vaccines ? faChevronUp : faChevronDown"></fa-icon>
-          VACCINES {{ vaccine_list ? '('+vaccine_list.length+')' : '' }}
+          VACCINES {{ vaccine_list?.length > 0 ? '('+vaccine_list.length+')' : '' }}
         </span>
         <fa-icon (click)="toggleModal('vaccine')" class="mx-0 my-0 text-blue-500 mr-2 hover:cursor-pointer" [icon]="faPlusCircle"></fa-icon>
       </div>
