@@ -67,6 +67,8 @@ export class PostpartumComponent implements OnInit {
   @Input() preg_outcome;
   @Input() patient_details;
   @Input() patient_mc_record;
+
+  @Output() post_mc_data = new EventEmitter<string>();
   provinces: any;
   municipalities: any;
   barangays: any;
@@ -80,7 +82,7 @@ export class PostpartumComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.getMCR('latest', this.patient_details.id)
+    this.getMCR()
     // this.getMCR()
     this.filter = '';
     this.today = new Date();
@@ -88,15 +90,15 @@ export class PostpartumComponent implements OnInit {
     this.saved = false;
   }
 
-  getMCR(type: any, id: any) {
+  getMCR() {
     // this.http.get('maternal-care/mc-records?type=' + type + '&patient_id=' + id).subscribe({
     //   next: (data: any) => {
-        if (!this.patient_mc_record[0]) {
-          console.log(this.patient_mc_record[0].message);
+        if (!this.patient_mc_record) {
+          console.log(" no record ");
           this.mcr_data = -1;
         } else {
-          this.mcr_data = this.patient_mc_record[0];
-          console.log(this.patient_mc_record[0], ' MCR SDATA DASOIDU');
+          this.mcr_data = this.patient_mc_record;
+          console.log(this.patient_mc_record, ' MCR SDATA DASOIDU');
         }
         this.createForm(this.mcr_data);
       // },
@@ -153,7 +155,7 @@ export class PostpartumComponent implements OnInit {
     healthy_baby: [post_registration.length != 0 && !post_registration.end_pregnancy?post_registration.healthy_baby:true],
     birth_weight: [post_registration.length != 0 && !post_registration.end_pregnancy?post_registration.birth_weight:0],
     attendant_code: [post_registration.length != 0 && !post_registration.end_pregnancy?post_registration.attendant.code:'',[Validators.required]],
-    breastfeeding:[post_registration.length != 0 && !post_registration.end_pregnancy?post_registration.breastfeeding:''],
+    breastfeeding:[post_registration.length != 0 && !post_registration.end_pregnancy?post_registration.breastfeeding:false],
     breastfed_date: [post_registration.length != 0 && !post_registration.end_pregnancy?new Date(post_registration.breastfed_date).toISOString().substring(0, 10):''],
     end_pregnancy: [post_registration.length != 0 && !post_registration.end_pregnancy?post_registration.end_pregnancy:false],
     postpartum_remarks:[post_registration.length != 0 && !post_registration.end_pregnancy?post_registration.postpartum_remarks:''],
@@ -184,6 +186,7 @@ export class PostpartumComponent implements OnInit {
       this.http.post('maternal-care/mc-postregistrations', this.postpartum_form.value).subscribe({
         next: (data: any) => {
           console.log(data, " data from saving postpartum")
+          this.post_mc_data.emit(data.data);
         },
         error: err => console.log(err),
         complete: () => {

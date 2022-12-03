@@ -73,7 +73,7 @@
                       <tbody>
                         <tr *ngFor="let mc of patient_mc_list" class="hover:bg-blue-100">
                           <!-- DATA -->
-                          <th class="px-2 font-normal">{{mc.pre_registration?(mc.pre_registration.pre_registration_date | date: 'MM/dd/yyyy'):(mc.post_registration.post_registration_date | date: 'MM/dd/yyyy') }}</th>
+                          <th class="px-2 font-normal">{{mc.pre_registration?'MCR: ' + (mc.pre_registration.pre_registration_date | date: 'MM/dd/yyyy'):'Post: ' + (mc.post_registration.post_registration_date | date: 'MM/dd/yyyy') }}</th>
                           <th class="px-2 font-normal">{{mc.pre_registration?(mc.pre_registration.lmp_date | date: 'MM/dd/yyyy'):'-'}}</th>
                           <th class="px-2 font-normal">{{mc.post_registration?(mc.post_registration.delivery_date | date: 'MM/dd/yyyy'):'-'}}</th>
                           <th class="px-2 font-normal">{{mc.post_registration?(mc.post_registration.admission_date | date: 'MM/dd/yyyy'):'-'}}</th>
@@ -122,16 +122,16 @@
     </div>
 
     <div class="fade-in mb-20" *ngIf="module == 4">
-      <!-- <div class="w-12/12 px-8 pb-10 border-solid border-2 border-zinc-100 border-l-0 border-r-0 border-t-0 p-3">
-        <app-postpartum (postpartum_bool)="postValue($event)" [patient_mc_record]="patient_mc_record"
+      <div class="w-12/12 px-8 pb-10 border-solid border-2 border-zinc-100 border-l-0 border-r-0 border-t-0 p-3">
+        <app-postpartum (postpartum_bool)="postValue($event)" (post_mc_data)="updatePost($event)" [patient_mc_record]="patient_mc_record"
           [delivery_location]="delivery_location" [regions]="regions" [attendants]="attendants"
           [preg_outcome]="preg_outcome" [patient_details]="patient_details"></app-postpartum>
-      </div> -->
-      <!-- <div *ngIf="post_value"
+      </div>
+      <div *ngIf="post_value"
         class="w-12/12 px-8 pb-10 border-solid border-2 border-zinc-100 border-l-0 border-r-0 border-t-0 p-3">
         <app-postvisits *ngIf="patient_details" [patient_mc_record]="patient_mc_record"
           [patient_details]="patient_details"></app-postvisits>
-      </div> -->
+      </div>
       <div class=" w-12/12 px-8 pb-10 border-solid border-2 border-zinc-100 border-l-0 border-r-0 border-t-0 p-3">
         <app-services *ngIf="visit_type" [patient_mc_record]="patient_mc_record" [module]="module"
           (modalStats)="openModal($event)" [lib_services]="lib_services" [visit_type]="visit_type"
