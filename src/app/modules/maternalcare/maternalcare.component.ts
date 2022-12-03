@@ -16,7 +16,7 @@ export class MaternalcareComponent implements OnInit {
 
   patient_details: any;
   public mcr_data: any;
-  public patient_mc_record: any;
+  public patient_mc_record: any = '';
   public patient_mc_list: any;
   prenatal: boolean;
   services: boolean;
@@ -45,14 +45,14 @@ export class MaternalcareComponent implements OnInit {
     this.module = 1;
     this.post_value = false;
     this.loading = false
-    // this.loadLibraries();
+    this.loadLibraries();
 
   }
 
   switchTab(tab) {
     this.module = 0;
     this.module = tab;
-    if(this.module == 1){
+    if (this.module == 1) {
       this.patient_mc_record = '';
     }
     console.log(this.module);
@@ -64,7 +64,7 @@ export class MaternalcareComponent implements OnInit {
     }
   }
 
-  openNew(){
+  openNew() {
     this.switchTab(2);
     // this.patient_mc_record = this.patient_mc_record[0]
   }
@@ -74,34 +74,28 @@ export class MaternalcareComponent implements OnInit {
     this.patient_details = info;
     this.mcrID('all', this.patient_details.id);
   }
-  
+
   mcrID(type: any, id: any) {
     if (id) {
       this.http.get('maternal-care/mc-records?type=' + type + '&patient_id=' + id).subscribe({
         next: (data: any) => {
           // console.log(data.data[0]);
-          if(data.data.length == 0){
+          if (data.data.length == 0) {
             this.patient_mc_list = ''
           }
-          else{
+          else {
             console.log(data.data[0]);
             this.patient_mc_list = data.data;
           }
-          
-          // if (this.patient_mc_record.length != 0) {
-              //   this.prenatal = true;
-              //   this.services = true;
-              // if(this.patient_mc_record.post_registration && this.patient_mc_record.post_registration.length != 0){
-              //   this.post_value = true;
-              // }
-          // }
+
+
         },
         error: err => console.log(err),
       });
     }
   }
 
-  openMCR(id: any){
+  openMCR(id: any) {
     this.loading = true;
     console.log(id);
     if (id) {
@@ -109,6 +103,14 @@ export class MaternalcareComponent implements OnInit {
         next: (data: any) => {
           console.log(data);
           this.patient_mc_record = data.data;
+          if (this.patient_mc_record.pre_registration.length != 0) {
+
+            this.prenatal = true;
+            // this.services = true;
+            // if (this.patient_mc_record.post_registration && this.patient_mc_record.post_registration.length != 0) {
+            //   this.post_value = true;
+            // }
+          }
         },
         error: err => console.log(err),
         complete: () => {
@@ -122,26 +124,32 @@ export class MaternalcareComponent implements OnInit {
   loadLibraries() {
     this.libraries.forEach(obj => {
       this.http.get('libraries/' + obj.location).subscribe({
-        next: (data: any) => this[obj.var_name] = data.data,
+        next: (data: any) => {
+          this[obj.var_name] = data.data;
+
+        },
         error: err => console.log(err),
       })
     });
+    console.log(this['risk_factors']);
   }
 
-  showPreServ(id){
-    if(id){
-      this.prenatal = true;
+  showPreServ(id: any) {
+    if (id != '') {
+      this.openMCR(id);
     }
+
+    this.prenatal = true;
   }
 
-  openModal(modal){
+  openModal(modal) {
     console.log("Opening modal via emit mcr with ", this.modalStats);
-    
+
     this.modalStats = modal;
   }
 
-  updatePrenatal(info){
-    this.patient_mc_record[0].prenatal_visit = info;
+  updatePrenatal(info) {
+    this.patient_mc_record.prenatal_visit = info;
   }
 
 

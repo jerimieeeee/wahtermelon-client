@@ -103,26 +103,26 @@
         <app-mcr *ngIf="patient_details" (patient_mc_id)="showPreServ($event)" [patient_mc_record]="patient_mc_record"
           [patient_details]="patient_details"></app-mcr>
       </div>
-      <!-- <div class="w-12/12 px-8 pb-10 border-solid border-2 border-zinc-100 border-l-0 border-r-0 border-t-0 p-3" *ngIf="patient_mc_record">
-        <app-riskfactors [risk_factors]="risk_factors" [patient_mc_record]="patient_mc_record"
+      <div class="w-12/12 px-8 pb-10 border-solid border-2 border-zinc-100 border-l-0 border-r-0 border-t-0 p-3">
+        <app-riskfactors *ngIf="risk_factors && patient_mc_record != ''" [risk_factors]="risk_factors" [patient_mc_record]="patient_mc_record"
           [patient_details]="patient_details"></app-riskfactors>
-      </div> -->
+      </div>
     </div>
 
     <div class="fade-in mb-20" *ngIf="module == 3">
       <div class="w-12/12 px-8 pb-10 border-solid border-2 border-zinc-100 border-l-0 border-r-0 border-t-0 p-3">
-        <app-prenatal (prenatal_mc_data)="updatePrenatal($event)" [fetals]="fetals" [fhr_lib]="fhr_lib"
-          [patient_mc_record]="patient_mc_record" [patient_details]="patient_details"></app-prenatal>
+        <app-prenatal (prenatal_mc_data)="updatePrenatal($event)" [patient_mc_record]="patient_mc_record" [patient_details]="patient_details" 
+          [fetals]="fetals" [fhr_lib]="fhr_lib"></app-prenatal>      
       </div>
       <div class=" w-12/12 px-8 pb-10 border-solid border-2 border-zinc-100 border-l-0 border-r-0 border-t-0 p-3">
-        <app-services *ngIf="visit_type" [patient_mc_record]="patient_mc_record" [module]="module"
+        <!-- <app-services *ngIf="visit_type" [patient_mc_record]="patient_mc_record" [module]="module"
           (modalStats)="openModal($event)" [lib_services]="lib_services" [visit_type]="visit_type"
-          [patient_details]="patient_details"></app-services>
+          [patient_details]="patient_details"></app-services> -->
       </div>
     </div>
 
     <div class="fade-in mb-20" *ngIf="module == 4">
-      <div class="w-12/12 px-8 pb-10 border-solid border-2 border-zinc-100 border-l-0 border-r-0 border-t-0 p-3">
+      <!-- <div class="w-12/12 px-8 pb-10 border-solid border-2 border-zinc-100 border-l-0 border-r-0 border-t-0 p-3">
         <app-postpartum (postpartum_bool)="postValue($event)" [patient_mc_record]="patient_mc_record"
           [delivery_location]="delivery_location" [regions]="regions" [attendants]="attendants"
           [preg_outcome]="preg_outcome" [patient_details]="patient_details"></app-postpartum>
@@ -136,7 +136,7 @@
         <app-services *ngIf="visit_type" [patient_mc_record]="patient_mc_record" [module]="module"
           (modalStats)="openModal($event)" [lib_services]="lib_services" [visit_type]="visit_type"
           [patient_details]="patient_details"></app-services>
-      </div>
+      </div> -->
     </div>
 
     <div class="fade-in mb-20 z-20" *ngIf="module == 5">

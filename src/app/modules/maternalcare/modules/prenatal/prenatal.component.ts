@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { faAngleDown, faCalendarDay, faCaretRight, faCircleCheck, faClose, faInfoCircle, faPencil, faSave, faTimes, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
@@ -69,7 +69,7 @@ export class PrenatalComponent implements OnInit {
   @Input() patient_mc_record;
   @Input() patient_details;
 
-  @Output() prenatal_mc_data;
+  @Output() prenatal_mc_data = new EventEmitter<string>();
   is_saving: boolean;
   saved: boolean;
   today: Date;
@@ -85,7 +85,7 @@ export class PrenatalComponent implements OnInit {
   ngOnInit(): void {
     this.value = 1;
     this.today = new Date();
-    this.getMCR('latest', this.patient_details.id);
+    this.getMCR();
 
   }
 
@@ -151,29 +151,29 @@ export class PrenatalComponent implements OnInit {
     return index;
   }
 
-  getMCR(type: any, id: any) {
+  getMCR() {
     this.prenatal_data =[]
-    console.log(this.patient_mc_record[0], " from getMCR - prenatal;");
+    console.log(this.patient_mc_record, " from getMCR - prenatal;");
 
 
-    console.log(this.patient_mc_record[0].prenatal_visit[0]?this.patient_mc_record[0].prenatal_visit[0]:this.patient_mc_record[0].prenatal_visit, " try getmcr");
+    console.log(this.patient_mc_record.prenatal_visit[0]?this.patient_mc_record.prenatal_visit[0]:this.patient_mc_record.prenatal_visit, " try getmcr");
 
-    if(this.patient_mc_record[0].prenatal_visit[0]?this.patient_mc_record[0].prenatal_visit[0]:this.patient_mc_record[0].prenatal_visit.length == 1){
+    if(this.patient_mc_record.prenatal_visit[0]?this.patient_mc_record.prenatal_visit[0]:this.patient_mc_record.prenatal_visit.length == 1){
       console.log("it went true");
 
-    this.value = this.patient_mc_record[0].prenatal_visit[0].visit_sequence + 1;
-    this.prenatal_data = this.patient_mc_record[0].prenatal_visit;
+    this.value = this.patient_mc_record.prenatal_visit[0].visit_sequence + 1;
+    this.prenatal_data = this.patient_mc_record.prenatal_visit;
   }
   this.createForm();
   }
   createForm() {
     let prenatal_visit: any
-    if(this.patient_mc_record[0].prenatal_visit[0]?this.patient_mc_record[0].prenatal_visit[0]:this.patient_mc_record[0].prenatal_visit.length == 1){
+    if(this.patient_mc_record.prenatal_visit[0]?this.patient_mc_record.prenatal_visit[0]:this.patient_mc_record.prenatal_visit.length == 1){
         // console.log("it went true again");
-        prenatal_visit = this.patient_mc_record[0].prenatal_visit[0];
+        prenatal_visit = this.patient_mc_record.prenatal_visit[0];
     }else{
       console.log(" its false coz prenatal is 0");
-      prenatal_visit = this.patient_mc_record[0].prenatal_visit;
+      prenatal_visit = this.patient_mc_record.prenatal_visit;
     }
 
     let user_id = this.http.getUserID();
@@ -181,7 +181,7 @@ export class PrenatalComponent implements OnInit {
     // console.log(prenatal_visit, " log prenatal_visit");
 
     this.prenatal_form = this.formBuilder.group({
-      patient_mc_id: [this.patient_mc_record[0].id, [Validators.required, Validators.minLength(2)]],
+      patient_mc_id: [this.patient_mc_record.id, [Validators.required, Validators.minLength(2)]],
       facility_code: [facility_code, [Validators.required, Validators.minLength(2)]],
       patient_id: [this.patient_details.id, [Validators.required, Validators.minLength(2)]],
       user_id: [user_id, [Validators.required, Validators.minLength(2)]],
@@ -191,11 +191,11 @@ export class PrenatalComponent implements OnInit {
       bp_systolic: ['', [Validators.required, Validators.minLength(2)]],
       bp_diastolic: ['', [Validators.required, Validators.minLength(2)]],
       fundic_height: [''],
-      presentation_code: [prenatal_visit.presentation_code ? prenatal_visit.presentation_code : '', [Validators.required, Validators.minLength(2)]],
+      presentation_code: ['', [Validators.required, Validators.minLength(2)]],
       fhr: [''],
       location_code: ['NA'],
       remarks: [''],
-      private: [prenatal_visit.private ? prenatal_visit.private : 0],
+      private: [0],
     });
 
     // console.log(this.prenatal_form.value, " form prenatal creatform

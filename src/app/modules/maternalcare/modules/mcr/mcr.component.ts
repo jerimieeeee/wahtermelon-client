@@ -63,7 +63,7 @@ export class McrComponent implements OnInit {
 
   ngOnInit() {
     this.today = new Date();
-   
+
     this.focused = false;
     this.updating = false;
     this.loading = false;
@@ -73,8 +73,6 @@ export class McrComponent implements OnInit {
   }
 
   getMCR() {
-    console.log(this.patient_mc_record, " from getmcr");
-
     if (!this.patient_mc_record) {
       this.mcr_data = -1;
       this.getEDC(this.today, 'any');
@@ -92,12 +90,9 @@ export class McrComponent implements OnInit {
     let user_id = this.http.getUserID();
     let facility_code = this.http.getUserFacility();
     this.mcr_form = this.formBuilder.group({
-      patient_id: [this.patient_details.id,
-      [Validators.required, Validators.minLength(2)]],
-      user_id: [user_id,
-        [Validators.required, Validators.minLength(2)]],
-      facility_code: [facility_code,
-        [Validators.required, Validators.minLength(2)]],
+      patient_id: [this.patient_details.id, [Validators.required, Validators.minLength(2)]],
+      user_id: [user_id, [Validators.required, Validators.minLength(2)]],
+      facility_code: [facility_code, [Validators.required, Validators.minLength(2)]],
       pre_registration_date: [(this.mcr_data == -1 ? new Date().toISOString().substring(0, 10) : new Date(this.mcr_data.pre_registration_date).toISOString().substring(0, 10)),
       [Validators.required]],
       lmp_date: [(this.mcr_data == -1 ? null : new Date(this.mcr_data.lmp_date).toISOString().substring(0, 10)),
@@ -127,14 +122,12 @@ export class McrComponent implements OnInit {
     console.log(this.mcr_form.value, " validation check");
     this.loading = true;
     let http;
-    if(this.updating){
+    if (this.updating) {
       http = this.http.update('maternal-care/mc-preregistrations/', this.mcr_data.id, this.mcr_form.value)
-    }else{
+    } else {
       http = this.http.post('maternal-care/mc-preregistrations', this.mcr_form.value)
     }
 
-    // console.log(url, " my url for saving or updating coz, ", this.updating);
-    
     if (this.mcr_form.valid) {
       http.subscribe({
         next: (data: any) => {
@@ -184,15 +177,15 @@ export class McrComponent implements OnInit {
   getEDC(value: any, from: any) {
     console.log('fetching Important dates from ' + from, ' using ' + value);
 
-    this.edc_date = from == 'db' ? new Date(this.mcr_data.edc_date).toISOString().substring(0, 10) : (value?new Date(value).toISOString().substring(0, 10): new Date().toISOString().substring(0, 10))
+    this.edc_date = from == 'db' ? new Date(this.mcr_data.edc_date).toISOString().substring(0, 10) : (value ? new Date(value).toISOString().substring(0, 10) : new Date().toISOString().substring(0, 10))
 
-    this.first_tri = from == 'db' ? new Date(this.mcr_data.trimester1_date).toISOString().substring(0, 10) : (value?new Date(value).toISOString().substring(0, 10): new Date().toISOString().substring(0, 10));
+    this.first_tri = from == 'db' ? new Date(this.mcr_data.trimester1_date).toISOString().substring(0, 10) : (value ? new Date(value).toISOString().substring(0, 10) : new Date().toISOString().substring(0, 10));
 
-    this.second_tri = from == 'db' ? new Date(this.mcr_data.trimester2_date).toISOString().substring(0, 10) : (value?new Date(value).toISOString().substring(0, 10): new Date().toISOString().substring(0, 10));
+    this.second_tri = from == 'db' ? new Date(this.mcr_data.trimester2_date).toISOString().substring(0, 10) : (value ? new Date(value).toISOString().substring(0, 10) : new Date().toISOString().substring(0, 10));
 
-    this.third_tri = from == 'db' ? new Date(this.mcr_data.trimester3_date).toISOString().substring(0, 10) : (value?new Date(value).toISOString().substring(0, 10): new Date().toISOString().substring(0, 10));
+    this.third_tri = from == 'db' ? new Date(this.mcr_data.trimester3_date).toISOString().substring(0, 10) : (value ? new Date(value).toISOString().substring(0, 10) : new Date().toISOString().substring(0, 10));
 
-    if (from == 'input' && value != '') {    
+    if (from == 'input' && value != '') {
       this.edc_date = new Date(this.edc_date).setDate(new Date(this.edc_date).getDate() + 280);
       this.first_tri = new Date(this.first_tri).setDate(new Date(this.first_tri).getDate() + 84);
       this.second_tri = new Date(this.second_tri).setDate(new Date(this.second_tri).getDate() + 189);
@@ -202,7 +195,7 @@ export class McrComponent implements OnInit {
     this.aog_date = new Date();
     this.aog_date.setHours(0, 0, 0, 0);
 
-    var lmp = value?new Date(value):new Date();
+    var lmp = value ? new Date(value) : new Date();
     lmp.setHours(0, 0, 0, 0);
 
     const msInWeek = 1000 * 60 * 60 * 24 * 7;
