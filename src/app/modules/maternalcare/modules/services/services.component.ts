@@ -95,7 +95,7 @@ export class ServicesComponent implements OnInit {
             this.saved = true
             setTimeout(() => {
               this.saved = false;
-              this.openModal();
+              this.modal = false;
             }, 1500);
           }
         })
@@ -137,7 +137,7 @@ export class ServicesComponent implements OnInit {
       visit_status: this.services_form.value.visit_status,
       intake_penicillin: item == 'intake_penicillin' ? this.services_form.value[item] : this.serviceChanges[i].intake_penicillin,
       positive_result: item == 'positive_result' ? this.services_form.value[item] : this.serviceChanges[i].positive_result,
-      service_date: this.services_form.value.service_date,
+      service_date: item == 'service_date' ? this.services_form.value[item] : this.serviceChanges[i].service_date,
       service_qty: item == 'service_qty' ? this.services_form.value[item] : this.serviceChanges[i].service_qty,
       service_id: id,
     };
@@ -147,8 +147,13 @@ export class ServicesComponent implements OnInit {
   }
   openModal() {
     console.log("opening modal");
-
     this.modal = !this.modal;
+    this.modalStats.emit(this.modal);
+  }
+
+  closeModal() {
+    console.log("opening modal");
+    this.modal = false;
     this.modalStats.emit(this.modal);
   }
 }

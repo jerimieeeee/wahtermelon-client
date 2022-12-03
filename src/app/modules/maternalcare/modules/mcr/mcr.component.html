@@ -70,14 +70,14 @@
                             Important Dates
                         </h1>
                     </div>
-                    <h3 class="bg-white col-span-2 rounded-md mx-2 font-semibold text-center">EDC Date<p class="font-medium">{{edc_date.toLocaleDateString('en-CA') == today.toLocaleDateString('en-CA')?'No Date':edc_date.toLocaleDateString('en-CA') | date: 'MM/dd/yyyy'}}</p></h3>
+                    <h3 class="bg-white col-span-2 rounded-md mx-2 font-semibold text-center">EDC Date<p class="font-medium">{{edc_date != today.toLocaleDateString('en-CA')?(edc_date | date: 'MM/dd/yyyy'):"No Date"}}</p></h3>
                     <h3 class="bg-white col-span-2 rounded-md mx-2 font-semibold text-center relative">AOG (Weeks)
                         <p class="font-medium {{aog_date.includes('-')?'text-red-500':''}}">{{aog_date}}
                         </p>
                     </h3>
-                   <h3 class="bg-white col-span-3 rounded-md mx-2 font-semibold text-center">End of 1st Trimester<p class="font-medium">{{first_tri.toLocaleDateString('en-CA') != today.toLocaleDateString('en-CA')?(first_tri.toLocaleDateString('en-CA')  | date: 'MM/dd/yyyy'):"No Date"}}</p></h3>
-                   <h3 class="bg-white col-span-3 rounded-md mx-2 font-semibold text-center">End of 2nd Trimester<p class="font-medium">{{second_tri.toLocaleDateString('en-CA') != today.toLocaleDateString('en-CA')?(second_tri.toLocaleDateString('en-CA')  | date: 'MM/dd/yyyy'):"No Date"}}</p></h3>
-                   <h3 class="bg-white col-span-3 rounded-md mx-2 font-semibold text-center">End of 3rd Trimester<p class="font-medium">{{third_tri.toLocaleDateString('en-CA') != today.toLocaleDateString('en-CA')?(third_tri.toLocaleDateString('en-CA')  | date: 'MM/dd/yyyy'):"No Date"}}</p></h3>
+                   <h3 class="bg-white col-span-3 rounded-md mx-2 font-semibold text-center">End of 1st Trimester<p class="font-medium">{{first_tri != today.toLocaleDateString('en-CA')?(first_tri | date: 'MM/dd/yyyy'):"No Date"}}</p></h3>
+                   <h3 class="bg-white col-span-3 rounded-md mx-2 font-semibold text-center">End of 2nd Trimester<p class="font-medium">{{second_tri != today.toLocaleDateString('en-CA')?(second_tri | date: 'MM/dd/yyyy'):"No Date"}}</p></h3>
+                   <h3 class="bg-white col-span-3 rounded-md mx-2 font-semibold text-center">End of 3rd Trimester<p class="font-medium">{{third_tri != today.toLocaleDateString('en-CA')?(third_tri | date: 'MM/dd/yyyy'):"No Date"}}</p></h3>
                 </div>
       
                 <div class="grid rounded-lg hover:drop-shadow-lg drop-shadow-md bg-white rounded-lg hover:border border-gray-300 hover:border-pink-400 m-2 border"
@@ -212,24 +212,18 @@
                     </fa-icon>
                     <button type="button" class="font-bold button-out border-check-red">Cancel</button>
                 </div>
-                <div (click)="saveForm(mcr_form.value)"
-                    class="cursor-pointer flex border-check hover:drop-shadow-md bg-green-300 hover:bg-green-400 py-1 rounded-full text-white px-3 peer-hover:bg-white peer-hover:text-green-400">
-                    <fa-icon *ngIf="!is_saving" [icon]="faSave" size="lg" class="mr-2"></fa-icon>
-                    <fa-icon *ngIf="is_saving" class="mr-2" [icon]="faSpinner" [spin]="true"></fa-icon>
-                    <button type="button" class="font-bold button-out border-check-red"
-                        (keyup.enter)="saveForm(mcr_form.value)">Save</button>
+                <div (click)="saveForm(mcr_form.value)" 
+                    class="cursor-pointer flex border-check hover:drop-shadow-md {{updating?'bg-blue-300 hover:bg-blue-400 peer-hover:text-blue-400':'bg-green-300 hover:bg-green-400 peer-hover:text-green-400'}} py-1 rounded-full text-white px-3 peer-hover:bg-white">
+                    <fa-icon *ngIf="!loading" [icon]="faSave" size="lg" class="mr-2"></fa-icon>
+                    <fa-icon *ngIf="loading" class="mr-2" [icon]="faSpinner" [spin]="true"></fa-icon>
+                    <button type="button" class="font-bold button-out border-check-red">
+                        {{this.updating?(this.loading?'Updating':'Update'):(this.loading?'Saving':'Save')}}
+                    </button>
                 </div>
             </div>
         </div>
-        <div class="relative w-auto border-check mt-2 mb-7 w-12/12" *ngIf="!focused && mcr_form.disabled">
-            <div class="absolute inline-flex right-0 cursor-pointer" (click)="edit()">
-                <div class="flex border-check bg-orange-300 hover:bg-orange-400 py-1 rounded-full  text-white px-2">
-                    <fa-icon [icon]="faPencil" size="lg" class="mr-2 ">
-                    </fa-icon>
-                    <button type="button" class="font-bold button-out border-check-red typed-out"
-                        (keyup.enter)="uncheck($event.target.id + fphx_cat)">Edit</button>
-                </div>
-            </div>
-        </div>
+        <!-- <div class="relative w-auto border-check mt-2 mb-7 w-12/12" *ngIf="updating">
+           
+        </div> -->
     </form>
 </div>
