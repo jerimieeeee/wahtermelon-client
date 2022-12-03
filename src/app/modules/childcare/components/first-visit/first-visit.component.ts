@@ -49,6 +49,8 @@ export class FirstVisitComponent implements OnInit {
 
   curr_name: any;
 
+  modalFilter: any;
+
 
   visitForm: FormGroup = new FormGroup({
     id: new FormControl<string| null>(''),
@@ -76,10 +78,11 @@ export class FirstVisitComponent implements OnInit {
     return this.visitForm.controls;
   }
 
-  showAdmissionModal = false;
+  showAlert = false;
 
-  toggleAdmissionModal(){
-    this.showAdmissionModal = !this.showAdmissionModal;
+  toggleAlertModal(value: any){
+    this.modalFilter = value;
+    this.showAlert = !this.showAlert;
   }
 
   // saveAdmission(){
@@ -106,12 +109,11 @@ export class FirstVisitComponent implements OnInit {
         next: (data: any) =>  this.getccdevDetails(),
         error: err => {console.log(err),
           this.is_saving = false;
-          alert('Update patient details or input the required fields')},
+          this.toggleAlertModal('E')},
         complete: () => {
           this.is_saving = false;
           console.log(this.visitForm.value, 'visit form')
-
-      alert('saving success!')
+      this.toggleAlertModal('S')
         }
       })
     }
@@ -128,7 +130,7 @@ export class FirstVisitComponent implements OnInit {
       patient_id: [this.patient_details.id, [Validators.required, Validators.minLength(2)]],
       user_id: [user_id, [Validators.required, Validators.minLength(2)]],
       ccdev_ended: ['0', [Validators.required, Validators.minLength(2)]],
-      nbs_filter: ['5500815323', [Validators.required, Validators.minLength(2)]],
+      nbs_filter: ['', [Validators.required, Validators.minLength(2)]],
     });
   }
 
@@ -172,7 +174,7 @@ export class FirstVisitComponent implements OnInit {
     .subscribe({
       next: (data: any) => {
         this.patient_info = data.data;
-        console.log(this.patient_info, 'info ccdev first visit')
+        // console.log(this.patient_info, 'info ccdev first visit')
         this.getccdevMama()
         this.visitForm.patchValue({...this.patient_info});
       },
@@ -185,7 +187,7 @@ export class FirstVisitComponent implements OnInit {
     .subscribe({
       next: (data: any) => {
         this.patient_info2 = data.data;
-        console.log(this.patient_info2, 'info ccdev mama first visit')
+        // console.log(this.patient_info2, 'info ccdev mama first visit')
       },
       error: err => console.log(err)
     });

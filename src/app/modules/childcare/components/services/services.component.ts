@@ -93,6 +93,13 @@ export class ServicesComponent implements OnInit {
   services_given= [];
   service_list = Services;
   modalFilter: any;
+  alertFilter: any;
+  showAlert = false;
+
+  toggleAlertModal(value: any){
+    this.alertFilter = value;
+    this.showAlert = !this.showAlert;
+  }
 
   toggleEssentialModal(value: any){
     console.log('toggleEssentialModal');
@@ -263,7 +270,7 @@ export class ServicesComponent implements OnInit {
   changeSelection(i: any) {
     // this.fetchSelectedItems()
     this.setDate(i)
-    console.log(this.selectedServiceList, 'sadsad')
+    // console.log(this.selectedServiceList, 'sadsad')
   }
 
   changeSelection2(i:any) {
@@ -287,8 +294,8 @@ export class ServicesComponent implements OnInit {
     this.loadServices()
     this.http.get('libraries/cc-services').subscribe((data: any) => {
       this.lib_ccservices = data.data
-      console.log(this.lib_ccservices, 'cc dev services library');
-      console.log(this.patient_details.id, 'awaw')
+      // console.log(this.lib_ccservices, 'cc dev services library');
+      // console.log(this.patient_details.id, 'awaw')
     });
   }
 
@@ -323,8 +330,30 @@ export class ServicesComponent implements OnInit {
     console.log(this.serviceForm.service_date, 'ng model check')
   }
 
+  submitNBS(){
+    
+  
+ 
+    var nbsfilter ={
+      nbs_filter: this.patient_info.nbs_filter,
+    }
+
+    console.log(nbsfilter);
+
+    this.http.update('child-care/cc-records/', this.patient_info.id, nbsfilter).subscribe({
+      // next: (data: any) => console.log(data.status, 'check status'),
+      error: err => console.log(err),
+      complete: () => {
+        // this.loadLibraries();
+        console.log(nbsfilter,'nbs filter data saved')
+        this.is_saving = false;
+      }
+    })
+  }
+
 
   onSubmit(){
+    this.submitNBS()
     var service_arr = [];
 
     console.log(this.serviceForm)
@@ -354,8 +383,8 @@ export class ServicesComponent implements OnInit {
 
       this.http.post('child-care/cc-services', serv_form).subscribe({
         next: (data: any) => { console.log(data.data, 'display lahat ng services') },
-        error: err => console.log(err),
-        complete: () => console.log('success')
+        error: err => this.toggleAlertModal('E'),
+        complete: () => this.toggleAlertModal('S')
       })
     }
   }
@@ -433,8 +462,8 @@ export class ServicesComponent implements OnInit {
         })
 
         // this.serviceForm = serv2;
-        console.log(this.serviceForm.service_status.CC);
-        console.log(this.serviceForm, 'test serv 2')
+        // console.log(this.serviceForm.service_status.CC);
+        // console.log(this.serviceForm, 'test serv 2')
       },
       error: err => console.log(err),
       complete: () => console.log(this.service_list,'services loaded')
@@ -454,20 +483,33 @@ export class ServicesComponent implements OnInit {
       error: err => console.log(err),
       complete: () => {
         // this.loadLibraries();
-        console.log(this.cc_newborn, 'data ng cc new born');
+        // console.log(this.cc_newborn, 'data ng cc new born');
       }
     })
+  }
+
+  getccdevDetails() {
+    this.http.get('child-care/cc-records/'+this.patient_details.id)
+    .subscribe({
+      next: (data: any) => {
+        this.patient_info = data.data;
+        // console.log(this.patient_info, 'info ccdev first visit')
+        
+      },
+      error: err => console.log(err)
+    });
   }
   
 
   ngOnInit() {
-    this.geteServiceName()
-    this.getServices()
-    this.fetchSelectedItems()
-    this.fetchSelectedItems2()
-    this.fetchCheckedIDs()
-    this.fetchCheckedIDs2()
+    // this.geteServiceName()
+    // this.getServices()
+    // this.fetchSelectedItems()
+    // this.fetchSelectedItems2()
+    // this.fetchCheckedIDs()
+    // this.fetchCheckedIDs2()
     this.loadCCLibraries()
+    this.getccdevDetails()
     if(this.patient_details.id) this.loadServicesTest()
   }
 }
