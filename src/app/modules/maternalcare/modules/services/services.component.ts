@@ -47,26 +47,22 @@ export class ServicesComponent implements OnInit {
   public service_list = [];
   public array_form = [];
   public group_list = [
-    { name: 'G1', qty: false, pos: false, pos_name: '', pen: false, service: [] },
-    { name: 'G2', qty: true, pos: false, pos_name: '', pen: false, service: []  },
+    { name: 'G1', qty: true, pos: false, pos_name: '', pen: false, service: []  },
+    { name: 'G2', qty: false, pos: false, pos_name: '', pen: false, service: [] },
     { name: 'G3', qty: false, pos: true, pos_name: 'Positive', pen: true, service: []  },
     { name: 'G4', qty: false, pos: true, pos_name: 'Positive', pen: false, service: []  },
     { name: 'G5', qty: false, pos: true, pos_name: 'Anemia', pen: false, service: []  },
   ];
 
   ngOnInit() {
-    console.log(this.lib_services);
-
     this.user_id = this.http.getUserID();
     this.facility_code = this.http.getUserFacility();
-    console.log(this.visit_type);
     this.createForm()
     for(let x = 0 ; x < 11 ; x++){
       this.serviceChanges.push(this.services_form.value);
     }
     this.getServices()
-    console.log(this.serviceChanges, " this are my init changes");
-
+    this.tagServiceGroup()
 
     this.today = new Date();
     this.modal = false;
@@ -95,7 +91,7 @@ export class ServicesComponent implements OnInit {
             this.saved = true
             setTimeout(() => {
               this.saved = false;
-              this.modal = false;
+              this.closeModal();
             }, 1500);
           }
         })
@@ -109,7 +105,23 @@ export class ServicesComponent implements OnInit {
       next: (data: any) => {
         console.log(data, " get services");
         this.service_list = data.data;
-        this.tagServiceGroup()
+        this.service_list.forEach(s => {
+          if (s.service.id == 'DENT' || s.service.id == 'HIV') {
+            s.group = this.group_list[1]
+          } else if (s.service.id == 'IRON' || s.service.id == 'VITA' || s.service.id == 'CALC' || s.service.id == 'IODN' || s.service.id == 'DWRMG') {
+            s.group = this.group_list[0]
+          } else if (s.service.id == 'SYP') {
+            s.group = this.group_list[2]
+          } else if (s.service.id == 'HEPB' || s.service.id == 'DIBTS') {
+            s.group = this.group_list[3]
+          } else if (s.service.id == 'CBC') {
+            s.group = this.group_list[4]
+          }
+        })
+
+        console.log(this.service_list, " get service after pushing group");
+        
+
       },
       error: err => console.log(err),
 
@@ -119,9 +131,9 @@ export class ServicesComponent implements OnInit {
   tagServiceGroup() {
     this.lib_services.forEach(s => {
       if (s.id == 'DENT' || s.id == 'HIV') {
-        this.group_list[0].service.push(s)
-      } else if (s.id == 'IRON' || s.id == 'VITA' || s.id == 'CALC' || s.id == 'IODN' || s.id == 'DWRMG') {
         this.group_list[1].service.push(s)
+      } else if (s.id == 'IRON' || s.id == 'VITA' || s.id == 'CALC' || s.id == 'IODN' || s.id == 'DWRMG') {
+        this.group_list[0].service.push(s)
       } else if (s.id == 'SYP') {
         this.group_list[2].service.push(s)
       } else if (s.id == 'HEPB' || s.id == 'DIBTS') {
@@ -153,7 +165,7 @@ export class ServicesComponent implements OnInit {
       service_date: [new Date().toISOString().substring(0, 10), [Validators.required]],
       visit_type_code: ['', [Validators.required]],
       visit_status: [this.module == 3 ? 'Prenatal' : (this.module == 4 ? 'Postpartum' : 'Services')],
-      service_qty:[''],
+      service_qty:[0],
       positive_result: [false],
       intake_penicillin: [false],
       service_id: [''],
@@ -162,6 +174,12 @@ export class ServicesComponent implements OnInit {
 
 
   }
+  getNG(id, x){
+    return this.serviceChanges[this.array_form.map(s => s.service_id).indexOf(id)][x];
+  }
+  // getGroupList(){
+  //   return this.group_list
+  // }
   onChange(desc, id, item) {
     let i = this.array_form.map(s => s.service_id).indexOf(id);
     this.serviceChanges[i] = {
@@ -169,12 +187,12 @@ export class ServicesComponent implements OnInit {
       facility_code: this.facility_code,
       patient_id: this.patient_details.id,
       user_id: this.user_id,
-      visit_type_code: item == 'visit_type_code' ? this.services_form.value[item] : '',
+      visit_type_code: item == 'visit_type_code' ? this.services_form.value[item] : this.serviceChanges[i].visit_type_code,
       visit_status: this.services_form.value.visit_status,
-      intake_penicillin: item == 'intake_penicillin' ? this.services_form.value[item] : false,
-      positive_result: item == 'positive_result' ? this.services_form.value[item] : false,
-      service_date: item == 'service_date' ? this.services_form.value[item] : new Date().toISOString().substring(0, 10),
-      service_qty: item == 'service_qty' ? this.services_form.value[item] : 0,
+      intake_penicillin: item == 'intake_penicillin' ? this.services_form.value[item] : this.serviceChanges[i].intake_penicillin,
+      positive_result: item == 'positive_result' ? this.services_form.value[item] : this.serviceChanges[i].positive_result,
+      service_date: item == 'service_date' ? this.services_form.value[item] : this.serviceChanges[i].service_date,
+      service_qty: item == 'service_qty' ? this.services_form.value[item] : this.serviceChanges[i].service_qty,
       service_id: id,
     };
 
@@ -185,6 +203,7 @@ export class ServicesComponent implements OnInit {
     console.log("opening modal");
     this.modal = !this.modal;
     this.modalStats.emit(this.modal);
+    this.createForm()
   }
 
   closeModal() {

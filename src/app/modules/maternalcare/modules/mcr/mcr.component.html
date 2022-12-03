@@ -217,7 +217,7 @@
                     <fa-icon *ngIf="!loading" [icon]="faSave" size="lg" class="mr-2"></fa-icon>
                     <fa-icon *ngIf="loading" class="mr-2" [icon]="faSpinner" [spin]="true"></fa-icon>
                     <button type="button" class="font-bold button-out border-check-red">
-                        {{this.updating?(this.loading?'Updating':'Update'):(this.loading?'Saving':'Save')}}
+                        {{updating?(loading?'Updating':'Update'):(loading?'Saving':'Save')}}
                     </button>
                 </div>
             </div>

@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { faAngleDown, faCalendarDay, faCaretRight, faCircleCheck, faClose, faInfoCircle, faPencil, faSave, faTimes, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
+import { faAngleDown, faCalendarDay, faCaretRight, faCircleCheck, faCircleNotch, faClose, faInfoCircle, faPencil, faSave, faTimes, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import { LockChanges } from '@ngrx/store-devtools/src/actions';
 import { HttpService } from 'app/shared/services/http.service';
 
@@ -15,6 +15,7 @@ export class PostvisitsComponent implements OnInit {
   faClose = faClose;
   faTimesCircle = faTimesCircle;
   faSave = faSave;
+  faSpinner = faCircleNotch;
   faPencil = faPencil;
   faAngleDown = faAngleDown;
   faInfoCircle = faInfoCircle;
@@ -59,6 +60,7 @@ export class PostvisitsComponent implements OnInit {
   @Input() patient_mc_record;
   @Input() patient_details;
   is_saving: boolean;
+  saved: boolean;
   constructor(private http: HttpService, private formBuilder: FormBuilder) { }
 
   cm_value = '';
@@ -78,17 +80,9 @@ export class PostvisitsComponent implements OnInit {
  ]
   ngOnInit(): void {
     this.value = 1;
-    // this.registry_id = 1;
-    // this.patient_height = 145;
-    // this.patient_weight = 75;
-    // this.patient_id = 1;
-    // this.bp_systolic = 120;
-    // this.bp_diastolic = 90;
     this.getMCR();
-    // this.mc_id = 2;
-    // this.user_id = 1;
-    // this.postpartum_week = 1;
-    // this.createForm();
+    console.log(this.patient_mc_record, "mc record form postvistis init");
+    
     this.focused = false;
   }
   flip(): void {
@@ -99,30 +93,29 @@ export class PostvisitsComponent implements OnInit {
   }
 
   getMCR() {
-    console.log(this.patient_mc_record[0], " from getMCR - post visit;");
-
-
-    console.log(this.patient_mc_record[0].postpartum_visit[0]?this.patient_mc_record[0].postpartum_visit[0]:this.patient_mc_record[0].postpartum_visit, " try getmcr - post visit");
-
-    if(this.patient_mc_record[0].postpartum_visit[0]?this.patient_mc_record[0].postpartum_visit[0]:this.patient_mc_record[0].postpartum_visit.length == 1){
-      console.log("it went true");
-
-    this.value = this.patient_mc_record[0].postpartum_visit[0].visit_sequence + 1;
-    this.patient_mc_record[0].postpartum_visit.forEach(p => {
-      this.postpartum_data.push(p);
-      console.log("pushing p's");
-
-    });
-     }
-  this.createForm(this.patient_mc_record[0]);
+    console.log(this.patient_mc_record.length == 0, " from getMCR - post visit;");
+    if(this.patient_mc_record.length != 0){
+      if(this.patient_mc_record.postpartum_visit[0]?this.patient_mc_record.postpartum_visit[0]:this.patient_mc_record.postpartum_visit.length == 1){
+        console.log("it went true");
+  
+      this.value = this.patient_mc_record.postpartum_visit[0].visit_sequence + 1;
+      this.patient_mc_record.postpartum_visit.forEach(p => {
+        this.postpartum_data.push(p);
+        console.log("pushing p's");
+  
+      });
+       }
+       this.createForm(this.patient_mc_record);
+    }
+  
   }
 createForm(mc_record: any) {
   let user_id = this.http.getUserID();
   let facility_code = this.http.getUserFacility();
   let post_visit: any
-  console.log(this.patient_mc_record[0].postpartum_visit, " post visit true or false ?");
+  console.log(this.patient_mc_record.postpartum_visit, " post visit true or false ?");
 
-  if(this.patient_mc_record[0].postpartum_visit[0]?this.patient_mc_record[0].postpartum_visit[0]:this.patient_mc_record[0].postpartum_visit.length == 1){
+  if(this.patient_mc_record.postpartum_visit[0]?this.patient_mc_record.postpartum_visit[0]:this.patient_mc_record.postpartum_visit.length == 1){
     console.log("post visit true");
 
     post_visit = mc_record.postpartum_visit[0];
@@ -137,12 +130,12 @@ createForm(mc_record: any) {
     facility_code: [facility_code],
     patient_id: [this.patient_details.id],
     user_id: [user_id],
-    postpartum_date: [post_visit.length != 0?new Date(post_visit.postpartum_date).toISOString().substring(0, 10):new Date().toISOString().substring(0, 10), [Validators.required]],
-    visit_type: [this.patient_mc_record.id, [Validators.required]],
-    patient_height:  [this.patient_mc_record.id, [Validators.required]],
-    patient_weight:  [this.patient_mc_record.id, [Validators.required]],
-    bp_systolic: [this.patient_mc_record.id, [Validators.required]],
-    bp_diastolic:  [this.patient_mc_record.id, [Validators.required]],
+    postpartum_date: [new Date().toISOString().substring(0, 10), [Validators.required]],
+    visit_type: ['', [Validators.required]],
+    patient_height:  ['', [Validators.required]],
+    patient_weight:  ['', [Validators.required]],
+    bp_systolic: ['', [Validators.required]],
+    bp_diastolic:  ['', [Validators.required]],
     breastfeeding: [false],
     family_planning: [false],
     fever: [false],
@@ -151,26 +144,8 @@ createForm(mc_record: any) {
     pallor:  [false],
     cord_ok: [false],
   })
-  //   this.postpartum_visit_form = new FormGroup({
-  //     postpartum_visit_date: new FormControl(new Date().toISOString().substring(0, 10)),
-  //     visit_sequence: new FormControl(this.value),
-  //     registry_id: new FormControl(this.registry_id),
-  //     postpartum_week: new FormControl(this.postpartum_week),
-  //     patient_height: new FormControl(this.patient_height),
-  //     patient_weight: new FormControl(this.patient_weight),
-  //     bp_systolic: new FormControl(this.bp_systolic),
-  //     bp_diastolic: new FormControl(this.bp_diastolic),
-  //     vi: new FormControl(),
-  //     vb: new FormControl(),
-  //     f: new FormControl(),
-  //     p: new FormControl(),
-  //     b: new FormControl(),
-  //     pb: new FormControl(),
-  //     fp: new FormControl(),
-
-  // });
 }
-saveForm(data){
+saveForm(){
   this.is_saving = true;
 
   console.log(this.postpartum_visit_form.valid, this.postpartum_visit_form.value);
@@ -196,16 +171,15 @@ saveForm(data){
       error: err => console.log(err),
       complete: () => {
         this.is_saving = false;
-        // this.saved = true;
+        this.saved = true;
+        this.createForm(this.patient_mc_record);
         setTimeout(() => {
-          // this.saved = false;
+          this.saved = false;
         }, 1500);
-        // this.loading = false;
-        // this.showModal = true;
       }
     })
   } else {
-    // this.loading = false;
+    this.is_saving = false;
   }
 
 }

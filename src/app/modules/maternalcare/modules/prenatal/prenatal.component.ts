@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { faAngleDown, faCalendarDay, faCaretRight, faCircleCheck, faClose, faInfoCircle, faPencil, faSave, faTimes, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
+import { faAngleDown, faCalendarDay, faCaretRight, faCircleCheck, faCircleNotch, faClose, faInfoCircle, faPencil, faSave, faTimes, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
@@ -20,6 +20,7 @@ export class PrenatalComponent implements OnInit {
   faInfoCircle = faInfoCircle;
   faCaretRight = faCaretRight;
   faCircleCheck = faCircleCheck;
+  faSpinner = faCircleNotch;
 
   prenatal_form: FormGroup = new FormGroup({
     prenatal_date: new FormControl<string | null>(''),
@@ -137,7 +138,7 @@ export class PrenatalComponent implements OnInit {
         }
       })
     } else {
-      // this.loading = false;
+      this.is_saving = false;
     }
     console.log(this.prenatal_form.value, " prenatal form");
 
