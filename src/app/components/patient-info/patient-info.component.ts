@@ -1,10 +1,11 @@
 import { animate, style, transition, trigger } from '@angular/animations';
 import { formatDate } from '@angular/common';
-import { Component, ComponentFactoryResolver, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { faFlask, faHeart, faExclamationCircle, faNotesMedical, faPlusCircle, faQuestionCircle, faPenToSquare, faTrash, faTableList, faPenSquare, faChevronRight, faChevronUp, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { AgeService } from 'app/shared/services/age.service';
 import { HttpService } from 'app/shared/services/http.service';
+import { VitalsChartsService } from 'app/shared/services/vitals_charts.service';
 
 @Component({
   selector: 'app-patient-info',
@@ -60,7 +61,8 @@ export class PatientInfoComponent {
     private activeRoute: ActivatedRoute,
     private router: Router,
     private http: HttpService,
-    private ageService: AgeService
+    private ageService: AgeService,
+    private vitalsCharts: VitalsChartsService
   ) {
     this.activeRoute.params.subscribe(params => {
       this.getPatient(params.id);
@@ -184,60 +186,12 @@ export class PatientInfoComponent {
   loadVitals(){
     this.http.get('patient-vitals/vitals', {params:{patient_id: this.patient_info.id, sort: '-vitals_date', per_page: 30}}).subscribe({
       next: (data: any) => {
-        // console.log(data.data)
+        console.log(data.data)
         this.patientVitals.emit(data.data);
-        this.latest_vitals = data.data[0];
-        // console.log(this.latest_vitals);
-        if(this.latest_vitals){
-          //iterate thru previous vitals if height is not present on latest vitals.
-          this.getLatestToday(data.data);
-        }
+        if(data.data.length > 0) this.latest_vitals = this.vitalsCharts.getLatestToday(data.data);
       },
       error: err => console.log(err),
       complete: () => console.log('vitals loaded')
-    })
-  }
-
-  getLatestToday(vitals){
-    // console.log(vitals)
-    Object.entries(vitals).every(([keys, values], indexes) => {
-      let val:any = values;
-
-      if(!this.latest_vitals.patient_height && val.patient_height) this.latest_vitals.patient_height = val.patient_height;
-      if(!this.latest_vitals.patient_weight && val.patient_weight) this.latest_vitals.patient_weight = val.patient_weight;
-
-      let vitals_date = formatDate(val.vitals_date, 'Y-MM-dd','en', 'en')
-      let date_today = formatDate(new Date(), 'Y-MM-dd','en', 'en')
-      // console.log(vitals_date, date_today)
-      if(vitals_date === date_today){
-        if(!this.latest_vitals.bp_systolic && val.bp_systolic){
-          this.latest_vitals.bp_systolic = val.bp_systolic;
-          this.latest_vitals.bp_diastolic = val.bp_diastolic;
-        }
-
-        if(!this.latest_vitals.patient_spo2 && val.patient_spo2) this.latest_vitals.patient_spo2 = val.patient_spo2;
-        if(!this.latest_vitals.patient_temp && val.patient_temp) this.latest_vitals.patient_temp = val.patient_temp;
-        if(!this.latest_vitals.patient_heart_rate && val.patient_heart_rate) this.latest_vitals.patient_heart_rate = val.patient_heart_rate;
-        if(!this.latest_vitals.patient_respiratory_rate && val.patient_respiratory_rate) this.latest_vitals.patient_respiratory_rate = val.patient_respiratory_rate;
-        if(!this.latest_vitals.patient_pulse_rate && val.patient_pulse_rate) this.latest_vitals.patient_pulse_rate = val.patient_pulse_rate;
-
-        if(!this.latest_vitals.patient_head_circumference && val.patient_head_circumference) this.latest_vitals.patient_head_circumference = val.patient_head_circumference;
-        if(!this.latest_vitals.patient_muac && val.patient_muac) this.latest_vitals.patient_muac = val.patient_muac;
-        if(!this.latest_vitals.patient_chest && val.patient_chest) this.latest_vitals.patient_chest = val.patient_chest;
-        if(!this.latest_vitals.patient_abdomen && val.patient_abdomen) this.latest_vitals.patient_abdomen = val.patient_abdomen;
-        if(!this.latest_vitals.patient_waist && val.patient_waist) this.latest_vitals.patient_waist = val.patient_waist;
-        if(!this.latest_vitals.patient_hip && val.patient_hip) this.latest_vitals.patient_hip = val.patient_hip;
-        if(!this.latest_vitals.patient_limbs && val.patient_limbs) this.latest_vitals.patient_limbs = val.patient_limbs;
-        if(!this.latest_vitals.patient_skinfold_thickness && val.patient_skinfold_thickness) this.latest_vitals.patient_skinfold_thickness = val.patient_skinfold_thickness;
-      }
-
-      if(this.latest_vitals.patient_height > 0 && this.latest_vitals.patient_weight > 0 &&
-        this.latest_vitals.bp_systolic > 0 && this.latest_vitals.patient_heart_rate > 0 &&
-        this.latest_vitals.patient_respiratory_rate > 0 && this.latest_vitals.patient_pulse_rate > 0 &&
-        this.latest_vitals.patient_waist > 0){
-        return false;
-      }
-      return true;
     })
   }
 

@@ -8,6 +8,7 @@ import { HttpService } from 'app/shared/services/http.service';
 import { formatDate } from '@angular/common';
 import { faCircle, faFolder, faStethoscope } from '@fortawesome/free-solid-svg-icons';
 import { faEye, faFolderOpen } from '@fortawesome/free-regular-svg-icons';
+import { VitalsChartsService } from 'app/shared/services/vitals_charts.service';
 
 @Component({
   selector: 'app-patient-itr',
@@ -49,13 +50,6 @@ export class PatientItrComponent implements OnInit {
     bmi: [],
     bmi_date: []
   }
-  /* open_details(){
-    this.show_details = !this.show_details;
-  } */
-
-  /* onSubmit(loc){
-    this.router.navigate(['/'+loc, {id: this.patient_details.id}])
-  } */
 
   patientInfo(info){
     this.patient_details = info;
@@ -268,13 +262,13 @@ export class PatientItrComponent implements OnInit {
   }
 
   openVisit(details: any){
-    console.log(details);
-    console.log(details.pt_group);
+    /* console.log(details);
+    console.log(details.pt_group); */
     this.router.navigate(['/'+details.pt_group, {id:details.patient.id, consult_id: details.id}])
   }
 
   showConsult(details: any){
-    console.log(details)
+    // console.log(details)
     if(details.vitals) this.getLatestToday(details);
   }
 
@@ -282,49 +276,8 @@ export class PatientItrComponent implements OnInit {
   selected_visit: any;
 
   getLatestToday(details){
-    // console.log(details)
-    this.latest_vitals = details.vitals[0];
     this.selected_visit = details;
-
-    Object.entries(details.vitals).every(([keys, values], indexes) => {
-      let val:any = values;
-
-      if(!this.latest_vitals.patient_height && val.patient_height) this.latest_vitals.patient_height = val.patient_height;
-      if(!this.latest_vitals.patient_weight && val.patient_weight) this.latest_vitals.patient_weight = val.patient_weight;
-
-      let vitals_date = formatDate(val.vitals_date, 'Y-MM-dd','en', 'en')
-      let date_today = formatDate(new Date(), 'Y-MM-dd','en', 'en')
-      // console.log(vitals_date, date_today)
-      if(vitals_date === date_today){
-        if(!this.latest_vitals.bp_systolic && val.bp_systolic){
-          this.latest_vitals.bp_systolic = val.bp_systolic;
-          this.latest_vitals.bp_diastolic = val.bp_diastolic;
-        }
-
-        if(!this.latest_vitals.patient_spo2 && val.patient_spo2) this.latest_vitals.patient_spo2 = val.patient_spo2;
-        if(!this.latest_vitals.patient_temp && val.patient_temp) this.latest_vitals.patient_temp = val.patient_temp;
-        if(!this.latest_vitals.patient_heart_rate && val.patient_heart_rate) this.latest_vitals.patient_heart_rate = val.patient_heart_rate;
-        if(!this.latest_vitals.patient_respiratory_rate && val.patient_respiratory_rate) this.latest_vitals.patient_respiratory_rate = val.patient_respiratory_rate;
-        if(!this.latest_vitals.patient_pulse_rate && val.patient_pulse_rate) this.latest_vitals.patient_pulse_rate = val.patient_pulse_rate;
-
-        if(!this.latest_vitals.patient_head_circumference && val.patient_head_circumference) this.latest_vitals.patient_head_circumference = val.patient_head_circumference;
-        if(!this.latest_vitals.patient_muac && val.patient_muac) this.latest_vitals.patient_muac = val.patient_muac;
-        if(!this.latest_vitals.patient_chest && val.patient_chest) this.latest_vitals.patient_chest = val.patient_chest;
-        if(!this.latest_vitals.patient_abdomen && val.patient_abdomen) this.latest_vitals.patient_abdomen = val.patient_abdomen;
-        if(!this.latest_vitals.patient_waist && val.patient_waist) this.latest_vitals.patient_waist = val.patient_waist;
-        if(!this.latest_vitals.patient_hip && val.patient_hip) this.latest_vitals.patient_hip = val.patient_hip;
-        if(!this.latest_vitals.patient_limbs && val.patient_limbs) this.latest_vitals.patient_limbs = val.patient_limbs;
-        if(!this.latest_vitals.patient_skinfold_thickness && val.patient_skinfold_thickness) this.latest_vitals.patient_skinfold_thickness = val.patient_skinfold_thickness;
-      }
-
-      if(this.latest_vitals.patient_height > 0 && this.latest_vitals.patient_weight > 0 &&
-        this.latest_vitals.bp_systolic > 0 && this.latest_vitals.patient_heart_rate > 0 &&
-        this.latest_vitals.patient_respiratory_rate > 0 && this.latest_vitals.patient_pulse_rate > 0 &&
-        this.latest_vitals.patient_waist > 0){
-        return false;
-      }
-      return true;
-    });
+    this.latest_vitals = this.vitalsCharts.getLatestToday(details.vitals);
 
     if(this.selected_id){
       if(this.selected_id === details.id){
@@ -357,7 +310,8 @@ export class PatientItrComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private http: HttpService
+    private http: HttpService,
+    private vitalsCharts: VitalsChartsService
   ) { }
 
   ngOnInit(): void {
