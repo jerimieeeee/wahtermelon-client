@@ -162,7 +162,8 @@ export class ModuleModalComponent implements OnInit {
 
     this.http.post('consultation/cn-records', new_visit).subscribe({
       next: (data: any) => {
-        this.router.navigate(['/'+selected_module.location, {id: this.patient_info.id}]);
+        console.log(data)
+        this.router.navigate(['/'+selected_module.location, {id: this.patient_info.id, consult_id: data.data.id}]);
         this.is_loading = false;
       },
       error: (err) => {console.log(err); this.is_loading = false;},
