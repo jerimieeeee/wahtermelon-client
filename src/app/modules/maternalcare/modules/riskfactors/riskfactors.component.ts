@@ -32,6 +32,8 @@ export class RiskfactorsComponent implements OnInit {
   public buttons = [];
   public hide = [];
   public risk_catch = [];
+  public module_data: any;
+
   show: boolean;
   @Input() risk_factors;
   @Input() patient_mc_record;
@@ -41,39 +43,53 @@ export class RiskfactorsComponent implements OnInit {
   constructor(private http: HttpService, private formBuilder: FormBuilder) { }
   is_saving: boolean;
   saved: boolean;
+
   ngOnInit(): void {
-    this.createForm(this.patient_mc_record[0]);
+    this.loadModule();
     this.searching = false;
     this.today = new Date();
-    this.getRisk()
     this.is_saving = false;
     this.saved = false;
   }
 
-  createForm(mc_record) {
 
+  loadModule() {
+    if (!this.patient_mc_record) {
+      this.module_data = -1;
+    } else {
+      this.module_data = this.patient_mc_record;
+      console.log(this.module_data, " module data from  loadModule - RISK FACTOR");
+    }
+
+    this.createForm();
+    if (this.module_data != -1) {
+      this.getRisk()
+    }
+
+  }
+
+  createForm() {
     let user_id = this.http.getUserID();
     let facility_code = this.http.getUserFacility();
 
     this.risk_form = this.formBuilder.group({
-      patient_mc_id: [this.patient_mc_record[0].id, [Validators.required]],
+      patient_mc_id: [this.module_data == -1 ? null : this.module_data.id, [Validators.required]],
       facility_code: [facility_code, [Validators.required]],
       patient_id: [this.patient_details.id, [Validators.required]],
       user_id: [user_id, [Validators.required]],
-      risk_id: ['',[Validators.required]],
-      date_detected: [new Date().toISOString().substring(0, 10),[Validators.required]],
+      risk_id: ['', [Validators.required]],
+      date_detected: [new Date().toISOString().substring(0, 10), [Validators.required]],
     });
-
-
   }
-  getRisk(){
-    this.http.get('maternal-care/mc-risk-factors?patient_mc_id=' + this.patient_mc_record[0].id).subscribe({
+
+  getRisk() {
+    this.http.get('maternal-care/mc-risk-factors?patient_mc_id=' + this.module_data.id).subscribe({
       next: (data: any) => {
         console.log(data, " get risks");
         this.risk_catch = data.data;
       },
       error: err => console.log(err),
-      
+
     })
   }
   searchfocus() {
@@ -85,23 +101,22 @@ export class RiskfactorsComponent implements OnInit {
   }
   saveForm(data) {
     this.is_saving = true;
-
-    this.http.post('maternal-care/mc-risk-factors', data).subscribe({
-      next: (data: any) => {
-        console.log(data.data, " data from saving risks")
-
-        this.risk_catch = data.data
-      },
-      error: err => console.log(err),
-      complete: () => {
-        this.is_saving = false;
-        this.saved = true;
-        setTimeout(()=>{
-          this.saved = false;
-      }, 1500);
-      }
-    })
-
+    if (this.risk_form.valid) {
+      this.http.post('maternal-care/mc-risk-factors', data).subscribe({
+        next: (data: any) => {
+          console.log(data.data, " data from saving risks")
+          this.risk_catch = data.data
+        },
+        error: err => console.log(err),
+        complete: () => {
+          this.is_saving = false;
+          this.saved = true;
+          setTimeout(() => {
+            this.saved = false;
+          }, 1500);
+        }
+      })
+    }
   }
 
   flip(): void {
