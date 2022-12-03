@@ -83,14 +83,16 @@ export class MaternalcareComponent implements OnInit {
         patient_id: id
       }
 
-      this.http.get('maternal-care/mc-records', {params}).subscribe({
+      this.http.get('maternal-care/mc-records', { params }).subscribe({
         next: (data: any) => {
           console.log(data.data);
           if (data.data.length > 0) {
             this.patient_mc_list = data.data;
 
-            if(!this.patient_mc_list[0].post_registration || !this.patient_mc_list[0].post_registration.end_pregnancy) {
-              this.openMCR(this.patient_mc_list[0].id);
+            if (!this.patient_mc_list[0].post_registration || !this.patient_mc_list[0].post_registration.end_pregnancy) {
+              this.openMCR(this.patient_mc_list[0].id);    
+              console.log(!this.patient_mc_list[0].pre_registration, !this.patient_mc_list[0].post_registration.end_pregnancy);
+                  
             }
           }
         },
@@ -106,21 +108,31 @@ export class MaternalcareComponent implements OnInit {
     if (id) {
       this.http.get('maternal-care/mc-records/' + id).subscribe({
         next: (data: any) => {
-          console.log(data);
+          console.log(data, " openMCR");
           this.patient_mc_record = data.data;
-          if (this.patient_mc_record.pre_registration.length != 0) {
+          if (this.patient_mc_record.pre_registration != null) {
 
             this.prenatal = true;
             // this.services = true;
             // if (this.patient_mc_record.post_registration && this.patient_mc_record.post_registration.length != 0) {
             //   this.post_value = true;
             // }
+            // if (this.patient_mc_record.pre_registration.length == null && this.patient_mc_record.post_registration != null) {
+            //   this.module = 4;
+            // } else {
+            //   this.module = 2;
+            // }
           }
         },
         error: err => console.log(err),
         complete: () => {
           this.loading = false;
-          this.module = 2;
+
+          if (!this.patient_mc_record.pre_registration && !this.patient_mc_record.post_registration.end_pregnancy) {
+            this.module = 4;        
+          }else{
+            this.module = 2;
+          }
         }
       });
     }
@@ -155,6 +167,10 @@ export class MaternalcareComponent implements OnInit {
 
   updatePrenatal(info) {
     this.patient_mc_record.prenatal_visit = info;
+  }
+
+  updatePost(info) {
+    this.patient_mc_record.post_registration = info;
   }
 
 
