@@ -18,6 +18,7 @@ export class MaternalcareComponent implements OnInit {
   public mcr_data: any;
   public patient_mc_record: any = '';
   public patient_mc_list: any;
+  public view_id: any;
   prenatal: boolean;
   services: boolean;
   post_value: boolean;
@@ -77,18 +78,21 @@ export class MaternalcareComponent implements OnInit {
 
   mcrID(type: any, id: any) {
     if (id) {
-      this.http.get('maternal-care/mc-records?type=' + type + '&patient_id=' + id).subscribe({
+      let params = {
+        type: type,
+        patient_id: id
+      }
+
+      this.http.get('maternal-care/mc-records', {params}).subscribe({
         next: (data: any) => {
-          // console.log(data.data[0]);
-          if (data.data.length == 0) {
-            this.patient_mc_list = ''
-          }
-          else {
-            console.log(data.data[0]);
+          console.log(data.data);
+          if (data.data.length > 0) {
             this.patient_mc_list = data.data;
+
+            if(!this.patient_mc_list[0].post_registration || !this.patient_mc_list[0].post_registration.end_pregnancy) {
+              this.openMCR(this.patient_mc_list[0].id);
+            }
           }
-
-
         },
         error: err => console.log(err),
       });
@@ -97,6 +101,7 @@ export class MaternalcareComponent implements OnInit {
 
   openMCR(id: any) {
     this.loading = true;
+    this.view_id = id;
     console.log(id);
     if (id) {
       this.http.get('maternal-care/mc-records/' + id).subscribe({

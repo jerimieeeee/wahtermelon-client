@@ -20,19 +20,19 @@
                 <div class=" col-span-10 border-check relative select-none" *ngIf="!focused">
                     <h3 for="risk_id">Risk Factors</h3>
                     <select formControlName="risk_id" (change)="onKeyUp($event.target.value, $event.target.id)"
-    
+
                         (keyup)="onKeyUp($event.target.value, $event.target.id)"
                         (keyup.escape)="$event.target.value = ''; onKeyUp($event.target.value, $event.target.id)"
                         id="risk_id"
                         class="z-50 peer text-ellipsis bg-white text-align-left drop_btn border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed">
-                    <!-- <input type="text" id="searchbar" placeholder="search.." value="a" (blur)="searchblur()" class="z-40 absolute left-0 top-10 text-ellipsis bg-white text-align-left drop_btn border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed"> -->     
+                    <!-- <input type="text" id="searchbar" placeholder="search.." value="a" (blur)="searchblur()" class="z-40 absolute left-0 top-10 text-ellipsis bg-white text-align-left drop_btn border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed"> -->
                         <option *ngFor="let factors of risk_factors" class="p-2 flex-wrap"
                             [class]="factors.hospital_flag == false && factors.monitor_flag == true? 'text-blue-500' : ''"
                             [style]="factors.hospital_flag == true && factors.monitor_flag == false?'color: rgb(220 38 38);':''"
                             value="{{factors.id}}">
-                            {{ factors.risk_name }} 
+                            {{ factors.risk_name }}
                         </option>
-                    </select> 
+                    </select>
                     <div *ngIf="is_saving && risk_form.controls.risk_id.errors" class="invalid-alert">
                         <div *ngIf="risk_form.controls.risk_id.errors?.['required']">
                             Required field
@@ -114,17 +114,17 @@
                 <div class="text-sm grid grid-cols-11 pb-1 font-medium" style="grid-column: span 11 / span 11;">
                     <div class=" col-span-8 relative select-none mx-2"><h3>Factors</h3></div>
                     <div class=" col-span-2 relative select-none mx-2"><h3>Date</h3></div>
-                    <div class=" relative select-none mx-2"><h3>Action</h3></div>
+                    <!-- <div class=" relative select-none mx-2"><h3>Action</h3></div> -->
                 </div>
 
                 <div class="text-sm grid grid-cols-11 hover:bg-blue-100 hover:font-medium" style="grid-column: span 11 / span 11;" *ngFor="let catch of risk_catch">
                     <div class=" col-span-8 relative select-none mx-2 {{catch.risk.hospital_flag == false && catch.risk.monitor_flag == true? 'text-blue-500' : (catch.risk.hospital_flag == true && catch.risk.monitor_flag == false?'text-red-500':'')}}">{{catch.risk.risk_name}}</div>
                     <div class=" col-span-2 relative select-none mx-2"><h3>{{catch.date_detected}}</h3></div>
-                    <div class=" relative select-none mx-2" (click)="edit(catch.risk_id)">
+                    <!-- <div class=" relative select-none mx-2" (click)="edit(catch)">
                         <button type="button" class="w-full">
                             <fa-icon [icon]="faPencil" size="lg" class="mr-2 hover:text-orange-300"></fa-icon>
                         </button>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
