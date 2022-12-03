@@ -1,3 +1,4 @@
+import { formatDate } from '@angular/common';
 import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { faAngleDown, faCalendarDay, faCaretRight, faClose, faInfoCircle, faPencil, faSave, faTimes, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
@@ -92,20 +93,35 @@ export class RiskfactorsComponent implements OnInit {
 
     })
   }
+
   searchfocus() {
     document.getElementById("searchbar").focus();
     this.searching = true;
   }
+
   searchblur() {
     this.searching = false;
   }
+
+  risk_to_edit: string = null;
+
   saveForm(data) {
+    console.log(data);
     this.is_saving = true;
     if (this.risk_form.valid) {
-      this.http.post('maternal-care/mc-risk-factors', data).subscribe({
+      let query;
+
+      if(this.risk_to_edit){
+        query = this.http.update('maternal-care/mc-risk-factors/', this.risk_to_edit, data)
+      } else {
+        query = this.http.post('maternal-care/mc-risk-factors', data);
+      }
+
+      query.subscribe({
         next: (data: any) => {
           console.log(data.data, " data from saving risks")
-          this.risk_catch = data.data
+          this.risk_catch = data.data;
+          this.risk_to_edit = null;
         },
         error: err => console.log(err),
         complete: () => {
@@ -150,23 +166,23 @@ export class RiskfactorsComponent implements OnInit {
     this.keyUp = [];
     this.risk_form.reset();
   }
-  edit(id) {
 
+  edit(risk) {
+    console.log(risk)
     this.risk_form.reset();
-    this.risk_catch.forEach(c => {
-      if (c.risk_id === id) {
-        this.risk_form.setValue({
-          factor: c.factor,
-          date: c.date,
-        });
-      }
+
+    this.createForm();
+
+    this.risk_form.patchValue({
+      id: risk.id,
+      risk_id: risk.risk.id,
+      date_detected: formatDate(risk.date_detected, 'Y-MM-dd', 'en'),
     });
-    this.hide.push(id);
-    console.log(this.hide.includes(id));
 
-    console.log(this.risk_form.get('factor').value, " factor value");
+    this.risk_to_edit = risk.id;
 
-    console.log(id, " risk_id edit");
+    console.log(this.risk_form, " factor value");
+    console.log(risk, " risk_id edit");
 
   }
 }
