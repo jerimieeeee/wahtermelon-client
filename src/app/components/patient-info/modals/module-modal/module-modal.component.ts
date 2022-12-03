@@ -209,7 +209,7 @@ export class ModuleModalComponent implements OnInit {
     let current_date =  new Date;
 
     this.date = current_date.toISOString().slice(0,10);
-    this.consult_date = formatDate(current_date,'Y-M-dd','en');
+    this.consult_date = formatDate(current_date,'Y-MM-dd','en');
     this.consult_time = formatDate(current_date,'HH:mm','en');
   }
 

@@ -466,7 +466,7 @@
 </div>
 
 <div *ngIf="modals['vaccine']">
-  <app-vaccine-modal (toggleModal)="toggleModal('vaccine')" [patient_info]="patient_info" [vaccines_given]="vaccines_given"></app-vaccine-modal>
+  <app-vaccine-modal (toggleModal)="toggleModal('vaccine')" (loadVaccines)="loadVaccines()" [patient_info]="patient_info" [vaccines_given]="vaccines_given"></app-vaccine-modal>
 </div>
 
 <div *ngIf="modals['vaccine-action']">

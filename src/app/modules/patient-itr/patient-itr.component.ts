@@ -292,8 +292,8 @@ export class PatientItrComponent implements OnInit {
       if(!this.latest_vitals.patient_height && val.patient_height) this.latest_vitals.patient_height = val.patient_height;
       if(!this.latest_vitals.patient_weight && val.patient_weight) this.latest_vitals.patient_weight = val.patient_weight;
 
-      let vitals_date = formatDate(val.vitals_date, 'Y-M-dd','en', 'en')
-      let date_today = formatDate(new Date(), 'Y-M-dd','en', 'en')
+      let vitals_date = formatDate(val.vitals_date, 'Y-MM-dd','en', 'en')
+      let date_today = formatDate(new Date(), 'Y-MM-dd','en', 'en')
       // console.log(vitals_date, date_today)
       if(vitals_date === date_today){
         if(!this.latest_vitals.bp_systolic && val.bp_systolic){

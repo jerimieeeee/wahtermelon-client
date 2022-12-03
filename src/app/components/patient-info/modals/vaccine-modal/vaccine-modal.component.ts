@@ -1,3 +1,4 @@
+import { animate, style, transition, trigger } from '@angular/animations';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { HttpService } from 'app/shared/services/http.service';
 import { Vaccines } from './data/vaccine';
@@ -5,12 +6,25 @@ import { Vaccines } from './data/vaccine';
 @Component({
   selector: 'app-vaccine-modal',
   templateUrl: './vaccine-modal.component.html',
-  styleUrls: ['./vaccine-modal.component.scss']
+  styleUrls: ['./vaccine-modal.component.scss'],
+  animations: [
+    trigger('openCloseTrigger', [
+      transition(':enter', [
+        style({width: 0, opacity: 0}),
+        animate('200ms', style({ opacity: '100%'})),
+      ]),
+      transition(':leave', [
+        animate('100ms', style({ width: 'full', opacity: 0 }))
+      ])
+    ]),
+  ]
 })
 export class VaccineModalComponent implements OnInit {
   @Output() toggleModal = new EventEmitter<any>();
+  @Output() loadVaccines = new EventEmitter<any>();
   @Input() patient_info;
   @Input() vaccines_given;
+
   error_message = "exceeded maximum value";
   vaccine_list = Vaccines;
   vaccines: any;
@@ -19,6 +33,7 @@ export class VaccineModalComponent implements OnInit {
     vaccine_date: []
   };
   vaccine_grouped = [];
+  showAlert: boolean = false;
 
   constructor(
     private http: HttpService
@@ -52,7 +67,15 @@ export class VaccineModalComponent implements OnInit {
       console.log(vax_form)
 
       this.http.post('patient-vaccines/vaccines', vax_form).subscribe({
-        next: (data: any) => { console.log(data.data), this.closeModal() },
+        next: (data: any) => {
+          console.log(data.data),
+          // this.closeModal();
+          this.loadVaccines.emit();
+          this.showAlert = true;
+          setTimeout(() => {
+            this.showAlert = false;
+          }, 3000);
+        },
         error: err => console.log(err),
         complete: () => console.log('success')
       })

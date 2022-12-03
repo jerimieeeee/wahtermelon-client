@@ -206,8 +206,8 @@ export class PatientInfoComponent {
       if(!this.latest_vitals.patient_height && val.patient_height) this.latest_vitals.patient_height = val.patient_height;
       if(!this.latest_vitals.patient_weight && val.patient_weight) this.latest_vitals.patient_weight = val.patient_weight;
 
-      let vitals_date = formatDate(val.vitals_date, 'Y-M-dd','en', 'en')
-      let date_today = formatDate(new Date(), 'Y-M-dd','en', 'en')
+      let vitals_date = formatDate(val.vitals_date, 'Y-MM-dd','en', 'en')
+      let date_today = formatDate(new Date(), 'Y-MM-dd','en', 'en')
       // console.log(vitals_date, date_today)
       if(vitals_date === date_today){
         if(!this.latest_vitals.bp_systolic && val.bp_systolic){
@@ -262,9 +262,18 @@ export class PatientInfoComponent {
   toggleModal(modal_name){
     this.modals[modal_name] = !this.modals[modal_name];
 
-    if (modal_name === 'vitals' && this.modals[modal_name] === false) this.loadVitals();
+    if (modal_name === 'vitals' && this.modals[modal_name] === false) {
+      if(this.modals['vitals'] == false)  this.vitals_to_edit = null;
+      this.loadVitals();
+    }
+
+    if (modal_name === 'philhealth' && this.modals[modal_name] === false) {
+      if(this.modals['philhealth'] == false)  this.philhealth_to_edit = null;
+      this.loadVitals();
+    }
+
     if (modal_name === 'vaccine' && this.modals[modal_name] === false) this.loadVaccines();
     if (modal_name === 'vaccine-action' && this.modals[modal_name] === false) this.loadVaccines();
-    if (modal_name === 'philhealth' && this.modals[modal_name] === false) this.loadVitals();
+
   }
 }
