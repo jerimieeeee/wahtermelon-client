@@ -81,6 +81,8 @@ export class PostvisitsComponent implements OnInit {
   ngOnInit(): void {
     this.value = 1;
     this.getMCR();
+    console.log(this.patient_mc_record, "mc record form postvistis init");
+    
     this.focused = false;
   }
   flip(): void {
@@ -91,22 +93,21 @@ export class PostvisitsComponent implements OnInit {
   }
 
   getMCR() {
-    console.log(this.patient_mc_record, " from getMCR - post visit;");
-
-
-    console.log(this.patient_mc_record.postpartum_visit[0]?this.patient_mc_record.postpartum_visit[0]:this.patient_mc_record.postpartum_visit, " try getmcr - post visit");
-
-    if(this.patient_mc_record.postpartum_visit[0]?this.patient_mc_record.postpartum_visit[0]:this.patient_mc_record.postpartum_visit.length == 1){
-      console.log("it went true");
-
-    this.value = this.patient_mc_record.postpartum_visit[0].visit_sequence + 1;
-    this.patient_mc_record.postpartum_visit.forEach(p => {
-      this.postpartum_data.push(p);
-      console.log("pushing p's");
-
-    });
-     }
-  this.createForm(this.patient_mc_record);
+    console.log(this.patient_mc_record.length == 0, " from getMCR - post visit;");
+    if(this.patient_mc_record.length != 0){
+      if(this.patient_mc_record.postpartum_visit[0]?this.patient_mc_record.postpartum_visit[0]:this.patient_mc_record.postpartum_visit.length == 1){
+        console.log("it went true");
+  
+      this.value = this.patient_mc_record.postpartum_visit[0].visit_sequence + 1;
+      this.patient_mc_record.postpartum_visit.forEach(p => {
+        this.postpartum_data.push(p);
+        console.log("pushing p's");
+  
+      });
+       }
+       this.createForm(this.patient_mc_record);
+    }
+  
   }
 createForm(mc_record: any) {
   let user_id = this.http.getUserID();
@@ -129,12 +130,12 @@ createForm(mc_record: any) {
     facility_code: [facility_code],
     patient_id: [this.patient_details.id],
     user_id: [user_id],
-    postpartum_date: [post_visit.length != 0?new Date(post_visit.postpartum_date).toISOString().substring(0, 10):new Date().toISOString().substring(0, 10), [Validators.required]],
-    visit_type: [this.patient_mc_record.id, [Validators.required]],
-    patient_height:  [this.patient_mc_record.id, [Validators.required]],
-    patient_weight:  [this.patient_mc_record.id, [Validators.required]],
-    bp_systolic: [this.patient_mc_record.id, [Validators.required]],
-    bp_diastolic:  [this.patient_mc_record.id, [Validators.required]],
+    postpartum_date: [new Date().toISOString().substring(0, 10), [Validators.required]],
+    visit_type: ['', [Validators.required]],
+    patient_height:  ['', [Validators.required]],
+    patient_weight:  ['', [Validators.required]],
+    bp_systolic: ['', [Validators.required]],
+    bp_diastolic:  ['', [Validators.required]],
     breastfeeding: [false],
     family_planning: [false],
     fever: [false],

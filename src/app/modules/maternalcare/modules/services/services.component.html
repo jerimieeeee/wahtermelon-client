@@ -31,7 +31,7 @@
                <div *ngIf="service_list.length != 0" class="text-sm pb-1 font-semibold h-max"
                   style="grid-column: span 9 / span 9;">
 
-                  <table class="table-auto relative">
+                  <table class="table-auto relative w-full">
                      <thead class="sticky top-0 ">
                         <tr>
                            <th class="px-2">Description</th>
@@ -46,20 +46,22 @@
                      <tbody>
                         <tr *ngFor="let service of service_list" class="hover:bg-blue-100">
                            <td class="px-2 font-normal">{{service.service.desc}}</td>
-                           <th class="px-2 font-normal">{{service.service_date}}</th>
-                           <th class="px-2 font-normal">{{service.service_qty?service.service_qty:'-'}}</th>
+                           <th class="px-2 font-normal">{{service.service_date | date: 'MM/dd/yyyy'}}</th>
+                           <th class="px-2 font-normal">{{!service.group.qty?'-':(service.service_qty?service.service_qty:'-')}}</th>
                            <th class="px-2 font-normal">{{service.visit_status}}</th>
                            <th class="px-2 font-normal">
-                              <fa-icon *ngIf="service.positive_result" [icon]="faCircleCheck" size="md"
+                              <fa-icon *ngIf="service.positive_result && service.group.pos" [icon]="faCircleCheck" size="md"
                                  class="text-green-400"></fa-icon>
-                              <fa-icon *ngIf="!service.positive_result" [icon]="faTimesCircle" size="md"
+                              <fa-icon *ngIf="!service.positive_result && service.group.pos" [icon]="faTimesCircle" size="md"
                                  class="text-red-400"></fa-icon>
+                              <p *ngIf="!service.group.pos">-</p>
                            </th>
                            <th class="px-2 font-normal">
-                              <fa-icon *ngIf="service.intake_penicillin" [icon]="faCircleCheck" size="md"
+                              <fa-icon *ngIf="service.intake_penicillin && service.group.pen" [icon]="faCircleCheck" size="md"
                                  class="text-green-400"></fa-icon>
-                              <fa-icon *ngIf="!service.intake_penicillin" [icon]="faTimesCircle" size="md"
+                              <fa-icon *ngIf="!service.intake_penicillin && service.group.pen" [icon]="faTimesCircle" size="md"
                                  class="text-red-400"></fa-icon>
+                              <p *ngIf="!service.group.pen">-</p>
                            </th>
                            <th class="px-2 font-normal">{{service.visit_type_code}}</th>
                         </tr>
@@ -88,8 +90,9 @@
                </div>
 
 
-               <div style="grid-column: span 16 / span 16;" class="bg-white">
-                  <table *ngFor="let group of group_list" class="table-auto w-full border-b">
+               <div style="grid-column: span 16 / span 16;" class="bg-gray-100 overflow-y-scroll scrollbar-thin scrollbar-thumb-white hover:scrollbar-thumb-blue-300 scrollbar-track-white h-96">
+                  <div *ngFor="let group of group_list w-full" class="m-4">
+                  <table class="table-auto border-separate border-spacing-2 border bg-white w-full">
                      <thead>
                         <tr>
                            <th></th>
@@ -100,36 +103,38 @@
                            <th>Visit Type</th>
                         </tr>
                      </thead>
-                     <tbody *ngFor="let service of group.service" class="mb-2 hover:bg-blue-100">
+                     <tbody *ngFor="let service of group.service" class="pb-2 hover:bg-blue-100">
                         <tr>
                            <td class="font-normal px-4">{{service.desc}}</td>
                            <td class="font-normal px-4" >
                               <input formControlName="service_date" id="service_date" name="service_date"
-                              type="date" (change)="onChange(service.desc, service.id, 'service_date')"
+                              (ngModel)="getNG(service.id, 'service_date')"
+                              type="date" (change)="onChange(service.desc, service.id, 'service_date')" 
                               class="col-span-8 rounded border-solid border border-zinc-300 focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none disabled:cursor-not-allowed"
                               width="auto">
                            </td>
                            <td class="font-normal px-4" *ngIf="group.qty">
                               <input type="number" formControlName="service_qty" min="0"
+                              (ngModel)="getNG(service.id, 'service_qty')"
                               (change)="onChange(service.desc, service.id, 'service_qty')"
                               class="font-medium disabled:group-hover:font-semibold peer invalid:border-red-500 border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed disabled:border-0  disabled:pl-5  disabled:typed-out disabled:group-hover:bg-gray-100 disabled:rounded-full">  
                            </td>
                            <td class="font-normal px-4" *ngIf="group.pos">
                               <input (change)="onChange(service.desc, service.id, 'positive_result')"
-                              
+                              (ngModel)="getNG(service.id, 'positive_result')"
                               class="check-style h-6 w-6 border border-gray-400 rounded-md bg-white checked:bg-blue-400 checked:border-blue-500 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
                               type="checkbox" formControlName="positive_result">
                            </td>
                            <td class="font-normal px-4" *ngIf="group.pen">
                               <input (change)="onChange(service.desc, service.id, 'intake_penicillin')"
-                              
+                              (ngModel)="getNG(service.id, 'intake_penicillin')"
                               class="check-style h-6 w-6 border border-gray-400 rounded-md bg-white checked:bg-blue-400 checked:border-blue-500 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
                               type="checkbox" formControlName="intake_penicillin">
                            </td>
                            <td class="font-normal px-4">
                               <select formControlName="visit_type_code" id="visit_type_code"
                               (change)="onChange(service.desc, service.id, 'visit_type_code')"
-                              
+                              (ngModel)="getNG(service.id, 'visit_type_code')"
                               class="text-ellipsis bg-white text-align-left drop_btn border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed">
                               <option *ngFor="let type of visit_type" [value]="type.code">
                                  {{type.desc}}
@@ -137,43 +142,6 @@
                            </select>
                            </td>
                         </tr>
-                        <!-- <tr>
-                           <td class="font-normal px-4">{{service.desc}}</td>
-                           <td class="font-normal px-4" >
-                              <input formControlName="service_date" id="service_date" name="service_date"
-                              type="date" (change)="onChange(serve.desc, serve.id, i, 'service_date')"
-                              class="col-span-8 rounded border-solid border border-zinc-300 focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none disabled:cursor-not-allowed"
-                              width="auto">
-                           </td>
-                           <td class="font-normal px-4" *ngIf="group.qty">
-                              <input type="number" formControlName="service_qty" min="0"
-                              (ngModel)="serviceChanges[i].service_qty"
-                              (change)="onChange(serve.desc, serve.id, i, 'service_qty')"
-                              class="font-medium disabled:group-hover:font-semibold peer invalid:border-red-500 border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed disabled:border-0  disabled:pl-5  disabled:typed-out disabled:group-hover:bg-gray-100 disabled:rounded-full">  
-                           </td>
-                           <td class="font-normal px-4" *ngIf="group.pos">
-                              <input (change)="onChange(serve.desc, serve.id, i, 'positive_result')"
-                              (ngModel)="serviceChanges[i].positive_result"
-                              class="check-style h-6 w-6 border border-gray-400 rounded-md bg-white checked:bg-blue-400 checked:border-blue-500 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
-                              type="checkbox" formControlName="positive_result">
-                           </td>
-                           <td class="font-normal px-4" *ngIf="group.pen">
-                              <input (change)="onChange(serve.desc, serve.id, i, 'intake_penicillin')"
-                              (ngModel)="serviceChanges[i].intake_penicillin"
-                              class="check-style h-6 w-6 border border-gray-400 rounded-md bg-white checked:bg-blue-400 checked:border-blue-500 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
-                              type="checkbox" formControlName="intake_penicillin">
-                           </td>
-                           <td class="font-normal px-4">
-                              <select formControlName="visit_type_code" id="visit_type_code"
-                              (change)="onChange(serve.desc, serve.id, i, 'visit_type_code')"
-                              (ngModel)="serviceChanges[i].visit_type_code"
-                              class="text-ellipsis bg-white text-align-left drop_btn border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed">
-                              <option *ngFor="let type of visit_type" [value]="type.code">
-                                 {{type.desc}}
-                              </option>
-                           </select>
-                           </td>
-                        </tr> -->
                      </tbody>
                   </table>
                   <!-- <div class="grid gap-0" style="grid-template-columns: repeat(14, minmax(0, 1fr));">
@@ -256,6 +224,7 @@
                         </div>
                      </div>
                   </div> -->
+                  </div>
                </div>
 
 

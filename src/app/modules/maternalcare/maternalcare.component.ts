@@ -47,14 +47,15 @@ export class MaternalcareComponent implements OnInit {
     this.post_value = false;
     this.loading = false
     this.loadLibraries();
-
+    
   }
 
   switchTab(tab) {
     this.module = 0;
     this.module = tab;
     if (this.module == 1) {
-      this.patient_mc_record = '';
+      this.patient_mc_record = ''
+      this.patientInfo(this.patient_details)
     }
     console.log(this.module);
   }
@@ -167,10 +168,12 @@ console.log(!this.patient_mc_record.pre_registration , !this.patient_mc_record.p
   }
 
   updatePrenatal(info) {
+    
     this.patient_mc_record.prenatal_visit = info;
   }
 
   updatePost(info) {
+    this.mcrID('all', this.patient_details.id);
     this.patient_mc_record.post_registration = info;
   }
 

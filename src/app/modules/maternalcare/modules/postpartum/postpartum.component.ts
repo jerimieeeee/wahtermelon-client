@@ -140,32 +140,32 @@ export class PostpartumComponent implements OnInit {
     facility_code: [facility_code],
     patient_id: [this.patient_details.id],
     user_id: [user_id],
-    post_registration_date:[post_registration.length != 0 && !post_registration.end_pregnancy ?new Date(post_registration.post_registration_date).toISOString().substring(0, 10) : new Date().toISOString().substring(0, 10),[Validators.required]],
-    admission_date: [post_registration.length != 0 && !post_registration.end_pregnancy?post_registration.admission_date.substring(0 , 19): '',[Validators.required]],
-    discharge_date: [post_registration.length != 0 && !post_registration.end_pregnancy?post_registration.discharge_date: '',[Validators.required]],
-    delivery_date: [post_registration.length != 0 && !post_registration.end_pregnancy?post_registration.delivery_date : '',[Validators.required]],
-    delivery_location_code: [post_registration.length != 0 && !post_registration.end_pregnancy?post_registration.delivery_location.code:'',[Validators.required]],
-    barangay_code: [post_registration.length != 0 && !post_registration.end_pregnancy?post_registration.barangay.code:'',[Validators.required]],
-    p_code: [post_registration.length != 0 && !post_registration.end_pregnancy?provinces:'',[Validators.required]],
-    m_code: [post_registration.length != 0 && !post_registration.end_pregnancy?municipalities:'',[Validators.required]],
-    gravidity:[post_registration.length != 0 && !post_registration.end_pregnancy?post_registration.gravidity:'',[Validators.required]],
-    parity: [post_registration.length != 0 && !post_registration.end_pregnancy?post_registration.parity:'',[Validators.required]],
-    full_term: [post_registration.length != 0 && !post_registration.end_pregnancy?post_registration.full_term:'',[Validators.required]],
-    preterm: [post_registration.length != 0 && !post_registration.end_pregnancy?post_registration.preterm:'',[Validators.required]],
-    abortion: [post_registration.length != 0 && !post_registration.end_pregnancy?post_registration.abortion:'',[Validators.required]],
-    livebirths: [post_registration.length != 0 && !post_registration.end_pregnancy?post_registration.livebirths:'',[Validators.required]],
-    outcome_code: [post_registration.length != 0 && !post_registration.end_pregnancy?post_registration.outcome.code:'',[Validators.required]],
-    healthy_baby: [post_registration.length != 0 && !post_registration.end_pregnancy?post_registration.healthy_baby:true],
-    birth_weight: [post_registration.length != 0 && !post_registration.end_pregnancy?post_registration.birth_weight:0],
-    attendant_code: [post_registration.length != 0 && !post_registration.end_pregnancy?post_registration.attendant.code:'',[Validators.required]],
-    breastfeeding:[post_registration.length != 0 && !post_registration.end_pregnancy?post_registration.breastfeeding:false],
-    breastfed_date: [post_registration.length != 0 && !post_registration.end_pregnancy?new Date(post_registration.breastfed_date).toISOString().substring(0, 10):''],
-    end_pregnancy: [post_registration.length != 0 && !post_registration.end_pregnancy?post_registration.end_pregnancy:false],
-    postpartum_remarks:[post_registration.length != 0 && !post_registration.end_pregnancy?post_registration.postpartum_remarks:''],
+    post_registration_date:[post_registration.length != 0  ?new Date(post_registration.post_registration_date).toISOString().substring(0, 10) : new Date().toISOString().substring(0, 10),[Validators.required]],
+    admission_date: [post_registration.length != 0 ?post_registration.admission_date.substring(0 , 19): '',[Validators.required]],
+    discharge_date: [post_registration.length != 0 ?post_registration.discharge_date: '',[Validators.required]],
+    delivery_date: [post_registration.length != 0 ?post_registration.delivery_date : '',[Validators.required]],
+    delivery_location_code: [post_registration.length != 0 ?post_registration.delivery_location.code:'',[Validators.required]],
+    barangay_code: [post_registration.length != 0 ?post_registration.barangay.code:'',[Validators.required]],
+    p_code: [post_registration.length != 0 ?provinces:'',[Validators.required]],
+    m_code: [post_registration.length != 0 ?municipalities:'',[Validators.required]],
+    gravidity:[post_registration.length != 0 ?post_registration.gravidity:'',[Validators.required]],
+    parity: [post_registration.length != 0 ?post_registration.parity:'',[Validators.required]],
+    full_term: [post_registration.length != 0 ?post_registration.full_term:'',[Validators.required]],
+    preterm: [post_registration.length != 0 ?post_registration.preterm:'',[Validators.required]],
+    abortion: [post_registration.length != 0 ?post_registration.abortion:'',[Validators.required]],
+    livebirths: [post_registration.length != 0 ?post_registration.livebirths:'',[Validators.required]],
+    outcome_code: [post_registration.length != 0 ?post_registration.outcome.code:'',[Validators.required]],
+    healthy_baby: [post_registration.length != 0 ?post_registration.healthy_baby:true],
+    birth_weight: [post_registration.length != 0 ?post_registration.birth_weight:0],
+    attendant_code: [post_registration.length != 0 ?post_registration.attendant.code:'',[Validators.required]],
+    breastfeeding:[post_registration.length != 0 ?post_registration.breastfeeding:false],
+    breastfed_date: [post_registration.length != 0 ?new Date(post_registration.breastfed_date).toISOString().substring(0, 10):''],
+    end_pregnancy: [post_registration.length != 0 ?post_registration.end_pregnancy:false],
+    postpartum_remarks:[post_registration.length != 0 ?post_registration.postpartum_remarks:''],
     });
 
 
-    this.bfd = post_registration.length != 0 && !post_registration.end_pregnancy?(post_registration.breastfeeding?true:false):false;
+    this.bfd = post_registration.length != 0 ?(post_registration.breastfeeding?true:false):false;
     console.log(this.postpartum_form.value, ' p_form after create');
 
   }
@@ -187,7 +187,7 @@ export class PostpartumComponent implements OnInit {
     if (this.postpartum_form.valid) {
       let http
       if (this.updating) {
-        http = this.http.update('maternal-care/mc-postregistrations/', this.mcr_data.id, this.postpartum_form.value)
+        http = this.http.update('maternal-care/mc-postregistrations/', this.mcr_data.post_registration.id, this.postpartum_form.value)
       } else {
         http = this.http.post('maternal-care/mc-postregistrations', this.postpartum_form.value)
       }

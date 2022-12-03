@@ -283,6 +283,7 @@
                                 (change)="onKeyUp($event.target.value, $event.target.id)" id="regions"
                                 (change)="loadDemog('regions', $event.target.value , 'provinces')"
                                 class="text-ellipsis bg-white text-align-left drop_btn border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed">
+                                <option value="" *ngIf="!selected_regions" [selected]="!selected_regions"></option>
                                 <option *ngFor="let reg of regions" [value]="reg.code" [selected]="reg.code === selected_regions">
                                     {{reg.name}}
                                 </option>
