@@ -48,7 +48,7 @@ export class VaccineActionModalComponent implements OnInit {
   }
 
   onUpdate(){
-    this.http.post('patient-vaccines/vaccines/'+this.vaccine.id, this.vaccine).subscribe({
+    this.http.update('patient-vaccines/vaccines/', this.vaccine.id, this.vaccine).subscribe({
       next: (data: any) => { this.showAlert = true;
         setTimeout(() => {
           this.showAlert = false;
