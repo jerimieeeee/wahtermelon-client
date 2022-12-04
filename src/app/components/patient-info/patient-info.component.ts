@@ -43,6 +43,9 @@ export class PatientInfoComponent {
   faChevronDown = faChevronDown;
 
   show_form: boolean = false;
+  show_philhealth: boolean = false;
+  show_vitals: boolean = false;
+  show_vaccines: boolean = false;
 
   vaccines_given: any;
   vaccine_list: any = [];
@@ -53,6 +56,7 @@ export class PatientInfoComponent {
   patient_vitals: any;
   vitals_to_edit: any;
   philhealth_to_edit: any;
+  immunization_status: any;
 
   accordions = [];
   modals = [];
@@ -114,10 +118,11 @@ export class PatientInfoComponent {
       }
 
       new_vax[val.vaccines.vaccine_id][val.id] = vax
+      this.vaccine_list[key]['dose'] = new_vax[val.vaccines.vaccine_id][val.id].dose;
     })
 
     this.vaccines_given = new_vax;
-    this.addDose(new_vax)
+    this.show_vaccines = true;
   }
 
   getNumberSuffix(i){
@@ -135,14 +140,6 @@ export class PatientInfoComponent {
     return i + "th";
   }
 
-  addDose(new_vax){
-    Object.entries(this.vaccine_list).forEach(([key, value], index) => {
-      var val:any = value;
-
-      this.vaccine_list[key]['dose'] = new_vax[val.vaccines.vaccine_id][val.id].dose;
-    });
-  }
-
   toggleActionModal(modal_name, vaccine){
     this.vaccine_to_edit = vaccine;
     this.modals['vaccine-action'] = !this.modals['vaccine-action'];
@@ -155,7 +152,6 @@ export class PatientInfoComponent {
     } else {
       return false;
     }
-
   }
 
   loadPhilhealth(){
@@ -163,23 +159,21 @@ export class PatientInfoComponent {
       next: (data: any) => {
         // console.log(data);
         this.philhealth_info = data.data[0];
+        this.show_philhealth = true;
       },
       error: err => console.log(err)
     })
   }
 
-  immunization_status: any;
   loadVaccines(){
     this.http.get('patient-vaccines/vaccines-records', {params:{'patient_id': this.patient_info.id, 'sort': '-vaccine_date' }}).subscribe({
       next: (data: any) => {
-        // console.log(data)
         this.vaccine_list = data.data;
         this.immunization_status = data.status;
-        // console.log(this.vaccine_list)
-        this.checkVaccineStatus(data.data);
+
+        this.checkVaccineStatus(this.vaccine_list);
       },
-      error: err => console.log(err),
-      complete: () => console.log('vaccines loaded')
+      error: err => {console.log(err)},
     })
   }
 
@@ -188,10 +182,14 @@ export class PatientInfoComponent {
       next: (data: any) => {
         console.log(data.data)
         this.patientVitals.emit(data.data);
-        if(data.data.length > 0) this.latest_vitals = this.vitalsCharts.getLatestToday(data.data);
+        if(data.data.length > 0) {
+          this.latest_vitals = this.vitalsCharts.getLatestToday(data.data)
+        } else {
+          this.latest_vitals = null;
+        }
+        this.show_vitals = true;
       },
       error: err => console.log(err),
-      complete: () => console.log('vitals loaded')
     })
   }
 
@@ -228,6 +226,5 @@ export class PatientInfoComponent {
 
     if (modal_name === 'vaccine' && this.modals[modal_name] === false) this.loadVaccines();
     if (modal_name === 'vaccine-action' && this.modals[modal_name] === false) this.loadVaccines();
-
   }
 }
