@@ -179,7 +179,7 @@ export class PostpartumComponent implements OnInit {
   }
   saveForm(data) {
     this.is_saving = true;
-    console.log(this.mcr_data, this.mcr_data.post_registration.id, " logging mcr data before daving");
+    console.log(this.mcr_data, " logging mcr data before daving");
 
     this.postpartum_form.value.delivery_date = this.postpartum_form.value.delivery_date.length == 16? this.postpartum_form.value.delivery_date.replace("T", " ") + ':00':this.postpartum_form.value.delivery_date.replace("T", " ");
     this.postpartum_form.value.admission_date = this.postpartum_form.value.admission_date.length == 16? this.postpartum_form.value.admission_date.replace("T", " ") + ':00':this.postpartum_form.value.admission_date.replace("T", " ");
@@ -198,7 +198,7 @@ export class PostpartumComponent implements OnInit {
       http.subscribe({
         next: (data: any) => {
           console.log(data, " data from saving postpartum")
-          this.post_mc_data.emit(data.data);
+          this.post_mc_data.emit(data.patient_mc_id);
         },
         error: err => console.log(err),
         complete: () => {
