@@ -100,7 +100,9 @@ export class PostpartumComponent implements OnInit {
           this.mcr_data = -1;
         } else {
           this.mcr_data = this.patient_mc_record;
-          this.updating = true;
+          if(this.patient_mc_record.post_registration){
+            this.updating = true;
+          }
           console.log(this.patient_mc_record, ' MCR SDATA DASOIDU');
         }
         this.createForm(this.mcr_data);
