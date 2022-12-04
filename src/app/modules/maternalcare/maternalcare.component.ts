@@ -134,7 +134,7 @@ export class MaternalcareComponent implements OnInit {
           if (!this.patient_mc_record.pre_registration) {
             this.module = 4;        
           }else{
-            if(this.module = 1){
+            if(this.module == 1){
               this.module = 2;
             }
           }
@@ -175,8 +175,9 @@ export class MaternalcareComponent implements OnInit {
   }
 
   updatePost(info) {
-    this.mcrID('all', this.patient_details.id);
-    this.patient_mc_record.post_registration = info;
+    // this.mcrID('all', this.patient_details.id);
+    this.openMCR(info);
+    // this.patient_mc_record.post_registration = info;
   }
 
   updatePostVisit(info){
