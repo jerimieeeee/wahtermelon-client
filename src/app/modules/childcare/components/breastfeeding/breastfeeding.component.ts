@@ -175,6 +175,7 @@ export class BreastfeedingComponent implements OnInit {
       bfed_month6: this.groupList[5],
       reason_id: this.patient_breastfed.ebfreasons,
       ebf_date: this.patient_breastfed.ebf_date,
+      comp_fed_date: this.patient_breastfed.comp_fed_date
     }
 
     // console.log(bfedmonths, 'patient_breasfed currently selected');
@@ -212,6 +213,7 @@ export class BreastfeedingComponent implements OnInit {
       bfed_month6: this.groupList[5] == 'null' ? null:this.groupList[5],
       reason_id: this.patient_breastfed.ebfreasons,
       ebf_date: this.patient_breastfed.ebf_date,
+      comp_fed_date: this.patient_breastfed.comp_fed_date
     }
 
     console.log(bfedmonths);
@@ -330,7 +332,7 @@ export class BreastfeedingComponent implements OnInit {
       next: (data: any) => {
         this.patient_breastfed = data.data;
 
-        // console.log(this.patient_breastfed, 'data ng breast fedzxc');
+        console.log(this.patient_breastfed, 'data ng breast fedzxc');
 
         if(this.patient_breastfed.ebfreasons != null){
           this.patient_breastfed.ebfreasons =  this.patient_breastfed.ebfreasons.reason_id;
@@ -364,7 +366,8 @@ export class BreastfeedingComponent implements OnInit {
             // bfed_month6: this.groupList[5] == 1 ? 1:0,
             bfed_month6: null,
             ebf_date: '',
-            ebfreasons: null
+            ebfreasons: null,
+            comp_fed_date: ''
           }
           // console.log(this.patient_breastfed, 'fake response')
           // console.log(this.groupList2, 'fake response group list 2')

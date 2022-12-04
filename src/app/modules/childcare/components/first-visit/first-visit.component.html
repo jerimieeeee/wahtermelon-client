@@ -34,7 +34,7 @@
               <path d="M18 16.496v1.504l1 1"></path>
            </svg>
           </div>
-         <input type="date" placeholder="Select Date and Time" class="mt-1 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input" placeholder="Select date" formControlName="admission_date" required>
+         <input type="datetime-local" placeholder="Select Date and Time" class="mt-1 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input" placeholder="Select date" formControlName="admission_date" required>
         </div>
 
         <div *ngIf="form_saving && f.admission_date.errors" class="invalid-alert mt-1">
@@ -63,7 +63,7 @@
               <path d="M18 16.496v1.504l1 1"></path>
            </svg>
           </div>
-         <input type="date" placeholder="Select Date and Time"  class="mt-1 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input" placeholder="Select date" formControlName="discharge_date" required>
+         <input type="datetime-local" placeholder="Select Date and Time"  class="mt-1 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input" placeholder="Select date" formControlName="discharge_date" required>
         </div>
 
         <div *ngIf="form_saving && f.discharge_date.errors" class="invalid-alert mt-1">

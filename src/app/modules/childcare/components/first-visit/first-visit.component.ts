@@ -6,6 +6,7 @@ import { HttpService } from 'app/shared/services/http.service';
 import { catchError, debounceTime, distinctUntilChanged, switchMap, tap, map, filter } from 'rxjs/operators';
 import { concat, Observable, of, Subject, throwError } from 'rxjs';
 import { Router } from '@angular/router';
+import { formatDate } from '@angular/common';
 
 
 
@@ -98,11 +99,19 @@ export class FirstVisitComponent implements OnInit {
 
   onSubmit(){
 
-    console.log(this.visitForm.value);
+    console.log(this.visitForm.value, 'form first visit');
     console.log(this.visitForm.invalid);
     this.form_saving = true;
     this.is_saving = true;
+    try {
 
+    this.visitForm.patchValue({admission_date: formatDate(this.visitForm.value.admission_date, 'Y-MM-dd HH:mm:ss' , 'en')})
+    this.visitForm.patchValue({discharge_date: formatDate(this.visitForm.value.discharge_date, 'Y-MM-dd HH:mm:ss' , 'en')})
+    
+    } catch (err) {
+    
+    }
+    
     // this.showModal = true;
 
       this.http.post('child-care/cc-records', this.visitForm.value).subscribe({
