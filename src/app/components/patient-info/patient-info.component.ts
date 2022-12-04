@@ -221,7 +221,7 @@ export class PatientInfoComponent {
 
     if (modal_name === 'philhealth' && this.modals[modal_name] === false) {
       if(this.modals['philhealth'] == false)  this.philhealth_to_edit = null;
-      this.loadVitals();
+      this.loadPhilhealth();
     }
 
     if (modal_name === 'vaccine' && this.modals[modal_name] === false) this.loadVaccines();

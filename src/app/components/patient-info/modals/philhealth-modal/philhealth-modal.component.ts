@@ -1,6 +1,7 @@
-import { formatDate } from '@angular/common';
+import { formatDate, ViewportScroller } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
@@ -86,7 +87,10 @@ export class PhilhealthModalComponent implements OnInit {
             this.showAlert = false;
           }, 3000);
         },
-        error: err => {console.log(err); this.submit_errors = err.error.errors}
+        error: err => {
+          console.log(err);
+          this.submit_errors = err.error.errors;
+        }
       })
     }
   }
@@ -109,7 +113,8 @@ export class PhilhealthModalComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private http: HttpService
+    private http: HttpService,
+    private router: Router
   ) { }
 
   loadMainLibrary(){
@@ -219,7 +224,7 @@ export class PhilhealthModalComponent implements OnInit {
       this.philhealthForm.patchValue({membership_category_id: this.philhealth_to_edit.membership_category.id});
 
       if(this.philhealthForm.value.membership_type_id === "DD"){
-        this.philhealthForm.patchValue({member_birthdate: formatDate(this.philhealth_to_edit.member_birthdate, 'Y-MM-dd','en')});
+        this.philhealthForm.patchValue({member_birthdate: formatDate(this.philhealth_to_edit.member_birthdate, 'yyyy-MM-dd','en')});
         this.philhealthForm.patchValue({member_pin_confirmation: this.philhealth_to_edit.member_pin});
       }
       this.showMember();

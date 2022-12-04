@@ -18,8 +18,8 @@ export class VitalsChartsService {
       if(!latest_vitals.patient_height && val.patient_height) latest_vitals.patient_height = val.patient_height;
       if(!latest_vitals.patient_weight && val.patient_weight) latest_vitals.patient_weight = val.patient_weight;
 
-      let vitals_date = formatDate(val.vitals_date, 'Y-MM-dd','en', 'en')
-      let date_today = formatDate(new Date(), 'Y-MM-dd','en', 'en')
+      let vitals_date = formatDate(val.vitals_date, 'yyyy-MM-dd','en', 'en')
+      let date_today = formatDate(new Date(), 'yyyy-MM-dd','en', 'en')
       // console.log(vitals_date, date_today)
       if(vitals_date === date_today){
         if(!latest_vitals.bp_systolic && val.bp_systolic){
