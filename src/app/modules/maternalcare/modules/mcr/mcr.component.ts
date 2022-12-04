@@ -131,7 +131,7 @@ export class McrComponent implements OnInit {
     this.loading = true;
     let http;
     if (this.updating) {
-      http = this.http.update('maternal-care/mc-preregistrations/', this.patient_mc_record.id, this.mcr_form.value)
+      http = this.http.update('maternal-care/mc-preregistrations/', this.mcr_data.id, this.mcr_form.value)
     } else {
       http = this.http.post('maternal-care/mc-preregistrations', this.mcr_form.value)
     }

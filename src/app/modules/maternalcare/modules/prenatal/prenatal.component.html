@@ -325,9 +325,9 @@
                                 </td>
                                 <td class="px-2 font-normal">{{prenatal.patient_weight}}</td>
                                 <td class="px-2 font-normal">{{prenatal.bp_systolic}}/{{prenatal.bp_diastolic}}</td>
-                                <td class="px-2 font-normal">{{prenatal.fundic_height}}</td>
-                                <td class="px-2 font-normal">{{prenatal.fhr}}</td>
-                                <td class="px-2 font-normal">{{prenatal.fhr == 0?'-':prenatal.location_code}}</td>
+                                <td class="px-2 font-normal">{{prenatal.fundic_height == null?'-':prenatal.fundic_height}}</td>
+                                <td class="px-2 font-normal">{{prenatal.fhr == null?'-':prenatal.fhr}}</td>
+                                <td class="px-2 font-normal">{{prenatal.fhr == 0 || prenatal.fhr == null?'-':prenatal.location_code}}</td>
                                 <td class="px-2 font-normal">{{prenatal.presentation_code}}</td>
                                 <td class="px-2 font-normal">{{prenatal.remarks?prenatal.remarks:'-'}}</td>
                                 <td class="px-2 font-normal">
