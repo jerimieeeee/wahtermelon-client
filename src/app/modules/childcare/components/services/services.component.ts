@@ -384,7 +384,8 @@ export class ServicesComponent implements OnInit {
 
       this.http.post('child-care/cc-services', serv_form).subscribe({
         next: (data: any) => { console.log(data.data, 'display lahat ng services') },
-        error: err => this.toggleAlertModal('E'),
+        error: err => {console.log(err),
+          this.toggleAlertModal('E')},
         complete: () => this.toggleAlertModal('S')
       })
     }
@@ -497,7 +498,7 @@ export class ServicesComponent implements OnInit {
         // console.log(this.patient_info, 'info ccdev first visit')
         
       },
-      error: err => console.log(err)
+      error: err => {console.log(err) }
     });
   }
   
@@ -510,7 +511,7 @@ export class ServicesComponent implements OnInit {
     // this.fetchCheckedIDs()
     // this.fetchCheckedIDs2()
     this.loadCCLibraries()
-    this.getccdevDetails()
+    // this.getccdevDetails()
     if(this.patient_details.id) this.loadServicesTest()
   }
 }
