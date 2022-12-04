@@ -179,7 +179,7 @@ export class PostpartumComponent implements OnInit {
   }
   saveForm(data) {
     this.is_saving = true;
-    console.log(this.postpartum_form.value.delivery_date.length, this.postpartum_form.value.admission_date.length);
+    console.log(this.mcr_data, this.mcr_data.post_registration.id, " logging mcr data before daving");
 
     this.postpartum_form.value.delivery_date = this.postpartum_form.value.delivery_date.length == 16? this.postpartum_form.value.delivery_date.replace("T", " ") + ':00':this.postpartum_form.value.delivery_date.replace("T", " ");
     this.postpartum_form.value.admission_date = this.postpartum_form.value.admission_date.length == 16? this.postpartum_form.value.admission_date.replace("T", " ") + ':00':this.postpartum_form.value.admission_date.replace("T", " ");

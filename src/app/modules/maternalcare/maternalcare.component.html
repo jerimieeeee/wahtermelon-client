@@ -129,7 +129,7 @@
       </div>
       <div *ngIf="post_value && patient_mc_record"
         class="w-12/12 px-8 pb-10 border-solid border-2 border-zinc-100 border-l-0 border-r-0 border-t-0 p-3">
-        <app-postvisits *ngIf="patient_details " [patient_mc_record]="patient_mc_record"
+        <app-postvisits *ngIf="patient_details" (post_visit_data)="updatePostVisit($event)" [patient_mc_record]="patient_mc_record"
           [patient_details]="patient_details"></app-postvisits>
       </div>
       <div class=" w-12/12 px-8 pb-10 border-solid border-2 border-zinc-100 border-l-0 border-r-0 border-t-0 p-3">

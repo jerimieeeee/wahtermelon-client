@@ -1,4 +1,4 @@
-<form [formGroup]="risk_form" (ngSubmit)="saveForm(risk_form.value)">
+<form [formGroup]="risk_form">
     <div class="grid gap-4 relative" style="grid-template-columns: repeat(16, minmax(0, 1fr));" *ngIf="!focused">
         <div class="sticky top-0 z-50 border border-blue-400 col-span-2 relative mx-2 px-2 py-1 rounded-t-lg text-sm bg-blue-500 text-white"
             style="grid-column: span 16 / span 16;"><button class="font-bold" type="button">Risk Factors</button>
@@ -67,21 +67,6 @@
         <div class=" drop-modal relative w-auto border-check mb-2 -mt-5"
             *ngIf="!focused && !risk_form.disabled"
             style="grid-column: span 14 / span 14; grid-column-start: 3;">
-            <!-- <div class="absolute inline-flex right-0 top-0" style=" top: -0.85rem;">
-                <div class="flex hover: border-check bg-white hover:bg-gray-400 text-gray-400 py-1 rounded-full hover:text-white px-2 cursor-pointer"
-                    (click)="cancel()">
-                    <fa-icon [icon]="faTimes" size="lg" class="mr-2">
-                    </fa-icon>
-                    <button type="button" class="font-bold button-out border-check-red typed-out">Cancel</button>
-                </div>
-                <div class="flex hover: border-check bg-white hover:bg-green-400 py-1 rounded-full text-green-500 hover:text-white px-2 cursor-pointer"
-                    (click)="saveForm(risk_form.value)">
-                    <fa-icon [icon]="faSave" size="lg" class="mr-2 ">
-                    </fa-icon>
-                    <button type="button" class="font-bold button-out border-check-red" [disabled]="risk_form.invalid"
-                        (keyup.enter)="saveForm(risk_form.value)">Save</button>
-                </div>
-            </div> -->
             <div class="relative w-auto border-check mt-2 mb-7 w-12/12" *ngIf="!focused && risk_form.enabled">
                 <div class="absolute inline-flex right-0 ">
                     <div *ngIf="saved" class="border rounded-md bg-green-200 text-green-400 px-2 ease-in-out duration-1000">Successfully Saved!</div>
@@ -95,8 +80,7 @@
                         class="cursor-pointer flex border-check hover:drop-shadow-md bg-green-300 hover:bg-green-400 py-1 rounded-full text-white px-3 peer-hover:bg-white peer-hover:text-green-400">
                         <fa-icon [icon]="faSave" size="lg" class="mr-2">
                         </fa-icon>
-                        <button type="button" class="font-bold button-out border-check-red"
-                            (keyup.enter)="saveForm(risk_form.value)">Save</button>
+                        <button type="button" class="font-bold button-out border-check-red">Save</button>
                     </div>
                 </div>
             </div>
@@ -128,59 +112,5 @@
                 </div>
             </div>
         </div>
-        <!-- <div *ngIf="risk_catch.length > 0" style="grid-column: span 16 / span 16;"
-            class=" drop-modal">
-            <div class=" grid  rounded-lg hover:drop-shadow-lg drop-shadow-md bg-white rounded-lg hover:border border-gray-300 hover:border-blue-400 p-2 m-2 border"
-                style="grid-template-columns: repeat(14, minmax(0, 1fr));">
-
-                <div class=" col-span-8 border-check relative select-none">
-                    <h3>Risk Factor</h3>
-
-                </div>
-                <div class=" col-span-4 border-check relative select-none">
-                    <h3>Date</h3>
-
-                </div>
-                <div class=" col-span-2 border-check relative select-none">
-                    <h3>Action</h3>
-                </div>
-                <div style="grid-column: span 16 / span 16;">
-                    <div *ngFor="let catch of risk_catch">
-                        <div class="grid m-2 group" style="grid-template-columns: repeat(14, minmax(0, 1fr));">
-
-                            <div class=" col-span-8 border-check relative select-none group-hover:bg-gray-100 flex rounded-l-full"
-                                [class]="hide.includes(catch.risk_id)?'bg-gray-200':''">
-                                <fa-icon [icon]="faCaretRight" class=" group-hover:text-blue-500 px-2"
-                                    [class]="hide.includes(catch.risk_id)?'text-blue-500':'text-gray-300'"></fa-icon>
-                                <p class="group-hover:font-semibold group-hover:text-gray-500 typed-out"
-                                    [class]="hide.includes(catch.risk_id)?'text-gray-500 font-semibold':'font-medium text-blue-500'">
-                                    {{catch.factor}}</p>
-
-                            </div>
-                            <div class=" col-span-4 border-check relative select-none group-hover:bg-gray-100 rounded-r-full"
-                                [class]="hide.includes(catch.risk_id)?'bg-gray-200':''">
-                                <p class="group-hover:font-semibold group-hover:text-gray-500 typed-out"
-                                    [class]="hide.includes(catch.risk_id)?'text-gray-500 font-semibold':'font-medium text-blue-500'">
-                                    {{catch.date}}</p>
-                            </div>
-                            <div class=" col-span-2 border-check relative select-none">
-                                <div class="grid grid-cols-2 relative w-auto border-check"
-                                    *ngIf="!focused && risk_catch">
-
-                                    <div (click)="edit(catch.risk_id)"
-                                        class="flex bg-white hover:text-orange-400 text-gray-400 cursor-pointer"
-                                        [class]="hide.includes(catch.risk_id)?'hidden':''">
-                                        <fa-icon [icon]="faPencil" size="lg" class="mr-2">
-                                        </fa-icon>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div> -->
-
     </div>
 </form>

@@ -314,9 +314,10 @@
                 </h1>
             </div>
 
-            <div class="text-sm grid pb-1 font-semibold h-max" style="grid-template-columns: repeat(24, minmax(0, 1fr)); grid-column: span 11 / span 11;">
+            <div class="text-sm grid pb-1 font-semibold h-max" style="grid-template-columns: repeat(27, minmax(0, 1fr)); grid-column: span 11 / span 11;">
                 <div class="transitions mx-2 select-none"><h3>No.</h3></div>
                 <div class="transitions col-span-2 mx-2 select-none whitespace-normal"><h3>Week</h3></div>
+                <div class="transitions col-span-3 mx-2 select-none"><h3>Date</h3></div>
                 <div class="transitions col-span-2 mx-2 select-none"><h3>Height</h3></div>
                 <div class="transitions col-span-2 mx-2 select-none"><h3>Weight</h3></div>
                 <div class="transitions col-span-2 mx-2 select-none"><h3>BP</h3></div>
@@ -331,9 +332,10 @@
             </div>
 
             <div class="overflow-x-hidden overflow-y-scroll scrollbar-thin scrollbar-thumb-white hover:scrollbar-thumb-blue-300 scrollbar-track-white" style="grid-column: span 11 / span 11;">
-                <div class="text-sm grid hover:bg-blue-100 hover:font-medium" style="grid-template-columns: repeat(24, minmax(0, 1fr)); grid-column: span 11 / span 11;" *ngFor="let post of postpartum_data">
+                <div class="text-sm grid hover:bg-blue-100 hover:font-medium" style="grid-template-columns: repeat(27, minmax(0, 1fr)); grid-column: span 11 / span 11;" *ngFor="let post of postpartum_data">
                     <div class="transitions relative select-none mx-2"><h3>{{post.visit_sequence}}</h3></div>
                     <div class="transitions col-span-2 relative select-none mx-2"><h3>{{post.postpartum_week}}</h3></div>
+                    <div class="transitions col-span-3 relative select-none mx-2"><h3>{{post.postpartum_date}}</h3></div>
                     <div class="transitions col-span-2 relative select-none mx-2"><h3>{{post.patient_height}}</h3></div>
                     <div class="transitions col-span-2 relative select-none mx-2"><h3>{{post.patient_weight}}</h3></div>
                     <div class="transitions col-span-2 relative select-none mx-2"><h3>{{post.bp_systolic}}/{{post.bp_diastolic}}</h3></div>

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { faAngleDown, faCalendarDay, faCaretRight, faCircleCheck, faCircleNotch, faClose, faInfoCircle, faPencil, faSave, faTimes, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import { LockChanges } from '@ngrx/store-devtools/src/actions';
@@ -59,6 +59,9 @@ export class PostvisitsComponent implements OnInit {
   actual_height: any;
   @Input() patient_mc_record;
   @Input() patient_details;
+
+  @Output() post_visit_data = new EventEmitter<string>();
+
   is_saving: boolean;
   saved: boolean;
   constructor(private http: HttpService, private formBuilder: FormBuilder) { }
@@ -132,8 +135,8 @@ createForm(mc_record: any) {
     user_id: [user_id],
     postpartum_date: [new Date().toISOString().substring(0, 10), [Validators.required]],
     visit_type: ['', [Validators.required]],
-    patient_height:  ['', [Validators.required]],
-    patient_weight:  ['', [Validators.required]],
+    patient_height:  [post_visit?post_visit.patient_height:'', [Validators.required]],
+    patient_weight:  [post_visit?post_visit.patient_weight:'', [Validators.required]],
     bp_systolic: ['', [Validators.required]],
     bp_diastolic:  ['', [Validators.required]],
     breastfeeding: [false],
@@ -158,14 +161,8 @@ saveForm(){
     this.http.post('maternal-care/mc-postpartum', this.postpartum_visit_form.value).subscribe({
       next: (data: any) => {
         console.log(data.data, " data from saving post visit")
-        this.postpartum_data = [];
-        // this.updateMCR('latest', this.patient_details.id);
-
-        data.data.forEach(d => {
-          this.postpartum_data.push(d)
-          console.log(d, " the Ds");
-
-        })
+        this.postpartum_data = data.data
+        this.post_visit_data.emit(data.data)
         this.value = this.postpartum_data[0].visit_sequence + 1;
       },
       error: err => console.log(err),

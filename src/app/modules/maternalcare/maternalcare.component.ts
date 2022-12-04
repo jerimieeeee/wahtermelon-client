@@ -129,11 +129,14 @@ export class MaternalcareComponent implements OnInit {
         complete: () => {
           this.loading = false;
 // console.log(!this.patient_mc_record.pre_registration , !this.patient_mc_record.post_registration.end_pregnancy, " openMCR");
-
+            console.log(this.module, " logging this module before swithcnig");
+            
           if (!this.patient_mc_record.pre_registration) {
             this.module = 4;        
           }else{
-            this.module = 2;
+            if(this.module = 1){
+              this.module = 2;
+            }
           }
         }
       });
@@ -168,7 +171,6 @@ export class MaternalcareComponent implements OnInit {
   }
 
   updatePrenatal(info) {
-    
     this.patient_mc_record.prenatal_visit = info;
   }
 
@@ -177,5 +179,8 @@ export class MaternalcareComponent implements OnInit {
     this.patient_mc_record.post_registration = info;
   }
 
+  updatePostVisit(info){
+    this.patient_mc_record.postpartum_visit = info;
+  }
 
 }
