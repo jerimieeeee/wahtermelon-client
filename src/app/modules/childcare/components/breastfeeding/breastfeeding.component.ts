@@ -38,6 +38,8 @@ export class BreastfeedingComponent implements OnInit {
   alertFilter: any;
   showAlert = false;
 
+  ebf_status: any;
+
   toggleAlertModal(value: any){
     this.alertFilter = value;
     this.showAlert = !this.showAlert;
@@ -136,7 +138,7 @@ export class BreastfeedingComponent implements OnInit {
     // console.log(this.groupList, 'selected bfed_months')
     if(this.groupList.includes('0'))
     {
-    //  console.log('open ang reason for stopping')
+     console.log('open ang reason for stopping')
      this.showData = true
     }
     else{
@@ -347,9 +349,18 @@ export class BreastfeedingComponent implements OnInit {
 
         })
 
-        // console.log(this.groupList2, 'grouplist 2 data')
+        console.log(this.groupList2, 'grouplist 2 data')
         this.getSelected()
         // console.log(this.groupList, 'grouplist data')
+        if(this.groupList2[0] == 1 && this.groupList2[1] == 1 && this.groupList2[2] == 1 && this.groupList2[3] == 1 && this.groupList2[4] == 1 && this.groupList2[5] == 1)
+          {
+            //  console.log('open ang reason for stopping')
+            this.ebf_status = 'Exclusively Breastfed'
+          }
+            else{
+              this.ebf_status = 'Non - EBF'
+      // console.log('close ang reason for stopping')
+          }
 
       },
       error: err => {console.log(err)
