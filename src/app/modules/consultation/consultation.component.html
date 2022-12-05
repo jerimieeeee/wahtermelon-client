@@ -1,33 +1,64 @@
 <div class="grid grid-cols-11 mt-4 gap-4">
   <div class="mb-16 col-span-8">
-    <div class="flex">
-      <div class="w-1/2 shadow px-2 mr-2 py-4 rounded-xl text-gray-600 border border-slate-100">
-        <div id="bp-chart">
-          <apx-chart
-            [series]="chartOptions.series"
-            [chart]="chartOptions.chart"
-            [xaxis]="chartOptions.xaxis"
-            [stroke]="chartOptions.stroke"
-            [tooltip]="chartOptions.tooltip"
-            [dataLabels]="chartOptions.dataLabels"
-            [title]="chartOptions.title"
-          ></apx-chart>
-        </div>
+    <div *ngIf="showChart" class="grid grid-cols-1 w-full">
+      <div class="w-full flex justify-end">
+        <!-- <label for="selected_chart" class="flex-none mr-5 mt-3">Select Chart</label> -->
+        <select id="selected_chart"  [(ngModel)]="selected_chart" class="input w-44" (change)="loadChart()">
+          <option value="bp_chart">Blood Pressure</option>
+          <option value="weight_chart">Weight</option>
+          <option value="bmi_chart">BMI</option>
+          <option value="bmi_weight_chart">BMI/Weight</option>
+          <option value="bp_weight_chart">BP/Weight</option>
+          <option value="all_chart">All</option>
+        </select>
       </div>
-      <div class="w-1/2 shadow px-2 ml-2  py-4 rounded-xl text-gray-600 border border-slate-100">
-        <div id="weight-chart">
-          <apx-chart
-            [series]="WeightChart.series"
-            [chart]="WeightChart.chart"
-            [xaxis]="WeightChart.xaxis"
-            [stroke]="WeightChart.stroke"
-            [tooltip]="WeightChart.tooltip"
-            [dataLabels]="WeightChart.dataLabels"
-            [title]="WeightChart.title"
-          ></apx-chart>
+
+      <div class="cols-span-1 flex w-full mt-3">
+        <div *ngIf="show_bp" [ngClass]="{'w-1/2' : selected_chart === 'bp_weight_chart', 'w-full' : selected_chart === 'bp_chart', 'w-1/3' : selected_chart === 'all_chart' }" class="w-full shadow px-2 mr-2 py-4 rounded-xl text-gray-600 border border-slate-100">
+          <div id="bp-chart">
+            <apx-chart
+              [series]="chartOptions?.series"
+              [chart]="chartOptions?.chart"
+              [xaxis]="chartOptions?.xaxis"
+              [stroke]="chartOptions?.stroke"
+              [tooltip]="chartOptions?.tooltip"
+              [dataLabels]="chartOptions?.dataLabels"
+              [title]="chartOptions?.title"
+            ></apx-chart>
+          </div>
         </div>
+
+        <div *ngIf="show_weight" [ngClass]="{'w-1/2' : (selected_chart === 'bp_weight_chart' || selected_chart === 'bmi_weight_chart'), 'w-full' : selected_chart === 'weight_chart', 'w-1/3' : selected_chart === 'all_chart' }" class="w-full  shadow px-2 ml-2  py-4 rounded-xl text-gray-600 border border-slate-100">
+          <div id="weight-chart">
+            <apx-chart
+              [series]="WeightChart?.series"
+              [chart]="WeightChart?.chart"
+              [xaxis]="WeightChart?.xaxis"
+              [stroke]="WeightChart?.stroke"
+              [tooltip]="WeightChart?.tooltip"
+              [dataLabels]="WeightChart?.dataLabels"
+              [title]="WeightChart?.title"
+            ></apx-chart>
+          </div>
+        </div>
+
+        <div *ngIf="show_bmi" [ngClass]="{'w-1/2' : selected_chart === 'bmi_weight_chart', 'w-full' : selected_chart === 'bmi_chart', 'w-1/3' : selected_chart === 'all_chart' }" class="w-full  shadow px-2 ml-2  py-4 rounded-xl text-gray-600 border border-slate-100">
+          <div id="bmi-chart">
+            <apx-chart
+              [series]="BmiChart?.series"
+              [chart]="BmiChart?.chart"
+              [xaxis]="BmiChart?.xaxis"
+              [stroke]="BmiChart?.stroke"
+              [tooltip]="BmiChart?.tooltip"
+              [dataLabels]="BmiChart?.dataLabels"
+              [title]="BmiChart?.title"
+            ></apx-chart>
+          </div>
+        </div>
+
       </div>
     </div>
+
 
     <div class="block shadow p-4 mt-4 rounded-xl text-gray-600 border border-slate-100">
       <span class="text-sky-500 font-bold">Consultation</span>
@@ -297,17 +328,17 @@
       </div>
 
 
-      <div class="text-right border-t border-solid border-gray-200 -mx-4 -mb-4 mt-8 rounded-b-xl">
-        <button type="button" (click)="saveConsult()" class="btn-save">
+      <!-- <div class="text-right border-t border-solid border-gray-200 -mx-4 -mb-4 mt-8 rounded-b-xl">
+        <button type="button" (click)="onSubmit()" class="btn-save">
           <fa-icon *ngIf="is_saving" class="mr-3" [icon]="faSpinner" [spin]="true"></fa-icon>
           {{ is_saving ? 'Saving' : 'Save' }}
         </button>
-      </div>
+      </div> -->
     </div>
   </div>
 
 
   <div class="col-span-3">
-    <app-patient-info></app-patient-info>
+    <app-patient-info (patientInfo)="patientInfo($event)" (patientVitals)="patientVitals($event)"></app-patient-info>
   </div>
 </div>

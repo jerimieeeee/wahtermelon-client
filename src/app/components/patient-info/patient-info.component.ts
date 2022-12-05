@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { faFlask, faHeart, faExclamationCircle, faNotesMedical, faPlusCircle, faQuestionCircle, faPenToSquare, faTrash, faTableList, faPenSquare, faChevronRight, faChevronUp, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { AgeService } from 'app/shared/services/age.service';
 import { HttpService } from 'app/shared/services/http.service';
-import { VitalsChartsService } from 'app/shared/services/vitals_charts.service';
+import { VitalsChartsService } from 'app/shared/services/vitals-charts.service';
 
 @Component({
   selector: 'app-patient-info',

@@ -8,7 +8,7 @@ import { HttpService } from 'app/shared/services/http.service';
 import { formatDate } from '@angular/common';
 import { faCircle, faFolder, faStethoscope } from '@fortawesome/free-solid-svg-icons';
 import { faEye, faFolderOpen } from '@fortawesome/free-regular-svg-icons';
-import { VitalsChartsService } from 'app/shared/services/vitals_charts.service';
+import { VitalsChartsService } from 'app/shared/services/vitals-charts.service';
 
 @Component({
   selector: 'app-patient-itr',

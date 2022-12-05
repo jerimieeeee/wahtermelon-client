@@ -129,7 +129,7 @@ export class BreastfeedingComponent implements OnInit {
 
   changeSelection(i: any, value: any) {
 
-
+    console.log(this.ccdev)
     this.ccdev[i].selected = value;
     // this.fetchSelectedItems()
     this.getPrev()
@@ -324,6 +324,27 @@ export class BreastfeedingComponent implements OnInit {
     }
   }
 
+  get ebfCondition(){
+    if(this.ccdev[0].selected == 1 && this.ccdev[1].selected == 1 && this.ccdev[2].selected == 1 &&
+      this.ccdev[3].selected == 1 && this.ccdev[4].selected == 1 && this.ccdev[5].selected == 1){
+      return true
+    }
+  }
+
+  get reasonCondition(){
+    if(this.ccdev[0].selected == 0 || this.ccdev[1].selected == 0 || this.ccdev[2].selected == 0 ||
+      this.ccdev[3].selected == 0 || this.ccdev[4].selected == 0 || this.ccdev[5].selected == 0){
+      return true
+    }
+  }
+
+  get getCompleCondition(){
+    if(this.ccdev[0].selected && this.ccdev[1].selected && this.ccdev[2].selected &&
+      this.ccdev[3].selected && this.ccdev[4].selected && this.ccdev[5].selected){
+      return true
+    }
+  }
+
   loadBreastfed() {
     this.groupList2 = [];
     var lib = ['bfed_month1','bfed_month2','bfed_month3','bfed_month4','bfed_month5','bfed_month6'];
@@ -340,7 +361,7 @@ export class BreastfeedingComponent implements OnInit {
 
 
         lib.forEach((obj, index) => {
-          this.groupList2.push(this.patient_breastfed[obj]);
+          // this.groupList2.push(this.patient_breastfed[obj]);
           // this.groupList.push(String(this.patient_breastfed[obj]));
           this.ccdev[index].selected = String(this.patient_breastfed[obj]);
           // console.log(this.patient_breastfed[obj], "for each checker");
