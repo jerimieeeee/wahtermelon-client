@@ -161,14 +161,14 @@ export class VitalsModalComponent implements OnInit {
       vitals_waist_in: [null],
       vitals_height_ft: [null, Validators.max(8)],
       vitals_height_in: [null, Validators.max(11)],
-      vitals_date_temp: [formatDate(date,'Y-MM-dd','en'), Validators.required],
+      vitals_date_temp: [formatDate(date,'yyyy-MM-dd','en'), Validators.required],
       vitals_time_temp: [formatDate(date,'HH:mm:ss','en'), Validators.required],
     });
 
     if(this.vitals_to_edit){
       console.log(this.vitals_to_edit)
       this.vitalsForm.patchValue({...this.vitals_to_edit});
-      this.vitalsForm.patchValue({vitals_date_temp: formatDate(this.vitalsForm.value.vitals_date,'Y-MM-dd','en')});
+      this.vitalsForm.patchValue({vitals_date_temp: formatDate(this.vitalsForm.value.vitals_date,'yyyy-MM-dd','en')});
       this.vitalsForm.patchValue({vitals_time_temp: formatDate(this.vitalsForm.value.vitals_date,'HH:mm:ss','en')});
 
       console.log(this.vitalsForm);

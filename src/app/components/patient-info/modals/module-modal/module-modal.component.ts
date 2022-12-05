@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { faClipboard, faCircleInfo, faHouse } from '@fortawesome/free-solid-svg-icons';
+import { faClipboard, faCircleInfo, faHouse, faUserDoctor } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { formatDate } from '@angular/common';
 import { AgeService } from 'app/shared/services/age.service';
@@ -18,6 +18,7 @@ export class ModuleModalComponent implements OnInit {
   faClipboard = faClipboard;
   faCircleInfo = faCircleInfo;
   faHouse = faHouse;
+  faUserDoctor = faUserDoctor;
 
   list_modules = {
     'General': {
@@ -92,6 +93,7 @@ export class ModuleModalComponent implements OnInit {
   };
 
   itr = { name: 'Patient ITR', location: 'itr', group: '', consult_active: false };
+  cn = { name: 'Consultation', location: 'cn', group: 'cn', consult_active: false};
   mc = { name: 'Maternal Care', location: 'mc', group: 'mc', consult_active: false };
   cc = { name: 'Child Care', location: 'cc', group: 'cc', consult_active: false };
 
@@ -184,6 +186,8 @@ export class ModuleModalComponent implements OnInit {
   checkOpenConsult(consults){
     Object.entries(consults).forEach(([keys, values], indexes) => {
       let vals: any= values;
+      if(vals.pt_group === 'cn') this.cn.consult_active = true;
+
       Object.entries(this.list_modules).forEach(([key, value], index) => {
         Object.entries(value.modules).forEach(([k, v], i) => {
           if(vals.pt_group === k) {
@@ -201,6 +205,7 @@ export class ModuleModalComponent implements OnInit {
 
     this.http.get('consultation/cn-records', {params:{consult_done: 0, patient_id: this.patient_info.id}}).subscribe({
       next: (data: any) => {
+        console.log(data.data)
         if(data.data.length > 0) this.checkOpenConsult(data.data);
       },
       error: err => { console.log(err) },
