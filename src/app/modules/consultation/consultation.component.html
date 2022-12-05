@@ -38,29 +38,36 @@
             Chief Complaint
           </div>
           <div class="col-span-8">
-            <div class="flex mb-2">
-              <button type="submit" class="inline-flex p-1 items-center text-gray-50 bg-sky-400 rounded-l-md border border-gray-300">
-                <fa-icon class="text-white fa-xl" [icon]="faPlusSquare" ></fa-icon>
-              </button>
-              <div class="chips-container">
-                <!-- <span [@closeChip] *ngIf="show_item" class="chips">
-                  Headache
-                  <fa-icon class="chips-close" [icon]="faXmark" (click)="deleteItem()"></fa-icon>
-                </span> -->
-                <ng-select class="select-chips" placeholder="search"
-                  [items]="complaints$ | async"
-                  [multiple]="true"
-                  [closeOnSelect]="false"
-                  [hideSelected]="true"
-                  bindLabel="complaint_desc"
-                  placeholder="Select Complaint"
-                  [(ngModel)]="selectedComplaint">
-                </ng-select>
-
+            <div class="rounded-md border border-solid border-gray-300">
+              <span class="rounded-t-md m-0 p-2 font-semibold text-gray-50 block bg-cyan-500">
+                Complaints
+              </span>
+              <div class="flex mb-2  p-4">
+                <button type="submit" class="inline-flex p-1 items-center text-gray-50 bg-sky-400 rounded-l-md border border-gray-300">
+                  <fa-icon class="text-white fa-xl" [icon]="faPlusSquare" ></fa-icon>
+                </button>
+                <div class="chips-container">
+                  <ng-select class="select-chips" placeholder="search"
+                    [items]="complaints$ | async"
+                    [multiple]="true"
+                    [closeOnSelect]="false"
+                    [hideSelected]="true"
+                    bindLabel="complaint_desc"
+                    placeholder="Select Complaint"
+                    [(ngModel)]="selectedComplaint">
+                  </ng-select>
+                </div>
               </div>
-            </div>
-            <div class="flex">
-              <textarea rows="3" id="complaint_notes" placeholder="Complaint Notes" class="placeholder-slate-400 w-full rounded-md border-gray-300 bg-gray-50"></textarea>
+              <div class="flex px-4 pb-4">
+                <textarea rows="3" id="complaint_notes" placeholder="Complaint Notes" class="placeholder-slate-400 w-full rounded-md border-gray-300 bg-gray-50"></textarea>
+              </div>
+
+              <div class="flex text-right">
+                <button type="button" class="btn-save ml-auto mr-5 mb-5" (click)="onSubmit('pe')">
+                  <fa-icon class="mr-2" [icon]="faFloppyDisk"></fa-icon>
+                 Save
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -118,23 +125,24 @@
                   <div class="col-span-1 font-bold">
                     {{ pe.key }}
                   </div>
-                  <div class="col-span-3 grid grid-cols-3 gap-4">
+                  <div class="col-span-3 grid grid-cols-2 gap-y-2">
                     <div *ngFor="let val of pe.value">
+                      <input type="checkbox" class="rounded-md border border-gray-400 p-2">
                       {{ val.pe_desc }}
                     </div>
 
-                    <div class="col-span-3">
-                      <span class="font-semibold">Notes: </span>
-                      <span>-</span>
+                    <div class="flex col-span-3">
+                      <span class="font-semibold mt-3 mr-2">Notes: </span>
+                      <input rows="2" type="textarea" class="input placeholder-slate-400 placeholder:italic" placeholder="remarks">
                     </div>
                   </div>
                 </div>
               </div>
 
               <div class="flex text-right">
-                <button type="button" class="flex btn-add ml-auto mr-5 mb-5">
-                  <fa-icon class="mr-2" [icon]="faPlus"></fa-icon>
-                 Add
+                <button type="button" class="btn-save ml-auto mr-5 mb-5" (click)="onSubmit('pe')">
+                  <fa-icon class="mr-2" [icon]="faFloppyDisk"></fa-icon>
+                 Save
                 </button>
               </div>
               <!-- <table class="w-full table-auto">
@@ -202,14 +210,20 @@
           </div>
           <div class="col-span-8">
             <div class="flex mb-2">
-              <button type="submit" class="inline-flex p-3 items-center text-gray-50 bg-sky-400 rounded-l-md border border-gray-300">
+              <button type="submit" class="inline-flex p-1 items-center text-gray-50 bg-sky-400 rounded-l-md border border-gray-300">
                 <fa-icon class="text-white fa-xl" [icon]="faPlusSquare" ></fa-icon>
               </button>
               <div class="chips-container">
-                <span [@closeChip] *ngIf="show_item" class="chips">
-                  Headache
-                  <fa-icon class="chips-close" [icon]="faXmark" (click)="deleteItem()"></fa-icon>
-                </span>
+                <ng-select class="select-chips" placeholder="search"
+                [items]="idx$ | async"
+                [minTermLength]="minLengthTerm"
+                [loading]="idxLoading"
+                typeToSearchText="search..."
+                [typeahead]="searchInput$"
+                [(ngModel)]="selectedIdx"
+                notFoundText="No records found"
+                [clearSearchOnAdd]>
+                </ng-select>
               </div>
             </div>
             <div class="block">

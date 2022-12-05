@@ -4,8 +4,9 @@ import { ChartComponent } from "ng-apexcharts";
 import { faCircleNotch, faPlus, faPlusSquare, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { trigger, transition, style, animate } from '@angular/animations';
 import { HttpService } from 'app/shared/services/http.service';
-import { delay, map, Observable, of } from 'rxjs';
-import { Complaints  } from './model/complaint';
+import { catchError, debounceTime, distinctUntilChanged, switchMap, tap, map, filter } from 'rxjs/operators';
+import { concat, Observable, of, Subject } from 'rxjs';
+import { faFloppyDisk } from '@fortawesome/free-regular-svg-icons';
 
 @Component({
   selector: 'app-consultation',
@@ -32,6 +33,7 @@ export class ConsultationComponent implements OnInit {
   faSpinner = faCircleNotch;
   faXmark = faXmark;
   faPlus = faPlus;
+  faFloppyDisk = faFloppyDisk;
 
   is_saving: boolean = false;
   show_item: boolean = true;
@@ -147,6 +149,50 @@ export class ConsultationComponent implements OnInit {
     this.show_item = false;
   }
 
+  onSubmit(table){
+    console.log(table)
+  }
+
+  //test idx
+  idxLoading: boolean = false;
+  idx$: Observable<any>;
+  searchInput$ = new Subject<string>();
+  selectedIdx: any;
+  minLengthTerm = 3;
+  user_last_name: string;
+  user_first_name: string;
+  user_middle_name: string;
+
+  loadIdx() {
+    this.idx$ = concat(
+      of([]), // default items
+      this.searchInput$.pipe(
+        filter(res => {
+          return res !== null && res.length >= this.minLengthTerm
+        }),
+        distinctUntilChanged(),
+        debounceTime(800),
+        tap(() => this.idxLoading = true),
+        switchMap(term => {
+          return this.getIdx(term).pipe(
+            catchError(() => of([])),
+            tap(() => this.idxLoading = false)
+          )
+        })
+      )
+    );
+  }
+
+  getIdx(term: string = null): Observable<any> {
+    return this.http.get('patient', {params:{'filter[search]':term, per_page: 'all'}})
+    .pipe(map((resp:any) => {
+      // console.log(resp);
+      /* this.showCreate = resp.data.length == 0 ? true : false;
+      console.log(this.showCreate) */
+      return resp.data;
+    }))
+  }
+  //text idx
   pe_grouped = [];
   loadLibraries() {
     let value: any;
@@ -176,6 +222,7 @@ export class ConsultationComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadLibraries();
+    // this.loadIdx();
   }
 
 }
