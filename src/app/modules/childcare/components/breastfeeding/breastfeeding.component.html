@@ -25,7 +25,7 @@
         <span *ngFor="let months of ccdev, index as i" class="flex"><p *ngIf="months.selected == 1" class="font-bold mr-2 py-2">Breastfeeding {{months.name}}:</p><p *ngIf="months.selected == 1" class="py-2">{{months.date}}</p></span> 
       </div>
       <div class="px-10 text-sm">
-        <div *ngIf="groupList2[5] == 1 || groupList[5] == 0 || groupList[5] == 1 || groupList2[5] == 0" class="py-2">
+        <div *ngIf="getCompleCondition" class="py-2">
           
           <span class="flex"><p class="font-bold mr-2">Complementary Feeding Date:</p><p class="">{{patient_breastfed?.comp_fed_date | date: 'MMM dd, YYYY'}}</p></span>
         </div>
@@ -41,7 +41,7 @@
               </button>
           
       </div>
-      <span *ngIf="groupList2[5] == 1 || groupList[5] == 0 || groupList[5] == 1 || groupList2[5] == 0" class="flex px-10 text-sm py-2"><p class="font-bold mr-2">EBF Status:</p><p class="">{{ebf_status}} - {{patient_breastfed?.ebf_date | date: 'MMM dd, YYYY' }}</p></span>
+      <span *ngIf="getCompleCondition" class="flex px-10 text-sm py-2"><p class="font-bold mr-2">EBF Status:</p><p class="">{{ebf_status}} - {{patient_breastfed?.ebf_date | date: 'MMM dd, YYYY' }}</p></span>
       <!-- <span class="col-start-1 flex px-10 text-sm"><p class="font-bold mr-2">Reason:</p><p class="">{{patient_breastfed?.ebf_reason}}</p></span> -->
     </div>
 
@@ -82,7 +82,7 @@
                         <label id="{{month.id}}" for="{{month.id}}">{{month.date}}</label>
                       </td>
                       <td class="py-4 px-12 text-sm">
-                        <select class="border-gray-300 text-gray-900 sm:text-sm rounded-lg" (change)="changeSelection(i,$event.target.value)" [(ngModel)]="month.selected" name="" id="" style="width:100%;">
+                        <select class="border-gray-300 text-gray-900 sm:text-sm rounded-lg" (change)="changeSelection(i,$event.target.value)" [(ngModel)]="ccdev[i].selected" name="" id="" style="width:100%;">
                           <option value='' ></option>
                           <option value='1' >Yes</option>
                           <option value='0' >No</option>
@@ -101,7 +101,7 @@
               </table>
             </div>
 
-            <div *ngIf="showData" class="flex py-4 px-5 rounded-b border-t border-gray-200">
+            <div *ngIf="reasonCondition" class="flex py-4 px-5 rounded-b border-t border-gray-200">
               <label class="mt-2.5 text-sm text-gray-900 w-full">Reason for Stopping</label>
               <select class="select border-gray-300 text-gray-900 sm:text-sm rounded-lg text-sm -pl-10" [(ngModel)]="patient_breastfed.ebfreasons" name="" id="" style="width:100%;">
                 <option  disabled selected>Select Reason</option>
@@ -111,12 +111,12 @@
               </select>
             </div>
 
-            <div *ngIf="groupList[0] == 1 && groupList[1] == 1 && groupList[2] == 1 && groupList[3] == 1 && groupList[4] == 1 && groupList[5] == 1 || groupList2[0] && groupList2[1] && groupList2[2] && groupList2[3] && groupList2[4] && groupList2[5] == 1" class="flex py-4 px-5 rounded-b border-t border-gray-200 ">
+            <div *ngIf="ebfCondition" class="flex py-4 px-5 rounded-b border-t border-gray-200 ">
               <label class="mt-2.5 ml-6 text-sm text-gray-900 w-full">EBF Date</label>
               <input class="border-gray-300 text-gray-900 sm:text-sm rounded-lg" type="date" placeholder="Enter EBF Date" style="width:100%;" [(ngModel)]="patient_breastfed.ebf_date" >
             </div>
 
-            <div *ngIf="groupList2[5] == 1 || groupList2[5] == 0 && groupList[5] == 1 || groupList[5] == 0" class="flex py-4 px-5 rounded-b border-t border-gray-200 ">
+            <div *ngIf="getCompleCondition" class="flex py-4 px-5 rounded-b border-t border-gray-200 ">
               <label class="mt-2.5 ml-6 text-sm text-gray-900 w-full">Complementary Feeding Start Date</label>
               <input class="border-gray-300 text-gray-900 sm:text-sm rounded-lg" type="date" placeholder="Enter Start Date" style="width:100%;" [(ngModel)]="patient_breastfed.comp_fed_date" >
             </div>
@@ -150,7 +150,7 @@
       </div>
     </div>
 </div>
-  
+
 <div *ngIf="showBreastfeedingModal" class="opacity-50 fixed inset-0 z-50 bg-black"></div>
 
 
@@ -173,7 +173,7 @@
           <table class="w-full max-w-sm text-left text-gray-500 dark:text-gray-400">
             <thead class="text-sm text-gray-700 dark:bg-gray-700 dark:text-gray-400">
               <tr class="sticky top-0 z-50 bg-gray-50">
-                  
+
               </tr>
             </thead>
               <tbody>
@@ -181,8 +181,8 @@
                   <label *ngIf="alertFilter == 'S'" for="" class="align-middle">Data Successfully Saved!</label>
                   <label *ngIf="alertFilter == 'E'" for="" class="align-middle">Error in Saving! Please check required fields</label>
                 </div>
-                  
-               
+
+
               </tbody>
           </table>
         </div>
@@ -190,7 +190,7 @@
           <!-- Modal footer -->
           <div class="flex justify-end py-4 px-6 space-x-4 rounded-b border-t border-gray-200 dark:border-gray-600">
             <button  type="button" class="btn-cancel" (click)="toggleAlertModal()">Close</button>
-            
+
           </div>
       </div>
   </div>

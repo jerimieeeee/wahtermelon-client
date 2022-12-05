@@ -158,7 +158,7 @@ export class MyAccountComponent implements OnInit {
       next: (data: any) => {
         console.log(data)
         this.orig_value = data.data;
-        this.orig_value.birthdate = formatDate(this.orig_value.birthdate,'Y-MM-dd','en')
+        this.orig_value.birthdate = formatDate(this.orig_value.birthdate,'yyyy-MM-dd','en')
         this.userForm.patchValue({...this.orig_value});
 
         this.loadDemog('regions', this.orig_value.facility.region.code, 'provinces');

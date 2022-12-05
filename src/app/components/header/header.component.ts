@@ -1,11 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { faChevronCircleDown, faBell, faSearch, faGear, faHome, faRightFromBracket, faAddressBook, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faChevronCircleDown, faBell, faSearch, faGear, faHome, faRightFromBracket, faAddressBook, faUser, faSquarePollVertical } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { catchError, debounceTime, distinctUntilChanged, switchMap, tap, map, filter } from 'rxjs/operators';
 import { concat, Observable, of, Subject } from 'rxjs';
 import { Router } from '@angular/router';
-import { ToothServicesComponent } from 'app/modules/dental/modals/tooth-services/tooth-services.component';
-import { AuthService } from 'app/shared/services/auth/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -24,6 +22,7 @@ export class HeaderComponent implements OnInit {
   faRightFromBracket = faRightFromBracket;
   faAddressBook = faAddressBook;
   faUser = faUser;
+  faSquarePollVertical = faSquarePollVertical;
 
   patients$: Observable<any>;
   searchInput$ = new Subject<string>();

@@ -73,14 +73,22 @@ export class McrComponent implements OnInit {
   }
 
   getMCR() {
+    console.log(this.patient_mc_record);
+    
     if (!this.patient_mc_record) {
       this.mcr_data = -1;
       this.getEDC(this.today, 'any');
     } else {
-      this.mcr_data = this.patient_mc_record.pre_registration;
-      console.log(this.mcr_data, " mcr data from getMCR - MCR");
-      this.getEDC(this.mcr_data.lmp_date, 'db');
+      if(this.patient_mc_record.pre_registration){
+        this.mcr_data = this.patient_mc_record.pre_registration;
+        console.log(this.mcr_data, " mcr data from getMCR - MCR");
+        this.getEDC(this.mcr_data.lmp_date, 'db');
+      }else{
+        this.mcr_data = -1;
+        this.getEDC(this.today, 'any');
+      }
       this.updating = true;
+
     }
 
     this.createForm();

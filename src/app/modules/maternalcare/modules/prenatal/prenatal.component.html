@@ -277,9 +277,11 @@
                 </div>
                 <div (click)="saveForm(prenatal_form.value)"
                     class="cursor-pointer flex  hover:drop-shadow-md bg-green-300 hover:bg-green-400 py-1 rounded-full text-white px-3 peer-hover:bg-white peer-hover:text-green-400">
-                    <fa-icon [icon]="faSave" size="lg" class="mr-2">
-                    </fa-icon>
-                    <button type="button" class="font-bold button-out -red">Save</button>
+                    <fa-icon *ngIf="!is_saving" [icon]="faSave" size="lg" class="mr-2"></fa-icon>
+                    <fa-icon *ngIf="is_saving" class="mr-2" [icon]="faSpinner" [spin]="true"></fa-icon>
+                    <button type="button" class="font-bold button-out border-check-red">
+                        {{this.is_saving?'Saving':'Save'}}
+                    </button>
                 </div>
             </div>
         </div>
@@ -323,9 +325,9 @@
                                 </td>
                                 <td class="px-2 font-normal">{{prenatal.patient_weight}}</td>
                                 <td class="px-2 font-normal">{{prenatal.bp_systolic}}/{{prenatal.bp_diastolic}}</td>
-                                <td class="px-2 font-normal">{{prenatal.fundic_height}}</td>
-                                <td class="px-2 font-normal">{{prenatal.fhr}}</td>
-                                <td class="px-2 font-normal">{{prenatal.fhr == 0?'-':prenatal.location_code}}</td>
+                                <td class="px-2 font-normal">{{prenatal.fundic_height == null?'-':prenatal.fundic_height}}</td>
+                                <td class="px-2 font-normal">{{prenatal.fhr == null?'-':prenatal.fhr}}</td>
+                                <td class="px-2 font-normal">{{prenatal.fhr == 0 || prenatal.fhr == null?'-':prenatal.location_code}}</td>
                                 <td class="px-2 font-normal">{{prenatal.presentation_code}}</td>
                                 <td class="px-2 font-normal">{{prenatal.remarks?prenatal.remarks:'-'}}</td>
                                 <td class="px-2 font-normal">

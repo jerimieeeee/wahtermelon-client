@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { faAngleDown, faCalendarDay, faCaretRight, faCircleCheck, faClose, faInfoCircle, faPencil, faSave, faTimes, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
+import { faAngleDown, faCalendarDay, faCaretRight, faCircleCheck, faCircleNotch, faClose, faInfoCircle, faPencil, faSave, faTimes, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
@@ -20,6 +20,7 @@ export class PrenatalComponent implements OnInit {
   faInfoCircle = faInfoCircle;
   faCaretRight = faCaretRight;
   faCircleCheck = faCircleCheck;
+  faSpinner = faCircleNotch;
 
   prenatal_form: FormGroup = new FormGroup({
     prenatal_date: new FormControl<string | null>(''),
@@ -117,11 +118,18 @@ export class PrenatalComponent implements OnInit {
       if (this.actual_height) {
         this.prenatal_form.value.patient_height = this.actual_height;
       }
-
-      this.http.post('maternal-care/mc-prenatal', this.prenatal_form.value).subscribe({
+      let filtered = {}
+      let target = this.prenatal_form.value
+      for (let key in target) {
+        if (target[String(key)] != null) {
+          filtered[key] = target[String(key)];
+        }
+      }
+      console.log(filtered, this.prenatal_form.value, " filtered saveform");
+      this.http.post('maternal-care/mc-prenatal', filtered).subscribe({
         next: (data: any) => {
           console.log(data.data, " data from saving prenatal")
-          this.prenatal_data = data.data;
+          this.prenatal_data = data.data;``
           this.prenatal_mc_data.emit(data.data);
           this.value = this.prenatal_data[0].visit_sequence + 1;
         },
@@ -137,7 +145,7 @@ export class PrenatalComponent implements OnInit {
         }
       })
     } else {
-      // this.loading = false;
+      this.is_saving = false;
     }
     console.log(this.prenatal_form.value, " prenatal form");
 
@@ -190,9 +198,9 @@ export class PrenatalComponent implements OnInit {
       patient_weight: [prenatal_visit.length != 0 ? prenatal_visit.patient_weight : 0, [Validators.required, Validators.minLength(2)]],
       bp_systolic: ['', [Validators.required, Validators.minLength(2)]],
       bp_diastolic: ['', [Validators.required, Validators.minLength(2)]],
-      fundic_height: [''],
+      fundic_height: [null],
       presentation_code: ['', [Validators.required, Validators.minLength(2)]],
-      fhr: [''],
+      fhr: [null],
       location_code: ['NA'],
       remarks: [''],
       private: [0],

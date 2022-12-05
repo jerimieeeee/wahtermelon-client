@@ -131,7 +131,7 @@ export class BreastfeedingComponent implements OnInit {
 
   changeSelection(i: any, value: any) {
 
-
+    console.log(this.ccdev)
     this.ccdev[i].selected = value;
     // this.fetchSelectedItems()
     this.getPrev()
@@ -206,13 +206,13 @@ export class BreastfeedingComponent implements OnInit {
       patient_ccdev_id: this.patient_info.id,
       patient_id: this.patient_info.patient_id,
       user_id: user_id,
-      bfed_month1: this.groupList[0] == 'null' ? null:this.groupList[0],
-      bfed_month2: this.groupList[1] == 'null' ? null:this.groupList[1],
-      bfed_month3: this.groupList[2] == 'null' ? null:this.groupList[2],
-      bfed_month4: this.groupList[3] == 'null' ? null:this.groupList[3],
-      bfed_month5: this.groupList[4] == 'null' ? null:this.groupList[4],
+      bfed_month1: this.ccdev[0].selected == 'null' ? null:this.ccdev[0].selected,
+      bfed_month2: this.ccdev[1].selected == 'null' ? null:this.ccdev[1].selected,
+      bfed_month3: this.ccdev[2].selected == 'null' ? null:this.ccdev[2].selected,
+      bfed_month4: this.ccdev[3].selected == 'null' ? null:this.ccdev[3].selected,
+      bfed_month5: this.ccdev[4].selected == 'null' ? null:this.ccdev[4].selected,
       // bfed_month6: this.groupList[5] == 1 ? 1:0,
-      bfed_month6: this.groupList[5] == 'null' ? null:this.groupList[5],
+      bfed_month6: this.ccdev[5].selected == 'null' ? null:this.ccdev[5].selected,
       reason_id: this.patient_breastfed.ebfreasons,
       ebf_date: this.patient_breastfed.ebf_date,
       comp_fed_date: this.patient_breastfed.comp_fed_date
@@ -326,6 +326,27 @@ export class BreastfeedingComponent implements OnInit {
     }
   }
 
+  get ebfCondition(){
+    if(this.ccdev[0].selected == 1 && this.ccdev[1].selected == 1 && this.ccdev[2].selected == 1 &&
+      this.ccdev[3].selected == 1 && this.ccdev[4].selected == 1 && this.ccdev[5].selected == 1){
+      return true
+    }
+  }
+
+  get reasonCondition(){
+    if(this.ccdev[0].selected == 0 || this.ccdev[1].selected == 0 || this.ccdev[2].selected == 0 ||
+      this.ccdev[3].selected == 0 || this.ccdev[4].selected == 0 || this.ccdev[5].selected == 0){
+      return true
+    }
+  }
+
+  get getCompleCondition(){
+    if(this.ccdev[0].selected && this.ccdev[1].selected && this.ccdev[2].selected &&
+      this.ccdev[3].selected && this.ccdev[4].selected && this.ccdev[5].selected){
+      return true
+    }
+  }
+
   loadBreastfed() {
     this.groupList2 = [];
     var lib = ['bfed_month1','bfed_month2','bfed_month3','bfed_month4','bfed_month5','bfed_month6'];
@@ -342,7 +363,7 @@ export class BreastfeedingComponent implements OnInit {
 
 
         lib.forEach((obj, index) => {
-          this.groupList2.push(this.patient_breastfed[obj]);
+          // this.groupList2.push(this.patient_breastfed[obj]);
           // this.groupList.push(String(this.patient_breastfed[obj]));
           this.ccdev[index].selected = String(this.patient_breastfed[obj]);
           // console.log(this.patient_breastfed[obj], "for each checker");
