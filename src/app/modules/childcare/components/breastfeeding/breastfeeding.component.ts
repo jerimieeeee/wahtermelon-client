@@ -61,17 +61,17 @@ export class BreastfeedingComponent implements OnInit {
     }, 5000);
   }
 
-  getSelected(){
-    if(this.groupList2.includes(0))
-    {
-      this.showData=true;
-      // console.log('open ang reason for stopping 2')
-    }
-    else{
-      this.showData=false;
-      // console.log('close ang reason for stopping 2')
-    }
-}
+//   getSelected(){
+//     if(this.groupList2.includes(0))
+//     {
+//       this.showData=true;
+//       console.log('open ang reason for stopping 2')
+//     }
+//     else{
+//       this.showData=false;
+//       console.log('close ang reason for stopping 2')
+//     }
+// }
 
 // changeSelection() {
 //   this.fetchSelectedItems()
@@ -318,14 +318,6 @@ export class BreastfeedingComponent implements OnInit {
 
 // }
 
-  checkGroupList(){
-    if(new Set(this.groupList).size === 1){
-      // console.log('trueeee')
-    }else{
-      // console.log('falseeee')
-    }
-  }
-
   get ebfCondition(){
     if(this.ccdev[0].selected == 1 && this.ccdev[1].selected == 1 && this.ccdev[2].selected == 1 &&
       this.ccdev[3].selected == 1 && this.ccdev[4].selected == 1 && this.ccdev[5].selected == 1){
@@ -334,15 +326,26 @@ export class BreastfeedingComponent implements OnInit {
   }
 
   get reasonCondition(){
-    if(this.ccdev[0].selected == 0 || this.ccdev[1].selected == 0 || this.ccdev[2].selected == 0 ||
-      this.ccdev[3].selected == 0 || this.ccdev[4].selected == 0 || this.ccdev[5].selected == 0){
+    if(this.ccdev[0].selected === "0" || this.ccdev[1].selected === "0" || this.ccdev[2].selected === "0" ||
+      this.ccdev[3].selected === "0" || this.ccdev[4].selected === "0" || this.ccdev[5].selected === "0"){
       return true
+    }else{
+      return false
     }
   }
 
   get getCompleCondition(){
-    if(this.ccdev[0].selected && this.ccdev[1].selected && this.ccdev[2].selected &&
-      this.ccdev[3].selected && this.ccdev[4].selected && this.ccdev[5].selected){
+    if(this.ccdev[0].selected !== 'null' && this.ccdev[1].selected !== 'null' && this.ccdev[2].selected !== 'null' && 
+      this.ccdev[3].selected !== 'null' && this.ccdev[4].selected !== 'null' && this.ccdev[5].selected !== 'null' &&
+      this.ccdev[0].selected !== '' && this.ccdev[1].selected !== '' && this.ccdev[2].selected !== '' && 
+      this.ccdev[3].selected !== '' && this.ccdev[4].selected !== '' && this.ccdev[5].selected !== ''){
+      return true
+    }
+  }
+
+  get editCondition(){
+    if(this.ccdev[0].selected == 'null' && this.ccdev[1].selected == 'null' && this.ccdev[2].selected == 'null' && 
+    this.ccdev[3].selected == 'null' && this.ccdev[4].selected == 'null' && this.ccdev[5].selected == 'null'){
       return true
     }
   }
@@ -370,17 +373,15 @@ export class BreastfeedingComponent implements OnInit {
 
         })
 
-        console.log(this.groupList2, 'grouplist 2 data')
-        this.getSelected()
+        // console.log(this.groupList2, 'grouplist 2 data')
+        // this.getSelected()
         // console.log(this.groupList, 'grouplist data')
-        if(this.groupList2[0] == 1 && this.groupList2[1] == 1 && this.groupList2[2] == 1 && this.groupList2[3] == 1 && this.groupList2[4] == 1 && this.groupList2[5] == 1)
+        if(this.ebfCondition)
           {
-            //  console.log('open ang reason for stopping')
             this.ebf_status = 'Exclusively Breastfed'
           }
             else{
               this.ebf_status = 'Non - EBF'
-      // console.log('close ang reason for stopping')
           }
 
       },
@@ -401,9 +402,16 @@ export class BreastfeedingComponent implements OnInit {
             ebfreasons: null,
             comp_fed_date: ''
           }
-          // console.log(this.patient_breastfed, 'fake response')
+          console.log(this.patient_breastfed, 'fake response')
           // console.log(this.groupList2, 'fake response group list 2')
-          this.getSelected()
+            this.ccdev[0].selected = 'null'
+            this.ccdev[1].selected = 'null'
+            this.ccdev[2].selected = 'null'
+            this.ccdev[3].selected = 'null'
+            this.ccdev[4].selected = 'null'
+            this.ccdev[5].selected = 'null'
+         
+          // this.getSelected()
         }
       }
     });
@@ -424,7 +432,7 @@ export class BreastfeedingComponent implements OnInit {
     this.loadBreastfed()
     // this.geteServiceName()
     this.loadLibraries();
-    this.checkGroupList();
+    // this.checkGroupList();
     this.getccdevDetails()
   }
 
