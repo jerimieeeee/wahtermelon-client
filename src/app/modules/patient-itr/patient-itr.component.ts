@@ -236,7 +236,7 @@ export class PatientItrComponent implements OnInit {
         this.generateBPChart();
         this.generateWeightChart();
         break;
-      case 'all':
+      case 'all_chart':
         this.generateBPChart();
         this.generateWeightChart();
         this.generateBMIChart();
