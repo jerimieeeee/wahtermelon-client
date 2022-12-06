@@ -26,7 +26,7 @@
       <!--FIRST VISIT SECTION-->
 
     <div class="grid grid-col-8">
-      <app-first-visit *ngIf="patient_details" [patient_details]="patient_details"></app-first-visit>
+      <app-first-visit *ngIf="patient_details" [patient_details]="patient_details" (checkCCdevDetails)="checkCCdevDetails($event)"></app-first-visit>
     </div>
 
     <!--border-->
@@ -34,7 +34,7 @@
 
     <!--SERVICES SECTION-->
 
-    <div class="grid grid-col-8">
+    <div class="grid grid-col-8" *ngIf="show_forms">
       <app-services *ngIf="patient_details" [patient_details]="patient_details"></app-services>
     </div>
 
@@ -52,7 +52,7 @@
 
     <!--BREASTFEEDING SECTION-->
 
-    <div class="grid grid-col-8">
+    <div class="grid grid-col-8" *ngIf="show_forms">
       <app-breastfeeding *ngIf="patient_details" [patient_details]="patient_details"></app-breastfeeding>
     </div>
 

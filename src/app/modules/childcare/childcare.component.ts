@@ -17,7 +17,7 @@ export class ChildcareComponent implements OnInit {
   module: Number;
 
   patient_details: any;
-  ccdev_info: any;
+
   consult_details: any;
   patient_consultdetails: any;
 
@@ -32,13 +32,12 @@ export class ChildcareComponent implements OnInit {
   patientInfo(info){
    this.patient_details = info;
    this.loadConsultDetails()
-   this.loadCcdevInfo()
     console.log(this.patient_details, 'get patient from ccdev');
   }
 
 
   endVisit(){
-
+  
     let endbutton = {
       consult_done: 1,
       patient_id : this.consult_details[0].patient.id,
@@ -65,31 +64,21 @@ export class ChildcareComponent implements OnInit {
 
     loadConsultDetails(){
 
-      this.http.get('consultation/cn-records',{params: {id: this.consult_id}}).subscribe((data: any) => {
+      this.http.get('consultation/cn-records',{params: {patient_id: this.patient_details.id}}).subscribe((data: any) => {
         this.consult_details = data.data
-        console.log(this.consult_details[0], 'kunin mo consult');
-        
-       
-      });
-    }
-
-    loadCcdevInfo() {
-      this.http.get('child-care/cc-records/'+this.patient_details.id)
-      .subscribe({
-        next: (data: any) => {
-          this.ccdev_info = data.data;
-          console.log(this.ccdev_info, 'main ccdev info')
-        
-        
-          
-        },
-        error: err => console.log(err)
+        console.log(this.consult_details, 'kunin mo consult');
       });
     }
     
+    show_forms: boolean;
+    checkCCdevDetails(e){
+      console.log(e, 'show form with condition ', e != '')
+      if(e != '') this.show_forms = true;
+    }
 
   ngOnInit(): void {
     this.module=1;
+    this.show_forms = false;
     this.consult_id = this.route.snapshot.paramMap.get('consult_id');
     console.log(this.consult_id, 'test consult ids')
   }

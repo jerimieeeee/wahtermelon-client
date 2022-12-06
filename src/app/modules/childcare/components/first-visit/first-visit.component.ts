@@ -18,7 +18,7 @@ import { formatDate } from '@angular/common';
 
 
 export class FirstVisitComponent implements OnInit {
-
+  @Output() checkCCdevDetails = new EventEmitter<any>();
   faSearch = faSearch;
   faPlus = faPlus;
   faCalendar = faCalendar;
@@ -188,6 +188,7 @@ export class FirstVisitComponent implements OnInit {
         console.log(this.patient_info, 'info ccdev first visit')
         this.getccdevMama()
         this.visitForm.patchValue({...this.patient_info});
+        this.checkCCdevDetails.emit(this.patient_info);
         if(this.patient_info.status == 'CPAB' )
           {
             this.cpab = 'Child Protected at Birth'
