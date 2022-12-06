@@ -88,8 +88,8 @@
                                     class="text-gray-400 hover:text-red-400 invisible group-hover:visible"></fa-icon>
                               </button>
                               <button>
-                                 <fa-icon *ngIf="is_saving && edit === i" class="mr-2" [icon]="faSpinner" [spin]="true"></fa-icon>
-                                 <fa-icon [icon]="faSave" *ngIf="edit === i !is_saving" size="lg" (click)="saveEdit(i)"
+                                 <fa-icon *ngIf="is_saving && edit === i" [icon]="faSpinner" [spin]="true" class="pl-4 text-gray-400 hover:text-blue-400 invisible group-hover:visible"></fa-icon>
+                                 <fa-icon [icon]="faSave" *ngIf="edit === i && !is_saving" size="lg" (click)="saveEdit(i)"
                                     class="pl-4 text-gray-400 hover:text-blue-400 invisible group-hover:visible">
                                  </fa-icon>
                               </button>
