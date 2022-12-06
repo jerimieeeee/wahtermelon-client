@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, OnChanges } from '@angular/core';
 import { BmiChart, ChartOptions, WeightChart } from 'app/modules/patient-itr/declarations/chart-options';
 import { trigger, transition, style, animate } from '@angular/animations';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-graphs',
