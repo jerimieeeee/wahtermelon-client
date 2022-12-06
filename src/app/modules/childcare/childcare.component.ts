@@ -17,7 +17,7 @@ export class ChildcareComponent implements OnInit {
   module: Number;
 
   patient_details: any;
-
+  ccdev_info: any;
   consult_details: any;
   patient_consultdetails: any;
 
@@ -32,6 +32,7 @@ export class ChildcareComponent implements OnInit {
   patientInfo(info){
    this.patient_details = info;
    this.loadConsultDetails()
+   this.loadCcdevInfo()
     console.log(this.patient_details, 'get patient from ccdev');
   }
 
@@ -69,6 +70,20 @@ export class ChildcareComponent implements OnInit {
         console.log(this.consult_details[0], 'kunin mo consult');
         
        
+      });
+    }
+
+    loadCcdevInfo() {
+      this.http.get('child-care/cc-records/'+this.patient_details.id)
+      .subscribe({
+        next: (data: any) => {
+          this.ccdev_info = data.data;
+          console.log(this.ccdev_info, 'main ccdev info')
+        
+        
+          
+        },
+        error: err => console.log(err)
       });
     }
     

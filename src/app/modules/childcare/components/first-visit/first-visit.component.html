@@ -1,6 +1,6 @@
 <div class="flex mt-5 mb-3">
       <h4 class="font-bold text-gray-600 text-sm">FIRST VISIT</h4>
-      <div class="relative">
+      <!-- <div class="relative">
         <fa-icon [icon]="faInfoCircle" class="peer ml-3 text-gray-300 hover:text-gray-500 z-50"></fa-icon>
         <div
             class="absolute text-sm bg-gradient-to-b from-stone-500 to-gray-400 p-2 rounded-md border border-gray-500  text-white drop-shadow-lg opacity-90 border-check z-50 w-60 invisible peer-hover:visible">
@@ -8,7 +8,7 @@
             <p class="font-light drop-shadow-lg">Once saved, the information will be displayed in the input boxes
                 and shall not be editable unless Edit button is pressed.</p>
         </div>
-    </div>
+    </div> -->
 </div>
     <!--Admission Date & Time Section-->
 <form [formGroup]="visitForm" (submit)="onSubmit()">
@@ -125,22 +125,17 @@
           [loading]="patientLoading"
           typeToSearchText="Search Mother's Name"
           [typeahead]="searchInput$"
-          [clearable]="false"
-          bindValue="class_id"
-          bindLabel="class_name"
+          [clearable]="true"
+          bindValue="id"
           (change)="hideItemName()"
           formControlName="mothers_id">
           <ng-template ng-label-tmp let-item="item" class="">
             <div class="flex">
-              <!-- <img src="./assets/img/profile_1.jpg" alt="profile_img" class="rounded-full w-8 h-8 mr-2" /> -->
               <div *ngIf="!hideName"><p class="" >{{patient_info2?.first_name}} {{patient_info2?.middle_name}} {{patient_info2?.last_name}}</p></div>
-
               <div ><p class="">{{item?.first_name}} {{item?.middle_name}} {{item?.last_name}}</p></div>
             </div>
+          </ng-template>
 
-
-
-        </ng-template>
           <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
             <!-- <a href="itr"> -->
               <div class="grid grid-flow-col auto-cols-max">
@@ -165,16 +160,26 @@
           </ng-template>
         </ng-select>
 
-        <div *ngIf="form_saving && f.mothers_id.errors" class="invalid-alert mt-1">
+        <!-- <div *ngIf="form_saving && f.mothers_id.errors" class="invalid-alert mt-1">
           <div *ngIf="f.mothers_id.errors?.['required']">
             {{ required_message }}
           </div>
           <div *ngIf="f.mothers_id.errors?.['minlength']">
             Minimum of 2 character.
           </div>
-        </div>
+        </div> -->
 
         </div>
+
+        <div *ngIf="patient_info?.status !== null" class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-10 py-2 mt-2 select-none">
+          <label></label>
+
+        <div class="relative ">
+
+         <p class="bg-green-50 mt-1 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  ">{{cpab}}</p>
+        </div>
+
+      </div>
 
         <div class="flex w-full flex-col px-5 pt-3">
 

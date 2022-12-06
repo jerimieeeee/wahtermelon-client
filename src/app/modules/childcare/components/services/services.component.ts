@@ -295,7 +295,7 @@ export class ServicesComponent implements OnInit {
     this.loadServices()
     this.http.get('libraries/cc-services').subscribe((data: any) => {
       this.lib_ccservices = data.data
-      // console.log(this.lib_ccservices, 'cc dev services library');
+      console.log(this.lib_ccservices, 'cc dev services library');
       // console.log(this.patient_details.id, 'awaw')
     });
   }

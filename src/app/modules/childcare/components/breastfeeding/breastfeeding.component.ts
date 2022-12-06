@@ -38,6 +38,8 @@ export class BreastfeedingComponent implements OnInit {
   alertFilter: any;
   showAlert = false;
 
+  ebf_status: any;
+
   toggleAlertModal(value: any){
     this.alertFilter = value;
     this.showAlert = !this.showAlert;
@@ -59,17 +61,17 @@ export class BreastfeedingComponent implements OnInit {
     }, 5000);
   }
 
-  getSelected(){
-    if(this.groupList2.includes(0))
-    {
-      this.showData=true;
-      // console.log('open ang reason for stopping 2')
-    }
-    else{
-      this.showData=false;
-      // console.log('close ang reason for stopping 2')
-    }
-}
+//   getSelected(){
+//     if(this.groupList2.includes(0))
+//     {
+//       this.showData=true;
+//       console.log('open ang reason for stopping 2')
+//     }
+//     else{
+//       this.showData=false;
+//       console.log('close ang reason for stopping 2')
+//     }
+// }
 
 // changeSelection() {
 //   this.fetchSelectedItems()
@@ -136,7 +138,7 @@ export class BreastfeedingComponent implements OnInit {
     // console.log(this.groupList, 'selected bfed_months')
     if(this.groupList.includes('0'))
     {
-    //  console.log('open ang reason for stopping')
+     console.log('open ang reason for stopping')
      this.showData = true
     }
     else{
@@ -204,13 +206,13 @@ export class BreastfeedingComponent implements OnInit {
       patient_ccdev_id: this.patient_info.id,
       patient_id: this.patient_info.patient_id,
       user_id: user_id,
-      bfed_month1: this.groupList[0] == 'null' ? null:this.groupList[0],
-      bfed_month2: this.groupList[1] == 'null' ? null:this.groupList[1],
-      bfed_month3: this.groupList[2] == 'null' ? null:this.groupList[2],
-      bfed_month4: this.groupList[3] == 'null' ? null:this.groupList[3],
-      bfed_month5: this.groupList[4] == 'null' ? null:this.groupList[4],
+      bfed_month1: this.ccdev[0].selected == 'null' ? null:this.ccdev[0].selected,
+      bfed_month2: this.ccdev[1].selected == 'null' ? null:this.ccdev[1].selected,
+      bfed_month3: this.ccdev[2].selected == 'null' ? null:this.ccdev[2].selected,
+      bfed_month4: this.ccdev[3].selected == 'null' ? null:this.ccdev[3].selected,
+      bfed_month5: this.ccdev[4].selected == 'null' ? null:this.ccdev[4].selected,
       // bfed_month6: this.groupList[5] == 1 ? 1:0,
-      bfed_month6: this.groupList[5] == 'null' ? null:this.groupList[5],
+      bfed_month6: this.ccdev[5].selected == 'null' ? null:this.ccdev[5].selected,
       reason_id: this.patient_breastfed.ebfreasons,
       ebf_date: this.patient_breastfed.ebf_date,
       comp_fed_date: this.patient_breastfed.comp_fed_date
@@ -316,14 +318,6 @@ export class BreastfeedingComponent implements OnInit {
 
 // }
 
-  checkGroupList(){
-    if(new Set(this.groupList).size === 1){
-      // console.log('trueeee')
-    }else{
-      // console.log('falseeee')
-    }
-  }
-
   get ebfCondition(){
     if(this.ccdev[0].selected == 1 && this.ccdev[1].selected == 1 && this.ccdev[2].selected == 1 &&
       this.ccdev[3].selected == 1 && this.ccdev[4].selected == 1 && this.ccdev[5].selected == 1){
@@ -332,15 +326,26 @@ export class BreastfeedingComponent implements OnInit {
   }
 
   get reasonCondition(){
-    if(this.ccdev[0].selected == 0 || this.ccdev[1].selected == 0 || this.ccdev[2].selected == 0 ||
-      this.ccdev[3].selected == 0 || this.ccdev[4].selected == 0 || this.ccdev[5].selected == 0){
+    if(this.ccdev[0].selected === "0" || this.ccdev[1].selected === "0" || this.ccdev[2].selected === "0" ||
+      this.ccdev[3].selected === "0" || this.ccdev[4].selected === "0" || this.ccdev[5].selected === "0"){
       return true
+    }else{
+      return false
     }
   }
 
   get getCompleCondition(){
-    if(this.ccdev[0].selected && this.ccdev[1].selected && this.ccdev[2].selected &&
-      this.ccdev[3].selected && this.ccdev[4].selected && this.ccdev[5].selected){
+    if(this.ccdev[0].selected !== 'null' && this.ccdev[1].selected !== 'null' && this.ccdev[2].selected !== 'null' && 
+      this.ccdev[3].selected !== 'null' && this.ccdev[4].selected !== 'null' && this.ccdev[5].selected !== 'null' &&
+      this.ccdev[0].selected !== '' && this.ccdev[1].selected !== '' && this.ccdev[2].selected !== '' && 
+      this.ccdev[3].selected !== '' && this.ccdev[4].selected !== '' && this.ccdev[5].selected !== ''){
+      return true
+    }
+  }
+
+  get editCondition(){
+    if(this.ccdev[0].selected == 'null' && this.ccdev[1].selected == 'null' && this.ccdev[2].selected == 'null' && 
+    this.ccdev[3].selected == 'null' && this.ccdev[4].selected == 'null' && this.ccdev[5].selected == 'null'){
       return true
     }
   }
@@ -369,8 +374,15 @@ export class BreastfeedingComponent implements OnInit {
         })
 
         // console.log(this.groupList2, 'grouplist 2 data')
-        this.getSelected()
+        // this.getSelected()
         // console.log(this.groupList, 'grouplist data')
+        if(this.ebfCondition)
+          {
+            this.ebf_status = 'Exclusively Breastfed'
+          }
+            else{
+              this.ebf_status = 'Non - EBF'
+          }
 
       },
       error: err => {console.log(err)
@@ -390,9 +402,16 @@ export class BreastfeedingComponent implements OnInit {
             ebfreasons: null,
             comp_fed_date: ''
           }
-          // console.log(this.patient_breastfed, 'fake response')
+          console.log(this.patient_breastfed, 'fake response')
           // console.log(this.groupList2, 'fake response group list 2')
-          this.getSelected()
+            this.ccdev[0].selected = 'null'
+            this.ccdev[1].selected = 'null'
+            this.ccdev[2].selected = 'null'
+            this.ccdev[3].selected = 'null'
+            this.ccdev[4].selected = 'null'
+            this.ccdev[5].selected = 'null'
+         
+          // this.getSelected()
         }
       }
     });
@@ -413,7 +432,7 @@ export class BreastfeedingComponent implements OnInit {
     this.loadBreastfed()
     // this.geteServiceName()
     this.loadLibraries();
-    this.checkGroupList();
+    // this.checkGroupList();
     this.getccdevDetails()
   }
 
