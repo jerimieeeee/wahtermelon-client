@@ -420,12 +420,12 @@ export class BreastfeedingComponent implements OnInit {
 
   ngOnInit(){
     this.ccdev = [
-    {"id" : "bfed_month1", "name" : "Month 1", "date" : moment(this.patient_details.birthdate).add(1, 'M').format('MMM DD, YYYY'), selected: '', isDefault: 'N/A'},
-    {"id" : "bfed_month2", "name" : "Month 2", "date" : moment(this.patient_details.birthdate).add(2, 'M').format('MMM DD, YYYY'), selected: '', isDefault: 'N/A'},
-    {"id" : "bfed_month3", "name" : "Month 3", "date" : moment(this.patient_details.birthdate).add(3, 'M').format('MMM DD, YYYY'), selected: '', isDefault: 'N/A'},
-    {"id" : "bfed_month4", "name" : "Month 4", "date" : moment(this.patient_details.birthdate).add(4, 'M').format('MMM DD, YYYY'), selected: '', isDefault: 'N/A'},
-    {"id" : "bfed_month5", "name" : "Month 5", "date" : moment(this.patient_details.birthdate).add(5, 'M').format('MMM DD, YYYY'), selected: '', isDefault: 'N/A'},
-    {"id" : "bfed_month6", "name" : "Month 6", "date" : moment(this.patient_details.birthdate).add(6, 'M').format('MMM DD, YYYY'), selected: '', isDefault: 'N/A'},
+    {"id" : "bfed_month1", "name" : "Month 1", "date" : moment(this.patient_details.birthdate).add(1, 'M').format('MM/DD/yyyy'), selected: '', isDefault: 'N/A'},
+    {"id" : "bfed_month2", "name" : "Month 2", "date" : moment(this.patient_details.birthdate).add(2, 'M').format('MM/DD/yyyy'), selected: '', isDefault: 'N/A'},
+    {"id" : "bfed_month3", "name" : "Month 3", "date" : moment(this.patient_details.birthdate).add(3, 'M').format('MM/DD/yyyy'), selected: '', isDefault: 'N/A'},
+    {"id" : "bfed_month4", "name" : "Month 4", "date" : moment(this.patient_details.birthdate).add(4, 'M').format('MM/DD/yyyy'), selected: '', isDefault: 'N/A'},
+    {"id" : "bfed_month5", "name" : "Month 5", "date" : moment(this.patient_details.birthdate).add(5, 'M').format('MM/DD/yyyy'), selected: '', isDefault: 'N/A'},
+    {"id" : "bfed_month6", "name" : "Month 6", "date" : moment(this.patient_details.birthdate).add(6, 'M').format('MM/DD/yyyy'), selected: '', isDefault: 'N/A'},
   ];
 
     // this.fetchSelectedItems()

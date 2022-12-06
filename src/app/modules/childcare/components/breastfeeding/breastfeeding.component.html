@@ -22,12 +22,12 @@
 
     <div class="w-full pt-4 grid grid-cols-2">
       <div class="px-10 text-sm">
-        <span *ngFor="let months of ccdev, index as i" class="flex"><p *ngIf="months.selected == 1" class="font-bold mr-2 py-2">Breastfeeding {{months.name}}:</p><p *ngIf="months.selected == 1" class="py-2">{{months.date}}</p></span> 
+        <span *ngFor="let months of ccdev, index as i" class="flex"><p *ngIf="months.selected == 1" class="font-semibold mr-2 py-2">Breastfeeding {{months.name}}:</p><p *ngIf="months.selected == 1" class="py-2">{{months.date}}</p></span> 
       </div>
       <div class="px-10 text-sm">
         <div *ngIf="getCompleCondition" class="py-2">
           
-          <span class="flex"><p class="font-bold mr-2">Complementary Feeding Date:</p><p class="">{{patient_breastfed?.comp_fed_date | date: 'MMM dd, YYYY'}}</p></span>
+          <span class="flex"><p class="font-semibold mr-2">Complementary Feeding Date:</p><p class="">{{patient_breastfed?.comp_fed_date | date: 'MM/dd/yyyy'}}</p></span>
         </div>
       </div>
       <div class="flex w-full item-start flex-wrap col-span-2" *ngIf="editCondition">
@@ -41,7 +41,8 @@
               </button>
           
       </div>
-      <span *ngIf="getCompleCondition" class="flex px-10 text-sm py-2"><p class="font-bold mr-2">EBF Status:</p><p class="">{{ebf_status}} - {{patient_breastfed?.ebf_date | date: 'MMM dd, YYYY' }}</p></span>
+      <span *ngIf="getCompleCondition" class="flex px-3 ml-10 text-sm p-2.5 bg-green-50 mt-1 border border-gray-300 rounded-lg min-width"><p class="font-semibold">{{ebf_status}}</p><p *ngIf="ebf_status == 'Exclusively Breastfed'" class="px-1"> - </p><p>{{patient_breastfed?.ebf_date | date: 'MM/dd/yyyy' }}</p></span>
+      <!-- <span *ngIf="getCompleCondition" class="flex px-10 text-sm py-2"><p class="font-bold mr-2">EBF Status:</p><p class="">{{ebf_status}}</p><p *ngIf="ebf_status == 'Exclusively Breastfed'" class="px-1"> - </p><p>{{patient_breastfed?.ebf_date | date: 'MM/dd/yyyy' }}</p></span> -->
       <!-- <span class="col-start-1 flex px-10 text-sm"><p class="font-bold mr-2">Reason:</p><p class="">{{patient_breastfed?.ebf_reason}}</p></span> -->
     </div>
 
@@ -85,7 +86,7 @@
                         <select class="border-gray-300 text-gray-900 sm:text-sm rounded-lg" (change)="changeSelection(i,$event.target.value)" [(ngModel)]="ccdev[i].selected" name="" id="" style="width:100%;">
                           <option value='' ></option>
                           <option value='1' >Yes</option>
-                          <option value=0 >No</option>
+                          <option value='0' >No</option>
                         </select>
                       </td>
                       <!-- <td class="py-4 pr-12 text-sm" *ngIf="month.ischecked">

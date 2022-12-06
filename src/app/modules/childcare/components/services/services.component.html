@@ -193,7 +193,7 @@
      
         <!-- <fa-icon (click)="toggleModal('delete-vaccine-modal')" class="mx-0 my-0 text-red-400 hover:cursor-pointer flex-none mr-2" [icon]="faTrash"></fa-icon> -->
         <span class="text-sm flex-auto" *ngIf="item.services.essential == 'N'">
-          <span class="font-bold">{{ item.services.service_name }}</span> <br />({{ item.status_id === 1 ? 'Done' : (item.status_id === 2 ? 'Done Outside - Private' : 'Done Outside - Public') }} -
+          <span class="font-semibold">{{ item.services.service_name }}</span> <br />({{ item.status_id === 1 ? 'Done' : (item.status_id === 2 ? 'Done Outside - Private' : 'Done Outside - Public') }} -
         </span>
         <span class="text-sm flex-auto text-right" *ngIf="item.services.essential == 'N'">
           {{ !item.service_date ? '-' : item.service_date | date: 'MM/dd/yyyy'}})
