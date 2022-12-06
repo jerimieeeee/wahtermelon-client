@@ -178,9 +178,9 @@ export class PatientInfoComponent {
   }
 
   loadVitals(){
-    this.http.get('patient-vitals/vitals', {params:{patient_id: this.patient_info.id, sort: '-vitals_date', per_page: 30}}).subscribe({
+    this.http.get('patient-vitals/vitals', {params:{patient_id: this.patient_info.id, sort: '-vitals_date', per_page: 15}}).subscribe({
       next: (data: any) => {
-        console.log(data.data)
+        // console.log(data.data)
         this.patientVitals.emit(data.data);
         if(data.data.length > 0) {
           this.latest_vitals = this.vitalsCharts.getLatestToday(data.data)

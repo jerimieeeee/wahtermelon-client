@@ -1,0 +1,54 @@
+<div class="grid grid-cols-10 mt-4">
+  <div class="col-span-2 pt-2">
+
+  </div>
+  <div class="col-span-8">
+    <div class="rounded-md border border-solid border-gray-300">
+      <span class="rounded-t-md m-0 p-2 font-semibold text-gray-50 bg-cyan-500 flex justify-between" [ngClass]="{'rounded-b' : !show_content}">
+        Final Diagnosis
+        <button type="button" (click)="show_content = !show_content">
+          <fa-icon [icon]="show_content ? faChevronCircleUp : faChevronCircleDown" class="pr-2" size="lg"></fa-icon>
+        </button>
+      </span>
+
+      <div *ngIf="show_content">
+        <div class="flex mb-2 p-4">
+          <button type="submit" class="inline-flex p-1 items-center text-gray-50 bg-sky-400 rounded-l-md border border-gray-300">
+            <fa-icon class="text-white fa-xl" [icon]="faPlusSquare" ></fa-icon>
+          </button>
+          <div class="chips-container">
+            <ng-select class="select-chips" placeholder="search"
+              [items]="fdx$ | async"
+              [minTermLength]="minLengthTerm"
+              [multiple]="true"
+              [loading]="fdxLoading"
+              typeToSearchText="search..."
+              [typeahead]="searchInput$"
+              [(ngModel)]="selectedFdx"
+              bindValue="icd10_code"
+              bindLabel="icd10_desc"
+              notFoundText="No records found">
+
+              <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
+                <div class="grid grid-flow-col auto-cols-max">
+                  <h5 class="text-blue-400" [ngOptionHighlight]="search">{{ item.icd10_code }}: {{ item.icd10_desc }}</h5>
+                </div>
+              </ng-template>
+            </ng-select>
+
+          </div>
+        </div>
+        <div class="flex px-4 pb-4">
+          <textarea rows="3" id="initial_dx_remarks" placeholder="Initial Diagnosis remark" class="placeholder-slate-400 w-full rounded-md border-gray-300 bg-gray-50"></textarea>
+        </div>
+        <div class="flex text-right">
+          <button type="button" class="btn-save ml-auto mr-5 mb-5" (click)="onSubmit()">
+            <fa-icon class="mr-2" [icon]="faFloppyDisk"></fa-icon>
+            Save
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

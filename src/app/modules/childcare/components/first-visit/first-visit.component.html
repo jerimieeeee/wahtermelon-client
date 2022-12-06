@@ -20,8 +20,8 @@
       </div>
 
       <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-10 py-2 mt-2">
-          <label>Admission Date & Time</label> 
-       
+          <label>Admission Date & Time</label>
+
         <div class="relative">
           <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time text-blue-500" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -45,12 +45,12 @@
 
       </div>
 
- 
+
         <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-10 py-2 mt-2">
-          <label>Discharge Date & Time</label> 
-       
-         
-           
+          <label>Discharge Date & Time</label>
+
+
+
         <div class="relative">
           <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time text-blue-500" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -75,10 +75,10 @@
         </div>
 
         <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-10 py-2">
-          <label>Weight at Birth (kg)</label> 
-       
-         
-           
+          <label>Weight at Birth (kg)</label>
+
+
+
         <div class="relative">
           <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-scale-outline text-blue-500" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -102,10 +102,10 @@
         </div>
 
         <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-10 py-2">
-          <label>Mother's Name</label> 
-       
-         
-           
+          <label>Mother's Name</label>
+
+
+
         <!-- <div class="relative">
           <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user-search text-blue-500" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -126,19 +126,20 @@
           typeToSearchText="Search Mother's Name"
           [typeahead]="searchInput$"
           [clearable]="false"
-          bindValue="id"
+          bindValue="class_id"
+          bindLabel="class_name"
           (change)="hideItemName()"
           formControlName="mothers_id">
           <ng-template ng-label-tmp let-item="item" class="">
             <div class="flex">
               <!-- <img src="./assets/img/profile_1.jpg" alt="profile_img" class="rounded-full w-8 h-8 mr-2" /> -->
               <div *ngIf="!hideName"><p class="" >{{patient_info2?.first_name}} {{patient_info2?.middle_name}} {{patient_info2?.last_name}}</p></div>
-              
+
               <div ><p class="">{{item?.first_name}} {{item?.middle_name}} {{item?.last_name}}</p></div>
             </div>
 
-            
-            
+
+
         </ng-template>
           <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
             <!-- <a href="itr"> -->
@@ -174,9 +175,9 @@
         </div>
 
         </div>
-        
+
         <div class="flex w-full flex-col px-5 pt-3">
-          
+
           <button type="button" class="btn-add ml-auto mr-5" (click)="onSubmit()" *ngIf="!patient_info">
             <fa-icon *ngIf="!is_saving" class="mr-1" [icon]="faSave"></fa-icon>
             <fa-icon *ngIf="is_saving" class="mr-1" [icon]="faSpinner" [spin]="true"></fa-icon>
@@ -188,9 +189,9 @@
            {{ is_saving ? 'Updating' : 'Update' }}
           </button>
         </div>
-        
-        
-    
+
+
+
 </div>
 </form>
 
@@ -198,14 +199,14 @@
 <!-- <div class="card mt-5 mb-7">
 
       <div class="card-header">
-        <h4 class="font-semibold text-white text-sm uppercase">Birth Information</h4>  
+        <h4 class="font-semibold text-white text-sm uppercase">Birth Information</h4>
       </div>
 
         <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
-          <label>Weight at Birth (kg)</label> 
-       
-         
-           
+          <label>Weight at Birth (kg)</label>
+
+
+
         <div class="relative">
           <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-scale-outline text-blue-500" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -220,10 +221,10 @@
         </div>
 
         <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
-          <label>Mother's Name</label> 
-       
-         
-           
+          <label>Mother's Name</label>
+
+
+
         <div class="relative">
           <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user-search text-blue-500" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -270,7 +271,7 @@
             <table class="w-full max-w-sm text-left text-gray-500 dark:text-gray-400">
               <thead class="text-sm text-gray-700 dark:bg-gray-700 dark:text-gray-400">
                 <tr class="sticky top-0 z-50 bg-gray-50">
-                    
+
                 </tr>
               </thead>
                 <tbody>
@@ -278,8 +279,8 @@
                     <label *ngIf="modalFilter == 'S'" for="" class="align-middle">Data Successfully Saved!</label>
                     <label *ngIf="modalFilter == 'E'" for="" class="align-middle">Error in Saving! Please check required fields</label>
                   </div>
-                    
-                 
+
+
                 </tbody>
             </table>
           </div>
@@ -287,7 +288,7 @@
             <!-- Modal footer -->
             <div class="flex justify-end py-4 px-6 space-x-4 rounded-b border-t border-gray-200 dark:border-gray-600">
               <button  type="button" class="btn-cancel" (click)="toggleAlertModal()">Close</button>
-              
+
             </div>
         </div>
     </div>

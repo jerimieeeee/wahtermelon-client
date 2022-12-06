@@ -8,11 +8,25 @@ import { NgApexchartsModule } from 'ng-apexcharts';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { InitialDxComponent } from './components/initial-dx/initial-dx.component';
+import { FinalDxComponent } from './components/final-dx/final-dx.component';
+import { PhysicalExamComponent } from './components/physical-exam/physical-exam.component';
+import { PrescriptionComponent } from './components/prescription/prescription.component';
+import { ComplaintHistoryComponent } from './components/complaint-history/complaint-history.component';
+import { GraphsComponent } from './components/graphs/graphs.component';
+import { ConsultHistoryComponent } from './components/consult-history/consult-history.component';
 
 
 @NgModule({
   declarations: [
-    ConsultationComponent
+    ConsultationComponent,
+    InitialDxComponent,
+    FinalDxComponent,
+    PhysicalExamComponent,
+    PrescriptionComponent,
+    ComplaintHistoryComponent,
+    GraphsComponent,
+    ConsultHistoryComponent
   ],
   imports: [
     CommonModule,
