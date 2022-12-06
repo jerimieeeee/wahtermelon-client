@@ -1,7 +1,7 @@
 import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
 // import { AnyNaptrRecord } from 'd/ns';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { faCircleCheck, faClose, faInfoCircle, faPencilSquare, faPenToSquare, faSave, faTimes, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
+import { faCircleCheck, faClose, faInfoCircle, faPencil, faPencilSquare, faPenToSquare, faSave, faTimes, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
@@ -30,7 +30,7 @@ export class ServicesComponent implements OnInit {
   // modal = false;
   modal: boolean;
   saved: boolean;
-
+  edit: any;
   constructor(private http: HttpService, private formBuilder: FormBuilder) { }
 
   faTimes = faTimes;
@@ -39,6 +39,7 @@ export class ServicesComponent implements OnInit {
   faPenToSquare = faPenToSquare;
   faTimesCircle = faTimesCircle
   faCircleCheck = faCircleCheck
+  faPencil = faPencil;
   user_id: any
   facility_code: any
 
@@ -47,18 +48,18 @@ export class ServicesComponent implements OnInit {
   public service_list = [];
   public array_form = [];
   public group_list = [
-    { name: 'G1', qty: true, pos: false, pos_name: '', pen: false, service: []  },
+    { name: 'G1', qty: true, pos: false, pos_name: '', pen: false, service: [] },
     { name: 'G2', qty: false, pos: false, pos_name: '', pen: false, service: [] },
-    { name: 'G3', qty: false, pos: true, pos_name: 'Positive', pen: true, service: []  },
-    { name: 'G4', qty: false, pos: true, pos_name: 'Positive', pen: false, service: []  },
-    { name: 'G5', qty: false, pos: true, pos_name: 'Anemia', pen: false, service: []  },
+    { name: 'G3', qty: false, pos: true, pos_name: 'Positive', pen: true, service: [] },
+    { name: 'G4', qty: false, pos: true, pos_name: 'Positive', pen: false, service: [] },
+    { name: 'G5', qty: false, pos: true, pos_name: 'Anemia', pen: false, service: [] },
   ];
 
   ngOnInit() {
     this.user_id = this.http.getUserID();
     this.facility_code = this.http.getUserFacility();
     this.createForm()
-    for(let x = 0 ; x < 11 ; x++){
+    for (let x = 0; x < 11; x++) {
       this.serviceChanges.push(this.services_form.value);
     }
     this.getServices()
@@ -67,6 +68,17 @@ export class ServicesComponent implements OnInit {
     this.today = new Date();
     this.modal = false;
   }
+
+  enableEdit(id) {
+    if (this.edit != id) {
+      this.edit = id;
+    } else {
+      this.edit = 's';
+    }
+    console.log(this.edit, this.edit != id, id, " enableEdit()");
+
+  }
+
   saveForm() {
     // maternal-care/mc-services
     console.log(this.serviceChanges);
@@ -120,7 +132,7 @@ export class ServicesComponent implements OnInit {
         })
 
         console.log(this.service_list, " get service after pushing group");
-        
+
 
       },
       error: err => console.log(err),
@@ -148,33 +160,33 @@ export class ServicesComponent implements OnInit {
   }
 
   createForm() {
-   
-    this.lib_services.forEach(lib =>  this.array_form.push(
+
+    this.lib_services.forEach(lib => this.array_form.push(
       {
         service_date: new Date().toISOString().substring(0, 10),
         visit_type_code: '',
         visit_status: this.module == 3 ? 'Prenatal' : (this.module == 4 ? 'Postpartum' : 'Services'),
-        service_qty:'',
+        service_qty: '',
         positive_result: false,
         intake_penicillin: false,
         service_id: lib.id,
       }
     )
-      );
+    );
     this.services_form = this.formBuilder.group({
       service_date: [new Date().toISOString().substring(0, 10), [Validators.required]],
       visit_type_code: ['', [Validators.required]],
       visit_status: [this.module == 3 ? 'Prenatal' : (this.module == 4 ? 'Postpartum' : 'Services')],
-      service_qty:[0],
+      service_qty: [0],
       positive_result: [false],
       intake_penicillin: [false],
       service_id: [''],
     });
-    
+
 
 
   }
-  getNG(id, x){
+  getNG(id, x) {
     return this.serviceChanges[this.array_form.map(s => s.service_id).indexOf(id)][x];
   }
   // getGroupList(){

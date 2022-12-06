@@ -115,7 +115,7 @@
 
                 <div class="transitions col-span-2 col-start-1 border-check relative select-none group mx-2"
                     *ngIf="!focused">
-                    <h3 for="patient_weight">Weight</h3>
+                    <h3 for="patient_weight">Weight (kg)</h3>
                     <fa-icon [icon]="faCaretRight"
                         class="absolute bottom-1.5 left-2 text-gray-300 group-hover:text-pink-300"
                         *ngIf="!focused && 1 == 0">
@@ -321,8 +321,8 @@
                             <th class="font-semibold">No.</th>
                             <th class="font-semibold">Week</th>
                             <th class="font-semibold">Date</th>
-                            <th class="font-semibold">Height</th>
-                            <th class="font-semibold">Weight</th>
+                            <th class="font-semibold">Height (cm)</th>
+                            <th class="font-semibold">Weight (kg)</th>
                             <th class="font-semibold">BP</th>
                             <th class="font-semibold">Fever > 38 C</th>
                             <th class="font-semibold">Vaginal Infection</th>
@@ -357,7 +357,7 @@
                         <tr *ngFor="let post of postpartum_data" class="hover:bg-blue-100">
                             <th class="font-normal">{{post.visit_sequence}}</th>
                             <th class="font-normal">{{post.postpartum_week}}</th>
-                            <th class="font-normal">{{post.postpartum_date}}</th>
+                            <th class="font-normal">{{post.postpartum_date | date: 'MM/dd/yyyy'}}</th>
                             <th class="font-normal">{{post.patient_height}}</th>
                             <th class="font-normal">{{post.patient_weight}}</th>
                             <th class="font-normal">{{post.bp_systolic}}/{{post.bp_diastolic}}</th>

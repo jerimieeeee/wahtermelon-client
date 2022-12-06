@@ -30,45 +30,76 @@
 
                <div *ngIf="service_list.length != 0" class="text-sm pb-1 font-semibold h-max"
                   style="grid-column: span 9 / span 9;">
-
                   <table class="table-auto relative w-full">
                      <thead class="sticky top-0 ">
                         <tr>
                            <th class="px-2">Description</th>
                            <th class="px-2">Date</th>
                            <th class="px-2">Quantity</th>
-                           <th class="px-2">Status</th>
-                           <th class="px-2">Positive</th>
-                           <th class="px-2">Penicillin</th>
+                           <th class="px-2" *ngIf="services_form.value.visit_status == 'Prenatal'">Positive</th>
+                           <th class="px-2" *ngIf="services_form.value.visit_status == 'Prenatal'">Penicillin</th>
                            <th class="px-2">Visit Type</th>
+                           <th class="px-2"></th>
                         </tr>
                      </thead>
-                     <tbody *ngFor="let service of service_list" >
-                        <tr *ngIf="service.visit_status === services_form.value.visit_status" class="hover:bg-blue-100">
+                     <tbody *ngFor="let service of service_list; let i = index">
+                        <tr *ngIf="service.visit_status === services_form.value.visit_status"
+                           class="hover:bg-blue-100 group">
                            <td class="px-2 font-normal">{{service.service.desc}}</td>
-                           <th class="px-2 font-normal">{{service.service_date | date: 'MM/dd/yyyy'}}</th>
                            <th class="px-2 font-normal">
-                              {{!service.group.qty?'-':(service.service_qty?service.service_qty:'-')}}</th>
-                           <th class="px-2 font-normal">{{service.visit_status}} </th>
+                              <p >{{service.service_date | date: 'MM/dd/yyyy'}}</p>
+                              <!-- <input (ngModel)="getNG(service.id, 'service_date')" id="service_date" name="service_date"
+                                 type="date" *ngIf="edit === i" [value]="service.service_date | date: 'yyyy-MM-dd'"
+                                 class="calendar-style col-span-8 rounded border-solid border border-zinc-300 focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none disabled:cursor-not-allowed"> -->
+                           </th>
                            <th class="px-2 font-normal">
-                              <fa-icon *ngIf="service.positive_result && service.group.pos" [icon]="faCircleCheck"
-                                 size="md" class="text-green-400"></fa-icon>
-                              <fa-icon *ngIf="!service.positive_result && service.group.pos" [icon]="faTimesCircle"
-                                 size="md" class="text-red-400"></fa-icon>
+                              <p >
+                                 {{!service.group.qty?'-':(service.service_qty?service.service_qty:'-')}}</p>
+                              <!-- <input type="number" (ngModel)="getNG(service.id, 'service_qty')" min="0"
+                                 *ngIf="edit === i" [value]="service.service_qty"
+                                 class="in-style font-medium disabled:group-hover:font-semibold peer invalid:border-red-500 border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed disabled:border-0  disabled:pl-5  disabled:typed-out disabled:group-hover:bg-gray-100 disabled:rounded-full"> -->
+                           </th>
+                           <th class="px-2 font-normal" *ngIf="services_form.value.visit_status == 'Prenatal'">
+                              <fa-icon *ngIf="service.positive_result && service.group.pos"
+                                 [icon]="faCircleCheck" size="md" class="text-green-400"></fa-icon>
+                              <fa-icon *ngIf="!service.positive_result && service.group.pos"
+                                 [icon]="faTimesCircle" size="md" class="text-red-400"></fa-icon>
                               <p *ngIf="!service.group.pos">-</p>
+                              <!-- <input (ngModel)="getNG(service.id, 'positive_result')" type="checkbox" *ngIf="edit === i"
+                                 [value]="positive_result"
+                                 class="check-style h-6 w-6 border border-gray-400 rounded-md bg-white checked:bg-blue-400 checked:border-blue-500 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"> -->
                            </th>
-                           <th class="px-2 font-normal">
-                              <fa-icon *ngIf="service.intake_penicillin && service.group.pen" [icon]="faCircleCheck"
-                                 size="md" class="text-green-400"></fa-icon>
-                              <fa-icon *ngIf="!service.intake_penicillin && service.group.pen" [icon]="faTimesCircle"
-                                 size="md" class="text-red-400"></fa-icon>
+                           <th class="px-2 font-normal" *ngIf="services_form.value.visit_status == 'Prenatal'">
+                              <fa-icon *ngIf="service.intake_penicillin && service.group.pen"
+                                 [icon]="faCircleCheck" size="md" class="text-green-400"></fa-icon>
+                              <fa-icon *ngIf="!service.intake_penicillin && service.group.pen"
+                                 [icon]="faTimesCircle" size="md" class="text-red-400"></fa-icon>
                               <p *ngIf="!service.group.pen">-</p>
+                              <!-- <input (ngModel)="getNG(service.id, 'intake_penicillin')" type="checkbox"
+                                 *ngIf="edit === i" [value]="intake_penicillin"
+                                 class="check-style h-6 w-6 border border-gray-400 rounded-md bg-white checked:bg-blue-400 checked:border-blue-500 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"> -->
                            </th>
-                           <th class="px-2 font-normal" style="text-transform: lowercase;"><p class="capitalize">{{service.visit_type_code}}</p></th>
+                           <th class="px-2 font-normal" style="text-transform: lowercase;">
+                              <p class="capitalize">{{service.visit_type_code}}</p>
+                           </th>
+                           <!-- <th class="px-2 font-normal">
+                              <button (click)="enableEdit(i)">
+                                 <fa-icon [icon]="faPencil"  size="lg"
+                                    class="text-gray-400 hover:text-orange-400 invisible group-hover:visible"></fa-icon>
+                              </button>
+                              <button (click)="enableEdit(i)">
+                                 <fa-icon [icon]="faTimes" *ngIf="edit === i" size="lg"
+                                    class="text-gray-400 hover:text-red-400 invisible group-hover:visible"></fa-icon>
+                              </button>
+                              <button>
+                                 <fa-icon [icon]="faSave" *ngIf="edit === i" size="lg"
+                                    class="pl-4 text-gray-400 hover:text-blue-400 invisible group-hover:visible">
+                                 </fa-icon>
+                              </button>
+                           </th> -->
                         </tr>
                      </tbody>
                   </table>
-
                </div>
             </div>
          </div>
@@ -93,7 +124,8 @@
                <div style="grid-column: span 16 / span 16;"
                   class="bg-gray-100 overflow-y-scroll scrollbar-thin scrollbar-thumb-white hover:scrollbar-thumb-blue-300 scrollbar-track-white h-96">
                   <div *ngFor="let group of group_list w-full" class="m-4">
-                     <table class="table-auto border-separate border-spacing-2 border bg-white w-full">
+                     <table
+                        class="table-auto border-separate border-spacing-2 border bg-white w-full {{services_form.value.visit_status == 'Postpartum'?(group.name == 'G1'?'':'hidden'):''}}">
                         <thead>
                            <tr>
                               <th></th>
@@ -104,7 +136,8 @@
                               <th>Visit Type</th>
                            </tr>
                         </thead>
-                        <tbody *ngFor="let service of group.service">
+                        <tbody *ngFor="let service of group.service"
+                           class="{{services_form.value.visit_status == 'Postpartum'?(service.id == 'VITA' || service.id == 'IRON'?'':'hidden'):''}}">
                            <tr class="pb-2 hover:bg-blue-100">
                               <td class="font-normal px-4">{{service.desc}}</td>
                               <td class="font-normal px-4">
