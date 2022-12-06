@@ -4,10 +4,13 @@
   </div>
   <div class="col-span-8">
     <div class="rounded-md border border-solid border-gray-300">
-      <span class="rounded-t-md m-0 p-2 font-semibold text-gray-50 block bg-teal-500">
-        Previous Diagnosis
+      <span class="rounded-t-md m-0 p-2 font-semibold text-gray-50 bg-green-500 flex justify-between" [ngClass]="{'rounded-b' : !show_content}">
+        Previous History
+        <button type="button" (click)="show_content = !show_content">
+          <fa-icon [icon]="show_content ? faChevronCircleUp : faChevronCircleDown" class="pr-2" size="lg"></fa-icon>
+        </button>
       </span>
-      <table class="w-full table-auto">
+      <table *ngIf="show_content" class="w-full table-auto">
         <thead>
           <tr class="border-b border-solid border-gray-200">
             <th>Date</th>

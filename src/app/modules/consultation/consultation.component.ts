@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { faChevronDown, faChevronUp, faCircleNotch, faPlus, faPlusSquare, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faChevronDown, faChevronUp, faCircleNotch, faDoorClosed, faPlus, faPlusSquare, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { catchError, debounceTime, distinctUntilChanged, switchMap, tap, map, filter } from 'rxjs/operators';
 import { concat, Observable, of, Subject } from 'rxjs';
@@ -20,14 +20,19 @@ export class ConsultationComponent implements OnInit {
   faFloppyDisk = faFloppyDisk;
   faChevronUp = faChevronUp;
   faChevronDown = faChevronDown;
+  faDoorClosed = faDoorClosed;
 
   is_saving: boolean = false;
   show_item: boolean = true;
+  toggle_content: boolean = true;
 
   patient_details: any;
   visit_list: any;
   vitals: any;
 
+  toggleAll(){
+    this.toggle_content = !this.toggle_content;
+  }
   patientVitals(vitals) {
     this.vitals = vitals;
   }
@@ -36,9 +41,9 @@ export class ConsultationComponent implements OnInit {
     console.log(table)
   }
 
-  //test idx
-
-  //text idx
+  endVisit() {
+    console.log(this.consult_id);
+  }
 
   patientInfo(info){
     this.patient_details = info;

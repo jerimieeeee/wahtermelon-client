@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnChanges } from '@angular/core';
 import { faFloppyDisk, faPlusSquare, faChevronCircleDown, faChevronCircleUp } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { Observable, of } from 'rxjs';
@@ -8,7 +8,9 @@ import { Observable, of } from 'rxjs';
   templateUrl: './complaint-history.component.html',
   styleUrls: ['./complaint-history.component.scss']
 })
-export class ComplaintHistoryComponent implements OnInit {
+export class ComplaintHistoryComponent implements OnInit, OnChanges {
+  @Input() toggle_content;
+
   faPlusSquare = faPlusSquare;
   faFloppyDisk = faFloppyDisk;
   faChevronCircleUp = faChevronCircleUp;
@@ -29,6 +31,10 @@ export class ComplaintHistoryComponent implements OnInit {
         this.complaints$ = of(data.data)
       }
     );
+  }
+
+  ngOnChanges(changes){
+    this.show_content = this.toggle_content;
   }
 
   constructor(

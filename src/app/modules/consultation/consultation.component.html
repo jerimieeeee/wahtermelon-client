@@ -2,25 +2,34 @@
   <div class="mb-16 col-span-8">
     <app-graphs [vitals]="vitals"></app-graphs>
 
-
-
     <div class="block shadow p-4 mt-4 rounded-xl text-gray-600 border border-slate-100">
-      <span class="text-sky-500 font-bold">Consultation</span>
+      <span class="text-sky-500 font-bold flex justify-between py-2">
+        <span class="flex">
+          <button class="font-normal text-sky-500 px-2 py-1 text-sm  mr-2" type="button" (click)="toggleAll()">
+            <fa-icon [icon]="toggle_content ? faChevronUp : faChevronDown" size="lg"></fa-icon>
+          </button>
+          <span class="mt-2">CONSULTATION</span>
+        </span>
+        <button type="button" class="btn-end-visit ml-auto">
+          <fa-icon class="mr-1" [icon]="faDoorClosed"></fa-icon>
+          End Visit
+        </button>
+      </span>
 
-      <app-complaint-history></app-complaint-history>
+      <app-complaint-history [toggle_content]="toggle_content"></app-complaint-history>
 
       <hr class="my-4">
-      <app-physical-exam></app-physical-exam>
+      <app-physical-exam [toggle_content]="toggle_content"></app-physical-exam>
 
       <hr class="my-4">
-      <app-consult-history></app-consult-history>
+      <app-consult-history [toggle_content]="toggle_content"></app-consult-history>
 
       <hr class="my-4">
-      <app-initial-dx></app-initial-dx>
-      <app-final-dx></app-final-dx>
+      <app-initial-dx [toggle_content]="toggle_content"></app-initial-dx>
+      <app-final-dx [toggle_content]="toggle_content"></app-final-dx>
 
       <hr class="my-4">
-      <app-prescription></app-prescription>
+      <app-prescription [toggle_content]="toggle_content"></app-prescription>
     </div>
   </div>
 
