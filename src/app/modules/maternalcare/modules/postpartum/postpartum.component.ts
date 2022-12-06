@@ -161,7 +161,7 @@ export class PostpartumComponent implements OnInit {
     birth_weight: [post_registration.length != 0 ?post_registration.birth_weight:0],
     attendant_code: [post_registration.length != 0 ?post_registration.attendant.code:'',[Validators.required]],
     breastfeeding:[post_registration.length != 0 ?post_registration.breastfeeding:false],
-    breastfed_date: [post_registration.length != 0 ?new Date(post_registration.breastfed_date).toISOString().substring(0, 10):''],
+    breastfed_date: [post_registration.length != 0 ?new Date(post_registration.breastfed_date).toISOString().substring(0, 10):null],
     end_pregnancy: [post_registration.length != 0 ?post_registration.end_pregnancy:false],
     postpartum_remarks:[post_registration.length != 0 ?post_registration.postpartum_remarks:''],
     });
@@ -179,19 +179,33 @@ export class PostpartumComponent implements OnInit {
   }
   saveForm(data) {
     this.is_saving = true;
-    console.log(this.mcr_data, " logging mcr data before daving");
+    // console.log(this.mcr_data, " logging mcr data before daving");
 
     this.postpartum_form.value.delivery_date = this.postpartum_form.value.delivery_date.length == 16? this.postpartum_form.value.delivery_date.replace("T", " ") + ':00':this.postpartum_form.value.delivery_date.replace("T", " ");
     this.postpartum_form.value.admission_date = this.postpartum_form.value.admission_date.length == 16? this.postpartum_form.value.admission_date.replace("T", " ") + ':00':this.postpartum_form.value.admission_date.replace("T", " ");
     this.postpartum_form.value.discharge_date = this.postpartum_form.value.discharge_date.length == 16? this.postpartum_form.value.discharge_date.replace("T", " ") + ':00':this.postpartum_form.value.discharge_date.replace("T", " ");
-  console.log(this.postpartum_form.value.discharge_date);
+  console.log(this.postpartum_form.value , "postpartum form before saving");
 
+  let filtered = {}
+      let target = this.postpartum_form.value
+      for (let key in target) {
+        if (this.postpartum_form.value.breastfeeding == false) {
+          if(key != 'breastfed_date'){
+            filtered[key] = target[String(key)];
+          }
+        }else{
+          filtered = target
+        }
+      }
+
+      console.log(filtered, " my filtered value");
+      
     if (this.postpartum_form.valid) {
       let http
       if (this.updating) {
-        http = this.http.update('maternal-care/mc-postregistrations/', this.mcr_data.post_registration.id, this.postpartum_form.value)
+        http = this.http.update('maternal-care/mc-postregistrations/', this.mcr_data.post_registration.id, filtered)
       } else {
-        http = this.http.post('maternal-care/mc-postregistrations', this.postpartum_form.value)
+        http = this.http.post('maternal-care/mc-postregistrations', filtered)
       }
   
 
@@ -217,7 +231,7 @@ export class PostpartumComponent implements OnInit {
 
     }
 
-    console.log(this.postpartum_form.value, " data value");
+    // console.log(this.postpartum_form.value, " data value");
     this.postpartum_bool.emit(this.postpartum_form.value);
   }
 

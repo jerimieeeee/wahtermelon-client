@@ -104,11 +104,11 @@
                 <div class="text-sm grid grid-cols-11 hover:bg-blue-100 hover:font-medium" style="grid-column: span 11 / span 11;" *ngFor="let catch of risk_catch">
                     <div class=" col-span-8 relative select-none mx-2 {{catch.risk.hospital_flag == false && catch.risk.monitor_flag == true? 'text-blue-500' : (catch.risk.hospital_flag == true && catch.risk.monitor_flag == false?'text-red-500':'')}}">{{catch.risk.risk_name}}</div>
                     <div class=" col-span-2 relative select-none mx-2"><h3>{{catch.date_detected | date: 'MM/dd/yyyy'}}</h3></div>
-                    <!-- <div class=" relative select-none mx-2" (click)="edit(catch)">
+                    <div class=" relative select-none mx-2" (click)="edit(catch)">
                         <button type="button" class="w-full">
                             <fa-icon [icon]="faPencil" size="lg" class="mr-2 hover:text-orange-300"></fa-icon>
                         </button>
-                    </div> -->
+                    </div>
                 </div>
             </div>
         </div>

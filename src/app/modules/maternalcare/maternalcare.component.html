@@ -8,7 +8,7 @@
           <a class="select-none inline-block p-4 rounded-t-lg border-b-2 hover:text-blue-400 hover:font-semibold hover:border-blue-400"
             [class]="module != 1? '' : 'text-blue-400 font-semibold border-blue-400'" (click)="switchTab(1)">History</a>
         </li>
-        <li class="mr-2" *ngIf="patient_details">
+        <li class="mr-2" *ngIf="patient_details && mcr">
           <a class="select-none inline-block p-4 rounded-t-lg border-b-2 hover:text-blue-400 hover:font-semibold hover:border-blue-400"
             [class]="module != 2? '' : 'text-blue-400 font-semibold border-blue-400'" (click)="switchTab(2)">Maternal
             Care Record</a>
@@ -27,9 +27,9 @@
           <a class="select-none inline-block p-4 rounded-t-lg border-b-2 hover:text-blue-400 hover:font-semibold hover:border-blue-400"
             [class]="module != 5? '' : 'text-blue-400 font-semibold border-blue-400'" (click)="switchTab(5)">Services</a>
         </li> -->
-        <li class="absolute right-0 " *ngIf="patient_details">
+        <li class="absolute right-0 " *ngIf="patient_details && patient_mc_record">
           <a class="select-none text-base inline-block p-2 bg-gray-300 mt-3 mr-3 text-gray-400 hover:text-white rounded-md font-bold hover:bg-orange-400"
-            (click)="switchTab(6)">
+            (click)="endVisit()">
             <fa-icon [icon]="faPersonWalking" size="lg" class="mx-2"></fa-icon>End Visit
           </a>
         </li>

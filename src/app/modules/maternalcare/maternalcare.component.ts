@@ -1,4 +1,5 @@
 import { Component, OnInit, Output } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { faPenToSquare, faPersonWalking, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { PatientInfoComponent } from 'app/components/patient-info/patient-info.component';
 import { HttpService } from 'app/shared/services/http.service';
@@ -25,8 +26,14 @@ export class MaternalcareComponent implements OnInit {
   loading: boolean;
 
   modalStats: any;
+  mcr: boolean;
+  consult_id: any;
+  consult_details: any;
 
-  constructor(private http: HttpService) { }
+  constructor(private http: HttpService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) { }
 
   module: number;
 
@@ -43,11 +50,14 @@ export class MaternalcareComponent implements OnInit {
   ]
 
   ngOnInit(): void {
+    this.mcr = true;
     this.module = 1;
     this.post_value = false;
     this.loading = false
     this.loadLibraries();
-    
+    this.consult_id = this.route.snapshot.paramMap.get('consult_id');
+    this.loadConsultDetails()
+    console.log(this.consult_id, 'test consult ids')
   }
 
   switchTab(tab) {
@@ -55,6 +65,7 @@ export class MaternalcareComponent implements OnInit {
     this.module = tab;
     if (this.module == 1) {
       this.patient_mc_record = ''
+      this.mcr = true;
       this.patientInfo(this.patient_details)
     }
     console.log(this.module);
@@ -91,9 +102,9 @@ export class MaternalcareComponent implements OnInit {
             this.patient_mc_list = data.data;
 
             if (!this.patient_mc_list[0].post_registration || !this.patient_mc_list[0].post_registration.end_pregnancy) {
-              this.openMCR(this.patient_mc_list[0].id);    
+              this.openMCR(this.patient_mc_list[0].id);
               // console.log(!this.patient_mc_list[0].pre_registration, !this.patient_mc_list[0].post_registration.end_pregnancy);
-                  
+
             }
           }
         },
@@ -111,6 +122,7 @@ export class MaternalcareComponent implements OnInit {
         next: (data: any) => {
           console.log(data, " openMCR");
           this.patient_mc_record = data.data;
+          this.mcr = true;
           if (this.patient_mc_record.pre_registration) {
 
             this.prenatal = true;
@@ -123,18 +135,21 @@ export class MaternalcareComponent implements OnInit {
             // } else {
             //   this.module = 2;
             // }
+          } else if (!this.patient_mc_record.pre_registration && this.patient_mc_record.post_registration) {
+            this.prenatal = false;;
+            this.mcr = false
           }
         },
         error: err => console.log(err),
         complete: () => {
           this.loading = false;
-// console.log(!this.patient_mc_record.pre_registration , !this.patient_mc_record.post_registration.end_pregnancy, " openMCR");
-            console.log(this.module, " logging this module before swithcnig");
-            
+          // console.log(!this.patient_mc_record.pre_registration , !this.patient_mc_record.post_registration.end_pregnancy, " openMCR");
+          console.log(this.module, " logging this module before swithcnig");
+
           if (!this.patient_mc_record.pre_registration) {
-            this.module = 4;        
-          }else{
-            if(this.module == 1){
+            this.module = 4;
+          } else {
+            if (this.module == 1) {
               this.module = 2;
             }
           }
@@ -180,8 +195,45 @@ export class MaternalcareComponent implements OnInit {
     // this.patient_mc_record.post_registration = info;
   }
 
-  updatePostVisit(info){
+  updatePostVisit(info) {
     this.patient_mc_record.postpartum_visit = info;
   }
+
+  endVisit(){
+
+    let endbutton = {
+      consult_done: 1,
+      patient_id : this.consult_details[0].patient.id,
+      user_id : this.consult_details[0].user.id,
+      consult_date : this.consult_details[0].consult_date,
+      pt_group : this.consult_details[0].pt_group,
+      // physician_id : this.consult_details[0].physician.id,
+      // is_pregnant: this.consult_details[0].is_pregnant
+    }
+      this.http.update('consultation/cn-records/',this.consult_id, endbutton).subscribe({
+        // next: (data: any) => console.log(data.status, 'check status'),
+        error: err => console.log(err),
+        complete: () => {
+         console.log('end visited kang bata ka')
+         this.proceedItr()
+        }
+      })
+      console.log(endbutton)
+    }
+
+    proceedItr(){
+      this.router.navigate(['/itr', {id: this.patient_details.id}])
+    }
+
+    loadConsultDetails(){
+
+      this.http.get('consultation/cn-records',{params: {id: this.consult_id}}).subscribe((data: any) => {
+        this.consult_details = data.data
+        console.log(this.consult_details[0], 'kunin mo consult');
+        
+       
+      });
+    }
+    
 
 }

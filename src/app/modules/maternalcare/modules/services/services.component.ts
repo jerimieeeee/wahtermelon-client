@@ -1,7 +1,7 @@
 import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
 // import { AnyNaptrRecord } from 'd/ns';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { faCircleCheck, faClose, faInfoCircle, faPencilSquare, faPenToSquare, faSave, faTimes, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
+import { faCircleCheck, faCircleNotch, faClose, faInfoCircle, faPencil, faPencilSquare, faPenToSquare, faSave, faTimes, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
@@ -30,7 +30,8 @@ export class ServicesComponent implements OnInit {
   // modal = false;
   modal: boolean;
   saved: boolean;
-
+  edit: any;
+  is_saving: boolean;
   constructor(private http: HttpService, private formBuilder: FormBuilder) { }
 
   faTimes = faTimes;
@@ -39,6 +40,9 @@ export class ServicesComponent implements OnInit {
   faPenToSquare = faPenToSquare;
   faTimesCircle = faTimesCircle
   faCircleCheck = faCircleCheck
+  faPencil = faPencil;
+  faSpinner = faCircleNotch;
+
   user_id: any
   facility_code: any
 
@@ -47,18 +51,18 @@ export class ServicesComponent implements OnInit {
   public service_list = [];
   public array_form = [];
   public group_list = [
-    { name: 'G1', qty: true, pos: false, pos_name: '', pen: false, service: []  },
+    { name: 'G1', qty: true, pos: false, pos_name: '', pen: false, service: [] },
     { name: 'G2', qty: false, pos: false, pos_name: '', pen: false, service: [] },
-    { name: 'G3', qty: false, pos: true, pos_name: 'Positive', pen: true, service: []  },
-    { name: 'G4', qty: false, pos: true, pos_name: 'Positive', pen: false, service: []  },
-    { name: 'G5', qty: false, pos: true, pos_name: 'Anemia', pen: false, service: []  },
+    { name: 'G3', qty: false, pos: true, pos_name: 'Positive', pen: true, service: [] },
+    { name: 'G4', qty: false, pos: true, pos_name: 'Positive', pen: false, service: [] },
+    { name: 'G5', qty: false, pos: true, pos_name: 'Anemia', pen: false, service: [] },
   ];
 
   ngOnInit() {
     this.user_id = this.http.getUserID();
     this.facility_code = this.http.getUserFacility();
     this.createForm()
-    for(let x = 0 ; x < 11 ; x++){
+    for (let x = 0; x < 11; x++) {
       this.serviceChanges.push(this.services_form.value);
     }
     this.getServices()
@@ -67,8 +71,20 @@ export class ServicesComponent implements OnInit {
     this.today = new Date();
     this.modal = false;
   }
+
+  enableEdit(id) {
+    if (this.edit != id) {
+      this.edit = id;
+    } else {
+      this.edit = 's';
+    }
+    console.log(this.edit, this.edit != id, id, " enableEdit()");
+
+  }
+
   saveForm() {
     // maternal-care/mc-services
+    this.is_saving = true;
     console.log(this.serviceChanges);
 
     this.serviceChanges.forEach(s => {
@@ -87,7 +103,7 @@ export class ServicesComponent implements OnInit {
           },
           error: err => console.log(err),
           complete: () => {
-            // this.is_saving = false;
+            this.is_saving = false;
             this.saved = true
             setTimeout(() => {
               this.saved = false;
@@ -120,7 +136,7 @@ export class ServicesComponent implements OnInit {
         })
 
         console.log(this.service_list, " get service after pushing group");
-        
+
 
       },
       error: err => console.log(err),
@@ -148,38 +164,74 @@ export class ServicesComponent implements OnInit {
   }
 
   createForm() {
-   
-    this.lib_services.forEach(lib =>  this.array_form.push(
+
+    this.lib_services.forEach(lib => this.array_form.push(
       {
         service_date: new Date().toISOString().substring(0, 10),
         visit_type_code: '',
         visit_status: this.module == 3 ? 'Prenatal' : (this.module == 4 ? 'Postpartum' : 'Services'),
-        service_qty:'',
+        service_qty: '',
         positive_result: false,
         intake_penicillin: false,
         service_id: lib.id,
       }
     )
-      );
+    );
     this.services_form = this.formBuilder.group({
       service_date: [new Date().toISOString().substring(0, 10), [Validators.required]],
       visit_type_code: ['', [Validators.required]],
       visit_status: [this.module == 3 ? 'Prenatal' : (this.module == 4 ? 'Postpartum' : 'Services')],
-      service_qty:[0],
+      service_qty: [0],
       positive_result: [false],
       intake_penicillin: [false],
       service_id: [''],
     });
-    
+
 
 
   }
-  getNG(id, x){
+  getNG(id, x) {
     return this.serviceChanges[this.array_form.map(s => s.service_id).indexOf(id)][x];
   }
-  // getGroupList(){
-  //   return this.group_list
-  // }
+  
+saveEdit(i){
+  console.log(this.service_list[i], " saveEdit bnoy")
+  let edits: any;
+  edits = {
+    patient_mc_id: this.service_list[i].patient_mc_id,
+    patient_id: this.service_list[i].patient_id,
+    service_id: this.service_list[i].service.id,
+    visit_type_code: this.service_list[i].visit_type_code,
+    visit_status: this.service_list[i].visit_status,
+    service_date: this.service_list[i].service_date,
+    service_qty: this.service_list[i].service_qty,
+    positive_result: this.service_list[i].positive_result,
+    intake_penicillin: this.service_list[i].intake_penicillin,
+  }
+
+  console.log(edits, " show edits");
+  this.is_saving = true;
+  this.http.update('maternal-care/mc-services/',this.service_list[i].id, edits).subscribe({
+    next: (data: any) => {
+      console.log(data.data, " data from saving services")
+      this.getServices();
+      this.service_list[i].push(data.data)
+      // this.services_form = data.data;
+    },
+    error: err => {console.log(err), this.is_saving = false;},
+    complete: () => {
+      this.is_saving = false;
+      this.saved = true
+      setTimeout(() => {
+        this.saved = false;
+        this.closeModal();
+      }, 1500);
+      this.edit = 's';
+    }
+  })
+
+}
+
   onChange(desc, id, item) {
     let i = this.array_form.map(s => s.service_id).indexOf(id);
     this.serviceChanges[i] = {
