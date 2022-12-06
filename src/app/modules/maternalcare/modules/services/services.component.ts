@@ -1,7 +1,7 @@
 import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
 // import { AnyNaptrRecord } from 'd/ns';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { faCircleCheck, faClose, faInfoCircle, faPencil, faPencilSquare, faPenToSquare, faSave, faTimes, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
+import { faCircleCheck, faCircleNotch, faClose, faInfoCircle, faPencil, faPencilSquare, faPenToSquare, faSave, faTimes, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
@@ -31,6 +31,7 @@ export class ServicesComponent implements OnInit {
   modal: boolean;
   saved: boolean;
   edit: any;
+  is_saving: boolean;
   constructor(private http: HttpService, private formBuilder: FormBuilder) { }
 
   faTimes = faTimes;
@@ -40,6 +41,8 @@ export class ServicesComponent implements OnInit {
   faTimesCircle = faTimesCircle
   faCircleCheck = faCircleCheck
   faPencil = faPencil;
+  faSpinner = faCircleNotch;
+
   user_id: any
   facility_code: any
 
@@ -81,6 +84,7 @@ export class ServicesComponent implements OnInit {
 
   saveForm() {
     // maternal-care/mc-services
+    this.is_saving = true;
     console.log(this.serviceChanges);
 
     this.serviceChanges.forEach(s => {
@@ -99,7 +103,7 @@ export class ServicesComponent implements OnInit {
           },
           error: err => console.log(err),
           complete: () => {
-            // this.is_saving = false;
+            this.is_saving = false;
             this.saved = true
             setTimeout(() => {
               this.saved = false;
@@ -189,9 +193,45 @@ export class ServicesComponent implements OnInit {
   getNG(id, x) {
     return this.serviceChanges[this.array_form.map(s => s.service_id).indexOf(id)][x];
   }
-  // getGroupList(){
-  //   return this.group_list
-  // }
+  
+saveEdit(i){
+  console.log(this.service_list[i], " saveEdit bnoy")
+  let edits: any;
+  edits = {
+    patient_mc_id: this.service_list[i].patient_mc_id,
+    patient_id: this.service_list[i].patient_id,
+    service_id: this.service_list[i].service.id,
+    visit_type_code: this.service_list[i].visit_type_code,
+    visit_status: this.service_list[i].visit_status,
+    service_date: this.service_list[i].service_date,
+    service_qty: this.service_list[i].service_qty,
+    positive_result: this.service_list[i].positive_result,
+    intake_penicillin: this.service_list[i].intake_penicillin,
+  }
+
+  console.log(edits, " show edits");
+  this.is_saving = true;
+  this.http.update('maternal-care/mc-services/',this.service_list[i].id, edits).subscribe({
+    next: (data: any) => {
+      console.log(data.data, " data from saving services")
+      this.getServices();
+      this.service_list[i].push(data.data)
+      // this.services_form = data.data;
+    },
+    error: err => {console.log(err), this.is_saving = false;},
+    complete: () => {
+      this.is_saving = false;
+      this.saved = true
+      setTimeout(() => {
+        this.saved = false;
+        this.closeModal();
+      }, 1500);
+      this.edit = 's';
+    }
+  })
+
+}
+
   onChange(desc, id, item) {
     let i = this.array_form.map(s => s.service_id).indexOf(id);
     this.serviceChanges[i] = {

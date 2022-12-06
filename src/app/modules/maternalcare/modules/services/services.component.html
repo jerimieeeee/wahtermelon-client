@@ -4,15 +4,6 @@
       class="sticky top-14 z-50 border border-blue-400 col-span-2 relative mx-2 px-2 py-1 rounded-t-lg text-sm bg-blue-500 text-white"
       style="grid-column: span 16 / span 16;"><button class="font-bold" type="button">{{module == 3?'Prenatal':(module
          == 4?'Postpartum':'Services')}} Services</button>
-      <!-- <div class="absolute left-16 top-1">
-         <fa-icon [icon]="faInfoCircle" class=" peer ml-4 text-white hover:text-gray-500 z-50"></fa-icon>
-         <div
-            class="absolute text-sm bg-gradient-to-b from-stone-500 to-gray-400 p-2 rounded-md border border-gray-500  text-white drop-shadow-lg opacity-90 border-check z-50 w-64 invisible peer-hover:visible">
-            <h1 class="font-bold drop-shadow-lg">IMPORTANT</h1>
-            <p class="font-light drop-shadow-lg">Once saved, the information will be displayed in the input
-               boxes and shall not be editable unless Edit button is pressed.</p>
-         </div>
-      </div> -->
       <div class="absolute right-2 top-1">
          <fa-icon [icon]="faPenToSquare" size="md" class="text-white hover:text-gray-500 z-50 " (click)="openModal()"
             *ngIf="service_list.length != 0"></fa-icon>
@@ -47,44 +38,49 @@
                            class="hover:bg-blue-100 group">
                            <td class="px-2 font-normal">{{service.service.desc}}</td>
                            <th class="px-2 font-normal">
-                              <p >{{service.service_date | date: 'MM/dd/yyyy'}}</p>
-                              <!-- <input (ngModel)="getNG(service.id, 'service_date')" id="service_date" name="service_date"
-                                 type="date" *ngIf="edit === i" [value]="service.service_date | date: 'yyyy-MM-dd'"
-                                 class="calendar-style col-span-8 rounded border-solid border border-zinc-300 focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none disabled:cursor-not-allowed"> -->
+                              <p *ngIf="edit !== i">{{service.service_date | date: 'MM/dd/yyyy'}}</p>
+                              <input [(ngModel)]="service_list[i].service_date" id="service_date" name="service_date"
+                                 type="date" *ngIf="edit === i"
+                                 class="calendar-style col-span-8 rounded border-solid border border-zinc-300 focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none disabled:cursor-not-allowed">
                            </th>
                            <th class="px-2 font-normal">
-                              <p >
-                                 {{!service.group.qty?'-':(service.service_qty?service.service_qty:'-')}}</p>
-                              <!-- <input type="number" (ngModel)="getNG(service.id, 'service_qty')" min="0"
-                                 *ngIf="edit === i" [value]="service.service_qty"
-                                 class="in-style font-medium disabled:group-hover:font-semibold peer invalid:border-red-500 border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed disabled:border-0  disabled:pl-5  disabled:typed-out disabled:group-hover:bg-gray-100 disabled:rounded-full"> -->
+                              <p  >
+                                 {{!service.group.qty?'-':(service.service_qty?(edit ===i?'':service.service_qty):'-')}}</p>
+                              <input type="number" [(ngModel)]="service_list[i].service_qty" min="0"
+                                 *ngIf="edit === i && service.group.qty"
+                                 class="in-style font-medium disabled:group-hover:font-semibold peer invalid:border-red-500 border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed disabled:border-0  disabled:pl-5  disabled:typed-out disabled:group-hover:bg-gray-100 disabled:rounded-full">
                            </th>
                            <th class="px-2 font-normal" *ngIf="services_form.value.visit_status == 'Prenatal'">
-                              <fa-icon *ngIf="service.positive_result && service.group.pos"
+                              <fa-icon *ngIf="service.positive_result && service.group.pos && edit !== i"
                                  [icon]="faCircleCheck" size="md" class="text-green-400"></fa-icon>
-                              <fa-icon *ngIf="!service.positive_result && service.group.pos"
+                              <fa-icon *ngIf="!service.positive_result && service.group.pos && edit !== i"
                                  [icon]="faTimesCircle" size="md" class="text-red-400"></fa-icon>
                               <p *ngIf="!service.group.pos">-</p>
-                              <!-- <input (ngModel)="getNG(service.id, 'positive_result')" type="checkbox" *ngIf="edit === i"
-                                 [value]="positive_result"
-                                 class="check-style h-6 w-6 border border-gray-400 rounded-md bg-white checked:bg-blue-400 checked:border-blue-500 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"> -->
+                              <input  [(ngModel)]="service_list[i].positive_result" min="0" type="checkbox" *ngIf="edit === i && service.group.pos"
+                                 class="check-style h-6 w-6 border border-gray-400 rounded-md bg-white checked:bg-blue-400 checked:border-blue-500 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer">
                            </th>
                            <th class="px-2 font-normal" *ngIf="services_form.value.visit_status == 'Prenatal'">
-                              <fa-icon *ngIf="service.intake_penicillin && service.group.pen"
+                              <fa-icon *ngIf="service.intake_penicillin && service.group.pen && edit !== i"
                                  [icon]="faCircleCheck" size="md" class="text-green-400"></fa-icon>
-                              <fa-icon *ngIf="!service.intake_penicillin && service.group.pen"
+                              <fa-icon *ngIf="!service.intake_penicillin && service.group.pen && edit !== i"
                                  [icon]="faTimesCircle" size="md" class="text-red-400"></fa-icon>
                               <p *ngIf="!service.group.pen">-</p>
-                              <!-- <input (ngModel)="getNG(service.id, 'intake_penicillin')" type="checkbox"
-                                 *ngIf="edit === i" [value]="intake_penicillin"
-                                 class="check-style h-6 w-6 border border-gray-400 rounded-md bg-white checked:bg-blue-400 checked:border-blue-500 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"> -->
+                              <input [(ngModel)]="service_list[i].intake_penicillin" min="0" type="checkbox"
+                                 *ngIf="edit === i && service.group.pen"
+                                 class="check-style h-6 w-6 border border-gray-400 rounded-md bg-white checked:bg-blue-400 checked:border-blue-500 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer">
                            </th>
                            <th class="px-2 font-normal" style="text-transform: lowercase;">
-                              <p class="capitalize">{{service.visit_type_code}}</p>
+                              <p class="capitalize" *ngIf="edit !== i">{{service.visit_type_code}}</p>
+                              <select  id="visit_type_code" [(ngModel)]="service_list[i].visit_type_code"  *ngIf="edit === i"
+                                    class="text-ellipsis bg-white text-align-left drop_btn border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed">
+                                    <option *ngFor="let type of visit_type" [value]="type.code">
+                                       {{type.desc}}
+                                    </option>
+                                 </select>
                            </th>
-                           <!-- <th class="px-2 font-normal">
+                           <th class="px-2 font-normal">
                               <button (click)="enableEdit(i)">
-                                 <fa-icon [icon]="faPencil"  size="lg"
+                                 <fa-icon [icon]="faPencil" *ngIf="edit !== i" size="lg" 
                                     class="text-gray-400 hover:text-orange-400 invisible group-hover:visible"></fa-icon>
                               </button>
                               <button (click)="enableEdit(i)">
@@ -92,11 +88,12 @@
                                     class="text-gray-400 hover:text-red-400 invisible group-hover:visible"></fa-icon>
                               </button>
                               <button>
-                                 <fa-icon [icon]="faSave" *ngIf="edit === i" size="lg"
+                                 <fa-icon *ngIf="is_saving && edit === i" class="mr-2" [icon]="faSpinner" [spin]="true"></fa-icon>
+                                 <fa-icon [icon]="faSave" *ngIf="edit === i !is_saving" size="lg" (click)="saveEdit(i)"
                                     class="pl-4 text-gray-400 hover:text-blue-400 invisible group-hover:visible">
                                  </fa-icon>
                               </button>
-                           </th> -->
+                           </th>
                         </tr>
                      </tbody>
                   </table>
