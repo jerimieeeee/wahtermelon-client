@@ -165,25 +165,6 @@ export class PrenatalComponent implements OnInit {
     });
   }
 
-  // edit(risk) {
-  //   console.log(risk)
-  //   this.risk_form.reset();
-
-  //   this.createForm();
-
-  //   this.risk_form.patchValue({
-  //     id: risk.id,
-  //     risk_id: risk.risk.id,
-  //     date_detected: formatDate(risk.date_detected, 'Y-MM-dd', 'en'),
-  //   });
-
-  //   this.risk_to_edit = risk.id;
-
-  //   console.log(this.risk_form, " factor value");
-  //   console.log(risk, " risk_id edit");
-
-  // }
-
   trackByFn(index, item) {
     return index;
   }
@@ -350,7 +331,6 @@ export class PrenatalComponent implements OnInit {
         this.prenatal_form.patchValue(this.edit_form);
       // }
     // });
-    this.value = 0;
         this.value = prenatal.visit_sequence;
     // this.hide.push(id);
     console.log(this.edit_form, " edit form");

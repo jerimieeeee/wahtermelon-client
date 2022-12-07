@@ -64,6 +64,9 @@ export class PostvisitsComponent implements OnInit {
 
   is_saving: boolean;
   saved: boolean;
+  edit_bool: boolean;
+  edit_form: any;
+  edit_id: any;
   constructor(private http: HttpService, private formBuilder: FormBuilder) { }
 
   cm_value = '';
@@ -85,7 +88,7 @@ export class PostvisitsComponent implements OnInit {
     this.value = 1;
     this.getMCR();
     console.log(this.patient_mc_record, "mc record form postvistis init");
-    
+    this.edit_bool = false
     this.focused = false;
   }
   flip(): void {
@@ -102,11 +105,7 @@ export class PostvisitsComponent implements OnInit {
         console.log("it went true");
   
       this.value = this.patient_mc_record.postpartum_visit[0].visit_sequence + 1;
-      this.patient_mc_record.postpartum_visit.forEach(p => {
-        this.postpartum_data.push(p);
-        console.log("pushing p's");
-  
-      });
+      this.postpartum_data =  this.patient_mc_record.postpartum_visit
        }
        this.createForm(this.patient_mc_record);
     }
@@ -148,6 +147,46 @@ createForm(mc_record: any) {
     cord_ok: [false],
   })
 }
+
+edit(visit) {
+  this.edit_bool = true;
+  console.log(visit, " data to be editesd");
+  
+  // this.prenatal_form.reset();
+      this.edit_form = {
+        patient_mc_id: visit.patient_mc_id,
+        patient_id: this.patient_details.id,
+        postpartum_date: visit.postpartum_date,
+        visit_type: visit.visit_type,
+        patient_height: visit.patient_height,
+        patient_weight: visit.patient_weight,
+        bp_systolic: visit.bp_systolic,
+        bp_diastolic: visit.bp_diastolic,
+        breastfeeding: visit.breastfeeding,
+        family_planning: visit.family_planning,
+        fever: visit.fever,
+        vaginal_infection: visit.vaginal_infection,
+        vaginal_bleeding: visit.vaginal_bleeding,
+        pallor: visit.pallor,
+        cord_ok: visit.cord_ok
+      };
+
+      this.postpartum_visit_form.patchValue(this.edit_form);
+    // }
+  // });
+  this.value = 0;
+      this.value = visit.visit_sequence;
+  // this.hide.push(id);
+  console.log(this.edit_form, " edit form");
+  console.log(visit.id, " id pre edit");
+
+  this.edit_id = visit.id;
+  
+      this.edit_bool = true;
+  // console.log(id, " prenatal id edit");
+
+}
+
 saveForm(){
   this.is_saving = true;
 
@@ -156,9 +195,20 @@ saveForm(){
   if (this.postpartum_visit_form.valid) {
     if (this.actual_height) {
       this.postpartum_visit_form.value.patient_height = this.actual_height;
+      this.edit_form.patient_height = this.actual_height
     }
+
+    let http
+    if(this.edit_bool){
+      http = this.http.update('maternal-care/mc-postpartum/', this.edit_id, this.postpartum_visit_form.value);
+      console.log(" going to update");
+      
+    }else{
+      http = this.http.post('maternal-care/mc-postpartum', this.postpartum_visit_form.value);
+    }
+
     console.log(this.postpartum_visit_form, " this is my data for saving post vist");
-    this.http.post('maternal-care/mc-postpartum', this.postpartum_visit_form.value).subscribe({
+    http.subscribe({
       next: (data: any) => {
         console.log(data.data, " data from saving post visit")
         this.postpartum_data = data.data
@@ -169,6 +219,8 @@ saveForm(){
       complete: () => {
         this.is_saving = false;
         this.saved = true;
+        this.edit_bool = false
+        this.edit_form = []
         this.createForm(this.patient_mc_record);
         setTimeout(() => {
           this.saved = false;
@@ -251,6 +303,8 @@ buttonShow(name) {
 }
 cancel() {
   this.keyUp = [];
+  this.edit_bool = false
+  this.getMCR();
   // this.createForm();
 }
 }
