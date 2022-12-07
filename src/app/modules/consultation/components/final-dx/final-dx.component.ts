@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnChanges } from '@angular/core';
 import { faFloppyDisk, faPlusSquare } from '@fortawesome/free-regular-svg-icons';
 import { faChevronCircleDown, faChevronCircleUp } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
@@ -9,7 +9,10 @@ import { catchError, concat, debounceTime, distinctUntilChanged, filter, map, Ob
   templateUrl: './final-dx.component.html',
   styleUrls: ['./final-dx.component.scss']
 })
-export class FinalDxComponent implements OnInit {
+export class FinalDxComponent implements OnInit, OnChanges {
+  @Input() toggle_content;
+  @Input() consult_details;
+
   faPlusSquare = faPlusSquare;
   faFloppyDisk = faFloppyDisk;
   faChevronCircleUp = faChevronCircleUp;
@@ -55,6 +58,10 @@ export class FinalDxComponent implements OnInit {
     .pipe(map((resp:any) => {
       return resp.data;
     }))
+  }
+
+  ngOnChanges(changes){
+    this.show_content = this.toggle_content;
   }
 
   constructor(

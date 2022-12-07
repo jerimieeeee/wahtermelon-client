@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnChanges } from '@angular/core';
 import { faFloppyDisk } from '@fortawesome/free-regular-svg-icons';
 import { faChevronCircleUp, faChevronCircleDown } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
@@ -8,7 +8,10 @@ import { HttpService } from 'app/shared/services/http.service';
   templateUrl: './physical-exam.component.html',
   styleUrls: ['./physical-exam.component.scss']
 })
-export class PhysicalExamComponent implements OnInit {
+export class PhysicalExamComponent implements OnInit, OnChanges {
+  @Input() toggle_content;
+  @Input() consult_details;
+
   faFloppyDisk = faFloppyDisk;
   faChevronCircleUp = faChevronCircleUp;
   faChevronCircleDown = faChevronCircleDown;
@@ -37,6 +40,10 @@ export class PhysicalExamComponent implements OnInit {
         // console.log(this.pe_grouped);
       }
     );
+  }
+
+  ngOnChanges(changes){
+    this.show_content = this.toggle_content;
   }
 
   constructor(
