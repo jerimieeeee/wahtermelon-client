@@ -44,8 +44,7 @@
                     <!-- <input type="text"
                         class="text-lg font-medium disabled:group-hover:font-semibold peer  focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed disabled:border-0  disabled:pl-5  disabled:typed-out disabled:group-hover:bg-gray-100 disabled:rounded-full"
                         id="visit_sequence" [value]="value" hidden> -->
-                    <div class="text-center text-2xl font-bold py-2 border-gray-300 border rounded-lg"
-                        *ngIf="!edit_bool">{{ value }}</div>
+                    <div class="text-center text-2xl font-bold py-2 border-gray-300 border rounded-lg">{{ value }}</div>
                     <!-- <div class="text-center text-2xl font-bold py-2 border-gray-300 border rounded-lg"
                         *ngIf="edit_bool">{{ prenatal_form.get('visit_sequence').value }}</div> -->
                 </div>
@@ -276,11 +275,11 @@
                     <button type="button" class="font-bold button-out -red">Cancel</button>
                 </div>
                 <div (click)="saveForm(prenatal_form.value)"
-                    class="cursor-pointer flex  hover:drop-shadow-md bg-green-300 hover:bg-green-400 py-1 rounded-full text-white px-3 peer-hover:bg-white peer-hover:text-green-400">
+                    class="cursor-pointer flex  hover:drop-shadow-md {{edit_bool?'bg-blue-300 hover:bg-blue-400 peer-hover:text-blue-400':'bg-green-300 hover:bg-green-400 peer-hover:text-green-400'}} py-1 rounded-full text-white px-3 peer-hover:bg-white peer-hover:text-green-400">
                     <fa-icon *ngIf="!is_saving" [icon]="faSave" size="lg" class="mr-2"></fa-icon>
                     <fa-icon *ngIf="is_saving" class="mr-2" [icon]="faSpinner" [spin]="true"></fa-icon>
                     <button type="button" class="font-bold button-out border-check-red">
-                        {{this.is_saving?'Saving':'Save'}}
+                        {{edit_bool?(is_saving?'Updating':'Update'):(is_saving?'Saving':'Save')}}
                     </button>
                 </div>
             </div>
@@ -312,10 +311,11 @@
                                 <th class="px-2">Fetal Presentation</th>
                                 <th class="px-2">Remarks</th>
                                 <th class="px-2">Outside</th>
+                                <th class="px-2"></th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let prenatal of prenatal_data" class="hover:bg-blue-100">
+                            <tr *ngFor="let prenatal of prenatal_data" class="hover:bg-blue-100 group">
                                 <td class="px-2 font-normal">{{prenatal.visit_sequence}}</td>
                                 <td class="px-2 font-normal">{{prenatal.trimester}}{{prenatal.trimester == 1?'st':(prenatal.trimester == 2?'nd':(prenatal.trimester == 3?'rd':'th'))}} </td>
                                 <td class="px-2 font-normal">{{prenatal.prenatal_date | date: 'MM/dd/yyy'}}</td>
@@ -333,6 +333,11 @@
                                 <td class="px-2 font-normal">
                                     <fa-icon *ngIf="prenatal.private" [icon]="faCircleCheck" size="md" class="text-green-400"></fa-icon>
                                     <fa-icon *ngIf="!prenatal.private" [icon]="faTimesCircle" size="md" class="text-red-400"></fa-icon>
+                                </td>
+                                <td class="px-2" (click)="edit(prenatal)">
+                                    <button type="button" class="w-full">
+                                        <fa-icon  *ngIf="!edit_bool" [icon]="faPencil" size="lg" class="mr-2 hover:text-orange-300 invisible group-hover:visible"></fa-icon>
+                                    </button>
                                 </td>
                             </tr>
                         </tbody>

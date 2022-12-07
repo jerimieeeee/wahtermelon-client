@@ -57,7 +57,6 @@ export class MaternalcareComponent implements OnInit {
     this.loadLibraries();
     this.consult_id = this.route.snapshot.paramMap.get('consult_id');
     this.loadConsultDetails()
-    console.log(this.consult_id, 'test consult ids')
   }
 
   switchTab(tab) {
@@ -228,10 +227,7 @@ export class MaternalcareComponent implements OnInit {
     loadConsultDetails(){
 
       this.http.get('consultation/cn-records',{params: {id: this.consult_id}}).subscribe((data: any) => {
-        this.consult_details = data.data
-        console.log(this.consult_details[0], 'kunin mo consult');
-        
-       
+        this.consult_details = data.data  
       });
     }
     
