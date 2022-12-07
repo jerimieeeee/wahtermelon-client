@@ -25,7 +25,7 @@ export class ConsultationComponent implements OnInit {
   is_saving: boolean = false;
   show_item: boolean = true;
   toggle_content: boolean = true;
-
+  open_consult: boolean = true;
   patient_details: any;
   visit_list: any;
   vitals: any;
@@ -43,6 +43,19 @@ export class ConsultationComponent implements OnInit {
 
   endVisit() {
     console.log(this.consult_id);
+    let params = {
+      patient_id: this.consult_details.patient.id,
+      consult_date: this.consult_details.consult_date,
+      pt_group: 'cn',
+      consult_done: true
+    }
+
+    this.http.update('consultation/cn-records/', this.consult_details.id, params).subscribe({
+      next: (data: any) => {
+        console.log(data)
+      },
+      error: err => console.log(err)
+    })
   }
 
   patientInfo(info){
@@ -72,7 +85,8 @@ export class ConsultationComponent implements OnInit {
     console.log(params)
     this.http.get('consultation/cn-records', {params}).subscribe({
       next: (data: any) => {
-        console.log(data.data);
+        console.log(data.data[0]);
+        this.consult_details = data.data[0];
       },
       error: err => console.log(err)
     })
@@ -82,6 +96,8 @@ export class ConsultationComponent implements OnInit {
     private http: HttpService,
     private route: ActivatedRoute
   ) { }
+
+  consult_details: any;
 
   consult_id: string;
   patient_id: string;

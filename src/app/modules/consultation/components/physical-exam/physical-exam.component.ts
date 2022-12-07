@@ -10,6 +10,7 @@ import { HttpService } from 'app/shared/services/http.service';
 })
 export class PhysicalExamComponent implements OnInit, OnChanges {
   @Input() toggle_content;
+  @Input() consult_details;
 
   faFloppyDisk = faFloppyDisk;
   faChevronCircleUp = faChevronCircleUp;

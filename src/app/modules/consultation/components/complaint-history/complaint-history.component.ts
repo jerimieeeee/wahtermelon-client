@@ -10,6 +10,7 @@ import { Observable, of } from 'rxjs';
 })
 export class ComplaintHistoryComponent implements OnInit, OnChanges {
   @Input() toggle_content;
+  @Input() consult_details;
 
   faPlusSquare = faPlusSquare;
   faFloppyDisk = faFloppyDisk;
@@ -22,7 +23,37 @@ export class ComplaintHistoryComponent implements OnInit, OnChanges {
   show_content: boolean = true;
 
   onSubmit(){
+    console.log(this.selectedComplaint);
 
+    if(Object.keys(this.selectedComplaint).length > 0) this.saveComplaints();
+  }
+
+  saveNotes(){
+
+  }
+
+  saveComplaints() {
+    let submit_complaints = [];
+
+    Object.entries(this.selectedComplaint).forEach(([keys, value], index) => {
+      console.log(value);
+      submit_complaints.push(value.complaint_id);
+    });
+
+    let complaint = {
+      notes_id: this.consult_details.consult_notes[0].id,
+      consult_id: this.consult_details.id,
+      patient_id: this.consult_details.patient.id,
+      complaints: submit_complaints
+    }
+
+    this.http.post('consultation/cn-complaint', complaint).subscribe({
+      next: (data: any) => {
+        console.log(data);
+      },
+      error: err => console.log(err)
+    })
+    console.log(submit_complaints);
   }
 
   loadLib(){

@@ -15,6 +15,7 @@ import { PrescriptionComponent } from './components/prescription/prescription.co
 import { ComplaintHistoryComponent } from './components/complaint-history/complaint-history.component';
 import { GraphsComponent } from './components/graphs/graphs.component';
 import { ConsultHistoryComponent } from './components/consult-history/consult-history.component';
+import { ConsultSummaryComponent } from './components/consult-summary/consult-summary.component';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { ConsultHistoryComponent } from './components/consult-history/consult-hi
     PrescriptionComponent,
     ComplaintHistoryComponent,
     GraphsComponent,
-    ConsultHistoryComponent
+    ConsultHistoryComponent,
+    ConsultSummaryComponent
   ],
   imports: [
     CommonModule,

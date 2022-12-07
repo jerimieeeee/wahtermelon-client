@@ -8,6 +8,7 @@ import { faChevronCircleDown, faChevronCircleUp } from '@fortawesome/free-solid-
 })
 export class PrescriptionComponent implements OnInit, OnChanges {
   @Input() toggle_content;
+  @Input() consult_details;
 
   show_content: boolean = true;
   faChevronCircleUp = faChevronCircleUp;
