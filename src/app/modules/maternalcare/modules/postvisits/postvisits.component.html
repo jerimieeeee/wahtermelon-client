@@ -28,7 +28,7 @@
                     <input type="text" formControlName="visit_sequence"
                         class="text-lg font-medium disabled:group-hover:font-semibold peer border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed disabled:border-0  disabled:pl-5  disabled:typed-out disabled:group-hover:bg-gray-100 disabled:rounded-full"
                         id="visit_sequence" [value]="value" hidden>
-                    <div class="text-center text-2xl font-bold py-2 border-gray-300 border rounded-lg" >
+                    <div class="text-center text-2xl font-bold py-2 border-gray-300 border rounded-lg">
                         {{ value }}
                     </div>
                     <!-- <div class="text-center text-2xl font-bold py-2 border-gray-300 border rounded-lg"
@@ -37,7 +37,7 @@
                 <div class="transitions col-span-4 border-check relative select-none" *ngIf="!focused">
                     <h3 for="fetal_presentation_id">Visit Type</h3>
                     <select formControlName="visit_type" name="visit_type" id="visit_type"
-                    class="text-ellipsis bg-white text-align-left drop_btn border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed">
+                        class="text-ellipsis bg-white text-align-left drop_btn border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed">
                         <option value="CLINIC">Clinic Visit</option>
                         <option value="HOME">Home Visit</option>
                     </select>
@@ -70,11 +70,12 @@
                         (keyup)="onKeyUp($event.target.value, $event.target.id)"
                         (keyup.escape)="clearForm($event.target.id)" id="patient_height"
                         (change)="onKeyUp($event.target.value, $event.target.id); cmCatcher($event.target.value)">
-                        <div *ngIf="is_saving && postpartum_visit_form.controls.patient_height.errors" class="invalid-alert">
-                            <div *ngIf="postpartum_visit_form.controls.patient_height.errors?.['required']">
-                                Required field
-                            </div>
+                    <div *ngIf="is_saving && postpartum_visit_form.controls.patient_height.errors"
+                        class="invalid-alert">
+                        <div *ngIf="postpartum_visit_form.controls.patient_height.errors?.['required']">
+                            Required field
                         </div>
+                    </div>
                 </div>
 
                 <div class="transitions col-span-2 border-check relative select-none group ml-2 mb-2" *ngIf="!focused">
@@ -88,11 +89,11 @@
                         (keyup)="onKeyUp($event.target.value, $event.target.id)"
                         (keyup.escape)="clearForm($event.target.id)" id="bp_systolic"
                         (change)="onKeyUp($event.target.value, $event.target.id)">
-                        <div *ngIf="is_saving && postpartum_visit_form.controls.bp_systolic.errors" class="invalid-alert">
-                            <div *ngIf="postpartum_visit_form.controls.bp_systolic.errors?.['required']">
-                                Required field
-                            </div>
+                    <div *ngIf="is_saving && postpartum_visit_form.controls.bp_systolic.errors" class="invalid-alert">
+                        <div *ngIf="postpartum_visit_form.controls.bp_systolic.errors?.['required']">
+                            Required field
                         </div>
+                    </div>
                 </div>
 
                 <div class="transitions col-span-2 border-check relative select-none group mr-2 mb-2" *ngIf="!focused">
@@ -106,11 +107,11 @@
                         (keyup)="onKeyUp($event.target.value, $event.target.id)"
                         (keyup.escape)="clearForm($event.target.id)" id="bp_diastolic"
                         (change)="onKeyUp($event.target.value, $event.target.id)">
-                        <div *ngIf="is_saving && postpartum_visit_form.controls.bp_diastolic.errors" class="invalid-alert">
-                            <div *ngIf="postpartum_visit_form.controls.bp_diastolic.errors?.['required']">
-                                Required field
-                            </div>
+                    <div *ngIf="is_saving && postpartum_visit_form.controls.bp_diastolic.errors" class="invalid-alert">
+                        <div *ngIf="postpartum_visit_form.controls.bp_diastolic.errors?.['required']">
+                            Required field
                         </div>
+                    </div>
                 </div>
 
                 <div class="transitions col-span-2 col-start-1 border-check relative select-none group mx-2"
@@ -125,11 +126,12 @@
                         (keyup)="onKeyUp($event.target.value, $event.target.id)"
                         (keyup.escape)="clearForm($event.target.id)" id="patient_weight"
                         (change)="onKeyUp($event.target.value, $event.target.id)">
-                        <div *ngIf="is_saving && postpartum_visit_form.controls.patient_weight.errors" class="invalid-alert">
-                            <div *ngIf="postpartum_visit_form.controls.patient_weight.errors?.['required']">
-                                Required field
-                            </div>
+                    <div *ngIf="is_saving && postpartum_visit_form.controls.patient_weight.errors"
+                        class="invalid-alert">
+                        <div *ngIf="postpartum_visit_form.controls.patient_weight.errors?.['required']">
+                            Required field
                         </div>
+                    </div>
                 </div>
 
                 <div class="transitions col-span-4 col-start-3 mb-2 mx-2" *ngIf="!focused">
@@ -139,14 +141,14 @@
                             <fa-icon [icon]="faCalendarDay" size="lg" class="text-blue-500" for="postpartum_date">
                             </fa-icon>
                         </div>
-                        <input formControlName="postpartum_date" id="postpartum_date"
-                            name="postpartum_date" type="date"
+                        <input formControlName="postpartum_date" id="postpartum_date" name="postpartum_date" type="date"
                             class="col-span-8 rounded-r border-solid border border-l-0 border-zinc-300 focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none disabled:cursor-not-allowed"
                             width="auto"
                             (keyup.escape)="$event.target.value = ''; onKeyUp($event.target.value, $event.target.id)"
                             (change)="onKeyUp($event.target.value, $event.target.id)">
                     </div>
-                    <div *ngIf="is_saving && postpartum_visit_form.controls.postpartum_date.errors" class="invalid-alert">
+                    <div *ngIf="is_saving && postpartum_visit_form.controls.postpartum_date.errors"
+                        class="invalid-alert">
                         <div *ngIf="postpartum_visit_form.controls.postpartum_date.errors?.['required']">
                             Required field
                         </div>
@@ -210,8 +212,7 @@
                         <input
                             class="check-style h-6 w-6 border border-gray-400 rounded-md   bg-white checked:bg-blue-400 checked:border-blue-500 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
                             type="checkbox" formControlName="cord_ok">
-                        <label class="text-gray-800 cursor-pointer" name="check"
-                            >
+                        <label class="text-gray-800 cursor-pointer" name="check">
                             {{toggle_questionaire[4].name}}
                         </label>
                     </div>
@@ -276,7 +277,8 @@
     </div>
     <div class="relative w-auto border-check mt-2 mb-7 w-12/12" *ngIf="!focused && postpartum_visit_form.enabled">
         <div class="absolute inline-flex right-0 ">
-            <div *ngIf="saved" class="border rounded-md bg-green-200 text-green-400 px-2 ease-in-out duration-1000">Successfully Saved!</div>
+            <div *ngIf="saved" class="border rounded-md bg-green-200 text-green-400 px-2 ease-in-out duration-1000">
+                Successfully Saved!</div>
             <div (click)="cancel()"
                 class="cursor-pointer flex border-check bg-white hover:drop-shadow-md hover:bg-gray-400 py-1 rounded-full text-gray-400 hover:text-white pl-2 pr-2 peer">
                 <fa-icon [icon]="faTimes" size="lg" class="mr-2">
@@ -284,12 +286,12 @@
                 <button type="button" class="font-bold button-out border-check-red">Cancel</button>
             </div>
             <div (click)="saveForm()"
-                class="cursor-pointer flex border-check hover:drop-shadow-md bg-green-300 hover:bg-green-400 py-1 rounded-full text-white px-3 peer-hover:bg-white peer-hover:text-green-400">
+                class="cursor-pointer flex border-check hover:drop-shadow-md {{edit_bool?'bg-blue-300 hover:bg-blue-400 peer-hover:text-blue-400':'bg-green-300 hover:bg-green-400 peer-hover:text-green-400'}} py-1 rounded-full text-white px-3 peer-hover:bg-white peer-hover:text-green-400">
                 <fa-icon *ngIf="!is_saving" [icon]="faSave" size="lg" class="mr-2"></fa-icon>
-                    <fa-icon *ngIf="is_saving" class="mr-2" [icon]="faSpinner" [spin]="true"></fa-icon>
-                    <button type="button" class="font-bold button-out border-check-red">
-                        {{this.is_saving?'Saving':'Save'}}
-                    </button>
+                <fa-icon *ngIf="is_saving" class="mr-2" [icon]="faSpinner" [spin]="true"></fa-icon>
+                <button type="button" class="font-bold button-out border-check-red">
+                    {{edit_bool?(is_saving?'Updating':'Update'):(is_saving?'Saving':'Save')}}
+                </button>
             </div>
         </div>
     </div>
@@ -304,8 +306,8 @@
         </div>
     </div>
 
-    <div  *ngIf="postpartum_data.length != 0" style="grid-column: span 16 / span 16;" class="mt-12">
-        <div class="mb-5 grid rounded-lg hover:drop-shadow-lg drop-shadow-md bg-white rounded-lg hover:border border-gray-300 hover:border-blue-400 mx-2  border group {{postpartum_data.length >= 6?'h-56':'h-max'}} "
+    <div *ngIf="postpartum_data.length != 0" style="grid-column: span 16 / span 16;" class="mt-12">
+        <div class="mb-5 grid rounded-lg hover:drop-shadow-lg drop-shadow-md bg-white rounded-lg hover:border border-gray-300 hover:border-blue-400 mx-2  border"
             style="grid-template-columns: repeat(11, minmax(0, 1fr));">
             <div class=" px-2 py-1 text-sm font-bold border border-dashed border-gray-300 border-t-0 border-l-0 border-r-0 group-hover:border-blue-400"
                 style="grid-column: span 11 / span 11;">
@@ -315,8 +317,8 @@
             </div>
 
             <div class="text-sm pb-1 font-semibold h-max" style="grid-column: span 11 / span 11;">
-                <table class="table-auto w-full border-separate border-spacing-x-1">
-                    <thead >
+                <table class="table-auto w-full">
+                    <thead>
                         <tr>
                             <th class="font-semibold">No.</th>
                             <th class="font-semibold">Week</th>
@@ -331,63 +333,71 @@
                             <th class="font-semibold">Baby's Cord OK</th>
                             <th class="font-semibold">Breastfeeding</th>
                             <th class="font-semibold">FP Method</th>
+                            <th class="font-semibold"></th>
                         </tr>
                     </thead>
-                <!-- </table> -->
-                
-                <!-- <div class="transitions mx-2 select-none"><h3>No.</h3></div>
-                <div class="transitions col-span-2 mx-2 select-none whitespace-normal"><h3>Week</h3></div>
-                <div class="transitions col-span-3 mx-2 select-none"><h3>Date</h3></div>
-                <div class="transitions col-span-2 mx-2 select-none"><h3>Height</h3></div>
-                <div class="transitions col-span-2 mx-2 select-none"><h3>Weight</h3></div>
-                <div class="transitions col-span-2 mx-2 select-none"><h3>BP</h3></div>
-                <div class="transitions col-span-2 mx-2 select-none whitespace-normal"><h3  class="w-full text-center">Fever > 38*C</h3></div>
-                <div class="transitions col-span-2 mx-2 select-none whitespace-normal px-1"><h3  class="w-full text-center">Vaginal Infection</h3></div>
-                <div class="transitions col-span-2 mx-2 select-none whitespace-normal px-1"><h3 class="w-full text-center">Vaginal Bleeding</h3></div>
-                <div class="transitions col-span-2 mx-2 select-none whitespace-normal"><h3 class="w-full text-center">Pallor</h3></div>
-                <div class="transitions col-span-2 mx-2 select-none whitespace-normal"><h3 class="w-full text-center">Baby's Cord</h3></div>
-                <div class="transitions col-span-3 mx-2 select-none whitespace-normal"><h3>Breastfeeding</h3></div>
-                <div class="transitions col-span-2 mx-2 select-none whitespace-normal"><h3 class="w-full text-center">FP Method</h3></div> -->
-                <!-- <div class="transitions mx-2 select-none"><h3>Action</h3></div> -->
-            <!-- </div>
-
-            <div class="overflow-x-hidden overflow-y-scroll scrollbar-thin scrollbar-thumb-white hover:scrollbar-thumb-blue-300 scrollbar-track-white" style="grid-column: span 11 / span 11;"> -->
-                <!-- <table> -->
                     <tbody>
-                        <tr *ngFor="let post of postpartum_data" class="hover:bg-blue-100">
+                        <tr *ngFor="let post of postpartum_data; let i = index;" class="hover:bg-blue-100 group">
                             <th class="font-normal">{{post.visit_sequence}}</th>
                             <th class="font-normal">{{post.postpartum_week}}</th>
                             <th class="font-normal">{{post.postpartum_date | date: 'MM/dd/yyyy'}}</th>
                             <th class="font-normal">{{post.patient_height}}</th>
                             <th class="font-normal">{{post.patient_weight}}</th>
                             <th class="font-normal">{{post.bp_systolic}}/{{post.bp_diastolic}}</th>
-                            <th class="font-normal"><fa-icon *ngIf="post.fever" [icon]="faCircleCheck" size="md" class="text-green-400"></fa-icon><fa-icon *ngIf="!post.fever" [icon]="faTimesCircle" size="md" class="text-red-400"></fa-icon></th>
-                            <th class="font-normal"><fa-icon *ngIf="post.vaginal_infection" [icon]="faCircleCheck" size="md" class="text-green-400"></fa-icon><fa-icon *ngIf="!post.vaginal_infection" [icon]="faTimesCircle" size="md" class="text-red-400"></fa-icon></th>
-                            <th class="font-normal"><fa-icon *ngIf="post.vaginal_bleeding" [icon]="faCircleCheck" size="md" class="text-green-400"></fa-icon><fa-icon *ngIf="!post.vaginal_bleeding" [icon]="faTimesCircle" size="md" class="text-red-400"></fa-icon></th>
-                            <th class="font-normal"><fa-icon *ngIf="post.pallor" [icon]="faCircleCheck" size="md" class="text-green-400"></fa-icon><fa-icon *ngIf="!post.pallor" [icon]="faTimesCircle" size="md" class="text-red-400"></fa-icon></th>
-                            <th class="font-normal"><fa-icon *ngIf="post.cord_ok" [icon]="faCircleCheck" size="md" class="text-green-400"></fa-icon><fa-icon *ngIf="!post.cord_ok" [icon]="faTimesCircle" size="md" class="text-red-400"></fa-icon></th>
-                            <th class="font-normal"><fa-icon *ngIf="post.breastfeeding" [icon]="faCircleCheck" size="md" class="text-green-400"></fa-icon><fa-icon *ngIf="!post.breastfeeding" [icon]="faTimesCircle" size="md" class="text-red-400"></fa-icon></th>
-                            <th class="font-normal"><fa-icon *ngIf="post.family_planning" [icon]="faCircleCheck" size="md" class="text-green-400"></fa-icon><fa-icon *ngIf="!post.family_planning" [icon]="faTimesCircle" size="md" class="text-red-400"></fa-icon></th>
+                            <th class="font-normal">
+                                <fa-icon *ngIf="post.fever" [icon]="faCircleCheck" size="md" class="text-green-400">
+                                </fa-icon>
+                                <fa-icon *ngIf="!post.fever" [icon]="faTimesCircle" size="md" class="text-red-400">
+                                </fa-icon>
+                            </th>
+                            <th class="font-normal">
+                                <fa-icon *ngIf="post.vaginal_infection" [icon]="faCircleCheck" size="md"
+                                    class="text-green-400"></fa-icon>
+                                <fa-icon *ngIf="!post.vaginal_infection" [icon]="faTimesCircle" size="md"
+                                    class="text-red-400"></fa-icon>
+                            </th>
+                            <th class="font-normal">
+                                <fa-icon *ngIf="post.vaginal_bleeding" [icon]="faCircleCheck" size="md"
+                                    class="text-green-400"></fa-icon>
+                                <fa-icon *ngIf="!post.vaginal_bleeding" [icon]="faTimesCircle" size="md"
+                                    class="text-red-400"></fa-icon>
+                            </th>
+                            <th class="font-normal">
+                                <fa-icon *ngIf="post.pallor" [icon]="faCircleCheck" size="md" class="text-green-400">
+                                </fa-icon>
+                                <fa-icon *ngIf="!post.pallor" [icon]="faTimesCircle" size="md" class="text-red-400">
+                                </fa-icon>
+                            </th>
+                            <th class="font-normal">
+                                <fa-icon *ngIf="post.cord_ok" [icon]="faCircleCheck" size="md" class="text-green-400">
+                                </fa-icon>
+                                <fa-icon *ngIf="!post.cord_ok" [icon]="faTimesCircle" size="md" class="text-red-400">
+                                </fa-icon>
+                            </th>
+                            <th class="font-normal">
+                                <fa-icon *ngIf="post.breastfeeding" [icon]="faCircleCheck" size="md"
+                                    class="text-green-400"></fa-icon>
+                                <fa-icon *ngIf="!post.breastfeeding" [icon]="faTimesCircle" size="md"
+                                    class="text-red-400"></fa-icon>
+                            </th>
+                            <th class="font-normal">
+                                <fa-icon *ngIf="post.family_planning" [icon]="faCircleCheck" size="md"
+                                    class="text-green-400"></fa-icon>
+                                <fa-icon *ngIf="!post.family_planning" [icon]="faTimesCircle" size="md"
+                                    class="text-red-400"></fa-icon>
+                            </th>
+                            <th class="px-2">
+                                <button (click)="edit(post)" type="button">
+                                    <fa-icon [icon]="faPencil" *ngIf="!edit_bool" size="lg"
+                                        class="text-gray-400 hover:text-orange-400 invisible group-hover:visible">
+                                    </fa-icon>
+                                </button>
+                            </th>
                         </tr>
                     </tbody>
                 </table>
-                <!-- <div class="text-sm grid hover:bg-blue-100 hover:font-medium" style="grid-template-columns: repeat(27, minmax(0, 1fr)); grid-column: span 11 / span 11;" *ngFor="let post of postpartum_data">
-                    <div class="transitions relative select-none mx-2"><h3>{{post.visit_sequence}}</h3></div>
-                    <div class="transitions col-span-2 relative select-none mx-2"><h3>{{post.postpartum_week}}</h3></div>
-                    <div class="transitions col-span-3 relative select-none mx-2"><h3>{{post.postpartum_date}}</h3></div>
-                    <div class="transitions col-span-2 relative select-none mx-2"><h3>{{post.patient_height}}</h3></div>
-                    <div class="transitions col-span-2 relative select-none mx-2"><h3>{{post.patient_weight}}</h3></div>
-                    <div class="transitions col-span-2 relative select-none mx-2"><h3>{{post.bp_systolic}}/{{post.bp_diastolic}}</h3></div>
-                    <div class="transitions col-span-2 relative select-none mx-2 whitespace-normal"><h3 class="w-full text-center"><fa-icon *ngIf="post.fever" [icon]="faCircleCheck" size="md" class="text-green-400"></fa-icon><fa-icon *ngIf="!post.fever" [icon]="faTimesCircle" size="md" class="text-red-400"></fa-icon></h3></div>
-                    <div class="transitions col-span-2 relative select-none mx-2 whitespace-normal"><h3 class="w-full text-center"><fa-icon *ngIf="post.vaginal_infection" [icon]="faCircleCheck" size="md" class="text-green-400"></fa-icon><fa-icon *ngIf="!post.vaginal_infection" [icon]="faTimesCircle" size="md" class="text-red-400"></fa-icon></h3></div>
-                    <div class="transitions col-span-2 relative select-none mx-2 whitespace-normal"><h3 class="w-full text-center"><fa-icon *ngIf="post.vaginal_bleeding" [icon]="faCircleCheck" size="md" class="text-green-400"></fa-icon><fa-icon *ngIf="!post.vaginal_bleeding" [icon]="faTimesCircle" size="md" class="text-red-400"></fa-icon></h3></div>
-                    <div class="transitions col-span-2 relative select-none mx-2 whitespace-normal"><h3 class="w-full text-center"><fa-icon *ngIf="post.pallor" [icon]="faCircleCheck" size="md" class="text-green-400"></fa-icon><fa-icon *ngIf="!post.pallor" [icon]="faTimesCircle" size="md" class="text-red-400"></fa-icon></h3></div>
-                    <div class="transitions col-span-2 relative select-none mx-2 whitespace-normal"><h3 class="w-full text-center"><fa-icon *ngIf="post.cord_ok" [icon]="faCircleCheck" size="md" class="text-green-400"></fa-icon><fa-icon *ngIf="!post.cord_ok" [icon]="faTimesCircle" size="md" class="text-red-400"></fa-icon></h3></div>
-                    <div class="transitions col-span-3 relative select-none mx-2 whitespace-normal"><h3 class="w-full text-center"><fa-icon *ngIf="post.breastfeeding" [icon]="faCircleCheck" size="md" class="text-green-400"></fa-icon><fa-icon *ngIf="!post.breastfeeding" [icon]="faTimesCircle" size="md" class="text-red-400"></fa-icon></h3></div>
-                    <div class="transitions col-span-2 relative select-none mx-2 whitespace-normal"><h3 class="w-full text-center"><fa-icon *ngIf="post.family_planning" [icon]="faCircleCheck" size="md" class="text-green-400"></fa-icon><fa-icon *ngIf="!post.family_planning" [icon]="faTimesCircle" size="md" class="text-red-400"></fa-icon></h3></div>
-                </div> -->
             </div>
-            
+
         </div>
     </div>
 </form>
