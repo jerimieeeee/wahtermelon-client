@@ -261,14 +261,8 @@ export class PatientItrComponent implements OnInit {
     })
   }
 
-  openVisit(details: any){
-    /* console.log(details);
-    console.log(details.pt_group); */
-    this.router.navigate(['/'+details.pt_group, {id:details.patient.id, consult_id: details.id}])
-  }
-
   showConsult(details: any){
-    // console.log(details)
+    console.log(details)
     if(details.vitals) this.getLatestToday(details);
   }
 

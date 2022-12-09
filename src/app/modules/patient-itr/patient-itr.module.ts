@@ -8,11 +8,13 @@ import { PatientItrComponent } from './patient-itr.component';
 import { TakePhotoComponent } from './modals/take-photo/take-photo.component';
 import { FormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { VisitDetailsComponent } from './components/visit-details/visit-details.component';
 
 @NgModule({
   declarations: [
     PatientItrComponent,
-    TakePhotoComponent
+    TakePhotoComponent,
+    VisitDetailsComponent
   ],
   imports: [
     CommonModule,
