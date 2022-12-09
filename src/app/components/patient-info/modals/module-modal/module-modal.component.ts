@@ -127,7 +127,7 @@ export class ModuleModalComponent implements OnInit {
       if(loc === 'itr'){
         this.router.navigate(['/'+loc, {id: this.patient_info.id}]);
       } else {
-        this.http.get('consultation/cn-records', {params:{'pt_group': group, 'consult_done': 0, patient_id: this.patient_info.id}}).subscribe({
+        this.http.get('consultation/records', {params:{'pt_group': group, 'consult_done': 0, patient_id: this.patient_info.id}}).subscribe({
           next: (data: any) => {
             this.selected_module = module;
             // console.log(data.data)
@@ -162,7 +162,7 @@ export class ModuleModalComponent implements OnInit {
       pt_group: selected_module.group
     };
 
-    this.http.post('consultation/cn-records', new_visit).subscribe({
+    this.http.post('consultation/records', new_visit).subscribe({
       next: (data: any) => {
         console.log(data)
         this.router.navigate(['/'+selected_module.location, {id: this.patient_info.id, consult_id: data.data.id}]);
@@ -203,7 +203,7 @@ export class ModuleModalComponent implements OnInit {
   ngOnInit(): void {
     this.selectPrograms();
 
-    this.http.get('consultation/cn-records', {params:{consult_done: 0, patient_id: this.patient_info.id}}).subscribe({
+    this.http.get('consultation/records', {params:{consult_done: 0, patient_id: this.patient_info.id}}).subscribe({
       next: (data: any) => {
         console.log(data.data)
         if(data.data.length > 0) this.checkOpenConsult(data.data);

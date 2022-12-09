@@ -47,7 +47,7 @@ export class ComplaintHistoryComponent implements OnInit, OnChanges {
       complaints: submit_complaints
     }
 
-    this.http.post('consultation/cn-complaint', complaint).subscribe({
+    this.http.post('consultation/complaint', complaint).subscribe({
       next: (data: any) => {
         console.log(data);
       },

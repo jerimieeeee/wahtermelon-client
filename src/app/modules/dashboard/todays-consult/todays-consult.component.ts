@@ -37,7 +37,7 @@ export class TodaysConsultComponent implements OnInit {
     params['params']['per_page'] = this.per_page;
     params['params']['consult_done'] = 0;
 
-    this.http.get('consultation/cn-records', params).subscribe({
+    this.http.get('consultation/records', params).subscribe({
       next: (data: any) => {
         // console.log(data);
         this.today_consults = data.data;

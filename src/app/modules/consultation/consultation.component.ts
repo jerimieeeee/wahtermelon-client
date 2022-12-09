@@ -50,7 +50,7 @@ export class ConsultationComponent implements OnInit {
       consult_done: true
     }
 
-    this.http.update('consultation/cn-records/', this.consult_details.id, params).subscribe({
+    this.http.update('consultation/records/', this.consult_details.id, params).subscribe({
       next: (data: any) => {
         console.log(data)
       },
@@ -65,7 +65,7 @@ export class ConsultationComponent implements OnInit {
 
   loadVisitHistory(){
     // console.log(this.patient_details);
-    this.http.get('consultation/cn-records',{params:{patient_id: this.patient_details.id, per_page: 'all', sort: '-consult_date'}}).subscribe({
+    this.http.get('consultation/records',{params:{patient_id: this.patient_details.id, per_page: 'all', sort: '-consult_date'}}).subscribe({
       next: (data: any) => {
         this.visit_list = data.data;
         // console.log(data);
@@ -83,7 +83,7 @@ export class ConsultationComponent implements OnInit {
     }
 
     console.log(params)
-    this.http.get('consultation/cn-records', {params}).subscribe({
+    this.http.get('consultation/records', {params}).subscribe({
       next: (data: any) => {
         console.log(data.data[0]);
         this.consult_details = data.data[0];
