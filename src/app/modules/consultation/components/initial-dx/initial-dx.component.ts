@@ -25,12 +25,37 @@ export class InitialDxComponent implements OnInit, OnChanges {
   searchInput$ = new Subject<string>();
   selectedIdx: any;
   minLengthTerm = 3;
-  user_last_name: string;
-  user_first_name: string;
-  user_middle_name: string;
+
+  idx_remarks: string;
 
   onSubmit(){
+    console.log(this.selectedIdx);
+    let idx = {
+      notes_id: this.consult_details.consult_notes.id,
+      idx: this.selectedIdx
+    };
 
+    this.http.post('consultation/cn-idx', idx).subscribe({
+      next: (data: any) => {
+        console.log(data);
+        this.saveNotes
+      },
+      error: err => console.log(err)
+    })
+  }
+
+  saveNotes() {
+    let notes_remarks = {
+      consult_id: this.consult_details.id,
+      patient_id: this.consult_details.patient.id,
+      idx_remarks: this.idx_remarks
+    }
+
+    console.log(notes_remarks);
+    this.http.update('consultation/cn-notes/', this.consult_details.consult_notes.id, notes_remarks).subscribe({
+      next: (data: any) => {console.log(data); },
+      error: err => console.log(err)
+    })
   }
 
   loadIdx() {
@@ -56,9 +81,7 @@ export class InitialDxComponent implements OnInit, OnChanges {
   getIdx(term: string = null): Observable<any> {
     return this.http.get('libraries/diagnosis', {params:{'filter[search]':term}})
     .pipe(map((resp:any) => {
-      // console.log(resp);
-      /* this.showCreate = resp.data.length == 0 ? true : false;
-      console.log(this.showCreate) */
+      console.log(resp.data)
       return resp.data;
     }))
   }

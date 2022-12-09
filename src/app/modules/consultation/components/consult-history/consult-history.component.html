@@ -1,3 +1,4 @@
+<hr class="my-4">
 <div class="grid grid-cols-10">
   <div class="col-span-2 pt-2 font-semibold">
     Diagnosis History
@@ -14,17 +15,54 @@
         <thead>
           <tr class="border-b border-solid border-gray-200">
             <th>Date</th>
-            <th>Initial Diagnosis</th>
-            <th>Final Diagnosis</th>
+            <th>Complaints | History</th>
+            <th>Diagnosis</th>
             <th>Precription</th>
           </tr>
         </thead>
         <tbody>
-          <tr class="text-center">
-            <td>09/01/2022</td>
-            <td>Sample dx</td>
-            <td>Sample dx</td>
-            <td></td>
+          <tr class="text-left mt-3 align-top border-t border-slate-200 text-sm" *ngFor="let visit of visit_list | slice:1; let i = index;">
+            <td class="p-3 w-2/12">
+              <div class=" grid grid-cols-1">
+                <span class="font-semibold w-full">{{ visit.consult_date | date: 'MM/dd/yyyy' }}</span>
+                <span class="text-sm w-full">{{ visit.consult_date | date: 'hh:mm:ss a' }}</span>
+              </div>
+            </td>
+
+            <td class="p-3 w-4/12">
+              <div class=" grid grid-cols-1">
+                <span class="w-full mb-3">
+                  <span class="font-semibold">Compalint notes:</span> <br /> {{ visit.consult_notes.complaint }}
+                </span>
+
+                <ul class="list-disc last:mb-3 ml-5" *ngFor="let complaint of visit.consult_notes.complaints">
+                  <li>{{ complaint.lib_complaints.complaint_desc }}</li>
+                </ul>
+
+                <span class="w-full mt-2 pt-2">
+                  <span class="font-semibold">History notes:</span> <br />{{ visit.consult_notes.history }}
+                </span>
+              </div>
+            </td>
+
+            <td class="p-3 w-3/12">
+              <div class="grid grid-cols-1 text-left">
+                <span class="font-semibold">Initial Diagnosis:</span>
+                <div *ngFor="let idx of visit.consult_notes.initialdx">
+                  test: adfsdaf
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 text-left mt-2 pt-2">
+                <span class="font-semibold">Final Diagnosis:</span>
+                <div *ngFor="let fdx of visit.consult_notes.fdx">
+                  test: adfsdaf
+                </div>
+              </div>
+            </td>
+            <td class="p-3 w-3/12">
+
+            </td>
           </tr>
         </tbody>
       </table>

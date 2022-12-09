@@ -18,28 +18,32 @@
           </button>
           <div class="chips-container">
             <ng-select class="select-chips" placeholder="search"
-              [items]="complaints$ | async"
+              [items]="complaints"
               [multiple]="true"
               [closeOnSelect]="false"
               [hideSelected]="true"
               bindLabel="complaint_desc"
+              bindValue="complaint_id"
               placeholder="Select Complaint"
               [(ngModel)]="selectedComplaint">
             </ng-select>
           </div>
         </div>
-        <div class="flex px-4 pb-4">
-          <textarea rows="3" id="complaint_notes" placeholder="Complaint Notes" class="placeholder-slate-400 w-full rounded-md border-gray-300 bg-gray-50"></textarea>
+        <div class="grid grid-cols-1 px-4 pb-4">
+          <label for="complaint_notes" class="font-semibold pl-1">Complaint notes</label>
+          <textarea rows="3" id="complaint_notes" placeholder="Complaint Notes" [(ngModel)]="consult_notes.complaint" class="placeholder-slate-400 w-full rounded-md border-gray-300 bg-gray-50"></textarea>
         </div>
 
-        <div class="flex px-4 pb-4">
-          <textarea rows="3" id="complaint_notes" placeholder="History of Current Illness" class="placeholder-slate-400 w-full rounded-md border-gray-300 bg-gray-50"></textarea>
+        <div class="grid grid-cols-1 px-4 pb-4">
+          <label for="complaint_notes" class="font-semibold pl-1">History notes</label>
+          <textarea rows="3" id="history_notes" placeholder="History of Current Illness" [(ngModel)]="consult_notes.history" class="placeholder-slate-400 w-full rounded-md border-gray-300 bg-gray-50"></textarea>
         </div>
 
         <div class="flex text-right">
-          <button type="button" class="btn-save ml-auto mr-5 mb-5" (click)="onSubmit()">
-            <fa-icon class="mr-2" [icon]="faFloppyDisk"></fa-icon>
-            Save
+          <button [disabled]="is_saving" type="button" class="btn-save ml-auto mr-5 mb-5 disabled:bg-gray-400" (click)="onSubmit()">
+            <fa-icon *ngIf="is_saving" class="mr-2" [icon]="faSpinner" spin="true"></fa-icon>
+            <fa-icon *ngIf="!is_saving" class="mr-2" [icon]="faFloppyDisk"></fa-icon>
+            {{ have_complaint ? 'Update' : 'Save' }}
           </button>
         </div>
       </div>

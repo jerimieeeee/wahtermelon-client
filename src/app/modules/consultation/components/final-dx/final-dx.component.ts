@@ -25,12 +25,36 @@ export class FinalDxComponent implements OnInit, OnChanges {
   searchInput$ = new Subject<string>();
   selectedFdx: any;
   minLengthTerm = 3;
-  user_last_name: string;
-  user_first_name: string;
-  user_middle_name: string;
+  idx_remarks: string;
 
   onSubmit(){
+    console.log(this.selectedFdx);
+    let idx = {
+      notes_id: this.consult_details.consult_notes.id,
+      idx: this.selectedFdx
+    };
 
+    this.http.post('consultation/cn-idx', idx).subscribe({
+      next: (data: any) => {
+        console.log(data);
+        this.saveNotes
+      },
+      error: err => console.log(err)
+    })
+  }
+
+  saveNotes() {
+    let notes_remarks = {
+      consult_id: this.consult_details.id,
+      patient_id: this.consult_details.patient.id,
+      idx_remarks: this.idx_remarks
+    }
+
+    console.log(notes_remarks);
+    this.http.update('consultation/cn-notes/', this.consult_details.consult_notes.id, notes_remarks).subscribe({
+      next: (data: any) => {console.log(data); },
+      error: err => console.log(err)
+    })
   }
 
   loadFdx() {

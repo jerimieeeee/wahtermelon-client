@@ -1,1 +1,14 @@
-<p>admin works!</p>
+<div class="grid grid-cols-12">
+  <div class="col-span-2 border border-solid border-slate-100 shadow-md h-auto p-5 m-5 rounded-xl">
+    <div class="grid grid-cols-1 justify-start">
+      <button *ngFor="let item of locations" class="font-semibold text-sm hover:bg-blue-400 hover:text-white rounded-lg button text-left my-3 px-3 py-1"
+        (click)="navigateTo(item.loc)" [ngClass]="{'bg-blue-500 text-white hover:bg-blue-600': (item.loc === selected_route)}">
+        <fa-icon [icon]="item.icon" class="font-normal"></fa-icon>
+        {{ item.name }}
+      </button>
+    </div>
+  </div>
+  <div class="col-span-10 mt-5 mr-5">
+    <router-outlet></router-outlet>
+  </div>
+</div>

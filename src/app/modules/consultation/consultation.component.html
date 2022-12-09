@@ -8,29 +8,21 @@
           <button class="font-normal text-sky-500 px-2 py-1 text-sm  mr-2" type="button" (click)="toggleAll()">
             <fa-icon [icon]="toggle_content ? faChevronUp : faChevronDown" size="lg"></fa-icon>
           </button>
-          <span class="mt-2">CONSULTATION</span>
+          <span class="mt-2"> CONSULTATION <span class="text-gray-500 text-sm">({{ consult_details?.consult_date | date: 'MM/dd/yyyy hh:mm:ss a' }} | ID:{{ consult_details?.id }})</span></span>
         </span>
-        <button type="button" class="btn-end-visit ml-auto" (click)="endVisit()">
+        <button type="button" class="btn-end-visit ml-auto" (click)="toggleModal()">
           <fa-icon class="mr-1" [icon]="faDoorClosed"></fa-icon>
           End Visit
         </button>
       </span>
 
       <div *ngIf="open_consult">
-        <app-complaint-history [toggle_content]="toggle_content" [consult_details]="consult_details"></app-complaint-history>
-
-        <hr class="my-4">
-        <app-physical-exam [toggle_content]="toggle_content" [consult_details]="consult_details"></app-physical-exam>
-
-        <hr class="my-4">
-        <app-consult-history [toggle_content]="toggle_content"></app-consult-history>
-
-        <hr class="my-4">
-        <app-initial-dx [toggle_content]="toggle_content" [consult_details]="consult_details"></app-initial-dx>
-        <app-final-dx [toggle_content]="toggle_content" [consult_details]="consult_details"></app-final-dx>
-
-        <hr class="my-4">
-        <app-prescription [toggle_content]="toggle_content" [consult_details]="consult_details"></app-prescription>
+        <app-complaint-history [toggle_content]="toggle_content" [consult_details]="consult_details" [have_complaint]="have_complaint" (loadConsult)="loadConsult()"></app-complaint-history>
+        <app-physical-exam *ngIf="have_complaint" [toggle_content]="toggle_content" [consult_details]="consult_details"></app-physical-exam>
+        <app-consult-history *ngIf="have_complaint" [toggle_content]="toggle_content"></app-consult-history>
+        <app-initial-dx *ngIf="have_complaint" [toggle_content]="toggle_content" [consult_details]="consult_details"></app-initial-dx>
+        <app-final-dx *ngIf="have_complaint" [toggle_content]="toggle_content" [consult_details]="consult_details"></app-final-dx>
+        <app-prescription *ngIf="have_complaint" [toggle_content]="toggle_content" [consult_details]="consult_details"></app-prescription>
       </div>
 
       <div *ngIf="!open_consult">
@@ -44,3 +36,5 @@
     <app-patient-info (patientInfo)="patientInfo($event)" (patientVitals)="patientVitals($event)"></app-patient-info>
   </div>
 </div>
+
+<app-end-visit *ngIf="show_end" (toggleModal)="toggleModal()" [consult_id]="consult_details?.id" [consult_date]="consult_details?.consult_date" [patient_id]="consult_details?.patient.id"></app-end-visit>

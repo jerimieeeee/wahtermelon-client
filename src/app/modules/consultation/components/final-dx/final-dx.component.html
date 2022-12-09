@@ -39,7 +39,7 @@
           </div>
         </div>
         <div class="flex px-4 pb-4">
-          <textarea rows="3" id="initial_dx_remarks" placeholder="Initial Diagnosis remark" class="placeholder-slate-400 w-full rounded-md border-gray-300 bg-gray-50"></textarea>
+          <textarea rows="3" id="fdx_remarks" [(ngModel)]="fdx_remarks" placeholder="Initial Diagnosis remark" class="placeholder-slate-400 w-full rounded-md border-gray-300 bg-gray-50"></textarea>
         </div>
         <div class="flex text-right">
           <button type="button" class="btn-save ml-auto mr-5 mb-5" (click)="onSubmit()">

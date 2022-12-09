@@ -15,7 +15,7 @@ import { VitalsChartsService } from 'app/shared/services/vitals-charts.service';
     trigger('openCloseAccordion', [
       transition(':enter', [
         style({height: 0, opacity: 0}),
-        animate('200ms', style({ height: 'full', opacity: '100%'})),
+        animate('200ms', style({ height: '100%', opacity: '100%'})),
       ]),
       transition(':leave', [
         animate('200ms', style({ height: 0, opacity: 0 }))

@@ -18,7 +18,7 @@ export class PhysicalExamComponent implements OnInit, OnChanges {
 
   pe_grouped = [];
 
-  show_content: boolean =true;
+  show_content: boolean =false;
 
   onSubmit(){
 
@@ -43,7 +43,7 @@ export class PhysicalExamComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes){
-    this.show_content = this.toggle_content;
+    // this.show_content = this.toggle_content;
   }
 
   constructor(
