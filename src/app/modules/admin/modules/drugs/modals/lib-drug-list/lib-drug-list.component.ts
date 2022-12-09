@@ -1,13 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { faAnglesLeft, faAnglesRight, faChevronLeft, faChevronRight, faSearch, faEdit, faAdd } from '@fortawesome/free-solid-svg-icons';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { faAdd, faAnglesLeft, faAnglesRight, faChevronLeft, faChevronRight, faEdit, faSearch, faCircleXmark } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
-  selector: 'app-drugs',
-  templateUrl: './drugs.component.html',
-  styleUrls: ['./drugs.component.scss']
+  selector: 'app-lib-drug-list',
+  templateUrl: './lib-drug-list.component.html',
+  styleUrls: ['./lib-drug-list.component.scss']
 })
-export class DrugsComponent implements OnInit {
+export class LibDrugListComponent implements OnInit {
+  @Output() showAdd = new EventEmitter<any>()
   faAnglesLeft = faAnglesLeft;
   faChevronLeft = faChevronLeft;
   faChevronRight = faChevronRight;
@@ -15,10 +16,10 @@ export class DrugsComponent implements OnInit {
   faSearch = faSearch;
   faEdit = faEdit;
   faAdd = faAdd;
+  faCircleXmark = faCircleXmark;
 
   is_updating: boolean = false;
   show_lib_drug: boolean = false;
-  show_drug_form: boolean = true;
 
   submit_error: any;
   drug_list: any;
@@ -32,12 +33,11 @@ export class DrugsComponent implements OnInit {
 
   search_item: string;
 
-  showEdit() {
-    this.show_drug_form = !this.show_drug_form;
+  selectDrugs() {
+    console.log('click')
   }
-
-  showAdd() {
-    this.show_lib_drug = !this.show_lib_drug;
+  closeModal() {
+    this.showAdd.emit();
   }
 
   loadDrugs(page?: number){
@@ -67,6 +67,6 @@ export class DrugsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    // this.loadDrugs();
+    this.loadDrugs();
   }
 }

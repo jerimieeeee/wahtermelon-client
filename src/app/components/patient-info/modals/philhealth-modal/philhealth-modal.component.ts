@@ -113,8 +113,7 @@ export class PhilhealthModalComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private http: HttpService,
-    private router: Router
+    private http: HttpService
   ) { }
 
   loadMainLibrary(){
