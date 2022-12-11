@@ -371,7 +371,8 @@ export class ServicesComponent implements OnInit {
     })
 
     if(service_arr.length > 0){
-      let user_id = localStorage.getItem('user_id');
+      let user_id =this.http.getUserID();
+      // let user_id = localStorage.getItem('user_id');
       let patient_id = this.patient_details.id
       var serv_form ={
         essential: this.modalFilter,

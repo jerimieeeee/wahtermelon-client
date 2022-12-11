@@ -43,7 +43,7 @@ export class ComplaintHistoryComponent implements OnInit, OnChanges {
     }
 
     console.log(notes_remarks);
-    this.http.update('consultation/cn-notes/', this.consult_details.consult_notes.id, notes_remarks).subscribe({
+    this.http.update('consultation/notes/', this.consult_details.consult_notes.id, notes_remarks).subscribe({
       next: (data: any) => {console.log(data); this.loadConsult.emit(); this.is_saving = false; },
       error: err => console.log(err)
     })
@@ -59,8 +59,10 @@ export class ComplaintHistoryComponent implements OnInit, OnChanges {
       complaints: this.selectedComplaint
     }
 
-    this.http.post('consultation/cn-complaint', complaint).subscribe({
-      next: (data: any) => {console.log(data); this.saveNotes()},
+    this.http.post('consultation/complaint', complaint).subscribe({
+      next: (data: any) => {
+        console.log(data);
+      },
       error: err => console.log(err)
     })
   }

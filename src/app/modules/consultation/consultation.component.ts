@@ -44,7 +44,20 @@ export class ConsultationComponent implements OnInit {
     this.vitals = vitals;
   }
   endVisit() {
-    /* */
+    console.log(this.consult_id);
+    let params = {
+      patient_id: this.consult_details.patient.id,
+      consult_date: this.consult_details.consult_date,
+      pt_group: 'cn',
+      consult_done: true
+    }
+
+    this.http.update('consultation/records/', this.consult_details.id, params).subscribe({
+      next: (data: any) => {
+        console.log(data)
+      },
+      error: err => console.log(err)
+    })
   }
 
   patientInfo(info){
@@ -55,13 +68,25 @@ export class ConsultationComponent implements OnInit {
     this.show_end = !this.show_end;
   }
 
+  loadVisitHistory(){
+    // console.log(this.patient_details);
+    this.http.get('consultation/records',{params:{patient_id: this.patient_details.id, per_page: 'all', sort: '-consult_date'}}).subscribe({
+      next: (data: any) => {
+        this.visit_list = data.data;
+        // console.log(data);
+      },
+      error: err => console.log(err),
+    })
+  }
+
   loadConsult(){
     let params = {
       id: this.consult_id,
       pt_group: 'cn',
     }
 
-    this.http.get('consultation/cn-records', {params}).subscribe({
+    console.log(params)
+    this.http.get('consultation/records', {params}).subscribe({
       next: (data: any) => {
         this.consult_details = data.data[0];
         console.log(this.consult_details)

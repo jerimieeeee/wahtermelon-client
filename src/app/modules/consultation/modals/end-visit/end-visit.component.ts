@@ -22,7 +22,7 @@ export class EndVisitComponent implements OnInit {
       consult_done: true
     }
 
-    this.http.update('consultation/cn-records/', this.consult_id, params).subscribe({
+    this.http.update('consultation/records/', this.consult_id, params).subscribe({
       next: (data: any) => {
         console.log(data);
         this.showAlert = true;

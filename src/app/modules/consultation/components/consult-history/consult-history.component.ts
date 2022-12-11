@@ -27,7 +27,7 @@ export class ConsultHistoryComponent implements OnInit, OnChanges {
       pt_group: 'cn'
     };
 
-    this.http.get('consultation/cn-records',{params}).subscribe({
+    this.http.get('consultation/records',{params}).subscribe({
       next: (data: any) => {
         this.visit_list = data.data;
         console.log(data.data);

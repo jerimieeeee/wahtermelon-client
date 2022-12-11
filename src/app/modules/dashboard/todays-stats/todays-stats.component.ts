@@ -17,7 +17,7 @@ export class TodaysStatsComponent implements OnInit {
   side_stats: any;
 
   loadStats(){
-    this.http.get('consultation/cn-stats').subscribe({
+    this.http.get('consultation/stats').subscribe({
       next: (data:any) => {
         // console.log(data);
         this.side_stats = data;

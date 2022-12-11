@@ -13,7 +13,7 @@ import { HttpService } from 'app/shared/services/http.service';
 export class ChildcareComponent implements OnInit {
 
   faDoorClosed = faDoorClosed;
-  
+
   module: Number;
 
   patient_details: any;
@@ -37,7 +37,7 @@ export class ChildcareComponent implements OnInit {
 
 
   endVisit(){
-  
+
     let endbutton = {
       consult_done: 1,
       patient_id : this.consult_details[0].patient.id,
@@ -47,7 +47,7 @@ export class ChildcareComponent implements OnInit {
       // physician_id : this.consult_details[0].physician.id,
       // is_pregnant: this.consult_details[0].is_pregnant
     }
-      this.http.update('consultation/cn-records/',this.consult_id, endbutton).subscribe({
+      this.http.update('consultation/records/',this.consult_id, endbutton).subscribe({
         // next: (data: any) => console.log(data.status, 'check status'),
         error: err => console.log(err),
         complete: () => {
@@ -64,12 +64,12 @@ export class ChildcareComponent implements OnInit {
 
     loadConsultDetails(){
 
-      this.http.get('consultation/cn-records',{params: {patient_id: this.patient_details.id}}).subscribe((data: any) => {
+      this.http.get('consultation/records',{params: {patient_id: this.patient_details.id}}).subscribe((data: any) => {
         this.consult_details = data.data
         console.log(this.consult_details, 'kunin mo consult');
       });
     }
-    
+
     show_forms: boolean;
     checkCCdevDetails(e){
       console.log(e, 'show form with condition ', e != '')

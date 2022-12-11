@@ -34,7 +34,7 @@ export class FinalDxComponent implements OnInit, OnChanges {
       idx: this.selectedFdx
     };
 
-    this.http.post('consultation/cn-idx', idx).subscribe({
+    this.http.post('consultation/final-diagnosis', idx).subscribe({
       next: (data: any) => {
         console.log(data);
         this.saveNotes
@@ -51,7 +51,7 @@ export class FinalDxComponent implements OnInit, OnChanges {
     }
 
     console.log(notes_remarks);
-    this.http.update('consultation/cn-notes/', this.consult_details.consult_notes.id, notes_remarks).subscribe({
+    this.http.update('consultation/notes/', this.consult_details.consult_notes.id, notes_remarks).subscribe({
       next: (data: any) => {console.log(data); },
       error: err => console.log(err)
     })

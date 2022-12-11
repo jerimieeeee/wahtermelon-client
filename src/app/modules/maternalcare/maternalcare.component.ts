@@ -57,7 +57,6 @@ export class MaternalcareComponent implements OnInit {
     this.loadLibraries();
     this.consult_id = this.route.snapshot.paramMap.get('consult_id');
     this.loadConsultDetails()
-    console.log(this.consult_id, 'test consult ids')
   }
 
   switchTab(tab) {
@@ -210,7 +209,7 @@ export class MaternalcareComponent implements OnInit {
       // physician_id : this.consult_details[0].physician.id,
       // is_pregnant: this.consult_details[0].is_pregnant
     }
-      this.http.update('consultation/cn-records/',this.consult_id, endbutton).subscribe({
+      this.http.update('consultation/records/',this.consult_id, endbutton).subscribe({
         // next: (data: any) => console.log(data.status, 'check status'),
         error: err => console.log(err),
         complete: () => {
@@ -227,13 +226,10 @@ export class MaternalcareComponent implements OnInit {
 
     loadConsultDetails(){
 
-      this.http.get('consultation/cn-records',{params: {id: this.consult_id}}).subscribe((data: any) => {
+      this.http.get('consultation/records',{params: {id: this.consult_id}}).subscribe((data: any) => {
         this.consult_details = data.data
-        console.log(this.consult_details[0], 'kunin mo consult');
-        
-       
       });
     }
-    
+
 
 }

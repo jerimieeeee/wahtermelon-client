@@ -63,7 +63,7 @@ export class PrenatalComponent implements OnInit {
   edit_bool: boolean;
   vitals_modal: boolean;
   max_value: number;
-
+  edit_id: any;
 
   @Input() fetals;
   @Input() fhr_lib;
@@ -82,6 +82,8 @@ export class PrenatalComponent implements OnInit {
   public catch_array = [];
   public hide = [];
   public prenatal_data = [];
+
+  edit_form: any;
 
   ngOnInit(): void {
     this.value = 1;
@@ -125,19 +127,27 @@ export class PrenatalComponent implements OnInit {
           filtered[key] = target[String(key)];
         }
       }
+      let http
+      if(this.edit_bool){
+        http = this.http.update('maternal-care/mc-prenatal/', this.edit_id, filtered);
+      }else{
+        http = this.http.post('maternal-care/mc-prenatal', filtered);
+      }
+
       console.log(filtered, this.prenatal_form.value, " filtered saveform");
-      this.http.post('maternal-care/mc-prenatal', filtered).subscribe({
+      http.subscribe({
         next: (data: any) => {
           console.log(data.data, " data from saving prenatal")
-          this.prenatal_data = data.data;``
+          this.prenatal_data = data.data;
           this.prenatal_mc_data.emit(data.data);
           this.value = this.prenatal_data[0].visit_sequence + 1;
         },
-        error: err => console.log(err),
+        error: err => {console.log(err),this.is_saving = false; },
         complete: () => {
           this.is_saving = false;
           this.saved = true;
-          this.createForm();
+          this.edit_bool = false;
+          this.getMCR();
           setTimeout(() => {
             this.saved = false;
           }, 1500);
@@ -290,41 +300,46 @@ export class PrenatalComponent implements OnInit {
     this.hide = [];
     this.keyUp = [];
     this.edit_bool = false;
-    this.createForm();
+    this.is_saving = false;
+    this.getMCR();
+    this.edit_id;
+    // this.prenatal_form.patchValue(this.prenatal_data[0])
     console.log("canceling");
     
   }
-  edit(id) {
+  edit(prenatal) {
     this.edit_bool = true;
-    this.prenatal_form.reset();
-    this.catch_array.forEach(c => {
-      if (c.visit_sequence == id) {
-        //this.value = c.visit_sequence;
-        this.prenatal_form.setValue({
-          visit_sequence: c.visit_sequence,
-          fhr: c.fhr,
-          fundic_height: c.fundic_height,
-          fhr_location_id: c.fhr_location_id,
-          fetal_presentation_id: c.fetal_presentation_id,
-          patient_height: c.patient_height,
-          patient_weight: c.patient_weight,
-          bp_systolic: c.bp_systolic,
-          bp_diastolic: c.bp_diastolic,
-          consult_id: c.consult_id,
-          lmp_date: c.lmp_date,
-          mc_id: c.mc_id,
-          user_id: c.user_id,
-          patient_id: c.patient_id,
-          remarks: c.remarks,
-          prenatal_date: c.prenatal_date,
-        });
-      }
-    });
+    console.log(prenatal, " data to be editesd");
+    
+    // this.prenatal_form.reset();
+        this.edit_form = {
+          patient_mc_id: prenatal.patient_mc_id,
+          patient_id: this.patient_details.id,
+          prenatal_date: prenatal.prenatal_date,
+          patient_height: prenatal.patient_height,
+          patient_weight: prenatal.patient_weight,
+          bp_systolic: prenatal.bp_systolic,
+          bp_diastolic: prenatal.bp_diastolic,
+          fundic_height: prenatal.fundic_height,
+          presentation_code: prenatal.presentation_code,
+          fhr: prenatal.fhr,
+          location_code: prenatal.location_code,
+          private: prenatal.private,
+          remarks: prenatal.remarks
+        };
 
-    this.hide.push(id);
-    console.log(this.hide.includes(id));
+        this.prenatal_form.patchValue(this.edit_form);
+      // }
+    // });
+        this.value = prenatal.visit_sequence;
+    // this.hide.push(id);
+    console.log(this.edit_form, " edit form");
+    console.log(prenatal.id, " id pre edit");
 
-    console.log(id, " prenatal id edit");
+    this.edit_id = prenatal.id;
+    
+        this.edit_bool = true;
+    // console.log(id, " prenatal id edit");
 
   }
 }

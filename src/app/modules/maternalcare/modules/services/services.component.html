@@ -52,18 +52,18 @@
                            </th>
                            <th class="px-2 font-normal" *ngIf="services_form.value.visit_status == 'Prenatal'">
                               <fa-icon *ngIf="service.positive_result && service.group.pos && edit !== i"
-                                 [icon]="faCircleCheck" size="md" class="text-green-400"></fa-icon>
+                                 [icon]="faCircleCheck" size="md" class="text-red-400"></fa-icon>
                               <fa-icon *ngIf="!service.positive_result && service.group.pos && edit !== i"
-                                 [icon]="faTimesCircle" size="md" class="text-red-400"></fa-icon>
+                                 [icon]="faTimesCircle" size="md" class="text-green-400"></fa-icon>
                               <p *ngIf="!service.group.pos">-</p>
                               <input  [(ngModel)]="service_list[i].positive_result" min="0" type="checkbox" *ngIf="edit === i && service.group.pos"
                                  class="check-style h-6 w-6 border border-gray-400 rounded-md bg-white checked:bg-blue-400 checked:border-blue-500 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer">
                            </th>
                            <th class="px-2 font-normal" *ngIf="services_form.value.visit_status == 'Prenatal'">
                               <fa-icon *ngIf="service.intake_penicillin && service.group.pen && edit !== i"
-                                 [icon]="faCircleCheck" size="md" class="text-green-400"></fa-icon>
+                                 [icon]="faCircleCheck" size="md" class="text-red-400"></fa-icon>
                               <fa-icon *ngIf="!service.intake_penicillin && service.group.pen && edit !== i"
-                                 [icon]="faTimesCircle" size="md" class="text-red-400"></fa-icon>
+                                 [icon]="faTimesCircle" size="md" class="text-green-400"></fa-icon>
                               <p *ngIf="!service.group.pen">-</p>
                               <input [(ngModel)]="service_list[i].intake_penicillin" min="0" type="checkbox"
                                  *ngIf="edit === i && service.group.pen"

@@ -30,12 +30,20 @@ export class InitialDxComponent implements OnInit, OnChanges {
 
   onSubmit(){
     console.log(this.selectedIdx);
+    if(this.saveInitialDx.length > 0) {
+      this.saveInitialDx()
+    } else {
+      this.saveNotes()
+    }
+  }
+
+  saveInitialDx() {
     let idx = {
       notes_id: this.consult_details.consult_notes.id,
-      idx: this.selectedIdx
+      initial_diagnosis: this.selectedIdx
     };
 
-    this.http.post('consultation/cn-idx', idx).subscribe({
+    this.http.post('consultation/initial-diagnosis', idx).subscribe({
       next: (data: any) => {
         console.log(data);
         this.saveNotes
@@ -48,11 +56,12 @@ export class InitialDxComponent implements OnInit, OnChanges {
     let notes_remarks = {
       consult_id: this.consult_details.id,
       patient_id: this.consult_details.patient.id,
-      idx_remarks: this.idx_remarks
+      idx_remark: this.idx_remarks
     }
 
     console.log(notes_remarks);
-    this.http.update('consultation/cn-notes/', this.consult_details.consult_notes.id, notes_remarks).subscribe({
+    console.log(this.consult_details.consult_notes.id);
+    this.http.update('consultation/notes/', this.consult_details.consult_notes.id, notes_remarks).subscribe({
       next: (data: any) => {console.log(data); },
       error: err => console.log(err)
     })
