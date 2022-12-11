@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { faSearch,faBalanceScale,faPlus,faInfoCircle,faTimes,faSave } from '@fortawesome/free-solid-svg-icons';
+import { FormControl, FormGroup } from '@angular/forms';
+import { faSearch,faBalanceScale,faPlus,faInfoCircle,faTimes,faSave,faChevronCircleDown,faChevronCircleUp } from '@fortawesome/free-solid-svg-icons';
+import { HttpService } from 'app/shared/services/http.service';
+import { answer_screening, answer_yn, answer_yna } from '../../data-lib/answers';
+import { circumcision } from '../../data-lib/libraries';
 
 @Component({
   selector: 'app-casdt',
@@ -7,11 +11,23 @@ import { faSearch,faBalanceScale,faPlus,faInfoCircle,faTimes,faSave } from '@for
   styleUrls: ['./casdt.component.scss']
 })
 export class CasdtComponent implements OnInit {
-
+  fa
   faInfoCircle = faInfoCircle;
   faTimes = faTimes;
   faSave = faSave;
-  
+  faChevronCircleDown = faChevronCircleDown;
+  faChevronCircleUp = faChevronCircleUp;
+  modals: any = [];
+
+  glucoseForm: FormGroup = new FormGroup({
+    ncd_id: new FormControl<string| null>(''),
+    patient_id: new FormControl<string| null>(''),
+    facility_code: new FormControl<string| null>(''),
+    date_taken: new FormControl<string| null>(''),
+    fbs: new FormControl<string| null>(''),
+    rbs: new FormControl<string| null>(''),
+    raised_blood_glucose: new FormControl<string| null>(''),
+  });
 
   size = [
     {code: 'small', desc: 'Small'},
@@ -36,21 +52,19 @@ export class CasdtComponent implements OnInit {
     {code: 'anteverted', desc: 'Anteverted'}
   ];
 
-  question = [
-    {code: 'Y', desc: 'Yes'},
-    {code: 'N', desc: 'No'}
-  ];
+  circumcision = circumcision;
+  answer_yn = answer_yn;
+  answer_yna = answer_yna;
+  answer_screening = answer_screening
 
-  papsmear = [
-    {code: 'a', desc: 'Positive'},
-    {code: 'b', desc: 'Negative'},
-    {code: 'c', desc: 'Suspect Cancer'}
-  ];
+  toggleModal(modal_name) {
 
+    this.modals[modal_name] = this.modals[modal_name] !== undefined ? !this.modals[modal_name] : false;
+  }
 
-
-
-  constructor() { }
+  constructor(
+    private http: HttpService
+  ) { }
 
   ngOnInit(): void {
   }

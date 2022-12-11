@@ -1,191 +1,163 @@
 <div class="grid grid-cols-12 item-start flex-wrap shadow-md rounded-xl mb-8 mt-8 overflow-y-auto">
-
-    <div class="col-span-12 row-start-1 flex bg-blue-500 px-5 py-3 rounded-tl rounded-tr">
-      <h4 class="font-bold text-white text-md mt-2 mb-2">Blood Glucose Test</h4> 
-      <div class="">
-        <fa-icon [icon]="faInfoCircle" class="peer text-white hover:text-white z-50 px-2"></fa-icon>
-        <div
-            class="absolute text-sm bg-gradient-to-b from-stone-500 to-gray-400 p-2 rounded border border-gray-500  text-white drop-shadow-lg opacity-90 border-check z-50 w-60 invisible peer-hover:visible">
-            <h1 class="font-bold drop-shadow-lg">IMPORTANT</h1>
-            <p class="font-light drop-shadow-lg">Once saved, the information will be displayed in the input boxes
-                and shall not be editable unless Edit button is pressed.</p>
-        </div>
-    </div>
-    </div>
-
-    <div class="relative text-sm col-start-1 col-span-6 row-start-2 px-5 mt-4 mb-4">
-        <h4 class="mb-2">Date Taken:</h4>
-        <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
-          <svg xmlns="http://www.w3.org/2000/svg" class="icon-tabler icon-tabler-calendar-event text-blue-500 mt-7 ml-5" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-            <rect x="4" y="5" width="16" height="16" rx="2"></rect>
-            <line x1="16" y1="3" x2="16" y2="7"></line>
-            <line x1="8" y1="3" x2="8" y2="7"></line>
-            <line x1="4" y1="11" x2="20" y2="11"></line>
-            <rect x="8" y="15" width="2" height="2"></rect>
-         </svg>
-        </div>
-       <input type="text" placeholder="Select Date" onfocus="(this.type='date')" class="cursor-pointer mt-1 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input" placeholder="Select Date">
-      
-    </div>
-  
-    <div class="text-sm col-start-7 col-span-6 row-start-2 px-5 mt-4 mb-4">
-      <h4 class="mb-2">If atleast 8 hours, record FBS (mg/dl):</h4>
-      <input class="text-sm border border-gray-200 p-2.5 rounded bg-white w-full"
-              type="text" name="text" formControlName="meds" required="true">
-  </div>
-
-  <div class="text-sm col-start-1 col-span-6 row-start-3 px-5 mb-6">
-    <h4 class="mb-2">Record RBS (mg/dl):</h4>
-    <input class="text-sm border border-gray-200 p-2.5 rounded bg-white w-full"
-            type="text" name="text" formControlName="meds" required="true">
-</div>
-
-<div class="text-sm col-start-7 col-span-6 row-start-3 px-5 mb-6">
-  <h4 class="mb-2">Raised Blood Glucose:</h4>
-  <input class="text-sm border border-gray-200 p-2.5 rounded bg-white w-full"
-          type="text" name="text" formControlName="meds" required="true">
-</div>
-  
-  </div>
-
-  <div class="col-start-1 col-span-12 row-start-1 border-b-2 border-gray-200 mt-2 mb-2"></div>
-
-  <div class="grid grid-cols-12 item-start flex-wrap shadow-md rounded-xl mb-8 mt-8 overflow-y-auto">
-
-    <div class="col-span-12 flex bg-blue-500 px-5 py-3 rounded-tl rounded-tr">
-      <h4 class="font-bold text-white text-md mt-2 mb-2">Blood Lipid Test</h4> 
-      <div class="">
-        <fa-icon [icon]="faInfoCircle" class="peer text-white hover:text-white z-50 px-2"></fa-icon>
-        <div
-            class="absolute text-sm bg-gradient-to-b from-stone-500 to-gray-400 p-2 rounded border border-gray-500  text-white drop-shadow-lg opacity-90 border-check z-50 w-60 invisible peer-hover:visible">
-            <h1 class="font-bold drop-shadow-lg">IMPORTANT</h1>
-            <p class="font-light drop-shadow-lg">Once saved, the information will be displayed in the input boxes
-                and shall not be editable unless Edit button is pressed.</p>
-        </div>
-    </div>
-    </div>
-  
-    <div class="relative text-sm col-start-1 col-span-6 row-start-2 px-5 mt-4 mb-4">
-      <h4 class="mb-2">Date Taken:</h4>
-      <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
-        <svg xmlns="http://www.w3.org/2000/svg" class="icon-tabler icon-tabler-calendar-event text-blue-500 mt-7 ml-5" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-          <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-          <rect x="4" y="5" width="16" height="16" rx="2"></rect>
-          <line x1="16" y1="3" x2="16" y2="7"></line>
-          <line x1="8" y1="3" x2="8" y2="7"></line>
-          <line x1="4" y1="11" x2="20" y2="11"></line>
-          <rect x="8" y="15" width="2" height="2"></rect>
-       </svg>
+  <div class="col-span-12 row-start-1 flex bg-blue-500 px-5 py-3 rounded-tl rounded-tr">
+    <h4 class="font-bold text-white text-md mt-2 mb-2">Blood Glucose Test</h4>
+    <!-- <div class="">
+      <fa-icon [icon]="faInfoCircle" class="peer text-white hover:text-white z-50 px-2"></fa-icon>
+      <div
+          class="absolute text-sm bg-gradient-to-b from-stone-500 to-gray-400 p-2 rounded border border-gray-500  text-white drop-shadow-lg opacity-90 border-check z-50 w-60 invisible peer-hover:visible">
+          <h1 class="font-bold drop-shadow-lg">IMPORTANT</h1>
+          <p class="font-light drop-shadow-lg">Once saved, the information will be displayed in the input boxes
+              and shall not be editable unless Edit button is pressed.</p>
       </div>
-     <input type="text" placeholder="Select Date" onfocus="(this.type='date')" class="cursor-pointer mt-1 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input" placeholder="Select Date">
-    
+    </div> -->
   </div>
 
-  <div class="text-sm col-start-7 col-span-6 row-start-2 px-5 mt-4 mb-4">
-    <h4 class="mb-2">Total Cholesterol (mmol/l):</h4>
-    <input class="text-sm border border-gray-200 p-2.5 rounded bg-white w-full"
-            type="text" name="text" formControlName="meds" required="true">
-</div>
+  <form [formGroup]="glucoseForm" (ngSubmit)="onSubmit('glucose', glucoseForm.value)" class="col-span-12 grid grid-cols-12 gap-x-5 px-5">
+    <div class="text-sm col-span-4 mt-4 mb-4">
+      <h4 class="mb-2">Date Taken</h4>
+      <input name="date_taken" formControlName="date_taken" type="date" placeholder="mm/dd/yyyy" class="text-sm border-gray-200 border p-2.5 rounded-md w-full">
+    </div>
 
-<div class="text-sm col-start-1 col-span-6 row-start-3 px-5 mb-6">
-<h4 class="mb-2">Raised Blood Lipids:</h4>
-<input class="text-sm border border-gray-200 p-2.5 rounded bg-white w-full"
-        type="text" name="text" formControlName="meds" required="true">
-</div>
-  
-  </div>
+    <div class="text-sm col-span-4 mt-4 mb-4">
+      <h4 class="mb-2">If atleast 8 hours, record FBS (mg/dl)</h4>
+      <input name="fbs" formControlName="fbs"  class="text-sm border border-gray-200 p-2.5 rounded w-full" (input)="raisedGlucose()" type="number">
+    </div>
 
-  <div class="col-start-1 col-span-12 row-start-1 border-b-2 border-gray-200 mt-2 mb-2"></div>
+    <div class="text-sm col-span-4 mt-4 mb-4">
+      <h4 class="mb-2">Record RBS (mg/dl)</h4>
+      <input name="rbs" formControlName="rbs" class="text-sm border border-gray-200 p-2.5 rounded w-full" (input)="raisedGlucose()" type="number" >
+    </div>
 
-  <div class="grid grid-cols-12 item-start flex-wrap shadow-md rounded-xl mb-8 mt-8 overflow-y-auto">
-
-    <div class="col-span-12 flex bg-blue-500 px-5 py-3 rounded-tl rounded-tr">
-      <h4 class="font-bold text-white text-md mt-2 mb-2">Urine Test for Protein</h4> 
-      <div class="">
-        <fa-icon [icon]="faInfoCircle" class="peer text-white hover:text-white z-50 px-2"></fa-icon>
-        <div
-            class="absolute text-sm bg-gradient-to-b from-stone-500 to-gray-400 p-2 rounded border border-gray-500  text-white drop-shadow-lg opacity-90 border-check z-50 w-60 invisible peer-hover:visible">
-            <h1 class="font-bold drop-shadow-lg">IMPORTANT</h1>
-            <p class="font-light drop-shadow-lg">Once saved, the information will be displayed in the input boxes
-                and shall not be editable unless Edit button is pressed.</p>
+    <div *ngIf="glucoseForm.value.raised_blood_glucose" class="text-sm col-span-12 mb-6 p-3 rounded-lg" [ngClass]="{'bg-red-200 border border-red-300':glucoseForm.value.raised_blood_glucose === 'Y'}">
+      <h4 class="mb-2">{{ glucoseForm.value.raised_blood_glucose === 'Y' ? 'Raised blood glucose' : 'Normal blood glucose'}}</h4>
+      <ul class="list-disc pl-10">
+        <div *ngIf="glucoseForm.value.raised_blood_glucose === 'Y'">
+          <li>FBS &#62;= 126 mg/dl</li>
+          <li>RBS &#62;= 200 mg/dl</li>
         </div>
-    </div>
-    </div>
-  
-    <div class="relative text-sm col-start-1 col-span-6 row-start-2 px-5 mt-4 mb-4">
-      <h4 class="mb-2">Date Taken:</h4>
-      <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
-        <svg xmlns="http://www.w3.org/2000/svg" class="icon-tabler icon-tabler-calendar-event text-blue-500 mt-7 ml-5" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-          <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-          <rect x="4" y="5" width="16" height="16" rx="2"></rect>
-          <line x1="16" y1="3" x2="16" y2="7"></line>
-          <line x1="8" y1="3" x2="8" y2="7"></line>
-          <line x1="4" y1="11" x2="20" y2="11"></line>
-          <rect x="8" y="15" width="2" height="2"></rect>
-       </svg>
-      </div>
-     <input type="text" placeholder="Select Date" onfocus="(this.type='date')" class="cursor-pointer mt-1 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input" placeholder="Select Date">
-    
-  </div>
-
-  <div class="text-sm col-start-7 col-span-6 row-start-2 px-5 mt-4 mb-4">
-    <h4 class="mb-2">Urine Protein in g/L:</h4>
-    <input class="text-sm border border-gray-200 p-2.5 rounded bg-white w-full"
-            type="text" name="text" formControlName="meds" required="true">
-</div>
-
-<div class="text-sm col-start-1 col-span-6 row-start-3 px-5 mb-6">
-<h4 class="mb-2">Presence of Urine Protein:</h4>
-<input class="text-sm border border-gray-200 p-2.5 rounded bg-white w-full"
-        type="text" name="text" formControlName="meds" required="true">
-</div>
-  
-  </div>
-
-  <div class="col-start-1 col-span-12 row-start-1 border-b-2 border-gray-200 mt-2 mb-2"></div>
-
-  <div class="grid grid-cols-12 flex item-start flex-wrap shadow-md rounded-xl mb-4 mt-8 overflow-y-auto">
-
-    <div class="col-span-12 flex bg-blue-500 px-5 py-3 rounded-tl rounded-tr">
-      <h4 class="font-bold text-white text-md mt-2 mb-2">Urine Test for Ketones</h4> 
-      <div class="">
-        <fa-icon [icon]="faInfoCircle" class="peer text-white hover:text-white z-50 px-2"></fa-icon>
-        <div
-            class="absolute text-sm bg-gradient-to-b from-stone-500 to-gray-400 p-2 rounded border border-gray-500  text-white drop-shadow-lg opacity-90 border-check z-50 w-60 invisible peer-hover:visible">
-            <h1 class="font-bold drop-shadow-lg">IMPORTANT</h1>
-            <p class="font-light drop-shadow-lg">Once saved, the information will be displayed in the input boxes
-                and shall not be editable unless Edit button is pressed.</p>
+        <div *ngIf="glucoseForm.value.raised_blood_glucose === 'N'">
+          <li>FBS &#60; 126 mg/dl</li>
+          <li>RBS &#60; 200 mg/dl</li>
         </div>
+      </ul>
+      <input hidden name="raised_blood_glucose" formControlName="raised_blood_glucose" class="text-sm border border-gray-200 p-2.5 rounded w-full disabled:bg-gray-300" type="text" disabled>
     </div>
-    </div>
-  
-    <div class="relative text-sm col-start-1 col-span-6 row-start-2 px-5 mt-4 mb-4">
-      <h4 class="mb-2">Date Taken:</h4>
-      <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
-        <svg xmlns="http://www.w3.org/2000/svg" class="icon-tabler icon-tabler-calendar-event text-blue-500 mt-7 ml-5" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-          <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-          <rect x="4" y="5" width="16" height="16" rx="2"></rect>
-          <line x1="16" y1="3" x2="16" y2="7"></line>
-          <line x1="8" y1="3" x2="8" y2="7"></line>
-          <line x1="4" y1="11" x2="20" y2="11"></line>
-          <rect x="8" y="15" width="2" height="2"></rect>
-       </svg>
-      </div>
-     <input type="text" placeholder="Select Date" onfocus="(this.type='date')" class="cursor-pointer mt-1 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input" placeholder="Select Date">
-    
-  </div>
 
-  <div class="text-sm col-start-7 col-span-6 row-start-2 px-5 mt-4 mb-4">
-    <h4 class="mb-2">Urine Ketone:</h4>
-    <input class="text-sm border border-gray-200 p-2.5 rounded bg-white w-full"
-            type="text" name="text" formControlName="meds" required="true">
+    <div class="col-span-12 flex justify-end border-t border-slate-200 pt-5">
+      <button [disabled]="glucoseForm.invalid || is_saving['glucose']" type="submit" class=" btn-save px-10 mr-5 mb-5 disabled:bg-gray-400">
+        <fa-icon *ngIf="is_saving['glucose']" [icon]="faSpinner" class="mr-2" spin="true" ></fa-icon>
+        <fa-icon *ngIf="is_saving['glucose']" [icon]="faSave" class="mr-2"></fa-icon>
+        {{ is_saving['glucose'] ? 'Saving' : 'Save' }}
+      </button>
+    </div>
+  </form>
 </div>
 
-<div class="text-sm col-start-1 col-span-6 row-start-3 px-5 mb-6">
-<h4 class="mb-2">Presence of Urine Ketone:</h4>
-<input class="text-sm border border-gray-200 p-2.5 rounded bg-white w-full"
-        type="text" name="text" formControlName="meds" required="true">
-</div>
-  
+
+<div class="grid grid-cols-12 item-start flex-wrap shadow-md rounded-xl mb-8 mt-8 overflow-y-auto">
+  <div class="col-span-12 flex bg-blue-500 px-5 py-3 rounded-tl rounded-tr">
+    <h4 class="font-bold text-white text-md mt-2 mb-2">Blood Lipid Test</h4>
   </div>
+
+  <form [formGroup]="bloodLipidForm" (ngSubmit)="onSubmit('bloodLipid', bloodLipidForm.value)" class="col-span-12 grid grid-cols-12 gap-x-5 px-5">
+    <div class="relative text-sm col-span-6 mt-4 mb-4">
+      <h4 class="mb-2">Date Taken</h4>
+      <input name="date_taken" formControlName="date_taken" type="date" placeholder="mm/dd/yyyy" class="text-sm border-gray-200 border p-2.5 rounded-md w-full">
+    </div>
+
+    <div class="text-sm col-span-6 mt-4 mb-4">
+      <h4 class="mb-2">Total Cholesterol (mmol/l)</h4>
+      <input name="total_cholesterol" formControlName="total_cholesterol" (input)="raisedLipids()" class="text-sm border border-gray-200 p-2.5 rounded w-full" type="number">
+    </div>
+
+    <div *ngIf="bloodLipidForm.value.raised_lipid" class="text-sm col-span-12 mb-6 p-3 rounded-lg" [ngClass]="{'bg-red-200 border border-red-300':bloodLipidForm.value.raised_lipid === 'Y'}">
+      <h4 class="mb-2">{{ bloodLipidForm.value.raised_lipid === 'Y' ? 'Raised blood lipids' : 'Normal blood lipids'}}</h4>
+      <ul class="list-disc pl-10">
+        <div *ngIf="bloodLipidForm.value.raised_lipid === 'Y'">
+          <li>Cholesterol &#62;= 200mg/100ml</li>
+        </div>
+        <div *ngIf="bloodLipidForm.value.raised_lipid === 'N'">
+          <li>Cholesterol &#60; 200mg/100ml</li>
+        </div>
+      </ul>
+      <input hidden name="raised_lipid" formControlName="raised_lipid" class="text-sm border border-gray-200 p-2.5 rounded w-full disabled:bg-gray-300" type="text" disabled>
+    </div>
+
+    <div class="col-span-12 flex justify-end border-t border-slate-200 pt-5">
+      <button [disabled]="bloodLipidForm.invalid || is_saving['bloodLipid']" type="submit" class=" btn-save px-10 mr-5 mb-5 disabled:bg-gray-400">
+        <fa-icon *ngIf="is_saving['bloodLipid']" [icon]="faSpinner" class="mr-2" spin="true" ></fa-icon>
+        <fa-icon *ngIf="is_saving['bloodLipid']" [icon]="faSave" class="mr-2"></fa-icon>
+        {{ is_saving['bloodLipid'] ? 'Saving' : 'Save' }}
+      </button>
+    </div>
+  </form>
+</div>
+
+
+<div class="grid grid-cols-12 item-start flex-wrap shadow-md rounded-xl mb-8 mt-8 overflow-y-auto">
+  <div class="col-span-12 flex bg-blue-500 px-5 py-3 rounded-tl rounded-tr">
+    <h4 class="font-bold text-white text-md mt-2 mb-2">Urine Test for Ketones</h4>
+  </div>
+
+  <form [formGroup]="urineKetonesForm" (ngSubmit)="onSubmit('urineKetones', urineKetonesForm.value)" class="col-span-12 grid grid-cols-12 gap-x-5 px-5">
+    <div class="relative text-sm col-span-6 mt-4 mb-4">
+      <h4 class="mb-2">Date Taken</h4>
+      <input name="date_taken" formControlName="date_taken" type="date" placeholder="mm/dd/yyyy" class="text-sm border-gray-200 border p-2.5 rounded-md w-full">
+    </div>
+
+    <div class="text-sm col-span-6 mt-4 mb-4">
+      <h4 class="mb-2">Urine Ketone</h4>
+      <!-- <input name="ketone" formControlName="ketone" (input)="urineKetone()" class="text-sm border border-gray-200 p-2.5 rounded w-full" type="number"> -->
+      <select name="ketone" formControlName="ketone" (change)="urineKetone()" class="text-sm border border-gray-200 p-2.5 rounded w-full">
+        <option [value]="item.code" *ngFor="let item of ketones_list">{{ item.desc }}</option>
+      </select>
+    </div>
+
+    <div *ngIf="urineKetonesForm.value.presence_urine_ketone" class="text-sm col-span-12 mb-6 p-3 rounded-lg" [ngClass]="{'bg-red-200 border border-red-300':urineKetonesForm.value.presence_urine_ketone === 'Y'}">
+      <h4 class="mb-2">{{ urineKetonesForm.value.presence_urine_ketone === 'Y' ? 'Traces or amount of urine ketone was found' : 'No traces or amount of urine ketone was found'}}</h4>
+      <input hidden name="presence_urine_ketone" formControlName="presence_urine_ketone" class="text-sm border border-gray-200 p-2.5 rounded w-full disabled:bg-gray-300" type="text" disabled>
+    </div>
+
+    <div class="col-span-12 flex justify-end border-t border-slate-200 pt-5">
+      <button [disabled]="urineKetonesForm.invalid || is_saving['urineKetones']" type="submit" class=" btn-save px-10 mr-5 mb-5 disabled:bg-gray-400">
+        <fa-icon *ngIf="is_saving['urineKetones']" [icon]="faSpinner" class="mr-2" spin="true" ></fa-icon>
+        <fa-icon *ngIf="is_saving['urineKetones']" [icon]="faSave" class="mr-2"></fa-icon>
+        {{ is_saving['urineKetones'] ? 'Saving' : 'Save' }}
+      </button>
+    </div>
+  </form>
+</div>
+
+
+<div class="grid grid-cols-12 item-start flex-wrap shadow-md rounded-xl mb-4 mt-8 overflow-y-auto">
+  <div class="col-span-12 flex bg-blue-500 px-5 py-3 rounded-tl rounded-tr">
+    <h4 class="font-bold text-white text-md mt-2 mb-2">Urine Test for Protein</h4>
+  </div>
+
+  <form [formGroup]="urineProteinForm" (ngSubmit)="onSubmit('urineProtein', urineProteinForm.value)" class="col-span-12 grid grid-cols-12 gap-x-5 px-5">
+    <div class="relative text-sm col-span-6 mt-4 mb-4">
+      <h4 class="mb-2">Date Taken</h4>
+      <input name="date_taken" formControlName="date_taken" type="date" placeholder="mm/dd/yyyy" class="text-sm border-gray-200 border p-2.5 rounded-md w-full">
+    </div>
+
+    <div class="text-sm col-span-6 mt-4 mb-4">
+      <h4 class="mb-2">Urine Protein</h4>
+      <select name="protein" formControlName="protein" (change)="urineProtein()" class="text-sm border border-gray-200 p-2.5 rounded w-full">
+        <option [value]="item.code" *ngFor="let item of protein_list">{{ item.desc }}</option>
+      </select>
+    </div>
+
+    <div *ngIf="urineProteinForm.value.presence_urine_protein" class="text-sm col-span-12 mb-6 p-3 rounded-lg" [ngClass]="{'bg-red-200 border border-red-300':urineProteinForm.value.presence_urine_protein === 'Y'}">
+      <h4 class="mb-2">{{ urineProteinForm.value.presence_urine_protein === 'Y' ? 'Traces or amount of urine protein was found' : 'No traces or amount of urine protein was found'}}</h4>
+      <input hidden name="presence_urine_protein" formControlName="presence_urine_protein" class="text-sm border border-gray-200 p-2.5 rounded w-full disabled:bg-gray-300" type="text" disabled>
+    </div>
+
+    <div class="col-span-12 flex justify-end border-t border-slate-200 pt-5">
+      <button [disabled]="urineProteinForm.invalid || is_saving['urineProtein']" type="submit" class=" btn-save px-10 mr-5 mb-5 disabled:bg-gray-400">
+        <fa-icon *ngIf="is_saving['urineProtein']" [icon]="faSpinner" class="mr-2" spin="true" ></fa-icon>
+        <fa-icon *ngIf="is_saving['urineProtein']" [icon]="faSave" class="mr-2"></fa-icon>
+        {{ is_saving['urineProtein'] ? 'Saving' : 'Save' }}
+      </button>
+    </div>
+  </form>
+</div>

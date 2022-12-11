@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { faSearch,faBalanceScale,faPlus,faInfoCircle } from '@fortawesome/free-solid-svg-icons';
+import { Component, Input, OnInit } from '@angular/core';
+import { faSave } from '@fortawesome/free-regular-svg-icons';
+import { faSearch,faBalanceScale,faPlus,faInfoCircle, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
   selector: 'app-patient-record',
@@ -7,8 +9,30 @@ import { faSearch,faBalanceScale,faPlus,faInfoCircle } from '@fortawesome/free-s
   styleUrls: ['./patient-record.component.scss']
 })
 export class PatientRecordComponent implements OnInit {
+  @Input() patient_id;
+  @Input() consult_id;
 
+  faSave = faSave;
   faInfoCircle = faInfoCircle;
+  faSpinner = faSpinner;
+
+  is_saving: boolean = false;
+
+  patient_counseling: any = [];
+  patient_target_organ: any = [];
+  patient_diagnosis: any = [];
+
+  ncd_record = {
+    current_medication: null,
+    palpation_heart: null,
+    peripheral_pulses: null,
+    abdomen: null,
+    heart: null,
+    lungs: null,
+    sensation_feet: null,
+    other_findings: null,
+    other_info: null,
+  };
 
   logical = [
     {code: 'Y', desc: 'Yes'},
@@ -37,10 +61,37 @@ export class PatientRecordComponent implements OnInit {
   ];
 
   physical_examination = [
-    {desc: 'Normal'},
-    {desc: 'Abnormal'}
+    {
+      code: 'palpation_heart',
+      desc: 'Palpation of heart'
+    },
+    {
+      code: 'peripheral_pulses',
+      desc: 'Palpation of perpheral pulses'
+    },
+    {
+      code: 'abdomen',
+      desc: 'Palpation of abdomen'
+    },
+    {
+      code: 'heart',
+      desc: 'Auscultation of heart'
+    },
+    {
+      code: 'lungs',
+      desc: 'Auscultation of lungs'
+    },
+    {
+      code: 'sensation_feet',
+      desc: 'If DM, sensation of feet and foot pulses'
+    }
   ];
-  
+
+  physical_examination_result = [
+    {code: 'Normal', desc: 'Normal'},
+    {code: 'Abnormal', desc: 'Abnormal'}
+  ];
+
   counselling = [
     {code: '1', desc: 'Smoking cessation'},
     {code: '2', desc: 'Diet'},
@@ -50,10 +101,18 @@ export class PatientRecordComponent implements OnInit {
     {code: '6', desc: 'Others'}
   ];
 
+  onSubmit(){
+    // this.is_saving = true;
 
+    console.log(this.patient_counseling);
+    console.log(this.ncd_record);
+    console.log(this.patient_target_organ);
+    console.log(this.patient_diagnosis);
+  }
 
-
-  constructor() { }
+  constructor(
+    private http: HttpService
+  ) { }
 
   ngOnInit(): void {
   }

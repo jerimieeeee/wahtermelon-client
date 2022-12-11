@@ -2,7 +2,7 @@
 
   <div class="flex justify-between w-full bg-blue-500 px-5 py-3 rounded-tl rounded-tr">
     <h4 class="col-start-1 col-span-12 font-bold text-white text-md mt-2">Human Rabies Case</h4>
-  
+
     <button type="button" class="mt-1 px-4 py-1.5 bg-white text-gray-600 font-semibold text-md leading-normal rounded shadow-md hover:shadow-lg hover:ring-2 hover:ring-gray-300 transition duration-150 ease-in-out flex align-center transform hover:scale-110" (click)="toggleCaseModal()">
       <svg xmlns="http://www.w3.org/2000/svg" class="icon-tabler icon-tabler-pencil-plus mr-2" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
         <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -10,7 +10,7 @@
         <path d="M13.5 6.5l4 4"></path>
         <path d="M16 18h4m-2 -2v4"></path>
      </svg>Add
-    </button> 
+    </button>
 
         <!-- <button type="submit" class="py-2 px-4 rounded-full bg-white text-gray-600 font-bold drop-shadow-md hoverborder-white-600 hoverbg-blue-400 hovertext-white shadow-md inline-flex items-center" name="add-btn">
           <label>Update</label>
@@ -51,9 +51,9 @@
                </svg>
               </div>
              <input type="text" onfocus="(this.type='date')" class="mt-1 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input cursor-pointer" placeholder="Select Date">
-            
+
           </div>
-            
+
             <div class="relative col-start-5 col-span-4 px-5 mt-5">
               <h4 class="mb-2 text-sm">Onset of Illness</h4>
               <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
@@ -67,9 +67,9 @@
                </svg>
               </div>
              <input type="text" onfocus="(this.type='date')" class="mt-1 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input cursor-pointer" placeholder="Select Date">
-            
+
           </div>
-            
+
             <div class="relative col-start-9 col-span-4 px-5 mt-5">
               <h4 class="mb-2 text-sm">Date Died</h4>
               <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
@@ -83,35 +83,35 @@
                </svg>
               </div>
              <input type="text" onfocus="(this.type='date')" class="mt-1 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input cursor-pointer" placeholder="Select Date">
-            
+
           </div>
-            
+
               <div class="col-start-1 col-span-12 row-start-2 border border-dashed border-gray-300 mt-5 mb-5 mx-5"></div>
-                      
+
               <div class=" row-start-3 col-start-1 col-span-12 px-5">
                 <h4 class="mb-2 text-sm">Place of Death</h4>
-                <select class="bg-white border-gray-300 p-2.5 text-sm rounded-lg w-full cursor-pointer" ng-model="vm.ncd.family_hx_hypertension" name="family_hx_hypertension">
+                <select class="bg-white border-gray-300 p-2.5 text-sm rounded-lg w-full cursor-pointer" name="family_hx_hypertension">
                   <option value="" disabled selected>Select Place</option>
                   <option class="cursor-pointer" ng-value="place.desc" *ngFor="let place of death_place">
                 {{place.desc}}
-                </option>    
+                </option>
                 </select>
               </div>
-            
+
               <div class=" row-start-4 col-start-1 col-span-12 px-5 mt-5">
                 <h4 class="mb-2 text-sm">Clinical Manifestations</h4>
                 <input class="border-gray-300 p-2.5 text-sm rounded-lg w-full bg-white"
                         type="text" name="date" formControlName="aDate" required="true">
               </div>
-            
+
               <div class=" row-start-5 col-start-1 col-span-12 px-5 mt-5">
                 <h4 class="mb-2 text-sm">Remarks</h4>
                 <input class="border-gray-300 p-2.5 text-sm rounded-lg w-full bg-white"
                         type="text" name="date" formControlName="aDate" required="true">
               </div>
-              
+
             </div>
-          </div>  
+          </div>
 
           <!-- Modal footer -->
           <div class="flex justify-end py-4 px-6 space-x-4 rounded-b border-t border-gray-200 dark:border-gray-600">

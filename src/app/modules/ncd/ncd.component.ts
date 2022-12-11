@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-ncd',
@@ -6,16 +7,20 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./ncd.component.scss']
 })
 export class NcdComponent implements OnInit {
-
   module: Number;
   modules: Number;
-  constructor() {
-    
-   }
+  constructor(
+    private route: ActivatedRoute
+  ) {
+
+  }
 
   ngOnInit(): void {
-    this.module=1;
-    this.modules=1;
+    this.module=6;
+    this.modules=2;
+
+    this.patient_id = this.route.snapshot.paramMap.get('id');
+    this.consult_id = this.route.snapshot.paramMap.get('consult_id');
   }
 
   switchTab(tab){
@@ -27,4 +32,7 @@ export class NcdComponent implements OnInit {
     this.modules = 0;
     this.modules = tabs;
   }
+
+  patient_id:string;
+  consult_id: string;
 }

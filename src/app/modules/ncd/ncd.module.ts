@@ -12,13 +12,18 @@ import { PatientRecordComponent } from './components/patient-record/patient-reco
 import { CasdtComponent } from './components/casdt/casdt.component';
 import { RiskScreeningComponent } from './components/risk-screening/risk-screening.component';
 import { Casdt2Component } from './components/casdt2/casdt2.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
   declarations: [NcdComponent, RiskAssessmentComponent, RiskStratificationComponent, QuestionnaireComponent, PatientRecordComponent, CasdtComponent, RiskScreeningComponent, Casdt2Component],
   imports: [
-    CommonModule,FontAwesomeModule,
-    NcdRoutingModule,SharedComponentsModule
+    CommonModule,
+    FontAwesomeModule,
+    NcdRoutingModule,
+    SharedComponentsModule,
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class NcdModule { }
