@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
-import { faSearch,faBalanceScale,faPlus,faInfoCircle,faTimes,faSave,faChevronCircleDown,faChevronCircleUp, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { faInfoCircle,faTimes,faSave,faChevronCircleDown,faChevronCircleUp, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { answer_screening, answer_yn, answer_yna } from '../../data-lib/answers';
 import { circumcision } from '../../data-lib/libraries';
