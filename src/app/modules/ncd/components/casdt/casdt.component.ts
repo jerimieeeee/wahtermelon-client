@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { faSearch,faBalanceScale,faPlus,faInfoCircle,faTimes,faSave,faChevronCircleDown,faChevronCircleUp } from '@fortawesome/free-solid-svg-icons';
+import { faSearch,faBalanceScale,faPlus,faInfoCircle,faTimes,faSave,faChevronCircleDown,faChevronCircleUp, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { answer_screening, answer_yn, answer_yna } from '../../data-lib/answers';
 import { circumcision } from '../../data-lib/libraries';
@@ -12,7 +12,7 @@ import { casdtForm } from './form';
   styleUrls: ['./casdt.component.scss']
 })
 export class CasdtComponent implements OnInit {
-
+  faSpinner = faSpinner;
   faInfoCircle = faInfoCircle;
   faTimes = faTimes;
   faSave = faSave;
@@ -21,6 +21,8 @@ export class CasdtComponent implements OnInit {
   modals: any = [];
 
   casdtForm = casdtForm;
+
+  is_saving: boolean =false;
 
   size = [
     {code: 'small', desc: 'Small'},
@@ -50,8 +52,11 @@ export class CasdtComponent implements OnInit {
   answer_yna = answer_yna;
   answer_screening = answer_screening
 
-  toggleModal(modal_name) {
+  onSubmit(){
+    this.is_saving = true;
+  }
 
+  toggleModal(modal_name) {
     this.modals[modal_name] = this.modals[modal_name] !== undefined ? !this.modals[modal_name] : false;
   }
 

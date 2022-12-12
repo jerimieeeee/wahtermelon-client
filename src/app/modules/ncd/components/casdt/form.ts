@@ -23,7 +23,7 @@ export const casdtForm: FormGroup = new FormGroup({
   cigarettes: new FormControl<number| null>(null),
   client: new FormControl<string| null>(null),
   client_remarks: new FormControl<string| null>(null),
-  counceling: new FormControl<string| null>(null),
+  counseling: new FormControl<string| null>(null),
   current_medication: new FormControl<string| null>(null),
   duration: new FormControl<number| null>(null),
   first_intercourse	: new FormControl<number| null>(null),
