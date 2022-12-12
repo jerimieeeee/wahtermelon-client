@@ -4,6 +4,7 @@ import { faSearch,faBalanceScale,faPlus,faInfoCircle,faTimes,faSave,faChevronCir
 import { HttpService } from 'app/shared/services/http.service';
 import { answer_screening, answer_yn, answer_yna } from '../../data-lib/answers';
 import { circumcision } from '../../data-lib/libraries';
+import { casdtForm } from './form';
 
 @Component({
   selector: 'app-casdt',
@@ -11,7 +12,7 @@ import { circumcision } from '../../data-lib/libraries';
   styleUrls: ['./casdt.component.scss']
 })
 export class CasdtComponent implements OnInit {
-  fa
+
   faInfoCircle = faInfoCircle;
   faTimes = faTimes;
   faSave = faSave;
@@ -19,15 +20,7 @@ export class CasdtComponent implements OnInit {
   faChevronCircleUp = faChevronCircleUp;
   modals: any = [];
 
-  glucoseForm: FormGroup = new FormGroup({
-    ncd_id: new FormControl<string| null>(''),
-    patient_id: new FormControl<string| null>(''),
-    facility_code: new FormControl<string| null>(''),
-    date_taken: new FormControl<string| null>(''),
-    fbs: new FormControl<string| null>(''),
-    rbs: new FormControl<string| null>(''),
-    raised_blood_glucose: new FormControl<string| null>(''),
-  });
+  casdtForm = casdtForm;
 
   size = [
     {code: 'small', desc: 'Small'},
@@ -67,6 +60,7 @@ export class CasdtComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    console.log(this.casdtForm)
   }
 
 }

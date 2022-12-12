@@ -25,16 +25,16 @@ export class FinalDxComponent implements OnInit, OnChanges {
   searchInput$ = new Subject<string>();
   selectedFdx: any;
   minLengthTerm = 3;
-  idx_remarks: string;
+  fdx_remarks: string;
 
   onSubmit(){
     console.log(this.selectedFdx);
-    let idx = {
+    let fdx = {
       notes_id: this.consult_details.consult_notes.id,
-      idx: this.selectedFdx
+      final_diagnosis: this.selectedFdx
     };
 
-    this.http.post('consultation/final-diagnosis', idx).subscribe({
+    this.http.post('consultation/final-diagnosis', fdx).subscribe({
       next: (data: any) => {
         console.log(data);
         this.saveNotes
@@ -47,7 +47,7 @@ export class FinalDxComponent implements OnInit, OnChanges {
     let notes_remarks = {
       consult_id: this.consult_details.id,
       patient_id: this.consult_details.patient.id,
-      idx_remarks: this.idx_remarks
+      fdx_remarks: this.fdx_remarks
     }
 
     console.log(notes_remarks);
