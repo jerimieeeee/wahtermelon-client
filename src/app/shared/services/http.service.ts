@@ -82,4 +82,11 @@ export class HttpService {
 
     return this.user_json.facility_code;
   }
+
+  toastr(type: string, message: string) {
+    return {
+      type: type,
+      message: message
+    }
+  }
 }

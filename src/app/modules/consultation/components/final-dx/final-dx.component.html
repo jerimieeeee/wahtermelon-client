@@ -52,3 +52,5 @@
     </div>
   </div>
 </div>
+
+<app-toaster-service *ngIf="show_toast" [type]="toastr.type" [message]="toastr.message"></app-toaster-service>

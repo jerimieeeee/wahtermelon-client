@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnChanges, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, OnChanges, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { faPlusSquare, faChevronCircleDown, faChevronCircleUp, faSpinner, faSave } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { Observable } from 'rxjs';
@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
   templateUrl: './complaint-history.component.html',
   styleUrls: ['./complaint-history.component.scss']
 })
-export class ComplaintHistoryComponent implements OnInit, OnChanges {
+export class ComplaintHistoryComponent implements OnInit, OnChanges, OnDestroy {
   @Output() loadConsult = new EventEmitter<any>();
   @Input() toggle_content;
   @Input() consult_details;
@@ -29,6 +29,11 @@ export class ComplaintHistoryComponent implements OnInit, OnChanges {
 
   show_content: boolean = true;
   is_saving: boolean = false;
+
+  toastr = {
+    type: null,
+    message: null
+  }
 
   onSubmit(){
     this.is_saving = true;
@@ -63,13 +68,30 @@ export class ComplaintHistoryComponent implements OnInit, OnChanges {
       }
 
       this.http.update('consultation/notes/', this.consult_details.consult_notes.id, notes_remarks).subscribe({
-        next: (data: any) => {console.log(data); this.loadConsult.emit(); this.is_saving = false; },
+        next: (data: any) => {
+          console.log(data);
+          this.is_saving = false;
+          this.showToastr();
+          this.loadConsult.emit();
+        },
         error: err => console.log(err)
       })
     } else {
       this.is_saving = false;
       this.loadConsult.emit();
     }
+  }
+
+  show_toast: boolean = false;
+  show_timer;
+  showToastr(){
+    this.toastr = this.http.toastr('success', 'Complaint was successfuly updated!');
+    this.show_toast = true;
+    this.show_timer = setTimeout(() => {
+      this.show_toast = false;
+    }, 5000);
+
+    // clearTimeout(this.show_timer);
   }
 
   loadLib(){
@@ -105,5 +127,9 @@ export class ComplaintHistoryComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.loadLib();
+  }
+
+  ngOnDestroy(): void {
+    clearTimeout(this.show_timer);
   }
 }

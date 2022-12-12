@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy } from '@angular/core';
 import { faFloppyDisk, faPlusSquare } from '@fortawesome/free-regular-svg-icons';
 import { faChevronCircleDown, faChevronCircleUp, faSave, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
@@ -9,7 +9,7 @@ import { catchError, concat, debounceTime, distinctUntilChanged, filter, map, Ob
   templateUrl: './final-dx.component.html',
   styleUrls: ['./final-dx.component.scss']
 })
-export class FinalDxComponent implements OnChanges {
+export class FinalDxComponent implements OnChanges, OnDestroy {
   @Input() toggle_content;
   @Input() consult_details;
 
@@ -61,12 +61,23 @@ export class FinalDxComponent implements OnChanges {
 
       console.log(notes_remarks);
       this.http.update('consultation/notes/', this.consult_details.consult_notes.id, notes_remarks).subscribe({
-        next: (data: any) => {console.log(data); this.is_saving = false;},
+        next: (data: any) => {console.log(data); this.is_saving = false; this.showToastr();},
         error: err => console.log(err)
       });
     } else {
       this.is_saving = false;
     }
+  }
+
+  toastr = { type: null, message: null }
+  show_toast: boolean = false;
+  show_timer;
+  showToastr(){
+    this.toastr = this.http.toastr('success', 'Final diagnosis was successfully updated!');
+    this.show_toast = true;
+    this.show_timer = setTimeout(() => {
+      this.show_toast = false;
+    }, 5000);
   }
 
   loadFdx(val) {
@@ -126,4 +137,8 @@ export class FinalDxComponent implements OnChanges {
   constructor(
     private http: HttpService
   ) { }
+
+  ngOnDestroy(): void {
+    clearTimeout(this.show_timer);
+  }
 }

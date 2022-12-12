@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy } from '@angular/core';
 import { faChevronCircleDown, faChevronCircleUp, faPlusSquare, faSave, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { catchError, concat, debounceTime, distinctUntilChanged, filter, map, Observable, of, Subject, switchMap, tap } from 'rxjs';
@@ -8,7 +8,7 @@ import { catchError, concat, debounceTime, distinctUntilChanged, filter, map, Ob
   templateUrl: './initial-dx.component.html',
   styleUrls: ['./initial-dx.component.scss']
 })
-export class InitialDxComponent implements OnChanges {
+export class InitialDxComponent implements OnChanges, OnDestroy {
   @Input() toggle_content;
   @Input() consult_details;
 
@@ -17,6 +17,9 @@ export class InitialDxComponent implements OnChanges {
   faChevronCircleUp = faChevronCircleUp;
   faChevronCircleDown = faChevronCircleDown;
   faSpinner = faSpinner;
+
+  toastr_message: string = null;
+  toastr_type: string = null;
 
   idxLoading: boolean = false;
   show_content: boolean = true;
@@ -51,6 +54,7 @@ export class InitialDxComponent implements OnChanges {
     }
   }
 
+
   saveNotes() {
     if(this.idx_remarks) {
       let notes_remarks = {
@@ -60,12 +64,27 @@ export class InitialDxComponent implements OnChanges {
       }
 
       this.http.update('consultation/notes/', this.consult_details.consult_notes.id, notes_remarks).subscribe({
-        next: (data: any) => {console.log(data); this.is_saving = false;},
+        next: (data: any) => {
+          console.log(data);
+          this.showToastr();
+          this.is_saving = false;
+        },
         error: err => console.log(err)
       })
     } else {
       this.is_saving = false;
     }
+  }
+
+  toastr = { type: null, message: null }
+  show_toast: boolean = false;
+  show_timer;
+  showToastr(){
+    this.toastr = this.http.toastr('success', 'Initial diagnosis was successfully updated!');
+    this.show_toast = true;
+    this.show_timer = setTimeout(() => {
+      this.show_toast = false;
+    }, 5000);
   }
 
   loadIdx(val) {
@@ -126,4 +145,8 @@ export class InitialDxComponent implements OnChanges {
   constructor(
     private http: HttpService
   ) { }
+
+  ngOnDestroy(): void {
+    clearTimeout(this.show_timer);
+  }
 }

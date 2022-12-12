@@ -2,6 +2,8 @@
   <div class="mb-16 col-span-8">
     <app-graphs [vitals]="vitals"></app-graphs>
 
+
+
     <div class="block shadow p-4 mt-4 rounded-xl text-gray-600 border border-slate-100">
       <span class="text-sky-500 font-bold flex justify-between py-2">
         <span class="flex">
@@ -38,3 +40,4 @@
 </div>
 
 <app-end-visit *ngIf="show_end" (toggleModal)="toggleModal()" [consult_id]="consult_details?.id" [consult_date]="consult_details?.consult_date" [patient_id]="consult_details?.patient.id"></app-end-visit>
+

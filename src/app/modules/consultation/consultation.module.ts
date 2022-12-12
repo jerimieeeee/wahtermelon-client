@@ -42,7 +42,7 @@ import { AlertPromptComponent } from './modals/alert-prompt/alert-prompt.compone
     FontAwesomeModule,
     NgSelectModule,
     FormsModule,
-    ReactiveFormsModule,
+    ReactiveFormsModule
   ]
 })
 export class ConsultationModule { }
