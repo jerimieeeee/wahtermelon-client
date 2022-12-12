@@ -1,6 +1,5 @@
 import { Component, Input, OnInit, OnChanges } from '@angular/core';
-import { faFloppyDisk } from '@fortawesome/free-regular-svg-icons';
-import { faChevronCircleUp, faChevronCircleDown } from '@fortawesome/free-solid-svg-icons';
+import { faChevronCircleUp, faChevronCircleDown, faSave } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
@@ -12,7 +11,7 @@ export class PhysicalExamComponent implements OnInit, OnChanges {
   @Input() toggle_content;
   @Input() consult_details;
 
-  faFloppyDisk = faFloppyDisk;
+  faSave = faSave;
   faChevronCircleUp = faChevronCircleUp;
   faChevronCircleDown = faChevronCircleDown;
 

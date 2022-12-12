@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, OnChanges, Output, EventEmitter } from '@angular/core';
-import { faFloppyDisk, faPlusSquare, faChevronCircleDown, faChevronCircleUp, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { faPlusSquare, faChevronCircleDown, faChevronCircleUp, faSpinner, faSave } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-complaint-history',
@@ -15,7 +15,7 @@ export class ComplaintHistoryComponent implements OnInit, OnChanges {
   @Input() have_complaint;
 
   faPlusSquare = faPlusSquare;
-  faFloppyDisk = faFloppyDisk;
+  faSave = faSave;
   faChevronCircleUp = faChevronCircleUp;
   faChevronCircleDown = faChevronCircleDown;
   faSpinner = faSpinner;
@@ -31,40 +31,45 @@ export class ComplaintHistoryComponent implements OnInit, OnChanges {
   is_saving: boolean = false;
 
   onSubmit(){
-    if(Object.keys(this.selectedComplaint).length > 0) this.saveComplaints();
+    this.is_saving = true;
+
+    if(Object.keys(this.selectedComplaint).length > 0){
+      let complaint = {
+        notes_id: this.consult_details.consult_notes.id,
+        consult_id: this.consult_details.id,
+        patient_id: this.consult_details.patient.id,
+        complaints: this.selectedComplaint
+      }
+
+      this.http.post('consultation/complaint', complaint).subscribe({
+        next: (data: any) => {
+          console.log(data);
+          this.saveNotes()
+        },
+        error: err => console.log(err)
+      })
+    } else {
+      this.saveNotes();
+    }
   }
 
   saveNotes(){
-    let notes_remarks = {
-      consult_id: this.consult_details.id,
-      patient_id: this.consult_details.patient.id,
-      complaint: this.consult_notes.complaint,
-      history: this.consult_notes.history
+    if(this.consult_notes.complaint || this.consult_notes.history){
+      let notes_remarks = {
+        consult_id: this.consult_details.id,
+        patient_id: this.consult_details.patient.id,
+        complaint: this.consult_notes.complaint,
+        history: this.consult_notes.history
+      }
+
+      this.http.update('consultation/notes/', this.consult_details.consult_notes.id, notes_remarks).subscribe({
+        next: (data: any) => {console.log(data); this.loadConsult.emit(); this.is_saving = false; },
+        error: err => console.log(err)
+      })
+    } else {
+      this.is_saving = false;
+      this.loadConsult.emit();
     }
-
-    console.log(notes_remarks);
-    this.http.update('consultation/notes/', this.consult_details.consult_notes.id, notes_remarks).subscribe({
-      next: (data: any) => {console.log(data); this.loadConsult.emit(); this.is_saving = false; },
-      error: err => console.log(err)
-    })
-  }
-
-  saveComplaints() {
-    this.is_saving = true;
-
-    let complaint = {
-      notes_id: this.consult_details.consult_notes.id,
-      consult_id: this.consult_details.id,
-      patient_id: this.consult_details.patient.id,
-      complaints: this.selectedComplaint
-    }
-
-    this.http.post('consultation/complaint', complaint).subscribe({
-      next: (data: any) => {
-        console.log(data);
-      },
-      error: err => console.log(err)
-    })
   }
 
   loadLib(){

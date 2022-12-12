@@ -40,10 +40,10 @@
         </div>
 
         <div class="flex text-right">
-          <button [disabled]="is_saving" type="button" class="btn-save ml-auto mr-5 mb-5 disabled:bg-gray-400" (click)="onSubmit()">
+          <button [disabled]="is_saving" type="button" class="btn-save ml-auto mr-5 mb-5 px-10 disabled:bg-gray-300" (click)="onSubmit()">
             <fa-icon *ngIf="is_saving" class="mr-2" [icon]="faSpinner" spin="true"></fa-icon>
-            <fa-icon *ngIf="!is_saving" class="mr-2" [icon]="faFloppyDisk"></fa-icon>
-            {{ have_complaint ? 'Update' : 'Save' }}
+            <fa-icon *ngIf="!is_saving" class="mr-2" [icon]="faSave"></fa-icon>
+            {{ is_saving ? 'Saving' : 'Save' }}
           </button>
         </div>
       </div>

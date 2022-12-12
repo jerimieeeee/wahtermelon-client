@@ -47,16 +47,28 @@
 
             <td class="p-3 w-3/12">
               <div class="grid grid-cols-1 text-left">
-                <span class="font-semibold">Initial Diagnosis:</span>
-                <div *ngFor="let idx of visit.consult_notes.initialdx">
-                  test: adfsdaf
+                <span class="font-semibold">Initial</span>
+                <ul class="list-disc ml-5">
+                  <li *ngFor="let idx of visit.consult_notes.initialdx">
+                    {{ idx.diagnosis.class_name }}
+                  </li>
+                </ul>
+
+                <div *ngIf="visit.consult_notes.idx_remarks" class="mt-2">
+                  <span class="text-sm italic">remarks:</span> {{ visit.consult_notes.idx_remarks }}
                 </div>
               </div>
 
               <div class="grid grid-cols-1 text-left mt-2 pt-2">
-                <span class="font-semibold">Final Diagnosis:</span>
-                <div *ngFor="let fdx of visit.consult_notes.fdx">
-                  test: adfsdaf
+                <span class="font-semibold">Final</span>
+                <ul class="list-disc ml-5">
+                  <li *ngFor="let fdx of visit.consult_notes.finaldx">
+                    <span class="font-semibold text-sm">{{ fdx.lib_icd10.icd10_code }}:</span> {{ fdx.lib_icd10.icd10_desc }}
+                  </li>
+                </ul>
+
+                <div *ngIf="visit.consult_notes.fdx_remarks" class="mt-2">
+                  <span class="text-sm italic">remarks:</span> {{ visit.consult_notes.fdx_remarks }}
                 </div>
               </div>
             </td>

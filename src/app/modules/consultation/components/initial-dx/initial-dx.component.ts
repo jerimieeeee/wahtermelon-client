@@ -1,6 +1,5 @@
-import { Component, Input, OnInit, OnChanges } from '@angular/core';
-import { faFloppyDisk } from '@fortawesome/free-regular-svg-icons';
-import { faChevronCircleDown, faChevronCircleUp, faPlusSquare } from '@fortawesome/free-solid-svg-icons';
+import { Component, Input, OnChanges } from '@angular/core';
+import { faChevronCircleDown, faChevronCircleUp, faPlusSquare, faSave, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { catchError, concat, debounceTime, distinctUntilChanged, filter, map, Observable, of, Subject, switchMap, tap } from 'rxjs';
 
@@ -9,17 +8,19 @@ import { catchError, concat, debounceTime, distinctUntilChanged, filter, map, Ob
   templateUrl: './initial-dx.component.html',
   styleUrls: ['./initial-dx.component.scss']
 })
-export class InitialDxComponent implements OnInit, OnChanges {
+export class InitialDxComponent implements OnChanges {
   @Input() toggle_content;
   @Input() consult_details;
 
   faPlusSquare = faPlusSquare;
-  faFloppyDisk = faFloppyDisk;
+  faSave = faSave;
   faChevronCircleUp = faChevronCircleUp;
   faChevronCircleDown = faChevronCircleDown;
+  faSpinner = faSpinner;
 
   idxLoading: boolean = false;
   show_content: boolean = true;
+  is_saving: boolean = false;
 
   idx$: Observable<any>;
   searchInput$ = new Subject<string>();
@@ -27,55 +28,55 @@ export class InitialDxComponent implements OnInit, OnChanges {
   minLengthTerm = 3;
 
   idx_remarks: string;
+  initial_dx: any;
 
   onSubmit(){
-    console.log(this.selectedIdx);
-    // if(this.saveInitialDx.length > 0) {
-      this.saveInitialDx()
-    // } else {
-      this.saveNotes()
-    // }
-  }
+    this.is_saving = true;
 
-  saveInitialDx() {
-    let idx = {
-      notes_id: this.consult_details.consult_notes.id,
-      initial_diagnosis: this.selectedIdx
-    };
+    if(Object.keys(this.selectedIdx).length > 0) {
+      let idx = {
+        notes_id: this.consult_details.consult_notes.id,
+        initial_diagnosis: this.selectedIdx
+      };
 
-    this.http.post('consultation/initial-diagnosis', idx).subscribe({
-      next: (data: any) => {
-        console.log(data);
-        // this.saveNotes
-      },
-      error: err => console.log(err)
-    })
+      this.http.post('consultation/initial-diagnosis', idx).subscribe({
+        next: (data: any) => {
+          console.log(data);
+          this.saveNotes();
+        },
+        error: err => console.log(err)
+      })
+    } else {
+      this.saveNotes();
+    }
   }
 
   saveNotes() {
-    let notes_remarks = {
-      consult_id: this.consult_details.id,
-      patient_id: this.consult_details.patient.id,
-      idx_remark: this.idx_remarks
-    }
+    if(this.idx_remarks) {
+      let notes_remarks = {
+        consult_id: this.consult_details.id,
+        patient_id: this.consult_details.patient.id,
+        idx_remarks: this.idx_remarks
+      }
 
-    console.log(notes_remarks);
-    console.log(this.consult_details.consult_notes.id);
-    this.http.update('consultation/notes/', this.consult_details.consult_notes.id, notes_remarks).subscribe({
-      next: (data: any) => {console.log(data); },
-      error: err => console.log(err)
-    })
+      this.http.update('consultation/notes/', this.consult_details.consult_notes.id, notes_remarks).subscribe({
+        next: (data: any) => {console.log(data); this.is_saving = false;},
+        error: err => console.log(err)
+      })
+    } else {
+      this.is_saving = false;
+    }
   }
 
-  loadIdx() {
+  loadIdx(val) {
     this.idx$ = concat(
-      of([]), // default items
+      of(val), // default items
       this.searchInput$.pipe(
         filter(res => {
           return res !== null && res.length >= this.minLengthTerm
         }),
         distinctUntilChanged(),
-        debounceTime(800),
+        debounceTime(400),
         tap(() => this.idxLoading = true),
         switchMap(term => {
           return this.getIdx(term).pipe(
@@ -95,15 +96,34 @@ export class InitialDxComponent implements OnInit, OnChanges {
     }))
   }
 
+  loadSelected(){
+    let selected_idx = [];
+    let temp_idx = [];
+
+    if(this.initial_dx && Object.keys(this.initial_dx).length > 0){
+      Object.entries(this.initial_dx).forEach(([key, value], index) => {
+        let val: any = value;
+        selected_idx.push(val.class_id.toString());
+        temp_idx.push(val.diagnosis);
+      });
+
+      this.loadIdx(temp_idx);
+      this.selectedIdx = selected_idx;
+    } else {
+      this.loadIdx([]);
+    };
+  }
+
   ngOnChanges(changes){
     this.show_content = this.toggle_content;
+    if(this.consult_details) {
+      this.initial_dx = this.consult_details.consult_notes.initialdx;
+      this.idx_remarks = this.consult_details.consult_notes.idx_remarks;
+      this.loadSelected();
+    }
   }
 
   constructor(
     private http: HttpService
   ) { }
-
-  ngOnInit(): void {
-    this.loadIdx();
-  }
 }
