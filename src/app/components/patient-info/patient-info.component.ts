@@ -2,7 +2,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
 import { formatDate } from '@angular/common';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { faFlask, faHeart, faExclamationCircle, faNotesMedical, faPlusCircle, faQuestionCircle, faPenToSquare, faTrash, faTableList, faPenSquare, faChevronRight, faChevronUp, faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import { faFlask, faHeart, faExclamationCircle, faNotesMedical, faPlusCircle, faQuestionCircle, faPenToSquare, faTrash, faTableList, faPenSquare, faChevronRight, faChevronUp, faChevronDown, fas } from '@fortawesome/free-solid-svg-icons';
 import { AgeService } from 'app/shared/services/age.service';
 import { HttpService } from 'app/shared/services/http.service';
 import { VitalsChartsService } from 'app/shared/services/vitals-charts.service';
@@ -23,7 +23,7 @@ import { VitalsChartsService } from 'app/shared/services/vitals-charts.service';
     ]),
   ]
 })
-export class PatientInfoComponent {
+export class PatientInfoComponent implements OnInit{
   @Output() patientInfo = new EventEmitter<any>();
   @Output() patientVitals = new EventEmitter<any>();
   patient_info: any;
@@ -46,6 +46,7 @@ export class PatientInfoComponent {
   show_philhealth: boolean = false;
   show_vitals: boolean = false;
   show_vaccines: boolean = false;
+  lab_request: boolean = false;
 
   vaccines_given: any;
   vaccine_list: any = [];
@@ -60,6 +61,8 @@ export class PatientInfoComponent {
 
   accordions = [];
   modals = [];
+
+  consult_id: string;
 
   constructor(
     private activeRoute: ActivatedRoute,
@@ -92,7 +95,9 @@ export class PatientInfoComponent {
         this.loadPhilhealth();
         this.loadVitals();
         this.loadVaccines();
+        this.loadLabs()
         this.accordions['vitals'] = true
+        this.accordions['lab_request'] = true
         // this.toggleModal('philhealth-modal');//open sample modal
         // console.log(data.data)
       },
@@ -102,6 +107,10 @@ export class PatientInfoComponent {
         //  console.log(err)
       }
     });
+  }
+
+  loadLabs(){
+    this.lab_request = true;
   }
 
   checkVaccineStatus(vaccines){
@@ -226,5 +235,9 @@ export class PatientInfoComponent {
 
     if (modal_name === 'vaccine' && this.modals[modal_name] === false) this.loadVaccines();
     if (modal_name === 'vaccine-action' && this.modals[modal_name] === false) this.loadVaccines();
+  }
+
+  ngOnInit(): void {
+    this.consult_id = this.activeRoute.snapshot.paramMap.get('consult_id');
   }
 }

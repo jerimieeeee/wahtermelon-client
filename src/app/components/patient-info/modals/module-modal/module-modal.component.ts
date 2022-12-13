@@ -62,9 +62,9 @@ export class ModuleModalComponent implements OnInit {
         }, */
       }
     },
-    /* 'Others': {
+    'Others': {
       modules: {
-        cn: {
+        /* cn: {
           name: 'Laboratory',
           location: 'consultation',
           group: '',
@@ -81,18 +81,19 @@ export class ModuleModalComponent implements OnInit {
           location: 'consultation',
           group: '',
           consult_active: false
-        },
+        }, */
         ncd: {
           name: 'NCD',
-          location: 'consultation',
-          group: '',
+          location: 'ncd',
+          group: 'ncd',
           consult_active: false
         },
       }
-    } */
+    }
   };
 
   itr = { name: 'Patient ITR', location: 'itr', group: '', consult_active: false };
+  lab = { name: 'Laboratory', location: 'lab', group: '', consult_active: false };
   cn = { name: 'Consultation', location: 'cn', group: 'cn', consult_active: false};
   mc = { name: 'Maternal Care', location: 'mc', group: 'mc', consult_active: false };
   cc = { name: 'Child Care', location: 'cc', group: 'cc', consult_active: false };
@@ -124,7 +125,7 @@ export class ModuleModalComponent implements OnInit {
     if('/'+loc === this.router.url.split(';')[0]){
       this.closeModal();
     } else {
-      if(loc === 'itr'){
+      if(loc === 'itr' || loc === 'lab'){
         this.router.navigate(['/'+loc, {id: this.patient_info.id}]);
       } else {
         this.http.get('consultation/records', {params:{'pt_group': group, 'consult_done': 0, patient_id: this.patient_info.id}}).subscribe({

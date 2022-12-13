@@ -18,6 +18,7 @@ import { ModuleModalComponent } from 'app/components/patient-info/modals/module-
 import { PhilhealthModalComponent } from 'app/components/patient-info/modals/philhealth-modal/philhealth-modal.component';
 import { PhilhealthListModalComponent } from 'app/components/patient-info/modals/philhealth-list-modal/philhealth-list-modal.component';
 import { NgxMaskModule } from 'ngx-mask';
+import { LabRequestModalComponent } from 'app/components/patient-info/modals/lab-request-modal/lab-request-modal.component';
 
 
 
@@ -36,7 +37,8 @@ import { NgxMaskModule } from 'ngx-mask';
     VitalsListModalComponent,
     ModuleModalComponent,
     PhilhealthModalComponent,
-    PhilhealthListModalComponent
+    PhilhealthListModalComponent,
+    LabRequestModalComponent
   ],
   imports: [
     CommonModule,
@@ -60,7 +62,8 @@ import { NgxMaskModule } from 'ngx-mask';
     VitalsListModalComponent,
     ModuleModalComponent,
     PhilhealthModalComponent,
-    PhilhealthListModalComponent
+    PhilhealthListModalComponent,
+    LabRequestModalComponent
   ]
 })
 export class SharedComponentsModule { }

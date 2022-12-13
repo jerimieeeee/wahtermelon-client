@@ -223,10 +223,10 @@
   </div>
   <div class="grid grid-cols-1 mx-2 ml-4 text-sm">
     <span class="flex-1 text-left">
-      <span class="font-semibold">Notes:</span> {{ selected_visit?.consult_notes.complaint }}
+      <span class="font-semibold">Notes:</span> {{ selected_visit?.consult_notes?.complaint }}
     </span>
     <ul class="list-disc">
-      <li class="ml-5" *ngFor="let complaint of selected_visit?.consult_notes.complaints">
+      <li class="ml-5" *ngFor="let complaint of selected_visit?.consult_notes?.complaints">
         {{ complaint.lib_complaints.complaint_desc }}
       </li>
     </ul>
@@ -237,7 +237,7 @@
   </div>
   <div class="flex mx-2 ml-4 text-sm">
     <span class="flex-1 text-left">
-      {{ selected_visit?.consult_notes.history }}
+      {{ selected_visit?.consult_notes?.history }}
     </span>
   </div>
 
@@ -251,13 +251,13 @@
       </span>
       <div class="col-span-1 grid grid-cols-1">
         <ul class="list-disc grid grid-cols-1 mb-2">
-          <li *ngFor="let idx of selected_visit?.consult_notes.initialdx" class="break-all ">
+          <li *ngFor="let idx of selected_visit?.consult_notes?.initialdx" class="break-all ">
             {{ idx.diagnosis.class_name }}
           </li>
         </ul>
 
-        <div *ngIf="selected_visit?.consult_notes.idx_remarks">
-          <span class="text-sm italic">remarks:</span> {{ selected_visit?.consult_notes.idx_remarks }}
+        <div *ngIf="selected_visit?.consult_notes?.idx_remarks">
+          <span class="text-sm italic">remarks:</span> {{ selected_visit?.consult_notes?.idx_remarks }}
         </div>
       </div>
     </div>
@@ -268,13 +268,13 @@
       </span>
       <div class="col-span-1 grid grid-cols-1">
         <ul class="list-disc grid grid-cols-1 mb-2">
-          <li *ngFor="let fdx of selected_visit?.consult_notes.finaldx" class="break-all ">
+          <li *ngFor="let fdx of selected_visit?.consult_notes?.finaldx" class="break-all ">
             <span class="italic">{{ fdx.lib_icd10.icd10_code }}:</span> {{ fdx.lib_icd10.icd10_desc }}
           </li>
         </ul>
 
-        <div *ngIf="selected_visit?.consult_notes.fdx_remarks">
-          <span class="text-sm italic">remarks:</span> {{ selected_visit?.consult_notes.fdx_remarks }}
+        <div *ngIf="selected_visit?.consult_notes?.fdx_remarks">
+          <span class="text-sm italic">remarks:</span> {{ selected_visit?.consult_notes?.fdx_remarks }}
         </div>
       </div>
     </div>
@@ -311,8 +311,8 @@
           </li>
         </ul>
 
-        <div *ngIf="selected_visit?.consult_notes.physical_exam_remarks[cat.key+'_remarks']">
-          <span class="text-sm italic">remarks:</span>{{ selected_visit?.consult_notes.physical_exam_remarks[cat.key+'_remarks'] }}
+        <div *ngIf="selected_visit?.consult_notes?.physical_exam_remarks[cat.key+'_remarks']">
+          <span class="text-sm italic">remarks:</span>{{ selected_visit?.consult_notes?.physical_exam_remarks[cat.key+'_remarks'] }}
         </div>
       </div>
     </div>
