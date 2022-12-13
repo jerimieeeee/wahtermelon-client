@@ -1,13 +1,14 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpService } from 'app/shared/services/http.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-end-visit',
   templateUrl: './end-visit.component.html',
   styleUrls: ['./end-visit.component.scss']
 })
-export class EndVisitComponent implements OnInit {
+export class EndVisitComponent {
   @Output() toggleModal = new EventEmitter<any>();
   @Input() consult_id;
   @Input() consult_date;
@@ -26,10 +27,8 @@ export class EndVisitComponent implements OnInit {
       next: (data: any) => {
         console.log(data);
         this.showAlert = true;
-        setTimeout(() => {
-          this.showAlert = false;
-          this.router.navigate(['/itr', {id: this.patient_id}])
-        }, 3000);
+        this.toastr.info('Visit was ended');
+        this.router.navigate(['/itr', {id: this.patient_id}])
       },
       error: err => console.log(err)
     })
@@ -37,14 +36,12 @@ export class EndVisitComponent implements OnInit {
 
   constructor(
     private http: HttpService,
-    private router: Router
+    private router: Router,
+    private toastr: ToastrService
   ) { }
 
   closeModal(){
     this.toggleModal.emit()
-  }
-
-  ngOnInit(): void {
   }
 
 }
