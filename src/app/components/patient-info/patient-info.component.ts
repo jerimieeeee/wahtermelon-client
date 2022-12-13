@@ -76,6 +76,10 @@ export class PatientInfoComponent implements OnInit{
     });
   }
 
+  openLab(){
+    this.router.navigate(['/lab', {id: this.patient_info.id}])
+  }
+
   editPatient(id){
     if(id) this.router.navigate(['/edit-patient', {id: id}]);
   }
@@ -109,8 +113,21 @@ export class PatientInfoComponent implements OnInit{
     });
   }
 
+  pending_labs: any;
+
   loadLabs(){
     this.lab_request = true;
+    let params = {
+      patient_id: this.patient_info.id
+    }
+
+    this.http.get('lab_url', {params}).subscribe({
+      next: (data: any) => {
+        console.log(data);
+        this.pending_labs = data.data
+      },
+      error: err => console.log(err)
+    })
   }
 
   checkVaccineStatus(vaccines){
