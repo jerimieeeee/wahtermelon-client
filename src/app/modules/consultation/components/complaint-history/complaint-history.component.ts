@@ -35,7 +35,7 @@ export class ComplaintHistoryComponent implements OnInit, OnChanges {
   onSubmit(){
     this.is_saving = true;
 
-    if(Object.keys(this.selectedComplaint).length > 0){
+    if(this.selectedComplaint && Object.keys(this.selectedComplaint).length > 0){
       let complaint = {
         notes_id: this.consult_details.consult_notes.id,
         consult_id: this.consult_details.id,

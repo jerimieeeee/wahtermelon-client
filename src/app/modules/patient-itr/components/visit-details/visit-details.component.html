@@ -241,30 +241,6 @@
     </span>
   </div>
 
-  <div class="border-b border-slate-200">
-    <div class="flex mx-2 mt-3 text-sm font-semibold ">
-      PHYSICAL EXAM
-    </div>
-
-    <div class="grid grid-cols-2 mx-2 ml-4 text-sm mb-5" *ngFor="let cat of physical_exam | keyvalue">
-      <span class="col-span-1 text-left">
-        {{ cat.key | titlecase }}
-      </span>
-
-      <div class="col-span-1 grid grid-cols-1">
-        <ul class="list-disc grid grid-cols-1 mb-2">
-          <li *ngFor="let pe of cat.value" class="break-all ">
-            {{ pe.pe_desc | titlecase}}
-          </li>
-        </ul>
-
-        <div *ngIf="selected_visit?.consult_notes.physical_exam_remarks[cat.key+'_remarks']">
-          <span class="text-sm italic">remarks:</span>{{ selected_visit?.consult_notes.physical_exam_remarks[cat.key+'_remarks'] }}
-        </div>
-      </div>
-    </div>
-  </div>
-
   <div>
     <div class="flex mx-2 mt-3 text-sm font-semibold">
       DIAGNOSIS
@@ -304,15 +280,43 @@
     </div>
   </div>
 
-  <div class="flex mx-2 mt-3 text-sm font-semibold">
-    PRESCRIPTION
+  <div>
+    <div class="flex mx-2 mt-3 text-sm font-semibold">
+      PRESCRIPTION
+    </div>
+    <div class="flex mx-2 ml-4 text-sm">
+      <span class="flex-1 text-left">
+        -
+      </span>
+      <span class="flex-1 text-right">
+        -<br />
+      </span>
+    </div>
   </div>
-  <div class="flex mx-2 ml-4 text-sm">
-    <span class="flex-1 text-left">
-      -
-    </span>
-    <span class="flex-1 text-right">
-      -<br />
-    </span>
+
+  <div class="border-b border-slate-200">
+    <div class="flex mx-2 mt-3 text-sm font-semibold ">
+      PHYSICAL EXAM
+    </div>
+
+    <div class="grid grid-cols-2 mx-2 ml-4 text-sm mb-5" *ngFor="let cat of physical_exam | keyvalue">
+      <span class="col-span-1 text-left">
+        {{ cat.key | titlecase }}
+      </span>
+
+      <div class="col-span-1 grid grid-cols-1">
+        <ul class="list-disc grid grid-cols-1 mb-2">
+          <li *ngFor="let pe of cat.value" class="break-all ">
+            {{ pe.pe_desc | titlecase}}
+          </li>
+        </ul>
+
+        <div *ngIf="selected_visit?.consult_notes.physical_exam_remarks[cat.key+'_remarks']">
+          <span class="text-sm italic">remarks:</span>{{ selected_visit?.consult_notes.physical_exam_remarks[cat.key+'_remarks'] }}
+        </div>
+      </div>
+    </div>
   </div>
+
+
 </div>

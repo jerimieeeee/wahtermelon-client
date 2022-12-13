@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { faChevronDown, faChevronUp, faCircleNotch, faDoorClosed, faPlus, faPlusSquare, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { catchError, debounceTime, distinctUntilChanged, switchMap, tap, map, filter } from 'rxjs/operators';
 import { concat, Observable, of, Subject } from 'rxjs';
 import { faFloppyDisk } from '@fortawesome/free-regular-svg-icons';
 import { ActivatedRoute } from '@angular/router';
+import { GraphsComponent } from './components/graphs/graphs.component';
 
 @Component({
   selector: 'app-consultation',
@@ -12,7 +13,7 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./consultation.component.scss']
 })
 export class ConsultationComponent implements OnInit {
-
+  @ViewChild(GraphsComponent) graph: GraphsComponent;
   faPlusSquare = faPlusSquare;
   faSpinner = faCircleNotch;
   faXmark = faXmark;
@@ -41,10 +42,12 @@ export class ConsultationComponent implements OnInit {
   }
 
   patientVitals(vitals) {
-    this.vitals = vitals;
+    // console.log(vitals)
+    this.graph.patientVitals(vitals);
   }
+
   endVisit() {
-    console.log(this.consult_id);
+    // console.log(this.consult_id);
     let params = {
       patient_id: this.consult_details.patient.id,
       consult_date: this.consult_details.consult_date,
@@ -85,7 +88,7 @@ export class ConsultationComponent implements OnInit {
       pt_group: 'cn',
     }
 
-    console.log(params)
+    // console.log(params)
     this.http.get('consultation/records', {params}).subscribe({
       next: (data: any) => {
         this.consult_details = data.data[0];

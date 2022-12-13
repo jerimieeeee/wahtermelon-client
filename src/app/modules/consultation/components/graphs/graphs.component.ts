@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnChanges } from '@angular/core';
+import { Component, Input, OnInit, OnChanges, ViewChild } from '@angular/core';
 import { BmiChart, ChartOptions, WeightChart } from 'app/modules/patient-itr/declarations/chart-options';
 import { trigger, transition, style, animate } from '@angular/animations';
 import { Router } from '@angular/router';
@@ -72,7 +72,7 @@ export class GraphsComponent implements OnInit, OnChanges {
       }
     })
 
-    if(this.vitals_graph.systolic.length > 0 || this.vitals_graph.diastolic.length > 0){
+    if(this.vitals_graph.systolic.length > 0 || this.vitals_graph.diastolic.length > 0 || this.vitals_graph.weight.length > 0 || this.vitals_graph.bmi.length > 0){
       this.selected_chart = 'all_chart';
       this.loadChart(this.selected_chart);
     } else {
@@ -84,7 +84,7 @@ export class GraphsComponent implements OnInit, OnChanges {
   }
 
   generateBPChart(){
-    if(!this.chartOptions) {
+
       this.chartOptions = {
         series: [
           {
@@ -119,12 +119,11 @@ export class GraphsComponent implements OnInit, OnChanges {
           }
         }
       };
-    }
+
   }
 
   generateWeightChart(){
     // this.show_weight = true;
-    if(!this.WeightChart) {
       this.WeightChart = {
         series: [
           {
@@ -155,11 +154,10 @@ export class GraphsComponent implements OnInit, OnChanges {
           }
         }
       };
-    }
+
   }
 
   generateBMIChart(){
-    if(!this.BmiChart) {
       this.BmiChart = {
         series: [
           {
@@ -190,7 +188,7 @@ export class GraphsComponent implements OnInit, OnChanges {
           }
         }
       };
-    }
+
   }
 
   loadChart(selected){
@@ -225,6 +223,7 @@ export class GraphsComponent implements OnInit, OnChanges {
 
         break;
     }
+
     this.showChart = true;
   }
 

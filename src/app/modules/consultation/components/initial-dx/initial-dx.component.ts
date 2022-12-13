@@ -38,7 +38,7 @@ export class InitialDxComponent implements OnChanges {
   onSubmit(){
     this.is_saving = true;
 
-    if(Object.keys(this.selectedIdx).length > 0) {
+    if(this.selectedIdx && Object.keys(this.selectedIdx).length > 0) {
       let idx = {
         notes_id: this.consult_details.consult_notes.id,
         initial_diagnosis: this.selectedIdx

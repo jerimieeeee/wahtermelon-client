@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, OnChanges } from '@angular/core';
-import { faChevronCircleUp, faChevronCircleDown, faSave, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { faChevronCircleUp, faChevronCircleDown, faSave, faSpinner, faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -16,6 +16,8 @@ export class PhysicalExamComponent implements OnInit, OnChanges {
   faChevronCircleUp = faChevronCircleUp;
   faChevronCircleDown = faChevronCircleDown;
   faSpinner = faSpinner;
+  faChevronDown = faChevronDown;
+  faChevronUp = faChevronUp;
 
   consult_notes: any;
   pe_grouped = [];
@@ -38,6 +40,11 @@ export class PhysicalExamComponent implements OnInit, OnChanges {
   show_content: boolean =false;
   consult_done: boolean = false;
   is_saving: boolean = false;
+
+  pe_item: any = [];
+  toggleItems(item) {
+    this.pe_item[item] = !this.pe_item[item];
+  }
 
   onSubmit(){
     console.log(this.physical_remarks);
@@ -108,7 +115,7 @@ export class PhysicalExamComponent implements OnInit, OnChanges {
         }, {});
 
         this.pe_grouped = groups;
-        console.log(this.pe_grouped);
+        // console.log(this.pe_grouped);
       }
     );
   }

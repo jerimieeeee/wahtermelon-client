@@ -35,7 +35,7 @@ export class FinalDxComponent implements OnChanges {
 
   onSubmit(){
     this.is_saving = true;
-    if(Object.keys(this.selectedFdx).length > 0) {
+    if(this.selectedFdx && Object.keys(this.selectedFdx).length > 0) {
       let fdx = {
         notes_id: this.consult_details.consult_notes.id,
         final_diagnosis: this.selectedFdx
