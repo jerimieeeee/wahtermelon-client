@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { faClipboard, faCircleInfo, faHouse, faUserDoctor } from '@fortawesome/free-solid-svg-icons';
+import { faClipboard, faCircleInfo, faHouse, faUserDoctor, faFlask } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { formatDate } from '@angular/common';
 import { AgeService } from 'app/shared/services/age.service';
@@ -19,6 +19,7 @@ export class ModuleModalComponent implements OnInit {
   faCircleInfo = faCircleInfo;
   faHouse = faHouse;
   faUserDoctor = faUserDoctor;
+  faFlask = faFlask;
 
   list_modules = {
     'General': {

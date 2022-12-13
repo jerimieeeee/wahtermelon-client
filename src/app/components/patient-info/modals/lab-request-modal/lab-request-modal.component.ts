@@ -29,6 +29,7 @@ export class LabRequestModalComponent implements OnInit {
     Object.entries(this.labs).forEach(([key, value], index) => {
       labs.push(key);
     });
+
     let request = {
       consult_id: this.consult_id,
       request_date: this.request_date,
