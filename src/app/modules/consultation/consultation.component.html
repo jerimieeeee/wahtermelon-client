@@ -12,7 +12,7 @@
           </button>
           <span class="mt-2"> CONSULTATION <span class="text-gray-500 text-sm">({{ consult_details?.consult_date | date: 'MM/dd/yyyy hh:mm:ss a' }} | ID:{{ consult_details?.id }})</span></span>
         </span>
-        <button type="button" class="btn-end-visit ml-auto" (click)="toggleModal()">
+        <button *ngIf="!consult_details?.consult_done" type="button" class="btn-end-visit ml-auto" (click)="toggleModal()">
           <fa-icon class="mr-1" [icon]="faDoorClosed"></fa-icon>
           End Visit
         </button>

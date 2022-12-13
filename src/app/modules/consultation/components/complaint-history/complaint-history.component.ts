@@ -1,6 +1,7 @@
-import { Component, Input, OnInit, OnChanges, Output, EventEmitter, OnDestroy } from '@angular/core';
+import { Component, Input, OnInit, OnChanges, Output, EventEmitter } from '@angular/core';
 import { faPlusSquare, faChevronCircleDown, faChevronCircleUp, faSpinner, faSave } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
+import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -8,7 +9,7 @@ import { Observable } from 'rxjs';
   templateUrl: './complaint-history.component.html',
   styleUrls: ['./complaint-history.component.scss']
 })
-export class ComplaintHistoryComponent implements OnInit, OnChanges, OnDestroy {
+export class ComplaintHistoryComponent implements OnInit, OnChanges {
   @Output() loadConsult = new EventEmitter<any>();
   @Input() toggle_content;
   @Input() consult_details;
@@ -29,11 +30,7 @@ export class ComplaintHistoryComponent implements OnInit, OnChanges, OnDestroy {
 
   show_content: boolean = true;
   is_saving: boolean = false;
-
-  toastr = {
-    type: null,
-    message: null
-  }
+  consult_done: boolean = false;
 
   onSubmit(){
     this.is_saving = true;
@@ -82,16 +79,8 @@ export class ComplaintHistoryComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
-  show_toast: boolean = false;
-  show_timer;
   showToastr(){
-    this.toastr = this.http.toastr('success', 'Complaint was successfuly updated!');
-    this.show_toast = true;
-    this.show_timer = setTimeout(() => {
-      this.show_toast = false;
-    }, 5000);
-
-    // clearTimeout(this.show_timer);
+    this.toastr.success('Successfully updated!','Complaint');
   }
 
   loadLib(){
@@ -118,18 +107,16 @@ export class ComplaintHistoryComponent implements OnInit, OnChanges, OnDestroy {
     if(this.consult_details) {
       this.loadSelected();
       this.consult_notes = this.consult_details.consult_notes;
+      this.consult_done = this.consult_details.consult_done;
     }
   }
 
   constructor(
-    private http: HttpService
+    private http: HttpService,
+    private toastr: ToastrService
   ) { }
 
   ngOnInit(): void {
     this.loadLib();
-  }
-
-  ngOnDestroy(): void {
-    clearTimeout(this.show_timer);
   }
 }

@@ -1,7 +1,8 @@
-import { Component, Input, OnChanges, OnDestroy } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 import { faFloppyDisk, faPlusSquare } from '@fortawesome/free-regular-svg-icons';
 import { faChevronCircleDown, faChevronCircleUp, faSave, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
+import { ToastrService } from 'ngx-toastr';
 import { catchError, concat, debounceTime, distinctUntilChanged, filter, map, Observable, of, Subject, switchMap, tap } from 'rxjs';
 
 @Component({
@@ -9,7 +10,7 @@ import { catchError, concat, debounceTime, distinctUntilChanged, filter, map, Ob
   templateUrl: './final-dx.component.html',
   styleUrls: ['./final-dx.component.scss']
 })
-export class FinalDxComponent implements OnChanges, OnDestroy {
+export class FinalDxComponent implements OnChanges {
   @Input() toggle_content;
   @Input() consult_details;
 
@@ -22,6 +23,7 @@ export class FinalDxComponent implements OnChanges, OnDestroy {
   fdxLoading: boolean = false;
   show_content: boolean = true;
   is_saving: boolean = false;
+  consult_done: boolean = false;
 
   fdx$: Observable<any>;
   searchInput$ = new Subject<string>();
@@ -61,23 +63,17 @@ export class FinalDxComponent implements OnChanges, OnDestroy {
 
       console.log(notes_remarks);
       this.http.update('consultation/notes/', this.consult_details.consult_notes.id, notes_remarks).subscribe({
-        next: (data: any) => {console.log(data); this.is_saving = false; this.showToastr();},
+        next: (data: any) => {console.log(data); this.showToastr();},
         error: err => console.log(err)
       });
     } else {
-      this.is_saving = false;
+      this.showToastr();
     }
   }
 
-  toastr = { type: null, message: null }
-  show_toast: boolean = false;
-  show_timer;
   showToastr(){
-    this.toastr = this.http.toastr('success', 'Final diagnosis was successfully updated!');
-    this.show_toast = true;
-    this.show_timer = setTimeout(() => {
-      this.show_toast = false;
-    }, 5000);
+    this.is_saving = false;
+    this.toastr.success('Successfully updated!','Final Diagnosis')
   }
 
   loadFdx(val) {
@@ -130,15 +126,13 @@ export class FinalDxComponent implements OnChanges, OnDestroy {
     if(this.consult_details) {
       this.final_dx = this.consult_details.consult_notes.finaldx;
       this.fdx_remarks = this.consult_details.consult_notes.fdx_remarks;
+      this.consult_done = this.consult_details.consult_done;
       this.loadSelected();
     }
   }
 
   constructor(
-    private http: HttpService
+    private http: HttpService,
+    private toastr: ToastrService
   ) { }
-
-  ngOnDestroy(): void {
-    clearTimeout(this.show_timer);
-  }
 }

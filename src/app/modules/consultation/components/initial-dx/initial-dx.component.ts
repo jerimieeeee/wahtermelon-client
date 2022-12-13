@@ -1,6 +1,7 @@
-import { Component, Input, OnChanges, OnDestroy } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 import { faChevronCircleDown, faChevronCircleUp, faPlusSquare, faSave, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
+import { ToastrService } from 'ngx-toastr';
 import { catchError, concat, debounceTime, distinctUntilChanged, filter, map, Observable, of, Subject, switchMap, tap } from 'rxjs';
 
 @Component({
@@ -8,7 +9,7 @@ import { catchError, concat, debounceTime, distinctUntilChanged, filter, map, Ob
   templateUrl: './initial-dx.component.html',
   styleUrls: ['./initial-dx.component.scss']
 })
-export class InitialDxComponent implements OnChanges, OnDestroy {
+export class InitialDxComponent implements OnChanges {
   @Input() toggle_content;
   @Input() consult_details;
 
@@ -24,6 +25,7 @@ export class InitialDxComponent implements OnChanges, OnDestroy {
   idxLoading: boolean = false;
   show_content: boolean = true;
   is_saving: boolean = false;
+  consult_done: boolean = false;
 
   idx$: Observable<any>;
   searchInput$ = new Subject<string>();
@@ -76,15 +78,8 @@ export class InitialDxComponent implements OnChanges, OnDestroy {
     }
   }
 
-  toastr = { type: null, message: null }
-  show_toast: boolean = false;
-  show_timer;
   showToastr(){
-    this.toastr = this.http.toastr('success', 'Initial diagnosis was successfully updated!');
-    this.show_toast = true;
-    this.show_timer = setTimeout(() => {
-      this.show_toast = false;
-    }, 5000);
+    this.toastr.success('Successfully updated!','Initial Diagnosis')
   }
 
   loadIdx(val) {
@@ -138,15 +133,14 @@ export class InitialDxComponent implements OnChanges, OnDestroy {
     if(this.consult_details) {
       this.initial_dx = this.consult_details.consult_notes.initialdx;
       this.idx_remarks = this.consult_details.consult_notes.idx_remarks;
+      this.consult_done = this.consult_details.consult_done;
       this.loadSelected();
     }
   }
 
   constructor(
-    private http: HttpService
+    private http: HttpService,
+    private toastr: ToastrService
   ) { }
 
-  ngOnDestroy(): void {
-    clearTimeout(this.show_timer);
-  }
 }

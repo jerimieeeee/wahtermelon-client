@@ -18,7 +18,6 @@ import { ModuleModalComponent } from 'app/components/patient-info/modals/module-
 import { PhilhealthModalComponent } from 'app/components/patient-info/modals/philhealth-modal/philhealth-modal.component';
 import { PhilhealthListModalComponent } from 'app/components/patient-info/modals/philhealth-list-modal/philhealth-list-modal.component';
 import { NgxMaskModule } from 'ngx-mask';
-import { ToasterServiceComponent } from './toaster-service/toaster-service.component';
 
 
 
@@ -37,8 +36,7 @@ import { ToasterServiceComponent } from './toaster-service/toaster-service.compo
     VitalsListModalComponent,
     ModuleModalComponent,
     PhilhealthModalComponent,
-    PhilhealthListModalComponent,
-    ToasterServiceComponent
+    PhilhealthListModalComponent
   ],
   imports: [
     CommonModule,
@@ -62,8 +60,7 @@ import { ToasterServiceComponent } from './toaster-service/toaster-service.compo
     VitalsListModalComponent,
     ModuleModalComponent,
     PhilhealthModalComponent,
-    PhilhealthListModalComponent,
-    ToasterServiceComponent
+    PhilhealthListModalComponent
   ]
 })
 export class SharedComponentsModule { }
