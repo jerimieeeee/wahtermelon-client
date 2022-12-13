@@ -16,13 +16,12 @@
         </span>
 
         <div class="flex pt-2">
-          <button type="button">
-            <fa-icon class="mx-0 my-0 text-amber-500 mr-2" (click)="editPatient(patient_info?.id)" [icon]="faPenSquare" size="lg"></fa-icon>
-          </button>
-          <fa-icon class="mx-0 my-0 text-gray-500 mr-2" [icon]="faHeart" [ngClass]="{'text-rose-400' : latest_vitals }" size="lg"></fa-icon>
-          <fa-icon class="mx-0 my-0 text-gray-500 mr-2" [icon]="faFlask" size="lg"></fa-icon>
+          <fa-icon (click)="navigateTo('itr')" class="cursor-pointer mx-0 my-0 text-blue-500 mr-2" [icon]="faClipboardUser" size="lg"></fa-icon>
+          <fa-icon (click)="toggleModal('vitals-list')" class="cursor-pointer mx-0 my-0 text-gray-500 mr-2" [icon]="faHeart" [ngClass]="{'text-rose-400' : latest_vitals }" size="lg"></fa-icon>
+          <fa-icon (click)="navigateTo('lab')" class="cursor-pointer mx-0 my-0 text-gray-500 mr-2" [icon]="faFlask" size="lg"></fa-icon>
           <fa-icon class="mx-0 my-0 text-gray-500 mr-2" [icon]="faNotesMedical" size="lg"></fa-icon>
           <fa-icon class="mx-0 my-0 text-gray-500 mr-2" [icon]="faExclamationCircle" size="lg"></fa-icon>
+          <fa-icon (click)="editPatient(patient_info?.id)" class="cursor-pointer mx-0 my-0 text-amber-500 mr-2" [icon]="faPenSquare" size="lg"></fa-icon>
         </div>
       </div>
     </div>

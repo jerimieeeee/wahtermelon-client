@@ -2,7 +2,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
 import { formatDate } from '@angular/common';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { faFlask, faHeart, faExclamationCircle, faNotesMedical, faPlusCircle, faQuestionCircle, faPenToSquare, faTrash, faTableList, faPenSquare, faChevronRight, faChevronUp, faChevronDown, fas } from '@fortawesome/free-solid-svg-icons';
+import { faFlask, faHeart, faExclamationCircle, faNotesMedical, faPlusCircle, faQuestionCircle, faPenToSquare, faTrash, faTableList, faPenSquare, faChevronRight, faChevronUp, faChevronDown, fas, faClipboardUser } from '@fortawesome/free-solid-svg-icons';
 import { AgeService } from 'app/shared/services/age.service';
 import { HttpService } from 'app/shared/services/http.service';
 import { VitalsChartsService } from 'app/shared/services/vitals-charts.service';
@@ -41,6 +41,7 @@ export class PatientInfoComponent implements OnInit{
   faChevronRight = faChevronRight;
   faChevronUp = faChevronUp;
   faChevronDown = faChevronDown;
+  faClipboardUser = faClipboardUser;
 
   show_form: boolean = false;
   show_philhealth: boolean = false;
@@ -76,8 +77,8 @@ export class PatientInfoComponent implements OnInit{
     });
   }
 
-  openLab(){
-    this.router.navigate(['/lab', {id: this.patient_info.id}])
+  navigateTo(loc){
+    this.router.navigate(['/'+loc, {id: this.patient_info.id}])
   }
 
   editPatient(id){
@@ -121,13 +122,13 @@ export class PatientInfoComponent implements OnInit{
       patient_id: this.patient_info.id
     }
 
-    this.http.get('lab_url', {params}).subscribe({
+    /* this.http.get('lab_url', {params}).subscribe({
       next: (data: any) => {
         console.log(data);
         this.pending_labs = data.data
       },
       error: err => console.log(err)
-    })
+    }) */
   }
 
   checkVaccineStatus(vaccines){
