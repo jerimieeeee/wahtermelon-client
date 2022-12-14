@@ -5,6 +5,7 @@ import { faPenToSquare, faPlusSquare, faSave } from '@fortawesome/free-regular-s
 import { HttpService } from 'app/shared/services/http.service';
 import { Services } from './data/service'
 import { DatePipe } from '@angular/common';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-services',
@@ -285,7 +286,10 @@ export class ServicesComponent implements OnInit {
 
   @Input() patient_details: any;
   
-  constructor(private http: HttpService) { 
+  constructor(
+    private http: HttpService,
+    private toastr : ToastrService
+    ) { 
     this.services.sort(function(a,b){
       return a.date.localeCompare(b.date);
     })
@@ -385,9 +389,22 @@ export class ServicesComponent implements OnInit {
 
       this.http.post('child-care/cc-services', serv_form).subscribe({
         next: (data: any) => { console.log(data.data, 'display lahat ng services') },
-        error: err => {console.log(err),
-          this.toggleAlertModal('E')},
-        complete: () => this.toggleAlertModal('S')
+        error: err => {console.log(err)
+          // this.toggleAlertModal('E')
+          if (serv_form.essential == 'Y') {
+            this.showToastrErrY()
+           
+          } else {
+            this.showToastrErrN()
+    }},
+        complete: () => {
+              // this.toggleAlertModal('S')
+              if (serv_form.essential == 'Y') {
+                this.showToastrY()
+               
+              } else {
+                this.showToastrN()
+        }}
       })
     }
   }
@@ -503,6 +520,21 @@ export class ServicesComponent implements OnInit {
     });
   }
   
+  showToastrY(){
+    this.toastr.success('Successfully Saved!','Essential Services');
+  }
+
+  showToastrN(){
+    this.toastr.success('Successfully Saved!','Services');
+  }
+
+  showToastrErrY(){
+    this.toastr.warning('Error in Saving!','Essential Services');
+  }
+
+  showToastrErrN(){
+    this.toastr.warning('Error in Saving!','Essential Services');
+  }
 
   ngOnInit() {
     // this.geteServiceName()

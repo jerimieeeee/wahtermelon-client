@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup,FormArray,FormControl,Validators,} from '@angula
 import * as moment from 'moment';
 import { faPenToSquare } from '@fortawesome/free-regular-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-breastfeeding',
@@ -114,7 +115,10 @@ export class BreastfeedingComponent implements OnInit {
 
 
 
-  constructor(private http: HttpService) {
+  constructor(
+    private http: HttpService,
+    private toastr: ToastrService
+    ) {
 
 
 
@@ -223,11 +227,12 @@ export class BreastfeedingComponent implements OnInit {
     this.http.post('child-care/cc-breastfed', bfedmonths).subscribe({
       // next: (data: any) => console.log(data.status, 'check status'),
       error: err => {console.log(err)
-        this.toggleAlertModal('E')},
+        this.showToastrErr()},
       complete: () => {
         // this.loadLibraries();
-        this.toggleAlertModal('S')
-        console.log('bfed data saved')
+        // this.toggleAlertModal('S')
+        this.showToastr()
+        // console.log('bfed data saved')
         this.is_saving = false;
       }
     })
@@ -415,6 +420,14 @@ export class BreastfeedingComponent implements OnInit {
         }
       }
     });
+  }
+
+  showToastr(){
+    this.toastr.success('Successfully saved!','Breastfeeding Info');
+  }
+
+  showToastrErr(){
+    this.toastr.warning('Error in Saving!','Breastfeeding Info');
   }
 
 
