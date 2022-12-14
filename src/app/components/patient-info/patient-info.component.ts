@@ -2,7 +2,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
 import { formatDate } from '@angular/common';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { faFlask, faHeart, faExclamationCircle, faNotesMedical, faPlusCircle, faQuestionCircle, faPenToSquare, faTrash, faTableList, faPenSquare, faChevronRight, faChevronUp, faChevronDown, fas, faClipboardUser } from '@fortawesome/free-solid-svg-icons';
+import { faFlask, faHeart, faExclamationCircle, faNotesMedical, faPlusCircle, faQuestionCircle, faPenToSquare, faTrash, faTableList, faPenSquare, faChevronRight, faChevronUp, faChevronDown, fas, faClipboardUser, faCamera } from '@fortawesome/free-solid-svg-icons';
 import { AgeService } from 'app/shared/services/age.service';
 import { HttpService } from 'app/shared/services/http.service';
 import { VitalsChartsService } from 'app/shared/services/vitals-charts.service';
@@ -42,6 +42,7 @@ export class PatientInfoComponent implements OnInit{
   faChevronUp = faChevronUp;
   faChevronDown = faChevronDown;
   faClipboardUser = faClipboardUser;
+  faCamera = faCamera;
 
   show_form: boolean = false;
   show_philhealth: boolean = false;

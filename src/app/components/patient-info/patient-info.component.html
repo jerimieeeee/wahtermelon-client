@@ -2,8 +2,16 @@
   <div class="block m-0 relative p-0  scrollbar-thumb-white hover:scrollbar-thumb-blue-300 scrollbar-track-white">
     <div class="flex justify-items-start sticky top-0 bg-white rounded-lg border border-gray-200 shadow-md p-2">
       <div class="m-3">
-        <div class="inline-flex overflow-hidden relative justify-center items-center w-16 h-16 bg-gray-100 rounded-full dark:bg-gray-600">
-          <span class="font-medium text-gray-600 dark:text-gray-300">{{ getInitials(patient_info?.first_name+' '+patient_info?.last_name) }}</span>
+        <!-- <div class="inline-flex overflow-hidden relative justify-center items-center w-16 h-16 bg-gray-300 rounded-full opacity-60">
+          <span class="font-medium text-gray-600 opacity-100">
+            <fa-icon [icon]="faCamera"></fa-icon>
+          </span>
+        </div> -->
+        <div (click)="toggleModal('photo')" class="group cursor-pointer inline-flex overflow-hidden relative justify-center items-center w-16 h-16 bg-gray-100 rounded-full hover:bg-gray-700 hover:opacity-50">
+          <span class="font-medium text-gray-600 opacity-100 group-hover:opacity-50">{{ getInitials(patient_info?.first_name+' '+patient_info?.last_name) }}</span>
+          <span class="absolute text-white opacity-0 group-hover:opacity-100">
+            <fa-icon [icon]="faCamera" size="xl"></fa-icon>
+          </span>
         </div>
       </div>
       <div class="mt-4 leading-tight">
@@ -325,46 +333,6 @@
     </div>
 
 
-    <!-- <div class="block pt-4 justify-items-start mx-5 mb-5">
-      <div class="flex justify-between items-center">
-        <span class="block text-blue-500 font-medium text-sm">
-          ALLERGIES
-        </span>
-        <fa-icon (click)="toggleModal('allergies')" class="mx-0 my-0 text-blue-500 mr-2 hover:cursor-pointer" [icon]="faPlusCircle"></fa-icon>
-      </div>
-
-      <div class="block">
-        <div class="flex pl-3 justify-between items-center">
-          <span class="block font-medium text-xs">
-            No Records
-          </span>
-          <span class="block text-xs">
-            -
-          </span>
-        </div>
-      </div>
-    </div> -->
-
-    <!-- <div class="block pt-4 justify-items-start mx-5 mb-5">
-      <div class="flex justify-between items-center">
-        <span class="block text-blue-500 font-medium text-sm">
-          MEDICATION
-        </span>
-        <fa-icon (click)="toggleModal('medication')" class="mx-0 my-0 text-blue-500 mr-2 hover:cursor-pointer" [icon]="faPlusCircle"></fa-icon>
-      </div>
-
-      <div class="block">
-        <div class="flex pl-3 justify-between items-center">
-          <span class="block font-medium text-xs">
-            No Records
-          </span>
-          <span class="block text-xs">
-
-          </span>
-        </div>
-      </div>
-    </div> -->
-
     <div class="block justify-items-start mx-5 mb-5">
       <div class="flex justify-between items-center">
         <span class="block text-blue-500 font-medium text-sm">
@@ -410,7 +378,48 @@
       </div>
     </div>
 
-    <!-- <div class="block pt-4 justify-items-start mx-5 mb-5">
+    <div class="block pt-4 justify-items-start mx-5 mb-5">
+      <div class="flex justify-between items-center">
+        <span class="block text-blue-500 font-medium text-sm">
+          ALLERGIES
+        </span>
+        <fa-icon (click)="toggleModal('allergies')" class="mx-0 my-0 text-blue-500 mr-2 hover:cursor-pointer" [icon]="faPlusCircle"></fa-icon>
+      </div>
+
+      <div class="block">
+        <div class="flex pl-3 justify-between items-center">
+          <span class="block font-medium text-xs">
+            No Records
+          </span>
+          <span class="block text-xs">
+            -
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="block pt-4 justify-items-start mx-5 mb-5">
+      <div class="flex justify-between items-center">
+        <span class="block text-blue-500 font-medium text-sm">
+          MEDICATION
+        </span>
+        <fa-icon (click)="toggleModal('medication')" class="mx-0 my-0 text-blue-500 mr-2 hover:cursor-pointer" [icon]="faPlusCircle"></fa-icon>
+      </div>
+
+      <div class="block">
+        <div class="flex pl-3 justify-between items-center">
+          <span class="block font-medium text-xs">
+            No Records
+          </span>
+          <span class="block text-xs">
+
+          </span>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="block pt-4 justify-items-start mx-5 mb-5">
       <div class="flex justify-between items-center">
         <span class="block text-blue-500 font-medium text-sm">
           MEDICAL HISTORY
@@ -428,9 +437,9 @@
           </span>
         </div>
       </div>
-    </div> -->
+    </div>
 
-    <!-- <div class="block pt-4 justify-items-start mx-5 mb-5">
+    <div class="block pt-4 justify-items-start mx-5 mb-5">
       <div class="flex justify-between items-center">
         <span class="block text-blue-500 font-medium text-sm">
           FAMILY MEDICAL HISTORY
@@ -448,9 +457,9 @@
           </span>
         </div>
       </div>
-    </div> -->
+    </div>
 
-    <!-- <div class="block pt-4 justify-items-start mx-5 mb-5">
+    <div class="block pt-4 justify-items-start mx-5 mb-5">
       <div class="flex justify-between items-center">
         <span class="block text-blue-500 font-medium text-sm">
           LIFESTYLE
@@ -486,9 +495,9 @@
           </span>
         </div>
       </div>
-    </div> -->
+    </div>
 
-    <!-- <div class="block pt-4 justify-items-start mx-5 mb-5">
+    <div class="block pt-4 justify-items-start mx-5 mb-5">
       <div class="flex justify-between items-center">
         <span class="block text-blue-500 font-medium text-sm">
           DEATH RECORD
@@ -506,7 +515,7 @@
           </span>
         </div>
       </div>
-    </div> -->
+    </div>
 
   </div>
 </div>
@@ -520,8 +529,8 @@
   <app-vitals-list-modal (toggleModal)="toggleModal('vitals-list')" (vitalsEdit)="vitalsEdit($event)" [patient_info]="patient_info"></app-vitals-list-modal>
 </div>
 
-<div *ngIf="modals['app-allergies']">
-  <app-allergies-modal (toggleModal)="toggleModal('app-allergies')"></app-allergies-modal>
+<div *ngIf="modals['allergies']">
+  <app-allergies-modal (toggleModal)="toggleModal('allergies')"></app-allergies-modal>
 </div>
 
 <div *ngIf="modals['medication']">
@@ -566,5 +575,9 @@
 
 <div *ngIf="modals['lab-request']">
   <app-lab-request-modal (toggleModal)="toggleModal('lab-request')" [patient_info]="patient_info" [consult_id]="consult_id"></app-lab-request-modal>
+</div>
+
+<div *ngIf="modals['photo']">
+  <app-photo-modal (toggleModal)="toggleModal('photo')" [patient_info]="patient_info"></app-photo-modal>
 </div>
 
