@@ -108,6 +108,20 @@ export class ModuleModalComponent implements OnInit {
   consult_time;
   date;
 
+  pATC: string;
+  is_atc_valid: boolean;
+  is_walk_in: boolean;
+
+  checkATC(){
+    this.http.post('isATCvalidURL', {params: {pATC: this.pATC}}).subscribe({
+      next: (data: any) => {
+        console.log(data)
+        this.is_atc_valid = data.data === 'YES' ? true : false;
+      },
+      error: err => console.log(err)
+    })
+  }
+
   selectPrograms(){
     if(this.patient_info.gender == 'F' && (this.patient_age.type === 'year' && this.patient_age.age >= 9)) {
       this.list_modules.General.modules['mc'] = this.mc;
@@ -161,7 +175,8 @@ export class ModuleModalComponent implements OnInit {
       user_id: user_id,
       consult_date: this.consult_date+' '+this.consult_time+':00',
       consult_done: 0,
-      pt_group: selected_module.group
+      pt_group: selected_module.group,
+      pATC: this.is_walk_in === false ? (this.pATC || this.pATC !== '' ? this.pATC : null) : 'WALKEDIN'
     };
 
     this.http.post('consultation/records', new_visit).subscribe({

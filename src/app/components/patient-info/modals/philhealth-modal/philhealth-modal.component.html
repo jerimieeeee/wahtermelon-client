@@ -16,7 +16,7 @@
 
             <div class="relative w-full text-sm md:w-1/3 lg:w-1/3 pl-5 py-2 mt-1">
               <label class="font-semibold" for="enlistment_date" [ngClass]="{'text-red-500': is_saving && f.enlistment_date.errors}">Enlistment Date</label>
-              <input name="enlistment_date" id="enlistment_date" formControlName="enlistment_date" [ngClass]="{'invalid-input': is_saving && f.enlistment_date.errors}" type="date" max="{{ date | date: 'yyyy-MM-dd'}}" class="input">
+              <input name="enlistment_date" id="enlistment_date" (change)="updateEffectivity()" formControlName="enlistment_date" [ngClass]="{'invalid-input': is_saving && f.enlistment_date.errors}" type="date" max="{{ date | date: 'yyyy-MM-dd'}}" class="input">
 
               <div *ngIf="is_saving && f.enlistment_date.errors" class="invalid-alert">
                 <div *ngIf="f.enlistment_date.errors?.['required']">
@@ -39,13 +39,31 @@
 
             <div class="relative w-full text-sm md:w-1/3 lg:w-1/3 pr-5 py-2 mt-1">
               <label  for="package_type_id" class="font-semibold" [ngClass]="{'text-red-500': is_saving && f.package_type_id.errors}">Enlistment type</label>
-              <select name="package_type_id" id="package_type_id" formControlName="package_type_id" [ngClass]="{'invalid-input': is_saving && f.package_type_id.errors}" class="input">
+              <select name="package_type_id" id="package_type_id" formControlName="package_type_id" (change)="isATCrequired()" [ngClass]="{'invalid-input': is_saving && f.package_type_id.errors}" class="input">
                 <option [value]="type.id" *ngFor="let type of package_types">{{ type.desc}}</option>
               </select>
               <div *ngIf="is_saving && f.package_type_id.errors" class="invalid-alert">
                 <div *ngIf="f.package_type_id.errors?.['required']">
                   {{ required_message }}
                 </div>
+              </div>
+            </div>
+
+            <div class="border border-slate-200 rounded-md mx-10 shadow-md w-full" *ngIf="philhealthForm.value.package_type_id === 'K'">
+              <div class="flex justify-start w-full ml-5 my-3">
+                <input type="checkbox" class="border border-gray-400 rounded-md h-5 w-5 mr-2" (change)="isATCrequired()" [ngModelOptions]="{standalone: true}" [(ngModel)]="is_walk_in" />Check if patient is Walk-in
+              </div>
+
+              <div *ngIf="!is_walk_in" class="flex justify-start w-full ml-5 mb-3">
+                <label for="pATC" class="input-label pr-5 inline-block align-middle pt-3 w-1/4">Konsulta ATC</label><br />
+                <input type="text" name="pATC" id="pATC" class="input w-52 mr-5" placeholder="Patient ATC" formControlName="pATC">
+                <button [disabled]="!pATC || is_loading" type="button" class="px-10 h-9 mt-1 text-sm rounded-md text-white bg-blue-500 disabled:bg-gray-300" (click)="checkATC()">Check ATC</button>
+              </div>
+
+              <div *ngIf="is_atc_valid !== undefined" class="flex mx-16 my-3 p-2 rounded-md bg-green-100 text-green-900 shadow-sm"
+                [ngClass]="{'bg-red-100 text-red-900': !is_atc_valid}">
+                <fa-icon class="flex-none my-0 m-2" [icon]="faCircleInfo" size="lg"></fa-icon>
+                {{ is_atc_valid ? 'ATC is valid' : 'ATC is not valid' }}
               </div>
             </div>
           </div>
@@ -313,8 +331,8 @@
           <span class="block sm:inline">Record was updated.</span>
         </div>
 
-        <button  type="button" class="text-white bg-orange-500 hover:ring-2 focus:outline-none hover:ring-orange-300 rounded text-sm font-medium my-2 px-6 py-2.5 transition duration-150 ease-in-out" (click)="closeModal()">Close</button>
-        <button  [disabled]="philhealthForm.pristine" type="button" class="text-white bg-blue-500 enabled:hover:ring-2 enabled:focus:outline-none enabled:hover:ring-blue-300 disabled:opacity-75 font-medium rounded text-sm my-2 px-6 py-2.5 text-center transition duration-150 ease-in-out" (click)="onSubmit()" >Save</button>
+        <button  type="button" class="text-white bg-gray-500 hover:ring-2 focus:outline-none hover:ring-gray-300 rounded text-sm font-medium my-2 px-6 py-2.5 transition duration-150 ease-in-out" (click)="closeModal()">Close</button>
+        <button [disabled]="philhealthForm.invalid" type="button" class="text-white bg-blue-500 enabled:hover:ring-2 enabled:focus:outline-none enabled:hover:ring-blue-300 disabled:bg-gray-300 font-medium rounded text-sm my-2 px-6 py-2.5 text-center transition duration-150 ease-in-out" (click)="onSubmit()" >Save</button>
       </div>
     </div>
   </div>
@@ -322,3 +340,4 @@
 
 <div class="opacity-50 fixed inset-0 z-50 bg-black"></div>
 
+<!-- [disabled]="philhealthForm.invalid" -->

@@ -20,6 +20,7 @@ import { PhilhealthListModalComponent } from 'app/components/patient-info/modals
 import { NgxMaskModule } from 'ngx-mask';
 import { LabRequestModalComponent } from 'app/components/patient-info/modals/lab-request-modal/lab-request-modal.component';
 import { PhotoModalComponent } from 'app/components/patient-info/modals/photo-modal/photo-modal.component';
+import { WebcamModule } from 'ngx-webcam';
 
 
 
@@ -48,7 +49,8 @@ import { PhotoModalComponent } from 'app/components/patient-info/modals/photo-mo
     NgApexchartsModule,
     ReactiveFormsModule,
     FormsModule,
-    NgxMaskModule.forRoot()
+    NgxMaskModule.forRoot(),
+    WebcamModule
   ],
   exports: [
     PatientInfoComponent,
