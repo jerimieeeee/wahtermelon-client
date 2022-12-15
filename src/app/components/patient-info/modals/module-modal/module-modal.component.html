@@ -11,7 +11,7 @@
         </div>
         <!-- Modal body -->
         <div *ngIf="show_form" class="overflow-y-auto overflow-x-hidden scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
-            <div *ngIf="!show_new">
+            <div *ngIf="show_new">
               <div class="grid grid-cols-1 item-start flex-wrap pb-5" *ngFor="let list of list_modules | keyvalue">
                 <div class="w-full px-5 my-3 rounded-tl rounded-tr">
                   <h4 class="font-bold text-blue-500 text-sm mt-2">{{ list.key }}</h4>
@@ -41,7 +41,7 @@
               </div>
             </div>
 
-            <div *ngIf="show_new" class="grid grid-cols-1 item-start flex-wrap pb-5">
+            <div *ngIf="!show_new" class="grid grid-cols-1 item-start flex-wrap pb-5">
               <div class="flex justify-center w-full my-5">
                 No active visit for <span class="font-semibold">{{ selected_module.name }}</span>.
                 Would you like to create a new <span class="font-semibold">{{ selected_module.name }}</span> visit?
@@ -56,13 +56,18 @@
 
                 <div class="border border-slate-200 rounded-md mx-10 shadow-md">
                   <div class="flex justify-start w-full ml-5 my-3">
-                    <input type="checkbox" class="border border-gray-400 rounded-md h-5 w-5 mr-2" [(ngModel)]="is_walk_in" />Check if patient is Walk-in
+                    <input [disabled]="is_checking_atc" type="checkbox" class="border border-gray-400 rounded-md h-5 w-5 mr-2 disabled:bg-gray-300" [(ngModel)]="is_walk_in" />Check if patient is Walk-in
                   </div>
 
                   <div *ngIf="!is_walk_in" class="flex justify-start w-full ml-5 mb-3">
-                    <label for="pATC" class="input-label pr-5 inline-block align-middle pt-3 w-1/4">Konsulta ATC</label><br />
-                    <input type="text" name="pATC" id="pATC" class="input w-52 mr-5" placeholder="Patient ATC" [(ngModel)]="pATC">
-                    <button [disabled]="!pATC || is_loading" type="button" class="px-10 h-9 mt-1 text-sm rounded-md text-white bg-blue-500 disabled:bg-gray-300" (click)="checkATC()">Check ATC</button>
+                    <label for="pATC"  class="input-label pr-5 inline-block align-middle pt-3 w-1/4">Konsulta ATC</label><br />
+                    <input type="text" name="pATC" id="pATC" class="input w-52" placeholder="Patient ATC" [(ngModel)]="pATC">
+                    <input type="date" name="pATC_date" id="pATC_date" class="input w-52" placeholder="mm/dd/yyyy" max="{{ date | date:'yyyy-MM-dd HH:mm:ss'}}" [(ngModel)]="pATC_date">
+
+                    <button [disabled]="!pATC || !pATC_date || is_loading || is_checking_atc" type="button" class="h-9 mt-1 text-sm rounded-md text-white bg-blue-500 disabled:bg-gray-300" (click)="checkATC()">
+                      <!-- ATC -->
+                      <fa-icon [icon]="is_checking_atc ? faSpinner : faCheck" class="py-1 px-2" [spin]="is_checking_atc"></fa-icon>
+                    </button>
                   </div>
 
                   <div *ngIf="is_atc_valid !== undefined" class="flex mx-16 my-3 p-2 rounded-md bg-green-100 text-green-900 shadow-sm"
@@ -73,8 +78,8 @@
                 </div>
 
                 <div class="flex justify-center mt-5">
-                  <button  type="button" class="btn-save px-10 bg-amber-500 mr-2" (click)="onCreateCancel()">Cancel</button>
-                  <button [disabled]="!consult_date || is_loading" type="button" class="btn-save px-10" (click)="onCreateNew(selected_module)">Proceed</button>
+                  <button  [disabled]="is_checking_atc" type="button" class="btn-save px-10 bg-amber-500 mr-2 disabled:bg-gray-300" (click)="onCreateCancel()">Cancel</button>
+                  <button [disabled]="!consult_date || is_loading || is_checking_atc" type="button" class="btn-save px-10 disabled:bg-gray-300" (click)="onCreateNew(selected_module)">Proceed</button>
                 </div>
               </div>
 

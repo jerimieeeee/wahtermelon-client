@@ -2,6 +2,7 @@ import { formatDate, ViewportScroller } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { faCheck, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -14,6 +15,9 @@ export class PhilhealthModalComponent implements OnInit {
   @Output() toggleModal = new EventEmitter<any>();
   @Input() patient_info;
   @Input() philhealth_to_edit;
+
+  faCheck = faCheck;
+  faSpinner = faSpinner;
 
   error_message = "exceeded maximum value";
   error_message_min = "does not meet minimum length";
@@ -48,7 +52,7 @@ export class PhilhealthModalComponent implements OnInit {
     employer_address: new FormControl<string| null>(''),
     member_pin_confirmation: new FormControl<string| null>(''),
     philhealth_id_confirmation: new FormControl<string| null>(''),
-    pATC: new FormControl<string| null>(''),
+    pATC: new FormControl<string| null>('')
   });
 
   date;
@@ -57,6 +61,7 @@ export class PhilhealthModalComponent implements OnInit {
   is_saving: boolean = false;
   loading: boolean = false;
   show_member_form: boolean = false;
+  is_checking_atc: boolean = false;
 
   membership_types: any;
   membership_categories: any;
@@ -67,18 +72,20 @@ export class PhilhealthModalComponent implements OnInit {
 
   submit_errors: [];
 
-  pATC: string;
+
+  pATC_date: string;
   is_atc_valid: boolean;
   is_walk_in: boolean;
 
   checkATC(){
-    this.http.post('isATCvalidURL', {params: {pATC: this.pATC}}).subscribe({
+    this.is_checking_atc = true;
+    /* this.http.post('isATCvalidURL', {params: {pATC: this.pATC}}).subscribe({
       next: (data: any) => {
         console.log(data)
         this.is_atc_valid = data.data === 'YES' ? true : false;
       },
       error: err => console.log(err)
-    })
+    }) */
   }
 
   onSubmit(){

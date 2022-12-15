@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { faClipboard, faCircleInfo, faHouse, faUserDoctor, faFlask } from '@fortawesome/free-solid-svg-icons';
+import { faClipboard, faCircleInfo, faHouse, faUserDoctor, faFlask, faCheck, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { formatDate } from '@angular/common';
 import { AgeService } from 'app/shared/services/age.service';
@@ -20,6 +20,8 @@ export class ModuleModalComponent implements OnInit {
   faHouse = faHouse;
   faUserDoctor = faUserDoctor;
   faFlask = faFlask;
+  faCheck = faCheck;
+  faSpinner = faSpinner;
 
   list_modules = {
     'General': {
@@ -102,6 +104,7 @@ export class ModuleModalComponent implements OnInit {
   show_new: boolean = false;
   is_loading: boolean = false;
   show_form: boolean = false;
+  is_checking_atc: boolean = false;
 
   selected_module: string = '';
   consult_date;
@@ -109,17 +112,19 @@ export class ModuleModalComponent implements OnInit {
   date;
 
   pATC: string;
+  pATC_date: string;
   is_atc_valid: boolean;
   is_walk_in: boolean;
 
   checkATC(){
-    this.http.post('isATCvalidURL', {params: {pATC: this.pATC}}).subscribe({
+    this.is_checking_atc = true;
+    /* this.http.post('isATCvalidURL', {params: {pATC: this.pATC}}).subscribe({
       next: (data: any) => {
         console.log(data)
         this.is_atc_valid = data.data === 'YES' ? true : false;
       },
       error: err => console.log(err)
-    })
+    }) */
   }
 
   selectPrograms(){
