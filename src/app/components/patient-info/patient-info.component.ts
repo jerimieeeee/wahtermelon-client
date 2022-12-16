@@ -102,7 +102,7 @@ export class PatientInfoComponent implements OnInit{
         this.loadVitals();
         this.loadVaccines();
         this.loadLabs();
-        this.toggleModal('philhealth') //togglemodal for easy test;
+        // this.toggleModal('philhealth') //togglemodal for easy test;
         this.accordions['vitals'] = true
         this.accordions['lab_request'] = true
         // this.toggleModal('philhealth-modal');//open sample modal
