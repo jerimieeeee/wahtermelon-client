@@ -15,6 +15,7 @@ export class PrescriptionComponent implements OnInit, OnChanges {
   show_content: boolean = true;
   show_list: boolean = false;
   show_form: boolean = false;
+  show_delete_form: boolean = false;
   show_actions: boolean = false;
   show_content_tx: boolean = false;
   is_saving: boolean = false;
@@ -34,8 +35,10 @@ export class PrescriptionComponent implements OnInit, OnChanges {
     plan: null
   }
 
-  editPrescribe(){
+  openDeleteForm(drug){
+    this.selected_drug = drug;
 
+    this.toggleDeleteForm()
   }
 
   onSubmit(){
@@ -75,11 +78,18 @@ export class PrescriptionComponent implements OnInit, OnChanges {
     this.show_list = !this.show_list;
   }
 
+  toggleDeleteForm(){
+    this.show_delete_form = !this.show_delete_form;
+
+    if(this.show_delete_form === false) {
+      this.loadPrescriptions();
+    }
+  }
+
   toggleForm(){
     this.show_form = !this.show_form;
 
     if(this.show_form === false) {
-      this.selected_drug = null;
       this.loadPrescriptions();
     }
   }
@@ -102,6 +112,8 @@ export class PrescriptionComponent implements OnInit, OnChanges {
 
   prescriptions: any;
 
+
+  //Temp function to load from lib
   libraries = {
     dosage_uom:             {var_name: 'dosage_desc',       location: 'unit-of-measurements', value: ''},
     dose_regimen:           {var_name: 'regimen_desc',      location: 'dose-regimens',        value: ''},
@@ -133,8 +145,10 @@ export class PrescriptionComponent implements OnInit, OnChanges {
     });
     // console.log(this.prescriptions)
   }
+  //end
 
   loadPrescriptions(){
+    this.selected_drug = null;
     let params = {
       sort: '-prescription_date',
       consult_id: this.consult_details.id

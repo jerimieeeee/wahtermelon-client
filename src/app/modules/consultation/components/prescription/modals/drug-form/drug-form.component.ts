@@ -84,6 +84,7 @@ export class DrugFormComponent implements OnInit {
       })
     });
   }
+  //end
 
   constructor(
     private http: HttpService,
@@ -97,8 +98,6 @@ export class DrugFormComponent implements OnInit {
     } else {
       this.prescriptionForm.controls.purpose_other.disable();
     }
-
-    console.log(this.prescriptionForm.value.medicine_purpose)
   }
 
   ngOnInit(): void {

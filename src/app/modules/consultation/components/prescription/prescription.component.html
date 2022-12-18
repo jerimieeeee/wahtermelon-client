@@ -34,9 +34,9 @@
               {{ prescription.purpose_desc }}<br />
             </td>
             <td class="text-sm text-center mb-5  align-middle">
-              <button class="mr-5" (click)="openAddForm(prescription)">
+              <!-- <button class="mr-5" (click)="openDeleteForm(prescription)">
                 <fa-icon [icon]="faTrash" class="text-rose-400"></fa-icon>
-              </button>
+              </button> -->
               <button (click)="openAddForm(prescription)">
                 <fa-icon [icon]="faEdit" class="text-amber-500"></fa-icon>
               </button>
@@ -77,3 +77,4 @@
 
 <app-drug-list *ngIf="show_list" (openAddForm)="openAddForm($event)" (toggleList)="toggleList()"></app-drug-list>
 <app-drug-form *ngIf="show_form" [selected_drug]="selected_drug" [consult_details]="consult_details" (toggleForm)="toggleForm()"></app-drug-form>
+<!-- <app-drug-delete *ngIf="show_delete_form" [selected_drug]="selected_drug" (toggleDeleteForm)="toggleDeleteForm()"></app-drug-delete> -->
