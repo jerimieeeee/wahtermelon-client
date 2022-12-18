@@ -12,21 +12,21 @@
           <!-- START PATIENT DETAILS -->
           <div class="grid grid-cols-3 gap-4 pb-5 px-10">
 
-            <div class="col-span-3 mt-5 mx-5">
+            <div class="col-span-3 mt-5 mx-5" *ngIf="!add_drug">
               <span class="font-semibold">Drug description:</span>
               {{ selected_drug.desc }}
             </div>
 
-            <!-- <div class="col-span-3 text-sm ">
-              <label class="font-semibold" for="drug_added" [ngClass]="{'text-red-500': is_saving && f.drug_added.errors}">Brand name</label>
-              <input name="drug_added" id="drug_added" formControlName="drug_added" type="text" class="input" [ngClass]="{'invalid-input': is_saving && f.drug_added.errors}">
+            <div class="col-span-3 text-sm " *ngIf="add_drug">
+              <label class="font-semibold" for="added_medicine" [ngClass]="{'text-red-500': is_saving && f.added_medicine.errors}">Brand name</label>
+              <input name="added_medicine" id="added_medicine" formControlName="added_medicine" type="text" class="input" [ngClass]="{'invalid-input': is_saving && f.added_medicine.errors}">
 
-              <div *ngIf="is_saving && f.drug_added.errors" class="invalid-alert">
-                <div *ngIf="f.drug_added.errors?.['required']">
+              <div *ngIf="is_saving && f.added_medicine.errors" class="invalid-alert">
+                <div *ngIf="f.added_medicine.errors?.['required']">
                   {{ required_message }}
                 </div>
               </div>
-            </div> -->
+            </div>
 
             <div class="col-span-1 text-sm">
               <label class="font-semibold" for="dosage_quantity" [ngClass]="{'text-red-500': is_saving && f.dosage_quantity.errors}">Dosage Qty.</label>

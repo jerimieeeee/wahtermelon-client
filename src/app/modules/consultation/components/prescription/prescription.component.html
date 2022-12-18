@@ -25,6 +25,8 @@
           <tr class="text-left align-top px-2 border-b border-slate-300" *ngFor="let prescription of prescriptions; trackBy:identify">
             <td class="font-semibold pl-5 align-middle">
               {{ prescription.medicine_desc }}
+
+              <span class="italic text-sky-500">{{ prescription.added_medicine }}</span>
             </td>
             <td class="text-sm mb-5">
               {{ prescription.dossage_quantity }} {{ prescription.dosage_desc }}<br />

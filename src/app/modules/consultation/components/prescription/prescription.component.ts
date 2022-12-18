@@ -101,7 +101,7 @@ export class PrescriptionComponent implements OnInit, OnChanges {
   ngOnChanges(changes){
     this.show_content = this.toggle_content;
     this.show_content_tx = this.toggle_content;
-    console.log(this.show_content)
+    // console.log(this.show_content)
     if(this.consult_details) this.show_actions = true;
 
     if(this.consult_details) {

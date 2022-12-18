@@ -45,7 +45,8 @@ export class DrugListComponent implements OnInit {
   }
 
   showAdd(){
-
+    this.openAddForm.emit();
+    this.toggleList.emit();
   }
 
   loadDrugs(page?: number){

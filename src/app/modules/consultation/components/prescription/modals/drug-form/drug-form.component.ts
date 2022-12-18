@@ -51,7 +51,7 @@ export class DrugFormComponent implements OnInit {
 
     if(this.prescriptionForm.valid){
       let query;
-      if(this.selected_drug.id){
+      if(this.selected_drug && this.selected_drug.id){
         query = this.http.update('medicine/prescriptions/', this.selected_drug.id, this.prescriptionForm.value);
       } else {
         query = this.http.post('medicine/prescriptions', this.prescriptionForm.value);
@@ -100,6 +100,8 @@ export class DrugFormComponent implements OnInit {
     }
   }
 
+  add_drug: boolean = false;
+
   ngOnInit(): void {
     this.loadLibraries();
     console.log(this.selected_drug);
@@ -111,29 +113,40 @@ export class DrugFormComponent implements OnInit {
       prescribed_by: [physician,[Validators.required]],
       consult_id: [this.consult_details.id,[Validators.required]],
       prescription_date: [formatDate(this.consult_details.consult_date, 'yyyy-MM-dd', 'en'),[Validators.required]],
-      konsulta_medicine_code: [this.selected_drug.code,[Validators.required]],
-      added_medicine: ['',[Validators.required]],
-      dosage_quantity: ['',[Validators.required]],
-      dosage_uom: ['',[Validators.required]], //libraries/unit-of-measurement
-      dose_regimen: ['',[Validators.required]], //libraries/dose-regimen
-      medicine_purpose: ['',[Validators.required]], //
-      purpose_other: ['',[Validators.required]], //libraries/purposes
-      duration_intake: ['',[Validators.required]],
-      duration_frequency: ['',[Validators.required]], //libraries/duration-frequencies
+      konsulta_medicine_code: [null,[Validators.required]],
+      added_medicine: [null,[Validators.required]],
+      dosage_quantity: [null,[Validators.required]],
+      dosage_uom: [null,[Validators.required]], //libraries/unit-of-measurement
+      dose_regimen: [null,[Validators.required]], //libraries/dose-regimen
+      medicine_purpose: [null,[Validators.required]], //
+      purpose_other: [null,[Validators.required]], //libraries/purposes
+      duration_intake: [null,[Validators.required]],
+      duration_frequency: [null,[Validators.required]], //libraries/duration-frequencies
       quantity: [null,[Validators.required]],
-      quantity_preparation: ['',[Validators.required]] //libraries/preparations
+      quantity_preparation: [null,[Validators.required]] //libraries/preparations
     });
 
-    if(this.selected_drug.code) this.prescriptionForm.controls.added_medicine.disable();
 
-    if(this.selected_drug.id) {
-      this.prescriptionForm.patchValue({...this.selected_drug});
-      this.prescriptionForm.controls.added_medicine.disable();
-      this.checkPurpose();
+    if(this.selected_drug){
+      if(this.selected_drug.id) {
+        console.log('x')
+        this.prescriptionForm.patchValue({...this.selected_drug});
+        this.prescriptionForm.controls.added_medicine.disable();
+        this.checkPurpose();
 
-      if(this.selected_drug.dossage_quantity) {
-        this.prescriptionForm.patchValue({dosage_quantity: this.selected_drug.dossage_quantity});
+        if(this.selected_drug.dossage_quantity) {
+          this.prescriptionForm.patchValue({dosage_quantity: this.selected_drug.dossage_quantity});
+        }
+      } else {
+        console.log('1')
+        this.prescriptionForm.patchValue({ konsulta_medicine_code: this.selected_drug.code })
+        this.prescriptionForm.controls.added_medicine.disable();
       }
+    } else {
+      console.log('2')
+      this.add_drug = true;
+      this.prescriptionForm.controls.konsulta_medicine_code.disable();
     }
+
   }
 }
