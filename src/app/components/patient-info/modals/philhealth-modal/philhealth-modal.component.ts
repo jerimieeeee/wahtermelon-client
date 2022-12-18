@@ -62,6 +62,7 @@ export class PhilhealthModalComponent implements OnInit {
   loading: boolean = false;
   show_member_form: boolean = false;
   is_checking_atc: boolean = false;
+  is_checking_status: boolean = false;
 
   membership_types: any;
   membership_categories: any;
@@ -77,9 +78,28 @@ export class PhilhealthModalComponent implements OnInit {
   is_atc_valid: boolean;
   is_walk_in: boolean;
 
-  checkATC(){
+  is_registered: any;
+
+  isATCValid(){
     this.is_checking_atc = true;
     /* this.http.post('isATCvalidURL', {params: {pATC: this.pATC}}).subscribe({
+      next: (data: any) => {
+        console.log(data)
+        this.is_atc_valid = data.data === 'YES' ? true : false;
+      },
+      error: err => console.log(err)
+    }) */
+  }
+
+  isMemberDependentRegistered() {
+    this.is_checking_status = true;
+
+    let params = {
+      pPIN: this.philhealthForm.value.philhealth_id,
+      pType: this.philhealthForm.value.membership_type_id
+    }
+
+    /* this.http.post('isATCvalidURL', {params}).subscribe({
       next: (data: any) => {
         console.log(data)
         this.is_atc_valid = data.data === 'YES' ? true : false;
@@ -121,11 +141,11 @@ export class PhilhealthModalComponent implements OnInit {
   }
 
   get philhealthMatchError() {
-    return ((this.philhealthForm.controls.philhealth_id.value != this.philhealthForm.controls.philhealth_id_confirmation.value) && this.philhealthForm.get('philhealth_id_confirmation')?.touched);
+    return ((this.philhealthForm.controls.philhealth_id.value != this.philhealthForm.controls.philhealth_id_confirmation.value) && this.philhealthForm.get('philhealth_id_confirmation')?.dirty);
   }
 
   get philhealthMemberMatchError() {
-    return ((this.philhealthForm.controls.member_pin.value != this.philhealthForm.controls.member_pin_confirmation.value) && this.philhealthForm.get('member_pin_confirmation')?.touched);
+    return ((this.philhealthForm.controls.member_pin.value != this.philhealthForm.controls.member_pin_confirmation.value) && this.philhealthForm.get('member_pin_confirmation')?.dirty);
   }
 
   closeModal(){

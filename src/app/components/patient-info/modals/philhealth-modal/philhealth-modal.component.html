@@ -49,7 +49,7 @@
               </div>
             </div>
 
-            <div class="border border-slate-200 rounded-md mx-5 shadow-md w-full">
+            <div *ngIf="philhealthForm.controls.pATC.enabled" class="border border-slate-200 rounded-md mx-5 shadow-md w-full">
               <div class="flex justify-start w-full ml-5 my-3">
                 <input [disabled]="is_checking_atc" type="checkbox" class="border border-gray-400 rounded-md h-5 w-5 mr-2 disabled:bg-gray-300" (change)="isATCrequired()" [ngModelOptions]="{standalone: true}" [(ngModel)]="is_walk_in" />Check if patient is Walk-in
               </div>
@@ -59,7 +59,7 @@
                 <input type="text" name="pATC" id="pATC" class="input w-52" placeholder="Patient ATC" formControlName="pATC">
                 <input type="date" name="pATC_date" id="pATC_date" class="input w-52" placeholder="mm/dd/yyyy" max="{{ date | date:'yyyy-MM-dd HH:mm:ss'}}" [ngModelOptions]="{standalone: true}" [(ngModel)]="pATC_date">
 
-                <button [disabled]="!philhealthForm.value.pATC || !pATC_date || is_loading || is_checking_atc" type="button" class="h-9 mt-1 text-sm rounded-md text-white bg-blue-500 disabled:bg-gray-300" (click)="checkATC()">
+                <button [disabled]="!philhealthForm.value.pATC || !pATC_date || is_loading || is_checking_atc" type="button" class="h-9 mt-1 text-sm rounded-md text-white bg-blue-500 disabled:bg-gray-300" (click)="isATCValid()">
                   <!-- ATC -->
                   <fa-icon [icon]="is_checking_atc ? faSpinner : faCheck" class="py-1 px-2" [spin]="is_checking_atc"></fa-icon>
                 </button>
@@ -79,7 +79,7 @@
               <div *ngIf="!is_walk_in" class="flex justify-start w-full ml-5 mb-3">
                 <label for="pATC" class="input-label pr-5 inline-block align-middle pt-3 w-1/4">Konsulta ATC</label><br />
                 <input type="text" name="pATC" id="pATC" class="input w-52 mr-5" placeholder="Patient ATC" formControlName="pATC">
-                <button [disabled]="!pATC || is_loading" type="button" class="px-10 h-9 mt-1 text-sm rounded-md text-white bg-blue-500 disabled:bg-gray-300" (click)="checkATC()">Check ATC</button>
+                <button [disabled]="!pATC || is_loading" type="button" class="px-10 h-9 mt-1 text-sm rounded-md text-white bg-blue-500 disabled:bg-gray-300" (click)="isATCValid()">Check ATC</button>
               </div>
 
               <div *ngIf="is_atc_valid !== undefined" class="flex mx-16 my-3 p-2 rounded-md bg-green-100 text-green-900 shadow-sm"
@@ -155,6 +155,19 @@
                   {{ required_message }}
                 </div>
               </div>
+            </div>
+
+            <div *ngIf="(philhealthForm.controls.pATC.enabled && philhealthForm.value.philhealth_id && philhealthForm.value.philhealth_id_confirmation && philhealthForm.value.membership_type_id) && !philhealthMatchError" class="relative w-full flex text-sm px-5 mt-2">
+              <div class="w-full text-sm md:w-1/2 lg:w-1/2">
+                <button class="px-5 bg-green-600 text-white rounded-md hover:bg-green-500 hover:text-gray-50" (click)="isMemberDependentRegistered()">
+                  check registration
+                </button>
+              </div>
+            </div>
+
+            <div *ngIf="is_registered" class="relative w-full text-sm px-5 py-2">
+              <label>Registration status</label>
+              <input type="text" value="Registered" class="input disabled:bg-gray-200" disabled />
             </div>
           </div>
           <div class="text-gray-600 border border-slate-100 mx-5"></div>

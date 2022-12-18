@@ -21,6 +21,8 @@ import { NgxMaskModule } from 'ngx-mask';
 import { LabRequestModalComponent } from 'app/components/patient-info/modals/lab-request-modal/lab-request-modal.component';
 import { PhotoModalComponent } from 'app/components/patient-info/modals/photo-modal/photo-modal.component';
 import { WebcamModule } from 'ngx-webcam';
+import { KonsultaComponent } from './konsulta/konsulta.component';
+import { EclaimsComponent } from './eclaims/eclaims.component';
 
 
 
@@ -41,7 +43,9 @@ import { WebcamModule } from 'ngx-webcam';
     PhilhealthModalComponent,
     PhilhealthListModalComponent,
     LabRequestModalComponent,
-    PhotoModalComponent
+    PhotoModalComponent,
+    KonsultaComponent,
+    EclaimsComponent
   ],
   imports: [
     CommonModule,
@@ -68,7 +72,9 @@ import { WebcamModule } from 'ngx-webcam';
     PhilhealthModalComponent,
     PhilhealthListModalComponent,
     LabRequestModalComponent,
-    PhotoModalComponent
+    PhotoModalComponent,
+    KonsultaComponent,
+    EclaimsComponent
   ]
 })
 export class SharedComponentsModule { }

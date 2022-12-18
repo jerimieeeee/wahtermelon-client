@@ -116,7 +116,7 @@ export class ModuleModalComponent implements OnInit {
   is_atc_valid: boolean;
   is_walk_in: boolean;
 
-  checkATC(){
+  isATCValid(){
     this.is_checking_atc = true;
     /* this.http.post('isATCvalidURL', {params: {pATC: this.pATC}}).subscribe({
       next: (data: any) => {
