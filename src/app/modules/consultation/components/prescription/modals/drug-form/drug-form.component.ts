@@ -60,6 +60,7 @@ export class DrugFormComponent implements OnInit {
         next: (data: any) => {
           console.log(data);
           this.toastr.success('Successfully added','Prescription');
+          this.closeModal();
         },
         error: err => console.log(err)
       })

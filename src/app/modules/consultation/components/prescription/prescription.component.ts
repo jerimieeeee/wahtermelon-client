@@ -154,7 +154,8 @@ export class PrescriptionComponent implements OnInit, OnChanges {
       consult_id: this.consult_details.id
     };
 
-    this.http.get('medicine/prescriptions',params).subscribe({
+    console.log(params)
+    this.http.get('medicine/prescriptions',{params}).subscribe({
       next: (data: any) => {
         console.log(data);
         this.prescriptions = data.data;
