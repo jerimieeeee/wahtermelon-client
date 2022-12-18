@@ -18,6 +18,8 @@ import { ConsultHistoryComponent } from './components/consult-history/consult-hi
 import { ConsultSummaryComponent } from './components/consult-summary/consult-summary.component';
 import { EndVisitComponent } from './modals/end-visit/end-visit.component';
 import { AlertPromptComponent } from './modals/alert-prompt/alert-prompt.component';
+import { DrugListComponent } from './components/prescription/modals/drug-list/drug-list.component';
+import { DrugFormComponent } from './components/prescription/modals/drug-form/drug-form.component';
 
 
 @NgModule({
@@ -32,7 +34,9 @@ import { AlertPromptComponent } from './modals/alert-prompt/alert-prompt.compone
     ConsultHistoryComponent,
     ConsultSummaryComponent,
     EndVisitComponent,
-    AlertPromptComponent
+    AlertPromptComponent,
+    DrugListComponent,
+    DrugFormComponent
   ],
   imports: [
     CommonModule,

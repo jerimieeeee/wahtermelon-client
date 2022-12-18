@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 
 import { KonsultaRoutingModule } from './konsulta-routing.module';
 import { KonsultaComponent } from './konsulta.component';
+import { FormsModule } from '@angular/forms';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 
 @NgModule({
@@ -11,7 +13,9 @@ import { KonsultaComponent } from './konsulta.component';
   ],
   imports: [
     CommonModule,
-    KonsultaRoutingModule
+    KonsultaRoutingModule,
+    FormsModule,
+    FontAwesomeModule
   ]
 })
 export class KonsultaModule { }

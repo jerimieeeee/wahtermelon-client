@@ -11,7 +11,7 @@
         </div>
         <!-- Modal body -->
         <div *ngIf="show_form" class="overflow-y-auto overflow-x-hidden scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
-            <div *ngIf="show_new">
+            <div *ngIf="!show_new">
               <div class="grid grid-cols-1 item-start flex-wrap pb-5" *ngFor="let list of list_modules | keyvalue">
                 <div class="w-full px-5 my-3 rounded-tl rounded-tr">
                   <h4 class="font-bold text-blue-500 text-sm mt-2">{{ list.key }}</h4>
@@ -41,7 +41,7 @@
               </div>
             </div>
 
-            <div *ngIf="!show_new" class="grid grid-cols-1 item-start flex-wrap pb-5">
+            <div *ngIf="show_new" class="grid grid-cols-1 item-start flex-wrap pb-5">
               <div class="flex justify-center w-full my-5">
                 No active visit for <span class="font-semibold">{{ selected_module.name }}</span>.
                 Would you like to create a new <span class="font-semibold">{{ selected_module.name }}</span> visit?

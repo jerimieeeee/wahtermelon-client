@@ -7,24 +7,73 @@
     <div class="rounded-md border border-solid border-gray-300">
       <span class="rounded-t-md m-0 p-2 font-semibold text-gray-50 bg-amber-500 flex justify-between" [ngClass]="{'rounded-b' : !show_content}">
         Prescriptions
-        <button type="button" (click)="show_content = !show_content">
-          <fa-icon [icon]="show_content ? faChevronCircleUp : faChevronCircleDown" class="pr-2" size="lg"></fa-icon>
+        <button *ngIf="show_actions" type="button" class="text-sm bg-white text-amber-500 px-3 rounded-full" (click)="toggleList()">
+          <fa-icon [icon]="faAdd" class="pr-1"></fa-icon>
+          add
         </button>
       </span>
-      <table *ngIf="show_content" class="w-full table-auto">
+      <table *ngIf="show_content" class="w-full table-auto p-5">
+        <thead>
+
+          <tr>
+            <th class="w-2/5">Description</th>
+            <th class="w-2/5">Dosage/Prepration/Quantity</th>
+            <th class="w-1/5">Action</th>
+          </tr>
+        </thead>
         <tbody>
-          <tr class="text-left align-top mx-2">
-            <td class="font-semibold text-center">Amoxicillin</td>
-            <td>
-              Table 500mg <br />
-              3x a day<br />
-              Sample <br />
+          <tr class="text-left align-top px-2 border-b border-slate-300" *ngFor="let prescription of prescriptions; trackBy:identify">
+            <td class="font-semibold pl-5 align-middle">
+              {{ prescription.medicine_desc }}
             </td>
-            <td>Increase Fluid intake</td>
-            <td></td>
+            <td class="text-sm mb-5">
+              {{ prescription.dossage_quantity }} {{ prescription.dosage_desc }}<br />
+              {{ prescription.regimen_desc }}<br />
+              {{ prescription.duration_intake }} {{ prescription.frequency_desc }}<br />
+              {{ prescription.quantity }} {{ prescription.preparation_desc }}<br />
+              {{ prescription.purpose_desc }}<br />
+            </td>
+            <td class="text-sm text-center mb-5  align-middle">
+              <button class="mr-5" (click)="openAddForm(prescription)">
+                <fa-icon [icon]="faTrash" class="text-rose-400"></fa-icon>
+              </button>
+              <button (click)="openAddForm(prescription)">
+                <fa-icon [icon]="faEdit" class="text-amber-500"></fa-icon>
+              </button>
+            </td>
           </tr>
         </tbody>
       </table>
     </div>
+
+    <div class="rounded-md border border-solid border-gray-300 mt-5">
+      <span class="rounded-t-md m-0 p-2 font-semibold text-gray-50 bg-cyan-500 flex justify-between" [ngClass]="{'rounded-b' : !show_content_tx }">
+        Treatment Plan
+        <button type="button" (click)="show_content_tx = !show_content_tx">
+          <fa-icon [icon]="show_content_tx ? faChevronCircleUp : faChevronCircleDown" class="pr-2" size="lg"></fa-icon>
+        </button>
+      </span>
+
+      <div *ngIf="show_content_tx">
+        <div class="grid grid-cols-1 px-4 pb-4 mt-4">
+          <!-- <label for="complaint_notes" class="font-semibold pl-1">Treatment plan</label> -->
+          <textarea [disabled]="consult_done" rows="3" id="plan" placeholder="Treatment plan" [(ngModel)]="consult_notes.plan" class="placeholder-slate-400 w-full rounded-md border-gray-300 bg-gray-50"></textarea>
+        </div>
+
+        <div class="flex text-right">
+          <button *ngIf="!consult_done" [disabled]="is_saving" type="button" class="btn-save ml-auto mr-5 mb-5 px-10 disabled:bg-gray-300" (click)="onSubmit()">
+            <fa-icon *ngIf="is_saving" class="mr-2" [icon]="faSpinner" spin="true"></fa-icon>
+            <fa-icon *ngIf="!is_saving" class="mr-2" [icon]="faSave"></fa-icon>
+            {{ is_saving ? 'Saving' : 'Save' }}
+          </button>
+        </div>
+      </div>
+    </div>
+
+
+
   </div>
 </div>
+
+<app-drug-list *ngIf="show_list" (openAddForm)="openAddForm($event)" (toggleList)="toggleList()"></app-drug-list>
+<app-drug-form *ngIf="show_form" [selected_drug]="selected_drug" [consult_details]="consult_details" (toggleForm)="toggleForm()"></app-drug-form>
