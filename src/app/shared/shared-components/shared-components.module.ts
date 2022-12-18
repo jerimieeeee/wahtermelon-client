@@ -23,6 +23,8 @@ import { PhotoModalComponent } from 'app/components/patient-info/modals/photo-mo
 import { WebcamModule } from 'ngx-webcam';
 import { KonsultaComponent } from './konsulta/konsulta.component';
 import { EclaimsComponent } from './eclaims/eclaims.component';
+import { EpresComponent } from './konsulta/modals/epres/epres.component';
+import { EkasComponent } from './konsulta/modals/ekas/ekas.component';
 
 
 
@@ -45,7 +47,9 @@ import { EclaimsComponent } from './eclaims/eclaims.component';
     LabRequestModalComponent,
     PhotoModalComponent,
     KonsultaComponent,
-    EclaimsComponent
+    EclaimsComponent,
+    EpresComponent,
+    EkasComponent
   ],
   imports: [
     CommonModule,
