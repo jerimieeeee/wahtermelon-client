@@ -3,22 +3,13 @@ import { formatDate } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { HttpService } from 'app/shared/services/http.service';
+import { ToastrService } from 'ngx-toastr';
+import { vitalsForm } from './forms';
 
 @Component({
   selector: 'app-vitals-modal',
   templateUrl: './vitals-modal.component.html',
-  styleUrls: ['./vitals-modal.component.scss'],
-  animations: [
-    trigger('openCloseTrigger', [
-      transition(':enter', [
-        style({width: 0, opacity: 0}),
-        animate('200ms', style({ opacity: '100%'})),
-      ]),
-      transition(':leave', [
-        animate('100ms', style({ width: 'full', opacity: 0 }))
-      ])
-    ]),
-  ]
+  styleUrls: ['./vitals-modal.component.scss']
 })
 export class VitalsModalComponent implements OnInit {
   @Output() toggleModal = new EventEmitter<any>();
@@ -26,50 +17,23 @@ export class VitalsModalComponent implements OnInit {
   @Input() patient_info;
   @Input() vitals_to_edit;
 
+  vitalsForm = vitalsForm;
+
   error_message = "exceeded maximum value";
   error_message_min = "exceeded minimum value";
 
-  vitalsForm: FormGroup = new FormGroup({
-    facility_code: new FormControl<string| null>(''),
-    patient_id: new FormControl<string| null>(''),
-    user_id: new FormControl<string| null>(''),
-    vitals_date: new FormControl<string| null>(''),
-    patient_temp: new FormControl<number| null>(null),
-    patient_height: new FormControl<number| null>(null),
-    patient_weight: new FormControl<number| null>(null),
-    patient_head_circumference: new FormControl<number| null>(null),
-    patient_skinfold_thickness: new FormControl<number| null>(null),
-    bp_systolic: new FormControl<number| null>(null),
-    bp_diastolic: new FormControl<number| null>(null),
-    patient_heart_rate: new FormControl<number| null>(null),
-    patient_respiratory_rate: new FormControl<number>(null),
-    patient_pulse_rate: new FormControl<number| null>(null),
-    patient_waist: new FormControl<number| null>(null),
-    patient_hip: new FormControl<number| null>(null),
-    patient_limbs: new FormControl<number| null>(null),
-    patient_muac: new FormControl<number| null>(null),
-    patient_chest: new FormControl<number| null>(null),
-    patient_abdomen: new FormControl<number| null>(null),
-    patient_spo2: new FormControl<number| null>(null),
-    vitals_height_ft: new FormControl<number| null>(null),
-    vitals_height_in: new FormControl<number| null>(null),
-    vitals_waist_in: new FormControl<number| null>(null),
-    vitals_date_temp: new FormControl<string| null>(''),
-    vitals_time_temp: new FormControl<string| null>(''),
-  });
-
   date;
   showChildVitals: boolean = false;
-  showAlert: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,
-    private http: HttpService
+    private http: HttpService,
+    private toastr: ToastrService
   ) { }
 
   onSubmit(){
     this.vitalsForm.patchValue({vitals_date: this.vitalsForm.value.vitals_date_temp+' '+this.vitalsForm.value.vitals_time_temp});
-    console.log(this.vitalsForm);
+    // console.log(this.vitalsForm);
     let query;
 
     if(this.vitals_to_edit){
@@ -78,13 +42,11 @@ export class VitalsModalComponent implements OnInit {
       query = this.http.post('patient-vitals/vitals', this.vitalsForm.value);
     }
     query.subscribe({
-      next: (data: any) => {
-        this.showAlert = true;
+      next: () => {
         this.vitalsForm.markAsPristine();
         this.vitalsForm.disable();
-        setTimeout(() => {
-          this.showAlert = false;
-        }, 3000);
+
+        this.toastr.success('Successfully recorded!', 'Vital signs')
         // console.log(data)
       },
       error: err => console.log(err),

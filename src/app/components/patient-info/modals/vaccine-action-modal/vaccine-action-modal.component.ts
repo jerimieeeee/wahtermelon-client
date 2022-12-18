@@ -3,6 +3,7 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-vaccine-action-modal',
@@ -27,8 +28,8 @@ export class VaccineActionModalComponent implements OnInit {
   faTrash = faTrash;
 
   constructor(
-    private formBuilder: FormBuilder,
-    private http: HttpService
+    private http: HttpService,
+    private toastr: ToastrService
   ) {
 
   }
@@ -49,10 +50,8 @@ export class VaccineActionModalComponent implements OnInit {
 
   onUpdate(){
     this.http.update('patient-vaccines/vaccines/', this.vaccine.id, this.vaccine).subscribe({
-      next: (data: any) => { this.showAlert = true;
-        setTimeout(() => {
-          this.showAlert = false;
-        }, 3000);
+      next: () => {
+        this.showToastr('success', 'Succcessfully updated!', 'Vaccine record');
       },
       error: err => console.log(err),
       complete: () => console.log('updated')
@@ -62,14 +61,15 @@ export class VaccineActionModalComponent implements OnInit {
   onDelete(){
     if(this.confirm_code === this.confirmation_code){
       this.http.delete('patient-vaccines/vaccines/', this.vaccine.id).subscribe({
-        next: (data: any) => {
+        next: () => {
           this.disableSave = true;
-          this.showAlertDelete = true;
+          // this.showAlertDelete = true;
           this.showDeleteCode = false;
           this.vaccine.id = undefined;
           this.vaccine.vaccine_id = undefined;
           this.vaccine.vaccine_date = undefined;
           this.vaccine.status_id = undefined;
+          this.showToastr('error','Record was deleted!','Vaccine record');
         },
         error: err => console.log(err),
         complete: () => console.log('updated')
@@ -78,6 +78,11 @@ export class VaccineActionModalComponent implements OnInit {
       this.generateCode();
       console.log('error');
     }
+  }
+
+  showToastr(type: string, message: string, title: string) {
+    this.toastr[type](message, title);
+    this.closeModal();
   }
 
   showDeleteForm(){
@@ -95,7 +100,6 @@ export class VaccineActionModalComponent implements OnInit {
 
   ngOnInit(): void {
     this.vaccine = {...this.vaccine_to_edit}
-    console.log(this.vaccine);
   }
 
 }

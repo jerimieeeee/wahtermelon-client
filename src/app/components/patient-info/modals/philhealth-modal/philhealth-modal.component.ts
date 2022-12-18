@@ -106,7 +106,7 @@ export class PhilhealthModalComponent implements OnInit {
           this.showAlert = true;
           this.philhealthForm.markAsPristine();
           this.philhealthForm.disable();
-          this.toastr.success('Successfully updated!','Philhealth');
+          this.toastr.success('Successfully recorded!','Philhealth');
         },
         error: err => {
           console.log(err);

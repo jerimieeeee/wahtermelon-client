@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { faClipboard, faCircleInfo, faHouse, faUserDoctor, faFlask, faCheck, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { formatDate } from '@angular/common';
-import { AgeService } from 'app/shared/services/age.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-module-modal',
@@ -187,6 +187,7 @@ export class ModuleModalComponent implements OnInit {
     this.http.post('consultation/records', new_visit).subscribe({
       next: (data: any) => {
         console.log(data)
+        this.toastr.success('Successfully recorded!','New visit')
         this.router.navigate(['/'+selected_module.location, {id: this.patient_info.id, consult_id: data.data.id}]);
         this.is_loading = false;
       },
@@ -202,7 +203,7 @@ export class ModuleModalComponent implements OnInit {
   constructor(
     private router: Router,
     private http: HttpService,
-    private ageService: AgeService
+    private toastr: ToastrService
   ) { }
 
   checkOpenConsult(consults){
