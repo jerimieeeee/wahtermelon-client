@@ -117,7 +117,7 @@ export class ConsultationComponent implements OnInit {
     this.patient_id = this.route.snapshot.paramMap.get('id');
     this.consult_id = this.route.snapshot.paramMap.get('consult_id');
 
-    this.modules = 2;
+    this.modules = 3;
     this.loadConsult();
   }
 

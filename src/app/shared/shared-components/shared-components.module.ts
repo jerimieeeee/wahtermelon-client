@@ -25,6 +25,9 @@ import { KonsultaComponent } from './konsulta/konsulta.component';
 import { EclaimsComponent } from './eclaims/eclaims.component';
 import { EpresComponent } from './konsulta/modals/epres/epres.component';
 import { EkasComponent } from './konsulta/modals/ekas/ekas.component';
+import { PbefComponent } from './eclaims/modals/pbef/pbef.component';
+import { Cf1Component } from './eclaims/modals/cf1/cf1.component';
+import { Cf2Component } from './eclaims/modals/cf2/cf2.component';
 
 
 
@@ -49,7 +52,10 @@ import { EkasComponent } from './konsulta/modals/ekas/ekas.component';
     KonsultaComponent,
     EclaimsComponent,
     EpresComponent,
-    EkasComponent
+    EkasComponent,
+    PbefComponent,
+    Cf1Component,
+    Cf2Component
   ],
   imports: [
     CommonModule,

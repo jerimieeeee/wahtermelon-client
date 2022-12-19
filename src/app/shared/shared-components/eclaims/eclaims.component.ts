@@ -7,6 +7,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EclaimsComponent implements OnInit {
 
+  pending_list: any = [];
+  modal: any = [];
+
+  toggleModal(name) {
+    this.modal[name] = !this.modal[name];
+  }
+
   constructor() { }
 
   ngOnInit(): void {

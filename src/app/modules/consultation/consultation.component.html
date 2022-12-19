@@ -15,6 +15,10 @@
               [class]="modules===2? 'text-blue-500 border-b-2 border-blue-500 font-bold' : 'hover:-translate-y-1 hover:scale-110 transition ease-in-out delay-400 duration-300' ">
               KONSULTA
           </button>
+          <button (click)="switchTabs(3)" class="text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 mr-6 pb-2"
+              [class]="modules===3? 'text-blue-500 border-b-2 border-blue-500 font-bold' : 'hover:-translate-y-1 hover:scale-110 transition ease-in-out delay-400 duration-300' ">
+              eCLAIMS
+          </button>
 
           <button *ngIf="!consult_details?.consult_done" type="button" class="btn-end-visit ml-auto" (click)="toggleModal()">
             <fa-icon class="mr-1" [icon]="faDoorClosed"></fa-icon>
@@ -49,6 +53,10 @@
 
       <div *ngIf="modules === 2">
         <app-konsulta></app-konsulta>
+      </div>
+
+      <div *ngIf="modules === 3">
+        <app-eclaims></app-eclaims>
       </div>
     </div>
   </div>
