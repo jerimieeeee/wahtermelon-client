@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
-import { faPrint } from '@fortawesome/free-solid-svg-icons';
+import { faFaceFrown, faFaceMeh, faFaceSmile, faPrint } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-ekas',
@@ -10,6 +10,9 @@ export class EkasComponent implements OnInit, OnDestroy {
   @Output() toggleModal = new EventEmitter<any>();
 
   faPrint = faPrint;
+  faFaceSmile = faFaceSmile;
+  faFaceMeh = faFaceMeh;
+  faFaceFrown = faFaceFrown;
 
   timeout:any;
   printForm(form_name) {

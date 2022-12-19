@@ -48,7 +48,7 @@
               </tr>
               <tr *ngFor="let drug of drug_list; let odd = odd; let i = index" class="bg-white border-t" [ngClass]="{'bg-gray-50': odd}"  class="hover:bg-blue-200 cursor-pointer" (click)="selectDrugs(drug)">
                 <th scope="row" class="py-4 px-6 font-medium whitespace-nowrap">
-                  {{ drug.generic_desc }}
+                  {{ drug.desc }}
                 </th>
                 <td class="py-4 px-6">
                   {{ drug.unit_desc }}

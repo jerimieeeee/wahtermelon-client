@@ -20,7 +20,7 @@ export class KonsultaComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    // this.toggleModal('epres')
+    this.toggleModal('ekas')
   }
 
 }

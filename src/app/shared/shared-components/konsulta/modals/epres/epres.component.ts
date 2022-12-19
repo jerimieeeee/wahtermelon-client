@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
-import { faPrint } from '@fortawesome/free-solid-svg-icons';
+import { faFaceFrown, faFaceMeh, faFaceSmile, faPrint } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-epres',
@@ -9,6 +9,9 @@ import { faPrint } from '@fortawesome/free-solid-svg-icons';
 export class EpresComponent implements OnInit, OnDestroy {
   @Output() toggleModal = new EventEmitter<any>();
   faPrint = faPrint;
+  faFaceSmile = faFaceSmile;
+  faFaceMeh = faFaceMeh;
+  faFaceFrown = faFaceFrown;
 
   timeout: any;
 
