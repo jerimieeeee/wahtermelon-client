@@ -18,6 +18,16 @@ import { ModuleModalComponent } from 'app/components/patient-info/modals/module-
 import { PhilhealthModalComponent } from 'app/components/patient-info/modals/philhealth-modal/philhealth-modal.component';
 import { PhilhealthListModalComponent } from 'app/components/patient-info/modals/philhealth-list-modal/philhealth-list-modal.component';
 import { NgxMaskModule } from 'ngx-mask';
+import { LabRequestModalComponent } from 'app/components/patient-info/modals/lab-request-modal/lab-request-modal.component';
+import { PhotoModalComponent } from 'app/components/patient-info/modals/photo-modal/photo-modal.component';
+import { WebcamModule } from 'ngx-webcam';
+import { KonsultaComponent } from './konsulta/konsulta.component';
+import { EclaimsComponent } from './eclaims/eclaims.component';
+import { EpresComponent } from './konsulta/modals/epres/epres.component';
+import { EkasComponent } from './konsulta/modals/ekas/ekas.component';
+import { PbefComponent } from './eclaims/modals/pbef/pbef.component';
+import { Cf1Component } from './eclaims/modals/cf1/cf1.component';
+import { Cf2Component } from './eclaims/modals/cf2/cf2.component';
 
 
 
@@ -36,7 +46,16 @@ import { NgxMaskModule } from 'ngx-mask';
     VitalsListModalComponent,
     ModuleModalComponent,
     PhilhealthModalComponent,
-    PhilhealthListModalComponent
+    PhilhealthListModalComponent,
+    LabRequestModalComponent,
+    PhotoModalComponent,
+    KonsultaComponent,
+    EclaimsComponent,
+    EpresComponent,
+    EkasComponent,
+    PbefComponent,
+    Cf1Component,
+    Cf2Component
   ],
   imports: [
     CommonModule,
@@ -44,7 +63,8 @@ import { NgxMaskModule } from 'ngx-mask';
     NgApexchartsModule,
     ReactiveFormsModule,
     FormsModule,
-    NgxMaskModule.forRoot()
+    NgxMaskModule.forRoot(),
+    WebcamModule
   ],
   exports: [
     PatientInfoComponent,
@@ -60,7 +80,11 @@ import { NgxMaskModule } from 'ngx-mask';
     VitalsListModalComponent,
     ModuleModalComponent,
     PhilhealthModalComponent,
-    PhilhealthListModalComponent
+    PhilhealthListModalComponent,
+    LabRequestModalComponent,
+    PhotoModalComponent,
+    KonsultaComponent,
+    EclaimsComponent
   ]
 })
 export class SharedComponentsModule { }

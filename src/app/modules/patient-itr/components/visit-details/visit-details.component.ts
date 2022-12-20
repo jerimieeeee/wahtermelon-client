@@ -30,7 +30,7 @@ export class VisitDetailsComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if(this.selected_visit) {
-      if(Object.keys(this.selected_visit.consult_notes.physical_exam).length > 0) {
+      if(this.selected_visit.consult_notes && Object.keys(this.selected_visit.consult_notes.physical_exam).length > 0) {
         this.groupPE(this.selected_visit.consult_notes.physical_exam);
       }
     }

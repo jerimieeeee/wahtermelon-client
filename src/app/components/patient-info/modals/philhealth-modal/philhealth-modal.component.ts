@@ -2,7 +2,9 @@ import { formatDate, ViewportScroller } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { faCheck, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-philhealth-modal',
@@ -13,6 +15,9 @@ export class PhilhealthModalComponent implements OnInit {
   @Output() toggleModal = new EventEmitter<any>();
   @Input() patient_info;
   @Input() philhealth_to_edit;
+
+  faCheck = faCheck;
+  faSpinner = faSpinner;
 
   error_message = "exceeded maximum value";
   error_message_min = "does not meet minimum length";
@@ -47,6 +52,7 @@ export class PhilhealthModalComponent implements OnInit {
     employer_address: new FormControl<string| null>(''),
     member_pin_confirmation: new FormControl<string| null>(''),
     philhealth_id_confirmation: new FormControl<string| null>(''),
+    pATC: new FormControl<string| null>('')
   });
 
   date;
@@ -55,6 +61,8 @@ export class PhilhealthModalComponent implements OnInit {
   is_saving: boolean = false;
   loading: boolean = false;
   show_member_form: boolean = false;
+  is_checking_atc: boolean = false;
+  is_checking_status: boolean = false;
 
   membership_types: any;
   membership_categories: any;
@@ -65,10 +73,45 @@ export class PhilhealthModalComponent implements OnInit {
 
   submit_errors: [];
 
+
+  pATC_date: string;
+  is_atc_valid: boolean;
+  is_walk_in: boolean;
+
+  is_registered: any;
+
+  isATCValid(){
+    this.is_checking_atc = true;
+    /* this.http.post('isATCvalidURL', {params: {pATC: this.pATC}}).subscribe({
+      next: (data: any) => {
+        console.log(data)
+        this.is_atc_valid = data.data === 'YES' ? true : false;
+      },
+      error: err => console.log(err)
+    }) */
+  }
+
+  isMemberDependentRegistered() {
+    this.is_checking_status = true;
+
+    let params = {
+      pPIN: this.philhealthForm.value.philhealth_id,
+      pType: this.philhealthForm.value.membership_type_id
+    }
+
+    /* this.http.post('isATCvalidURL', {params}).subscribe({
+      next: (data: any) => {
+        console.log(data)
+        this.is_atc_valid = data.data === 'YES' ? true : false;
+      },
+      error: err => console.log(err)
+    }) */
+  }
+
   onSubmit(){
     this.is_saving = true;
     console.log(this.philhealthForm)
-    this.philhealthForm.patchValue({effectivity_year: formatDate(this.philhealthForm.value.enlistment_date, 'yyyy', 'en')})
+
     if(this.philhealthForm.valid){
       let query;
       if(this.philhealth_to_edit){
@@ -83,9 +126,7 @@ export class PhilhealthModalComponent implements OnInit {
           this.showAlert = true;
           this.philhealthForm.markAsPristine();
           this.philhealthForm.disable();
-          setTimeout(() => {
-            this.showAlert = false;
-          }, 3000);
+          this.toastr.success('Successfully recorded!','Philhealth');
         },
         error: err => {
           console.log(err);
@@ -100,11 +141,11 @@ export class PhilhealthModalComponent implements OnInit {
   }
 
   get philhealthMatchError() {
-    return ((this.philhealthForm.controls.philhealth_id.value != this.philhealthForm.controls.philhealth_id_confirmation.value) && this.philhealthForm.get('philhealth_id_confirmation')?.touched);
+    return ((this.philhealthForm.controls.philhealth_id.value != this.philhealthForm.controls.philhealth_id_confirmation.value) && this.philhealthForm.get('philhealth_id_confirmation')?.dirty);
   }
 
   get philhealthMemberMatchError() {
-    return ((this.philhealthForm.controls.member_pin.value != this.philhealthForm.controls.member_pin_confirmation.value) && this.philhealthForm.get('member_pin_confirmation')?.touched);
+    return ((this.philhealthForm.controls.member_pin.value != this.philhealthForm.controls.member_pin_confirmation.value) && this.philhealthForm.get('member_pin_confirmation')?.dirty);
   }
 
   closeModal(){
@@ -113,7 +154,8 @@ export class PhilhealthModalComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private http: HttpService
+    private http: HttpService,
+    private toastr: ToastrService
   ) { }
 
   loadMainLibrary(){
@@ -183,6 +225,24 @@ export class PhilhealthModalComponent implements OnInit {
     }
   }
 
+  updateEffectivity(){
+    this.philhealthForm.patchValue({effectivity_year: formatDate(this.philhealthForm.value.enlistment_date, 'yyyy', 'en')});
+  }
+
+  isATCrequired(){
+    if(this.philhealthForm.value.package_type_id === 'K') {
+      this.philhealthForm.controls.pATC.enable();
+
+      if(this.is_walk_in) {
+        this.philhealthForm.patchValue({pATC: 'WALKEDIN'})
+      } else {
+        this.philhealthForm.patchValue({pATC: null})
+      }
+    } else {
+      this.philhealthForm.controls.pATC.disable();
+    }
+  }
+
   ngOnInit(): void {
     this.loadMainLibrary();
     let user_id = this.http.getUserID();
@@ -212,7 +272,7 @@ export class PhilhealthModalComponent implements OnInit {
       employer_address: [null],
       member_pin_confirmation: [null, [Validators.required, Validators.minLength(12)]],
       philhealth_id_confirmation: [null, [Validators.required, Validators.minLength(12)]],
-
+      pATC: [null, [Validators.required]],
     });
 
     if(this.philhealth_to_edit){

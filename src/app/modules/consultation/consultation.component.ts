@@ -30,12 +30,19 @@ export class ConsultationComponent implements OnInit {
   have_complaint:boolean = false;
   show_end: boolean = false;
 
+  modules: Number;
+
   patient_details: any;
   visit_list: any;
   vitals: any;
   consult_details: any;
   consult_id: string;
   patient_id: string;
+
+  switchTabs(tabs){
+    this.modules = 0;
+    this.modules = tabs;
+  }
 
   toggleAll(){
     this.toggle_content = !this.toggle_content;
@@ -110,6 +117,7 @@ export class ConsultationComponent implements OnInit {
     this.patient_id = this.route.snapshot.paramMap.get('id');
     this.consult_id = this.route.snapshot.paramMap.get('consult_id');
 
+    this.modules = 3;
     this.loadConsult();
   }
 

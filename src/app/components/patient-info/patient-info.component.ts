@@ -2,7 +2,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
 import { formatDate } from '@angular/common';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { faFlask, faHeart, faExclamationCircle, faNotesMedical, faPlusCircle, faQuestionCircle, faPenToSquare, faTrash, faTableList, faPenSquare, faChevronRight, faChevronUp, faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import { faFlask, faHeart, faExclamationCircle, faNotesMedical, faPlusCircle, faQuestionCircle, faPenToSquare, faTrash, faTableList, faPenSquare, faChevronRight, faChevronUp, faChevronDown, fas, faClipboardUser, faCamera } from '@fortawesome/free-solid-svg-icons';
 import { AgeService } from 'app/shared/services/age.service';
 import { HttpService } from 'app/shared/services/http.service';
 import { VitalsChartsService } from 'app/shared/services/vitals-charts.service';
@@ -23,7 +23,7 @@ import { VitalsChartsService } from 'app/shared/services/vitals-charts.service';
     ]),
   ]
 })
-export class PatientInfoComponent {
+export class PatientInfoComponent implements OnInit{
   @Output() patientInfo = new EventEmitter<any>();
   @Output() patientVitals = new EventEmitter<any>();
   patient_info: any;
@@ -41,11 +41,14 @@ export class PatientInfoComponent {
   faChevronRight = faChevronRight;
   faChevronUp = faChevronUp;
   faChevronDown = faChevronDown;
+  faClipboardUser = faClipboardUser;
+  faCamera = faCamera;
 
   show_form: boolean = false;
   show_philhealth: boolean = false;
   show_vitals: boolean = false;
   show_vaccines: boolean = false;
+  lab_request: boolean = false;
 
   vaccines_given: any;
   vaccine_list: any = [];
@@ -61,6 +64,8 @@ export class PatientInfoComponent {
   accordions = [];
   modals = [];
 
+  consult_id: string;
+
   constructor(
     private activeRoute: ActivatedRoute,
     private router: Router,
@@ -71,6 +76,10 @@ export class PatientInfoComponent {
     this.activeRoute.params.subscribe(params => {
       this.getPatient(params.id);
     });
+  }
+
+  navigateTo(loc){
+    this.router.navigate(['/'+loc, {id: this.patient_info.id}])
   }
 
   editPatient(id){
@@ -92,7 +101,10 @@ export class PatientInfoComponent {
         this.loadPhilhealth();
         this.loadVitals();
         this.loadVaccines();
+        this.loadLabs();
+        // this.toggleModal('philhealth') //togglemodal for easy test;
         this.accordions['vitals'] = true
+        this.accordions['lab_request'] = true
         // this.toggleModal('philhealth-modal');//open sample modal
         // console.log(data.data)
       },
@@ -102,6 +114,23 @@ export class PatientInfoComponent {
         //  console.log(err)
       }
     });
+  }
+
+  pending_labs: any;
+
+  loadLabs(){
+    this.lab_request = true;
+    let params = {
+      patient_id: this.patient_info.id
+    }
+
+    /* this.http.get('lab_url', {params}).subscribe({
+      next: (data: any) => {
+        console.log(data);
+        this.pending_labs = data.data
+      },
+      error: err => console.log(err)
+    }) */
   }
 
   checkVaccineStatus(vaccines){
@@ -226,5 +255,9 @@ export class PatientInfoComponent {
 
     if (modal_name === 'vaccine' && this.modals[modal_name] === false) this.loadVaccines();
     if (modal_name === 'vaccine-action' && this.modals[modal_name] === false) this.loadVaccines();
+  }
+
+  ngOnInit(): void {
+    this.consult_id = this.activeRoute.snapshot.paramMap.get('consult_id');
   }
 }

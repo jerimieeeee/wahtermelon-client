@@ -1,9 +1,9 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { faClipboard, faCircleInfo, faHouse, faUserDoctor } from '@fortawesome/free-solid-svg-icons';
+import { faClipboard, faCircleInfo, faHouse, faUserDoctor, faFlask, faCheck, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { formatDate } from '@angular/common';
-import { AgeService } from 'app/shared/services/age.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-module-modal',
@@ -19,6 +19,9 @@ export class ModuleModalComponent implements OnInit {
   faCircleInfo = faCircleInfo;
   faHouse = faHouse;
   faUserDoctor = faUserDoctor;
+  faFlask = faFlask;
+  faCheck = faCheck;
+  faSpinner = faSpinner;
 
   list_modules = {
     'General': {
@@ -62,9 +65,9 @@ export class ModuleModalComponent implements OnInit {
         }, */
       }
     },
-    /* 'Others': {
+    'Others': {
       modules: {
-        cn: {
+        /* cn: {
           name: 'Laboratory',
           location: 'consultation',
           group: '',
@@ -81,18 +84,19 @@ export class ModuleModalComponent implements OnInit {
           location: 'consultation',
           group: '',
           consult_active: false
-        },
+        }, */
         ncd: {
           name: 'NCD',
-          location: 'consultation',
-          group: '',
+          location: 'ncd',
+          group: 'ncd',
           consult_active: false
         },
       }
-    } */
+    }
   };
 
   itr = { name: 'Patient ITR', location: 'itr', group: '', consult_active: false };
+  lab = { name: 'Laboratory', location: 'lab', group: '', consult_active: false };
   cn = { name: 'Consultation', location: 'cn', group: 'cn', consult_active: false};
   mc = { name: 'Maternal Care', location: 'mc', group: 'mc', consult_active: false };
   cc = { name: 'Child Care', location: 'cc', group: 'cc', consult_active: false };
@@ -100,11 +104,28 @@ export class ModuleModalComponent implements OnInit {
   show_new: boolean = false;
   is_loading: boolean = false;
   show_form: boolean = false;
+  is_checking_atc: boolean = false;
 
   selected_module: string = '';
   consult_date;
   consult_time;
   date;
+
+  pATC: string;
+  pATC_date: string;
+  is_atc_valid: boolean;
+  is_walk_in: boolean;
+
+  isATCValid(){
+    this.is_checking_atc = true;
+    /* this.http.post('isATCvalidURL', {params: {pATC: this.pATC}}).subscribe({
+      next: (data: any) => {
+        console.log(data)
+        this.is_atc_valid = data.data === 'YES' ? true : false;
+      },
+      error: err => console.log(err)
+    }) */
+  }
 
   selectPrograms(){
     if(this.patient_info.gender == 'F' && (this.patient_age.type === 'year' && this.patient_age.age >= 9)) {
@@ -124,7 +145,7 @@ export class ModuleModalComponent implements OnInit {
     if('/'+loc === this.router.url.split(';')[0]){
       this.closeModal();
     } else {
-      if(loc === 'itr'){
+      if(loc === 'itr' || loc === 'lab'){
         this.router.navigate(['/'+loc, {id: this.patient_info.id}]);
       } else {
         this.http.get('consultation/records', {params:{'pt_group': group, 'consult_done': 0, patient_id: this.patient_info.id}}).subscribe({
@@ -159,12 +180,14 @@ export class ModuleModalComponent implements OnInit {
       user_id: user_id,
       consult_date: this.consult_date+' '+this.consult_time+':00',
       consult_done: 0,
-      pt_group: selected_module.group
+      pt_group: selected_module.group,
+      pATC: this.is_walk_in === false ? (this.pATC || this.pATC !== '' ? this.pATC : null) : 'WALKEDIN'
     };
 
     this.http.post('consultation/records', new_visit).subscribe({
       next: (data: any) => {
         console.log(data)
+        this.toastr.success('Successfully recorded!','New visit')
         this.router.navigate(['/'+selected_module.location, {id: this.patient_info.id, consult_id: data.data.id}]);
         this.is_loading = false;
       },
@@ -180,7 +203,7 @@ export class ModuleModalComponent implements OnInit {
   constructor(
     private router: Router,
     private http: HttpService,
-    private ageService: AgeService
+    private toastr: ToastrService
   ) { }
 
   checkOpenConsult(consults){

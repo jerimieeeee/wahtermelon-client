@@ -1,0 +1,69 @@
+<div class="grid grid-cols-11 mt-4 gap-4">
+  <div class="mb-16 col-span-8">
+    <div class="block shadow p-4 mt-4 rounded-xl text-gray-600 border border-slate-100">
+      <span class="text-sky-500 font-bold flex justify-between py-2">
+        <span class="flex">
+          <!-- <button class="font-normal text-sky-500 px-2 py-1 text-sm  mr-2" type="button" (click)="toggleAll()">
+            <fa-icon [icon]="toggle_content ? faChevronUp : faChevronDown" size="lg"></fa-icon>
+          </button> -->
+          <span class="mt-2"> Laboratories <span class="text-gray-500 text-sm"><!-- ({{ consult_details?.consult_date | date: 'MM/dd/yyyy hh:mm:ss a' }} | ID:{{ consult_details?.id }}) --></span></span>
+        </span>
+        <!-- <button *ngIf="!consult_details?.consult_done" type="button" class="btn-end-visit ml-auto" (click)="toggleModal()">
+          <fa-icon class="mr-1" [icon]="faDoorClosed"></fa-icon>
+          End Visit
+        </button> -->
+      </span>
+
+      <div class="border border-slate-200 shadow-md rounded-xl">
+        <div class="w-full bg-orange-500 text-white rounded-t-xl p-3 font-semibold">
+          Pending lab requests
+        </div>
+
+        <div class="w-full p-5">
+          <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+              <tr>
+                <th scope="col" class="py-3 px-6">Lab type</th>
+                <th scope="col" class="py-3 px-6">Date requested</th>
+                <th scope="col" class="py-3 px-6">Action</th>
+              </tr>
+            </thead>
+            <tbody> <!-- *ngFor="let philhealth of philhealth_infos"  -->
+              <tr *ngFor="let lab of pending_list" class="bg-white border-b last:border-0">
+                <td class="w-1/3 py-4 px-6">
+                  <fa-icon (click)="toggleModal('delete', lab)" size="lg" class="mx-0 my-0 text-rose-400 hover:cursor-pointer flex-none mr-2" [icon]="faXmark"></fa-icon>
+                  {{ lab.type }}
+                </td>
+                <th scope="row" class="w-1/3 py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
+                  {{ lab.date_requested }}
+                </th>
+                <td class="w-1/3 py-4 px-6">
+                  <!-- <fa-icon (click)="toggleModal('delete')" size="xl" class="mr-5 mx-0 my-0 text-rose-400 hover:cursor-pointer flex-none mr-2" [icon]="faTrash"></fa-icon> -->
+                  <fa-icon (click)="toggleModal('add', lab)" size="lg" class="mx-0 my-0 text-blue-500 hover:cursor-pointer flex-none mr-2" [icon]="faEdit"></fa-icon>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="border border-slate-200 shadow-md rounded-xl mt-5">
+        <div class="w-full bg-green-500 text-white rounded-t-xl p-3 font-semibold">
+          Laboratory results
+        </div>
+
+        <div class="w-full p-5">
+          test content
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="col-span-3">
+    <app-patient-info (patientInfo)="patientInfo($event)"></app-patient-info>
+  </div>
+</div>
+
+<app-lab-form *ngIf="modal['add']" [selected_lab]="selected_lab" (toggleModal)="toggleModal($event)"></app-lab-form>
+<app-lab-delete *ngIf="modal['delete']" [selected_lab]="selected_lab" (toggleModal)="toggleModal($event)"></app-lab-delete>
