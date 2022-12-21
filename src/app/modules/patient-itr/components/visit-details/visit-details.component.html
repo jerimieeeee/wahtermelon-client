@@ -311,7 +311,7 @@
           </li>
         </ul>
 
-        <div *ngIf="selected_visit?.consult_notes?.physical_exam_remarks[cat.key+'_remarks']">
+        <div *ngIf="selected_visit?.consult_notes?.physical_exam_remarks && selected_visit?.consult_notes?.physical_exam_remarks[cat.key+'_remarks']">
           <span class="text-sm italic">remarks:</span>{{ selected_visit?.consult_notes?.physical_exam_remarks[cat.key+'_remarks'] }}
         </div>
       </div>

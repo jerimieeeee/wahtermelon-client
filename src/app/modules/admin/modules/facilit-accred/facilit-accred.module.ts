@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 
 import { FacilitAccredRoutingModule } from './facilit-accred-routing.module';
 import { FacilitAccredComponent } from './facilit-accred.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -11,7 +13,9 @@ import { FacilitAccredComponent } from './facilit-accred.component';
   ],
   imports: [
     CommonModule,
-    FacilitAccredRoutingModule
+    FacilitAccredRoutingModule,
+    FontAwesomeModule,
+    FormsModule
   ]
 })
 export class FacilitAccredModule { }

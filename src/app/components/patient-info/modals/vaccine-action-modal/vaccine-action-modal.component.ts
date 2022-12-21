@@ -64,11 +64,6 @@ export class VaccineActionModalComponent implements OnInit {
         next: () => {
           this.disableSave = true;
           // this.showAlertDelete = true;
-          this.showDeleteCode = false;
-          this.vaccine.id = undefined;
-          this.vaccine.vaccine_id = undefined;
-          this.vaccine.vaccine_date = undefined;
-          this.vaccine.status_id = undefined;
           this.showToastr('error','Record was deleted!','Vaccine record');
         },
         error: err => console.log(err),

@@ -38,11 +38,14 @@ const routes: Routes = [
       {
         path: 'account-list',
         loadChildren: () => import('./modules/account-list/account-list.module').then(m => m.AccountListModule)
-      }
-      ,
+      },
       {
         path: 'konsulta',
         loadChildren: () => import('./modules/konsulta/konsulta.module').then(m => m.KonsultaModule)
+      },
+      {
+        path: 'konsulta-masterlist',
+        loadChildren: () => import('./modules/konsulta-masterlist/konsulta-masterlist.module').then(m => m.KonsultaMasterlistModule)
       }
     ]
   },

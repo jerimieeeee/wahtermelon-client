@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { faHospital } from '@fortawesome/free-regular-svg-icons';
-import { faCapsules, faCommentSms, faFlaskVial, faHouseMedical, faSquarePollHorizontal, faStethoscope, faUsers } from '@fortawesome/free-solid-svg-icons';
+import { faCapsules, faCommentSms, faFlaskVial, faHouseMedical, faSquarePollHorizontal, faStethoscope, faTableList, faUsers } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-admin',
@@ -55,6 +55,11 @@ export class AdminComponent implements OnInit {
       loc: 'konsulta',
       name: 'Konsulta',
       icon: faStethoscope
+    },
+    {
+      loc: 'konsulta-masterlist',
+      name: 'Konsulta Masterlist',
+      icon: faTableList
     }
   ]
 

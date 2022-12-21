@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { faFaceFrown, faFaceMeh, faFaceSmile, faPrint } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
@@ -6,7 +6,7 @@ import { faFaceFrown, faFaceMeh, faFaceSmile, faPrint } from '@fortawesome/free-
   templateUrl: './epres.component.html',
   styleUrls: ['./epres.component.scss']
 })
-export class EpresComponent implements OnInit, OnDestroy {
+export class EpresComponent implements OnInit {
   @Output() toggleModal = new EventEmitter<any>();
   faPrint = faPrint;
   faFaceSmile = faFaceSmile;
@@ -35,9 +35,5 @@ export class EpresComponent implements OnInit, OnDestroy {
   constructor() { }
 
   ngOnInit(): void {
-  }
-
-  ngOnDestroy(): void {
-      this.timeout.unsubscribe();
   }
 }

@@ -5,6 +5,7 @@ import { faInfoCircle, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { Subject } from 'rxjs';
 import { ketones_list, protein_list } from '../../data-lib/libraries'
+import { bloodLipidForm, glucoseForm, urineKetonesForm, urineProteinForm } from './forms';
 @Component({
   selector: 'app-risk-screening',
   templateUrl: './risk-screening.component.html',
@@ -30,42 +31,11 @@ export class RiskScreeningComponent implements OnInit, OnDestroy {
   protein_list = protein_list;
   ketones_list = ketones_list
 
-  glucoseForm: FormGroup = new FormGroup({
-    ncd_id: new FormControl<string| null>(''),
-    patient_id: new FormControl<string| null>(''),
-    facility_code: new FormControl<string| null>(''),
-    date_taken: new FormControl<string| null>(''),
-    fbs: new FormControl<string| null>(''),
-    rbs: new FormControl<string| null>(''),
-    raised_blood_glucose: new FormControl<string| null>(''),
-  });
-
-  bloodLipidForm: FormGroup = new FormGroup({
-    ncd_id: new FormControl<string| null>(''),
-    patient_id: new FormControl<string| null>(''),
-    facility_code: new FormControl<string| null>(''),
-    date_taken: new FormControl<string| null>(''),
-    total_cholesterol: new FormControl<string| null>(''),
-    raised_lipid: new FormControl<string| null>(''),
-  });
-
-  urineKetonesForm: FormGroup = new FormGroup({
-    ncd_id: new FormControl<string| null>(''),
-    patient_id: new FormControl<string| null>(''),
-    facility_code: new FormControl<string| null>(''),
-    date_taken: new FormControl<string| null>(''),
-    ketone: new FormControl<string| null>(''),
-    presence_urine_ketone: new FormControl<string| null>(''),
-  });
-
-  urineProteinForm: FormGroup = new FormGroup({
-    ncd_id: new FormControl<string| null>(''),
-    patient_id: new FormControl<string| null>(''),
-    facility_code: new FormControl<string| null>(''),
-    date_taken: new FormControl<string| null>(''),
-    protein: new FormControl<string| null>(''),
-    presence_urine_protein: new FormControl<string| null>(''),
-  });
+  //forms
+  glucoseForm = glucoseForm
+  bloodLipidForm = bloodLipidForm
+  urineKetonesForm = urineKetonesForm
+  urineProteinForm = urineProteinForm
 
   raisedGlucose(){
     if(this.glucoseForm.value.fbs > 0 || this.glucoseForm.value.rbs > 0) {
@@ -124,7 +94,8 @@ export class RiskScreeningComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.glucoseForm = this.formBuilder.nonNullable.group({
-      facility_code: [this.http.getUserFacility()],
+      consult_ncd_risk_id: ['',Validators.required],
+      patient_ncd_id: ['',Validators.required],
       patient_id: [this.patient_id],
       date_taken: [null, Validators.required],
       fbs: [null, Validators.required],
@@ -133,7 +104,8 @@ export class RiskScreeningComponent implements OnInit, OnDestroy {
     });
 
     this.bloodLipidForm = this.formBuilder.nonNullable.group({
-      facility_code: [this.http.getUserFacility()],
+      consult_ncd_risk_id: ['',Validators.required],
+      patient_ncd_id: ['',Validators.required],
       patient_id: [this.patient_id],
       date_taken: [null, Validators.required],
       total_cholesterol: [null, Validators.required],
@@ -141,7 +113,8 @@ export class RiskScreeningComponent implements OnInit, OnDestroy {
     });
 
     this.urineKetonesForm = this.formBuilder.nonNullable.group({
-      facility_code: [this.http.getUserFacility()],
+      consult_ncd_risk_id: ['',Validators.required],
+      patient_ncd_id: ['',Validators.required],
       patient_id: [this.patient_id],
       date_taken: [null, Validators.required],
       ketone: [null, Validators.required],
@@ -149,7 +122,8 @@ export class RiskScreeningComponent implements OnInit, OnDestroy {
     });
 
     this.urineProteinForm = this.formBuilder.nonNullable.group({
-      facility_code: [this.http.getUserFacility()],
+      consult_ncd_risk_id: ['',Validators.required],
+      patient_ncd_id: ['',Validators.required],
       patient_id: [this.patient_id],
       date_taken: [null, Validators.required],
       protein: [null, Validators.required],

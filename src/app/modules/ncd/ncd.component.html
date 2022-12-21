@@ -48,20 +48,20 @@
             [class]="module===5? 'text-blue-500 border-b-2 border-blue-500 font-bold' : 'hover:-translate-y-1 hover:scale-110 transition ease-in-out delay-400 duration-300' ">
             PATIENT RECORD
         </button>
-        <button (click)="switchTab(6)" class="text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 mr-6 pb-2"
+        <!-- <button (click)="switchTab(6)" class="text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 mr-6 pb-2"
             [class]="module===6? 'text-blue-500 border-b-2 border-blue-500 font-bold' : 'hover:-translate-y-1 hover:scale-110 transition ease-in-out delay-400 duration-300' ">
             CASDT
         </button>
         <button (click)="switchTab(7)" class="text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 mr-6 pb-2"
             [class]="module===7? 'text-blue-500 border-b-2 border-blue-500 font-bold' : 'hover:-translate-y-1 hover:scale-110 transition ease-in-out delay-400 duration-300' ">
             CASDT 2
-        </button>
+        </button> -->
       </nav>
 
           <!--FIRST VISIT SECTION-->
 
       <div class="grid grid-col-8" >
-        <app-risk-assessment *ngIf="module===1" [patient_id]="patient_id" [consult_id]="consult_id"></app-risk-assessment>
+        <app-risk-assessment *ngIf="module===1" [patient_info]="patient_info" [consult_id]="consult_id"  [vitals]="vitals"></app-risk-assessment>
         <app-risk-screening *ngIf="module===2" [patient_id]="patient_id" [consult_id]="consult_id"></app-risk-screening>
         <app-questionnaire *ngIf="module===3" [patient_id]="patient_id" [consult_id]="consult_id"></app-questionnaire>
         <app-risk-stratification *ngIf="module===4" [patient_id]="patient_id" [consult_id]="consult_id"></app-risk-stratification>
@@ -77,6 +77,6 @@
   </div>
 
   <div class="w-3/12">
-    <app-patient-info></app-patient-info>
+    <app-patient-info (patientVitals)="patientVitals($event)" (patientInfo)="patientInfo($event)"></app-patient-info>
   </div>
 </div>

@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { faAnglesLeft, faAnglesRight, faChevronLeft, faChevronRight, faRotate, faSearch, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { faAnglesLeft, faAnglesRight, faCalendarDays, faChevronLeft, faChevronRight, faRotate, faSearch, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
-  selector: 'app-facilit-accred',
-  templateUrl: './facilit-accred.component.html',
-  styleUrls: ['./facilit-accred.component.scss']
+  selector: 'app-konsulta-masterlist',
+  templateUrl: './konsulta-masterlist.component.html',
+  styleUrls: ['./konsulta-masterlist.component.scss']
 })
-export class FacilitAccredComponent implements OnInit {
+export class KonsultaMasterlistComponent implements OnInit {
   faSpinner = faSpinner;
   faChevronLeft = faChevronLeft;
   faChevronRight = faChevronRight;
@@ -15,6 +15,7 @@ export class FacilitAccredComponent implements OnInit {
   faAnglesRight = faAnglesRight;
   faSearch = faSearch;
   faRotate = faRotate;
+  faCalendarDays = faCalendarDays;
 
   per_page: number = 10;
   current_page: number;
@@ -28,19 +29,15 @@ export class FacilitAccredComponent implements OnInit {
 
   konsulta_list: any = [];
 
-  extractReg(){
-    let params = {
-      pStartDate: '',
-      pEndDate: ''
-    }
+  modal: any = [];
 
-    this.http.post('extract url', {params}).subscribe({
-      next: (data: any) => {
-        console.log(data);
-        this.loadList();
-      },
-      error: err => console.log(err)
-    })
+  toggleModal(name: string){
+    this.modal[name] = !this.modal[name];
+  }
+
+  showList(data) {
+    this.konsulta_list = data.ASSIGNMENT;
+    console.log(this.konsulta_list);
   }
 
   loadList(page?: number){

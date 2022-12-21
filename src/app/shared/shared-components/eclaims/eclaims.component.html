@@ -28,8 +28,11 @@
       </span>
 
       <div class="border border-slate-200 shadow-md rounded-xl">
-        <div class="w-full bg-blue-500 text-white rounded-t-xl p-3 font-semibold">
-          Eclaims
+        <div class="w-full bg-blue-500 text-white rounded-t-xl p-3 font-semibold flex justify-between">
+          <span>Eclaims</span>
+          <button type="button" (click)="refreshClaims()">
+            <fa-icon [icon]="faRotate" [spin]="is_refreshing"></fa-icon>
+          </button>
         </div>
 
         <div class="w-full p-5">

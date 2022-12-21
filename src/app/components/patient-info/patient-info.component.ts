@@ -206,22 +206,39 @@ export class PatientInfoComponent implements OnInit{
     })
   }
 
+  vitals: any;
   loadVitals(){
     this.http.get('patient-vitals/vitals', {params:{patient_id: this.patient_info.id, sort: '-vitals_date', per_page: 15}}).subscribe({
       next: (data: any) => {
         // console.log(data.data)
-        this.patientVitals.emit(data.data);
-        if(data.data.length > 0) {
-          this.latest_vitals = this.vitalsCharts.getLatestToday(data.data)
+        let vitals = data.data;
+
+        if(vitals.length > 0) {
+          let orig_systolic = data.data.bp_systolic;
+          let orig_diastolic = data.data.bp_diastolic;
+
+          this.latest_vitals = this.vitalsCharts.getLatestToday(vitals);
+
+          vitals[0]['bp_systolic'] = orig_systolic;
+          vitals[0]['bp_diastolic'] = orig_diastolic;
+          this.patientVitals.emit(vitals);
         } else {
           this.latest_vitals = null;
         }
+
         this.show_vitals = true;
       },
       error: err => console.log(err),
     })
   }
 
+  getLatestToday(vitals){
+    if(vitals.length > 0) {
+      this.latest_vitals = this.vitalsCharts.getLatestToday(vitals)
+    } else {
+      this.latest_vitals = null;
+    }
+  }
   vitalsEdit(e){
     this.vitals_to_edit = e;
     this.toggleModal('vitals');
