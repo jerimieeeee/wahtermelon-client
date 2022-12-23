@@ -42,7 +42,7 @@ export class RiskAssessmentComponent implements OnInit, OnChanges {
   };
 
   onSubmit() {
-    console.log(this.riskAssessForm);
+    // console.log(this.riskAssessForm);
 
     this.is_saving = true;
     if(this.riskAssessForm.valid){

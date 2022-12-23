@@ -52,15 +52,19 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
     }
   }
 
+  identify(index, item) {
+    return item.id
+  }
+
   onSubmit() {
     this.is_saving = true;
 
-    console.log(this.questionnaireForm)
     if(this.questionnaireForm.valid){
       this.http.post('non-communicable-disease/risk-questionnaire', this.questionnaireForm.value).subscribe({
         next: (data: any) => {
           console.log(data);
           this.toastr.success('Recorded successfully!','Questionnaire');
+          this.is_saving = false;
         },
         error: err => console.log(err)
       })
@@ -68,19 +72,12 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
   }
 
   getRecord() {
-    // let params = {consult_ncd_risk_id: this.consult_details.id}
-    let params = {patient_ncd_id: this.consult_details.patient_ncd_id}
-    this.http.get('non-communicable-disease/risk-questionnaire', {params}).subscribe({
-      next: (data: any) => {
-        console.log(data)
-        if(data.data.length > 0) {
-          this.questionnaireForm.patchValue({...data.data[0]});
-          console.log(this.questionnaireForm)
-        }
-      },
-      error: err => console.log(err),
-      complete: () => this.show_form = true
-    })
+    if(this.consult_details){
+      this.questionnaireForm.patchValue({...this.consult_details.riskQuestionnaire});
+      this.getAnginaValue();
+      this.getStrokeTia();
+      this.show_form = true
+    }
   }
 
   createForm() {

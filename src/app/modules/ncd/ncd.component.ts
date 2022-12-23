@@ -1,5 +1,5 @@
 import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
@@ -15,14 +15,22 @@ export class NcdComponent implements OnInit, OnChanges {
   patient_info: any;
   consult_details: any;
   ncd_details: any;
+  ncd_list: any;
 
   patient_id:string;
   consult_id: string;
 
   constructor(
     private route: ActivatedRoute,
-    private http: HttpService
+    private http: HttpService,
+    private router: Router
   ) { }
+
+  openNCD(patient_id, consult_id){
+    console.log(patient_id)
+    console.log(consult_id)
+    this.router.navigate(['/ncd', {id: patient_id, consult_id: consult_id}]);
+  }
 
   loadNCD(){
     let params = { consult_id: this.consult_id }
@@ -30,8 +38,10 @@ export class NcdComponent implements OnInit, OnChanges {
       next: (data: any) => {
         console.log(data.data);
         if(data.data.length > 0) {
-          data.data[0]['consult_date'] = data.data[0].assessment_date
-          this.consult_details = data.data[0];
+          this.ncd_list = data.data;
+          let risk_val = data.data[0];
+          risk_val['consult_date'] = risk_val.assessment_date
+          this.consult_details = risk_val;
         } else {
           this.loadConsult();
         }
@@ -68,8 +78,8 @@ export class NcdComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    this.module=3;
-    this.modules=2;
+    this.module=1;
+    this.modules=1;
 
     this.patient_id = this.route.snapshot.paramMap.get('id');
     this.consult_id = this.route.snapshot.paramMap.get('consult_id');

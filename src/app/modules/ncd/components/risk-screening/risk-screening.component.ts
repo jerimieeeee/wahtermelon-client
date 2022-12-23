@@ -1,8 +1,10 @@
+import { formatDate } from '@angular/common';
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { faSave } from '@fortawesome/free-regular-svg-icons';
 import { faInfoCircle, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
+import { ToastrService } from 'ngx-toastr';
 import { bloodLipidForm, glucoseForm, urineKetonesForm, urineProteinForm } from './forms';
 @Component({
   selector: 'app-risk-screening',
@@ -34,10 +36,22 @@ export class RiskScreeningComponent implements OnInit, OnChanges {
   urineProteinForm = urineProteinForm
 
   urls =[
-    'non-communicable-disease/risk-screening-blood-glucose',
-    'non-communicable-disease/risk-screening-blood-lipid',
-    'non-communicable-disease/risk-screening-urine-ketones',
-    'non-communicable-disease/risk-screening-urine-protein'
+    {
+      group: 'glucoseForm',
+      url: 'non-communicable-disease/risk-screening-blood-glucose'
+    },
+    {
+      group: 'bloodLipidForm',
+      url: 'non-communicable-disease/risk-screening-blood-lipid'
+    },
+    {
+      group: 'urineKetonesForm',
+      url: 'non-communicable-disease/risk-screening-urine-ketones'
+    },
+    {
+      group: 'urineProteinForm',
+      url: 'non-communicable-disease/risk-screening-urine-protein'
+    }
   ]
 
   loadLibraries(){
@@ -53,15 +67,31 @@ export class RiskScreeningComponent implements OnInit, OnChanges {
   }
 
   loadScreenings(){
-    this.urls.forEach((val) => {
-      console.log(val)
-      this.http.get(val,{params:{patient_ncd_id: this.consult_details.patient_ncd_id}}).subscribe({
-        next: (data: any) => {
-          console.log(data);
-        },
-        error: err => console.log(err)
-      })
-    })
+    if(this.consult_details) {
+      if(this.consult_details.riskScreeningGlucose){
+        this.consult_details.riskScreeningGlucose.date_taken = formatDate(this.consult_details.riskScreeningGlucose.date_taken, 'yyyy-MM-dd', 'en');
+        this.glucoseForm.patchValue({...this.consult_details.riskScreeningGlucose});
+        this.glucoseForm.addControl('id', this.formBuilder.control(this.consult_details.riskScreeningGlucose.id))
+      }
+
+      if(this.consult_details.riskScreeningLipid){
+        this.consult_details.riskScreeningLipid.date_taken = formatDate(this.consult_details.riskScreeningLipid.date_taken, 'yyyy-MM-dd', 'en');
+        this.bloodLipidForm.patchValue({...this.consult_details.riskScreeningLipid});
+        this.bloodLipidForm.addControl('id', this.formBuilder.control(this.consult_details.riskScreeningLipid.id))
+      }
+
+      if(this.consult_details.riskScreeningKetones){
+        this.consult_details.riskScreeningKetones.date_taken = formatDate(this.consult_details.riskScreeningKetones.date_taken, 'yyyy-MM-dd', 'en');
+        this.urineKetonesForm.patchValue({...this.consult_details.riskScreeningKetones});
+        this.urineKetonesForm.addControl('id', this.formBuilder.control(this.consult_details.riskScreeningKetones.id))
+      }
+
+      if(this.consult_details.riskScreeningProtein){
+        this.consult_details.riskScreeningProtein.date_taken = formatDate(this.consult_details.riskScreeningProtein.date_taken, 'yyyy-MM-dd', 'en');
+        this.urineProteinForm.patchValue({...this.consult_details.riskScreeningProtein});
+        this.urineProteinForm.addControl('id', this.formBuilder.control(this.consult_details.riskScreeningProtein.id))
+      }
+    }
   }
 
   raisedGlucose(){
@@ -106,14 +136,13 @@ export class RiskScreeningComponent implements OnInit, OnChanges {
   }
 
   onSubmit(group, val) {
-    console.log(group, val)
-    console.log(this[group+'Form'])
+    this.is_saving[group] = true;
     if(this[group+'Form'].valid) {
       let url = this.getURL(group)
-      console.log(url)
       this.http.post(url, this[group+'Form'].value).subscribe({
         next: (data: any) => {
-          console.log(data)
+          this.is_saving[group] = false;
+          this.toastr.success('Recorded successfully!','Risk screening')
         },
         error: err => console.log(err)
       })
@@ -123,19 +152,20 @@ export class RiskScreeningComponent implements OnInit, OnChanges {
   getURL(group){
     switch(group) {
       case 'glucose':
-        return this.urls[0];
+        return this.urls[0].url;
       case 'bloodLipid':
-        return this.urls[1];
+        return this.urls[1].url;
       case 'urineKetones':
-        return this.urls[2];
+        return this.urls[2].url;
       case 'urineProtein':
-        return this.urls[2];
+        return this.urls[2].url;
     }
   }
 
   constructor(
     private http: HttpService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private toastr: ToastrService
   ) { }
 
   createForm(){

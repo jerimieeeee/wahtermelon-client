@@ -114,6 +114,10 @@ const routes: Routes = [
   {
     path: 'lab',
     loadChildren: () => import('./modules/lab/lab.module').then(m => m.LabModule)
+  },
+  {
+    path: 'dispensing',
+    loadChildren: () => import('./modules/drug-dispensing/drug-dispensing.module').then(m => m.DrugDispensingModule)
   }
 ];
 

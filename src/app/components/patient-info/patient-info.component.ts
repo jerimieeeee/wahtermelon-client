@@ -72,11 +72,7 @@ export class PatientInfoComponent implements OnInit{
     private http: HttpService,
     private ageService: AgeService,
     private vitalsCharts: VitalsChartsService
-  ) {
-    this.activeRoute.params.subscribe(params => {
-      this.getPatient(params.id);
-    });
-  }
+  ) { }
 
   navigateTo(loc){
     this.router.navigate(['/'+loc, {id: this.patient_info.id}])
@@ -95,8 +91,8 @@ export class PatientInfoComponent implements OnInit{
   getPatient(id){
     this.http.get('patient/'+id).subscribe({
       next: (data: any) => {
-        this.show_form = true;
         this.patient_info = data.data;
+        this.show_form = true;
         this.patientInfo.emit(data.data);
         this.loadPhilhealth();
         this.loadVitals();
@@ -105,6 +101,7 @@ export class PatientInfoComponent implements OnInit{
         // this.toggleModal('philhealth') //togglemodal for easy test;
         this.accordions['vitals'] = true
         this.accordions['lab_request'] = true
+        this.accordions['prescriptions'] = true
         // this.toggleModal('philhealth-modal');//open sample modal
         // console.log(data.data)
       },
@@ -117,6 +114,8 @@ export class PatientInfoComponent implements OnInit{
   }
 
   pending_labs: any;
+
+
 
   loadLabs(){
     this.lab_request = true;
@@ -276,5 +275,6 @@ export class PatientInfoComponent implements OnInit{
 
   ngOnInit(): void {
     this.consult_id = this.activeRoute.snapshot.paramMap.get('consult_id');
+    this.getPatient(this.activeRoute.snapshot.paramMap.get('id'));
   }
 }

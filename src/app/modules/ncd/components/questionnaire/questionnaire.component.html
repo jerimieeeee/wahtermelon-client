@@ -12,7 +12,7 @@
 
       <div class="col-start-10 col-span-3 px-5">
         <select class="text-sm mt-4 bg-white border-gray-300 border px-2 p-2.5 rounded-md w-full" (change)="getAnginaValue()" [formControlName]="'question'+q.question_id" [name]="'question'+q.question_id">
-          <option [value]="logic2.id" *ngFor="let logic2 of logical2" [selected]="logic2.id === 'N'">
+          <option [value]="logic2.id" *ngFor="let logic2 of logical2" >
             {{logic2.desc}}
           </option>
         </select>
@@ -50,7 +50,7 @@
 
     <div class="col-start-10 col-span-3 px-5">
       <select class="text-sm mt-4 bg-white border-gray-300 border px-2 p-2.5 rounded-md w-full" (change)="getStrokeTia()" formControlName="question8" name="question8">
-        <option [value]="logic2.id" *ngFor="let logic2 of logical2" [selected]="logic2.id === 'N'">
+        <option [value]="logic2.id" *ngFor="let logic2 of logical2" >
           {{logic2.desc}}
         </option>
       </select>
