@@ -3,6 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { faSave } from '@fortawesome/free-regular-svg-icons';
 import { faInfoCircle, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
+import { ToastrService } from 'ngx-toastr';
 import { questionnaire } from '../../data-lib/libraries';
 import { questionnaireForm } from './forms';
 
@@ -37,17 +38,17 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
   getAnginaValue(){
     if(this.questionnaireForm.value.question3 === 'Y' || this.questionnaireForm.value.question4 === 'Y' || this.questionnaireForm.value.question5 === 'Y' ||
     this.questionnaireForm.value.question6 === 'Y' || this.questionnaireForm.value.question7 === 'Y') {
-      this.questionnaireForm.patchValue({angina_heart_attack: true}); return true;
+      this.questionnaireForm.patchValue({angina_heart_attack: 'Y'});
     } else {
-      this.questionnaireForm.patchValue({angina_heart_attack: false}); return false;
+      this.questionnaireForm.patchValue({angina_heart_attack: 'N'});
     }
   }
 
   getStrokeTia(){
     if(this.questionnaireForm.value.question8 === 'Y') {
-      this.questionnaireForm.patchValue({stroke_tia: true}); return true;
+      this.questionnaireForm.patchValue({stroke_tia: 'Y'});
     } else {
-      this.questionnaireForm.patchValue({stroke_tia: false}); return false;
+      this.questionnaireForm.patchValue({stroke_tia: 'N'});
     }
   }
 
@@ -56,8 +57,30 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
 
     console.log(this.questionnaireForm)
     if(this.questionnaireForm.valid){
-
+      this.http.post('non-communicable-disease/risk-questionnaire', this.questionnaireForm.value).subscribe({
+        next: (data: any) => {
+          console.log(data);
+          this.toastr.success('Recorded successfully!','Questionnaire');
+        },
+        error: err => console.log(err)
+      })
     }
+  }
+
+  getRecord() {
+    // let params = {consult_ncd_risk_id: this.consult_details.id}
+    let params = {patient_ncd_id: this.consult_details.patient_ncd_id}
+    this.http.get('non-communicable-disease/risk-questionnaire', {params}).subscribe({
+      next: (data: any) => {
+        console.log(data)
+        if(data.data.length > 0) {
+          this.questionnaireForm.patchValue({...data.data[0]});
+          console.log(this.questionnaireForm)
+        }
+      },
+      error: err => console.log(err),
+      complete: () => this.show_form = true
+    })
   }
 
   createForm() {
@@ -79,7 +102,7 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
         stroke_tia: [null, Validators.required],
       });
 
-      this.show_form = true
+      this.getRecord();
     }
   }
 
@@ -89,7 +112,8 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
 
   constructor(
     private http: HttpService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private toastr: ToastrService
   ) { }
 
   ngOnInit(): void {
