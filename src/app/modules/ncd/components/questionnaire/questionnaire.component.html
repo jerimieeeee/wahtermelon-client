@@ -1,72 +1,74 @@
-<div class="grid grid-cols-12 item-start flex-wrap shadow-md rounded-xl mb-8 mt-8">
-  <div class="col-span-12 flex bg-blue-500 px-5 py-3 rounded-t-xl" [ngClass]="{'bg-red-400': getAnginaValue() }">
-    <h4 class="font-bold text-white text-md mt-2 mb-2">Angina or Heart Attack</h4>
+<form [formGroup]="questionnaireForm" (ngSubmit)="onSubmit()" *ngIf="show_form">
+  <div class="grid grid-cols-12 item-start flex-wrap shadow-md rounded-xl mb-8 mt-8">
+    <div class="col-span-12 flex bg-blue-500 px-5 py-3 rounded-t-xl" [ngClass]="{'bg-red-400': questionnaireForm.value.angina_heart_attack}">
+      <h4 class="font-bold text-white text-md mt-2 mb-2">Angina or Heart Attack</h4>
+    </div>
+
+    <div class="col-span-full grid grid-cols-12" *ngFor="let q of questionnaire" >
+      <div class="text-sm col-start-1 col-span-9 w-full px-5 mt-4 mb-4 grid grid-cols-1">
+        <h1 class="mb-1">{{ q.question_id }}. {{ q.question_e }} </h1>
+        <h1 class="pl-3 italic">{{ q.question_t }}</h1>
+      </div>
+
+      <div class="col-start-10 col-span-3 px-5">
+        <select class="text-sm mt-4 bg-white border-gray-300 border px-2 p-2.5 rounded-md w-full" (change)="getAnginaValue()" [formControlName]="'question'+q.question_id" [name]="'question'+q.question_id">
+          <option [value]="logic2.id" *ngFor="let logic2 of logical2" [selected]="logic2.id === 'N'">
+            {{logic2.desc}}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="text-sm col-start-1 col-span-12 border-b-2 border-gray-200 mt-2 mb-4"></div>
+
+    <p class="text-sm col-start-1 col-span-12 w-full px-5 mt-2 mb-4" [ngClass]="{'text-red-400': questionnaireForm.value.angina_heart_attack}">
+      <b>Note:</b> If the answer is <b>YES</b> to either questions 3, 4, 5, 6, or 7, the patient may have angina or heart attack, and must see a doctor.
+    </p>
   </div>
 
-  <div class="col-span-full grid grid-cols-12" *ngFor="let q of questionnaire" >
-    <div class="text-sm col-start-1 col-span-9 w-full px-5 mt-4 mb-4 grid grid-cols-1">
-      <h1 class="mb-1">{{ q.question_id }}. {{ q.question_e }} </h1>
-      <h1 class="pl-3 italic">{{ q.question_t }}</h1>
+  <div class="grid grid-cols-12 item-start flex-wrap shadow-md rounded-xl mb-4 mt-8">
+    <div class="col-span-12 flex bg-blue-500 px-5 py-3  rounded-t-xl" [ngClass]="{'bg-red-400': questionnaireForm.value.stroke_tia}">
+      <h4 class="font-bold text-white text-md mt-2 mb-2">Stroke or Transient Ischemic Attack</h4>
+    </div>
+
+    <div class="text-sm col-start-1 col-span-9 w-full px-5 mt-4 mb-4">
+        <h1 class="mb-1">
+          8. Have you experienced any of the following:
+        </h1>
+        <ul class="list-disc px-8">
+          <li>Difficulty in talking.</li>
+          <li>Weakness of arm and/or legs on one side of the body or numbness on one side of the body?</li>
+        </ul>
+        <h1 class="mb-1 px-4 mt-2">
+          Have you experienced any of the following:
+        </h1>
+        <ul class="list-disc px-8">
+          <li>Hirap sa pagsasalita.</li>
+          <li>Panghihina ng braso at/o ng binti o pamamanhid ng kalahating bahagi ng katawan?</li>
+        </ul>
     </div>
 
     <div class="col-start-10 col-span-3 px-5">
-      <select class="text-sm mt-4 bg-white border-gray-300 border px-2 p-2.5 rounded-md w-full" [(ngModel)]="question_answer[q.question_id]" [name]="question_answer[q.question_id]">
-        <option [value]="logic2.code" *ngFor="let logic2 of logical2" [selected]="logic2.code === 'N'">
-        {{logic2.desc}}
+      <select class="text-sm mt-4 bg-white border-gray-300 border px-2 p-2.5 rounded-md w-full" (change)="getStrokeTia()" formControlName="question8" name="question8">
+        <option [value]="logic2.id" *ngFor="let logic2 of logical2" [selected]="logic2.id === 'N'">
+          {{logic2.desc}}
         </option>
       </select>
     </div>
+
+    <!--border-->
+    <div class="col-start-1 col-span-12 border-b-2 border-gray-200 mt-2 mb-1"></div>
+
+    <p class="text-sm col-start-1 col-span-12 w-full px-5 mt-2 mb-4" [ngClass]="{'text-red-400': questionnaireForm.value.stroke_tia}">
+      <b>Note:</b> If the answer to question 8 is <b>YES</b>, the patient may be having TIA or stroke, and must see a doctor.
+    </p>
   </div>
 
-  <div class="text-sm col-start-1 col-span-12 border-b-2 border-gray-200 mt-2 mb-4"></div>
-
-  <p class="text-sm col-start-1 col-span-12 w-full px-5 mt-2 mb-4" [ngClass]="{'text-red-400': getAnginaValue() }">
-    <b>Note:</b> If the answer is <b>YES</b> to either questions 3, 4, 5, 6, or 7, the patient may have angina or heart attack, and must see a doctor.
-  </p>
-</div>
-
-<div class="grid grid-cols-12 item-start flex-wrap shadow-md rounded-xl mb-4 mt-8">
-  <div class="col-span-12 flex bg-blue-500 px-5 py-3  rounded-t-xl" [ngClass]="{'bg-red-400': question_answer['q8'] === 'Y'}">
-    <h4 class="font-bold text-white text-md mt-2 mb-2">Stroke or Transient Ischemic Attack</h4>
+  <div class="flex justify-end">
+    <button type="submit" [disabled]="questionnaireForm.invalid || is_saving" class="btn-save px-10 disabled:bg-gray-300">
+      <fa-icon *ngIf="!is_saving" [icon]="faSave" class="mr-2"></fa-icon>
+      <fa-icon *ngIf="is_saving" [icon]="faSpinner" class="mr-2" spin="true"></fa-icon>
+      Save
+    </button>
   </div>
-
-  <div class="text-sm col-start-1 col-span-9 w-full px-5 mt-4 mb-4">
-      <h1 class="mb-1">
-        8. Have you experienced any of the following:
-      </h1>
-      <ul class="list-disc px-8">
-        <li>Difficulty in talking.</li>
-        <li>Weakness of arm and/or legs on one side of the body or numbness on one side of the body?</li>
-      </ul>
-      <h1 class="mb-1 px-4 mt-2">
-        Have you experienced any of the following:
-      </h1>
-      <ul class="list-disc px-8">
-        <li>Hirap sa pagsasalita.</li>
-        <li>Panghihina ng braso at/o ng binti o pamamanhid ng kalahating bahagi ng katawan?</li>
-      </ul>
-  </div>
-
-  <div class="col-start-10 col-span-3 px-5">
-    <select class="text-sm mt-4 bg-white border-gray-300 border px-2 p-2.5 rounded-md w-full" [(ngModel)]="question_answer['q8']" [name]="question_answer['q8']">
-      <option [value]="logic2.code" *ngFor="let logic2 of logical2" [selected]="logic2.code === 'N'">
-      {{logic2.desc}}
-      </option>
-    </select>
-  </div>
-
-  <!--border-->
-  <div class="col-start-1 col-span-12 border-b-2 border-gray-200 mt-2 mb-1"></div>
-
-  <p class="text-sm col-start-1 col-span-12 w-full px-5 mt-2 mb-4" [ngClass]="{'text-red-400': question_answer['q8'] === 'Y'}">
-    <b>Note:</b> If the answer to question 8 is <b>YES</b>, the patient may be having TIA or stroke, and must see a doctor.
-  </p>
-</div>
-
-<div class="flex justify-end">
-  <button [disabled]="is_saving || objectKeys(question_answer).length < 8" class="btn-save px-10 disabled:bg-gray-300" (click)="onSubmit()">
-    <fa-icon *ngIf="!is_saving" [icon]="faSave" class="mr-2"></fa-icon>
-    <fa-icon *ngIf="is_saving" [icon]="faSpinner" class="mr-2" spin="true"></fa-icon>
-    Save
-  </button>
-</div>
+</form>

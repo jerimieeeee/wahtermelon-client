@@ -1,11 +1,10 @@
 import { formatDate } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, Validators } from '@angular/forms';
 import { faSave } from '@fortawesome/free-regular-svg-icons';
 import { faInfoCircle, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
-import { alcohol, answer_yna, answer_ynau, smoking } from '../../data-lib/answers';
-import { client, family_history } from '../../data-lib/libraries';
+import { family_history } from '../../data-lib/libraries';
 import { riskAssessForm } from './forms';
 
 @Component({
@@ -207,6 +206,7 @@ export class RiskAssessmentComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if(this.patient_info && this.consult_details) this.creatFormValidation();
     if(this.consult_details && this.consult_details.assessment_date){
+      // this.getVitalsToday(this.vitals, this.consult_details);
       this.riskAssessForm.patchValue({...this.consult_details});
       this.riskAssessForm.patchValue({assessment_date: formatDate(this.consult_details.assessment_date, 'yyyy-MM-dd', 'en')})
       this.show_form = true;

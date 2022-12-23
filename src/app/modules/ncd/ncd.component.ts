@@ -68,7 +68,7 @@ export class NcdComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    this.module=2;
+    this.module=3;
     this.modules=2;
 
     this.patient_id = this.route.snapshot.paramMap.get('id');

@@ -3,7 +3,6 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { faSave } from '@fortawesome/free-regular-svg-icons';
 import { faInfoCircle, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
-import { ketones_list, protein_list } from '../../data-lib/libraries'
 import { bloodLipidForm, glucoseForm, urineKetonesForm, urineProteinForm } from './forms';
 @Component({
   selector: 'app-risk-screening',

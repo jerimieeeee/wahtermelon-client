@@ -63,7 +63,7 @@
       <div class="grid grid-col-8" >
         <app-risk-assessment *ngIf="module===1" [patient_info]="patient_info" [consult_details]="consult_details" [vitals]="vitals" (loadNCD)="loadNCD()"></app-risk-assessment>
         <app-risk-screening *ngIf="module===2" [patient_id]="patient_id" [consult_details]="consult_details"></app-risk-screening>
-        <app-questionnaire *ngIf="module===3" [patient_id]="patient_id" [consult_details]="consult_details"></app-questionnaire>
+        <app-questionnaire *ngIf="module===3" [consult_details]="consult_details"></app-questionnaire>
         <app-risk-stratification *ngIf="module===4" [patient_id]="patient_id" [consult_details]="consult_details"></app-risk-stratification>
         <app-patient-record *ngIf="module===5" [patient_id]="patient_id" [consult_details]="consult_details"></app-patient-record>
         <app-casdt *ngIf="module===6" [patient_id]="patient_id" [consult_details]="consult_details"></app-casdt>
