@@ -32,19 +32,19 @@
             [class]="module===1? 'text-blue-500 border-b-2 border-blue-500 font-bold' : 'hover:-translate-y-1 hover:scale-110 transition ease-in-out delay-400 duration-300' ">
             RISK ASSESSMENT
         </button>
-        <button (click)="switchTab(2)" class="text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 mr-6 pb-2"
+        <button *ngIf="consult_details?.assessment_date" (click)="switchTab(2)" class="text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 mr-6 pb-2"
             [class]="module===2? 'text-blue-500 border-b-2 border-blue-500 font-bold' : 'hover:-translate-y-1 hover:scale-110 transition ease-in-out delay-400 duration-300' ">
             RISK SCREENING
         </button>
-        <button (click)="switchTab(3)" class="text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 mr-6 pb-2"
+        <button *ngIf="consult_details?.assessment_date" (click)="switchTab(3)" class="text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 mr-6 pb-2"
             [class]="module===3? 'text-blue-500 border-b-2 border-blue-500 font-bold' : 'hover:-translate-y-1 hover:scale-110 transition ease-in-out delay-400 duration-300' ">
             QUESTIONNAIRE
         </button>
-        <button (click)="switchTab(4)" class="text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 mr-6 pb-2"
+        <button *ngIf="consult_details?.assessment_date" (click)="switchTab(4)" class="text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 mr-6 pb-2"
             [class]="module===4? 'text-blue-500 border-b-2 border-blue-500 font-bold' : 'hover:-translate-y-1 hover:scale-110 transition ease-in-out delay-400 duration-300' ">
             RISK STRATIFICATION
         </button>
-        <button (click)="switchTab(5)" class="text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 mr-6 pb-2"
+        <button *ngIf="consult_details?.assessment_date" (click)="switchTab(5)" class="text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 mr-6 pb-2"
             [class]="module===5? 'text-blue-500 border-b-2 border-blue-500 font-bold' : 'hover:-translate-y-1 hover:scale-110 transition ease-in-out delay-400 duration-300' ">
             PATIENT RECORD
         </button>
@@ -61,13 +61,13 @@
           <!--FIRST VISIT SECTION-->
 
       <div class="grid grid-col-8" >
-        <app-risk-assessment *ngIf="module===1" [patient_info]="patient_info" [consult_id]="consult_id"  [vitals]="vitals"></app-risk-assessment>
-        <app-risk-screening *ngIf="module===2" [patient_id]="patient_id" [consult_id]="consult_id"></app-risk-screening>
-        <app-questionnaire *ngIf="module===3" [patient_id]="patient_id" [consult_id]="consult_id"></app-questionnaire>
-        <app-risk-stratification *ngIf="module===4" [patient_id]="patient_id" [consult_id]="consult_id"></app-risk-stratification>
-        <app-patient-record *ngIf="module===5" [patient_id]="patient_id" [consult_id]="consult_id"></app-patient-record>
-        <app-casdt *ngIf="module===6" [patient_id]="patient_id" [consult_id]="consult_id"></app-casdt>
-        <app-casdt2 *ngIf="module===7" [patient_id]="patient_id" [consult_id]="consult_id"></app-casdt2>
+        <app-risk-assessment *ngIf="module===1" [patient_info]="patient_info" [consult_details]="consult_details" [vitals]="vitals" (loadNCD)="loadNCD()"></app-risk-assessment>
+        <app-risk-screening *ngIf="module===2" [patient_id]="patient_id" [consult_details]="consult_details"></app-risk-screening>
+        <app-questionnaire *ngIf="module===3" [patient_id]="patient_id" [consult_details]="consult_details"></app-questionnaire>
+        <app-risk-stratification *ngIf="module===4" [patient_id]="patient_id" [consult_details]="consult_details"></app-risk-stratification>
+        <app-patient-record *ngIf="module===5" [patient_id]="patient_id" [consult_details]="consult_details"></app-patient-record>
+        <app-casdt *ngIf="module===6" [patient_id]="patient_id" [consult_details]="consult_details"></app-casdt>
+        <app-casdt2 *ngIf="module===7" [patient_id]="patient_id" [consult_details]="consult_details"></app-casdt2>
       </div>
     </div>
 

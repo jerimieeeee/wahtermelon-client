@@ -5,7 +5,7 @@
 
   <div class="text-sm col-span-3 w-full px-5 mt-5 mb-4 relative">
     <h1 class="mb-1">Obesity:</h1>
-    <label>{{ vitals_today?.patient_bmi_class }}</label>
+    <label>{{ riskAssessForm.value.obesity ? 'Yes' :'No' }}</label>
   </div>
 
   <div class="text-sm col-span-3 w-full px-5 mt-5 mb-4 relative">
@@ -22,7 +22,7 @@
 
   <div class="text-sm col-span-3 w-full px-5 mt-5 mb-4 relative">
     <h1 class="mb-1">Waist Circumference:</h1>
-    <label>{{ vitals_today?.patient_waist+' cm' }}</label>
+    <label>{{ riskAssessForm.value.waist_line+' cm' }}</label>
   </div>
 
   <div class="text-sm col-span-3 w-full px-5 mb-5 relative">
@@ -37,20 +37,20 @@
 
   <div class="text-sm col-span-3 w-full px-5 mb-5 relative">
     <h1 class="mb-1">Average Blood Pressure:</h1>
-    <label *ngIf="riskAssessForm.value.systolic_2nd">
-      {{ getAverage() }}
+    <label *ngIf="riskAssessForm.value.avg_systolic">
+      {{ riskAssessForm.value.avg_systolic+'/'+riskAssessForm.value.avg_diastolic }}
     </label>
   </div>
 
   <div class="text-sm col-span-3 w-full px-5 mb-5 relative">
     <h1 class="mb-1">Raised Blood Pressure (>=140/90): </h1>
     <label>
-      {{ riskAssessForm.value.raised_bp }}
+      {{ riskAssessForm.value.raised_bp ? 'Yes' : 'No'}}
     </label>
   </div>
 </div>
 
-<form [formGroup]="riskAssessForm" (ngSubmit)="onSubmit()" *ngIf="riskAssessForm.value.avg_systolic">
+<form [formGroup]="riskAssessForm" (ngSubmit)="onSubmit()" *ngIf="show_form">
   <div class="grid grid-cols-12  item-start flex-wrap shadow-md rounded-xl mb-8 mt-8">
     <div class="col-span-12 flex bg-blue-500 px-5 py-2 rounded-tl rounded-tr">
       <h4 class="font-bold text-white text-md mt-2 mb-1">NCD High Risk Assessment</h4>
@@ -72,8 +72,8 @@
 
     <div class="text-sm col-span-4 px-5 mt-4 mb-6">
       <h4 class="mb-1">Assessment Date:</h4>
-      <input class="text-sm  border-gray-200 border p-2.5 rounded-md w-full" formControlName="assessment_date"
-              type="date" name="assessment_date" required="true" >
+      <input class="text-sm  border-gray-200 border p-2.5 rounded-md w-full disabled:bg-gray-300" formControlName="assessment_date"
+              type="date" name="assessment_date" disabled>
     </div>
   </div>
 
@@ -118,7 +118,7 @@
     <div class="text-sm col-span-4 w-full px-5 mt-4 mb-4 relative">
       <h1 class="mb-1">Excessive Alcohol Intake:</h1>
       <select class="text-sm border-gray-200 border p-2.5 rounded-md w-full" formControlName="excessive_alcohol_intake" name="excessive_alcohol_intake">
-        <option  [value]="logical2.id" *ngFor="let logic2 of logical2" >
+        <option  [value]="logic2.id" *ngFor="let logic2 of logical2" >
           {{logic2.desc}}
         </option>
       </select>
@@ -127,7 +127,7 @@
     <div class="text-sm col-span-4 w-full px-5 mt-4 mb-4 relative">
       <h1 class="mb-1">High Fat / High Salt Intake:</h1>
       <select class="text-sm border-gray-200 border p-2.5 rounded-md w-full" formControlName="high_fat" name="high_fat">
-        <option  [value]="logical2.id" *ngFor="let logic2 of logical2" >
+        <option  [value]="logic2.id" *ngFor="let logic2 of logical2" >
           {{logic2.desc}}
         </option>
       </select>
@@ -136,7 +136,7 @@
     <div class="text-sm col-span-4 w-full px-5 mt-4 mb-4 relative">
       <h1 class="mb-1">Dietary Fiber Intake of Fruits:</h1>
       <select class="text-sm border-gray-200 border p-2.5 rounded-md w-full" formControlName="intake_fruits" name="intake_fruits">
-        <option  [value]="logical2.id" *ngFor="let logic2 of logical2" >
+        <option  [value]="logic2.id" *ngFor="let logic2 of logical2" >
           {{logic2.desc}}
         </option>
       </select>
@@ -145,7 +145,7 @@
     <div class="text-sm col-span-4 w-full px-5 mt-4 mb-4 relative">
       <h1 class="mb-1">Physical Activity:</h1>
       <select class="text-sm border-gray-200 border p-2.5 rounded-md w-full" formControlName="physical_activity" name="physical_activity">
-        <option  [value]="logical2.id" *ngFor="let logic2 of logical2" >
+        <option  [value]="logic2.id" *ngFor="let logic2 of logical2" >
           {{logic2.desc}}
         </option>
       </select>
@@ -154,7 +154,7 @@
     <div class="text-sm col-span-4 w-full px-5 mt-4 mb-6 relative">
       <h1 class="mb-1">Dietary Fiber Intake of Vegetables:</h1>
       <select class="text-sm border-gray-200 border p-2.5 rounded-md w-full" formControlName="intake_vegetables" name="intake_vegetables">
-        <option  [value]="logical2.id" *ngFor="let logic2 of logical2" >
+        <option  [value]="logic2.id" *ngFor="let logic2 of logical2" >
           {{logic2.desc}}
         </option>
       </select>
@@ -175,16 +175,16 @@
       </select>
     </div>
 
-    <div class="text-sm col-span-6 w-full px-5 mt-4 mb-6 relative" *ngIf="f.polyphagia.enabled">
+    <div class="text-sm col-span-6 w-full px-5 mt-4 mb-6 relative" *ngIf="f.location.value === '2'">
       <h1 class="mb-1">Undertaking medications:</h1>
-      <select class="text-sm border-gray-200 border p-2.5 rounded-md w-full" formControlName="diabetes_medication" name="diabetes_medication">
+      <select class="text-sm border-gray-200 border p-2.5 rounded-md w-full" formControlName="diabetes_medications" name="diabetes_medications">
         <option  [value]="logic.id" *ngFor="let logic of logical">
           {{logic.desc}}
         </option>
       </select>
     </div>
 
-    <div class="text-sm col-span-4 w-full px-5 mt-4 mb-6 relative" *ngIf="f.polyphagia.enabled">
+    <div class="text-sm col-span-4 w-full px-5 mt-4 mb-6 relative" *ngIf="f.location.value === '2'">
       <h1 class="mb-1">Polyphagia</h1>
       <select class="text-sm border-gray-200 border p-2.5 rounded-md w-full" formControlName="polyphagia" name="polyphagia">
         <option  [value]="logic.id" *ngFor="let logic of logical">
@@ -193,7 +193,7 @@
       </select>
     </div>
 
-    <div class="text-sm col-span-4 w-full px-5 mt-4 mb-6 relative" *ngIf="f.polyphagia.enabled">
+    <div class="text-sm col-span-4 w-full px-5 mt-4 mb-6 relative" *ngIf="f.location.value === '2'">
       <h1 class="mb-1">Polydipsia</h1>
       <select class="text-sm border-gray-200 border p-2.5 rounded-md w-full" formControlName="polydipsia" name="polydipsia">
         <option  [value]="logic.id" *ngFor="let logic of logical">
@@ -202,7 +202,7 @@
       </select>
     </div>
 
-    <div class="text-sm col-span-4 w-full px-5 mt-4 mb-6 relative" *ngIf="f.polyphagia.enabled">
+    <div class="text-sm col-span-4 w-full px-5 mt-4 mb-6 relative" *ngIf="f.location.value === '2'">
       <h1 class="mb-1">Polyuria</h1>
       <select class="text-sm border-gray-200 border p-2.5 rounded-md w-full" formControlName="polyuria" name="polyuria">
         <option  [value]="logic.id" *ngFor="let logic of logical">
@@ -213,8 +213,9 @@
   </div>
 
   <div class="flex justify-end">
-    <button type="submit" class="btn-save px-10 disabled:bg-gray-300" name="add-btn">
-      Save
+    <button [disabled]="riskAssessForm.invalid" type="submit" class="btn-save px-10 disabled:bg-gray-300" name="add-btn">
+      <fa-icon [icon]="is_saving ? faSpinner : faSave" [spin]="is_saving"></fa-icon>
+      {{ is_saving ? 'Saving' : 'Save'}}
     </button>
   </div>
 </form>

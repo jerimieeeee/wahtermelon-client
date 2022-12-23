@@ -28,14 +28,14 @@
       <input name="rbs" formControlName="rbs" class="text-sm border border-gray-200 p-2.5 rounded w-full" (input)="raisedGlucose()" type="number" >
     </div>
 
-    <div *ngIf="glucoseForm.value.raised_blood_glucose" class="text-sm col-span-12 mb-6 p-3 rounded-lg" [ngClass]="{'bg-red-200 border border-red-300':glucoseForm.value.raised_blood_glucose === 'Y'}">
-      <h4 class="mb-2">{{ glucoseForm.value.raised_blood_glucose === 'Y' ? 'Raised blood glucose' : 'Normal blood glucose'}}</h4>
+    <div *ngIf="glucoseForm.value.raised_blood_glucose" class="text-sm col-span-12 mb-6 p-3 rounded-lg" [ngClass]="{'bg-red-200 border border-red-300':glucoseForm.value.raised_blood_glucose === true}">
+      <h4 class="mb-2">{{ glucoseForm.value.raised_blood_glucose === true ? 'Raised blood glucose' : 'Normal blood glucose'}}</h4>
       <ul class="list-disc pl-10">
-        <div *ngIf="glucoseForm.value.raised_blood_glucose === 'Y'">
+        <div *ngIf="glucoseForm.value.raised_blood_glucose === true">
           <li>FBS &#62;= 126 mg/dl</li>
           <li>RBS &#62;= 200 mg/dl</li>
         </div>
-        <div *ngIf="glucoseForm.value.raised_blood_glucose === 'N'">
+        <div *ngIf="glucoseForm.value.raised_blood_glucose === false">
           <li>FBS &#60; 126 mg/dl</li>
           <li>RBS &#60; 200 mg/dl</li>
         </div>
@@ -43,8 +43,8 @@
       <input hidden name="raised_blood_glucose" formControlName="raised_blood_glucose" class="text-sm border border-gray-200 p-2.5 rounded w-full disabled:bg-gray-300" type="text" disabled>
     </div>
 
-    <div class="col-span-12 flex justify-end border-t border-slate-200 pt-5">
-      <button [disabled]="glucoseForm.invalid || is_saving['glucose']" type="submit" class=" btn-save px-10 mr-5 mb-5 disabled:bg-gray-400">
+    <div class="col-span-12 flex justify-end border-t border-slate-200 pt-5"><!--    -->
+      <button [disabled]="(glucoseForm.invalid || (!glucoseForm.value.rbs && !glucoseForm.value.fbs)) || is_saving['glucose']" type="submit" class=" btn-save px-10 mr-5 mb-5 disabled:bg-gray-400">
         <fa-icon *ngIf="is_saving['glucose']" [icon]="faSpinner" class="mr-2" spin="true" ></fa-icon>
         <fa-icon *ngIf="is_saving['glucose']" [icon]="faSave" class="mr-2"></fa-icon>
         {{ is_saving['glucose'] ? 'Saving' : 'Save' }}
@@ -70,17 +70,17 @@
       <input name="total_cholesterol" formControlName="total_cholesterol" (input)="raisedLipids()" class="text-sm border border-gray-200 p-2.5 rounded w-full" type="number">
     </div>
 
-    <div *ngIf="bloodLipidForm.value.raised_lipid" class="text-sm col-span-12 mb-6 p-3 rounded-lg" [ngClass]="{'bg-red-200 border border-red-300':bloodLipidForm.value.raised_lipid === 'Y'}">
-      <h4 class="mb-2">{{ bloodLipidForm.value.raised_lipid === 'Y' ? 'Raised blood lipids' : 'Normal blood lipids'}}</h4>
+    <div *ngIf="bloodLipidForm.value.raised_blood_lipid" class="text-sm col-span-12 mb-6 p-3 rounded-lg" [ngClass]="{'bg-red-200 border border-red-300':bloodLipidForm.value.raised_blood_lipid === true}">
+      <h4 class="mb-2">{{ bloodLipidForm.value.raised_blood_lipid === true ? 'Raised blood lipids' : 'Normal blood lipids'}}</h4>
       <ul class="list-disc pl-10">
-        <div *ngIf="bloodLipidForm.value.raised_lipid === 'Y'">
+        <div *ngIf="bloodLipidForm.value.raised_blood_lipid === true">
           <li>Cholesterol &#62;= 200mg/100ml</li>
         </div>
-        <div *ngIf="bloodLipidForm.value.raised_lipid === 'N'">
+        <div *ngIf="bloodLipidForm.value.raised_blood_lipid === false">
           <li>Cholesterol &#60; 200mg/100ml</li>
         </div>
       </ul>
-      <input hidden name="raised_lipid" formControlName="raised_lipid" class="text-sm border border-gray-200 p-2.5 rounded w-full disabled:bg-gray-300" type="text" disabled>
+      <input hidden name="raised_blood_lipid" formControlName="raised_blood_lipid" class="text-sm border border-gray-200 p-2.5 rounded w-full disabled:bg-gray-300" type="text" disabled>
     </div>
 
     <div class="col-span-12 flex justify-end border-t border-slate-200 pt-5">
@@ -109,13 +109,13 @@
       <h4 class="mb-2">Urine Ketone</h4>
       <!-- <input name="ketone" formControlName="ketone" (input)="urineKetone()" class="text-sm border border-gray-200 p-2.5 rounded w-full" type="number"> -->
       <select name="ketone" formControlName="ketone" (change)="urineKetone()" class="text-sm border border-gray-200 p-2.5 rounded w-full">
-        <option [value]="item.code" *ngFor="let item of ketones_list">{{ item.desc }}</option>
+        <option [value]="item.id" *ngFor="let item of ketones_list">{{ item.desc }}</option>
       </select>
     </div>
 
-    <div *ngIf="urineKetonesForm.value.presence_urine_ketone" class="text-sm col-span-12 mb-6 p-3 rounded-lg" [ngClass]="{'bg-red-200 border border-red-300':urineKetonesForm.value.presence_urine_ketone === 'Y'}">
-      <h4 class="mb-2">{{ urineKetonesForm.value.presence_urine_ketone === 'Y' ? 'Traces or amount of urine ketone was found' : 'No traces or amount of urine ketone was found'}}</h4>
-      <input hidden name="presence_urine_ketone" formControlName="presence_urine_ketone" class="text-sm border border-gray-200 p-2.5 rounded w-full disabled:bg-gray-300" type="text" disabled>
+    <div *ngIf="urineKetonesForm.value.presence_of_urine_ketone" class="text-sm col-span-12 mb-6 p-3 rounded-lg" [ngClass]="{'bg-red-200 border border-red-300':urineKetonesForm.value.presence_of_urine_ketone === true}">
+      <h4 class="mb-2">{{ urineKetonesForm.value.presence_of_urine_ketone === true ? 'Traces or amount of urine ketone was found' : 'No traces or amount of urine ketone was found'}}</h4>
+      <input hidden name="presence_of_urine_ketone" formControlName="presence_of_urine_ketone" class="text-sm border border-gray-200 p-2.5 rounded w-full disabled:bg-gray-300" type="text" disabled>
     </div>
 
     <div class="col-span-12 flex justify-end border-t border-slate-200 pt-5">
@@ -143,13 +143,13 @@
     <div class="text-sm col-span-6 mt-4 mb-4">
       <h4 class="mb-2">Urine Protein</h4>
       <select name="protein" formControlName="protein" (change)="urineProtein()" class="text-sm border border-gray-200 p-2.5 rounded w-full">
-        <option [value]="item.code" *ngFor="let item of protein_list">{{ item.desc }}</option>
+        <option [value]="item.id" *ngFor="let item of protein_list">{{ item.desc }}</option>
       </select>
     </div>
 
-    <div *ngIf="urineProteinForm.value.presence_urine_protein" class="text-sm col-span-12 mb-6 p-3 rounded-lg" [ngClass]="{'bg-red-200 border border-red-300':urineProteinForm.value.presence_urine_protein === 'Y'}">
-      <h4 class="mb-2">{{ urineProteinForm.value.presence_urine_protein === 'Y' ? 'Traces or amount of urine protein was found' : 'No traces or amount of urine protein was found'}}</h4>
-      <input hidden name="presence_urine_protein" formControlName="presence_urine_protein" class="text-sm border border-gray-200 p-2.5 rounded w-full disabled:bg-gray-300" type="text" disabled>
+    <div *ngIf="urineProteinForm.value.presence_of_urine_protein" class="text-sm col-span-12 mb-6 p-3 rounded-lg" [ngClass]="{'bg-red-200 border border-red-300':urineProteinForm.value.presence_of_urine_protein === true}">
+      <h4 class="mb-2">{{ urineProteinForm.value.presence_of_urine_protein === true ? 'Traces or amount of urine protein was found' : 'No traces or amount of urine protein was found'}}</h4>
+      <input hidden name="presence_of_urine_protein" formControlName="presence_of_urine_protein" class="text-sm border border-gray-200 p-2.5 rounded w-full disabled:bg-gray-300" type="text" disabled>
     </div>
 
     <div class="col-span-12 flex justify-end border-t border-slate-200 pt-5">

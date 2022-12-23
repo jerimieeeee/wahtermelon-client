@@ -16,7 +16,7 @@ export const bloodLipidForm: FormGroup = new FormGroup({
   patient_id: new FormControl<string| null>(''),
   date_taken: new FormControl<string| null>(''),
   total_cholesterol: new FormControl<string| null>(''),
-  raised_lipid: new FormControl<string| null>(''),
+  raised_blood_lipid: new FormControl<string| null>(''),
 });
 
 export const urineKetonesForm: FormGroup = new FormGroup({
@@ -25,7 +25,7 @@ export const urineKetonesForm: FormGroup = new FormGroup({
   patient_id: new FormControl<string| null>(''),
   date_taken: new FormControl<string| null>(''),
   ketone: new FormControl<string| null>(''),
-  presence_urine_ketone: new FormControl<string| null>(''),
+  presence_of_urine_ketone: new FormControl<string| null>(''),
 });
 
 export const urineProteinForm: FormGroup = new FormGroup({
@@ -34,5 +34,5 @@ export const urineProteinForm: FormGroup = new FormGroup({
   patient_id: new FormControl<string| null>(''),
   date_taken: new FormControl<string| null>(''),
   protein: new FormControl<string| null>(''),
-  presence_urine_protein: new FormControl<string| null>(''),
+  presence_of_urine_protein: new FormControl<string| null>(''),
 });

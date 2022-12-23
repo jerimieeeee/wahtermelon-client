@@ -1,5 +1,5 @@
 import { formatDate } from '@angular/common';
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { faSave } from '@fortawesome/free-regular-svg-icons';
 import { faInfoCircle, faSpinner } from '@fortawesome/free-solid-svg-icons';
@@ -14,8 +14,9 @@ import { riskAssessForm } from './forms';
   styleUrls: ['./risk-assessment.component.scss']
 })
 export class RiskAssessmentComponent implements OnInit, OnChanges {
+  @Output() loadNCD = new EventEmitter<any>();
   @Input() patient_info;
-  @Input() consult_id;
+  @Input() consult_details;
   @Input() vitals;
   @Input() ncd_details;
 
@@ -31,40 +32,36 @@ export class RiskAssessmentComponent implements OnInit, OnChanges {
   alcohol: [];
 
   family_history = family_history;
-
   riskAssessForm = riskAssessForm;
 
   is_saving: boolean = false;
-
-
-
-  onSubmit() {
-    console.log(this.riskAssessForm.value);
-
-    /* this.is_saving = true;
-    if(this.riskAssessForm.valid){
-      this.http.post('non-communicable-disease/risk-assessment', this.riskAssessForm.value).subscribe({
-        next: (data: any) => {
-          console.log(data)
-        },
-        error: err => console.log(err)
-      })
-    } */
-  }
-
-  get f(): { [key: string]: AbstractControl } {
-    return this.riskAssessForm.controls;
-  }
-
-  constructor(
-    private http: HttpService,
-    private formBuilder: FormBuilder
-  ) { }
+  show_form: boolean = false;
 
   vitals_today = {
     patient_waist: null,
     patient_bmi_class: null
   };
+
+  onSubmit() {
+    console.log(this.riskAssessForm);
+
+    this.is_saving = true;
+    if(this.riskAssessForm.valid){
+      let query;
+      if(this.consult_details && this.consult_details.assessment_date) {
+        query = this.http.update('non-communicable-disease/risk-assessment/', this.consult_details.id, this.riskAssessForm.value);
+      } else {
+        query = this.http.post('non-communicable-disease/risk-assessment', this.riskAssessForm.value);
+      }
+      query.subscribe({
+        next: (data: any) => {
+          console.log(data)
+          this.is_saving = false;
+        },
+        error: err => console.log(err)
+      })
+    }
+  }
 
   setAdiposity(waist){
     let val;
@@ -80,68 +77,90 @@ export class RiskAssessmentComponent implements OnInit, OnChanges {
   }
 
   checkDiabetes() {
-    if(this.riskAssessForm.value.presence_diabetes === '1' && this.riskAssessForm.value.location === '2') {
+    if(this.riskAssessForm.value.presence_diabetes === 'Y' && this.riskAssessForm.value.location === '2') {
+      this.f.client_type.enable();
       this.f.polyphagia.enable();
       this.f.polydipsia.enable();
       this.f.polyuria.enable();
     } else {
-      this.riskAssessForm.patchValue({diabetes_medication: 'N'})
-      this.f.polyphagia.disable();
-      this.f.polydipsia.disable();
-      this.f.polyuria.disable();
+      this.riskAssessForm.patchValue({
+        diabetes_medications: 'X',
+        polyphagia: 'X',
+        polydipsia: 'X',
+        polyuria: 'X'
+      })
+      this.f.client_type.disable();
+
+      if(this.riskAssessForm.value.location === '2') this.f.client_type.enable();
     }
   }
 
-  getVitalsToday(vitals){
-    let consult_date = new Date();
-    Object.entries(vitals).every(([keys, values], indexes) => {
-      let val:any = values;
+  getVitalsToday(vitals, consult_details){
+    if(vitals && consult_details){
+      this.riskAssessForm.patchValue({assessment_date: formatDate(consult_details.consult_date,'yyyy-MM-dd','en')});
 
-      if(!this.riskAssessForm.value.bmi && val.patient_bmi) this.riskAssessForm.patchValue({bmi: val.patient_bmi});
-      if(!this.riskAssessForm.value.obesity && val.patient_bmi) this.riskAssessForm.patchValue({obesity: val.patient_bmi >= 25});
-      if(!this.vitals_today.patient_bmi_class && val.patient_bmi_class) this.vitals_today.patient_bmi_class = val.patient_bmi_class;
-      if(!this.vitals_today.patient_waist && val.patient_waist) this.vitals_today.patient_waist = val.patient_waist; this.setAdiposity(val.patient_waist)
+      Object.entries(vitals).every(([keys, values], indexes) => {
+        let val:any = values;
 
-      let vitals_date = formatDate(val.vitals_date, 'yyyy-MM-dd','en', 'en')
-      let date_today = formatDate(consult_date, 'yyyy-MM-dd','en', 'en')
+        if(!this.riskAssessForm.value.bmi && val.patient_bmi) this.riskAssessForm.patchValue({bmi: val.patient_bmi});
+        if(!this.riskAssessForm.value.obesity && val.patient_bmi) this.riskAssessForm.patchValue({obesity: val.patient_bmi >= 25});
+        if(!this.vitals_today.patient_bmi_class && val.patient_bmi_class) this.vitals_today.patient_bmi_class = val.patient_bmi_class;
 
-      if(vitals_date === date_today){
-        if(!this.riskAssessForm.value.systolic_1st && val.bp_systolic) {
-          this.riskAssessForm.patchValue({
-            systolic_1st: val.bp_systolic,
-            diastolic_1st: val.bp_diastolic
-          })
-        } else {
-          if((!this.riskAssessForm.value.systolic_2nd && this.riskAssessForm.value.systolic_1st) && val.bp_systolic) {
+        let vitals_date = formatDate(val.vitals_date, 'yyyy-MM-dd','en', 'en')
+        let date_today = formatDate(consult_details.consult_date, 'yyyy-MM-dd','en', 'en')
+
+        if(vitals_date === date_today){
+          if(!this.riskAssessForm.value.systolic_1st && val.bp_systolic) {
             this.riskAssessForm.patchValue({
-              systolic_2nd: val.bp_systolic,
-              diastolic_2nd: val.bp_diastolic
-            })
+              systolic_1st: val.bp_systolic,
+              diastolic_1st: val.bp_diastolic
+            });
+          } else {
+            if((!this.riskAssessForm.value.systolic_2nd && this.riskAssessForm.value.systolic_1st) && val.bp_systolic) {
+              this.riskAssessForm.patchValue({
+                systolic_2nd: val.bp_systolic,
+                diastolic_2nd: val.bp_diastolic
+              });
+
+              this.setAverage();
+            }
+          }
+
+          if(!this.riskAssessForm.value.waist_line && val.patient_waist) {
+            this.riskAssessForm.patchValue({waist_line: val.patient_waist});
+            this.setAdiposity(val.patient_waist);
           }
         }
-      }
 
-      if(this.riskAssessForm.value.systolic_1st && this.riskAssessForm.value.diastolic_1st &&
-        this.riskAssessForm.value.systolic_2nd && this.riskAssessForm.value.diastolic_2nd &&
-        this.vitals_today.patient_waist > 0){
-        return false;
-      }
-      return true;
-    });
+        if(this.riskAssessForm.value.systolic_1st && this.riskAssessForm.value.diastolic_1st &&
+          this.riskAssessForm.value.systolic_2nd && this.riskAssessForm.value.diastolic_2nd &&
+          this.vitals_today.patient_waist > 0){
+          return false;
+        }
+        return true;
+      });
+
+      this.checkIfComplete();
+    }
   }
 
-  getAverage(){
+  checkIfComplete(){
+    if(this.riskAssessForm.value.bmi && this.riskAssessForm.value.obesity && this.riskAssessForm.value.avg_systolic && this.riskAssessForm.value.avg_diastolic && this.riskAssessForm.value.waist_line) {
+      this.show_form = true;
+    }
+  }
+
+  setAverage(){
     this.riskAssessForm.patchValue({
       avg_systolic: (this.riskAssessForm.value.systolic_1st + this.riskAssessForm.value.systolic_2nd)/2,
       avg_diastolic: (this.riskAssessForm.value.diastolic_1st + this.riskAssessForm.value.diastolic_2nd)/2
     })
 
     if(this.riskAssessForm.value.avg_systolic >= 140 && this.riskAssessForm.value.avg_diastolic >= 90){
-      this.riskAssessForm.patchValue({raised_bp: 'Y'});
+      this.riskAssessForm.patchValue({raised_bp: true});
     } else {
-      this.riskAssessForm.patchValue({raised_bp: 'N'});
+      this.riskAssessForm.patchValue({raised_bp: false});
     }
-    return this.riskAssessForm.value.avg_systolic+'/'+this.riskAssessForm.value.avg_diastolic
   }
 
   loadLibraries(){
@@ -151,7 +170,7 @@ export class RiskAssessmentComponent implements OnInit, OnChanges {
     });
 
     this.http.get('libraries/ncd-smoking').subscribe({
-      next: (data: any) =>  {this.smoking = data.data; console.log(data.data)},
+      next: (data: any) =>  this.smoking = data.data,
       error: err => console.log(err)
     });
 
@@ -166,20 +185,49 @@ export class RiskAssessmentComponent implements OnInit, OnChanges {
     });
 
     this.http.get('libraries/ncd-client-types').subscribe({
-      next: (data: any) =>  {this.client = data.data; console.log(data.data)},
+      next: (data: any) =>  this.client = data.data,
       error: err => console.log(err)
     });
 
-    //Alcohol
+    this.http.get('libraries/ncd-alcohol-intake').subscribe({
+      next: (data: any) =>  this.alcohol = data.data,
+      error: err => console.log(err)
+    });
+  }
+
+  get f(): { [key: string]: AbstractControl } {
+    return this.riskAssessForm.controls;
+  }
+
+  constructor(
+    private http: HttpService,
+    private formBuilder: FormBuilder
+  ) { }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if(this.patient_info && this.consult_details) this.creatFormValidation();
+    if(this.consult_details && this.consult_details.assessment_date){
+      this.riskAssessForm.patchValue({...this.consult_details});
+      this.riskAssessForm.patchValue({assessment_date: formatDate(this.consult_details.assessment_date, 'yyyy-MM-dd', 'en')})
+      this.show_form = true;
+    } else {
+      this.getVitalsToday(this.vitals, this.consult_details);
+    }
   }
 
   creatFormValidation() {
+    let consult_id;
+    if(this.consult_details.assessment_date) {
+      consult_id = this.consult_details.consult_id;
+    } else {
+      consult_id = this.consult_details.id;
+    }
     this.riskAssessForm = this.formBuilder.nonNullable.group({
-      facility_code: [this.http.getUserFacility()],
+      consult_id: [consult_id],
       patient_id: [this.patient_info.id],
       location: [null, Validators.required],
       client_type: [null, Validators.required],
-      assessment_date: [null, Validators.required],
+      assessment_date: [this.consult_details.consult_date, Validators.required],
       family_hx_hypertension: [null, Validators.required],
       family_hx_stroke: [null, Validators.required],
       family_hx_heart_attack: [null, Validators.required],
@@ -195,7 +243,8 @@ export class RiskAssessmentComponent implements OnInit, OnChanges {
       intake_fruits: [null, Validators.required],
       physical_activity: [null, Validators.required],
       presence_diabetes: [null, Validators.required],
-      diabetes_medication: [null, Validators.required],
+      diabetes_medications: [null, Validators.required],
+      waist_line: [null, Validators.required],
       polyphagia: [null, Validators.required],
       polydipsia: [null, Validators.required],
       polyuria: [null, Validators.required],
@@ -208,17 +257,10 @@ export class RiskAssessmentComponent implements OnInit, OnChanges {
       systolic_1st: [null, Validators.required],
       diastolic_1st: [null, Validators.required],
       systolic_2nd: [null, Validators.required],
-      diastolic_2nd: [null, Validators.required],
-      gender: [null, Validators.required],
-      age: [null, Validators.required],
+      diastolic_2nd: [null, Validators.required]
     });
 
     this.checkDiabetes()
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if(this.patient_info) this.creatFormValidation();
-    if(this.patient_info && this.vitals) this.getVitalsToday(this.vitals);
   }
 
   ngOnInit(): void {

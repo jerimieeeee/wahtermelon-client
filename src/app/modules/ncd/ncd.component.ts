@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpService } from 'app/shared/services/http.service';
 
@@ -7,12 +7,14 @@ import { HttpService } from 'app/shared/services/http.service';
   templateUrl: './ncd.component.html',
   styleUrls: ['./ncd.component.scss']
 })
-export class NcdComponent implements OnInit {
+export class NcdComponent implements OnInit, OnChanges {
   module: Number;
   modules: Number;
 
   vitals: any;
   patient_info: any;
+  consult_details: any;
+  ncd_details: any;
 
   patient_id:string;
   consult_id: string;
@@ -20,17 +22,34 @@ export class NcdComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private http: HttpService
-  ) {
+  ) { }
 
-  }
-
-  ncd_details: any;
   loadNCD(){
     let params = { consult_id: this.consult_id }
     this.http.get('non-communicable-disease/risk-assessment', {params}).subscribe({
       next: (data: any) => {
         console.log(data.data);
-        this.ncd_details = data.data;
+        if(data.data.length > 0) {
+          data.data[0]['consult_date'] = data.data[0].assessment_date
+          this.consult_details = data.data[0];
+        } else {
+          this.loadConsult();
+        }
+      },
+      error: err => console.log(err)
+    })
+  }
+
+  loadConsult() {
+    let params = {
+      id: this.consult_id,
+      pt_group: 'ncd',
+    }
+
+    this.http.get('consultation/records', {params}).subscribe({
+      next: (data: any) => {
+        this.consult_details = data.data[0];
+
       },
       error: err => console.log(err)
     })
@@ -38,31 +57,32 @@ export class NcdComponent implements OnInit {
 
   patientInfo(info) {
     this.patient_info = info;
-    console.log(this.patient_info)
   }
 
   patientVitals(vitals) {
     this.vitals = vitals;
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+
+  }
+
   ngOnInit(): void {
-    this.module=1;
+    this.module=2;
     this.modules=2;
 
     this.patient_id = this.route.snapshot.paramMap.get('id');
     this.consult_id = this.route.snapshot.paramMap.get('consult_id');
 
-    // this.loadNCD();
+    this.loadNCD();
   }
 
   switchTab(tab){
-    console.log(tab)
     this.module = 0;
     this.module = tab;
   }
 
   switchTabs(tabs){
-    console.log(tabs)
     this.modules = 0;
     this.modules = tabs;
   }
