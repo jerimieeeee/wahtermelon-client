@@ -67,5 +67,5 @@
   </div>
 </div>
 
-<app-end-visit *ngIf="show_end" (toggleModal)="toggleModal()" [consult_id]="consult_details?.id" [consult_date]="consult_details?.consult_date" [patient_id]="consult_details?.patient.id"></app-end-visit>
+<app-end-visit *ngIf="show_end" (toggleModal)="toggleModal()" [consult_id]="consult_details?.id" [consult_date]="consult_details?.consult_date" [patient_id]="consult_details?.patient.id" [pt_group]="'cn'"></app-end-visit>
 

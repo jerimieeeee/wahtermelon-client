@@ -29,6 +29,7 @@ import { PbefComponent } from './eclaims/modals/pbef/pbef.component';
 import { Cf1Component } from './eclaims/modals/cf1/cf1.component';
 import { Cf2Component } from './eclaims/modals/cf2/cf2.component';
 import { PrescriptionsComponent } from 'app/components/patient-info/components/prescriptions/prescriptions.component';
+import { EndVisitComponent } from '../shared-modals/end-visit/end-visit.component';
 
 
 
@@ -57,7 +58,8 @@ import { PrescriptionsComponent } from 'app/components/patient-info/components/p
     PbefComponent,
     Cf1Component,
     Cf2Component,
-    PrescriptionsComponent
+    PrescriptionsComponent,
+    EndVisitComponent
   ],
   imports: [
     CommonModule,
@@ -86,7 +88,8 @@ import { PrescriptionsComponent } from 'app/components/patient-info/components/p
     LabRequestModalComponent,
     PhotoModalComponent,
     KonsultaComponent,
-    EclaimsComponent
+    EclaimsComponent,
+    EndVisitComponent
   ]
 })
 export class SharedComponentsModule { }

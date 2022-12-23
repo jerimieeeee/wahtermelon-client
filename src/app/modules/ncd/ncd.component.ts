@@ -1,5 +1,6 @@
 import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { faDoorClosed } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
@@ -19,6 +20,9 @@ export class NcdComponent implements OnInit, OnChanges {
 
   patient_id:string;
   consult_id: string;
+  show_end: boolean = false;
+
+  faDoorClosed = faDoorClosed;
 
   constructor(
     private route: ActivatedRoute,
@@ -30,6 +34,10 @@ export class NcdComponent implements OnInit, OnChanges {
     console.log(patient_id)
     console.log(consult_id)
     this.router.navigate(['/ncd', {id: patient_id, consult_id: consult_id}]);
+  }
+
+  toggleModal() {
+    this.show_end = !this.show_end;
   }
 
   loadNCD(){
