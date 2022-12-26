@@ -1,7 +1,9 @@
+import { formatDate } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { faSave } from '@fortawesome/free-regular-svg-icons';
 import { faSearch,faBalanceScale,faPlus,faInfoCircle, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-patient-record',
@@ -10,7 +12,7 @@ import { HttpService } from 'app/shared/services/http.service';
 })
 export class PatientRecordComponent implements OnInit {
   @Input() patient_id;
-  @Input() consult_id;
+  @Input() consult_details;
 
   faSave = faSave;
   faInfoCircle = faInfoCircle;
@@ -41,29 +43,11 @@ export class PatientRecordComponent implements OnInit {
     {code: 'X', desc: 'Not Applicable'}
   ];
 
-  diagnosis = [
-    {code: '1', desc: 'With cardiovascular risk factors only'},
-    {code: '2', desc: 'Essential hypertension'},
-    {code: '3', desc: 'Secondary hypertension'},
-    {code: '4', desc: 'Diabetes'},
-    {code: '5', desc: 'Renal disease (albuminuria > 3g/L, createnine > 177 mol/L or 2mg/dl'},
-    {code: '6', desc: 'Congestive heart disease'},
-    {code: '7', desc: 'Coronary heart disease'},
-    {code: '8', desc: 'Peripheral vascular disease'},
-    {code: '9', desc: 'Cerebrovascular disease'}
-  ];
-
-  target_organ = [
-    {code: '1', desc: 'Left ventricular hypertrophy'},
-    {code: '2', desc: 'Microalbuminuria (0.2-3g/L)'},
-    {code: '3', desc: 'Hypertensive retinopathy'},
-    {code: '4', desc: 'Others'}
-  ];
 
   physical_examination = [
     {
-      code: 'palpation_heart',
-      desc: 'Palpation of heart'
+      code: 'palpitation_heart',
+      desc: 'Palpitation of heart'
     },
     {
       code: 'peripheral_pulses',
@@ -87,34 +71,95 @@ export class PatientRecordComponent implements OnInit {
     }
   ];
 
-  physical_examination_result = [
-    {code: 'Normal', desc: 'Normal'},
-    {code: 'Abnormal', desc: 'Abnormal'}
+  physical_examination_result: [];
+  counselling: [];
+  diagnosis: [];
+  target_organ: [];
+
+  libraries = [
+    {var_name: 'counselling', url: 'ncd-record-counselling'},
+    {var_name: 'diagnosis', url: 'ncd-record-diagnosis'},
+    {var_name: 'target_organ', url: 'ncd-record-target-organ'},
+    {var_name: 'physical_examination_result', url: 'ncd-physical-exam'},
   ];
 
-  counselling = [
-    {code: '1', desc: 'Smoking cessation'},
-    {code: '2', desc: 'Diet'},
-    {code: '3', desc: 'Physical activity'},
-    {code: '4', desc: 'Weight control'},
-    {code: '5', desc: 'Alcohol intake'},
-    {code: '6', desc: 'Others'}
-  ];
+  loadLibraries() {
+    Object.entries(this.libraries).forEach(([key, value], index) => {
+      let val: any = value;
+      this.http.get('libraries/'+val.url).subscribe({
+        next: (data: any) => {
+          this[val.var_name] = data.data;
+
+          if(this.libraries.length-1 === index) this.getRecord();
+        },
+        error: err => console.log(err)
+      })
+    })
+  }
+
+  getRecord(){
+    this.ncd_record = this.consult_details.patientNcdRecord;
+
+    console.log(this.ncd_record)
+    if(Object.keys(this.consult_details.ncdRecordTargetOrgan).length > 0){
+      this.patient_target_organ = this.loadIndexSelected(this.consult_details.ncdRecordTargetOrgan, 'target_organ_code')
+    }
+  }
+
+  loadIndexSelected(data, field) {
+    let index_code = [];
+    if(Object.keys(data).length > 0) {
+      Object.entries(data).forEach(([key, value], index) => {
+        let val: any = value;
+        console.log(val)
+        index_code[val[field]] = true;
+      });
+    }
+
+    console.log(index_code)
+    return index_code;
+  }
+
 
   onSubmit(){
     // this.is_saving = true;
+    this.ncd_record['patient_ncd_id'] = this.consult_details.patient_ncd_id;
+    this.ncd_record['consult_ncd_risk_id'] = this.consult_details.id;
+    this.ncd_record['patient_id'] = this.consult_details.patient_id;
+    this.ncd_record['consultation_date'] = formatDate(this.consult_details.assessment_date, 'yyyy-MM-dd', 'en');
 
-    console.log(this.patient_counseling);
+    this.ncd_record['diagnosis_code'] = this.getIndexVal(this.patient_diagnosis);
+    this.ncd_record['couselling_code'] = this.getIndexVal(this.patient_counseling);
+    this.ncd_record['target_organ_code'] = this.getIndexVal(this.patient_target_organ);
+
     console.log(this.ncd_record);
-    console.log(this.patient_target_organ);
-    console.log(this.patient_diagnosis);
+    this.http.post('non-communicable-disease/patient-record',this.ncd_record).subscribe({
+      next: (data: any) => {
+        console.log(data);
+      },
+      error: err => console.log(err)
+    })
+  }
+
+  getIndexVal(val){
+    let code_val = [];
+
+    val.forEach((value, key) => {
+      if(value === true) {
+        code_val.push(key)
+      }
+    })
+
+    return code_val;
   }
 
   constructor(
-    private http: HttpService
+    private http: HttpService,
+    private toastr: ToastrService
   ) { }
 
   ngOnInit(): void {
+    this.loadLibraries();
   }
 
 }

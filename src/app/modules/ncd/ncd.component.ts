@@ -53,6 +53,10 @@ export class NcdComponent implements OnInit, OnChanges {
         if(data.data.length > 0) {
           data.data[0]['consult_date'] = data.data[0].assessment_date;
           this.consult_details = data.data[0];
+
+
+    this.modules = 2;
+    this.module = 5;
         }else {
           this.consult_details = this.consult_details_temp;
         }
@@ -91,10 +95,11 @@ export class NcdComponent implements OnInit, OnChanges {
         this.ncd_list[index]['consult_done'] = values.consult_done;
       }
 
-      if(Object.keys(this.ncd_list).length-1 === index) this.loadNCD(this.consult_id);
+      if(Object.keys(this.ncd_list).length-1 === index) {
+        this.loadNCD(this.consult_id);
+      }
     });
 
-    this.modules = 2;
     // console.log(this.ncd_list)
   }
 

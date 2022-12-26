@@ -24,8 +24,8 @@
     </div>
     <div class="col-span-12 grid grid-cols-12 gap-4 ml-10 mb-6">
       <div *ngFor="let diag of diagnosis" class="text-sm col-span-6 ">
-        <input [(ngModel)]="patient_diagnosis[diag.code]" type="checkbox" id="diagnosiscond" class="h-4 w-4 border-gray-400 text-blue-500 rounded-md mr-3">
-        <label [for]="patient_diagnosis[diag.code]" class="ml-1 align-middle">{{diag.desc}}</label>
+        <input [(ngModel)]="patient_diagnosis[diag.id]" type="checkbox" attr.id="patient_diagnosis{{diag.id}}" class="h-4 w-4 border-gray-400 text-blue-500 rounded-md mr-3">
+        <label attr.for="patient_diagnosis{{diag.id}}" class="ml-1 align-middle">{{diag.desc}}</label>
       </div>
     </div>
   </div>
@@ -36,8 +36,8 @@
     </div>
     <div class="col-span-12 grid grid-cols-12 gap-4 ml-10 mb-6">
       <div *ngFor="let organ of target_organ" class="text-sm col-span-6 ">
-        <input [(ngModel)]="patient_target_organ[organ.code]" type="checkbox" id="diagnosiscond" class="h-4 w-4 border-gray-400 text-blue-500 rounded-md mr-3">
-        <label [for]="patient_target_organ[organ.code]" class="ml-1 align-middle">{{organ.desc}}</label>
+        <input [(ngModel)]="patient_target_organ[organ.id]" type="checkbox" attr.id="patient_target_organ{{organ.id}}" class="h-4 w-4 border-gray-400 text-blue-500 rounded-md mr-3">
+        <label attr.for="patient_target_organ{{organ.id}}" class="ml-1 align-middle">{{organ.desc}}</label>
       </div>
     </div>
   </div>
@@ -50,7 +50,7 @@
       <div class="text-sm col-span-6" *ngFor="let pe of physical_examination">
         <h1 class="mb-1">{{ pe.desc}}</h1>
         <select [(ngModel)]="ncd_record[pe.code]" class="text-sm form-select bg-white border-gray-200 border p-2.5 rounded-md w-full" name="family_hx_hypertension">
-          <option [value]="result.code" *ngFor="let result of physical_examination_result">
+          <option [value]="result.id" *ngFor="let result of physical_examination_result">
             {{ result.desc }}
           </option>
         </select>
@@ -69,8 +69,8 @@
     </div>
     <div class="col-span-12 grid grid-cols-12 gap-4 ml-10 mb-6">
       <div *ngFor="let coun of counselling" class="text-sm col-span-6 ">
-        <input type="checkbox" [(ngModel)]="patient_counseling[coun.code]" id="diagnosiscond" class="h-4 w-4 border-gray-400 text-blue-500 rounded-md mr-3">
-        <label for="diagnosiscond" class="ml-1 align-middle" [value]="coun.code">{{coun.desc}}</label>
+        <input type="checkbox" [(ngModel)]="patient_counseling[coun.id]" attr.id="patient_counseling{{coun.id}}" class="h-4 w-4 border-gray-400 text-blue-500 rounded-md mr-3">
+        <label attr.for="patient_counseling{{coun.id}}" class="ml-1 align-middle" [value]="coun.id">{{coun.desc}}</label>
       </div>
     </div>
   </div>
