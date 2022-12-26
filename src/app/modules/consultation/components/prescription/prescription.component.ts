@@ -143,7 +143,6 @@ export class PrescriptionComponent implements OnInit, OnChanges {
         })
       });
     });
-    // console.log(this.prescriptions)
   }
   //end
 
