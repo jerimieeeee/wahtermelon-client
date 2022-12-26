@@ -14,7 +14,7 @@ import { riskAssessForm } from './forms';
   styleUrls: ['./risk-assessment.component.scss']
 })
 export class RiskAssessmentComponent implements OnInit, OnChanges {
-  @Output() loadNCD = new EventEmitter<any>();
+  @Output() loadRisk = new EventEmitter<any>();
   @Input() patient_info;
   @Input() consult_details;
   @Input() vitals;
@@ -27,7 +27,7 @@ export class RiskAssessmentComponent implements OnInit, OnChanges {
   location: [];
   logical: [];
   logical2: [];
-  client: [];
+  clients: [];
   smoking: [];
   alcohol: [];
 
@@ -43,7 +43,7 @@ export class RiskAssessmentComponent implements OnInit, OnChanges {
   };
 
   onSubmit() {
-    // console.log(this.riskAssessForm);
+    console.log(this.riskAssessForm);
 
     this.is_saving = true;
     if(this.riskAssessForm.valid){
@@ -57,7 +57,8 @@ export class RiskAssessmentComponent implements OnInit, OnChanges {
         next: (data: any) => {
           console.log(data)
           this.is_saving = false;
-          this.toastr.success('Recorded successfully!','Risk Assessment')
+          this.toastr.success('Recorded successfully!','Risk Assessment');
+          this.loadRisk.emit();
         },
         error: err => console.log(err)
       })
@@ -78,7 +79,7 @@ export class RiskAssessmentComponent implements OnInit, OnChanges {
   }
 
   checkDiabetes() {
-    if(this.riskAssessForm.value.presence_diabetes === 'Y' && this.riskAssessForm.value.location === '2') {
+    if(this.riskAssessForm.value.presence_diabetes === 'Y' && this.riskAssessForm.value.location === 2) {
       this.f.client_type.enable();
       this.f.polyphagia.enable();
       this.f.polydipsia.enable();
@@ -92,7 +93,7 @@ export class RiskAssessmentComponent implements OnInit, OnChanges {
       })
       this.f.client_type.disable();
 
-      if(this.riskAssessForm.value.location === '2') this.f.client_type.enable();
+      if(this.riskAssessForm.value.location === 2) this.f.client_type.enable();
     }
   }
 
@@ -187,7 +188,7 @@ export class RiskAssessmentComponent implements OnInit, OnChanges {
     });
 
     this.http.get('libraries/ncd-client-types').subscribe({
-      next: (data: any) =>  this.client = data.data,
+      next: (data: any) =>  this.clients = data.data,
       error: err => console.log(err)
     });
 
@@ -213,6 +214,7 @@ export class RiskAssessmentComponent implements OnInit, OnChanges {
       // this.getVitalsToday(this.vitals, this.consult_details);
       this.riskAssessForm.patchValue({...this.consult_details});
       this.riskAssessForm.patchValue({assessment_date: formatDate(this.consult_details.assessment_date, 'yyyy-MM-dd', 'en')})
+      this.checkDiabetes()
       this.show_form = true;
     } else {
       this.getVitalsToday(this.vitals, this.consult_details);

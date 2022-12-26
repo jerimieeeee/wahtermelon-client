@@ -55,7 +55,7 @@
           <!--FIRST VISIT SECTION-->
 
       <div class="grid grid-col-8" >
-        <app-risk-assessment *ngIf="module===1" [patient_info]="patient_info" [consult_details]="consult_details" [vitals]="vitals" (loadNCD)="loadNCD()"></app-risk-assessment>
+        <app-risk-assessment *ngIf="module===1" [patient_info]="patient_info" [consult_details]="consult_details" [vitals]="vitals" (loadRisk)="loadRisk()"></app-risk-assessment>
         <app-risk-screening *ngIf="module===2" [patient_id]="patient_id" [consult_details]="consult_details"></app-risk-screening>
         <app-questionnaire *ngIf="module===3" [consult_details]="consult_details"></app-questionnaire>
         <app-risk-stratification *ngIf="module===4" [patient_id]="patient_id" [consult_details]="consult_details"></app-risk-stratification>

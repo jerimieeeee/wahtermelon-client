@@ -94,6 +94,7 @@ export class NcdComponent implements OnInit, OnChanges {
       if(Object.keys(this.ncd_list).length-1 === index) this.loadNCD(this.consult_id);
     });
 
+    this.modules = 2;
     // console.log(this.ncd_list)
   }
 
