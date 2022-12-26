@@ -15,6 +15,7 @@ export class NcdComponent implements OnInit, OnChanges {
   vitals: any;
   patient_info: any;
   consult_details: any;
+  consult_details_temp: any;
   ncd_details: any;
   ncd_list: any;
 
@@ -30,44 +31,85 @@ export class NcdComponent implements OnInit, OnChanges {
     private router: Router
   ) { }
 
-  openNCD(patient_id, consult_id){
-    console.log(patient_id)
-    console.log(consult_id)
-    this.router.navigate(['/ncd', {id: patient_id, consult_id: consult_id}]);
+  openNCD(ncd){
+    // console.log(ncd)
+    this.router.navigate(['/ncd', {id: ncd.patient_id ?? ncd.patient.id, consult_id: ncd.consult_id ?? ncd.id}]);
+    this.consult_details = ncd;
+    this.modules = 2;
   }
+
 
   toggleModal() {
     this.show_end = !this.show_end;
   }
 
-  loadNCD(){
-    let params = { consult_id: this.consult_id }
+  loadNCD(consult_id, type?) {
+    let params = { consult_id: consult_id };
+
     this.http.get('non-communicable-disease/risk-assessment', {params}).subscribe({
       next: (data: any) => {
-        console.log(data.data);
+        console.log(params)
+        console.log(data.data)
         if(data.data.length > 0) {
-          this.ncd_list = data.data;
-          let risk_val = data.data[0];
-          risk_val['consult_date'] = risk_val.assessment_date
-          this.consult_details = risk_val;
-        } else {
-          this.loadConsult();
+          data.data[0]['consult_date'] = data.data[0].assessment_date;
+          this.consult_details = data.data[0];
+        }else {
+          this.consult_details = this.consult_details_temp;
+        }
+
+        // console.log(this.consult_details)
+      },
+      error: err => console.log(err)
+    })
+  }
+
+  risk_list: any;
+
+  loadRisk(){
+    let params = {
+      patient_id: this.patient_id,
+      sort: '-assessment_date'
+    }
+    this.http.get('non-communicable-disease/risk-assessment', {params}).subscribe({
+      next: (data: any) => {
+        this.risk_list = data.data;
+        if(this.risk_list) {
+          this.fillConsult();
         }
       },
       error: err => console.log(err)
     })
   }
 
+  fillConsult(){
+    Object.entries(this.ncd_list).forEach(([key, value], index) => {
+      let values: any = value;
+      let result = this.risk_list.find(item => item.consult_id === values.id)
+
+      if(result) {
+        this.ncd_list[index] = result;
+        this.ncd_list[index]['consult_done'] = values.consult_done;
+      }
+
+      if(Object.keys(this.ncd_list).length-1 === index) this.loadNCD(this.consult_id);
+    });
+
+    // console.log(this.ncd_list)
+  }
+
   loadConsult() {
     let params = {
-      id: this.consult_id,
+      patient_id: this.patient_id,
       pt_group: 'ncd',
+      sort: '-consult_date'
     }
 
     this.http.get('consultation/records', {params}).subscribe({
       next: (data: any) => {
-        this.consult_details = data.data[0];
-
+        console.log(data)
+        this.ncd_list = data.data;
+        this.consult_details_temp = data.data[0];
+        this.loadRisk();
       },
       error: err => console.log(err)
     })
@@ -91,8 +133,7 @@ export class NcdComponent implements OnInit, OnChanges {
 
     this.patient_id = this.route.snapshot.paramMap.get('id');
     this.consult_id = this.route.snapshot.paramMap.get('consult_id');
-
-    this.loadNCD();
+    this.loadConsult();
   }
 
   switchTab(tab){

@@ -4,6 +4,7 @@ import { AbstractControl, FormBuilder, Validators } from '@angular/forms';
 import { faSave } from '@fortawesome/free-regular-svg-icons';
 import { faInfoCircle, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
+import { ToastrService } from 'ngx-toastr';
 import { family_history } from '../../data-lib/libraries';
 import { riskAssessForm } from './forms';
 
@@ -56,6 +57,7 @@ export class RiskAssessmentComponent implements OnInit, OnChanges {
         next: (data: any) => {
           console.log(data)
           this.is_saving = false;
+          this.toastr.success('Recorded successfully!','Risk Assessment')
         },
         error: err => console.log(err)
       })
@@ -96,14 +98,15 @@ export class RiskAssessmentComponent implements OnInit, OnChanges {
 
   getVitalsToday(vitals, consult_details){
     if(vitals && consult_details){
+      // console.log(vitals);
       this.riskAssessForm.patchValue({assessment_date: formatDate(consult_details.consult_date,'yyyy-MM-dd','en')});
 
-      Object.entries(vitals).every(([keys, values], indexes) => {
+      Object.entries(vitals).reverse().every(([keys, values], indexes) => {
         let val:any = values;
 
-        if(!this.riskAssessForm.value.bmi && val.patient_bmi) this.riskAssessForm.patchValue({bmi: val.patient_bmi});
-        if(!this.riskAssessForm.value.obesity && val.patient_bmi) this.riskAssessForm.patchValue({obesity: val.patient_bmi >= 25});
-        if(!this.vitals_today.patient_bmi_class && val.patient_bmi_class) this.vitals_today.patient_bmi_class = val.patient_bmi_class;
+        if(val.patient_bmi) this.riskAssessForm.patchValue({bmi: val.patient_bmi});
+        if(val.patient_bmi) this.riskAssessForm.patchValue({obesity: val.patient_bmi >= 25});
+        if(val.patient_bmi_class) this.vitals_today.patient_bmi_class = val.patient_bmi_class;
 
         let vitals_date = formatDate(val.vitals_date, 'yyyy-MM-dd','en', 'en')
         let date_today = formatDate(consult_details.consult_date, 'yyyy-MM-dd','en', 'en')
@@ -133,7 +136,7 @@ export class RiskAssessmentComponent implements OnInit, OnChanges {
 
         if(this.riskAssessForm.value.systolic_1st && this.riskAssessForm.value.diastolic_1st &&
           this.riskAssessForm.value.systolic_2nd && this.riskAssessForm.value.diastolic_2nd &&
-          this.vitals_today.patient_waist > 0){
+          this.vitals_today.patient_waist > 0 && (Object(vitals).length-1 === indexes)){
           return false;
         }
         return true;
@@ -200,7 +203,8 @@ export class RiskAssessmentComponent implements OnInit, OnChanges {
 
   constructor(
     private http: HttpService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private toastr: ToastrService
   ) { }
 
   ngOnChanges(changes: SimpleChanges): void {

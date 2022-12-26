@@ -75,25 +75,26 @@
           <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
               <tr>
-                <th scope="col" class="text-center py-3 px-3 w-2/12">Assessment Date</th>
+                <th scope="col" class="text-center py-3 px-3 w-3/12">Assessment Date</th>
                 <th scope="col" class="text-center py-3 px-3 w-3/12">Risk Stratification</th>
-                <th scope="col" class="text-center py-3 px-3 w-5/12">Details</th>
-                <th scope="col" class="text-center py-3 px-3 w-2/12">Actions</th>
+                <th scope="col" class="text-center py-3 px-3 w-3/12">Location</th>
+                <th scope="col" class="text-center py-3 px-3 w-3/12">Actions</th>
               </tr>
             </thead>
             <tbody *ngIf="ncd_list">
               <tr *ngFor="let ncd of ncd_list; trackBy:identify" class="bg-white border-b last:border-0">
-                <td class="py-4 px-3">
-                  {{ ncd.assessment_date | date: 'MM/dd/yyyy' }}
+                <td class="py-4 px-3 text-center">
+                  {{ ncd.assessment_date ? (ncd.assessment_date | date: 'MM/dd/yyyy') : (ncd.consult_date | date: 'MM/dd/yyyy')}}
                 </td>
-                <td scope="row" class="py-4 px-3 font-medium text-gray-900">
+                <td scope="row" class="py-4 px-3 font-medium text-gray-900 text-center">
 
                 </td>
-                <td scope="row" class="py-4 px-3 font-medium text-gray-900">
+                <td scope="row" class="py-4 px-3 font-medium text-gray-900 text-center">
+                  {{ ncd.location ? ncd.location === 1 ? 'Community' : 'Facility' : '-' }}
                 </td>
-                <td scope="row" class="py-4 px-3 font-medium text-gray-900">
-                  <button type="button" class="btn-save" (click)="openNCD(ncd.patient_id, ncd.consult_id)">
-                    Open
+                <td scope="row" class="py-4 px-3 font-medium text-gray-900 text-center">
+                  <button type="button" class="btn-save" (click)="openNCD(ncd)">
+                    {{ ncd.consult_done ? 'View' : 'Open'}}
                   </button>
                 </td>
               </tr>

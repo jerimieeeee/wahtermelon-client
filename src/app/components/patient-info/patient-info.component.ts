@@ -213,8 +213,8 @@ export class PatientInfoComponent implements OnInit{
         let vitals = data.data;
 
         if(vitals.length > 0) {
-          let orig_systolic = data.data.bp_systolic;
-          let orig_diastolic = data.data.bp_diastolic;
+          let orig_systolic = data.data[0].bp_systolic;
+          let orig_diastolic = data.data[0].bp_diastolic;
 
           this.latest_vitals = this.vitalsCharts.getLatestToday(vitals);
 
