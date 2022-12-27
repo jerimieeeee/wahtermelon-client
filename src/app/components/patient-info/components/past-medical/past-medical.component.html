@@ -1,15 +1,13 @@
 <div class="block pt-4 justify-items-start mx-5 pb-5">
   <div class="flex justify-between items-center">
     <span class="block text-blue-500 font-medium text-sm">
-      <fa-icon (click)="toggle('prescriptions')" class="mx-0 my-0 text-gray-500 mr-2 hover:cursor-pointer" [icon]="accordions['prescriptions'] ? faChevronUp : faChevronDown"></fa-icon>
-      PRESCRIPTIONS
+      <fa-icon *ngIf="history?.length >= 1" (click)="toggle('history')" class="mx-0 my-0 text-gray-500 mr-2 hover:cursor-pointer" [icon]="accordions['history'] ? faChevronUp : faChevronDown"></fa-icon>
+      PAST MEDICAL HISTORY <span *ngIf="history?.length >= 1">({{ history.length }})</span>
     </span>
-    <span>
-      <button (click)="navigate('dispensing')" class="bg-blue-500 text-xs text-white px-3 py-1 rounded-md  hover:ring-2 hover:ring-blue-400" >dispensing</button>
-    </span>
+    <fa-icon (click)="modalToggle('history')" class="mx-0 my-0 text-blue-500 mr-2 hover:cursor-pointer" [icon]="faPlusCircle"></fa-icon>
   </div>
 
-  <div *ngIf="!prescriptions" >
+  <div *ngIf="!history" >
     <div class="p-4 mx-auto">
       <div class="animate-pulse grid grid-cols-2 gap-x-20 gap-y-4 justify-between">
         <div class="h-2 bg-slate-200 rounded"></div>
@@ -21,14 +19,14 @@
       </div>
     </div>
   </div>
-  <div *ngIf="prescriptions" >
-    <div [@openCloseAccordion] *ngIf="accordions['prescriptions']" class="block">
-      <div class="flex pl-3 justify-between items-center mt-1 border-dashed border-b border-slate-200" *ngFor="let pres of prescriptions; trackBy:identify">
+  <div *ngIf="history" >
+    <div [@openCloseAccordion] *ngIf="accordions['history']" class="block">
+      <div class="flex pl-3 justify-between items-center mt-1" *ngFor="let hx of history; trackBy:identify">
         <span class="block font-medium text-xs w-10/12">
-          {{ pres.konsulta_medicine.desc ?? pres.added_medicine }}
+          {{ hx.medical_history_id }}
         </span>
         <span class="block text-xs w-2/12 align-top text-right">
-          {{ pres.quantity }}
+          {{ hx.remarks }}
         </span>
       </div>
 

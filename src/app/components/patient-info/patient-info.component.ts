@@ -1,11 +1,14 @@
 import { animate, style, transition, trigger } from '@angular/animations';
 import { formatDate } from '@angular/common';
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { faFlask, faHeart, faExclamationCircle, faNotesMedical, faPlusCircle, faQuestionCircle, faPenToSquare, faTrash, faTableList, faPenSquare, faChevronRight, faChevronUp, faChevronDown, fas, faClipboardUser, faCamera } from '@fortawesome/free-solid-svg-icons';
 import { AgeService } from 'app/shared/services/age.service';
 import { HttpService } from 'app/shared/services/http.service';
 import { VitalsChartsService } from 'app/shared/services/vitals-charts.service';
+import { FamilyMedicalComponent } from './components/family-medical/family-medical.component';
+import { PastMedicalComponent } from './components/past-medical/past-medical.component';
+import { VaccineComponent } from './components/vaccine/vaccine.component';
 
 @Component({
   selector: 'app-patient-info',
@@ -23,7 +26,11 @@ import { VitalsChartsService } from 'app/shared/services/vitals-charts.service';
     ]),
   ]
 })
-export class PatientInfoComponent implements OnInit{
+export class PatientInfoComponent implements OnInit {
+  @ViewChild(PastMedicalComponent) pastMedical: PastMedicalComponent;
+  @ViewChild(FamilyMedicalComponent) familyMedical: FamilyMedicalComponent;
+  @ViewChild(VaccineComponent) vaccine: VaccineComponent;
+
   @Output() patientInfo = new EventEmitter<any>();
   @Output() patientVitals = new EventEmitter<any>();
   patient_info: any;
@@ -51,8 +58,7 @@ export class PatientInfoComponent implements OnInit{
   lab_request: boolean = false;
 
   vaccines_given: any;
-  vaccine_list: any = [];
-  vaccine_to_edit: any;
+
   patient_age: any;
   latest_vitals: any;
   philhealth_info: any;
@@ -83,9 +89,11 @@ export class PatientInfoComponent implements OnInit{
   }
 
   getAge(){
-    let age_value = this.ageService.calcuateAge(this.patient_info.birthdate);
-    this.patient_age = age_value;
-    return age_value.age + ' ' + age_value.type+(age_value.age>1 ? 's old' : ' old' );
+    if(this.patient_info && this.patient_info.birthdate){
+      let age_value = this.ageService.calcuateAge(this.patient_info.birthdate);
+      this.patient_age = age_value;
+      return age_value.age + ' ' + age_value.type+(age_value.age>1 ? 's old' : ' old' );
+    }
   }
 
   getPatient(id){
@@ -96,14 +104,13 @@ export class PatientInfoComponent implements OnInit{
         this.patientInfo.emit(data.data);
         this.loadPhilhealth();
         this.loadVitals();
-        this.loadVaccines();
         this.loadLabs();
-        // this.toggleModal('philhealth') //togglemodal for easy test;
-        this.accordions['vitals'] = true
-        this.accordions['lab_request'] = true
-        this.accordions['prescriptions'] = true
-        // this.toggleModal('philhealth-modal');//open sample modal
-        // console.log(data.data)
+
+        this.loadData('all');
+        // this.toggleModal('history') //togglemodal for easy test;
+        this.accordions['vitals'] = true;
+        this.accordions['lab_request'] = true;
+        this.accordions['prescriptions'] = true;
       },
       error: err => {
         // feature: add prompt that patient is not found. for now redirect to home
@@ -115,7 +122,11 @@ export class PatientInfoComponent implements OnInit{
 
   pending_labs: any;
 
-
+  loadData(field){
+    if(field === 'past_medical' || field==='all') this.pastMedical.loadData(this.patient_info.id);
+    if(field === 'family_medical' || field==='all') this.familyMedical.loadData(this.patient_info.id);
+    if(field === 'vaccines' || field==='all') this.vaccine.loadData(this.patient_info.id);
+  }
 
   loadLabs(){
     this.lab_request = true;
@@ -132,47 +143,11 @@ export class PatientInfoComponent implements OnInit{
     }) */
   }
 
-  checkVaccineStatus(vaccines){
-    var new_vax = [];
-    Object.entries(vaccines).reverse().forEach(([key, value], index) => {
-      var val:any = value
-      if(!new_vax[val.vaccines.vaccine_id]) new_vax[val.vaccines.vaccine_id] = []
-
-      let vax = {
-        id: val.id,
-        vaccine_id: val.vaccines.vaccine_id,
-        vaccine_date: val.vaccine_date,
-        dose: this.getNumberSuffix(Object.keys(new_vax[val.vaccines.vaccine_id]).length + 1)
-      }
-
-      new_vax[val.vaccines.vaccine_id][val.id] = vax
-      this.vaccine_list[key]['dose'] = new_vax[val.vaccines.vaccine_id][val.id].dose;
-    })
-
-    this.vaccines_given = new_vax;
-    this.show_vaccines = true;
-  }
-
-  getNumberSuffix(i){
-    var j = i % 10,
-    k = i % 100;
-    if (j == 1 && k != 11) {
-        return i + "st";
-    }
-    if (j == 2 && k != 12) {
-        return i + "nd";
-    }
-    if (j == 3 && k != 13) {
-        return i + "rd";
-    }
-    return i + "th";
-  }
-
-  toggleActionModal(modal_name, vaccine){
+  /* toggleActionModal(modal_name, vaccine){
     this.vaccine_to_edit = vaccine;
     this.modals['vaccine-action'] = !this.modals['vaccine-action'];
     if(this.modals['vaccine-action'] == false) this.loadVaccines();
-  }
+  } */
 
   get philhealthColor(){
     if(this.philhealth_info){
@@ -190,18 +165,6 @@ export class PatientInfoComponent implements OnInit{
         this.show_philhealth = true;
       },
       error: err => console.log(err)
-    })
-  }
-
-  loadVaccines(){
-    this.http.get('patient-vaccines/vaccines-records', {params:{'patient_id': this.patient_info.id, 'sort': '-vaccine_date' }}).subscribe({
-      next: (data: any) => {
-        this.vaccine_list = data.data;
-        this.immunization_status = data.status;
-
-        this.checkVaccineStatus(this.vaccine_list);
-      },
-      error: err => {console.log(err)},
     })
   }
 
@@ -256,8 +219,9 @@ export class PatientInfoComponent implements OnInit{
     this.accordions[id] = !this.accordions[id];
   }
 
-  toggleModal(modal_name){
-    this.modals[modal_name] = !this.modals[modal_name];
+  toggleModal(modal_name, data?){
+    // if(modal_name === 'vaccine')
+    this.modals[modal_name.modal_name ?? modal_name] = !this.modals[modal_name ?? modal_name];
 
     if (modal_name === 'vitals' && this.modals[modal_name] === false) {
       if(this.modals['vitals'] == false)  this.vitals_to_edit = null;
@@ -269,8 +233,13 @@ export class PatientInfoComponent implements OnInit{
       this.loadPhilhealth();
     }
 
-    if (modal_name === 'vaccine' && this.modals[modal_name] === false) this.loadVaccines();
-    if (modal_name === 'vaccine-action' && this.modals[modal_name] === false) this.loadVaccines();
+    if (modal_name.modal_name === 'vaccine' && this.modals[modal_name] === false) {
+      this.loadData('vaccines');
+    } else if (modal_name.modal_name  === 'vaccine' && this.modals[modal_name.modal_name] === true) {
+      console.log(modal_name.data)
+      this.vaccines_given = modal_name.data;
+    }
+    if (modal_name === 'vaccine-action' && this.modals[modal_name] === false) this.loadData('vaccines');
   }
 
   ngOnInit(): void {

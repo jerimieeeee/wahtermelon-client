@@ -1,5 +1,5 @@
 import { formatDate } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { faSave } from '@fortawesome/free-regular-svg-icons';
 import { faSearch,faBalanceScale,faPlus,faInfoCircle, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
@@ -10,7 +10,7 @@ import { ToastrService } from 'ngx-toastr';
   templateUrl: './patient-record.component.html',
   styleUrls: ['./patient-record.component.scss']
 })
-export class PatientRecordComponent implements OnInit {
+export class PatientRecordComponent implements OnInit, OnChanges {
   @Input() patient_id;
   @Input() consult_details;
 
@@ -25,15 +25,15 @@ export class PatientRecordComponent implements OnInit {
   patient_diagnosis: any = [];
 
   ncd_record = {
-    current_medication: null,
-    palpation_heart: null,
+    current_medications: null,
+    palpitation_heart: null,
     peripheral_pulses: null,
     abdomen: null,
     heart: null,
     lungs: null,
     sensation_feet: null,
     other_findings: null,
-    other_info: null,
+    other_infos: null,
   };
 
   logical = [
@@ -90,7 +90,7 @@ export class PatientRecordComponent implements OnInit {
         next: (data: any) => {
           this[val.var_name] = data.data;
 
-          if(this.libraries.length-1 === index) this.getRecord();
+          // if(this.libraries.length-1 === index) this.getRecord();
         },
         error: err => console.log(err)
       })
@@ -101,8 +101,16 @@ export class PatientRecordComponent implements OnInit {
     this.ncd_record = this.consult_details.patientNcdRecord;
 
     console.log(this.ncd_record)
-    if(Object.keys(this.consult_details.ncdRecordTargetOrgan).length > 0){
+    if(this.consult_details && Object.keys(this.consult_details.ncdRecordTargetOrgan).length > 0){
       this.patient_target_organ = this.loadIndexSelected(this.consult_details.ncdRecordTargetOrgan, 'target_organ_code')
+    }
+
+    if(this.consult_details && Object.keys(this.consult_details.ncdRecordDiagnosis).length > 0){
+      this.patient_diagnosis = this.loadIndexSelected(this.consult_details.ncdRecordDiagnosis, 'diagnosis_code')
+    }
+
+    if(this.consult_details && Object.keys(this.consult_details.ncdRecordCounselling).length > 0){
+      this.patient_counseling = this.loadIndexSelected(this.consult_details.ncdRecordCounselling, 'counselling_code')
     }
   }
 
@@ -111,7 +119,6 @@ export class PatientRecordComponent implements OnInit {
     if(Object.keys(data).length > 0) {
       Object.entries(data).forEach(([key, value], index) => {
         let val: any = value;
-        console.log(val)
         index_code[val[field]] = true;
       });
     }
@@ -129,7 +136,7 @@ export class PatientRecordComponent implements OnInit {
     this.ncd_record['consultation_date'] = formatDate(this.consult_details.assessment_date, 'yyyy-MM-dd', 'en');
 
     this.ncd_record['diagnosis_code'] = this.getIndexVal(this.patient_diagnosis);
-    this.ncd_record['couselling_code'] = this.getIndexVal(this.patient_counseling);
+    this.ncd_record['counselling_code'] = this.getIndexVal(this.patient_counseling);
     this.ncd_record['target_organ_code'] = this.getIndexVal(this.patient_target_organ);
 
     console.log(this.ncd_record);
@@ -162,4 +169,7 @@ export class PatientRecordComponent implements OnInit {
     this.loadLibraries();
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    this.getRecord();
+  }
 }

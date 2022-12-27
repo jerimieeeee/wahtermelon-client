@@ -86,43 +86,25 @@ export class DrugDispensingComponent implements OnInit {
   }
 
   dispensed_list = [];
-  getDispensePrescription() {
-    Object.entries(this.prescriptions).forEach(([key, value], index) => {
-      let values: any = value;
-      let result = this.dispensed.find(item => item.prescription_id === values.id)
-
-      if(result) {
-        values['dispense_quantity'] = result.dispense_quantity;
-        values['dispensing_date'] = result.dispensing_date;
-        values['remarks'] = result.remarks;
-
-        this.dispensed_list.push(values);
-        this.prescriptions.splice(key, 1)
-      }
-
-      if(this.prescriptions.length-1 === index) this.show_form = true;
-    });
-    console.log(this.dispensed_list);
-    // this.show_form = true;
-  }
 
   getDispense(id){
     let params = {patient_id: id};
     this.http.get('medicine/dispensing', {params}).subscribe({
       next: (data: any) => {
-        this.dispensed = data.data;
+        console.log(data.data)
+        // this.dispensed_list = data.data;
         this.show_form = true;
-        // this.getDispensePrescription();
       },
       error: err => console.log(err)
     })
   }
 
   getPresciptions(id){
-    let params = {patient_id: id};
+    let params = {patient_id: id, status: 'dispensing'};
     this.http.get('medicine/prescriptions', {params}).subscribe({
       next: (data: any) => {
-        this.prescriptions = this.getValues(data.data);
+        console.log(data.data)
+        this.prescriptions = data.data;
         this.getDispense(this.route.snapshot.paramMap.get('id'))
       },
       error: err => console.log(err)

@@ -32,11 +32,11 @@
             <tbody *ngIf="show_form">
               <tr *ngFor="let pres of prescriptions; trackBy:identify" class="bg-white border-b last:border-0">
                 <td class="py-4 px-3">
-                  {{ pres.medicine_desc ?? pres.added_medicine}}
+                  {{ pres.konsulta_medicine.desc ?? pres.added_medicine}}
                 </td>
                 <td scope="row" class="py-4 px-3 font-medium text-gray-900">
-                  {{ pres.dosage_quantity }} {{ pres.dosage_desc }} {{ pres.regimen_desc }}
-                  {{ pres.duration_intake }} {{ pres.frequency_desc }}
+                  {{ pres.dosage_quantity }} {{ pres.unit_of_measurement.desc }} {{ pres.regimen.desc }}
+                  {{ pres.duration_intake }} {{ pres.frequency.desc }}
                 </td>
                 <td scope="row" class="py-4 px-3 font-medium text-gray-900">
                   {{ pres.prescription_date | date : 'MM/dd/yyyy'}}
@@ -45,7 +45,7 @@
                   {{ pres.quantity }}
                 </td>
                 <td scope="row" class="py-4 px-3 font-medium text-gray-900">
-                  {{ pres.preparation_desc }}
+                  {{ pres.preparation.desc }}
                 </td>
                 <td scope="row" class="py-4 px-3">
                   <input type="number" class="w-16 h-7 border border-slate-400 rounded" [(ngModel)]="pres.dispense_quantity"/>
@@ -86,11 +86,11 @@
             <tbody *ngIf="show_form">
               <tr *ngFor="let pres of dispensed_list; trackBy:identify" class="bg-white border-b last:border-0">
                 <td class="py-4 px-3">
-                  {{ pres.medicine_desc ?? pres.added_medicine}}
+                  {{ pres.konsulta_medicine.desc ?? pres.added_medicine}}
                 </td>
                 <td scope="row" class="py-4 px-3 font-medium text-gray-900">
-                  {{ pres.dosage_quantity }} {{ pres.dosage_desc }} {{ pres.regimen_desc }}
-                  {{ pres.duration_intake }} {{ pres.frequency_desc }}
+                  {{ pres.dosage_quantity }} {{ pres.unit_of_measurement.desc }} {{ pres.regimen.desc }}
+                  {{ pres.duration_intake }} {{ pres.frequency.desc }}
                 </td>
                 <td scope="row" class="py-4 px-3 font-medium text-gray-900">
                   {{ pres.prescription_date | date : 'MM/dd/yyyy'}}

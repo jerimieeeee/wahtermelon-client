@@ -30,6 +30,9 @@ import { Cf1Component } from './eclaims/modals/cf1/cf1.component';
 import { Cf2Component } from './eclaims/modals/cf2/cf2.component';
 import { PrescriptionsComponent } from 'app/components/patient-info/components/prescriptions/prescriptions.component';
 import { EndVisitComponent } from '../shared-modals/end-visit/end-visit.component';
+import { PastMedicalComponent } from 'app/components/patient-info/components/past-medical/past-medical.component';
+import { FamilyMedicalComponent } from 'app/components/patient-info/components/family-medical/family-medical.component';
+import { VaccineComponent } from 'app/components/patient-info/components/vaccine/vaccine.component';
 
 
 
@@ -59,7 +62,10 @@ import { EndVisitComponent } from '../shared-modals/end-visit/end-visit.componen
     Cf1Component,
     Cf2Component,
     PrescriptionsComponent,
-    EndVisitComponent
+    EndVisitComponent,
+    PastMedicalComponent,
+    FamilyMedicalComponent,
+    VaccineComponent
   ],
   imports: [
     CommonModule,

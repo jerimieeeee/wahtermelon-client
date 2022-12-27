@@ -1,5 +1,7 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { HttpService } from 'app/shared/services/http.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-fam-history-modal',
@@ -8,103 +10,67 @@ import { AbstractControl, FormBuilder, FormControl, FormGroup } from '@angular/f
 })
 export class FamHistoryModalComponent implements OnInit {
   @Output() toggleModal = new EventEmitter<any>();
+  @Output() loadData = new EventEmitter<any>();
+  @Input() patient_info;
+  history_list: []
 
-  famHistoryForm: FormGroup = new FormGroup({
-    history_allergy: new FormControl<string| null>(''),
-    history_cancer: new FormControl<string| null>(null),
-    history_hepatitis: new FormControl<string| null>(null),
-    history_hypertension: new FormControl<string| null>(null),
-    history_tuberculosis: new FormControl<string| null>(null),
-    history_tuberculosis_cat: new FormControl<string| null>(null),
-    history_bool: new FormGroup({
-      history_asthma: new FormControl<boolean| null>(null),
-      history_diabetes_mellitus: new FormControl<boolean| null>(null),
-      history_cerebrovascular: new FormControl<boolean| null>(null),
-      history_coronary_arthery: new FormControl<boolean| null>(null),
-      history_emphysema: new FormControl<boolean| null>(null),
-      history_epilepsy: new FormControl<boolean| null>(null),
-      history_hyperlipedemmia: new FormControl<boolean| null>(null),
-      history_peptic_ulcer: new FormControl<boolean| null>(null),
-      history_pneumonia: new FormControl<boolean| null>(null),
-      history_thyroid: new FormControl<boolean| null>(null),
-      history_uti: new FormControl<boolean| null>(null)
-    }),
-    history_remarks: new FormControl<string| null>(null)
-  });
+  patient_history = {
+    medical_history_id: [],
+    remarks: []
+  }
 
-  history_list = [
-    {
-      history_id: 1,
-      history_desc: 'Asthma',
-      history_var: 'history_asthma'
-    },
-    {
-      history_id: 2,
-      history_desc: 'Diabetes Mellitus',
-      history_var: 'history_diabetes_mellitus'
-    },
-    {
-      history_id: 3,
-      history_desc: 'Cerebrovascular',
-      history_var: 'history_cerebrovascular'
-    },
-    {
-      history_id: 4,
-      history_desc: 'Coronary Arthery Disease',
-      history_var: 'history_coronary_arthery'
-    },
-    {
-      history_id: 5,
-      history_desc: 'Emphysema',
-      history_var: 'history_emphysema'
-    },
-    {
-      history_id: 6,
-      history_desc: 'Epilepsy/Seizure Disorder',
-      history_var: 'history_epilepsy'
-    },
-    {
-      history_id: 7,
-      history_desc: 'Hyperlipidemia',
-      history_var: 'history_hyperlipedemmia'
-    },
-    {
-      history_id: 8,
-      history_desc: 'Peptic Ulcer Disease',
-      history_var: 'history_peptic_ulcer'
-    },
-    {
-      history_id: 9,
-      history_desc: 'Pneumonia',
-      history_var: 'history_pneumonia'
-    },
-    {
-      history_id: 10,
-      history_desc: 'Thyroid Disease',
-      history_var: 'history_thyroid'
-    },
-    {
-      history_id: 11,
-      history_desc: 'Urinary Track Infection',
-      history_var: 'history_uti'
-    },
-  ]
-  constructor(
-    private formBuilder: FormBuilder
-  ) { }
-
-  get f(): { [key: string]: AbstractControl } {
-    return this.famHistoryForm.controls;
+  loadLibraries() {
+    this.http.get('libraries/medical-history').subscribe({
+      next: (data: any) => this.history_list = data.data,
+      error: err => console.log(err)
+    })
   }
 
   onSubmit(){
-    console.log(this.famHistoryForm);
+    console.log(this.patient_history);
+
+    var hx_arr = [];
+
+    Object.entries(this.patient_history.medical_history_id).forEach(([key, value], index) => {
+      if(value === true){
+        let hx = {
+          category: 2,
+          medical_history_id: key,
+          remarks: this.patient_history.remarks[key] ? this.patient_history.remarks[key] : null,
+        };
+
+        hx_arr.push(hx);
+      }
+    })
+
+    if(hx_arr.length > 0){
+      var hx_form = {
+        patient_id: this.patient_info.id,
+        medical_history: hx_arr
+      }
+
+      this.http.post('patient-history/history', hx_form).subscribe({
+        next: () => {
+          this.toastr.success('Successfully recorded!','Family Medical History')
+          this.loadData.emit('family_medical');
+          this.closeModal();
+        },
+        error: err => console.log(err),
+        complete: () => console.log('success')
+      })
+    }
   }
 
   closeModal(){
-    this.toggleModal.emit('fam-history-modal')
+    this.toggleModal.emit('fam-history')
   }
 
+  constructor(
+    private http: HttpService,
+    private toastr: ToastrService
+  ) { }
+
   ngOnInit(): void {
+    this.loadLibraries();
   }
 }

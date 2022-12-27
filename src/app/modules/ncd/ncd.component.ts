@@ -53,10 +53,6 @@ export class NcdComponent implements OnInit, OnChanges {
         if(data.data.length > 0) {
           data.data[0]['consult_date'] = data.data[0].assessment_date;
           this.consult_details = data.data[0];
-
-
-    this.modules = 2;
-    this.module = 5;
         }else {
           this.consult_details = this.consult_details_temp;
         }
@@ -70,6 +66,7 @@ export class NcdComponent implements OnInit, OnChanges {
   risk_list: any;
 
   loadRisk(){
+    //load risk list
     let params = {
       patient_id: this.patient_id,
       sort: '-assessment_date'
@@ -80,6 +77,25 @@ export class NcdComponent implements OnInit, OnChanges {
         if(this.risk_list) {
           this.fillConsult();
         }
+      },
+      error: err => console.log(err)
+    })
+  }
+
+  loadConsult() {
+    //load ncd visits
+    let params = {
+      patient_id: this.patient_id,
+      pt_group: 'ncd',
+      sort: '-consult_date'
+    }
+
+    this.http.get('consultation/records', {params}).subscribe({
+      next: (data: any) => {
+        console.log(data)
+        this.ncd_list = data.data;
+        this.consult_details_temp = data.data[0];
+        this.loadRisk();
       },
       error: err => console.log(err)
     })
@@ -99,26 +115,6 @@ export class NcdComponent implements OnInit, OnChanges {
         this.loadNCD(this.consult_id);
       }
     });
-
-    // console.log(this.ncd_list)
-  }
-
-  loadConsult() {
-    let params = {
-      patient_id: this.patient_id,
-      pt_group: 'ncd',
-      sort: '-consult_date'
-    }
-
-    this.http.get('consultation/records', {params}).subscribe({
-      next: (data: any) => {
-        console.log(data)
-        this.ncd_list = data.data;
-        this.consult_details_temp = data.data[0];
-        this.loadRisk();
-      },
-      error: err => console.log(err)
-    })
   }
 
   patientInfo(info) {

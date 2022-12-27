@@ -32,34 +32,18 @@ export class PrescriptionsComponent implements OnChanges {
   }
 
   identify(index, item) {
-    // console.log(item)
     return item.id
   }
 
-  getValues(){
-    Object.entries(this.prescriptions).forEach(([key, value], index) => {
-      let values: any = value;
-
-      if(values.konsulta_medicine_code){
-        this.http.get('libraries/konsulta-medicines/'+values.konsulta_medicine_code).subscribe({
-          next: (data: any) => {
-            this.prescriptions[key]['medicine_desc'] = data.data.desc
-          },
-          error: err => console.log(err)
-        })
-      }
-    });
-    // console.log(this.prescriptions);
-  }
 
   loadPrescriptions(){
     if(this.patient_info){
-      let params = {patient_id: this.patient_info.id};
+      let params = {patient_id: this.patient_info.id, status: 'dispensing'};
 
       this.http.get('medicine/prescriptions', {params}).subscribe({
         next: (data: any) => {
+          // console.log(data.data)
           this.prescriptions = data.data;
-          this.getValues();
         },
         error: err => console.log(err)
       });

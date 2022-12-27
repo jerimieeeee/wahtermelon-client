@@ -10,70 +10,18 @@
       </div>
       <!-- Modal body -->
       <div class="overflow-y-auto h-96 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
-        <form [formGroup]="historyForm" class="w-full max-w-3xl text-left text-gray-500 dark:text-gray-400">
-          <div class="flex item-start flex-wrap pb-5">
-            <!-- <div class="flex justify-between w-full px-5 mt-3 rounded-tl rounded-tr">
-              <h4 class="font-bold text-blue-500 text-sm mt-2">His</h4>
-            </div> -->
+          <div class="flex item-start flex-wrap pb-5 px-5" *ngFor="let list of history_list">
 
-            <div class="flex px-5 w-full">
-              <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
-                <label for="history_allergy">Allergy (Specific)</label>
-                <input name="history_allergy" id="history_allergy" formControlName="history_allergy" type="text" class="mt-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-              </div>
-
-              <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
-                <label for="history_cancer">Cancer (Specific Organ)</label>
-                <input name="history_cancer" id="history_cancer" formControlName="history_cancer" type="text" class="mt-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-              </div>
+            <div class="w-4/12 flex mb-5" >
+              <input type="checkbox" [(ngModel)]="patient_history.medical_history_id[list.id]"
+              attr.id="patient_history{{list.id}}" class="flex-none mt-2 mr-2 border border-gray-300 sm:text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block p-2.5">
+              <label attr.for="patient_history{{list.id}}" class="flex-1 mt-2 text-gray-800">{{ list.history_desc }}</label>
             </div>
 
-            <div class="flex px-5 w-full">
-              <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
-                <label for="history_hepatitis">Hepatitis</label>
-                <input name="history_hepatitis" id="history_hepatitis" formControlName="history_hepatitis" type="text" class="mt-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-              </div>
-
-              <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
-                <label for="history_hypertension">Hypertension (BP Reading)</label>
-                <input name="history_hypertension" id="history_hypertension" formControlName="history_hypertension" type="text" class="mt-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-              </div>
-            </div>
-
-            <div class="flex px-5 w-full">
-              <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
-                <label for="history_tuberculosis">Tuberculosis (Specific Organ)</label>
-                <input name="history_tuberculosis" id="history_tuberculosis" formControlName="history_tuberculosis" type="text" class="mt-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-              </div>
-
-              <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
-                <label for="history_tuberculosis_cat">If PTB, What Category?</label>
-                <input name="history_tuberculosis_cat" id="history_tuberculosis_cat" formControlName="history_tuberculosis_cat" type="text" class="mt-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-              </div>
+            <div class="w-8/12">
+              <input type="text" class="input" [(ngModel)]="patient_history.remarks[list.id]"/>
             </div>
           </div>
-          <div class="text-gray-600 border border-slate-100 mx-5"></div><!-- border -->
-
-          <div class="flex item-start flex-wrap pb-5">
-            <div class="grid grid-cols-3 gap-4 px-10">
-              <div class="col-span-1 flex" *ngFor="let list of history_list">
-                <input type="checkbox" class="flex-none mt-2 mr-2 border border-gray-300 sm:text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                <span class="flex-1 mt-2 text-gray-800">{{ list.history_desc }}</span>
-              </div>
-            </div>
-          </div>
-          <div class="text-gray-600 border border-slate-100 mx-5"></div><!-- border -->
-
-          <div class="flex item-start flex-wrap pb-5">
-            <div class="flex-1 px-5 w-full">
-              <div class="relative w-full text-sm px-5 py-2 mt-2">
-                <label for="history_remarks">Past Medical History Remarks</label>
-                <input name="history_remarks" id="history_remarks" formControlName="history_remarks" type="text" class="mt-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-              </div>
-            </div>
-          </div>
-          <div class="text-gray-600 border border-slate-100 mx-5"></div>
-        </form>
       </div>
 
       <!-- Modal footer -->

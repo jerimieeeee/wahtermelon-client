@@ -1,4 +1,4 @@
-<div class="rounded-xl text-gray-600 border border-slate-100" *ngIf="show_form"> <!-- overflow-y-scroll scrollbar-thin  style="height: 38rem;" -->
+<div class="rounded-xl text-gray-600 border border-slate-100" > <!-- overflow-y-scroll scrollbar-thin  style="height: 38rem;" -->
   <div class="block m-0 relative p-0  scrollbar-thumb-white hover:scrollbar-thumb-blue-300 scrollbar-track-white">
     <div class="flex justify-items-start sticky top-0 bg-white rounded-lg border border-gray-200 shadow-md p-2">
       <div class="m-3">
@@ -86,7 +86,7 @@
     <div class="block pt-4 justify-items-start mx-5 pb-5">
       <div class="flex justify-between items-center">
         <span class="block text-blue-500 font-medium text-sm">
-          <fa-icon (click)="toggleAccordion('lab_request')" class="mx-0 my-0 text-gray-500 mr-2 hover:cursor-pointer" [icon]="accordions.lab_request ? faChevronUp : faChevronDown"></fa-icon>
+          <fa-icon (click)="toggleAccordion('lab_request')" class="mx-0 my-0 text-gray-500 mr-2 hover:cursor-pointer" [icon]="accordions['lab_request'] ? faChevronUp : faChevronDown"></fa-icon>
           LAB REQUESTS
         </span>
         <span>
@@ -127,7 +127,7 @@
     <div class="block pt-4 justify-items-start mx-5 pb-5">
       <div class="flex justify-between items-center">
         <span class="block text-blue-500 font-medium text-sm">
-          <fa-icon (click)="toggleAccordion('vitals')" class="mx-0 my-0 text-gray-500 mr-2 hover:cursor-pointer" [icon]="accordions.vitals ? faChevronUp : faChevronDown"></fa-icon>
+          <fa-icon (click)="toggleAccordion('vitals')" class="mx-0 my-0 text-gray-500 mr-2 hover:cursor-pointer" [icon]="accordions['vitals'] ? faChevronUp : faChevronDown"></fa-icon>
           VITAL SIGNS <span *ngIf="latest_vitals">({{ latest_vitals?.vitals_date | date: 'MM/dd/yyyy hh:mm:ss a' }})</span>
         </span>
         <span>
@@ -334,11 +334,10 @@
       </div>
     </div>
 
-
-    <div class="block justify-items-start mx-5 mb-5">
+    <!-- <div class="block justify-items-start mx-5 mb-5">
       <div class="flex justify-between items-center">
         <span class="block text-blue-500 font-medium text-sm">
-          <fa-icon (click)="toggleAccordion('vaccines')" class="mx-0 my-0 text-gray-500 mr-2 hover:cursor-pointer" [icon]="accordions.vaccines ? faChevronUp : faChevronDown"></fa-icon>
+          <fa-icon (click)="toggleAccordion('vaccines')" class="mx-0 my-0 text-gray-500 mr-2 hover:cursor-pointer" [icon]="accordions['vaccines'] ? faChevronUp : faChevronDown"></fa-icon>
           VACCINES {{ vaccine_list?.length > 0 ? '('+vaccine_list.length+')' : '' }}
         </span>
         <fa-icon (click)="toggleModal('vaccine')" class="mx-0 my-0 text-blue-500 mr-2 hover:cursor-pointer" [icon]="faPlusCircle"></fa-icon>
@@ -368,7 +367,6 @@
           <div class="flex pl-3 justify-between items-center mb-3 border-b border-b-gray-100" *ngFor="let vaccine of vaccine_list">
 
             <fa-icon (click)="toggleActionModal('vaccine-action', vaccine)" class="mx-0 my-0 text-amber-400 hover:cursor-pointer flex-none mr-2" [icon]="faPenToSquare"></fa-icon>
-            <!-- <fa-icon (click)="toggleModal('delete-vaccine')" class="mx-0 my-0 text-red-400 hover:cursor-pointer flex-none mr-2" [icon]="faTrash"></fa-icon> -->
             <span class="font-medium text-xs flex-auto">
               <span class="font-bold">{{ vaccine.vaccine_id }} - {{ vaccine.dose }} Dose</span> <br />({{ vaccine.status_id === 1 ? 'Done' : (vaccine.status_id === 2 ? 'Done Outside - Private' : 'Done Outside - Public') }})
             </span>
@@ -378,9 +376,9 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
 
-    <div class="block pt-4 justify-items-start mx-5 mb-5">
+    <!-- <div class="block pt-4 justify-items-start mx-5 mb-5">
       <div class="flex justify-between items-center">
         <span class="block text-blue-500 font-medium text-sm">
           ALLERGIES
@@ -398,9 +396,9 @@
           </span>
         </div>
       </div>
-    </div>
+    </div> -->
 
-    <div class="block pt-4 justify-items-start mx-5 mb-5">
+    <!-- <div class="block pt-4 justify-items-start mx-5 mb-5">
       <div class="flex justify-between items-center">
         <span class="block text-blue-500 font-medium text-sm">
           MEDICATION
@@ -418,48 +416,10 @@
           </span>
         </div>
       </div>
-    </div>
-
-
-    <div class="block pt-4 justify-items-start mx-5 mb-5">
-      <div class="flex justify-between items-center">
-        <span class="block text-blue-500 font-medium text-sm">
-          MEDICAL HISTORY
-        </span>
-        <fa-icon (click)="toggleModal('history')" class="mx-0 my-0 text-blue-500 mr-2 hover:cursor-pointer" [icon]="faPlusCircle"></fa-icon>
-      </div>
-
-      <div class="block">
-        <div class="flex pl-3 justify-between items-center">
-          <span class="block font-medium text-xs">
-            No Records
-          </span>
-          <span class="block text-xs">
-            -
-          </span>
-        </div>
-      </div>
-    </div>
-
-    <div class="block pt-4 justify-items-start mx-5 mb-5">
-      <div class="flex justify-between items-center">
-        <span class="block text-blue-500 font-medium text-sm">
-          FAMILY MEDICAL HISTORY
-        </span>
-        <fa-icon (click)="toggleModal('fam-history')" class="mx-0 my-0 text-blue-500 mr-2 hover:cursor-pointer" [icon]="faPlusCircle"></fa-icon>
-      </div>
-
-      <div class="block">
-        <div class="flex pl-3 justify-between items-center">
-          <span class="block font-medium text-xs">
-            No Records
-          </span>
-          <span class="block text-xs">
-
-          </span>
-        </div>
-      </div>
-    </div>
+    </div> -->
+    <app-vaccine (toggleAccordion)="toggleAccordion($event)" [accordions]="accordions" (toggleModal)="toggleModal($event)"></app-vaccine>
+    <app-past-medical (toggleAccordion)="toggleAccordion($event)" [accordions]="accordions" (toggleModal)="toggleModal($event)"></app-past-medical>
+    <app-family-medical (toggleAccordion)="toggleAccordion($event)" [accordions]="accordions"></app-family-medical>
 
     <div class="block pt-4 justify-items-start mx-5 mb-5">
       <div class="flex justify-between items-center">
@@ -548,11 +508,11 @@
 </div>
 
 <div *ngIf="modals['history']">
-  <app-history-modal (toggleModal)="toggleModal('history')"></app-history-modal>
+  <app-history-modal (toggleModal)="toggleModal('history')" [patient_info]="patient_info" (loadData)="loadData('past_medical')"></app-history-modal>
 </div>
 
 <div *ngIf="modals['fam-history']">
-  <app-fam-history-modal (toggleModal)="toggleModal('fam-history')"></app-fam-history-modal>
+  <app-fam-history-modal (toggleModal)="toggleModal('fam-history')" [patient_info]="patient_info"></app-fam-history-modal>
 </div>
 
 <div *ngIf="modals['lifestyle']">
