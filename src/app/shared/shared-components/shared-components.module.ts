@@ -33,8 +33,8 @@ import { EndVisitComponent } from '../shared-modals/end-visit/end-visit.componen
 import { PastMedicalComponent } from 'app/components/patient-info/components/past-medical/past-medical.component';
 import { FamilyMedicalComponent } from 'app/components/patient-info/components/family-medical/family-medical.component';
 import { VaccineComponent } from 'app/components/patient-info/components/vaccine/vaccine.component';
-
-
+import { VitalsComponent } from 'app/components/patient-info/components/vitals/vitals.component';
+import { PhilhealthComponent } from 'app/components/patient-info/components/philhealth/philhealth.component';
 
 @NgModule({
   declarations: [
@@ -65,7 +65,9 @@ import { VaccineComponent } from 'app/components/patient-info/components/vaccine
     EndVisitComponent,
     PastMedicalComponent,
     FamilyMedicalComponent,
-    VaccineComponent
+    VaccineComponent,
+    VitalsComponent,
+    PhilhealthComponent
   ],
   imports: [
     CommonModule,

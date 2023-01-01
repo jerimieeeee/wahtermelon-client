@@ -2,7 +2,6 @@
   <div class="col-span-8">
     <div *ngIf="showChart" class="grid grid-cols-1 w-full">
       <div class="w-full flex justify-end">
-        <!-- <label for="selected_chart" class="flex-none mr-5 mt-3">Select Chart</label> -->
         <select id="selected_chart"  [(ngModel)]="selected_chart" class="input w-44" (change)="loadChart()">
           <option value="bp_chart">Blood Pressure</option>
           <option value="weight_chart">Weight</option>

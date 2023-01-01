@@ -8,6 +8,7 @@ import { HttpService } from 'app/shared/services/http.service';
 import { VitalsChartsService } from 'app/shared/services/vitals-charts.service';
 import { FamilyMedicalComponent } from './components/family-medical/family-medical.component';
 import { PastMedicalComponent } from './components/past-medical/past-medical.component';
+import { PhilhealthComponent } from './components/philhealth/philhealth.component';
 import { VaccineComponent } from './components/vaccine/vaccine.component';
 
 @Component({
@@ -30,6 +31,7 @@ export class PatientInfoComponent implements OnInit {
   @ViewChild(PastMedicalComponent) pastMedical: PastMedicalComponent;
   @ViewChild(FamilyMedicalComponent) familyMedical: FamilyMedicalComponent;
   @ViewChild(VaccineComponent) vaccine: VaccineComponent;
+  @ViewChild(PhilhealthComponent) philhealth: PhilhealthComponent;
 
   @Output() patientInfo = new EventEmitter<any>();
   @Output() patientVitals = new EventEmitter<any>();
@@ -52,7 +54,6 @@ export class PatientInfoComponent implements OnInit {
   faCamera = faCamera;
 
   show_form: boolean = false;
-  show_philhealth: boolean = false;
   show_vitals: boolean = false;
   show_vaccines: boolean = false;
   lab_request: boolean = false;
@@ -61,11 +62,9 @@ export class PatientInfoComponent implements OnInit {
 
   patient_age: any;
   latest_vitals: any;
-  philhealth_info: any;
   patient_vitals: any;
   vitals_to_edit: any;
   philhealth_to_edit: any;
-  immunization_status: any;
 
   accordions = [];
   modals = [];
@@ -102,7 +101,7 @@ export class PatientInfoComponent implements OnInit {
         this.patient_info = data.data;
         this.show_form = true;
         this.patientInfo.emit(data.data);
-        this.loadPhilhealth();
+        // this.loadPhilhealth();
         this.loadVitals();
         this.loadLabs();
 
@@ -126,6 +125,7 @@ export class PatientInfoComponent implements OnInit {
     if(field === 'past_medical' || field==='all') this.pastMedical.loadData(this.patient_info.id);
     if(field === 'family_medical' || field==='all') this.familyMedical.loadData(this.patient_info.id);
     if(field === 'vaccines' || field==='all') this.vaccine.loadData(this.patient_info.id);
+    if(field === 'philhealth' || field==='all') this.philhealth.loadData(this.patient_info.id);
   }
 
   loadLabs(){
@@ -149,24 +149,9 @@ export class PatientInfoComponent implements OnInit {
     if(this.modals['vaccine-action'] == false) this.loadVaccines();
   } */
 
-  get philhealthColor(){
-    if(this.philhealth_info){
-      return (formatDate(this.philhealth_info.enlistment_date, 'yyyy', 'en') < formatDate(new Date(), 'yyyy', 'en'))
-    } else {
-      return false;
-    }
-  }
 
-  loadPhilhealth(){
-    this.http.get('patient-philhealth/philhealth', {params:{'filter[patient_id]': this.patient_info.id,  per_page: '1', sort: '-enlistment_date'}}).subscribe({
-      next: (data: any) => {
-        // console.log(data);
-        this.philhealth_info = data.data[0];
-        this.show_philhealth = true;
-      },
-      error: err => console.log(err)
-    })
-  }
+
+
 
   vitals: any;
   loadVitals(){
@@ -230,7 +215,7 @@ export class PatientInfoComponent implements OnInit {
 
     if (modal_name === 'philhealth' && this.modals[modal_name] === false) {
       if(this.modals['philhealth'] == false)  this.philhealth_to_edit = null;
-      this.loadPhilhealth();
+      // this.loadPhilhealth();
     }
 
     if (modal_name.modal_name === 'vaccine' && this.modals[modal_name] === false) {

@@ -60,25 +60,7 @@
         </span>
       </div>
 
-      <div class="mt-4 leading-tight">
-        <div class="flex justify-between items-center">
-          <span class="block text-blue-500 font-medium text-sm">
-            PHILHEALTH
-          </span>
-          <span>
-            <fa-icon (click)="toggleModal('philhealth-list')" class="mx-0 my-0 text-green-500 mr-2 hover:cursor-pointer" [icon]="faTableList" *ngIf="philhealth_info" ></fa-icon>
-            <fa-icon (click)="toggleModal('philhealth')" class="mx-0 my-0 text-blue-500 mr-2 hover:cursor-pointer" [icon]="faPlusCircle"></fa-icon>
-          </span>
-        </div>
-        <div class="flex pl-3 justify-between items-center" [ngClass]="{'text-red-500': philhealthColor}">
-          <span class="block text-xs">
-            {{ philhealth_info?.philhealth_id }}
-          </span>
-          <span class="block text-xs">
-            {{ philhealth_info?.enlistment_date | date: 'MM/dd/yyyy' }}
-          </span>
-        </div>
-      </div>
+      <app-philhealth (toggleAccordion)="toggleAccordion($event)" [accordions]="accordions" (toggleModal)="toggleModal($event)"></app-philhealth>
     </div>
 
     <app-prescriptions (toggleAccordion)="toggleAccordion($event)" (navigateTo)="navigateTo($event)" [accordions]="accordions" [consult_id]="consult_id" [patient_info]="patient_info"></app-prescriptions>
@@ -333,50 +315,6 @@
         </div>
       </div>
     </div>
-
-    <!-- <div class="block justify-items-start mx-5 mb-5">
-      <div class="flex justify-between items-center">
-        <span class="block text-blue-500 font-medium text-sm">
-          <fa-icon (click)="toggleAccordion('vaccines')" class="mx-0 my-0 text-gray-500 mr-2 hover:cursor-pointer" [icon]="accordions['vaccines'] ? faChevronUp : faChevronDown"></fa-icon>
-          VACCINES {{ vaccine_list?.length > 0 ? '('+vaccine_list.length+')' : '' }}
-        </span>
-        <fa-icon (click)="toggleModal('vaccine')" class="mx-0 my-0 text-blue-500 mr-2 hover:cursor-pointer" [icon]="faPlusCircle"></fa-icon>
-      </div>
-
-      <div *ngIf="!show_vaccines" >
-        <div class="p-4 mx-auto">
-          <div class="animate-pulse grid grid-cols-2 gap-x-20 gap-y-4 justify-between">
-            <div class="h-2 bg-slate-200 rounded"></div>
-            <div class="h-2 bg-slate-200 rounded"></div>
-            <div class="h-2 bg-slate-200 rounded"></div>
-            <div class="h-2 bg-slate-200 rounded"></div>
-            <div class="h-2 bg-slate-200 rounded"></div>
-            <div class="h-2 bg-slate-200 rounded"></div>
-          </div>
-        </div>
-      </div>
-
-      <div *ngIf="show_vaccines" >
-        <div [@openCloseAccordion] *ngIf="accordions.vaccines" class="block">
-          <div class="flex pl-3 justify-between items-center mb-5 border-b border-b-gray-100">
-            <span class="font-medium text-xs flex-auto">
-              <span class="font-semibold">IMMUNIZATION STATUS: </span> <br /><span class="font-bold text-l">{{ immunization_status?.immunization_status ?? '-' }}</span>
-            </span>
-            <span class="italic text-xs flex-auto text-right"><br />{{ immunization_status?.immunization_status ? (immunization_status?.vaccine_date | date: 'MM/dd/yyyy') : '-' }}</span>
-          </div>
-          <div class="flex pl-3 justify-between items-center mb-3 border-b border-b-gray-100" *ngFor="let vaccine of vaccine_list">
-
-            <fa-icon (click)="toggleActionModal('vaccine-action', vaccine)" class="mx-0 my-0 text-amber-400 hover:cursor-pointer flex-none mr-2" [icon]="faPenToSquare"></fa-icon>
-            <span class="font-medium text-xs flex-auto">
-              <span class="font-bold">{{ vaccine.vaccine_id }} - {{ vaccine.dose }} Dose</span> <br />({{ vaccine.status_id === 1 ? 'Done' : (vaccine.status_id === 2 ? 'Done Outside - Private' : 'Done Outside - Public') }})
-            </span>
-            <span class="italic text-xs flex-auto text-right">
-              {{ !vaccine.vaccine_date ? '-' : vaccine.vaccine_date | date: 'MM/dd/yyyy'}}
-            </span>
-          </div>
-        </div>
-      </div>
-    </div> -->
 
     <!-- <div class="block pt-4 justify-items-start mx-5 mb-5">
       <div class="flex justify-between items-center">
