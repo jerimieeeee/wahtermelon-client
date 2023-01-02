@@ -92,7 +92,7 @@ export class DrugDispensingComponent implements OnInit {
     this.http.get('medicine/dispensing', {params}).subscribe({
       next: (data: any) => {
         console.log(data.data)
-        // this.dispensed_list = data.data;
+        this.dispensed_list = data.data;
         this.show_form = true;
       },
       error: err => console.log(err)

@@ -84,28 +84,28 @@
               </tr>
             </thead>
             <tbody *ngIf="show_form">
-              <tr *ngFor="let pres of dispensed_list; trackBy:identify" class="bg-white border-b last:border-0">
+              <tr *ngFor="let dis of dispensed_list; trackBy:identify" class="bg-white border-b last:border-0">
                 <td class="py-4 px-3">
-                  {{ pres.konsulta_medicine.desc ?? pres.added_medicine}}
+                  {{ dis.prescription.konsulta_medicine.desc ?? dis.prescription.added_medicine}}
                 </td>
                 <td scope="row" class="py-4 px-3 font-medium text-gray-900">
-                  {{ pres.dosage_quantity }} {{ pres.unit_of_measurement.desc }} {{ pres.regimen.desc }}
-                  {{ pres.duration_intake }} {{ pres.frequency.desc }}
+                  {{ dis.prescription.dosage_quantity }} {{ dis.prescription.unit_of_measurement.desc }} {{ dis.prescription.regimen.desc }}
+                  {{ dis.prescription.duration_intake }} {{ dis.prescription.frequency.desc }}
                 </td>
                 <td scope="row" class="py-4 px-3 font-medium text-gray-900">
-                  {{ pres.prescription_date | date : 'MM/dd/yyyy'}}
+                  {{ dis.prescription.prescription_date | date : 'MM/dd/yyyy'}}
                 </td>
                 <td scope="row" class="py-4 px-3 font-medium text-gray-900">
-                  {{ pres.quantity }}
+                  {{ dis.prescription.quantity }}
                 </td>
                 <td scope="row" class="py-4 px-3 font-medium text-gray-900">
-                  {{ pres.preparation_desc }}
+                  {{ dis.prescription.preparation.desc }}
                 </td>
                 <td scope="row" class="py-4 px-3">
-                  {{ pres.dispense_quantity }}
+                  {{ dis.dispense_quantity }}
                 </td>
                 <td scope="row" class="py-4 px-3">
-                  {{ pres.remarks }}
+                  {{ dis.remarks }}
                 </td>
               </tr>
             </tbody>
