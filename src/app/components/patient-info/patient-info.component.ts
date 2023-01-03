@@ -101,7 +101,6 @@ export class PatientInfoComponent implements OnInit {
         this.patient_info = data.data;
         this.show_form = true;
         this.patientInfo.emit(data.data);
-        // this.loadPhilhealth();
         this.loadVitals();
         this.loadLabs();
 
@@ -213,17 +212,19 @@ export class PatientInfoComponent implements OnInit {
       this.loadVitals();
     }
 
-    if (modal_name === 'philhealth' && this.modals[modal_name] === false) {
+    if (modal_name.modal_name === 'philhealth' && this.modals[modal_name.modal_name] === false) {
       if(this.modals['philhealth'] == false)  this.philhealth_to_edit = null;
-      // this.loadPhilhealth();
+      this.loadData('philhealth');
     }
 
-    if (modal_name.modal_name === 'vaccine' && this.modals[modal_name] === false) {
-      this.loadData('vaccines');
-    } else if (modal_name.modal_name  === 'vaccine' && this.modals[modal_name.modal_name] === true) {
-      console.log(modal_name.data)
-      this.vaccines_given = modal_name.data;
+    if (modal_name.modal_name === 'vaccine') {
+      if(this.modals[modal_name.modal_name] === true) {
+        this.vaccines_given = modal_name.data;
+      } else {
+        this.loadData('vaccines');
+      }
     }
+
     if (modal_name === 'vaccine-action' && this.modals[modal_name] === false) this.loadData('vaccines');
   }
 
