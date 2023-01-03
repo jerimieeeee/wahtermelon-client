@@ -264,14 +264,46 @@ export class PatientItrComponent implements OnInit {
   showConsult(details: any){
     console.log(details)
     if(details.vitals) this.getLatestToday(details);
+    let query: any;
+    let params: any;
+    switch (details.pt_group) {
+      case 'ncd':
+        params = {consult_id: details.id, sort: '-assessment_date'};
+        query = this.http.get('non-communicable-disease/risk-assessment', {params});
+        this.getSelected(query, details.pt_group);
+        break;
+      case 'cc':
+        query = this.http.get('child-care/cc-records/'+details.patient.id);
+        this.getSelected(query, details.pt_group);
+        break;
+      default:
+        this.selected_visit = details;
+        break;
+    }
+  }
+
+  getSelected(query, group){
+    query.subscribe({
+      next: (data: any) => {
+        console.log(data.data)
+        if(group === 'cc') {
+          this.selected_visit = data.data;
+        }else {
+          this.selected_visit = data.data[0];
+        }
+
+        this.selected_visit.pt_group = group;
+      },
+      error: err => console.log(err)
+    })
   }
 
   selected_id: number;
   selected_visit: any;
 
   getLatestToday(details){
-    this.selected_visit = details;
-    this.latest_vitals = this.vitalsCharts.getLatestToday(details.vitals);
+    this.latest_vitals = this.vitalsCharts.getLatestToday(details.vitals, details.consult_date);
+    console.log(this.latest_vitals)
 
     if(this.selected_id){
       if(this.selected_id === details.id){

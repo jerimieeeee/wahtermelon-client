@@ -10,31 +10,39 @@ export class VisitDetailsComponent implements OnChanges {
   @Input() latest_vitals;
   @Input() selected_visit;
 
-  physical_exam = [];
+  comps: any = [];
 
   openVisit(details: any){
-    /* console.log(details);
-    console.log(details.pt_group); */
-    this.router.navigate(['/'+details.pt_group, {id:details.patient.id, consult_id: details.id}])
+    console.log(details);
+    /* console.log(details.pt_group); */
+    // let consult_id;
+    // let patient_id;
+
+    // if(details.pt_group === 'cn') {
+      let consult_id = details.pt_group === 'cn' ? details.id : details.consult_id;
+      let patient_id = details.pt_group === 'cn' ? details.patient.id : details.patient_id;
+    /* } else  {
+      consult_id = details.consult_id;
+      patient_id = details.patient_id;
+    } */
+    this.router.navigate(['/'+details.pt_group, {id:patient_id, consult_id: consult_id}])
   }
 
-  groupPE(pe){
-    Object.entries(pe).forEach(([key, value], index) => {
-      let val: any = value;
-      if(!this.physical_exam[val.lib_physical_exam.category_id.toLowerCase()]) this.physical_exam[val.lib_physical_exam.category_id.toLowerCase()] = [];
-      this.physical_exam[val.lib_physical_exam.category_id.toLowerCase()].push(val.lib_physical_exam);
-    });
+  resetVal(){
 
-    console.log(this.physical_exam)
+  }
+
+  displayVisit(){
+    if(this.selected_visit) {
+      Object.entries(this.comps).forEach(([key, value], index) => {
+        if(key !==  this.selected_visit.pt_group) this.comps[key] = false;
+      });
+      this.comps[this.selected_visit.pt_group] = !this.comps[this.selected_visit.pt_group];
+    }
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(this.selected_visit)
-    if(this.selected_visit) {
-      if(this.selected_visit.consult_notes && Object.keys(this.selected_visit.consult_notes.physical_exam).length > 0) {
-        this.groupPE(this.selected_visit.consult_notes.physical_exam);
-      }
-    }
+    this.displayVisit();
   }
 
   constructor(
