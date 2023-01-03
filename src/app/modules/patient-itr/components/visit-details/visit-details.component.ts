@@ -13,18 +13,9 @@ export class VisitDetailsComponent implements OnChanges {
   comps: any = [];
 
   openVisit(details: any){
-    console.log(details);
-    /* console.log(details.pt_group); */
-    // let consult_id;
-    // let patient_id;
+    let consult_id = details.pt_group === 'cn' ? details.id : details.consult_id;
+    let patient_id = details.pt_group === 'cn' ? details.patient.id : details.patient_id;
 
-    // if(details.pt_group === 'cn') {
-      let consult_id = details.pt_group === 'cn' ? details.id : details.consult_id;
-      let patient_id = details.pt_group === 'cn' ? details.patient.id : details.patient_id;
-    /* } else  {
-      consult_id = details.consult_id;
-      patient_id = details.patient_id;
-    } */
     this.router.navigate(['/'+details.pt_group, {id:patient_id, consult_id: consult_id}])
   }
 
