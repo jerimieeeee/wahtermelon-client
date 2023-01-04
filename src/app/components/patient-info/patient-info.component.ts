@@ -121,6 +121,7 @@ export class PatientInfoComponent implements OnInit {
   pending_labs: any;
 
   loadData(field){
+    console.log(field);
     if(field === 'past_medical' || field==='all') this.pastMedical.loadData(this.patient_info.id);
     if(field === 'family_medical' || field==='all') this.familyMedical.loadData(this.patient_info.id);
     if(field === 'vaccines' || field==='all') this.vaccine.loadData(this.patient_info.id);
@@ -203,9 +204,13 @@ export class PatientInfoComponent implements OnInit {
     this.accordions[id] = !this.accordions[id];
   }
 
+  vaccine_to_edit;
+
   toggleModal(modal_name, data?){
     // if(modal_name === 'vaccine')
-    this.modals[modal_name.modal_name ?? modal_name] = !this.modals[modal_name ?? modal_name];
+    console.log(modal_name)
+    this.modals[modal_name.modal_name ?? modal_name] = !this.modals[modal_name.modal_name ?? modal_name];
+    console.log(this.modals)
 
     if (modal_name === 'vitals' && this.modals[modal_name] === false) {
       if(this.modals['vitals'] == false)  this.vitals_to_edit = null;
@@ -213,19 +218,25 @@ export class PatientInfoComponent implements OnInit {
     }
 
     if (modal_name.modal_name === 'philhealth' && this.modals[modal_name.modal_name] === false) {
-      if(this.modals['philhealth'] == false)  this.philhealth_to_edit = null;
+      if(this.modals['philhealth'] === false)  this.philhealth_to_edit = null;
       this.loadData('philhealth');
     }
 
     if (modal_name.modal_name === 'vaccine') {
       if(this.modals[modal_name.modal_name] === true) {
         this.vaccines_given = modal_name.data;
+      }
+    }
+
+    if (modal_name.modal_name === 'vaccine-action') {
+      if(this.modals[modal_name.modal_name] === true) {
+        this.vaccine_to_edit = modal_name.data;
       } else {
         this.loadData('vaccines');
       }
     }
 
-    if (modal_name === 'vaccine-action' && this.modals[modal_name] === false) this.loadData('vaccines');
+    // if (modal_name === 'vaccine-action' && this.modals[modal_name] === false) this.loadData('vaccines');
   }
 
   ngOnInit(): void {

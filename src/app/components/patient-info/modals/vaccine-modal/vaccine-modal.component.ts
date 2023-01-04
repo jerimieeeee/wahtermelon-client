@@ -11,7 +11,7 @@ import { Vaccines } from './data/vaccine';
 })
 export class VaccineModalComponent implements OnInit {
   @Output() toggleModal = new EventEmitter<any>();
-  @Output() loadVaccines = new EventEmitter<any>();
+  @Output() loadData = new EventEmitter<any>();
   @Input() patient_info;
   @Input() vaccines_given;
 
@@ -60,7 +60,7 @@ export class VaccineModalComponent implements OnInit {
       this.http.post('patient-vaccines/vaccines', vax_form).subscribe({
         next: () => {
           this.toastr.success('Successfully recorded!','Vaccine record')
-          this.loadVaccines.emit();
+          this.loadData.emit('vaccines');
         },
         error: err => console.log(err),
         complete: () => console.log('success')

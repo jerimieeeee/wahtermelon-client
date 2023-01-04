@@ -421,63 +421,32 @@
 </div>
 
 <!-- MODALS -->
-<div *ngIf="modals['vitals']">
-  <app-vitals-modal (toggleModal)="toggleModal('vitals')" [patient_age]="patient_age" [patient_info]="patient_info" [vitals_to_edit]="vitals_to_edit"></app-vitals-modal>
-</div>
+<app-vitals-modal *ngIf="modals['vitals']" (toggleModal)="toggleModal('vitals')" [patient_age]="patient_age" [patient_info]="patient_info" [vitals_to_edit]="vitals_to_edit"></app-vitals-modal>
 
-<div *ngIf="modals['vitals-list']">
-  <app-vitals-list-modal (toggleModal)="toggleModal('vitals-list')" (vitalsEdit)="vitalsEdit($event)" [patient_info]="patient_info"></app-vitals-list-modal>
-</div>
+<app-vitals-list-modal *ngIf="modals['vitals-list']" (toggleModal)="toggleModal('vitals-list')" (vitalsEdit)="vitalsEdit($event)" [patient_info]="patient_info"></app-vitals-list-modal>
 
-<div *ngIf="modals['allergies']">
-  <app-allergies-modal (toggleModal)="toggleModal('allergies')"></app-allergies-modal>
-</div>
+<app-allergies-modal *ngIf="modals['allergies']" (toggleModal)="toggleModal('allergies')"></app-allergies-modal>
 
-<div *ngIf="modals['medication']">
-  <app-medication-modal (toggleModal)="toggleModal('medication')"></app-medication-modal>
-</div>
+<app-medication-modal *ngIf="modals['medication']" (toggleModal)="toggleModal('medication')"></app-medication-modal>
 
-<div *ngIf="modals['vaccine']">
-  <app-vaccine-modal (toggleModal)="toggleModal('vaccine')" (loadVaccines)="loadVaccines()" [patient_info]="patient_info" [vaccines_given]="vaccines_given"></app-vaccine-modal>
-</div>
+<app-vaccine-modal *ngIf="modals['vaccine']" (toggleModal)="toggleModal('vaccine')" (loadData)="loadData($event)" [patient_info]="patient_info" [vaccines_given]="vaccines_given"></app-vaccine-modal>
 
-<div *ngIf="modals['vaccine-action']">
-  <app-vaccine-action-modal (toggleModal)="toggleModal('vaccine-action')" [vaccine_to_edit]="vaccine_to_edit"></app-vaccine-action-modal>
-</div>
+<app-vaccine-action-modal *ngIf="modals['vaccine-action']" (toggleModal)="toggleModal($event)" [vaccine_to_edit]="vaccine_to_edit"></app-vaccine-action-modal>
 
-<div *ngIf="modals['history']">
-  <app-history-modal (toggleModal)="toggleModal('history')" [patient_info]="patient_info" (loadData)="loadData('past_medical')"></app-history-modal>
-</div>
+<app-history-modal *ngIf="modals['history']" (toggleModal)="toggleModal('history')" [patient_info]="patient_info" (loadData)="loadData('past_medical')"></app-history-modal>
 
-<div *ngIf="modals['fam-history']">
-  <app-fam-history-modal (toggleModal)="toggleModal('fam-history')" [patient_info]="patient_info"></app-fam-history-modal>
-</div>
+<app-fam-history-modal *ngIf="modals['fam-history']" (toggleModal)="toggleModal('fam-history')" [patient_info]="patient_info"></app-fam-history-modal>
 
-<div *ngIf="modals['lifestyle']">
-  <app-lifestyle-modal (toggleModal)="toggleModal('lifestyle')"></app-lifestyle-modal>
-</div>
+<app-lifestyle-modal *ngIf="modals['lifestyle']" (toggleModal)="toggleModal('lifestyle')"></app-lifestyle-modal>
 
-<div *ngIf="modals['death']">
-  <app-death-modal (toggleModal)="toggleModal('death')"></app-death-modal>
-</div>
+<app-death-modal *ngIf="modals['death']" (toggleModal)="toggleModal('death')"></app-death-modal>
 
-<div *ngIf="modals['module']">
-  <app-module-modal (toggleModal)="toggleModal('module')" [patient_info]="patient_info" [patient_age]="patient_age"></app-module-modal>
-</div>
+<app-module-modal *ngIf="modals['module']" (toggleModal)="toggleModal('module')" [patient_info]="patient_info" [patient_age]="patient_age"></app-module-modal>
 
-<div *ngIf="modals['philhealth']">
-  <app-philhealth-modal (toggleModal)="toggleModal('philhealth')" [patient_info]="patient_info" [philhealth_to_edit]="philhealth_to_edit"></app-philhealth-modal>
-</div>
+<app-philhealth-modal *ngIf="modals['philhealth']" (toggleModal)="toggleModal($event)" [patient_info]="patient_info" [philhealth_to_edit]="philhealth_to_edit"></app-philhealth-modal>
 
-<div *ngIf="modals['philhealth-list']">
-  <app-philhealth-list-modal (toggleModal)="toggleModal('philhealth-list')" (philhealthEdit)="philhealthEdit($event)" [patient_info]="patient_info" ></app-philhealth-list-modal>
-</div>
+<app-philhealth-list-modal *ngIf="modals['philhealth-list']" (toggleModal)="toggleModal('philhealth-list')" (philhealthEdit)="philhealthEdit($event)" [patient_info]="patient_info" ></app-philhealth-list-modal>
 
-<div *ngIf="modals['lab-request']">
-  <app-lab-request-modal (toggleModal)="toggleModal('lab-request')" [patient_info]="patient_info" [consult_id]="consult_id"></app-lab-request-modal>
-</div>
+<app-lab-request-modal *ngIf="modals['lab-request']" (toggleModal)="toggleModal('lab-request')" [patient_info]="patient_info" [consult_id]="consult_id"></app-lab-request-modal>
 
-<div *ngIf="modals['photo']">
-  <app-photo-modal (toggleModal)="toggleModal('photo')" [patient_info]="patient_info"></app-photo-modal>
-</div>
-
+<app-photo-modal *ngIf="modals['photo']" (toggleModal)="toggleModal('photo')" [patient_info]="patient_info"></app-photo-modal>

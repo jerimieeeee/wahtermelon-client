@@ -53,8 +53,7 @@ export class VaccineActionModalComponent implements OnInit {
       next: () => {
         this.showToastr('success', 'Succcessfully updated!', 'Vaccine record');
       },
-      error: err => console.log(err),
-      complete: () => console.log('updated')
+      error: err => console.log(err)
     })
   }
 
@@ -90,7 +89,8 @@ export class VaccineActionModalComponent implements OnInit {
   }
 
   closeModal(){
-    this.toggleModal.emit('vaccine-action-modal')
+    console.log('test')
+    this.toggleModal.emit({modal_name: 'vaccine-action'})
   }
 
   ngOnInit(): void {

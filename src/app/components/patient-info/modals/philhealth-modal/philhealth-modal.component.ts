@@ -127,6 +127,7 @@ export class PhilhealthModalComponent implements OnInit {
           this.philhealthForm.markAsPristine();
           this.philhealthForm.disable();
           this.toastr.success('Successfully recorded!','Philhealth');
+          this.closeModal()
         },
         error: err => {
           console.log(err);
@@ -149,7 +150,7 @@ export class PhilhealthModalComponent implements OnInit {
   }
 
   closeModal(){
-    this.toggleModal.emit('philhealth-modal');
+    this.toggleModal.emit({modal_name: 'philhealth'});
   }
 
   constructor(

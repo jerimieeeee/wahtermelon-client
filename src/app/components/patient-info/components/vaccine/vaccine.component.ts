@@ -19,7 +19,7 @@ export class VaccineComponent implements OnInit {
 
   vaccines_given: any;
   vaccine_list: any = [];
-  vaccine_to_edit: any;
+  // vaccine_to_edit: any;
   immunization_status: any;
 
   show_vaccines: boolean = false;
@@ -54,11 +54,12 @@ export class VaccineComponent implements OnInit {
     })
 
     this.vaccines_given = new_vax;
+    // this.toggleModal.emit({modal_name: null, data: this.vaccines_given});
     this.show_vaccines = true;
   }
 
-  toggleActionModal(modal_name, vaccine){
-    this.vaccine_to_edit = vaccine;
+  toggleActionModal(name, vaccine){
+    this.toggleModal.emit({modal_name: name, data: vaccine});
     // this.modals['vaccine-action'] = !this.modals['vaccine-action'];
     // if(this.modals['vaccine-action'] == false) this.loadVaccines();
   }
