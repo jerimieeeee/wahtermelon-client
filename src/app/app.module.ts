@@ -17,7 +17,6 @@ import { FacilityaccreditationComponent } from './components/facilityaccreditati
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { RequestsInterceptor } from './shared/interceptor/http/http-interceptor';
 import { ToastrModule } from 'ngx-toastr';
-import { PhilhealthComponent } from './components/patient-info/components/philhealth/philhealth.component';
 
 @NgModule({
   declarations: [

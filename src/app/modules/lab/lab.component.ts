@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { faEdit, faFlaskVial, faTrash, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
   selector: 'app-lab',
@@ -14,43 +15,26 @@ export class LabComponent implements OnInit {
 
   patient_details: any;
 
-  pending_list = [
-    {
-      id: 1,
-      type: 'Serology',
-      date_requested: '12/22/2022'
-    },
-    {
-      id: 2,
-      type: 'Serology',
-      date_requested: '12/22/2022'
-    },
-    {
-      id: 3,
-      type: 'Serology',
-      date_requested: '12/22/2022'
-    },
-    {
-      id: 4,
-      type: 'Serology',
-      date_requested: '12/22/2022'
-    },
-    {
-      id: 5,
-      type: 'Serology',
-      date_requested: '12/22/2022'
-    },
-    {
-      id: 6,
-      type: 'Serology',
-      date_requested: '12/22/2022'
-    },
-  ];
+  pending_list: any;
 
-
+  loadData(){
+    let params = {
+      patient_id: this.patient_details.id,
+      sort: '-request_date'
+    }
+    this.http.get('laboratory/consult-laboratories', {params}).subscribe({
+      next: (data: any) => {
+        console.log(data)
+        this.pending_list = data.data
+      },
+      error: err => console.log(err)
+    })
+  }
 
   patientInfo(info){
     this.patient_details = info;
+    this.loadData();
+    console.log(info)
   }
   modal = [];
   selected_lab: any;
@@ -61,7 +45,9 @@ export class LabComponent implements OnInit {
     if(this.modal[form] === false) this.selected_lab = null;
   }
 
-  constructor() { }
+  constructor(
+    private http: HttpService
+  ) { }
 
   ngOnInit(): void {
   }

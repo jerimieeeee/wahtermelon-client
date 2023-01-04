@@ -7,6 +7,7 @@ import { AgeService } from 'app/shared/services/age.service';
 import { HttpService } from 'app/shared/services/http.service';
 import { VitalsChartsService } from 'app/shared/services/vitals-charts.service';
 import { FamilyMedicalComponent } from './components/family-medical/family-medical.component';
+import { LaboratoryComponent } from './components/laboratory/laboratory.component';
 import { PastMedicalComponent } from './components/past-medical/past-medical.component';
 import { PhilhealthComponent } from './components/philhealth/philhealth.component';
 import { VaccineComponent } from './components/vaccine/vaccine.component';
@@ -32,7 +33,7 @@ export class PatientInfoComponent implements OnInit {
   @ViewChild(FamilyMedicalComponent) familyMedical: FamilyMedicalComponent;
   @ViewChild(VaccineComponent) vaccine: VaccineComponent;
   @ViewChild(PhilhealthComponent) philhealth: PhilhealthComponent;
-
+  @ViewChild(LaboratoryComponent) laboratories: LaboratoryComponent;
   @Output() patientInfo = new EventEmitter<any>();
   @Output() patientVitals = new EventEmitter<any>();
   patient_info: any;
@@ -126,6 +127,7 @@ export class PatientInfoComponent implements OnInit {
     if(field === 'family_medical' || field==='all') this.familyMedical.loadData(this.patient_info.id);
     if(field === 'vaccines' || field==='all') this.vaccine.loadData(this.patient_info.id);
     if(field === 'philhealth' || field==='all') this.philhealth.loadData(this.patient_info.id);
+    if(field === 'laboratory' || field==='all') this.laboratories.loadData(this.patient_info.id);
   }
 
   loadLabs(){
@@ -204,8 +206,13 @@ export class PatientInfoComponent implements OnInit {
     this.accordions[id] = !this.accordions[id];
   }
 
-  vaccine_to_edit;
+  lab_req_list: any;
+  setLabList(data) {
+    console.log(data)
+    this.lab_req_list = data;
+  }
 
+  vaccine_to_edit;
   setVaccineGiven(data) {
     console.log(data);
     this.vaccines_given = data;
@@ -220,6 +227,10 @@ export class PatientInfoComponent implements OnInit {
     if (modal_name === 'vitals' && this.modals[modal_name] === false) {
       if(this.modals['vitals'] == false)  this.vitals_to_edit = null;
       this.loadVitals();
+    }
+
+    if (modal_name === 'lab-request' && this.modals[modal_name] === false) {
+      this.loadData('laboratory');
     }
 
     if (modal_name.modal_name === 'philhealth' && this.modals[modal_name.modal_name] === false) {

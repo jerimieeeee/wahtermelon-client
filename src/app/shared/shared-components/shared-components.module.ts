@@ -35,6 +35,7 @@ import { FamilyMedicalComponent } from 'app/components/patient-info/components/f
 import { VaccineComponent } from 'app/components/patient-info/components/vaccine/vaccine.component';
 import { VitalsComponent } from 'app/components/patient-info/components/vitals/vitals.component';
 import { PhilhealthComponent } from 'app/components/patient-info/components/philhealth/philhealth.component';
+import { LaboratoryComponent } from 'app/components/patient-info/components/laboratory/laboratory.component';
 
 @NgModule({
   declarations: [
@@ -67,7 +68,8 @@ import { PhilhealthComponent } from 'app/components/patient-info/components/phil
     FamilyMedicalComponent,
     VaccineComponent,
     VitalsComponent,
-    PhilhealthComponent
+    PhilhealthComponent,
+    LaboratoryComponent
   ],
   imports: [
     CommonModule,

@@ -56,16 +56,12 @@ export class VaccineComponent implements OnInit {
 
     this.vaccines_given = new_vax;
     this.setVaccineGiven.emit(this.vaccines_given);
-    // this.toggleModal.emit({modal_name: null, data: this.vaccines_given});
     this.show_vaccines = true;
   }
 
   toggleActionModal(name, vaccine){
     this.toggleModal.emit({modal_name: name, data: vaccine});
-    // this.modals['vaccine-action'] = !this.modals['vaccine-action'];
-    // if(this.modals['vaccine-action'] == false) this.loadVaccines();
   }
-
 
   getNumberSuffix(i){
     var j = i % 10,

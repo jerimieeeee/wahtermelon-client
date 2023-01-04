@@ -14,7 +14,7 @@
           <div class="grid grid-cols-2 p-5 w-full px-5">
             <div class="col-span-1 grid grid-cols-2 w-full">
               <label for="request_date" class="input-label text-left pt-3 pr-5">Request Date</label>
-              <input type="date" class="input w-44" [(ngModel)]="request_date"/>
+              <input type="date" class="input w-44" [(ngModel)]="request_date" [max]="max_date"/>
             </div>
             <div *ngIf="consult_id" class="input-label col-span-1 pl-5 pt-3">
               Consult ID: {{ consult_id }}
@@ -30,9 +30,16 @@
               </div>
             </div>
 
+            <div class="col-span-2 grid grid-cols-2 pt-5 pl-5" *ngIf="lab_req_list">
+              <span class="col-span-2">Requested Labs</span>
+              <div class="col-span-1 mb-2 flex justify-between" *ngFor="let req of lab_req_list">
+                <span class="w-1/2">{{ req.lab_code }} </span>
+                <span class="w-1/2 text-right mr-5">{{ req.request_date | date: 'MM/dd/yyyy' }} </span>
+              </div>
+            </div>
             <div class="col-span-2 grid grid-cols-2 pt-5 pl-5">
               <div class="col-span-1 mb-2" *ngFor="let lab of lab_list">
-                <input [disabled]="consult_done" type="checkbox" [(ngModel)]="labs[lab.code]" class="rounded-md border border-gray-400 p-2">
+                <input [disabled]="consult_done || !request_date" (click)="updateList(lab.code)" type="checkbox" [(ngModel)]="labs[lab.code]" class="rounded-md border border-gray-400 p-2 disabled:bg-gray-200">
                 {{ lab.desc }}
               </div>
             </div>
@@ -43,7 +50,9 @@
       <!-- Modal footer -->
       <div class="flex justify-end py-4 px-5 space-x-4 rounded-b border-t border-gray-200 dark:border-gray-600">
         <button  type="button" class="btn-save bg-gray-400 px-10" (click)="closeModal()">Close</button>
-        <button [disabled]="!request_date || !labs.includes(true)" type="button" class="btn-save px-10 disabled:bg-gray-300" (click)="onSubmit()" >Request</button>
+        <button [disabled]="!request_date || count === 0 || is_saving" type="button" class="btn-save px-10 disabled:bg-gray-300" (click)="onSubmit()">
+          Request
+        </button>
       </div>
     </div>
   </div>
