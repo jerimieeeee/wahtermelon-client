@@ -23,7 +23,7 @@
     <div [@openCloseAccordion] *ngIf="accordions['family-history']" class="block">
       <div class="flex pl-3 justify-between items-center mt-1" *ngFor="let hx of history; trackBy:identify">
         <span class="block font-medium text-xs w-10/12">
-          {{ hx.medical_history_id }}
+          {{ hx.libmedicalHistory.history_desc }}
         </span>
         <span class="block text-xs w-2/12 align-top text-right">
           {{ hx.remarks }}
