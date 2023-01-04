@@ -355,7 +355,7 @@
         </div>
       </div>
     </div> -->
-    <app-vaccine (toggleAccordion)="toggleAccordion($event)" [accordions]="accordions" (toggleModal)="toggleModal($event)"></app-vaccine>
+    <app-vaccine (toggleAccordion)="toggleAccordion($event)" [accordions]="accordions" (toggleModal)="toggleModal($event)" (setVaccineGiven)="setVaccineGiven($event)"></app-vaccine>
     <app-past-medical (toggleAccordion)="toggleAccordion($event)" [accordions]="accordions" (toggleModal)="toggleModal($event)"></app-past-medical>
     <app-family-medical (toggleAccordion)="toggleAccordion($event)" [accordions]="accordions"></app-family-medical>
 

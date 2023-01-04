@@ -10,6 +10,7 @@ import { HttpService } from 'app/shared/services/http.service';
 export class VaccineComponent implements OnInit {
   @Output() toggleAccordion = new EventEmitter<any>();
   @Output() toggleModal = new EventEmitter<any>();
+  @Output() setVaccineGiven = new EventEmitter<any>();
   @Input() accordions;
 
   faChevronUp = faChevronUp;
@@ -54,6 +55,7 @@ export class VaccineComponent implements OnInit {
     })
 
     this.vaccines_given = new_vax;
+    this.setVaccineGiven.emit(this.vaccines_given);
     // this.toggleModal.emit({modal_name: null, data: this.vaccines_given});
     this.show_vaccines = true;
   }

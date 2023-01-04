@@ -206,6 +206,11 @@ export class PatientInfoComponent implements OnInit {
 
   vaccine_to_edit;
 
+  setVaccineGiven(data) {
+    console.log(data);
+    this.vaccines_given = data;
+  }
+
   toggleModal(modal_name, data?){
     // if(modal_name === 'vaccine')
     console.log(modal_name)
