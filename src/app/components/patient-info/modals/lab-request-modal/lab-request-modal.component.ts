@@ -57,17 +57,19 @@ export class LabRequestModalComponent implements OnInit {
         if(this.consult_id) request['consult_id'] = this.consult_id;
 
         this.http.post('laboratory/consult-laboratories', request).subscribe({
-          next: (data: any) => console.log(data),
+          next: () => {if(this.count-1 === index) this.saveDone()},
           error: err => this.toastr.error(err, 'Request Error')
         });
-      }
-
-      if(this.count-1 === index) {
-        this.showToastr();
-        this.is_saving = false;
-        this.closeModal();
+      } else {
+        if(this.count-1 === index) this.saveDone()
       }
     });
+  }
+
+  saveDone(){
+    this.showToastr();
+    this.is_saving = false;
+    this.closeModal();
   }
 
   showToastr(){

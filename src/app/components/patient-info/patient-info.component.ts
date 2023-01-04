@@ -36,6 +36,7 @@ export class PatientInfoComponent implements OnInit {
   @ViewChild(LaboratoryComponent) laboratories: LaboratoryComponent;
   @Output() patientInfo = new EventEmitter<any>();
   @Output() patientVitals = new EventEmitter<any>();
+  @Output() reloadLabs = new EventEmitter<any>();
   patient_info: any;
 
   faNotesMedical = faNotesMedical;
@@ -208,13 +209,14 @@ export class PatientInfoComponent implements OnInit {
 
   lab_req_list: any;
   setLabList(data) {
-    console.log(data)
+    // console.log(data)
     this.lab_req_list = data;
+    this.reloadLabs.emit(data);
   }
 
   vaccine_to_edit;
   setVaccineGiven(data) {
-    console.log(data);
+    // console.log(data);
     this.vaccines_given = data;
   }
 

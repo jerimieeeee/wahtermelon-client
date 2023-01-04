@@ -25,10 +25,10 @@
   <div *ngIf="lab_list" >
     <div [@openCloseAccordion] *ngIf="accordions.lab_request" class="block pt-2">
       <div class="flex pl-3 justify-between items-center" *ngFor="let lab of lab_list">
-        <span class="block font-medium text-xs">
-          {{ lab.lab_code }}
+        <span class="block font-medium text-xs" *ngIf="!lab.result || (lab.result.lab_status_code === 'N')">
+          {{ lab.laboratory.desc }}
         </span>
-        <span class="block text-xs">
+        <span class="block text-xs" *ngIf="!lab.result || (lab.result.lab_status_code === 'N')">
           {{ lab.request_date | date: 'MM/dd/yyyy'  }}
         </span>
       </div>

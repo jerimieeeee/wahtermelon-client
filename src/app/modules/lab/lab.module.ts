@@ -7,6 +7,7 @@ import { SharedComponentsModule } from 'app/shared/shared-components/shared-comp
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { LabFormComponent } from './components/lab-form/lab-form.component';
 import { LabDeleteComponent } from './components/lab-delete/lab-delete.component';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { LabDeleteComponent } from './components/lab-delete/lab-delete.component
     CommonModule,
     LabRoutingModule,
     SharedComponentsModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    FormsModule
   ]
 })
 export class LabModule { }

@@ -1,5 +1,6 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { faSave, faSpider } from '@fortawesome/free-solid-svg-icons';
+import { formatDate } from '@angular/common';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, OnInit } from '@angular/core';
+import { faSave, faSpider, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -8,22 +9,23 @@ import { ToastrService } from 'ngx-toastr';
   templateUrl: './lab-form.component.html',
   styleUrls: ['./lab-form.component.scss']
 })
-export class LabFormComponent implements OnChanges {
+export class LabFormComponent implements OnChanges, OnInit {
   @Output() toggleModal = new EventEmitter<any>();
   @Input() selected_lab;
   @Input() patient_details;
 
   faSave = faSave;
-  faSpinner = faSpider;
+  faSpinner = faSpinner;
 
   is_saving: boolean = false;
   fields: any;
 
-  lab_form: any = [];
+  lab_form: any = {};
+  max_date = formatDate(new Date, 'yyyy-MM-dd', 'en');
 
   loadForm(){
     if(this.selected_lab) {
-      this.http.get('libraries/laboratories/'+this.selected_lab.lab_code).subscribe({
+      this.http.get('libraries/laboratories/'+this.selected_lab.laboratory.code).subscribe({
         next: (data: any) => {
           console.log(data.data)
           this.trimForm(data.data.category);
@@ -32,6 +34,8 @@ export class LabFormComponent implements OnChanges {
       })
     }
   }
+
+  show_form: boolean = false;
 
   trimForm(data){
     let birthdate:any = new Date(this.patient_details.birthdate);
@@ -43,45 +47,109 @@ export class LabFormComponent implements OnChanges {
     Object.entries(data).forEach(([key, value], index) => {
       let vals: any = value;
       if(vals.range_cat) {
-        console.log(vals.range_cat)
         if(cat === vals.range_cat) {
           fields.push(vals)
+          this.lab_form[vals.field_name] = null
         }
       } else {
-        console.log(vals.range_cat)
         fields.push(vals)
+        this.lab_form[vals.field_name] = null
       }
     });
-    console.log(fields)
+
     this.fields = fields;
+
+    if(this.selected_lab.result) {
+      this.lab_form = this.selected_lab.result;
+    }
+    console.log(this.lab_form)
+    this.show_form = true;
+
   }
 
   onSubmit(){
+    console.log(this.selected_lab)
     this.is_saving = true;
-    let result = {
-      id: this.selected_lab.id,
-      type: this.selected_lab.type
-    }
 
-    this.http.post('url', result).subscribe({
-      next: (data: any) => {
-        console.log(data);
-        this.is_saving = false;
-        this.toastr.success('Lab result was recorded!','Laboratory Result');
-        this.closeModal();
-      },
-      error: err => console.log(err)
-    })
+    let url: string = this.getURL(this.selected_lab.laboratory.code);
+
+    if(url || url !== null || url !== ''){
+      let query;
+      if(this.lab_form.request_id) {
+        query = this.http.update(url+'/', this.lab_form.id, this.lab_form)
+      } else {
+        this.lab_form['patient_id'] = this.selected_lab.patient_id;
+        this.lab_form['request_id'] = this.selected_lab.id;
+        if(this.selected_lab.consult_id) this.lab_form['consult_id'] = this.selected_lab.consult_id;
+
+        query = this.http.post(url, this.lab_form)
+      }
+
+      query.subscribe({
+        next: (data: any) => {
+          console.log(data);
+          this.is_saving = false;
+          this.toastr.success('Lab result was recorded!','Laboratory Result');
+          this.closeModal();
+        },
+        error: err => console.log(err)
+      })
+    } else {
+      this.is_saving = false;
+      this.toastr.error('Laboratory does not exist','Lab form')
+    }
+  }
+
+  getURL(lab_code): string{
+    switch (lab_code) {
+      case 'CBC':
+        return 'laboratory/consult-laboratory-cbc'
+      case 'CRTN':
+        return 'laboratory/consult-laboratory-creatinine'
+      case 'CXRAY':
+        return 'laboratory/consult-laboratory-chestxray'
+      case 'ECG':
+        return ''
+      default:
+        break;
+    }
+    return '';
   }
 
   closeModal(){
     this.toggleModal.emit('add');
   }
 
+  spl_val = ['observation_code', 'findings_code'];
+  lab_statuses: any;
+  lab_findings: any;
+  lab_observation: any;
+
+  loadLibraries(){
+    this.http.get('libraries/laboratory-statuses').subscribe({
+      next: (data: any) => this.lab_statuses = data.data,
+      error: err => console.log(err)
+    });
+
+    this.http.get('libraries/laboratory-chestxray-findings').subscribe({
+      next: (data: any) => this.lab_findings = data.data,
+      error: err => console.log(err)
+    });
+
+    this.http.get('libraries/laboratory-chestxray-observations').subscribe({
+      next: (data: any) => this.lab_observation = data.data,
+      error: err => console.log(err)
+    });
+  }
+
   constructor(
     private http: HttpService,
     private toastr: ToastrService
   ) { }
+
+  ngOnInit(): void {
+    this.loadLibraries()
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     this.loadForm()

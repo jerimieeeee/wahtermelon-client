@@ -5,29 +5,72 @@
       <!-- Modal header -->
       <div class="flex justify-between items-start py-3 px-5 rounded-t border-b bg-blue-500 dark:border-gray-600">
         <h3 class="mt-2 text-sm font-bold text-white dark:text-white">
-          {{ selected_lab.lab_code }}
+          {{ selected_lab.laboratory.desc }}
         </h3>
 
       </div>
       <!-- Modal body -->
       <div class=" h-96 overflow-y-auto">
         <div class="flex item-start flex-wrap pb-5">
-          <div class="grid grid-cols-2 px-3 py-3 gap-5 w-full mx-5 mt-5 rounded-lg">
+          <div class="grid grid-cols-2 px-3 py-3 gap-5 w-full mx-5 mt-5 rounded-lg" *ngIf="show_form">
+            <div class="text-sm col-span-1">
+              <label class="font-semibold" >Laboratory date</label>
+              <input name="field" [(ngModel)]="lab_form['laboratory_date']" type="date" [max]="max_date" placeholder="mm/dd/yyyy" class="input">
+            </div>
+
+            <div class="text-sm col-span-1">
+              <label class="font-semibold" >Laboratory status</label>
+              <select name="field" [(ngModel)]="lab_form['lab_status_code']" class="input">
+                <option [value]="status.code" *ngFor="let status of lab_statuses">{{ status.desc }}</option>
+              </select>
+            </div>
+
             <div *ngFor="let field of fields">
+              <div class="text-sm col-span-1" *ngIf="field.field_name === 'findings_code'">
+                <label class="font-semibold" >{{ field.field_desc }}</label>
+                <select name="field" [(ngModel)]="lab_form['findings_code']" class="input">
+                  <option [value]="findings.code" *ngFor="let findings of lab_findings">{{ findings.desc }}</option>
+                </select>
+              </div>
+
+              <div class="text-sm col-span-1" *ngIf="field.field_name === 'observation_code'">
+                <label class="font-semibold" >{{ field.field_desc }}</label>
+                <select name="field" [(ngModel)]="lab_form['observation_code']" class="input">
+                  <option [value]="obs.code" *ngFor="let obs of lab_observation">{{ obs.desc }}</option>
+                </select>
+              </div>
+
+              <div class="text-sm col-span-1" *ngIf="spl_val.indexOf(field.field_name) < 0">
+                <label class="font-semibold" >{{ field.field_desc }}</label>
+                <input name="field" [(ngModel)]="lab_form[field.field_name]" [type]="field.nv_min !== null ? 'number' : 'text'" class="input">
+                <span class="italic text-xs text-gray-500" *ngIf="field.nv_min !== null">Normal values(Min: {{ field.nv_min }} to Max: {{ field.nv_max }})</span>
+              </div>
+
+              <!--  -->
+
+              <!-- <div class="text-sm col-span-1" *ngIf="field.field_name !== 'observation_code'">
+                <label class="font-semibold" >{{ field.field_desc }}</label>
+                <select name="field" [(ngModel)]="lab_form['observation_code']" class="input">
+                  <option [value]="obs.code" *ngFor="let obs of lab_observation">{{ obs.desc }}</option>
+                </select>
+              </div> -->
+            </div>
+
+            <div class="col-span-2">
               <div class="text-sm col-span-1">
-                <label class="font-semibold" [for]="lab_form[field.field_name]">{{ field.field_desc }}</label>
-                <input [name]="lab_form[field.field_name]"  [(ngModel)]="lab_form[field.field_name]"  [type]="field.nv_min !== null ? 'number' : 'text'" class="mt-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input">
+                <label class="font-semibold" >Remarks</label>
+                <input name="field" [(ngModel)]="lab_form['remarks']" type="text" class="input">
               </div>
             </div>
+
           </div>
         </div>
       </div>
 
       <!-- Modal footer  -->
       <div class="flex justify-end pb-5 px-5 space-x-4 rounded-b mb-5">
-
         <button  type="button" class="btn-save bg-gray-400 px-10" (click)="closeModal()">Cancel</button>
-        <button type="button" class="btn-save px-10" (click)="onSubmit()" >
+        <button [disabled]="!lab_form['laboratory_date'] || !lab_form['lab_status_code']" type="button" class="btn-save px-10 disabled:bg-gray-300" (click)="onSubmit()" >
           <fa-icon [icon]="is_saving ? faSpinner : faSave" class="mr-2" [spin]="is_saving"></fa-icon>
           {{ is_saving ? 'Saving' : 'Save' }}
         </button>
