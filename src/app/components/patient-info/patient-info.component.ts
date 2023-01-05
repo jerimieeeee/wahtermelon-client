@@ -1,7 +1,6 @@
 import { animate, style, transition, trigger } from '@angular/animations';
-import { formatDate } from '@angular/common';
-import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, EventEmitter, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { faFlask, faHeart, faExclamationCircle, faNotesMedical, faPlusCircle, faQuestionCircle, faPenToSquare, faTrash, faTableList, faPenSquare, faChevronRight, faChevronUp, faChevronDown, fas, faClipboardUser, faCamera } from '@fortawesome/free-solid-svg-icons';
 import { AgeService } from 'app/shared/services/age.service';
 import { HttpService } from 'app/shared/services/http.service';
@@ -16,6 +15,7 @@ import { PrescriptionsComponent } from './components/prescriptions/prescriptions
 import { SocialHistoryComponent } from './components/social-history/social-history.component';
 import { SurgicalHistoryComponent } from './components/surgical-history/surgical-history.component';
 import { VaccineComponent } from './components/vaccine/vaccine.component';
+import { filter, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-patient-info',
@@ -33,7 +33,8 @@ import { VaccineComponent } from './components/vaccine/vaccine.component';
     ]),
   ]
 })
-export class PatientInfoComponent implements OnInit {
+
+export class PatientInfoComponent implements OnInit, OnChanges {
   @ViewChild(PastMedicalComponent) pastMedical: PastMedicalComponent;
   @ViewChild(FamilyMedicalComponent) familyMedical: FamilyMedicalComponent;
   @ViewChild(VaccineComponent) vaccine: VaccineComponent;
@@ -90,7 +91,11 @@ export class PatientInfoComponent implements OnInit {
     private http: HttpService,
     private ageService: AgeService,
     private vitalsCharts: VitalsChartsService
-  ) { }
+  ) {
+    /* this.activeRoute.params.subscribe((params:Params) => {
+      console.log(p.id)
+    }) */
+  }
 
   navigateTo(loc){
     this.router.navigate(['/'+loc, {id: this.patient_info.id}])
@@ -294,25 +299,36 @@ export class PatientInfoComponent implements OnInit {
     }
 
     if(modal_name === 'history') {
-      this.loadData('past_medical');
+      if(this.modals['history'] === false) this.loadData('past_medical');
     }
 
     if(modal_name === 'fam-history') {
-      this.loadData('family_medical');
+      if(this.modals['surgical-history'] === false) this.loadData('family_medical');
     }
 
     if(modal_name === 'surgical-history') {
-      this.loadData('surgical_history');
+      if(this.modals['surgical-history'] === false) this.loadData('surgical_history');
     }
 
     if(modal_name === 'lifestyle'){
-      console.log('yes')
       if(this.modals['lifestyle'] === false) this.loadData('social_history');
     }
     // if (modal_name === 'vaccine-action' && this.modals[modal_name] === false) this.loadData('vaccines');
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    this.getPatient(this.activeRoute.snapshot.paramMap.get('id'));
+  }
+
+  navigationEnd$ = this.router.events.pipe(
+    filter(event => event instanceof NavigationEnd),
+    tap(() => {
+      this.getPatient(this.activeRoute.snapshot.paramMap.get('id'));
+    })
+  );
+
   ngOnInit(): void {
+    this.navigationEnd$.subscribe();
     this.consult_id = this.activeRoute.snapshot.paramMap.get('consult_id');
     this.getPatient(this.activeRoute.snapshot.paramMap.get('id'));
   }

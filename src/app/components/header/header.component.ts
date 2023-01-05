@@ -1,9 +1,10 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { faChevronCircleDown, faBell, faSearch, faGear, faHome, faRightFromBracket, faAddressBook, faUser, faSquarePollVertical } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { catchError, debounceTime, distinctUntilChanged, switchMap, tap, map, filter } from 'rxjs/operators';
 import { concat, Observable, of, Subject } from 'rxjs';
 import { Router } from '@angular/router';
+import { PatientInfoComponent } from '../patient-info/patient-info.component';
 
 @Component({
   selector: 'app-header',
@@ -12,6 +13,7 @@ import { Router } from '@angular/router';
 })
 export class HeaderComponent implements OnInit {
   // @ViewChild(NgSelectComponent) ngSelectComponent: NgSelectComponent;
+  @ViewChild(PatientInfoComponent) patientInfo: PatientInfoComponent;
   @Input() user_info;
 
   faChevronCircleDown = faChevronCircleDown;
@@ -91,7 +93,10 @@ export class HeaderComponent implements OnInit {
   }
 
   onSelect(selectedPatient){
-    if(selectedPatient) this.router.navigate(['/itr', {id: selectedPatient.id}]);
+    if(selectedPatient) {
+      // this.patientInfo.getPatient(selectedPatient.id);
+      this.router.navigate(['/itr', {id: selectedPatient.id}]);
+    }
     this.selectedPatient = null;
     this.loadPatients();
   }
