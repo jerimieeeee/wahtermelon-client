@@ -18,24 +18,29 @@ export class LabFormComponent implements OnChanges, OnInit {
   faSpinner = faSpinner;
 
   is_saving: boolean = false;
+  show_form: boolean = false;
   fields: any;
 
   lab_form: any = {};
   max_date = formatDate(new Date, 'yyyy-MM-dd', 'en');
 
+  spl_val = ['observation_code', 'findings_code'];
+  lab_statuses: any;
+  lab_cxray_findings: any;
+  lab_cxray_observation: any;
+  lab_findings: any;
+
   loadForm(){
     if(this.selected_lab) {
       this.http.get('libraries/laboratories/'+this.selected_lab.laboratory.code).subscribe({
         next: (data: any) => {
-          console.log(data.data)
+          // console.log(data.data)
           this.trimForm(data.data.category);
         },
         error: err => console.log(err)
-      })
+      });
     }
   }
-
-  show_form: boolean = false;
 
   trimForm(data){
     let birthdate:any = new Date(this.patient_details.birthdate);
@@ -60,11 +65,25 @@ export class LabFormComponent implements OnChanges, OnInit {
     this.fields = fields;
 
     if(this.selected_lab.result) {
-      this.lab_form = this.selected_lab.result;
+      this.fillCodes(this.selected_lab)
     }
-    console.log(this.lab_form)
-    this.show_form = true;
 
+    this.show_form = true;
+  }
+
+  fillCodes(data){
+    this.lab_form = this.selected_lab.result;
+    switch (data.laboratory.code) {
+      case 'CXRAY':
+        this.lab_form['findings_code'] = this.lab_form.findings.code;
+        this.lab_form['observation_code'] = this.lab_form.observation.code;
+        break;
+      case 'ECG':
+        this.lab_form['findings_code'] = this.lab_form.findings.code;
+        break;
+      default:
+        break;
+    }
   }
 
   onSubmit(){
@@ -116,15 +135,6 @@ export class LabFormComponent implements OnChanges, OnInit {
     return '';
   }
 
-  closeModal(){
-    this.toggleModal.emit('add');
-  }
-
-  spl_val = ['observation_code', 'findings_code'];
-  lab_statuses: any;
-  lab_findings: any;
-  lab_observation: any;
-
   loadLibraries(){
     this.http.get('libraries/laboratory-statuses').subscribe({
       next: (data: any) => this.lab_statuses = data.data,
@@ -132,14 +142,23 @@ export class LabFormComponent implements OnChanges, OnInit {
     });
 
     this.http.get('libraries/laboratory-chestxray-findings').subscribe({
-      next: (data: any) => this.lab_findings = data.data,
+      next: (data: any) => this.lab_cxray_findings = data.data,
       error: err => console.log(err)
     });
 
     this.http.get('libraries/laboratory-chestxray-observations').subscribe({
-      next: (data: any) => this.lab_observation = data.data,
+      next: (data: any) => this.lab_cxray_observation = data.data,
       error: err => console.log(err)
     });
+
+    this.http.get('libraries/laboratory-findings').subscribe({
+      next: (data: any) => this.lab_findings = data.data,
+      error: err => console.log(err)
+    });
+  }
+
+  closeModal(){
+    this.toggleModal.emit('add');
   }
 
   constructor(

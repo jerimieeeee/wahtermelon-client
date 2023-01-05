@@ -26,17 +26,24 @@
             </div>
 
             <div *ngFor="let field of fields">
-              <div class="text-sm col-span-1" *ngIf="field.field_name === 'findings_code'">
+              <div class="text-sm col-span-1" *ngIf="selected_lab.laboratory.code === 'CXRAY' && field.field_name === 'findings_code'">
                 <label class="font-semibold" >{{ field.field_desc }}</label>
                 <select name="field" [(ngModel)]="lab_form['findings_code']" class="input">
-                  <option [value]="findings.code" *ngFor="let findings of lab_findings">{{ findings.desc }}</option>
+                  <option [value]="findings.code" *ngFor="let findings of lab_cxray_findings">{{ findings.desc }}</option>
                 </select>
               </div>
 
-              <div class="text-sm col-span-1" *ngIf="field.field_name === 'observation_code'">
+              <div class="text-sm col-span-1" *ngIf="selected_lab.laboratory.code === 'CXRAY' && field.field_name === 'observation_code'">
                 <label class="font-semibold" >{{ field.field_desc }}</label>
-                <select name="field" [(ngModel)]="lab_form['observation_code']" class="input">
+                <select name="field" [(ngModel)]="lab_form['lab_cxray_observation']" class="input">
                   <option [value]="obs.code" *ngFor="let obs of lab_observation">{{ obs.desc }}</option>
+                </select>
+              </div>
+
+              <div class="text-sm col-span-1" *ngIf="selected_lab.laboratory.code === 'ECG' && field.field_name === 'findings_code'">
+                <label class="font-semibold" >{{ field.field_desc }}</label>
+                <select name="field" [(ngModel)]="lab_form['findings_code']" class="input">
+                  <option [value]="findings.code" *ngFor="let findings of lab_findings">{{ findings.desc }}</option>
                 </select>
               </div>
 
