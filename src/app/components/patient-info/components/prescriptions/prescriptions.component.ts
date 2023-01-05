@@ -36,6 +36,21 @@ export class PrescriptionsComponent implements OnChanges {
   }
 
 
+  loadData(patient_id) {
+    let params = {
+      patient_id: patient_id,
+      status: 'dispensing'
+    }
+
+    this.http.get('medicine/prescriptions', {params}).subscribe({
+      next: (data: any) => {
+        console.log(data)
+        this.prescriptions = data.data;
+      },
+      error: err => console.log(err)
+    })
+  }
+
   loadPrescriptions(){
     if(this.patient_info){
       let params = {patient_id: this.patient_info.id, status: 'dispensing'};
@@ -55,7 +70,7 @@ export class PrescriptionsComponent implements OnChanges {
   ) { }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.loadPrescriptions();
+    // this.loadPrescriptions();
   }
 
 }

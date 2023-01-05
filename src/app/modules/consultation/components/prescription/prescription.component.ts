@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnChanges } from '@angular/core';
+import { Component, Input, OnInit, OnChanges, Output, EventEmitter } from '@angular/core';
 import { faAdd, faChevronCircleDown, faChevronCircleUp, faEdit, faSave, faSpinner, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
@@ -9,6 +9,7 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./prescription.component.scss']
 })
 export class PrescriptionComponent implements OnInit, OnChanges {
+  @Output() reloadData = new EventEmitter<any>();
   @Input() toggle_content;
   @Input() consult_details;
 
@@ -35,9 +36,12 @@ export class PrescriptionComponent implements OnInit, OnChanges {
     plan: null
   }
 
+  reloadPrescrition(){
+    this.reloadData.emit()
+  }
+
   openDeleteForm(drug){
     this.selected_drug = drug;
-
     this.toggleDeleteForm()
   }
 
@@ -124,7 +128,6 @@ export class PrescriptionComponent implements OnInit, OnChanges {
   }
 
   identify(index, item) {
-    // console.log(item)
     return item.id
   }
 
@@ -150,7 +153,8 @@ export class PrescriptionComponent implements OnInit, OnChanges {
     this.selected_drug = null;
     let params = {
       sort: '-prescription_date',
-      consult_id: this.consult_details.id
+      consult_id: this.consult_details.id,
+      status: 'dispensing'
     };
 
     console.log(params)
@@ -158,7 +162,7 @@ export class PrescriptionComponent implements OnInit, OnChanges {
       next: (data: any) => {
         console.log(data);
         this.prescriptions = data.data;
-        this.getValues();
+        // this.getValues();
       },
       error: err => console.log(err)
     })

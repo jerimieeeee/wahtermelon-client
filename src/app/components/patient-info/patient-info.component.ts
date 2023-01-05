@@ -10,6 +10,7 @@ import { FamilyMedicalComponent } from './components/family-medical/family-medic
 import { LaboratoryComponent } from './components/laboratory/laboratory.component';
 import { PastMedicalComponent } from './components/past-medical/past-medical.component';
 import { PhilhealthComponent } from './components/philhealth/philhealth.component';
+import { PrescriptionsComponent } from './components/prescriptions/prescriptions.component';
 import { VaccineComponent } from './components/vaccine/vaccine.component';
 
 @Component({
@@ -34,6 +35,8 @@ export class PatientInfoComponent implements OnInit {
   @ViewChild(VaccineComponent) vaccine: VaccineComponent;
   @ViewChild(PhilhealthComponent) philhealth: PhilhealthComponent;
   @ViewChild(LaboratoryComponent) laboratories: LaboratoryComponent;
+  @ViewChild(PrescriptionsComponent) prescriptions: PrescriptionsComponent;
+
   @Output() patientInfo = new EventEmitter<any>();
   @Output() patientVitals = new EventEmitter<any>();
   @Output() reloadLabs = new EventEmitter<any>();
@@ -129,6 +132,7 @@ export class PatientInfoComponent implements OnInit {
     if(field === 'vaccines' || field==='all') this.vaccine.loadData(this.patient_info.id);
     if(field === 'philhealth' || field==='all') this.philhealth.loadData(this.patient_info.id);
     if(field === 'laboratory' || field==='all') this.laboratories.loadData(this.patient_info.id);
+    if(field === 'prescription' || field==='all') this.prescriptions.loadData(this.patient_info.id);
   }
 
   loadLabs(){

@@ -11,6 +11,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class DrugFormComponent implements OnInit {
   @Output() toggleForm = new EventEmitter<any>();
+  @Output() reloadPrescrition = new EventEmitter<any>();
   @Input() selected_drug;
   @Input() consult_details;
 
@@ -60,6 +61,7 @@ export class DrugFormComponent implements OnInit {
         next: (data: any) => {
           console.log(data);
           this.toastr.success('Successfully added','Prescription');
+          this.reloadPrescrition.emit();
           this.closeModal();
         },
         error: err => console.log(err)
@@ -79,7 +81,7 @@ export class DrugFormComponent implements OnInit {
   loadLibraries(){
     this.libraries.forEach(obj => {
       this.http.get('libraries/'+obj.location).subscribe({
-        next: (data: any) => this[obj.var_name] = data.data,
+        next: (data: any) => {this[obj.var_name] = data.data; console.log(data.data)},
         error: err => console.log(err),
         complete: () => this.show_form = true
       })

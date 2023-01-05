@@ -6,6 +6,7 @@ import { concat, Observable, of, Subject } from 'rxjs';
 import { faFloppyDisk } from '@fortawesome/free-regular-svg-icons';
 import { ActivatedRoute } from '@angular/router';
 import { GraphsComponent } from './components/graphs/graphs.component';
+import { PatientInfoComponent } from 'app/components/patient-info/patient-info.component';
 
 @Component({
   selector: 'app-consultation',
@@ -14,6 +15,8 @@ import { GraphsComponent } from './components/graphs/graphs.component';
 })
 export class ConsultationComponent implements OnInit {
   @ViewChild(GraphsComponent) graph: GraphsComponent;
+  @ViewChild(PatientInfoComponent) patient_info: PatientInfoComponent;
+
   faPlusSquare = faPlusSquare;
   faSpinner = faCircleNotch;
   faXmark = faXmark;
@@ -51,6 +54,10 @@ export class ConsultationComponent implements OnInit {
   patientVitals(vitals) {
     // console.log(vitals)
     this.graph.patientVitals(vitals);
+  }
+
+  reloadData() {
+    this.patient_info.loadData('prescription');
   }
 
   endVisit() {
@@ -117,7 +124,7 @@ export class ConsultationComponent implements OnInit {
     this.patient_id = this.route.snapshot.paramMap.get('id');
     this.consult_id = this.route.snapshot.paramMap.get('consult_id');
 
-    this.modules = 3;
+    this.modules = 1;
     this.loadConsult();
   }
 
