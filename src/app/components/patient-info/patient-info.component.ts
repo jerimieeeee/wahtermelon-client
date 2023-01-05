@@ -8,10 +8,13 @@ import { HttpService } from 'app/shared/services/http.service';
 import { VitalsChartsService } from 'app/shared/services/vitals-charts.service';
 import { FamilyMedicalComponent } from './components/family-medical/family-medical.component';
 import { LaboratoryComponent } from './components/laboratory/laboratory.component';
+import { MenstrualHistoryComponent } from './components/menstrual-history/menstrual-history.component';
 import { PastMedicalComponent } from './components/past-medical/past-medical.component';
 import { PhilhealthComponent } from './components/philhealth/philhealth.component';
+import { PregnancyHistoryComponent } from './components/pregnancy-history/pregnancy-history.component';
 import { PrescriptionsComponent } from './components/prescriptions/prescriptions.component';
 import { SocialHistoryComponent } from './components/social-history/social-history.component';
+import { SurgicalHistoryComponent } from './components/surgical-history/surgical-history.component';
 import { VaccineComponent } from './components/vaccine/vaccine.component';
 
 @Component({
@@ -38,6 +41,9 @@ export class PatientInfoComponent implements OnInit {
   @ViewChild(LaboratoryComponent) laboratories: LaboratoryComponent;
   @ViewChild(PrescriptionsComponent) prescriptions: PrescriptionsComponent;
   @ViewChild(SocialHistoryComponent) socialHistory: SocialHistoryComponent;
+  @ViewChild(SurgicalHistoryComponent) surgicalHistory: SurgicalHistoryComponent;
+  @ViewChild(MenstrualHistoryComponent) menstrualHistory: MenstrualHistoryComponent;
+  @ViewChild(PregnancyHistoryComponent) pregnancyHistory: PregnancyHistoryComponent;
 
   @Output() patientInfo = new EventEmitter<any>();
   @Output() patientVitals = new EventEmitter<any>();
@@ -136,14 +142,21 @@ export class PatientInfoComponent implements OnInit {
     if(field === 'laboratory' || field==='all') this.laboratories.loadData(this.patient_info.id);
     if(field === 'prescription' || field==='all') this.prescriptions.loadData(this.patient_info.id);
     if(field === 'social_history' || field==='all') this.socialHistory.loadData(this.patient_info.id);
+    if(field === 'surgical_history' || field==='all') this.surgicalHistory.loadData(this.patient_info.id);
+    if(field === 'menstrual_history' || field==='all') {} //this.surgicalHistory.loadData(this.patient_info.id);
+    if(field === 'pregnancy_history' || field==='all')  {} //this.surgicalHistory.loadData(this.patient_info.id);
   }
 
   social_history: any;
   past_medical: any;
   family_medical: any;
+  surgical_history: any;
+
+  setSurgicalHistory(data) {
+    this.surgical_history = data;
+  }
 
   setPastMedical(data) {
-    console.log(data)
     this.past_medical = data;
   }
 
@@ -286,6 +299,10 @@ export class PatientInfoComponent implements OnInit {
 
     if(modal_name === 'fam-history') {
       this.loadData('family_medical');
+    }
+
+    if(modal_name === 'surgical-history') {
+      this.loadData('surgical_history');
     }
 
     if(modal_name === 'lifestyle'){

@@ -38,6 +38,12 @@ import { PhilhealthComponent } from 'app/components/patient-info/components/phil
 import { LaboratoryComponent } from 'app/components/patient-info/components/laboratory/laboratory.component';
 import { SocialHistoryComponent } from 'app/components/patient-info/components/social-history/social-history.component';
 import { DeathRecordComponent } from 'app/components/patient-info/components/death-record/death-record.component';
+import { SurgicalHistoryComponent } from 'app/components/patient-info/components/surgical-history/surgical-history.component';
+import { PregnancyHistoryComponent } from 'app/components/patient-info/components/pregnancy-history/pregnancy-history.component';
+import { MenstrualHistoryComponent } from 'app/components/patient-info/components/menstrual-history/menstrual-history.component';
+import { MenstrualModalComponent } from 'app/components/patient-info/modals/menstrual-modal/menstrual-modal.component';
+import { PregnancyModalComponent } from 'app/components/patient-info/modals/pregnancy-modal/pregnancy-modal.component';
+import { SurgicalModalComponent } from 'app/components/patient-info/modals/surgical-modal/surgical-modal.component';
 
 @NgModule({
   declarations: [
@@ -73,7 +79,13 @@ import { DeathRecordComponent } from 'app/components/patient-info/components/dea
     PhilhealthComponent,
     LaboratoryComponent,
     SocialHistoryComponent,
-    DeathRecordComponent
+    DeathRecordComponent,
+    SurgicalHistoryComponent,
+    PregnancyHistoryComponent,
+    MenstrualHistoryComponent,
+    MenstrualModalComponent,
+    PregnancyModalComponent,
+    SurgicalModalComponent
   ],
   imports: [
     CommonModule,
