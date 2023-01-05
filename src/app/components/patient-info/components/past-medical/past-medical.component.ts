@@ -19,7 +19,7 @@ export class PastMedicalComponent {
   history: [];
 
   loadData(patient_id){
-    this.http.get('patient-history/history', {params:{patient_id: patient_id}}).subscribe({
+    this.http.get('patient-history/history', {params:{patient_id: patient_id, category: '1'}}).subscribe({
       next: (data: any) => {
         // console.log(data)
         this.history = data.data;

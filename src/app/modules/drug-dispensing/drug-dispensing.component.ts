@@ -37,6 +37,7 @@ export class DrugDispensingComponent implements OnInit {
   show_form: boolean = false;
 
   onSubmit(){
+    console.log(this.prescriptions)
     Object.entries(this.prescriptions).forEach(([key, value], index) => {
       let values: any = value;
 
@@ -46,7 +47,7 @@ export class DrugDispensingComponent implements OnInit {
           dispensing_date: this.dispensing_date,
           prescription_id: values.id,
           dispense_quantity: values.dispense_quantity,
-          remarks: values.remarks,
+          remarks: values.remarks ? values.remarks : '',
           unit_price: 0,
           total_amount: 0
         }
@@ -87,11 +88,18 @@ export class DrugDispensingComponent implements OnInit {
 
   dispensed_list = [];
 
+  qtyDisp(data){
+    console.log(data);
+
+    if(data.disp)
+    return 0;
+  }
+
   getDispense(id){
     let params = {patient_id: id};
     this.http.get('medicine/dispensing', {params}).subscribe({
       next: (data: any) => {
-        console.log(data.data)
+        // console.log(data.data)
         this.dispensed_list = data.data;
         this.show_form = true;
       },
@@ -103,7 +111,7 @@ export class DrugDispensingComponent implements OnInit {
     let params = {patient_id: id, status: 'dispensing'};
     this.http.get('medicine/prescriptions', {params}).subscribe({
       next: (data: any) => {
-        console.log(data.data)
+        // console.log(data.data)
         this.prescriptions = data.data;
         this.getDispense(this.route.snapshot.paramMap.get('id'))
       },
@@ -117,6 +125,11 @@ export class DrugDispensingComponent implements OnInit {
 
   modal = [];
   selected_lab: any;
+
+  checkValid(pres){
+    console.log(pres)
+    if(pres.dispense_quantity > pres.quantity) pres.dispense_quantity = pres.quantity;
+  }
 
   toggleModal(form, lab?){
     this.selected_lab = lab;

@@ -11,6 +11,7 @@ import { LaboratoryComponent } from './components/laboratory/laboratory.componen
 import { PastMedicalComponent } from './components/past-medical/past-medical.component';
 import { PhilhealthComponent } from './components/philhealth/philhealth.component';
 import { PrescriptionsComponent } from './components/prescriptions/prescriptions.component';
+import { SocialHistoryComponent } from './components/social-history/social-history.component';
 import { VaccineComponent } from './components/vaccine/vaccine.component';
 
 @Component({
@@ -36,6 +37,7 @@ export class PatientInfoComponent implements OnInit {
   @ViewChild(PhilhealthComponent) philhealth: PhilhealthComponent;
   @ViewChild(LaboratoryComponent) laboratories: LaboratoryComponent;
   @ViewChild(PrescriptionsComponent) prescriptions: PrescriptionsComponent;
+  @ViewChild(SocialHistoryComponent) socialHistory: SocialHistoryComponent;
 
   @Output() patientInfo = new EventEmitter<any>();
   @Output() patientVitals = new EventEmitter<any>();
@@ -133,6 +135,14 @@ export class PatientInfoComponent implements OnInit {
     if(field === 'philhealth' || field==='all') this.philhealth.loadData(this.patient_info.id);
     if(field === 'laboratory' || field==='all') this.laboratories.loadData(this.patient_info.id);
     if(field === 'prescription' || field==='all') this.prescriptions.loadData(this.patient_info.id);
+    if(field === 'social_history' || field==='all') this.socialHistory.loadData(this.patient_info.id);
+  }
+
+  social_history: any;
+
+  setSocial(data){
+    // console.log(data);
+    this.social_history = data;
   }
 
   loadLabs(){
@@ -193,6 +203,7 @@ export class PatientInfoComponent implements OnInit {
       this.latest_vitals = null;
     }
   }
+
   vitalsEdit(e){
     this.vitals_to_edit = e;
     this.toggleModal('vitals');
@@ -258,6 +269,18 @@ export class PatientInfoComponent implements OnInit {
       }
     }
 
+    if(modal_name === 'history') {
+      this.loadData('past_medical');
+    }
+
+    if(modal_name === 'fam-history') {
+      this.loadData('family_medical');
+    }
+
+    if(modal_name === 'lifestyle'){
+      console.log('yes')
+      if(this.modals['lifestyle'] === false) this.loadData('social_history');
+    }
     // if (modal_name === 'vaccine-action' && this.modals[modal_name] === false) this.loadData('vaccines');
   }
 

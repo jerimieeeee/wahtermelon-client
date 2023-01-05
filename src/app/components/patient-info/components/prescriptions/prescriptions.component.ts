@@ -44,7 +44,7 @@ export class PrescriptionsComponent implements OnChanges {
 
     this.http.get('medicine/prescriptions', {params}).subscribe({
       next: (data: any) => {
-        console.log(data)
+        // console.log(data)
         this.prescriptions = data.data;
       },
       error: err => console.log(err)

@@ -56,7 +56,7 @@ export class PrescriptionComponent implements OnInit, OnChanges {
 
     this.http.update('consultation/notes/', this.consult_details.consult_notes.id, notes_remarks).subscribe({
       next: (data: any) => {
-        console.log(data);
+        // console.log(data);
         this.is_saving = false;
         this.showToastr();
       },
@@ -157,10 +157,10 @@ export class PrescriptionComponent implements OnInit, OnChanges {
       status: 'dispensing'
     };
 
-    console.log(params)
+    // console.log(params)
     this.http.get('medicine/prescriptions',{params}).subscribe({
       next: (data: any) => {
-        console.log(data);
+        // console.log(data);
         this.prescriptions = data.data;
         // this.getValues();
       },

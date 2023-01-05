@@ -110,7 +110,7 @@ export class DrugFormComponent implements OnInit {
     console.log(this.selected_drug);
     console.log(this.consult_details);
 
-    let physician = this.http.getUserID(); //this.consult_details.physician
+    let physician = this.consult_details.physician.id; //this.consult_details.physician
     this.prescriptionForm = this.formBuilder.nonNullable.group({
       patient_id: [this.consult_details.patient.id],
       prescribed_by: [physician,[Validators.required]],
@@ -132,7 +132,7 @@ export class DrugFormComponent implements OnInit {
 
     if(this.selected_drug){
       if(this.selected_drug.id) {
-        console.log('x')
+        // console.log('x')
         this.prescriptionForm.patchValue({...this.selected_drug});
         this.prescriptionForm.controls.added_medicine.disable();
         this.checkPurpose();
@@ -141,12 +141,12 @@ export class DrugFormComponent implements OnInit {
           this.prescriptionForm.patchValue({dosage_quantity: this.selected_drug.dossage_quantity});
         }
       } else {
-        console.log('1')
+        // console.log('1')
         this.prescriptionForm.patchValue({ konsulta_medicine_code: this.selected_drug.code })
         this.prescriptionForm.controls.added_medicine.disable();
       }
     } else {
-      console.log('2')
+      // console.log('2')
       this.add_drug = true;
       this.prescriptionForm.controls.konsulta_medicine_code.disable();
     }

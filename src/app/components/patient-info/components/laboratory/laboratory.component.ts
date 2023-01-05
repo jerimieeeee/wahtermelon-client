@@ -45,7 +45,7 @@ export class LaboratoryComponent implements OnInit {
       if(url !== '') {
         this.http.get(url, {params: {request_id: val.id}}).subscribe({
           next: (data: any) => {
-            console.log(data)
+            // console.log(data)
             this.lab_list[key]['result'] = data.data[0];
             if(Object.keys(this.lab_list).length - 1 === index) {
               this.show_form = true;

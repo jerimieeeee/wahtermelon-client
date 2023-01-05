@@ -1,0 +1,56 @@
+<div class="block pt-4 justify-items-start mx-5 mb-5">
+  <div class="flex justify-between items-center">
+    <span class="block text-blue-500 font-medium text-sm">
+      LIFESTYLE
+    </span>
+    <fa-icon (click)="modalToggle('lifestyle')" class="mx-0 my-0 text-blue-500 mr-2 hover:cursor-pointer" [icon]="faPlusCircle"></fa-icon>
+  </div>
+
+  <div class="block">
+    <div class="flex pl-3 justify-between items-center">
+      <span class="block font-medium text-xs">
+        SMOKER
+      </span>
+      <span class="block text-xs">
+        {{ social_history?.smoking }}
+      </span>
+    </div>
+
+    <div class="flex pl-3 justify-between items-center">
+      <span class="block font-medium text-xs">
+        Pack year
+      </span>
+      <span class="block text-xs">
+        {{ social_history?.pack_per_year ?? '-'}}
+      </span>
+    </div>
+
+
+    <div class="flex pl-3 justify-between items-center">
+      <span class="block font-medium text-xs">
+        ALCOHOL
+      </span>
+      <span class="block text-xs">
+        {{ social_history?.alcohol }}
+      </span>
+    </div>
+
+    <div class="flex pl-3 justify-between items-center">
+      <span class="block font-medium text-xs">
+        Bottle per day
+      </span>
+      <span class="block text-xs">
+        {{ social_history?.bottles_per_day ?? '-' }}
+      </span>
+    </div>
+
+    <div class="flex pl-3 justify-between items-center">
+      <span class="block font-medium text-xs">
+        ILLICIT DRUGS
+      </span>
+      <span class="block text-xs">
+        {{ social_history?.illicit_drugs }}
+      </span>
+    </div>
+  </div>
+</div>

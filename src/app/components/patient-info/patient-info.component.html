@@ -318,65 +318,10 @@
     </div> -->
     <app-vaccine (toggleAccordion)="toggleAccordion($event)" [accordions]="accordions" (toggleModal)="toggleModal($event)" (setVaccineGiven)="setVaccineGiven($event)"></app-vaccine>
     <app-past-medical (toggleAccordion)="toggleAccordion($event)" [accordions]="accordions" (toggleModal)="toggleModal($event)"></app-past-medical>
-    <app-family-medical (toggleAccordion)="toggleAccordion($event)" [accordions]="accordions"></app-family-medical>
+    <app-family-medical (toggleAccordion)="toggleAccordion($event)" [accordions]="accordions" (toggleModal)="toggleModal($event)"></app-family-medical>
+    <app-social-history (toggleAccordion)="toggleAccordion($event)" [accordions]="accordions" (toggleModal)="toggleModal($event)" (setSocial)="setSocial($event)"></app-social-history>
 
-    <div class="block pt-4 justify-items-start mx-5 mb-5">
-      <div class="flex justify-between items-center">
-        <span class="block text-blue-500 font-medium text-sm">
-          LIFESTYLE
-        </span>
-        <fa-icon (click)="toggleModal('lifestyle')" class="mx-0 my-0 text-blue-500 mr-2 hover:cursor-pointer" [icon]="faPlusCircle"></fa-icon>
-      </div>
-
-      <div class="block">
-        <div class="flex pl-3 justify-between items-center">
-          <span class="block font-medium text-xs">
-            SMOKER
-          </span>
-          <span class="block text-xs">
-            -
-          </span>
-        </div>
-
-        <div class="flex pl-3 justify-between items-center">
-          <span class="block font-medium text-xs">
-            ALCOHOL
-          </span>
-          <span class="block text-xs">
-            -
-          </span>
-        </div>
-
-        <div class="flex pl-3 justify-between items-center">
-          <span class="block font-medium text-xs">
-            ILLICIT DRUGS
-          </span>
-          <span class="block text-xs">
-            -
-          </span>
-        </div>
-      </div>
-    </div>
-
-    <div class="block pt-4 justify-items-start mx-5 mb-5">
-      <div class="flex justify-between items-center">
-        <span class="block text-blue-500 font-medium text-sm">
-          DEATH RECORD
-        </span>
-        <fa-icon (click)="toggleModal('death')" class="mx-0 my-0 text-blue-500 mr-2 hover:cursor-pointer" [icon]="faPlusCircle"></fa-icon>
-      </div>
-
-      <div class="block">
-        <div class="flex pl-3 justify-between items-center">
-          <span class="block font-medium text-xs">
-            -
-          </span>
-          <span class="block text-xs">
-            -
-          </span>
-        </div>
-      </div>
-    </div>
+    <!-- <app-death-record></app-death-record> -->
 
   </div>
 </div>
@@ -396,9 +341,9 @@
 
 <app-history-modal *ngIf="modals['history']" (toggleModal)="toggleModal('history')" [patient_info]="patient_info" (loadData)="loadData('past_medical')"></app-history-modal>
 
-<app-fam-history-modal *ngIf="modals['fam-history']" (toggleModal)="toggleModal('fam-history')" [patient_info]="patient_info"></app-fam-history-modal>
+<app-fam-history-modal *ngIf="modals['fam-history']" (toggleModal)="toggleModal($event)" [patient_info]="patient_info"></app-fam-history-modal>
 
-<app-lifestyle-modal *ngIf="modals['lifestyle']" (toggleModal)="toggleModal('lifestyle')"></app-lifestyle-modal>
+<app-lifestyle-modal *ngIf="modals['lifestyle']" (toggleModal)="toggleModal($event)" [patient_info]="patient_info" [social_history]="social_history"></app-lifestyle-modal>
 
 <app-death-modal *ngIf="modals['death']" (toggleModal)="toggleModal('death')"></app-death-modal>
 

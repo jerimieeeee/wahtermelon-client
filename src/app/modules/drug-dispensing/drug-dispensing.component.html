@@ -31,27 +31,27 @@
             </thead>
             <tbody *ngIf="show_form">
               <tr *ngFor="let pres of prescriptions; trackBy:identify" class="bg-white border-b last:border-0">
-                <td class="py-4 px-3">
+                <td class="py-4 px-3 font-medium">
                   {{ pres.konsulta_medicine.desc ?? pres.added_medicine}}
                 </td>
-                <td scope="row" class="py-4 px-3 font-medium text-gray-900">
+                <td scope="row" class="py-4 px-3  text-gray-900">
                   {{ pres.dosage_quantity }} {{ pres.unit_of_measurement.desc }} {{ pres.regimen.desc }}
                   {{ pres.duration_intake }} {{ pres.frequency.desc }}
                 </td>
-                <td scope="row" class="py-4 px-3 font-medium text-gray-900">
+                <td scope="row" class="py-4 px-3  text-gray-900">
                   {{ pres.prescription_date | date : 'MM/dd/yyyy'}}
                 </td>
-                <td scope="row" class="py-4 px-3 font-medium text-gray-900">
+                <td scope="row" class="py-4 px-3 text-gray-900">
                   {{ pres.quantity }}
                 </td>
-                <td scope="row" class="py-4 px-3 font-medium text-gray-900">
+                <td scope="row" class="py-4 px-3  text-gray-900">
                   {{ pres.preparation.desc }}
                 </td>
                 <td scope="row" class="py-4 px-3">
-                  <input type="number" class="w-16 h-7 border border-slate-400 rounded" [(ngModel)]="pres.dispense_quantity"/>
+                  <input type="number" class="w-16 h-7 border border-slate-400 rounded" [max]="pres.quantity" [(ngModel)]="pres['dispense_quantity']" (keyup)="checkValid(pres)" />
                 </td>
                 <td scope="row" class="py-4 px-3">
-                  <textarea [disabled]="!pres.dispense_quantity || pres.dispense_quantity === 0" class="w-full border border-slate-400 rounded text-sm disabled:bg-gray-200" [(ngModel)]="pres.remarks"></textarea>
+                  <textarea [disabled]="!pres.dispense_quantity || pres.dispense_quantity === 0" class="w-full border border-slate-400 rounded text-sm disabled:bg-gray-200" [(ngModel)]="pres['remarks']"></textarea>
                 </td>
               </tr>
             </tbody>
@@ -88,23 +88,23 @@
                 <td class="py-4 px-3">
                   {{ dis.prescription.konsulta_medicine.desc ?? dis.prescription.added_medicine}}
                 </td>
-                <td scope="row" class="py-4 px-3 font-medium text-gray-900">
+                <td scope="row" class="py-4 px-3 text-gray-900">
                   {{ dis.prescription.dosage_quantity }} {{ dis.prescription.unit_of_measurement.desc }} {{ dis.prescription.regimen.desc }}
                   {{ dis.prescription.duration_intake }} {{ dis.prescription.frequency.desc }}
                 </td>
-                <td scope="row" class="py-4 px-3 font-medium text-gray-900">
+                <td scope="row" class="py-4 px-3 text-gray-900">
                   {{ dis.prescription.prescription_date | date : 'MM/dd/yyyy'}}
                 </td>
-                <td scope="row" class="py-4 px-3 font-medium text-gray-900">
+                <td scope="row" class="py-4 px-3 text-gray-900">
                   {{ dis.prescription.quantity }}
                 </td>
-                <td scope="row" class="py-4 px-3 font-medium text-gray-900">
+                <td scope="row" class="py-4 px-3 text-gray-900">
                   {{ dis.prescription.preparation.desc }}
                 </td>
-                <td scope="row" class="py-4 px-3">
+                <td scope="row" class="py-4 px-3 font-semibold text-center">
                   {{ dis.dispense_quantity }}
                 </td>
-                <td scope="row" class="py-4 px-3">
+                <td scope="row" class="py-4 px-3 font-semibold">
                   {{ dis.remarks }}
                 </td>
               </tr>

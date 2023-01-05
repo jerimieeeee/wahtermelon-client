@@ -36,6 +36,8 @@ import { VaccineComponent } from 'app/components/patient-info/components/vaccine
 import { VitalsComponent } from 'app/components/patient-info/components/vitals/vitals.component';
 import { PhilhealthComponent } from 'app/components/patient-info/components/philhealth/philhealth.component';
 import { LaboratoryComponent } from 'app/components/patient-info/components/laboratory/laboratory.component';
+import { SocialHistoryComponent } from 'app/components/patient-info/components/social-history/social-history.component';
+import { DeathRecordComponent } from 'app/components/patient-info/components/death-record/death-record.component';
 
 @NgModule({
   declarations: [
@@ -69,7 +71,9 @@ import { LaboratoryComponent } from 'app/components/patient-info/components/labo
     VaccineComponent,
     VitalsComponent,
     PhilhealthComponent,
-    LaboratoryComponent
+    LaboratoryComponent,
+    SocialHistoryComponent,
+    DeathRecordComponent
   ],
   imports: [
     CommonModule,
