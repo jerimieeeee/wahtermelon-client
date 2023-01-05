@@ -148,7 +148,7 @@ export class RiskAssessmentComponent implements OnInit, OnChanges {
   }
 
   checkIfComplete(){
-    if(this.riskAssessForm.value.bmi && this.riskAssessForm.value.obesity && this.riskAssessForm.value.avg_systolic && this.riskAssessForm.value.avg_diastolic && this.riskAssessForm.value.waist_line) {
+    if(this.riskAssessForm.value.bmi && this.riskAssessForm.value.obesity !== undefined && this.riskAssessForm.value.avg_systolic && this.riskAssessForm.value.avg_diastolic && this.riskAssessForm.value.waist_line) {
       this.show_form = true;
     }
   }
