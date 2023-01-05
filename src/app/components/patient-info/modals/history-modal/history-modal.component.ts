@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -7,10 +7,12 @@ import { ToastrService } from 'ngx-toastr';
   templateUrl: './history-modal.component.html',
   styleUrls: ['./history-modal.component.scss']
 })
-export class HistoryModalComponent implements OnInit {
+export class HistoryModalComponent implements OnInit, OnChanges {
   @Output() toggleModal = new EventEmitter<any>();
   @Output() loadData = new EventEmitter<any>();
   @Input() patient_info;
+  @Input() past_medical;
+
   history_list: []
 
   patient_history = {
@@ -37,7 +39,7 @@ export class HistoryModalComponent implements OnInit {
           medical_history_id: key,
           remarks: this.patient_history.remarks[key] ? this.patient_history.remarks[key] : null,
         };
-
+        console.log(hx)
         hx_arr.push(hx);
       }
     })
@@ -60,6 +62,19 @@ export class HistoryModalComponent implements OnInit {
     }
   }
 
+  patchData(){
+    if(this.past_medical) {
+      console.log(this.past_medical);
+      Object.entries(this.past_medical).forEach(([key, value], index) => {
+        let val: any = value;
+        this.patient_history.medical_history_id[val.medical_history_id] = true;
+        if(val.remarks) {
+          this.patient_history.remarks[val.medical_history_id] = val.remarks;
+        }
+      })
+    }
+  }
+
   closeModal(){
     this.toggleModal.emit('history')
   }
@@ -68,6 +83,10 @@ export class HistoryModalComponent implements OnInit {
     private http: HttpService,
     private toastr: ToastrService
   ) { }
+
+  ngOnChanges(change: SimpleChanges) : void {
+    this.patchData()
+  }
 
   ngOnInit(): void {
     this.loadLibraries();

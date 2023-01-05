@@ -10,6 +10,7 @@ import { HttpService } from 'app/shared/services/http.service';
 export class PastMedicalComponent {
   @Output() toggleAccordion = new EventEmitter<any>();
   @Output() toggleModal = new EventEmitter<any>();
+  @Output() setPastMedical = new EventEmitter<any>();
   @Input() accordions;
 
   faChevronUp = faChevronUp;
@@ -22,6 +23,7 @@ export class PastMedicalComponent {
     this.http.get('patient-history/history', {params:{patient_id: patient_id, category: '1'}}).subscribe({
       next: (data: any) => {
         // console.log(data)
+        this.setPastMedical.emit(data.data);
         this.history = data.data;
       },
       error: err => console.log(err)

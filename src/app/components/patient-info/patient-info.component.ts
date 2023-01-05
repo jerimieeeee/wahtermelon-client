@@ -139,6 +139,17 @@ export class PatientInfoComponent implements OnInit {
   }
 
   social_history: any;
+  past_medical: any;
+  family_medical: any;
+
+  setPastMedical(data) {
+    console.log(data)
+    this.past_medical = data;
+  }
+
+  setFamilyMedical(data){
+    this.family_medical = data;
+  }
 
   setSocial(data){
     // console.log(data);

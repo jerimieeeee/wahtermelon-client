@@ -317,8 +317,8 @@
       </div>
     </div> -->
     <app-vaccine (toggleAccordion)="toggleAccordion($event)" [accordions]="accordions" (toggleModal)="toggleModal($event)" (setVaccineGiven)="setVaccineGiven($event)"></app-vaccine>
-    <app-past-medical (toggleAccordion)="toggleAccordion($event)" [accordions]="accordions" (toggleModal)="toggleModal($event)"></app-past-medical>
-    <app-family-medical (toggleAccordion)="toggleAccordion($event)" [accordions]="accordions" (toggleModal)="toggleModal($event)"></app-family-medical>
+    <app-past-medical (toggleAccordion)="toggleAccordion($event)" [accordions]="accordions" (toggleModal)="toggleModal($event)" (setPastMedical)="setPastMedical($event)"></app-past-medical>
+    <app-family-medical (toggleAccordion)="toggleAccordion($event)" [accordions]="accordions" (toggleModal)="toggleModal($event)" (setFamilyMedical)="setFamilyMedical($event)"></app-family-medical>
     <app-social-history (toggleAccordion)="toggleAccordion($event)" [accordions]="accordions" (toggleModal)="toggleModal($event)" (setSocial)="setSocial($event)"></app-social-history>
 
     <!-- <app-death-record></app-death-record> -->
@@ -339,9 +339,9 @@
 
 <app-vaccine-action-modal *ngIf="modals['vaccine-action']" (toggleModal)="toggleModal($event)" [vaccine_to_edit]="vaccine_to_edit"></app-vaccine-action-modal>
 
-<app-history-modal *ngIf="modals['history']" (toggleModal)="toggleModal('history')" [patient_info]="patient_info" (loadData)="loadData('past_medical')"></app-history-modal>
+<app-history-modal *ngIf="modals['history']" (toggleModal)="toggleModal('history')" [patient_info]="patient_info" (loadData)="loadData('past_medical')" [past_medical]="past_medical"></app-history-modal>
 
-<app-fam-history-modal *ngIf="modals['fam-history']" (toggleModal)="toggleModal($event)" [patient_info]="patient_info"></app-fam-history-modal>
+<app-fam-history-modal *ngIf="modals['fam-history']" (toggleModal)="toggleModal($event)" [patient_info]="patient_info" [family_medical]="family_medical"></app-fam-history-modal>
 
 <app-lifestyle-modal *ngIf="modals['lifestyle']" (toggleModal)="toggleModal($event)" [patient_info]="patient_info" [social_history]="social_history"></app-lifestyle-modal>
 

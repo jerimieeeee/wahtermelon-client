@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
@@ -8,10 +8,11 @@ import { ToastrService } from 'ngx-toastr';
   templateUrl: './fam-history-modal.component.html',
   styleUrls: ['./fam-history-modal.component.scss']
 })
-export class FamHistoryModalComponent implements OnInit {
+export class FamHistoryModalComponent implements OnInit, OnChanges {
   @Output() toggleModal = new EventEmitter<any>();
   @Output() loadData = new EventEmitter<any>();
   @Input() patient_info;
+  @Input() family_medical;
   history_list: []
 
   patient_history = {
@@ -59,6 +60,23 @@ export class FamHistoryModalComponent implements OnInit {
         complete: () => console.log('success')
       })
     }
+  }
+
+  patchData(){
+    if(this.family_medical) {
+      console.log(this.family_medical);
+      Object.entries(this.family_medical).forEach(([key, value], index) => {
+        let val: any = value;
+        this.patient_history.medical_history_id[val.medical_history_id] = true;
+        if(val.remarks) {
+          this.patient_history.remarks[val.medical_history_id] = val.remarks;
+        }
+      })
+    }
+  }
+
+  ngOnChanges(change: SimpleChanges) : void {
+    this.patchData()
   }
 
   closeModal(){
