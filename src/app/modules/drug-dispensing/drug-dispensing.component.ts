@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { faEdit, faFlaskVial, faTrash, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-drug-dispensing',
@@ -47,7 +48,7 @@ export class DrugDispensingComponent implements OnInit {
           dispensing_date: this.dispensing_date,
           prescription_id: values.id,
           dispense_quantity: values.dispense_quantity,
-          remarks: values.remarks ? values.remarks : '',
+          remarks: values.remarks ? values.remarks : 'NA',
           unit_price: 0,
           total_amount: 0
         }
@@ -56,9 +57,18 @@ export class DrugDispensingComponent implements OnInit {
         this.http.post('medicine/dispensing', params).subscribe({
           next: (data: any) => {
             console.log(data)
+            if(Object.keys(this.prescriptions).length-1 === index) {
+              this.getPresciptions(this.route.snapshot.paramMap.get('id'));
+              this.toastr.success('Successfully recorded!','Dispensing');
+            }
           },
           error: err => console.log(err)
         })
+      } else {
+        if(Object.keys(this.prescriptions).length-1 === index) {
+          this.getPresciptions(this.route.snapshot.paramMap.get('id'));
+          this.toastr.success('Successfully recorded!','Dispensing');
+        }
       }
     })
   }
@@ -139,7 +149,8 @@ export class DrugDispensingComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private http: HttpService
+    private http: HttpService,
+    private toastr: ToastrService
   ) { }
 
   ngOnInit(): void {
