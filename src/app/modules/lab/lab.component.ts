@@ -73,7 +73,19 @@ export class LabComponent implements OnInit {
       case 'CXRAY':
         return 'laboratory/consult-laboratory-chestxray'
       case 'ECG':
-        return ''
+        return 'laboratory/consult-laboratory-ecg'
+      case 'FBS':
+        return 'laboratory/consult-laboratory-fbs'
+      case 'RBS':
+        return 'laboratory/consult-laboratory-rbs'
+      case 'HBA':
+        return 'laboratory/consult-laboratory-hba1c'
+      case 'PSMR':
+        return 'laboratory/consult-laboratory-papsmear'
+      case 'PPD':
+        return 'laboratory/consult-laboratory-ppd'
+      case 'SPTM':
+        return 'laboratory/consult-laboratory-sputum'
       default:
         break;
     }

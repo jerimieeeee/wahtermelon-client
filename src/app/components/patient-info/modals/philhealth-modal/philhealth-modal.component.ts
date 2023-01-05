@@ -2,7 +2,7 @@ import { formatDate, ViewportScroller } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { faCheck, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faCircleInfo, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -18,6 +18,7 @@ export class PhilhealthModalComponent implements OnInit {
 
   faCheck = faCheck;
   faSpinner = faSpinner;
+  faCircleInfo = faCircleInfo;
 
   error_message = "exceeded maximum value";
   error_message_min = "does not meet minimum length";
@@ -73,7 +74,6 @@ export class PhilhealthModalComponent implements OnInit {
 
   submit_errors: [];
 
-
   pATC_date: string;
   is_atc_valid: boolean;
   is_walk_in: boolean;
@@ -82,13 +82,19 @@ export class PhilhealthModalComponent implements OnInit {
 
   isATCValid(){
     this.is_checking_atc = true;
-    /* this.http.post('isATCvalidURL', {params: {pATC: this.pATC}}).subscribe({
+    let params = {
+      pPin: this.philhealthForm.value.philhealth_id,
+      pATC: this.philhealthForm.value.pATC,
+      pEffectivityDate: formatDate(this.pATC_date, 'MM/dd/yyyy', 'en')
+    }
+    this.http.get('konsulta/check-atc', {params}).subscribe({
       next: (data: any) => {
         console.log(data)
+        this.is_checking_atc = false;
         this.is_atc_valid = data.data === 'YES' ? true : false;
       },
       error: err => console.log(err)
-    }) */
+    })
   }
 
   isMemberDependentRegistered() {
@@ -99,13 +105,14 @@ export class PhilhealthModalComponent implements OnInit {
       pType: this.philhealthForm.value.membership_type_id
     }
 
-    /* this.http.post('isATCvalidURL', {params}).subscribe({
+    this.http.get('konsulta/check-registered', {params}).subscribe({
       next: (data: any) => {
         console.log(data)
-        this.is_atc_valid = data.data === 'YES' ? true : false;
+        this.is_checking_status = false;
+        this.is_registered = data.data === 'YES' ? true : false;
       },
       error: err => console.log(err)
-    }) */
+    })
   }
 
   onSubmit(){
