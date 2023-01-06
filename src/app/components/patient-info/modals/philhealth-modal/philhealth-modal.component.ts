@@ -91,7 +91,7 @@ export class PhilhealthModalComponent implements OnInit {
       next: (data: any) => {
         console.log(data)
         this.is_checking_atc = false;
-        this.is_atc_valid = data.data === 'YES' ? true : false;
+        this.is_atc_valid = data.return === 'YES' ? true : false;
       },
       error: err => console.log(err)
     })
@@ -107,9 +107,8 @@ export class PhilhealthModalComponent implements OnInit {
 
     this.http.get('konsulta/check-registered', {params}).subscribe({
       next: (data: any) => {
-        console.log(data)
         this.is_checking_status = false;
-        this.is_registered = data.data === 'YES' ? true : false;
+        this.is_registered = data.return === 'YES' ? true : false;
       },
       error: err => console.log(err)
     })

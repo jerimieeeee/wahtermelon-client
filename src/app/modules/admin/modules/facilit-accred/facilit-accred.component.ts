@@ -43,23 +43,10 @@ export class FacilitAccredComponent implements OnInit {
     })
   }
 
-  loadList(page?: number){
-    let params = {params: { }};
-    if (this.search_item) params['params']['filter[search]'] = this.search_item;
-    if (page) params['params']['page'] = page;
-    params['params']['per_page'] = this.per_page;
-
-    console.log(params)
-    this.http.get('users',params).subscribe({
+  loadList(){
+    this.http.get('settings/philhealth-credentials').subscribe({
       next: (data: any) => {
-        console.log(data.data);
-        this.konsulta_list = data.data;
-
-        this.current_page = data.meta.current_page;
-        this.last_page = data.meta.last_page;
-        this.from = data.meta.from;
-        this.to = data.meta.to;
-        this.total = data.meta.total;
+        console.log(data.data)
       },
       error: err => console.log(err)
     })
@@ -70,5 +57,6 @@ export class FacilitAccredComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.loadList()
   }
 }

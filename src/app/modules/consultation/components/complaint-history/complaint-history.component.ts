@@ -75,6 +75,7 @@ export class ComplaintHistoryComponent implements OnInit, OnChanges {
       })
     } else {
       this.is_saving = false;
+      this.showToastr();
       this.loadConsult.emit();
     }
   }
