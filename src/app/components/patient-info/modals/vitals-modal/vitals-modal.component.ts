@@ -47,6 +47,7 @@ export class VitalsModalComponent implements OnInit {
         this.vitalsForm.disable();
 
         this.toastr.success('Successfully recorded!', 'Vital signs')
+        this.closeModal();
         // console.log(data)
       },
       error: err => console.log(err),

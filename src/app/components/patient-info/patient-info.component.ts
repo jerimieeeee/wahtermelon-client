@@ -233,40 +233,70 @@ export class PatientInfoComponent implements OnInit {
     this.vaccines_given = data;
   }
 
+  history_list: any;
+
+  loadLibrary(url, var_name, modal_name){
+    console.log('loaded')
+    this.http.get(url).subscribe({
+      next: (data: any) => {
+        this[var_name] = data.data;
+        this.modals[modal_name] = !this.modals[modal_name];
+      },
+      error: err => console.log(err)
+    })
+  }
+
   toggleModal(modal_name, data?){
     console.log(modal_name)
-    this.modals[modal_name.modal_name ?? modal_name] = !this.modals[modal_name.modal_name ?? modal_name];
 
-    if (modal_name === 'vitals' && this.modals[modal_name] === false) {
-      if(this.modals['vitals'] == false)  this.vitals_to_edit = null;
-      this.loadVitals();
-    }
-
-    if (modal_name.modal_name === 'philhealth' && this.modals[modal_name.modal_name] === false) {
-      if(this.modals['philhealth'] === false)  this.philhealth_to_edit = null;
-      this.loadData('philhealth');
-    }
-
-    if (modal_name.modal_name === 'vaccine') {
-      if(this.modals[modal_name.modal_name] === true) {
-        this.vaccines_given = modal_name.data;
-      }
-    }
-
-    if (modal_name.modal_name === 'vaccine-action') {
-      if(this.modals[modal_name.modal_name] === true) {
-        this.vaccine_to_edit = modal_name.data;
+    if(modal_name === 'fam-history' || modal_name === 'history') {
+      if(!this.history_list){
+        this.loadLibrary('libraries/medical-history', 'history_list', modal_name);
+        /* this.http.get('libraries/medical-history').subscribe({
+          next: (data: any) => {
+            this.history_list = data.data;
+            this.modals[modal_name] = !this.modals[modal_name];
+          },
+          error: err => console.log(err)
+        }) */
       } else {
-        this.loadData('vaccines');
+        this.modals[modal_name] = !this.modals[modal_name];
       }
+
+      if(modal_name === 'history' && this.modals['history'] === false) this.loadData('past_medical');
+      if(modal_name === 'fam-history' && this.modals['surgical-history'] === false) this.loadData('family_medical');
+    } else {
+      this.modals[modal_name.modal_name ?? modal_name] = !this.modals[modal_name.modal_name ?? modal_name];
+
+      if (modal_name === 'vitals' && this.modals[modal_name] === false) {
+        if(this.modals['vitals'] == false)  this.vitals_to_edit = null;
+        this.loadVitals();
+      }
+
+      if (modal_name.modal_name === 'philhealth' && this.modals[modal_name.modal_name] === false) {
+        if(this.modals['philhealth'] === false)  this.philhealth_to_edit = null;
+        this.loadData('philhealth');
+      }
+
+
+      if (modal_name.modal_name === 'vaccine') {
+        if(this.modals[modal_name.modal_name] === true) {
+          this.vaccines_given = modal_name.data;
+        }
+      }
+
+      if (modal_name.modal_name === 'vaccine-action') {
+        if(this.modals[modal_name.modal_name] === true) {
+          this.vaccine_to_edit = modal_name.data;
+        } else {
+          this.loadData('vaccines');
+        }
+      }
+
+      if(modal_name === 'surgical-history' && this.modals['surgical-history'] === false) this.loadData('surgical_history');
+      if(modal_name === 'lifestyle' && this.modals['lifestyle'] === false) this.loadData('social_history');
+      if (modal_name === 'lab-request' && this.modals[modal_name] === false) this.loadData('laboratory');
     }
-
-    if(modal_name === 'history' && this.modals['history'] === false) this.loadData('past_medical');
-    if(modal_name === 'fam-history' && this.modals['surgical-history'] === false) this.loadData('family_medical');
-    if(modal_name === 'surgical-history' && this.modals['surgical-history'] === false) this.loadData('surgical_history');
-    if(modal_name === 'lifestyle' && this.modals['lifestyle'] === false) this.loadData('social_history');
-    if (modal_name === 'lab-request' && this.modals[modal_name] === false) this.loadData('laboratory');
-
     // if (modal_name === 'vaccine-action' && this.modals[modal_name] === false) this.loadData('vaccines');
   }
 

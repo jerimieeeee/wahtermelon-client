@@ -10,9 +10,9 @@
       </div>
       <!-- Modal body -->
       <div class="overflow-y-auto h-96 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
-          <div class="flex item-start flex-wrap pb-5 px-5" *ngFor="let list of history_list">
+          <div class="flex item-start flex-wrap pt-3 px-10 first:mt-5 last:mb-10" *ngFor="let list of history_list">
 
-            <div class="w-4/12 flex mb-5" >
+            <div class="w-4/12 flex mb-2" >
               <input type="checkbox" [(ngModel)]="patient_history.medical_history_id[list.id]"
               attr.id="patient_history{{list.id}}" class="flex-none mt-2 mr-2 border border-gray-300 sm:text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block p-2.5">
               <label attr.for="patient_history{{list.id}}" class="flex-1 mt-2 text-gray-800">{{ list.history_desc }}</label>

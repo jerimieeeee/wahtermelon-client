@@ -12,24 +12,15 @@ export class HistoryModalComponent implements OnInit, OnChanges {
   @Output() loadData = new EventEmitter<any>();
   @Input() patient_info;
   @Input() past_medical;
-
-  history_list: []
+  @Input() history_list;
 
   patient_history = {
     medical_history_id: [],
     remarks: []
   }
 
-  loadLibraries() {
-    this.http.get('libraries/medical-history').subscribe({
-      next: (data: any) => this.history_list = data.data,
-      error: err => console.log(err)
-    })
-  }
-
   onSubmit(){
-    console.log(this.patient_history);
-
+    // console.log(this.patient_history);
     var hx_arr = [];
 
     Object.entries(this.patient_history.medical_history_id).forEach(([key, value], index) => {
@@ -64,7 +55,6 @@ export class HistoryModalComponent implements OnInit, OnChanges {
 
   patchData(){
     if(this.past_medical) {
-      console.log(this.past_medical);
       Object.entries(this.past_medical).forEach(([key, value], index) => {
         let val: any = value;
         this.patient_history.medical_history_id[val.medical_history_id] = true;
@@ -89,7 +79,7 @@ export class HistoryModalComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    this.loadLibraries();
+    // this.loadLibraries();
   }
 
 }

@@ -107,6 +107,7 @@ export class PhilhealthModalComponent implements OnInit {
 
     this.http.get('konsulta/check-registered', {params}).subscribe({
       next: (data: any) => {
+        console.log(data)
         this.is_checking_status = false;
         this.is_registered = data.return === 'YES' ? true : false;
       },

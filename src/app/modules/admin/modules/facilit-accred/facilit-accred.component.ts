@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { faAnglesLeft, faAnglesRight, faChevronLeft, faChevronRight, faRotate, faSearch, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { faAnglesLeft, faAnglesRight, faChevronLeft, faChevronRight, faPenToSquare, faRotate, faSearch, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
@@ -15,6 +15,8 @@ export class FacilitAccredComponent implements OnInit {
   faAnglesRight = faAnglesRight;
   faSearch = faSearch;
   faRotate = faRotate;
+
+  faPenToSquare = faPenToSquare;
 
   per_page: number = 10;
   current_page: number;
@@ -43,9 +45,12 @@ export class FacilitAccredComponent implements OnInit {
     })
   }
 
+  accred_list: any;
+
   loadList(){
     this.http.get('settings/philhealth-credentials').subscribe({
       next: (data: any) => {
+        this.accred_list = data.data
         console.log(data.data)
       },
       error: err => console.log(err)

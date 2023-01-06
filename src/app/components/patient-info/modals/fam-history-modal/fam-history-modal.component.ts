@@ -13,23 +13,15 @@ export class FamHistoryModalComponent implements OnInit, OnChanges {
   @Output() loadData = new EventEmitter<any>();
   @Input() patient_info;
   @Input() family_medical;
-  history_list: []
+  @Input() history_list;
 
   patient_history = {
     medical_history_id: [],
     remarks: []
   }
 
-  loadLibraries() {
-    this.http.get('libraries/medical-history').subscribe({
-      next: (data: any) => this.history_list = data.data,
-      error: err => console.log(err)
-    })
-  }
-
   onSubmit(){
-    console.log(this.patient_history);
-
+    // console.log(this.patient_history);
     var hx_arr = [];
 
     Object.entries(this.patient_history.medical_history_id).forEach(([key, value], index) => {
@@ -89,6 +81,6 @@ export class FamHistoryModalComponent implements OnInit, OnChanges {
   ) { }
 
   ngOnInit(): void {
-    this.loadLibraries();
+    // this.loadLibraries();
   }
 }
