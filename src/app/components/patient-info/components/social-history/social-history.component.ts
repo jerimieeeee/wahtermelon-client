@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+import { faChevronDown, faChevronUp, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
@@ -14,15 +14,22 @@ export class SocialHistoryComponent implements OnInit {
   @Input() accordions;
 
   faPlusCircle = faPlusCircle;
+  faChevronUp = faChevronUp;
+  faChevronDown = faChevronDown;
   social_history: any;
 
   loadData(patient_id) {
-    // console.log(patient_id)
+    console.log(patient_id)
     this.http.get('patient-social-history/history', {params: {patient_id: patient_id}}).subscribe({
       next: (data: any) => {
-        // console.log(data)
-        this.social_history = data.data[0];
-        this.setSocial.emit(data.data);
+        console.log(data.data.length)
+        if(data.data.length !== 0) {
+          this.social_history = data.data[0];
+        } else {
+          this.social_history = [];
+        }
+        console.log(this.social_history)
+        this.setSocial.emit(this.social_history);
       },
       error: err => console.log(err)
     })

@@ -14,6 +14,7 @@ export class LifestyleModalComponent implements OnInit, OnChanges {
   @Input() patient_info;
   @Input() social_history;
   answers: any;
+  answers_yn: any;
 
   is_saving: boolean = false;
 
@@ -23,7 +24,8 @@ export class LifestyleModalComponent implements OnInit, OnChanges {
     pack_per_year: new FormControl<number| null>(null),
     alcohol: new FormControl<string| null>(null),
     bottles_per_day: new FormControl<number| null>(null),
-    illicit_drugs: new FormControl<string| null>(null)
+    illicit_drugs: new FormControl<string| null>(null),
+    sexually_active: new FormControl<string| null>(null)
   });
 
 
@@ -71,6 +73,11 @@ export class LifestyleModalComponent implements OnInit, OnChanges {
       next: (data: any) => this.answers = data.data,
       error: err => console.log(err)
     })
+
+    this.http.get('libraries/ncd-answers-s2').subscribe({
+      next: (data: any) => this.answers_yn = data.data,
+      error: err => console.log(err)
+    })
   }
 
   createForm(){
@@ -82,8 +89,9 @@ export class LifestyleModalComponent implements OnInit, OnChanges {
         alcohol: [null, Validators.required],
         bottles_per_day: [null],
         illicit_drugs: [null, Validators.required],
+        sexually_active: [null, Validators.required],
       });
-      console.log(this.lifestyleForm)
+
       this.disableFields()
     }
   }
@@ -109,9 +117,7 @@ export class LifestyleModalComponent implements OnInit, OnChanges {
 
 
     if(this.social_history) {
-      console.log(this.social_history)
       this.lifestyleForm.patchValue({...this.social_history[0]});
-      console.log(this.lifestyleForm)
     }
   }
 }

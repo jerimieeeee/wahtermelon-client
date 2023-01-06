@@ -24,9 +24,9 @@
                 </select>
               </div>
 
-              <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
+              <div *ngIf="lifestyleForm.value.smoking === 'Y'" class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
                 <label for="pack_per_year">Number of Pack Year</label>
-                <input [disabled]="f.pack_per_year.disabled" name="pack_per_year" id="pack_per_year" formControlName="pack_per_year" type="number" class="input disabled:bg-gray-300">
+                <input name="pack_per_year" id="pack_per_year" formControlName="pack_per_year" type="number" class="input disabled:bg-gray-300">
               </div>
             </div>
 
@@ -38,7 +38,7 @@
                 </select>
               </div>
 
-              <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
+              <div *ngIf="lifestyleForm.value.alcohol === 'Y'" class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
                 <label for="bottles_per_day">Bottles per day</label>
                 <input [disabled]="f.bottles_per_day.disabled" name="bottles_per_day" id="bottles_per_day" formControlName="bottles_per_day" type="number" class="input disabled:bg-gray-300">
               </div>
@@ -52,6 +52,23 @@
                 </select>
               </div>
             </div>
+
+            <div class="flex px-5 w-full">
+              <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
+                <label for="sexually_active">Sexually Active</label>
+                <select id="sexually_active" name="sexually_active" formControlName="sexually_active" class="input">
+                  <option *ngFor="let ans of answers_yn" [value]="ans.id">{{ ans.desc }}</option>
+                </select>
+              </div>
+            </div>
+            <!-- <div class="flex px-5 w-full">
+              <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
+                <label for="sexually_active">Sexually Active</label>
+                <select id="sexually_active" name="sexually_active" formControlName="sexually_active" class="input">
+                  <option *ngFor="let ans of answers" [value]="ans.id">{{ ans.desc }}</option>
+                </select>
+              </div>
+            </div> -->
           </div>
         </form>
       </div>
@@ -59,8 +76,8 @@
       <!-- Modal footer -->
       <div class="flex justify-end py-4 px-5 space-x-4 rounded-b border-t border-gray-200 dark:border-gray-600">
         <button type="button" class="btn-save bg-gray-400" (click)="closeModal()">Close</button>
-        <button [disabled]="lifestyleForm.invalid" type="submit" class="btn-save px-10 disabled:bg-gray-300" (click)="onSubmit()" >
-          Save
+        <button [disabled]="is_saving || lifestyleForm.invalid" type="submit" class="btn-save px-10 disabled:bg-gray-300" (click)="onSubmit()" >
+          {{ is_saving ? 'Saving' : 'Save' }}
         </button>
       </div>
     </div>
