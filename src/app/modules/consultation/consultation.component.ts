@@ -7,6 +7,7 @@ import { faFloppyDisk } from '@fortawesome/free-regular-svg-icons';
 import { ActivatedRoute } from '@angular/router';
 import { GraphsComponent } from './components/graphs/graphs.component';
 import { PatientInfoComponent } from 'app/components/patient-info/patient-info.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-consultation',
@@ -44,7 +45,7 @@ export class ConsultationComponent implements OnInit {
   patient_id: string;
 
   referred_to: string = '';
-  physicians: any = [
+  physicians: any; /* = [
     {
       id: '97d1709c-29e7-4a7b-be3e-71c9ed7183c4',
       last_name: 'Santos',
@@ -66,7 +67,7 @@ export class ConsultationComponent implements OnInit {
       middle_name: 'Bildan',
       suffix_name: 'NA'
     },
-  ]
+  ] */
 
   switchTabs(tabs){
     this.modules = 0;
@@ -156,7 +157,9 @@ export class ConsultationComponent implements OnInit {
       this.http.update('consultation/records/', this.consult_details.id, params).subscribe({
         next: (data: any) => {
           console.log(data);
-          this.loadConsult();
+          this.toastr.success('Patient was referred','Referral')
+          // this.loadConsult();
+          this.consult_details['physician'] = this.referred_to;
         },
         error: err => console.log(err)
       })
@@ -164,9 +167,10 @@ export class ConsultationComponent implements OnInit {
   }
 
   loadUsers(){
-    this.http.get('users', {params:{per_page: 'all'}}).subscribe({
+    this.http.get('users', {params:{per_page: 'all', designation_code: 'MD'}}).subscribe({
       next: (data: any) => {
         console.log(data.data)
+        this.physicians = data.data
       },
       error: err => console.log(err)
     })
@@ -174,7 +178,8 @@ export class ConsultationComponent implements OnInit {
 
   constructor(
     private http: HttpService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private toastr: ToastrService
   ) { }
 
   ngOnInit(): void {
@@ -183,5 +188,6 @@ export class ConsultationComponent implements OnInit {
 
     this.modules = 1;
     this.loadConsult();
+    this.loadUsers()
   }
 }
