@@ -100,12 +100,72 @@ export class LabComponent implements OnInit {
   selected_lab: any;
 
   toggleModal(form, lab?){
+    console.log(lab);
     this.selected_lab = lab;
-    this.modal[form] = !this.modal[form];
-    if(this.modal[form] === false) {
-      this.selected_lab = null;
-      this.getResults();
+
+    if(this.selected_lab){
+      console.log(this.selected_lab);
+      if(lab && lab.laboratory.code === 'CXRAY') {
+        if(!this.lab_cxray_findings || !this.lab_cxray_observation) {
+          this.loadCxrayLib(form);
+        } else {
+          this.modal[form] = !this.modal[form];
+        }
+      }else if(lab && lab.laboratory.code === 'ECG') {
+        this.loadLibraries('libraries/laboratory-findings','lab_findings', form)
+      } else {
+        this.modal[form] = !this.modal[form];
+      }
+
+      if(this.modal[form] === false) {
+        // this.selected_lab = null;
+        this.getResults();
+      }
+    } else {
+      this.modal[form] = false;
     }
+  }
+
+  lab_statuses: any;
+  lab_findings: any;
+  lab_cxray_findings: any;
+  lab_cxray_observation: any;
+
+  loadLabStatusLib(){
+    this.http.get('libraries/laboratory-statuses').subscribe({
+      next: (data: any) => this.lab_statuses = data.data,
+      error: err => console.log(err)
+    });
+  }
+
+  loadCxrayLib(form){
+    this.http.get('libraries/laboratory-chestxray-findings').subscribe({
+      next: (data: any) => {
+        this.lab_cxray_findings = data.data;
+        this.loadCxrayObs(form);
+      },
+      error: err => console.log(err)
+    });
+  }
+
+  loadCxrayObs(form){
+    this.http.get('libraries/laboratory-chestxray-observations').subscribe({
+      next: (data: any) => {
+        this.lab_cxray_observation = data.data;
+        this.modal[form] = !this.modal[form];
+      },
+      error: err => console.log(err)
+    });
+  }
+
+  loadLibraries(url, var_name, form){
+    this.http.get(url).subscribe({
+      next: (data: any) => {
+        this[var_name] = data.data;
+        this.modal[form] = !this.modal[form];
+      },
+      error: err => console.log(err)
+    });
   }
 
   constructor(
@@ -113,6 +173,7 @@ export class LabComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.loadLabStatusLib();
   }
 
 }

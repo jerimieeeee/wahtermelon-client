@@ -13,6 +13,10 @@ export class LabFormComponent implements OnChanges, OnInit {
   @Output() toggleModal = new EventEmitter<any>();
   @Input() selected_lab;
   @Input() patient_details;
+  @Input() lab_statuses;
+  @Input() lab_cxray_findings;
+  @Input() lab_cxray_observation;
+  @Input() lab_findings;
 
   faSave = faSave;
   faSpinner = faSpinner;
@@ -25,12 +29,9 @@ export class LabFormComponent implements OnChanges, OnInit {
   max_date = formatDate(new Date, 'yyyy-MM-dd', 'en');
 
   spl_val = ['observation_code', 'findings_code'];
-  lab_statuses: any;
-  lab_cxray_findings: any;
-  lab_cxray_observation: any;
-  lab_findings: any;
 
   loadForm(){
+    // console.log(this.selected_lab)
     if(this.selected_lab) {
       this.http.get('libraries/laboratories/'+this.selected_lab.laboratory.code).subscribe({
         next: (data: any) => {
@@ -147,28 +148,6 @@ export class LabFormComponent implements OnChanges, OnInit {
     return '';
   }
 
-  loadLibraries(){
-    this.http.get('libraries/laboratory-statuses').subscribe({
-      next: (data: any) => this.lab_statuses = data.data,
-      error: err => console.log(err)
-    });
-
-    this.http.get('libraries/laboratory-chestxray-findings').subscribe({
-      next: (data: any) => this.lab_cxray_findings = data.data,
-      error: err => console.log(err)
-    });
-
-    this.http.get('libraries/laboratory-chestxray-observations').subscribe({
-      next: (data: any) => this.lab_cxray_observation = data.data,
-      error: err => console.log(err)
-    });
-
-    this.http.get('libraries/laboratory-findings').subscribe({
-      next: (data: any) => this.lab_findings = data.data,
-      error: err => console.log(err)
-    });
-  }
-
   closeModal(){
     this.toggleModal.emit('add');
   }
@@ -179,7 +158,7 @@ export class LabFormComponent implements OnChanges, OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.loadLibraries()
+    // this.loadLibraries()
   }
 
   ngOnChanges(changes: SimpleChanges): void {

@@ -36,7 +36,7 @@
               <div class="text-sm col-span-1" *ngIf="selected_lab.laboratory.code === 'CXRAY' && field.field_name === 'observation_code'">
                 <label class="font-semibold" >{{ field.field_desc }}</label>
                 <select name="field" [(ngModel)]="lab_form['lab_cxray_observation']" class="input">
-                  <option [value]="obs.code" *ngFor="let obs of lab_observation">{{ obs.desc }}</option>
+                  <option [value]="obs.code" *ngFor="let obs of lab_cxray_observation">{{ obs.desc }}</option>
                 </select>
               </div>
 

@@ -58,5 +58,5 @@
   </div>
 </div>
 
-<app-lab-form *ngIf="modal['add']" [selected_lab]="selected_lab" [patient_details]="patient_details" (toggleModal)="toggleModal($event)"></app-lab-form>
+<app-lab-form *ngIf="modal['add']" [selected_lab]="selected_lab" [patient_details]="patient_details" (toggleModal)="toggleModal($event)" [lab_statuses]="lab_statuses" [lab_cxray_observation]="lab_cxray_observation" [lab_cxray_findings]="lab_cxray_findings" [lab_findings]="lab_findings"></app-lab-form>
 <app-lab-delete *ngIf="modal['delete']" [selected_lab]="selected_lab" (toggleModal)="toggleModal($event)"></app-lab-delete>
