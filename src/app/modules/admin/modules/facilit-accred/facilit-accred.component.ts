@@ -46,6 +46,11 @@ export class FacilitAccredComponent implements OnInit {
   }
 
   accred_list: any;
+  modals: any = [];
+
+  toggleModal(name, ){
+    this.modals[name] = !this.modals[name];
+  }
 
   loadList(){
     this.http.get('settings/philhealth-credentials').subscribe({

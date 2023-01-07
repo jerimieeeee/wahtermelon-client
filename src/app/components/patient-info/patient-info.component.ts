@@ -84,14 +84,6 @@ export class PatientInfoComponent implements OnInit {
 
   consult_id: string;
 
-  constructor(
-    private activeRoute: ActivatedRoute,
-    private router: Router,
-    private http: HttpService,
-    private ageService: AgeService,
-    private vitalsCharts: VitalsChartsService
-  ) { }
-
   navigateTo(loc){
     this.router.navigate(['/'+loc, {id: this.patient_info.id}])
   }
@@ -125,7 +117,6 @@ export class PatientInfoComponent implements OnInit {
       error: err => {
         // feature: add prompt that patient is not found. for now redirect to home
         this.router.navigate(['/home'])
-        //  console.log(err)
       }
     });
   }
@@ -142,7 +133,7 @@ export class PatientInfoComponent implements OnInit {
     if(field === 'prescription' || field==='all') this.prescriptions.loadData(this.patient_info.id);
     if(field === 'social_history' || field==='all') this.socialHistory.loadData(this.patient_info.id);
     if(field === 'surgical_history' || field==='all') this.surgicalHistory.loadData(this.patient_info.id);
-    if(field === 'menstrual_history' || field==='all') {} //this.surgicalHistory.loadData(this.patient_info.id);
+    if(field === 'menstrual_history' || field==='all') this.menstrualHistory.loadData(this.patient_info.id);
     if(field === 'pregnancy_history' || field==='all')  {} //this.surgicalHistory.loadData(this.patient_info.id);
   }
 
@@ -150,6 +141,7 @@ export class PatientInfoComponent implements OnInit {
   past_medical: any;
   family_medical: any;
   surgical_history: any;
+  menstrual_history: any;
 
   setSurgicalHistory(data) {
     this.surgical_history = data;
@@ -167,6 +159,10 @@ export class PatientInfoComponent implements OnInit {
     this.social_history = data;
   }
 
+  setMenstrual(data){
+    console.log(data)
+    this.menstrual_history = data;
+  }
 
   vitals: any;
   loadVitals(){
@@ -227,20 +223,21 @@ export class PatientInfoComponent implements OnInit {
     this.reloadLabs.emit(data);
   }
 
-  vaccine_to_edit: any;
   setVaccineGiven(data) {
-    // console.log(data);
     this.vaccines_given = data;
   }
 
+  surgery_to_delete: any;
+  vaccine_to_edit: any;
   //Libraries for modals
   history_list: any;
-  surgery_to_delete: any;
+  fp_method: any;
 
   toggleModal(modal_name, data?){
     console.log(modal_name)
 
     if(modal_name === 'fam-history' || modal_name === 'history') {
+      // PAST AND FAMILY HISTORY
       if(!this.history_list){
         this.loadLibrary('libraries/medical-history', 'history_list', modal_name);
       } else {
@@ -250,6 +247,7 @@ export class PatientInfoComponent implements OnInit {
       if(modal_name === 'history' && this.modals['history'] === false) this.loadData('past_medical');
       if(modal_name === 'fam-history' && this.modals['surgical-history'] === false) this.loadData('family_medical');
     } else if (modal_name.modal_name === 'surgical-history' || modal_name.modal_name === 'surgical-action') {
+      //SURGICAL HISTORY
       this.modals[modal_name.modal_name] = !this.modals[modal_name.modal_name];
 
       if(modal_name.modal_name === 'surgical-action' && this.modals['surgical-action'] === true) {
@@ -261,7 +259,17 @@ export class PatientInfoComponent implements OnInit {
         this.loadData('surgical_history');
         this.surgery_to_delete = null;
       }
-    } else {
+    } else if (modal_name === 'menstrual') {
+      //MENSTRUAL HISTORY
+      if(!this.fp_method){
+        this.loadLibrary('libraries/family-planning-method','fp_method','menstrual')
+      } else {
+        this.modals[modal_name] = !this.modals[modal_name];
+      }
+
+      if(modal_name === 'menstrual' && this.modals['menstrual'] === false) this.loadData('menstrual_history');
+    }else {
+      // OTHERS
       this.modals[modal_name.modal_name ?? modal_name] = !this.modals[modal_name.modal_name ?? modal_name];
 
       if (modal_name === 'vitals' && this.modals[modal_name] === false) {
@@ -292,7 +300,6 @@ export class PatientInfoComponent implements OnInit {
       if(modal_name === 'lifestyle' && this.modals['lifestyle'] === false) this.loadData('social_history');
       if (modal_name === 'lab-request' && this.modals[modal_name] === false) this.loadData('laboratory');
     }
-    // if (modal_name === 'vaccine-action' && this.modals[modal_name] === false) this.loadData('vaccines');
   }
 
   loadLibrary(url, var_name, modal_name){
@@ -312,6 +319,14 @@ export class PatientInfoComponent implements OnInit {
       this.getPatient(this.activeRoute.snapshot.paramMap.get('id'));
     })
   );
+
+  constructor(
+    private activeRoute: ActivatedRoute,
+    private router: Router,
+    private http: HttpService,
+    private ageService: AgeService,
+    private vitalsCharts: VitalsChartsService
+  ) { }
 
   ngOnInit(): void {
     this.consult_id = this.activeRoute.snapshot.paramMap.get('consult_id');

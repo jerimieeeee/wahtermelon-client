@@ -7,6 +7,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FacilityFormComponent implements OnInit {
 
+  onSubmit() {
+
+  }
+
   constructor() { }
 
   ngOnInit(): void {

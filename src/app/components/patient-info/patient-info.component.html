@@ -318,6 +318,7 @@
     </div> -->
     <app-vaccine (toggleAccordion)="toggleAccordion($event)" [accordions]="accordions" (toggleModal)="toggleModal($event)" (setVaccineGiven)="setVaccineGiven($event)"></app-vaccine>
     <app-past-medical (toggleAccordion)="toggleAccordion($event)" [accordions]="accordions" (toggleModal)="toggleModal($event)" (setPastMedical)="setPastMedical($event)"></app-past-medical>
+    <app-menstrual-history (toggleAccordion)="toggleAccordion($event)" [accordions]="accordions" (toggleModal)="toggleModal($event)" (setMenstrual)="setMenstrual($event)"></app-menstrual-history>
     <app-family-medical (toggleAccordion)="toggleAccordion($event)" [accordions]="accordions" (toggleModal)="toggleModal($event)" (setFamilyMedical)="setFamilyMedical($event)"></app-family-medical>
     <app-social-history (toggleAccordion)="toggleAccordion($event)" [accordions]="accordions" (toggleModal)="toggleModal($event)" (setSocial)="setSocial($event)"></app-social-history>
     <app-surgical-history (toggleAccordion)="toggleAccordion($event)" [accordions]="accordions" (toggleModal)="toggleModal($event)" (setSurgicalHistory)="setSurgicalHistory($event)"></app-surgical-history>
@@ -327,6 +328,8 @@
 </div>
 
 <!-- MODALS -->
+<app-module-modal *ngIf="modals['module']" (toggleModal)="toggleModal('module')" [patient_info]="patient_info" [patient_age]="patient_age"></app-module-modal>
+
 <app-vitals-modal *ngIf="modals['vitals']" (toggleModal)="toggleModal('vitals')" [patient_age]="patient_age" [patient_info]="patient_info" [vitals_to_edit]="vitals_to_edit"></app-vitals-modal>
 <app-vitals-list-modal *ngIf="modals['vitals-list']" (toggleModal)="toggleModal('vitals-list')" (vitalsEdit)="vitalsEdit($event)" [patient_info]="patient_info"></app-vitals-list-modal>
 <app-allergies-modal *ngIf="modals['allergies']" (toggleModal)="toggleModal('allergies')"></app-allergies-modal>
@@ -336,7 +339,7 @@
 <app-history-modal *ngIf="modals['history']" (toggleModal)="toggleModal('history')" [patient_info]="patient_info" [history_list]="history_list" [past_medical]="past_medical"></app-history-modal>
 <app-fam-history-modal *ngIf="modals['fam-history']" (toggleModal)="toggleModal($event)" [patient_info]="patient_info" [history_list]="history_list" [family_medical]="family_medical"></app-fam-history-modal>
 <app-lifestyle-modal *ngIf="modals['lifestyle']" (toggleModal)="toggleModal($event)" [patient_info]="patient_info" [social_history]="social_history"></app-lifestyle-modal>
-<app-module-modal *ngIf="modals['module']" (toggleModal)="toggleModal('module')" [patient_info]="patient_info" [patient_age]="patient_age"></app-module-modal>
+<app-menstrual-modal *ngIf="modals['menstrual']" (toggleModal)="toggleModal($event)" [patient_info]="patient_info" [menstrual_history]="menstrual_history" [fp_method]="fp_method"></app-menstrual-modal>
 <app-philhealth-modal *ngIf="modals['philhealth']" (toggleModal)="toggleModal($event)" [patient_info]="patient_info" [philhealth_to_edit]="philhealth_to_edit"></app-philhealth-modal>
 <app-philhealth-list-modal *ngIf="modals['philhealth-list']" (toggleModal)="toggleModal('philhealth-list')" (philhealthEdit)="philhealthEdit($event)" [patient_info]="patient_info" ></app-philhealth-list-modal>
 <app-lab-request-modal *ngIf="modals['lab-request']" (toggleModal)="toggleModal('lab-request')" [lab_req_list]="lab_req_list" [patient_info]="patient_info" [consult_id]="consult_id"></app-lab-request-modal>
