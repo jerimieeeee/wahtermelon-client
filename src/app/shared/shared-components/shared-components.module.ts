@@ -44,6 +44,7 @@ import { MenstrualHistoryComponent } from 'app/components/patient-info/component
 import { MenstrualModalComponent } from 'app/components/patient-info/modals/menstrual-modal/menstrual-modal.component';
 import { PregnancyModalComponent } from 'app/components/patient-info/modals/pregnancy-modal/pregnancy-modal.component';
 import { SurgicalModalComponent } from 'app/components/patient-info/modals/surgical-modal/surgical-modal.component';
+import { SurgicalActionModalComponent } from 'app/components/patient-info/modals/surgical-action-modal/surgical-action-modal.component';
 
 @NgModule({
   declarations: [
@@ -85,7 +86,8 @@ import { SurgicalModalComponent } from 'app/components/patient-info/modals/surgi
     MenstrualHistoryComponent,
     MenstrualModalComponent,
     PregnancyModalComponent,
-    SurgicalModalComponent
+    SurgicalModalComponent,
+    SurgicalActionModalComponent
   ],
   imports: [
     CommonModule,

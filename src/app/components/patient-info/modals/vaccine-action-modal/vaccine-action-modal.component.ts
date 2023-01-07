@@ -70,6 +70,7 @@ export class VaccineActionModalComponent implements OnInit {
       })
     }else{
       this.generateCode();
+      this.toastr.info('Code mismatch, please try again', 'Incorrect Code')
       console.log('error');
     }
   }

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { faChevronDown, faChevronUp, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+import { faChevronDown, faChevronUp, faPlusCircle, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
@@ -16,6 +16,7 @@ export class SurgicalHistoryComponent {
   faChevronUp = faChevronUp;
   faChevronDown = faChevronDown;
   faPlusCircle = faPlusCircle;
+  faTrashCan = faTrashCan;
 
   history: [];
 
@@ -34,8 +35,8 @@ export class SurgicalHistoryComponent {
     this.toggleAccordion.emit(name);
   }
 
-  modalToggle(name) {
-    this.toggleModal.emit(name);
+  modalToggle(name, data?) {
+    this.toggleModal.emit({modal_name: name, data: data});
   }
 
   constructor(

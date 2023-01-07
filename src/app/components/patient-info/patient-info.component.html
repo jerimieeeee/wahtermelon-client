@@ -340,7 +340,9 @@
 <app-philhealth-modal *ngIf="modals['philhealth']" (toggleModal)="toggleModal($event)" [patient_info]="patient_info" [philhealth_to_edit]="philhealth_to_edit"></app-philhealth-modal>
 <app-philhealth-list-modal *ngIf="modals['philhealth-list']" (toggleModal)="toggleModal('philhealth-list')" (philhealthEdit)="philhealthEdit($event)" [patient_info]="patient_info" ></app-philhealth-list-modal>
 <app-lab-request-modal *ngIf="modals['lab-request']" (toggleModal)="toggleModal('lab-request')" [lab_req_list]="lab_req_list" [patient_info]="patient_info" [consult_id]="consult_id"></app-lab-request-modal>
-<app-surgical-modal *ngIf="modals['surgical-history']" (toggleModal)="toggleModal($event)" [patient_info]="patient_info"></app-surgical-modal>
 
-<app-photo-modal *ngIf="modals['photo']" (toggleModal)="toggleModal('photo')" [patient_info]="patient_info"></app-photo-modal>
+<app-surgical-modal *ngIf="modals['surgical-history']" (toggleModal)="toggleModal($event)" [patient_info]="patient_info"></app-surgical-modal>
+<app-surgical-action-modal *ngIf="modals['surgical-action']" (toggleModal)="toggleModal($event)" [surgery_to_delete]="surgery_to_delete"></app-surgical-action-modal>
+
 <app-death-modal *ngIf="modals['death']" (toggleModal)="toggleModal('death')"></app-death-modal>
+<app-photo-modal *ngIf="modals['photo']" (toggleModal)="toggleModal('photo')" [patient_info]="patient_info"></app-photo-modal>

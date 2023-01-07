@@ -1,1 +1,64 @@
-<p>facility-form works!</p>
+<!-- <div id="defaultModal" tabindex="-1" class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 w-full md:inset-0 h-modal md:h-full justify-center items-center flex" aria-modal="true" role="dialog" style="z-index:60">
+  <div class="relative p-4 w-full max-w-3xl h-auto md:h-auto">
+    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+      <div class="flex justify-between items-start py-3 px-5 rounded-t border-b bg-blue-500 dark:border-gray-600">
+        <h3 class="mt-2 text-sm font-bold text-white dark:text-white">
+            Social/Personal History
+        </h3>
+      </div>
+
+      <div class="overflow-y-auto h-96 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
+        <form [formGroup]="lifestyleForm" (submit)="onSubmit()" class="w-full max-w-3xl text-left text-gray-500 dark:text-gray-400">
+          <div class="flex item-start flex-wrap pb-5">
+
+            <div class="flex px-5 w-full">
+              <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
+                <label for="smoking">Smoking</label>
+                <select id="smoking" name="smoking" formControlName="smoking" class="input" (change)="disableFields()">
+                  <option *ngFor="let ans of answers" [value]="ans.id">{{ ans.desc }}</option>
+                </select>
+              </div>
+
+              <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
+                <label for="pack_per_year">Number of Pack Year</label>
+                <input [disabled]="f.pack_per_year.disabled" name="pack_per_year" id="pack_per_year" formControlName="pack_per_year" type="number" class="input disabled:bg-gray-300">
+              </div>
+            </div>
+
+            <div class="flex px-5 w-full">
+              <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
+                <label for="alcohol">Alcohol</label>
+                <select id="alcohol" name="alcohol" formControlName="alcohol" class="input" (change)="disableFields()">
+                  <option *ngFor="let ans of answers" [value]="ans.id">{{ ans.desc }}</option>
+                </select>
+              </div>
+
+              <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
+                <label for="bottles_per_day">Bottles per day</label>
+                <input [disabled]="f.bottles_per_day.disabled" name="bottles_per_day" id="bottles_per_day" formControlName="bottles_per_day" type="number" class="input disabled:bg-gray-300">
+              </div>
+            </div>
+
+            <div class="flex px-5 w-full">
+              <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
+                <label for="illicit_drugs">Illicit Drug</label>
+                <select id="illicit_drugs" name="illicit_drugs" formControlName="illicit_drugs" class="input">
+                  <option *ngFor="let ans of answers" [value]="ans.id">{{ ans.desc }}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div class="flex justify-end py-4 px-5 space-x-4 rounded-b border-t border-gray-200 dark:border-gray-600">
+        <button type="button" class="btn-save bg-gray-400" (click)="closeModal()">Close</button>
+        <button [disabled]="lifestyleForm.invalid" type="submit" class="btn-save px-10 disabled:bg-gray-300" (click)="onSubmit()" >
+          Save
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="opacity-50 fixed inset-0 z-50 bg-black"></div> -->

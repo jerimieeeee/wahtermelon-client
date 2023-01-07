@@ -233,18 +233,9 @@ export class PatientInfoComponent implements OnInit {
     this.vaccines_given = data;
   }
 
+  //Libraries for modals
   history_list: any;
-
-  loadLibrary(url, var_name, modal_name){
-    console.log('loaded')
-    this.http.get(url).subscribe({
-      next: (data: any) => {
-        this[var_name] = data.data;
-        this.modals[modal_name] = !this.modals[modal_name];
-      },
-      error: err => console.log(err)
-    })
-  }
+  surgery_to_delete: any;
 
   toggleModal(modal_name, data?){
     console.log(modal_name)
@@ -252,19 +243,24 @@ export class PatientInfoComponent implements OnInit {
     if(modal_name === 'fam-history' || modal_name === 'history') {
       if(!this.history_list){
         this.loadLibrary('libraries/medical-history', 'history_list', modal_name);
-        /* this.http.get('libraries/medical-history').subscribe({
-          next: (data: any) => {
-            this.history_list = data.data;
-            this.modals[modal_name] = !this.modals[modal_name];
-          },
-          error: err => console.log(err)
-        }) */
       } else {
         this.modals[modal_name] = !this.modals[modal_name];
       }
 
       if(modal_name === 'history' && this.modals['history'] === false) this.loadData('past_medical');
       if(modal_name === 'fam-history' && this.modals['surgical-history'] === false) this.loadData('family_medical');
+    } else if (modal_name.modal_name === 'surgical-history' || modal_name.modal_name === 'surgical-action') {
+      this.modals[modal_name.modal_name] = !this.modals[modal_name.modal_name];
+
+      if(modal_name.modal_name === 'surgical-action' && this.modals['surgical-action'] === true) {
+        this.surgery_to_delete = modal_name.data;
+      }
+
+      if((modal_name.modal_name === 'surgical-history' && this.modals['surgical-history'] === false) ||
+        (modal_name.modal_name === 'surgical-action' && this.modals['surgical-action'] === false)) {
+        this.loadData('surgical_history');
+        this.surgery_to_delete = null;
+      }
     } else {
       this.modals[modal_name.modal_name ?? modal_name] = !this.modals[modal_name.modal_name ?? modal_name];
 
@@ -293,11 +289,21 @@ export class PatientInfoComponent implements OnInit {
         }
       }
 
-      if(modal_name === 'surgical-history' && this.modals['surgical-history'] === false) this.loadData('surgical_history');
       if(modal_name === 'lifestyle' && this.modals['lifestyle'] === false) this.loadData('social_history');
       if (modal_name === 'lab-request' && this.modals[modal_name] === false) this.loadData('laboratory');
     }
     // if (modal_name === 'vaccine-action' && this.modals[modal_name] === false) this.loadData('vaccines');
+  }
+
+  loadLibrary(url, var_name, modal_name){
+    console.log('loaded')
+    this.http.get(url).subscribe({
+      next: (data: any) => {
+        this[var_name] = data.data;
+        this.modals[modal_name] = !this.modals[modal_name];
+      },
+      error: err => console.log(err)
+    })
   }
 
   navigationEnd$ = this.router.events.pipe(

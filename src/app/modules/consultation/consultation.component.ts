@@ -156,9 +156,7 @@ export class ConsultationComponent implements OnInit {
 
       this.http.update('consultation/records/', this.consult_details.id, params).subscribe({
         next: (data: any) => {
-          console.log(data);
-          this.toastr.success('Patient was referred','Referral')
-          // this.loadConsult();
+          this.toastr.success('Patient was referred','Referral');
           this.consult_details['physician'] = this.referred_to;
         },
         error: err => console.log(err)
@@ -169,7 +167,7 @@ export class ConsultationComponent implements OnInit {
   loadUsers(){
     this.http.get('users', {params:{per_page: 'all', designation_code: 'MD'}}).subscribe({
       next: (data: any) => {
-        console.log(data.data)
+        // console.log(data.data)
         this.physicians = data.data
       },
       error: err => console.log(err)

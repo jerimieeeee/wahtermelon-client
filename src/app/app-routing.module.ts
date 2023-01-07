@@ -60,10 +60,6 @@ const routes: Routes = [
     loadChildren: () => import('./modules/drug-list/drug-list.module').then(m => m.DrugListModule)
   },
   {
-    path: 'accred',
-    loadChildren: () => import('../app/components/facilityaccreditation/facilityaccreditation.module').then(m => m.FacilityaccreditationModule)
-  },
-  {
     path: 'drug-list',
     loadChildren: () => import('./modules/drug-list/drug-list.module').then(m => m.DrugListModule)
   },

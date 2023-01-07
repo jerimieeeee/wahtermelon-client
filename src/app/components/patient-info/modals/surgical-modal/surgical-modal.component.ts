@@ -43,8 +43,15 @@ export class SurgicalModalComponent implements OnInit {
     this.is_saving = true;
 
     this.surgical_form.patient_id = this.patient_info.id;
+    let query;
 
-    this.http.post('patient-surgical-history/history', this.surgical_form).subscribe({
+    console.log(this.surgical_form)
+    if(this.surgical_form.id) {
+      query = this.http.update('patient-surgical-history/history/', this.surgical_form.id, this.surgical_form);
+    } else {
+      query = this.http.post('patient-surgical-history/history', this.surgical_form);
+    }
+    query.subscribe({
       next: (data: any) => {
         console.log(data)
         this.is_saving = false;
@@ -62,7 +69,7 @@ export class SurgicalModalComponent implements OnInit {
   }
 
   closeModal(){
-    this.toggleModal.emit('surgical-history');
+    this.toggleModal.emit({modal_name: 'surgical-history'});
   }
 
   constructor(
