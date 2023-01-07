@@ -37,9 +37,9 @@
               <span class="mt-2 font-bold "> CONSULTATION <span class="text-gray-500 text-sm">({{ consult_details?.consult_date | date: 'MM/dd/yyyy hh:mm:ss a' }} | ID:{{ consult_details?.id }})</span></span>
             </div>
 
-            <div class="w-1/2 flex justify-end" *ngIf="consult_details && open_consult">
+            <div class="w-1/2 flex justify-end" *ngIf="consult_details && open_consult && have_complaint">
               <div class="flex text-gray-700">
-                <select [disabled]="enable_edit" class="input px-2 mr-3 disabled:bg-gray-300"  [(ngModel)]="referred_to">
+                <select [disabled]="enable_edit" class="input px-2 mr-3 disabled:bg-gray-300"  [(ngModel)]="referred_to.id">
                   <option [value]="dr.id" class="pr-3" *ngFor="let dr of physicians">{{ dr.last_name }}, {{ dr.first_name }} {{ dr.middle_name }}</option>
                 </select>
                 <button (click)="referTo()" [ngClass]="{'bg-orange-500 hover:ring-orange-400': enable_edit}" class="bg-blue-500 text-xs text-white px-5 py-1 rounded-md  hover:ring-2 hover:ring-blue-400 h-10 mt-1 w-24">
@@ -61,7 +61,7 @@
           <div class="grid grid-cols-10" *ngIf="have_complaint && !consult_details.physician">
             <div class="col-start-3 col-span-8 text-gray-700 p-10 border border-slate-300 shadow-md rounded-md mt-5">
               <label for="referred_to">To open final diagnosis & prescription you must refer this patient to a physician</label>
-              <select [disabled]="enable_edit" class="input px-2 mr-3 disabled:bg-gray-300 mb-3" name="referred_to" [(ngModel)]="referred_to">
+              <select [disabled]="enable_edit" class="input px-2 mr-3 disabled:bg-gray-300 mb-3" name="referred_to" [(ngModel)]="referred_to.id">
                 <option [value]="dr.id" class="pr-3" *ngFor="let dr of physicians">{{ dr.last_name }}, {{ dr.first_name }} {{ dr.middle_name }}</option>
               </select>
               <div class="w-full text-right">

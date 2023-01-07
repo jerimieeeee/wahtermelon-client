@@ -61,6 +61,7 @@ export class VaccineModalComponent implements OnInit {
         next: () => {
           this.toastr.success('Successfully recorded!','Vaccine record')
           this.loadData.emit('vaccines');
+          this.closeModal();
         },
         error: err => console.log(err),
         complete: () => console.log('success')

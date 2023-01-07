@@ -41,7 +41,7 @@ export class LabComponent implements OnInit {
   getResults(){
     Object.entries(this.pending_list).forEach(([key, value], index) => {
       let val: any = value;
-      let url = this.getURL(val.laboratory.code)
+      let url = this.http.getURL(val.laboratory.code)
       if(url !== '') {
         this.http.get(url, {params: {request_id: val.id}}).subscribe({
           next: (data: any) => {
@@ -64,34 +64,6 @@ export class LabComponent implements OnInit {
     this.getResults();
   }
 
-  getURL(lab_code): string{
-    switch (lab_code) {
-      case 'CBC':
-        return 'laboratory/consult-laboratory-cbc'
-      case 'CRTN':
-        return 'laboratory/consult-laboratory-creatinine'
-      case 'CXRAY':
-        return 'laboratory/consult-laboratory-chestxray'
-      case 'ECG':
-        return 'laboratory/consult-laboratory-ecg'
-      case 'FBS':
-        return 'laboratory/consult-laboratory-fbs'
-      case 'RBS':
-        return 'laboratory/consult-laboratory-rbs'
-      case 'HBA':
-        return 'laboratory/consult-laboratory-hba1c'
-      case 'PSMR':
-        return 'laboratory/consult-laboratory-papsmear'
-      case 'PPD':
-        return 'laboratory/consult-laboratory-ppd'
-      case 'SPTM':
-        return 'laboratory/consult-laboratory-sputum'
-      default:
-        break;
-    }
-    return '';
-  }
-
   patientInfo(info){
     this.patient_details = info;
     // this.loadData();
@@ -100,11 +72,9 @@ export class LabComponent implements OnInit {
   selected_lab: any;
 
   toggleModal(form, lab?){
-    console.log(lab);
     this.selected_lab = lab;
 
     if(this.selected_lab){
-      console.log(this.selected_lab);
       if(lab && lab.laboratory.code === 'CXRAY') {
         if(!this.lab_cxray_findings || !this.lab_cxray_observation) {
           this.loadCxrayLib(form);

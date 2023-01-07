@@ -89,4 +89,32 @@ export class HttpService {
       message: message
     }
   }
+
+  getURL(lab_code): string{
+    switch (lab_code) {
+      case 'CBC':
+        return 'laboratory/consult-laboratory-cbc'
+      case 'CRTN':
+        return 'laboratory/consult-laboratory-creatinine'
+      case 'CXRAY':
+        return 'laboratory/consult-laboratory-chestxray'
+      case 'ECG':
+        return 'laboratory/consult-laboratory-ecg'
+      case 'FBS':
+        return 'laboratory/consult-laboratory-fbs'
+      case 'RBS':
+        return 'laboratory/consult-laboratory-rbs'
+      case 'HBA':
+        return 'laboratory/consult-laboratory-hba1c'
+      case 'PSMR':
+        return 'laboratory/consult-laboratory-papsmear'
+      case 'PPD':
+        return 'laboratory/consult-laboratory-ppd'
+      case 'SPTM':
+        return 'laboratory/consult-laboratory-sputum'
+      default:
+        break;
+    }
+    return '';
+  }
 }

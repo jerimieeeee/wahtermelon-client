@@ -44,7 +44,9 @@ export class ConsultationComponent implements OnInit {
   consult_id: string;
   patient_id: string;
 
-  referred_to: string = '';
+  referred_to = {
+    id: ''
+  };
   physicians: any; /* = [
     {
       id: '97d1709c-29e7-4a7b-be3e-71c9ed7183c4',
@@ -134,7 +136,7 @@ export class ConsultationComponent implements OnInit {
         }
 
         if(this.consult_details.physician) {
-          this.referred_to = this.consult_details.physician.id;
+          this.referred_to = this.consult_details.physician;
           this.enable_edit = true;
         }
       },
@@ -151,7 +153,7 @@ export class ConsultationComponent implements OnInit {
         consult_date: this.consult_details.consult_date,
         pt_group: 'cn',
         consult_done: false,
-        physician_id: this.referred_to
+        physician_id: this.referred_to.id
       }
 
       this.http.update('consultation/records/', this.consult_details.id, params).subscribe({
