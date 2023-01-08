@@ -1,7 +1,7 @@
-<div class="flex w-full mt-4">
-  <div class="flex-wrap w-9/12 h-full rounded-xl text-gray-600 border border-slate-100 px-4 py-4 ml-5 mr-1 mb-10">
+<!-- <div class="flex w-full mt-4"> -->
+  <!-- <div class="flex-wrap w-9/12 h-full rounded-xl text-gray-600 border border-slate-100 px-4 py-4 ml-5 mr-1 mb-10"> -->
     <div class="flex">
-      <nav class="flex flex-row whitespace-nowrap text-sm max-w-xl">
+      <nav class="flex flex-row whitespace-nowrap text-sm max-w-xl mt-5">
         <button (click)="switchTabs(1)" class="text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 mr-6 pb-2"
         [class]="modules===1? 'text-blue-500 border-b-2 border-blue-500 font-bold' : 'hover:-translate-y-1 hover:scale-110 transition ease-in-out delay-400 duration-300' ">
             NCD HISTORY
@@ -12,7 +12,7 @@
         </button>
       </nav>
       <div class="ml-auto" *ngIf="modules===2">
-        <button *ngIf="!consult_details?.consult_done" type="button" class="btn-end-visit ml-auto" (click)="toggleModal()">
+        <button *ngIf="!consult_details?.consult_done" type="button" class="btn-end-visit ml-auto mt-5" (click)="toggleModal()">
           <fa-icon class="mr-1" [icon]="faDoorClosed"></fa-icon>
           End Visit
         </button>
@@ -103,11 +103,11 @@
         </div>
       </div>
     </div>
-  </div>
+  <!-- </div> -->
 
-  <div class="w-3/12">
+  <!-- <div class="w-3/12">
     <app-patient-info (patientVitals)="patientVitals($event)" (patientInfo)="patientInfo($event)"></app-patient-info>
   </div>
-</div>
+</div> -->
 
 <app-end-visit *ngIf="ncd_list && show_end" [consult_id]="consult_id" [patient_id]="consult_details.patient_id" [consult_date]="consult_details.consult_date" [pt_group]="'ncd'"></app-end-visit>

@@ -17,7 +17,8 @@ export class LabFormComponent implements OnChanges, OnInit {
   @Input() lab_cxray_findings;
   @Input() lab_cxray_observation;
   @Input() lab_findings;
-
+  @Input() lab_sputum_collection;
+  @Input() lab_result_pn;
   faSave = faSave;
   faSpinner = faSpinner;
 
@@ -28,7 +29,7 @@ export class LabFormComponent implements OnChanges, OnInit {
   lab_form: any = {};
   max_date = formatDate(new Date, 'yyyy-MM-dd', 'en');
 
-  spl_val = ['observation_code', 'findings_code'];
+  spl_val = ['observation_code', 'findings_code', 'data_collection_code'];
 
   loadForm(){
     // console.log(this.selected_lab)
@@ -73,6 +74,7 @@ export class LabFormComponent implements OnChanges, OnInit {
   }
 
   fillCodes(data){
+    console.log(data)
     this.lab_form = this.selected_lab.result;
     switch (data.laboratory.code) {
       case 'CXRAY':
@@ -81,6 +83,10 @@ export class LabFormComponent implements OnChanges, OnInit {
         break;
       case 'ECG':
         this.lab_form['findings_code'] = this.lab_form.findings.code;
+        break;
+      case 'SPTM':
+        this.lab_form['findings_code'] = this.lab_form.findings.code;
+        this.lab_form['data_collection_code'] = this.lab_form.data_collection.code;
         break;
       default:
         break;

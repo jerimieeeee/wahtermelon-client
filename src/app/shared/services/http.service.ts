@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -143,5 +144,15 @@ export class HttpService {
       consult_id: consult_id,
       loc: loc
     }
+  }
+
+  patient_info: any;
+  setPatientInfo(data){
+    this.patient_info = data;
+    console.log(this.patient_info)
+  }
+
+  getPatientInfo(){
+    return this.patient_info;
   }
 }

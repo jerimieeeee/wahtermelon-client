@@ -1,5 +1,4 @@
 import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
-import { Router } from '@angular/router';
 import { BmiChart, ChartOptions, WeightChart } from './chart-option';
 
 @Component({
@@ -38,10 +37,10 @@ export class GraphComponent implements OnInit {
     this.vitals_graph.weight = [];
     this.vitals_graph.weight_date = [];
 
-    console.log(vitals)
+    // console.log(vitals)
     Object.entries(vitals).forEach(([key, value], index) => {
       let val: any = value;
-      console.log(val)
+      // console.log(val)
       if(val.bp_systolic){
         this.vitals_graph.systolic.push(val.bp_systolic);
         this.vitals_graph.diastolic.push(val.bp_diastolic);
@@ -68,7 +67,7 @@ export class GraphComponent implements OnInit {
     }
 
     this.generateAllChart();
-    console.log(this.vitals_graph)
+    // console.log(this.vitals_graph)
   }
 
   generateBPChart(){
@@ -216,7 +215,7 @@ export class GraphComponent implements OnInit {
   }
 
   generateAllChart() {
-    console.log('test')
+    // console.log('test')
     this.generateBPChart();
     this.generateWeightChart();
     this.generateBMIChart();

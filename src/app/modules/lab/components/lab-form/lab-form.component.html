@@ -26,6 +26,20 @@
             </div>
 
             <div *ngFor="let field of fields">
+              <div class="text-sm col-span-1" *ngIf="selected_lab.laboratory.code === 'SPTM' && field.field_name === 'findings_code'">
+                <label class="font-semibold" >{{ field.field_desc }}</label>
+                <select name="field" [(ngModel)]="lab_form['findings_code']" class="input">
+                  <option [value]="findings.code" *ngFor="let findings of lab_findings">{{ findings.desc }}</option>
+                </select>
+              </div>
+
+              <div class="text-sm col-span-1" *ngIf="selected_lab.laboratory.code === 'SPTM' && field.field_name === 'data_collection_code'">
+                <label class="font-semibold" >{{ field.field_desc }}</label>
+                <select name="field" [(ngModel)]="lab_form['data_collection_code']" class="input">
+                  <option [value]="findings.code" *ngFor="let findings of lab_sputum_collection">{{ findings.desc }}</option>
+                </select>
+              </div>
+
               <div class="text-sm col-span-1" *ngIf="selected_lab.laboratory.code === 'CXRAY' && field.field_name === 'findings_code'">
                 <label class="font-semibold" >{{ field.field_desc }}</label>
                 <select name="field" [(ngModel)]="lab_form['findings_code']" class="input">

@@ -87,7 +87,7 @@ export class PatientItrComponent implements OnInit {
 
     if(this.vitals_graph.systolic.length > 0 || this.vitals_graph.diastolic.length > 0){
       this.selected_chart = 'bp_weight_chart';
-      this.loadChart();
+      // this.loadChart();
     } else {
       this.showChart = false;
     }
@@ -100,174 +100,24 @@ export class PatientItrComponent implements OnInit {
     })
   );
 
-  generateBPChart(){
-    this.chartOptions = {
-      series: [
-        {
-          name: "Systolic",
-          data: this.vitals_graph.systolic
-        },
-        {
-          name: "Diastolic",
-          data: this.vitals_graph.diastolic
-        }
-      ],
-      chart: {
-        height: 200,
-        type: "area"
-      },
-      dataLabels: {
-        enabled: false
-      },
-      stroke: {
-        curve: "smooth"
-      },
-      title: {
-        text: "Blood Pressure History"
-      },
-      xaxis: {
-        type: "datetime",
-        categories: this.vitals_graph.bp_date
-      },
-      tooltip: {
-        x: {
-          format: "dd/MM/yy HH:mm"
-        }
-      }
-    };
 
-    this.showChart = true;
-    this.show_bp = true;
-  }
-
-  generateWeightChart(){
-    // this.show_weight = true;
-    this.WeightChart = {
-      series: [
-        {
-          name: "Weight",
-          data: this.vitals_graph.weight
-        }
-      ],
-      chart: {
-        height: 200,
-        type: "line"
-      },
-      dataLabels: {
-        enabled: false
-      },
-      stroke: {
-        curve: "smooth"
-      },
-      title: {
-        text: "Weight History"
-      },
-      xaxis: {
-        type: "datetime",
-        categories: this.vitals_graph.weight_date
-      },
-      tooltip: {
-        x: {
-          format: "dd/MM/yy HH:mm"
-        }
-      }
-    };
-
-    this.showChart = true;
-    this.show_weight = true;
-  }
-
-  generateBMIChart(){
-    this.BmiChart = {
-      series: [
-        {
-          name: "BMI",
-          data: this.vitals_graph.bmi
-        }
-      ],
-      chart: {
-        height: 200,
-        type: "line"
-      },
-      dataLabels: {
-        enabled: false
-      },
-      stroke: {
-        curve: "smooth"
-      },
-      title: {
-        text: "BMI History"
-      },
-      xaxis: {
-        type: "datetime",
-        categories: this.vitals_graph.bmi_date
-      },
-      tooltip: {
-        x: {
-          format: "dd/MM/yy HH:mm"
-        }
-      }
-    };
-
-    this.showChart = true;
-    this.show_bmi = true;
-  }
-
-  loadChart(){
-    this.show_bmi = false;
-    this.show_bp = false;
-    this.show_weight = false;
-
-    switch (this.selected_chart) {
-      case 'bp_chart':
-        this.generateBPChart();
-        break;
-      case 'weight_chart':
-        this.generateWeightChart();
-        break;
-      case 'bmi_chart':
-        this.generateBMIChart();
-        break;
-      case 'bmi_weight_chart':
-        this.generateWeightChart();
-        this.generateBMIChart();
-        break;
-      case 'bp_weight_chart':
-        this.generateBPChart();
-        this.generateWeightChart();
-        break;
-      case 'all_chart':
-        this.generateBPChart();
-        this.generateWeightChart();
-        this.generateBMIChart();
-        break;
-    }
-  }
-
-  generateAllChart(){
-    this.generateBPChart();
-    this.generateWeightChart();
-    this.generateBMIChart();
-  }
 
   patient_id: string;
   loadData(){
-
     let patient_id = this.route.snapshot.paramMap.get('id');
-    // let urlParams = this.http.getUrlParams();
-    console.log(patient_id);
+
     if(this.patient_id !== patient_id){
       this.http.get('consultation/records',{params:{patient_id: patient_id, per_page: 'all', sort: '-consult_date'}}).subscribe({
         next: (data: any) => {
-          this.visit_list = data.data;
           // console.log(data);
+          this.visit_list = data.data;
         },
         error: err => console.log(err),
       })
     }
   }
 
-  selected_visit: any = {}
+  selected_visit: any;
   showConsult(details: any){
     console.log(details)
     if(details.vitals) this.getLatestToday(details);

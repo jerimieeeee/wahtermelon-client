@@ -20,6 +20,7 @@ export class RiskAssessmentComponent implements OnInit, OnChanges {
   @Input() vitals;
   @Input() ncd_details;
 
+  // patient_info: any;
   faInforCircle = faInfoCircle;
   faSave = faSave;
   faSpinner = faSpinner;
@@ -99,7 +100,7 @@ export class RiskAssessmentComponent implements OnInit, OnChanges {
 
   getVitalsToday(vitals, consult_details){
     if(vitals && consult_details){
-      // console.log(vitals);
+      console.log(vitals);
       this.riskAssessForm.patchValue({assessment_date: formatDate(consult_details.consult_date,'yyyy-MM-dd','en')});
 
       Object.entries(vitals).reverse().every(([keys, values], indexes) => {
@@ -113,7 +114,34 @@ export class RiskAssessmentComponent implements OnInit, OnChanges {
         let date_today = formatDate(consult_details.consult_date, 'yyyy-MM-dd','en', 'en')
 
         if(vitals_date === date_today){
-          if(!this.riskAssessForm.value.systolic_1st && val.bp_systolic) {
+          if(val.bp_systolic) {
+
+            if(!this.riskAssessForm.value.systolic_1st){
+              this.riskAssessForm.patchValue({
+                systolic_1st: val.bp_systolic,
+                diastolic_1st: val.bp_diastolic
+              });
+            } else if (this.riskAssessForm.value.systolic_1st && !this.riskAssessForm.value.systolic_2nd) {
+              this.riskAssessForm.patchValue({
+                systolic_2nd: val.bp_systolic,
+                diastolic_2nd: val.bp_diastolic
+              });
+              this.setAverage();
+            } else {
+              this.riskAssessForm.patchValue({
+                systolic_1st: this.riskAssessForm.value.systolic_2nd,
+                diastolic_1st: this.riskAssessForm.value.diastolic_2nd
+              });
+
+              this.riskAssessForm.patchValue({
+                systolic_2nd: val.bp_systolic,
+                diastolic_2nd: val.bp_diastolic
+              });
+              this.setAverage();
+            }
+
+          }
+          /* if(!this.riskAssessForm.value.systolic_1st && val.bp_systolic) {
             this.riskAssessForm.patchValue({
               systolic_1st: val.bp_systolic,
               diastolic_1st: val.bp_diastolic
@@ -127,7 +155,7 @@ export class RiskAssessmentComponent implements OnInit, OnChanges {
 
               this.setAverage();
             }
-          }
+          } */
 
           if(!this.riskAssessForm.value.waist_line && val.patient_waist) {
             this.riskAssessForm.patchValue({waist_line: val.patient_waist});
@@ -270,6 +298,8 @@ export class RiskAssessmentComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    this.loadLibraries()
+    this.loadLibraries();
+    // this.patient_info = this.http.getPatientInfo;
+    // console.log(this.patient_info)
   }
 }

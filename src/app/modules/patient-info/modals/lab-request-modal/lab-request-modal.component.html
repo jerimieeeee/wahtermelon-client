@@ -19,6 +19,15 @@
             <div *ngIf="consult_id" class="input-label col-span-1 pl-5 pt-3">
               Consult ID: {{ consult_id }}
             </div>
+            <div>
+              <div class="col-span-1 grid grid-cols-2 w-full">
+                <label for="request_date" class="input-label text-left pt-3 pr-5">Recommended by physician?</label>
+                <select type="date" class="input w-44" [(ngModel)]="is_recommended">
+                  <option></option>
+                  <option *ngFor="let rec of recommended" [value]="rec.code">{{ rec.desc }}</option>
+                </select>
+              </div>
+            </div>
 
             <div *ngIf="!consult_id" class="col-span-2 flex justify-center w-full mt-3">
               <div class="bg-orange-100 border border-orange-500 p-3 rounded-md text-orange-700 ">
@@ -50,7 +59,7 @@
       <!-- Modal footer -->
       <div class="flex justify-end py-4 px-5 space-x-4 rounded-b border-t border-gray-200 dark:border-gray-600">
         <button  type="button" class="btn-save bg-gray-400 px-10" (click)="closeModal()">Close</button>
-        <button [disabled]="!request_date || count === 0 || is_saving" type="button" class="btn-save px-10 disabled:bg-gray-300" (click)="onSubmit()">
+        <button [disabled]="!request_date || count === 0 || !is_recommended || is_saving" type="button" class="btn-save px-10 disabled:bg-gray-300" (click)="onSubmit()">
           Request
         </button>
       </div>

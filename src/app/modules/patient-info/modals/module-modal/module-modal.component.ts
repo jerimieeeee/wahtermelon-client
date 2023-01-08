@@ -144,7 +144,7 @@ export class ModuleModalComponent implements OnInit {
 
     console.log(loc, this.router.url.split(';')[0])
     if('/patient/'+loc === this.router.url.split(';')[0]){
-      console.log(1)
+      // console.log(1)
       this.closeModal();
     } else {
       if(loc === 'itr' || loc === 'lab'){
@@ -201,7 +201,7 @@ export class ModuleModalComponent implements OnInit {
 
   closeModal(){
     this.is_loading = false;
-    this.toggleModal.emit('vaccine-moodal');
+    this.toggleModal.emit('module');
   }
 
   constructor(

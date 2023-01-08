@@ -1,15 +1,15 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { faEdit, faFlask, faFlaskVial, faTrash, faXmark } from '@fortawesome/free-solid-svg-icons';
-import { PatientInfoComponent } from 'app/components/patient-info/patient-info.component';
+// import { PatientInfoComponent } from 'app/components/patient-info/patient-info.component';
 import { HttpService } from 'app/shared/services/http.service';
-
+import { PatientInfoComponent } from '../patient-info/patient-info.component';
+import { eventSubscriber } from './emmitter.interface';
 @Component({
   selector: 'app-lab',
   templateUrl: './lab.component.html',
   styleUrls: ['./lab.component.scss']
 })
-export class LabComponent implements OnInit {
-  @ViewChild(PatientInfoComponent) patient_info: PatientInfoComponent;
+export class LabComponent implements OnInit, OnDestroy {
   faFlaskVial = faFlaskVial;
   faTrash = faTrash;
   faEdit = faEdit;
@@ -22,6 +22,7 @@ export class LabComponent implements OnInit {
   show_form: boolean = false;
 
   loadData(){
+    console.log('loaded labs')
     let params = {
       patient_id: this.patient_details.id,
       sort: '-request_date',
@@ -34,8 +35,6 @@ export class LabComponent implements OnInit {
       },
       error: err => console.log(err)
     })
-
-    this.patient_info.loadData('laboratory');
   }
 
   getResults(){
@@ -64,10 +63,6 @@ export class LabComponent implements OnInit {
     this.getResults();
   }
 
-  patientInfo(info){
-    this.patient_details = info;
-    this.loadData();
-  }
   modal = [];
   selected_lab: any;
 
@@ -81,9 +76,19 @@ export class LabComponent implements OnInit {
         } else {
           this.modal[form] = !this.modal[form];
         }
-      }else if(lab && lab.laboratory.code === 'ECG') {
-        this.loadLibraries('libraries/laboratory-findings','lab_findings', form)
-      } else {
+      } else if(lab && lab.laboratory.code === 'ECG') {
+        if(!this.lab_findings){
+          this.loadLibraries('libraries/laboratory-findings','lab_findings', form)
+        } else {
+          this.modal[form] = !this.modal[form];
+        }
+      } else if(lab && lab.laboratory.code === 'SPTM') {
+        if(!this.lab_sputum_collection && !this.lab_result_pn) {
+          this.loadSputumCollection(form);
+        } else {
+          this.modal[form] = !this.modal[form];
+        }
+      }else {
         this.modal[form] = !this.modal[form];
       }
 
@@ -93,6 +98,7 @@ export class LabComponent implements OnInit {
       }
     } else {
       this.modal[form] = false;
+      this.getResults();
     }
   }
 
@@ -100,6 +106,19 @@ export class LabComponent implements OnInit {
   lab_findings: any;
   lab_cxray_findings: any;
   lab_cxray_observation: any;
+  lab_sputum_collection: any;
+  lab_result_pn: any;
+
+  loadSputumCollection(form){
+    this.http.get('libraries/laboratory-sputum-collection').subscribe({
+      next: (data: any) => {
+        this.lab_sputum_collection = data.data;
+        // this.loadLibraries('libraries/laboratory-results','lab_result_pn', form)
+        this.loadLibraries('libraries/laboratory-findings','lab_findings', form)
+      },
+      error: err => console.log(err)
+    });
+  }
 
   loadLabStatusLib(){
     this.http.get('libraries/laboratory-statuses').subscribe({
@@ -139,11 +158,20 @@ export class LabComponent implements OnInit {
   }
 
   constructor(
-    private http: HttpService
-  ) { }
+    private http: HttpService,
+    private patientInfo: PatientInfoComponent
+  ) {
+    this.loadData = this.loadData.bind(this);
+    eventSubscriber(patientInfo.reloadLabs, this.loadData)
+  }
 
   ngOnInit(): void {
     this.loadLabStatusLib();
+    this.patient_details = this.http.getPatientInfo();
+    this.loadData();
   }
 
+  ngOnDestroy(): void {
+    eventSubscriber(this.patientInfo.reloadNCDVitals, this.loadData, true);
+  }
 }

@@ -95,7 +95,7 @@ export class HeaderComponent implements OnInit {
   onSelect(selectedPatient){
     if(selectedPatient) {
       // this.patientInfo.getPatient(selectedPatient.id);
-      this.router.navigate(['/itr', {id: selectedPatient.id}]);
+      this.router.navigate(['/patient/itr', {id: selectedPatient.id}]);
     }
     this.selectedPatient = null;
     this.loadPatients();

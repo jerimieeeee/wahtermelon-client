@@ -38,10 +38,20 @@ export class PatientInfoComponent implements OnInit {
   @ViewChild(VitalsComponent) vitals: VitalsComponent;
 
   // @ViewChild(PatientItrComponent) patientItr: PatientItrComponent;
+  reloadNCDVitals: EventEmitter<any> = new EventEmitter();
+  reloadLabs: EventEmitter<any> = new EventEmitter();
+
+  ncdVitals(){
+    this.reloadNCDVitals.emit()
+  }
+
+  labModule(){
+    this.reloadLabs.emit();
+  }
 
   @Output() patientInfo = new EventEmitter<any>();
   @Output() patientVitals = new EventEmitter<any>();
-  @Output() reloadLabs = new EventEmitter<any>();
+  // @Output() reloadLabs = new EventEmitter<any>();
   patient_info: any;
 
   faNotesMedical = faNotesMedical;
@@ -77,18 +87,15 @@ export class PatientInfoComponent implements OnInit {
 
   consult_id: string;
 
-  navigateTo(loc){
-    console.log(loc)
-    this.router.navigate(['/'+loc, {id: this.patient_info.id}])
-
-    this.loadVisit(loc)
+  active_loc: any = [];
+  toggleLoc(loc){
+    this.active_loc = [];
+    this.active_loc[loc] = true;
+    console.log(this.active_loc)
   }
 
-  loadVisit(loc){
-    // console.log(this.patientItr)
-    if(loc === 'itr') {
-      // this.patientItr.loadData(this.patient_id);
-    }
+  navigateTo(loc){
+    this.router.navigate(['/patient/'+loc, {id: this.patient_info.id}])
   }
 
   editPatient(id){
@@ -106,15 +113,16 @@ export class PatientInfoComponent implements OnInit {
   patient_id: string;
   getPatient(){
     let params = this.http.getUrlParams();
-
+    console.log(params)
     if(this.patient_id !== params.patient_id){
       this.http.get('patient/'+params.patient_id).subscribe({
         next: (data: any) => {
           this.patient_info = data.data;
           this.show_form = true;
-          this.patientInfo.emit(data.data);
+          this.http.setPatientInfo(data.data);
           // this.loadVitals();
           this.loadData('all');
+          // this.toggleLoc(params.loc)
           // this.toggleModal('history') //togglemodal for easy test;
           this.accordions['vitals'] = true;
           this.accordions['lab_request'] = true;
@@ -172,40 +180,6 @@ export class PatientInfoComponent implements OnInit {
     this.menstrual_history = data;
   }
 
-  // vitals: any;
-  /* loadVitals(){
-    this.http.get('patient-vitals/vitals', {params:{patient_id: this.patient_info.id, sort: '-vitals_date', per_page: 15}}).subscribe({
-      next: (data: any) => {
-        // console.log(data.data)
-        let vitals = data.data;
-
-        if(vitals.length > 0) {
-          let orig_systolic = data.data[0].bp_systolic;
-          let orig_diastolic = data.data[0].bp_diastolic;
-
-          this.latest_vitals = this.vitalsCharts.getLatestToday(vitals);
-
-          vitals[0]['bp_systolic'] = orig_systolic;
-          vitals[0]['bp_diastolic'] = orig_diastolic;
-          this.patientVitals.emit(vitals);
-        } else {
-          this.latest_vitals = null;
-        }
-
-        this.show_vitals = true;
-      },
-      error: err => console.log(err),
-    })
-  } */
-
-  /* getLatestToday(vitals){
-    if(vitals.length > 0) {
-      this.latest_vitals = this.vitalsCharts.getLatestToday(vitals)
-    } else {
-      this.latest_vitals = null;
-    }
-  } */
-
   vitalsEdit(e){
     this.vitals_to_edit = e;
     this.toggleModal('vitals');
@@ -228,7 +202,8 @@ export class PatientInfoComponent implements OnInit {
   setLabList(data) {
     // console.log(data)
     this.lab_req_list = data;
-    this.reloadLabs.emit(data);
+    this.labModule()
+    // this.reloadLabs.emit(data);
   }
 
   setVaccineGiven(data) {
@@ -288,6 +263,7 @@ export class PatientInfoComponent implements OnInit {
       if (modal_name === 'vitals' && this.modals[modal_name] === false) {
         if(this.modals['vitals'] == false)  this.vitals_to_edit = null;
         this.loadData('vitals');
+        this.ncdVitals()
       }
 
       if (modal_name.modal_name === 'philhealth' && this.modals[modal_name.modal_name] === false) {
@@ -311,7 +287,10 @@ export class PatientInfoComponent implements OnInit {
       }
 
       if(modal_name === 'lifestyle' && this.modals['lifestyle'] === false) this.loadData('social_history');
-      if (modal_name === 'lab-request' && this.modals[modal_name] === false) this.loadData('laboratory');
+      if (modal_name === 'lab-request' && this.modals[modal_name] === false) {
+        this.loadData('laboratory');
+        // this.labModule();
+      }
     }
   }
 

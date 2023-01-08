@@ -22,7 +22,7 @@ export class VitalsComponent implements OnInit {
   latest_vitals: any;
   show_vitals: boolean = false;
   loadData(patient_id){
-    console.log(patient_id)
+    // console.log(patient_id)
     this.http.get('patient-vitals/vitals', {params:{patient_id: patient_id, sort: '-vitals_date', per_page: 15}}).subscribe({
       next: (data: any) => {
         // console.log(data.data)

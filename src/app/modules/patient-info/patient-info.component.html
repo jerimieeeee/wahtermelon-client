@@ -1,7 +1,7 @@
 <div class="grid grid-cols-11 mt-4 gap-4">
   <div class="col-span-8">
     <app-graph [patient_vitals]="patient_vitals"></app-graph>
-    <router-outlet></router-outlet>
+    <router-outlet *ngIf="show_form"></router-outlet>
   </div>
 
   <div class="col-span-3">

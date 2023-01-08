@@ -18,6 +18,8 @@ export class LabRequestModalComponent implements OnInit {
   lab_list;// = lab_list;
   request_date: string;
   labs: any = [];
+  is_recommended: string;
+
   is_saving: boolean = false;
 
   constructor(
@@ -34,10 +36,17 @@ export class LabRequestModalComponent implements OnInit {
     }
   }
 
+  recommended: any;
+
   loadLabs(){
     this.http.get('libraries/laboratories').subscribe({
+      next: (data: any) => this.lab_list = data.data,
+      error: err => console.log(err)
+    })
+
+    this.http.get('libraries/laboratory-recommendations').subscribe({
       next: (data: any) => {
-        this.lab_list = data.data;
+        this.recommended = data.data;
       },
       error: err => console.log(err)
     })
@@ -51,7 +60,9 @@ export class LabRequestModalComponent implements OnInit {
         let request = {
           request_date: this.request_date,
           patient_id: this.patient_info.id,
-          lab_code: key
+          lab_code: key,
+          recommendation_code: this.is_recommended,
+          request_status_code: 'RQ'
         };
 
         if(this.consult_id) request['consult_id'] = this.consult_id;

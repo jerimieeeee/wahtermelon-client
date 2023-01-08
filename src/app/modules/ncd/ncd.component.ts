@@ -1,14 +1,15 @@
-import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, OnChanges, SimpleChanges, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { faDoorClosed } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
-
+import { PatientInfoComponent } from '../patient-info/patient-info.component';
+import { eventSubscriber } from './emmitter.interface';
 @Component({
   selector: 'app-ncd',
   templateUrl: './ncd.component.html',
   styleUrls: ['./ncd.component.scss']
 })
-export class NcdComponent implements OnInit, OnChanges {
+export class NcdComponent implements OnInit, OnChanges, OnDestroy {
   module: Number;
   modules: Number;
 
@@ -28,12 +29,20 @@ export class NcdComponent implements OnInit, OnChanges {
   constructor(
     private route: ActivatedRoute,
     private http: HttpService,
-    private router: Router
-  ) { }
+    private router: Router,
+    private patientInfo: PatientInfoComponent
+  ) {
+    this.loadVitals = this.loadVitals.bind(this);
+    eventSubscriber(patientInfo.reloadNCDVitals, this.loadVitals)
+  }
+
+  ngOnDestroy(): void {
+    eventSubscriber(this.patientInfo.reloadNCDVitals, this.loadVitals, true);
+  }
 
   openNCD(ncd){
     // console.log(ncd)
-    this.router.navigate(['/ncd', {id: ncd.patient_id ?? ncd.patient.id, consult_id: ncd.consult_id ?? ncd.id}]);
+    this.router.navigate(['/patient/ncd', {id: ncd.patient_id ?? ncd.patient.id, consult_id: ncd.consult_id ?? ncd.id}]);
     this.consult_details = ncd;
     this.modules = 2;
   }
@@ -117,12 +126,35 @@ export class NcdComponent implements OnInit, OnChanges {
     });
   }
 
-  patientInfo(info) {
+  /* patientInfo(info) {
     this.patient_info = info;
+  } */
+
+  loadVitals(){
+    console.log('reload please ncd')
+    this.http.get('patient-vitals/vitals', {params:{patient_id: this.patient_id, sort: '-vitals_date', per_page: 15}}).subscribe({
+      next: (data: any) => {
+        // console.log(data.data)
+        let vitals = data.data;
+
+        if(vitals.length > 0) {
+          let orig_systolic = data.data[0].bp_systolic;
+          let orig_diastolic = data.data[0].bp_diastolic;
+
+          vitals[0]['bp_systolic'] = orig_systolic;
+          vitals[0]['bp_diastolic'] = orig_diastolic;
+          // this.show_vitals = true;
+          this.vitals = vitals;
+        } else {
+          // this.show_vitals = true;
+        }
+      },
+      error: err => console.log(err),
+    })
   }
 
   patientVitals(vitals) {
-    this.vitals = vitals;
+    // this.vitals = vitals;
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -133,9 +165,12 @@ export class NcdComponent implements OnInit, OnChanges {
     this.module=1;
     this.modules=1;
 
+    this.patient_info = this.http.getPatientInfo();
+    console.log(this.patient_info)
     this.patient_id = this.route.snapshot.paramMap.get('id');
     this.consult_id = this.route.snapshot.paramMap.get('consult_id');
     this.loadConsult();
+    this.loadVitals();
   }
 
   switchTab(tab){

@@ -32,6 +32,7 @@ export class LaboratoryComponent implements OnInit {
       next: (data: any) => {
         // console.log(data)
         this.lab_list = data.data;
+        this.setLabList.emit(this.lab_list);
         // this.getResults()
       },
       error: err => console.log(err)

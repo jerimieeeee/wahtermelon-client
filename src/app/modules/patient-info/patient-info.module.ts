@@ -40,6 +40,7 @@ import { NgxMaskModule } from 'ngx-mask';
 import { WebcamModule } from 'ngx-webcam';
 import { GraphComponent } from './components/graph/graph.component';
 import { NgApexchartsModule } from 'ng-apexcharts';
+import { PatientItrModule } from '../patient-itr/patient-itr.module';
 
 
 @NgModule({
@@ -87,6 +88,7 @@ import { NgApexchartsModule } from 'ng-apexcharts';
     WebcamModule,
     ReactiveFormsModule,
     NgApexchartsModule,
+    PatientItrModule
   ]
 })
 export class PatientInfoModule { }
