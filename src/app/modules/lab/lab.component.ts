@@ -66,7 +66,7 @@ export class LabComponent implements OnInit {
 
   patientInfo(info){
     this.patient_details = info;
-    // this.loadData();
+    this.loadData();
   }
   modal = [];
   selected_lab: any;
