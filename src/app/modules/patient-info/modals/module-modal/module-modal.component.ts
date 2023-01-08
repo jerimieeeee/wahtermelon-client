@@ -142,23 +142,26 @@ export class ModuleModalComponent implements OnInit {
     let group = module.group;
     this.is_loading = true;
 
-    if('/'+loc === this.router.url.split(';')[0]){
+    console.log(loc, this.router.url.split(';')[0])
+    if('/patient/'+loc === this.router.url.split(';')[0]){
+      console.log(1)
       this.closeModal();
     } else {
       if(loc === 'itr' || loc === 'lab'){
-        this.router.navigate(['/'+loc, {id: this.patient_info.id}]);
+        this.router.navigate(['/patient/'+loc, {id: this.patient_info.id}]);
+        this.closeModal();
       } else {
         this.http.get('consultation/records', {params:{'pt_group': group, 'consult_done': 0, patient_id: this.patient_info.id}}).subscribe({
           next: (data: any) => {
             this.selected_module = module;
             // console.log(data.data)
             if(data.data.length > 0){
-              this.router.navigate(['/'+loc, {id: this.patient_info.id, consult_id: data.data[0].id}])
-              this.is_loading = false;
+              this.router.navigate(['/patient/'+loc, {id: this.patient_info.id, consult_id: data.data[0].id}])
+              this.closeModal();
             }else{
               console.log(this.selected_module);
-              this.is_loading = false;
               this.show_new = true;
+              this.closeModal();
             }
           },
           error: err => {console.log(err);this.is_loading = false},
@@ -188,7 +191,7 @@ export class ModuleModalComponent implements OnInit {
       next: (data: any) => {
         console.log(data)
         this.toastr.success('Successfully recorded!','New visit')
-        this.router.navigate(['/'+selected_module.location, {id: this.patient_info.id, consult_id: data.data.id}]);
+        this.router.navigate(['/patient/'+selected_module.location, {id: this.patient_info.id, consult_id: data.data.id}]);
         this.is_loading = false;
       },
       error: (err) => {console.log(err); this.is_loading = false;},
@@ -197,6 +200,7 @@ export class ModuleModalComponent implements OnInit {
   }
 
   closeModal(){
+    this.is_loading = false;
     this.toggleModal.emit('vaccine-moodal');
   }
 

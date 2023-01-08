@@ -1,1 +1,112 @@
-<p>patient-info works!</p>
+<div class="grid grid-cols-11 mt-4 gap-4">
+  <div class="col-span-8">
+    <app-graph [patient_vitals]="patient_vitals"></app-graph>
+    <router-outlet></router-outlet>
+  </div>
+
+  <div class="col-span-3">
+    <div class="rounded-xl text-gray-600 border border-slate-100" >
+      <div class="block m-0 relative p-0  scrollbar-thumb-white hover:scrollbar-thumb-blue-300 scrollbar-track-white">
+        <div class="flex justify-items-start sticky top-0 bg-white rounded-lg border border-gray-200 shadow-md p-2">
+          <div class="m-3">
+            <!-- <div class="inline-flex overflow-hidden relative justify-center items-center w-16 h-16 bg-gray-300 rounded-full opacity-60">
+              <span class="font-medium text-gray-600 opacity-100">
+                <fa-icon [icon]="faCamera"></fa-icon>
+              </span>
+            </div> -->
+            <div (click)="toggleModal('photo')" class="group cursor-pointer inline-flex overflow-hidden relative justify-center items-center w-16 h-16 bg-gray-100 rounded-full hover:bg-gray-700 hover:opacity-50">
+              <span class="font-medium text-gray-600 opacity-100 group-hover:opacity-50">{{ getInitials(patient_info?.first_name+' '+patient_info?.last_name) }}</span>
+              <span class="absolute text-white opacity-0 group-hover:opacity-100">
+                <fa-icon [icon]="faCamera" size="xl"></fa-icon>
+              </span>
+            </div>
+          </div>
+          <div class="mt-4 leading-tight">
+            <span class="block text-blue-500 font-medium">
+              {{ patient_info?.last_name }}, {{ patient_info?.first_name }} {{ patient_info?.middle_name }} {{ patient_info?.suffix_name === "NA" ? "" : patient_info?.suffix_name }}
+            </span>
+
+            <span class="block text-xs">
+              {{ patient_info?.birthdate | date: 'MM/dd/yyyy' }} [{{ getAge() }}][{{patient_info?.gender}}]
+            </span>
+
+            <div class="flex pt-2">
+              <fa-icon (click)="navigateTo('itr')" class="cursor-pointer mx-0 my-0 text-blue-500 mr-2" [icon]="faClipboardUser" size="lg"></fa-icon>
+              <fa-icon (click)="toggleModal('vitals-list')" class="cursor-pointer mx-0 my-0 text-gray-500 mr-2" [icon]="faHeart" [ngClass]="{'text-rose-400' : latest_vitals }" size="lg"></fa-icon>
+              <fa-icon (click)="navigateTo('lab')" class="cursor-pointer mx-0 my-0 text-gray-500 mr-2" [icon]="faFlask" size="lg"></fa-icon>
+              <fa-icon class="mx-0 my-0 text-gray-500 mr-2" [icon]="faNotesMedical" size="lg"></fa-icon>
+              <fa-icon class="mx-0 my-0 text-gray-500 mr-2" [icon]="faExclamationCircle" size="lg"></fa-icon>
+              <fa-icon (click)="editPatient(patient_info?.id)" class="cursor-pointer mx-0 my-0 text-amber-500 mr-2" [icon]="faPenSquare" size="lg"></fa-icon>
+            </div>
+          </div>
+        </div>
+
+        <div class="block justify-items-start mx-5 pb-5 border-b border-gray-200">
+          <div class="mt-4 flex justify-center">
+            <button type="button" class="w-48 inline-flex justify-center px-5 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-sky-500 hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500" (click)="toggleModal('module')">Navigate Programs</button>
+          </div>
+
+          <div class="mt-4 leading-tight">
+            <span class="block text-blue-500 font-medium text-sm">
+              ADDRESS
+            </span>
+            <span class="block text-xs">
+              {{ patient_info?.household_folder?.address }}, {{ 'Brgy. '+patient_info?.household_folder?.barangay.name }},
+              {{ patient_info?.household_folder?.barangay.municipality.name }},
+              {{ patient_info?.household_folder?.barangay.province.name }} <br />
+              {{ patient_info?.household_folder?.barangay.region.name }}
+            </span>
+          </div>
+
+          <div class="mt-4 leading-tight">
+            <span class="block text-blue-500 font-medium text-sm">
+              CONTACT NUMBER
+            </span>
+            <span class="block text-xs">
+              {{ patient_info?.mobile_number }}
+            </span>
+          </div>
+
+          <app-philhealth (toggleAccordion)="toggleAccordion($event)" [accordions]="accordions" (toggleModal)="toggleModal($event)"></app-philhealth>
+        </div>
+
+        <app-prescriptions (toggleAccordion)="toggleAccordion($event)" (navigateTo)="navigateTo($event)" [accordions]="accordions" [consult_id]="consult_id" [patient_info]="patient_info"></app-prescriptions>
+        <app-laboratory (toggleAccordion)="toggleAccordion($event)" (navigateTo)="navigateTo($event)" [accordions]="accordions" (toggleModal)="toggleModal($event)" (setLabList)="setLabList($event)"></app-laboratory>
+        <app-vitals (toggleAccordion)="toggleAccordion($event)" (toggleModal)="toggleModal($event)" (setVitals)="setVitals($event)" [accordions]="accordions"></app-vitals>
+        <app-vaccine (toggleAccordion)="toggleAccordion($event)" [accordions]="accordions" (toggleModal)="toggleModal($event)" (setVaccineGiven)="setVaccineGiven($event)"></app-vaccine>
+        <app-past-medical (toggleAccordion)="toggleAccordion($event)" [accordions]="accordions" (toggleModal)="toggleModal($event)" (setPastMedical)="setPastMedical($event)"></app-past-medical>
+        <app-menstrual-history (toggleAccordion)="toggleAccordion($event)" [accordions]="accordions" (toggleModal)="toggleModal($event)" (setMenstrual)="setMenstrual($event)"></app-menstrual-history>
+        <app-family-medical (toggleAccordion)="toggleAccordion($event)" [accordions]="accordions" (toggleModal)="toggleModal($event)" (setFamilyMedical)="setFamilyMedical($event)"></app-family-medical>
+        <app-social-history (toggleAccordion)="toggleAccordion($event)" [accordions]="accordions" (toggleModal)="toggleModal($event)" (setSocial)="setSocial($event)"></app-social-history>
+        <app-surgical-history (toggleAccordion)="toggleAccordion($event)" [accordions]="accordions" (toggleModal)="toggleModal($event)" (setSurgicalHistory)="setSurgicalHistory($event)"></app-surgical-history>
+        <!-- <app-death-record></app-death-record> -->
+
+      </div>
+    </div>
+  </div>
+</div>
+<!-- MODALS -->
+<app-module-modal *ngIf="modals['module']" (toggleModal)="toggleModal('module')" [patient_info]="patient_info" [patient_age]="patient_age"></app-module-modal>
+<app-lab-request-modal *ngIf="modals['lab-request']" (toggleModal)="toggleModal('lab-request')" [lab_req_list]="lab_req_list" [patient_info]="patient_info" [consult_id]="consult_id"></app-lab-request-modal>
+
+<app-history-modal *ngIf="modals['history']" (toggleModal)="toggleModal('history')" [patient_info]="patient_info" [history_list]="history_list" [past_medical]="past_medical"></app-history-modal>
+<app-fam-history-modal *ngIf="modals['fam-history']" (toggleModal)="toggleModal($event)" [patient_info]="patient_info" [history_list]="history_list" [family_medical]="family_medical"></app-fam-history-modal>
+<app-lifestyle-modal *ngIf="modals['lifestyle']" (toggleModal)="toggleModal($event)" [patient_info]="patient_info" [social_history]="social_history"></app-lifestyle-modal>
+<app-menstrual-modal *ngIf="modals['menstrual']" (toggleModal)="toggleModal($event)" [patient_info]="patient_info" [menstrual_history]="menstrual_history" [fp_method]="fp_method"></app-menstrual-modal>
+
+<app-vitals-modal *ngIf="modals['vitals']" (toggleModal)="toggleModal('vitals')" [patient_age]="patient_age" [patient_info]="patient_info" [vitals_to_edit]="vitals_to_edit"></app-vitals-modal>
+<app-vitals-list-modal *ngIf="modals['vitals-list']" (toggleModal)="toggleModal('vitals-list')" (vitalsEdit)="vitalsEdit($event)" [patient_info]="patient_info"></app-vitals-list-modal>
+
+<app-philhealth-modal *ngIf="modals['philhealth']" (toggleModal)="toggleModal($event)" [patient_info]="patient_info" [philhealth_to_edit]="philhealth_to_edit"></app-philhealth-modal>
+<app-philhealth-list-modal *ngIf="modals['philhealth-list']" (toggleModal)="toggleModal('philhealth-list')" (philhealthEdit)="philhealthEdit($event)" [patient_info]="patient_info" ></app-philhealth-list-modal>
+
+<app-vaccine-modal *ngIf="modals['vaccine']" (toggleModal)="toggleModal('vaccine')" (loadData)="loadData($event)" [patient_info]="patient_info" [vaccines_given]="vaccines_given"></app-vaccine-modal>
+<app-vaccine-action-modal *ngIf="modals['vaccine-action']" (toggleModal)="toggleModal($event)" [vaccine_to_edit]="vaccine_to_edit"></app-vaccine-action-modal>
+
+<app-surgical-modal *ngIf="modals['surgical-history']" (toggleModal)="toggleModal($event)" [patient_info]="patient_info"></app-surgical-modal>
+<app-surgical-action-modal *ngIf="modals['surgical-action']" (toggleModal)="toggleModal($event)" [surgery_to_delete]="surgery_to_delete"></app-surgical-action-modal>
+
+<app-allergies-modal *ngIf="modals['allergies']" (toggleModal)="toggleModal('allergies')"></app-allergies-modal>
+<app-medication-modal *ngIf="modals['medication']" (toggleModal)="toggleModal('medication')"></app-medication-modal>
+<app-death-modal *ngIf="modals['death']" (toggleModal)="toggleModal('death')"></app-death-modal>
+<app-photo-modal *ngIf="modals['photo']" (toggleModal)="toggleModal('photo')" [patient_info]="patient_info"></app-photo-modal>

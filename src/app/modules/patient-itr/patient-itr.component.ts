@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ChartComponent } from "ng-apexcharts";
 import { openCloseTrigger } from './declarations/animation';
 import { BmiChart, ChartOptions, WeightChart } from './declarations/chart-options';
-import { NavigationEnd, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { filter, tap } from "rxjs/operators";
 import { HttpService } from 'app/shared/services/http.service';
 import { formatDate } from '@angular/common';
@@ -53,7 +53,7 @@ export class PatientItrComponent implements OnInit {
 
   patientInfo(info){
     this.patient_details = info;
-    this.loadVisitHistory();
+    // this.loadVisitHistory();
   }
 
   patientVitals(vitals){
@@ -250,17 +250,24 @@ export class PatientItrComponent implements OnInit {
     this.generateBMIChart();
   }
 
-  loadVisitHistory(){
-    // console.log(this.patient_details);
-    this.http.get('consultation/records',{params:{patient_id: this.patient_details.id, per_page: 'all', sort: '-consult_date'}}).subscribe({
-      next: (data: any) => {
-        this.visit_list = data.data;
-        // console.log(data);
-      },
-      error: err => console.log(err),
-    })
+  patient_id: string;
+  loadData(){
+
+    let patient_id = this.route.snapshot.paramMap.get('id');
+    // let urlParams = this.http.getUrlParams();
+    console.log(patient_id);
+    if(this.patient_id !== patient_id){
+      this.http.get('consultation/records',{params:{patient_id: patient_id, per_page: 'all', sort: '-consult_date'}}).subscribe({
+        next: (data: any) => {
+          this.visit_list = data.data;
+          // console.log(data);
+        },
+        error: err => console.log(err),
+      })
+    }
   }
 
+  selected_visit: any = {}
   showConsult(details: any){
     console.log(details)
     if(details.vitals) this.getLatestToday(details);
@@ -292,14 +299,13 @@ export class PatientItrComponent implements OnInit {
           this.selected_visit = data.data[0];
         }
 
-        this.selected_visit.pt_group = group;
+        this.selected_visit['pt_group'] = group;
       },
       error: err => console.log(err)
     })
   }
 
   selected_id: number;
-  selected_visit: any;
 
   getLatestToday(details){
     this.latest_vitals = this.vitalsCharts.getLatestToday(details.vitals, details.consult_date);
@@ -337,10 +343,13 @@ export class PatientItrComponent implements OnInit {
   constructor(
     private router: Router,
     private http: HttpService,
-    private vitalsCharts: VitalsChartsService
+    private vitalsCharts: VitalsChartsService,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
+    // console.log(this.router.url)
+    this.loadData();
     this.navigationEnd$.subscribe();
   }
 }

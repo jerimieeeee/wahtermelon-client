@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,10 @@ export class HttpService {
   //   'Authorization': `Bearer ${localStorage.getItem('token')}`,
   // });
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private router: Router
+  ) { }
 
   user_json: any;
 
@@ -116,5 +120,28 @@ export class HttpService {
         break;
     }
     return '';
+  }
+
+  getUrlParams() {
+    let patient_id;
+    let consult_id;
+    let loc;
+
+    let values = this.router.url.split(';');
+    let id = values[1].split('=');
+
+    patient_id = id[1];
+    let location = values[0].split('/');
+    loc = location[2]
+    if(values[2]) {
+      let consult = values[2].split('=');
+      consult_id = consult[1];
+    }
+
+    return {
+      patient_id: patient_id,
+      consult_id: consult_id,
+      loc: loc
+    }
   }
 }

@@ -316,7 +316,7 @@ export class PatientInfoComponent implements OnInit {
   navigationEnd$ = this.router.events.pipe(
     filter(event => event instanceof NavigationEnd),
     tap(() => {
-      this.getPatient(this.activeRoute.snapshot.paramMap.get('id'));
+      // this.getPatient(this.activeRoute.snapshot.paramMap.get('id'));
     })
   );
 

@@ -19,16 +19,16 @@ export class SocialHistoryComponent implements OnInit {
   social_history: any;
 
   loadData(patient_id) {
-    console.log(patient_id)
+    // console.log(patient_id)
     this.http.get('patient-social-history/history', {params: {patient_id: patient_id}}).subscribe({
       next: (data: any) => {
-        console.log(data.data.length)
+        // console.log(data.data.length)
         if(data.data.length !== 0) {
           this.social_history = data.data[0];
         } else {
           this.social_history = [];
         }
-        console.log(this.social_history)
+        // console.log(this.social_history)
         this.setSocial.emit(this.social_history);
       },
       error: err => console.log(err)
