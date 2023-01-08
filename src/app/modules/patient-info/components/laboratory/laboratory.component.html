@@ -1,0 +1,38 @@
+<div class="block pt-4 justify-items-start mx-5 pb-5">
+  <div class="flex justify-between items-center">
+    <span class="block text-blue-500 font-medium text-sm">
+      <fa-icon (click)="toggle('lab_request')" class="mx-0 my-0 text-gray-500 mr-2 hover:cursor-pointer" [icon]="accordions['lab_request'] ? faChevronUp : faChevronDown"></fa-icon>
+      LAB REQUESTS
+    </span>
+    <span>
+      <button (click)="modalToggle('lab-request')" class="mr-2 bg-amber-500 text-xs text-white px-3 py-1 rounded-md  hover:ring-2 hover:ring-amber-400" >request</button>
+      <button (click)="navigate('lab')" class="bg-green-500 text-xs text-white px-3 py-1 rounded-md  hover:ring-2 hover:ring-green-400" >open lab</button>
+    </span>
+  </div>
+
+  <div *ngIf="!lab_list" >
+    <div class="p-4 mx-auto">
+      <div class="animate-pulse grid grid-cols-2 gap-x-20 gap-y-4 justify-between">
+        <div class="h-2 bg-slate-200 rounded"></div>
+        <div class="h-2 bg-slate-200 rounded"></div>
+        <div class="h-2 bg-slate-200 rounded"></div>
+        <div class="h-2 bg-slate-200 rounded"></div>
+        <div class="h-2 bg-slate-200 rounded"></div>
+        <div class="h-2 bg-slate-200 rounded"></div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="lab_list" >
+    <div [@openCloseAccordion] *ngIf="accordions.lab_request" class="block pt-2">
+      <div class="flex pl-3 justify-between items-center" *ngFor="let lab of lab_list">
+        <span class="block font-medium text-xs" *ngIf="!lab.result || (lab.result.lab_status_code === 'N')">
+          {{ lab.laboratory.desc }}
+        </span>
+        <span class="block text-xs" *ngIf="!lab.result || (lab.result.lab_status_code === 'N')">
+          {{ lab.request_date | date: 'MM/dd/yyyy'  }}
+        </span>
+      </div>
+
+    </div>
+  </div>
+</div>

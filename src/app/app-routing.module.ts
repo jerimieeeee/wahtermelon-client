@@ -114,7 +114,8 @@ const routes: Routes = [
   {
     path: 'dispensing',
     loadChildren: () => import('./modules/drug-dispensing/drug-dispensing.module').then(m => m.DrugDispensingModule)
-  }
+  },
+  { path: 'modules/patient-info', loadChildren: () => import('./modules/patient-info/patient-info.module').then(m => m.PatientInfoModule) }
 ];
 
 @NgModule({
