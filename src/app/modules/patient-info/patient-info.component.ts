@@ -236,6 +236,7 @@ export class PatientInfoComponent implements OnInit {
   }
 
   setVitals(data) {
+    console.log(data)
     this.patient_vitals = data;
   }
 

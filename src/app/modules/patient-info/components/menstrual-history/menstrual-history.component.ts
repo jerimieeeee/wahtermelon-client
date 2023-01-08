@@ -22,7 +22,7 @@ export class MenstrualHistoryComponent {
   loadData(patient_id){
     this.http.get('patient-menstrual-history/history', {params:{patient_id: patient_id}}).subscribe({
       next: (data: any) => {
-        console.log(data)
+        // console.log(data)
         this.setMenstrual.emit(data.data);
         this.menstrual_history = data.data[0];
       },
