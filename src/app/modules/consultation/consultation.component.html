@@ -42,7 +42,7 @@
                 <select [disabled]="enable_edit" class="input px-2 mr-3 disabled:bg-gray-300"  [(ngModel)]="referred_to.id">
                   <option [value]="dr.id" class="pr-3" *ngFor="let dr of physicians">{{ dr.last_name }}, {{ dr.first_name }} {{ dr.middle_name }}</option>
                 </select>
-                <button (click)="referTo()" [ngClass]="{'bg-orange-500 hover:ring-orange-400': enable_edit}" class="bg-blue-500 text-xs text-white px-5 py-1 rounded-md  hover:ring-2 hover:ring-blue-400 h-10 mt-1 w-24">
+                <button (click)="referTo()" [disabled]="!referred_to.id" [ngClass]="{'bg-orange-500 hover:ring-orange-400': enable_edit}" class="disabled:bg-gray-300 bg-blue-500 text-xs text-white px-5 py-1 rounded-md  hover:ring-2 hover:ring-blue-400 h-10 mt-1 w-24">
                   {{ enable_edit ? 'Update' : 'Refer' }}
                 </button>
               </div>
@@ -65,7 +65,7 @@
                 <option [value]="dr.id" class="pr-3" *ngFor="let dr of physicians">{{ dr.last_name }}, {{ dr.first_name }} {{ dr.middle_name }}</option>
               </select>
               <div class="w-full text-right">
-                <button (click)="referTo()" [ngClass]="{'bg-orange-500 hover:ring-orange-400': enable_edit}" class="bg-blue-500 text-xs text-white px-5 py-1 rounded-md  hover:ring-2 hover:ring-blue-400 h-10 mt-1 w-24">
+                <button (click)="referTo()" [disabled]="!referred_to.id" class="btn-save px-5 disabled:bg-gray-300">
                   {{ enable_edit ? 'Update' : 'Refer' }}
                 </button>
               </div>
