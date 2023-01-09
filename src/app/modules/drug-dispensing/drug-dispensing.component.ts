@@ -31,7 +31,6 @@ export class DrugDispensingComponent implements OnInit {
   }
 
   identify(index, item) {
-    // console.log(item)
     return item.id
   }
 
@@ -73,36 +72,35 @@ export class DrugDispensingComponent implements OnInit {
     })
   }
 
-  getValues(items){
-    Object.entries(items).forEach(([key, value], index) => {
-      let values: any = value;
-
-      Object.entries(this.libraries).forEach(([k, v], i) => {
-        // console.log(i)
-        items[key]['dispense_quantity'] = null;
-        items[key]['remarks'] = null;
-        if(k === 'konsulta_medicine_code' && !values[k]){
-
-        } else {
-          this.http.get('libraries/'+v.location+'/'+values[k]).subscribe({
-            next: (data: any) => {
-              items[key][v.var_name] = data.data.desc
-            },
-            error: err => console.log(err)
-          })
-        }
-      });
-    });
-    return items;
-  }
-
   dispensed_list = [];
 
-  qtyDisp(data){
-    console.log(data);
+  qtyDisp(pres){
+    console.log(pres);
 
-    if(data.disp)
-    return 0;
+    if(pres.dispensing) {
+      let dispensed: number = 0;
+      Object.entries(pres.dispensing).forEach(([key, value], index) => {
+        let val: any = value;
+        dispensed = dispensed + val.dispense_quantity
+      });
+
+      console.log('dispensed_qty', pres.quantity, dispensed)
+      pres.quantity = pres.quantity - dispensed;
+    }
+
+    return pres.quantity;
+  }
+
+  getQtyDisp(pres_length){
+    if(pres_length >= 1) {
+      if(pres_length === 1) {
+        this.qtyDisp(this.prescriptions[0])
+      } else {
+        Object.entries(this.prescriptions).forEach(([key, value], index) => {
+          this.qtyDisp(value);
+        })
+      }
+    }
   }
 
   getDispense(id){
@@ -122,8 +120,10 @@ export class DrugDispensingComponent implements OnInit {
     let params = {patient_id: id, status: 'dispensing'};
     this.http.get('medicine/prescriptions', {params}).subscribe({
       next: (data: any) => {
-        // console.log(data.data)
+        console.log(data.data)
         this.prescriptions = data.data;
+        if(Object.keys(this.prescriptions).length > 0) this.getQtyDisp(Object.keys(this.prescriptions).length);
+
         this.getDispense(this.route.snapshot.paramMap.get('id'))
       },
       error: err => console.log(err)
