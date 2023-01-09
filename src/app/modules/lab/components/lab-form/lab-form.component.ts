@@ -96,6 +96,9 @@ export class LabFormComponent implements OnChanges, OnInit {
       case 'FOBT':
         this.lab_form['findings_code'] = this.lab_form.findings ? this.lab_form.findings.code : null;
         break;
+      case 'PPD':
+        this.lab_form['findings_code'] = this.lab_form.findings ? this.lab_form.findings.code : null;
+        break;
       default:
         break;
     }
