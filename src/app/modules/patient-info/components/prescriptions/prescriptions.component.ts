@@ -46,7 +46,7 @@ export class PrescriptionsComponent implements OnInit, OnDestroy {
 
     this.http.get('medicine/prescriptions', {params}).subscribe({
       next: (data: any) => {
-        // console.log(data)
+        console.log(data)
         this.prescriptions = data.data;
       },
       error: err => console.log(err)
@@ -59,7 +59,7 @@ export class PrescriptionsComponent implements OnInit, OnDestroy {
 
       this.http.get('medicine/prescriptions', {params}).subscribe({
         next: (data: any) => {
-          // console.log(data.data)
+          console.log(data.data)
           this.prescriptions = data.data;
         },
         error: err => console.log(err)
