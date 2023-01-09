@@ -89,7 +89,7 @@
         <tbody *ngIf="show_form">
           <tr *ngFor="let dis of dispensed_list; trackBy:identify" class="bg-white border-b last:border-0">
             <td class="py-4 px-3">
-              {{ dis.prescription.konsulta_medicine.desc ?? dis.prescription.added_medicine}}
+              {{ dis.prescription.konsulta_medicine ? dis.prescription.konsulta_medicine.desc : dis.prescription.added_medicine }}
             </td>
             <td scope="row" class="py-4 px-3 text-gray-900">
               {{ dis.prescription.dosage_quantity }} {{ dis.prescription.unit_of_measurement.desc }} {{ dis.prescription.regimen.desc }}
