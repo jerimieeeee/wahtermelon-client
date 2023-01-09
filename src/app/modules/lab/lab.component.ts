@@ -50,7 +50,7 @@ export class LabComponent implements OnInit, OnDestroy {
       if(url !== '') {
         this.http.get(url, {params: {request_id: val.id}}).subscribe({
           next: (data: any) => {
-            console.log(data.data)
+            // console.log(data.data)
             this.pending_list[key]['result'] = data.data[0];
             if(Object.keys(this.pending_list).length - 1 === index) {
               this.show_form = true;

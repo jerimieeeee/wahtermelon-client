@@ -7,7 +7,7 @@
     <fa-icon (click)="modalToggle('menstrual')" class="mx-0 my-0 text-blue-500 mr-2 hover:cursor-pointer" [icon]="faPlusCircle"></fa-icon>
   </div>
 
-  <div *ngIf="!menstrual_history" >
+  <div *ngIf="!show_form" >
     <div class="p-4 mx-auto">
       <div class="animate-pulse grid grid-cols-2 gap-x-20 gap-y-4 justify-between">
         <div class="h-2 bg-slate-200 rounded"></div>
@@ -19,7 +19,7 @@
       </div>
     </div>
   </div>
-  <div *ngIf="menstrual_history" >
+  <div *ngIf="show_form" >
     <div [@openCloseAccordion] *ngIf="accordions['menstrual']" class="block">
       <div class="flex pl-3 justify-between items-center">
         <span class="block font-medium text-xs">
