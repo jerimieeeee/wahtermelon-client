@@ -107,7 +107,7 @@ export class LifestyleModalComponent implements OnInit, OnChanges {
   ) { }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.lifestyleForm.patchValue({...this.social_history[0]});
+    this.lifestyleForm.patchValue({...this.social_history});
     this.disableFields();
   }
 
@@ -115,9 +115,9 @@ export class LifestyleModalComponent implements OnInit, OnChanges {
     this.createForm();
     this.loadLibraries();
 
-
+    console.log(this.social_history)
     if(this.social_history) {
-      this.lifestyleForm.patchValue({...this.social_history[0]});
+      this.lifestyleForm.patchValue({...this.social_history});
     }
   }
 }

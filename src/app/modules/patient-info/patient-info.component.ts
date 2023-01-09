@@ -167,11 +167,16 @@ export class PatientInfoComponent implements OnInit {
   setDetails(data) {
     //set details from components
     this[data.var_name] = data.data;
+    console.log(data)
   }
 
-  setPhilhealthDetails(data) {
+  /* setSocial(data){
+    this.social_history = data;
+  } */
+
+  /* setPhilhealthDetails(data) {
     this.philhealth_details = data;
-  }
+  } */
 
   setSurgicalHistory(data) {
     this.surgical_history = data;
@@ -185,9 +190,7 @@ export class PatientInfoComponent implements OnInit {
     this.family_medical = data;
   }
 
-  setSocial(data){
-    this.social_history = data;
-  }
+
 
   setMenstrual(data){
     this.menstrual_history = data;
@@ -230,7 +233,7 @@ export class PatientInfoComponent implements OnInit {
       }
 
       if(modal_name === 'history' && this.modals['history'] === false) this.loadData('past_medical');
-      if(modal_name === 'fam-history' && this.modals['surgical-history'] === false) this.loadData('family_medical');
+      if(modal_name === 'fam-history' && this.modals['fam-history'] === false) this.loadData('family_medical');
     } else if (modal_name.modal_name === 'surgical-history' || modal_name.modal_name === 'surgical-action') {
       //SURGICAL HISTORY
       this.modals[modal_name.modal_name] = !this.modals[modal_name.modal_name];

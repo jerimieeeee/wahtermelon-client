@@ -10,7 +10,7 @@ import { HttpService } from 'app/shared/services/http.service';
 export class SocialHistoryComponent implements OnInit {
   @Output() toggleAccordion = new EventEmitter<any>();
   @Output() toggleModal = new EventEmitter<any>();
-  @Output() setSocial = new EventEmitter<any>();
+  @Output() setDetails = new EventEmitter<any>();
   @Input() accordions;
 
   faPlusCircle = faPlusCircle;
@@ -29,7 +29,7 @@ export class SocialHistoryComponent implements OnInit {
           this.social_history = [];
         }
         // console.log(this.social_history)
-        this.setSocial.emit(this.social_history);
+        this.setDetails.emit({var_name: 'social_history', data: this.social_history});
       },
       error: err => console.log(err)
     })
