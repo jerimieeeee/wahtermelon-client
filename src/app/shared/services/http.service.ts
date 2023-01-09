@@ -117,6 +117,14 @@ export class HttpService {
         return 'laboratory/consult-laboratory-ppd'
       case 'SPTM':
         return 'laboratory/consult-laboratory-sputum'
+      case 'FCAL':
+        return 'laboratory/consult-laboratory-fecalysis'
+      case 'LPFL':
+        return 'laboratory/consult-laboratory-lipid-profile'
+      case 'URN':
+        return 'laboratory/consult-laboratory-urinalysis'
+      case 'OGTT':
+        return 'laboratory/consult-laboratory-oral-glucose'
       default:
         break;
     }

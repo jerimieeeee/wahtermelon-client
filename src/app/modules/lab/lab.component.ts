@@ -43,13 +43,14 @@ export class LabComponent implements OnInit, OnDestroy {
   }
 
   getResults(){
+    console.log('labs loaded')
     Object.entries(this.pending_list).forEach(([key, value], index) => {
       let val: any = value;
       let url = this.http.getURL(val.laboratory.code)
       if(url !== '') {
         this.http.get(url, {params: {request_id: val.id}}).subscribe({
           next: (data: any) => {
-            // console.log(data.data)
+            console.log(data.data)
             this.pending_list[key]['result'] = data.data[0];
             if(Object.keys(this.pending_list).length - 1 === index) {
               this.show_form = true;
@@ -75,6 +76,10 @@ export class LabComponent implements OnInit, OnDestroy {
 
   modal = [];
   selected_lab: any;
+
+  cancelModal(form) {
+    this.modal[form] = !this.modal[form];
+  }
 
   toggleModal(form, lab?){
     this.selected_lab = lab;
@@ -104,11 +109,11 @@ export class LabComponent implements OnInit, OnDestroy {
 
       if(this.modal[form] === false) {
         // this.selected_lab = null;
-        this.getResults();
+        this.loadData();
       }
     } else {
       this.modal[form] = false;
-      this.getResults();
+      this.loadData();
     }
   }
 

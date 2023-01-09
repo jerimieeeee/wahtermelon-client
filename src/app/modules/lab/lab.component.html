@@ -57,11 +57,12 @@
 
   <!-- <div class="col-span-3">
     <app-patient-info (patientInfo)="patientInfo($event)" (reloadLabs)="reloadLabs($event)"></app-patient-info>
-  </div>
+  </div>cancelModal
 </div> -->
 
 <app-lab-form *ngIf="modal['add']"
-  (toggleModal)="toggleModal($event)"
+    (toggleModal)="toggleModal($event)"
+    (cancelModal)="cancelModal($event)"
     [selected_lab]="selected_lab"
     [patient_details]="patient_details"
     [lab_statuses]="lab_statuses"

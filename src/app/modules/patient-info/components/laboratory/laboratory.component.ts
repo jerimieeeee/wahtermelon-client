@@ -66,22 +66,6 @@ export class LaboratoryComponent implements OnInit, OnDestroy {
     })
   }
 
-  getURL(lab_code): string{
-    switch (lab_code) {
-      case 'CBC':
-        return 'laboratory/consult-laboratory-cbc'
-      case 'CRTN':
-        return 'laboratory/consult-laboratory-creatinine'
-      case 'CXRAY':
-        return 'laboratory/consult-laboratory-chestxray'
-      case 'ECG':
-        return ''
-      default:
-        break;
-    }
-    return '';
-  }
-
   navigate(loc) {
     this.navigateTo.emit(loc)
   }

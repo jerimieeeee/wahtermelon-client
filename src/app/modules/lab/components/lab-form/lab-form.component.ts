@@ -11,6 +11,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class LabFormComponent implements OnChanges, OnInit {
   @Output() toggleModal = new EventEmitter<any>();
+  @Output() cancelModal = new EventEmitter<any>();
   @Input() selected_lab;
   @Input() patient_details;
   @Input() lab_statuses;
@@ -82,15 +83,15 @@ export class LabFormComponent implements OnChanges, OnInit {
     this.lab_form = this.selected_lab.result;
     switch (data.laboratory.code) {
       case 'CXRAY':
-        this.lab_form['findings_code'] = this.lab_form.findings.code;
-        this.lab_form['observation_code'] = this.lab_form.observation.code;
+        this.lab_form['findings_code'] = this.lab_form.findings ? this.lab_form.findings.code : null;
+        this.lab_form['observation_code'] = this.lab_form.observation ? this.lab_form.observation.code : null;
         break;
       case 'ECG':
-        this.lab_form['findings_code'] = this.lab_form.findings.code;
+        this.lab_form['findings_code'] = this.lab_form.findings ? this.lab_form.findings.code : null;
         break;
       case 'SPTM':
-        this.lab_form['findings_code'] = this.lab_form.findings.code;
-        this.lab_form['data_collection_code'] = this.lab_form.data_collection.code;
+        this.lab_form['findings_code'] = this.lab_form.findings ? this.lab_form.findings.code : null;
+        this.lab_form['data_collection_code'] = this.lab_form.data_collection ? this.lab_form.data_collection.code : null;
         break;
       default:
         break;
@@ -118,9 +119,12 @@ export class LabFormComponent implements OnChanges, OnInit {
         query.subscribe({
           next: (data: any) => {
             console.log(data);
-            this.is_saving = false;
-            this.toastr.success('Lab result was recorded!','Laboratory Result');
-            this.closeModal();
+            if(this.selected_lab.request_status_code === 'RF') {
+              this.updateLabReq('RQ');
+            } else {
+              this.toastr.success('Lab result was recorded!','Laboratory Result');
+              this.closeModal();
+            }
           },
           error: err => console.log(err)
         })
@@ -129,26 +133,35 @@ export class LabFormComponent implements OnChanges, OnInit {
         this.toastr.error('Laboratory does not exist','Lab form')
       }
     } else {
-      let params = {
-        lab_code: this.selected_lab.laboratory.code,
-        patient_id: this.selected_lab.patient_id,
-        recommendation_code: this.selected_lab.recommendation_code,
-        request_date: this.selected_lab.request_date,
-        request_status_code: 'RF',
-      }
-
-      this.http.update('laboratory/consult-laboratories/', this.selected_lab.id, params).subscribe({
-        next: () => {
-          this.toastr.success('Lab record was updated!','Lab Record');
-          this.closeModal();
-        },
-        error: err => console.log(err)
-      })
+      this.updateLabReq('RF');
     }
   }
 
+  updateLabReq(request_status_code){
+    let params = {
+      lab_code: this.selected_lab.laboratory.code,
+      patient_id: this.selected_lab.patient_id,
+      recommendation_code: this.selected_lab.recommendation_code,
+      request_date: this.selected_lab.request_date,
+      request_status_code: request_status_code,
+    }
+
+    this.http.update('laboratory/consult-laboratories/', this.selected_lab.id, params).subscribe({
+      next: () => {
+        this.toastr.success('Lab record was updated!','Lab Record');
+        this.closeModal();
+      },
+      error: err => console.log(err)
+    })
+  }
+
   closeModal(){
+    this.is_saving = false;
     this.toggleModal.emit('add');
+  }
+
+  cancelThisModal(){
+    this.cancelModal.emit('add');
   }
 
   constructor(
