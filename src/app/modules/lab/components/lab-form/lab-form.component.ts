@@ -1,6 +1,6 @@
 import { formatDate } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, OnInit } from '@angular/core';
-import { faSave, faSpider, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { faSave, faSearch, faSpider, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -25,6 +25,7 @@ export class LabFormComponent implements OnChanges, OnInit {
   is_saving: boolean = false;
   show_form: boolean = false;
   fields: any;
+  request_status_code: boolean;
 
   lab_form: any = {};
   max_date = formatDate(new Date, 'yyyy-MM-dd', 'en');
@@ -66,6 +67,7 @@ export class LabFormComponent implements OnChanges, OnInit {
 
     this.fields = fields;
 
+    this.request_status_code = this.selected_lab.request_status_code === 'RF' ? true : false;
     if(this.selected_lab.result) {
       this.fillCodes(this.selected_lab)
     }
@@ -74,7 +76,9 @@ export class LabFormComponent implements OnChanges, OnInit {
   }
 
   fillCodes(data){
-    console.log(data)
+    console.log(this.selected_lab)
+    console.log(this.request_status_code)
+
     this.lab_form = this.selected_lab.result;
     switch (data.laboratory.code) {
       case 'CXRAY':
@@ -97,32 +101,49 @@ export class LabFormComponent implements OnChanges, OnInit {
     console.log(this.selected_lab)
     this.is_saving = true;
 
-    let url: string = this.http.getURL(this.selected_lab.laboratory.code);
+    if(!this.request_status_code) {
+      let url: string = this.http.getURL(this.selected_lab.laboratory.code);
+      if(url || url !== null || url !== ''){
+        let query;
+        if(this.lab_form.request_id) {
+          query = this.http.update(url+'/', this.lab_form.id, this.lab_form)
+        } else {
+          this.lab_form['patient_id'] = this.selected_lab.patient_id;
+          this.lab_form['request_id'] = this.selected_lab.id;
+          if(this.selected_lab.consult_id) this.lab_form['consult_id'] = this.selected_lab.consult_id;
 
-    if(url || url !== null || url !== ''){
-      let query;
-      if(this.lab_form.request_id) {
-        query = this.http.update(url+'/', this.lab_form.id, this.lab_form)
+          query = this.http.post(url, this.lab_form)
+        }
+
+        query.subscribe({
+          next: (data: any) => {
+            console.log(data);
+            this.is_saving = false;
+            this.toastr.success('Lab result was recorded!','Laboratory Result');
+            this.closeModal();
+          },
+          error: err => console.log(err)
+        })
       } else {
-        this.lab_form['patient_id'] = this.selected_lab.patient_id;
-        this.lab_form['request_id'] = this.selected_lab.id;
-        if(this.selected_lab.consult_id) this.lab_form['consult_id'] = this.selected_lab.consult_id;
-
-        query = this.http.post(url, this.lab_form)
+        this.is_saving = false;
+        this.toastr.error('Laboratory does not exist','Lab form')
+      }
+    } else {
+      let params = {
+        lab_code: this.selected_lab.laboratory.code,
+        patient_id: this.selected_lab.patient_id,
+        recommendation_code: this.selected_lab.recommendation_code,
+        request_date: this.selected_lab.request_date,
+        request_status_code: 'RF',
       }
 
-      query.subscribe({
-        next: (data: any) => {
-          console.log(data);
-          this.is_saving = false;
-          this.toastr.success('Lab result was recorded!','Laboratory Result');
+      this.http.update('laboratory/consult-laboratories/', this.selected_lab.id, params).subscribe({
+        next: () => {
+          this.toastr.success('Lab record was updated!','Lab Record');
           this.closeModal();
         },
         error: err => console.log(err)
       })
-    } else {
-      this.is_saving = false;
-      this.toastr.error('Laboratory does not exist','Lab form')
     }
   }
 
