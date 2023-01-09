@@ -27,7 +27,7 @@
             <th scope="col" class="text-center py-3 px-3 w-2/12">Remarks</th>
           </tr>
         </thead>
-        <tbody *ngIf="show_form">
+        <tbody *ngIf="pres_length > 0">
           <tr *ngFor="let pres of prescriptions; trackBy:identify" class="bg-white border-b last:border-0">
             <td class="py-4 px-3 font-medium">
               {{ pres.konsulta_medicine.desc ?? pres.added_medicine}}
@@ -53,10 +53,15 @@
             </td>
           </tr>
         </tbody>
+        <tbody *ngIf="pres_length === 0">
+          <tr>
+            <td colspan="7" class="text-center italic">No records found</td>
+          </tr>
+        </tbody>
       </table>
     </div>
 
-    <div *ngIf="prescriptions" class="flex justify-end w-full">
+    <div *ngIf="pres_length > 0" class="flex justify-end w-full">
       <button [disabled]="!dispensing_date" type="button" class="btn-save px-10 mr-5 mb-5 disabled:bg-gray-300" (click)="onSubmit()">
         Dispense
       </button>

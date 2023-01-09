@@ -115,6 +115,7 @@ export class DrugDispensingComponent implements OnInit {
     })
   }
 
+  pres_length: number = 0;
   getPresciptions(id){
     console.log('get prescription')
     let params = {patient_id: id, status: 'dispensing'};
@@ -122,7 +123,8 @@ export class DrugDispensingComponent implements OnInit {
       next: (data: any) => {
         console.log(data.data)
         this.prescriptions = data.data;
-        if(Object.keys(this.prescriptions).length > 0) this.getQtyDisp(Object.keys(this.prescriptions).length);
+        this.pres_length = Object.keys(this.prescriptions).length;
+        if(this.pres_length > 0) this.getQtyDisp(Object.keys(this.prescriptions).length);
 
         this.getDispense(this.route.snapshot.paramMap.get('id'))
       },
