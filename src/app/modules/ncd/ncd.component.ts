@@ -2,8 +2,8 @@ import { Component, OnInit, OnChanges, SimpleChanges, OnDestroy } from '@angular
 import { ActivatedRoute, Router } from '@angular/router';
 import { faDoorClosed } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
+import { eventSubscriber } from '../patient-info/emmitter.interface';
 import { PatientInfoComponent } from '../patient-info/patient-info.component';
-import { eventSubscriber } from './emmitter.interface';
 @Component({
   selector: 'app-ncd',
   templateUrl: './ncd.component.html',

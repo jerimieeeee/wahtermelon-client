@@ -118,6 +118,7 @@ export class DrugDispensingComponent implements OnInit {
   }
 
   getPresciptions(id){
+    console.log('get prescription')
     let params = {patient_id: id, status: 'dispensing'};
     this.http.get('medicine/prescriptions', {params}).subscribe({
       next: (data: any) => {

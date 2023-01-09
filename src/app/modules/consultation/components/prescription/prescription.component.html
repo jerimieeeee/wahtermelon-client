@@ -7,10 +7,17 @@
     <div class="rounded-md border border-solid border-gray-300">
       <span class="rounded-t-md m-0 p-2 font-semibold text-gray-50 bg-amber-500 flex justify-between" [ngClass]="{'rounded-b' : !show_content}">
         Prescriptions
-        <button *ngIf="show_actions" type="button" class="text-sm bg-white text-amber-500 px-3 rounded-full" (click)="toggleList()">
-          <fa-icon [icon]="faAdd" class="pr-1"></fa-icon>
-          add
-        </button>
+        <div>
+          <button *ngIf="prescriptions" type="button" class="text-sm bg-white text-amber-500 px-3 rounded-full" (click)="navigateTo('dispensing')">
+            <fa-icon [icon]="faPrescriptionBottleMedical" class="pr-1"></fa-icon>
+            dispensing
+          </button>
+
+          <button *ngIf="show_actions" type="button" class="ml-3 text-sm bg-white text-blue-500 px-3 rounded-full" (click)="toggleList()">
+            <fa-icon [icon]="faAdd" class="pr-1"></fa-icon>
+            add drugs
+          </button>
+        </div>
       </span>
       <table *ngIf="show_content" class="w-full table-auto p-5">
         <thead>
@@ -80,5 +87,18 @@
   </div>
 </div>
 
-<app-drug-list *ngIf="show_list" (openAddForm)="openAddForm($event)" (toggleList)="toggleList()" (reloadPrescrition)="reloadPrescrition()"></app-drug-list>
-<app-drug-form *ngIf="show_form" [selected_drug]="selected_drug" [consult_details]="consult_details" (toggleForm)="toggleForm()" (reloadPrescrition)="reloadPrescrition()"></app-drug-form>
+<app-drug-list *ngIf="show_list"
+  (openAddForm)="openAddForm($event)"
+  (toggleList)="toggleList()"
+></app-drug-list>
+
+<app-drug-form *ngIf="show_form"
+  (toggleForm)="toggleForm()"
+  [selected_drug]="selected_drug"
+  [consult_details]="consult_details"
+  [drug_uom]="drug_uom"
+  [drug_regimen]="drug_regimen"
+  [drug_purpose]="drug_purpose"
+  [drug_frequency]="drug_frequency"
+  [drug_preparation]="drug_preparation"
+></app-drug-form>

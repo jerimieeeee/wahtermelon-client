@@ -11,9 +11,13 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class DrugFormComponent implements OnInit {
   @Output() toggleForm = new EventEmitter<any>();
-  @Output() reloadPrescrition = new EventEmitter<any>();
   @Input() selected_drug;
   @Input() consult_details;
+  @Input() drug_uom;
+  @Input() drug_regimen;
+  @Input() drug_purpose;
+  @Input() drug_frequency;
+  @Input() drug_preparation;
 
   submit_errors: any;
   is_saving: boolean = false;
@@ -48,7 +52,7 @@ export class DrugFormComponent implements OnInit {
   }
 
   onSubmit(){
-    console.log(this.prescriptionForm);
+    // console.log(this.prescriptionForm);
 
     if(this.prescriptionForm.valid){
       let query;
@@ -61,7 +65,6 @@ export class DrugFormComponent implements OnInit {
         next: (data: any) => {
           console.log(data);
           this.toastr.success('Successfully added','Prescription');
-          this.reloadPrescrition.emit();
           this.closeModal();
         },
         error: err => console.log(err)
@@ -69,7 +72,7 @@ export class DrugFormComponent implements OnInit {
     }
   }
 
-  drug_uom: any;drug_regimen: any;drug_purpose: any;drug_frequency: any;drug_preparation: any;
+  // drug_uom: any;drug_regimen: any;drug_purpose: any;drug_frequency: any;drug_preparation: any;
   libraries = [
     {var_name: 'drug_uom', location: 'unit-of-measurements'},
     {var_name: 'drug_regimen', location: 'dose-regimens'},
@@ -106,9 +109,9 @@ export class DrugFormComponent implements OnInit {
   add_drug: boolean = false;
 
   ngOnInit(): void {
-    this.loadLibraries();
-    console.log(this.selected_drug);
-    console.log(this.consult_details);
+    // this.loadLibraries();
+    // console.log(this.selected_drug);
+    // console.log(this.consult_details);
 
     let physician = this.consult_details.physician.id; //this.consult_details.physician
     this.prescriptionForm = this.formBuilder.nonNullable.group({

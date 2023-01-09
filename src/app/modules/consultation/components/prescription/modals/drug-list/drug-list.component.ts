@@ -35,7 +35,7 @@ export class DrugListComponent implements OnInit {
   search_item: string;
 
   selectDrugs(drug) {
-    console.log(drug)
+    // console.log(drug)
     this.openAddForm.emit(drug);
     this.toggleList.emit();
   }
@@ -55,7 +55,7 @@ export class DrugListComponent implements OnInit {
     if (page) params['params']['page'] = page;
     params['params']['per_page'] = this.per_page;
 
-    console.log(params)
+    // console.log(params)
     this.http.get('libraries/konsulta-medicines',params).subscribe({
       next: (data: any) => {
         // console.log(data.data);

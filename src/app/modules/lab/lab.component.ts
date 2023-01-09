@@ -31,7 +31,12 @@ export class LabComponent implements OnInit, OnDestroy {
     this.http.get('laboratory/consult-laboratories', {params}).subscribe({
       next: (data: any) => {
         this.pending_list = data.data
-        this.getResults();
+        // console.log(this.pending_list.length);
+        if(this.pending_list.length >= 1) {
+          this.getResults();
+        } else {
+          this.show_form = true;
+        }
       },
       error: err => console.log(err)
     })
@@ -44,7 +49,11 @@ export class LabComponent implements OnInit, OnDestroy {
       if(url !== '') {
         this.http.get(url, {params: {request_id: val.id}}).subscribe({
           next: (data: any) => {
+            // console.log(data.data)
             this.pending_list[key]['result'] = data.data[0];
+            if(Object.keys(this.pending_list).length - 1 === index) {
+              this.show_form = true;
+            }
           },
           error: err => console.log(err)
         })
@@ -54,10 +63,11 @@ export class LabComponent implements OnInit, OnDestroy {
         this.show_form = true;
       }
     })
+    // console.log(this.pending_list)
   }
 
   reloadLabs(data){
-    console.log(data)
+    // console.log(data)
     this.show_form = false;
     this.pending_list = data;
     this.getResults();

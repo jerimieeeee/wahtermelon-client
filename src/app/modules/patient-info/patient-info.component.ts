@@ -1,12 +1,9 @@
-import { Location } from '@angular/common';
-import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { faCamera, faChevronDown, faChevronRight, faChevronUp, faClipboardUser, faExclamationCircle, faFlask, faHeart, faNotesMedical, faPenSquare, faPenToSquare, faPlusCircle, faQuestionCircle, faTableList, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { Component, EventEmitter, OnInit, ViewChild } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
+import { faCamera, faClipboardUser, faExclamationCircle, faFlask, faHeart, faNotesMedical, faPenSquare } from '@fortawesome/free-solid-svg-icons';
 import { AgeService } from 'app/shared/services/age.service';
 import { HttpService } from 'app/shared/services/http.service';
-import { VitalsChartsService } from 'app/shared/services/vitals-charts.service';
 import { filter, tap } from 'rxjs/operators';
-import { PatientItrComponent } from '../patient-itr/patient-itr.component';
 import { FamilyMedicalComponent } from './components/family-medical/family-medical.component';
 import { LaboratoryComponent } from './components/laboratory/laboratory.component';
 import { MenstrualHistoryComponent } from './components/menstrual-history/menstrual-history.component';
@@ -37,36 +34,53 @@ export class PatientInfoComponent implements OnInit {
   @ViewChild(PregnancyHistoryComponent) pregnancyHistory: PregnancyHistoryComponent;
   @ViewChild(VitalsComponent) vitals: VitalsComponent;
 
-  // @ViewChild(PatientItrComponent) patientItr: PatientItrComponent;
   reloadNCDVitals: EventEmitter<any> = new EventEmitter();
   reloadLabs: EventEmitter<any> = new EventEmitter();
 
-  ncdVitals(){
-    this.reloadNCDVitals.emit()
+  reloadChild(child) {
+    switch (child) {
+      case 'ncd':
+        this.reloadNCDVitals.emit()
+        break;
+      case 'lab':
+        this.reloadLabs.emit()
+        break;
+      default:
+        break;
+    }
   }
 
-  labModule(){
-    this.reloadLabs.emit();
+  constructor(
+    private router: Router,
+    private http: HttpService,
+    private ageService: AgeService,
+  ) { }
+
+  loadData(field){
+    console.log(field);
+    if(field === 'past_medical'       || field==='all') this.pastMedical.loadData(this.patient_info.id);
+    if(field === 'family_medical'     || field==='all') this.familyMedical.loadData(this.patient_info.id);
+    if(field === 'vaccines'           || field==='all') this.vaccine.loadData(this.patient_info.id);
+    if(field === 'philhealth'         || field==='all') this.philhealth.loadData(this.patient_info.id);
+    if(field === 'social_history'     || field==='all') this.socialHistory.loadData(this.patient_info.id);
+    if(field === 'surgical_history'   || field==='all') this.surgicalHistory.loadData(this.patient_info.id);
+    if(field === 'menstrual_history'  || field==='all') this.menstrualHistory.loadData(this.patient_info.id);
+    if(field === 'pregnancy_history'  || field==='all')  {} //this.surgicalHistory.loadData(this.patient_info.id);
+    if(field === 'vitals'             || field==='all') this.vitals.loadData(this.patient_info.id);
+
+    if((field === 'laboratory'         || field==='all') && this.active_loc !== 'lab') this.laboratories.loadData(this.patient_info.id);
+    if((field === 'prescription'       || field==='all') && this.active_loc !== 'dispensing') this.prescriptions.loadData(this.patient_info.id);
   }
 
-  @Output() patientInfo = new EventEmitter<any>();
-  @Output() patientVitals = new EventEmitter<any>();
-  // @Output() reloadLabs = new EventEmitter<any>();
+  no_graph_list = ['lab', 'dispensing'];
+
   patient_info: any;
 
   faNotesMedical = faNotesMedical;
   faFlask = faFlask;
   faHeart = faHeart;
   faExclamationCircle = faExclamationCircle;
-  faPlusCircle = faPlusCircle;
-  faQuestionCircle = faQuestionCircle;
-  faPenToSquare = faPenToSquare;
-  faTrash = faTrash;
-  faTableList = faTableList;
   faPenSquare = faPenSquare;
-  faChevronRight = faChevronRight;
-  faChevronUp = faChevronUp;
-  faChevronDown = faChevronDown;
   faClipboardUser = faClipboardUser;
   faCamera = faCamera;
 
@@ -85,15 +99,6 @@ export class PatientInfoComponent implements OnInit {
   accordions = [];
   modals = [];
 
-  consult_id: string;
-
-  active_loc: any = [];
-  toggleLoc(loc){
-    this.active_loc = [];
-    this.active_loc[loc] = true;
-    console.log(this.active_loc)
-  }
-
   navigateTo(loc){
     this.router.navigate(['/patient/'+loc, {id: this.patient_info.id}])
   }
@@ -102,28 +107,27 @@ export class PatientInfoComponent implements OnInit {
     if(id) this.router.navigate(['/edit-patient', {id: id}]);
   }
 
-  getAge(){
-    if(this.patient_info && this.patient_info.birthdate){
-      let age_value = this.ageService.calcuateAge(this.patient_info.birthdate);
-      this.patient_age = age_value;
-      return age_value.age + ' ' + age_value.type+(age_value.age>1 ? 's old' : ' old' );
-    }
-  }
-
   patient_id: string;
+  consult_id: string;
+  active_loc: string;
+  active_loc_id: any;
+
   getPatient(){
-    let params = this.http.getUrlParams();
-    console.log(params)
-    if(this.patient_id !== params.patient_id){
-      this.http.get('patient/'+params.patient_id).subscribe({
+    this.active_loc_id = this.http.getUrlParams();
+    this.active_loc = this.active_loc_id.loc;
+    this.consult_id = this.active_loc_id.consult_id ?? null;
+
+    // console.log(this.active_loc_id)
+    if(this.patient_id !== this.active_loc_id.patient_id){
+      this.patient_id = this.active_loc_id.patient_id;
+
+      this.http.get('patient/'+this.active_loc_id.patient_id).subscribe({
         next: (data: any) => {
           this.patient_info = data.data;
           this.show_form = true;
-          this.http.setPatientInfo(data.data);
-          // this.loadVitals();
+          this.http.setPatientInfo(this.patient_info);
           this.loadData('all');
-          // this.toggleLoc(params.loc)
-          // this.toggleModal('history') //togglemodal for easy test;
+
           this.accordions['vitals'] = true;
           this.accordions['lab_request'] = true;
           this.accordions['prescriptions'] = true;
@@ -134,24 +138,22 @@ export class PatientInfoComponent implements OnInit {
           // this.router.navigate(['/home'])
         }
       });
+    } else {
+      this.reloadData();
     }
   }
 
-  pending_labs: any;
-
-  loadData(field){
-    console.log(field);
-    if(field === 'past_medical'       || field==='all') this.pastMedical.loadData(this.patient_info.id);
-    if(field === 'family_medical'     || field==='all') this.familyMedical.loadData(this.patient_info.id);
-    if(field === 'vaccines'           || field==='all') this.vaccine.loadData(this.patient_info.id);
-    if(field === 'philhealth'         || field==='all') this.philhealth.loadData(this.patient_info.id);
-    if(field === 'laboratory'         || field==='all') this.laboratories.loadData(this.patient_info.id);
-    if(field === 'prescription'       || field==='all') this.prescriptions.loadData(this.patient_info.id);
-    if(field === 'social_history'     || field==='all') this.socialHistory.loadData(this.patient_info.id);
-    if(field === 'surgical_history'   || field==='all') this.surgicalHistory.loadData(this.patient_info.id);
-    if(field === 'menstrual_history'  || field==='all') this.menstrualHistory.loadData(this.patient_info.id);
-    if(field === 'pregnancy_history'  || field==='all')  {} //this.surgicalHistory.loadData(this.patient_info.id);
-    if(field === 'vitals'             || field==='all') this.vitals.loadData(this.patient_info.id);
+  reloadData(){
+    switch (this.active_loc) {
+      case 'lab':
+        this.loadData('prescription')
+        break;
+      case 'dispensing':
+        this.loadData('laboratory')
+        break;
+      default:
+        break;
+    }
   }
 
   social_history: any;
@@ -159,6 +161,7 @@ export class PatientInfoComponent implements OnInit {
   family_medical: any;
   surgical_history: any;
   menstrual_history: any;
+  lab_req_list: any;
 
   setSurgicalHistory(data) {
     this.surgical_history = data;
@@ -190,20 +193,9 @@ export class PatientInfoComponent implements OnInit {
     this.toggleModal('philhealth');
   }
 
-  getInitials(string) {
-    return [...string.matchAll(/\b\w/g)].join('')
-  }
-
-  toggleAccordion(id){
-    this.accordions[id] = !this.accordions[id];
-  }
-
-  lab_req_list: any;
   setLabList(data) {
-    // console.log(data)
     this.lab_req_list = data;
-    this.labModule()
-    // this.reloadLabs.emit(data);
+    // this.reloadChild('lab');
   }
 
   setVaccineGiven(data) {
@@ -211,19 +203,14 @@ export class PatientInfoComponent implements OnInit {
   }
 
   setVitals(data) {
-    console.log(data)
     this.patient_vitals = data;
   }
 
   surgery_to_delete: any;
   vaccine_to_edit: any;
-  //Libraries for modals
-  history_list: any;
-  fp_method: any;
 
   toggleModal(modal_name, data?){
     console.log(modal_name)
-
     if(modal_name === 'fam-history' || modal_name === 'history') {
       // PAST AND FAMILY HISTORY
       if(!this.history_list){
@@ -263,7 +250,7 @@ export class PatientInfoComponent implements OnInit {
       if (modal_name === 'vitals' && this.modals[modal_name] === false) {
         if(this.modals['vitals'] == false)  this.vitals_to_edit = null;
         this.loadData('vitals');
-        this.ncdVitals()
+        // this.reloadChild('ncd');
       }
 
       if (modal_name.modal_name === 'philhealth' && this.modals[modal_name.modal_name] === false) {
@@ -287,12 +274,17 @@ export class PatientInfoComponent implements OnInit {
       }
 
       if(modal_name === 'lifestyle' && this.modals['lifestyle'] === false) this.loadData('social_history');
-      if (modal_name === 'lab-request' && this.modals[modal_name] === false) {
-        this.loadData('laboratory');
-        // this.labModule();
-      }
+      if (modal_name === 'lab-request' && this.modals[modal_name] === false) this.loadData('laboratory');
     }
   }
+
+  toggleAccordion(id){
+    this.accordions[id] = !this.accordions[id];
+  }
+
+  //Libraries for modals
+  history_list: any;
+  fp_method: any;
 
   loadLibrary(url, var_name, modal_name){
     this.http.get(url).subscribe({
@@ -304,20 +296,24 @@ export class PatientInfoComponent implements OnInit {
     })
   }
 
+  getInitials(string) {
+    return [...string.matchAll(/\b\w/g)].join('')
+  }
+
+  getAge(){
+    if(this.patient_info && this.patient_info.birthdate){
+      let age_value = this.ageService.calcuateAge(this.patient_info.birthdate);
+      this.patient_age = age_value;
+      return age_value.age + ' ' + age_value.type+(age_value.age>1 ? 's old' : ' old' );
+    }
+  }
+
   navigationEnd$ = this.router.events.pipe(
     filter(event => event instanceof NavigationEnd),
     tap(() => {
       this.getPatient();
     })
   );
-
-  constructor(
-    private activeRoute: ActivatedRoute,
-    private router: Router,
-    private http: HttpService,
-    private ageService: AgeService,
-    private vitalsCharts: VitalsChartsService,
-  ) { }
 
   ngOnInit(): void {
     this.getPatient();

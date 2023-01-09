@@ -1,5 +1,5 @@
-<div class="grid grid-cols-11 mt-4 gap-4">
-  <div class="mb-16 col-span-8">
+<!-- <div class="grid grid-cols-11 mt-4 gap-4"> -->
+  <!-- <div class="mb-16 col-span-8"> -->
     <div class="block shadow p-4 mt-4 rounded-xl text-gray-600 border border-slate-100">
       <span class="text-sky-500 font-bold flex justify-between py-2">
         <span class="flex">
@@ -113,13 +113,13 @@
         </div>
       </div>
     </div>
-  </div>
+  <!-- </div> -->
 
 
-  <div class="col-span-3">
+  <!-- <div class="col-span-3">
     <app-patient-info (patientInfo)="patientInfo($event)"></app-patient-info>
   </div>
-</div>
+</div> -->
 
 <app-lab-form *ngIf="modal['add']" [selected_lab]="selected_lab" (toggleModal)="toggleModal($event)"></app-lab-form>
 <app-lab-delete *ngIf="modal['delete']" [selected_lab]="selected_lab" (toggleModal)="toggleModal($event)"></app-lab-delete>

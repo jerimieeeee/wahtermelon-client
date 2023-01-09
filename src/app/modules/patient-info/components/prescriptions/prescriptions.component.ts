@@ -1,13 +1,15 @@
-import { Component, OnChanges, Output, Input, EventEmitter, SimpleChanges } from '@angular/core';
+import { Component, Output, Input, EventEmitter, OnInit, OnDestroy } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
 import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
+import { filter, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-prescriptions',
   templateUrl: './prescriptions.component.html',
   styleUrls: ['./prescriptions.component.scss']
 })
-export class PrescriptionsComponent implements OnChanges {
+export class PrescriptionsComponent implements OnInit, OnDestroy {
   @Output() toggleAccordion = new EventEmitter<any>();
   @Output() navigateTo = new EventEmitter<any>();
   @Input() accordions;
@@ -66,11 +68,31 @@ export class PrescriptionsComponent implements OnChanges {
   }
 
   constructor(
-    private http: HttpService
+    private http: HttpService,
+    private router: Router
   ) { }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    // this.loadPrescriptions();
+  no_pres_form = ['dispensing', 'cn'];
+  active_loc_id: any;
+  navigationEnd$ = this.router.events.pipe(
+    filter(event => event instanceof NavigationEnd),
+    tap(() => {
+      this.active_loc_id = this.http.getUrlParams()
+    })
+  );
+
+  navi_end
+  ngOnInit(): void {
+    this.active_loc_id = this.http.getUrlParams()
+    this.navi_end = this.navigationEnd$.subscribe();
   }
+
+  ngOnDestroy() {
+    this.navi_end.unsubscribe();
+  }
+  /* ngOnChanges(changes: SimpleChanges): void {
+    // this.loadPrescriptions();
+    this.active_loc_id = this.http.getUrlParams()
+  } */
 
 }

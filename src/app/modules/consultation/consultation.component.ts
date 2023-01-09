@@ -85,7 +85,7 @@ export class ConsultationComponent implements OnInit {
   }
 
   reloadData() {
-    this.patient_info.loadData('prescription');
+    // this.patient_info.loadData('prescription');
   }
 
   endVisit() {
@@ -185,7 +185,7 @@ export class ConsultationComponent implements OnInit {
   ngOnInit(): void {
     this.patient_id = this.route.snapshot.paramMap.get('id');
     this.consult_id = this.route.snapshot.paramMap.get('consult_id');
-    console.log(this.consult_id)
+    // console.log(this.consult_id)
     this.modules = 1;
     this.loadConsult();
     this.loadUsers()

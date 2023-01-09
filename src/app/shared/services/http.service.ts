@@ -149,7 +149,7 @@ export class HttpService {
   patient_info: any;
   setPatientInfo(data){
     this.patient_info = data;
-    console.log(this.patient_info)
+    // console.log(this.patient_info)
   }
 
   getPatientInfo(){
