@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { faAnglesLeft, faAnglesRight, faCalendarDays, faChevronLeft, faChevronRight, faRotate, faSearch, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { faAnglesLeft, faAnglesRight, faCalendarDays, faChevronLeft, faChevronRight, faRotate, faSearch, faSpinner, faArrowsRotate } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
@@ -16,6 +16,7 @@ export class KonsultaMasterlistComponent implements OnInit {
   faSearch = faSearch;
   faRotate = faRotate;
   faCalendarDays = faCalendarDays;
+  faArrowsRotate = faArrowsRotate;
 
   per_page: number = 10;
   current_page: number;
@@ -25,6 +26,9 @@ export class KonsultaMasterlistComponent implements OnInit {
   total: number;
 
   search_item: string;
+  search_pin: string;
+  search_year: string;
+
   submit_error: any;
 
   konsulta_list: any = [];
@@ -42,12 +46,15 @@ export class KonsultaMasterlistComponent implements OnInit {
 
   loadList(page?: number){
     let params = {params: { }};
-    if (this.search_item) params['params']['filter[search]'] = this.search_item;
+    if (this.search_item) params['params']['search'] = this.search_item;
+    if (this.search_pin) params['params']['filter[philhealth_id]'] = this.search_pin;
+    if (this.search_year) params['params']['filter[effectivity_year]'] = this.search_year;
+
     if (page) params['params']['page'] = page;
     params['params']['per_page'] = this.per_page;
 
     console.log(params)
-    this.http.get('users',params).subscribe({
+    this.http.get('konsulta/registration-lists',params).subscribe({
       next: (data: any) => {
         console.log(data.data);
         this.konsulta_list = data.data;
@@ -67,5 +74,6 @@ export class KonsultaMasterlistComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.loadList()
   }
 }

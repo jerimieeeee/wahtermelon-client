@@ -3,7 +3,9 @@
   <div class="border border-solid border-slate-100 rounded-t-xl font-semibold justify-between">
     <div class="flex border border-solid border-slate-100 rounded-t-xl p-3 font-semibold justify-between">
       <div class="text-blue-500 text-lg pt-2 pl-5">
-        Konsulta Masterlist
+        <button type="button" (click)="toggleModal('set_date')" class="text-blue-500 px-4">
+          <fa-icon [icon]="faArrowsRotate" class=""></fa-icon><!-- Get Masterlist -->
+        </button> Konsulta Masterlist
       </div>
       <div>
         <!-- <button *ngIf="is_updating" class="text-white-500 bg-amber-500 active:bg-amber-300 hover:bg-amber-600 text-sm px-4 py-2 rounded hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button">
@@ -20,9 +22,16 @@
           </button>
         </div> -->
         <!-- ml-3 text-white bg-blue-500 h-8 w-8 mt-1 rounded-md -->
-        <button type="button" (click)="toggleModal('set_date')" class="btn-save px-4">
-          <fa-icon [icon]="faCalendarDays" class="mr-2"></fa-icon>Extract Masterlist
+        <input [(ngModel)]="search_item" type="text" placeholder="search name..." (keyup.enter)="loadList()" class="border border-gray-300 rounded-l-lg text-sm w-44" />
+        <input [(ngModel)]="search_pin" type="text" placeholder="search pin..." (keyup.enter)="loadList()" class="border border-gray-300 text-sm w-44" />
+        <input [(ngModel)]="search_year" type="text" placeholder="assigned year..." (keyup.enter)="loadList()" class="border border-gray-300 text-sm w-44" />
+        <button type="button" (click)="loadList()" class="px-4 mr-5 bg-blue-500 text-white rounded-r-lg">
+          <fa-icon [icon]="faSearch" class=""></fa-icon><!-- Get Masterlist -->
         </button>
+
+        <!-- <button type="button" (click)="toggleModal('set_date')" class="btn-save px-4">
+          <fa-icon [icon]="faCalendarDays" class=""></fa-icon
+        </button> -->
       </div>
     </div>
 
@@ -51,23 +60,23 @@
           <tbody>
             <tr *ngFor="let konsulta of konsulta_list; let odd = odd; let i = index" class="bg-white border-t" [ngClass]="{'bg-gray-50': odd}">
               <td class="py-4 px-6">
-                {{ konsulta.pAssignedDate | date: 'MM/dd/yyyy' }}
+                {{ konsulta.assigned_date | date: 'MM/dd/yyyy' }}
               </td>
               <th scope="row" class="py-4 px-6 font-medium">
-                {{ konsulta.pAssignedLastName }}, {{ konsulta.pAssignedFirstName }} {{ konsulta.pAssignedMiddleName }} {{ konsulta.pAssignedExtName }}
+                {{ konsulta.last_name }}, {{ konsulta.first_name }} {{ konsulta.middle_name }} {{ konsulta.suffix_name }}
               </th>
               <td class="py-4 px-6">
-                {{ konsulta.pAssignedDateOfBirth | date: 'MM/dd/yyyy' }} <br />
-                {{ konsulta.pAssignedSex }}
+                {{ konsulta.birthdate | date: 'MM/dd/yyyy' }} <br />
+                {{ konsulta.gender }}
               </td>
               <td class="py-4 px-6">
-                {{ konsulta.pAssignedPin }}
+                {{ konsulta.philhealth_id }}
               </td>
               <td class="py-4 px-6">
-                {{ konsulta.pAssignedType }}
+                {{ konsulta.membership_type_id }}
               </td>
               <td class="py-4 px-6">
-                {{ konsulta.pPrimaryLastName }}, {{ konsulta.pPrimaryFirstName }} {{ konsulta.pPrimaryMiddleName }} {{ konsulta.pPrimaryExtName }}
+                {{ konsulta.member_last_name }}, {{ konsulta.member_first_name }} {{ konsulta.member_middle_name }} {{ konsulta.member_suffix_name }}
               </td>
               <td class="py-4 px-6">
                 <!-- <label class="inline-flex relative items-center cursor-pointer">
@@ -82,7 +91,7 @@
     </div>
   </div>
 
-  <!-- <div *ngIf="konsulta_list?.length >= 1">
+  <div *ngIf="konsulta_list?.length >= 1">
     <div class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
       <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
         <div>
@@ -112,7 +121,7 @@
         </div>
       </div>
     </div>
-  </div> -->
+  </div>
 
 </div>
 

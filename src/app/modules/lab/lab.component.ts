@@ -81,6 +81,8 @@ export class LabComponent implements OnInit, OnDestroy {
     this.modal[form] = !this.modal[form];
   }
 
+  forms_with_finding_pn = ['FOBT', 'PPD'];
+
   toggleModal(form, lab?){
     this.selected_lab = lab;
 
@@ -103,13 +105,13 @@ export class LabComponent implements OnInit, OnDestroy {
         } else {
           this.modal[form] = !this.modal[form];
         }
-      } else if(lab && lab.laboratory.code === 'FOBT') {
+      } else if(lab && this.forms_with_finding_pn.includes(lab.laboratory.code)) {
         if(!this.lab_result_pn) {
           this.loadLibraries('libraries/laboratory-results','lab_result_pn', form)
         } else {
           this.modal[form] = !this.modal[form];
         }
-      }else {
+      } else {
         this.modal[form] = !this.modal[form];
       }
 

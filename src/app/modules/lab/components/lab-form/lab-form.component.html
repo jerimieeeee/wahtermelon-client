@@ -55,7 +55,7 @@
 
                 <div class="text-sm col-span-1" *ngIf="selected_lab.laboratory.code === 'CXRAY' && field.field_name === 'observation_code'">
                   <label class="font-semibold" >{{ field.field_desc }}</label>
-                  <select name="field" [(ngModel)]="lab_form['lab_cxray_observation']" class="input">
+                  <select name="field" [(ngModel)]="lab_form['observation_code']" class="input">
                     <option [value]="obs.code" *ngFor="let obs of lab_cxray_observation">{{ obs.desc }}</option>
                   </select>
                 </div>
@@ -67,7 +67,7 @@
                   </select>
                 </div>
 
-                <div class="text-sm col-span-1" *ngIf="selected_lab.laboratory.code === 'FOBT' && field.field_name === 'findings_code'">
+                <div class="text-sm col-span-1" *ngIf="form_with_findings_pn.includes(selected_lab.laboratory.code) && field.field_name === 'findings_code'">
                   <label class="font-semibold" >{{ field.field_desc }}</label>
                   <select name="field" [(ngModel)]="lab_form['findings_code']" class="input">
                     <option [value]="findings.code" *ngFor="let findings of lab_result_pn">{{ findings.desc }}</option>
@@ -104,8 +104,8 @@
 
       <!-- Modal footer  -->
       <div class="flex justify-end pb-5 px-5 space-x-4 rounded-b my-5">
-        <button  type="button" class="btn-save bg-gray-400 px-10" (click)="cancelThisModal()">Cancel</button>
-        <button [disabled]="!request_status_code && (!lab_form['laboratory_date'] || !lab_form['lab_status_code'])" type="button" class="btn-save px-10 disabled:bg-gray-300" (click)="onSubmit()" >
+        <button [disabled]="is_saving" type="button" class="btn-save bg-gray-400 px-10" (click)="cancelThisModal()">Cancel</button>
+        <button [disabled]="is_saving || (!request_status_code && (!lab_form['laboratory_date'] || !lab_form['lab_status_code']))" type="button" class="btn-save px-10 disabled:bg-gray-300" (click)="onSubmit()" >
           <fa-icon [icon]="is_saving ? faSpinner : faSave" class="mr-2" [spin]="is_saving"></fa-icon>
           {{ is_saving ? 'Saving' : 'Save' }}
         </button>
