@@ -6,7 +6,6 @@ import { concat, Observable, of, Subject } from 'rxjs';
 import { faFloppyDisk } from '@fortawesome/free-regular-svg-icons';
 import { ActivatedRoute } from '@angular/router';
 import { GraphsComponent } from './components/graphs/graphs.component';
-import { PatientInfoComponent } from 'app/components/patient-info/patient-info.component';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -16,7 +15,6 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class ConsultationComponent implements OnInit {
   @ViewChild(GraphsComponent) graph: GraphsComponent;
-  @ViewChild(PatientInfoComponent) patient_info: PatientInfoComponent;
 
   faPlusSquare = faPlusSquare;
   faSpinner = faCircleNotch;
@@ -47,29 +45,7 @@ export class ConsultationComponent implements OnInit {
   referred_to = {
     id: ''
   };
-  physicians: any; /* = [
-    {
-      id: '97d1709c-29e7-4a7b-be3e-71c9ed7183c4',
-      last_name: 'Santos',
-      first_name: 'Mark Christian',
-      middle_name: 'Baustista',
-      suffix_name: 'NA'
-    },
-    {
-      id: '97ef7165-5270-407d-b833-fa26bec5ccd6',
-      last_name: 'Hagenes',
-      first_name: 'Kiley',
-      middle_name: 'Feil',
-      suffix_name: 'NA'
-    },
-    {
-      id: '97eba43a-dd19-44a8-8db3-044db0f81827',
-      last_name: 'Perez',
-      first_name: 'Emmanuel',
-      middle_name: 'Bildan',
-      suffix_name: 'NA'
-    },
-  ] */
+  physicians: any;
 
   switchTabs(tabs){
     this.modules = 0;
@@ -82,10 +58,6 @@ export class ConsultationComponent implements OnInit {
 
   patientVitals(vitals) {
     this.graph.patientVitals(vitals);
-  }
-
-  reloadData() {
-    // this.patient_info.loadData('prescription');
   }
 
   endVisit() {

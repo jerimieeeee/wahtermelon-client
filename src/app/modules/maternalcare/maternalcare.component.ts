@@ -1,7 +1,6 @@
 import { Component, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { faPenToSquare, faPersonWalking, faSpinner } from '@fortawesome/free-solid-svg-icons';
-import { PatientInfoComponent } from 'app/components/patient-info/patient-info.component';
 import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
@@ -60,7 +59,7 @@ export class MaternalcareComponent implements OnInit {
     this.loadLibraries();
 
     this.active_loc_id = this.http.getUrlParams();
-    console.log(this.active_loc_id)
+    // console.log(this.active_loc_id)
     this.patient_id = this.active_loc_id.patient_id;
     this.consult_id = this.active_loc_id.consult_id;
     this.loadConsultDetails();

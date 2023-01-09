@@ -4,7 +4,6 @@ import { HttpService } from 'app/shared/services/http.service';
 import { catchError, debounceTime, distinctUntilChanged, switchMap, tap, map, filter } from 'rxjs/operators';
 import { concat, Observable, of, Subject } from 'rxjs';
 import { Router } from '@angular/router';
-import { PatientInfoComponent } from '../patient-info/patient-info.component';
 
 @Component({
   selector: 'app-header',
@@ -13,7 +12,6 @@ import { PatientInfoComponent } from '../patient-info/patient-info.component';
 })
 export class HeaderComponent implements OnInit {
   // @ViewChild(NgSelectComponent) ngSelectComponent: NgSelectComponent;
-  @ViewChild(PatientInfoComponent) patientInfo: PatientInfoComponent;
   @Input() user_info;
 
   faChevronCircleDown = faChevronCircleDown;
