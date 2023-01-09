@@ -11,6 +11,7 @@ import { HttpService } from 'app/shared/services/http.service';
 export class PhilhealthComponent implements OnInit {
   @Output() toggleAccordion = new EventEmitter<any>();
   @Output() toggleModal = new EventEmitter<any>();
+  @Output() setDetails = new EventEmitter<any>();
   @Input() accordions;
 
   faPlusCircle = faPlusCircle;
@@ -24,6 +25,7 @@ export class PhilhealthComponent implements OnInit {
       next: (data: any) => {
         // console.log(data);
         this.philhealth_info = data.data[0];
+        this.setDetails.emit({var_name: 'philhealth_details', data: data.data[0]});
         this.show_philhealth = true;
       },
       error: err => console.log(err)

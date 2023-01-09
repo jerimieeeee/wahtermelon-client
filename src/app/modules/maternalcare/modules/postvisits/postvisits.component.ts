@@ -49,7 +49,6 @@ export class PostvisitsComponent implements OnInit {
 
   mc_id: Number = new Number();
   user_id: Number = new Number();
-  patient_id: Number = new Number();
 
   focused: boolean;
 
@@ -58,7 +57,7 @@ export class PostvisitsComponent implements OnInit {
   decimal: number;
   actual_height: any;
   @Input() patient_mc_record;
-  @Input() patient_details;
+  @Input() patient_id;
 
   @Output() post_visit_data = new EventEmitter<string>();
 
@@ -103,13 +102,13 @@ export class PostvisitsComponent implements OnInit {
     if(this.patient_mc_record.length != 0){
       if(this.patient_mc_record.postpartum_visit[0]?this.patient_mc_record.postpartum_visit[0]:this.patient_mc_record.postpartum_visit.length == 1){
         console.log("it went true");
-  
+
       this.value = this.patient_mc_record.postpartum_visit[0].visit_sequence + 1;
       this.postpartum_data =  this.patient_mc_record.postpartum_visit
        }
        this.createForm(this.patient_mc_record);
     }
-  
+
   }
 createForm(mc_record: any) {
   let user_id = this.http.getUserID();
@@ -130,7 +129,7 @@ createForm(mc_record: any) {
   this.postpartum_visit_form = this.formBuilder.group({
     patient_mc_id: [mc_record.id],
     facility_code: [facility_code],
-    patient_id: [this.patient_details.id],
+    patient_id: [this.patient_id],
     user_id: [user_id],
     postpartum_date: [new Date().toISOString().substring(0, 10), [Validators.required]],
     visit_type: ['', [Validators.required]],
@@ -151,11 +150,11 @@ createForm(mc_record: any) {
 edit(visit) {
   this.edit_bool = true;
   console.log(visit, " data to be editesd");
-  
+
   // this.prenatal_form.reset();
       this.edit_form = {
         patient_mc_id: visit.patient_mc_id,
-        patient_id: this.patient_details.id,
+        patient_id: this.patient_id,
         postpartum_date: visit.postpartum_date,
         visit_type: visit.visit_type,
         patient_height: visit.patient_height,
@@ -181,7 +180,7 @@ edit(visit) {
   console.log(visit.id, " id pre edit");
 
   this.edit_id = visit.id;
-  
+
       this.edit_bool = true;
   // console.log(id, " prenatal id edit");
 
@@ -202,7 +201,7 @@ saveForm(){
     if(this.edit_bool){
       http = this.http.update('maternal-care/mc-postpartum/', this.edit_id, this.postpartum_visit_form.value);
       console.log(" going to update");
-      
+
     }else{
       http = this.http.post('maternal-care/mc-postpartum', this.postpartum_visit_form.value);
     }

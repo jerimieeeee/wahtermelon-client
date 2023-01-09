@@ -38,7 +38,7 @@ export class RiskfactorsComponent implements OnInit {
   show: boolean;
   @Input() risk_factors;
   @Input() patient_mc_record;
-  @Input() patient_details;
+  @Input() patient_id;
   searching: boolean;
   today: Date;
   constructor(private http: HttpService, private formBuilder: FormBuilder) { }
@@ -76,7 +76,7 @@ export class RiskfactorsComponent implements OnInit {
     this.risk_form = this.formBuilder.group({
       patient_mc_id: [this.module_data == -1 ? null : this.module_data.id, [Validators.required]],
       facility_code: [facility_code, [Validators.required]],
-      patient_id: [this.patient_details.id, [Validators.required]],
+      patient_id: [this.patient_id, [Validators.required]],
       user_id: [user_id, [Validators.required]],
       risk_id: ['', [Validators.required]],
       date_detected: [new Date().toISOString().substring(0, 10), [Validators.required]],

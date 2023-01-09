@@ -14,6 +14,7 @@ export class ModuleModalComponent implements OnInit {
   @Output() toggleModal = new EventEmitter<any>();
   @Input() patient_info;
   @Input() patient_age;
+  @Input() philhealth_details;
 
   faClipboard = faClipboard;
   faCircleInfo = faCircleInfo;
@@ -118,13 +119,19 @@ export class ModuleModalComponent implements OnInit {
 
   isATCValid(){
     this.is_checking_atc = true;
-    /* this.http.post('isATCvalidURL', {params: {pATC: this.pATC}}).subscribe({
+    let params = {
+      pPin: this.philhealth_details.philhealth_id,
+      pATC: this.pATC,
+      pEffectivityDate: formatDate(this.pATC_date, 'MM/dd/yyyy', 'en')
+    }
+    this.http.get('konsulta/check-atc', {params}).subscribe({
       next: (data: any) => {
         console.log(data)
-        this.is_atc_valid = data.data === 'YES' ? true : false;
+        this.is_checking_atc = false;
+        this.is_atc_valid = data.return === 'YES' ? true : false;
       },
       error: err => console.log(err)
-    }) */
+    })
   }
 
   selectPrograms(){
@@ -142,7 +149,7 @@ export class ModuleModalComponent implements OnInit {
     let group = module.group;
     this.is_loading = true;
 
-    // console.log(loc, this.router.url.split(';')[0])
+    console.log(loc, this.router.url.split(';')[0])
     if('/patient/'+loc === this.router.url.split(';')[0]){
       // console.log(1)
       this.closeModal();
@@ -154,18 +161,17 @@ export class ModuleModalComponent implements OnInit {
         this.http.get('consultation/records', {params:{'pt_group': group, 'consult_done': 0, patient_id: this.patient_info.id}}).subscribe({
           next: (data: any) => {
             this.selected_module = module;
-            // console.log(data.data)
+
             if(data.data.length > 0){
               this.router.navigate(['/patient/'+loc, {id: this.patient_info.id, consult_id: data.data[0].id}])
               this.closeModal();
             }else{
               console.log(this.selected_module);
               this.show_new = true;
-              this.closeModal();
             }
           },
           error: err => {console.log(err);this.is_loading = false},
-          complete: () => console.log('loaded visits')
+          complete: () => this.is_loading = false
         });
       }
     }
@@ -184,7 +190,8 @@ export class ModuleModalComponent implements OnInit {
       consult_date: this.consult_date+' '+this.consult_time+':00',
       consult_done: 0,
       pt_group: selected_module.group,
-      pATC: this.is_walk_in === false ? (this.pATC || this.pATC !== '' ? this.pATC : null) : 'WALKEDIN'
+      authorization_transaction_code: this.is_atc_valid ? (this.is_walk_in === false ? (this.pATC || this.pATC !== '' ? this.pATC : null) : 'WALKEDIN') : null,
+      walkedin_status: this.is_atc_valid ? false : true
     };
 
     this.http.post('consultation/records', new_visit).subscribe({
@@ -192,7 +199,7 @@ export class ModuleModalComponent implements OnInit {
         console.log(data)
         this.toastr.success('Successfully recorded!','New visit')
         this.router.navigate(['/patient/'+selected_module.location, {id: this.patient_info.id, consult_id: data.data.id}]);
-        this.is_loading = false;
+        this.closeModal()
       },
       error: (err) => {console.log(err); this.is_loading = false;},
       complete: () => console.log('new visit saved')
@@ -244,6 +251,8 @@ export class ModuleModalComponent implements OnInit {
     this.date = current_date.toISOString().slice(0,10);
     this.consult_date = formatDate(current_date,'yyyy-MM-dd','en');
     this.consult_time = formatDate(current_date,'HH:mm','en');
+
+    console.log(this.philhealth_details)
   }
 
 }

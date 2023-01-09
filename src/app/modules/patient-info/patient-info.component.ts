@@ -162,6 +162,16 @@ export class PatientInfoComponent implements OnInit {
   surgical_history: any;
   menstrual_history: any;
   lab_req_list: any;
+  philhealth_details: any;
+
+  setDetails(data) {
+    //set details from components
+    this[data.var_name] = data.data;
+  }
+
+  setPhilhealthDetails(data) {
+    this.philhealth_details = data;
+  }
 
   setSurgicalHistory(data) {
     this.surgical_history = data;
@@ -183,16 +193,6 @@ export class PatientInfoComponent implements OnInit {
     this.menstrual_history = data;
   }
 
-  vitalsEdit(e){
-    this.vitals_to_edit = e;
-    this.toggleModal('vitals');
-  }
-
-  philhealthEdit(e){
-    this.philhealth_to_edit = e;
-    this.toggleModal('philhealth');
-  }
-
   setLabList(data) {
     this.lab_req_list = data;
     // this.reloadChild('lab');
@@ -204,6 +204,16 @@ export class PatientInfoComponent implements OnInit {
 
   setVitals(data) {
     this.patient_vitals = data;
+  }
+
+  vitalsEdit(e){
+    this.vitals_to_edit = e;
+    this.toggleModal('vitals');
+  }
+
+  philhealthEdit(e){
+    this.philhealth_to_edit = e;
+    this.toggleModal('philhealth');
   }
 
   surgery_to_delete: any;

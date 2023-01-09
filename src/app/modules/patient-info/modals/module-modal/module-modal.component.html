@@ -54,7 +54,7 @@
                   <input type="time" name="consult_date" id="consult_date" class="input w-52" placeholder="mm/dd/yyyy" max="{{ date | date:'yyyy-MM-dd HH:mm:ss'}}" [(ngModel)]="consult_time">
                 </div>
 
-                <div class="border border-slate-200 rounded-md mx-10 shadow-md">
+                <div *ngIf="philhealth_details" class="border border-slate-200 rounded-md mx-10 shadow-md">
                   <div class="flex justify-start w-full ml-5 my-3">
                     <input [disabled]="is_checking_atc" type="checkbox" class="border border-gray-400 rounded-md h-5 w-5 mr-2 disabled:bg-gray-300" [(ngModel)]="is_walk_in" />Check if patient is Walk-in
                   </div>
@@ -77,6 +77,12 @@
                   </div>
                 </div>
 
+                <div *ngIf="!philhealth_details" class="border border-yellow-400 text-yellow-700 rounded-md mx-10 bg-yellow-100">
+                  <div class="p-3">
+                    ATC checking is not available. Philhealth pin not found.
+                  </div>
+                </div>
+
                 <div class="flex justify-center mt-5">
                   <button  [disabled]="is_checking_atc" type="button" class="btn-save px-10 bg-amber-500 mr-2 disabled:bg-gray-300" (click)="onCreateCancel()">Cancel</button>
                   <button [disabled]="!consult_date || is_loading || is_checking_atc" type="button" class="btn-save px-10 disabled:bg-gray-300" (click)="onCreateNew(selected_module)">Proceed</button>
@@ -91,7 +97,7 @@
         </div>
         <!-- Modal footer -->
         <div class="flex justify-end py-4 px-5 space-x-4 rounded-b border-t border-gray-200 dark:border-gray-600">
-          <button  [disabled]="is_loading" type="button" class="text-white enabled:bg-red-500 disabled:bg-gray-400 enabled:hover:ring-2 focus:outline-none enabled:hover:ring-red-300 rounded text-sm font-medium px-6 py-2.5 transition duration-150 ease-in-out" (click)="closeModal()">Close</button>
+          <button  [disabled]="is_loading" type="button" class="btn-save px-5 bg-gray-400" (click)="closeModal()">Close</button>
         </div>
       </div>
     </div>

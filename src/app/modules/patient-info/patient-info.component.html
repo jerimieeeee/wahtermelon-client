@@ -67,7 +67,7 @@
             </span>
           </div>
 
-          <app-philhealth (toggleAccordion)="toggleAccordion($event)" [accordions]="accordions" (toggleModal)="toggleModal($event)"></app-philhealth>
+          <app-philhealth (setDetails)="setDetails($event)" (toggleAccordion)="toggleAccordion($event)" (toggleModal)="toggleModal($event)" [accordions]="accordions" ></app-philhealth>
         </div>
 
         <app-prescriptions  (toggleAccordion)="toggleAccordion($event)" (navigateTo)="navigateTo($event)" [accordions]="accordions" [consult_id]="consult_id" [patient_info]="patient_info"></app-prescriptions>
@@ -87,7 +87,7 @@
   </div>
 </div>
 <!-- MODALS -->
-<app-module-modal *ngIf="modals['module']" (toggleModal)="toggleModal('module')" [patient_info]="patient_info" [patient_age]="patient_age"></app-module-modal>
+<app-module-modal *ngIf="modals['module']" [philhealth_details]="philhealth_details" (toggleModal)="toggleModal('module')" [patient_info]="patient_info" [patient_age]="patient_age"></app-module-modal>
 <app-lab-request-modal *ngIf="modals['lab-request']" (toggleModal)="toggleModal('lab-request')" [lab_req_list]="lab_req_list" [patient_info]="patient_info" [consult_id]="consult_id"></app-lab-request-modal>
 
 <app-history-modal *ngIf="modals['history']" (toggleModal)="toggleModal('history')" [patient_info]="patient_info" [history_list]="history_list" [past_medical]="past_medical"></app-history-modal>
