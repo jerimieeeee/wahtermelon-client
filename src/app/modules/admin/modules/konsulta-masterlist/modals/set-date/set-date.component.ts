@@ -1,5 +1,6 @@
 import { formatDate } from '@angular/common';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -10,12 +11,13 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class SetDateComponent implements OnInit {
   @Output() toggleModal = new EventEmitter<any>();
-  @Output() showList = new EventEmitter<any>();
+  @Output() loadList = new EventEmitter<any>();
 
   pStartDate: string;
   pEndDate: string;
 
   is_loading: boolean = false;
+  faSpinner = faSpinner;
 
   closeModal(){
     this.toggleModal.emit('set_date');
@@ -36,7 +38,7 @@ export class SetDateComponent implements OnInit {
     this.http.get('konsulta/registration-list', {params}).subscribe({
       next: (data: any) => {
         console.log(data);
-        this.showList.emit(data);
+        this.loadList.emit();
         this.is_loading = false;
         this.closeModal()
       },
