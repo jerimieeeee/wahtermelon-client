@@ -225,7 +225,7 @@ export class PatientRegistrationComponent implements OnInit {
   }
 
   proceedItr(){
-    this.router.navigate(['/itr', {id: this.new_patient_id}])
+    this.router.navigate(['/patient/itr', {id: this.new_patient_id}])
   }
 
   toggleModal(modal){
