@@ -125,6 +125,8 @@ export class HttpService {
         return 'laboratory/consult-laboratory-urinalysis'
       case 'OGTT':
         return 'laboratory/consult-laboratory-oral-glucose'
+      case 'FOBT':
+        return 'laboratory/consult-laboratory-fecal-occult'
       default:
         break;
     }
