@@ -93,11 +93,15 @@ export class LabFormComponent implements OnChanges, OnInit {
         this.lab_form['findings_code'] = this.lab_form.findings ? this.lab_form.findings.code : null;
         this.lab_form['data_collection_code'] = this.lab_form.data_collection ? this.lab_form.data_collection.code : null;
         break;
+      case 'FOBT':
+        this.lab_form['findings_code'] = this.lab_form.findings ? this.lab_form.findings.code : null;
+        break;
       default:
         break;
     }
   }
 
+  form_with_finding_code = ['ECG', 'FOBT'];
   onSubmit(){
     console.log(this.selected_lab)
     this.is_saving = true;

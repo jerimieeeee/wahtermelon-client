@@ -103,6 +103,12 @@ export class LabComponent implements OnInit, OnDestroy {
         } else {
           this.modal[form] = !this.modal[form];
         }
+      } else if(lab && lab.laboratory.code === 'FOBT') {
+        if(!this.lab_result_pn) {
+          this.loadLibraries('libraries/laboratory-results','lab_result_pn', form)
+        } else {
+          this.modal[form] = !this.modal[form];
+        }
       }else {
         this.modal[form] = !this.modal[form];
       }
