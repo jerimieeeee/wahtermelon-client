@@ -16,6 +16,7 @@ export class ResultFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log(this.return_value)
   }
 
 }

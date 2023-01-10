@@ -58,8 +58,10 @@ export class ValidatedListComponent implements OnInit {
       this.toastr.error('Record error','Error')
       this.returnData(data)
     } else {
-
-      this.toastr.success('Record validated/submitted', 'Success')
+      if(data.message){
+        this.returnData(data);
+        this.toastr.success('Record validated/submitted', 'Success')
+      }
     }
 
     this.submitting = false;

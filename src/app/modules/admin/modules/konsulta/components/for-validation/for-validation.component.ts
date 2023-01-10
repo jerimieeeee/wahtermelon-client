@@ -37,7 +37,11 @@ export class ForValidationComponent implements OnInit {
           this.toastr.error('Validation failed','Error')
           this.returnData(data)
         } else {
-          this.toastr.success('Success!', 'Record Validation')
+          if(data.message){
+            this.returnData(data)
+            this.toastr.success('Success!', 'Record Validation')
+          }
+
         }
         this.validating = false;
       },

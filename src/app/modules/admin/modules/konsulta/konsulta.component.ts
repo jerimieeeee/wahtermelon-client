@@ -84,7 +84,10 @@ export class KonsultaComponent implements OnInit {
     this.return_value = data;
     this.show_return = !this.show_return;
 
-    if(this.show_return === false) this.return_value = null;
+    if(this.show_return === false) {
+      this.return_value = null;
+      this.loadList();
+    }
   }
 
   current_year = formatDate(new Date, 'yyyy', 'en')
@@ -104,17 +107,23 @@ export class KonsultaComponent implements OnInit {
     })
 
     console.log(patient_id)
-    let params = new HttpParams({
+    /* let params = new HttpParams({
       fromObject: {
         'patient_id[]': patient_id,
         'tranche': this.filter_tranche,
         'revalidate': 0
       }
-    });
+    }); */
+    let params = {
+      patient_id: [patient_id],
+      tranche: this.filter_tranche,
+      revalidate: 0
+    }
 
     console.log(params)
     this.http.get('konsulta/validate-report', {params}).subscribe({
       next: (data: any) => {
+        console.log(data)
         if(data.errors) {
           this.toastr.error('Validation failed','Error')
           this.showReturn(data)
@@ -137,6 +146,7 @@ export class KonsultaComponent implements OnInit {
     this.filter_year = this.current_year;
 
     this.loadList();
+    // this.showReturn()
   }
 
 }
