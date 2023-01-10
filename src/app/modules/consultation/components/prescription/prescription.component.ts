@@ -75,7 +75,7 @@ export class PrescriptionComponent implements OnInit, OnChanges {
   }
 
   openAddForm(drug){
-    // console.log(drug)
+    console.log(drug)
     this.selected_drug = drug;
     this.toggleForm();
   }
@@ -102,9 +102,9 @@ export class PrescriptionComponent implements OnInit, OnChanges {
     }
   }
 
-  resetForm(){
+  /* resetForm(){
     this.selected_drug = null;
-  }
+  } */
 
   ngOnChanges(changes){
     this.show_content = this.toggle_content;
@@ -160,7 +160,7 @@ export class PrescriptionComponent implements OnInit, OnChanges {
   }
 
   loadPrescriptions(){
-    this.selected_drug = null;
+    // this.selected_drug = null;
     let params = {
       sort: '-prescription_date',
       consult_id: this.consult_details.id,

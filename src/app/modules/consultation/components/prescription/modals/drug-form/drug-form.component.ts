@@ -1,5 +1,5 @@
 import { formatDate } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
@@ -9,7 +9,7 @@ import { ToastrService } from 'ngx-toastr';
   templateUrl: './drug-form.component.html',
   styleUrls: ['./drug-form.component.scss']
 })
-export class DrugFormComponent implements OnInit {
+export class DrugFormComponent implements OnInit, OnChanges {
   @Output() toggleForm = new EventEmitter<any>();
   @Input() selected_drug;
   @Input() consult_details;
@@ -108,11 +108,7 @@ export class DrugFormComponent implements OnInit {
 
   add_drug: boolean = false;
 
-  ngOnInit(): void {
-    // this.loadLibraries();
-    // console.log(this.selected_drug);
-    // console.log(this.consult_details);
-
+  ngOnChanges(changes: SimpleChanges): void {
     let physician = this.consult_details.physician.id; //this.consult_details.physician
     this.prescriptionForm = this.formBuilder.nonNullable.group({
       patient_id: [this.consult_details.patient.id],
@@ -132,7 +128,7 @@ export class DrugFormComponent implements OnInit {
       quantity_preparation: [null,[Validators.required]] //libraries/preparations
     });
 
-
+    // console.log(this.selected_drug)
     if(this.selected_drug){
       if(this.selected_drug.id) {
         // console.log('x')
@@ -153,6 +149,14 @@ export class DrugFormComponent implements OnInit {
       this.add_drug = true;
       this.prescriptionForm.controls.konsulta_medicine_code.disable();
     }
+  }
+
+  ngOnInit(): void {
+    // this.loadLibraries();
+    // console.log(this.selected_drug);
+    // console.log(this.consult_details);
+
+
 
   }
 }
