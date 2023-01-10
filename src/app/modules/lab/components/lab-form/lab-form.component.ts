@@ -37,6 +37,8 @@ export class LabFormComponent implements OnChanges, OnInit {
 
   spl_val = ['observation_code', 'findings_code', 'data_collection_code', 'blood_code', 'color_code', 'consistency_code'];
 
+  submit_errors: any;
+
   loadForm(){
     // console.log(this.selected_lab)
     if(this.selected_lab) {

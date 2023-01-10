@@ -72,24 +72,28 @@ export class RiskScreeningComponent implements OnInit, OnChanges {
         this.consult_details.riskScreeningGlucose.date_taken = formatDate(this.consult_details.riskScreeningGlucose.date_taken, 'yyyy-MM-dd', 'en');
         this.glucoseForm.patchValue({...this.consult_details.riskScreeningGlucose});
         this.glucoseForm.addControl('id', this.formBuilder.control(this.consult_details.riskScreeningGlucose.id))
+        this.raisedGlucose();
       }
 
       if(this.consult_details.riskScreeningLipid){
         this.consult_details.riskScreeningLipid.date_taken = formatDate(this.consult_details.riskScreeningLipid.date_taken, 'yyyy-MM-dd', 'en');
         this.bloodLipidForm.patchValue({...this.consult_details.riskScreeningLipid});
         this.bloodLipidForm.addControl('id', this.formBuilder.control(this.consult_details.riskScreeningLipid.id))
+        this.raisedLipids();
       }
 
       if(this.consult_details.riskScreeningKetones){
         this.consult_details.riskScreeningKetones.date_taken = formatDate(this.consult_details.riskScreeningKetones.date_taken, 'yyyy-MM-dd', 'en');
         this.urineKetonesForm.patchValue({...this.consult_details.riskScreeningKetones});
         this.urineKetonesForm.addControl('id', this.formBuilder.control(this.consult_details.riskScreeningKetones.id))
+        this.urineKetone()
       }
 
       if(this.consult_details.riskScreeningProtein){
         this.consult_details.riskScreeningProtein.date_taken = formatDate(this.consult_details.riskScreeningProtein.date_taken, 'yyyy-MM-dd', 'en');
         this.urineProteinForm.patchValue({...this.consult_details.riskScreeningProtein});
         this.urineProteinForm.addControl('id', this.formBuilder.control(this.consult_details.riskScreeningProtein.id))
+        this.urineProtein()
       }
     }
   }
@@ -158,7 +162,7 @@ export class RiskScreeningComponent implements OnInit, OnChanges {
       case 'urineKetones':
         return this.urls[2].url;
       case 'urineProtein':
-        return this.urls[2].url;
+        return this.urls[3].url;
     }
   }
 

@@ -18,6 +18,7 @@ export class ValidatedListComponent implements OnInit {
   faCircleCheck = faCircleCheck;
 
   validating: boolean = false;
+  submitting: boolean = false;
 
   validate(kon){
     this.submitting = true;
@@ -28,7 +29,7 @@ export class ValidatedListComponent implements OnInit {
       revalidate: 1,
       transmittal_number: [kon.transmittal_number]
     }
-    console.log(params)
+
     this.http.get('konsulta/validate-report', {params}).subscribe({
       next: (data: any) => {
         this.processReturn(data)
@@ -37,7 +38,6 @@ export class ValidatedListComponent implements OnInit {
     })
   }
 
-  submitting: boolean = false;
   submit(transmittal_number){
     this.validating = true;
     this.submitting = true;
@@ -64,7 +64,6 @@ export class ValidatedListComponent implements OnInit {
 
     this.submitting = false;
     this.validating = false;
-    console.log(data);
   }
 
   returnData(data){

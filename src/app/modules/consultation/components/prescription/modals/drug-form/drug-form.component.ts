@@ -155,8 +155,5 @@ export class DrugFormComponent implements OnInit, OnChanges {
     // this.loadLibraries();
     // console.log(this.selected_drug);
     // console.log(this.consult_details);
-
-
-
   }
 }

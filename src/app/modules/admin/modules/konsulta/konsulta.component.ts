@@ -3,6 +3,7 @@ import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { faAnglesLeft, faAnglesRight, faChevronLeft, faChevronRight, faFilter, faSearch, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-konsulta',
@@ -114,7 +115,12 @@ export class KonsultaComponent implements OnInit {
     console.log(params)
     this.http.get('konsulta/validate-report', {params}).subscribe({
       next: (data: any) => {
-        console.log(data)
+        if(data.errors) {
+          this.toastr.error('Validation failed','Error')
+          this.showReturn(data)
+        } else {
+          this.toastr.success('Success!', 'Record Validation')
+        }
         this.loadList();
       },
       error: err => console.log(err)
@@ -122,7 +128,8 @@ export class KonsultaComponent implements OnInit {
   }
 
   constructor(
-    private http: HttpService
+    private http: HttpService,
+    private toastr: ToastrService
   ) { }
 
   ngOnInit(): void {

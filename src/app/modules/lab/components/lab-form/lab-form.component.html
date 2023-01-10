@@ -76,21 +76,21 @@
 
                 <div class="text-sm col-span-1" *ngIf="selected_lab.laboratory.code === 'FCAL' && field.field_name === 'blood_code'">
                   <label class="font-semibold" >{{ field.field_desc }}</label>
-                  <select name="field" [(ngModel)]="lab_form['findings_code']" class="input">
+                  <select name="field" [(ngModel)]="lab_form['blood_code']" class="input">
                     <option [value]="findings.code" *ngFor="let findings of lab_stool_blood">{{ findings.desc }}</option>
                   </select>
                 </div>
 
                 <div class="text-sm col-span-1" *ngIf="selected_lab.laboratory.code === 'FCAL' && field.field_name === 'color_code'">
                   <label class="font-semibold" >{{ field.field_desc }}</label>
-                  <select name="field" [(ngModel)]="lab_form['findings_code']" class="input">
+                  <select name="field" [(ngModel)]="lab_form['color_code']" class="input">
                     <option [value]="findings.code" *ngFor="let findings of lab_stool_color">{{ findings.desc }}</option>
                   </select>
                 </div>
 
                 <div class="text-sm col-span-1" *ngIf="selected_lab.laboratory.code === 'FCAL' && field.field_name === 'consistency_code'">
                   <label class="font-semibold" >{{ field.field_desc }}</label>
-                  <select name="field" [(ngModel)]="lab_form['findings_code']" class="input">
+                  <select name="field" [(ngModel)]="lab_form['consistency_code']" class="input">
                     <option [value]="findings.code" *ngFor="let findings of lab_stool_consistency">{{ findings.desc }}</option>
                   </select>
                 </div>
