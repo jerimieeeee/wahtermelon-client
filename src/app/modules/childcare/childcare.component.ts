@@ -23,6 +23,8 @@ export class ChildcareComponent implements OnInit {
 
   consult_id: any
 
+  show_end: boolean = false;
+
 
   // Section 2
   constructor(private http: HttpService,
@@ -51,11 +53,15 @@ export class ChildcareComponent implements OnInit {
         // next: (data: any) => console.log(data.status, 'check status'),
         error: err => console.log(err),
         complete: () => {
-         console.log('end visited kang bata ka')
+        //  console.log('end visited kang bata ka')
          this.proceedItr()
         }
       })
       console.log(endbutton)
+    }
+
+    toggleModal(){
+      this.show_end = !this.show_end;
     }
 
     proceedItr(){
@@ -64,7 +70,7 @@ export class ChildcareComponent implements OnInit {
 
     loadConsultDetails(){
 
-      this.http.get('consultation/records',{params: {patient_id: this.patient_details.id}}).subscribe((data: any) => {
+      this.http.get('consultation/records',{params: {patient_id: this.patient_details.id, id: this.consult_id}}).subscribe((data: any) => {
         this.consult_details = data.data
         console.log(this.consult_details, 'kunin mo consult');
       });

@@ -1,4 +1,4 @@
-<div class="grid grid-cols-1 m-5">
+<!-- <div class="grid grid-cols-1 m-5">
 
   <form [formGroup]="reportForm" (ngSubmit)="onSubmit()" class="flex my-3 space-x-3">
     <div class="col-span-6 sm:col-span-2">
@@ -42,4 +42,6 @@
       <app-fhsis2018-cc *ngIf="report_params?.report_type=== 'fhsis2018-cc'" [report_params]="report_params"></app-fhsis2018-cc>
       <app-fhsis2018-mc *ngIf="report_params?.report_type === 'fhsis2018-mc'" [report_params]="report_params"></app-fhsis2018-mc>
   </div>
-</div>
+</div> -->
+
+<app-fhsis2018-cc></app-fhsis2018-cc>

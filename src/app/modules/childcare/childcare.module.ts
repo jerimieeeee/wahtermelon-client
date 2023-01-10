@@ -15,6 +15,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { SharedComponentsModule } from 'app/shared/shared-components/shared-components.module';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { EndVisitComponent } from './end-visit/end-visit.component';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
     FirstVisitComponent,
     ServicesComponent,
     VaccineInfoComponent,
-    BreastfeedingComponent],
+    BreastfeedingComponent,
+    EndVisitComponent],
   imports: [
     CommonModule,
     ChildcareRoutingModule,
