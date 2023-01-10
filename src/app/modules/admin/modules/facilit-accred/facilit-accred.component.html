@@ -3,7 +3,7 @@
   <div class="border border-solid border-slate-100 rounded-t-xl font-semibold justify-between">
     <div class="flex border border-solid border-slate-100 rounded-t-xl p-3 font-semibold justify-between">
       <div class="text-blue-500 text-lg pt-2 pl-5">
-        Konsulta Masterlist
+        Facility Credentials
       </div>
       <div>
         <!-- <button *ngIf="is_updating" class="text-white-500 bg-amber-500 active:bg-amber-300 hover:bg-amber-600 text-sm px-4 py-2 rounded hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button">
@@ -22,7 +22,9 @@
         <button type="button" (click)="extractReg()" class="ml-3 text-white bg-blue-500 h-8 w-8 mt-1 rounded-md">
           <fa-icon [icon]="faRotate"></fa-icon>
         </button> -->
-
+        <button type="button" (click)="toggleModal('add')" class="ml-3 text-white bg-blue-500 px-5 mt-1 rounded-md text-sm">
+          <fa-icon [icon]="faPlus" class="mr-2"></fa-icon>Add Accreditation
+        </button>
       </div>
     </div>
 
@@ -41,11 +43,11 @@
             <tr>
               <th scope="col" class="py-3 px-6">Facility Name</th>
               <th scope="col" class="py-3 px-6">Facility Code</th>
+              <th scope="col" class="py-3 px-6">Program</th>
               <th scope="col" class="py-3 px-6">PMCC Number</th>
               <th scope="col" class="py-3 px-6">Accreditation Number</th>
               <th scope="col" class="py-3 px-6">Software Cert ID</th>
-              <th scope="col" class="py-3 px-6">Action</th>
-              <!-- <th scope="col" class="py-3 px-6">Actions</th> -->
+              <th scope="col" class="py-3 px-6">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -57,6 +59,9 @@
                 {{ accred.facility_code }}
               </td>
               <td class="py-4 px-6">
+                {{ accred.program_code }}
+              </td>
+              <td class="py-4 px-6">
                 {{ accred.pmcc_number }}
               </td>
               <td class="py-4 px-6">
@@ -66,13 +71,8 @@
                 {{ accred.software_certification_id }}
               </td>
               <td class="py-4 px-6">
-                <fa-icon [icon]="faPenToSquare" class="text-orange-500" (click)="toggleModal()"></fa-icon>
+                <fa-icon [icon]="faPenToSquare" class="text-orange-500 cursor-pointer" (click)="openEdit('add', accred)"></fa-icon>
               </td>
-              <!-- <td class="py-4 px-6"> -->
-                <!-- <fa-icon (click)="editVitals(vitals)" class="mx-0 my-0 text-amber-500 hover:cursor-pointer flex-none mr-2" [icon]="faPenToSquare"></fa-icon> -->
-
-                <!-- <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a> -->
-              <!-- </td> -->
             </tr>
           </tbody>
         </table>
@@ -80,7 +80,7 @@
     </div>
   </div>
 
-  <!-- <div *ngIf="konsulta_list?.length >= 1">
+  <div *ngIf="konsulta_list?.length >= 10">
     <div class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
       <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
         <div>
@@ -110,6 +110,7 @@
         </div>
       </div>
     </div>
-  </div> -->
-
+  </div>
 </div>
+
+<app-facility-form *ngIf="modals['add']" [credential_to_edit]="credential_to_edit" (toggleModal)="toggleModal($event)"></app-facility-form>

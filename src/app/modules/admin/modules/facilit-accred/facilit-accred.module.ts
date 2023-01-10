@@ -4,20 +4,23 @@ import { CommonModule } from '@angular/common';
 import { FacilitAccredRoutingModule } from './facilit-accred-routing.module';
 import { FacilitAccredComponent } from './facilit-accred.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FacilityFormComponent } from './modals/facility-form/facility-form.component';
+import { FacilityDeleteComponent } from './modals/facility-delete/facility-delete.component';
 
 
 @NgModule({
   declarations: [
     FacilitAccredComponent,
-    FacilityFormComponent
+    FacilityFormComponent,
+    FacilityDeleteComponent
   ],
   imports: [
     CommonModule,
     FacilitAccredRoutingModule,
     FontAwesomeModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class FacilitAccredModule { }
