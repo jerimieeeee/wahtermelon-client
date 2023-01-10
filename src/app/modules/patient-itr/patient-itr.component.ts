@@ -96,6 +96,7 @@ export class PatientItrComponent implements OnInit {
   navigationEnd$ = this.router.events.pipe(
     filter(event => event instanceof NavigationEnd),
     tap(() => {
+      this.loadData();
       this.show_details = false;
     })
   );
