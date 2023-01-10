@@ -74,6 +74,7 @@ export class InitialDxComponent implements OnChanges {
         error: err => console.log(err)
       })
     } else {
+      this.showToastr()
       this.is_saving = false;
     }
   }

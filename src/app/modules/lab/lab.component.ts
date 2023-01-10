@@ -107,7 +107,7 @@ export class LabComponent implements OnInit, OnDestroy {
         }
       } else if(lab && lab.laboratory.code === 'FCAL') {
         if(!this.lab_stool_blood && !this.lab_stool_color && !this.lab_stool_consistency) {
-          this.loadStoolColor(form);
+          this.loadStoolBlood(form);
         } else {
           this.modal[form] = !this.modal[form];
         }
@@ -156,6 +156,7 @@ export class LabComponent implements OnInit, OnDestroy {
   loadStoolBlood(form){
     this.http.get('libraries/laboratory-blood-stool').subscribe({
       next: (data: any) => {
+        console.log(data)
         this.lab_stool_blood = data.data;
         this.loadStoolColor(form);
       }
