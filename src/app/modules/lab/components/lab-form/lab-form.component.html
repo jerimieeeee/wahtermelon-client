@@ -74,6 +74,27 @@
                   </select>
                 </div>
 
+                <div class="text-sm col-span-1" *ngIf="selected_lab.laboratory.code === 'FCAL' && field.field_name === 'blood_code'">
+                  <label class="font-semibold" >{{ field.field_desc }}</label>
+                  <select name="field" [(ngModel)]="lab_form['findings_code']" class="input">
+                    <option [value]="findings.code" *ngFor="let findings of lab_stool_blood">{{ findings.desc }}</option>
+                  </select>
+                </div>
+
+                <div class="text-sm col-span-1" *ngIf="selected_lab.laboratory.code === 'FCAL' && field.field_name === 'color_code'">
+                  <label class="font-semibold" >{{ field.field_desc }}</label>
+                  <select name="field" [(ngModel)]="lab_form['findings_code']" class="input">
+                    <option [value]="findings.code" *ngFor="let findings of lab_stool_color">{{ findings.desc }}</option>
+                  </select>
+                </div>
+
+                <div class="text-sm col-span-1" *ngIf="selected_lab.laboratory.code === 'FCAL' && field.field_name === 'consistency_code'">
+                  <label class="font-semibold" >{{ field.field_desc }}</label>
+                  <select name="field" [(ngModel)]="lab_form['findings_code']" class="input">
+                    <option [value]="findings.code" *ngFor="let findings of lab_stool_consistency">{{ findings.desc }}</option>
+                  </select>
+                </div>
+
                 <div class="text-sm col-span-1" *ngIf="spl_val.indexOf(field.field_name) < 0">
                   <label class="font-semibold" >{{ field.field_desc }}</label>
                   <input name="field" [(ngModel)]="lab_form[field.field_name]" [type]="field.nv_min !== null ? 'number' : 'text'" class="input">
