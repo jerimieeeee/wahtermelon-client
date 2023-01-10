@@ -105,6 +105,12 @@ export class LabComponent implements OnInit, OnDestroy {
         } else {
           this.modal[form] = !this.modal[form];
         }
+      } else if(lab && lab.laboratory.code === 'FCAL') {
+        if(!this.lab_stool_blood && !this.lab_stool_color && !this.lab_stool_consistency) {
+          this.loadStoolColor(form);
+        } else {
+          this.modal[form] = !this.modal[form];
+        }
       } else if(lab && this.forms_with_finding_pn.includes(lab.laboratory.code)) {
         if(!this.lab_result_pn) {
           this.loadLibraries('libraries/laboratory-results','lab_result_pn', form)
@@ -132,6 +138,10 @@ export class LabComponent implements OnInit, OnDestroy {
   lab_sputum_collection: any;
   lab_result_pn: any;
 
+  lab_stool_blood: any;
+  lab_stool_color: any;
+  lab_stool_consistency: any;
+
   loadSputumCollection(form){
     this.http.get('libraries/laboratory-sputum-collection').subscribe({
       next: (data: any) => {
@@ -141,6 +151,33 @@ export class LabComponent implements OnInit, OnDestroy {
       },
       error: err => console.log(err)
     });
+  }
+
+  loadStoolBlood(form){
+    this.http.get('libraries/laboratory-blood-stool').subscribe({
+      next: (data: any) => {
+        this.lab_stool_blood = data.data;
+        this.loadStoolColor(form);
+      }
+    })
+  }
+
+  loadStoolColor(form){
+    this.http.get('libraries/laboratory-stool-color').subscribe({
+      next: (data: any) => {
+        this.lab_stool_color = data.data
+        this.loadStoolConsistency(form)
+      }
+    })
+  }
+
+  loadStoolConsistency(form){
+    this.http.get('libraries/laboratory-stool-consistency').subscribe({
+      next: (data: any) => {
+        this.lab_stool_consistency = data.data
+        this.modal[form] = !this.modal[form];
+      }
+    })
   }
 
   loadLabStatusLib(){

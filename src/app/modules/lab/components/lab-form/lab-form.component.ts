@@ -20,6 +20,10 @@ export class LabFormComponent implements OnChanges, OnInit {
   @Input() lab_findings;
   @Input() lab_sputum_collection;
   @Input() lab_result_pn;
+  @Input() lab_stool_blood;
+  @Input() lab_stool_color;
+  @Input() lab_stool_consistency;
+
   faSave = faSave;
   faSpinner = faSpinner;
 
@@ -31,7 +35,7 @@ export class LabFormComponent implements OnChanges, OnInit {
   lab_form: any = {};
   max_date = formatDate(new Date, 'yyyy-MM-dd', 'en');
 
-  spl_val = ['observation_code', 'findings_code', 'data_collection_code'];
+  spl_val = ['observation_code', 'findings_code', 'data_collection_code', 'blood_code', 'color_code', 'consistency_code'];
 
   loadForm(){
     // console.log(this.selected_lab)
@@ -98,6 +102,11 @@ export class LabFormComponent implements OnChanges, OnInit {
         break;
       case 'PPD':
         this.lab_form['findings_code'] = this.lab_form.findings ? this.lab_form.findings.code : null;
+        break;
+      case 'FCAL':
+        // this.lab_form['blood_code'] = this.lab_form.findings ? this.lab_form.findings.code : null;
+        // this.lab_form['color_code'] = this.lab_form.findings ? this.lab_form.findings.code : null;
+        // this.lab_form['consistency_code'] = this.lab_form.findings ? this.lab_form.findings.code : null;
         break;
       default:
         break;

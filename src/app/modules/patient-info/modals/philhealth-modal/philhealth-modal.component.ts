@@ -53,7 +53,8 @@ export class PhilhealthModalComponent implements OnInit {
     employer_address: new FormControl<string| null>(''),
     member_pin_confirmation: new FormControl<string| null>(''),
     philhealth_id_confirmation: new FormControl<string| null>(''),
-    pATC: new FormControl<string| null>('')
+    authorization_transaction_code: new FormControl<string| null>(''),
+    walkedin_status: new FormControl<boolean| null>(null)
   });
 
   date;
@@ -75,7 +76,7 @@ export class PhilhealthModalComponent implements OnInit {
   submit_errors: [];
 
   pATC_date: string;
-  is_atc_valid: boolean;
+  is_atc_valid: string;
   is_walk_in: boolean;
 
   is_registered: any;
@@ -84,14 +85,14 @@ export class PhilhealthModalComponent implements OnInit {
     this.is_checking_atc = true;
     let params = {
       pPin: this.philhealthForm.value.philhealth_id,
-      pATC: this.philhealthForm.value.pATC,
+      pATC: this.philhealthForm.value.authorization_transaction_code,
       pEffectivityDate: formatDate(this.pATC_date, 'MM/dd/yyyy', 'en')
     }
     this.http.get('konsulta/check-atc', {params}).subscribe({
       next: (data: any) => {
         console.log(data)
         this.is_checking_atc = false;
-        this.is_atc_valid = data.return === 'YES' ? true : false;
+        this.is_atc_valid = data.return;;
       },
       error: err => console.log(err)
     })
@@ -118,6 +119,12 @@ export class PhilhealthModalComponent implements OnInit {
   onSubmit(){
     this.is_saving = true;
     console.log(this.philhealthForm)
+
+    if(this.is_atc_valid !== 'YES') {
+      this.philhealthForm.patchValue({authorization_transaction_code: 'WALKEDIN', walkedin_status: true})
+    } else {
+      // this.philhealthForm.patchValue({walkedin_status: false})
+    }
 
     if(this.philhealthForm.valid){
       let query;
@@ -209,7 +216,7 @@ export class PhilhealthModalComponent implements OnInit {
   }
 
   enableMemberForm(value: boolean){
-    console.log(value)
+    // console.log(value)
     if(value === true){
       this.philhealthForm.controls.member_pin.enable();
       this.philhealthForm.controls.member_pin_confirmation.enable();
@@ -239,15 +246,15 @@ export class PhilhealthModalComponent implements OnInit {
 
   isATCrequired(){
     if(this.philhealthForm.value.package_type_id === 'K') {
-      this.philhealthForm.controls.pATC.enable();
+      this.philhealthForm.controls.authorization_transaction_code.enable();
 
-      if(this.is_walk_in) {
-        this.philhealthForm.patchValue({pATC: 'WALKEDIN'})
+      if(this.philhealthForm.value.walkedin_status) {
+        this.philhealthForm.patchValue({authorization_transaction_code: 'WALKEDIN'})
       } else {
-        this.philhealthForm.patchValue({pATC: null})
+        this.philhealthForm.patchValue({authorization_transaction_code: null})
       }
     } else {
-      this.philhealthForm.controls.pATC.disable();
+      this.philhealthForm.controls.authorization_transaction_code.disable();
     }
   }
 
@@ -280,7 +287,8 @@ export class PhilhealthModalComponent implements OnInit {
       employer_address: [null],
       member_pin_confirmation: [null, [Validators.required, Validators.minLength(12)]],
       philhealth_id_confirmation: [null, [Validators.required, Validators.minLength(12)]],
-      pATC: [null, [Validators.required]],
+      authorization_transaction_code: [null, [Validators.required]],
+      walkedin_status: [false],
     });
 
     if(this.philhealth_to_edit){
