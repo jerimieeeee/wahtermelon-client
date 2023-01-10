@@ -76,7 +76,7 @@ export class PhilhealthModalComponent implements OnInit {
   submit_errors: [];
 
   pATC_date: string;
-  is_atc_valid: boolean;
+  is_atc_valid: string;
   is_walk_in: boolean;
 
   is_registered: any;
@@ -92,7 +92,7 @@ export class PhilhealthModalComponent implements OnInit {
       next: (data: any) => {
         console.log(data)
         this.is_checking_atc = false;
-        this.is_atc_valid = data.return === 'YES' ? true : false;
+        this.is_atc_valid = data.return;;
       },
       error: err => console.log(err)
     })
@@ -120,7 +120,7 @@ export class PhilhealthModalComponent implements OnInit {
     this.is_saving = true;
     console.log(this.philhealthForm)
 
-    if(this.is_atc_valid === false) {
+    if(this.is_atc_valid !== 'YES') {
       this.philhealthForm.patchValue({authorization_transaction_code: 'WALKEDIN', walkedin_status: true})
     } else {
       // this.philhealthForm.patchValue({walkedin_status: false})

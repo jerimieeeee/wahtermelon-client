@@ -111,9 +111,9 @@
               </div>
 
               <div *ngIf="is_atc_valid !== undefined" class="flex mx-16 my-3 p-2 rounded-md bg-green-100 text-green-900 shadow-sm"
-                [ngClass]="{'bg-red-100 text-red-900': !is_atc_valid}">
+                [ngClass]="{'bg-red-100 text-red-900': is_atc_valid !== 'YES'}">
                 <fa-icon class="flex-none my-0 m-2" [icon]="faCircleInfo" size="lg"></fa-icon>
-                {{ is_atc_valid ? 'ATC is valid' : 'ATC is not valid' }}
+                {{ is_atc_valid === 'YES' ? 'ATC is valid' : (is_atc_valid === 'NO' ? 'ATC is not valid' : is_atc_valid) }}
               </div>
             </div>
 

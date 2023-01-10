@@ -31,7 +31,7 @@ export class EndVisitComponent {
         console.log(data);
         this.is_saving = false;
         this.toastr.info('Visit was ended');
-        this.router.navigate(['/itr', {id: this.patient_id}])
+        this.router.navigate(['/patient/itr', {id: this.patient_id}])
       },
       error: err => console.log(err)
     })
