@@ -1,7 +1,6 @@
 import { Component, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { faPenToSquare, faPersonWalking, faSpinner } from '@fortawesome/free-solid-svg-icons';
-import { PatientInfoComponent } from 'app/components/patient-info/patient-info.component';
 import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
@@ -27,7 +26,6 @@ export class MaternalcareComponent implements OnInit {
 
   modalStats: any;
   mcr: boolean;
-  consult_id: any;
   consult_details: any;
 
   constructor(private http: HttpService,
@@ -49,14 +47,23 @@ export class MaternalcareComponent implements OnInit {
     { var_name: 'visit_type', location: 'mc-visit-type' },
   ]
 
+  active_loc_id: any;
+  patient_id: any;
+  consult_id: any;
+
   ngOnInit(): void {
     this.mcr = true;
     this.module = 1;
     this.post_value = false;
     this.loading = false
     this.loadLibraries();
-    this.consult_id = this.route.snapshot.paramMap.get('consult_id');
-    this.loadConsultDetails()
+
+    this.active_loc_id = this.http.getUrlParams();
+    // console.log(this.active_loc_id)
+    this.patient_id = this.active_loc_id.patient_id;
+    this.consult_id = this.active_loc_id.consult_id;
+    this.loadConsultDetails();
+    this.mcrID('all', this.patient_id);
   }
 
   switchTab(tab) {
@@ -65,7 +72,7 @@ export class MaternalcareComponent implements OnInit {
     if (this.module == 1) {
       this.patient_mc_record = ''
       this.mcr = true;
-      this.patientInfo(this.patient_details)
+      // this.patientInfo(this.patient_details)
     }
     console.log(this.module);
   }
@@ -82,10 +89,10 @@ export class MaternalcareComponent implements OnInit {
   }
 
 
-  patientInfo(info) {
+  /* patientInfo(info) {
     this.patient_details = info;
     this.mcrID('all', this.patient_details.id);
-  }
+  } */
 
   mcrID(type: any, id: any) {
     if (id) {
@@ -221,7 +228,7 @@ export class MaternalcareComponent implements OnInit {
     }
 
     proceedItr(){
-      this.router.navigate(['/itr', {id: this.patient_details.id}])
+      this.router.navigate(['/patient/itr', {id: this.patient_id}])
     }
 
     loadConsultDetails(){

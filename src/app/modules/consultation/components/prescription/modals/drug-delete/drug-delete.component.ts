@@ -10,6 +10,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class DrugDeleteComponent implements OnInit {
   @Output() toggleForm = new EventEmitter<any>();
+  @Output() reloadPrescrition = new EventEmitter<any>();
   @Input() selected_drug;
   faTrash = faTrash;
 

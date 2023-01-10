@@ -21,7 +21,7 @@ export class ServicesComponent implements OnInit {
 
   @Input() lib_services;
   @Input() visit_type;
-  @Input() patient_details;
+  @Input() patient_id;
   @Input() patient_mc_record;
   @Input() module;
   @Output() modalStats = new EventEmitter<boolean>();
@@ -193,7 +193,7 @@ export class ServicesComponent implements OnInit {
   getNG(id, x) {
     return this.serviceChanges[this.array_form.map(s => s.service_id).indexOf(id)][x];
   }
-  
+
 saveEdit(i){
   console.log(this.service_list[i], " saveEdit bnoy")
   let edits: any;
@@ -237,7 +237,7 @@ saveEdit(i){
     this.serviceChanges[i] = {
       patient_mc_id: this.patient_mc_record.id,
       facility_code: this.facility_code,
-      patient_id: this.patient_details.id,
+      patient_id: this.patient_id,
       user_id: this.user_id,
       visit_type_code: item == 'visit_type_code' ? this.services_form.value[item] : this.serviceChanges[i].visit_type_code,
       visit_status: this.services_form.value.visit_status,

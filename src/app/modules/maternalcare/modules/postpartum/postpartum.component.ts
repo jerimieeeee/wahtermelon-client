@@ -66,7 +66,7 @@ export class PostpartumComponent implements OnInit {
   @Input() regions;
   @Input() attendants;
   @Input() preg_outcome;
-  @Input() patient_details;
+  @Input() patient_id;
   @Input() patient_mc_record;
 
   @Output() post_mc_data = new EventEmitter<string>();
@@ -140,7 +140,7 @@ export class PostpartumComponent implements OnInit {
   }
     this.postpartum_form = this.formBuilder.group({
     facility_code: [facility_code],
-    patient_id: [this.patient_details.id],
+    patient_id: [this.patient_id],
     user_id: [user_id],
     post_registration_date:[post_registration.length != 0  ?new Date(post_registration.post_registration_date).toISOString().substring(0, 10) : new Date().toISOString().substring(0, 10),[Validators.required]],
     admission_date: [post_registration.length != 0 ?post_registration.admission_date.substring(0 , 19): '',[Validators.required]],
@@ -199,7 +199,7 @@ export class PostpartumComponent implements OnInit {
       }
 
       console.log(filtered, " my filtered value");
-      
+
     if (this.postpartum_form.valid) {
       let http
       if (this.updating) {
@@ -207,7 +207,7 @@ export class PostpartumComponent implements OnInit {
       } else {
         http = this.http.post('maternal-care/mc-postregistrations', filtered)
       }
-  
+
 
       http.subscribe({
         next: (data: any) => {

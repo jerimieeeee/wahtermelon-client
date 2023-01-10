@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ChartComponent } from "ng-apexcharts";
 import { openCloseTrigger } from './declarations/animation';
 import { BmiChart, ChartOptions, WeightChart } from './declarations/chart-options';
-import { NavigationEnd, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { filter, tap } from "rxjs/operators";
 import { HttpService } from 'app/shared/services/http.service';
 import { formatDate } from '@angular/common';
@@ -53,7 +53,7 @@ export class PatientItrComponent implements OnInit {
 
   patientInfo(info){
     this.patient_details = info;
-    this.loadVisitHistory();
+    // this.loadVisitHistory();
   }
 
   patientVitals(vitals){
@@ -87,7 +87,7 @@ export class PatientItrComponent implements OnInit {
 
     if(this.vitals_graph.systolic.length > 0 || this.vitals_graph.diastolic.length > 0){
       this.selected_chart = 'bp_weight_chart';
-      this.loadChart();
+      // this.loadChart();
     } else {
       this.showChart = false;
     }
@@ -100,178 +100,66 @@ export class PatientItrComponent implements OnInit {
     })
   );
 
-  generateBPChart(){
-    this.chartOptions = {
-      series: [
-        {
-          name: "Systolic",
-          data: this.vitals_graph.systolic
+
+
+  patient_id: string;
+  loadData(){
+    let patient_id = this.route.snapshot.paramMap.get('id');
+
+    if(this.patient_id !== patient_id){
+      this.http.get('consultation/records',{params:{patient_id: patient_id, per_page: 'all', sort: '-consult_date'}}).subscribe({
+        next: (data: any) => {
+          // console.log(data);
+          this.visit_list = data.data;
         },
-        {
-          name: "Diastolic",
-          data: this.vitals_graph.diastolic
-        }
-      ],
-      chart: {
-        height: 200,
-        type: "area"
-      },
-      dataLabels: {
-        enabled: false
-      },
-      stroke: {
-        curve: "smooth"
-      },
-      title: {
-        text: "Blood Pressure History"
-      },
-      xaxis: {
-        type: "datetime",
-        categories: this.vitals_graph.bp_date
-      },
-      tooltip: {
-        x: {
-          format: "dd/MM/yy HH:mm"
-        }
-      }
-    };
-
-    this.showChart = true;
-    this.show_bp = true;
+        error: err => console.log(err),
+      })
+    }
   }
 
-  generateWeightChart(){
-    // this.show_weight = true;
-    this.WeightChart = {
-      series: [
-        {
-          name: "Weight",
-          data: this.vitals_graph.weight
-        }
-      ],
-      chart: {
-        height: 200,
-        type: "line"
-      },
-      dataLabels: {
-        enabled: false
-      },
-      stroke: {
-        curve: "smooth"
-      },
-      title: {
-        text: "Weight History"
-      },
-      xaxis: {
-        type: "datetime",
-        categories: this.vitals_graph.weight_date
-      },
-      tooltip: {
-        x: {
-          format: "dd/MM/yy HH:mm"
-        }
-      }
-    };
-
-    this.showChart = true;
-    this.show_weight = true;
-  }
-
-  generateBMIChart(){
-    this.BmiChart = {
-      series: [
-        {
-          name: "BMI",
-          data: this.vitals_graph.bmi
-        }
-      ],
-      chart: {
-        height: 200,
-        type: "line"
-      },
-      dataLabels: {
-        enabled: false
-      },
-      stroke: {
-        curve: "smooth"
-      },
-      title: {
-        text: "BMI History"
-      },
-      xaxis: {
-        type: "datetime",
-        categories: this.vitals_graph.bmi_date
-      },
-      tooltip: {
-        x: {
-          format: "dd/MM/yy HH:mm"
-        }
-      }
-    };
-
-    this.showChart = true;
-    this.show_bmi = true;
-  }
-
-  loadChart(){
-    this.show_bmi = false;
-    this.show_bp = false;
-    this.show_weight = false;
-
-    switch (this.selected_chart) {
-      case 'bp_chart':
-        this.generateBPChart();
+  selected_visit: any;
+  showConsult(details: any){
+    console.log(details)
+    if(details.vitals) this.getLatestToday(details);
+    let query: any;
+    let params: any;
+    switch (details.pt_group) {
+      case 'ncd':
+        params = {consult_id: details.id, sort: '-assessment_date'};
+        query = this.http.get('non-communicable-disease/risk-assessment', {params});
+        this.getSelected(query, details.pt_group);
         break;
-      case 'weight_chart':
-        this.generateWeightChart();
+      case 'cc':
+        query = this.http.get('child-care/cc-records/'+details.patient.id);
+        this.getSelected(query, details.pt_group);
         break;
-      case 'bmi_chart':
-        this.generateBMIChart();
-        break;
-      case 'bmi_weight_chart':
-        this.generateWeightChart();
-        this.generateBMIChart();
-        break;
-      case 'bp_weight_chart':
-        this.generateBPChart();
-        this.generateWeightChart();
-        break;
-      case 'all_chart':
-        this.generateBPChart();
-        this.generateWeightChart();
-        this.generateBMIChart();
+      default:
+        this.selected_visit = details;
         break;
     }
   }
 
-  generateAllChart(){
-    this.generateBPChart();
-    this.generateWeightChart();
-    this.generateBMIChart();
-  }
-
-  loadVisitHistory(){
-    // console.log(this.patient_details);
-    this.http.get('consultation/records',{params:{patient_id: this.patient_details.id, per_page: 'all', sort: '-consult_date'}}).subscribe({
+  getSelected(query, group){
+    query.subscribe({
       next: (data: any) => {
-        this.visit_list = data.data;
-        // console.log(data);
+        console.log(data.data)
+        if(group === 'cc') {
+          this.selected_visit = data.data;
+        }else {
+          this.selected_visit = data.data[0];
+        }
+
+        this.selected_visit['pt_group'] = group;
       },
-      error: err => console.log(err),
+      error: err => console.log(err)
     })
   }
 
-  showConsult(details: any){
-    console.log(details)
-    if(details.vitals) this.getLatestToday(details);
-  }
-
   selected_id: number;
-  selected_visit: any;
 
   getLatestToday(details){
-    this.selected_visit = details;
-    this.latest_vitals = this.vitalsCharts.getLatestToday(details.vitals);
+    this.latest_vitals = this.vitalsCharts.getLatestToday(details.vitals, details.consult_date);
+    console.log(this.latest_vitals)
 
     if(this.selected_id){
       if(this.selected_id === details.id){
@@ -305,10 +193,13 @@ export class PatientItrComponent implements OnInit {
   constructor(
     private router: Router,
     private http: HttpService,
-    private vitalsCharts: VitalsChartsService
+    private vitalsCharts: VitalsChartsService,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
+    // console.log(this.router.url)
+    this.loadData();
     this.navigationEnd$.subscribe();
   }
 }

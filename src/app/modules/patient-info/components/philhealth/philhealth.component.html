@@ -1,0 +1,19 @@
+<div class="mt-4 leading-tight">
+  <div class="flex justify-between items-center">
+    <span class="block text-blue-500 font-medium text-sm">
+      PHILHEALTH
+    </span>
+    <span>
+      <fa-icon (click)="modalToggle('philhealth-list')" class="mx-0 my-0 text-green-500 mr-2 hover:cursor-pointer" [icon]="faTableList" *ngIf="philhealth_info" ></fa-icon>
+      <fa-icon (click)="modalToggle('philhealth')" class="mx-0 my-0 text-blue-500 mr-2 hover:cursor-pointer" [icon]="faPlusCircle"></fa-icon>
+    </span>
+  </div>
+  <div class="flex pl-3 justify-between items-center" [ngClass]="{'text-red-500': philhealthColor}">
+    <span class="block text-xs">
+      {{ philhealth_info?.philhealth_id }}
+    </span>
+    <span class="block text-xs">
+      {{ philhealth_info?.enlistment_date | date: 'MM/dd/yyyy' }}
+    </span>
+  </div>
+</div>

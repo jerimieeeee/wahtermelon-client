@@ -50,7 +50,7 @@ export class McrComponent implements OnInit {
   third_tri: any;
   today: any;
 
-  @Input() patient_details;
+  @Input() patient_id;
   @Input() patient_mc_record;
   @Output() patient_mc_id = new EventEmitter<string>();
   is_saving: boolean;
@@ -79,7 +79,7 @@ export class McrComponent implements OnInit {
 
   getMCR() {
     console.log(this.patient_mc_record);
-    
+
     if (!this.patient_mc_record) {
       this.mcr_data = -1;
       this.getEDC(this.today, 'any');
@@ -103,7 +103,7 @@ export class McrComponent implements OnInit {
     let user_id = this.http.getUserID();
     let facility_code = this.http.getUserFacility();
     this.mcr_form = this.formBuilder.group({
-      patient_id: [this.patient_details.id, [Validators.required, Validators.minLength(2)]],
+      patient_id: [this.patient_id, [Validators.required, Validators.minLength(2)]],
       user_id: [user_id, [Validators.required, Validators.minLength(2)]],
       facility_code: [facility_code, [Validators.required, Validators.minLength(2)]],
       pre_registration_date: [(this.mcr_data == -1 ? new Date().toISOString().substring(0, 10) : new Date(this.mcr_data.pre_registration_date).toISOString().substring(0, 10)),

@@ -5,29 +5,110 @@
       <!-- Modal header -->
       <div class="flex justify-between items-start py-3 px-5 rounded-t border-b bg-blue-500 dark:border-gray-600">
         <h3 class="mt-2 text-sm font-bold text-white dark:text-white">
-            Delete
+          {{ selected_lab.laboratory.desc }}
         </h3>
 
       </div>
       <!-- Modal body -->
-      <div class=" h-96">
+      <div class=" h-96 overflow-y-auto">
         <div class="flex item-start flex-wrap pb-5">
-          <div class="grid grid-cols-3 px-3 py-3 mt-10 mx-10 w-full rounded-lg text-center">
-            <div class="col-span-3 text-left mb-2 pb-2 border-b border-slate-200 font-semibold text-lg">
-              Do you really want to delete this lab?
+          <div class="grid grid-cols-2 px-3 py-3 w-full mx-5 mt-5 rounded-lg" *ngIf="show_form">
+            <div class="col-span-2 flex mb-3 justify-center">
+              <input type="checkbox" name="request_status_code" class="w-6 h-6 input" [(ngModel)]="request_status_code" [ngModelOptions]="{standalone: true}"/>
+              <label for="request_status_code" class="ml-3 mt-1">Patient has refused lab service</label>
             </div>
-            <div class="col-span-3 text-left mb-2 pb-2 text-sm">
-              {{ selected_lab.type }} : {{ selected_lab.date_requested | date: 'MM/dd/yyyy' }}
+
+            <div *ngIf="!request_status_code" class="col-span-2 grid grid-cols-2 gap-5" >
+              <div class="text-sm col-span-1">
+                <label class="font-semibold" >Laboratory date</label>
+                <input name="field" [(ngModel)]="lab_form['laboratory_date']" type="date" [max]="max_date" placeholder="mm/dd/yyyy" class="input">
+              </div>
+
+              <div class="text-sm col-span-1">
+                <label class="font-semibold" >Laboratory status</label>
+                <select name="field" [(ngModel)]="lab_form['lab_status_code']" class="input">
+                  <option [value]="status.code" *ngFor="let status of lab_statuses">{{ status.desc }}</option>
+                </select>
+              </div>
+
+              <div *ngFor="let field of fields">
+                <div class="text-sm col-span-1" *ngIf="selected_lab.laboratory.code === 'SPTM' && field.field_name === 'findings_code'">
+                  <label class="font-semibold" >{{ field.field_desc }}</label>
+                  <select name="field" [(ngModel)]="lab_form['findings_code']" class="input">
+                    <option [value]="findings.code" *ngFor="let findings of lab_findings">{{ findings.desc }}</option>
+                  </select>
+                </div>
+
+                <div class="text-sm col-span-1" *ngIf="selected_lab.laboratory.code === 'SPTM' && field.field_name === 'data_collection_code'">
+                  <label class="font-semibold" >{{ field.field_desc }}</label>
+                  <select name="field" [(ngModel)]="lab_form['data_collection_code']" class="input">
+                    <option [value]="findings.code" *ngFor="let findings of lab_sputum_collection">{{ findings.desc }}</option>
+                  </select>
+                </div>
+
+                <div class="text-sm col-span-1" *ngIf="selected_lab.laboratory.code === 'CXRAY' && field.field_name === 'findings_code'">
+                  <label class="font-semibold" >{{ field.field_desc }}</label>
+                  <select name="field" [(ngModel)]="lab_form['findings_code']" class="input">
+                    <option [value]="findings.code" *ngFor="let findings of lab_cxray_findings">{{ findings.desc }}</option>
+                  </select>
+                </div>
+
+                <div class="text-sm col-span-1" *ngIf="selected_lab.laboratory.code === 'CXRAY' && field.field_name === 'observation_code'">
+                  <label class="font-semibold" >{{ field.field_desc }}</label>
+                  <select name="field" [(ngModel)]="lab_form['observation_code']" class="input">
+                    <option [value]="obs.code" *ngFor="let obs of lab_cxray_observation">{{ obs.desc }}</option>
+                  </select>
+                </div>
+
+                <div class="text-sm col-span-1" *ngIf="selected_lab.laboratory.code === 'ECG' && field.field_name === 'findings_code'">
+                  <label class="font-semibold" >{{ field.field_desc }}</label>
+                  <select name="field" [(ngModel)]="lab_form['findings_code']" class="input">
+                    <option [value]="findings.code" *ngFor="let findings of lab_findings">{{ findings.desc }}</option>
+                  </select>
+                </div>
+
+                <div class="text-sm col-span-1" *ngIf="form_with_findings_pn.includes(selected_lab.laboratory.code) && field.field_name === 'findings_code'">
+                  <label class="font-semibold" >{{ field.field_desc }}</label>
+                  <select name="field" [(ngModel)]="lab_form['findings_code']" class="input">
+                    <option [value]="findings.code" *ngFor="let findings of lab_result_pn">{{ findings.desc }}</option>
+                  </select>
+                </div>
+
+                <div class="text-sm col-span-1" *ngIf="spl_val.indexOf(field.field_name) < 0">
+                  <label class="font-semibold" >{{ field.field_desc }}</label>
+                  <input name="field" [(ngModel)]="lab_form[field.field_name]" [type]="field.nv_min !== null ? 'number' : 'text'" class="input">
+                  <span class="italic text-xs text-gray-500" *ngIf="field.nv_min !== null">Normal values(Min: {{ field.nv_min }} to Max: {{ field.nv_max }})</span>
+                </div>
+
+                <!--  -->
+
+                <!-- <div class="text-sm col-span-1" *ngIf="field.field_name !== 'observation_code'">
+                  <label class="font-semibold" >{{ field.field_desc }}</label>
+                  <select name="field" [(ngModel)]="lab_form['observation_code']" class="input">
+                    <option [value]="obs.code" *ngFor="let obs of lab_observation">{{ obs.desc }}</option>
+                  </select>
+                </div> -->
+              </div>
+
+              <div class="col-span-2">
+                <div class="text-sm col-span-1">
+                  <label class="font-semibold" >Remarks</label>
+                  <input name="field" [(ngModel)]="lab_form['remarks']" type="text" class="input">
+                </div>
+              </div>
             </div>
+
           </div>
         </div>
       </div>
 
       <!-- Modal footer  -->
-      <div class="flex justify-end py-2 px-5 space-x-4 rounded-b">
-
-        <button  type="button" class="text-white bg-gray-400 hover:ring-2 focus:outline-none hover:ring-gray-300 rounded text-sm font-medium my-2 px-6 py-2.5 transition duration-150 ease-in-out" (click)="closeModal()">Cancel</button>
-        <button type="button" class="text-white bg-blue-500 enabled:hover:ring-2 enabled:focus:outline-none enabled:hover:ring-blue-300 disabled:opacity-75 font-medium rounded text-sm my-2 px-6 py-2.5 text-center transition duration-150 ease-in-out" (click)="onSubmit()" >Delete</button>
+      <div class="flex justify-end pb-5 px-5 space-x-4 rounded-b my-5">
+        <button [disabled]="is_saving" type="button" class="btn-save bg-gray-400 px-10" (click)="cancelThisModal()">Cancel</button>
+        <button [disabled]="is_saving || (!request_status_code && (!lab_form['laboratory_date'] || !lab_form['lab_status_code']))" type="button" class="btn-save px-10 disabled:bg-gray-300" (click)="onSubmit()" >
+          <fa-icon [icon]="is_saving ? faSpinner : faSave" class="mr-2" [spin]="is_saving"></fa-icon>
+          {{ is_saving ? 'Saving' : 'Save' }}
+        </button>
       </div>
     </div>
   </div>

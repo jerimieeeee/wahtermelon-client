@@ -49,7 +49,6 @@ export class PrenatalComponent implements OnInit {
 
   mc_id: Number = new Number();
   user_id: Number = new Number();
-  patient_id: Number = new Number();
   trimester: Number = new Number();
   remarks: String = new String();
   value: number;
@@ -69,7 +68,7 @@ export class PrenatalComponent implements OnInit {
   @Input() fetals;
   @Input() fhr_lib;
   @Input() patient_mc_record;
-  @Input() patient_details;
+  @Input() patient_id;
 
   @Output() prenatal_mc_data = new EventEmitter<string>();
   is_saving: boolean;
@@ -202,7 +201,7 @@ export class PrenatalComponent implements OnInit {
     this.prenatal_form = this.formBuilder.group({
       patient_mc_id: [this.patient_mc_record.id, [Validators.required, Validators.minLength(2)]],
       facility_code: [facility_code, [Validators.required, Validators.minLength(2)]],
-      patient_id: [this.patient_details.id, [Validators.required, Validators.minLength(2)]],
+      patient_id: [this.patient_id, [Validators.required, Validators.minLength(2)]],
       user_id: [user_id, [Validators.required, Validators.minLength(2)]],
       prenatal_date: [new Date().toISOString().substring(0, 10),[Validators.required]],
       patient_height: [prenatal_visit.length != 0 ? prenatal_visit.patient_height : 0, [Validators.required, Validators.minLength(2)]],
@@ -306,16 +305,16 @@ export class PrenatalComponent implements OnInit {
     this.edit_id;
     // this.prenatal_form.patchValue(this.prenatal_data[0])
     console.log("canceling");
-    
+
   }
   edit(prenatal) {
     this.edit_bool = true;
     console.log(prenatal, " data to be editesd");
-    
+
     // this.prenatal_form.reset();
         this.edit_form = {
           patient_mc_id: prenatal.patient_mc_id,
-          patient_id: this.patient_details.id,
+          patient_id: this.patient_id,
           prenatal_date: prenatal.prenatal_date,
           patient_height: prenatal.patient_height,
           patient_weight: prenatal.patient_weight,
@@ -338,7 +337,7 @@ export class PrenatalComponent implements OnInit {
     console.log(prenatal.id, " id pre edit");
 
     this.edit_id = prenatal.id;
-    
+
         this.edit_bool = true;
     // console.log(id, " prenatal id edit");
 

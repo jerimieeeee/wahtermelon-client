@@ -14,7 +14,7 @@
     </div>
     <div class="text-sm col-span-12 px-5 mb-6 ml-5">
       <h4 class="mb-1 font-semibold">List current medications</h4>
-      <textarea name="text" [(ngModel)]="ncd_record.current_medication" rows="4" class="text-sm border border-gray-200 p-2.5 rounded bg-white w-full"></textarea>
+      <textarea name="text" [(ngModel)]="ncd_record.current_medications" rows="4" class="text-sm border border-gray-200 p-2.5 rounded bg-white w-full"></textarea>
     </div>
   </div>
 
@@ -24,8 +24,8 @@
     </div>
     <div class="col-span-12 grid grid-cols-12 gap-4 ml-10 mb-6">
       <div *ngFor="let diag of diagnosis" class="text-sm col-span-6 ">
-        <input [(ngModel)]="patient_diagnosis[diag.code]" type="checkbox" id="diagnosiscond" class="h-4 w-4 border-gray-400 text-blue-500 rounded-md mr-3">
-        <label [for]="patient_diagnosis[diag.code]" class="ml-1 align-middle">{{diag.desc}}</label>
+        <input [(ngModel)]="patient_diagnosis[diag.id]" type="checkbox" attr.id="patient_diagnosis{{diag.id}}" class="h-4 w-4 border-gray-400 text-blue-500 rounded-md mr-3">
+        <label attr.for="patient_diagnosis{{diag.id}}" class="ml-1 align-middle">{{diag.desc}}</label>
       </div>
     </div>
   </div>
@@ -36,8 +36,8 @@
     </div>
     <div class="col-span-12 grid grid-cols-12 gap-4 ml-10 mb-6">
       <div *ngFor="let organ of target_organ" class="text-sm col-span-6 ">
-        <input [(ngModel)]="patient_target_organ[organ.code]" type="checkbox" id="diagnosiscond" class="h-4 w-4 border-gray-400 text-blue-500 rounded-md mr-3">
-        <label [for]="patient_target_organ[organ.code]" class="ml-1 align-middle">{{organ.desc}}</label>
+        <input [(ngModel)]="patient_target_organ[organ.id]" type="checkbox" attr.id="patient_target_organ{{organ.id}}" class="h-4 w-4 border-gray-400 text-blue-500 rounded-md mr-3">
+        <label attr.for="patient_target_organ{{organ.id}}" class="ml-1 align-middle">{{organ.desc}}</label>
       </div>
     </div>
   </div>
@@ -50,7 +50,7 @@
       <div class="text-sm col-span-6" *ngFor="let pe of physical_examination">
         <h1 class="mb-1">{{ pe.desc}}</h1>
         <select [(ngModel)]="ncd_record[pe.code]" class="text-sm form-select bg-white border-gray-200 border p-2.5 rounded-md w-full" name="family_hx_hypertension">
-          <option [value]="result.code" *ngFor="let result of physical_examination_result">
+          <option [value]="result.id" *ngFor="let result of physical_examination_result">
             {{ result.desc }}
           </option>
         </select>
@@ -69,8 +69,8 @@
     </div>
     <div class="col-span-12 grid grid-cols-12 gap-4 ml-10 mb-6">
       <div *ngFor="let coun of counselling" class="text-sm col-span-6 ">
-        <input type="checkbox" [(ngModel)]="patient_counseling[coun.code]" id="diagnosiscond" class="h-4 w-4 border-gray-400 text-blue-500 rounded-md mr-3">
-        <label for="diagnosiscond" class="ml-1 align-middle" [value]="coun.code">{{coun.desc}}</label>
+        <input type="checkbox" [(ngModel)]="patient_counseling[coun.id]" attr.id="patient_counseling{{coun.id}}" class="h-4 w-4 border-gray-400 text-blue-500 rounded-md mr-3">
+        <label attr.for="patient_counseling{{coun.id}}" class="ml-1 align-middle" [value]="coun.id">{{coun.desc}}</label>
       </div>
     </div>
   </div>
@@ -81,7 +81,7 @@
     </div>
     <div class="text-sm col-span-12 px-5 mb-6 ml-5">
       <h4 class="mb-1 font-semibold">Other information</h4>
-      <textarea name="text" [(ngModel)]="ncd_record.other_info" rows="4" class="text-sm border border-gray-200 p-2.5 rounded bg-white w-full"></textarea>
+      <textarea name="text" [(ngModel)]="ncd_record.other_infos" rows="4" class="text-sm border border-gray-200 p-2.5 rounded bg-white w-full"></textarea>
     </div>
   </div>
 
@@ -93,100 +93,3 @@
     </button>
   </div>
 </div>
-
-<!-- <div class="grid grid-cols-12 item-start flex-wrap shadow-md rounded-xl mb-8 mt-8">
-  <div class="col-span-12 flex bg-blue-500 px-5 py-3 rounded-tl rounded-tr">
-    <h4 class="font-bold text-white text-md mt-2 mb-2">Diagnosis & Associated Clinical Conditions</h4>
-  </div>
-
-  <div *ngFor="let diag of diagnosis" class="text-sm col-span-4 w-full px-5 mt-4 mb-4">
-    <input type="checkbox" id="diagnosiscond" class="form-checkbox h-4 w-4 border-gray-400 text-blue-500 rounded-full"><label for="diagnosiscond" class="ml-1 align-middle"> {{diag.desc}}</label>
-  </div>
-</div> -->
-<!-- <div class="grid grid-cols-12 item-start flex-wrap shadow-md rounded-xl mb-8 mt-8">
-  <div class="col-span-12 flex bg-blue-500 px-5 py-3 rounded-tl rounded-tr">
-    <h4 class="font-bold text-white text-md mt-2 mb-2">Target Organ Damage</h4>
-  </div>
-
-  <div *ngFor="let organ of target_organ" class="text-sm col-span-4 w-full px-5 mt-4 mb-4">
-    <input type="checkbox" class="form-checkbox h-4 w-4 border-gray-400 border text-blue-500 rounded-full"><span class="ml-1 align-middle"> {{organ.desc}}</span>
-  </div>
-</div> -->
-<!-- <div class="grid grid-cols-12 item-start flex-wrap shadow-md rounded-xl mb-8 mt-8">
-  <div class="col-span-12 flex bg-blue-500 px-5 py-3 rounded-tl rounded-tr">
-    <h4 class="font-bold text-white text-md mt-2 mb-2">Physical Examination</h4>
-  </div>
-
-  <div class="text-sm col-span-4 w-full px-5 mt-4 mb-4">
-    <h1 class="mb-1">Palpatation of the Heart:</h1>
-    <select class="text-sm form-select bg-white border-gray-200 border p-2.5 rounded-md w-full" name="family_hx_hypertension">
-      <option [value]="pe.code" *ngFor="let pe of physical_examination_result">
-        {{ pe.desc }}
-      </option>
-    </select>
-  </div>
-
-<div class="text-sm col-span-4 w-full px-5 mt-4 mb-4">
-  <h1 class="mb-1">Palpatation of Peripherals Pulses:</h1>
-  <select class="text-sm form-select bg-white border-gray-200 border p-2.5 rounded-md w-full" name="family_hx_hypertension">
-  <option [value]="pe.desc" *ngFor="let pe of physical_examination">
-  {{pe.desc}}
-  </option>
-  </select>
-</div>
-
-<div class="text-sm col-span-4 w-full px-5 mt-4 mb-4">
-  <h1 class="mb-1">Palpatation of Abdomen:</h1>
-  <select class="text-sm form-select bg-white border-gray-200 border p-2.5 rounded-md w-full" name="family_hx_hypertension">
-  <option [value]="pe.desc" *ngFor="let pe of physical_examination">
-  {{pe.desc}}
-  </option>
-  </select>
-</div>
-
-<div class="text-sm col-span-4 w-full px-5 mb-4">
-  <h1 class="mb-1">Auscultation of Heart:</h1>
-  <select class="text-sm form-select bg-white border-gray-200 border p-2.5 rounded-md w-full" name="family_hx_hypertension">
-  <option [value]="pe.desc" *ngFor="let pe of physical_examination">
-  {{pe.desc}}
-  </option>
-  </select>
-</div>
-
-<div class="text-sm col-span-4 w-full px-5 mb-4">
-  <h1 class="mb-1">Auscultation of Lungs:</h1>
-  <select class="text-sm form-select bg-white border-gray-200 border p-2.5 rounded-md w-full" name="family_hx_hypertension">
-  <option [value]="pe.desc" *ngFor="let pe of physical_examination">
-  {{pe.desc}}
-  </option>
-  </select>
-</div>
-
-<div class="text-sm col-span-4 w-full px-5 mb-4">
-  <h1 class="mb-1">Sensation of Feet and Foot pulses:</h1>
-  <select class="text-sm form-select bg-white border-gray-200 border p-2.5 rounded-md w-full" name="family_hx_hypertension">
-  <option [value]="pe.desc" *ngFor="let pe of physical_examination">
-  {{pe.desc}}
-  </option>
-  </select>
-</div>
-
-</div> -->
-<!-- <div class="grid grid-cols-12 item-start flex-wrap shadow-md rounded-xl mb-8 mt-8">
-  <div class="col-span-12 flex bg-blue-500 px-5 py-3 rounded-tl rounded-tr">
-    <h4 class="font-bold text-white text-md mt-2 mb-2">Provided Counselling On</h4>
-  </div>
-
-  <div *ngFor="let coun of counselling" class="text-sm col-span-4 w-full px-5 mt-4 mb-4">
-    <input type="checkbox" class="form-checkbox h-4 w-4 border-gray-300 text-blue-500 rounded-full"><span class="ml-1 align-middle"> {{coun.desc}}</span>
-  </div>
-</div> -->
-<!-- <div class="grid grid-cols-12 item-start flex-wrap shadow-md rounded-xl mb-4 mt-8">
-  <div class="col-span-12 flex bg-blue-500 px-5 py-3 rounded-tl rounded-tr">
-    <h4 class="font-bold text-white text-md mt-2 mb-2">Other Information</h4>
-  </div>
-
-  <div class="text sm col-span-12 col-start-1 w-full px-5 mt-4 mb-4">
-    <input type="text" placeholder="Write here.." class="text-sm border border-gray-200 p-2.5 rounded bg-white w-full">
-  </div>
-</div> -->

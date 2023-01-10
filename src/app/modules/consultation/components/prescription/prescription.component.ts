@@ -1,5 +1,6 @@
-import { Component, Input, OnInit, OnChanges } from '@angular/core';
-import { faAdd, faChevronCircleDown, faChevronCircleUp, faEdit, faSave, faSpinner, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { Component, Input, OnInit, OnChanges, Output, EventEmitter } from '@angular/core';
+import { Router } from '@angular/router';
+import { faAdd, faChevronCircleDown, faChevronCircleUp, faEdit, faSave, faSpinner, faTrash, faPrescriptionBottleMedical } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -28,16 +29,21 @@ export class PrescriptionComponent implements OnInit, OnChanges {
   faSpinner = faSpinner;
   faEdit = faEdit;
   faTrash = faTrash;
+  faPrescriptionBottleMedical = faPrescriptionBottleMedical;
 
   selected_drug: any;
+  prescriptions: any;
 
   consult_notes = {
     plan: null
   }
 
+  navigateTo(loc){
+    this.router.navigate(['/patient/'+loc, {id:this.consult_details.patient.id,consult_id:this.consult_details.id}])
+  }
+
   openDeleteForm(drug){
     this.selected_drug = drug;
-
     this.toggleDeleteForm()
   }
 
@@ -52,7 +58,7 @@ export class PrescriptionComponent implements OnInit, OnChanges {
 
     this.http.update('consultation/notes/', this.consult_details.consult_notes.id, notes_remarks).subscribe({
       next: (data: any) => {
-        console.log(data);
+        // console.log(data);
         this.is_saving = false;
         this.showToastr();
       },
@@ -69,14 +75,12 @@ export class PrescriptionComponent implements OnInit, OnChanges {
   }
 
   openAddForm(drug){
-    console.log(drug)
+    // console.log(drug)
     this.selected_drug = drug;
     this.toggleForm();
   }
 
-  toggleList(){
-    this.show_list = !this.show_list;
-  }
+
 
   toggleDeleteForm(){
     this.show_delete_form = !this.show_delete_form;
@@ -87,7 +91,11 @@ export class PrescriptionComponent implements OnInit, OnChanges {
   }
 
   toggleForm(){
-    this.show_form = !this.show_form;
+    if(!this.drug_uom || !this.drug_uom || !this.drug_purpose || !this.drug_frequency || !this.drug_preparation) {
+      this.loadLibraries()
+    } else {
+      this.show_form = !this.show_form;
+    }
 
     if(this.show_form === false) {
       this.loadPrescriptions();
@@ -110,56 +118,58 @@ export class PrescriptionComponent implements OnInit, OnChanges {
     }
   }
 
-  prescriptions: any;
 
 
-  //Temp function to load from lib
-  libraries = {
-    dosage_uom:             {var_name: 'dosage_desc',       location: 'unit-of-measurements', value: ''},
-    dose_regimen:           {var_name: 'regimen_desc',      location: 'dose-regimens',        value: ''},
-    medicine_purpose:       {var_name: 'purpose_desc',      location: 'purposes',             value: ''},
-    duration_frequency:     {var_name: 'frequency_desc',    location: 'duration-frequencies', value: ''},
-    quantity_preparation:   {var_name: 'preparation_desc',  location: 'preparations',         value: ''},
-    konsulta_medicine_code: {var_name: 'medicine_desc',     location: 'konsulta-medicines',   value: ''}
+  //loadLibraries
+  drug_uom: any;
+  drug_regimen: any;
+  drug_purpose: any;
+  drug_frequency: any;
+  drug_preparation: any;
+
+  libraries = [
+    {var_name: 'drug_uom',          location: 'unit-of-measurements'},
+    {var_name: 'drug_regimen',      location: 'dose-regimens'},
+    {var_name: 'drug_purpose',      location: 'purposes'},
+    {var_name: 'drug_frequency',    location: 'duration-frequencies'},
+    {var_name: 'drug_preparation',  location: 'preparations'}
+  ];
+
+  loadLibraries(){
+    // this.
+    this.libraries.forEach((obj, index) => {
+      this.http.get('libraries/'+obj.location).subscribe({
+        next: (data: any) => {
+          this[obj.var_name] = data.data;
+          // console.log(data.data);
+          if(this.libraries.length -1 === index) {
+            this.show_form = true
+          }
+        },
+        error: err => console.log(err)
+      })
+    });
+  }
+
+  toggleList(){
+    this.show_list = !this.show_list;
   }
 
   identify(index, item) {
-    // console.log(item)
     return item.id
   }
-
-  getValues(){
-    Object.entries(this.prescriptions).reverse().forEach(([key, value], index) => {
-      let values: any = value;
-
-      Object.entries(this.libraries).reverse().forEach(([k, v], i) => {
-        // console.log(values[k])
-        this.http.get('libraries/'+v.location+'/'+values[k]).subscribe({
-          next: (data: any) => {
-            // console.log(data)
-            this.prescriptions[key][v.var_name] = data.data.desc
-          },
-          error: err => console.log(err)
-        })
-      });
-    });
-    // console.log(this.prescriptions)
-  }
-  //end
 
   loadPrescriptions(){
     this.selected_drug = null;
     let params = {
       sort: '-prescription_date',
-      consult_id: this.consult_details.id
+      consult_id: this.consult_details.id,
+      status: 'dispensing'
     };
 
-    console.log(params)
     this.http.get('medicine/prescriptions',{params}).subscribe({
       next: (data: any) => {
-        console.log(data);
         this.prescriptions = data.data;
-        this.getValues();
       },
       error: err => console.log(err)
     })
@@ -167,7 +177,8 @@ export class PrescriptionComponent implements OnInit, OnChanges {
 
   constructor(
     private http: HttpService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {

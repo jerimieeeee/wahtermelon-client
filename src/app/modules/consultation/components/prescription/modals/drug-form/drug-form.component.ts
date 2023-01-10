@@ -13,6 +13,11 @@ export class DrugFormComponent implements OnInit {
   @Output() toggleForm = new EventEmitter<any>();
   @Input() selected_drug;
   @Input() consult_details;
+  @Input() drug_uom;
+  @Input() drug_regimen;
+  @Input() drug_purpose;
+  @Input() drug_frequency;
+  @Input() drug_preparation;
 
   submit_errors: any;
   is_saving: boolean = false;
@@ -47,7 +52,7 @@ export class DrugFormComponent implements OnInit {
   }
 
   onSubmit(){
-    console.log(this.prescriptionForm);
+    // console.log(this.prescriptionForm);
 
     if(this.prescriptionForm.valid){
       let query;
@@ -67,7 +72,7 @@ export class DrugFormComponent implements OnInit {
     }
   }
 
-  drug_uom: any;drug_regimen: any;drug_purpose: any;drug_frequency: any;drug_preparation: any;
+  // drug_uom: any;drug_regimen: any;drug_purpose: any;drug_frequency: any;drug_preparation: any;
   libraries = [
     {var_name: 'drug_uom', location: 'unit-of-measurements'},
     {var_name: 'drug_regimen', location: 'dose-regimens'},
@@ -79,7 +84,7 @@ export class DrugFormComponent implements OnInit {
   loadLibraries(){
     this.libraries.forEach(obj => {
       this.http.get('libraries/'+obj.location).subscribe({
-        next: (data: any) => this[obj.var_name] = data.data,
+        next: (data: any) => {this[obj.var_name] = data.data; console.log(data.data)},
         error: err => console.log(err),
         complete: () => this.show_form = true
       })
@@ -104,11 +109,11 @@ export class DrugFormComponent implements OnInit {
   add_drug: boolean = false;
 
   ngOnInit(): void {
-    this.loadLibraries();
-    console.log(this.selected_drug);
-    console.log(this.consult_details);
+    // this.loadLibraries();
+    // console.log(this.selected_drug);
+    // console.log(this.consult_details);
 
-    let physician = this.http.getUserID(); //this.consult_details.physician
+    let physician = this.consult_details.physician.id; //this.consult_details.physician
     this.prescriptionForm = this.formBuilder.nonNullable.group({
       patient_id: [this.consult_details.patient.id],
       prescribed_by: [physician,[Validators.required]],
@@ -130,7 +135,7 @@ export class DrugFormComponent implements OnInit {
 
     if(this.selected_drug){
       if(this.selected_drug.id) {
-        console.log('x')
+        // console.log('x')
         this.prescriptionForm.patchValue({...this.selected_drug});
         this.prescriptionForm.controls.added_medicine.disable();
         this.checkPurpose();
@@ -139,12 +144,12 @@ export class DrugFormComponent implements OnInit {
           this.prescriptionForm.patchValue({dosage_quantity: this.selected_drug.dossage_quantity});
         }
       } else {
-        console.log('1')
+        // console.log('1')
         this.prescriptionForm.patchValue({ konsulta_medicine_code: this.selected_drug.code })
         this.prescriptionForm.controls.added_medicine.disable();
       }
     } else {
-      console.log('2')
+      // console.log('2')
       this.add_drug = true;
       this.prescriptionForm.controls.konsulta_medicine_code.disable();
     }

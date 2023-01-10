@@ -1,6 +1,6 @@
-<div class="flex w-full">
+<!-- <div class="flex w-full"> -->
   <div
-    class="w-9/12 relative h-screen px-2 mt-5 ml-5 rounded-3xl text-gray-600 shadow-md overflow-y-scroll scrollbar-thin scrollbar-thumb-blue-300 scrollbar-track-white {{modalStats?'z-50':'z-0'}}">
+    class="w-full relative h-screen px-2 mt-5 ml-5 rounded-3xl text-gray-600 shadow-md overflow-y-scroll scrollbar-thin scrollbar-thumb-blue-300 scrollbar-track-white {{modalStats?'z-50':'z-0'}}">
     <div class="text-sm font-medium text-center sticky top-0 text-gray-500 bg-white {{modalStats?'z-0':'z-10'}}">
       <!-- TEST -->
       <ul class="flex flex-wrap ">
@@ -8,26 +8,26 @@
           <a class="select-none inline-block p-4 rounded-t-lg border-b-2 hover:text-blue-400 hover:font-semibold hover:border-blue-400"
             [class]="module != 1? '' : 'text-blue-400 font-semibold border-blue-400'" (click)="switchTab(1)">History</a>
         </li>
-        <li class="mr-2" *ngIf="patient_details && mcr">
+        <li class="mr-2" *ngIf="patient_id && mcr">
           <a class="select-none inline-block p-4 rounded-t-lg border-b-2 hover:text-blue-400 hover:font-semibold hover:border-blue-400"
             [class]="module != 2? '' : 'text-blue-400 font-semibold border-blue-400'" (click)="switchTab(2)">Maternal
             Care Record</a>
         </li>
-        <li class="mr-2" *ngIf="patient_details && patient_mc_record && prenatal">
+        <li class="mr-2" *ngIf="patient_id && patient_mc_record && prenatal">
           <a class="select-none inline-block p-4 rounded-t-lg border-b-2 hover:text-blue-400 hover:font-semibold hover:border-blue-400"
             [class]="module != 3? '' : 'text-blue-400 font-semibold border-blue-400'"
             (click)="switchTab(3)">Prenatal</a>
         </li>
-        <li class="mr-2" *ngIf="patient_details">
+        <li class="mr-2" *ngIf="patient_id">
           <a class="select-none inline-block p-4 rounded-t-lg border-b-2 hover:text-blue-400 hover:font-semibold hover:border-blue-400"
             [class]="module != 4? '' : 'text-blue-400 font-semibold border-blue-400'"
             (click)="switchTab(4)">Postpartum</a>
         </li>
-        <!-- <li class="mr-2" *ngIf="patient_details && patient_mc_record && services">
+        <!-- <li class="mr-2" *ngIf="patient_id && patient_mc_record && services">
           <a class="select-none inline-block p-4 rounded-t-lg border-b-2 hover:text-blue-400 hover:font-semibold hover:border-blue-400"
             [class]="module != 5? '' : 'text-blue-400 font-semibold border-blue-400'" (click)="switchTab(5)">Services</a>
         </li> -->
-        <li class="absolute right-0 " *ngIf="patient_details && patient_mc_record">
+        <li class="absolute right-0 " *ngIf="patient_id && patient_mc_record">
           <a class="select-none text-base inline-block p-2 bg-gray-300 mt-3 mr-3 text-gray-400 hover:text-white rounded-md font-bold hover:bg-orange-400"
             (click)="endVisit()">
             <fa-icon [icon]="faPersonWalking" size="lg" class="mx-2"></fa-icon>End Visit
@@ -100,24 +100,24 @@
 
     <div class="fade-in mb-20" *ngIf="module == 2">
       <div class="w-12/12 px-8 pb-10 border-solid border-2 border-zinc-100 border-l-0 border-r-0 border-t-0 p-3">
-        <app-mcr *ngIf="patient_details" (patient_mc_id)="showPreServ($event)" [patient_mc_record]="patient_mc_record"
-          [patient_details]="patient_details"></app-mcr>
+        <app-mcr *ngIf="patient_id" (patient_mc_id)="showPreServ($event)" [patient_mc_record]="patient_mc_record"
+          [patient_id]="patient_id"></app-mcr>
       </div>
       <div class="w-12/12 px-8 pb-10 border-solid border-2 border-zinc-100 border-l-0 border-r-0 border-t-0 p-3">
         <app-riskfactors *ngIf="risk_factors && patient_mc_record != ''" [risk_factors]="risk_factors" [patient_mc_record]="patient_mc_record"
-          [patient_details]="patient_details"></app-riskfactors>
+          [patient_id]="patient_id"></app-riskfactors>
       </div>
     </div>
 
     <div class="fade-in mb-20" *ngIf="module == 3">
       <div class="w-12/12 px-8 pb-10 border-solid border-2 border-zinc-100 border-l-0 border-r-0 border-t-0 p-3">
-        <app-prenatal (prenatal_mc_data)="updatePrenatal($event)" [patient_mc_record]="patient_mc_record" [patient_details]="patient_details" 
-          [fetals]="fetals" [fhr_lib]="fhr_lib"></app-prenatal>      
+        <app-prenatal (prenatal_mc_data)="updatePrenatal($event)" [patient_mc_record]="patient_mc_record" [patient_id]="patient_id"
+          [fetals]="fetals" [fhr_lib]="fhr_lib"></app-prenatal>
       </div>
       <div class=" w-12/12 px-8 pb-10 border-solid border-2 border-zinc-100 border-l-0 border-r-0 border-t-0 p-3">
         <app-services *ngIf="visit_type" [patient_mc_record]="patient_mc_record" [module]="module"
           (modalStats)="openModal($event)" [lib_services]="lib_services" [visit_type]="visit_type"
-          [patient_details]="patient_details"></app-services>
+          [patient_id]="patient_id"></app-services>
       </div>
     </div>
 
@@ -125,17 +125,17 @@
       <div class="w-12/12 px-8 pb-10 border-solid border-2 border-zinc-100 border-l-0 border-r-0 border-t-0 p-3">
         <app-postpartum (postpartum_bool)="postValue($event)" (post_mc_data)="updatePost($event)" [patient_mc_record]="patient_mc_record"
           [delivery_location]="delivery_location" [regions]="regions" [attendants]="attendants"
-          [preg_outcome]="preg_outcome" [patient_details]="patient_details"></app-postpartum>
+          [preg_outcome]="preg_outcome" [patient_id]="patient_id"></app-postpartum>
       </div>
       <div *ngIf="post_value && patient_mc_record"
         class="w-12/12 px-8 pb-10 border-solid border-2 border-zinc-100 border-l-0 border-r-0 border-t-0 p-3">
-        <app-postvisits *ngIf="patient_details" (post_visit_data)="updatePostVisit($event)" [patient_mc_record]="patient_mc_record"
-          [patient_details]="patient_details"></app-postvisits>
+        <app-postvisits *ngIf="patient_id" (post_visit_data)="updatePostVisit($event)" [patient_mc_record]="patient_mc_record"
+          [patient_id]="patient_id"></app-postvisits>
       </div>
       <div class=" w-12/12 px-8 pb-10 border-solid border-2 border-zinc-100 border-l-0 border-r-0 border-t-0 p-3">
         <app-services *ngIf="visit_type" [patient_mc_record]="patient_mc_record" [module]="module"
           (modalStats)="openModal($event)" [lib_services]="lib_services" [visit_type]="visit_type"
-          [patient_details]="patient_details"></app-services>
+          [patient_id]="patient_id"></app-services>
       </div>
     </div>
 
@@ -143,12 +143,12 @@
       <div class=" w-12/12 px-8 pb-10 border-solid border-2 border-zinc-100 border-l-0 border-r-0 border-t-0 p-3">
         <app-services *ngIf="visit_type" [patient_mc_record]="patient_mc_record" [module]="module"
           (modalStats)="openModal($event)" [lib_services]="lib_services" [visit_type]="visit_type"
-          [patient_details]="patient_details"></app-services>
+          [patient_id]="patient_id"></app-services>
       </div>
     </div>
   </div>
 
-  <div class="w-3/12">
+  <!-- <div class="w-3/12">
     <app-patient-info (patientInfo)="patientInfo($event)"></app-patient-info>
-  </div>
-</div>
+  </div> -->
+<!-- </div> -->

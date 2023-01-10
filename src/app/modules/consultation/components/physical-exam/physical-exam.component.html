@@ -19,7 +19,8 @@
               <button type="button" (click)="toggleItems(pe.key)">
                 <fa-icon [icon]="pe_item[pe.key] ? faChevronUp : faChevronDown" class="pr-2" size="md"></fa-icon>
               </button>
-              {{ pe.key | titlecase}}
+              <span *ngIf="pe.key !== 'heent'">{{ pe.key | titlecase}}</span>
+              <span *ngIf="pe.key === 'heent'">{{ pe.key | uppercase}}</span>
             </div>
             <div *ngIf="pe_item[pe.key] === undefined ? false : pe_item[pe.key]" class="col-span-1 grid grid-cols-2 gap-y-2">
               <div *ngFor="let val of pe.value">
