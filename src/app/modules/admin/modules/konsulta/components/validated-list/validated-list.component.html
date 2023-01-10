@@ -19,21 +19,21 @@
         {{ kon.total_soap }} | {{ kon.total_profile }} | {{ kon.total_enlistment }}
       </td>
       <td class="py-4 px-6 align-top">
-        <div *ngIf="kon.xml_errors">
+        <div *ngIf="kon.xml_status === 'F'">
           <button class="rounded px-2 text-sm bg-red-400 text-white" (click)="returnData(kon.xml_errors)">
             show errors
           </button>
         </div>
       </td>
       <td class="py-4 px-6">
-        <div *ngIf="kon.xml_errors">
+        <div *ngIf="kon.xml_status === 'F'">
           <button [disabled]="validating" class="btn-save px-5 disabled:bg-gray-300" (click)="validate(kon)">
             <fa-icon [icon]="validating ? faSpinner : faCircleCheck" [spin]="validating" class="mr-2"></fa-icon>
             {{ validating ? 'loading' : 'validate' }}
           </button>
         </div>
 
-        <div *ngIf="!kon.xml_errors">
+        <div *ngIf="kon.xml_status === 'V'">
           <button [disabled]="submitting" class="btn-save px-5 disabled:bg-gray-300" (click)="submit(kon.transmittal_number)">
             <fa-icon [icon]="submitting ? faSpinner : faCircleCheck" [spin]="submitting" class="mr-2"></fa-icon>
             {{ submitting ? 'loading' : 'submit' }}

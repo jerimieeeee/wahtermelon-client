@@ -31,13 +31,14 @@ export class GeneralSurveyComponent implements OnInit {
   onSubmit(){
     if(this.general_survey_code){
       let general_survey = {
-          notes_id: this.consult_details.consult_notes.id,
+          // notes_id: this.consult_details.consult_notes.id,
           consult_id: this.consult_details.id,
           patient_id: this.consult_details.patient.id,
           general_survey_code: this.general_survey_code,
           general_survey_remarks: this.general_survey_remarks,
       }
 
+      console.log(general_survey)
       this.http.update('consultation/notes/', this.consult_details.consult_notes.id, general_survey).subscribe({
         next: (data: any) => {
           console.log(data);
@@ -50,8 +51,9 @@ export class GeneralSurveyComponent implements OnInit {
   }
 
   loadLib(){
-    this.http.get('survey_list url').subscribe(
+    this.http.get('libraries/general-survey').subscribe(
       (data: any) => {
+        console.log(data)
         this.survey_list = data.data;
       }
     );
@@ -63,6 +65,7 @@ export class GeneralSurveyComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.loadLib()
   }
 
   ngOnChanges(changes){
@@ -70,7 +73,12 @@ export class GeneralSurveyComponent implements OnInit {
     if(this.consult_details) {
       this.consult_notes = this.consult_details.consult_notes;
       this.consult_done = this.consult_details.consult_done;
+
+      this.general_survey_code = this.consult_notes.general_survey_code
+      this.general_survey_remarks = this.consult_notes.general_survey_remarks
     }
+
+    console.log(this.consult_details)
   }
 
 }
