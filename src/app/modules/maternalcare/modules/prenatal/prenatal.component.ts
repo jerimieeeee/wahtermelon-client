@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { faAngleDown, faCalendarDay, faCaretRight, faCircleCheck, faCircleNotch, faClose, faInfoCircle, faPencil, faSave, faTimes, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-prenatal',
@@ -75,7 +76,7 @@ export class PrenatalComponent implements OnInit {
   saved: boolean;
   today: Date;
   public mcPrenatal_id = [];
-  constructor(private http: HttpService, private formBuilder: FormBuilder) { }
+  constructor(private http: HttpService, private formBuilder: FormBuilder, private toastr: ToastrService  ) { }
 
   public keyUp = [];
   public buttons = [];
@@ -128,10 +129,14 @@ export class PrenatalComponent implements OnInit {
         }
       }
       let http
+      let title = 'Prenatal Visit'
+      let message
       if(this.edit_bool){
         http = this.http.update('maternal-care/mc-prenatal/', this.edit_id, filtered);
+        message = 'Succesfully updated!'
       }else{
         http = this.http.post('maternal-care/mc-prenatal', filtered);
+        message = 'Succesfully saved!'
       }
 
       console.log(filtered, this.prenatal_form.value, " filtered saveform");
@@ -144,14 +149,10 @@ export class PrenatalComponent implements OnInit {
         },
         error: err => {console.log(err),this.is_saving = false; },
         complete: () => {
-          this.is_saving = false;
-          this.saved = true;
+          this.toastr.success(message, title, {timeOut: 1500, progressBar: true, progressAnimation: 'increasing'});
           this.edit_bool = false;
           this.getMCR();
-          setTimeout(() => {
-            this.saved = false;
-          }, 1500);
-
+          this.is_saving = false;
         }
       })
     } else {

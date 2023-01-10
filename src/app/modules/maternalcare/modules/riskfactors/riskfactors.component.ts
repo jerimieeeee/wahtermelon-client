@@ -3,6 +3,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { faAngleDown, faCalendarDay, faCaretRight, faClose, faInfoCircle, faPencil, faSave, faTimes, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -41,7 +42,7 @@ export class RiskfactorsComponent implements OnInit {
   @Input() patient_details;
   searching: boolean;
   today: Date;
-  constructor(private http: HttpService, private formBuilder: FormBuilder) { }
+  constructor(private http: HttpService, private formBuilder: FormBuilder, private toastr: ToastrService) { }
   is_saving: boolean;
   saved: boolean;
 
@@ -110,11 +111,14 @@ export class RiskfactorsComponent implements OnInit {
     this.is_saving = true;
     if (this.risk_form.valid) {
       let query;
-
+      let message
+      let title = 'Risk Factors'
       if(this.risk_to_edit){
         query = this.http.update('maternal-care/mc-risk-factors/', this.risk_to_edit, data)
+        message = 'Succesfully updated!'
       } else {
         query = this.http.post('maternal-care/mc-risk-factors', data);
+        message = 'Succesfully saved!'
       }
 
       query.subscribe({
@@ -125,11 +129,9 @@ export class RiskfactorsComponent implements OnInit {
         },
         error: err => console.log(err),
         complete: () => {
+          this.toastr.success(message, title, {timeOut: 1500, progressBar: true, progressAnimation: 'increasing'});
           this.is_saving = false;
-          this.saved = true;
-          setTimeout(() => {
-            this.saved = false;
-          }, 1500);
+          this.createForm();
         }
       })
     }

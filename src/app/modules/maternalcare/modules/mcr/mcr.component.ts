@@ -156,9 +156,6 @@ export class McrComponent implements OnInit {
         complete: () => {
           this.saved = true;
           this.toastr.success(message, title, {timeOut: 1500, progressBar: true, progressAnimation: 'increasing'});
-          setTimeout(() => {
-            this.saved = false;
-          }, 1500);
           this.loading = false;
         }
       })
