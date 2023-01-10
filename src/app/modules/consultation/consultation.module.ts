@@ -20,6 +20,7 @@ import { AlertPromptComponent } from './modals/alert-prompt/alert-prompt.compone
 import { DrugListComponent } from './components/prescription/modals/drug-list/drug-list.component';
 import { DrugFormComponent } from './components/prescription/modals/drug-form/drug-form.component';
 import { DrugDeleteComponent } from './components/prescription/modals/drug-delete/drug-delete.component';
+import { GeneralSurveyComponent } from './components/general-survey/general-survey.component';
 
 
 @NgModule({
@@ -36,7 +37,8 @@ import { DrugDeleteComponent } from './components/prescription/modals/drug-delet
     AlertPromptComponent,
     DrugListComponent,
     DrugFormComponent,
-    DrugDeleteComponent
+    DrugDeleteComponent,
+    GeneralSurveyComponent
   ],
   imports: [
     CommonModule,

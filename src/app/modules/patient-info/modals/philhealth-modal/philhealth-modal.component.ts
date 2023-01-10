@@ -76,9 +76,9 @@ export class PhilhealthModalComponent implements OnInit {
   submit_errors: [];
 
   pATC_date: string;
-  is_atc_valid: string;
   is_walk_in: boolean;
 
+  is_atc_valid: any;
   is_registered: any;
 
   isATCValid(){
@@ -110,7 +110,7 @@ export class PhilhealthModalComponent implements OnInit {
       next: (data: any) => {
         console.log(data)
         this.is_checking_status = false;
-        this.is_registered = data.return === 'YES' ? true : false;
+        this.is_registered = data.return;
       },
       error: err => console.log(err)
     })

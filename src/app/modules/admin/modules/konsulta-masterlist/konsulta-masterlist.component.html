@@ -54,7 +54,9 @@
               <th scope="col" class="w-1/12 py-3 px-6">Pin</th>
               <th scope="col" class="w-1/12 py-3 px-6">Membership <br /> Type</th>
               <th scope="col" class="w-3/12 py-3 px-6">Primary <br /> Name</th>
-              <th scope="col" class="w-2/12 py-3 px-6">Actions</th>
+              <th scope="col" class="w-3/12 py-3 px-6">Primary <br /> Pin</th>
+              <th scope="col" class="w-3/12 py-3 px-6">Birtdate | <br />Gender</th>
+              <!-- <th scope="col" class="w-2/12 py-3 px-6">Actions</th> -->
             </tr>
           </thead>
           <tbody>
@@ -79,11 +81,15 @@
                 {{ konsulta.member_last_name }}, {{ konsulta.member_first_name }} {{ konsulta.member_middle_name }} {{ konsulta.member_suffix_name }}
               </td>
               <td class="py-4 px-6">
-                <!-- <label class="inline-flex relative items-center cursor-pointer">
-                  <input  type="checkbox" class="sr-only peer" [(ngModel)]="konsulta_list[i].is_active" (change)="updateActive(konsulta_list[i], i)" [disabled]="is_updating">
-                  <div class="w-14 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300  rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[8px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600 disabled:opacity-7" [ngClass]="{'peer-checked:bg-gray-600' : is_updating}"></div>
-                </label> -->
+                {{ konsulta.member_pin }}
               </td>
+              <td class="py-4 px-6">
+                {{ konsulta.member_birthdate | date: 'MM/dd/yyyy' }} <br />
+                {{ konsulta.member_gender }}
+              </td>
+              <!-- <td class="py-4 px-6">
+
+              </td> -->
             </tr>
           </tbody>
         </table>

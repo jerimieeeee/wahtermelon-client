@@ -1,0 +1,35 @@
+<table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 mb-5">
+  <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+    <tr>
+      <th scope="col" class="py-3 px-6">Name</th>
+      <th scope="col" class="py-3 px-6">Birthdate <br /> [Gender]</th>
+      <th scope="col" class="py-3 px-6">Pin</th>
+      <th scope="col" class="py-3 px-6">Konsulta Registration</th>
+      <th scope="col" class="py-3 px-6 w-2/12 text-center">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let kon of konsulta_list; let odd = odd; let i = index" class="bg-white border-t" [ngClass]="{'bg-gray-50': odd}">
+      <th scope="row" class="py-4 px-6 font-medium whitespace-nowrap">
+        {{ kon.patient.last_name }}, {{ kon.patient.first_name }} {{ kon.patient.middle_name === 'NA' ? '' : kon.patient.middle_name }} {{ kon.patient.suffix_name === 'NA' ? '' : kon.patient.suffix_name}}
+      </th>
+      <td class="py-4 px-6">
+        {{ kon.patient.birthdate | date: 'MM/dd/yyyy' }} <br />
+        [{{ kon.patient.gender }}]
+      </td>
+      <td class="py-4 px-6">
+        {{ kon.philhealth_id }}
+      </td>
+      <td class="py-4 px-6">
+        {{ kon.konsulta_registration[0].last_name }}, {{ kon.konsulta_registration[0].first_name }} {{ kon.konsulta_registration[0].middle_name === 'NA' ? '' : kon.konsulta_registration[0].middle_name }} {{ kon.konsulta_registration[0].suffix_name === 'NA' ? '' : kon.konsulta_registration[0].suffix_name}}
+      </td>
+      <td class="py-4 px-6">
+        <!-- {{ account.email }} -->
+        <button [disabled]="validating" class="btn-save px-5 disabled:bg-gray-300" (click)="validate(kon)">
+          <fa-icon [icon]="validating ? faSpinner : faCircleCheck" [spin]="validating" class="mr-2"></fa-icon>
+          {{ validating ? 'loading' : 'validate' }}
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
