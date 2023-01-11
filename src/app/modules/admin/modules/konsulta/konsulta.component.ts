@@ -73,7 +73,7 @@ export class KonsultaComponent implements OnInit {
 
     query.subscribe({
       next: (data: any) => {
-        // console.log(data.data);
+        console.log(data.data);
         this.konsulta_list = data.data;
 
         if(this.form_type === "1") {

@@ -8,6 +8,11 @@
       <span class="rounded-t-md m-0 p-2 font-semibold text-gray-50 bg-amber-500 flex justify-between" [ngClass]="{'rounded-b' : !show_content}">
         Prescriptions
         <div>
+          <button type="button" class="ml-3 text-sm bg-white text-green-500 px-3 rounded-full" (click)="toggleModal()">
+            <fa-icon [icon]="faReceipt" class="pr-1"></fa-icon>
+            epresss
+          </button>
+
           <button *ngIf="prescriptions" type="button" class="text-sm bg-white text-amber-500 px-3 rounded-full" (click)="navigateTo('dispensing')">
             <fa-icon [icon]="faPrescriptionBottleMedical" class="pr-1"></fa-icon>
             dispensing
@@ -16,11 +21,6 @@
           <button *ngIf="show_actions" type="button" class="ml-3 text-sm bg-white text-blue-500 px-3 rounded-full" (click)="toggleList()">
             <fa-icon [icon]="faAdd" class="pr-1"></fa-icon>
             add drugs
-          </button>
-
-          <button type="button" class="ml-3 text-sm bg-white text-blue-500 px-3 rounded-full" (click)="toggleModal()">
-            <fa-icon [icon]="faAdd" class="pr-1"></fa-icon>
-            epresss
           </button>
         </div>
       </span>

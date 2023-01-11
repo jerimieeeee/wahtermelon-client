@@ -39,7 +39,7 @@
                   </div>
                   <div class="col-span-2 flex">
                     Case No.:
-                    <span class="underline flex-1 w-full">            </span>
+                    <span class="underline flex-1 w-full">{{ patient_philhealth?.transsaction_number }}</span>
                   </div>
                   <div class="col-span-2 flex">
                     HCI Accreditation No:
@@ -64,7 +64,7 @@
                   </div>
                   <div class="col-span-1 flex">
                     <span class="text-[.8em]">Contact No.: </span>
-                    <span class="underline flex-1 w-full">{{ patient_info?.mobile_number }}}</span>
+                    <span class="underline flex-1 w-full">{{ patient_info?.mobile_number }}</span>
                   </div>
                 </div>
 
@@ -139,10 +139,12 @@
                       </td>
 
 
-                      <td *ngIf="prescription_length - 1 === i" class="border border-slate-700 text-[0.65rem] font-normal" >
-                        <br /><br /><br />
-                        Signature over printed name <br />
-                        License #: ________________
+                      <td class="border border-slate-700 text-[0.65rem] font-normal" >
+                        <div *ngIf="prescription_length - 1 === i">
+                          <br /><br /><br />
+                          Signature over printed name <br />
+                          License #: ________________
+                        </div>
                       </td>
 
                       <td class="border border-slate-700">
@@ -153,10 +155,12 @@
 
                       </td>
 
-                      <td *ngIf="prescription_length - 1 === i" class="border border-slate-700 text-[0.65rem] font-normal" [attr.rowspan]="prescription_length">
-                        <br /><br /><br />
-                        Signature over printed name <br />
-                        Name of Dispensing Facility: <br />{{ facility_info?.facility_name }}
+                      <td class="border border-slate-700 text-[0.65rem] font-normal" >
+                        <div *ngIf="prescription_length - 1 === i">
+                          <br /><br /><br />
+                          Signature over printed name <br />
+                          Name of Dispensing Facility: <br />{{ facility_info?.facility_name }}
+                        </div>
                       </td>
 
                       <!-- <td *ngIf="prescription_length - 1 < i" class="border border-slate-700 text-[0.65rem] font-normal">

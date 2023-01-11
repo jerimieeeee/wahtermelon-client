@@ -38,7 +38,8 @@ import { EndVisitComponent } from '../shared-modals/end-visit/end-visit.componen
     KonsultaComponent,
     EclaimsComponent,
     EndVisitComponent,
-    EpresComponent
+    EpresComponent,
+    EkasComponent
   ]
 })
 export class SharedComponentsModule { }

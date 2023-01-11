@@ -33,58 +33,61 @@
 
               <div class="p-1">
                 <div class="grid grid-cols-4 text-xs">
-                  <div class="col-span-1 flex">
-                    HCI Name:
-                    <span class="underline flex-1 w-full">test</span>
+                  <div class="col-span-2 flex">
+                    <span>HCI Name:</span>
+                    <span class="underline flex-1 w-full">{{ facility_info?.facility_name }}</span>
                   </div>
-                  <div class="col-span-1 flex">
-                    Case No.:
-                    <span class="underline flex-1 w-full">test</span>
+                  <div class="col-span-2 flex">
+                    <span>HCI Accreditation No:</span>
+                    <span class="underline flex-1 w-full"></span>
                   </div>
-                  <div class="col-span-1 flex">
-                    HCI Accreditation Np:
-                    <span class="underline flex-1 w-full">test</span>
+
+                  <div class="col-span-2 flex">
+                    <span>Case No.:</span>
+                    <span class="underline flex-1 w-full">{{ patient_philhealth?.transaction_number }}</span>
                   </div>
-                  <div class="col-span-1 flex">
-                    Transaction No.:
-                    <span class="underline flex-1 w-full">test</span>
+                  <div class="col-span-2 flex">
+                    <span>Transaction No.:</span>
+                    <span class="underline flex-1 w-full">{{ consult_details?.transaction_number }}</span>
                   </div>
                 </div>
 
                 <div class="grid grid-cols-4 text-xs mt-2">
                   <div class="col-span-2 flex">
-                    Patient name (pangalan ng pasyente):
-                    <span class="underline flex-1 w-full">test</span>
+                    <span class="text-[.8em]">Patient name (pangalan ng pasyente): </span>
+                    <span class="underline flex-1 w-full">
+                      {{ patient_info?.last_name }}, {{ patient_info?.first_name }} {{ patient_info?.middle_name }} {{ patient_info?.suffix_name === 'NA' ? '' : patient_info?.suffix_name }}
+                    </span>
                   </div>
                   <div class="col-span-1 flex">
-                    Age (Edad):
-                    <span class="underline flex-1 w-full">test</span>
+                    <span class="text-[.8em]">Age (Edad): </span>
+                    <span class="underline flex-1 w-full">{{ age?.age | number: '1.0-0' }} {{ age?.type }}{{ age?.age > 1 ? 's old' : 'old' }}</span>
                   </div>
                   <div class="col-span-1 flex">
-                    Contact No.:
-                    <span class="underline flex-1 w-full">test</span>
+                    <span class="text-[.8em]">Contact No.: </span>
+                    <span class="underline flex-1 w-full">{{ patient_info?.mobile_number }}</span>
                   </div>
                 </div>
 
                 <div class="grid grid-cols-4 text-xs">
                   <div class="col-span-2 flex">
-                    PIN (Philhealht Identification No.):
-                    <span class="underline flex-1 w-full">test</span>
+                    <span class="text-[.8em]">PIN (Philhealht Identification No.): </span>
+                    <span class="underline flex-1 w-full">{{ patient_philhealth?.philhealth_id }}</span>
                   </div>
                   <div class="col-span-2 flex">
-                    Membership Category:
-                    <span class="underline flex-1 w-full">test</span>
+                    <span class="text-[.8em]">Membership Category: </span>
+                    <span class="underline flex-1 w-full"> </span>
                   </div>
                 </div>
 
                 <div class="grid grid-cols-4 text-xs">
                   <div class="col-span-2 flex">
-                    Membership type:
-                    <span class="flex-1 w-full">_____ Member _____ Dependent</span>
+                    <span class="text-[.8em]">Membership type: </span>
+                    <span class="flex-1 w-full">{{ patient_philhealth?.membership_type_id === "MM" ? 'Member' : 'Dependent' }}</span>
                   </div>
                   <div class="col-span-2 flex">
-                    Authorization Transaction Code (ATC):
-                    <span class="underline flex-1 w-full">test</span>
+                    <span class="text-[.8em]">Authorization Transaction Code (ATC):</span>
+                    <span class="underline flex-1 w-full">{{ consult_details?.walkedin_status === true ? 'WALKEDIN' : (consult_details?.authorization_transaction_code ? consult_details?.authorization_transaction_code : 'WALKEDIN' ) }}</span>
                   </div>
                 </div>
               </div>
@@ -115,13 +118,13 @@
                   </thead>
                   <tbody>
                     <tr>
-                      <td class="border border-slate-700">test</td>
+                      <td class="border border-slate-700">History and physical examination (vitals, anthropometrics)</td>
                       <td class="border border-slate-700"></td>
                       <td class="border border-slate-700"></td>
                       <td class="border border-slate-700"></td>
                     </tr>
-                    <tr>
-                      <td class="border border-slate-700">test</td>
+                    <tr *ngFor="let lab of lab_list">
+                      <td class="border border-slate-700">{{ lab.laboratory.desc }}</td>
                       <td class="border border-slate-700"></td>
                       <td class="border border-slate-700"></td>
                       <td class="border border-slate-700"></td>
@@ -193,7 +196,7 @@
                     (Lagda sa nakalimbag na pangalan ng pasyente)
                   </div>
                   <div class="col-span-5">
-                    Next Dispensing Date: _____________________ <br />
+                    Next Consultation Date: _____________________ <br />
                     (Petsa ng susunod na bigay ng gamot)
                   </div>
                 </div>

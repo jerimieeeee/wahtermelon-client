@@ -1,5 +1,7 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { faFaceFrown, faFaceMeh, faFaceSmile, faPrint } from '@fortawesome/free-solid-svg-icons';
+import { AgeService } from 'app/shared/services/age.service';
+import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
   selector: 'app-ekas',
@@ -8,6 +10,8 @@ import { faFaceFrown, faFaceMeh, faFaceSmile, faPrint } from '@fortawesome/free-
 })
 export class EkasComponent implements OnInit {
   @Output() toggleModal = new EventEmitter<any>();
+  @Input() lab_list;
+  @Input() consult_details;
 
   faPrint = faPrint;
   faFaceSmile = faFaceSmile;
@@ -28,12 +32,43 @@ export class EkasComponent implements OnInit {
     // document.body.innerHTML = originalContents;
   }
 
+  patient_info: any;
+  patient_philhealth: any;
+  facility_info: any;
+  age: any;
+  prescription_length: number;
+
+  getFacility() {
+    this.http.get('libraries/facilities/'+this.http.getUserFromJSON().facility.code).subscribe({
+      next: (data: any) => {
+        this.facility_info = data.data;
+
+        console.log(this.patient_info);
+        console.log(this.patient_philhealth);
+        console.log(this.facility_info);
+        console.log(this.lab_list);
+        console.log(this.consult_details);
+
+        // console.log(this.prescription_length);
+        this.age = this.ageService.calcuateAge(this.patient_info.birthdate, this.consult_details.consult_date)
+        // console.log(this.age)
+      },
+      error: err => console.log(err)
+    })
+  }
+
   closeModal(){
     this.toggleModal.emit('ekas');
   }
 
-  constructor() { }
+  constructor(
+    private http: HttpService,
+    private ageService: AgeService
+  ) { }
 
   ngOnInit(): void {
+    this.patient_info = this.http.getPatientInfo();
+    this.patient_philhealth = this.http.getPhilhealhtInfo();
+    this.getFacility();
   }
 }

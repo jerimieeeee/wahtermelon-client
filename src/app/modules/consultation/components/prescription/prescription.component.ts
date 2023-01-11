@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, OnChanges, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
-import { faAdd, faChevronCircleDown, faChevronCircleUp, faEdit, faSave, faSpinner, faTrash, faPrescriptionBottleMedical } from '@fortawesome/free-solid-svg-icons';
+import { faAdd, faChevronCircleDown, faChevronCircleUp, faEdit, faSave, faSpinner, faTrash, faPrescriptionBottleMedical, faReceipt } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -30,6 +30,7 @@ export class PrescriptionComponent implements OnInit, OnChanges {
   faEdit = faEdit;
   faTrash = faTrash;
   faPrescriptionBottleMedical = faPrescriptionBottleMedical;
+  faReceipt = faReceipt;
 
   selected_drug: any;
   prescriptions: any;
