@@ -17,8 +17,11 @@ export class ResultFormComponent implements OnInit {
     this.toggleModal.emit();
   }
 
+  is_error_array: any;
+  show_form: boolean = false;
   ngOnInit(): void {
-    console.log(this.return_value)
+    this.is_error_array = Array.isArray(this.return_value.errors);
+    this.show_form = true;
   }
 
 }

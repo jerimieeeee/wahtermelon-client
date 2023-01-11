@@ -7,7 +7,7 @@
         </h3>
       </div>
 
-      <div class="overflow-y-auto h-96 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
+      <div *ngIf="show_form" class="overflow-y-auto h-96 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
         <table *ngIf="!return_value?.message" class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
           <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
@@ -15,9 +15,16 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let val of return_value?.errors | keyvalue" class="bg-white border-b">
+            <tr *ngIf="is_error_array === true">
               <td class="py-4 px-6">
-                {{ val.value }}
+                <div *ngFor="let val of return_value?.errors | keyvalue" class="grid grid-cols-1">
+                  {{ val.value }}
+                </div>
+              </td>
+            </tr>
+            <tr *ngIf="is_error_array === false" class="bg-white border-b">
+              <td>
+                {{ return_value?.errors }}
               </td>
             </tr>
           </tbody>

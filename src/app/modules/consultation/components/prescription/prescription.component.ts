@@ -169,8 +169,7 @@ export class PrescriptionComponent implements OnInit, OnChanges {
     // this.selected_drug = null;
     let params = {
       sort: '-prescription_date',
-      consult_id: this.consult_details.id,
-      status: 'dispensing'
+      consult_id: this.consult_details.id
     };
 
     this.http.get('medicine/prescriptions',{params}).subscribe({
