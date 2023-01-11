@@ -38,34 +38,38 @@ export class ForValidationComponent implements OnInit {
     this.http.get('konsulta/validate-report', {params}).subscribe({
       next: (data: any) => {
         console.log(data);
-        if(data.errors) {
-          this.toastr.error('Validation failed','Error')
-          // kon['validated'] = true;
-          this.returnData(data, save)
-        } else {
-          if(data.message){
-            this.returnData(data, save)
-            kon['validated'] = true;
-            this.toastr.success('Success!', 'Record Validation')
-          }
-
-        }
-        this.validating = false;
+        this.processReturn(data, save, kon)
       },
       error: err => console.log(err)
     })
   }
 
-  addToSaving(id){
-    console.log(id)
-    console.log(this.saving_list)
+  processReturn(data, save, kon){
+    console.log(data)
+    if(data){
+      if(data.errors) {
+        this.toastr.error('Record error','Error')
+        this.returnData(data, save)
+      } else {
+        if(data.message){
+          this.returnData(data, save);
+          kon['validated'] = true;
+          this.toastr.success('Record validated/submitted', 'Success')
+        }
+      }
+    } else {
+      this.toastr.error('Validation failed','Error')
+    }
 
+    this.validating = false;
+  }
+
+  addToSaving(id){
     if(this.saving_list[id] === false) {
       delete this.saving_list[id]
     }
 
     this.addSaving.emit(this.saving_list)
-    // let index = this.
   }
 
   returnData(data, save){

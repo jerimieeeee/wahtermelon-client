@@ -20,6 +20,9 @@ export class KonsultaComponent implements OnInit {
   faFilter = faFilter;
   faSave = faSave;
 
+  current_year = formatDate(new Date, 'yyyy', 'en')
+  years: any = [];
+
   per_page: number = 10;
   current_page: number;
   last_page: number;
@@ -27,17 +30,25 @@ export class KonsultaComponent implements OnInit {
   to: number;
   total: number;
 
-  submit_error: any;
   filter_tranche: number = 1;
   filter_status: string ="V";
   filter_year: any;
-
-  konsulta_list: any = [];
-
-  searching: boolean = false;
-
   forms: any =[];
   form_type: string = "1";
+  submit_error: any;
+
+  konsulta_list: any = [];
+  save_list: any = [];
+  save_list_length: number = 0;
+
+  searching: boolean = false;
+  show_return: boolean = false;
+  show_list: boolean = false;
+  is_saving: boolean = false;
+
+  return_value: any;
+  patient_list: any;
+
 
   loadList(page?: number){
     this.forms = [];
@@ -56,12 +67,13 @@ export class KonsultaComponent implements OnInit {
     } else {
       if (this.filter_tranche) params['params']['filter[tranche]'] = this.filter_tranche;
       if (this.filter_status) params['params']['filter[xml_status]'] = this.filter_status;
+      params['params']['include'] = 'patient'
       query = this.http.get('konsulta/validated-xml',params);
     }
 
     query.subscribe({
       next: (data: any) => {
-        console.log(data.data);
+        // console.log(data.data);
         this.konsulta_list = data.data;
 
         if(this.form_type === "1") {
@@ -80,8 +92,6 @@ export class KonsultaComponent implements OnInit {
     })
   }
 
-  show_return: boolean = false;
-  return_value: any;
   showReturn(data?){
     this.return_value = data.data;
     this.show_return = !this.show_return;
@@ -91,22 +101,26 @@ export class KonsultaComponent implements OnInit {
     }
   }
 
+  showList(data?) {
+    console.log(data)
+    this.patient_list = data;
+    this.toggleList();
+  }
+
+  toggleList() {
+    this.show_list = !this.show_list;
+  }
+
   toggleModal(){
     this.show_return = !this.show_return;
   }
 
-  current_year = formatDate(new Date, 'yyyy', 'en')
-  years: any = [];
   generateYear(){
     let date = parseInt(this.current_year);
     for(let year = date; year > date-5; year--) {
       this.years.push(year);
     }
   }
-
-  save_list: any = [];
-  is_saving: boolean = false;
-  save_list_length: number = 0;
 
   addSaving(data){
     this.save_list = data;
@@ -120,7 +134,6 @@ export class KonsultaComponent implements OnInit {
       patient_id.push(key)
     })
 
-    // console.log(patient_id)
     let params = new HttpParams({
       fromObject: {
         'patient_id[]': patient_id,

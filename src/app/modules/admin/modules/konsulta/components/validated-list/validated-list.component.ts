@@ -11,6 +11,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class ValidatedListComponent implements OnInit {
   @Output() showReturn = new EventEmitter<any>();
+  @Output() showList = new EventEmitter<any>();
   @Input() konsulta_list;
   @Input() filter_tranche;
 
@@ -38,7 +39,7 @@ export class ValidatedListComponent implements OnInit {
       }
     }); */
 
-    console.log(params)
+    // console.log(params)
     this.http.get('konsulta/validate-report', {params}).subscribe({
       next: (data: any) => {
         console.log(data)
@@ -63,10 +64,16 @@ export class ValidatedListComponent implements OnInit {
     })
   }
 
-  processReturn(data){
-    console.log(data)
-    if(data){
+  checkPatientList(patient_list) {
+    if(Object.keys(patient_list).length > 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
+  processReturn(data){
+    if(data){
       if(data.errors) {
         this.toastr.error('Record error','Error')
         this.returnData(data)
@@ -82,6 +89,10 @@ export class ValidatedListComponent implements OnInit {
 
     this.submitting = false;
     this.validating = false;
+  }
+
+  openList(data){
+    this.showList.emit(data);
   }
 
   returnData(data, save?){

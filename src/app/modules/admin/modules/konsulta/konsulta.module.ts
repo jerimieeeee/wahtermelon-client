@@ -10,6 +10,7 @@ import { ValidatedListComponent } from './components/validated-list/validated-li
 import { ResultFormComponent } from './modals/result-form/result-form.component';
 import { EkasComponent } from './modals/ekas/ekas.component';
 import { EpresComponent } from './modals/epres/epres.component';
+import { PatientListComponent } from './modals/patient-list/patient-list.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { EpresComponent } from './modals/epres/epres.component';
     ValidatedListComponent,
     ResultFormComponent,
     EkasComponent,
-    EpresComponent
+    EpresComponent,
+    PatientListComponent
   ],
   imports: [
     CommonModule,
