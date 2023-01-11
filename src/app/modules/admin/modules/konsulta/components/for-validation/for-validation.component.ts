@@ -40,7 +40,7 @@ export class ForValidationComponent implements OnInit {
         console.log(data);
         if(data.errors) {
           this.toastr.error('Validation failed','Error')
-          kon['validated'] = true;
+          // kon['validated'] = true;
           this.returnData(data, save)
         } else {
           if(data.message){
