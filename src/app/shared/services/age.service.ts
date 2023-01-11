@@ -12,9 +12,9 @@ export class AgeService {
     let birthdate = new Date(birthday);
     let date;
     if(end_date){
-      date = Date.now()
-    } else {
       date = new Date(end_date);
+    } else {
+      date = Date.now()
     }
 
     let timeDiff = Math.abs(date - birthdate.getTime());
