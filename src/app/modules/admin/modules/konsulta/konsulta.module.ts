@@ -8,6 +8,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ForValidationComponent } from './components/for-validation/for-validation.component';
 import { ValidatedListComponent } from './components/validated-list/validated-list.component';
 import { ResultFormComponent } from './modals/result-form/result-form.component';
+import { EkasComponent } from './modals/ekas/ekas.component';
+import { EpresComponent } from './modals/epres/epres.component';
 
 
 @NgModule({
@@ -15,7 +17,9 @@ import { ResultFormComponent } from './modals/result-form/result-form.component'
     KonsultaComponent,
     ForValidationComponent,
     ValidatedListComponent,
-    ResultFormComponent
+    ResultFormComponent,
+    EkasComponent,
+    EpresComponent
   ],
   imports: [
     CommonModule,

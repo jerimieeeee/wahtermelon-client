@@ -1,7 +1,7 @@
 import { formatDate } from '@angular/common';
 import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { faAnglesLeft, faAnglesRight, faChevronLeft, faChevronRight, faFilter, faSearch, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { faAnglesLeft, faAnglesRight, faChevronLeft, faChevronRight, faFilter, faSave, faSearch, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -18,6 +18,7 @@ export class KonsultaComponent implements OnInit {
   faAnglesRight = faAnglesRight;
   faSearch = faSearch;
   faFilter = faFilter;
+  faSave = faSave;
 
   per_page: number = 10;
   current_page: number;
@@ -78,16 +79,16 @@ export class KonsultaComponent implements OnInit {
       error: err => console.log(err)
     })
   }
+
   show_return: boolean = false;
   return_value: any;
   showReturn(data?){
-    this.return_value = data;
+    this.return_value = data.data;
     this.show_return = !this.show_return;
-    this.loadList();
-    /* if(this.show_return === false) {
-      this.return_value = null;
 
-    } */
+    if(data.save !== 0) {
+      this.loadList();
+    }
   }
 
   toggleModal(){
@@ -103,14 +104,23 @@ export class KonsultaComponent implements OnInit {
     }
   }
 
+  save_list: any = [];
+  is_saving: boolean = false;
+  save_list_length: number = 0;
+
+  addSaving(data){
+    this.save_list = data;
+    this.save_list_length = Object.keys(this.save_list).length;
+  }
+
   validateNewList(){
+    this.is_saving = true;
     let patient_id = [];
-    Object.entries(this.konsulta_list).forEach(([key, value], index) => {
-      let val: any = value;
-      patient_id.push(val.patient.id)
+    Object.entries(this.save_list).forEach(([key, value], index) => {
+      patient_id.push(key)
     })
 
-    console.log(patient_id)
+    // console.log(patient_id)
     let params = new HttpParams({
       fromObject: {
         'patient_id[]': patient_id,
@@ -118,16 +128,12 @@ export class KonsultaComponent implements OnInit {
         'revalidate': 0
       }
     });
-    /* let params = {
-      patient_id: [patient_id],
-      tranche: this.filter_tranche,
-      revalidate: 0
-    } */
 
-    console.log(params)
+    // console.log(params)
     this.http.get('konsulta/validate-report', {params}).subscribe({
       next: (data: any) => {
         console.log(data)
+        this.is_saving = false;
         if(data.errors) {
           this.toastr.error('Validation failed','Error')
           this.showReturn(data)
@@ -150,7 +156,6 @@ export class KonsultaComponent implements OnInit {
     this.filter_year = this.current_year;
 
     this.loadList();
-    // this.showReturn()
   }
 
 }

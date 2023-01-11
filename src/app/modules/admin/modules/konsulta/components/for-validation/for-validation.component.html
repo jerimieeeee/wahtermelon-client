@@ -1,33 +1,45 @@
-<table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 mb-5">
-  <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+<table class="w-full text-sm text-left text-gray-500 mb-5">
+  <thead class="text-xs text-gray-700 uppercase bg-gray-50">
     <tr>
-      <th scope="col" class="py-3 px-6">Name</th>
-      <th scope="col" class="py-3 px-6">Birthdate <br /> [Gender]</th>
-      <th scope="col" class="py-3 px-6">Pin</th>
-      <th scope="col" class="py-3 px-6">Konsulta Registration</th>
-      <th scope="col" class="py-3 px-6 w-2/12 text-center">Actions</th>
+      <th scope="col" class="py-3 px-3 w-4/12 text-center">Name</th>
+      <th scope="col" class="py-3 px-3 w-1/12">Birthdate <br /> [Gender]</th>
+      <th scope="col" class="py-3 px-3 w-1/12">Pin</th>
+      <th scope="col" class="py-3 px-3 w-3/12">Konsulta Registration</th>
+      <th scope="col" class="py-3 px-3 w-3/12 text-center">Actions</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let kon of konsulta_list; let odd = odd; let i = index" class="bg-white border-t" [ngClass]="{'bg-gray-50': odd}">
-      <th scope="row" class="py-4 px-6 font-medium whitespace-nowrap">
-        {{ kon.patient.last_name }}, {{ kon.patient.first_name }} {{ kon.patient.middle_name === 'NA' ? '' : kon.patient.middle_name }} {{ kon.patient.suffix_name === 'NA' ? '' : kon.patient.suffix_name}}
+      <th scope="row" class="py-4 px-3 font-medium">
+        <div class="grid grid-cols-12">
+          <div class="col-span-1 align-middle">
+            <input [disabled]="!kon.validated" [(ngModel)]="saving_list[kon.patient.id]" (change)="addToSaving(kon.patient.id)" type="checkbox" class="rounded w-4 h-4 border border-slate-400 disabled:bg-gray-400" />
+          </div>
+          <div class="col-span-11">
+            {{ kon.patient.last_name }}, {{ kon.patient.first_name }} {{ kon.patient.middle_name === 'NA' ? '' : kon.patient.middle_name }} {{ kon.patient.suffix_name === 'NA' ? '' : kon.patient.suffix_name}}
+          </div>
+        </div>
       </th>
-      <td class="py-4 px-6">
+      <td class="py-4 px-3">
         {{ kon.patient.birthdate | date: 'MM/dd/yyyy' }} <br />
         [{{ kon.patient.gender }}]
       </td>
-      <td class="py-4 px-6">
-        {{ kon.philhealth_id }}
+      <td class="py-4 px-3">
+        {{ kon.philhealth_id }} {{ kon.validated }}
       </td>
-      <td class="py-4 px-6">
+      <td class="py-4 px-3">
         {{ kon.konsulta_registration[0].last_name }}, {{ kon.konsulta_registration[0].first_name }} {{ kon.konsulta_registration[0].middle_name === 'NA' ? '' : kon.konsulta_registration[0].middle_name }} {{ kon.konsulta_registration[0].suffix_name === 'NA' ? '' : kon.konsulta_registration[0].suffix_name}}
       </td>
-      <td class="py-4 px-6">
-        <!-- {{ account.email }} -->
-        <button [disabled]="validating" class="btn-save px-5 disabled:bg-gray-300" (click)="validate(kon)">
+      <td class="py-4 px-3 text-center">
+        <!-- {{ account.email }}  -->
+        <button [disabled]="validating" class="text-sm text-white bg-blue-500 py-1 w-28 rounded-md px-3 mr-2 disabled:bg-gray-300" (click)="validate(kon, 0)">
           <fa-icon [icon]="validating ? faSpinner : faCircleCheck" [spin]="validating" class="mr-2"></fa-icon>
-          {{ validating ? 'loading' : 'validate' }}
+          {{ validating ? 'Loading' : 'Validate' }}
+        </button>
+
+        <button [disabled]="is_saving" class="text-sm text-white bg-orange-400 py-1 w-28 rounded-md px-3 disabled:bg-gray-300" (click)="validate(kon, 1)">
+          <fa-icon [icon]="is_saving ? faSpinner : faSave" [spin]="is_saving" class="mr-2"></fa-icon>
+          {{ is_saving ? 'Loading' : 'Save' }}
         </button>
       </td>
     </tr>

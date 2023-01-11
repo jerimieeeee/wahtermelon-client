@@ -84,8 +84,8 @@ export class ValidatedListComponent implements OnInit {
     this.validating = false;
   }
 
-  returnData(data){
-    this.showReturn.emit(data);
+  returnData(data, save?){
+    this.showReturn.emit({data: data, save: save});
   }
 
   constructor(

@@ -20,7 +20,7 @@
       </td>
       <td class="py-4 px-6 align-top">
         <div *ngIf="kon.xml_status === 'F'">
-          <button class="rounded px-2 text-sm bg-red-400 text-white" (click)="returnData(kon.xml_errors)">
+          <button class="rounded px-2 text-sm bg-red-400 text-white" (click)="returnData(kon.xml_errors, 0)">
             show errors
           </button>
         </div>

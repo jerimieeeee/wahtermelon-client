@@ -1,6 +1,6 @@
 import { HttpParams } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { faCircleCheck, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { faCircleCheck, faSave, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -11,34 +11,41 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class ForValidationComponent implements OnInit {
   @Output() showReturn = new EventEmitter<any>();
+  @Output() addSaving = new EventEmitter<any>();
   @Input() konsulta_list;
   @Input() filter_tranche;
 
   faCircleCheck = faCircleCheck;
   faSpinner = faSpinner;
+  faSave = faSave;
+
+  saving_list: any = [];
 
   validating: boolean = false;
+  is_saving: boolean = false;
 
-  validate(kon){
+  validate(kon, save){
     this.validating = true;
     let params = new HttpParams({
       fromObject: {
         'patient_id[]': [kon.patient.id],
         'tranche': this.filter_tranche,
-        'revalidate': 0
+        'revalidate': 0,
+        'save': save
       }
     });
 
-    console.log(params)
     this.http.get('konsulta/validate-report', {params}).subscribe({
       next: (data: any) => {
         console.log(data);
         if(data.errors) {
           this.toastr.error('Validation failed','Error')
-          this.returnData(data)
+          kon['validated'] = true;
+          this.returnData(data, save)
         } else {
           if(data.message){
-            this.returnData(data)
+            this.returnData(data, save)
+            kon['validated'] = true;
             this.toastr.success('Success!', 'Record Validation')
           }
 
@@ -49,8 +56,20 @@ export class ForValidationComponent implements OnInit {
     })
   }
 
-  returnData(data){
-    this.showReturn.emit(data);
+  addToSaving(id){
+    console.log(id)
+    console.log(this.saving_list)
+
+    if(this.saving_list[id] === false) {
+      delete this.saving_list[id]
+    }
+
+    this.addSaving.emit(this.saving_list)
+    // let index = this.
+  }
+
+  returnData(data, save){
+    this.showReturn.emit({data: data, save: save});
   }
 
   constructor(

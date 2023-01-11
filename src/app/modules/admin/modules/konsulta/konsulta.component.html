@@ -50,7 +50,7 @@
 
     <div>
       <div class="overflow-x-auto relative shadow-md sm:rounded-lg">
-        <app-for-validation *ngIf="forms['for_validation']" (showReturn)="showReturn($event)" [konsulta_list]="konsulta_list" [filter_tranche]="filter_tranche"></app-for-validation>
+        <app-for-validation *ngIf="forms['for_validation']" (addSaving)="addSaving($event)" (showReturn)="showReturn($event)" [konsulta_list]="konsulta_list" [filter_tranche]="filter_tranche"></app-for-validation>
         <app-validated-list *ngIf="forms['validated_list']" (showReturn)="showReturn($event)" [konsulta_list]="konsulta_list" [filter_tranche]="filter_tranche"></app-validated-list>
       </div>
     </div>
@@ -90,8 +90,9 @@
       </div>
 
       <div class="flex justify-end" *ngIf="form_type==='1'">
-        <button class="btn-save px-5" type="button" (click)="validateNewList()">
-          Validate ({{ konsulta_list?.length }})
+        <button [disabled]="save_list_length === 0 || is_saving" class="btn-save px-5 disabled:bg-gray-300" type="button" (click)="validateNewList()">
+          <fa-icon [icon]="is_saving ? faSpinner : faSave" [spin]="is_saving" class="mr-2"></fa-icon>
+          Validate {{ '('+save_list_length+')' }}
         </button>
       </div>
     </div>
