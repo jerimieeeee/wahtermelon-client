@@ -51,7 +51,7 @@ export class PatientRecordComponent implements OnInit, OnChanges {
     },
     {
       code: 'peripheral_pulses',
-      desc: 'Palpation of perpheral pulses'
+      desc: 'Palpation of peripheral pulses'
     },
     {
       code: 'abdomen',

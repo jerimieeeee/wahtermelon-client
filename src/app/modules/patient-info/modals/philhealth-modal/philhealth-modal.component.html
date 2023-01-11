@@ -154,7 +154,7 @@
               <div *ngIf="is_registered !== undefined" class="flex mx-16 my-3 p-2 rounded-md bg-green-100 text-green-900 shadow-sm"
                   [ngClass]="{'bg-red-100 text-red-900': is_registered !== 'YES'}">
                   <fa-icon class="flex-none my-0 m-2" [icon]="faCircleInfo" size="lg"></fa-icon>
-                  {{ is_registered  === 'YES' ? 'Member/Dependent is registered' : (is_registered === 'NO' ? 'Member/Dependent not registered' : is_registered) }}
+                  {{ is_registered  === 'YES' ? 'PIN is registered' : (is_registered === 'NO' ? 'PIN not registered' : is_registered) }}
               </div>
             </div>
           </div>

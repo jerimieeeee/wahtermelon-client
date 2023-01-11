@@ -80,8 +80,8 @@ export class RiskAssessmentComponent implements OnInit, OnChanges {
   }
 
   checkDiabetes() {
-    if(this.riskAssessForm.value.presence_diabetes === 'Y' && this.riskAssessForm.value.location === 2) {
-      this.f.client_type.enable();
+    if(this.riskAssessForm.value.location === 2) {
+      this.f.diabetes_medications.enable();
       this.f.polyphagia.enable();
       this.f.polydipsia.enable();
       this.f.polyuria.enable();
@@ -92,7 +92,10 @@ export class RiskAssessmentComponent implements OnInit, OnChanges {
         polydipsia: 'X',
         polyuria: 'X'
       })
-      this.f.client_type.disable();
+      /* this.f.diabetes_medications.disable();
+      this.f.polyphagia.disable();
+      this.f.polydipsia.disable();
+      this.f.polyuria.disable(); */
 
       if(this.riskAssessForm.value.location === 2) this.f.client_type.enable();
     }
