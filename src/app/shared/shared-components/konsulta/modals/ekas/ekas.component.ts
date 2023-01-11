@@ -39,7 +39,8 @@ export class EkasComponent implements OnInit {
   prescription_length: number;
 
   getFacility() {
-    this.http.get('libraries/facilities/'+this.http.getUserFromJSON().facility.code).subscribe({
+    let facility = this.http.getUserFromJSON();
+    this.http.get('libraries/facilities/'+facility.code).subscribe({
       next: (data: any) => {
         this.facility_info = data.data;
 
