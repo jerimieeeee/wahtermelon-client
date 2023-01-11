@@ -44,11 +44,11 @@ export class EkasComponent implements OnInit {
       next: (data: any) => {
         this.facility_info = data.data;
 
-        /* console.log(this.patient_info);
+        console.log(this.patient_info);
         console.log(this.patient_philhealth);
         console.log(this.facility_info);
         console.log(this.lab_list);
-        console.log(this.consult_details); */
+        console.log(this.consult_details);
 
         this.age = this.ageService.calcuateAge(this.patient_info.birthdate, this.consult_details.consult_date)
         // console.log(this.age)
