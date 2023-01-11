@@ -41,6 +41,8 @@ import { WebcamModule } from 'ngx-webcam';
 import { GraphComponent } from './components/graph/graph.component';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { PatientItrModule } from '../patient-itr/patient-itr.module';
+import { PreghistComponent } from './components/preghist/preghist.component';
+import { PreghistModalComponent } from './modals/preghist-modal/preghist-modal.component';
 
 
 @NgModule({
@@ -77,7 +79,9 @@ import { PatientItrModule } from '../patient-itr/patient-itr.module';
     PregnancyModalComponent,
     SurgicalModalComponent,
     SurgicalActionModalComponent,
-    GraphComponent
+    GraphComponent,
+    PreghistComponent,
+    PreghistModalComponent
   ],
   imports: [
     CommonModule,

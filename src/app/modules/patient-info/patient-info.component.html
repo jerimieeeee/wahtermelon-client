@@ -79,6 +79,9 @@
         <app-vaccine (toggleAccordion)="toggleAccordion($event)" [accordions]="accordions" (toggleModal)="toggleModal($event)" (setVaccineGiven)="setVaccineGiven($event)"></app-vaccine>
         <app-past-medical (toggleAccordion)="toggleAccordion($event)" [accordions]="accordions" (toggleModal)="toggleModal($event)" (setPastMedical)="setPastMedical($event)"></app-past-medical>
         <app-menstrual-history (toggleAccordion)="toggleAccordion($event)" [accordions]="accordions" (toggleModal)="toggleModal($event)" (setMenstrual)="setMenstrual($event)"></app-menstrual-history>
+
+        <app-preghist (toggleAccordion)="toggleAccordion($event)" [accordions]="accordions" (toggleModal)="toggleModal($event)" (setDetails)="setDetails($event)"></app-preghist>
+
         <app-family-medical (toggleAccordion)="toggleAccordion($event)" [accordions]="accordions" (toggleModal)="toggleModal($event)" (setFamilyMedical)="setFamilyMedical($event)"></app-family-medical>
         <app-social-history (toggleAccordion)="toggleAccordion($event)" [accordions]="accordions" (toggleModal)="toggleModal($event)" (setDetails)="setDetails($event)"></app-social-history>
         <app-surgical-history (toggleAccordion)="toggleAccordion($event)" [accordions]="accordions" (toggleModal)="toggleModal($event)" (setSurgicalHistory)="setSurgicalHistory($event)"></app-surgical-history>
@@ -96,6 +99,8 @@
 <app-fam-history-modal *ngIf="modals['fam-history']" (toggleModal)="toggleModal($event)" [patient_info]="patient_info" [history_list]="history_list" [family_medical]="family_medical"></app-fam-history-modal>
 <app-lifestyle-modal *ngIf="modals['lifestyle']" (toggleModal)="toggleModal($event)" [patient_info]="patient_info" [social_history]="social_history"></app-lifestyle-modal>
 <app-menstrual-modal *ngIf="modals['menstrual']" (toggleModal)="toggleModal($event)" [patient_info]="patient_info" [menstrual_history]="menstrual_history" [fp_method]="fp_method"></app-menstrual-modal>
+
+<app-preghist-modal *ngIf="modals['preghist']" (toggleModal)="toggleModal($event)" [patient_info]="patient_info" [pregnancy_history]="pregnancy_history" [delivery_method]="delivery_method"></app-preghist-modal>
 
 <app-vitals-modal *ngIf="modals['vitals']" (toggleModal)="toggleModal('vitals')" [patient_age]="patient_age" [patient_info]="patient_info" [vitals_to_edit]="vitals_to_edit"></app-vitals-modal>
 <app-vitals-list-modal *ngIf="modals['vitals-list']" (toggleModal)="toggleModal('vitals-list')" (vitalsEdit)="vitalsEdit($event)" [patient_info]="patient_info"></app-vitals-list-modal>
