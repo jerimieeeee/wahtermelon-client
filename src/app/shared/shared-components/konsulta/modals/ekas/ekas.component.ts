@@ -40,7 +40,8 @@ export class EkasComponent implements OnInit {
 
   getFacility() {
     let facility = this.http.getUserFromJSON();
-    this.http.get('libraries/facilities/'+facility.facility.code).subscribe({
+    // console.log(facility)
+    this.http.get('libraries/facilities/'+facility.facility_code).subscribe({
       next: (data: any) => {
         this.facility_info = data.data;
 
