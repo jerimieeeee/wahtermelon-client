@@ -120,7 +120,7 @@ export class ModuleModalComponent implements OnInit {
   isATCValid(){
     this.is_checking_atc = true;
     let params = {
-      pPin: this.philhealth_details.philhealth_id,
+      pPIN: this.philhealth_details.philhealth_id,
       pATC: this.pATC,
       pEffectivityDate: formatDate(this.pATC_date, 'MM/dd/yyyy', 'en')
     }
