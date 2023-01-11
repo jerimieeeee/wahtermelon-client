@@ -40,7 +40,8 @@ export class DrugFormComponent implements OnInit, OnChanges {
     duration_intake: new FormControl<string| null>(null),
     duration_frequency: new FormControl<string| null>(null),
     quantity: new FormControl<number| null>(null),
-    quantity_preparation: new FormControl<string| null>(null)
+    quantity_preparation: new FormControl<string| null>(null),
+    instruction_quantity: new FormControl<number| null>(null)
   });
 
   get f(): { [key: string]: AbstractControl } {
@@ -125,7 +126,8 @@ export class DrugFormComponent implements OnInit, OnChanges {
       duration_intake: [null,[Validators.required]],
       duration_frequency: [null,[Validators.required]], //libraries/duration-frequencies
       quantity: [null,[Validators.required]],
-      quantity_preparation: [null,[Validators.required]] //libraries/preparations
+      quantity_preparation: [null,[Validators.required]], //libraries/preparations
+      instruction_quantity: [null,[Validators.required]]
     });
 
     // console.log(this.selected_drug)

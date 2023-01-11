@@ -97,13 +97,24 @@
               </div>
             </div>
 
-            <div class="col-span-2 text-sm">
+            <div class="col-span-1 text-sm">
               <label class="font-semibold" for="quantity_preparation" [ngClass]="{'text-red-500': is_saving && f.quantity_preparation.errors}">Preparation</label>
               <select name="quantity_preparation" id="quantity_preparation" formControlName="quantity_preparation" [ngClass]="{'invalid-input': is_saving && f.quantity_preparation.errors}" class="input">
                 <option [value]="prep.code" *ngFor="let prep of drug_preparation">{{ prep.desc}}</option>
               </select>
               <div *ngIf="is_saving && f.quantity_preparation.errors" class="invalid-alert">
                 <div *ngIf="f.quantity_preparation.errors?.['required']">
+                  {{ required_message }}
+                </div>
+              </div>
+            </div>
+
+            <div class="col-span-1 text-sm">
+              <label class="font-semibold" for="instruction_quantity" [ngClass]="{'text-red-500': is_saving && f.instruction_quantity.errors}">Instruction Qty.</label>
+              <input name="instruction_quantity" id="instruction_quantity" formControlName="instruction_quantity" [ngClass]="{'invalid-input': is_saving && f.instruction_quantity.errors}" type="number" class="input">
+
+              <div *ngIf="is_saving && f.instruction_quantity.errors" class="invalid-alert">
+                <div *ngIf="f.instruction_quantity.errors?.['required']">
                   {{ required_message }}
                 </div>
               </div>
@@ -147,7 +158,7 @@
       </div>
       <div class="flex justify-end mr-10 py-3 rounded-b">
         <button  type="button" class="btn-save px-10 bg-gray-400 mr-5" (click)="closeModal()">Close</button>
-        <button  type="button" class="btn-save px-10 disabled:bg-gray-300" (click)="onSubmit()" >Save</button>
+        <button [disabled]="prescriptionForm.invalid" type="button" class="btn-save px-10 disabled:bg-gray-300" (click)="onSubmit()" >Save</button>
       </div><!-- [disabled]="prescriptionForm.invalid" -->
     </div>
   </div>
