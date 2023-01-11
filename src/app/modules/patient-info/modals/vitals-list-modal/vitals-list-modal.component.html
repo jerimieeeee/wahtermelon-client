@@ -14,16 +14,16 @@
           <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
               <tr>
-                <th scope="col" class="py-3 px-6">Date & Time</th>
-                <th scope="col" class="py-3 px-6">Blood Pressure</th>
-                <th scope="col" class="py-3 px-6">Height (cm)</th>
-                <th scope="col" class="py-3 px-6">Weight (kg)</th>
-                <th scope="col" class="py-3 px-6">Temp (C)</th>
-                <th scope="col" class="py-3 px-6">O2 sat, Heart/Pulse/Resp Rate</th>
-                <th scope="col" class="py-3 px-6">Body Measurement</th>
+                <th scope="col" class="py-3 px-3">Date & Time</th>
+                <th scope="col" class="py-3 px-3">Blood Pressure</th>
+                <th scope="col" class="py-3 px-3">Weight & <br /> Height</th>
+                <th scope="col" class="py-3 px-3">Visual Acuity <br /> (R|L)</th>
+                <th scope="col" class="py-3 px-3">Temp (C)</th>
+                <th scope="col" class="py-3 px-3">O2 sat, Heart/Pulse/Resp Rate</th>
+                <th scope="col" class="py-3 px-3">Body Measurement</th>
                 <!-- <th scope="col" class="py-3 px-6">Resp Rate</th> -->
                 <!-- <th scope="col" class="py-3 px-6">Others</th> -->
-                <th scope="col" class="py-3 px-6">Action</th>
+                <th scope="col" class="py-3 px-3">Action</th>
               </tr>
             </thead>
             <tbody>
@@ -35,10 +35,11 @@
                   {{ vitals.bp_systolic }}{{ vitals.bp_systolic ? '/' : '-' }}{{ vitals.bp_diastolic }}
                 </td>
                 <td class="py-4 px-6 align-top">
-                  {{ vitals.patient_height ?? '-' }}
+                  {{ vitals.patient_height ? vitals.patient_height+' kg' : '-' }} <br />
+                  {{ vitals.patient_weight ? vitals.patient_weight+' cm' : '-' }}
                 </td>
                 <td class="py-4 px-6 align-top">
-                  {{ vitals.patient_weight ?? '-' }}
+                  {{ vitals.patient_right_vision_acuity ? vitals.patient_right_vision_acuity+' | ' : '' }}  {{ vitals.patient_left_vision_acuity ?? '-' }}
                 </td>
                 <td class="py-4 px-6 align-top">
                   {{ vitals.patient_temp ?? '-' }}

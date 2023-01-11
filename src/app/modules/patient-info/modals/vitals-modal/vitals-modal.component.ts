@@ -126,6 +126,8 @@ export class VitalsModalComponent implements OnInit {
       vitals_height_in: [null, Validators.max(11)],
       vitals_date_temp: [formatDate(date,'yyyy-MM-dd','en'), Validators.required],
       vitals_time_temp: [formatDate(date,'HH:mm:ss','en'), Validators.required],
+      patient_right_vision_acuity: [null, Validators.max(20)],
+      patient_left_vision_acuity: [null, Validators.max(20)],
     });
 
     if(this.vitals_to_edit){

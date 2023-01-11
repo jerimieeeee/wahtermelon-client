@@ -27,4 +27,6 @@ export const vitalsForm: FormGroup = new FormGroup({
   vitals_waist_in: new FormControl<number| null>(null),
   vitals_date_temp: new FormControl<string| null>(''),
   vitals_time_temp: new FormControl<string| null>(''),
+  patient_left_vision_acuity: new FormControl<number| null>(null),
+  patient_right_vision_acuity: new FormControl<number| null>(null)
 });
