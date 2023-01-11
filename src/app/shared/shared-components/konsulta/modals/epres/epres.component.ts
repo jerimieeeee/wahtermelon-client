@@ -1,5 +1,7 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, Input } from '@angular/core';
 import { faFaceFrown, faFaceMeh, faFaceSmile, faPrint } from '@fortawesome/free-solid-svg-icons';
+import { AgeService } from 'app/shared/services/age.service';
+import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
   selector: 'app-epres',
@@ -8,6 +10,9 @@ import { faFaceFrown, faFaceMeh, faFaceSmile, faPrint } from '@fortawesome/free-
 })
 export class EpresComponent implements OnInit {
   @Output() toggleModal = new EventEmitter<any>();
+  @Input() prescriptions;
+  @Input() consult_details;
+
   faPrint = faPrint;
   faFaceSmile = faFaceSmile;
   faFaceMeh = faFaceMeh;
@@ -32,8 +37,41 @@ export class EpresComponent implements OnInit {
     this.toggleModal.emit('epres');
   }
 
-  constructor() { }
+  patient_info: any;
+  patient_philhealth: any;
+  facility_info: any;
+  age: any;
+  prescription_length: number;
+
+  getFacility() {
+    this.http.get('libraries/facilities/'+this.http.getUserFromJSON().facility.code).subscribe({
+      next: (data: any) => {
+        this.facility_info = data.data;
+
+        /* console.log(this.patient_info);
+        console.log(this.patient_philhealth);
+        console.log(this.facility_info);
+        console.log(this.prescriptions);
+        console.log(this.consult_details); */
+
+        this.prescription_length = Object.keys(this.prescriptions).length;
+        // console.log(this.prescription_length);
+        this.age = this.ageService.calcuateAge(this.patient_info.birthdate, this.consult_details.consult_date)
+        // console.log(this.age)
+      },
+      error: err => console.log(err)
+    })
+  }
+
+  constructor(
+    private http: HttpService,
+    private ageService: AgeService
+  ) { }
 
   ngOnInit(): void {
+    this.patient_info = this.http.getPatientInfo();
+    this.patient_philhealth = this.http.getPhilhealhtInfo();
+    this.getFacility();
+
   }
 }

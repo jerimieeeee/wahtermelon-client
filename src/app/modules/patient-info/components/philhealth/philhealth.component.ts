@@ -25,6 +25,7 @@ export class PhilhealthComponent implements OnInit {
       next: (data: any) => {
         // console.log(data);
         this.philhealth_info = data.data[0];
+        this.http.setPhilhealhtInfo(this.philhealth_info);
         this.setDetails.emit({var_name: 'philhealth_details', data: data.data[0]});
         this.show_philhealth = true;
       },

@@ -165,4 +165,13 @@ export class HttpService {
   getPatientInfo(){
     return this.patient_info;
   }
+
+  philhealth_info: any;
+  setPhilhealhtInfo(data) {
+    this.philhealth_info = data;
+  }
+
+  getPhilhealhtInfo(){
+    return this.philhealth_info;
+  }
 }

@@ -38,10 +38,10 @@ export class GeneralSurveyComponent implements OnInit {
           general_survey_remarks: this.general_survey_remarks,
       }
 
-      console.log(general_survey)
+      // console.log(general_survey)
       this.http.update('consultation/notes/', this.consult_details.consult_notes.id, general_survey).subscribe({
         next: (data: any) => {
-          console.log(data);
+          // console.log(data);
           this.toastr.success('Successfully recorded!','General Survey')
         }
       })
@@ -53,7 +53,7 @@ export class GeneralSurveyComponent implements OnInit {
   loadLib(){
     this.http.get('libraries/general-survey').subscribe(
       (data: any) => {
-        console.log(data)
+        // console.log(data)
         this.survey_list = data.data;
       }
     );
@@ -78,7 +78,6 @@ export class GeneralSurveyComponent implements OnInit {
       this.general_survey_remarks = this.consult_notes.general_survey_remarks
     }
 
-    console.log(this.consult_details)
   }
 
 }

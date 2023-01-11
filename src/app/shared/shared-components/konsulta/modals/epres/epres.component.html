@@ -35,49 +35,51 @@
                 <div class="grid grid-cols-4 text-xs">
                   <div class="col-span-2 flex">
                     HCI Name:
-                    <span class="underline flex-1 w-full">test</span>
+                    <span class="underline flex-1 w-full">{{ facility_info?.facility_name }}</span>
                   </div>
                   <div class="col-span-2 flex">
                     Case No.:
-                    <span class="underline flex-1 w-full">test</span>
+                    <span class="underline flex-1 w-full">            </span>
                   </div>
                   <div class="col-span-2 flex">
                     HCI Accreditation No:
-                    <span class="underline flex-1 w-full">test</span>
+                    <span class="underline flex-1 w-full"> </span>
                   </div>
                   <div class="col-span-2 flex">
                     Transaction No.:
-                    <span class="underline flex-1 w-full">test</span>
+                    <span class="underline flex-1 w-full">{{ consult_details?.transaction_number }}</span>
                   </div>
                 </div>
 
                 <div class="grid grid-cols-4 text-xs mt-2">
                   <div class="col-span-2 flex">
-                    Patient name (pangalan ng pasyente):
-                    <span class="underline flex-1 w-full">test</span>
+                    <span class="text-[.8em]">Patient name (pangalan ng pasyente): </span>
+                    <span class="underline flex-1 w-full">
+                      {{ patient_info?.last_name }}, {{ patient_info?.first_name }} {{ patient_info?.middle_name }} {{ patient_info?.suffix_name === 'NA' ? '' : patient_info?.suffix_name }}
+                    </span>
                   </div>
                   <div class="col-span-1 flex">
-                    Age (Edad):
-                    <span class="underline flex-1 w-full">test</span>
+                    <span class="text-[.8em]">Age (Edad): </span>
+                    <span class="underline flex-1 w-full">{{ age?.age | number: '1.0-0' }} {{ age?.type }}{{ age?.age > 1 ? 's old' : 'old' }} </span>
                   </div>
                   <div class="col-span-1 flex">
-                    Contact No.:
-                    <span class="underline flex-1 w-full">test</span>
+                    <span class="text-[.8em]">Contact No.: </span>
+                    <span class="underline flex-1 w-full">{{ patient_info?.mobile_number }}}</span>
                   </div>
                 </div>
 
                 <div class="grid grid-cols-12 text-xs">
                   <div class="col-span-4 flex">
-                    PIN (Philhealht Identification No.):
-                    <span class="underline flex-1 w-full">test</span>
+                    <span class="text-[.75em]">PIN (Philhealht Identification No.): </span>
+                    <span class="underline flex-1 w-full">{{ patient_philhealth?.philhealth_id }}</span>
                   </div>
-                  <div class="col-span-3 flex">
-                    Membership Category:
-                    <span class="underline flex-1 w-full">test</span>
+                  <div class="col-span-3 flex ml-3">
+                    <span class="text-[.8em]">Membership Category: </span>
+                    <span class="underline flex-1 w-full"> </span>
                   </div>
                   <div class="col-span-5 flex">
-                    Membership type:
-                    <span class="flex-1 w-full">__Member ___Dependent</span>
+                    <span class="text-[.8em]">Membership type: </span>
+                    <span class="flex-1 w-full">{{ patient_philhealth?.membership_type_id === "MM" ? 'Member' : 'Dependent' }}</span>
                   </div>
                 </div>
               </div>
@@ -122,31 +124,46 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td class="border border-slate-700">test</td>
-                      <td class="border border-slate-700"></td>
-                      <td class="border border-slate-700"></td>
-                      <td class="border border-slate-700 text-[0.65rem] font-normal" rowspan="2">
+                    <tr *ngFor="let pres of prescriptions; let i = index">
+                      <td class="border border-slate-700">
+                        {{ pres.konsulta_medicine ? pres.konsulta_medicine.category : '' }}
+                      </td>
+
+                      <td class="border border-slate-700">
+                        <span *ngIf="pres.konsulta_medicine">{{ pres.konsulta_medicine.desc }}</span>
+                        <span *ngIf="!pres.konsulta_medicine">{{ pres.added_medicine }} {{ pres.dosage_quantity }} {{ pres.unit_of_measurement.code }}</span>
+                      </td>
+
+                      <td class="border border-slate-700">
+                        {{ pres.quantity }}
+                      </td>
+
+
+                      <td *ngIf="prescription_length - 1 === i" class="border border-slate-700 text-[0.65rem] font-normal" >
                         <br /><br /><br />
                         Signature over printed name <br />
                         License #: ________________
                       </td>
-                      <td class="border border-slate-700"></td>
-                      <td class="border border-slate-700"></td>
-                      <td class="border border-slate-700 text-[0.65rem] font-normal" rowspan="2">
+
+                      <td class="border border-slate-700">
+
+                      </td>
+
+                      <td class="border border-slate-700">
+
+                      </td>
+
+                      <td *ngIf="prescription_length - 1 === i" class="border border-slate-700 text-[0.65rem] font-normal" [attr.rowspan]="prescription_length">
                         <br /><br /><br />
                         Signature over printed name <br />
-                        Name of Dispensing Facility: <br />________________
+                        Name of Dispensing Facility: <br />{{ facility_info?.facility_name }}
                       </td>
-                    </tr>
-                    <tr>
-                      <td class="border border-slate-700">test</td>
-                      <td class="border border-slate-700"></td>
-                      <td class="border border-slate-700"></td>
-                      <!-- <td class="border border-slate-700" rowspan="2"></td> -->
-                      <td class="border border-slate-700"></td>
-                      <td class="border border-slate-700"></td>
-                      <!-- <td class="border border-slate-700"></td> -->
+
+                      <!-- <td *ngIf="prescription_length - 1 < i" class="border border-slate-700 text-[0.65rem] font-normal">
+                        <br /><br /><br />
+                        Signature over printed name <br />
+                        Name of Dispensing Facility: <br />{{ facility_info?.facility_name }}
+                      </td> -->
                     </tr>
                   </tbody>
                 </table>

@@ -151,6 +151,11 @@ export class PrescriptionComponent implements OnInit, OnChanges {
     });
   }
 
+  show_epress: boolean = false;
+  toggleModal(){
+    this.show_epress = !this.show_epress;
+  }
+
   toggleList(){
     this.show_list = !this.show_list;
   }

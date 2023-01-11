@@ -167,7 +167,7 @@ export class PatientInfoComponent implements OnInit {
   setDetails(data) {
     //set details from components
     this[data.var_name] = data.data;
-    console.log(data)
+    // console.log(data)
   }
 
   /* setSocial(data){
