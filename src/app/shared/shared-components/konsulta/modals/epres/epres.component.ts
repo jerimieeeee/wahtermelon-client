@@ -48,11 +48,11 @@ export class EpresComponent implements OnInit {
       next: (data: any) => {
         this.facility_info = data.data;
 
-        console.log(this.patient_info);
+        /* console.log(this.patient_info);
         console.log(this.patient_philhealth);
         console.log(this.facility_info);
         console.log(this.prescriptions);
-        console.log(this.consult_details);
+        console.log(this.consult_details); */
 
         this.prescription_length = Object.keys(this.prescriptions).length;
         // console.log(this.prescription_length);

@@ -21,6 +21,7 @@ import { DrugListComponent } from './components/prescription/modals/drug-list/dr
 import { DrugFormComponent } from './components/prescription/modals/drug-form/drug-form.component';
 import { DrugDeleteComponent } from './components/prescription/modals/drug-delete/drug-delete.component';
 import { GeneralSurveyComponent } from './components/general-survey/general-survey.component';
+import { ManagementComponent } from './components/management/management.component';
 
 
 @NgModule({
@@ -38,7 +39,8 @@ import { GeneralSurveyComponent } from './components/general-survey/general-surv
     DrugListComponent,
     DrugFormComponent,
     DrugDeleteComponent,
-    GeneralSurveyComponent
+    GeneralSurveyComponent,
+    ManagementComponent
   ],
   imports: [
     CommonModule,

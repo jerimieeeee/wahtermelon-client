@@ -124,7 +124,7 @@ export class ConsultationComponent implements OnInit {
     this.http.get('consultation/records', {params}).subscribe({
       next: (data: any) => {
         this.consult_details = data.data[0];
-        // console.log(this.consult_details)
+        console.log(this.consult_details)
         if(this.consult_details.consult_notes.complaint || this.consult_details.consult_notes.complaints.length > 0  || this.consult_details.consult_notes.history) {
           this.have_complaint = true;
         }
