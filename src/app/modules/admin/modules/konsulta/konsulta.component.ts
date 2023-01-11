@@ -93,7 +93,7 @@ export class KonsultaComponent implements OnInit {
   }
 
   showReturn(data?){
-    this.return_value = data;
+    this.return_value = data.data;
     this.show_return = !this.show_return;
 
     if(data.save !== 0) {
@@ -150,10 +150,10 @@ export class KonsultaComponent implements OnInit {
         this.is_saving = false;
         if(data.errors) {
           this.toastr.error('Validation failed','Error')
-          this.showReturn(data)
+          this.showReturn({data: data})
         } else {
           this.toastr.success('Success!', 'Record Validation')
-          this.showReturn(data)
+          this.showReturn({data: data})
         }
         this.loadList();
       },

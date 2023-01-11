@@ -43,7 +43,9 @@ export class ValidatedListComponent implements OnInit {
     this.http.get('konsulta/validate-report', {params}).subscribe({
       next: (data: any) => {
         console.log(data)
-        this.processReturn(data)
+        let result = data.data ? data.data : data
+        console.log(result)
+        this.processReturn(result)
       },
       error: err => console.log(err)
     })
@@ -58,7 +60,9 @@ export class ValidatedListComponent implements OnInit {
 
     this.http.get('konsulta/submit-xml', {params}).subscribe({
       next: (data: any) => {
-        this.processReturn(data)
+        let result = data.data ? data.data : data
+        console.log(result)
+        this.processReturn(result)
       },
       error: err => console.log(err)
     })
@@ -73,6 +77,7 @@ export class ValidatedListComponent implements OnInit {
   }
 
   processReturn(data){
+    console.log(data)
     if(data){
       if(data.errors) {
         this.toastr.error('Record error','Error')

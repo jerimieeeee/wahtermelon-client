@@ -22,6 +22,9 @@ export class ResultFormComponent implements OnInit {
   ngOnInit(): void {
     this.is_error_array = Array.isArray(this.return_value.errors);
     this.show_form = true;
+
+    console.log(this.is_error_array);
+    console.log(this.return_value)
   }
 
 }
