@@ -93,7 +93,7 @@ export class KonsultaComponent implements OnInit {
   }
 
   showReturn(data?){
-    this.return_value = data.data;
+    this.return_value = data;
     this.show_return = !this.show_return;
 
     if(data.save !== 0) {
