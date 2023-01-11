@@ -39,31 +39,23 @@ export class EpresComponent implements OnInit {
 
   patient_info: any;
   patient_philhealth: any;
-  facility_info: any;
+  facility: any;
   age: any;
   prescription_length: number;
 
-  getFacility() {
+  /* getFacility() {
     let facility = this.http.getUserFromJSON();
-    // console.log(facility)
+    console.log(facility)
     this.http.get('libraries/facilities/'+facility.facility_code).subscribe({
       next: (data: any) => {
         this.facility_info = data.data;
 
-        /* console.log(this.patient_info);
-        console.log(this.patient_philhealth);
-        console.log(this.facility_info);
-        console.log(this.prescriptions);
-        console.log(this.consult_details); */
-
         this.prescription_length = Object.keys(this.prescriptions).length;
-        // console.log(this.prescription_length);
         this.age = this.ageService.calcuateAge(this.patient_info.birthdate, this.consult_details.consult_date)
-        // console.log(this.age)
       },
       error: err => console.log(err)
     })
-  }
+  } */
 
   constructor(
     private http: HttpService,
@@ -73,7 +65,8 @@ export class EpresComponent implements OnInit {
   ngOnInit(): void {
     this.patient_info = this.http.getPatientInfo();
     this.patient_philhealth = this.http.getPhilhealhtInfo();
-    this.getFacility();
+    this.facility = this.http.getUserFromJSON();
+    this.age = this.ageService.calcuateAge(this.patient_info.birthdate, this.consult_details.consult_date)
 
   }
 }

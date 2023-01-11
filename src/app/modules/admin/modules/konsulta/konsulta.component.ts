@@ -138,7 +138,8 @@ export class KonsultaComponent implements OnInit {
       fromObject: {
         'patient_id[]': patient_id,
         'tranche': this.filter_tranche,
-        'revalidate': 0
+        'revalidate': 0,
+        'save': 1
       }
     });
 
@@ -152,6 +153,7 @@ export class KonsultaComponent implements OnInit {
           this.showReturn(data)
         } else {
           this.toastr.success('Success!', 'Record Validation')
+          this.showReturn(data)
         }
         this.loadList();
       },

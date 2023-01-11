@@ -37,26 +37,7 @@ export class EkasComponent implements OnInit {
   facility_info: any;
   age: any;
   prescription_length: number;
-
-  getFacility() {
-    let facility = this.http.getUserFromJSON();
-    // console.log(facility)
-    this.http.get('libraries/facilities/'+facility.facility_code).subscribe({
-      next: (data: any) => {
-        this.facility_info = data.data;
-
-        console.log(this.patient_info);
-        console.log(this.patient_philhealth);
-        console.log(this.facility_info);
-        console.log(this.lab_list);
-        console.log(this.consult_details);
-
-        this.age = this.ageService.calcuateAge(this.patient_info.birthdate, this.consult_details.consult_date)
-        // console.log(this.age)
-      },
-      error: err => console.log(err)
-    })
-  }
+  facility: any;
 
   closeModal(){
     this.toggleModal.emit('ekas');
@@ -70,6 +51,9 @@ export class EkasComponent implements OnInit {
   ngOnInit(): void {
     this.patient_info = this.http.getPatientInfo();
     this.patient_philhealth = this.http.getPhilhealhtInfo();
-    this.getFacility();
+    this.facility = this.http.getUserFromJSON();
+    this.age = this.ageService.calcuateAge(this.patient_info.birthdate, this.consult_details.consult_date);
+    console.log(this.patient_info)
+    // this.getFacility();
   }
 }

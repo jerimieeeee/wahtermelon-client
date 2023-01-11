@@ -35,19 +35,19 @@
                 <div class="grid grid-cols-4 text-xs">
                   <div class="col-span-2 flex">
                     HCI Name:
-                    <span class="underline flex-1 w-full">{{ facility_info?.facility_name }}</span>
+                    <span class="underline flex-1 w-full">{{ facility?.konsulta_credential.facility_name }}</span>
                   </div>
                   <div class="col-span-2 flex">
                     Case No.:
-                    <span class="underline flex-1 w-full">{{ patient_philhealth?.transaction_number }}</span>
+                    <span class="underline flex-1 w-full">{{ patient_info?.case_number }}</span>
                   </div>
                   <div class="col-span-2 flex">
                     HCI Accreditation No:
-                    <span class="underline flex-1 w-full"> </span>
+                    <span class="underline flex-1 w-full">{{ facility?.konsulta_credential.accreditation_number }}</span>
                   </div>
                   <div class="col-span-2 flex">
                     Transaction No.:
-                    <span class="underline flex-1 w-full">{{ consult_details?.transaction_number }}</span>
+                    <span class="underline flex-1 w-full">{{ 'S'+consult_details?.transaction_number }}</span>
                   </div>
                 </div>
 

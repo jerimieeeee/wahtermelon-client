@@ -3,15 +3,17 @@
     <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
       <div class="flex justify-between items-start py-3 px-5 rounded-t border-b bg-blue-500 dark:border-gray-600">
         <h3 class="mt-2 text-sm font-bold text-white dark:text-white">
-            RETURN
+            RETURN test {{is_error_array}}
         </h3>
       </div>
 
       <div *ngIf="show_form" class="overflow-y-auto h-96 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
-        <table *ngIf="!return_value?.message" class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
           <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
-              <th  scope="col" class="py-3 px-6">Errors</th>
+              <th  scope="col" class="py-3 px-6">
+                <span *ngIf="!return_value.message">Errors</span>
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -23,16 +25,17 @@
               </td>
             </tr>
             <tr *ngIf="is_error_array === false" class="bg-white border-b">
-              <td>
-                {{ return_value?.errors }}
+              <td *ngIf="return_value.errors">
+                {{ return_value.errors }}
+              </td>
+              <td *ngIf="return_value.message">
+                <div class="flex justify-center mt-20 text-lg font-semibold">
+                  {{ return_value.message }}
+                </div>
               </td>
             </tr>
           </tbody>
         </table>
-
-        <div *ngIf="return_value?.message" class="flex justify-center mt-20 text-lg font-semibold px-10">
-           {{ return_value?.message }}
-        </div>
       </div>
 
       <div class="flex justify-end py-4 px-5 space-x-4 rounded-b border-t border-gray-200 dark:border-gray-600">

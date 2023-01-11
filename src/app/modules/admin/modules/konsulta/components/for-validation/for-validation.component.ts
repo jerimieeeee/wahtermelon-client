@@ -14,6 +14,7 @@ export class ForValidationComponent implements OnInit {
   @Output() addSaving = new EventEmitter<any>();
   @Input() konsulta_list;
   @Input() filter_tranche;
+  @Input() validating;
 
   faCircleCheck = faCircleCheck;
   faSpinner = faSpinner;
@@ -21,7 +22,7 @@ export class ForValidationComponent implements OnInit {
 
   saving_list: any = [];
 
-  validating: boolean = false;
+  // validating: boolean = false;
   is_saving: boolean = false;
 
   validate(kon, save){

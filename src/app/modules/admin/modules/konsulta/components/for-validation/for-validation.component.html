@@ -37,9 +37,9 @@
           {{ validating ? 'Loading' : 'Validate' }}
         </button>
 
-        <button [disabled]="is_saving" class="text-sm text-white bg-orange-400 py-1 w-28 rounded-md px-3 disabled:bg-gray-300" (click)="validate(kon, 1)">
-          <fa-icon [icon]="is_saving ? faSpinner : faSave" [spin]="is_saving" class="mr-2"></fa-icon>
-          {{ is_saving ? 'Loading' : 'Save' }}
+        <button [disabled]="validating" class="text-sm text-white bg-orange-400 py-1 w-28 rounded-md px-3 disabled:bg-gray-300" (click)="validate(kon, 1)">
+          <fa-icon [icon]="validating ? faSpinner : faSave" [spin]="validating" class="mr-2"></fa-icon>
+          {{ validating ? 'Loading' : 'Save' }}
         </button>
       </td>
     </tr>
