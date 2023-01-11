@@ -38,7 +38,9 @@
             </td>
             <td scope="row" class="py-4 px-3 font-medium text-gray-900">
               {{ prescription.dosage_quantity }} {{ prescription.unit_of_measurement.desc }} {{ prescription.regimen.desc }}
-              {{ prescription.duration_intake }} {{ prescription.frequency.desc }}
+              {{ prescription.duration_intake }} {{ prescription.frequency.desc }} <br /><br />
+
+              Instruction Qty: {{ prescription.instruction_quantity }}
             </td>
             <td scope="row" class="py-4 px-3 font-medium text-gray-900">
               {{ prescription.prescription_date | date : 'MM/dd/yyyy'}}
