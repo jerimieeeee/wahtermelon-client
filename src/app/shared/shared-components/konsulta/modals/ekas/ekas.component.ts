@@ -49,7 +49,6 @@ export class EkasComponent implements OnInit {
         console.log(this.lab_list);
         console.log(this.consult_details);
 
-        // console.log(this.prescription_length);
         this.age = this.ageService.calcuateAge(this.patient_info.birthdate, this.consult_details.consult_date)
         // console.log(this.age)
       },
