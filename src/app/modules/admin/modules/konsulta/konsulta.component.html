@@ -99,4 +99,4 @@
 
 </div>
 
-<app-result-form *ngIf="show_return" (showReturn)="showReturn()" [return_value]="return_value"></app-result-form>
+<app-result-form *ngIf="show_return" (showReturn)="showReturn()" (toggleModal)="toggleModal()" [return_value]="return_value"></app-result-form>

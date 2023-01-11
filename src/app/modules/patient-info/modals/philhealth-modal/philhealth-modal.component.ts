@@ -84,10 +84,11 @@ export class PhilhealthModalComponent implements OnInit {
   isATCValid(){
     this.is_checking_atc = true;
     let params = {
-      pPin: this.philhealthForm.value.philhealth_id,
+      pPIN: this.philhealthForm.value.philhealth_id,
       pATC: this.philhealthForm.value.authorization_transaction_code,
       pEffectivityDate: formatDate(this.pATC_date, 'MM/dd/yyyy', 'en')
     }
+
     this.http.get('konsulta/check-atc', {params}).subscribe({
       next: (data: any) => {
         console.log(data)

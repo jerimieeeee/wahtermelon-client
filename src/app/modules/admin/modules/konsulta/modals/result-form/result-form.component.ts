@@ -7,12 +7,14 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 })
 export class ResultFormComponent implements OnInit {
   @Output() showReturn = new EventEmitter<any>();
+  @Output() toggleModal = new EventEmitter<any>();
   @Input() return_value;
 
   constructor() { }
 
+
   closeModal(){
-    this.showReturn.emit();
+    this.toggleModal.emit();
   }
 
   ngOnInit(): void {
