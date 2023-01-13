@@ -34,10 +34,10 @@ export class ValidatedListComponent implements OnInit {
 
     this.http.get('konsulta/validate-report', {params}).subscribe({
       next: (data: any) => {
-        console.log(data)
+        /* console.log(data)
         let result = data.data ? data.data : data
-        console.log(result)
-        this.processReturn(result)
+        console.log(result) */
+        this.processReturn(data)
       },
       error: err => console.log(err)
     })
@@ -64,20 +64,25 @@ export class ValidatedListComponent implements OnInit {
       query = this.http.get('konsulta/download-xml', {params: params});
     }
 
+    // console.log(kon.xml_url.split('/'))
+    let file_info = kon.xml_url.split('/')
+    let file_name = file_info[file_info.length-1];
     query.subscribe({
       next: (response) => {
         // console.log(response)
         if(type === 'raw') {
-          this.downloadFile(response, kon.xml_status === 'S' ? kon.konsulta_transaction_number : kon.transmittal_number, 'raw')
+          // let raw_file_info = file_info.split('.');
+          let raw_file = kon.xml_status === 'S' ? kon.konsulta_transaction_number : kon.transmittal_number+'.xml'
+          this.downloadFile(response, kon.xml_status === 'S' ? kon.konsulta_transaction_number : kon.transmittal_number, 'raw', raw_file)
         } else {
-          this.downloadFile(response, kon.xml_status === 'S' ? kon.konsulta_transaction_number : kon.transmittal_number, 'enc')
+          this.downloadFile(response, kon.xml_status === 'S' ? kon.konsulta_transaction_number : kon.transmittal_number, 'enc', file_name)
         }
       },
       error: err => console.log()
     })
   }
 
-  downloadFile(response, trans_number, type) {
+  downloadFile(response, trans_number, type, filename) {
     let content;
     if(type === 'raw') {
       content = response;
@@ -90,7 +95,7 @@ export class ValidatedListComponent implements OnInit {
 
     let element = document.createElement('a');
     element.href = url;
-    element.setAttribute('download', trans_number+(type === 'raw' ? '.xml' : '.xml.enc'));
+    element.setAttribute('download', filename);
     document.body.appendChild(element);
     element.click();
 
@@ -106,9 +111,9 @@ export class ValidatedListComponent implements OnInit {
 
     this.http.get('konsulta/submit-xml', {params}).subscribe({
       next: (data: any) => {
-        let result = data.data ? data.data : data
-        console.log(result)
-        this.processReturn(result)
+
+        // console.log(result)
+        this.processReturn(data)
       },
       error: err => console.log(err)
     })
@@ -123,14 +128,15 @@ export class ValidatedListComponent implements OnInit {
   }
 
   processReturn(data){
-    console.log(data)
+    // console.log(data)
     if(data){
-      if(data.errors) {
+      let result = data.data ? data.data : data
+      if(result.errors) {
         this.toastr.error('Record error','Error')
-        this.returnData(data)
+        this.returnData(result)
       } else {
-        if(data.message){
-          this.returnData(data);
+        if(result.message){
+          this.returnData(result);
           this.toastr.success('Record validated/submitted', 'Success')
         }
       }

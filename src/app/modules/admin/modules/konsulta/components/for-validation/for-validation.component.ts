@@ -12,6 +12,7 @@ import { ToastrService } from 'ngx-toastr';
 export class ForValidationComponent implements OnInit {
   @Output() showReturn = new EventEmitter<any>();
   @Output() addSaving = new EventEmitter<any>();
+  @Output() loadList = new EventEmitter<any>();
   @Input() konsulta_list;
   @Input() filter_tranche;
   @Input() validating;
@@ -59,6 +60,7 @@ export class ForValidationComponent implements OnInit {
         }
       }
     } else {
+      this.loadList.emit()
       this.toastr.error('Validation failed','Error')
     }
 

@@ -50,7 +50,7 @@
 
     <div>
       <div class="overflow-x-auto relative shadow-md sm:rounded-lg">
-        <app-for-validation *ngIf="forms['for_validation']" (addSaving)="addSaving($event)" (showReturn)="showReturn($event)" [validating]="is_saving" [konsulta_list]="konsulta_list" [filter_tranche]="filter_tranche"></app-for-validation>
+        <app-for-validation *ngIf="forms['for_validation']" (addSaving)="addSaving($event)" (showReturn)="showReturn($event)" (loadList)="loadList()" [validating]="is_saving" [konsulta_list]="konsulta_list" [filter_tranche]="filter_tranche"></app-for-validation>
         <app-validated-list *ngIf="forms['validated_list']" [filter_status]="filter_status" (showReturn)="showReturn($event)" (showList)="showList($event)" [konsulta_list]="konsulta_list" [filter_tranche]="filter_tranche"></app-validated-list>
       </div>
     </div>

@@ -43,7 +43,7 @@
 
       <td class="py-4 px-3 align-top text-center">
         <div *ngIf="checkPatientList(kon.patient)" >
-          <button class="text-sm text-white bg-blue-400 py-1 w-28 rounded-md px-3 mr-2 disabled:bg-gray-300" >
+          <button class="text-sm text-white bg-blue-400 py-1 w-28 rounded-md px-3 mr-2 disabled:bg-gray-300" (click)="openList(kon.patient)">
             show list
           </button>
         </div>
