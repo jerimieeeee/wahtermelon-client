@@ -193,7 +193,7 @@ export class ModuleModalComponent implements OnInit {
       consult_date: this.consult_date+' '+this.consult_time+':00',
       consult_done: 0,
       pt_group: selected_module.group,
-      authorization_transaction_code: this.is_atc_valid ? (!this.is_walk_in ? (this.pATC || this.pATC !== '' ? this.pATC : null) : 'WALKEDIN') : null,
+      authorization_transaction_code: this.is_atc_valid ? (!this.is_walk_in ? (this.pATC || this.pATC !== '' ? this.pATC : 'WALKEDIN') : 'WALKEDIN') : 'WALKEDIN',
       walkedin_status: this.is_atc_valid ? false : true
     };
 
