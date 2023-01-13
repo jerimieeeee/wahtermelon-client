@@ -14,29 +14,29 @@
 
       <div class="w-full justify-end flex">
         <!-- <input type="text" [(ngModel)]="search_item" class="form-input border-0 text-sm p-1 m-1 border-r border-gray-400" (keyup.enter)="loadList()" placeholder="Search name"/> -->
-        <select [(ngModel)]="form_type" class="input w-44">
+        <select [(ngModel)]="form_type" class="input w-44" (change)="loadList()">
           <option value="1">For Validation</option>
           <option value="2">Validated List</option>
         </select>
 
-        <select [(ngModel)]="filter_tranche" class="input w-44">
+        <select [(ngModel)]="filter_tranche" class="input w-44" (change)="loadList()">
           <option [value]="1">1st Tranche</option>
           <option [value]="2">2nd Tranche</option>
         </select>
 
-        <select *ngIf="form_type==='1'" [(ngModel)]="filter_year" class="input w-44">
+        <select *ngIf="form_type==='1'" [(ngModel)]="filter_year" class="input w-44" (change)="loadList()">
           <option [value]="year" *ngFor="let year of years" >{{year}}</option>
         </select>
 
-        <select *ngIf="form_type==='2'" [(ngModel)]="filter_status" class="input w-44">
+        <select *ngIf="form_type==='2'" [(ngModel)]="filter_status" class="input w-44" (change)="loadList()">
           <option value="V">Validated</option>
           <option value="S">Submitted/Success</option>
           <option value="F">Failed</option>
         </select>
 
-        <button [disabled]="searching" type="button" class="ml-3 text-white text-sm bg-blue-500 rounded-md h-9 w-9 mt-1 disabled:bg-gray-300" (click)="loadList()">
+        <!-- <button [disabled]="searching" type="button" class="ml-3 text-white text-sm bg-blue-500 rounded-md h-9 w-9 mt-1 disabled:bg-gray-300" (click)="loadList()">
           <fa-icon class="" [icon]="searching ? faSpinner : faFilter" [spin]="searching"></fa-icon>
-        </button>
+        </button> -->
       </div>
     </div>
 
@@ -51,7 +51,7 @@
     <div>
       <div class="overflow-x-auto relative shadow-md sm:rounded-lg">
         <app-for-validation *ngIf="forms['for_validation']" (addSaving)="addSaving($event)" (showReturn)="showReturn($event)" [validating]="is_saving" [konsulta_list]="konsulta_list" [filter_tranche]="filter_tranche"></app-for-validation>
-        <app-validated-list *ngIf="forms['validated_list']" (showReturn)="showReturn($event)" (showList)="showList($event)" [konsulta_list]="konsulta_list" [filter_tranche]="filter_tranche"></app-validated-list>
+        <app-validated-list *ngIf="forms['validated_list']" [filter_status]="filter_status" (showReturn)="showReturn($event)" (showList)="showList($event)" [konsulta_list]="konsulta_list" [filter_tranche]="filter_tranche"></app-validated-list>
       </div>
     </div>
   </div>

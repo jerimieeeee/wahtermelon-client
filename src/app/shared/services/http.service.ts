@@ -22,6 +22,10 @@ export class HttpService {
 
   user_json: any;
 
+  downloadXML(url){
+    return `${this.baseUrl}`+url;
+  }
+
   get(loc, data?) {
     return this.http.get(`${this.baseUrl}` + loc, data ? data : '')
   }

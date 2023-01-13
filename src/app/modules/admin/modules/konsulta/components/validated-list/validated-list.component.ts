@@ -14,6 +14,7 @@ export class ValidatedListComponent implements OnInit {
   @Output() showList = new EventEmitter<any>();
   @Input() konsulta_list;
   @Input() filter_tranche;
+  @Input() filter_status;
 
   faSpinner = faSpinner;
   faCircleCheck = faCircleCheck;
@@ -31,15 +32,6 @@ export class ValidatedListComponent implements OnInit {
       transmittal_number: [kon.transmittal_number]
     }
 
-    /* let params = new HttpParams({
-      fromObject: {
-        'transmittal_number[]': kon.transmittal_number,
-        'tranche': this.filter_tranche,
-        'revalidate': 1
-      }
-    }); */
-
-    // console.log(params)
     this.http.get('konsulta/validate-report', {params}).subscribe({
       next: (data: any) => {
         console.log(data)
@@ -49,6 +41,60 @@ export class ValidatedListComponent implements OnInit {
       },
       error: err => console.log(err)
     })
+  }
+
+  downloading: boolean = false;
+
+  downloadXml(kon, type) {
+    this.downloading = true
+    let params = {
+      raw: type === 'raw' ? 1 : 0
+    }
+
+    if(kon.xml_status === 'S') {
+      params['konsulta_transaction_number'] = kon.konsulta_transaction_number
+    } else {
+      params['transmittal_number'] = kon.transmittal_number
+    }
+
+    let query;
+    if(type === 'raw') {
+      query = this.http.get('konsulta/download-xml', {params: params, responseType: 'text/xml'});
+    } else {
+      query = this.http.get('konsulta/download-xml', {params: params});
+    }
+
+    query.subscribe({
+      next: (response) => {
+        // console.log(response)
+        if(type === 'raw') {
+          this.downloadFile(response, kon.xml_status === 'S' ? kon.konsulta_transaction_number : kon.transmittal_number, 'raw')
+        } else {
+          this.downloadFile(response, kon.xml_status === 'S' ? kon.konsulta_transaction_number : kon.transmittal_number, 'enc')
+        }
+      },
+      error: err => console.log()
+    })
+  }
+
+  downloadFile(response, trans_number, type) {
+    let content;
+    if(type === 'raw') {
+      content = response;
+    } else {
+      content = JSON.stringify(response);
+    }
+
+    let blob = new Blob([content], { type: 'text/xml'})
+    let url = window.URL.createObjectURL(blob)
+
+    let element = document.createElement('a');
+    element.href = url;
+    element.setAttribute('download', trans_number+(type === 'raw' ? '.xml' : '.xml.enc'));
+    document.body.appendChild(element);
+    element.click();
+
+    this.downloading = false;
   }
 
   submit(transmittal_number){
