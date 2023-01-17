@@ -34,7 +34,7 @@ export class ValidatedListComponent implements OnInit {
 
     this.http.get('konsulta/validate-report', {params}).subscribe({
       next: (data: any) => {
-        /* console.log(data)
+        console.log(data) /*
         let result = data.data ? data.data : data
         console.log(result) */
         this.processReturn(data)
