@@ -23,10 +23,10 @@
           rounded-l-lg
           transition
           ease-in-out
-          m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" type="file" id="formFile">
+          m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" type="file" id="formFile" [(ngModel)]="xmlFile" multiple>
         </div>
 
-        <button type="button" (click)="uploadFile()" class="px-4 mr-5 bg-blue-500 text-white rounded-r-lg text-sm">
+        <button type="button" (click)="uploadFile(file_to_upload)" class="px-4 mr-5 bg-blue-500 text-white rounded-r-lg text-sm">
           <fa-icon [icon]="faUpload" class=""></fa-icon>
         </button>
 
@@ -58,12 +58,17 @@
                 {{ list.transmittal_number }}
               </td>
               <th scope="row" class="py-4 px-6 font-medium text-center">
-                <div *ngFor="let enlist of list.enlistments.ENLISTMENT">
-                  {{ enlist.pPatientLname }}, {{ enlist.pPatientFname }} {{ enlist.pPatientMname }} {{ enlist.pPatientExtname }}
+                <div *ngIf="list.enlistments.ENLISTMENT.length > 0">
+                  <div *ngFor="let enlist of list.enlistments.ENLISTMENT">
+                    {{ enlist.pPatientLname }}, {{ enlist.pPatientFname }} {{ enlist.pPatientMname }} {{ enlist.pPatientExtname }}
+                  </div>
+                </div>
+                <div *ngIf="!list.enlistments.ENLISTMENT.length">
+                  {{ list.enlistments.ENLISTMENT.pPatientLname }}, {{ list.enlistments.ENLISTMENT.pPatientFname }} {{ list.enlistments.ENLISTMENT.pPatientMname }} {{ list.enlistments.ENLISTMENT.pPatientExtname }}
                 </div>
               </th>
               <td class="py-4 px-6 text-center">
-                <button type="button" class="px-3 py-1 rounded-md bg-blue-500 text-white">
+                <button type="button" class="px-3 py-1 rounded-md bg-blue-500 text-white" (click)="viewContent(list.imported_xml)">
                   <fa-icon [icon]="faClipboardList" class="mr-2"></fa-icon>
                   View XML
                 </button>
@@ -109,4 +114,4 @@
 
 </div>
 
-<app-uploaded-xml *ngIf="modals['uploaded-xml']" (toggleModal)="toggleModal($event)" [xmlData]="xmlData"></app-uploaded-xml>
+<app-uploaded-xml *ngIf="modals['uploaded-xml']" (toggleModal)="toggleModal($event)" [xml_to_view]="xml_to_view"></app-uploaded-xml>

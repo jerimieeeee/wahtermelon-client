@@ -24,7 +24,7 @@ export class RequestsInterceptor implements HttpInterceptor {
     if(localStorage.getItem('access_token')){
       request = request.clone({
         setHeaders: {
-          'Content-Type' : 'application/json; charset=utf-8',
+          // 'Content-Type' : 'multipart/form-data',
           'Accept'       : 'application/json',
           'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
         },

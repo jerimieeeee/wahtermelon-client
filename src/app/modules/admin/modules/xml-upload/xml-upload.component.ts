@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { faSpinner,  faSearch, faCalendarDays, faArrowsRotate, faUpload, faClipboardList } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-xml-upload',
@@ -55,28 +56,42 @@ export class XmlUploadComponent implements OnInit {
     this.toggleModal({name: 'uploaded-xml'})
   }
 
-  file_to_upload: File = null;
+  file_to_upload: any = null;
+  xmlFile: any = null;
 
   readXML(files: FileList){
-    console.log(files[0])
-    this.file_to_upload = files[0];
+    // console.log(files.item(0))
+    this.file_to_upload = files;
   }
 
-  uploadFile(){
-    const xml: FormData = new FormData()
-    xml.append('fileKey', this.file_to_upload, this.file_to_upload.name)
+  uploadFile(fileToUpload){
+    const formData: FormData = new FormData()
+    for (let index = 0; index < fileToUpload.length; index++) {
+      // const element = array[index];
+      formData.append('xml[]', fileToUpload[index])
+    }
 
-    let params = [];
-    params.push(this.file_to_upload)
 
-    console.log(typeof params, params)
-    this.http.post('konsulta/upload-xml', params).subscribe({
+    console.log(formData.get('xml'))
+    this.http.post('konsulta/upload-xml', formData).subscribe({
       next: (data:any) => {
         console.log(data)
+        this.toastr.success('Successfully uploaded!','XML Upload');
+        this.file_to_upload = null;
+        this.xmlFile = null;
+        this.loadList();
         // this.openModal();
       },
-      error: err => console.log(err)
+      error: err => console.log('text', err)
     })
+  }
+
+  xml_to_view: any;
+
+  viewContent(data){
+    this.xml_to_view = data;
+
+    this.openModal();
   }
 
   loadList(page?: number){
@@ -88,7 +103,7 @@ export class XmlUploadComponent implements OnInit {
     if (page) params['params']['page'] = page;
     params['params']['per_page'] = this.per_page;
 
-    console.log(params)
+    // console.log(params)
     this.http.get('konsulta/imported-xml',params).subscribe({
       next: (data: any) => {
         console.log(data.data);
@@ -105,7 +120,8 @@ export class XmlUploadComponent implements OnInit {
   }
 
   constructor(
-    private http: HttpService
+    private http: HttpService,
+    private toastr: ToastrService
   ) { }
 
   ngOnInit(): void {
