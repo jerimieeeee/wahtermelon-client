@@ -5,27 +5,18 @@
       <!-- Modal header -->
       <div class="flex justify-between items-start py-3 px-5 rounded-t border-b bg-blue-500 dark:border-gray-600">
         <h3 class="mt-2 text-sm font-bold text-white dark:text-white">
-          XML UPLOAD
+          XML CONTENT
         </h3>
       </div>
       <!-- Modal body -->
-      <div class="overflow-y-auto h-96 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-tracsk-gray-100">
-        <div *ngIf="!show_form" class="w-full flex justify-center pt-36">
-          <fa-icon [icon]="faSpinner" spin="true" class="text-2xl text-blue-500"></fa-icon>
-          <span class="mt-1 ml-3 text-blue-500 font-semibold">Uploading XML</span>
-        </div>
-        <table *ngIf="show_form">
-          <!-- <thead *ngIf="show_form">
-            <tr>
-              <th class="px-3 w-full text-center">XML Content</th>
-            </tr>
-          </thead> -->
+      <div class="overflow-y-auto h-96 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100 flex justify-center">
+        <table *ngIf="show_form" class="w-10/12 border border-slate-300 rounded-lg">
           <tbody>
-            <tr class="cursor-pointer flex" (click)="toggleAccordion('enlistment')">
-              <td class="font-bold text-center bg-green-300  w-full">ENLISTMENTS</td>
+            <tr class="cursor-pointer h-10" (click)="toggleAccordion('enlistment')">
+              <td class="font-bold text-center bg-green-300 w-full">ENLISTMENTS</td>
             </tr>
-            <tr class="border-b border-slate-200" *ngFor="let res of xml_to_view.ENLISTMENTS | keyvalue">
-              <div *ngIf="accordion['enlistment']" >
+            <tr class="border-b border-slate-200" *ngIf="accordion['enlistment']" >
+              <div *ngFor="let res of xml_to_view.ENLISTMENTS | keyvalue">
                 <div *ngIf="res.value.length > 0">
                   <div *ngFor="let r of res.value | keyvalue">
                     <div *ngFor="let item of r.value | keyvalue" class="pb-5 text-sm">
@@ -41,11 +32,11 @@
               </div>
             </tr>
 
-            <tr class="cursor-pointer flex" (click)="toggleAccordion('profiling')">
+            <tr class="cursor-pointer h-10" (click)="toggleAccordion('profiling')">
               <td class="font-bold text-center bg-blue-300  w-full">PROFILING</td>
             </tr>
-            <tr class="border-b border-slate-200" *ngFor="let res of xml_to_view.PROFILING | keyvalue">
-              <div *ngIf="accordion['profiling']" >
+            <tr class="border-b border-slate-200" *ngIf="accordion['profiling']">
+              <div *ngFor="let res of xml_to_view.PROFILING | keyvalue">
                 <div *ngIf="res.value.length > 0">
                   <div *ngFor="let r of res.value | keyvalue">
                     <div *ngFor="let item of r.value | keyvalue" class="pb-5 text-sm">
@@ -61,11 +52,11 @@
               </div>
             </tr>
 
-            <tr class="cursor-pointer" (click)="toggleAccordion('soaps')">
+            <tr class="cursor-pointer h-10" (click)="toggleAccordion('soaps')">
               <td class="font-bold text-center bg-yellow-300  w-full">SOAPS</td>
             </tr>
-            <tr class="border-b border-slate-200" *ngFor="let res of xml_to_view.SOAPS | keyvalue">
-              <div *ngIf="accordion['soaps']" >
+            <tr class="border-b border-slate-200" *ngIf="accordion['soaps']">
+              <div *ngFor="let res of xml_to_view.SOAPS | keyvalue">
                 <div *ngIf="res.value.length > 0">
                   <div *ngFor="let r of res.value | keyvalue">
                     <div *ngFor="let item of r.value | keyvalue" class="pb-5 text-sm">
@@ -81,11 +72,11 @@
               </div>
             </tr>
 
-            <tr class="cursor-pointer" (click)="toggleAccordion('diagnostic')">
+            <tr class="cursor-pointer h-10" (click)="toggleAccordion('diagnostic')">
               <td class="font-bold text-center bg-red-300  w-full">DIAGNOSTIC EXAM RESULTS</td>
             </tr>
-            <tr class="border-b border-slate-200" *ngFor="let res of xml_to_view.DIAGNOSTICEXAMRESULTS | keyvalue">
-              <div *ngIf="accordion['diagnostic']" >
+            <tr class="border-b border-slate-200" *ngIf="accordion['diagnostic']">
+              <div *ngFor="let res of xml_to_view.DIAGNOSTICEXAMRESULTS | keyvalue">
                 <div *ngIf="res.value.length > 0">
                   <div *ngFor="let r of res.value | keyvalue">
                     <div *ngFor="let item of r.value | keyvalue" class="pb-5 text-sm">
@@ -101,11 +92,11 @@
               </div>
             </tr>
 
-            <tr class="cursor-pointer" (click)="toggleAccordion('medicines')">
+            <tr class="cursor-pointer h-10" (click)="toggleAccordion('medicines')">
               <td class="font-bold text-center bg-orange-300  w-full">MEDICINE</td>
             </tr>
-            <tr class="border-b border-slate-200" *ngFor="let res of xml_to_view.MEDICINES | keyvalue">
-              <div *ngIf="accordion['medicines']" >
+            <tr class="border-b border-slate-200" *ngIf="accordion['medicines']" >
+              <div *ngFor="let res of xml_to_view.MEDICINES | keyvalue">
                 <div *ngIf="res.value.length > 0">
                   <div *ngFor="let r of res.value | keyvalue">
                     <div *ngFor="let item of r.value | keyvalue" class="pb-5 text-sm">
