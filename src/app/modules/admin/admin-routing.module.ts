@@ -46,9 +46,14 @@ const routes: Routes = [
       {
         path: 'konsulta-masterlist',
         loadChildren: () => import('./modules/konsulta-masterlist/konsulta-masterlist.module').then(m => m.KonsultaMasterlistModule)
+      },
+      {
+        path: 'xml-upload',
+        loadChildren: () => import('./modules/xml-upload/xml-upload.module').then(m => m.XmlUploadModule)
       }
     ]
-  },
+  }
+
 
 ];
 

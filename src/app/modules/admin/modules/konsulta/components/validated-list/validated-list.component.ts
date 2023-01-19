@@ -51,11 +51,11 @@ export class ValidatedListComponent implements OnInit {
       raw: type === 'raw' ? 1 : 0
     }
 
-    if(kon.xml_status === 'S') {
-      params['konsulta_transaction_number'] = kon.konsulta_transaction_number
-    } else {
+    // if(kon.xml_status === 'S') {
+    //   params['konsulta_transaction_number'] = kon.konsulta_transaction_number
+    // } else {
       params['transmittal_number'] = kon.transmittal_number
-    }
+    // }
 
     let query;
     if(type === 'raw') {
