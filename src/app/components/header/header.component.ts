@@ -66,12 +66,6 @@ export class HeaderComponent implements OnInit {
     private router: Router
   ) { }
 
-  dummy_patient = [
-    'ln twenty',
-    'aolastname',
-    'ln eight'
-  ];
-
   loadPatients() {
     this.patients$ = concat(
       of([]), // default items
@@ -83,56 +77,13 @@ export class HeaderComponent implements OnInit {
         debounceTime(800),
         tap(() => this.patientLoading = true),
         switchMap(term => {
-          let in_arr: boolean = false;
-          let in_store: boolean = false;
-          if(this.dummy_patient.includes(term)){
-            in_arr = true;
-            in_store = this.checkLocalStore(term)
-          } else {
-            in_arr = false;
-          }
-          console.log(in_store)
-          if(in_arr === false) {
-            return this.getPatient(term).pipe(
-              catchError(() => of([])),
-              tap(() => this.patientLoading = false)
-            )
-          } else {
-            if(in_store === true) {
-              return this.getPatient(term).pipe(
-                catchError(() => of([])),
-                tap(() => this.patientLoading = false)
-              )
-            } else {
-              this.patientLoading = false;
-              this.showCreate = true
-              return of([]);
-            }
-          }
+          return this.getPatient(term).pipe(
+            catchError(() => of([])),
+            tap(() => this.patientLoading = false)
+          )
         })
       )
     );
-  }
-
-  checkLocalStore(term){
-    // return false
-    let ret_val: boolean = false;
-    if(localStorage.getItem('uploaded-xml')) {
-      let list = JSON.parse(localStorage.getItem('uploaded-xml'));
-
-      Object.entries(list).forEach(([key, value], index) => {
-        let val: any = value;
-
-        if(ret_val !== true) {
-          if(val.attr.pPatientLname.search(term.toUpperCase()) > -1) {
-            console.log(term)
-            ret_val = true;
-          }
-        }
-      })
-    }
-
-    return ret_val;
   }
 
   toggleMenu(){

@@ -26,7 +26,7 @@
           m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" type="file" id="formFile">
         </div>
 
-        <button type="button" (click)="openModal()" class="px-4 mr-5 bg-blue-500 text-white rounded-r-lg text-sm">
+        <button type="button" (click)="uploadFile()" class="px-4 mr-5 bg-blue-500 text-white rounded-r-lg text-sm">
           <fa-icon [icon]="faUpload" class=""></fa-icon>
         </button>
 
@@ -47,30 +47,26 @@
         <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 mb-5">
           <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
-              <th scope="col" class="w-1/5 py-3 px-6">Name</th>
-              <th scope="col" class="w-1/5 py-3 px-6">Birthdate</th>
-              <th scope="col" class="w-1/5 py-3 px-6">Member Name</th>
-              <th scope="col" class="w-1/5 py-3 px-6">Member Birthdate</th>
-              <th scope="col" class="w-1/5 py-3 px-6">Transaction Number</th>
+              <th scope="col" class="w-1/5 py-3 px-6 text-center">Transmittal Number</th>
+              <th scope="col" class="w-3/5 py-3 px-6 text-center">Name</th>
+              <th scope="col" class="w-1/5 py-3 px-6 text-center">Action</th>
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let uploaded of uploaded_list; let odd = odd; let i = index" class="bg-white border-t" [ngClass]="{'bg-gray-50': odd}">
-              <td class="py-4 px-6">
-                {{ uploaded.attr.pPatientLname }}, {{ uploaded.attr.pPatientFname }} {{ uploaded.attr.pPatientMname }} {{ uploaded.attr.pPatientExtname }}
+            <tr *ngFor="let list of xml_list; let odd = odd; let i = index" class="bg-white border-t" [ngClass]="{'bg-gray-50': odd}">
+              <td class="py-4 px-6 text-center">
+                {{ list.transmittal_number }}
               </td>
               <th scope="row" class="py-4 px-6 font-medium text-center">
-                {{ uploaded.attr.pPatientDob | date: 'MM/dd/yyyy' }}
+                <div *ngFor="let enlist of list.enlistments.ENLISTMENT">
+                  {{ enlist.pPatientLname }}, {{ enlist.pPatientFname }} {{ enlist.pPatientMname }} {{ enlist.pPatientExtname }}
+                </div>
               </th>
-              <td class="py-4 px-6">
-                {{ uploaded.attr.pMemLname }}, {{ uploaded.attr.pMemFname }} {{ uploaded.attr.pMemMname }} {{ uploaded.attr.pMemExtname }}
-              </td>
-              <th scope="row" class="py-4 px-6 font-medium text-center">
-                {{ uploaded.attr.pMemDob | date: 'MM/dd/yyyy' }}
-              </th>
-
-              <td class="py-4 px-6">
-                {{ uploaded.attr.pHciCaseNo }}
+              <td class="py-4 px-6 text-center">
+                <button type="button" class="px-3 py-1 rounded-md bg-blue-500 text-white">
+                  <fa-icon [icon]="faClipboardList" class="mr-2"></fa-icon>
+                  View XML
+                </button>
               </td>
             </tr>
           </tbody>

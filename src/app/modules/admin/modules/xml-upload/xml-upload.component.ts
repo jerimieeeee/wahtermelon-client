@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { faSpinner, faChevronLeft, faChevronRight, faAnglesLeft, faAnglesRight, faSearch, faRotate, faCalendarDays, faArrowsRotate, faUpload } from '@fortawesome/free-solid-svg-icons';
+import { faSpinner,  faSearch, faCalendarDays, faArrowsRotate, faUpload, faClipboardList } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
-import { NgxXmlToJsonService } from 'ngx-xml-to-json';
 
 @Component({
   selector: 'app-xml-upload',
@@ -10,15 +9,11 @@ import { NgxXmlToJsonService } from 'ngx-xml-to-json';
 })
 export class XmlUploadComponent implements OnInit {
   faSpinner = faSpinner;
-  faChevronLeft = faChevronLeft;
-  faChevronRight = faChevronRight;
-  faAnglesLeft = faAnglesLeft;
-  faAnglesRight = faAnglesRight;
   faSearch = faSearch;
-  faRotate = faRotate;
   faCalendarDays = faCalendarDays;
   faArrowsRotate = faArrowsRotate;
   faUpload = faUpload;
+  faClipboardList = faClipboardList;
 
   per_page: number = 10;
   current_page: number;
@@ -34,7 +29,7 @@ export class XmlUploadComponent implements OnInit {
 
   submit_error: any;
 
-  konsulta_list: any = [];
+  xml_list: any = [];
 
   modals: any = [];
   uploaded_list: any = [];
@@ -56,54 +51,48 @@ export class XmlUploadComponent implements OnInit {
 
   }
 
-  showList(data) {
-    this.konsulta_list = data.ASSIGNMENT;
-    console.log(this.konsulta_list);
-  }
-
-  /* xmlJson(data) {
-    let parseString = require('xml2js').parseString;
-
-    parseString(data, function(err, result) {
-      console.log(result)
-    })
-  } */
   openModal(){
     this.toggleModal({name: 'uploaded-xml'})
   }
 
-  xmlData: string;
-  readXML(files: FileList){
-    const reader = new FileReader();
-    reader.onload = (evt) => {
-      const xmlData: string = (evt as any).target.result;
-      const option = {
-        textKey: 'text',
-        attrKey: 'attr',
-        cdataKey: 'cdata'
-      }
-      this.xmlData = this.xml2json.xmlToJson(xmlData, option);
-      console.log(this.xmlData)
-      this.toggleModal({name: 'uploaded-xml'})
-    }
+  file_to_upload: File = null;
 
-    reader.readAsText(files[0])
+  readXML(files: FileList){
+    console.log(files[0])
+    this.file_to_upload = files[0];
+  }
+
+  uploadFile(){
+    const xml: FormData = new FormData()
+    xml.append('fileKey', this.file_to_upload, this.file_to_upload.name)
+
+    let params = [];
+    params.push(this.file_to_upload)
+
+    console.log(typeof params, params)
+    this.http.post('konsulta/upload-xml', params).subscribe({
+      next: (data:any) => {
+        console.log(data)
+        // this.openModal();
+      },
+      error: err => console.log(err)
+    })
   }
 
   loadList(page?: number){
     let params = {params: { }};
-    if (this.search_item) params['params']['search'] = this.search_item;
+    /* if (this.search_item) params['params']['search'] = this.search_item;
     if (this.search_pin) params['params']['filter[philhealth_id]'] = this.search_pin;
-    if (this.search_year) params['params']['filter[effectivity_year]'] = this.search_year;
+    if (this.search_year) params['params']['filter[effectivity_year]'] = this.search_year; */
 
     if (page) params['params']['page'] = page;
     params['params']['per_page'] = this.per_page;
 
     console.log(params)
-    this.http.get('konsulta/registration-lists',params).subscribe({
+    this.http.get('konsulta/imported-xml',params).subscribe({
       next: (data: any) => {
         console.log(data.data);
-        this.konsulta_list = data.data;
+        this.xml_list = data.data;
 
         this.current_page = data.meta.current_page;
         this.last_page = data.meta.last_page;
@@ -116,16 +105,10 @@ export class XmlUploadComponent implements OnInit {
   }
 
   constructor(
-    private http: HttpService,
-    private xml2json: NgxXmlToJsonService
+    private http: HttpService
   ) { }
 
   ngOnInit(): void {
-    // this.loadList();
-    // this.toggleModal({name: 'uploaded-xml'})
-    this.uploaded_list = JSON.parse(localStorage.getItem('uploaded-xml'))
-    if(!this.uploaded_list) {
-      this.uploaded_list = [];
-    }
+    this.loadList()
   }
 }
