@@ -26,12 +26,15 @@ export class RequestsInterceptor implements HttpInterceptor {
         setHeaders: {
           // 'Content-Type' : 'multipart/form-data',
           'Accept'       : 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
+          'withCredentials': 'true',
+          // 'Authorization': 'access_token',
         },
+
       });
     }
     return next.handle(request).pipe(
       catchError ((error) => {
+        console.log(error)
         if(error && error.status ===401){
           return this.handle401Error(request, next, error);
         } else {
@@ -53,7 +56,7 @@ export class RequestsInterceptor implements HttpInterceptor {
       }),
       catchError((error) => { */
         localStorage.removeItem('user');
-        localStorage.removeItem('access_token');
+        // localStorage.removeItem('access_token');
 
         this.router.navigate(['/']);
         return throwError(() => originalError);
