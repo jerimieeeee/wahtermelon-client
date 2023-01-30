@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
   selector: 'app-ncd',
@@ -6,8 +7,20 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./ncd.component.scss']
 })
 export class NcdComponent implements OnInit {
+  @Input() selected_visit
 
-  constructor() { }
+  loadData(){
+    this.http.get('child-care/cc-records/'+this.selected_visit.patient.id).subscribe({
+      next: (data: any) => {
+        console.log(data)
+      },
+      error: err => console.log(err)
+    });
+  }
+
+  constructor(
+    private http: HttpService
+  ) { }
 
   ngOnInit(): void {
   }
