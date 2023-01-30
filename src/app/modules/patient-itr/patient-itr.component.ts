@@ -134,6 +134,10 @@ export class PatientItrComponent implements OnInit {
         query = this.http.get('child-care/cc-records/'+details.patient.id);
         this.getSelected(query, details.pt_group);
         break;
+      case 'mc':
+        query = this.http.get('maternal-care/mc-records', {params:{type: 'all', patient_id: details.patient.id}});
+        this.getSelected(query, details.pt_group);
+        break;
       default:
         this.selected_visit = details;
         break;
@@ -144,7 +148,7 @@ export class PatientItrComponent implements OnInit {
     query.subscribe({
       next: (data: any) => {
         console.log(data.data)
-        if(group === 'cc') {
+        if(group === 'cc' || group === 'mc') {
           this.selected_visit = data.data;
         }else {
           this.selected_visit = data.data[0];
