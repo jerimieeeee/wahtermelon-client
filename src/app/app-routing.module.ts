@@ -12,33 +12,21 @@ const routes: Routes = [
     component: AppComponent
   },
   {
+    path: 'verify',
+    component: AppComponent
+  },
+  {
     path: 'fp',
     loadChildren: () => import('./modules/familyplanning/familyplanning.module').then(m => m.FamilyplanningModule)
   },
-  /* {
-    path: 'mc',
-    loadChildren: () => import('./modules/maternalcare/maternalcare.module').then(m => m.MaternalcareModule)
-  }, */
-  /* {
-    path: 'cc',
-    loadChildren: () => import('./modules/childcare/childcare.module').then(m => m.ChildcareModule)
-  }, */
   {
     path: 'tb',
     loadChildren: () => import('./modules/tbdots/tbdots.module').then(m => m.TbdotsModule)
   },
-  /* {
-    path: 'ncd',
-    loadChildren: () => import('./modules/ncd/ncd.module').then(m => m.NcdModule)
-  }, */
   {
     path: 'ab',
     loadChildren: () => import('./modules/animalbite/animalbite.module').then(m => m.AnimalbiteModule)
   },
-  /* {
-    path: 'itr',
-    loadChildren: () => import('./modules/patient-itr/patient-itr.module').then(m => m.PatientItrModule)
-  }, */
   {
     path: 'registration',
     loadChildren: () => import('./modules/patient-registration/patient-registration.module').then(m => m.PatientRegistrationModule)
@@ -60,17 +48,9 @@ const routes: Routes = [
     loadChildren: () => import('./modules/drug-list/drug-list.module').then(m => m.DrugListModule)
   },
   {
-    path: 'drug-list',
-    loadChildren: () => import('./modules/drug-list/drug-list.module').then(m => m.DrugListModule)
-  },
-  {
     path: 'facility-config',
     loadChildren: () => import('./modules/facility-config/facility-config.module').then(m => m.FacilityConfigModule)
   },
-  /* {
-    path: 'cn',
-    loadChildren: () => import('./modules/consultation/consultation.module').then(m => m.ConsultationModule)
-  }, */
   {
     path: 'user-registration',
     loadChildren: () => import('./modules/user-registration/user-registration.module').then(m => m.UserRegistrationModule)
@@ -86,10 +66,6 @@ const routes: Routes = [
   {
     path: 'households',
     loadChildren: () => import('./modules/households/households.module').then(m => m.HouseholdsModule)
-  },
-  {
-    path: 'verify',
-    loadChildren: () => import('./modules/verify/verify.module').then(m => m.VerifyModule)
   },
   {
     path: 'forgot-password',
@@ -111,10 +87,6 @@ const routes: Routes = [
     path: 'lab',
     loadChildren: () => import('./modules/lab/lab.module').then(m => m.LabModule)
   },
-  /* {
-    path: 'dispensing',
-    loadChildren: () => import('./modules/drug-dispensing/drug-dispensing.module').then(m => m.DrugDispensingModule)
-  }, */
   {
     path: 'patient', loadChildren: () => import('./modules/patient-info/patient-info.module').then(m => m.PatientInfoModule)
   }
