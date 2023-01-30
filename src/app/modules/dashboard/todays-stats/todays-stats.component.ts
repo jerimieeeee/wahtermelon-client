@@ -21,14 +21,14 @@ export class TodaysStatsComponent implements OnInit {
   loadStats(){
     this.http.get('consultation/stats').subscribe({
       next: (data:any) => {
-        console.log(data);
+        // console.log(data);
         this.side_stats = data;
       },
       error: err => console.log(err)
     })
   }
   ngOnInit(): void {
-    console.log(this.cookieService.get('access_token'))
+    // console.log(this.cookieService.get('access_token'))
     this.loadStats()
   }
 
