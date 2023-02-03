@@ -85,6 +85,7 @@ export class RiskAssessmentComponent implements OnInit, OnChanges {
       this.f.polyphagia.enable();
       this.f.polydipsia.enable();
       this.f.polyuria.enable();
+      this.f.client_type.enable();
     } else {
       this.riskAssessForm.patchValue({
         diabetes_medications: 'X',
@@ -96,13 +97,10 @@ export class RiskAssessmentComponent implements OnInit, OnChanges {
       this.f.polyphagia.disable();
       this.f.polydipsia.disable();
       this.f.polyuria.disable(); */
-
-      if(this.riskAssessForm.value.location === 2) {
-        this.f.client_type.enable();
-      } else {
-        this.f.client_type.disable();
-      }
+      this.f.client_type.disable();
     }
+
+    console.log(this.f)
   }
 
   getVitalsToday(vitals, consult_details){
