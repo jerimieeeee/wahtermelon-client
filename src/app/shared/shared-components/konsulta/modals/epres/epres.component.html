@@ -124,7 +124,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr *ngFor="let pres of prescriptions; let i = index">
+                    <tr *ngFor="let pres of prescriptions; first as isFirst">
                       <td class="border border-slate-700">
                         {{ pres.konsulta_medicine ? pres.konsulta_medicine.category : '' }}
                       </td>
@@ -139,8 +139,8 @@
                       </td>
 
 
-                      <td class="border border-slate-700 text-[0.65rem] font-normal" >
-                        <div *ngIf="prescription_length - 1 === i">
+                      <td class="border border-slate-700 text-[0.65rem] font-normal align-bottom" [rowSpan]="prescription_length" *ngIf="isFirst">
+                        <div >
                           <br /><br /><br />
                           <strong>{{ pres.prescriber.first_name }} {{ pres.prescriber.middle_name }} {{ pres.prescriber.last_name }}</strong><br />
                           Signature over printed name <br />
@@ -163,13 +163,11 @@
                         </span>
                       </td>
 
-                      <td class="border border-slate-700 text-[0.65rem] font-normal" >
-                        <div *ngIf="prescription_length - 1 === i">
-                          <br /><br /><br />
-                          <strong>{{ dispensed_personnel?.first_name }} {{ dispensed_personnel?.middle_name }} {{ dispensed_personnel?.last_name }}</strong><br />
-                          Signature over printed name <br />
-                          Name of Dispensing Facility: <br />{{ facility_info?.facility_name }}
-                        </div>
+                      <td class="border border-slate-700 text-[0.65rem] font-normal align-bottom" [rowSpan]="prescription_length" *ngIf="isFirst">
+                        <br /><br /><br />
+                        <strong>{{ dispensed_personnel?.first_name }} {{ dispensed_personnel?.middle_name }} {{ dispensed_personnel?.last_name }}</strong><br />
+                        Signature over printed name <br />
+                        Name of Dispensing Facility: <br />{{ facility_info?.facility_name }}
                       </td>
 
                       <!-- <td *ngIf="prescription_length - 1 < i" class="border border-slate-700 text-[0.65rem] font-normal">
