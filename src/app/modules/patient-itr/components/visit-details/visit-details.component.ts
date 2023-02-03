@@ -20,10 +20,6 @@ export class VisitDetailsComponent implements OnChanges {
     this.router.navigate(['/patient/'+details.pt_group, {id:patient_id, consult_id: consult_id}])
   }
 
-  resetVal(){
-
-  }
-
   displayVisit(){
     console.log(this.selected_visit)
     if(this.selected_visit) {

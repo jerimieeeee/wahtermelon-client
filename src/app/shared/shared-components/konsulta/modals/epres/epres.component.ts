@@ -42,20 +42,46 @@ export class EpresComponent implements OnInit {
   facility: any;
   age: any;
   prescription_length: number;
+  dispensed_personnel: any;
+  philhealth_info: any;
+  patient_age: any;
 
-  /* getFacility() {
-    let facility = this.http.getUserFromJSON();
-    console.log(facility)
-    this.http.get('libraries/facilities/'+facility.facility_code).subscribe({
+  iteratePrescription(){
+    if(this.prescriptions){
+      if(this.prescriptions[0].dispensing){
+        this.http.get('users/'+this.prescriptions[0].dispensing[0].user_id).subscribe({
+          next: (data: any) => {
+            console.log(data)
+            this.dispensed_personnel = data.data
+            this.getAge();
+          },
+          error: err => console.log(err)
+        })
+      }
+    }
+  }
+
+  getAge(){
+    this.http.get('patient-philhealth/philhealth', {params:{'filter[patient_id]': this.patient_info.id,  per_page: '1', sort: '-enlistment_date'}}).subscribe({
       next: (data: any) => {
-        this.facility_info = data.data;
+        this.philhealth_info = data.data[0];
 
-        this.prescription_length = Object.keys(this.prescriptions).length;
-        this.age = this.ageService.calcuateAge(this.patient_info.birthdate, this.consult_details.consult_date)
+        let params = {
+          date_from: this.patient_info.birthdate,
+          date_to: data.data[0].enlistment_date
+        }
+
+        this.http.post('konsulta/generate-age', params).subscribe({
+          next: (data: any) => {
+            console.log(data)
+            this.patient_age = data.data;
+          },
+          error: err => console.log(err)
+        })
       },
       error: err => console.log(err)
     })
-  } */
+  }
 
   constructor(
     private http: HttpService,
@@ -66,7 +92,11 @@ export class EpresComponent implements OnInit {
     this.patient_info = this.http.getPatientInfo();
     this.patient_philhealth = this.http.getPhilhealhtInfo();
     this.facility = this.http.getUserFromJSON();
+    this.prescription_length = Object.keys(this.prescriptions).length;
     this.age = this.ageService.calcuateAge(this.patient_info.birthdate, this.consult_details.consult_date)
+
+    this.iteratePrescription();
+    // console.log(this.prescriptions)
 
   }
 }

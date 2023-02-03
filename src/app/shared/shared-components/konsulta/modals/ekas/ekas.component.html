@@ -28,7 +28,7 @@
             <div class="border-2 border-sky-700">
               <div class="flex align-middle h-14 p-1">
                 <img src="./assets/img/philhealth_logo.png" class="w-12 h-14" />
-                <span class="underline font-semibold mt-3">ELECTRON KONSULTA AVAILMENT SLIP (eKAS)</span>
+                <span class="underline font-semibold mt-3">ELECTRONIC KONSULTA AVAILMENT SLIP (eKAS)</span>
               </div>
 
               <div class="p-1">
@@ -61,7 +61,7 @@
                   </div>
                   <div class="col-span-1 flex">
                     <span class="text-[.8em]">Age (Edad): </span>
-                    <span class="underline flex-1 w-full">{{ age?.age | number: '1.0-0' }} {{ age?.type }}{{ age?.age > 1 ? 's old ' : 'old ' }}</span>
+                    <span class="underline flex-1 w-full text-[.8em]">{{ patient_age }}</span>
                   </div>
                   <div class="col-span-1 flex">
                     <span class="text-[.8em]">Contact No.: </span>
@@ -102,7 +102,8 @@
                     <tr>
                       <th class="w-4/12 border border-slate-700">Konsulta Services</th>
                       <th class="w-2/12 border border-slate-700">
-                        Performed
+                        <span class="underline">&#10004;</span> Performed <span class="text-sm">(nagawa)</span> <br />
+                        <span class="underline">X</span> Not performed <span class="text-sm">(hindi nagawa)</span> <br />
                       </th>
                       <th class="w-3/12 border border-slate-700">
                         Date Performed <br />
@@ -119,15 +120,26 @@
                   <tbody>
                     <tr>
                       <td class="border border-slate-700">History and physical examination (vitals, anthropometrics)</td>
-                      <td class="border border-slate-700"></td>
-                      <td class="border border-slate-700"></td>
-                      <td class="border border-slate-700"></td>
+                      <td class="border border-slate-700 text-center">&#10004;</td>
+                      <td class="border border-slate-700">
+                        {{ consult_details.consult_date | date: 'yyyy-MM-dd' }}
+                      </td>
+                      <td class="border border-slate-700">
+                        {{ consult_details.user.first_name }} {{ consult_details.user.middle_name }} {{ consult_details.user.last_name }}
+                      </td>
                     </tr>
                     <tr *ngFor="let lab of lab_list">
                       <td class="border border-slate-700">{{ lab.laboratory.desc }}</td>
-                      <td class="border border-slate-700"></td>
-                      <td class="border border-slate-700"></td>
-                      <td class="border border-slate-700"></td>
+                      <td class="border border-slate-700 text-center">
+                        {{ lab.result ? '&#10004;' : 'X'}}
+                      </td>
+
+                      <td class="border border-slate-700">
+                        {{ lab.result ? lab.result.laboratory_date : '-' }}
+                      </td>
+                      <td class="border border-slate-700">
+                        {{ lab.result ? lab.result.user : '-' }}
+                      </td>
                     </tr>
                   </tbody>
                 </table>

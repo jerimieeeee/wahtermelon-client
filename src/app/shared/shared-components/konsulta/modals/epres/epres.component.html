@@ -60,7 +60,7 @@
                   </div>
                   <div class="col-span-1 flex">
                     <span class="text-[.8em]">Age (Edad): </span>
-                    <span class="underline flex-1 w-full">{{ age?.age | number: '1.0-0' }} {{ age?.type }}{{ age?.age > 1 ? 's old ' : 'old ' }} </span>
+                    <span class="underline flex-1 w-full text-[.8em]">{{ patient_age }} </span>
                   </div>
                   <div class="col-span-1 flex">
                     <span class="text-[.8em]">Contact No.: </span>
@@ -134,7 +134,7 @@
                         <span *ngIf="!pres.konsulta_medicine">{{ pres.added_medicine }} {{ pres.dosage_quantity }} {{ pres.unit_of_measurement.code }}</span>
                       </td>
 
-                      <td class="border border-slate-700">
+                      <td class="border border-slate-700 text-center">
                         {{ pres.quantity }}
                       </td>
 
@@ -142,22 +142,31 @@
                       <td class="border border-slate-700 text-[0.65rem] font-normal" >
                         <div *ngIf="prescription_length - 1 === i">
                           <br /><br /><br />
+                          <strong>{{ pres.prescriber.first_name }} {{ pres.prescriber.middle_name }} {{ pres.prescriber.last_name }}</strong><br />
                           Signature over printed name <br />
                           License #: ________________
                         </div>
                       </td>
 
-                      <td class="border border-slate-700">
-
+                      <td class="border border-slate-700 text-center">
+                        <span *ngIf="pres.dispensing">
+                          &#10004;
+                        </span>
+                        <span *ngIf="!pres.dispensing">
+                          X
+                        </span>
                       </td>
 
                       <td class="border border-slate-700">
-
+                        <span *ngIf="pres.dispensing">
+                          {{ pres.dispensing[0].dispensing_date }}
+                        </span>
                       </td>
 
                       <td class="border border-slate-700 text-[0.65rem] font-normal" >
                         <div *ngIf="prescription_length - 1 === i">
                           <br /><br /><br />
+                          <strong>{{ dispensed_personnel?.first_name }} {{ dispensed_personnel?.middle_name }} {{ dispensed_personnel?.last_name }}</strong><br />
                           Signature over printed name <br />
                           Name of Dispensing Facility: <br />{{ facility_info?.facility_name }}
                         </div>
