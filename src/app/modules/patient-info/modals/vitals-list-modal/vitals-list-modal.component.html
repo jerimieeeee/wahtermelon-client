@@ -35,8 +35,8 @@
                   {{ vitals.bp_systolic }}{{ vitals.bp_systolic ? '/' : '-' }}{{ vitals.bp_diastolic }}
                 </td>
                 <td class="py-4 px-6 align-top">
-                  {{ vitals.patient_height ? vitals.patient_height+' kg' : '-' }} <br />
-                  {{ vitals.patient_weight ? vitals.patient_weight+' cm' : '-' }}
+                  {{ vitals.patient_height ? vitals.patient_height+' cm' : '-' }} <br />
+                  {{ vitals.patient_weight ? vitals.patient_weight+' kg' : '-' }}
                 </td>
                 <td class="py-4 px-6 align-top">
                   {{ vitals.patient_right_vision_acuity ? vitals.patient_right_vision_acuity+' | ' : '' }}  {{ vitals.patient_left_vision_acuity ?? '-' }}

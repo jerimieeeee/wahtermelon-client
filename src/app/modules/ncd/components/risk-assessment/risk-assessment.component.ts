@@ -44,7 +44,7 @@ export class RiskAssessmentComponent implements OnInit, OnChanges {
   };
 
   onSubmit() {
-    console.log(this.riskAssessForm);
+    // console.log(this.riskAssessForm);
 
     this.is_saving = true;
     if(this.riskAssessForm.valid){
@@ -97,7 +97,11 @@ export class RiskAssessmentComponent implements OnInit, OnChanges {
       this.f.polydipsia.disable();
       this.f.polyuria.disable(); */
 
-      if(this.riskAssessForm.value.location === 2) this.f.client_type.enable();
+      if(this.riskAssessForm.value.location === 2) {
+        this.f.client_type.enable();
+      } else {
+        this.f.client_type.disable();
+      }
     }
   }
 
