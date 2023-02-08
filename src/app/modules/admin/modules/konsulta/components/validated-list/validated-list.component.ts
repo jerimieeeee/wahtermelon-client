@@ -1,5 +1,5 @@
 import { HttpParams } from '@angular/common/http';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { faCircleCheck, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
@@ -9,7 +9,7 @@ import { ToastrService } from 'ngx-toastr';
   templateUrl: './validated-list.component.html',
   styleUrls: ['./validated-list.component.scss']
 })
-export class ValidatedListComponent implements OnInit {
+export class ValidatedListComponent {
   @Output() showReturn = new EventEmitter<any>();
   @Output() showList = new EventEmitter<any>();
   @Input() konsulta_list;
@@ -161,7 +161,4 @@ export class ValidatedListComponent implements OnInit {
     private http: HttpService,
     private toastr: ToastrService
   ) { }
-
-  ngOnInit(): void {
-  }
 }
