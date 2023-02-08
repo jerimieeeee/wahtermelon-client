@@ -29,7 +29,8 @@ export class ValidatedListComponent implements OnInit {
     let params = {
       tranche: [this.filter_tranche],
       revalidate: 1,
-      transmittal_number: [kon.transmittal_number]
+      transmittal_number: [kon.transmittal_number],
+      save: 1
     }
 
     this.http.get('konsulta/validate-report', {params}).subscribe({
