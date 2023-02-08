@@ -6,8 +6,8 @@
       <div class="flex justify-between items-start py-3 px-5 rounded-t border-b bg-blue-500 dark:border-gray-600">
         <h3 class="mt-2 text-sm font-bold text-white dark:text-white">
             electronic Prescription Slip (ePresS)
-        </h3>
-        <button type="button" class="bg-white text-blue-500 hover:bg-gray-100 hover:text-blue-400 px-2 py-1 rounded-md" (click)="printForm('philhealth_form')">
+        </h3><!-- (click)="printForm('philhealth_form')" -->
+        <button type="button" printSectionId="philhealth_form" ngxPrint class="bg-white text-blue-500 hover:bg-gray-100 hover:text-blue-400 px-2 py-1 rounded-md">
           <fa-icon [icon]="faPrint"></fa-icon>
         </button>
       </div>
