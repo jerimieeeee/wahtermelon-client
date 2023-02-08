@@ -96,7 +96,7 @@ export class EpresComponent implements OnInit {
     this.age = this.ageService.calcuateAge(this.patient_info.birthdate, this.consult_details.consult_date)
 
     this.iteratePrescription();
-    // console.log(this.prescriptions)
+    console.log(this.patient_philhealth)
 
   }
 }
