@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { faFaceFrown, faFaceMeh, faFaceSmile, faPrint } from '@fortawesome/free-solid-svg-icons';
+import { faFaceFrown, faFaceMeh, faFaceSmile, faPrint, faSpinner, faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import { AgeService } from 'app/shared/services/age.service';
 import { HttpService } from 'app/shared/services/http.service';
 
@@ -17,20 +17,7 @@ export class EkasComponent implements OnInit {
   faFaceSmile = faFaceSmile;
   faFaceMeh = faFaceMeh;
   faFaceFrown = faFaceFrown;
-
-  timeout:any;
-  printForm(form_name) {
-    let printContents = document.getElementById(form_name).innerHTML;
-    let originalContents = document.body.innerHTML;
-
-    document.body.innerHTML = printContents;
-    this.timeout = setTimeout(() => {
-      window.print();
-      document.body.innerHTML = originalContents;
-    }, 250)
-    // window.print();
-    // document.body.innerHTML = originalContents;
-  }
+  faCircleNotch = faCircleNotch;
 
   patient_info: any;
   patient_philhealth: any;
@@ -49,17 +36,11 @@ export class EkasComponent implements OnInit {
           next: (data: any) => {
             // console.log(data.data)
             this.lab_list[key]['result'] = data.data[0];
-            if(Object.keys(this.lab_list).length - 1 === index) {
-              this.show_form = true;
-            }
           },
           error: err => console.log(err)
         })
       }
 
-      if(Object.keys(this.lab_list).length - 1 === index) {
-        this.show_form = true;
-      }
     });
 
     this.getAge();
@@ -81,6 +62,7 @@ export class EkasComponent implements OnInit {
         this.http.post('konsulta/generate-age', params).subscribe({
           next: (data: any) => {
             console.log(data)
+            this.show_form = true;
             this.patient_age = data.data;
           },
           error: err => console.log(err)

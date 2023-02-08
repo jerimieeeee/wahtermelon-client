@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit, Output, Input } from '@angular/core';
-import { faFaceFrown, faFaceMeh, faFaceSmile, faPrint } from '@fortawesome/free-solid-svg-icons';
+import { faCircleNotch, faFaceFrown, faFaceMeh, faFaceSmile, faPrint } from '@fortawesome/free-solid-svg-icons';
 import { AgeService } from 'app/shared/services/age.service';
 import { HttpService } from 'app/shared/services/http.service';
 
@@ -17,21 +17,9 @@ export class EpresComponent implements OnInit {
   faFaceSmile = faFaceSmile;
   faFaceMeh = faFaceMeh;
   faFaceFrown = faFaceFrown;
+  faCircleNotch = faCircleNotch;
 
-  timeout: any;
-
-  printForm(form_name) {
-    let printContents = document.getElementById(form_name).innerHTML;
-    let originalContents = document.body.innerHTML;
-
-    document.body.innerHTML = printContents;
-    this.timeout = setTimeout(() => {
-      window.print();
-      document.body.innerHTML = originalContents;
-    }, 250)
-    // window.print();
-    // document.body.innerHTML = originalContents;
-  }
+  show_form:boolean = false;
 
   closeModal(){
     this.toggleModal.emit('epres');
@@ -75,6 +63,7 @@ export class EpresComponent implements OnInit {
           next: (data: any) => {
             console.log(data)
             this.patient_age = data.data;
+            this.show_form = true;
           },
           error: err => console.log(err)
         })

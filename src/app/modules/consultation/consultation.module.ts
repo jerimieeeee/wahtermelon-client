@@ -22,7 +22,6 @@ import { DrugFormComponent } from './components/prescription/modals/drug-form/dr
 import { DrugDeleteComponent } from './components/prescription/modals/drug-delete/drug-delete.component';
 import { GeneralSurveyComponent } from './components/general-survey/general-survey.component';
 import { ManagementComponent } from './components/management/management.component';
-import {NgxPrintModule} from 'ngx-print';
 
 @NgModule({
   declarations: [
@@ -50,8 +49,7 @@ import {NgxPrintModule} from 'ngx-print';
     FontAwesomeModule,
     NgSelectModule,
     FormsModule,
-    ReactiveFormsModule,
-    NgxPrintModule
+    ReactiveFormsModule
   ]
 })
 export class ConsultationModule { }

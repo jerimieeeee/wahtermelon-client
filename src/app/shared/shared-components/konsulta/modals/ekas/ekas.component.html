@@ -7,12 +7,12 @@
         <h3 class="mt-2 text-sm font-bold text-white dark:text-white">
             electronic Konsulta Availment Slip (eKAS)
         </h3>
-        <button type="button" class="bg-white text-blue-500 hover:bg-gray-100 hover:text-blue-400 px-2 py-1 rounded-md" (click)="printForm('philhealth_form')">
+        <button type="button" printSectionId="philhealth_form" ngxPrint [useExistingCss]="true" class="bg-white text-blue-500 hover:bg-gray-100 hover:text-blue-400 px-2 py-1 rounded-md">
           <fa-icon [icon]="faPrint"></fa-icon>
         </button>
       </div>
       <!-- Modal body -->
-      <div class="overflow-y-auto scrollbar-thin h-96 scrollbar-thumb-gray-400 scrollbar-track-gray-100">
+      <div class="overflow-y-auto scrollbar-thin h-96 scrollbar-thumb-gray-400 scrollbar-track-gray-100" *ngIf="show_form">
         <div class="w-[210mm] h-[297mm] flex justify-center align-middle bg-white">
           <div class="w-[195mm] h-[272mm] mt-[12.5mm]" id="philhealth_form">
             <!-- FORM START -->
@@ -229,6 +229,9 @@
 
       </div>
 
+      <div class="h-96 flex justify-center align-middle w-full" *ngIf="!show_form">
+        <fa-icon [icon]="faCircleNotch" spin="true" size="2xl" class="mt-20 text-blue-500"></fa-icon>
+      </div>
       <!-- Modal footer -->
       <div class="flex justify-end py-4 px-5 space-x-4 rounded-b border-t border-gray-200 dark:border-gray-600">
         <button  type="button" class="text-white bg-orange-500 hover:ring-2 focus:outline-none hover:ring-orange-300 rounded text-sm font-medium px-6 py-2.5 transition duration-150 ease-in-out transform hover:scale-110 " (click)="closeModal()">Close</button>
