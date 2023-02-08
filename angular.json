@@ -18,7 +18,8 @@
           "builder": "@angular-builders/custom-webpack:browser",
           "options": {
             "allowedCommonJsDependencies": [
-              "apexcharts"
+              "apexcharts",
+              "moment"
             ],
             "outputPath": "dist/wahtermelon-client",
             "index": "src/index.html",

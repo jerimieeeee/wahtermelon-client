@@ -17,6 +17,7 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { RequestsInterceptor } from './shared/interceptor/http/http-interceptor';
 import { ToastrModule } from 'ngx-toastr';
 import { CookieService } from 'ngx-cookie-service'
+import { provideEnvironmentNgxMask } from 'ngx-mask';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { CookieService } from 'ngx-cookie-service'
     useClass: RequestsInterceptor,
     multi: true
     },
-    CookieService
+    CookieService,
+    provideEnvironmentNgxMask()
   ],
   bootstrap: [AppComponent]
 })
