@@ -177,8 +177,8 @@ export class BreastfeedingComponent implements OnInit {
       bfed_month2: this.groupList[1],
       bfed_month3: this.groupList[2],
       bfed_month4: this.groupList[3],
-      bfed_month5: this.groupList[4],
-      bfed_month6: this.groupList[5],
+      // bfed_month5: this.groupList[4],
+      // bfed_month6: this.groupList[5],
       reason_id: this.patient_breastfed.ebfreasons,
       ebf_date: this.patient_breastfed.ebf_date,
       comp_fed_date: this.patient_breastfed.comp_fed_date
@@ -214,9 +214,9 @@ export class BreastfeedingComponent implements OnInit {
       bfed_month2: this.ccdev[1].selected == 'null' ? null:this.ccdev[1].selected,
       bfed_month3: this.ccdev[2].selected == 'null' ? null:this.ccdev[2].selected,
       bfed_month4: this.ccdev[3].selected == 'null' ? null:this.ccdev[3].selected,
-      bfed_month5: this.ccdev[4].selected == 'null' ? null:this.ccdev[4].selected,
+      // bfed_month5: this.ccdev[4].selected == 'null' ? null:this.ccdev[4].selected,
       // bfed_month6: this.groupList[5] == 1 ? 1:0,
-      bfed_month6: this.ccdev[5].selected == 'null' ? null:this.ccdev[5].selected,
+      // bfed_month6: this.ccdev[5].selected == 'null' ? null:this.ccdev[5].selected,
       reason_id: this.patient_breastfed.ebfreasons,
       ebf_date: this.patient_breastfed.ebf_date,
       comp_fed_date: this.patient_breastfed.comp_fed_date
@@ -325,14 +325,14 @@ export class BreastfeedingComponent implements OnInit {
 
   get ebfCondition(){
     if(this.ccdev[0].selected == 1 && this.ccdev[1].selected == 1 && this.ccdev[2].selected == 1 &&
-      this.ccdev[3].selected == 1 && this.ccdev[4].selected == 1 && this.ccdev[5].selected == 1){
+      this.ccdev[3].selected == 1 ){
       return true
     }
   }
 
   get reasonCondition(){
     if(this.ccdev[0].selected === "0" || this.ccdev[1].selected === "0" || this.ccdev[2].selected === "0" ||
-      this.ccdev[3].selected === "0" || this.ccdev[4].selected === "0" || this.ccdev[5].selected === "0"){
+      this.ccdev[3].selected === "0" ){
       return true
     }else{
       return false
@@ -341,23 +341,23 @@ export class BreastfeedingComponent implements OnInit {
 
   get getCompleCondition(){
     if(this.ccdev[0].selected !== 'null' && this.ccdev[1].selected !== 'null' && this.ccdev[2].selected !== 'null' && 
-      this.ccdev[3].selected !== 'null' && this.ccdev[4].selected !== 'null' && this.ccdev[5].selected !== 'null' &&
+      this.ccdev[3].selected !== 'null' &&
       this.ccdev[0].selected !== '' && this.ccdev[1].selected !== '' && this.ccdev[2].selected !== '' && 
-      this.ccdev[3].selected !== '' && this.ccdev[4].selected !== '' && this.ccdev[5].selected !== ''){
+      this.ccdev[3].selected !== ''){
       return true
     }
   }
 
   get editCondition(){
     if(this.ccdev[0].selected == 'null' && this.ccdev[1].selected == 'null' && this.ccdev[2].selected == 'null' && 
-    this.ccdev[3].selected == 'null' && this.ccdev[4].selected == 'null' && this.ccdev[5].selected == 'null'){
+    this.ccdev[3].selected == 'null'){
       return true
     }
   }
 
   loadBreastfed() {
     this.groupList2 = [];
-    var lib = ['bfed_month1','bfed_month2','bfed_month3','bfed_month4','bfed_month5','bfed_month6'];
+    var lib = ['bfed_month1','bfed_month2','bfed_month3','bfed_month4'];
     this.http.get('child-care/cc-breastfed/'+this.patient_details.id)
     .subscribe({
       next: (data: any) => {
@@ -400,9 +400,9 @@ export class BreastfeedingComponent implements OnInit {
             bfed_month2: null,
             bfed_month3: null,
             bfed_month4: null,
-            bfed_month5: null,
+            // bfed_month5: null,
             // bfed_month6: this.groupList[5] == 1 ? 1:0,
-            bfed_month6: null,
+            // bfed_month6: null,
             ebf_date: '',
             ebfreasons: null,
             comp_fed_date: ''
@@ -413,8 +413,8 @@ export class BreastfeedingComponent implements OnInit {
             this.ccdev[1].selected = 'null'
             this.ccdev[2].selected = 'null'
             this.ccdev[3].selected = 'null'
-            this.ccdev[4].selected = 'null'
-            this.ccdev[5].selected = 'null'
+            // this.ccdev[4].selected = 'null'
+            // this.ccdev[5].selected = 'null'
          
           // this.getSelected()
         }
@@ -433,12 +433,12 @@ export class BreastfeedingComponent implements OnInit {
 
   ngOnInit(){
     this.ccdev = [
-    {"id" : "bfed_month1", "name" : "Month 1", "date" : moment(this.patient_details.birthdate).add(1, 'M').format('MM/DD/yyyy'), selected: '', isDefault: 'N/A'},
-    {"id" : "bfed_month2", "name" : "Month 2", "date" : moment(this.patient_details.birthdate).add(2, 'M').format('MM/DD/yyyy'), selected: '', isDefault: 'N/A'},
-    {"id" : "bfed_month3", "name" : "Month 3", "date" : moment(this.patient_details.birthdate).add(3, 'M').format('MM/DD/yyyy'), selected: '', isDefault: 'N/A'},
-    {"id" : "bfed_month4", "name" : "Month 4", "date" : moment(this.patient_details.birthdate).add(4, 'M').format('MM/DD/yyyy'), selected: '', isDefault: 'N/A'},
-    {"id" : "bfed_month5", "name" : "Month 5", "date" : moment(this.patient_details.birthdate).add(5, 'M').format('MM/DD/yyyy'), selected: '', isDefault: 'N/A'},
-    {"id" : "bfed_month6", "name" : "Month 6", "date" : moment(this.patient_details.birthdate).add(6, 'M').format('MM/DD/yyyy'), selected: '', isDefault: 'N/A'},
+    {"id" : "bfed_month1", "name" : "Month 1 and 15 Days", "date" : moment(this.patient_details.birthdate).add(1, 'M').add(15, 'd').format('MM/DD/yyyy'), selected: '', isDefault: 'N/A'},
+    {"id" : "bfed_month2", "name" : "Month 2 and 15 Days", "date" : moment(this.patient_details.birthdate).add(2, 'M').add(15, 'd').format('MM/DD/yyyy'), selected: '', isDefault: 'N/A'},
+    {"id" : "bfed_month3", "name" : "Month 3 and 15 Days", "date" : moment(this.patient_details.birthdate).add(3, 'M').add(15, 'd').format('MM/DD/yyyy'), selected: '', isDefault: 'N/A'},
+    // {"id" : "bfed_month4", "name" : "Month 4", "date" : moment(this.patient_details.birthdate).add(4, 'M').format('MM/DD/yyyy'), selected: '', isDefault: 'N/A'},
+    // {"id" : "bfed_month5", "name" : "Month 5", "date" : moment(this.patient_details.birthdate).add(5, 'M').format('MM/DD/yyyy'), selected: '', isDefault: 'N/A'},
+    {"id" : "bfed_month6", "name" : "Month 5 and 29 Days", "date" : moment(this.patient_details.birthdate).add(6, 'M').subtract(1, 'd').format('MM/DD/yyyy'), selected: '', isDefault: 'N/A'},
   ];
 
     // this.fetchSelectedItems()

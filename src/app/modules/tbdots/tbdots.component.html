@@ -1,5 +1,5 @@
-<div class="flex w-full">
-    <div class="relative w-9/12 h-screen shadow px-2 ml-5 rounded-3xl text-gray-600 shadow-md overflow-y-scroll">
+<!-- <div class="flex w-full"> -->
+    <div class="relative w-full h-screen px-2 ml-5 rounded-3xl text-gray-600 shadow-md overflow-y-scroll">
       <div class="text-sm font-medium text-center text-gray-500 ">
         <ul class="flex flex-wrap -mb-px ">
           <li class="mr-2">
@@ -18,21 +18,21 @@
             <a class="select-none text-base inline-block p-2 bg-gray-300 mt-3 mr-3 text-gray-400 hover:text-white rounded-md font-bold hover:bg-orange-400"
               (click)="switchTab(4)">
               <fa-icon [icon]="faPersonWalking" size="lg" class="mx-2"></fa-icon>End Visit</a>
-          </li> 
+          </li>
         </ul>
       </div>
       <!-- [class]="module != 2? '' : 'active'" (click)="switchTab(2)" -->
       <div class="fade-in" *ngIf="module == 1">
-        
+
         <div class="w-12/12 mb-10 px-8 pb-10 border-solid border-2 border-zinc-100 border-l-0 border-r-0 border-t-0 p-3">
           <app-casefindings></app-casefindings>
         </div>
-       
+
       </div>
-  
+
     </div>
-  
+  <!--
     <div class="w-3/12">
       <app-patient-info></app-patient-info>
     </div>
-  </div>
+  </div> -->

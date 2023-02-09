@@ -1,5 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +15,10 @@ export class HttpService {
   //   'Authorization': `Bearer ${localStorage.getItem('token')}`,
   // });
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private router: Router
+  ) { }
 
   user_json: any;
 
@@ -88,5 +93,76 @@ export class HttpService {
       type: type,
       message: message
     }
+  }
+
+  getURL(lab_code): string{
+    switch (lab_code) {
+      case 'CBC':
+        return 'laboratory/consult-laboratory-cbc'
+      case 'CRTN':
+        return 'laboratory/consult-laboratory-creatinine'
+      case 'CXRAY':
+        return 'laboratory/consult-laboratory-chestxray'
+      case 'ECG':
+        return 'laboratory/consult-laboratory-ecg'
+      case 'FBS':
+        return 'laboratory/consult-laboratory-fbs'
+      case 'RBS':
+        return 'laboratory/consult-laboratory-rbs'
+      case 'HBA':
+        return 'laboratory/consult-laboratory-hba1c'
+      case 'PSMR':
+        return 'laboratory/consult-laboratory-papsmear'
+      case 'PPD':
+        return 'laboratory/consult-laboratory-ppd'
+      case 'SPTM':
+        return 'laboratory/consult-laboratory-sputum'
+      case 'FCAL':
+        return 'laboratory/consult-laboratory-fecalysis'
+      case 'LPFL':
+        return 'laboratory/consult-laboratory-lipid-profile'
+      case 'URN':
+        return 'laboratory/consult-laboratory-urinalysis'
+      case 'OGTT':
+        return 'laboratory/consult-laboratory-oral-glucose'
+      case 'FOBT':
+        return 'laboratory/consult-laboratory-fecal-occult'
+      default:
+        break;
+    }
+    return '';
+  }
+
+  getUrlParams() {
+    let patient_id;
+    let consult_id;
+    let loc;
+
+    let values = this.router.url.split(';');
+    let id = values[1].split('=');
+
+    patient_id = id[1];
+    let location = values[0].split('/');
+    loc = location[2]
+    if(values[2]) {
+      let consult = values[2].split('=');
+      consult_id = consult[1];
+    }
+
+    return {
+      patient_id: patient_id,
+      consult_id: consult_id,
+      loc: loc
+    }
+  }
+
+  patient_info: any;
+  setPatientInfo(data){
+    this.patient_info = data;
+    // console.log(this.patient_info)
+  }
+
+  getPatientInfo(){
+    return this.patient_info;
   }
 }

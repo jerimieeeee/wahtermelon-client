@@ -1,7 +1,7 @@
-<div class="flex w-full mt-4">
-  <div class="flex-wrap w-9/12 h-full rounded-xl text-gray-600 border border-slate-100 px-4 py-4 ml-5 mr-1 mb-10">
+<!-- <div class="flex w-full mt-4"> -->
+  <!-- <div class="flex-wrap w-9/12 h-full rounded-xl text-gray-600 border border-slate-100 px-4 py-4 ml-5 mr-1 mb-10"> -->
     <div class="flex">
-      <nav class="flex flex-row whitespace-nowrap text-sm max-w-xl">
+      <nav class="flex flex-row whitespace-nowrap text-sm max-w-xl mt-5">
         <button (click)="switchTabs(1)" class="text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 mr-6 pb-2"
         [class]="modules===1? 'text-blue-500 border-b-2 border-blue-500 font-bold' : 'hover:-translate-y-1 hover:scale-110 transition ease-in-out delay-400 duration-300' ">
             NCD HISTORY
@@ -12,14 +12,8 @@
         </button>
       </nav>
       <div class="ml-auto" *ngIf="modules===2">
-        <button type="button" class="px-3 pt-2.5 pb-2 bg-orange-500 text-white font-semibold text-md leading-normal rounded focus:shadow-lg focus:outline-none hover:ring-2 hover:ring-orange-300 transition duration-150 ease-in-out transform hover:scale-110 flex align-center">
-          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-door-exit mr-1" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-            <path d="M13 12v.01"></path>
-            <path d="M3 21h18"></path>
-            <path d="M5 21v-16a2 2 0 0 1 2 -2h7.5m2.5 10.5v7.5"></path>
-            <path d="M14 7h7m-3 -3l3 3l-3 3"></path>
-          </svg>
+        <button *ngIf="!consult_details?.consult_done" type="button" class="btn-end-visit ml-auto mt-5" (click)="toggleModal()">
+          <fa-icon class="mr-1" [icon]="faDoorClosed"></fa-icon>
           End Visit
         </button>
       </div>
@@ -32,51 +26,88 @@
             [class]="module===1? 'text-blue-500 border-b-2 border-blue-500 font-bold' : 'hover:-translate-y-1 hover:scale-110 transition ease-in-out delay-400 duration-300' ">
             RISK ASSESSMENT
         </button>
-        <button (click)="switchTab(2)" class="text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 mr-6 pb-2"
+        <button *ngIf="consult_details?.assessment_date" (click)="switchTab(2)" class="text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 mr-6 pb-2"
             [class]="module===2? 'text-blue-500 border-b-2 border-blue-500 font-bold' : 'hover:-translate-y-1 hover:scale-110 transition ease-in-out delay-400 duration-300' ">
             RISK SCREENING
         </button>
-        <button (click)="switchTab(3)" class="text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 mr-6 pb-2"
+        <button *ngIf="consult_details?.assessment_date" (click)="switchTab(3)" class="text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 mr-6 pb-2"
             [class]="module===3? 'text-blue-500 border-b-2 border-blue-500 font-bold' : 'hover:-translate-y-1 hover:scale-110 transition ease-in-out delay-400 duration-300' ">
             QUESTIONNAIRE
         </button>
-        <button (click)="switchTab(4)" class="text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 mr-6 pb-2"
+        <button *ngIf="consult_details?.assessment_date" (click)="switchTab(4)" class="text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 mr-6 pb-2"
             [class]="module===4? 'text-blue-500 border-b-2 border-blue-500 font-bold' : 'hover:-translate-y-1 hover:scale-110 transition ease-in-out delay-400 duration-300' ">
             RISK STRATIFICATION
         </button>
-        <button (click)="switchTab(5)" class="text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 mr-6 pb-2"
+        <button *ngIf="consult_details?.assessment_date" (click)="switchTab(5)" class="text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 mr-6 pb-2"
             [class]="module===5? 'text-blue-500 border-b-2 border-blue-500 font-bold' : 'hover:-translate-y-1 hover:scale-110 transition ease-in-out delay-400 duration-300' ">
             PATIENT RECORD
         </button>
-        <button (click)="switchTab(6)" class="text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 mr-6 pb-2"
+        <!-- <button (click)="switchTab(6)" class="text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 mr-6 pb-2"
             [class]="module===6? 'text-blue-500 border-b-2 border-blue-500 font-bold' : 'hover:-translate-y-1 hover:scale-110 transition ease-in-out delay-400 duration-300' ">
             CASDT
         </button>
         <button (click)="switchTab(7)" class="text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 mr-6 pb-2"
             [class]="module===7? 'text-blue-500 border-b-2 border-blue-500 font-bold' : 'hover:-translate-y-1 hover:scale-110 transition ease-in-out delay-400 duration-300' ">
             CASDT 2
-        </button>
+        </button> -->
       </nav>
 
           <!--FIRST VISIT SECTION-->
 
       <div class="grid grid-col-8" >
-        <app-risk-assessment *ngIf="module===1" [patient_id]="patient_id" [consult_id]="consult_id"></app-risk-assessment>
-        <app-risk-screening *ngIf="module===2" [patient_id]="patient_id" [consult_id]="consult_id"></app-risk-screening>
-        <app-questionnaire *ngIf="module===3" [patient_id]="patient_id" [consult_id]="consult_id"></app-questionnaire>
-        <app-risk-stratification *ngIf="module===4" [patient_id]="patient_id" [consult_id]="consult_id"></app-risk-stratification>
-        <app-patient-record *ngIf="module===5" [patient_id]="patient_id" [consult_id]="consult_id"></app-patient-record>
-        <app-casdt *ngIf="module===6" [patient_id]="patient_id" [consult_id]="consult_id"></app-casdt>
-        <app-casdt2 *ngIf="module===7" [patient_id]="patient_id" [consult_id]="consult_id"></app-casdt2>
+        <app-risk-assessment *ngIf="module===1" [patient_info]="patient_info" [consult_details]="consult_details" [vitals]="vitals" (loadRisk)="loadRisk()"></app-risk-assessment>
+        <app-risk-screening *ngIf="module===2" [patient_id]="patient_id" [consult_details]="consult_details"></app-risk-screening>
+        <app-questionnaire *ngIf="module===3" [consult_details]="consult_details"></app-questionnaire>
+        <app-risk-stratification *ngIf="module===4" [patient_id]="patient_id" [consult_details]="consult_details"></app-risk-stratification>
+        <app-patient-record *ngIf="module===5" [patient_id]="patient_id" [consult_details]="consult_details"></app-patient-record>
+        <app-casdt *ngIf="module===6" [patient_id]="patient_id" [consult_details]="consult_details"></app-casdt>
+        <app-casdt2 *ngIf="module===7" [patient_id]="patient_id" [consult_details]="consult_details"></app-casdt2>
       </div>
     </div>
 
     <div *ngIf="modules===1">
-      <p class="mt-5 mb-2">No Patient Record Found!</p>
-    </div>
-  </div>
+      <div class="border border-slate-200 shadow-md rounded-xl mt-5">
+        <div class="w-full bg-green-500 text-white rounded-t-xl p-3 font-semibold">
+          NCD Visits
+        </div>
 
-  <div class="w-3/12">
-    <app-patient-info></app-patient-info>
+        <div class="w-full p-5">
+          <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+              <tr>
+                <th scope="col" class="text-center py-3 px-3 w-3/12">Assessment Date</th>
+                <th scope="col" class="text-center py-3 px-3 w-3/12">Risk Stratification</th>
+                <th scope="col" class="text-center py-3 px-3 w-3/12">Location</th>
+                <th scope="col" class="text-center py-3 px-3 w-3/12">Actions</th>
+              </tr>
+            </thead>
+            <tbody *ngIf="ncd_list">
+              <tr *ngFor="let ncd of ncd_list; trackBy:identify" class="bg-white border-b last:border-0">
+                <td class="py-4 px-3 text-center">
+                  {{ ncd.assessment_date ? (ncd.assessment_date | date: 'MM/dd/yyyy') : (ncd.consult_date | date: 'MM/dd/yyyy')}}
+                </td>
+                <td scope="row" class="py-4 px-3 font-medium text-gray-900 text-center">
+
+                </td>
+                <td scope="row" class="py-4 px-3 font-medium text-gray-900 text-center">
+                  {{ ncd.location ? ncd.location === 1 ? 'Community' : 'Facility' : '-' }}
+                </td>
+                <td scope="row" class="py-4 px-3 font-medium text-gray-900 text-center">
+                  <button type="button" class="btn-save" (click)="openNCD(ncd)">
+                    {{ ncd.consult_done ? 'View' : 'Open'}}
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  <!-- </div> -->
+
+  <!-- <div class="w-3/12">
+    <app-patient-info (patientVitals)="patientVitals($event)" (patientInfo)="patientInfo($event)"></app-patient-info>
   </div>
-</div>
+</div> -->
+
+<app-end-visit *ngIf="ncd_list && show_end" [consult_id]="consult_id" [patient_id]="consult_details.patient_id" [consult_date]="consult_details.consult_date" [pt_group]="'ncd'"></app-end-visit>
