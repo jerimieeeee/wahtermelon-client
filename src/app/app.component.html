@@ -17,62 +17,80 @@
   <div class="flex-1 overflow-auto" *ngIf="showLogin">
     <section class="bg-gray-50 dark:bg-gray-900">
       <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-          <a href="#" class="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
-              <img class="w-16 h-16 mr-2" src="./assets/img/wah_icon.png" alt="logo">
-              Wireless Access for Health
-          </a>
-          <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
-              <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
-                  <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
-                      Sign in to your account
-                  </h1>
-                  <form [formGroup]="loginForm" class="space-y-4 md:space-y-6" (ngSubmit)="onSubmit()">
-                      <div>
-                          <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
-                          <input type="email" name="email" id="email" formControlName="email" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@company.com" required="">
+        <a href="#" class="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
+            <img class="w-16 h-16 mr-2" src="./assets/img/wah_icon.png" alt="logo">
+            Wireless Access for Health
+        </a>
+        <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+          <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
 
-                          <div *ngIf="is_saving && f.email.errors" class="invalid-alert">
-                            <div *ngIf="f.email.errors?.['required']">
-                              email is required.
-                            </div>
-
-                            <div *ngIf="f.email.errors?.['email']">
-                              Not a valid email format
-                            </div>
-                          </div>
-                      </div>
-                      <div>
-                          <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
-                          <input type="password" name="password" id="password" formControlName="password" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="">
-
-                          <div *ngIf="is_saving && f.password.errors" class="invalid-alert">
-                            <div *ngIf="f.password.errors?.['required']">
-                              password is required.
-                            </div>
-                          </div>
-                      </div>
-                      <div class="flex items-center justify-between">
-                          <div class="flex items-start" *ngIf="auth_error">
-                              <!-- <div class="flex items-center h-5">
-                                <input id="remember" aria-describedby="remember" type="checkbox" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800" required="">
-                              </div> -->
-                              <div class="text-sm invalid-alert">
-                                <label>{{ auth_error_message }}</label>
-                              </div>
-                          </div>
-                          <!-- <a href="#" class="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">Forgot password?</a> -->
-                      </div>
-                      <button type="submit"  class="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-primary-800">Sign in</button>
-                      <p class="text-sm font-light text-gray-500 dark:text-gray-400">
-                          Don’t have an account yet? <a routerLink="/user-registration" class="font-medium text-primary-600 hover:underline dark:text-primary-500">Sign up</a>
-                      </p>
-
-                        <div class="flex justify-center ml-3 text-sm ">
-                          <span class="font-medium text-sky-600 hover:underline cursor-pointer" (click)="showPrivacyStatement = !showPrivacyStatement">Data Privacy Statement</span>
-                        </div>
-                  </form>
+            <div class="flex items-center justify-between" *ngIf="show_activated">
+              <div class="flex items-start text-green-900 bg-green-100 border border-green-300 w-full rounded-lg" >
+                  <div class="text-sm p-2.5">
+                    <label>Your email has been verified. You may now login to your account.</label>
+                  </div>
               </div>
+            </div>
+
+
+            <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+                Sign in to your account
+            </h1>
+            <form [formGroup]="loginForm" class="space-y-4 md:space-y-6" (ngSubmit)="onSubmit()">
+              <div>
+                <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
+                <input type="email" name="email" id="email" formControlName="email" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@company.com" >
+
+                <div *ngIf="is_saving && f.email.errors" class="invalid-alert">
+                  <div *ngIf="f.email.errors?.['required']">
+                    email is required.
+                  </div>
+
+                  <div *ngIf="f.email.errors?.['email']">
+                    Not a valid email format
+                  </div>
+                </div>
+              </div>
+              <div>
+                <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
+                <div class="relative rounded-md">
+                  <input [type]="show_pass ? 'text' : 'password'" name="password" id="password" formControlName="password" placeholder="••••••••" class="border border-gray-300 bg-gray-50 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                  <button (click)="show_pass = !show_pass" class="absolute inset-y-0 right-0 flex items-center pr-2 text-gray-500" type="button">
+                    <fa-icon [icon]="show_pass ? faEyeSlash : faEye"></fa-icon>
+                  </button>
+                </div>
+
+                <div *ngIf="is_saving && f.password.errors" class="invalid-alert">
+                  <div *ngIf="f.password.errors?.['required']">
+                    password is required.
+                  </div>
+                </div>
+              </div>
+              <div class="flex items-center justify-between">
+                <div class="flex items-start" *ngIf="auth_error">
+                    <!-- <div class="flex items-center h-5">
+                      <input id="remember" aria-describedby="remember" type="checkbox" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800" required="">
+                    </div> -->
+                    <div class="text-sm invalid-alert">
+                      <label>{{ auth_error_message }}</label>
+                    </div>
+                </div>
+                  <a routerLink="/forgot-password" class="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">Forgot password?</a>
+              </div>
+              <button [disabled]="is_saving" type="submit"  class="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-primary-800">
+                <fa-icon [icon]="faSpinner" *ngIf="is_saving" class="mr-3" spin="true"></fa-icon>
+                {{ is_saving ? 'Signing in' : 'Sign in'}}
+              </button>
+              <p class="text-sm font-light text-gray-500 dark:text-gray-400">
+                Don’t have an account yet? <a routerLink="/user-registration" class="font-medium text-primary-600 hover:underline dark:text-primary-500">Sign up</a>
+              </p>
+
+              <div class="flex justify-center ml-3 text-sm ">
+                <span class="font-medium text-sky-600 hover:underline cursor-pointer" (click)="showPrivacyStatement = !showPrivacyStatement">Data Privacy Statement</span>
+              </div>
+            </form>
           </div>
+        </div>
       </div>
     </section>
 

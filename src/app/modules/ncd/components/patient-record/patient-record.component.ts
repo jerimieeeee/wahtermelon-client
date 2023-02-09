@@ -1,14 +1,40 @@
-import { Component, OnInit } from '@angular/core';
-import { faSearch,faBalanceScale,faPlus,faInfoCircle } from '@fortawesome/free-solid-svg-icons';
+import { formatDate } from '@angular/common';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { faSave } from '@fortawesome/free-regular-svg-icons';
+import { faSearch,faBalanceScale,faPlus,faInfoCircle, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { HttpService } from 'app/shared/services/http.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-patient-record',
   templateUrl: './patient-record.component.html',
   styleUrls: ['./patient-record.component.scss']
 })
-export class PatientRecordComponent implements OnInit {
+export class PatientRecordComponent implements OnInit, OnChanges {
+  @Input() patient_id;
+  @Input() consult_details;
 
+  faSave = faSave;
   faInfoCircle = faInfoCircle;
+  faSpinner = faSpinner;
+
+  is_saving: boolean = false;
+
+  patient_counseling: any = [];
+  patient_target_organ: any = [];
+  patient_diagnosis: any = [];
+
+  ncd_record = {
+    current_medications: null,
+    palpitation_heart: null,
+    peripheral_pulses: null,
+    abdomen: null,
+    heart: null,
+    lungs: null,
+    sensation_feet: null,
+    other_findings: null,
+    other_infos: null,
+  };
 
   logical = [
     {code: 'Y', desc: 'Yes'},
@@ -17,45 +43,133 @@ export class PatientRecordComponent implements OnInit {
     {code: 'X', desc: 'Not Applicable'}
   ];
 
-  diagnosis = [
-    {code: '1', desc: 'With cardiovascular risk factors only'},
-    {code: '2', desc: 'Essential hypertension'},
-    {code: '3', desc: 'Secondary hypertension'},
-    {code: '4', desc: 'Diabetes'},
-    {code: '5', desc: 'Renal disease (albuminuria > 3g/L, createnine > 177 mol/L or 2mg/dl'},
-    {code: '6', desc: 'Congestive heart disease'},
-    {code: '7', desc: 'Coronary heart disease'},
-    {code: '8', desc: 'Peripheral vascular disease'},
-    {code: '9', desc: 'Cerebrovascular disease'}
-  ];
-
-  target_organ = [
-    {code: '1', desc: 'Left ventricular hypertrophy'},
-    {code: '2', desc: 'Microalbuminuria (0.2-3g/L)'},
-    {code: '3', desc: 'Hypertensive retinopathy'},
-    {code: '4', desc: 'Others'}
-  ];
 
   physical_examination = [
-    {desc: 'Normal'},
-    {desc: 'Abnormal'}
+    {
+      code: 'palpitation_heart',
+      desc: 'Palpitation of heart'
+    },
+    {
+      code: 'peripheral_pulses',
+      desc: 'Palpation of perpheral pulses'
+    },
+    {
+      code: 'abdomen',
+      desc: 'Palpation of abdomen'
+    },
+    {
+      code: 'heart',
+      desc: 'Auscultation of heart'
+    },
+    {
+      code: 'lungs',
+      desc: 'Auscultation of lungs'
+    },
+    {
+      code: 'sensation_feet',
+      desc: 'If DM, sensation of feet and foot pulses'
+    }
   ];
-  
-  counselling = [
-    {code: '1', desc: 'Smoking cessation'},
-    {code: '2', desc: 'Diet'},
-    {code: '3', desc: 'Physical activity'},
-    {code: '4', desc: 'Weight control'},
-    {code: '5', desc: 'Alcohol intake'},
-    {code: '6', desc: 'Others'}
+
+  physical_examination_result: [];
+  counselling: [];
+  diagnosis: [];
+  target_organ: [];
+
+  libraries = [
+    {var_name: 'counselling', url: 'ncd-record-counselling'},
+    {var_name: 'diagnosis', url: 'ncd-record-diagnosis'},
+    {var_name: 'target_organ', url: 'ncd-record-target-organ'},
+    {var_name: 'physical_examination_result', url: 'ncd-physical-exam'},
   ];
 
+  loadLibraries() {
+    Object.entries(this.libraries).forEach(([key, value], index) => {
+      let val: any = value;
+      this.http.get('libraries/'+val.url).subscribe({
+        next: (data: any) => {
+          this[val.var_name] = data.data;
 
-
-
-  constructor() { }
-
-  ngOnInit(): void {
+          // if(this.libraries.length-1 === index) this.getRecord();
+        },
+        error: err => console.log(err)
+      })
+    })
   }
 
+  getRecord(){
+    this.ncd_record = this.consult_details.patientNcdRecord;
+
+    console.log(this.ncd_record)
+    if(this.consult_details && Object.keys(this.consult_details.ncdRecordTargetOrgan).length > 0){
+      this.patient_target_organ = this.loadIndexSelected(this.consult_details.ncdRecordTargetOrgan, 'target_organ_code')
+    }
+
+    if(this.consult_details && Object.keys(this.consult_details.ncdRecordDiagnosis).length > 0){
+      this.patient_diagnosis = this.loadIndexSelected(this.consult_details.ncdRecordDiagnosis, 'diagnosis_code')
+    }
+
+    if(this.consult_details && Object.keys(this.consult_details.ncdRecordCounselling).length > 0){
+      this.patient_counseling = this.loadIndexSelected(this.consult_details.ncdRecordCounselling, 'counselling_code')
+    }
+  }
+
+  loadIndexSelected(data, field) {
+    let index_code = [];
+    if(Object.keys(data).length > 0) {
+      Object.entries(data).forEach(([key, value], index) => {
+        let val: any = value;
+        index_code[val[field]] = true;
+      });
+    }
+
+    console.log(index_code)
+    return index_code;
+  }
+
+
+  onSubmit(){
+    // this.is_saving = true;
+    this.ncd_record['patient_ncd_id'] = this.consult_details.patient_ncd_id;
+    this.ncd_record['consult_ncd_risk_id'] = this.consult_details.id;
+    this.ncd_record['patient_id'] = this.consult_details.patient_id;
+    this.ncd_record['consultation_date'] = formatDate(this.consult_details.assessment_date, 'yyyy-MM-dd', 'en');
+
+    this.ncd_record['diagnosis_code'] = this.getIndexVal(this.patient_diagnosis);
+    this.ncd_record['counselling_code'] = this.getIndexVal(this.patient_counseling);
+    this.ncd_record['target_organ_code'] = this.getIndexVal(this.patient_target_organ);
+
+    console.log(this.ncd_record);
+    this.http.post('non-communicable-disease/patient-record',this.ncd_record).subscribe({
+      next: (data: any) => {
+        console.log(data);
+      },
+      error: err => console.log(err)
+    })
+  }
+
+  getIndexVal(val){
+    let code_val = [];
+
+    val.forEach((value, key) => {
+      if(value === true) {
+        code_val.push(key)
+      }
+    })
+
+    return code_val;
+  }
+
+  constructor(
+    private http: HttpService,
+    private toastr: ToastrService
+  ) { }
+
+  ngOnInit(): void {
+    this.loadLibraries();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.getRecord();
+  }
 }

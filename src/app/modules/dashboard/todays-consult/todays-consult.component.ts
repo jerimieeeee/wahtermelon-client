@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { faQuestionCircle, faChevronDown, faFolderOpen, faHeart, faFlask, faNotesMedical, faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
+import { faQuestionCircle, faChevronDown, faFolderOpen, faHeart, faFlask, faNotesMedical, faExclamationCircle, faChevronRight, faChevronLeft, faAnglesLeft, faAnglesRight } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
@@ -16,87 +16,53 @@ export class TodaysConsultComponent implements OnInit {
   faFlask = faFlask;
   faNotesMedical = faNotesMedical;
   faExclamationCircle = faExclamationCircle;
+  faChevronRight = faChevronRight;
+  faChevronLeft = faChevronLeft;
+  faAnglesLeft = faAnglesLeft;
+  faAnglesRight = faAnglesRight;
 
-  today_consults = [
-    {
-      id: "/itr",
-      first_name: "Dal-mi",
-      last_name: "Seo",
-      address: "Gwangju, South Korea",
-      visit_type: "General Consult",
-      location: "Physician",
-      duration: "1 hour 45 mins",
-      img_name: "profile_2.jpg"
-    },
-    {
-      id: "/itr",
-      first_name: "Ji-Pyeong",
-      last_name: "Han",
-      address: "Seoul, South Korea",
-      visit_type: "General Consult",
-      location: "Physician",
-      duration: "1 hour 38 mins",
-      img_name: "003.jpg"
-    },
-    {
-      id: "/itr",
-      first_name: "Do-san",
-      last_name: "Nam",
-      address: "Seoul, South Korea",
-      visit_type: "General Consult",
-      location: "Physician",
-      duration: "1 hour 25 mins",
-      img_name: "004.jpg"
-    },
-    {
-      id: "/itr",
-      first_name: "Chul-san",
-      last_name: "Lee",
-      address: "Seoul, South Korea",
-      visit_type: "General Consult",
-      location: "Physician",
-      duration: "1 hour 24 mins",
-      img_name: "005.jpg"
-    },
-    {
-      id: "/itr",
-      first_name: "Yong-san",
-      last_name: "Kim",
-      address: "Seoul, South Korea",
-      visit_type: "General Consult",
-      location: "Physician",
-      duration: "1 hour 23 mins",
-      img_name: "006.jpg"
-    },
-    {
-      id: "/itr",
-      first_name: "Sa-Ha",
-      last_name: "Jung",
-      address: "Seoul, South Korea",
-      visit_type: "General Consult",
-      location: "Physician",
-      duration: "1 hour 12 mins",
-      img_name: "007.jpg"
-    },
-  ]
+  today_consults: [];
 
-  getInitials(string) {
-    return [...string.matchAll(/\b\w/g)].join('')
-  }
+  per_page: number = 10;
+  current_page: number;
+  last_page: number;
+  from: number;
+  to: number;
+  total: number;
 
-  getTodaysConsult(){
-    this.http.get('consultation/cn-records',{params:{consult_done: 0}}).subscribe({
+  getTodaysConsult(page?: number){
+    let params = {params: { }};
+    if (page) params['params']['page'] = page;
+    params['params']['include'] = 'barangay';
+    params['params']['per_page'] = this.per_page;
+    params['params']['consult_done'] = 0;
+
+    this.http.get('consultation/records', params).subscribe({
       next: (data: any) => {
-        this.today_consults = data.data;
         // console.log(data);
+        this.today_consults = data.data;
+
+        this.current_page = data.meta.current_page;
+        this.last_page = data.meta.last_page;
+        this.from = data.meta.from;
+        this.to = data.meta.to;
+        this.total = data.meta.total;
       },
       error: err => console.log(err)
     })
   }
 
-  openItr(patient_id){
-    console.log(patient_id)
-    this.router.navigate(['/itr', {id: patient_id}]);
+  onPageChange(page){
+
+  }
+
+  openItr(patient_id, ptgroup, id){
+    // console.log(patient_id)
+    if(ptgroup === 'itr'){
+      this.router.navigate(['/patient/'+ptgroup, {id: patient_id}]);
+    } else {
+      this.router.navigate(['/patient/'+ptgroup, {id: patient_id, consult_id: id}]);
+    }
   }
 
   getDataDiff(consult_date) {
@@ -121,20 +87,19 @@ export class TodaysConsultComponent implements OnInit {
     switch(group){
       case 'cn':
         return 'Consultation';
-        break;
       case 'cc':
         return 'Child Care';
-        break;
       case 'mc':
         return 'Maternal Care';
-        break;
       case 'dn':
         return 'Dental';
-        break;
       case 'ncd':
         return 'Non Communicable Disease';
-        break;
     }
+  }
+
+  getInitials(string) {
+    return [...string.matchAll(/\b\w/g)].join('')
   }
 
   constructor(

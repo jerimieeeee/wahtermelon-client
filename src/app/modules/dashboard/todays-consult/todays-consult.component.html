@@ -1,6 +1,6 @@
 <div class="px-4 py-2 mb-10 rounded-xl text-gray-600 h-100 border border-slate-100">
     <div class="md:flex md:justify-between md:items-center pb-2 border-b-2">
-      <span class="font-semibold text-xl pt-2 " [ngClass]="{'text-blue-500':today_consults.length === 0}">Todays Consult</span>
+      <span class="font-semibold text-xl pt-2 " [ngClass]="{'text-blue-500':today_consults?.length === 0}">Todays Consult {{ today_consults?.length >= 1 ? '('+total+')' : '' }}</span>
       <div class="flex items-center">
         <!-- <div>
           <button type="button" class="bg-orange-400 px-3 rounded-full mr-3 text-gray-800 hover:text-indigo-500">
@@ -14,7 +14,7 @@
       </div>
     </div>
 
-    <div class="pt-3" *ngIf="today_consults.length >= 1">
+    <div class="pt-3" *ngIf="today_consults?.length >= 1">
       <div class="flex justify-between items-center mb-3  pb-3 border-b border-gray-200" *ngFor="let profile of today_consults"> <!-- added pb-3 -->
         <div class="flex">
           <a class="flex justify-center mx-auto cursor-pointer" (click)="openItr(profile?.patient.id)">
@@ -25,7 +25,7 @@
           </a>
 
           <div class="flex justify-center md:block leading-tight mx-2 my-1">
-            <span class="block text-blue-500 font-medium text-lg my-0 py-0 cursor-pointer" (click)="openItr(profile?.patient.id)">
+            <span class="block text-blue-500 font-medium text-lg my-0 py-0 cursor-pointer" (click)="openItr(profile?.patient.id,'itr')">
               {{ profile?.patient?.last_name }}, {{ profile?.patient?.first_name }} {{ profile?.patient?.middle_name === 'NA' ? '' : profile?.patient?.middle_name  }} {{ profile?.patient?.suffix_name === 'NA' ? '' : profile?.patient?.suffix_name }}
             </span>
 
@@ -45,7 +45,7 @@
         <!-- <div class="flex"> -->
           <div class="grid grid-cols-12 text-left w-3/5">
             <div class="col-span-6 px-5w-full">
-              <button type="button" class="text-gray-700 hover:text-indigo-500" (click)="openItr(profile?.patient.id)">
+              <button type="button" class="text-gray-700 hover:text-indigo-500" (click)="openItr(profile?.patient.id, profile?.pt_group, profile?.id)">
                 <fa-icon class="mx-0 my-0" [icon]="faFolderOpen"></fa-icon>
                 {{ getVisitType(profile?.pt_group) }}
               </button>
@@ -61,72 +61,41 @@
       </div>
     </div>
 
-    <div class="pt-3" *ngIf="today_consults.length === 0">
+    <div class="pt-3" *ngIf="today_consults?.length === 0">
       <div class="text-center items-center mb-3 italic" >
         No record to show
       </div>
     </div>
 
-    <!-- <div *ngIf="today_consults.length >= 1">
+    <div *ngIf="today_consults?.length >= 1">
       <div class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
-        <div class="flex-1 flex justify-between sm:hidden">
-          <a href="#" class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:text-gray-500">
-            Previous
-          </a>
-          <a href="#" class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:text-gray-500">
-            Next
-          </a>
-        </div>
         <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
           <div>
             <p class="text-sm text-gray-700">
-              Showing
-              <span class="font-medium">1</span>
-              to
-              <span class="font-medium">6</span>
-              of
-              <span class="font-medium">72</span>
-              results
+              Showing <span class="font-medium">{{ from }}</span>
+              to <span class="font-medium">{{ to }}</span>
+              of <span class="font-medium">{{ total }}</span> results
             </p>
           </div>
           <div>
             <nav class="relative z-0 inline-flex shadow-sm -space-x-px" aria-label="Pagination">
-              <a href="#" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
-                <span class="sr-only">Previous</span>
-                <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                  <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
-                </svg>
-              </a>
-              <a href="#" class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
-                1
-              </a>
-              <a href="#" class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
-                2
-              </a>
-              <a href="#" class="hidden md:inline-flex relative items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
-                3
-              </a>
-              <span class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700">
-                ...
-              </span>
-              <a href="#" class="hidden md:inline-flex relative items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
-                8
-              </a>
-              <a href="#" class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
-                9
-              </a>
-              <a href="#" class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
-                10
-              </a>
-              <a href="#" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
-                <span class="sr-only">Next</span>
-                <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                  <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
-                </svg>
-              </a>
+              <button [disabled]="current_page===1" (click)="getTodaysConsult(1)" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 enabled:bg-white disabled:bg-gray-300 text-sm font-medium text-gray-500 hover:bg-gray-50">
+                <fa-icon [icon]="faAnglesLeft" class="block h-15 w-15 text-gray-500 pr-1"></fa-icon>
+              </button>
+
+                <button [disabled]="current_page===1" (click)="getTodaysConsult(current_page-1)" class="relative inline-flex items-center px-4 py-2 border border-gray-300 enabled:bg-white disabled:bg-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
+                  <fa-icon [icon]="faChevronLeft" class="block h-15 w-15 text-gray-500 pr-1"></fa-icon>Previous
+                </button>
+                <button [disabled]="current_page===last_page" (click)="getTodaysConsult(current_page+1)" class="relative inline-flex items-center px-4 py-2 border border-gray-300 enabled:bg-white disabled:bg-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
+                  Next<fa-icon [icon]="faChevronRight" class="h-5 w-5 text-gray-500"></fa-icon>
+                </button>
+
+              <button [disabled]="current_page===last_page" (click)="getTodaysConsult(last_page)" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 enabled:bg-white disabled:bg-gray-300 text-sm font-medium text-gray-500 hover:bg-gray-50">
+                <fa-icon [icon]="faAnglesRight" class="h-5 w-5 text-gray-500"></fa-icon>
+              </button>
             </nav>
           </div>
         </div>
       </div>
-    </div> -->
+    </div>
 </div>

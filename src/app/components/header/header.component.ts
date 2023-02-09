@@ -1,11 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { faChevronCircleDown, faBell, faSearch, faGear, faHome, faRightFromBracket, faAddressBook, faUser } from '@fortawesome/free-solid-svg-icons';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { faChevronCircleDown, faBell, faSearch, faGear, faHome, faRightFromBracket, faAddressBook, faUser, faSquarePollVertical } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { catchError, debounceTime, distinctUntilChanged, switchMap, tap, map, filter } from 'rxjs/operators';
 import { concat, Observable, of, Subject } from 'rxjs';
 import { Router } from '@angular/router';
-import { ToothServicesComponent } from 'app/modules/dental/modals/tooth-services/tooth-services.component';
-import { AuthService } from 'app/shared/services/auth/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -24,6 +22,7 @@ export class HeaderComponent implements OnInit {
   faRightFromBracket = faRightFromBracket;
   faAddressBook = faAddressBook;
   faUser = faUser;
+  faSquarePollVertical = faSquarePollVertical;
 
   patients$: Observable<any>;
   searchInput$ = new Subject<string>();
@@ -32,6 +31,13 @@ export class HeaderComponent implements OnInit {
   user_last_name: string;
   user_first_name: string;
   user_middle_name: string;
+
+  user = {
+    first_name: '',
+    middle_name: '',
+    last_name: '',
+    suffix_name: ''
+  };
 
   showMenu: boolean = false;
   patientLoading:boolean = false;
@@ -43,22 +49,21 @@ export class HeaderComponent implements OnInit {
       location: 'my-account',
       icon: faUser
     },
-    {
+    /* {
       name: 'Account List',
       location: 'account-list',
       icon: faAddressBook
-    },
+    }, */
     {
       name: 'Settings',
-      location: 'home',
+      location: 'admin',
       icon: faGear
     },
   ]
 
   constructor(
     private http: HttpService,
-    private router: Router,
-    private authService: AuthService
+    private router: Router
   ) { }
 
   loadPatients() {
@@ -86,9 +91,10 @@ export class HeaderComponent implements OnInit {
   }
 
   onSelect(selectedPatient){
-    /* this.searchInput$.next(null);
-    // this.loadPatients(); */
-    if(selectedPatient) this.router.navigate(['/itr', {id: selectedPatient.id}]);
+    if(selectedPatient) {
+      // this.patientInfo.getPatient(selectedPatient.id);
+      this.router.navigate(['/patient/itr', {id: selectedPatient.id}]);
+    }
     this.selectedPatient = null;
     this.loadPatients();
   }
@@ -96,7 +102,7 @@ export class HeaderComponent implements OnInit {
   getPatient(term: string = null): Observable<any> {
     return this.http.get('patient', {params:{'filter[search]':term, per_page: 'all'}})
     .pipe(map((resp:any) => {
-      console.log(resp);
+      // console.log(resp);
       this.showCreate = resp.data.length == 0 ? true : false;
       console.log(this.showCreate)
       return resp.data;
@@ -104,7 +110,7 @@ export class HeaderComponent implements OnInit {
   }
 
   navigateTo(loc){
-    console.log(loc)
+    this.toggleMenu();
     this.router.navigate(['/'+loc]);
   }
 
@@ -113,20 +119,24 @@ export class HeaderComponent implements OnInit {
   }
 
   logout(){
-    localStorage.removeItem('access_token');
-    window.location.reload();
-    /* this.authService.logout().subscribe({
-      next: res => this.router.navigate(['/login']),
+    this.http.logout().subscribe({
+      next: () => {
+        this.http.removeLocalStorageItem();
+        this.router.navigate(['/']);
+      },
       error: err => console.log(err)
-    }); */
+    });
   }
 
 
   ngOnInit(): void {
     this.loadPatients();
-    this.user_last_name = localStorage.getItem('user_last_name');
-    this.user_first_name = localStorage.getItem('user_first_name');
-    this.user_middle_name = localStorage.getItem('user_middle_name');
+    let val = this.http.getUserFromJSON();
+
+    this.user.last_name = val.last_name;
+    this.user.first_name = val.first_name;
+    this.user.middle_name = val.middle_name === 'NA' ? '' : val.middle_name;
+    this.user.suffix_name = val.suffix_name === 'NA' ? '' : val.suffix_name;
   }
 
 }

@@ -1,0 +1,49 @@
+<hr class="my-4">
+<div class="grid grid-cols-10">
+  <div class="col-span-2 pt-2 font-semibold">
+    Diagnosis
+  </div>
+  <div class="col-span-8">
+    <div class="rounded-md border border-solid border-gray-300">
+      <span class="rounded-t-md m-0 p-2 font-semibold text-gray-50 bg-cyan-500 flex justify-between" [ngClass]="{'rounded-b' : !show_content}">
+        Initial Diagnosis
+        <button type="button" (click)="show_content = !show_content">
+          <fa-icon [icon]="show_content ? faChevronCircleUp : faChevronCircleDown" class="pr-2" size="lg"></fa-icon>
+        </button>
+      </span>
+
+      <div *ngIf="show_content">
+        <div class="flex mb-2 p-4">
+          <button type="submit" class="inline-flex p-1 items-center text-gray-50 bg-sky-400 rounded-l-md border border-gray-300">
+            <fa-icon class="text-white fa-xl" [icon]="faPlusSquare" ></fa-icon>
+          </button>
+          <div class="chips-container">
+            <ng-select class="select-chips" placeholder="search"
+              [items]="idx$ | async"
+              [multiple]="true"
+              [loading]="idxLoading"
+              typeToSearchText="search..."
+              [typeahead]="searchInput$"
+              [(ngModel)]="selectedIdx"
+              bindValue="class_id"
+              bindLabel="class_name"
+              [disabled]="consult_done"
+              notFoundText="No records found">
+            </ng-select>
+          </div>
+        </div>
+        <div class="flex px-4 pb-4">
+          <textarea [disabled]="consult_done" rows="3" id="idx_remarks" placeholder="Initial Diagnosis remark" [(ngModel)]="idx_remarks" class="placeholder-slate-400 w-full rounded-md border-gray-300 bg-gray-50"></textarea>
+        </div>
+        <div class="flex text-right">
+          <button *ngIf="!consult_done" [disabled]="is_saving" type="button" class="btn-save ml-auto mr-5 mb-5 px-10 disabled:bg-gray-300" (click)="onSubmit()">
+            <fa-icon *ngIf="is_saving" class="mr-2" [icon]="faSpinner" spin="true"></fa-icon>
+            <fa-icon *ngIf="!is_saving" class="mr-2" [icon]="faSave"></fa-icon>
+            {{ is_saving ? 'Saving' : 'Save' }}
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

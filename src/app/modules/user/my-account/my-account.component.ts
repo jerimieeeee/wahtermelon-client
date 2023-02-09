@@ -26,6 +26,15 @@ export class MyAccountComponent implements OnInit {
   date;
   submit_errors: any;
 
+  regions: object;
+  provinces: object;
+  municipalities: object;
+  facilities: object;
+  designations: object;
+  employers: object;
+
+  orig_value: any;
+
   constructor(
     private http: HttpService,
     private formBuilder: FormBuilder,
@@ -40,7 +49,13 @@ export class MyAccountComponent implements OnInit {
     birthdate: new FormControl<string| null>(''),
     gender: new FormControl<string| null>(''),
     contact_number: new FormControl<number| null>(null),
-    photo_url: new FormControl<string| null>('')
+    photo_url: new FormControl<string| null>(''),
+    facility_code: new FormControl<string| null>(''),
+    region: new FormControl<string| null>(''),
+    province: new FormControl<string| null>(''),
+    municipality: new FormControl<string| null>(''),
+    designation_code: new FormControl<string| null>(''),
+    employer_code: new FormControl<string| null>(''),
   });
 
   enbaleEdit(){
@@ -50,8 +65,6 @@ export class MyAccountComponent implements OnInit {
       this.userForm.disable();
       this.userForm.patchValue({...this.orig_value});
     }
-
-    console.log(this.userForm);
   }
 
   onSubmit(){
@@ -59,7 +72,7 @@ export class MyAccountComponent implements OnInit {
     this.loading = true;
 
     console.log(this.userForm)
-    let user_id = localStorage.getItem('user_id');
+    let user_id = this.http.getUserID();
     if(!this.userForm.invalid){
       this.http.update('users/', user_id, this.userForm.value).subscribe({
         next: (data:any) => {
@@ -98,26 +111,74 @@ export class MyAccountComponent implements OnInit {
     // this.router.navigate(['/home']);
   }
 
+  libraries = [
+    {var_name: 'suffix_names', location: 'suffix-names'},
+    {var_name: 'regions', location: 'regions'},
+    {var_name: 'designations', location: 'designations'},
+    {var_name: 'employers', location: 'employers'},
+  ]
+
   loadLibraries(){
-    this.http.get('libraries/suffix-names').subscribe({
-      next: (data: any) => {this.suffix_names = data.data},
+    this.libraries.forEach(obj => {
+      this.http.get('libraries/'+obj.location).subscribe({
+        next: (data: any) => {this[obj.var_name] = data.data; console.log(obj.var_name, data.data)},
+        error: err => console.log(err)
+      })
+    });
+  }
+
+  loadFacilities(municipality){
+    console.log(municipality);
+    this.http.get('libraries/facilities', {params:{'filter[municipality_code]':municipality, 'per_page': 'all'}}).subscribe({
+      next: (data: any) => {
+        console.log(data)
+        this.facilities = data.data;
+      },
+      error: err => console.log(err)
+    })
+  }
+
+  loadDemog(loc, code, include){
+    if(loc == 'regions') {
+      this.municipalities = null;
+      this.facilities = null;
+    }else if (loc == 'provinces') {
+      this.facilities = null;
+    }
+
+    this.http.get('libraries/'+loc+'/'+code,{params:{'include':include}}).subscribe({
+      next: (data: any) => {console.log(data.data); this[include] = data.data[include]},
       error: err => console.log(err)
     });
   }
 
-  orig_value: any;
-
   loadUser(){
-    this.http.get('users/'+localStorage.getItem('user_id')).subscribe({
+    let user_id = this.http.getUserID();
+    this.http.get('users/'+user_id).subscribe({
       next: (data: any) => {
         console.log(data)
         this.orig_value = data.data;
-        this.orig_value.birthdate = formatDate(this.orig_value.birthdate,'Y-MM-dd','en')
+        this.orig_value.birthdate = formatDate(this.orig_value.birthdate,'yyyy-MM-dd','en')
         this.userForm.patchValue({...this.orig_value});
 
-        localStorage.setItem('user_last_name', this.orig_value.last_name);
+        this.loadDemog('regions', this.orig_value.facility.region.code, 'provinces');
+        this.userForm.patchValue({region: this.orig_value.facility.region.code});
+        this.loadDemog('provinces', this.orig_value.facility.province.code, 'municipalities');
+        this.userForm.patchValue({province: this.orig_value.facility.province.code});
+        this.loadFacilities(this.orig_value.facility.municipality.code);
+        this.userForm.patchValue({municipality: this.orig_value.facility.municipality.code});
+        this.userForm.patchValue({facility_code: this.orig_value.facility.code});
+
+        this.userForm.patchValue({designation_code: this.orig_value.designation.code})
+        this.userForm.patchValue({employer_code: this.orig_value.employer.code})
+
+        this.orig_value['facility_code'] = this.orig_value.facility?.code;
+
+        this.http.saveUserToLocalStorage(this.orig_value);
+        console.log(this.orig_value);
+        /* localStorage.setItem('user_last_name', this.orig_value.last_name);
         localStorage.setItem('user_first_name', this.orig_value.first_name);
-        localStorage.setItem('user_middle_name', this.orig_value.middle_name);
+        localStorage.setItem('user_middle_name', this.orig_value.middle_name); */
 
         // this.orig_value = this.userForm.value;
         this.userForm.disable();
@@ -136,7 +197,13 @@ export class MyAccountComponent implements OnInit {
       birthdate: ['', Validators.required],
       gender: ['', Validators.required],
       contact_number: ['', Validators.required],
-      photo_url: ['']
+      photo_url: [''],
+      facility_code: [''],
+      region: ['', Validators.required],
+      province: ['', Validators.required],
+      municipality: ['', Validators.required],
+      designation_code: ['', Validators.required],
+      employer_code: ['', Validators.required],
     });
 
     this.loadUser();

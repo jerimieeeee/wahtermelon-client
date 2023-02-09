@@ -1,6 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { faAngleDown, faCalendarDay, faCaretRight, faCircleCheck, faClose, faInfoCircle, faPencil, faSave, faTimes, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
+import { faAngleDown, faCalendarDay, faCaretRight, faCircleCheck, faCircleNotch, faClose, faInfoCircle, faPencil, faSave, faTimes, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import { LockChanges } from '@ngrx/store-devtools/src/actions';
 import { HttpService } from 'app/shared/services/http.service';
 
@@ -15,6 +15,7 @@ export class PostvisitsComponent implements OnInit {
   faClose = faClose;
   faTimesCircle = faTimesCircle;
   faSave = faSave;
+  faSpinner = faCircleNotch;
   faPencil = faPencil;
   faAngleDown = faAngleDown;
   faInfoCircle = faInfoCircle;
@@ -48,7 +49,6 @@ export class PostvisitsComponent implements OnInit {
 
   mc_id: Number = new Number();
   user_id: Number = new Number();
-  patient_id: Number = new Number();
 
   focused: boolean;
 
@@ -57,12 +57,19 @@ export class PostvisitsComponent implements OnInit {
   decimal: number;
   actual_height: any;
   @Input() patient_mc_record;
-  @Input() patient_details;
+  @Input() patient_id;
+
+  @Output() post_visit_data = new EventEmitter<string>();
+
   is_saving: boolean;
+  saved: boolean;
+  edit_bool: boolean;
+  edit_form: any;
+  edit_id: any;
   constructor(private http: HttpService, private formBuilder: FormBuilder) { }
 
   cm_value = '';
- 
+
   public keyUp = [];
   public buttons = [];
   public postpartum_data = [];
@@ -78,17 +85,9 @@ export class PostvisitsComponent implements OnInit {
  ]
   ngOnInit(): void {
     this.value = 1;
-    // this.registry_id = 1;
-    // this.patient_height = 145;
-    // this.patient_weight = 75;
-    // this.patient_id = 1;
-    // this.bp_systolic = 120;
-    // this.bp_diastolic = 90;
     this.getMCR();
-    // this.mc_id = 2;
-    // this.user_id = 1;
-    // this.postpartum_week = 1;
-    // this.createForm();
+    console.log(this.patient_mc_record, "mc record form postvistis init");
+    this.edit_bool = false
     this.focused = false;
   }
   flip(): void {
@@ -99,32 +98,27 @@ export class PostvisitsComponent implements OnInit {
   }
 
   getMCR() {
-    console.log(this.patient_mc_record[0], " from getMCR - post visit;");
+    console.log(this.patient_mc_record.length == 0, " from getMCR - post visit;");
+    if(this.patient_mc_record.length != 0){
+      if(this.patient_mc_record.postpartum_visit[0]?this.patient_mc_record.postpartum_visit[0]:this.patient_mc_record.postpartum_visit.length == 1){
+        console.log("it went true");
 
+      this.value = this.patient_mc_record.postpartum_visit[0].visit_sequence + 1;
+      this.postpartum_data =  this.patient_mc_record.postpartum_visit
+       }
+       this.createForm(this.patient_mc_record);
+    }
 
-    console.log(this.patient_mc_record[0].postpartum_visit[0]?this.patient_mc_record[0].postpartum_visit[0]:this.patient_mc_record[0].postpartum_visit, " try getmcr - post visit");
-   
-    if(this.patient_mc_record[0].postpartum_visit[0]?this.patient_mc_record[0].postpartum_visit[0]:this.patient_mc_record[0].postpartum_visit.length == 1){
-      console.log("it went true");
-      
-    this.value = this.patient_mc_record[0].postpartum_visit[0].visit_sequence + 1;
-    this.patient_mc_record[0].postpartum_visit.forEach(p => {
-      this.postpartum_data.push(p);
-      console.log("pushing p's");
-      
-    });
-     }
-  this.createForm(this.patient_mc_record[0]);
   }
 createForm(mc_record: any) {
-  let user_id = localStorage.getItem('user_id');
-  let facility_code = 'DOH000000000005672';
+  let user_id = this.http.getUserID();
+  let facility_code = this.http.getUserFacility();
   let post_visit: any
-  console.log(this.patient_mc_record[0].postpartum_visit, " post visit true or false ?");
-  
-  if(this.patient_mc_record[0].postpartum_visit[0]?this.patient_mc_record[0].postpartum_visit[0]:this.patient_mc_record[0].postpartum_visit.length == 1){
+  console.log(this.patient_mc_record.postpartum_visit, " post visit true or false ?");
+
+  if(this.patient_mc_record.postpartum_visit[0]?this.patient_mc_record.postpartum_visit[0]:this.patient_mc_record.postpartum_visit.length == 1){
     console.log("post visit true");
-    
+
     post_visit = mc_record.postpartum_visit[0];
   }else{
     console.log("post visit false");
@@ -135,14 +129,14 @@ createForm(mc_record: any) {
   this.postpartum_visit_form = this.formBuilder.group({
     patient_mc_id: [mc_record.id],
     facility_code: [facility_code],
-    patient_id: [this.patient_details.id],
+    patient_id: [this.patient_id],
     user_id: [user_id],
-    postpartum_date: [post_visit.length != 0?new Date(post_visit.postpartum_date).toISOString().substring(0, 10):new Date().toISOString().substring(0, 10), [Validators.required]],
-    visit_type: [this.patient_mc_record.id, [Validators.required]],
-    patient_height:  [this.patient_mc_record.id, [Validators.required]],
-    patient_weight:  [this.patient_mc_record.id, [Validators.required]],
-    bp_systolic: [this.patient_mc_record.id, [Validators.required]],
-    bp_diastolic:  [this.patient_mc_record.id, [Validators.required]],
+    postpartum_date: [new Date().toISOString().substring(0, 10), [Validators.required]],
+    visit_type: ['', [Validators.required]],
+    patient_height:  [post_visit?post_visit.patient_height:'', [Validators.required]],
+    patient_weight:  [post_visit?post_visit.patient_weight:'', [Validators.required]],
+    bp_systolic: ['', [Validators.required]],
+    bp_diastolic:  ['', [Validators.required]],
     breastfeeding: [false],
     family_planning: [false],
     fever: [false],
@@ -151,63 +145,91 @@ createForm(mc_record: any) {
     pallor:  [false],
     cord_ok: [false],
   })
-  //   this.postpartum_visit_form = new FormGroup({
-  //     postpartum_visit_date: new FormControl(new Date().toISOString().substring(0, 10)),
-  //     visit_sequence: new FormControl(this.value),
-  //     registry_id: new FormControl(this.registry_id),
-  //     postpartum_week: new FormControl(this.postpartum_week),
-  //     patient_height: new FormControl(this.patient_height),
-  //     patient_weight: new FormControl(this.patient_weight),
-  //     bp_systolic: new FormControl(this.bp_systolic),
-  //     bp_diastolic: new FormControl(this.bp_diastolic),
-  //     vi: new FormControl(),
-  //     vb: new FormControl(),
-  //     f: new FormControl(),
-  //     p: new FormControl(),
-  //     b: new FormControl(),
-  //     pb: new FormControl(),
-  //     fp: new FormControl(),
-      
-  // });
 }
-saveForm(data){
+
+edit(visit) {
+  this.edit_bool = true;
+  console.log(visit, " data to be editesd");
+
+  // this.prenatal_form.reset();
+      this.edit_form = {
+        patient_mc_id: visit.patient_mc_id,
+        patient_id: this.patient_id,
+        postpartum_date: visit.postpartum_date,
+        visit_type: visit.visit_type,
+        patient_height: visit.patient_height,
+        patient_weight: visit.patient_weight,
+        bp_systolic: visit.bp_systolic,
+        bp_diastolic: visit.bp_diastolic,
+        breastfeeding: visit.breastfeeding,
+        family_planning: visit.family_planning,
+        fever: visit.fever,
+        vaginal_infection: visit.vaginal_infection,
+        vaginal_bleeding: visit.vaginal_bleeding,
+        pallor: visit.pallor,
+        cord_ok: visit.cord_ok
+      };
+
+      this.postpartum_visit_form.patchValue(this.edit_form);
+    // }
+  // });
+  this.value = 0;
+      this.value = visit.visit_sequence;
+  // this.hide.push(id);
+  console.log(this.edit_form, " edit form");
+  console.log(visit.id, " id pre edit");
+
+  this.edit_id = visit.id;
+
+      this.edit_bool = true;
+  // console.log(id, " prenatal id edit");
+
+}
+
+saveForm(){
   this.is_saving = true;
-  
+
   console.log(this.postpartum_visit_form.valid, this.postpartum_visit_form.value);
-  
+
   if (this.postpartum_visit_form.valid) {
     if (this.actual_height) {
       this.postpartum_visit_form.value.patient_height = this.actual_height;
+      this.edit_form.patient_height = this.actual_height
     }
+
+    let http
+    if(this.edit_bool){
+      http = this.http.update('maternal-care/mc-postpartum/', this.edit_id, this.postpartum_visit_form.value);
+      console.log(" going to update");
+
+    }else{
+      http = this.http.post('maternal-care/mc-postpartum', this.postpartum_visit_form.value);
+    }
+
     console.log(this.postpartum_visit_form, " this is my data for saving post vist");
-    this.http.post('maternal-care/mc-postpartum', this.postpartum_visit_form.value).subscribe({
+    http.subscribe({
       next: (data: any) => {
         console.log(data.data, " data from saving post visit")
-        this.postpartum_data = [];
-        // this.updateMCR('latest', this.patient_details.id);
-        
-        data.data.forEach(d => {
-          this.postpartum_data.push(d)
-          console.log(d, " the Ds");
-
-        })
+        this.postpartum_data = data.data
+        this.post_visit_data.emit(data.data)
         this.value = this.postpartum_data[0].visit_sequence + 1;
       },
       error: err => console.log(err),
       complete: () => {
         this.is_saving = false;
-        // this.saved = true;
+        this.saved = true;
+        this.edit_bool = false
+        this.edit_form = []
+        this.createForm(this.patient_mc_record);
         setTimeout(() => {
-          // this.saved = false;
+          this.saved = false;
         }, 1500);
-        // this.loading = false;
-        // this.showModal = true;
       }
     })
   } else {
-    // this.loading = false;
+    this.is_saving = false;
   }
-    
+
 }
 
 onKeyUp(data_input: string, id: string) {
@@ -222,7 +244,7 @@ onKeyUp(data_input: string, id: string) {
 
  }
  console.log(this.keyUp);
- 
+
 }
 clearForm(id) {
  this.postpartum_visit_form.get(id).reset();
@@ -280,6 +302,8 @@ buttonShow(name) {
 }
 cancel() {
   this.keyUp = [];
+  this.edit_bool = false
+  this.getMCR();
   // this.createForm();
 }
 }

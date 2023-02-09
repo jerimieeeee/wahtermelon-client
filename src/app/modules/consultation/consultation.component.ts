@@ -1,181 +1,165 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ChartOptions, WeightChart } from '../patient-itr/declarations/chart-options';
-import { ChartComponent } from "ng-apexcharts";
-import { faCircleNotch, faPlus, faPlusSquare, faXmark } from '@fortawesome/free-solid-svg-icons';
-import { trigger, transition, style, animate } from '@angular/animations';
+import { faChevronDown, faChevronUp, faCircleNotch, faDoorClosed, faPlus, faPlusSquare, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
-import { delay, map, Observable, of } from 'rxjs';
-import { Complaints  } from './model/complaint';
+import { catchError, debounceTime, distinctUntilChanged, switchMap, tap, map, filter } from 'rxjs/operators';
+import { concat, Observable, of, Subject } from 'rxjs';
+import { faFloppyDisk } from '@fortawesome/free-regular-svg-icons';
+import { ActivatedRoute } from '@angular/router';
+import { GraphsComponent } from './components/graphs/graphs.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-consultation',
   templateUrl: './consultation.component.html',
-  styleUrls: ['./consultation.component.scss'],
-  animations: [
-    trigger('closeChip', [
-    transition(':enter', [
-      style({ opacity: 0, visibility: 'hidden'}),
-      animate('250ms', style({ opacity: '100%', visibility: 'visible'})),
-    ]),
-    transition(':leave', [
-      animate('250ms', style({ opacity: 0, visibility: 'hidden', overflow: 'hidden' }))
-    ])
-  ])],
+  styleUrls: ['./consultation.component.scss']
 })
 export class ConsultationComponent implements OnInit {
-  public WeightChart: Partial<WeightChart>;
-  public chartOptions: Partial<ChartOptions>;
-  @ViewChild("bp-chart") bp_chart: ChartComponent;
-  @ViewChild("weight-chart") weight_chart: ChartComponent;
+  @ViewChild(GraphsComponent) graph: GraphsComponent;
 
   faPlusSquare = faPlusSquare;
   faSpinner = faCircleNotch;
   faXmark = faXmark;
   faPlus = faPlus;
+  faFloppyDisk = faFloppyDisk;
+  faChevronUp = faChevronUp;
+  faChevronDown = faChevronDown;
+  faDoorClosed = faDoorClosed;
 
   is_saving: boolean = false;
   show_item: boolean = true;
+  toggle_content: boolean = true;
+  open_consult: boolean = true;
+  have_complaint:boolean = false;
+  show_end: boolean = false;
+  enable_edit: boolean = false;
 
-  complaints$: Observable<any[]>;
-  selectedComplaint = [];
-  list_complaints: any;
+  modules: Number;
 
-  /* async getComplaint(term: string = null): Observable<Complaints[]> {
-    console.log(term)
-    let items = this.complaints$;
-    if(term) {
-      items = items.filter(x => x.complaint_desc.toLocaleLowerCase().indexOf(term.toLocaleLowerCase()) > -1);
+  patient_details: any;
+  visit_list: any;
+  vitals: any;
+  consult_details: any;
+  consult_id: string;
+  patient_id: string;
+
+  referred_to = {
+    id: ''
+  };
+  physicians: any;
+
+  switchTabs(tabs){
+    this.modules = 0;
+    this.modules = tabs;
+  }
+
+  toggleAll(){
+    this.toggle_content = !this.toggle_content;
+  }
+
+  patientVitals(vitals) {
+    this.graph.patientVitals(vitals);
+  }
+
+  endVisit() {
+    let params = {
+      patient_id: this.consult_details.patient.id,
+      consult_date: this.consult_details.consult_date,
+      pt_group: 'cn',
+      consult_done: true
     }
-    return of(items).pipe(delay(500))
-  } */
+
+    this.http.update('consultation/records/', this.consult_details.id, params).subscribe({
+      next: (data: any) => {
+        console.log(data)
+      },
+      error: err => console.log(err)
+    })
+  }
+
+  patientInfo(info){
+    this.patient_details = info;
+  }
+
+  toggleModal(){
+    this.show_end = !this.show_end;
+  }
+
+  loadVisitHistory(){
+    this.http.get('consultation/records',{params:{patient_id: this.patient_details.id, per_page: 'all', sort: '-consult_date'}}).subscribe({
+      next: (data: any) => {
+        this.visit_list = data.data;
+      },
+      error: err => console.log(err),
+    })
+  }
+
+  loadConsult(){
+    let params = {
+      id: this.consult_id,
+      pt_group: 'cn',
+    }
+
+    this.http.get('consultation/records', {params}).subscribe({
+      next: (data: any) => {
+        this.consult_details = data.data[0];
+        // console.log(this.consult_details)
+        if(this.consult_details.consult_notes.complaint || this.consult_details.consult_notes.complaints.length > 0  || this.consult_details.consult_notes.history) {
+          this.have_complaint = true;
+        }
+
+        if(this.consult_details.physician) {
+          this.referred_to = this.consult_details.physician;
+          this.enable_edit = true;
+        }
+      },
+      error: err => console.log(err)
+    })
+  }
+
+  referTo(){
+    if(this.enable_edit) {
+      this.enable_edit = false;
+    } else {
+      let params = {
+        patient_id: this.consult_details.patient.id,
+        consult_date: this.consult_details.consult_date,
+        pt_group: 'cn',
+        consult_done: false,
+        physician_id: this.referred_to.id
+      }
+
+      this.http.update('consultation/records/', this.consult_details.id, params).subscribe({
+        next: (data: any) => {
+          this.toastr.success('Patient was referred','Referral');
+          this.consult_details['physician'] = this.referred_to;
+        },
+        error: err => console.log(err)
+      })
+    }
+  }
+
+  loadUsers(){
+    this.http.get('users', {params:{per_page: 'all', designation_code: 'MD'}}).subscribe({
+      next: (data: any) => {
+        // console.log(data.data)
+        this.physicians = data.data
+      },
+      error: err => console.log(err)
+    })
+  }
 
   constructor(
-    private http: HttpService
-  ) {
-    this.chartOptions = {
-      series: [
-        {
-          name: "Systolic",
-          data: [120, 120, 110, 120, 140, 120, 120]
-        },
-        {
-          name: "Diastolic",
-          data: [90, 80, 80, 84, 92, 70, 80]
-        }
-      ],
-      chart: {
-        height: 200,
-        type: "area"
-      },
-      dataLabels: {
-        enabled: false
-      },
-      stroke: {
-        curve: "smooth"
-      },
-      title: {
-        text: "Blood Pressure History"
-      },
-      xaxis: {
-        type: "datetime",
-        categories: [
-          "2018-09-19T00:00:00.000Z",
-          "2018-09-19T01:30:00.000Z",
-          "2018-09-19T02:30:00.000Z",
-          "2018-09-19T03:30:00.000Z",
-          "2018-09-19T04:30:00.000Z",
-          "2018-09-19T05:30:00.000Z",
-          "2018-09-19T06:30:00.000Z"
-        ]
-      },
-      tooltip: {
-        x: {
-          format: "dd/MM/yy HH:mm"
-        }
-      }
-    };
-
-    this.WeightChart = {
-      series: [
-        {
-          name: "Weight",
-          data: [120, 120, 110, 120, 140, 120, 120]
-        }
-      ],
-      chart: {
-        height: 200,
-        type: "line"
-      },
-      dataLabels: {
-        enabled: false
-      },
-      stroke: {
-        curve: "smooth"
-      },
-      title: {
-        text: "Weight History"
-      },
-      xaxis: {
-        type: "datetime",
-        categories: [
-          "2018-09-19T00:00:00.000Z",
-          "2018-09-19T01:30:00.000Z",
-          "2018-09-19T02:30:00.000Z",
-          "2018-09-19T03:30:00.000Z",
-          "2018-09-19T04:30:00.000Z",
-          "2018-09-19T05:30:00.000Z",
-          "2018-09-19T06:30:00.000Z"
-        ]
-      },
-      tooltip: {
-        x: {
-          format: "dd/MM/yy HH:mm"
-        }
-      }
-    };
-  }
-
-  saveConsult(){
-    this.is_saving = true;
-
-    setTimeout(() => {
-      this.is_saving = false;
-    }, 5000);
-  }
-
-  deleteItem(){
-    this.show_item = false;
-  }
-
-  pe_grouped = [];
-  loadLibraries() {
-    let value: any;
-    this.http.get('libraries/complaint').subscribe(
-      (data: any) => {
-        this.complaints$ = of(data.data)
-      }
-    );
-
-    this.http.get('libraries/pe').subscribe(
-      (data: any) => {
-        const list = data.data;
-
-        const groups = list.reduce((groups, item) => {
-          const group = (groups[item.category_id] || []);
-          group.push(item);
-          groups[item.category_id] = group;
-          return groups;
-        }, {});
-
-        this.pe_grouped = groups;
-        console.log(this.pe_grouped);
-      }
-    );
-    return value;
-  }
+    private http: HttpService,
+    private route: ActivatedRoute,
+    private toastr: ToastrService
+  ) { }
 
   ngOnInit(): void {
-    this.loadLibraries();
+    this.patient_id = this.route.snapshot.paramMap.get('id');
+    this.consult_id = this.route.snapshot.paramMap.get('consult_id');
+    // console.log(this.consult_id)
+    this.modules = 1;
+    this.loadConsult();
+    this.loadUsers()
   }
-
 }

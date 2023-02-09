@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { faSearch,faBalanceScale,faPlus,faInfoCircle,faTimes,faSave } from '@fortawesome/free-solid-svg-icons';
+import { faInfoCircle,faTimes,faSave,faChevronCircleDown,faChevronCircleUp, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { HttpService } from 'app/shared/services/http.service';
+import { answer_screening, answer_yn } from '../../data-lib/answers';
+import { circumcision } from '../../data-lib/libraries';
+import { casdtForm } from './form';
 
 @Component({
   selector: 'app-casdt',
@@ -7,11 +11,17 @@ import { faSearch,faBalanceScale,faPlus,faInfoCircle,faTimes,faSave } from '@for
   styleUrls: ['./casdt.component.scss']
 })
 export class CasdtComponent implements OnInit {
-
+  faSpinner = faSpinner;
   faInfoCircle = faInfoCircle;
   faTimes = faTimes;
   faSave = faSave;
-  
+  faChevronCircleDown = faChevronCircleDown;
+  faChevronCircleUp = faChevronCircleUp;
+  modals: any = [];
+
+  casdtForm = casdtForm;
+
+  is_saving: boolean =false;
 
   size = [
     {code: 'small', desc: 'Small'},
@@ -36,23 +46,30 @@ export class CasdtComponent implements OnInit {
     {code: 'anteverted', desc: 'Anteverted'}
   ];
 
-  question = [
-    {code: 'Y', desc: 'Yes'},
-    {code: 'N', desc: 'No'}
-  ];
+  circumcision = circumcision;
+  answer_yn = answer_yn;
+  answer_yna: [];
+  answer_screening = answer_screening
 
-  papsmear = [
-    {code: 'a', desc: 'Positive'},
-    {code: 'b', desc: 'Negative'},
-    {code: 'c', desc: 'Suspect Cancer'}
-  ];
+  loadLibraries(){
 
+  }
 
+  onSubmit(){
+    this.is_saving = true;
+  }
 
+  toggleModal(modal_name) {
+    this.modals[modal_name] = this.modals[modal_name] !== undefined ? !this.modals[modal_name] : false;
+  }
 
-  constructor() { }
+  constructor(
+    private http: HttpService
+  ) { }
 
   ngOnInit(): void {
+    console.log(this.casdtForm);
+    this.loadLibraries;
   }
 
 }

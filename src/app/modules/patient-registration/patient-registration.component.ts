@@ -40,6 +40,8 @@ export class PatientRegistrationComponent implements OnInit {
     education_code: new FormControl<string| null>(''),
     civil_status_code: new FormControl<string| null>(''),
     consent_flag: new FormControl<boolean>(false),
+    user_id: new FormControl<string| null>(''),
+    facility_code: new FormControl<string| null>(''),
     family: new FormGroup({
       region: new FormControl<string| null>(''),
       province: new FormControl<string| null>(''),
@@ -88,6 +90,7 @@ export class PatientRegistrationComponent implements OnInit {
   is_saving: boolean = false;
   loading: boolean = false;
   familyFolderModal: boolean = false;
+  show_form = false;
 
   selected_family_folder: string;
   selected_barangay_code: string;
@@ -123,6 +126,7 @@ export class PatientRegistrationComponent implements OnInit {
       } else {
         query = this.http.post('patient', this.patientForm.value);
       }
+      // console.log(this.patientForm);
       query.subscribe({
         next: (data: any) => {
           // console.log(data)
@@ -142,9 +146,10 @@ export class PatientRegistrationComponent implements OnInit {
   }
 
   saveFolder(id){
-    let user_id = localStorage.getItem('user_id')
+    let user_id = this.http.getUserID();
+    let facility_code = this.http.getUserFacility();
     let params = {
-      facility_code: this.show_demog_input ? 'DOH000000000005672' : this.selected_facility,
+      facility_code: this.show_demog_input ? facility_code : this.selected_facility,
       user_id: user_id,
       patient_id: id,
       address: this.show_demog_input ? this.patientForm.controls.family['controls'].address.value : this.selected_address,
@@ -180,7 +185,7 @@ export class PatientRegistrationComponent implements OnInit {
   show_edit: boolean = false;
 
   transaction(data){
-    console.log(data);
+    // console.log(data);
     this.selected_family_folder = data.data ? data.data.id : null;
     this.selected_barangay_code = data.data ? data.data.barangay.code : null;
     this.selected_address = data.data ? data.data.address : null;
@@ -220,7 +225,7 @@ export class PatientRegistrationComponent implements OnInit {
   }
 
   proceedItr(){
-    this.router.navigate(['/itr', {id: this.new_patient_id}])
+    this.router.navigate(['/patient/itr', {id: this.new_patient_id}])
   }
 
   toggleModal(modal){
@@ -253,7 +258,8 @@ export class PatientRegistrationComponent implements OnInit {
     this.libraries.forEach(obj => {
       this.http.get('libraries/'+obj.location).subscribe({
         next: (data: any) => this[obj.var_name] = data.data,
-        error: err => console.log(err)
+        error: err => console.log(err),
+        complete: () => this.show_form = true
       })
     });
   }
@@ -262,8 +268,10 @@ export class PatientRegistrationComponent implements OnInit {
   loadPatient(id){
     this.http.get('patient/'+id).subscribe({
       next: (data: any) => {
-        console.log(data);
+        // console.log(data);
         this.patientForm.patchValue({...data.data});
+
+        // this.patientForm.patchValue({suffix_name: data.data.suffix_code})
         this.patient_to_update = data.data.id;
         // console.log(this.patientForm);
         this.button_function = 'Update';
@@ -279,29 +287,36 @@ export class PatientRegistrationComponent implements OnInit {
   member_count: number;
   patchAddress(address, member){
     // console.log(address);
-    this.patientForm.patchValue({family:{address: address.address}});
+    if(address) {
+      this.patientForm.patchValue({family:{address: address.address}});
 
-    this.loadDemog('regions', address.barangay.region.code, 'provinces');
-    this.patientForm.patchValue({family:{region: address.barangay.region.code}});
+      this.loadDemog('regions', address.barangay.region.code, 'provinces');
+      this.patientForm.patchValue({family:{region: address.barangay.region.code}});
 
-    this.loadDemog('provinces', address.barangay.province.code, 'municipalities');
-    this.patientForm.patchValue({family:{province: address.barangay.province.code}});
+      this.loadDemog('provinces', address.barangay.province.code, 'municipalities');
+      this.patientForm.patchValue({family:{province: address.barangay.province.code}});
 
-    this.loadDemog('municipalities', address.barangay.municipality.code, 'barangays');
-    this.patientForm.patchValue({family:{municipality: address.barangay.municipality.code}});
+      this.loadDemog('municipalities', address.barangay.municipality.code, 'barangays');
+      this.patientForm.patchValue({family:{municipality: address.barangay.municipality.code}});
 
-    this.patientForm.patchValue({family:{brgy: address.barangay.code}});
-    this.patientForm.patchValue({family:{cct_id: address.cct_id}});
-    if(address.cct_id) this.patientForm.patchValue({family:{cct_date: address.cct_date}});
-    this.patientForm.patchValue({family:{brgy: address.barangay.code}});
-    this.patientForm.patchValue({family:{is_head: member.family_role_code}});
+      this.patientForm.patchValue({family:{brgy: address.barangay.code}});
+      this.patientForm.patchValue({family:{cct_id: address.cct_id}});
+      if(address.cct_id) this.patientForm.patchValue({family:{cct_date: address.cct_date}});
+      this.patientForm.patchValue({family:{brgy: address.barangay.code}});
+      this.patientForm.patchValue({family:{is_head: member.family_role_code}});
 
-    this.selected_family_folder = address.id;
+      this.selected_family_folder = address.id;
+    }
     this.isDisabled(true);
   }
 
   ngOnInit(): void {
+    let user_id = this.http.getUserID();
+    let facility_code = this.http.getUserFacility();
+
     this.patientForm = this.formBuilder.nonNullable.group({
+      facility_code: [facility_code],
+      user_id: [user_id],
       last_name: ['', [Validators.required, Validators.minLength(2)]],
       first_name: ['', [Validators.required, Validators.minLength(2)]],
       middle_name: ['', [Validators.required, Validators.minLength(1)]],
@@ -327,7 +342,7 @@ export class PatientRegistrationComponent implements OnInit {
         cct_id: ['', [Validators.minLength(2)]],
         cct_date: [''],
         is_head: [false, [Validators.required]],
-      })
+      }),
     });
 
     this.date = new Date().toISOString().slice(0,10);

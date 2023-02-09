@@ -1,5 +1,6 @@
+import { formatDate } from '@angular/common';
 import { Component, OnInit, Input } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { faAngleDown, faCalendarDay, faCaretRight, faClose, faInfoCircle, faPencil, faSave, faTimes, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 
@@ -20,7 +21,11 @@ export class RiskfactorsComponent implements OnInit {
   faInfoCircle = faInfoCircle;
   faCaretRight = faCaretRight;
 
-  risk_form: FormGroup;
+  risk_form: FormGroup = new FormGroup({
+    risk_id: new FormControl<string | null>(''),
+    date_detected: new FormControl<string | null>(''),
+  });
+
   factor: String = new String();
   focused: boolean;
 
@@ -28,116 +33,156 @@ export class RiskfactorsComponent implements OnInit {
   public buttons = [];
   public hide = [];
   public risk_catch = [];
+  public module_data: any;
+
   show: boolean;
   @Input() risk_factors;
+  @Input() patient_mc_record;
+  @Input() patient_id;
   searching: boolean;
   today: Date;
-  constructor(private http: HttpService) { }
-  
+  constructor(private http: HttpService, private formBuilder: FormBuilder) { }
+  is_saving: boolean;
+  saved: boolean;
+
   ngOnInit(): void {
-    this.createForm();
+    this.loadModule();
     this.searching = false;
     this.today = new Date();
+    this.is_saving = false;
+    this.saved = false;
+  }
+
+
+  loadModule() {
+    if (!this.patient_mc_record) {
+      this.module_data = -1;
+    } else {
+      this.module_data = this.patient_mc_record;
+      console.log(this.module_data, " module data from  loadModule - RISK FACTOR");
+    }
+
+    this.createForm();
+    if (this.module_data != -1) {
+      this.getRisk()
+    }
+
   }
 
   createForm() {
-    this.risk_form = new FormGroup({
-      factor: new FormControl(),
-      date: new FormControl(new Date().toISOString().substring(0,10)),
+    let user_id = this.http.getUserID();
+    let facility_code = this.http.getUserFacility();
+
+    this.risk_form = this.formBuilder.group({
+      patient_mc_id: [this.module_data == -1 ? null : this.module_data.id, [Validators.required]],
+      facility_code: [facility_code, [Validators.required]],
+      patient_id: [this.patient_id, [Validators.required]],
+      user_id: [user_id, [Validators.required]],
+      risk_id: ['', [Validators.required]],
+      date_detected: [new Date().toISOString().substring(0, 10), [Validators.required]],
     });
   }
 
-searchfocus() {
-  document.getElementById("searchbar").focus();
-  this.searching = true;
-}
-searchblur() {
-  this.searching = false;
-}
+  getRisk() {
+    this.http.get('maternal-care/mc-risk-factors?patient_mc_id=' + this.module_data.id).subscribe({
+      next: (data: any) => {
+        console.log(data, " get risks");
+        this.risk_catch = data.data;
+      },
+      error: err => console.log(err),
+
+    })
+  }
+
+  searchfocus() {
+    document.getElementById("searchbar").focus();
+    this.searching = true;
+  }
+
+  searchblur() {
+    this.searching = false;
+  }
+
+  risk_to_edit: string = null;
+
   saveForm(data) {
-    // const strs = ['valval', 'bal', 'gal', 'dalval'];
-    // const result = strs.filter(s => s.includes('val'));
-  
-    // console.log(strs);
-    // console.log(result); ------> good for filtering searches 
-    console.log(data, "data");
-    console.log(data.factor, " factor");
-    
-    
-    data.factor = data.factor.split('_');
-    let index = this.risk_catch.findIndex(c => c.factor === data.factor[0]);
-    
-    if(index != -1){
-      this.risk_catch.splice(index, 1);
-    }
- 
-    this.risk_form.setValue({
-      factor: data.factor[0],
-      date: data.date,
-    });
-    this.risk_catch.push({
-      risk_id: data.factor[1],
-      factor: data.factor[0],
-      hospital_flag: data.factor[2],
-      monitor_flag: data.factor[3],
-      date: data.date,
-    });
+    console.log(data);
+    this.is_saving = true;
+    if (this.risk_form.valid) {
+      let query;
 
-    this.createForm();
-    this.hide = [];
-    //this.risk_form.disable();
+      if(this.risk_to_edit){
+        query = this.http.update('maternal-care/mc-risk-factors/', this.risk_to_edit, data)
+      } else {
+        query = this.http.post('maternal-care/mc-risk-factors', data);
+      }
+
+      query.subscribe({
+        next: (data: any) => {
+          console.log(data.data, " data from saving risks")
+          this.risk_catch = data.data;
+          this.risk_to_edit = null;
+        },
+        error: err => console.log(err),
+        complete: () => {
+          this.is_saving = false;
+          this.saved = true;
+          setTimeout(() => {
+            this.saved = false;
+          }, 1500);
+        }
+      })
+    }
   }
-  flip(): void{
+
+  flip(): void {
     this.focused = !this.focused;
     this.keyUp = [];
     this.buttons = [];
     this.buttons.push('save');
   }
 
-  onKeyUp(data_input: string, id: string){
-    // console.log(data_input + ' this is my data input');
-    
-        if(this.keyUp.includes(id)){
-          if(data_input == ''){
-            this.keyUp.splice(this.keyUp.indexOf(id), 1);
-          }
-        }else{
-          this.keyUp.push(id);
-        }
+  onKeyUp(data_input: string, id: string) {
+    if (this.keyUp.includes(id)) {
+      if (data_input == '') {
+        this.keyUp.splice(this.keyUp.indexOf(id), 1);
+      }
+    } else {
+      this.keyUp.push(id);
+    }
 
-        // console.log(this.keyUp.length);
-        // console.log(this.keyUp);
   }
-  buttonShow(name){
+
+  buttonShow(name) {
     this.buttons = [];
-    if(!this.buttons.includes(name)){
+    if (!this.buttons.includes(name)) {
       this.buttons.push(name);
     }
     // console.log(this.buttons);
-    
+
   }
-  cancel(){
+  cancel() {
     this.hide = [];
     this.keyUp = [];
     this.risk_form.reset();
   }
-  edit(id){
 
+  edit(risk) {
+    console.log(risk)
     this.risk_form.reset();
-    this.risk_catch.forEach(c => {
-      if(c.risk_id === id){
-        this.risk_form.setValue({
-          factor: c.factor,
-          date: c.date,
-        });
-      }
+
+    this.createForm();
+
+    this.risk_form.patchValue({
+      id: risk.id,
+      risk_id: risk.risk.id,
+      date_detected: formatDate(risk.date_detected, 'Y-MM-dd', 'en'),
     });
-    this.hide.push(id);
-    console.log(this.hide.includes(id));
-    
-    console.log(this.risk_form.get('factor').value, " factor value");
-    
-   console.log(id," risk_id edit");
-   
+
+    this.risk_to_edit = risk.id;
+
+    console.log(this.risk_form, " factor value");
+    console.log(risk, " risk_id edit");
+
   }
 }

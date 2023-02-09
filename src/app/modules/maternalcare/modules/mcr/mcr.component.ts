@@ -44,16 +44,18 @@ export class McrComponent implements OnInit {
   });
 
   response: any;
-  first_tri: Date;
-  second_tri: Date;
-  third_tri: Date;
-  today: Date;
+  first_tri: any;
+  second_tri: any;
+  third_tri: any;
+  today: any;
 
-  @Input() patient_details;
+  @Input() patient_id;
   @Input() patient_mc_record;
   @Output() patient_mc_id = new EventEmitter<string>();
   is_saving: boolean;
   saved: boolean;
+  updating: boolean;
+  loading: boolean;
 
   constructor(private http: HttpService, private formBuilder: FormBuilder) { }
 
@@ -61,44 +63,44 @@ export class McrComponent implements OnInit {
 
   ngOnInit() {
     this.today = new Date();
-    this.getMCR('latest', this.patient_details.id);
+
     this.focused = false;
+    this.updating = false;
+    this.loading = false;
     this.saved = false;
-    this.error_message = "**please enter numbers only!"
-   
+    this.getMCR();
+
   }
 
-  getMCR(type: any, id: any) {
-    // this.http.get('maternal-care/mc-records?type=' + type + '&patient_id=' + id).subscribe({
-    //   next: (data: any) => {
-      console.log(this.patient_mc_record, " from getmcr");
-      
-        if (this.patient_mc_record.length == 0) {
-          // console.log(this.patient_mc_record.message);
-          this.mcr_data = -1;
-          this.getEDC(this.today, 'any');
-        } else {
-     
-          this.mcr_data = this.patient_mc_record[0].pre_registration;
-          // console.log(this.mcr_data, " mcr data pre_registration");
-          this.getEDC(this.mcr_data.lmp_date, 'db');
-        }
-        this.createForm();
-    //   },
-    //   error: err => console.log(err),
-    // })
+  getMCR() {
+    console.log(this.patient_mc_record);
+
+    if (!this.patient_mc_record) {
+      this.mcr_data = -1;
+      this.getEDC(this.today, 'any');
+    } else {
+      if(this.patient_mc_record.pre_registration){
+        this.mcr_data = this.patient_mc_record.pre_registration;
+        console.log(this.mcr_data, " mcr data from getMCR - MCR");
+        this.getEDC(this.mcr_data.lmp_date, 'db');
+      }else{
+        this.mcr_data = -1;
+        this.getEDC(this.today, 'any');
+      }
+      this.updating = true;
+
+    }
+
+    this.createForm();
   }
 
   createForm() {
-    let user_id = localStorage.getItem('user_id');
-    let facility_code = 'DOH000000000005672';
+    let user_id = this.http.getUserID();
+    let facility_code = this.http.getUserFacility();
     this.mcr_form = this.formBuilder.group({
-      patient_id: [this.patient_details.id,
-      [Validators.required, Validators.minLength(2)]],
-      user_id: [user_id,
-        [Validators.required, Validators.minLength(2)]],
-      facility_code: [facility_code,
-        [Validators.required, Validators.minLength(2)]],
+      patient_id: [this.patient_id, [Validators.required, Validators.minLength(2)]],
+      user_id: [user_id, [Validators.required, Validators.minLength(2)]],
+      facility_code: [facility_code, [Validators.required, Validators.minLength(2)]],
       pre_registration_date: [(this.mcr_data == -1 ? new Date().toISOString().substring(0, 10) : new Date(this.mcr_data.pre_registration_date).toISOString().substring(0, 10)),
       [Validators.required]],
       lmp_date: [(this.mcr_data == -1 ? null : new Date(this.mcr_data.lmp_date).toISOString().substring(0, 10)),
@@ -124,44 +126,46 @@ export class McrComponent implements OnInit {
     this.buttons.push('save');
   }
   saveForm() {
-    // this.mcr_form.setValue({
+
     console.log(this.mcr_form.value, " validation check");
-    this.is_saving = true;
-    // this.loading = true;
-    // this.showModal = true;
+    this.loading = true;
+    let http;
+    if (this.updating) {
+      http = this.http.update('maternal-care/mc-preregistrations/', this.mcr_data.id, this.mcr_form.value)
+    } else {
+      http = this.http.post('maternal-care/mc-preregistrations', this.mcr_form.value)
+    }
+
     if (this.mcr_form.valid) {
-      this.http.post('maternal-care/mc-preregistrations', this.mcr_form.value).subscribe({
-        next: (data: any) => {console.log(data, " data from saving"), this.patient_mc_id.emit(data.patient_mc_id)},
+      http.subscribe({
+        next: (data: any) => {
+          console.log(data, " data from saving");
+          this.patient_mc_id.emit(data.patient_mc_id)
+        },
         error: err => console.log(err),
         complete: () => {
-          this.is_saving = false;
           this.saved = true;
-          setTimeout(()=>{
+          setTimeout(() => {
             this.saved = false;
-        }, 1500);
-          // this.loading = false;
-          // this.showModal = true;
+          }, 1500);
+          this.loading = false;
         }
       })
     } else {
-      // this.loading = false;
+      this.loading = false;
     }
-    // console.log(this.mcr_data, " try mcr_dat afrom save");
   }
 
   onKeyUp(data_input: string, id: string) {
-    // console.log(data_input + ' this is my data input');
-
     if (this.keyUp.includes(id)) {
       if (data_input == '') {
         this.keyUp.splice(this.keyUp.indexOf(id), 1);
       }
     } else {
       this.keyUp.push(id);
-
     }
-
   }
+
   buttonShow(name) {
     this.buttons = [];
     if (!this.buttons.includes(name)) {
@@ -171,7 +175,7 @@ export class McrComponent implements OnInit {
 
   cancel() {
     this.keyUp = [];
-    this.mcr_form.reset();
+    this.getMCR();
   }
 
   edit() {
@@ -181,24 +185,25 @@ export class McrComponent implements OnInit {
   getEDC(value: any, from: any) {
     console.log('fetching Important dates from ' + from, ' using ' + value);
 
-    this.edc_date = from == 'db' ? new Date(this.mcr_data.edc_date) : new Date(value);
+    this.edc_date = from == 'db' ? new Date(this.mcr_data.edc_date).toISOString().substring(0, 10) : (value ? new Date(value).toISOString().substring(0, 10) : new Date().toISOString().substring(0, 10))
 
-    this.first_tri = from == 'db' ? new Date(this.mcr_data.trimester1_date) : new Date(value);
+    this.first_tri = from == 'db' ? new Date(this.mcr_data.trimester1_date).toISOString().substring(0, 10) : (value ? new Date(value).toISOString().substring(0, 10) : new Date().toISOString().substring(0, 10));
 
-    this.second_tri = from == 'db' ? new Date(this.mcr_data.trimester2_date) : new Date(value);
+    this.second_tri = from == 'db' ? new Date(this.mcr_data.trimester2_date).toISOString().substring(0, 10) : (value ? new Date(value).toISOString().substring(0, 10) : new Date().toISOString().substring(0, 10));
 
-    this.third_tri = from == 'db' ? new Date(this.mcr_data.trimester3_date) : this.edc_date;
+    this.third_tri = from == 'db' ? new Date(this.mcr_data.trimester3_date).toISOString().substring(0, 10) : (value ? new Date(value).toISOString().substring(0, 10) : new Date().toISOString().substring(0, 10));
 
-    if (from == 'input') {
-      this.edc_date.setDate(this.edc_date.getDate() + 280);
-      this.first_tri.setDate(this.first_tri.getDate() + (7 * 12));
-      this.second_tri.setDate(this.second_tri.getDate() + (7 * 27));
+    if (from == 'input' && value != '') {
+      this.edc_date = new Date(this.edc_date).setDate(new Date(this.edc_date).getDate() + 280);
+      this.first_tri = new Date(this.first_tri).setDate(new Date(this.first_tri).getDate() + 84);
+      this.second_tri = new Date(this.second_tri).setDate(new Date(this.second_tri).getDate() + 189);
+      this.third_tri = this.edc_date;
     }
 
     this.aog_date = new Date();
     this.aog_date.setHours(0, 0, 0, 0);
 
-    var lmp = new Date(value);
+    var lmp = value ? new Date(value) : new Date();
     lmp.setHours(0, 0, 0, 0);
 
     const msInWeek = 1000 * 60 * 60 * 24 * 7;

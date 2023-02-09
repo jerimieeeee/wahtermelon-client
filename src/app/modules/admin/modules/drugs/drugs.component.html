@@ -1,0 +1,134 @@
+
+<div class="bg-white border border-solid border-slate-100 rounded-xl shadow-md">
+  <div class="border border-solid border-slate-100 rounded-t-xl font-semibold justify-between">
+    <div class="flex border border-solid border-slate-100 rounded-t-xl p-3 font-semibold justify-between">
+      <div class="text-blue-500 text-lg pt-2 pl-5">
+        Drug List
+      </div>
+      <!-- <div>
+        <button *ngIf="is_updating" class="text-white-500 bg-amber-500 active:bg-amber-300 hover:bg-amber-600 text-sm px-4 py-2 rounded hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button">
+          <fa-icon class="mr-3" [icon]="faSpinner" spin="true"></fa-icon>
+          Updating
+        </button>
+      </div> -->
+
+      <div class="border border-gray-400 rounded-md">
+        <input type="text" [(ngModel)]="search_item" class="form-input border-0 text-sm p-1 m-1 border-r border-gray-400" (keyup.enter)="loadDrugs()" placeholder="Search drugs"/>
+        <button type="button" class="text-blue-500 w-9 h-9" (click)="loadDrugs()">
+          <fa-icon class="-ml-1" [icon]="faSearch"></fa-icon>
+        </button>
+      </div>
+    </div>
+
+    <div *ngIf="submit_error" class="col-span-8 bg-red-200 rounded border border-red-300 text-red-900 text-sm">
+      <div class="block p-3 pl-10" >
+        <ul class="list-disc" >
+          <li *ngFor="let error of submit_error | keyvalue">{{ error.value }}</li>
+        </ul>
+      </div>
+    </div>
+
+    <div>
+      <div class="overflow-x-auto relative shadow-md sm:rounded-lg">
+        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 mb-5">
+          <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+              <th scope="col" class="py-3 px-6">Brand Name</th>
+              <th scope="col" class="py-3 px-6">Generic Name</th>
+              <th scope="col" class="py-3 px-6">Drug Strength</th>
+              <th scope="col" class="py-3 px-6">Drug Form</th>
+              <th scope="col" class="py-3 px-6">Dosage Qty</th>
+              <th scope="col" class="py-3 px-6">Dosage Regimen</th>
+              <th scope="col" class="py-3 px-6">Duration Intake</th>
+              <th scope="col" class="py-3 px-6">Duration Frequency</th>
+              <th scope="col" class="py-3 px-6">Action</th>
+              <!-- <th scope="col" class="py-3 px-6">Actions</th> -->
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngIf="drug_list?.length === 0">
+              <td colspan="9" >
+                <div class="grid grid-cols-1 w-full mt-10">
+                  <div class="text-center italic"> No records found... </div>
+                  <div class="flex justify-center mt-3">
+                    <button type="button" class="btn-save" (click)="showAdd()">
+                      <fa-icon [icon]="faAdd" class="mr-1 text-white"></fa-icon>
+                      Add
+                    </button>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr *ngFor="let drug of drug_list; let odd = odd; let i = index" class="bg-white border-t" [ngClass]="{'bg-gray-50': odd}" [ngClass]="{'text-red-500': !drug.employer}">
+              <th scope="row" class="py-4 px-6 font-medium whitespace-nowrap">
+                {{ drug.last_name }}, {{ drug.first_name }} {{ drug.middle_name === 'NA' ? '' : drug.middle_name }} {{ drug.suffix_name === 'NA' ? '' : drug.suffix_name}}
+              </th>
+              <td class="py-4 px-6">
+                {{ drug.birtdate | date: 'MM/dd/yyyy' }}
+              </td>
+              <td class="py-4 px-6">
+                {{ drug.gender }}
+              </td>
+              <td class="py-4 px-6">
+                {{ drug.contact_number }}
+              </td>
+              <td class="py-4 px-6">
+                {{ drug.email }}
+              </td>
+              <td class="py-4 px-6">
+
+              </td>
+              <td class="py-4 px-6">
+
+              </td>
+              <td class="py-4 px-6">
+
+              </td>
+              <td class="py-4 px-6">
+                <button type="button" (click)="showEdit()">
+                  <fa-icon [icon]="faEdit" class="text-amber-500"></fa-icon>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="drug_list?.length >= 1">
+    <div class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
+      <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+        <div>
+          <p class="text-sm text-gray-700">
+            Showing <span class="font-medium">{{ from }}</span>
+            to <span class="font-medium">{{ to }}</span>
+            of <span class="font-medium">{{ total }}</span> results
+          </p>
+        </div>
+        <div>
+          <nav class="relative z-0 inline-flex shadow-sm -space-x-px" aria-label="Pagination">
+            <button [disabled]="current_page===1" (click)="loadDrugs(1)" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 enabled:bg-white disabled:bg-gray-300 text-sm font-medium text-gray-500 hover:bg-gray-50">
+              <fa-icon [icon]="faAnglesLeft" class="block h-15 w-15 text-gray-500 pr-1"></fa-icon>
+            </button>
+
+              <button [disabled]="current_page===1" (click)="loadDrugs(current_page-1)" class="relative inline-flex items-center px-4 py-2 border border-gray-300 enabled:bg-white disabled:bg-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
+                <fa-icon [icon]="faChevronLeft" class="block h-15 w-15 text-gray-500 pr-1"></fa-icon>Previous
+              </button>
+              <button [disabled]="current_page===last_page" (click)="loadDrugs(current_page+1)" class="relative inline-flex items-center px-4 py-2 border border-gray-300 enabled:bg-white disabled:bg-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
+                Next<fa-icon [icon]="faChevronRight" class="h-5 w-5 text-gray-500"></fa-icon>
+              </button>
+
+            <button [disabled]="current_page===last_page" (click)="loadDrugs(last_page)" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 enabled:bg-white disabled:bg-gray-300 text-sm font-medium text-gray-500 hover:bg-gray-50">
+              <fa-icon [icon]="faAnglesRight" class="h-5 w-5 text-gray-500"></fa-icon>
+            </button>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<app-lib-drug-list *ngIf="show_lib_drug" (showAdd)="showAdd()"></app-lib-drug-list>
+<app-drug-form *ngIf="show_drug_form" (showEdit)="showEdit()"></app-drug-form>

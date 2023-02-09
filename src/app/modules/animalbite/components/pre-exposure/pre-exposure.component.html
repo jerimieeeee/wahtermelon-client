@@ -2,7 +2,7 @@
 
     <div class="flex justify-between w-full bg-blue-500 px-5 py-3 rounded-tl rounded-tr">
       <h4 class="col-start-1 col-span-12 font-bold text-white text-md mt-2">Pre-Exposure Prophylaxis History</h4>
-    
+
       <button type="button" class="mt-1 px-4 py-1.5 bg-white text-gray-600 font-semibold text-md leading-normal rounded shadow-md hover:shadow-lg hover:ring-2 hover:ring-gray-300 transition duration-150 ease-in-out flex align-center transform hover:scale-110" (click)="togglePreExpModal()">
         <svg xmlns="http://www.w3.org/2000/svg" class="icon-tabler icon-tabler-pencil-plus mr-2" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
           <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -10,7 +10,7 @@
           <path d="M13.5 6.5l4 4"></path>
           <path d="M16 18h4m-2 -2v4"></path>
        </svg>Add
-      </button> 
+      </button>
 
           <!-- <button type="submit" class="py-2 px-4 rounded-full bg-white text-gray-600 font-bold drop-shadow-md hoverborder-white-600 hoverbg-blue-400 hovertext-white shadow-md inline-flex items-center" name="add-btn">
             <label>Update</label>
@@ -53,29 +53,29 @@
                </svg>
               </div>
              <input type="text" placeholder="Input text here" onfocus="(this.type='date')" class="mt-1 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input" placeholder="Select Date">
-            
+
           </div>
-          
+
               <div class="row-start-1 col-start-7 col-span-6 mt-5 px-5">
                   <h1 class="mb-2 text-sm">Indication Option</h1>
-                  <select class="bg-white border-gray-300 p-2.5 rounded-lg w-full text-sm" ng-model="vm.ncd.family_hx_hypertension" name="family_hx_hypertension">
+                  <select class="bg-white border-gray-300 p-2.5 rounded-lg w-full text-sm" name="family_hx_hypertension">
                     <option value="" disabled selected>Select Indication</option>
                     <option ng-value="io.desc" *ngFor="let io of lib_ab_indication_option">
                   {{io.desc}}
-                  </option>    
+                  </option>
                   </select>
               </div>
-          
+
               <div class="row-start-2 col-start-1 col-span-12 mt-5 px-5">
                   <h4 class="mb-2 text-sm">Indication Option - If others please specify</h4>
                   <input class="border-gray-300 text-sm p-2.5 rounded-lg w-full bg-white"
                           type="text" name="date" formControlName="aDate" required="true">
               </div>
-          
+
               <div class="col-start-1 col-span-12 row-start-3 border-b border-dashed border-gray-300 mt-7 mb-6 mx-5"></div>
-          
+
               <!-- Day 0 -->
-          
+
               <div class="relative row-start-4 col-start-1 col-span-4 w-full px-5">
                   <h4 class="mb-2 text-sm">Day 0</h4>
                   <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
@@ -90,29 +90,29 @@
                   </div>
                  <input type="text" placeholder="Input text here" onfocus="(this.type='date')" class="mt-1 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input" placeholder="Select Date">
               </div>
-          
+
               <div class="row-start-4 col-start-5 col-span-4 w-full px-5">
                   <h1 class="mb-2 text-sm">Brand Name</h1>
-                  <select class="bg-white text-sm border-gray-300 p-2.5 rounded-lg w-full" ng-model="vm.ncd.family_hx_hypertension" name="family_hx_hypertension">
+                  <select class="bg-white text-sm border-gray-300 p-2.5 rounded-lg w-full" name="family_hx_hypertension">
                     <option value="" disabled selected>Select Brand</option>
                     <option ng-value="brand.desc" *ngFor="let brand of brand_name">
                   {{brand.desc}}
-                  </option>    
+                  </option>
                   </select>
               </div>
-          
+
               <div class="  row-start-4 col-start-9 col-span-4 w-full px-5">
                   <h1 class="mb-2 text-sm">Vaccine Route</h1>
-                  <select class="bg-white text-sm border-gray-300 p-2.5 rounded-lg w-full" ng-model="vm.ncd.family_hx_hypertension" name="family_hx_hypertension">
+                  <select class="bg-white text-sm border-gray-300 p-2.5 rounded-lg w-full" name="family_hx_hypertension">
                     <option value="" disabled selected>Select Route</option>
                     <option ng-value="route.desc" *ngFor="let route of vaccine_route">
                   {{route.desc}}
-                  </option>    
+                  </option>
                   </select>
               </div>
-          
+
                <!-- Day 1 -->
-          
+
                <div class="relative row-start-5 col-start-1 col-span-4 w-full  px-5 mt-8">
                   <h4 class="mb-2 text-sm">Day 7</h4>
                   <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
@@ -127,29 +127,29 @@
                   </div>
                  <input type="text" placeholder="Input text here" onfocus="(this.type='date')" class="mt-1 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input" placeholder="Select Date">
               </div>
-          
+
               <div class="row-start-5 col-start-5 col-span-4 w-full  px-5 mt-8">
                   <h1 class="mb-2 text-sm">Brand Name</h1>
-                  <select class="bg-white text-sm border-gray-300 p-2.5 rounded w-full" ng-model="vm.ncd.family_hx_hypertension" name="family_hx_hypertension">
+                  <select class="bg-white text-sm border-gray-300 p-2.5 rounded w-full" name="family_hx_hypertension">
                     <option value="" disabled selected>Select Brand</option>
                     <option ng-value="brand.desc" *ngFor="let brand of brand_name">
                   {{brand.desc}}
-                  </option>    
+                  </option>
                   </select>
               </div>
-          
+
               <div class="row-start-5 col-start-9 col-span-4 w-full  px-5 mt-8">
                   <h1 class="mb-2 text-sm">Vaccine Route</h1>
-                  <select class="bg-white text-sm border-gray-300 p-2.5 rounded w-full" ng-model="vm.ncd.family_hx_hypertension" name="family_hx_hypertension">
+                  <select class="bg-white text-sm border-gray-300 p-2.5 rounded w-full" name="family_hx_hypertension">
                     <option value="" disabled selected>Select Route</option>
                     <option ng-value="route.desc" *ngFor="let route of vaccine_route">
                   {{route.desc}}
-                  </option>    
+                  </option>
                   </select>
               </div>
-          
+
               <!-- Day 21/28 -->
-          
+
               <div class="relative row-start-6 col-start-1 col-span-4 w-full  px-5 mt-8">
                   <h4 class="mb-2 text-sm">Day 21/28</h4>
                   <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
@@ -164,36 +164,36 @@
                   </div>
                  <input type="text" placeholder="Input text here" onfocus="(this.type='date')" class="mt-1 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input" placeholder="Select Date">
               </div>
-          
+
               <div class="  row-start-6 col-start-5 col-span-4 w-full  px-5 mt-8">
                   <h1 class="mb-2 text-sm">Brand Name</h1>
-                  <select class="bg-white text-sm border-gray-300 p-2.5 rounded w-full" ng-model="vm.ncd.family_hx_hypertension" name="family_hx_hypertension">
+                  <select class="bg-white text-sm border-gray-300 p-2.5 rounded w-full" name="family_hx_hypertension">
                     <option value="" disabled selected>Select Brand</option>
                     <option ng-value="brand.desc" *ngFor="let brand of brand_name">
                   {{brand.desc}}
-                  </option>    
+                  </option>
                   </select>
               </div>
-          
+
               <div class="  row-start-6 col-start-9 col-span-4 w-full  px-5 mt-8">
                   <h1 class="mb-2 text-sm">Vaccine Route</h1>
-                  <select class="bg-white text-sm border-gray-300 p-2.5 rounded w-full" ng-model="vm.ncd.family_hx_hypertension" name="family_hx_hypertension">
+                  <select class="bg-white text-sm border-gray-300 p-2.5 rounded w-full" name="family_hx_hypertension">
                     <option value="" disabled selected>Select Route</option>
                     <option ng-value="route.desc" *ngFor="let route of vaccine_route">
                   {{route.desc}}
-                  </option>    
+                  </option>
                   </select>
               </div>
-          
+
               <div class="col-start-1 col-span-12 row-start-7 border-b border-dashed border-gray-300 mt-8 mb-6 mx-5"></div>
-          
+
               <div class=" row-start-8 col-start-1 col-span-12 px-5 pb-4">
                   <h4 class="mb-2 text-sm">Remarks</h4>
                   <input class="border-gray-300 text-sm p-2.5 rounded-md w-full bg-white"
                           type="text" name="date" formControlName="aDate" required="true">
               </div>
-                      
-              
+
+
           </div>
         </div>
 

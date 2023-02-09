@@ -6,6 +6,8 @@ import { HttpService } from 'app/shared/services/http.service';
 import { catchError, debounceTime, distinctUntilChanged, switchMap, tap, map, filter } from 'rxjs/operators';
 import { concat, Observable, of, Subject, throwError } from 'rxjs';
 import { Router } from '@angular/router';
+import { formatDate } from '@angular/common';
+import { ToastrService } from 'ngx-toastr';
 
 
 
@@ -17,7 +19,7 @@ import { Router } from '@angular/router';
 
 
 export class FirstVisitComponent implements OnInit {
-
+  @Output() checkCCdevDetails = new EventEmitter<any>();
   faSearch = faSearch;
   faPlus = faPlus;
   faCalendar = faCalendar;
@@ -49,6 +51,10 @@ export class FirstVisitComponent implements OnInit {
 
   curr_name: any;
 
+  modalFilter: any;
+
+  cpab: any;
+
 
   visitForm: FormGroup = new FormGroup({
     id: new FormControl<string| null>(''),
@@ -67,8 +73,12 @@ export class FirstVisitComponent implements OnInit {
 
 
   // Section 2
-  constructor(private formBuilder: FormBuilder, private http: HttpService,
-    private router: Router) { }
+  constructor(
+    private formBuilder: FormBuilder, 
+    private http: HttpService,
+    private router: Router,
+    private toastr: ToastrService
+    ) { }
 
 
 
@@ -76,10 +86,11 @@ export class FirstVisitComponent implements OnInit {
     return this.visitForm.controls;
   }
 
-  showAdmissionModal = false;
+  showAlert = false;
 
-  toggleAdmissionModal(){
-    this.showAdmissionModal = !this.showAdmissionModal;
+  toggleAlertModal(value: any){
+    this.modalFilter = value;
+    this.showAlert = !this.showAlert;
   }
 
   // saveAdmission(){
@@ -95,30 +106,45 @@ export class FirstVisitComponent implements OnInit {
 
   onSubmit(){
 
-    console.log(this.visitForm.value);
+    console.log(this.visitForm.value, 'form first visit');
     console.log(this.visitForm.invalid);
     this.form_saving = true;
     this.is_saving = true;
+    try {
 
+    this.visitForm.patchValue({admission_date: formatDate(this.visitForm.value.admission_date, 'Y-MM-dd HH:mm:ss' , 'en')})
+    this.visitForm.patchValue({discharge_date: formatDate(this.visitForm.value.discharge_date, 'Y-MM-dd HH:mm:ss' , 'en')})
+    
+    } catch (err) {
+    
+    }
+   
     // this.showModal = true;
 
       this.http.post('child-care/cc-records', this.visitForm.value).subscribe({
         next: (data: any) =>  this.getccdevDetails(),
         error: err => {console.log(err),
           this.is_saving = false;
-          alert('Update patient details or input the required fields')},
+          // this.toggleAlertModal('E')},
+          this.showToastrErr()},
         complete: () => {
           this.is_saving = false;
           console.log(this.visitForm.value, 'visit form')
-         
-      alert('saving success!')
+
+          if (this.patient_info) {
+            this.showToastrUpd()
+          } else {
+            this.showToastr() 
+          }
+          // this.toggleAlertModal('S')
+          // this.showToastr()
         }
       })
     }
 
 
   validateForm(){
-    let user_id = localStorage.getItem('user_id');
+    let user_id = this.http.getUserID();
     this.visitForm = this.formBuilder.group({
       id: ['', [Validators.required]],
       admission_date: ['', [Validators.required]],
@@ -128,7 +154,7 @@ export class FirstVisitComponent implements OnInit {
       patient_id: [this.patient_details.id, [Validators.required, Validators.minLength(2)]],
       user_id: [user_id, [Validators.required, Validators.minLength(2)]],
       ccdev_ended: ['0', [Validators.required, Validators.minLength(2)]],
-      nbs_filter: ['5500815323', [Validators.required, Validators.minLength(2)]],
+      nbs_filter: ['', [Validators.required, Validators.minLength(2)]],
     });
   }
 
@@ -155,6 +181,10 @@ export class FirstVisitComponent implements OnInit {
   //   this.loadPatients();
   // }
 
+  getInitials(string) {
+    return [...string.matchAll(/\b\w/g)].join('')
+  }
+
   getPatient(term: string = null): Observable<any> {
     return this.http.get('patient', {params:{'filter[search]':term}})
     .pipe(map((resp:any) => {
@@ -171,6 +201,11 @@ export class FirstVisitComponent implements OnInit {
         console.log(this.patient_info, 'info ccdev first visit')
         this.getccdevMama()
         this.visitForm.patchValue({...this.patient_info});
+        this.checkCCdevDetails.emit(this.patient_info);
+        if(this.patient_info.status == 'CPAB' )
+          {
+            this.cpab = 'Child Protected at Birth'
+          }
       },
       error: err => console.log(err)
     });
@@ -216,6 +251,18 @@ export class FirstVisitComponent implements OnInit {
         })
       )
     );
+  }
+
+  showToastr(){
+    this.toastr.success('Successfully saved!','Admission Info');
+  }
+
+  showToastrUpd(){
+    this.toastr.success('Successfully Updated!','Admission Info');
+  }
+
+  showToastrErr(){
+    this.toastr.warning('Error in Saving!','Admission Info');
   }
 
   // saveBirth(){

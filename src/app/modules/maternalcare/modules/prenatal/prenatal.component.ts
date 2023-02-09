@@ -1,6 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { faAngleDown, faCalendarDay, faCaretRight, faClose, faInfoCircle, faPencil, faSave, faTimes, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
+import { faAngleDown, faCalendarDay, faCaretRight, faCircleCheck, faCircleNotch, faClose, faInfoCircle, faPencil, faSave, faTimes, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
@@ -19,6 +19,8 @@ export class PrenatalComponent implements OnInit {
   faAngleDown = faAngleDown;
   faInfoCircle = faInfoCircle;
   faCaretRight = faCaretRight;
+  faCircleCheck = faCircleCheck;
+  faSpinner = faCircleNotch;
 
   prenatal_form: FormGroup = new FormGroup({
     prenatal_date: new FormControl<string | null>(''),
@@ -30,6 +32,7 @@ export class PrenatalComponent implements OnInit {
     presentation_code: new FormControl<string | null>(''),
     fhr: new FormControl<string | null>(''),
     location_code: new FormControl<string | null>(''),
+    remarks: new FormControl<string | null>(''),
     private: new FormControl<string | null>(''),
   });
 
@@ -45,7 +48,6 @@ export class PrenatalComponent implements OnInit {
 
   mc_id: Number = new Number();
   user_id: Number = new Number();
-  patient_id: Number = new Number();
   trimester: Number = new Number();
   remarks: String = new String();
   value: number;
@@ -60,13 +62,16 @@ export class PrenatalComponent implements OnInit {
   edit_bool: boolean;
   vitals_modal: boolean;
   max_value: number;
-
+  edit_id: any;
 
   @Input() fetals;
   @Input() fhr_lib;
   @Input() patient_mc_record;
-  @Input() patient_details;
+  @Input() patient_id;
+
+  @Output() prenatal_mc_data = new EventEmitter<string>();
   is_saving: boolean;
+  saved: boolean;
   today: Date;
   public mcPrenatal_id = [];
   constructor(private http: HttpService, private formBuilder: FormBuilder) { }
@@ -77,10 +82,12 @@ export class PrenatalComponent implements OnInit {
   public hide = [];
   public prenatal_data = [];
 
+  edit_form: any;
+
   ngOnInit(): void {
     this.value = 1;
     this.today = new Date();
-    this.getMCR('latest', this.patient_details.id);
+    this.getMCR();
 
   }
 
@@ -112,35 +119,42 @@ export class PrenatalComponent implements OnInit {
       if (this.actual_height) {
         this.prenatal_form.value.patient_height = this.actual_height;
       }
+      let filtered = {}
+      let target = this.prenatal_form.value
+      for (let key in target) {
+        if (target[String(key)] != null) {
+          filtered[key] = target[String(key)];
+        }
+      }
+      let http
+      if(this.edit_bool){
+        http = this.http.update('maternal-care/mc-prenatal/', this.edit_id, filtered);
+      }else{
+        http = this.http.post('maternal-care/mc-prenatal', filtered);
+      }
 
-      this.http.post('maternal-care/mc-prenatal', this.prenatal_form.value).subscribe({
+      console.log(filtered, this.prenatal_form.value, " filtered saveform");
+      http.subscribe({
         next: (data: any) => {
           console.log(data.data, " data from saving prenatal")
-          this.patient_mc_record[0].prenatal_visit = data.data;
-          this.getMCR('latest', this.patient_details.id);
-          // this.updateMCR('latest', this.patient_details.id);
-
-          /* data.data.forEach(d => {
-            d.push({aog_count: d.aog_weeks + ' weeks and ' + d.aog_days + ' days'});
-            this.prenatal_data.push(d)
-            console.log(d, " the Ds");
-
-          })
-          this.value = this.prenatal_data[0].visit_sequence + 1; */
+          this.prenatal_data = data.data;
+          this.prenatal_mc_data.emit(data.data);
+          this.value = this.prenatal_data[0].visit_sequence + 1;
         },
-        error: err => console.log(err),
+        error: err => {console.log(err),this.is_saving = false; },
         complete: () => {
           this.is_saving = false;
-          // this.saved = true;
+          this.saved = true;
+          this.edit_bool = false;
+          this.getMCR();
           setTimeout(() => {
-            // this.saved = false;
+            this.saved = false;
           }, 1500);
-          // this.loading = false;
-          // this.showModal = true;
+
         }
       })
     } else {
-      // this.loading = false;
+      this.is_saving = false;
     }
     console.log(this.prenatal_form.value, " prenatal form");
 
@@ -154,84 +168,54 @@ export class PrenatalComponent implements OnInit {
     return index;
   }
 
-  getMCR(type: any, id: any) {
+  getMCR() {
     this.prenatal_data =[]
-    console.log(this.patient_mc_record[0], " from getMCR - prenatal;");
+    console.log(this.patient_mc_record, " from getMCR - prenatal;");
 
 
-    console.log(this.patient_mc_record[0].prenatal_visit[0]?this.patient_mc_record[0].prenatal_visit[0]:this.patient_mc_record[0].prenatal_visit, " try getmcr");
+    console.log(this.patient_mc_record.prenatal_visit[0]?this.patient_mc_record.prenatal_visit[0]:this.patient_mc_record.prenatal_visit, " try getmcr");
 
-    if(this.patient_mc_record[0].prenatal_visit[0]?this.patient_mc_record[0].prenatal_visit[0]:this.patient_mc_record[0].prenatal_visit.length == 1){
+    if(this.patient_mc_record.prenatal_visit[0]?this.patient_mc_record.prenatal_visit[0]:this.patient_mc_record.prenatal_visit.length == 1){
       console.log("it went true");
 
-    this.value = this.patient_mc_record[0].prenatal_visit[0].visit_sequence + 1;
-    this.patient_mc_record[0].prenatal_visit.forEach((p, i) => {
-      // p.push();
-      let aog_days_unit;
-      let aog_weeks_unit;
-      let final_statement;
-
-      if(p.aog_days > 1){
-        aog_days_unit = 'days';
-      }else{
-        aog_days_unit = 'day';
-      }
-      if(p.aog_weeks > 1){
-        aog_weeks_unit = 'weeks';
-      }else{
-        aog_weeks_unit = 'week';
-      }
-
-      if(p.aog_weeks > 0){
-        if(p.aog_days > 0){
-          final_statement = p.aog_weeks + ' ' + aog_weeks_unit + ' and ' + p.aog_days + ' ' + aog_days_unit
-        }else{
-          final_statement = p.aog_weeks + ' ' + aog_weeks_unit
-        }
-      }else{
-        final_statement = p.aog_days + ' ' + aog_days_unit
-      }
-      this.prenatal_data.push(p);
-      this.prenatal_data[i]["aog_count"] = final_statement;
-      console.log(this.prenatal_data, " prenatal data");
-
-    });
+    this.value = this.patient_mc_record.prenatal_visit[0].visit_sequence + 1;
+    this.prenatal_data = this.patient_mc_record.prenatal_visit;
   }
-  this.createForm(this.patient_mc_record[0]);
+  this.createForm();
   }
-  createForm(mc_record: any) {
+  createForm() {
     let prenatal_visit: any
-    if(this.patient_mc_record[0].prenatal_visit[0]?this.patient_mc_record[0].prenatal_visit[0]:this.patient_mc_record[0].prenatal_visit.length == 1){
-        console.log("it went true again");
-        prenatal_visit = mc_record.prenatal_visit[0];
+    if(this.patient_mc_record.prenatal_visit[0]?this.patient_mc_record.prenatal_visit[0]:this.patient_mc_record.prenatal_visit.length == 1){
+        // console.log("it went true again");
+        prenatal_visit = this.patient_mc_record.prenatal_visit[0];
     }else{
       console.log(" its false coz prenatal is 0");
-      prenatal_visit = mc_record.prenatal_visit;
+      prenatal_visit = this.patient_mc_record.prenatal_visit;
     }
 
-    let user_id = localStorage.getItem('user_id');
-    let facility_code = 'DOH000000000005672';
-    console.log(prenatal_visit, " log prenatal_visit");
+    let user_id = this.http.getUserID();
+    let facility_code = this.http.getUserFacility();
+    // console.log(prenatal_visit, " log prenatal_visit");
 
     this.prenatal_form = this.formBuilder.group({
-      patient_mc_id: [mc_record.id, [Validators.required, Validators.minLength(2)]],
+      patient_mc_id: [this.patient_mc_record.id, [Validators.required, Validators.minLength(2)]],
       facility_code: [facility_code, [Validators.required, Validators.minLength(2)]],
-      patient_id: [this.patient_details.id, [Validators.required, Validators.minLength(2)]],
+      patient_id: [this.patient_id, [Validators.required, Validators.minLength(2)]],
       user_id: [user_id, [Validators.required, Validators.minLength(2)]],
-      prenatal_date: [prenatal_visit.length != 0 ? new Date(prenatal_visit.prenatal_date).toISOString().substring(0, 10) : new Date().toISOString().substring(0, 10),
-      [Validators.required]],
+      prenatal_date: [new Date().toISOString().substring(0, 10),[Validators.required]],
       patient_height: [prenatal_visit.length != 0 ? prenatal_visit.patient_height : 0, [Validators.required, Validators.minLength(2)]],
       patient_weight: [prenatal_visit.length != 0 ? prenatal_visit.patient_weight : 0, [Validators.required, Validators.minLength(2)]],
-      bp_systolic: [prenatal_visit.bp_systolic ? prenatal_visit.bp_systolic : '', [Validators.required, Validators.minLength(2)]],
-      bp_diastolic: [prenatal_visit.bp_diastolic ? prenatal_visit.bp_diastolic : '', [Validators.required, Validators.minLength(2)]],
-      fundic_height: [prenatal_visit.fundic_height ? prenatal_visit.fundic_height : 0],
-      presentation_code: [prenatal_visit.presentation_code ? prenatal_visit.presentation_code : '', [Validators.required, Validators.minLength(2)]],
-      fhr: [prenatal_visit.fhr ? prenatal_visit.fhr : 0],
-      location_code: [prenatal_visit.location_code ? prenatal_visit.location_code : 'NA'],
-      private: [prenatal_visit.private ? prenatal_visit.private : 0],
+      bp_systolic: ['', [Validators.required, Validators.minLength(2)]],
+      bp_diastolic: ['', [Validators.required, Validators.minLength(2)]],
+      fundic_height: [null],
+      presentation_code: ['', [Validators.required, Validators.minLength(2)]],
+      fhr: [null],
+      location_code: ['NA'],
+      remarks: [''],
+      private: [0],
     });
 
-    console.log(this.prenatal_form.value, " form prenatal creatform");
+    // console.log(this.prenatal_form.value, " form prenatal creatform
   }
 
   quadrant(id) {
@@ -315,39 +299,46 @@ export class PrenatalComponent implements OnInit {
     this.hide = [];
     this.keyUp = [];
     this.edit_bool = false;
-    this.createForm(0);
+    this.is_saving = false;
+    this.getMCR();
+    this.edit_id;
+    // this.prenatal_form.patchValue(this.prenatal_data[0])
+    console.log("canceling");
+
   }
-  edit(id) {
+  edit(prenatal) {
     this.edit_bool = true;
-    this.prenatal_form.reset();
-    this.catch_array.forEach(c => {
-      if (c.visit_sequence == id) {
-        //this.value = c.visit_sequence;
-        this.prenatal_form.setValue({
-          visit_sequence: c.visit_sequence,
-          fhr: c.fhr,
-          fundic_height: c.fundic_height,
-          fhr_location_id: c.fhr_location_id,
-          fetal_presentation_id: c.fetal_presentation_id,
-          patient_height: c.patient_height,
-          patient_weight: c.patient_weight,
-          bp_systolic: c.bp_systolic,
-          bp_diastolic: c.bp_diastolic,
-          consult_id: c.consult_id,
-          lmp_date: c.lmp_date,
-          mc_id: c.mc_id,
-          user_id: c.user_id,
-          patient_id: c.patient_id,
-          remarks: c.remarks,
-          prenatal_date: c.prenatal_date,
-        });
-      }
-    });
+    console.log(prenatal, " data to be editesd");
 
-    this.hide.push(id);
-    console.log(this.hide.includes(id));
+    // this.prenatal_form.reset();
+        this.edit_form = {
+          patient_mc_id: prenatal.patient_mc_id,
+          patient_id: this.patient_id,
+          prenatal_date: prenatal.prenatal_date,
+          patient_height: prenatal.patient_height,
+          patient_weight: prenatal.patient_weight,
+          bp_systolic: prenatal.bp_systolic,
+          bp_diastolic: prenatal.bp_diastolic,
+          fundic_height: prenatal.fundic_height,
+          presentation_code: prenatal.presentation_code,
+          fhr: prenatal.fhr,
+          location_code: prenatal.location_code,
+          private: prenatal.private,
+          remarks: prenatal.remarks
+        };
 
-    console.log(id, " prenatal id edit");
+        this.prenatal_form.patchValue(this.edit_form);
+      // }
+    // });
+        this.value = prenatal.visit_sequence;
+    // this.hide.push(id);
+    console.log(this.edit_form, " edit form");
+    console.log(prenatal.id, " id pre edit");
+
+    this.edit_id = prenatal.id;
+
+        this.edit_bool = true;
+    // console.log(id, " prenatal id edit");
 
   }
 }

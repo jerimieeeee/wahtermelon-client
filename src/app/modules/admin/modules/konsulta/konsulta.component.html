@@ -1,0 +1,112 @@
+
+<div class="bg-white border border-solid border-slate-100 rounded-xl shadow-md">
+  <div class="border border-solid border-slate-100 rounded-t-xl font-semibold justify-between">
+    <div class="flex border border-solid border-slate-100 rounded-t-xl p-3 font-semibold justify-between">
+      <div class="text-blue-500 text-lg pt-2 pl-5">
+        Konsulta
+      </div>
+      <div>
+        <!-- <button *ngIf="is_updating" class="text-white-500 bg-amber-500 active:bg-amber-300 hover:bg-amber-600 text-sm px-4 py-2 rounded hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button">
+          <fa-icon class="mr-3" [icon]="faSpinner" spin="true"></fa-icon>
+          Updating
+        </button> -->
+      </div>
+
+      <div class="border border-gray-400 rounded-md">
+        <input type="text" [(ngModel)]="search_item" class="form-input border-0 text-sm p-1 m-1 border-r border-gray-400" (keyup.enter)="loadList()" placeholder="Search name"/>
+        <button type="button" class="text-blue-500 w-9 h-9" (click)="loadList()">
+          <fa-icon class="-ml-1" [icon]="faSearch"></fa-icon>
+        </button>
+      </div>
+    </div>
+
+    <div *ngIf="submit_error" class="col-span-8 bg-red-200 rounded border border-red-300 text-red-900 text-sm">
+      <div class="block p-3 pl-10" >
+        <ul class="list-disc" >
+          <li *ngFor="let error of submit_error | keyvalue">{{ error.value }}</li>
+        </ul>
+      </div>
+    </div>
+
+    <div>
+      <div class="overflow-x-auto relative shadow-md sm:rounded-lg">
+        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 mb-5">
+          <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+              <th scope="col" class="py-3 px-6">Name</th>
+              <th scope="col" class="py-3 px-6">Birthdate</th>
+              <th scope="col" class="py-3 px-6">Gender</th>
+              <th scope="col" class="py-3 px-6">Contact Number</th>
+              <th scope="col" class="py-3 px-6">Email Address</th>
+              <th scope="col" class="py-3 px-6">Active Status</th>
+              <!-- <th scope="col" class="py-3 px-6">Actions</th> -->
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let account of konsulta_list; let odd = odd; let i = index" class="bg-white border-t" [ngClass]="{'bg-gray-50': odd}" [ngClass]="{'text-red-500': !account.employer}">
+              <th scope="row" class="py-4 px-6 font-medium whitespace-nowrap">
+                {{ account.last_name }}, {{ account.first_name }} {{ account.middle_name === 'NA' ? '' : account.middle_name }} {{ account.suffix_name === 'NA' ? '' : account.suffix_name}}
+              </th>
+              <td class="py-4 px-6">
+                {{ account.birtdate | date: 'MM/dd/yyyy' }}
+              </td>
+              <td class="py-4 px-6">
+                {{ account.gender }}
+              </td>
+              <td class="py-4 px-6">
+                {{ account.contact_number }}
+              </td>
+              <td class="py-4 px-6">
+                {{ account.email }}
+              </td>
+              <td class="py-4 px-6">
+                <label class="inline-flex relative items-center cursor-pointer">
+                  <input  type="checkbox" class="sr-only peer" [(ngModel)]="konsulta_list[i].is_active" (change)="updateActive(konsulta_list[i], i)" [disabled]="is_updating">
+                  <div class="w-14 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300  rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[8px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600 disabled:opacity-7" [ngClass]="{'peer-checked:bg-gray-600' : is_updating}"></div>
+                </label>
+              </td>
+              <!-- <td class="py-4 px-6"> -->
+                <!-- <fa-icon (click)="editVitals(vitals)" class="mx-0 my-0 text-amber-500 hover:cursor-pointer flex-none mr-2" [icon]="faPenToSquare"></fa-icon> -->
+
+                <!-- <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a> -->
+              <!-- </td> -->
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="konsulta_list?.length >= 1">
+    <div class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
+      <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+        <div>
+          <p class="text-sm text-gray-700">
+            Showing <span class="font-medium">{{ from }}</span>
+            to <span class="font-medium">{{ to }}</span>
+            of <span class="font-medium">{{ total }}</span> results
+          </p>
+        </div>
+        <div>
+          <nav class="relative z-0 inline-flex shadow-sm -space-x-px" aria-label="Pagination">
+            <button [disabled]="current_page===1" (click)="loadList(1)" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 enabled:bg-white disabled:bg-gray-300 text-sm font-medium text-gray-500 hover:bg-gray-50">
+              <fa-icon [icon]="faAnglesLeft" class="block h-15 w-15 text-gray-500 pr-1"></fa-icon>
+            </button>
+
+              <button [disabled]="current_page===1" (click)="loadList(current_page-1)" class="relative inline-flex items-center px-4 py-2 border border-gray-300 enabled:bg-white disabled:bg-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
+                <fa-icon [icon]="faChevronLeft" class="block h-15 w-15 text-gray-500 pr-1"></fa-icon>Previous
+              </button>
+              <button [disabled]="current_page===last_page" (click)="loadList(current_page+1)" class="relative inline-flex items-center px-4 py-2 border border-gray-300 enabled:bg-white disabled:bg-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
+                Next<fa-icon [icon]="faChevronRight" class="h-5 w-5 text-gray-500"></fa-icon>
+              </button>
+
+            <button [disabled]="current_page===last_page" (click)="loadList(last_page)" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 enabled:bg-white disabled:bg-gray-300 text-sm font-medium text-gray-500 hover:bg-gray-50">
+              <fa-icon [icon]="faAnglesRight" class="h-5 w-5 text-gray-500"></fa-icon>
+            </button>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

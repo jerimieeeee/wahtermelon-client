@@ -45,15 +45,15 @@
     <div class="md:flex items-center">
       <div class="flex flex-col md:flex-row md:mx-2 items-center">
         <a class="my-1 text-sm text-gray-700 font-medium hover:text-indigo-500 md:mx-2 md:my-0" href="#">
-          <!-- <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 22 22" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2" />
-          </svg> -->
-          <fa-icon [icon]="faHome" class="text-gray-700" size="lg"></fa-icon>
+          <fa-icon [icon]="faHome"  size="lg"></fa-icon>
         </a>
         <a class="my-1 text-sm text-gray-700 hover:text-indigo-500 md:mx-2 md:my-0" href="#/households">
           <svg class="fill-current w-6 h-6" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
             <path d="M16,4c0-1.11,0.89-2,2-2s2,0.89,2,2s-0.89,2-2,2S16,5.11,16,4z M20,22v-6h2.5l-2.54-7.63C19.68,7.55,18.92,7,18.06,7h-0.12 c-0.86,0-1.63,0.55-1.9,1.37l-0.86,2.58C16.26,11.55,17,12.68,17,14v8H20z M12.5,11.5c0.83,0,1.5-0.67,1.5-1.5s-0.67-1.5-1.5-1.5 S11,9.17,11,10S11.67,11.5,12.5,11.5z M5.5,6c1.11,0,2-0.89,2-2s-0.89-2-2-2s-2,0.89-2,2S4.39,6,5.5,6z M7.5,22v-7H9V9 c0-1.1-0.9-2-2-2H4C2.9,7,2,7.9,2,9v6h1.5v7H7.5z M14,22v-4h1v-4c0-0.82-0.68-1.5-1.5-1.5h-2c-0.82,0-1.5,0.68-1.5,1.5v4h1v4H14z" />
           </svg>
+        </a>
+        <a class="my-1 text-sm text-gray-700  hover:text-indigo-500 md:mx-2 md:my-0 font-medium" routerLink="/reports">
+          <fa-icon [icon]="faSquarePollVertical" size="xl"></fa-icon>
         </a>
         <span class="block text-2xl">
           |
@@ -69,7 +69,7 @@
         <div class="flex justify-center md:block leading-tight mx-2 my-1">
           <!-- <img src="./assets/img/profile_1.jpg" class="rounded-full w-12 h-12 mx-auto" /> -->
           <div class="inline-flex overflow-hidden relative justify-center items-center w-14 h-14 bg-gray-100 rounded-full dark:bg-gray-600">
-            <span class="font-medium text-gray-600 dark:text-gray-300">{{ getInitials(user_first_name+' '+user_last_name) }}</span>
+            <span class="font-medium text-gray-600 dark:text-gray-300">{{ getInitials(user?.first_name+' '+user?.last_name) }}</span>
           </div>
         </div>
 
@@ -78,7 +78,7 @@
             Hello,
           </span>
           <span class="block text-blue-500 font-medium">
-            {{ user_first_name }} {{ user_middle_name === 'NA' ? '' : user_middle_name }} {{ user_last_name }}
+            {{ user?.first_name }} {{ user?.middle_name }} {{ user?.last_name }} {{ user?.suffix_name }}
           </span>
         </div>
 

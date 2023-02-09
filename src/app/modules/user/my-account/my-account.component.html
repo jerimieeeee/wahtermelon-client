@@ -121,6 +121,84 @@
               </div>
             </div>
 
+            <div class="col-span-8">
+              <label for="designation_code" class="input-label" [ngClass]="{'text-red-500': is_saving && f.designation_code.errors}">Designation</label>
+              <select id="designation_code" name="designation_code" formControlName="designation_code" class="input disabled:bg-gray-300" [ngClass]="{'invalid-input': is_saving && f.designation_code.errors}" >
+                <option *ngFor="let designation of designations" [value]="designation.code" >{{ designation.desc }}</option>
+              </select>
+
+              <div *ngIf="is_saving && f.designation_code.errors" class="invalid-alert">
+                <div *ngIf="f.designation_code.errors?.['required']">
+                  {{ required_message }}
+                </div>
+              </div>
+            </div>
+
+            <div class="col-span-8">
+              <label for="employer_code" class="input-label" [ngClass]="{'text-red-500': is_saving && f.employer_code.errors}">Employer</label>
+              <select id="employer_code" name="employer_code" formControlName="employer_code" class="input disabled:bg-gray-300" [ngClass]="{'invalid-input': is_saving && f.employer_code.errors}" >
+                <option *ngFor="let employer of employers" [value]="employer.code" >{{ employer.desc }}</option>
+              </select>
+
+              <div *ngIf="is_saving && f.employer_code.errors" class="invalid-alert">
+                <div *ngIf="f.employer_code.errors?.['required']">
+                  {{ required_message }}
+                </div>
+              </div>
+            </div>
+
+            <div class="col-span-8">
+              <label for="region" class="input-label" [ngClass]="{'text-red-500': is_saving && f.region.errors}">Region</label>
+              <select id="region" name="region" formControlName="region" class="input disabled:bg-gray-300" (change)="loadDemog('regions', userForm.value.region, 'provinces')" [ngClass]="{'invalid-input': is_saving && f.region.errors}" >
+                <option *ngFor="let region of regions" [value]="region.code" >{{ region.name }}</option>
+              </select>
+
+              <div *ngIf="is_saving && f.region.errors" class="invalid-alert">
+                <div *ngIf="f.region.errors?.['required']">
+                  {{ required_message }}
+                </div>
+              </div>
+            </div>
+
+            <div class="col-span-8">
+              <label for="province" class="input-label" [ngClass]="{'text-red-500': is_saving && f.region.errors}">Province</label>
+              <select id="province" name="province" formControlName="province" class="input disabled:bg-gray-300" (change)="loadDemog('provinces', userForm.value.province, 'municipalities')" [ngClass]="{'invalid-input': is_saving && f.province.errors}" >
+                <option *ngFor="let province of provinces" [value]="province.code" >{{ province.name }}</option>
+              </select>
+
+              <div *ngIf="is_saving && f.province.errors" class="invalid-alert">
+                <div *ngIf="f.province.errors?.['required']">
+                  {{ required_message }}
+                </div>
+              </div>
+            </div>
+
+            <div class="col-span-8">
+              <label for="municipality" class="input-label" [ngClass]="{'text-red-500': is_saving && f.municipality.errors}">Municipality</label>
+              <select id="municipality" name="municipality" formControlName="municipality" class="input disabled:bg-gray-300" (change)="loadFacilities(userForm.value.municipality)" [ngClass]="{'invalid-input': is_saving && f.municipality.errors}" >
+                <option *ngFor="let municipality of municipalities" [value]="municipality.code" >{{ municipality.name }}</option>
+              </select>
+
+              <div *ngIf="is_saving && f.municipality.errors" class="invalid-alert">
+                <div *ngIf="f.municipality.errors?.['required']">
+                  {{ required_message }}
+                </div>
+              </div>
+            </div>
+
+            <div class="col-span-8">
+              <label for="facility_code" class="input-label" [ngClass]="{'text-red-500': is_saving && f.facility_code.errors}">Facility</label>
+              <select id="facility_code" name="facility_code" class="input disabled:bg-gray-300" [ngClass]="{'invalid-input': is_saving && f.facility_code.errors}" formControlName="facility_code">
+                <option [value]="facility.code"*ngFor="let facility of facilities" >{{ facility.facility_name }}</option>
+              </select>
+
+              <div *ngIf="is_saving && f.facility_code.errors" class="invalid-alert">
+                <div *ngIf="f.facility_code.errors?.['required']">
+                  {{ required_message }}
+                </div>
+              </div>
+            </div>
+
             <!-- <div class="col-span-8">
               <label for="password" class="input-label" [ngClass]="{'text-red-500': is_saving && f.password.errors}">Password</label>
               <input type="password" name="password" id="password" class="input disabled:bg-gray-200 disabled:text-gray-500" [ngClass]="{'invalid-input': is_saving && f.password.errors}" formControlName="password">

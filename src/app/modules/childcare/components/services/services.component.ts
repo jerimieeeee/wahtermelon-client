@@ -1,8 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { faSearch, faPlus, faInfoCircle, faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import { FormBuilder, FormGroup,FormArray,FormControl,Validators,} from '@angular/forms';
 import { faPenToSquare, faPlusSquare, faSave } from '@fortawesome/free-regular-svg-icons';
+import { HttpService } from 'app/shared/services/http.service';
+import { Services } from './data/service'
 import { DatePipe } from '@angular/common';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-services',
@@ -80,11 +83,32 @@ export class ServicesComponent implements OnInit {
  showEssentialModal = false;
 
   ccservicename: any;
+  lib_ccservices: any;
+  patient_info: any;
+  cc_newborn: any;
 
-  toggleEssentialModal(){
+  serviceForm: any = {
+    service_status: [] ,
+    service_date: [] ,
+    quantity : []
+  };
+  services_given= [];
+  service_list = Services;
+  modalFilter: any;
+  alertFilter: any;
+  showAlert = false;
+
+  toggleAlertModal(value: any){
+    this.alertFilter = value;
+    this.showAlert = !this.showAlert;
+  }
+
+  toggleEssentialModal(value: any){
     console.log('toggleEssentialModal');
+    this.modalFilter = value;
     this.showEssentialModal = !this.showEssentialModal;
-    this.geteServiceName();
+    this.loadServicesTest()
+    this.getccdevDetails()
   }
 
   showServiceModal = false;
@@ -176,11 +200,11 @@ export class ServicesComponent implements OnInit {
   }
 
   setDate(i: any) {
-    this.selectedServiceList = this.eservices2.filter((value, index) => {
+    this.selectedServiceList = this.lib_ccservices.filter((value, index) => {
       if(value.ischecked && index == i){
-        this.eservices2[index].service_date=this.defaultDate
+        this.lib_ccservices[index].service_date=this.defaultDate
       }else if(!value.ischecked && index == i){
-        this.eservices2[index].service_date=''
+        this.lib_ccservices[index].service_date=''
       }
       return value.ischecked
     });
@@ -226,6 +250,8 @@ export class ServicesComponent implements OnInit {
     });
   }
 
+ 
+
   fetchCheckedIDs() {
     this.checkedIDs = []
     this.eservices2.forEach((value, index) => {
@@ -247,7 +273,7 @@ export class ServicesComponent implements OnInit {
   changeSelection(i: any) {
     // this.fetchSelectedItems()
     this.setDate(i)
-    console.log(this.selectedServiceList, 'sadsad')
+    // console.log(this.selectedServiceList, 'sadsad')
   }
 
   changeSelection2(i:any) {
@@ -259,18 +285,272 @@ export class ServicesComponent implements OnInit {
     this.eservices2.forEach((c) => (c.ischecked = evt.target.checked));
   }
 
-  constructor() { 
+  @Input() patient_details: any;
+  
+  constructor(
+    private http: HttpService,
+    private toastr : ToastrService
+    ) { 
     this.services.sort(function(a,b){
       return a.date.localeCompare(b.date);
     })
   }
 
+  loadCCLibraries(){
+    this.loadServices()
+    this.http.get('libraries/cc-services').subscribe((data: any) => {
+      this.lib_ccservices = data.data
+      console.log(this.lib_ccservices, 'cc dev services library');
+      // console.log(this.patient_details.id, 'awaw')
+    });
+  }
+
+  // onSubmit(){
+  //   this.selectedServiceList = this.lib_ccservices.filter((value, index) => {
+  //     return value.ischecked
+  //   });
+
+  //   let user_id = localStorage.getItem('user_id');
+  //   var newborndata ={
+     
+  //     patient_id: this.patient_details.id,
+  //     user_id: user_id,
+  //     services: this.selectedServiceList
+  //   }
+
+  //   console.log(newborndata);
+
+  //   this.http.post('child-care/cc-services', newborndata).subscribe({
+  //     next: (data: any) => console.log(data.status, 'check status'),
+  //     error: err => console.log(err),
+  //     complete: () => {
+  //       // this.loadLibraries();
+  //       console.log('essential newborn data saved')
+  //       this.loadServices()
+  //     }
+  //   })
+
+  // }
+  onChange(){
+    console.log(this.serviceForm.service_status, 'ng model check')
+    console.log(this.serviceForm.service_date, 'ng model check')
+    console.log(this.serviceForm.quantity, 'ng model check')
+  }
+
+  submitNBS(){
+    
+  
+ 
+    var nbsfilter ={
+      nbs_filter: this.patient_info.nbs_filter,
+    }
+
+    console.log(nbsfilter);
+
+    this.http.update('child-care/cc-records/', this.patient_info.id, nbsfilter).subscribe({
+      // next: (data: any) => console.log(data.status, 'check status'),
+      error: err => console.log(err),
+      complete: () => {
+        // this.loadLibraries();
+        console.log(nbsfilter,'nbs filter data saved')
+        this.is_saving = false;
+      }
+    })
+  }
+
+
+  onSubmit(){
+    this.submitNBS()
+    var service_arr = [];
+
+    console.log(this.serviceForm)
+    Object.entries(this.serviceForm.service_status).forEach(([key, value], index) => {
+      if(value != '-'){
+        let service = {
+          service_id: key,
+          service_date: this.serviceForm.service_date[key] ? this.serviceForm.service_date[key] : null,
+          status_id: value,
+          quantity: this.serviceForm.quantity[key] ? this.serviceForm.quantity[key] : null
+        };
+
+        service_arr.push(service);
+        console.log(this.serviceForm.quantity[key], 'check quantity if working')
+      }
+    })
+
+    if(service_arr.length > 0){
+      let user_id =this.http.getUserID();
+      // let user_id = localStorage.getItem('user_id');
+      let patient_id = this.patient_details.id
+      var serv_form ={
+        essential: this.modalFilter,
+        patient_id: patient_id,
+        user_id: user_id,
+        services: service_arr
+      }
+
+      console.log(serv_form, 'ito ung isusubmit')
+
+      this.http.post('child-care/cc-services', serv_form).subscribe({
+        next: (data: any) => { console.log(data.data, 'display lahat ng services') },
+        error: err => {console.log(err)
+          // this.toggleAlertModal('E')
+          if (serv_form.essential == 'Y') {
+            this.showToastrErrY()
+           
+          } else {
+            this.showToastrErrN()
+    }},
+        complete: () => {
+              // this.toggleAlertModal('S')
+              if (serv_form.essential == 'Y') {
+                this.showToastrY()
+               
+              } else {
+                this.showToastrN()
+        }}
+      })
+    }
+  }
+
+  checkServiceStatus(services){
+    var new_serv = [];
+    Object.entries(services).reverse().forEach(([key, value], index) => {
+      var val:any = value
+      if(!new_serv[val.services.service_id]) new_serv[val.services.service_id] = []
+
+      let vax = {
+        id: val.id,
+        service_id: val.services.service_id,
+        service_date: val.service_date,
+        dose: this.getNumberSuffix(Object.keys(new_serv[val.services.service_id]).length + 1)
+      }
+
+      new_serv[val.services.service_id][val.id] = vax
+    })
+
+    this.services_given = new_serv;
+    this.addDose(new_serv)
+  }
+
+  getNumberSuffix(i){
+    var j = i % 10,
+    k = i % 100;
+    if (j == 1 && k != 11) {
+        return i + "st";
+    }
+    if (j == 2 && k != 12) {
+        return i + "nd";
+    }
+    if (j == 3 && k != 13) {
+        return i + "rd";
+    }
+    return i + "th";
+  }
+
+  addDose(new_serv){
+    Object.entries(this.service_list).forEach(([key, value], index) => {
+      var val:any = value;
+
+      this.service_list[key]['dose'] = new_serv[val.services.service_id][val.id].dose;
+    });
+  }
+
+  findEssential(service_list: any[]): any[] {
+    return service_list.filter(e => e.services.essential == 'Y');
+  }
+
+  findServices(service_list: any[]): any[] {
+    return service_list.filter(e => e.services.essential == 'N');
+  }
+
+  loadServicesTest(){
+    this.http.get('child-care/cc-services', {params:{patient_id: this.patient_details.id, sort:'service_id'}}).subscribe({
+      next: (data: any) => {
+        console.log(data)
+        this.service_list = data.data;
+      //   data.data.sort(function(a, b) { 
+      //     return (a.services.service_name - b.services.service_name) || a.services.service_name.localeCompare(b.services.service_id); 
+      // });
+      
+        
+        // this.serviceForm = {
+        //   service_status: [],
+        //   service_date: [],
+        //   quantity: []
+        // }
+        data.data.forEach((value) => {
+          // console.log(value)
+          this.serviceForm.service_status[value.service_id] = value.status_id;
+          this.serviceForm.service_date[value.service_id] = value.service_date;
+          this.serviceForm.quantity[value.service_id] = value.quantity;
+          // serv2.service_date['value.status_id'] = value.s
+        })
+
+        // this.serviceForm = serv2;
+        // console.log(this.serviceForm.service_status.CC);
+        // console.log(this.serviceForm, 'test serv 2')
+      },
+      error: err => console.log(err),
+      complete: () => console.log(this.service_list,'services loaded')
+      
+    })
+  }
+ 
+
+
+  loadServices(){
+
+    this.http.get('child-care/cc-services', {params:{patient_id: this.patient_details.id, sort:'service_id'}}).subscribe({
+      next: (data: any) => {
+        this.cc_newborn = data.data;
+      },
+  
+      error: err => console.log(err),
+      complete: () => {
+        // this.loadLibraries();
+        // console.log(this.cc_newborn, 'data ng cc new born');
+      }
+    })
+  }
+
+  getccdevDetails() {
+    this.http.get('child-care/cc-records/'+this.patient_details.id)
+    .subscribe({
+      next: (data: any) => {
+        this.patient_info = data.data;
+        // console.log(this.patient_info, 'info ccdev first visit')
+        
+      },
+      error: err => {console.log(err) }
+    });
+  }
+  
+  showToastrY(){
+    this.toastr.success('Successfully Saved!','Essential Services');
+  }
+
+  showToastrN(){
+    this.toastr.success('Successfully Saved!','Services');
+  }
+
+  showToastrErrY(){
+    this.toastr.warning('Error in Saving!','Essential Services');
+  }
+
+  showToastrErrN(){
+    this.toastr.warning('Error in Saving!','Essential Services');
+  }
+
   ngOnInit() {
-    this.geteServiceName()
-    this.getServices()
-    this.fetchSelectedItems()
-    this.fetchSelectedItems2()
-    this.fetchCheckedIDs()
-    this.fetchCheckedIDs2()
+    // this.geteServiceName()
+    // this.getServices()
+    // this.fetchSelectedItems()
+    // this.fetchSelectedItems2()
+    // this.fetchCheckedIDs()
+    // this.fetchCheckedIDs2()
+    this.loadCCLibraries()
+    // this.getccdevDetails()
+    if(this.patient_details.id) this.loadServicesTest()
   }
 }

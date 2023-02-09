@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
 // import { AnyNaptrRecord } from 'd/ns';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { faCircleCheck, faCircleNotch, faClose, faInfoCircle, faPencil, faPencilSquare, faPenToSquare, faSave, faTimes, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
+import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
   selector: 'app-services',
@@ -8,127 +11,256 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ServicesComponent implements OnInit {
   focused: boolean;
-  painting: boolean;
-  erase: boolean;
-  check_bool: boolean;
-  canvas: any;
-  ctx: any;
-  x: any
-  y:any
-  i = 0;
-  canvasWidth: any;
-  canvasHeight: any;
-  canvasData: any;
 
-  r = 8;
-  ar =  Math.ceil((this.r/2)) 
+  services_form: FormGroup = new FormGroup({
+    service_date: new FormControl<string | null>(''),
+    service_qty: new FormControl<string | null>(''),
+    intake_penicillin: new FormControl<string | null>(''),
+    positive_result: new FormControl<string | null>(''),
+  });
 
-  input_test = '';
-  constructor() { }
-   
-  
-  
-  public keyUp = [];
-  public buttons = [];
-  public coords = [];
-  public identity = [];
-  public checker = [];
-  ngOnInit(): void {
-    this.check_bool = true;
-  }
+  @Input() lib_services;
+  @Input() visit_type;
+  @Input() patient_id;
+  @Input() patient_mc_record;
+  @Input() module;
+  @Output() modalStats = new EventEmitter<boolean>();
 
-  trackMouse(e){
-    
-  this.canvas = document.getElementById("myCanvas");
-  this.canvasWidth = this.canvas.width;
-  this.canvasHeight = this.canvas.height;
-  this.ctx = this.canvas.getContext("2d");
+  today: Date;
+  // modal = false;
+  modal: boolean;
+  saved: boolean;
+  edit: any;
+  is_saving: boolean;
+  constructor(private http: HttpService, private formBuilder: FormBuilder) { }
 
-  this.y = e.layerY;
-  this.x = e.layerX;
-  let test_identity = this.x + ',' + this.y + ''
-  console.log(test_identity);
-  
-  let evicted_dot = -1;
-  this.identity = [];
-  this.checker = [];
-  for (let a = -this.ar; a <= this.ar; a++) {
-    // identity.push((this.x + a) + ',' + (this.y + a));
-    for (let b = -this.ar; b <= this.ar; b++) {
-      this.identity.push((this.x + a) + ',' + (this.y  + b));
+  faTimes = faTimes;
+  faSave = faSave;
+  faInfoCircle = faInfoCircle;
+  faPenToSquare = faPenToSquare;
+  faTimesCircle = faTimesCircle
+  faCircleCheck = faCircleCheck
+  faPencil = faPencil;
+  faSpinner = faCircleNotch;
+
+  user_id: any
+  facility_code: any
+
+  public serviceChanges = [];
+  public service_array = [];
+  public service_list = [];
+  public array_form = [];
+  public group_list = [
+    { name: 'G1', qty: true, pos: false, pos_name: '', pen: false, service: [] },
+    { name: 'G2', qty: false, pos: false, pos_name: '', pen: false, service: [] },
+    { name: 'G3', qty: false, pos: true, pos_name: 'Positive', pen: true, service: [] },
+    { name: 'G4', qty: false, pos: true, pos_name: 'Positive', pen: false, service: [] },
+    { name: 'G5', qty: false, pos: true, pos_name: 'Anemia', pen: false, service: [] },
+  ];
+
+  ngOnInit() {
+    this.user_id = this.http.getUserID();
+    this.facility_code = this.http.getUserFacility();
+    this.createForm()
+    for (let x = 0; x < 11; x++) {
+      this.serviceChanges.push(this.services_form.value);
     }
+    this.getServices()
+    this.tagServiceGroup()
+
+    this.today = new Date();
+    this.modal = false;
   }
-  // console.log(identity, ' identity');
-  // let identity = this.x + ',' + this.y + '';
-  for (let ide of this.identity) {
-    this.checker.push(this.coords.map((el) => el.id).indexOf(ide));
+
+  enableEdit(id) {
+    if (this.edit != id) {
+      this.edit = id;
+    } else {
+      this.edit = 's';
+    }
+    console.log(this.edit, this.edit != id, id, " enableEdit()");
+
   }
-  this.check_bool =  this.checker.every((check)=>{ return check == -1; });
-  console.log(this.checker, ' checker', this.check_bool);
-  for (let check of this.checker) {
-      if(check != -1){
-        evicted_dot = this.checker.indexOf(check);
+
+  saveForm() {
+    // maternal-care/mc-services
+    this.is_saving = true;
+    console.log(this.serviceChanges);
+
+    this.serviceChanges.forEach(s => {
+      // console.log(s.service_id != "");
+
+      if (s.service_id != "") {
+        console.log(this.serviceChanges.map(z => z.service_id).indexOf(s.service_id), " logging index of with id")
+        console.log("commiting to save ", s);
+
+        this.http.post('maternal-care/mc-services', s).subscribe({
+          next: (data: any) => {
+            console.log(data.data, " data from saving services")
+            this.getServices();
+            // this.service_list.push(data.data)
+            // this.services_form = data.data;
+          },
+          error: err => console.log(err),
+          complete: () => {
+            this.is_saving = false;
+            this.saved = true
+            setTimeout(() => {
+              this.saved = false;
+              this.closeModal();
+            }, 1500);
+          }
+        })
+
       }
+    })
+    this.createForm();
   }
-  console.log(evicted_dot, this.identity[evicted_dot]);
-  
-  // this.coords.push({id: this.x + ',' + this.y, x: this.x, y: this.y});
-  console.log(this.identity, ' identity');
-  // let checker =  this.coords.map((el) => el.id).indexOf(identity);
-  
-  this.updateCanvas(this.identity[evicted_dot] + '', this.check_bool, this.x + ',' + this.y, this.x, this.y, this.r, this.ctx);
-  // // this.ctx.fillRect(this.x -5,this.y -5,10,10);
-  console.log(this.coords, " coords");
-  this.check_bool = true;
-// 
-}
+  getServices() {
+    this.http.get('maternal-care/mc-services?filter[patient_mc_id]=' + this.patient_mc_record.id).subscribe({
+      next: (data: any) => {
+        console.log(data, " get services");
+        this.service_list = data.data;
+        this.service_list.forEach(s => {
+          if (s.service.id == 'DENT' || s.service.id == 'HIV') {
+            s.group = this.group_list[1]
+          } else if (s.service.id == 'IRON' || s.service.id == 'VITA' || s.service.id == 'CALC' || s.service.id == 'IODN' || s.service.id == 'DWRMG') {
+            s.group = this.group_list[0]
+          } else if (s.service.id == 'SYP') {
+            s.group = this.group_list[2]
+          } else if (s.service.id == 'HEPB' || s.service.id == 'DIBTS') {
+            s.group = this.group_list[3]
+          } else if (s.service.id == 'CBC') {
+            s.group = this.group_list[4]
+          }
+        })
 
-point(x, y, r, canvas) {
-    canvas.lineWidth = 2;
-    canvas.fillStyle = "rgba(69, 1, 124, 0.3)";
-    canvas.beginPath();
-    canvas.arc(x, y, r, 0, 2 * Math.PI, true);
-    canvas.stroke();
-    canvas.fill();
-  
-}
+        console.log(this.service_list, " get service after pushing group");
 
-updateCanvas(evicted_dot, check_bool, i, x, y, r, canvas) {
-  // console.log(evicted_dot == 'undefined');
-  
-  if(check_bool == false && evicted_dot != 'undefined'){
-    console.log("splicing");
-    
-    this.coords.splice(this.coords.map((el) => el.id).indexOf(evicted_dot),1);
-  }else if(check_bool == true){
-    console.log("pushing");
-    
-    this.coords.push({id: i , x: x, y: y, r: r})
-  } 
-  canvas.clearRect(0,0,1500,1500);
-  for (let coord of this.coords) {
-    
-    this.point(coord.x, coord.y, coord.r,canvas)
+
+      },
+      error: err => console.log(err),
+
+    })
   }
-}
-activeTrackMouse(e) {
-  this.identity = [];
-  this.checker = [];
-  this.y = e.layerY;
-  this.x = e.layerX;
-  for (let a = -this.ar; a <= this.ar; a++) {
-    // identity.push((this.x + a) + ',' + (this.y + a));
-    for (let b = -this.ar; b <= this.ar; b++) {
-      this.identity.push((this.x + a) + ',' + (this.y  + b));
+
+  tagServiceGroup() {
+    this.lib_services.forEach(s => {
+      if (s.id == 'DENT' || s.id == 'HIV') {
+        this.group_list[1].service.push(s)
+      } else if (s.id == 'IRON' || s.id == 'VITA' || s.id == 'CALC' || s.id == 'IODN' || s.id == 'DWRMG') {
+        this.group_list[0].service.push(s)
+      } else if (s.id == 'SYP') {
+        this.group_list[2].service.push(s)
+      } else if (s.id == 'HEPB' || s.id == 'DIBTS') {
+        this.group_list[3].service.push(s)
+      } else if (s.id == 'CBC') {
+        this.group_list[4].service.push(s)
+      }
+    })
+
+    console.log(this.group_list, ' after tagging groups');
+
+  }
+
+  createForm() {
+
+    this.lib_services.forEach(lib => this.array_form.push(
+      {
+        service_date: new Date().toISOString().substring(0, 10),
+        visit_type_code: '',
+        visit_status: this.module == 3 ? 'Prenatal' : (this.module == 4 ? 'Postpartum' : 'Services'),
+        service_qty: '',
+        positive_result: false,
+        intake_penicillin: false,
+        service_id: lib.id,
+      }
+    )
+    );
+    this.services_form = this.formBuilder.group({
+      service_date: [new Date().toISOString().substring(0, 10), [Validators.required]],
+      visit_type_code: ['', [Validators.required]],
+      visit_status: [this.module == 3 ? 'Prenatal' : (this.module == 4 ? 'Postpartum' : 'Services')],
+      service_qty: [0],
+      positive_result: [false],
+      intake_penicillin: [false],
+      service_id: [''],
+    });
+
+
+
+  }
+  getNG(id, x) {
+    return this.serviceChanges[this.array_form.map(s => s.service_id).indexOf(id)][x];
+  }
+
+saveEdit(i){
+  console.log(this.service_list[i], " saveEdit bnoy")
+  let edits: any;
+  edits = {
+    patient_mc_id: this.service_list[i].patient_mc_id,
+    patient_id: this.service_list[i].patient_id,
+    service_id: this.service_list[i].service.id,
+    visit_type_code: this.service_list[i].visit_type_code,
+    visit_status: this.service_list[i].visit_status,
+    service_date: this.service_list[i].service_date,
+    service_qty: this.service_list[i].service_qty,
+    positive_result: this.service_list[i].positive_result,
+    intake_penicillin: this.service_list[i].intake_penicillin,
+  }
+
+  console.log(edits, " show edits");
+  this.is_saving = true;
+  this.http.update('maternal-care/mc-services/',this.service_list[i].id, edits).subscribe({
+    next: (data: any) => {
+      console.log(data.data, " data from saving services")
+      this.getServices();
+      this.service_list[i].push(data.data)
+      // this.services_form = data.data;
+    },
+    error: err => {console.log(err), this.is_saving = false;},
+    complete: () => {
+      this.is_saving = false;
+      this.saved = true
+      setTimeout(() => {
+        this.saved = false;
+        this.closeModal();
+      }, 1500);
+      this.edit = 's';
     }
-  }
-  // console.log(identity, ' identity');
-  // let identity = this.x + ',' + this.y + '';
-  for (let ide of this.identity) {
-    this.checker.push(this.coords.map((el) => el.id).indexOf(ide));
-  }
-  this.check_bool =  this.checker.every((check)=>{ return check == -1; });
-  console.log(this.check_bool, this.checker);
-  
+  })
+
 }
+
+  onChange(desc, id, item) {
+    let i = this.array_form.map(s => s.service_id).indexOf(id);
+    this.serviceChanges[i] = {
+      patient_mc_id: this.patient_mc_record.id,
+      facility_code: this.facility_code,
+      patient_id: this.patient_id,
+      user_id: this.user_id,
+      visit_type_code: item == 'visit_type_code' ? this.services_form.value[item] : this.serviceChanges[i].visit_type_code,
+      visit_status: this.services_form.value.visit_status,
+      intake_penicillin: item == 'intake_penicillin' ? this.services_form.value[item] : this.serviceChanges[i].intake_penicillin,
+      positive_result: item == 'positive_result' ? this.services_form.value[item] : this.serviceChanges[i].positive_result,
+      service_date: item == 'service_date' ? this.services_form.value[item] : this.serviceChanges[i].service_date,
+      service_qty: item == 'service_qty' ? this.services_form.value[item] : this.serviceChanges[i].service_qty,
+      service_id: id,
+    };
+
+    console.log(this.serviceChanges, " these are the changes with the description: ", desc);
+
+  }
+  openModal() {
+    console.log("opening modal");
+    this.modal = !this.modal;
+    this.modalStats.emit(this.modal);
+    this.createForm()
+  }
+
+  closeModal() {
+    console.log("opening modal");
+    this.modal = false;
+    this.modalStats.emit(this.modal);
+  }
 }
