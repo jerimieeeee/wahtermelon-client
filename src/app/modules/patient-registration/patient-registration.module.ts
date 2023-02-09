@@ -5,7 +5,7 @@ import { PatientRegistrationRoutingModule } from './patient-registration-routing
 import { PatientRegistrationComponent } from './patient-registration.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { NgxMaskModule, IConfig } from 'ngx-mask';
+import { IConfig, NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 import { FamilyFolderModalComponent } from './modals/family-folder-modal/family-folder-modal.component'
 
 export const options: Partial<null|IConfig> | (() => Partial<IConfig>) = null;
@@ -21,7 +21,11 @@ export const options: Partial<null|IConfig> | (() => Partial<IConfig>) = null;
     FormsModule,
     FontAwesomeModule,
     ReactiveFormsModule,
-    NgxMaskModule.forRoot(),
+    NgxMaskDirective,
+    NgxMaskPipe
+  ],
+  providers: [
+    provideNgxMask()
   ]
 })
 export class PatientRegistrationModule { }

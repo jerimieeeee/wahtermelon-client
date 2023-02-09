@@ -8,31 +8,38 @@ import {
 } from '@angular/common/http';
 import { Observable, catchError, throwError } from 'rxjs';
 import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 // import { catchError } from 'rxjs/operators';
 
 @Injectable()
 export class RequestsInterceptor implements HttpInterceptor {
+  cookie_value;
 
   constructor(
-    private router: Router
-  ) {}
+    private router: Router,
+    private cookieService: CookieService
+  ) {
+    this.cookie_value = this.cookieService.get('access_token');
+  }
+
 
   intercept(
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    if(localStorage.getItem('access_token')){
+    if(this.cookieService.get('access_token')){
       request = request.clone({
         setHeaders: {
-          'Content-Type' : 'application/json; charset=utf-8',
+          // 'Content-Type' : 'multipart/form-data',
           'Accept'       : 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
+          'withCredentials': 'true',
+          'Authorization': `Bearer ${this.cookie_value}`
         },
       });
     }
     return next.handle(request).pipe(
       catchError ((error) => {
-        if(error && error.status ===401){
+        if(error && error.status === 401){
           return this.handle401Error(request, next, error);
         } else {
           return throwError(() => error)
@@ -52,10 +59,12 @@ export class RequestsInterceptor implements HttpInterceptor {
         return next.handle(req);
       }),
       catchError((error) => { */
-        localStorage.removeItem('user');
-        localStorage.removeItem('access_token');
+        // localStorage.removeItem('user');
+        // localStorage.removeItem('access_token');
 
-        this.router.navigate(['/']);
+        // this.router.navigate(['/']);
+        localStorage.removeItem('user');
+        this.cookieService.delete('access_token');
         return throwError(() => originalError);
       /* })
     ); */

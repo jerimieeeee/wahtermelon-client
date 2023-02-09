@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { faPrint } from '@fortawesome/free-solid-svg-icons';
+import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
   selector: 'app-konsulta',
@@ -14,13 +15,29 @@ export class KonsultaComponent implements OnInit {
   modal: any = [];
 
   toggleModal(name?){
+    console.log(name)
     this.modal[name] = !this.modal[name];
   }
 
-  constructor() { }
+  loadDetails(){
+
+  }
+
+  constructor(
+    private http: HttpService
+  ) { }
+
+  active_loc_id: any;
+  patient_id: any;
+  consult_id: any;
 
   ngOnInit(): void {
     // this.toggleModal('ekas')
+    this.active_loc_id = this.http.getUrlParams;
+    this.patient_id = this.active_loc_id.patient_id;
+    this.consult_id = this.active_loc_id.consult_id;
+    this.loadDetails();
+
   }
 
 }

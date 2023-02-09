@@ -23,7 +23,7 @@ export class TodaysConsultComponent implements OnInit {
 
   today_consults: [];
 
-  per_page: number = 10;
+  per_page: number = 5;
   current_page: number;
   last_page: number;
   from: number;
@@ -39,7 +39,7 @@ export class TodaysConsultComponent implements OnInit {
 
     this.http.get('consultation/records', params).subscribe({
       next: (data: any) => {
-        // console.log(data);
+        console.log(data);
         this.today_consults = data.data;
 
         this.current_page = data.meta.current_page;

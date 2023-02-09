@@ -37,6 +37,8 @@ export class LabFormComponent implements OnChanges, OnInit {
 
   spl_val = ['observation_code', 'findings_code', 'data_collection_code', 'blood_code', 'color_code', 'consistency_code'];
 
+  submit_errors: any;
+
   loadForm(){
     // console.log(this.selected_lab)
     if(this.selected_lab) {
@@ -104,9 +106,9 @@ export class LabFormComponent implements OnChanges, OnInit {
         this.lab_form['findings_code'] = this.lab_form.findings ? this.lab_form.findings.code : null;
         break;
       case 'FCAL':
-        // this.lab_form['blood_code'] = this.lab_form.findings ? this.lab_form.findings.code : null;
-        // this.lab_form['color_code'] = this.lab_form.findings ? this.lab_form.findings.code : null;
-        // this.lab_form['consistency_code'] = this.lab_form.findings ? this.lab_form.findings.code : null;
+        this.lab_form['blood_code'] = this.lab_form.blood ? this.lab_form.blood.code : null;
+        this.lab_form['color_code'] = this.lab_form.color ? this.lab_form.color.code : null;
+        this.lab_form['consistency_code'] = this.lab_form.consistency ? this.lab_form.consistency.code : null;
         break;
       default:
         break;

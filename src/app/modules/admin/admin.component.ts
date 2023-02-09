@@ -60,6 +60,11 @@ export class AdminComponent implements OnInit {
       loc: 'konsulta-masterlist',
       name: 'Konsulta Masterlist',
       icon: faTableList
+    },
+    {
+      loc: 'xml-upload',
+      name: 'XML Import',
+      icon: faTableList
     }
   ]
 

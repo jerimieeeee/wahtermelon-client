@@ -5,7 +5,7 @@ import { UserRegistrationRoutingModule } from './user-registration-routing.modul
 import { UserRegistrationComponent } from './user-registration.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { NgxMaskModule } from 'ngx-mask';
+import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 
 
 @NgModule({
@@ -18,7 +18,11 @@ import { NgxMaskModule } from 'ngx-mask';
     FormsModule,
     FontAwesomeModule,
     ReactiveFormsModule,
-    NgxMaskModule.forRoot(),
+    NgxMaskDirective,
+    NgxMaskPipe
+  ],
+  providers: [
+    provideNgxMask()
   ]
 })
 export class UserRegistrationModule { }

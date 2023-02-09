@@ -8,6 +8,11 @@
       <span class="rounded-t-md m-0 p-2 font-semibold text-gray-50 bg-amber-500 flex justify-between" [ngClass]="{'rounded-b' : !show_content}">
         Prescriptions
         <div>
+          <button type="button" class="ml-3 text-sm bg-white text-green-500 px-3 rounded-full" (click)="toggleModal()">
+            <fa-icon [icon]="faReceipt" class="pr-1"></fa-icon>
+            epress
+          </button>
+
           <button *ngIf="prescriptions" type="button" class="text-sm bg-white text-amber-500 px-3 rounded-full" (click)="navigateTo('dispensing')">
             <fa-icon [icon]="faPrescriptionBottleMedical" class="pr-1"></fa-icon>
             dispensing
@@ -38,7 +43,9 @@
             </td>
             <td scope="row" class="py-4 px-3 font-medium text-gray-900">
               {{ prescription.dosage_quantity }} {{ prescription.unit_of_measurement.desc }} {{ prescription.regimen.desc }}
-              {{ prescription.duration_intake }} {{ prescription.frequency.desc }}
+              {{ prescription.duration_intake }} {{ prescription.frequency.desc }} <br /><br />
+
+              Instruction Qty: {{ prescription.instruction_quantity }}
             </td>
             <td scope="row" class="py-4 px-3 font-medium text-gray-900">
               {{ prescription.prescription_date | date : 'MM/dd/yyyy'}}
@@ -102,3 +109,10 @@
   [drug_frequency]="drug_frequency"
   [drug_preparation]="drug_preparation"
 ></app-drug-form>
+
+<!-- <app-prescription *ngIf="show_epress"></app-prescription> -->
+<app-epres *ngIf="show_epress"
+(toggleModal)="toggleModal()"
+[prescriptions]="prescriptions"
+[consult_details]="consult_details"
+></app-epres>

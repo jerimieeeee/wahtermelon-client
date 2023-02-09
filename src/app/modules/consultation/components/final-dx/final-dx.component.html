@@ -39,7 +39,7 @@
           </div>
         </div>
         <div class="flex px-4 pb-4">
-          <textarea [disabled]="consult_done" rows="3" id="fdx_remarks" [(ngModel)]="fdx_remarks" placeholder="Initial Diagnosis remark" class="placeholder-slate-400 w-full rounded-md border-gray-300 bg-gray-50"></textarea>
+          <textarea [disabled]="consult_done" rows="3" id="fdx_remarks" [(ngModel)]="fdx_remarks" placeholder="Final Diagnosis remarks" class="placeholder-slate-400 w-full rounded-md border-gray-300 bg-gray-50"></textarea>
         </div>
         <div class="flex justify-between">
           <button *ngIf="!consult_done" [disabled]="is_saving" type="button" class="btn-save ml-auto mr-5 mb-5 px-10 disabled:bg-gray-300" (click)="onSubmit()">

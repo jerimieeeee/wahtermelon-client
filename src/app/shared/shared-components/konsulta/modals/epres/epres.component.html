@@ -6,13 +6,13 @@
       <div class="flex justify-between items-start py-3 px-5 rounded-t border-b bg-blue-500 dark:border-gray-600">
         <h3 class="mt-2 text-sm font-bold text-white dark:text-white">
             electronic Prescription Slip (ePresS)
-        </h3>
-        <button type="button" class="bg-white text-blue-500 hover:bg-gray-100 hover:text-blue-400 px-2 py-1 rounded-md" (click)="printForm('philhealth_form')">
+        </h3><!-- (click)="printForm('philhealth_form')" -->
+        <button type="button" printSectionId="philhealth_form" ngxPrint [useExistingCss]="true" class="bg-white text-blue-500 hover:bg-gray-100 hover:text-blue-400 px-2 py-1 rounded-md">
           <fa-icon [icon]="faPrint"></fa-icon>
         </button>
       </div>
       <!-- Modal body -->
-      <div class="overflow-y-auto scrollbar-thin h-96 scrollbar-thumb-gray-400 scrollbar-track-gray-100">
+      <div class="overflow-y-auto scrollbar-thin h-96 scrollbar-thumb-gray-400 scrollbar-track-gray-100" *ngIf="show_form">
         <div class="w-[210mm] h-[297mm] flex justify-center align-middle bg-white">
           <div class="w-[195mm] h-[272mm] mt-[12.5mm]" id="philhealth_form">
             <!-- FORM START -->
@@ -33,56 +33,58 @@
 
               <div class="p-1">
                 <div class="grid grid-cols-4 text-xs">
-                  <div class="col-span-2 flex">
+                  <div class="col-span-2 flex text-[.75em]">
                     HCI Name:
-                    <span class="underline flex-1 w-full">test</span>
+                    <span class="underline flex-1 w-full text-[.8em]">{{ facility?.konsulta_credential.facility_name }}</span>
                   </div>
-                  <div class="col-span-2 flex">
+                  <div class="col-span-2 flex text-[.75em]">
                     Case No.:
-                    <span class="underline flex-1 w-full">test</span>
+                    <span class="underline flex-1 w-full text-[.8em]">{{ patient_info?.case_number }}</span>
                   </div>
-                  <div class="col-span-2 flex">
+                  <div class="col-span-2 flex text-[.75em]">
                     HCI Accreditation No:
-                    <span class="underline flex-1 w-full">test</span>
+                    <span class="underline flex-1 w-full text-[.8em]">{{ facility?.konsulta_credential.accreditation_number }}</span>
                   </div>
-                  <div class="col-span-2 flex">
+                  <div class="col-span-2 flex text-[.75em]">
                     Transaction No.:
-                    <span class="underline flex-1 w-full">test</span>
+                    <span class="underline flex-1 w-full text-[.8em]">{{ 'S'+consult_details?.transaction_number }}</span>
                   </div>
                 </div>
 
                 <div class="grid grid-cols-4 text-xs mt-2">
                   <div class="col-span-2 flex">
-                    Patient name (pangalan ng pasyente):
-                    <span class="underline flex-1 w-full">test</span>
+                    <span class="text-[.75em]">Patient name (pangalan ng pasyente): </span>
+                    <span class="underline flex-1 w-full text-[.8em]">
+                      {{ patient_info?.last_name }}, {{ patient_info?.first_name }} {{ patient_info?.middle_name }} {{ patient_info?.suffix_name === 'NA' ? '' : patient_info?.suffix_name }}
+                    </span>
                   </div>
                   <div class="col-span-1 flex">
-                    Age (Edad):
-                    <span class="underline flex-1 w-full">test</span>
+                    <span class="text-[.75em]">Age (Edad): </span>
+                    <span class="underline flex-1 w-full text-[.75em]">{{ patient_age }} </span>
                   </div>
                   <div class="col-span-1 flex">
-                    Contact No.:
-                    <span class="underline flex-1 w-full">test</span>
+                    <span class="text-[.75em]">Contact No.: </span>
+                    <span class="underline flex-1 w-full text-[.8em]">{{ patient_info?.mobile_number }}</span>
                   </div>
                 </div>
 
                 <div class="grid grid-cols-12 text-xs">
                   <div class="col-span-4 flex">
-                    PIN (Philhealht Identification No.):
-                    <span class="underline flex-1 w-full">test</span>
+                    <span class="text-[.75em]">PIN (PhilHealth Identification No.): </span>
+                    <span class="underline flex-1 w-full text-[.8em]">{{ patient_philhealth?.philhealth_id }}</span>
                   </div>
-                  <div class="col-span-3 flex">
-                    Membership Category:
-                    <span class="underline flex-1 w-full">test</span>
+                  <div class="col-span-3 flex ml-3">
+                    <span class="text-[.75em]">Membership Category: </span>
+                    <span class="underline flex-1 w-full text-[.8em]"> </span>
                   </div>
                   <div class="col-span-5 flex">
-                    Membership type:
-                    <span class="flex-1 w-full">__Member ___Dependent</span>
+                    <span class="text-[.75em]">Membership type: </span>
+                    <span class="flex-1 w-full text-[.8em]">{{ patient_philhealth?.membership_type_id === "MM" ? 'Member' : 'Dependent' }}</span>
                   </div>
                 </div>
               </div>
 
-              <div class="w-full border border-black bg-gray-300 text-xs my-5 p-1">
+              <div class="w-full border border-black bg-gray-300 text-xs my-5 p-1 py-0">
                 To be filled out by the facility (pupunuan ng pasilidad)
               </div>
 
@@ -90,84 +92,110 @@
                 <table class="border border-slate-600 border-collapse mx-2">
                   <thead>
                     <tr>
-                      <th class="w-2/12 border border-slate-700">
+                      <th class="w-2/12 border border-slate-700 text-[.8em]">
                         Category <br />
                         (Kategorya)
                       </th>
-                      <th class="w-1/12 border border-slate-700">
+                      <th class="w-1/12 border border-slate-700 text-[.8em]">
                         Medicine Strength/ Form/ Volume <br />
                         (Gamot/ Anyo/ Dami)
                       </th>
-                      <th class="w-1/12 border border-slate-700">
+                      <th class="w-1/12 border border-slate-700 text-[.8em]">
                         Quantity<br />
                         (Bilang)
                       </th>
-                      <th class="w-3/12 border border-slate-700">
+                      <th class="w-3/12 border border-slate-700 text-[.8em]">
                         Name of the Prescribing Physician <br />
                         (Pangalan ng nagresetang doktor)
                       </th>
-                      <th class="w-1/12 border border-slate-700">
+                      <th class="w-1/12 border border-slate-700 text-[.8em]">
                         <span class="underline">&#10004;</span> Dispensed <br />
                         (Naibigay) <br />
                         <span class="underline">X</span> Not dispensed <br />
                         (Hindi naibigay)
                       </th>
-                      <th class="w-1/12 border border-slate-700">
+                      <th class="w-1/12 border border-slate-700 text-[.8em]">
                         Date dispensed (Petsa kung kelan naibigay)
                       </th>
-                      <th class="w-3/12 border border-slate-700">
+                      <th class="w-3/12 border border-slate-700 text-[.8em]">
                         Name of the Dispensing Personnel <br />
                         (Pangalan ng nagbigay)
                       </th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td class="border border-slate-700">test</td>
-                      <td class="border border-slate-700"></td>
-                      <td class="border border-slate-700"></td>
-                      <td class="border border-slate-700 text-[0.65rem] font-normal" rowspan="2">
+                    <tr *ngFor="let pres of prescriptions; first as isFirst">
+                      <td class="border border-slate-700 text-[.8em]">
+                        {{ pres.konsulta_medicine ? pres.konsulta_medicine.category : '' }}
+                      </td>
+
+                      <td class="border border-slate-700 text-[.8em]">
+                        <span *ngIf="pres.konsulta_medicine">{{ pres.konsulta_medicine.desc }}</span>
+                        <span *ngIf="!pres.konsulta_medicine">{{ pres.added_medicine }} {{ pres.dosage_quantity }} {{ pres.unit_of_measurement.code }}</span>
+                      </td>
+
+                      <td class="border border-slate-700 text-center text-[.8em]">
+                        {{ pres.quantity }}
+                      </td>
+
+
+                      <td class="border border-slate-700 text-[0.65rem] font-normal align-bottom" [rowSpan]="prescription_length" *ngIf="isFirst">
+                        <div >
+                          <br /><br /><br />
+                          <strong>{{ pres.prescriber.first_name }} {{ pres.prescriber.middle_name }} {{ pres.prescriber.last_name }}</strong><br />
+                          Signature over printed name <br />
+                          License #: ________________
+                        </div>
+                      </td>
+
+                      <td class="border border-slate-700 text-center text-[.8em]">
+                        <span *ngIf="pres.dispensing">
+                          &#10004;
+                        </span>
+                        <span *ngIf="!pres.dispensing">
+                          X
+                        </span>
+                      </td>
+
+                      <td class="border border-slate-700 text-[.8em]">
+                        <span *ngIf="pres.dispensing">
+                          {{ pres.dispensing[0].dispensing_date }}
+                        </span>
+                      </td>
+
+                      <td class="border border-slate-700 text-[0.65rem] font-normal align-bottom" [rowSpan]="prescription_length" *ngIf="isFirst">
+                        <br /><br /><br />
+                        <strong>{{ dispensed_personnel?.first_name }} {{ dispensed_personnel?.middle_name }} {{ dispensed_personnel?.last_name }}</strong><br />
+                        Signature over printed name <br />
+                        Name of Dispensing Facility: <br />{{ facility?.konsulta_credential.facility_name }}
+                      </td>
+
+                      <!-- <td *ngIf="prescription_length - 1 < i" class="border border-slate-700 text-[0.65rem] font-normal">
                         <br /><br /><br />
                         Signature over printed name <br />
-                        License #: ________________
-                      </td>
-                      <td class="border border-slate-700"></td>
-                      <td class="border border-slate-700"></td>
-                      <td class="border border-slate-700 text-[0.65rem] font-normal" rowspan="2">
-                        <br /><br /><br />
-                        Signature over printed name <br />
-                        Name of Dispensing Facility: <br />________________
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="border border-slate-700">test</td>
-                      <td class="border border-slate-700"></td>
-                      <td class="border border-slate-700"></td>
-                      <!-- <td class="border border-slate-700" rowspan="2"></td> -->
-                      <td class="border border-slate-700"></td>
-                      <td class="border border-slate-700"></td>
-                      <!-- <td class="border border-slate-700"></td> -->
+                        Name of Dispensing Facility: <br />{{ facility_info?.facility_name }}
+                      </td> -->
                     </tr>
                   </tbody>
                 </table>
               </div>
 
-              <div class="w-full border border-black bg-gray-300 text-xs my-5 p-1">
+              <div class="w-full border border-black bg-gray-300 text-xs my-5 p-1 py-0">
                 To be filled out by the patient (pupunuan ng pasyente)
               </div>
 
               <div class="w-full p-1 text-xs">
                 <div class="grid grid-cols-1">
-                  <div class="flex">
+                  <div class="flex text-[.8em]">
                     Did you receive the above mentioned medicines? __ Yes __ No
                   </div>
-                  <div class="flex">
+                  <div class="flex text-[.8em]">
                     (Natanggap mo ba ang mga gamot na nabanggit?)
                   </div>
                 </div>
 
                 <div class="grid grid-cols-4 mt-3">
-                  <div class="col-span-2 grid grid-cols-1">
+                  <div class="col-span-2 grid grid-cols-1 text-[.8em]">
                     <span>Are you satisfied with the medicines you received?</span>
                     <span>(Nasiyahan ka ba sa mga gamot na natanggap mo?)</span>
                   </div>
@@ -185,10 +213,10 @@
                 </div>
 
                 <div class="grid grid-cols-1 mt-3">
-                  <div class="flex">
+                  <div class="flex text-[.8em]">
                     For your comment, suggestion or complaint:
                   </div>
-                  <div class="flex">
+                  <div class="flex text-[.8em]">
                     (Para sa iyong komento, mungkahi o reklamo)
                   </div>
 
@@ -197,31 +225,31 @@
                   </div>
                 </div>
 
-                <div class="grid grid-cols-1 mt-3">
-                  <div class="flex">
+                <div class="grid grid-cols-1 mt-2">
+                  <div class="flex text-[.8em]">
                     Under the penalty of law, I attest that the information I provided in this slip are true and accurate.
                   </div>
-                  <div class="flex">
+                  <div class="flex text-[.8em]">
                     (Sa ilalim ng batas, pinatutunayan ko na ang impormasyong ibinigay ko ay totoo at tama)
                   </div>
                 </div>
               </div>
 
-              <div class="w-full p-1 text-xs mt-10 mb-5">
+              <div class="w-full p-1 text-xs mt-7 mb-5">
                 <div class="grid grid-cols-12">
-                  <div class="col-span-7">
+                  <div class="col-span-7 text-[.8em]">
                     ________________________________________ <br />
                     Signature over printed name of patient <br />
                     (Lagda sa nakalimbag na pangalan ng pasyente)
                   </div>
-                  <div class="col-span-5">
+                  <div class="col-span-5 text-[.8em]">
                     Next Dispensing Date: _____________________ <br />
                     (Petsa ng susunod na bigay ng gamot)
                   </div>
                 </div>
 
-                <div class="grid grid-cols-12 mt-5">
-                  <div class="col-span-7">
+                <div class="grid grid-cols-12 mt-3">
+                  <div class="col-span-7 text-[.8em]">
                     Note: <br />
                     Accomplished form shall be submitted to PhilHealth <br />
                     (Ang kumpletong form ay dapat isumite sa PhilHealth)
@@ -236,6 +264,9 @@
 
       </div>
 
+      <div class="h-96 flex justify-center align-middle w-full" *ngIf="!show_form">
+        <fa-icon [icon]="faCircleNotch" spin="true" size="2xl" class="mt-20 text-blue-500"></fa-icon>
+      </div>
       <!-- Modal footer -->
       <div class="flex justify-end py-4 px-5 space-x-4 rounded-b border-t border-gray-200 dark:border-gray-600">
         <button  type="button" class="text-white bg-orange-500 hover:ring-2 focus:outline-none hover:ring-orange-300 rounded text-sm font-medium px-6 py-2.5 transition duration-150 ease-in-out transform hover:scale-110 " (click)="closeModal()">Close</button>

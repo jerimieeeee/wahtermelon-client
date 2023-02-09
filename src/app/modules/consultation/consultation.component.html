@@ -11,19 +11,26 @@
           [class]="modules===1? 'text-blue-500 border-b-2 border-blue-500 font-bold' : 'hover:-translate-y-1 hover:scale-110 transition ease-in-out delay-400 duration-300' ">
               CONSULTATION
           </button>
-          <button (click)="switchTabs(2)" class="text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 mr-6 pb-2"
+          <!-- <button (click)="switchTabs(2)" class="text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 mr-6 pb-2"
               [class]="modules===2? 'text-blue-500 border-b-2 border-blue-500 font-bold' : 'hover:-translate-y-1 hover:scale-110 transition ease-in-out delay-400 duration-300' ">
               KONSULTA
-          </button>
+          </button> -->
           <!-- <button (click)="switchTabs(3)" class="text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 mr-6 pb-2"
               [class]="modules===3? 'text-blue-500 border-b-2 border-blue-500 font-bold' : 'hover:-translate-y-1 hover:scale-110 transition ease-in-out delay-400 duration-300' ">
               eCLAIMS
           </button> -->
 
-          <button *ngIf="!consult_details?.consult_done" type="button" class="btn-end-visit ml-auto" (click)="toggleModal()">
-            <fa-icon class="mr-1" [icon]="faDoorClosed"></fa-icon>
-            End Visit
-          </button>
+          <div>
+            <button *ngIf="consult_details" type="button" class="btn-end-visit bg-green-500 mr-3 hover:ring-green-400" (click)="openEkas()">
+              <fa-icon class="mr-1" [icon]="faFile"></fa-icon>
+              eKAS
+            </button>
+
+            <button *ngIf="!consult_details?.consult_done" type="button" class="btn-end-visit ml-auto" (click)="toggleModal()">
+              <fa-icon class="mr-1" [icon]="faDoorClosed"></fa-icon>
+              End Visit
+            </button>
+          </div>
         </nav>
       </div>
 
@@ -52,7 +59,11 @@
 
         <div *ngIf="consult_details && open_consult">
           <app-complaint-history [toggle_content]="toggle_content" [consult_details]="consult_details" [have_complaint]="have_complaint" (loadConsult)="loadConsult()"></app-complaint-history>
+          <app-general-survey [toggle_content]="toggle_content" [consult_details]="consult_details"></app-general-survey>
           <app-physical-exam *ngIf="have_complaint" [toggle_content]="toggle_content" [consult_details]="consult_details"></app-physical-exam>
+
+          <app-management *ngIf="have_complaint" [toggle_content]="toggle_content" [consult_details]="consult_details"></app-management>
+
           <app-consult-history [toggle_content]="toggle_content"></app-consult-history>
           <app-initial-dx *ngIf="have_complaint" [toggle_content]="toggle_content" [consult_details]="consult_details"></app-initial-dx>
           <app-final-dx *ngIf="have_complaint && consult_details.physician" [toggle_content]="toggle_content" [consult_details]="consult_details"></app-final-dx>
@@ -99,5 +110,11 @@
   [consult_date]="consult_details?.consult_date"
   [patient_id]="consult_details?.patient.id"
   [pt_group]="'cn'"
- ></app-end-visit>
+></app-end-visit>
+
+<app-ekas *ngIf="show_ekas"
+  (toggleModal)="toggleEkas()"
+  [lab_list]="lab_list"
+  [consult_details]="consult_details"
+></app-ekas>
 

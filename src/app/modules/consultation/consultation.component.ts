@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { faChevronDown, faChevronUp, faCircleNotch, faDoorClosed, faPlus, faPlusSquare, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faChevronDown, faChevronUp, faCircleNotch, faDoorClosed, faFile, faPlus, faPlusSquare, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { catchError, debounceTime, distinctUntilChanged, switchMap, tap, map, filter } from 'rxjs/operators';
 import { concat, Observable, of, Subject } from 'rxjs';
@@ -24,6 +24,7 @@ export class ConsultationComponent implements OnInit {
   faChevronUp = faChevronUp;
   faChevronDown = faChevronDown;
   faDoorClosed = faDoorClosed;
+  faFile = faFile;
 
   is_saving: boolean = false;
   show_item: boolean = true;
@@ -84,8 +85,29 @@ export class ConsultationComponent implements OnInit {
     this.show_end = !this.show_end;
   }
 
+  lab_list: any;
+  show_ekas: boolean = false;
+  openEkas() {
+    let params = {
+      patient_id: this.patient_id,
+      sort: '-request_date',
+      include: 'laboratory'
+    }
+    this.http.get('laboratory/consult-laboratories', {params}).subscribe({
+      next: (data: any) => {
+        this.lab_list = data.data;
+        this.show_ekas = !this.show_ekas;
+      },
+      error: err => console.log(err)
+    })
+  }
+
+  toggleEkas(){
+    this.show_ekas = !this.show_ekas;
+  }
+
   loadVisitHistory(){
-    this.http.get('consultation/records',{params:{patient_id: this.patient_details.id, per_page: 'all', sort: '-consult_date'}}).subscribe({
+    this.http.get('consultation/records',{params:{patient_id: this.patient_id, per_page: 'all', sort: '-consult_date'}}).subscribe({
       next: (data: any) => {
         this.visit_list = data.data;
       },
@@ -102,7 +124,7 @@ export class ConsultationComponent implements OnInit {
     this.http.get('consultation/records', {params}).subscribe({
       next: (data: any) => {
         this.consult_details = data.data[0];
-        // console.log(this.consult_details)
+        console.log(this.consult_details)
         if(this.consult_details.consult_notes.complaint || this.consult_details.consult_notes.complaints.length > 0  || this.consult_details.consult_notes.history) {
           this.have_complaint = true;
         }

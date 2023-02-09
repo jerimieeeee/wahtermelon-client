@@ -1,0 +1,127 @@
+<div id="defaultModal" tabindex="-1" class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 w-full md:inset-0 h-modal md:h-full justify-center items-center flex" aria-modal="true" role="dialog" style="z-index:60">
+  <div class="relative p-4 w-full max-w-4xl h-auto md:h-auto">
+    <!-- Modal content -->
+    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+      <!-- Modal header -->
+      <div class="flex justify-between items-start py-3 px-5 rounded-t border-b bg-blue-500 dark:border-gray-600">
+        <h3 class="mt-2 text-sm font-bold text-white dark:text-white">
+          XML CONTENT
+        </h3>
+      </div>
+      <!-- Modal body -->
+      <div class="overflow-y-auto h-96 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100 flex justify-center">
+        <table *ngIf="show_form" class="w-10/12 border border-slate-300 rounded-lg">
+          <tbody>
+            <tr class="cursor-pointer h-10" (click)="toggleAccordion('enlistment')">
+              <td class="font-bold text-center bg-green-300 w-full">ENLISTMENTS</td>
+            </tr>
+            <tr class="border-b border-slate-200" *ngIf="accordion['enlistment']" >
+              <div *ngFor="let res of xml_to_view.ENLISTMENTS | keyvalue">
+                <div *ngIf="res.value.length > 0">
+                  <div *ngFor="let r of res.value | keyvalue">
+                    <div *ngFor="let item of r.value | keyvalue" class="pb-5 text-sm">
+                      <span class="font-semibold">{{ item.key }}:</span> {{ item.value | json }}
+                    </div>
+                  </div>
+                </div>
+                <div *ngIf="!res.value.length">
+                  <div *ngFor="let r of res.value | keyvalue" class="pb-5 text-sm">
+                    <span class="font-semibold">{{ r.key }}:</span> {{ r.value | json }}
+                  </div>
+                </div>
+              </div>
+            </tr>
+
+            <tr class="cursor-pointer h-10" (click)="toggleAccordion('profiling')">
+              <td class="font-bold text-center bg-blue-300  w-full">PROFILING</td>
+            </tr>
+            <tr class="border-b border-slate-200" *ngIf="accordion['profiling']">
+              <div *ngFor="let res of xml_to_view.PROFILING | keyvalue">
+                <div *ngIf="res.value.length > 0">
+                  <div *ngFor="let r of res.value | keyvalue">
+                    <div *ngFor="let item of r.value | keyvalue" class="pb-5 text-sm">
+                      <span class="font-semibold">{{ item.key }}:</span> {{ item.value | json }}
+                    </div>
+                  </div>
+                </div>
+                <div *ngIf="!res.value.length">
+                  <div *ngFor="let r of res.value | keyvalue" class="pb-5 text-sm">
+                    <span class="font-semibold">{{ r.key }}:</span> {{ r.value | json }}
+                  </div>
+                </div>
+              </div>
+            </tr>
+
+            <tr class="cursor-pointer h-10" (click)="toggleAccordion('soaps')">
+              <td class="font-bold text-center bg-yellow-300  w-full">SOAPS</td>
+            </tr>
+            <tr class="border-b border-slate-200" *ngIf="accordion['soaps']">
+              <div *ngFor="let res of xml_to_view.SOAPS | keyvalue">
+                <div *ngIf="res.value.length > 0">
+                  <div *ngFor="let r of res.value | keyvalue">
+                    <div *ngFor="let item of r.value | keyvalue" class="pb-5 text-sm">
+                      <span class="font-semibold">{{ item.key }}:</span> {{ item.value | json }}
+                    </div>
+                  </div>
+                </div>
+                <div *ngIf="!res.value.length">
+                  <div *ngFor="let r of res.value | keyvalue" class="pb-5 text-sm">
+                    <span class="font-semibold">{{ r.key }}:</span> {{ r.value | json }}
+                  </div>
+                </div>
+              </div>
+            </tr>
+
+            <tr class="cursor-pointer h-10" (click)="toggleAccordion('diagnostic')">
+              <td class="font-bold text-center bg-red-300  w-full">DIAGNOSTIC EXAM RESULTS</td>
+            </tr>
+            <tr class="border-b border-slate-200" *ngIf="accordion['diagnostic']">
+              <div *ngFor="let res of xml_to_view.DIAGNOSTICEXAMRESULTS | keyvalue">
+                <div *ngIf="res.value.length > 0">
+                  <div *ngFor="let r of res.value | keyvalue">
+                    <div *ngFor="let item of r.value | keyvalue" class="pb-5 text-sm">
+                      <span class="font-semibold">{{ item.key }}:</span> {{ item.value | json }}
+                    </div>
+                  </div>
+                </div>
+                <div *ngIf="!res.value.length">
+                  <div *ngFor="let r of res.value | keyvalue" class="pb-5 text-sm">
+                    <span class="font-semibold">{{ r.key }}:</span> {{ r.value | json }}
+                  </div>
+                </div>
+              </div>
+            </tr>
+
+            <tr class="cursor-pointer h-10" (click)="toggleAccordion('medicines')">
+              <td class="font-bold text-center bg-orange-300  w-full">MEDICINE</td>
+            </tr>
+            <tr class="border-b border-slate-200" *ngIf="accordion['medicines']" >
+              <div *ngFor="let res of xml_to_view.MEDICINES | keyvalue">
+                <div *ngIf="res.value.length > 0">
+                  <div *ngFor="let r of res.value | keyvalue">
+                    <div *ngFor="let item of r.value | keyvalue" class="pb-5 text-sm">
+                      <span class="font-semibold">{{ item.key }}:</span> {{ item.value | json }}
+                    </div>
+                  </div>
+                </div>
+                <div *ngIf="!res.value.length">
+                  <div *ngFor="let r of res.value | keyvalue" class="pb-5 text-sm">
+                    <span class="font-semibold">{{ r.key }}:</span> {{ r.value | json }}
+                  </div>
+                </div>
+              </div>
+            </tr>
+
+
+          </tbody>
+        </table>
+      </div>
+      <!-- Modal footer  -->
+      <div class="flex justify-end py-4 px-5 space-x-4 rounded-b border-t border-gray-200 dark:border-gray-600">
+        <button type="button" class="btn-save bg-gray-400 px-10" (click)="closeModal()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="opacity-50 fixed inset-0 z-50 bg-black"></div>

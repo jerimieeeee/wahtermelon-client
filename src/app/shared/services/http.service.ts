@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 import { Subject } from 'rxjs';
 
 @Injectable({
@@ -17,10 +18,15 @@ export class HttpService {
 
   constructor(
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private cookieService: CookieService
   ) { }
 
   user_json: any;
+
+  downloadXML(url){
+    return `${this.baseUrl}`+url;
+  }
 
   get(loc, data?) {
     return this.http.get(`${this.baseUrl}` + loc, data ? data : '')
@@ -47,16 +53,17 @@ export class HttpService {
   }
 
   logout() {
-    return this.http.post(`${this.baseUrl}`+'logout', localStorage.getItem('access_token'))
+    return this.http.get(`${this.baseUrl}`+'logout')
   }
 
   saveUserToLocalStorage(user) {
+    console.log(user)
     localStorage.setItem('user', JSON.stringify(user))
   }
 
   removeLocalStorageItem(){
     localStorage.removeItem('user');
-    localStorage.removeItem('access_token');
+    this.cookieService.delete('access_token');
     return 'Items removed';
   }
 
@@ -164,5 +171,14 @@ export class HttpService {
 
   getPatientInfo(){
     return this.patient_info;
+  }
+
+  philhealth_info: any;
+  setPhilhealhtInfo(data) {
+    this.philhealth_info = data;
+  }
+
+  getPhilhealhtInfo(){
+    return this.philhealth_info;
   }
 }

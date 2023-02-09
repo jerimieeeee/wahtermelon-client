@@ -51,7 +51,7 @@ export class PatientRecordComponent implements OnInit, OnChanges {
     },
     {
       code: 'peripheral_pulses',
-      desc: 'Palpation of perpheral pulses'
+      desc: 'Palpation of peripheral pulses'
     },
     {
       code: 'abdomen',
@@ -88,6 +88,7 @@ export class PatientRecordComponent implements OnInit, OnChanges {
       let val: any = value;
       this.http.get('libraries/'+val.url).subscribe({
         next: (data: any) => {
+          // console.log(data)
           this[val.var_name] = data.data;
 
           // if(this.libraries.length-1 === index) this.getRecord();
@@ -98,19 +99,21 @@ export class PatientRecordComponent implements OnInit, OnChanges {
   }
 
   getRecord(){
-    this.ncd_record = this.consult_details.patientNcdRecord;
+    if(this.consult_details.patientNcdRecord){
 
-    console.log(this.ncd_record)
-    if(this.consult_details && Object.keys(this.consult_details.ncdRecordTargetOrgan).length > 0){
-      this.patient_target_organ = this.loadIndexSelected(this.consult_details.ncdRecordTargetOrgan, 'target_organ_code')
-    }
+      this.ncd_record = this.consult_details.patientNcdRecord;
 
-    if(this.consult_details && Object.keys(this.consult_details.ncdRecordDiagnosis).length > 0){
-      this.patient_diagnosis = this.loadIndexSelected(this.consult_details.ncdRecordDiagnosis, 'diagnosis_code')
-    }
+      if(this.consult_details && Object.keys(this.consult_details.ncdRecordTargetOrgan).length > 0){
+        this.patient_target_organ = this.loadIndexSelected(this.consult_details.ncdRecordTargetOrgan, 'target_organ_code')
+      }
 
-    if(this.consult_details && Object.keys(this.consult_details.ncdRecordCounselling).length > 0){
-      this.patient_counseling = this.loadIndexSelected(this.consult_details.ncdRecordCounselling, 'counselling_code')
+      if(this.consult_details && Object.keys(this.consult_details.ncdRecordDiagnosis).length > 0){
+        this.patient_diagnosis = this.loadIndexSelected(this.consult_details.ncdRecordDiagnosis, 'diagnosis_code')
+      }
+
+      if(this.consult_details && Object.keys(this.consult_details.ncdRecordCounselling).length > 0){
+        this.patient_counseling = this.loadIndexSelected(this.consult_details.ncdRecordCounselling, 'counselling_code')
+      }
     }
   }
 
@@ -123,7 +126,6 @@ export class PatientRecordComponent implements OnInit, OnChanges {
       });
     }
 
-    console.log(index_code)
     return index_code;
   }
 
@@ -139,10 +141,10 @@ export class PatientRecordComponent implements OnInit, OnChanges {
     this.ncd_record['counselling_code'] = this.getIndexVal(this.patient_counseling);
     this.ncd_record['target_organ_code'] = this.getIndexVal(this.patient_target_organ);
 
-    console.log(this.ncd_record);
     this.http.post('non-communicable-disease/patient-record',this.ncd_record).subscribe({
       next: (data: any) => {
         console.log(data);
+        this.toastr.success('Successfully recorded!','NCD Record')
       },
       error: err => console.log(err)
     })

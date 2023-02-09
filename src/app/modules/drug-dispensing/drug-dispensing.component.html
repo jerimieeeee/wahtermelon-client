@@ -34,7 +34,9 @@
             </td>
             <td scope="row" class="py-4 px-3  text-gray-900">
               {{ pres.dosage_quantity }} {{ pres.unit_of_measurement.desc }} {{ pres.regimen.desc }}
-              {{ pres.duration_intake }} {{ pres.frequency.desc }}
+              {{ pres.duration_intake }} {{ pres.frequency.desc }} <br /><br />
+
+              Instruction Qty: {{ pres.instruction_quantity }}
             </td>
             <td scope="row" class="py-4 px-3  text-gray-900">
               {{ pres.prescription_date | date : 'MM/dd/yyyy'}}
@@ -93,7 +95,9 @@
             </td>
             <td scope="row" class="py-4 px-3 text-gray-900">
               {{ dis.prescription.dosage_quantity }} {{ dis.prescription.unit_of_measurement.desc }} {{ dis.prescription.regimen.desc }}
-              {{ dis.prescription.duration_intake }} {{ dis.prescription.frequency.desc }}
+              {{ dis.prescription.duration_intake }} {{ dis.prescription.frequency.desc }} <br /><br />
+
+              Instruction Qty: {{ dis.prescription.instruction_quantity }}
             </td>
             <td scope="row" class="py-4 px-3 text-gray-900">
               {{ dis.prescription.prescription_date | date : 'MM/dd/yyyy'}}

@@ -1,0 +1,48 @@
+<div id="defaultModal" tabindex="-1" class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 w-full md:inset-0 h-modal md:h-full justify-center items-center flex" aria-modal="true" role="dialog" style="z-index:60">
+  <div class="relative p-4 w-full max-w-3xl h-auto md:h-auto">
+    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+      <div class="flex justify-between items-start py-3 px-5 rounded-t border-b bg-blue-500 dark:border-gray-600">
+        <h3 class="mt-2 text-sm font-bold text-white dark:text-white">
+            RETURN
+        </h3>
+      </div>
+
+      <div *ngIf="show_form" class="overflow-y-auto h-96 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
+        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+          <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+              <th  scope="col" class="py-3 px-6">
+                <span *ngIf="!return_value.message">Errors</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngIf="is_error_array === true">
+              <td class="py-4 px-6">
+                <div *ngFor="let val of return_value?.errors | keyvalue" class="grid grid-cols-1">
+                  {{ val.value }}
+                </div>
+              </td>
+            </tr>
+            <tr *ngIf="is_error_array === false" class="bg-white border-b">
+              <td *ngIf="return_value.errors">
+                {{ return_value.errors }}
+              </td>
+              <td *ngIf="return_value.message">
+                <div class="flex justify-center mt-20 text-lg font-semibold">
+                  {{ return_value.message }}
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="flex justify-end py-4 px-5 space-x-4 rounded-b border-t border-gray-200 dark:border-gray-600">
+        <button  type="button" class="btn-save bg-gray-400 px-10" (click)="closeModal()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="opacity-50 fixed inset-0 z-50 bg-black"></div>

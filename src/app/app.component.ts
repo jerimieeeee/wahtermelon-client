@@ -8,6 +8,7 @@ import { filter, tap } from 'rxjs/operators';
 import { openCloseTrigger } from './modules/patient-registration/declarations/animation';
 import { faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons';
 import { AuthService } from './shared/services/auth/auth.service';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-root',
@@ -37,14 +38,8 @@ export class AppComponent implements OnInit{
     private formBuilder: FormBuilder,
     private router: Router,
     private location: Location,
-    private auth: AuthService
-  ) {
-
-  }
-
- /*  showPass(){
-    this.show_pass = !this
-  } */
+    private cookieService: CookieService
+  ) { }
 
   loginForm: FormGroup = new FormGroup({
     email: new FormControl<string| null>(''),
@@ -57,15 +52,12 @@ export class AppComponent implements OnInit{
     if(this.loginForm.valid){
       this.http.login(this.loginForm.value).subscribe({
         next: (data: any) => {
-          localStorage.setItem('access_token', data.access_token);
           this.http.saveUserToLocalStorage(data.user);
+          this.cookieService.set('access_token', data.access_token);
 
-          this.is_saving = false;
-          this.router.navigate(['/']);
-          this.checkAuth();
+          window.location.reload();
         },
-        error: err => { console.log(err); this.auth_error = true; this.is_saving = false; this.auth_error_message = err.error.message },
-        complete: () => { }
+        error: err => { console.log(err); this.auth_error = true; this.is_saving = false; this.auth_error_message = err.error.message }
       });
     }
   }
@@ -85,7 +77,7 @@ export class AppComponent implements OnInit{
   checkAuth(){
     const url = this.location.path();
 
-    if(localStorage.getItem('access_token')){
+    if(this.cookieService.get('access_token')){
       this.isAuthenticated = true;
     } else {
       this.verify_url = this.location.path().split(';');
@@ -93,7 +85,7 @@ export class AppComponent implements OnInit{
     }
 
     if(this.isAuthenticated == false) {
-      console.log(this.verify_url)
+      // console.log(this.verify_url)
       if(url == '/user-registration' || url == '/forgot-password'){
         this.showLogin = false;
       } else if (this.verify_url[0] == '/verify') {
@@ -121,11 +113,11 @@ export class AppComponent implements OnInit{
   show_activated: boolean = false;
 
   activateUser(params){
-    console.log(params)
+    // console.log(params)
     this.http.get('email/verify/'+params).subscribe({
       next: (data:any) => {
         this.show_activated = true;
-        console.log(data)
+        // console.log(data)
       },
       error: err => console.log(err)
     })
@@ -151,8 +143,5 @@ export class AppComponent implements OnInit{
       password: ['', [Validators.required, Validators.minLength(2)]],
     });
   }
-}
-function swithMap(arg0: () => any): import("rxjs").OperatorFunction<Object, unknown> {
-  throw new Error('Function not implemented.');
 }
 

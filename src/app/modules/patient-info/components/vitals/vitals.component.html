@@ -123,12 +123,22 @@
         </span>
       </div>
 
-      <div class="flex pl-3 pb-5 justify-between items-center">
+      <div class="flex pl-3 justify-between items-center">
         <span class="block font-medium text-xs">
           Pulse Rate
         </span>
         <span class="block text-xs">
           {{ (latest_vitals?.patient_pulse_rate ? (latest_vitals?.patient_pulse_rate | number: '1.0-0') : '-') }}
+        </span>
+      </div>
+
+      <div class="flex pl-3 pb-5 justify-between items-center">
+        <span class="block font-medium text-xs">
+          Visual Acuity (Right | Left)
+        </span>
+        <span class="block text-xs">
+          {{ (latest_vitals?.patient_right_vision_acuity ? (latest_vitals?.patient_right_vision_acuity | number: '1.0-0') : '-') }} |
+          {{ (latest_vitals?.patient_left_vision_acuity ? (latest_vitals?.patient_left_vision_acuity | number: '1.0-0') : '-') }}
         </span>
       </div>
 

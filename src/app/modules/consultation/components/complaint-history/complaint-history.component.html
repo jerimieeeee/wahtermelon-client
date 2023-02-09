@@ -1,4 +1,4 @@
-<div class="grid grid-cols-10">
+<div class="grid grid-cols-10 mb-5">
   <div class="col-span-2 pt-2 pr-5 font-semibold">
     Chief Complaint and History of Current Illness
   </div>
@@ -29,6 +29,14 @@
             </ng-select>
           </div>
         </div>
+
+        <!-- <div class="grid grid-cols-1 px-4 pb-4">
+          <label for="complaint_notes" class="font-semibold pl-1">Complaints</label>
+          <div class="">
+
+          </div>
+        </div> -->
+
         <div class="grid grid-cols-1 px-4 pb-4">
           <label for="complaint_notes" class="font-semibold pl-1">Complaint notes</label>
           <textarea [disabled]="consult_done" rows="3" id="complaint_notes" placeholder="Complaint Notes" [(ngModel)]="consult_notes.complaint" class="placeholder-slate-400 w-full rounded-md border-gray-300 bg-gray-50"></textarea>

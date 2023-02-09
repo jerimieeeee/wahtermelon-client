@@ -1,115 +1,52 @@
-<!-- <div class="grid grid-cols-11 mt-4 gap-4"> -->
-  <div class="w-full">
-    <!-- <div *ngIf="showChart" class="grid grid-cols-1 w-full">
-      <div class="w-full flex justify-end">
-        <select id="selected_chart"  [(ngModel)]="selected_chart" class="input w-44" (change)="loadChart()">
-          <option value="bp_chart">Blood Pressure</option>
-          <option value="weight_chart">Weight</option>
-          <option value="bmi_chart">BMI</option>
-          <option value="bmi_weight_chart">BMI/Weight</option>
-          <option value="bp_weight_chart">BP/Weight</option>
-          <option value="all_chart">All</option>
-        </select>
+<div class="w-full">
+  <div class="block shadow px-2 py-2 mt-4 rounded-xl text-gray-600 border border-slate-100">
+    <div class="grid grid-cols-3 border-b-2">
+      <div class="col-span-1">Medical Journal</div>
+      <div class="col-auto"></div>
+    </div>
+
+    <div class="pt-15 mt-15" *ngIf="visit_list?.length === 0">
+      <div class="text-center items-center mb-3 mt-15 italic" >
+        No record to show
       </div>
+    </div>
 
-      <div class="cols-span-1 flex w-full mt-3">
-        <div *ngIf="show_bp" [ngClass]="{'w-1/2' : selected_chart === 'bp_weight_chart', 'w-full' : selected_chart === 'bp_chart', 'w-1/3' : selected_chart === 'all_chart' }" class="w-full shadow px-2 mr-2 py-4 rounded-xl text-gray-600 border border-slate-100">
-          <div id="bp-chart">
-            <apx-chart
-              [series]="chartOptions?.series"
-              [chart]="chartOptions?.chart"
-              [xaxis]="chartOptions?.xaxis"
-              [stroke]="chartOptions?.stroke"
-              [tooltip]="chartOptions?.tooltip"
-              [dataLabels]="chartOptions?.dataLabels"
-              [title]="chartOptions?.title"
-            ></apx-chart>
-          </div>
-        </div>
-
-        <div *ngIf="show_weight" [ngClass]="{'w-1/2' : (selected_chart === 'bp_weight_chart' || selected_chart === 'bmi_weight_chart'), 'w-full' : selected_chart === 'weight_chart', 'w-1/3' : selected_chart === 'all_chart' }" class="w-full  shadow px-2 ml-2  py-4 rounded-xl text-gray-600 border border-slate-100">
-          <div id="weight-chart">
-            <apx-chart
-              [series]="WeightChart?.series"
-              [chart]="WeightChart?.chart"
-              [xaxis]="WeightChart?.xaxis"
-              [stroke]="WeightChart?.stroke"
-              [tooltip]="WeightChart?.tooltip"
-              [dataLabels]="WeightChart?.dataLabels"
-              [title]="WeightChart?.title"
-            ></apx-chart>
-          </div>
-        </div>
-
-        <div *ngIf="show_bmi" [ngClass]="{'w-1/2' : selected_chart === 'bmi_weight_chart', 'w-full' : selected_chart === 'bmi_chart', 'w-1/3' : selected_chart === 'all_chart' }" class="w-full  shadow px-2 ml-2  py-4 rounded-xl text-gray-600 border border-slate-100">
-          <div id="weight-chart">
-            <apx-chart
-              [series]="BmiChart?.series"
-              [chart]="BmiChart?.chart"
-              [xaxis]="BmiChart?.xaxis"
-              [stroke]="BmiChart?.stroke"
-              [tooltip]="BmiChart?.tooltip"
-              [dataLabels]="BmiChart?.dataLabels"
-              [title]="BmiChart?.title"
-            ></apx-chart>
-          </div>
-        </div>
-
-      </div>
-    </div> -->
-
-    <div class="block shadow px-2 py-2 mt-4 rounded-xl text-gray-600 border border-slate-100">
-      <div class="grid grid-cols-3 border-b-2">
-        <div class="col-span-1">Medical Journal</div>
-        <div class="col-auto"></div>
-      </div>
-
-      <div class="pt-15 mt-15" *ngIf="visit_list?.length === 0">
-        <div class="text-center items-center mb-3 mt-15 italic" >
-          No record to show
-        </div>
-      </div>
-
-      <div *ngIf="visit_list?.length >= 1" class="flex">
-        <div [@halfFull]="show_details ? 'half' : 'full'" class="mr-2 flex-auto">
-          <div class="last:border-0 border-b border-slate-200 pb-2" *ngFor="let visit of visit_list" >
-            <div class="grid grid-cols-8 gap-2 mt-2">
-              <div class="col-span-2 text-sm font-semibold h-full">
-                {{ visit?.consult_date | date:'MM/dd/yyyy'}}
+    <div *ngIf="visit_list?.length >= 1" class="flex">
+      <div [@halfFull]="show_details ? 'half' : 'full'" class="mr-2 flex-auto">
+        <div class="last:border-0 border-b border-slate-200 pb-2" *ngFor="let visit of visit_list" >
+          <div class="grid grid-cols-8 gap-2 mt-2">
+            <div class="col-span-2 text-sm font-semibold h-full">
+              {{ visit?.consult_date | date:'MM/dd/yyyy'}}
+            </div>
+            <div class="col-span-6 bg-blue-50 hover:bg-blue-200 hover:cursor-pointer p-2 text-sm col-start-3 grid grid-cols-12" [ngClass]="{'bg-green-200 hover:bg-green-300' : visit?.consult_done === false}" (click)="showConsult(visit)">
+              <div class="col-span-11">
+                <span class="text-cyan-700 text-base font-semibold">{{ getVisitType(visit?.pt_group) }}</span><br />
+                Attended by: <span *ngIf="visit?.user">{{ visit?.user?.last_name+', ' }} {{ visit?.user?.first_name }} {{ visit?.user?.middle_name === 'NA' ? ' ' : visit?.user?.middle_name }} {{ visit?.user?.suffix_name === 'NA' ? ' ' : visit?.user?.suffix_name }}</span><br />
+                Referred to: <span *ngIf="visit?.physician">{{ visit?.physician?.last_name+', ' }} {{ visit?.physician?.first_name }} {{ visit?.physician?.middle_name === 'NA' ? ' ' : visit?.physician?.middle_name }} {{ visit?.physician?.suffix_name === 'NA' ? ' ' : visit?.physician?.suffix_name }}</span>
               </div>
-              <div class="col-span-6 bg-blue-50 hover:bg-blue-200 hover:cursor-pointer p-2 text-sm col-start-3 grid grid-cols-12" [ngClass]="{'bg-green-200 hover:bg-green-300' : visit?.consult_done === false}" (click)="showConsult(visit)">
-                <div class="col-span-11">
-                  <span class="text-cyan-700 text-base font-semibold">{{ getVisitType(visit?.pt_group) }}</span><br />
-                  Attended by: <span *ngIf="visit?.user">{{ visit?.user?.last_name+', ' }} {{ visit?.user?.first_name }} {{ visit?.user?.middle_name === 'NA' ? ' ' : visit?.user?.middle_name }} {{ visit?.user?.suffix_name === 'NA' ? ' ' : visit?.user?.suffix_name }}</span><br />
-                  Referred to: <span *ngIf="visit?.physician">{{ visit?.physician?.last_name+', ' }} {{ visit?.physician?.first_name }} {{ visit?.physician?.middle_name === 'NA' ? ' ' : visit?.physician?.middle_name }} {{ visit?.physician?.suffix_name === 'NA' ? ' ' : visit?.physician?.suffix_name }}</span>
-                </div>
 
-                <span class="col-span-1 flex justify-center my-auto" *ngIf="show_details && (visit.id === selected_id)">
-                  <fa-icon [icon]="faFolderOpen" class="text-blue-500 text-lg" [ngClass]="{'text-green-600' : visit.consult_done === false}"></fa-icon>
-                </span>
+              <span class="col-span-1 flex justify-center my-auto" *ngIf="show_details && (visit.id === selected_id)">
+                <fa-icon [icon]="faFolderOpen" class="text-blue-500 text-lg" [ngClass]="{'text-green-600' : visit.consult_done === false}"></fa-icon>
+              </span>
 
-                <span class="col-span-1 flex justify-center my-auto text-blue-50 hover:text-blue-500" *ngIf="visit.consult_done === true && (visit.id !== selected_id)" >
-                  <fa-icon [icon]="faFolder" class=" text-lg"></fa-icon>
-                </span>
+              <span class="col-span-1 flex justify-center my-auto text-blue-50 hover:text-blue-500" *ngIf="visit.consult_done === true && (visit.id !== selected_id)" >
+                <fa-icon [icon]="faFolder" class=" text-lg"></fa-icon>
+              </span>
 
-                <span class="col-span-1 flex justify-center my-auto text-green-600 hover:text-green-700" *ngIf="visit.consult_done === false && (visit.id !== selected_id)" >
-                  <fa-icon [icon]="faStethoscope" class=" text-lg"></fa-icon>
-                </span>
-              </div>
+              <span class="col-span-1 flex justify-center my-auto text-green-600 hover:text-green-700" *ngIf="visit.consult_done === false && (visit.id !== selected_id)" >
+                <fa-icon [icon]="faStethoscope" class=" text-lg"></fa-icon>
+              </span>
             </div>
           </div>
         </div>
+      </div>
 
-        <div [@myInsertRemoveTrigger] *ngIf="show_details" class="my-2 w-1/2">
-          <app-visit-details [selected_visit]="selected_visit" [latest_vitals]="latest_vitals"></app-visit-details>
-        </div>
+      <div [@myInsertRemoveTrigger] *ngIf="show_details" class="my-2 w-1/2">
+        <app-visit-details [selected_visit]="selected_visit" [latest_vitals]="latest_vitals"></app-visit-details>
       </div>
     </div>
   </div>
+</div>
 
-  <!-- <div class="col-span-3">
-    <app-patient-info (patientInfo)="patientInfo($event)" (patientVitals)="patientVitals($event)"></app-patient-info>
-  </div>
-</div> -->
 
 

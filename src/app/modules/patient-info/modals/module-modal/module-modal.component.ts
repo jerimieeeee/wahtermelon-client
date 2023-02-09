@@ -120,7 +120,7 @@ export class ModuleModalComponent implements OnInit {
   isATCValid(){
     this.is_checking_atc = true;
     let params = {
-      pPin: this.philhealth_details.philhealth_id,
+      pPIN: this.philhealth_details.philhealth_id,
       pATC: this.pATC,
       pEffectivityDate: formatDate(this.pATC_date, 'MM/dd/yyyy', 'en')
     }
@@ -183,6 +183,9 @@ export class ModuleModalComponent implements OnInit {
 
   onCreateNew(selected_module){
     this.is_loading = true;
+    console.log(this.is_atc_valid)
+    console.log(this.pATC)
+    console.log(this.pATC)
     let user_id = this.http.getUserID();
     let new_visit = {
       patient_id: this.patient_info.id,
@@ -190,7 +193,7 @@ export class ModuleModalComponent implements OnInit {
       consult_date: this.consult_date+' '+this.consult_time+':00',
       consult_done: 0,
       pt_group: selected_module.group,
-      authorization_transaction_code: this.is_atc_valid ? (this.is_walk_in === false ? (this.pATC || this.pATC !== '' ? this.pATC : null) : 'WALKEDIN') : null,
+      authorization_transaction_code: this.is_atc_valid ? (!this.is_walk_in ? (this.pATC || this.pATC !== '' ? this.pATC : 'WALKEDIN') : 'WALKEDIN') : 'WALKEDIN',
       walkedin_status: this.is_atc_valid ? false : true
     };
 

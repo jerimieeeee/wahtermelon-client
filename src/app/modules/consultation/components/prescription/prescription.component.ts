@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, OnChanges, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
-import { faAdd, faChevronCircleDown, faChevronCircleUp, faEdit, faSave, faSpinner, faTrash, faPrescriptionBottleMedical } from '@fortawesome/free-solid-svg-icons';
+import { faAdd, faChevronCircleDown, faChevronCircleUp, faEdit, faSave, faSpinner, faTrash, faPrescriptionBottleMedical, faReceipt } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -30,6 +30,7 @@ export class PrescriptionComponent implements OnInit, OnChanges {
   faEdit = faEdit;
   faTrash = faTrash;
   faPrescriptionBottleMedical = faPrescriptionBottleMedical;
+  faReceipt = faReceipt;
 
   selected_drug: any;
   prescriptions: any;
@@ -75,7 +76,7 @@ export class PrescriptionComponent implements OnInit, OnChanges {
   }
 
   openAddForm(drug){
-    // console.log(drug)
+    console.log(drug)
     this.selected_drug = drug;
     this.toggleForm();
   }
@@ -102,9 +103,9 @@ export class PrescriptionComponent implements OnInit, OnChanges {
     }
   }
 
-  resetForm(){
+  /* resetForm(){
     this.selected_drug = null;
-  }
+  } */
 
   ngOnChanges(changes){
     this.show_content = this.toggle_content;
@@ -151,6 +152,11 @@ export class PrescriptionComponent implements OnInit, OnChanges {
     });
   }
 
+  show_epress: boolean = false;
+  toggleModal(){
+    this.show_epress = !this.show_epress;
+  }
+
   toggleList(){
     this.show_list = !this.show_list;
   }
@@ -160,11 +166,10 @@ export class PrescriptionComponent implements OnInit, OnChanges {
   }
 
   loadPrescriptions(){
-    this.selected_drug = null;
+    // this.selected_drug = null;
     let params = {
       sort: '-prescription_date',
-      consult_id: this.consult_details.id,
-      status: 'dispensing'
+      consult_id: this.consult_details.id
     };
 
     this.http.get('medicine/prescriptions',{params}).subscribe({

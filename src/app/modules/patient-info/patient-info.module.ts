@@ -36,11 +36,13 @@ import { VaccineModalComponent } from './modals/vaccine-modal/vaccine-modal.comp
 import { VitalsListModalComponent } from './modals/vitals-list-modal/vitals-list-modal.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NgxMaskModule } from 'ngx-mask';
 import { WebcamModule } from 'ngx-webcam';
 import { GraphComponent } from './components/graph/graph.component';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { PatientItrModule } from '../patient-itr/patient-itr.module';
+import { PreghistComponent } from './components/preghist/preghist.component';
+import { PreghistModalComponent } from './modals/preghist-modal/preghist-modal.component';
+import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 
 
 @NgModule({
@@ -77,18 +79,22 @@ import { PatientItrModule } from '../patient-itr/patient-itr.module';
     PregnancyModalComponent,
     SurgicalModalComponent,
     SurgicalActionModalComponent,
-    GraphComponent
+    GraphComponent,
+    PreghistComponent,
+    PreghistModalComponent
   ],
   imports: [
     CommonModule,
     PatientInfoRoutingModule,
     FontAwesomeModule,
     FormsModule,
-    NgxMaskModule.forRoot(),
     WebcamModule,
     ReactiveFormsModule,
     NgApexchartsModule,
-    PatientItrModule
-  ]
+    PatientItrModule,
+    NgxMaskDirective,
+    NgxMaskPipe
+  ],
+  providers: [provideNgxMask()]
 })
 export class PatientInfoModule { }
