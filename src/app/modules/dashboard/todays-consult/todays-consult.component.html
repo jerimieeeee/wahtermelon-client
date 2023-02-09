@@ -16,20 +16,19 @@
 
     <div class="pt-3" *ngIf="today_consults?.length >= 1">
       <div class="flex justify-between items-center mb-3  pb-3 border-b border-gray-200" *ngFor="let profile of today_consults"> <!-- added pb-3 -->
-        <div class="flex">
-          <a class="flex justify-center mx-auto cursor-pointer" (click)="openItr(profile?.patient.id)">
-
-            <div (click)="openItr(profile?.patient.id)" class="inline-flex overflow-hidden relative justify-center items-center w-16 h-16 bg-gray-100 rounded-full dark:bg-gray-600">
-              <span class="font-medium text-gray-600 dark:text-gray-300 text-sm xl:text-lg">{{ getInitials(profile?.patient?.first_name+' '+profile?.patient?.last_name) }}</span>
+        <div class="flex cursor-pointer w-2/5 hover:opacity-75" (click)="openItr(profile?.patient.id,'itr')">
+          <a class="justify-center mx-auto">
+            <div class="inline-flex overflow-hidden relative justify-center items-center w-16 h-16 bg-gray-200 rounded-full dark:bg-gray-600">
+              <span class="font-medium text-gray-600 text-sm xl:text-lg">{{ getInitials(profile?.patient?.first_name+' '+profile?.patient?.last_name) }}</span>
             </div>
           </a>
 
-          <div class="flex justify-center md:block leading-tight mx-2 my-1">
-            <span class="block text-blue-500 font-medium my-0 py-0 cursor-pointer text-sm" (click)="openItr(profile?.patient.id,'itr')">
+          <div class="flex justify-center text-blue-500 md:block leading-tight mx-2 my-1 w-full hover:bg-blue-500 hover:text-white p-1 rounded-md">
+            <span class="w-full block font-medium my-0 py-0 text-sm">
               {{ profile?.patient?.last_name }}, {{ profile?.patient?.first_name }} {{ profile?.patient?.middle_name === 'NA' ? '' : profile?.patient?.middle_name  }} {{ profile?.patient?.suffix_name === 'NA' ? '' : profile?.patient?.suffix_name }}
             </span>
 
-            <span class="block text-xs">
+            <span class="w-full block text-xs">
               -<!-- {{ profile?.address }} -->
             </span>
 
@@ -42,23 +41,24 @@
           </div>
         </div>
 
-        <!-- <div class="flex"> -->
-          <div class="grid grid-cols-12 text-left w-3/5">
-            <div class="col-span-6 text-gray-700  hover:bg-indigo-500 hover:text-white hover:cursor-pointer p-3 rounded-md text-[.85em]" (click)="openItr(profile?.patient.id, profile?.pt_group, profile?.id)">
-              <button type="button" class="justify-center" >
-                <!-- <fa-icon class="mx-0 my-0" [icon]="faFolderOpen"></fa-icon> -->
-                <span class="hidden xl:inline-block">{{ getVisitType(profile?.pt_group) }}</span>
-                <span class="xl:hidden uppercase text-xs">{{ profile?.pt_group }}</span>
-              </button>
-            </div>
-            <div class="col-span-3 px-5">
-              -<!-- {{ profile?.pt_group }} --> <!-- location -->
-            </div>
-            <div class="col-span-3 px-5 text-[.8em]">
-              {{ getDataDiff(profile?.consult_date) }} <!-- duration -->
-            </div>
+        <div class="grid grid-cols-12 text-left w-3/5">
+          <div class="col-span-6 text-gray-700  hover:bg-green-500 hover:text-white hover:cursor-pointer p-3 rounded-md text-[.85em]" (click)="openItr(profile?.patient.id, profile?.pt_group, profile?.id)">
+            <button type="button" class=" flex justify-between" >
+              <!-- <fa-icon class="mx-0 my-0" [icon]="faFolderOpen"></fa-icon> -->
+              <span class="hidden xl:inline-block">{{ getVisitType(profile?.pt_group) }}</span>
+              <span class="xl:hidden uppercase text-xs">{{ profile?.pt_group }}</span>
+
+              <!-- <div class="grow"></div>
+              <fa-icon class="mx-0 my-0" [icon]="faFolderOpen"></fa-icon> -->
+            </button>
           </div>
-        <!-- </div> -->
+          <div class="col-span-3 px-5">
+            -<!-- {{ profile?.pt_group }} --> <!-- location -->
+          </div>
+          <div class="col-span-3 px-5 text-[.8em]">
+            {{ getDataDiff(profile?.consult_date) }} <!-- duration -->
+          </div>
+        </div>
       </div>
     </div>
 
