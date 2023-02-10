@@ -17,13 +17,15 @@ import { SharedComponentsModule } from 'app/shared/shared-components/shared-comp
 import { NgSelectModule } from '@ng-select/ng-select';
 
 
+
 @NgModule({
   declarations: [
     ChildcareComponent,
     FirstVisitComponent,
     ServicesComponent,
     VaccineInfoComponent,
-    BreastfeedingComponent],
+    BreastfeedingComponent,
+  ],
   imports: [
     CommonModule,
     ChildcareRoutingModule,

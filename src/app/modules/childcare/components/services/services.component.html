@@ -147,6 +147,18 @@
                       name="" id="" type="text" placeholder="Enter Number" class="col-span-1 col-start-2 mt-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                   </div>
 
+                  <div *ngIf="serviceForm.service_status['MNP'] !== '-' && serviceForm.service_status['MNP'] !== '' && serviceForm.service_status['MNP'] !== undefined && item.service_id == 'MNP'" class="col-start-2">
+                    <label>Quantity</label>
+                    <input  [(ngModel)]="serviceForm.quantity[item.service_id]"
+                      name="{{ 'quantity.'+item.service_id }}" id="{{ 'quantity.'+item.service_id }}" type="text" placeholder="Enter Number" class="col-span-1 col-start-2 mt-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    </div>
+
+                    <div *ngIf="serviceForm.service_status['MNP2'] !== '-' && serviceForm.service_status['MNP2'] !== '' && serviceForm.service_status['MNP2'] !== undefined && item.service_id == 'MNP2'" class="col-start-2">
+                      <label>Quantity</label>
+                      <input  [(ngModel)]="serviceForm.quantity[item.service_id]"
+                        name="{{ 'quantity.'+item.service_id }}" id="{{ 'quantity.'+item.service_id }}" type="text" placeholder="Enter Number" class="col-span-1 col-start-2 mt-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                      </div>
+
                 <!-- </div> -->
               </div>
               
