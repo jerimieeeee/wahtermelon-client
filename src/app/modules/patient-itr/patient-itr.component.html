@@ -18,11 +18,11 @@
             <div class="col-span-2 text-sm font-semibold h-full">
               {{ visit?.consult_date | date:'MM/dd/yyyy'}}
             </div>
-            <div class="col-span-6 bg-blue-50 hover:bg-blue-200 hover:cursor-pointer p-2 text-sm col-start-3 grid grid-cols-12" [ngClass]="{'bg-green-200 hover:bg-green-300' : visit?.consult_done === false}" (click)="showConsult(visit)">
+            <div class="col-span-6 bg-blue-50 hover:bg-blue-200 hover:cursor-pointer p-1 pl-5 text-sm col-start-3 grid grid-cols-12 rounded-l-xl" [ngClass]="{'bg-green-200 hover:bg-green-300' : visit?.consult_done === false}" (click)="showConsult(visit)">
               <div class="col-span-11">
-                <span class="text-cyan-700 text-base font-semibold">{{ getVisitType(visit?.pt_group) }}</span><br />
-                Attended by: <span *ngIf="visit?.user">{{ visit?.user?.last_name+', ' }} {{ visit?.user?.first_name }} {{ visit?.user?.middle_name === 'NA' ? ' ' : visit?.user?.middle_name }} {{ visit?.user?.suffix_name === 'NA' ? ' ' : visit?.user?.suffix_name }}</span><br />
-                Referred to: <span *ngIf="visit?.physician">{{ visit?.physician?.last_name+', ' }} {{ visit?.physician?.first_name }} {{ visit?.physician?.middle_name === 'NA' ? ' ' : visit?.physician?.middle_name }} {{ visit?.physician?.suffix_name === 'NA' ? ' ' : visit?.physician?.suffix_name }}</span>
+                <span class="text-cyan-800 font-semibold">{{ getVisitType(visit?.pt_group) }}</span><br />
+                <span class="text-[.8em] ">Attended by: <span class="font-semibold" *ngIf="visit?.user">{{ visit?.user?.last_name+', ' }} {{ visit?.user?.first_name }} {{ visit?.user?.middle_name === 'NA' ? ' ' : visit?.user?.middle_name }} {{ visit?.user?.suffix_name === 'NA' ? ' ' : visit?.user?.suffix_name }}</span></span><br />
+                <span class="text-[.8em] ">Referred to: <span class="font-semibold" *ngIf="visit?.physician">{{ visit?.physician?.last_name+', ' }} {{ visit?.physician?.first_name }} {{ visit?.physician?.middle_name === 'NA' ? ' ' : visit?.physician?.middle_name }} {{ visit?.physician?.suffix_name === 'NA' ? ' ' : visit?.physician?.suffix_name }}</span></span>
               </div>
 
               <span class="col-span-1 flex justify-center my-auto" *ngIf="show_details && (visit.id === selected_id)">
