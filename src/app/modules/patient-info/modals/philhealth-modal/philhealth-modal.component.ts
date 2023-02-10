@@ -314,5 +314,4 @@ export class PhilhealthModalComponent implements OnInit {
 
     this.date = new Date().toISOString().slice(0,10);
   }
-
 }
