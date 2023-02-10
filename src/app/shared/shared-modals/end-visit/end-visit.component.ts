@@ -19,11 +19,16 @@ export class EndVisitComponent {
 
   onSubmit(){
     this.is_saving = true;
-    let params = {
-      patient_id: this.patient_id,
-      consult_date: this.consult_date,
-      pt_group: this.pt_group,
-      consult_done: true
+    let params;
+    if(!this.consult_date || !this.pt_group){
+      params = {}
+    } else {
+      params = {
+        patient_id: this.patient_id,
+        consult_date: this.consult_date,
+        pt_group: this.pt_group,
+        consult_done: true
+      }
     }
 
     this.http.update('consultation/records/', this.consult_id, params).subscribe({
@@ -44,6 +49,6 @@ export class EndVisitComponent {
   ) { }
 
   closeModal(){
-    this.toggleModal.emit()
+    this.toggleModal.emit('end_visit')
   }
 }

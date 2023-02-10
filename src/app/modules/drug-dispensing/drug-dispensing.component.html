@@ -3,10 +3,15 @@
     <span class="flex">
       <span class="mt-2"> Prescription and Dispensing</span>
     </span>
+
+    <button *ngIf="consult_details?.consult_done === false" type="button" class="btn-end-visit ml-auto" (click)="toggleModal('end_visit')">
+      <fa-icon class="mr-1" [icon]="faDoorClosed"></fa-icon>
+      End Visit
+    </button>
   </span>
 
-  <div class="border border-slate-200 shadow-md rounded-xl">
-    <div class="flex justify-between w-full bg-orange-500 text-white rounded-t-xl p-3 font-semibold">
+  <div class="border border-slate-200 shadow-md rounded-xl" *ngIf="show_form">
+    <div class="flex justify-between w-full bg-orange-500 text-white rounded-t-xl px-3 py-1 font-semibold text-sm">
       <span class="mt-3">Prescriptions</span>
       <div class="flex w-5/12 justify-end">
         <label for="dispensing_date" class="mr-2 mt-3">Dispense date</label>
@@ -18,7 +23,7 @@
       <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
           <tr>
-            <th scope="col" class="text-center py-3 px-3 w-3/12 ">Medicine</th>
+            <th scope="col" class="text-center py-3 px-3 w-3/12">Medicine</th>
             <th scope="col" class="text-center py-3 px-3 w-3/12">Intake</th>
             <th scope="col" class="text-center py-3 px-3 w-1/12">Prescription Date</th>
             <th scope="col" class="text-center py-3 px-3 w-1/12">Quantity</th>
@@ -70,8 +75,8 @@
     </div>
   </div>
 
-  <div class="border border-slate-200 shadow-md rounded-xl mt-5">
-    <div class="w-full bg-green-500 text-white rounded-t-xl p-3 font-semibold">
+  <div class="border border-slate-200 shadow-md rounded-xl mt-5" *ngIf="show_form">
+    <div class="w-full bg-green-500 text-white rounded-t-xl p-3 font-semibold text-sm">
       Dispensed Drugs
     </div>
 
@@ -88,7 +93,7 @@
             <th scope="col" class="text-center py-3 px-3 w-2/12">Remarks</th>
           </tr>
         </thead>
-        <tbody *ngIf="show_form">
+        <tbody>
           <tr *ngFor="let dis of dispensed_list; trackBy:identify" class="bg-white border-b last:border-0">
             <td class="py-4 px-3">
               {{ dis.prescription.konsulta_medicine ? dis.prescription.konsulta_medicine.desc : dis.prescription.added_medicine }}
@@ -121,5 +126,12 @@
   </div>
 </div>
 
-<app-lab-form *ngIf="modal['add']" [selected_lab]="selected_lab" (toggleModal)="toggleModal($event)"></app-lab-form>
-<app-lab-delete *ngIf="modal['delete']" [selected_lab]="selected_lab" (toggleModal)="toggleModal($event)"></app-lab-delete>
+<!-- <app-lab-form *ngIf="modal['add']" [selected_lab]="selected_lab" (toggleModal)="toggleModal($event)"></app-lab-form>
+<app-lab-delete *ngIf="modal['delete']" [selected_lab]="selected_lab" (toggleModal)="toggleModal($event)"></app-lab-delete> -->
+
+<app-end-visit *ngIf="modal['end_visit']" (toggleModal)="toggleModal($event)"
+  [consult_id]="consult_details?.id"
+  [consult_date]="consult_details?.consult_date"
+  [patient_id]="consult_details?.patient.id"
+  [pt_group]="'cn'"
+></app-end-visit>
