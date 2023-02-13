@@ -137,7 +137,6 @@ export class PatientInfoComponent implements OnInit {
         error: err => {
           // feature: add prompt that patient is not found. for now redirect to home
           console.log(err)
-          // this.router.navigate(['/home'])
         }
       });
     } else {
@@ -168,18 +167,8 @@ export class PatientInfoComponent implements OnInit {
   pregnancy_history: any;
 
   setDetails(data) {
-    //set details from components
     this[data.var_name] = data.data;
-    // console.log(data)
   }
-
-  /* setSocial(data){
-    this.social_history = data;
-  } */
-
-  /* setPhilhealthDetails(data) {
-    this.philhealth_details = data;
-  } */
 
   setSurgicalHistory(data) {
     this.surgical_history = data;
@@ -201,7 +190,6 @@ export class PatientInfoComponent implements OnInit {
 
   setLabList(data) {
     this.lab_req_list = data;
-    // this.reloadChild('lab');
   }
 
   setVaccineGiven(data) {

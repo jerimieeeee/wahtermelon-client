@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { faChevronDown, faChevronUp, faPenToSquare, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+import { faChevronDown, faChevronUp, faPenToSquare, faPlusCircle, faMinus } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
@@ -17,6 +17,7 @@ export class VaccineComponent implements OnInit {
   faChevronDown = faChevronDown;
   faPlusCircle = faPlusCircle;
   faPenToSquare = faPenToSquare;
+  faMinus = faMinus;
 
   vaccines_given: any;
   vaccine_list: any = [];

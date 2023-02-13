@@ -5,6 +5,7 @@ import { faPenToSquare, faPlusSquare, faSave } from '@fortawesome/free-regular-s
 import { HttpService } from 'app/shared/services/http.service';
 import { Services } from './data/service'
 import { DatePipe } from '@angular/common';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-services',
@@ -88,7 +89,8 @@ export class ServicesComponent implements OnInit {
 
   serviceForm: any = {
     service_status: [] ,
-    service_date: []
+    service_date: [] ,
+    quantity : []
   };
   services_given= [];
   service_list = Services;
@@ -285,7 +287,10 @@ export class ServicesComponent implements OnInit {
 
   @Input() patient_details: any;
   
-  constructor(private http: HttpService) { 
+  constructor(
+    private http: HttpService,
+    private toastr : ToastrService
+    ) { 
     this.services.sort(function(a,b){
       return a.date.localeCompare(b.date);
     })
@@ -329,6 +334,7 @@ export class ServicesComponent implements OnInit {
   onChange(){
     console.log(this.serviceForm.service_status, 'ng model check')
     console.log(this.serviceForm.service_date, 'ng model check')
+    console.log(this.serviceForm.quantity, 'ng model check')
   }
 
   submitNBS(){
@@ -363,10 +369,12 @@ export class ServicesComponent implements OnInit {
         let service = {
           service_id: key,
           service_date: this.serviceForm.service_date[key] ? this.serviceForm.service_date[key] : null,
-          status_id: value
+          status_id: value,
+          quantity: this.serviceForm.quantity[key] ? this.serviceForm.quantity[key] : null
         };
 
         service_arr.push(service);
+        console.log(this.serviceForm.quantity[key], 'check quantity if working')
       }
     })
 
@@ -385,9 +393,22 @@ export class ServicesComponent implements OnInit {
 
       this.http.post('child-care/cc-services', serv_form).subscribe({
         next: (data: any) => { console.log(data.data, 'display lahat ng services') },
-        error: err => {console.log(err),
-          this.toggleAlertModal('E')},
-        complete: () => this.toggleAlertModal('S')
+        error: err => {console.log(err)
+          // this.toggleAlertModal('E')
+          if (serv_form.essential == 'Y') {
+            this.showToastrErrY()
+           
+          } else {
+            this.showToastrErrN()
+    }},
+        complete: () => {
+              // this.toggleAlertModal('S')
+              if (serv_form.essential == 'Y') {
+                this.showToastrY()
+               
+              } else {
+                this.showToastrN()
+        }}
       })
     }
   }
@@ -453,14 +474,16 @@ export class ServicesComponent implements OnInit {
       // });
       
         
-        this.serviceForm = {
-          service_status: [],
-          service_date: []
-        }
+        // this.serviceForm = {
+        //   service_status: [],
+        //   service_date: [],
+        //   quantity: []
+        // }
         data.data.forEach((value) => {
           // console.log(value)
           this.serviceForm.service_status[value.service_id] = value.status_id;
           this.serviceForm.service_date[value.service_id] = value.service_date;
+          this.serviceForm.quantity[value.service_id] = value.quantity;
           // serv2.service_date['value.status_id'] = value.s
         })
 
@@ -503,6 +526,21 @@ export class ServicesComponent implements OnInit {
     });
   }
   
+  showToastrY(){
+    this.toastr.success('Successfully Saved!','Essential Services');
+  }
+
+  showToastrN(){
+    this.toastr.success('Successfully Saved!','Services');
+  }
+
+  showToastrErrY(){
+    this.toastr.warning('Error in Saving!','Essential Services');
+  }
+
+  showToastrErrN(){
+    this.toastr.warning('Error in Saving!','Essential Services');
+  }
 
   ngOnInit() {
     // this.geteServiceName()

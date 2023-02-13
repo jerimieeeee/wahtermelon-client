@@ -11,11 +11,18 @@ export class McComponent implements OnInit {
   patient_mc_list: any;
 
   loadData(){
-    this.http.get('child-care/cc-records/'+this.selected_visit.patient.id).subscribe({
+    let params = {
+      type: 'all',
+      patient_id: this.selected_visit.patient.id
+    }
+
+    this.http.get('maternal-care/mc-records', { params }).subscribe({
       next: (data: any) => {
-        console.log(data)
+        if (data.data.length > 0) {
+          this.patient_mc_list = data.data;
+        }
       },
-      error: err => console.log(err)
+      error: err => console.log(err),
     });
   }
 
@@ -24,9 +31,8 @@ export class McComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    if(this.selected_visit[0]) {
-      this.patient_mc_list = [this.selected_visit[0]];
-      console.log(typeof this.patient_mc_list, this.patient_mc_list)
+    if(this.selected_visit) {
+      this.loadData();
     }
   }
 }

@@ -14,7 +14,7 @@
           VISIT HISTORY
       </button> -->
 
-      <button type="button" class="btn-end-visit ml-auto" (click)="endVisit()">
+      <button type="button" class="btn-end-visit ml-auto" (click)="toggleModal()">
         <fa-icon class="mr-1" [icon]="faDoorClosed"></fa-icon>
         End Visit
       </button>
@@ -64,4 +64,6 @@
   </div> -->
 
 <!-- </div> -->
+
+<app-end-visit *ngIf="show_end" (toggleModal)="toggleModal()" [consult_id]="consult_id" [consult_date]="consult_details[0]?.consult_date" [patient_id]="consult_details[0]?.patient.id" [pt_group]="consult_details[0]?.pt_group"></app-end-visit>
 

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { faChevronDown, faChevronUp, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+import { faChevronDown, faChevronUp, faMinus, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
@@ -16,6 +16,8 @@ export class SocialHistoryComponent implements OnInit {
   faPlusCircle = faPlusCircle;
   faChevronUp = faChevronUp;
   faChevronDown = faChevronDown;
+  faMinus = faMinus;
+
   social_history: any;
 
   loadData(patient_id) {
