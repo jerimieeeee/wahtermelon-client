@@ -1,7 +1,8 @@
 <div class="block justify-items-start mx-5 mb-5">
   <div class="flex justify-between items-center">
-    <span class="block text-blue-500 font-medium text-sm">
-      <fa-icon (click)="toggle('vaccines')" class="mx-0 my-0 text-gray-500 mr-2 hover:cursor-pointer" [icon]="accordions['vaccines'] ? faChevronUp : faChevronDown"></fa-icon>
+    <span class="block text-blue-500 font-medium text-sm select-none" [ngClass]="{'opacity-70': (vaccine_list?.length === 0 || !vaccine_list)}">
+      <fa-icon *ngIf="vaccine_list?.length > 0" (click)="toggle('vaccines')" class="mx-0 my-0 mr-2 hover:cursor-pointer" [icon]="accordions['vaccines'] ? faChevronUp : faChevronDown"></fa-icon>
+      <fa-icon *ngIf="vaccine_list?.length === 0 || !vaccine_list" class="mx-0 my-0 mr-2" [icon]="faMinus"></fa-icon>
       VACCINES {{ vaccine_list?.length > 0 ? '('+vaccine_list.length+')' : '' }}
     </span>
     <fa-icon (click)="modalToggle('vaccine')" class="mx-0 my-0 text-blue-500 mr-2 hover:cursor-pointer" [icon]="faPlusCircle"></fa-icon>
@@ -20,7 +21,7 @@
     </div>
   </div>
 
-  <div *ngIf="show_vaccines" >
+  <div *ngIf="show_vaccines && vaccine_list?.length > 0" >
     <div [@openCloseAccordion] *ngIf="accordions['vaccines']" class="block">
       <div class="flex pl-3 justify-between items-center mb-5 border-b border-b-gray-100">
         <span class="font-medium text-xs flex-auto">
