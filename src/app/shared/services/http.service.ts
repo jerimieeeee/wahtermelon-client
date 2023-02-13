@@ -135,9 +135,8 @@ export class HttpService {
       case 'FOBT':
         return 'laboratory/consult-laboratory-fecal-occult'
       default:
-        break;
+        return '';
     }
-    return '';
   }
 
   getUrlParams() {

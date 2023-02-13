@@ -24,6 +24,9 @@ export class ChildcareComponent implements OnInit {
   active_loc_id: any;
   consult_id: any
 
+  show_end: boolean = false;
+
+
   // Section 2
   constructor(private http: HttpService,
   private router: Router,
@@ -36,38 +39,41 @@ export class ChildcareComponent implements OnInit {
   } */
 
 
-  endVisit(){
-    let endbutton = {
-      consult_done: 1,
-      patient_id : this.consult_details[0].patient.id,
-      user_id : this.consult_details[0].user.id,
-      consult_date : this.consult_details[0].consult_date,
-      pt_group : this.consult_details[0].pt_group,
-      // physician_id : this.consult_details[0].physician.id,
-      // is_pregnant: this.consult_details[0].is_pregnant
+  // endVisit(){
+  //   let endbutton = {
+  //     consult_done: 1,
+  //     patient_id : this.consult_details[0].patient.id,
+  //     user_id : this.consult_details[0].user.id,
+  //     consult_date : this.consult_details[0].consult_date,
+  //     pt_group : this.consult_details[0].pt_group,
+  //     // physician_id : this.consult_details[0].physician.id,
+  //     // is_pregnant: this.consult_details[0].is_pregnant
+  //   }
+  //     this.http.update('consultation/records/',this.consult_id, endbutton).subscribe({
+  //       // next: (data: any) => console.log(data.status, 'check status'),
+  //       error: err => console.log(err),
+  //       complete: () => {
+  //       //  console.log('end visited kang bata ka')
+  //        this.proceedItr()
+  //       }
+  //     })
+  //     console.log(endbutton)
+  //   }
+
+    toggleModal(){
+      this.show_end = !this.show_end;
     }
 
-    this.http.update('consultation/records/',this.consult_id, endbutton).subscribe({
-      // next: (data: any) => console.log(data.status, 'check status'),
-      error: err => console.log(err),
-      complete: () => {
-        console.log('end visited kang bata ka')
-        this.proceedItr()
-      }
-    })
-    console.log(endbutton)
-  }
-
-  proceedItr(){
-    this.router.navigate(['/patient/itr', {id: this.patient_details.id}])
-  }
+  // proceedItr(){
+  //   this.router.navigate(['/patient/itr', {id: this.patient_details.id}])
+  // }
 
   loadConsultDetails(){
-    this.http.get('consultation/records',{params: {patient_id: this.patient_details.id}}).subscribe((data: any) => {
-      this.consult_details = data.data
-      console.log(this.consult_details, 'kunin mo consult');
-    });
-  }
+      this.http.get('consultation/records',{params: {patient_id: this.patient_details.id, id: this.consult_id}}).subscribe((data: any) => {
+        this.consult_details = data.data
+        console.log(this.consult_details, 'kunin mo consult');
+      });
+    }
 
   show_forms: boolean;
   checkCCdevDetails(e){

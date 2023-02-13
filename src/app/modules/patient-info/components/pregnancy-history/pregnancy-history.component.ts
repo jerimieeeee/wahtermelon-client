@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { faMinus } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-pregnancy-history',
@@ -7,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PregnancyHistoryComponent implements OnInit {
 
+  faMinus = faMinus;
   constructor() { }
 
   ngOnInit(): void {

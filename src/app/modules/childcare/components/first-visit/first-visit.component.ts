@@ -7,6 +7,7 @@ import { catchError, debounceTime, distinctUntilChanged, switchMap, tap, map, fi
 import { concat, Observable, of, Subject, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 import { formatDate } from '@angular/common';
+import { ToastrService } from 'ngx-toastr';
 
 
 
@@ -72,8 +73,12 @@ export class FirstVisitComponent implements OnInit {
 
 
   // Section 2
-  constructor(private formBuilder: FormBuilder, private http: HttpService,
-    private router: Router) { }
+  constructor(
+    private formBuilder: FormBuilder, 
+    private http: HttpService,
+    private router: Router,
+    private toastr: ToastrService
+    ) { }
 
 
 
@@ -113,18 +118,26 @@ export class FirstVisitComponent implements OnInit {
     } catch (err) {
     
     }
-    
+   
     // this.showModal = true;
 
       this.http.post('child-care/cc-records', this.visitForm.value).subscribe({
         next: (data: any) =>  this.getccdevDetails(),
         error: err => {console.log(err),
           this.is_saving = false;
-          this.toggleAlertModal('E')},
+          // this.toggleAlertModal('E')},
+          this.showToastrErr()},
         complete: () => {
           this.is_saving = false;
           console.log(this.visitForm.value, 'visit form')
-      this.toggleAlertModal('S')
+
+          if (this.patient_info) {
+            this.showToastrUpd()
+          } else {
+            this.showToastr() 
+          }
+          // this.toggleAlertModal('S')
+          // this.showToastr()
         }
       })
     }
@@ -238,6 +251,18 @@ export class FirstVisitComponent implements OnInit {
         })
       )
     );
+  }
+
+  showToastr(){
+    this.toastr.success('Successfully saved!','Admission Info');
+  }
+
+  showToastrUpd(){
+    this.toastr.success('Successfully Updated!','Admission Info');
+  }
+
+  showToastrErr(){
+    this.toastr.warning('Error in Saving!','Admission Info');
   }
 
   // saveBirth(){
