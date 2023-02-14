@@ -86,7 +86,7 @@ export class PostvisitsComponent implements OnInit {
   ngOnInit(): void {
     this.value = 1;
     this.getMCR();
-    console.log(this.patient_mc_record, "mc record form postvistis init");
+    // console.log(this.patient_mc_record, "mc record form postvistis init");
     this.edit_bool = false
     this.focused = false;
   }
@@ -98,10 +98,10 @@ export class PostvisitsComponent implements OnInit {
   }
 
   getMCR() {
-    console.log(this.patient_mc_record.length == 0, " from getMCR - post visit;");
+    // console.log(this.patient_mc_record.length == 0, " from getMCR - post visit;");
     if(this.patient_mc_record.length != 0){
       if(this.patient_mc_record.postpartum_visit[0]?this.patient_mc_record.postpartum_visit[0]:this.patient_mc_record.postpartum_visit.length == 1){
-        console.log("it went true");
+        // console.log("it went true");
 
       this.value = this.patient_mc_record.postpartum_visit[0].visit_sequence + 1;
       this.postpartum_data =  this.patient_mc_record.postpartum_visit
@@ -114,14 +114,14 @@ createForm(mc_record: any) {
   let user_id = this.http.getUserID();
   let facility_code = this.http.getUserFacility();
   let post_visit: any
-  console.log(this.patient_mc_record.postpartum_visit, " post visit true or false ?");
+  // console.log(this.patient_mc_record.postpartum_visit, " post visit true or false ?");
 
   if(this.patient_mc_record.postpartum_visit[0]?this.patient_mc_record.postpartum_visit[0]:this.patient_mc_record.postpartum_visit.length == 1){
-    console.log("post visit true");
+    // console.log("post visit true");
 
     post_visit = mc_record.postpartum_visit[0];
   }else{
-    console.log("post visit false");
+    // console.log("post visit false");
 
     post_visit = mc_record.postpartum_visit;
   }
@@ -149,7 +149,7 @@ createForm(mc_record: any) {
 
 edit(visit) {
   this.edit_bool = true;
-  console.log(visit, " data to be editesd");
+  // console.log(visit, " data to be editesd");
 
   // this.prenatal_form.reset();
       this.edit_form = {
@@ -174,10 +174,10 @@ edit(visit) {
     // }
   // });
   this.value = 0;
-      this.value = visit.visit_sequence;
+  this.value = visit.visit_sequence;
   // this.hide.push(id);
-  console.log(this.edit_form, " edit form");
-  console.log(visit.id, " id pre edit");
+  // console.log(this.edit_form, " edit form");
+  // console.log(visit.id, " id pre edit");
 
   this.edit_id = visit.id;
 
@@ -189,27 +189,28 @@ edit(visit) {
 saveForm(){
   this.is_saving = true;
 
-  console.log(this.postpartum_visit_form.valid, this.postpartum_visit_form.value);
+  // console.log(this.postpartum_visit_form.valid, this.postpartum_visit_form);
+  // console.log(this.edit_form);
 
   if (this.postpartum_visit_form.valid) {
     if (this.actual_height) {
       this.postpartum_visit_form.value.patient_height = this.actual_height;
-      this.edit_form.patient_height = this.actual_height
+      if(this.edit_form) this.edit_form.patient_height = this.actual_height
     }
 
     let http
     if(this.edit_bool){
       http = this.http.update('maternal-care/mc-postpartum/', this.edit_id, this.postpartum_visit_form.value);
-      console.log(" going to update");
+      // console.log(" going to update");
 
     }else{
       http = this.http.post('maternal-care/mc-postpartum', this.postpartum_visit_form.value);
     }
 
-    console.log(this.postpartum_visit_form, " this is my data for saving post vist");
+    // console.log(this.postpartum_visit_form, " this is my data for saving post vist");
     http.subscribe({
       next: (data: any) => {
-        console.log(data.data, " data from saving post visit")
+        // console.log(data.data, " data from saving post visit")
         this.postpartum_data = data.data
         this.post_visit_data.emit(data.data)
         this.value = this.postpartum_data[0].visit_sequence + 1;
@@ -233,7 +234,7 @@ saveForm(){
 }
 
 onKeyUp(data_input: string, id: string) {
-  console.log(data_input + ' this is my data input');
+  // console.log(data_input + ' this is my data input');
 
  if (this.keyUp.includes(id)) {
    if (data_input == '') {
@@ -243,7 +244,7 @@ onKeyUp(data_input: string, id: string) {
    this.keyUp.push(id);
 
  }
- console.log(this.keyUp);
+//  console.log(this.keyUp);
 
 }
 clearForm(id) {
@@ -251,11 +252,11 @@ clearForm(id) {
  // this.onKeyUp('', id);
 }
 cmCatcher(h, h2) {
-  console.log(h, " cmCatcher");
+  // console.log(h, " cmCatcher");
 
   h2 = h.split(' ');
 
-  console.log(h2[0]);
+  // console.log(h2[0]);
 
   if (h2[0] > 9) {
     this.feet = h / 30.48;
@@ -266,15 +267,15 @@ cmCatcher(h, h2) {
     this.cm_value = Math.trunc(this.feet) + 'ft ' + this.in + ' in';
     console.log('h value is ', Math.trunc(this.feet), 'ft ', this.in, ' in');
   } else {
-    console.log(h.lastIndexOf(' '));
-    console.log(h.lastIndexOf(','));
+    // console.log(h.lastIndexOf(' '));
+    // console.log(h.lastIndexOf(','));
     if (h.lastIndexOf(' ') == 1) {
 
       h = h.split(' ');
 
       this.feet = h[0] * 30.48;
       this.feet = +this.feet.toFixed(1);
-      console.log(h[1] > 12);
+      // console.log(h[1] > 12);
 
       if (h[1] >= 12) {
         h[1] = 11

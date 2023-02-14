@@ -12,6 +12,7 @@ import { ToastrService } from 'ngx-toastr';
 export class PrescriptionComponent implements OnInit, OnChanges {
   @Input() toggle_content;
   @Input() consult_details;
+  @Input() with_credentials;
 
   show_content: boolean = true;
   show_list: boolean = false;
