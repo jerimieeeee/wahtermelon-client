@@ -91,6 +91,7 @@ export class ConsultationComponent implements OnInit {
     })
   }
 
+  with_credentials: boolean = false;
   loadConsult(){
     let params = {
       id: this.consult_id,
@@ -103,15 +104,19 @@ export class ConsultationComponent implements OnInit {
         // console.log(this.consult_details)
         if(this.consult_details.consult_notes.complaint || this.consult_details.consult_notes.complaints.length > 0  || this.consult_details.consult_notes.history) {
           this.have_complaint = true;
-        }
+          this.loadUsers();
 
-        if(this.consult_details.physician) {
-          this.referred_to = this.consult_details.physician;
-          this.enable_edit = true;
+          if(this.consult_details.physician) {
+            this.referred_to = this.consult_details.physician;
+            this.enable_edit = true;
+          }
         }
       },
       error: err => console.log(err)
-    })
+    });
+
+    let info = this.http.getUserFromJSON();
+    this.with_credentials = info.konsulta_credential ? true : false;
   }
 
   referTo(){
@@ -158,6 +163,6 @@ export class ConsultationComponent implements OnInit {
     // console.log(this.consult_id)
     this.modules = 1;
     this.loadConsult();
-    this.loadUsers()
+    // this.loadUsers()
   }
 }

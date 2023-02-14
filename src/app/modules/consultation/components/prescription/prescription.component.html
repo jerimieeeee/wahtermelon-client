@@ -8,7 +8,7 @@
       <span class="rounded-t-md m-0 p-2 font-semibold text-gray-50 bg-amber-500 flex justify-between" [ngClass]="{'rounded-b' : !show_content}">
         Prescriptions
         <div>
-          <button type="button" class="ml-3 text-sm bg-white text-green-500 px-3 rounded-full" (click)="toggleModal()">
+          <button *ngIf="with_credentials" type="button" class="ml-3 text-sm bg-white text-green-500 px-3 rounded-full" (click)="toggleModal()">
             <fa-icon [icon]="faReceipt" class="pr-1"></fa-icon>
             epress
           </button>
