@@ -3,42 +3,36 @@
     <div class="flex justify-between items-center">
       <a href="#">
         <img src="./assets/img/wah_icon.png" class="rounded-full w-12 h-12 mx-auto mr-5" />
-
       </a>
-        <ng-select class="search" placeholder="search"
-          [items]="patients$ | async"
-          [minTermLength]="minLengthTerm"
-          [loading]="patientLoading"
-          typeToSearchText="search..."
-          [typeahead]="searchInput$"
-          [(ngModel)]="selectedPatient"
-          (change)="onSelect(selectedPatient)"
-          notFoundText="No records found"
-          [clearSearchOnAdd]>
-          <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
-            <!-- <a href="itr"> -->
-              <div class="grid grid-flow-col auto-cols-max">
 
-                  <div class="my-auto mr-3">
-                    <!-- <img src="./assets/img/profile_1.jpg" alt="profile_img" class="rounded-full w-14 h-14 mx-auto mr-2" /> -->
-                    <div class="inline-flex overflow-hidden relative justify-center items-center w-14 h-14 bg-gray-100 rounded-full dark:bg-gray-600">
-                      <span class="font-medium text-gray-600 dark:text-gray-300">{{ getInitials(item.first_name+' '+item.last_name) }}</span>
-                    </div>
-                  </div>
-                  <div>
-                    <h5 class="text-blue-400" [ngOptionHighlight]="search">{{ item.last_name }}, {{ item.first_name }} {{ item.middle_name }} {{ item.suffix_name === 'NA' ? '' : item.suffix_name}}</h5>
-                    <h6 class="text-muted">{{ item.birthdate | date: 'MM/dd/yyyy'}}</h6>
-                    <!-- <h6 class="text-muted">{{ item.household_member }}, {{ item.muncity }}</h6> -->
-                  </div>
+      <ng-select class="search" placeholder="search"
+        [items]="patients$ | async"
+        [minTermLength]="minLengthTerm"
+        [loading]="patientLoading"
+        typeToSearchText="search..."
+        [typeahead]="searchInput$"
+        [(ngModel)]="selectedPatient"
+        (change)="onSelect(selectedPatient)"
+        notFoundText="No records found"
+        [clearSearchOnAdd]>
+        <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
+          <div class="grid grid-flow-col auto-cols-max">
+            <div class="my-auto mr-3">
+              <div class="inline-flex overflow-hidden relative justify-center items-center w-14 h-14 bg-gray-100 rounded-full dark:bg-gray-600">
+                <span class="font-medium text-gray-600 dark:text-gray-300">{{ getInitials(item.first_name+' '+item.last_name) }}</span>
               </div>
-            <!-- </a> -->
-          </ng-template>
+            </div>
+            <div>
+              <h5 class="text-blue-400" [ngOptionHighlight]="search">{{ item.last_name }}, {{ item.first_name }} {{ item.middle_name }} {{ item.suffix_name === 'NA' ? '' : item.suffix_name}}</h5>
+              <h6 class="text-muted">{{ item.birthdate | date: 'MM/dd/yyyy'}}</h6>
+            </div>
+          </div>
+        </ng-template>
 
-          <ng-template *ngIf="showCreate" ng-footer-tmp>
-            <a class="text-blue-600" routerLink="/registration"> Create a new record</a>
-          </ng-template>
-        </ng-select>
-      <!-- </div> -->
+        <ng-template *ngIf="showCreate" ng-footer-tmp>
+          <a class="text-blue-600" routerLink="/registration"> Create a new record</a>
+        </ng-template>
+      </ng-select>
     </div>
 
 
@@ -67,7 +61,6 @@
         </a>
 
         <div class="flex justify-center md:block leading-tight mx-2 my-1">
-          <!-- <img src="./assets/img/profile_1.jpg" class="rounded-full w-12 h-12 mx-auto" /> -->
           <div class="inline-flex overflow-hidden relative justify-center items-center w-14 h-14 bg-gray-100 rounded-full dark:bg-gray-600">
             <span class="font-medium text-gray-600 dark:text-gray-300">{{ getInitials(user?.first_name+' '+user?.last_name) }}</span>
           </div>
