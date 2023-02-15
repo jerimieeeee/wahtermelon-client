@@ -14,7 +14,7 @@
 
             <div class="col-span-3 mt-5 mx-5" *ngIf="!add_drug">
               <span class="font-semibold">Drug description:</span>
-              {{ selected_drug.desc }}
+              {{ selected_drug.konsulta_medicine ? selected_drug.konsulta_medicine.desc : selected_drug.desc }}
             </div>
 
             <div class="col-span-3 text-sm " *ngIf="add_drug">
