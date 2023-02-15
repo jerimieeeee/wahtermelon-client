@@ -77,7 +77,7 @@ export class PrescriptionComponent implements OnInit, OnChanges {
   }
 
   openAddForm(drug){
-    console.log(drug)
+    // console.log(drug)
     this.selected_drug = drug;
     this.toggleForm();
   }

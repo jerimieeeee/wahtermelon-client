@@ -8,9 +8,13 @@
           <fa-icon class="ml-2 my-0" [icon]="faChevronDown"></fa-icon>
           </button>
         </div> -->
-        <button type="button" class="text-gray-700 hover:text-indigo-500">
+        <select class="input px-2 mr-3 disabled:bg-gray-300 w-72" (change)="getTodaysConsult()" [(ngModel)]="selected_physician">
+          <option value="all">All</option>
+          <option [value]="dr.id" class="pr-" *ngFor="let dr of physicians">{{ dr.last_name }}, {{ dr.first_name }} {{ dr.middle_name }}</option>
+        </select>
+        <!-- <button type="button" class="text-gray-700 hover:text-indigo-500">
           <fa-icon class="mx-0 my-0" [icon]="faQuestionCircle"></fa-icon>
-        </button>
+        </button> -->
       </div>
     </div>
 
@@ -52,10 +56,15 @@
               <fa-icon class="mx-0 my-0" [icon]="faFolderOpen"></fa-icon> -->
             </button>
           </div>
-          <div class="col-span-3 px-5">
-            -<!-- {{ profile?.pt_group }} --> <!-- location -->
+          <div class="col-span-3 px-3 text-sm">
+            <span *ngIf="profile.physician">
+              Dr. {{ profile.physician.first_name }} {{ profile.physician.last_name }}
+            </span>
+            <span *ngIf="!profile.physician">
+              -
+            </span>
           </div>
-          <div class="col-span-3 px-5 text-[.8em]">
+          <div class="col-span-3 px-3 text-[.8em]">
             {{ getDataDiff(profile?.consult_date) }} <!-- duration -->
           </div>
         </div>

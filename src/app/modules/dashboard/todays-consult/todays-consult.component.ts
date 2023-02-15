@@ -33,13 +33,14 @@ export class TodaysConsultComponent implements OnInit {
   getTodaysConsult(page?: number){
     let params = {params: { }};
     if (page) params['params']['page'] = page;
-    params['params']['include'] = 'barangay';
+    if (this.selected_physician !== 'all') params['params']['physician_id'] = this.selected_physician;
     params['params']['per_page'] = this.per_page;
     params['params']['consult_done'] = 0;
 
+    console.log(params)
     this.http.get('consultation/records', params).subscribe({
       next: (data: any) => {
-        console.log(data);
+        // console.log(data);
         this.today_consults = data.data;
 
         this.current_page = data.meta.current_page;
@@ -52,8 +53,19 @@ export class TodaysConsultComponent implements OnInit {
     })
   }
 
-  onPageChange(page){
+  selected_physician: string;
+  physicians: any = [];
 
+  loadPhysicians(){
+    this.http.get('users', {params:{per_page: 'all', designation_code: 'MD'}}).subscribe({
+      next: (data: any) => {
+        this.physicians = data.data;
+        let user_info = this.http.getUserFromJSON();
+        this.selected_physician = user_info.designation_code === 'MD' ? user_info.id : 'all';
+        this.getTodaysConsult();
+      },
+      error: err => console.log(err)
+    })
   }
 
   openItr(patient_id, ptgroup, id){
@@ -108,7 +120,7 @@ export class TodaysConsultComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.getTodaysConsult();
+    this.loadPhysicians();
   }
 
 }
