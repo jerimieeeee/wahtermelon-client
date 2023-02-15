@@ -85,10 +85,10 @@ export class EkasComponent implements OnInit {
     this.patient_info = this.http.getPatientInfo();
     this.patient_philhealth = this.http.getPhilhealhtInfo();
     this.facility = this.http.getUserFromJSON();
-    this.age = this.ageService.calcuateAge(this.patient_info.birthdate, this.consult_details.consult_date);
+    // this.age = this.ageService.calcuateAge(this.patient_info.birthdate, this.consult_details.consult_date);
 
-    this.getResults();
     console.log(this.consult_details)
+    this.getResults();
     // console.log(this.patient_info)
     // this.getFacility();
   }

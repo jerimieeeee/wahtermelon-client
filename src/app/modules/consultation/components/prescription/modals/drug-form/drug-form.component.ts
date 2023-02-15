@@ -1,5 +1,5 @@
 import { formatDate } from '@angular/common';
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
@@ -9,7 +9,7 @@ import { ToastrService } from 'ngx-toastr';
   templateUrl: './drug-form.component.html',
   styleUrls: ['./drug-form.component.scss']
 })
-export class DrugFormComponent implements OnInit, OnChanges {
+export class DrugFormComponent implements OnChanges {
   @Output() toggleForm = new EventEmitter<any>();
   @Input() selected_drug;
   @Input() consult_details;
@@ -64,7 +64,7 @@ export class DrugFormComponent implements OnInit, OnChanges {
       }
       query.subscribe({
         next: (data: any) => {
-          console.log(data);
+          // console.log(data);
           this.toastr.success('Successfully added','Prescription');
           this.closeModal();
         },
@@ -85,7 +85,7 @@ export class DrugFormComponent implements OnInit, OnChanges {
   loadLibraries(){
     this.libraries.forEach(obj => {
       this.http.get('libraries/'+obj.location).subscribe({
-        next: (data: any) => {this[obj.var_name] = data.data; console.log(data.data)},
+        next: (data: any) => {this[obj.var_name] = data.data; /* console.log(data.data) */},
         error: err => console.log(err),
         complete: () => this.show_form = true
       })
@@ -133,29 +133,29 @@ export class DrugFormComponent implements OnInit, OnChanges {
     // console.log(this.selected_drug)
     if(this.selected_drug){
       if(this.selected_drug.id) {
-        // console.log('x')
-        this.prescriptionForm.patchValue({...this.selected_drug});
+        this.prescriptionForm.patchValue({
+          konsulta_medicine_code: this.selected_drug.konsulta_medicine.code,
+          dosage_quantity: this.selected_drug.dosage_quantity,
+          dosage_uom: this.selected_drug.unit_of_measurement.code,
+          dose_regimen: this.selected_drug.regimen.code,
+          medicine_purpose: this.selected_drug.purpose.code,
+          duration_intake: this.selected_drug.duration_intake,
+          duration_frequency: this.selected_drug.frequency.code,
+          quantity: this.selected_drug.quantity,
+          quantity_preparation: this.selected_drug.preparation.code,
+          instruction_quantity: this.selected_drug.instruction_quantity
+        });
+
+        // console.log(this.prescriptionForm.value)
         this.prescriptionForm.controls.added_medicine.disable();
         this.checkPurpose();
-
-        if(this.selected_drug.dossage_quantity) {
-          this.prescriptionForm.patchValue({dosage_quantity: this.selected_drug.dossage_quantity});
-        }
       } else {
-        // console.log('1')
         this.prescriptionForm.patchValue({ konsulta_medicine_code: this.selected_drug.code })
         this.prescriptionForm.controls.added_medicine.disable();
       }
     } else {
-      // console.log('2')
       this.add_drug = true;
       this.prescriptionForm.controls.konsulta_medicine_code.disable();
     }
-  }
-
-  ngOnInit(): void {
-    // this.loadLibraries();
-    // console.log(this.selected_drug);
-    // console.log(this.consult_details);
   }
 }
