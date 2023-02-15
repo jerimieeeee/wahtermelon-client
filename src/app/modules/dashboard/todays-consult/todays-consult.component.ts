@@ -38,7 +38,7 @@ export class TodaysConsultComponent implements OnInit, OnDestroy {
     params['params']['per_page'] = this.per_page;
     params['params']['consult_done'] = 0;
 
-    console.log(params)
+    // console.log(params)
     this.http.get('consultation/records', params).subscribe({
       next: (data: any) => {
         // console.log(data);
