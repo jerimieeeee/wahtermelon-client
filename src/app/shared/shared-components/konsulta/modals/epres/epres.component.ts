@@ -82,7 +82,7 @@ export class EpresComponent implements OnInit {
     this.patient_philhealth = this.http.getPhilhealhtInfo();
     this.facility = this.http.getUserFromJSON();
     this.prescription_length = Object.keys(this.prescriptions).length;
-    this.age = this.ageService.calcuateAge(this.patient_info.birthdate, this.consult_details.consult_date)
+    // this.age = this.ageService.calcuateAge(this.patient_info.birthdate, this.consult_details.consult_date)
 
     console.log(this.prescriptions)
     this.iteratePrescription();

@@ -8,9 +8,13 @@
           <fa-icon class="ml-2 my-0" [icon]="faChevronDown"></fa-icon>
           </button>
         </div> -->
-        <button type="button" class="text-gray-700 hover:text-indigo-500">
+        <select class="input px-2 mr-3 disabled:bg-gray-300 w-72" (change)="getTodaysConsult()" [(ngModel)]="selected_physician">
+          <option value="all">All</option>
+          <option [value]="dr.id" class="pr-" *ngFor="let dr of physicians">{{ dr.last_name }}, {{ dr.first_name }} {{ dr.middle_name }}</option>
+        </select>
+        <!-- <button type="button" class="text-gray-700 hover:text-indigo-500">
           <fa-icon class="mx-0 my-0" [icon]="faQuestionCircle"></fa-icon>
-        </button>
+        </button> -->
       </div>
     </div>
 
