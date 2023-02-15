@@ -39,7 +39,7 @@ export class EpresComponent implements OnInit {
       if(this.prescriptions[0].dispensing){
         this.http.get('users/'+this.prescriptions[0].dispensing[0].user_id).subscribe({
           next: (data: any) => {
-            console.log(data)
+            // console.log(data)
             this.dispensed_personnel = data.data
             this.getAge();
           },
@@ -84,8 +84,8 @@ export class EpresComponent implements OnInit {
     this.prescription_length = Object.keys(this.prescriptions).length;
     this.age = this.ageService.calcuateAge(this.patient_info.birthdate, this.consult_details.consult_date)
 
+    console.log(this.prescriptions)
     this.iteratePrescription();
-    console.log(this.patient_philhealth)
 
   }
 }
