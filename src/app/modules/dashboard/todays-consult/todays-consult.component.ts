@@ -1,14 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { faQuestionCircle, faChevronDown, faFolderOpen, faHeart, faFlask, faNotesMedical, faExclamationCircle, faChevronRight, faChevronLeft, faAnglesLeft, faAnglesRight } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
+import { interval, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-todays-consult',
   templateUrl: './todays-consult.component.html',
   styleUrls: ['./todays-consult.component.scss']
 })
-export class TodaysConsultComponent implements OnInit {
+export class TodaysConsultComponent implements OnInit, OnDestroy {
   faQuestionCircle = faQuestionCircle;
   faChevronDown = faChevronDown;
   faFolderOpen = faFolderOpen;
@@ -37,7 +38,7 @@ export class TodaysConsultComponent implements OnInit {
     params['params']['per_page'] = this.per_page;
     params['params']['consult_done'] = 0;
 
-    console.log(params)
+    // console.log(params)
     this.http.get('consultation/records', params).subscribe({
       next: (data: any) => {
         // console.log(data);
@@ -56,13 +57,25 @@ export class TodaysConsultComponent implements OnInit {
   selected_physician: string;
   physicians: any = [];
 
+  private updateList: Subscription;
+
+  subscribeRefresh(){
+    this.updateList = interval(10000).subscribe(
+      () => {
+        this.getTodaysConsult();
+      }
+    )
+  }
+
   loadPhysicians(){
     this.http.get('users', {params:{per_page: 'all', designation_code: 'MD'}}).subscribe({
       next: (data: any) => {
         this.physicians = data.data;
         let user_info = this.http.getUserFromJSON();
         this.selected_physician = user_info.designation_code === 'MD' ? user_info.id : 'all';
+
         this.getTodaysConsult();
+        this.subscribeRefresh();
       },
       error: err => console.log(err)
     })
@@ -123,4 +136,7 @@ export class TodaysConsultComponent implements OnInit {
     this.loadPhysicians();
   }
 
+  ngOnDestroy(): void {
+    this.updateList.unsubscribe();
+  }
 }
