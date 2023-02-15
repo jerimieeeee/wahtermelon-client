@@ -52,10 +52,15 @@
               <fa-icon class="mx-0 my-0" [icon]="faFolderOpen"></fa-icon> -->
             </button>
           </div>
-          <div class="col-span-3 px-5">
-            -<!-- {{ profile?.pt_group }} --> <!-- location -->
+          <div class="col-span-3 px-3 text-sm">
+            <span *ngIf="profile.physician">
+              Dr. {{ profile.physician.first_name }} {{ profile.physician.last_name }}
+            </span>
+            <span *ngIf="!profile.physician">
+              -
+            </span>
           </div>
-          <div class="col-span-3 px-5 text-[.8em]">
+          <div class="col-span-3 px-3 text-[.8em]">
             {{ getDataDiff(profile?.consult_date) }} <!-- duration -->
           </div>
         </div>
