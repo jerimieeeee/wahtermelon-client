@@ -16,13 +16,13 @@
         <div *ngFor="let fppe_cat of fp_pe_cat;  let i = index;">
 
             <form action="">
-                <div class="grid sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 mb-2 bg-white rounded-lg border m-2"
+                <div class="grid sm:grid-cols-1 lg:grid-cols-2 mb-2 bg-white rounded-lg border m-2"
                     [style]="module_strings.includes(i) && !saved? 'border-color: rgb(96 165 250); filter: drop-shadow(0 10px 8px rgb(0 0 0 / 0.04)) drop-shadow(0 4px 3px rgb(0 0 0 / 0.1)); margin-bottom: 1.25rem; padding-bottom: 0.5rem;' : ' '"
                     [class]="saved? 'hover:drop-shadow-lg drop-shadow-md hover:border border-gray-300 hover:border-gray-500':'hover:border-gray-400 border-gray-200'">
 
                     <div (click)="showModule(fppe_cat, i)" (keyup.tab)="nextModule(fp_pe_cat[i+1], i+1);"
                         (keyup.enter)="selectAll('select' + fppe_cat)"
-                        class="text-gray-500 form-check sm:col-span-1 md:col-span-3 lg:col-span-4 p-2 font-semibold"
+                        class="text-gray-500 form-check sm:col-span-1 lg:col-span-2 p-2 font-semibold text-sm"
                         [style]="module_strings.includes(i)? 'border-bottom-width: 1px; border-style: dashed; border-color: rgb(96 165 250); border-top-width: 0px; border-left-width: 0px; border-right-width: 0px;' : ''">
                         <div *ngFor="let cat_name of lib_cat_name" class="normal-case">
                             <h1 class="select-none" *ngIf="fppe_cat == cat_name.pe_cat_id">
