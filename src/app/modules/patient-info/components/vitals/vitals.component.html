@@ -1,7 +1,7 @@
 <div class="block pt-4 justify-items-start mx-5 pb-5">
   <div class="flex justify-between items-center">
     <span class="block text-blue-500 font-medium text-sm">
-      <fa-icon (click)="toggle('vitals')" class="mx-0 my-0 text-gray-500 mr-2 hover:cursor-pointer" [icon]="accordions['vitals'] ? faChevronUp : faChevronDown"></fa-icon>
+      <fa-icon (click)="toggle('vitals')" class="mx-0 my-0 mr-2 hover:cursor-pointer" [icon]="accordions['vitals'] ? faChevronUp : faChevronDown"></fa-icon>
       VITAL SIGNS <span *ngIf="latest_vitals">({{ latest_vitals?.vitals_date | date: 'MM/dd/yyyy hh:mm:ss a' }})</span>
     </span>
     <span>

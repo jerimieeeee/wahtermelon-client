@@ -1,8 +1,8 @@
 <div class="block pt-4 justify-items-start mx-5 pb-5">
   <div class="flex justify-between items-center">
     <span class="block text-blue-500 font-medium text-sm select-none" [ngClass]="{'opacity-70': !social_history}">
-      <fa-icon *ngIf="social_history" (click)="toggle('lifestyle')" class="mx-0 my-0 text-gray-500 mr-2 hover:cursor-pointer" [icon]="accordions['lifestyle'] ? faChevronUp : faChevronDown"></fa-icon>
-      <fa-icon *ngIf="!social_history" class="mx-0 my-0 text-gray-500 mr-2" [icon]="faMinus"></fa-icon>
+      <fa-icon *ngIf="social_history" (click)="toggle('lifestyle')" class="mx-0 my-0 mr-2 hover:cursor-pointer" [icon]="accordions['lifestyle'] ? faChevronUp : faChevronDown"></fa-icon>
+      <fa-icon *ngIf="!social_history" class="mx-0 my-0 mr-2" [icon]="faMinus"></fa-icon>
       LIFESTYLE
     </span>
     <fa-icon (click)="modalToggle('lifestyle')" class="mx-0 my-0 text-blue-500 mr-2 hover:cursor-pointer" [icon]="faPlusCircle"></fa-icon>
