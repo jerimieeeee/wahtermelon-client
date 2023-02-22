@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { faQuestionCircle, faChevronDown, faFolderOpen, faHeart, faFlask, faNotesMedical, faExclamationCircle, faChevronRight, faChevronLeft, faAnglesLeft, faAnglesRight } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
+import { NameHelperService } from 'app/shared/services/name-helper.service';
 import { interval, Subscription } from 'rxjs';
 
 @Component({
@@ -23,6 +24,8 @@ export class TodaysConsultComponent implements OnInit, OnDestroy {
   faAnglesRight = faAnglesRight;
 
   today_consults: [];
+  physicians: [];
+  selected_physician: string;
 
   per_page: number = 5;
   current_page: number;
@@ -30,6 +33,8 @@ export class TodaysConsultComponent implements OnInit, OnDestroy {
   from: number;
   to: number;
   total: number;
+
+  show_form: boolean = false;
 
   getTodaysConsult(page?: number){
     let params = {params: { }};
@@ -43,6 +48,7 @@ export class TodaysConsultComponent implements OnInit, OnDestroy {
       next: (data: any) => {
         // console.log(data);
         this.today_consults = data.data;
+        this.show_form = true;
 
         this.current_page = data.meta.current_page;
         this.last_page = data.meta.last_page;
@@ -54,8 +60,6 @@ export class TodaysConsultComponent implements OnInit, OnDestroy {
     })
   }
 
-  selected_physician: string;
-  physicians: any = [];
 
   private updateList: Subscription;
 
@@ -103,19 +107,8 @@ export class TodaysConsultComponent implements OnInit, OnDestroy {
     return duration_day+' '+duration_hours+' '+duration_minutes;
   }
 
-  getVisitType(group){
-    switch(group){
-      case 'cn':
-        return 'Consultation';
-      case 'cc':
-        return 'Child Care';
-      case 'mc':
-        return 'Maternal Care';
-      case 'dn':
-        return 'Dental';
-      case 'ncd':
-        return 'Non Communicable Disease';
-    }
+  checkVisit(group){
+    return this.nameHelper.getVisitType(group);
   }
 
   getInitials(first_name, last_name) {
@@ -124,7 +117,8 @@ export class TodaysConsultComponent implements OnInit, OnDestroy {
 
   constructor(
     private http: HttpService,
-    private router: Router
+    private router: Router,
+    private nameHelper: NameHelperService
   ) { }
 
   ngOnInit(): void {
