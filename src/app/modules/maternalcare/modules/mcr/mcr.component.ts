@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { faAngleDown, faCalendarDay, faCaretRight, faCircleNotch, faClose, faInfoCircle, faPencil, faSave, faTimes, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
+import { ToastrService } from 'ngx-toastr';
 
 
 
@@ -57,7 +58,7 @@ export class McrComponent implements OnInit {
   updating: boolean;
   loading: boolean;
 
-  constructor(private http: HttpService, private formBuilder: FormBuilder) { }
+  constructor(private http: HttpService, private formBuilder: FormBuilder, private toastr: ToastrService ) { }
 
 
 
@@ -69,6 +70,10 @@ export class McrComponent implements OnInit {
     this.loading = false;
     this.saved = false;
     this.getMCR();
+
+  }
+
+  setToastr(){
 
   }
 
@@ -130,12 +135,17 @@ export class McrComponent implements OnInit {
     console.log(this.mcr_form.value, " validation check");
     this.loading = true;
     let http;
+    let message
+    let title = 'Maternal Care Record'
     if (this.updating) {
       http = this.http.update('maternal-care/mc-preregistrations/', this.mcr_data.id, this.mcr_form.value)
+      message = 'Succesfully updated!'
     } else {
       http = this.http.post('maternal-care/mc-preregistrations', this.mcr_form.value)
+      message = 'Succesfully saved!'
     }
-
+    console.log(message);
+    
     if (this.mcr_form.valid) {
       http.subscribe({
         next: (data: any) => {
@@ -145,9 +155,7 @@ export class McrComponent implements OnInit {
         error: err => console.log(err),
         complete: () => {
           this.saved = true;
-          setTimeout(() => {
-            this.saved = false;
-          }, 1500);
+          this.toastr.success(message, title, {timeOut: 1500, progressBar: true, progressAnimation: 'increasing'});
           this.loading = false;
         }
       })

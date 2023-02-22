@@ -29,7 +29,7 @@
         </li> -->
         <li class="absolute right-0 " *ngIf="patient_id && patient_mc_record">
           <a class="select-none text-base inline-block p-2 bg-gray-300 mt-3 mr-3 text-gray-400 hover:text-white rounded-md font-bold hover:bg-orange-400"
-            (click)="endVisit()">
+            (click)="toggleModal()">
             <fa-icon [icon]="faPersonWalking" size="lg" class="mx-2"></fa-icon>End Visit
           </a>
         </li>
@@ -148,7 +148,6 @@
     </div>
   </div>
 
-  <!-- <div class="w-3/12">
-    <app-patient-info (patientInfo)="patientInfo($event)"></app-patient-info>
-  </div> -->
-<!-- </div> -->
+<app-end-visit  *ngIf="show_end" [consult_id]="consult_id" [toggleModal]="toggleModal()"
+          [consult_date]="consult_details[0]?.consult_date" [patient_id]="consult_details[0]?.patient.id"
+          [pt_group]="'mc'"></app-end-visit>

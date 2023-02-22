@@ -23,7 +23,7 @@
         <div class="flex cursor-pointer w-2/5 hover:opacity-75" (click)="openItr(profile?.patient.id,'itr')">
           <a class="justify-center mx-auto">
             <div class="inline-flex overflow-hidden relative justify-center items-center w-16 h-16 bg-gray-200 rounded-full dark:bg-gray-600">
-              <span class="font-medium text-gray-600 text-sm xl:text-lg">{{ getInitials(profile?.patient?.first_name+' '+profile?.patient?.last_name) }}</span>
+              <span class="font-medium text-gray-600 text-sm xl:text-lg">{{ getInitials(profile?.patient?.first_name, profile?.patient?.last_name) }}</span>
             </div>
           </a>
 
@@ -87,7 +87,7 @@
               of <span class="font-medium">{{ total }}</span> results
             </p>
           </div>
-          <div>
+          <div *ngIf="total >= 6">
             <nav class="relative z-0 inline-flex shadow-sm -space-x-px" aria-label="Pagination">
               <button [disabled]="current_page===1" (click)="getTodaysConsult(1)" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 enabled:bg-white disabled:bg-gray-300 text-sm font-medium text-gray-500 hover:bg-gray-50">
                 <fa-icon [icon]="faAnglesLeft" class="block h-15 w-15 text-gray-500 pr-1"></fa-icon>

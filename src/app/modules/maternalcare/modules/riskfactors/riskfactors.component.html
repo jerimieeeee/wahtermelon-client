@@ -80,7 +80,7 @@
                         class="cursor-pointer flex border-check hover:drop-shadow-md bg-green-300 hover:bg-green-400 py-1 rounded-full text-white px-3 peer-hover:bg-white peer-hover:text-green-400">
                         <fa-icon [icon]="faSave" size="lg" class="mr-2">
                         </fa-icon>
-                        <button type="button" class="font-bold button-out border-check-red">Save</button>
+                        <button type="button" class="font-bold button-out border-check-red" [disabled]="is_saving">Save</button>
                     </div>
                 </div>
             </div>

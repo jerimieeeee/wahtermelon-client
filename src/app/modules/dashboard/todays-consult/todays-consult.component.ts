@@ -123,8 +123,8 @@ export class TodaysConsultComponent implements OnInit, OnDestroy {
     }
   }
 
-  getInitials(string) {
-    return [...string.matchAll(/\b\w/g)].join('')
+  getInitials(first_name, last_name) {
+    return first_name.charAt(0)+last_name.charAt(0)
   }
 
   constructor(

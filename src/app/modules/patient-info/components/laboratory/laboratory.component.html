@@ -1,7 +1,7 @@
 <div *ngIf="active_loc_id?.loc !== 'lab'" class="block pt-4 justify-items-start mx-5 pb-5">
   <div class="flex justify-between items-center">
     <span class="block text-blue-500 font-medium text-sm">
-      <fa-icon (click)="toggle('lab_request')" class="mx-0 my-0 text-gray-500 mr-2 hover:cursor-pointer" [icon]="accordions['lab_request'] ? faChevronUp : faChevronDown"></fa-icon>
+      <fa-icon (click)="toggle('lab_request')" class="mx-0 my-0 mr-2 hover:cursor-pointer" [icon]="accordions['lab_request'] ? faChevronUp : faChevronDown"></fa-icon>
       LAB REQUESTS
     </span>
     <span>
