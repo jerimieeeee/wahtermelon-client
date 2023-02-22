@@ -216,7 +216,7 @@
                     class="cursor-pointer flex border-check hover:drop-shadow-md {{updating?'bg-blue-300 hover:bg-blue-400 peer-hover:text-blue-400':'bg-green-300 hover:bg-green-400 peer-hover:text-green-400'}} py-1 rounded-full text-white px-3 peer-hover:bg-white">
                     <fa-icon *ngIf="!loading" [icon]="faSave" size="lg" class="mr-2"></fa-icon>
                     <fa-icon *ngIf="loading" class="mr-2" [icon]="faSpinner" [spin]="true"></fa-icon>
-                    <button type="button" class="font-bold button-out border-check-red">
+                    <button type="button" class="font-bold button-out border-check-red" [disabled]="loading">
                         {{updating?(loading?'Updating':'Update'):(loading?'Saving':'Save')}}
                     </button>
                 </div>

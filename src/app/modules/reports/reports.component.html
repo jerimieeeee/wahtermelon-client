@@ -40,7 +40,7 @@
 
   <div class="flex flex-wrap border border-slate-300 rounded-xl">
       <app-fhsis2018-cc *ngIf="report_params?.report_type=== 'fhsis2018-cc'" [report_params]="report_params"></app-fhsis2018-cc>
-      <app-fhsis2018-mc *ngIf="report_params?.report_type === 'fhsis2018-mc'" [report_params]="report_params"></app-fhsis2018-mc>
+      <app-fhsis2018-mc class="w-full" *ngIf="report_params?.report_type === 'fhsis2018-mc'" [report_params]="report_params"></app-fhsis2018-mc>
   </div>
 </div> -->
 
