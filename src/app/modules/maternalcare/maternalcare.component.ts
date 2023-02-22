@@ -27,6 +27,7 @@ export class MaternalcareComponent implements OnInit {
   modalStats: any;
   mcr: boolean;
   consult_details: any;
+  show_end: boolean;
 
   constructor(private http: HttpService,
     private router: Router,
@@ -66,6 +67,10 @@ export class MaternalcareComponent implements OnInit {
     this.mcrID('all', this.patient_id);
   }
 
+  toggleModal(){
+    this.show_end = !this.show_end;
+  }
+  
   switchTab(tab) {
     this.module = 0;
     this.module = tab;
