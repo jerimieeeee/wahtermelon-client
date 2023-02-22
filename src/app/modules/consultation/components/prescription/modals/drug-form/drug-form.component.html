@@ -18,7 +18,7 @@
             </div>
 
             <div class="col-span-3 text-sm " *ngIf="add_drug">
-              <label class="font-semibold" for="added_medicine" [ngClass]="{'text-red-500': is_saving && f.added_medicine.errors}">Brand name</label>
+              <label class="font-semibold" for="added_medicine" [ngClass]="{'text-red-500': is_saving && f.added_medicine.errors}">Drug name</label>
               <input name="added_medicine" id="added_medicine" formControlName="added_medicine" type="text" class="input" [ngClass]="{'invalid-input': is_saving && f.added_medicine.errors}">
 
               <div *ngIf="is_saving && f.added_medicine.errors" class="invalid-alert">
