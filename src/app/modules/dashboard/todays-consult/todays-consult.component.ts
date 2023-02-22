@@ -33,12 +33,12 @@ export class TodaysConsultComponent implements OnInit, OnDestroy {
 
   getTodaysConsult(page?: number){
     let params = {params: { }};
-    if (page) params['params']['page'] = page;
+    params['params']['page'] = !page ? this.current_page : page;
     if (this.selected_physician !== 'all') params['params']['physician_id'] = this.selected_physician;
     params['params']['per_page'] = this.per_page;
     params['params']['consult_done'] = 0;
 
-    // console.log(params)
+    // console.log(params, page, this.current_page)
     this.http.get('consultation/records', params).subscribe({
       next: (data: any) => {
         // console.log(data);
@@ -72,7 +72,7 @@ export class TodaysConsultComponent implements OnInit, OnDestroy {
       next: (data: any) => {
         this.physicians = data.data;
         let user_info = this.http.getUserFromJSON();
-        this.selected_physician = user_info.designation_code === 'MD' ? user_info.id : 'all';
+        this.selected_physician = user_info.designation.code === 'MD' ? user_info.id : 'all';
 
         this.getTodaysConsult();
         this.subscribeRefresh();
@@ -82,7 +82,6 @@ export class TodaysConsultComponent implements OnInit, OnDestroy {
   }
 
   openItr(patient_id, ptgroup, id){
-    // console.log(patient_id)
     if(ptgroup === 'itr'){
       this.router.navigate(['/patient/'+ptgroup, {id: patient_id}]);
     } else {
@@ -93,19 +92,15 @@ export class TodaysConsultComponent implements OnInit, OnDestroy {
   getDataDiff(consult_date) {
     let endDate = new Date();
     let startDate = new Date(consult_date);
-    let x = endDate.getTime();
-    let y = startDate.getTime();
     var diff = endDate.getTime() - startDate.getTime();
     var days = Math.floor(diff / (60 * 60 * 24 * 1000));
     var hours = Math.floor(diff / (60 * 60 * 1000)) - (days * 24);
     var minutes = Math.floor(diff / (60 * 1000)) - ((days * 24 * 60) + (hours * 60));
-    // var seconds = Math.floor(diff / 1000) - ((days * 24 * 60 * 60) + (hours * 60 * 60) + (minutes * 60));
 
     let duration_day = days ? days + ' days': '';;
     let duration_hours = hours ? hours + ' hours': '';
     let duration_minutes = minutes ? minutes + ' minutes': '';
     return duration_day+' '+duration_hours+' '+duration_minutes;
-    // return { day: days, hour: hours, minute: minutes, second: seconds };
   }
 
   getVisitType(group){
