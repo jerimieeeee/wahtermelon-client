@@ -130,11 +130,12 @@ export class DrugFormComponent implements OnChanges {
       instruction_quantity: [null,[Validators.required]]
     });
 
-    // console.log(this.selected_drug)
     if(this.selected_drug){
+      // console.log(this.selected_drug)
       if(this.selected_drug.id) {
         this.prescriptionForm.patchValue({
-          konsulta_medicine_code: this.selected_drug.konsulta_medicine.code,
+          konsulta_medicine_code: this.selected_drug.konsulta_medicine ? this.selected_drug.konsulta_medicine.code : null,
+          added_medicine: this.selected_drug.added_medicine ? this.selected_drug.added_medicine : null,
           dosage_quantity: this.selected_drug.dosage_quantity,
           dosage_uom: this.selected_drug.unit_of_measurement.code,
           dose_regimen: this.selected_drug.regimen.code,
@@ -147,7 +148,13 @@ export class DrugFormComponent implements OnChanges {
         });
 
         // console.log(this.prescriptionForm.value)
-        this.prescriptionForm.controls.added_medicine.disable();
+        if(this.selected_drug.konsulta_medicine) {
+          this.prescriptionForm.controls.added_medicine.disable();
+        } else {
+          this.add_drug = true;
+          this.prescriptionForm.controls.added_medicine.enable();
+          this.prescriptionForm.controls.konsulta_medicine_code.disable();
+        }
         this.checkPurpose();
       } else {
         this.prescriptionForm.patchValue({ konsulta_medicine_code: this.selected_drug.code })
