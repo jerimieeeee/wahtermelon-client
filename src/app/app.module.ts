@@ -13,7 +13,6 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgApexchartsModule } from 'ng-apexcharts';
-import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { RequestsInterceptor } from './shared/interceptor/http/http-interceptor';
 import { ToastrModule } from 'ngx-toastr';
 import { CookieService } from 'ngx-cookie-service'
@@ -36,7 +35,6 @@ import { provideEnvironmentNgxMask } from 'ngx-mask';
     NgSelectModule,
     FormsModule,
     NgApexchartsModule,
-    Ng2SearchPipeModule,
     NgApexchartsModule,
     ReactiveFormsModule,
     ToastrModule.forRoot()
