@@ -76,7 +76,7 @@ export class TodaysConsultComponent implements OnInit, OnDestroy {
       next: (data: any) => {
         this.physicians = data.data;
         let user_info = this.http.getUserFromJSON();
-        this.selected_physician = user_info.designation.code === 'MD' ? user_info.id : 'all';
+        this.selected_physician = user_info.designation_code === 'MD' ? user_info.id : 'all';
 
         this.getTodaysConsult();
         this.subscribeRefresh();
