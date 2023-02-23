@@ -126,7 +126,15 @@
                   <tbody>
                     <tr *ngFor="let pres of prescriptions; first as isFirst">
                       <td class="border border-slate-700 text-[.8em]">
-                        {{ pres.konsulta_medicine ? pres.konsulta_medicine.category : '' }}
+                        <span *ngIf="pres.konsulta_medicine">
+                          {{pres.konsulta_medicine.category}}
+                        </span>
+                        <span *ngIf="pres.added_medicine">
+                          {{pres.purpose.desc}}
+                        </span>
+                        <!-- {{ pres.konsulta_medicine ? pres.konsulta_medicine.category : '' }}
+                        {{ pres.added_medicine ? pres.konsulta_medicine.purpose.desc : '' }}-->
+
                       </td>
 
                       <td class="border border-slate-700 text-[.8em]">
