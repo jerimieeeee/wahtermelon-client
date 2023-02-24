@@ -5,20 +5,20 @@
   <!-- <div class="col-span-1 flex w-full text-blue-500 px-5 ">
     It works! CC Report
   </div> -->
-  <div class="flex flex-col">
+  <div class="flex flex-col pb-5">
     <div class="sm:-mx-6 lg:-mx-8">
       <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
         <div class="">
           <table class="min-w-full border">
             <thead class="border-b">
               <tr>
-                <th scope="col" colspan="2" class="text-sm font-medium text-gray-900 px-6 py-4 border">   
+                <th scope="col" colspan="1" class="text-sm font-medium text-gray-900 px-6 py-4 border">   
                   <img src="./assets/img/DOH_Logo.png" class="rounded-full w-28 h-28 mx-auto" />
                 </th>
                 <th scope="col" colspan="4" class="text-sm font-medium text-gray-900 px-6 py-4 border">
                   Details
                 </th>
-                <th scope="col" colspan="2" class="text-sm font-medium text-gray-900 px-6 py-4 border">
+                <th scope="col" colspan="3" class="text-sm font-medium text-gray-900 px-6 py-4 border">
                   Date
                 </th>
                 <th scope="col" colspan="2" class="text-sm font-medium text-gray-900 px-6 py-4 border">
@@ -26,48 +26,48 @@
                 </th>
               </tr>
               <tr>
-                <th scope="col" colspan="10" class="text-xs font-normal text-gray-900 px-6 py-4 border">
+                <th scope="col" colspan="10" class="text-xs font-semibold text-gray-900 px-6 py-4 border">
                   Section C. Child Care and Services
                 </th>
               </tr>
-              <tr class="text-center sticky top-0 bg-gray-100">
-                <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 border-r">
+              <tr class="text-center sticky top-0 bg-gray-150">
+                <th scope="col" class="text-sm font-semibold text-gray-900 px-6 py-4 border-r">
                   Indicator
                 <br /><span class="text-xs">(Col. 1)</span>
                 </th>
-                <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 border-r">
+                <th scope="col" class="text-sm font-semibold text-gray-900 px-6 py-4 border-r">
                   Male
                 <br /><span class="text-xs">(Col. 2)</span>
                 </th>
-                <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 border-r">
+                <th scope="col" class="text-sm font-semibold text-gray-900 px-6 py-4 border-r">
                   Female
                 <br /><span class="text-xs">(Col. 3)</span>
                 </th>
-                <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 border-r">
+                <th scope="col" class="text-sm font-semibold text-gray-900 px-6 py-4 border-r">
                   Total
                 <br /><span class="text-xs">(Col. 4)</span>
                 </th>
-                <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 border-r">
+                <th scope="col" class="text-sm font-semibold text-gray-900 px-6 py-4 border-r">
                   Remarks
                 <br /><span class="text-xs">(Col. 5)</span>
                 </th>
-                <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 border-r">
+                <th scope="col" class="text-sm font-semibold text-gray-900 px-6 py-4 border-r">
                   Indicator
                 <br /><span class="text-xs">(Col. 1)</span>
                 </th>
-                <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 border-r">
+                <th scope="col" class="text-sm font-semibold text-gray-900 px-6 py-4 border-r">
                   Male
                 <br /><span class="text-xs">(Col. 2)</span>
                 </th>
-                <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 border-r">
+                <th scope="col" class="text-sm font-semibold text-gray-900 px-6 py-4 border-r">
                   Female
                 <br /><span class="text-xs">(Col. 3)</span>
                 </th>
-                <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 border-r">
+                <th scope="col" class="text-sm font-semibold text-gray-900 px-6 py-4 border-r">
                   Total
                 <br /><span class="text-xs">(Col. 4)</span>
                 </th>
-                <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 border-r">
+                <th scope="col" class="text-sm font-semibold text-gray-900 px-6 py-4 border-r">
                   Remarks
                 <br /><span class="text-xs">(Col. 5)</span>
                 </th>
@@ -75,163 +75,206 @@
             </thead>
             <tbody>
               <tr>
-                <th scope="col" colspan="10" class="text-xs font-normal text-left text-gray-900 px-6 py-4 border bg-gray-50">
-                  C1. Immunization Services for Newborns, Infants and School-Aged Chilren/Adolescents
+                <th scope="col" colspan="10" class="text-xs font-semibold text-left text-gray-900 px-6 py-4 border bg-gray-100">
+                  C1. Immunization Services for Newborns, Infants and School-Aged Children/Adolescents
                 </th>
               </tr>
               
               <tr class="border text-sm">
-                <td class="p-5 border">1. CPAB - Total</td>
-                <td class="p-5 border text-blue-500 text-center">5</td>
-                <td class="p-5 border text-blue-500 text-center">12</td>
-                <td class="p-5 border text-blue-500 text-center">17</td>
+                <td class="p-5 border">1. CPAB</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.CPAB_Male.length}}</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.CPAB_Female.length}}</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.CPAB_Male.length + this.stats?.CPAB_Female.length}}</td>
                 <td class="p-5 border"></td>
-                <td class="p-5 border">11. PCV 1 - Total</td>
-                <td class="p-5 border text-blue-500 text-center">3</td>
-                <td class="p-5 border text-blue-500 text-center">5</td>
-                <td class="p-5 border text-blue-500 text-center">8</td>
-                <td class="p-5 border"></td>
-              </tr>
-
-              <tr class="border text-sm">
-                <td class="p-5 border">2. BCG - Total</td>
-                <td class="p-5 border text-blue-500 text-center">5</td>
-                <td class="p-5 border text-blue-500 text-center">12</td>
-                <td class="p-5 border text-blue-500 text-center">17</td>
-                <td class="p-5 border"></td>
-                <td class="p-5 border">12. PCV 2 - Total</td>
-                <td class="p-5 border text-blue-500 text-center">3</td>
-                <td class="p-5 border text-blue-500 text-center">5</td>
-                <td class="p-5 border text-blue-500 text-center">8</td>
+                <td class="p-5 border">12. IPV2 (catch up)</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.IPV2_Catch_up_Male.length}}</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.IPV2_Catch_up_Female.length}}</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.IPV2_Catch_up_Male.length + this.stats?.IPV2_Catch_up_Female.length}}</td>
                 <td class="p-5 border"></td>
               </tr>
 
               <tr class="border text-sm">
-                <td class="p-5 border">3. HepB, within 24 hours.</td>
-                <td class="p-5 border text-blue-500 text-center">5</td>
-                <td class="p-5 border text-blue-500 text-center">12</td>
-                <td class="p-5 border text-blue-500 text-center">17</td>
+                <td class="p-5 border select-none">2. BCG</td>
+                <td class="p-5 border text-blue-500 text-center" [class]="this.stats?.BCG_Male.length !==0 ? 'cursor-pointer select-none' : 'pointer-events-none select-none' " (click)="toggleAlertModal()">{{this.stats?.BCG_Male.length}}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]="this.stats?.BCG_Female.length !==0 ? 'cursor-pointer select-none' : 'pointer-events-none select-none' " (click)="toggleAlertModal()">{{this.stats?.BCG_Female.length}}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]="this.stats?.BCG_Female.length !==0 || this.stats?.BCG_Male.length !==0 ? 'cursor-pointer select-none' : 'pointer-events-none select-none' " (click)="toggleAlertModal()">{{this.stats?.BCG_Male.length + this.stats?.BCG_Female.length}}</td>
                 <td class="p-5 border"></td>
-                <td class="p-5 border">13. PCV 3 - Total</td>
-                <td class="p-5 border text-blue-500 text-center">3</td>
-                <td class="p-5 border text-blue-500 text-center">5</td>
-                <td class="p-5 border text-blue-500 text-center">8</td>
-                <td class="p-5 border"></td>
-              </tr>
-
-              <tr class="border text-sm">
-                <td class="p-5 border">4. DPT-HiB-HepB 1 - Total</td>
-                <td class="p-5 border text-blue-500 text-center">5</td>
-                <td class="p-5 border text-blue-500 text-center">12</td>
-                <td class="p-5 border text-blue-500 text-center">17</td>
-                <td class="p-5 border"></td>
-                <td class="p-5 border">14. MCV 1 - Total</td>
-                <td class="p-5 border text-blue-500 text-center">3</td>
-                <td class="p-5 border text-blue-500 text-center">5</td>
-                <td class="p-5 border text-blue-500 text-center">8</td>
+                <td class="p-5 border">13. PCV 1 </td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.PCV1_Male.length}}</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.PCV1_Female.length}}</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.PCV1_Male.length + this.stats?.PCV1_Female.length}}</td>
                 <td class="p-5 border"></td>
               </tr>
 
               <tr class="border text-sm">
-                <td class="p-5 border">5. DPT-HiB-HepB 2 - Total</td>
-                <td class="p-5 border text-blue-500 text-center">5</td>
-                <td class="p-5 border text-blue-500 text-center">12</td>
-                <td class="p-5 border text-blue-500 text-center">17</td>
+                <td class="p-5 border">3. a. HepB, within 24 hours.</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.HEPB_Male_within_24.length}}</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.HEPB_Female_within_24.length}}</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.HEPB_Male_within_24.length + this.stats?.HEPB_Female_within_24.length}}</td>
                 <td class="p-5 border"></td>
-                <td class="p-5 border">15. MCV 2 - Total</td>
-                <td class="p-5 border text-blue-500 text-center">3</td>
-                <td class="p-5 border text-blue-500 text-center">5</td>
-                <td class="p-5 border text-blue-500 text-center">8</td>
-                <td class="p-5 border"></td>
-              </tr>
-
-              <tr class="border text-sm">
-                <td class="p-5 border">6. DPT-HiB-HepB 3 - Total</td>
-                <td class="p-5 border text-blue-500 text-center">5</td>
-                <td class="p-5 border text-blue-500 text-center">12</td>
-                <td class="p-5 border text-blue-500 text-center">17</td>
-                <td class="p-5 border"></td>
-                <td class="p-5 border">16. FIC - Total</td>
-                <td class="p-5 border text-blue-500 text-center">3</td>
-                <td class="p-5 border text-blue-500 text-center">5</td>
-                <td class="p-5 border text-blue-500 text-center">8</td>
+                <td class="p-5 border">14. PCV 2</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.PCV2_Male.length}}</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.PCV2_Female.length}}</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.PCV2_Male.length + this.stats?.PCV2_Female.length}}</td>
                 <td class="p-5 border"></td>
               </tr>
 
               <tr class="border text-sm">
-                <td class="p-5 border">7. OPV 1 - Total</td>
-                <td class="p-5 border text-blue-500 text-center">5</td>
-                <td class="p-5 border text-blue-500 text-center">12</td>
-                <td class="p-5 border text-blue-500 text-center">17</td>
+                <td class="p-5 border pl-9">b. HepB, within 24 hours.</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.HEPB_Male_after_24.length}}</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.HEPB_Male_after_24.length}}</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.HEPB_Male_after_24.length + this.stats?.HEPB_Female_after_24.length}}</td>
                 <td class="p-5 border"></td>
-                <td class="p-5 border">17. CIC - Total</td>
-                <td class="p-5 border text-blue-500 text-center">3</td>
-                <td class="p-5 border text-blue-500 text-center">5</td>
-                <td class="p-5 border text-blue-500 text-center">8</td>
-                <td class="p-5 border"></td>
-              </tr>
-
-              <tr class="border text-sm">
-                <td class="p-5 border">8. OPV 2 - Total</td>
-                <td class="p-5 border text-blue-500 text-center">5</td>
-                <td class="p-5 border text-blue-500 text-center">12</td>
-                <td class="p-5 border text-blue-500 text-center">17</td>
-                <td class="p-5 border"></td>
-                <td class="p-5 border">18. Td, Grade 1 (November) - Total</td>
-                <td class="p-5 border text-blue-500 text-center">3</td>
-                <td class="p-5 border text-blue-500 text-center">5</td>
-                <td class="p-5 border text-blue-500 text-center">8</td>
+                <td class="p-5 border">15. PCV 3</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.PCV3_Male.length}}</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.PCV3_Female.length}}</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.PCV3_Male.length + this.stats?.PCV3_Female.length}}</td>
                 <td class="p-5 border"></td>
               </tr>
 
               <tr class="border text-sm">
-                <td class="p-5 border">9. OPV 3 - Total</td>
+                <td class="p-5 border">4. DPT-HiB-HepB 1</td>
                 <td class="p-5 border text-blue-500 text-center">5</td>
                 <td class="p-5 border text-blue-500 text-center">12</td>
                 <td class="p-5 border text-blue-500 text-center">17</td>
                 <td class="p-5 border"></td>
-                <td class="p-5 border">19. MR, Grade 1 (November) - Total</td>
-                <td class="p-5 border text-blue-500 text-center">3</td>
-                <td class="p-5 border text-blue-500 text-center">5</td>
-                <td class="p-5 border text-blue-500 text-center">8</td>
+                <td class="p-5 border">16. MCV 1</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.MCV1_Male.length}}</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.MCV1_Female.length}}</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.MCV1_Male.length + this.stats?.MCV1_Female.length}}</td>
                 <td class="p-5 border"></td>
               </tr>
 
               <tr class="border text-sm">
-                <td class="p-5 border">10. IPV - Total</td>
+                <td class="p-5 border">5. DPT-HiB-HepB 2</td>
                 <td class="p-5 border text-blue-500 text-center">5</td>
                 <td class="p-5 border text-blue-500 text-center">12</td>
                 <td class="p-5 border text-blue-500 text-center">17</td>
                 <td class="p-5 border"></td>
-                <td class="p-5 border">20. Td, Grade 7 (November) - Total</td>
-                <td class="p-5 border text-blue-500 text-center">3</td>
-                <td class="p-5 border text-blue-500 text-center">5</td>
-                <td class="p-5 border text-blue-500 text-center">8</td>
+                <td class="p-5 border">17. MCV 2</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.MCV2_Male.length}}</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.MCV2_Female.length}}</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.MCV2_Male.length + this.stats?.MCV2_Female.length}}</td>
                 <td class="p-5 border"></td>
               </tr>
 
               <tr class="border text-sm">
-                <td colspan="5" class="p-5 border"></td>
-                <td class="p-5 border">21. MR, Grade 7 (November) - Total</td>
-                <td class="p-5 border text-blue-500 text-center">3</td>
+                <td class="p-5 border">6. DPT-HiB-HepB 3</td>
                 <td class="p-5 border text-blue-500 text-center">5</td>
-                <td class="p-5 border text-blue-500 text-center">8</td>
+                <td class="p-5 border text-blue-500 text-center">12</td>
+                <td class="p-5 border text-blue-500 text-center">17</td>
+                <td class="p-5 border"></td>
+                <td class="p-5 border">18. FIC</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.FIC_Male.length}}</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.FIC_Female.length}}</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.FIC_Male.length + this.stats?.FIC_Female.length}}</td>
+                <td class="p-5 border"></td>
+              </tr>
+
+              <tr class="border text-sm">
+                <td class="p-5 border">7. OPV 1</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.OPV1_Male.length}}</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.OPV1_Female.length}}</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.OPV1_Male.length + this.stats?.OPV1_Female.length}}</td>
+                <td class="p-5 border"></td>
+                <td class="p-5 border">19. CIC</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.CIC_Male.length}}</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.CIC_Female.length}}</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.CIC_Male.length + this.stats?.CIC_Female.length}}</td>
+                <td class="p-5 border"></td>
+              </tr>
+
+              <tr class="border text-sm">
+                <td class="p-5 border">8. OPV 2</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.OPV2_Male.length}}</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.OPV2_Female.length}}</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.OPV2_Male.length + this.stats?.OPV2_Female.length}}</td>
+                <td class="p-5 border"></td>
+                <td class="p-5 border">20. Td, Grade 1 (November) - Total</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.TDRGR1_Male.length}}</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.TDRGR1_Female.length}}</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.TDRGR1_Male.length + this.stats?.TDRGR1_Female.length}}</td>
+                <td class="p-5 border"></td>
+              </tr>
+
+              <tr class="border text-sm">
+                <td class="p-5 border">9. OPV 3</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.OPV3_Male.length}}</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.OPV3_Female.length}}</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.OPV3_Male.length + this.stats?.OPV3_Female.length}}</td>
+                <td class="p-5 border"></td>
+                <td class="p-5 border">21. MR, Grade 1 (November) - Total</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.MRGR1_Male.length}}</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.MRGR1_Female.length}}</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.MRGR1_Male.length + this.stats?.MRGR1_Female.length}}</td>
+                <td class="p-5 border"></td>
+              </tr>
+
+              <tr class="border text-sm">
+                <td class="p-5 border">10. IPV 1</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.IPV1_Male.length}}</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.IPV1_Female.length}}</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.IPV1_Male.length + this.stats?.IPV1_Female.length}}</td>
+                <td class="p-5 border"></td>
+                <td class="p-5 border">22. Td, Grade 7 (November) - Total</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.TDRGR7_Male.length}}</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.TDRGR7_Female.length}}</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.TDRGR7_Male.length + this.stats?.TDRGR7_Female.length}}</td>
+                <td class="p-5 border"></td>
+              </tr>
+
+              <tr class="border text-sm">
+                <td class="p-5 border">12. IPV 2 (routine)</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.IPV2_Routine_Male.length}}</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.IPV2_Routine_Female.length}}</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.IPV2_Routine_Male.length + this.stats?.IPV2_Routine_Female.length}}</td>
+                <td class="p-5 border"></td>
+                <td class="p-5 border">23. MR, Grade 7 (November) - Total</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.MRGR7_Male.length}}</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.MRGR7_Female.length}}</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.MRGR7_Male.length + this.stats?.MRGR7_Female.length}}</td>
                 <td class="p-5 border"></td>
               </tr>
 
               <tr>
-                <th scope="col" colspan="10" class="text-xs font-normal text-left text-gray-900 px-6 py-4 border bg-gray-50">
+                <th scope="col" colspan="10" class="text-xs font-semibold text-left text-gray-900 px-6 py-4 border bg-gray-50">
                   C2. Nutrition Services for Infants and Children
                 </th>
               </tr>
 
               <tr class="border text-sm">
-                <td class="p-5 border">22. Newborns initiated on breastfeeding<br>immediately after birth lasting to 90 mins - Total</td>
-                <td class="p-5 border text-blue-500 text-center">5</td>
-                <td class="p-5 border text-blue-500 text-center">12</td>
-                <td class="p-5 border text-blue-500 text-center">17</td>
+                <td class="p-5 border">24. Newborns initiated on breastfeeding<br>immediately after birth lasting to 90 mins - Total</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.Initiated_Breastfeeding_90mins_Male.length}}</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.Initiated_Breastfeeding_90mins_Female.length}}</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.Initiated_Breastfeeding_90mins_Male.length + this.stats?.Initiated_Breastfeeding_90mins_Female.length}}</td>
                 <td class="p-5 border"></td>
-                <td class="p-5 border">11. PCV 1 - Total</td>
+                <td class="p-5 border">33. Stunted - Total</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.stunted_0_59_months_Male.length}}</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.stunted_0_59_months_Female.length}}</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.stunted_0_59_months_Male.length + this.stats?.stunted_0_59_months_Female.length}}</td>
+                <td class="p-5 border"></td>
+              </tr>
+
+              <tr class="border text-sm">
+                <td class="p-5 border">25. Preterm/LBW infants given iron <br /> supplementation</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.preterm_iron_Male.length}}</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.preterm_iron_Female.length}}</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.preterm_iron_Male.length + this.stats?.preterm_iron_Female.length}}</td>
+                <td class="p-5 border"></td>
+                <td class="p-5 border">34. Wasted - Total</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.wasted_0_59_months_Male.length}}</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.wasted_0_59_months_Female.length}}</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.wasted_0_59_months_Male.length + this.stats?.wasted_0_59_months_Female.length}}</td>
+                <td class="p-5 border"></td>
+              </tr>
+
+              <tr class="border text-sm">
+                <td class="p-5 border">26. Infants exclusively breastfed until 5th month <br/> and 29 Days - Total</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.ebf_5months_29days_Male.length}}</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.ebf_5months_29days_Female.length}}</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.ebf_5months_29days_Male.length + this.stats?.ebf_5months_29days_Female.length}}</td>
+                <td class="p-5 border"></td>
+                <td class="p-5 border">34. a.1. MAM-admitted in SFT - Total</td>
                 <td class="p-5 border text-blue-500 text-center">3</td>
                 <td class="p-5 border text-blue-500 text-center">5</td>
                 <td class="p-5 border text-blue-500 text-center">8</td>
@@ -239,12 +282,12 @@
               </tr>
 
               <tr class="border text-sm">
-                <td class="p-5 border">23. Preterm/LBW infants given iron <br /> supplementation - Total</td>
-                <td class="p-5 border text-blue-500 text-center">5</td>
-                <td class="p-5 border text-blue-500 text-center">12</td>
-                <td class="p-5 border text-blue-500 text-center">17</td>
+                <td class="p-5 border">27.  Infants 6 mos. old initiated to comp. feeding <br/> w/ con't. BF</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.complimentary_6_11_months_Male.length}}</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.complimentary_6_11_months_Female.length}}</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.complimentary_6_11_months_Male.length + this.stats?.complimentary_6_11_months_Female.length}}</td>
                 <td class="p-5 border"></td>
-                <td class="p-5 border">12. PCV 2 - Total</td>
+                <td class="p-5 border">34. a.1. MAM-admitted in SFT - Total</td>
                 <td class="p-5 border text-blue-500 text-center">3</td>
                 <td class="p-5 border text-blue-500 text-center">5</td>
                 <td class="p-5 border text-blue-500 text-center">8</td>
@@ -252,12 +295,12 @@
               </tr>
 
               <tr class="border text-sm">
-                <td class="p-5 border">24. Infants exclusively breastfed until 6th month - <br /> Total</td>
-                <td class="p-5 border text-blue-500 text-center">5</td>
-                <td class="p-5 border text-blue-500 text-center">12</td>
-                <td class="p-5 border text-blue-500 text-center">17</td>
+                <td class="p-5 border">28. Infants 6 mos. old who have initiated and <br/> received  comp.feeding but has stopped BF or  <br/> has never been BF at all - Total</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.stop_bfed_complimentary_6_11_months_Male.length}}</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.stop_bfed_complimentary_6_11_months_Female.length}}</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.stop_bfed_complimentary_6_11_months_Male.length + this.stats?.stop_bfed_complimentary_6_11_months_Female.length}}</td>
                 <td class="p-5 border"></td>
-                <td class="p-5 border">13. PCV 3 - Total</td>
+                <td class="p-5 border">34. a.2. MAM-cured in SFP - Total</td>
                 <td class="p-5 border text-blue-500 text-center">3</td>
                 <td class="p-5 border text-blue-500 text-center">5</td>
                 <td class="p-5 border text-blue-500 text-center">8</td>
@@ -265,18 +308,210 @@
               </tr>
 
               <tr class="border text-sm">
-                <td class="p-5 border">25. Infants 6 mos. old initiated to complementary <br /> feeding with continued breastfeeding - Total</td>
-                <td class="p-5 border text-blue-500 text-center">5</td>
-                <td class="p-5 border text-blue-500 text-center">12</td>
-                <td class="p-5 border text-blue-500 text-center">17</td>
+                <td class="p-5 border">29.  Infants 6-11 mos. Old given 1 dose of <br/> Vit. A 100,000 I.U.</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.6_11_months_vit_a_Male.length}}</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.6_11_months_vit_a_Female.length}}</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.6_11_months_vit_a_Male.length + this.stats?.6_11_months_vit_a_Female.length}}</td>
                 <td class="p-5 border"></td>
-                <td class="p-5 border">14. MCV 1 - Total</td>
+                <td class="p-5 border">34. a.3. MAM-defaulted in SFP - Total</td>
                 <td class="p-5 border text-blue-500 text-center">3</td>
                 <td class="p-5 border text-blue-500 text-center">5</td>
                 <td class="p-5 border text-blue-500 text-center">8</td>
                 <td class="p-5 border"></td>
               </tr>
 
+              <tr class="border text-sm">
+                <td class="p-5 border">30. Children 12-59 mos. Old given 2 doses of <br/> Vit. A 200,000 I.U.</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.12_59_months_vit_a_Male.length}}</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.12_59_months_vit_a_Female.length}}</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.12_59_months_vit_a_Male.length + this.stats?.12_59_months_vit_a_Female.length}}</td>
+                <td class="p-5 border"></td>
+                <td class="p-5 border">34. a.4. MAM died in SFP - Total</td>
+                <td class="p-5 border text-blue-500 text-center">3</td>
+                <td class="p-5 border text-blue-500 text-center">5</td>
+                <td class="p-5 border text-blue-500 text-center">8</td>
+                <td class="p-5 border"></td>
+              </tr>
+
+              <tr class="border text-sm">
+                <td class="p-5 border">31. Infant 6-11 mos. Old who completed MNP <br/> supplementation</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.mnp_6_11_months_Male.length}}</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.mnp_6_11_months_Female.length}}</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.mnp_6_11_months_Male.length + this.stats?.mnp_6_11_months_Female.length}}</td>
+                <td class="p-5 border"></td>
+                <td class="p-5 border">34. b. SAM  - Total</td>
+                <td class="p-5 border text-blue-500 text-center">3</td>
+                <td class="p-5 border text-blue-500 text-center">5</td>
+                <td class="p-5 border text-blue-500 text-center">8</td>
+                <td class="p-5 border"></td>
+              </tr>
+
+              <tr class="border text-sm"> 
+                <td class="p-5 border">32. Children 12-23 mos. Who completed  MNP <br/> Supplementation</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.mnp2_12_23_months_Male.length}}</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.mnp2_12_23_months_Female.length}}</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.mnp2_12_23_months_Male.length + this.stats?.mnp2_12_23_months_Female.length}}</td>
+                <td class="p-5 border"></td>
+                <td class="p-5 border">34. b.1. SAM- admitted to OTC - Total</td>
+                <td class="p-5 border text-blue-500 text-center">5</td>
+                <td class="p-5 border text-blue-500 text-center">12</td>
+                <td class="p-5 border text-blue-500 text-center">17</td>
+                <td class="p-5 border"></td>
+              </tr> 
+
+              <tr class="text-sm">
+                <td colspan="5" class="p-5 bg-gray-100"></td>
+                <td class="p-5 border">34. b.2. SAM - cured in OTC - Total</td>
+                <td class="p-5 border text-blue-500 text-center">3</td>
+                <td class="p-5 border text-blue-500 text-center">5</td>
+                <td class="p-5 border text-blue-500 text-center">8</td>
+                <td class="p-5 border"></td>
+              </tr>
+
+              <tr class="text-sm">
+                <td colspan="5" class="p-5 bg-gray-100"></td>
+                <td class="p-5 border">34. b.3. SAM-defaulted in OTC - Total</td>
+                <td class="p-5 border text-blue-500 text-center">3</td>
+                <td class="p-5 border text-blue-500 text-center">5</td>
+                <td class="p-5 border text-blue-500 text-center">8</td>
+                <td class="p-5 border"></td>
+              </tr>
+
+              <tr class="text-sm">
+                <td colspan="5" class="p-5 bg-gray-100"></td>
+                <td class="p-5 border">34. b.4. SAM- died in OTC - Total</td>
+                <td class="p-5 border text-blue-500 text-center">3</td>
+                <td class="p-5 border text-blue-500 text-center">5</td>
+                <td class="p-5 border text-blue-500 text-center">8</td>
+                <td class="p-5 border"></td>
+              </tr>
+
+              <tr class="text-sm">
+                <td colspan="5" class="p-5 bg-gray-100"></td>
+                <td class="p-5 border">35. Overweight and Obese - Total</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.obese_overweight_0_59_months_Male.length}}</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.obese_overweight_0_59_months_Female.length}}</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.obese_overweight_0_59_months_Male.length + this.stats?.obese_overweight_0_59_months_Female.length}}</td>
+                <td class="p-5 border"></td>
+              </tr>
+
+              <tr class="text-sm">
+                <td colspan="5" class="p-5 bg-gray-100"></td>
+                <td class="p-5 border">34. Normal - Total</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.normal_0_59_months_Male.length}}</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.normal_0_59_months_Female.length}}</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.normal_0_59_months_Male.length + this.stats?.normal_0_59_months_Female.length}}</td>
+                <td class="p-5 border"></td>
+              </tr>
+
+              <tr>
+                <td scope="col" colspan="5" class="text-xs font-semibold text-left text-gray-900 px-6 py-4 border bg-gray-100">
+                  C4. Deworming Services for Infants, Children and Adolescents
+                </td>
+                <td scope="col" colspan="5" class="text-xs font-semibold text-left text-gray-900 px-6 py-4 border bg-gray-100">
+                  C5. Deworming Services for Infants, Children and Adolescents
+                </td>
+              </tr>
+
+              <tr class="border text-sm"> 
+                <td class="p-5 border">37. 1-19 y/o given 2 doses of deworming drug</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.deworming_1_to_19_yo_Male.length}}</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.deworming_1_to_19_yo_Female.length}}</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.deworming_1_to_19_yo_Male.length + this.stats?.deworming_1_to_19_yo_Female.length}}</td>
+                <td class="p-5 border"></td>
+                <td class="p-5 border">38. Sick Infants 6-11 mos. Old seen</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.sick_infant_6_to_11_months_Male.length}}</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.sick_infant_6_to_11_months_Female.length}}</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.sick_infant_6_to_11_months_Male.length + this.stats?.sick_infant_6_to_11_months_Female.length}}</td>
+                <td class="p-5 border"></td>
+              </tr> 
+
+              <tr class="border text-sm"> 
+                <td class="p-5 border pl-8"> a. PSAC, 1-4 y.o. dewormed (2 doses)</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.deworming_1_to_4_yo_Male.length}}</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.deworming_1_to_4_yo_Female.length}}</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.deworming_1_to_4_yo_Male.length + this.stats?.deworming_1_to_4_yo_Female.length}}</td>
+                <td class="p-5 border"></td>
+                <td class="p-5 border">39. Sick Infants 6-11 mos. Old received Vitamin A</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.sick_infant_6_to_11_months_with_vit_a_Male.length}}</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.sick_infant_6_to_11_months_with_vit_a_Female.length}}</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.sick_infant_6_to_11_months_with_vit_a_Male.length + this.stats?.sick_infant_6_to_11_months_with_vit_a_Female.length}}</td>
+                <td class="p-5 border"></td>
+              </tr> 
+
+              <tr class="border text-sm"> 
+                <td class="p-5 border pl-8"> b. SAC, 5-9 y.o. dewormed (2 doses)</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.deworming_5_to_9_yo_Male.length}}</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.deworming_5_to_9_yo_Female.length}}</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.deworming_5_to_9_yo_Male.length + this.stats?.deworming_5_to_9_yo_Female.length}}</td>
+                <td class="p-5 border"></td>
+                <td class="p-5 border">40. Sick Children 12-59 mos. old seen</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.sick_children_12_to_59_months_Male.length}}</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.sick_children_12_to_59_months_Female.length}}</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.sick_children_12_to_59_months_Male.length + this.stats?.sick_children_12_to_59_months_Female.length}}</td>
+                <td class="p-5 border"></td>
+              </tr> 
+
+              <tr class="border text-sm"> 
+                <td class="p-5 border pl-8"> c. Adolescents, 10-19 y.o. dewormed (2 doses)</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.deworming_10_to_19_yo_Male.length}}</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.deworming_10_to_19_yo_Female.length}}</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.deworming_10_to_19_yo_Male.length + this.stats?.deworming_10_to_19_yo_Female.length}}</td>
+                <td class="p-5 border"></td>
+                <td class="p-5 border">41. Sick Children 12-59 mos. old received Vitamin A</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.sick_children_12_to_59_months_with_vit_a_Male.length}}</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.sick_children_12_to_59_months_with_vit_a_Female.length}}</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.sick_children_12_to_59_months_with_vit_a_Male.length + this.stats?.sick_children_12_to_59_months_with_vit_a_Female.length}}</td>
+                <td class="p-5 border"></td>
+              </tr> 
+
+              <tr class="text-sm">
+                <td colspan="5" class="p-5 bg-gray-100"></td>
+                <td class="p-5 border">42. Diarrhea cases 0-59 months old seen</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.diarrhea_0_59_months_Male.length}}</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.diarrhea_0_59_months_Female.length}}</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.diarrhea_0_59_months_Male.length + this.stats?.diarrhea_0_59_months_Female.length}}</td>
+                <td class="p-5 border"></td>
+              </tr>
+
+              <tr class="text-sm">
+                <td colspan="5" class="p-5 bg-gray-100"></td>
+                <td class="p-5 border">43. Diarrhea cases 0-59 months old received ORS</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.diarrhea_0_59_months_with_ors_Male.length}}</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.diarrhea_0_59_months_with_ors_Female.length}}</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.diarrhea_0_59_months_with_ors_Male.length + this.stats?.diarrhea_0_59_months_with_ors_Female.length}}</td>
+                <td class="p-5 border"></td>
+              </tr>
+
+              <tr class="text-sm">
+                <td colspan="5" class="p-5 bg-gray-100"></td>
+                <td class="p-5 border">44. Diarrhea cases 0-59 mos. received ORS w/ zinc</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.diarrhea_0_59_months_with_ors_zinc_Male.length}}</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.diarrhea_0_59_months_with_ors_zinc_Female.length}}</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.diarrhea_0_59_months_with_ors_zinc_Male.length + this.stats?.diarrhea_0_59_months_with_ors_zinc_Female.length}}</td>
+                <td class="p-5 border"></td>
+              </tr>
+
+              <tr class="text-sm">
+                <td colspan="5" class="p-5 bg-gray-100"></td>
+                <td class="p-5 border">45. Pneumonia cases 0-59 mos. old seen</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.pneumonia_0_59_months_Male.length}}</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.pneumonia_0_59_months_Female.length}}</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.pneumonia_0_59_months_Male.length + this.stats?.pneumonia_0_59_months_Female.length}}</td>
+                <td class="p-5 border"></td>
+              </tr>
+
+              <tr class="text-sm">
+                <td colspan="5" class="p-5 bg-gray-100"></td>
+                <td class="p-5 border">46. Pneumonia cases 0-59 mos. old completed treatment</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.pneumonia_0_59_months_with_treatment_Male.length}}</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.pneumonia_0_59_months_with_treatment_Female.length}}</td>
+                <td class="p-5 border text-blue-500 text-center">{{this.stats?.pneumonia_0_59_months_with_treatment_Male.length + this.stats?.pneumonia_0_59_months_with_treatment_Female.length}}</td>
+                <td class="p-5 border"></td>
+              </tr>
+              
+
+              
             </tbody>
           </table>
         </div>
