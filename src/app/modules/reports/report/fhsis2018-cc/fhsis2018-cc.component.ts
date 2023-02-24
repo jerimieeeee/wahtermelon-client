@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
@@ -7,48 +7,53 @@ import { HttpService } from 'app/shared/services/http.service';
   styleUrls: ['./fhsis2018-cc.component.scss']
 })
 
-export class Fhsis2018CcComponent implements OnInit {
+export class Fhsis2018CcComponent implements OnChanges {
   @Input() report_params;
 
-  generateReport() {
-    console.log(this.report_params);
-  }
-
   stats : any;
-  test_year = '2023'
-  test_month = '01'
-  test1 : any;
-  test2 : any;
-  test3 : any;
-
-  modalFilter : any;
-  showAlert = false;
+  showForm: boolean = false;
+  name_list: any = [];
 
   constructor(
     private http: HttpService
   ) { }
 
-  getccreport() {
-    this.http.get('childcare-report/stats', {params:{year: this.test_year, month: this.test_month}})
-    .subscribe({
-      next: (data: any) => {
-        this.stats = data;
-        console.log(this.stats, 'cc reports');
-        // this.test1 = this.stats.BCG_Female.length;
-        // this.test2 = this.stats.BCG_Male.length;
-        // this.test3 = (this.test1 + this.test2)
-      },
-      error: err => console.log(err)
-    });
+  generateReport() {
+    this.report_params;
+    if(this.report_params){
+      let params = {
+        year: this.report_params.year,
+        month: this.report_params.month
+      };
+
+      this.http.get('reports-2018/child-care/m1', {params})
+      .subscribe({
+        next: (data: any) => {
+          this.stats = data;
+          this.showForm = true;
+
+          console.log(this.stats, 'cc reports');
+        },
+        error: err => console.log(err)
+      });
+    }
   }
 
-  toggleAlertModal(){
-    // this.modalFilter = value;
-    console.log('Test Modal')
+  openList:boolean = false;
+  toggleModal(name_list, name_list2?){
+    let list = [];
+    if(name_list2) {
+      list = {...name_list, ...name_list2}
+    } else {
+      list = name_list
+    }
+
+    console.log(typeof name_list)
+    this.name_list = list;
+    this.openList = !this.openList;
   }
 
-  ngOnInit(): void {
-    // this.generateReport();
-    this.getccreport();
+  ngOnChanges(): void {
+    this.generateReport();
   }
 }
