@@ -43,7 +43,7 @@ export class Fhsis2018CcComponent implements OnChanges {
   toggleModal(name_list, name_list2?){
     let list = [];
     if(name_list2) {
-      list = {...name_list, ...name_list2}
+      list = name_list.concat(name_list2)
     } else {
       list = name_list
     }
