@@ -2,34 +2,31 @@
     <div class="md:flex md:justify-between md:items-center pb-2 border-b-2">
       <span class="font-semibold pt-2" [ngClass]="{'text-blue-500':today_consults?.length === 0}">Todays Consult {{ today_consults?.length >= 1 ? '('+total+')' : '' }}</span>
       <div class="flex items-center">
-        <!-- <div>
-          <button type="button" class="bg-orange-400 px-3 rounded-full mr-3 text-gray-800 hover:text-indigo-500">
-            all
-          <fa-icon class="ml-2 my-0" [icon]="faChevronDown"></fa-icon>
-          </button>
-        </div> -->
-        <button type="button" class="text-gray-700 hover:text-indigo-500">
+        <select class="input px-2 mr-3 disabled:bg-gray-300 w-72" (change)="getTodaysConsult()" [(ngModel)]="selected_physician">
+          <option value="all">All</option>
+          <option [value]="dr.id" class="pr-" *ngFor="let dr of physicians">{{ dr.last_name }}, {{ dr.first_name }} {{ dr.middle_name }}</option>
+        </select>
+        <!-- <button type="button" class="text-gray-700 hover:text-indigo-500">
           <fa-icon class="mx-0 my-0" [icon]="faQuestionCircle"></fa-icon>
-        </button>
+        </button> -->
       </div>
     </div>
 
-    <div class="pt-3" *ngIf="today_consults?.length >= 1">
-      <div class="flex justify-between items-center mb-3  pb-3 border-b border-gray-200" *ngFor="let profile of today_consults"> <!-- added pb-3 -->
-        <div class="flex">
-          <a class="flex justify-center mx-auto cursor-pointer" (click)="openItr(profile?.patient.id)">
-
-            <div (click)="openItr(profile?.patient.id)" class="inline-flex overflow-hidden relative justify-center items-center w-16 h-16 bg-gray-100 rounded-full dark:bg-gray-600">
-              <span class="font-medium text-gray-600 dark:text-gray-300 text-sm xl:text-lg">{{ getInitials(profile?.patient?.first_name+' '+profile?.patient?.last_name) }}</span>
+    <div class="pt-3" *ngIf="show_form">
+      <div class="flex justify-between items-center mb-3  pb-3 border-b border-gray-200" *ngFor="let profile of today_consults"> <!-- today_consults?.length >= 1 -->
+        <div class="flex cursor-pointer w-2/5 hover:opacity-75" (click)="openItr(profile?.patient.id,'itr')">
+          <a class="justify-center mx-auto">
+            <div class="inline-flex overflow-hidden relative justify-center items-center w-16 h-16 bg-gray-200 rounded-full dark:bg-gray-600">
+              <span class="font-medium text-gray-600 text-sm xl:text-lg">{{ getInitials(profile?.patient?.first_name, profile?.patient?.last_name) }}</span>
             </div>
           </a>
 
-          <div class="flex justify-center md:block leading-tight mx-2 my-1">
-            <span class="block text-blue-500 font-medium my-0 py-0 cursor-pointer text-sm" (click)="openItr(profile?.patient.id,'itr')">
+          <div class="flex justify-center text-blue-500 md:block leading-tight mx-2 my-1 w-full hover:bg-blue-500 hover:text-white p-1 rounded-md">
+            <span class="w-full block font-medium my-0 py-0 text-sm">
               {{ profile?.patient?.last_name }}, {{ profile?.patient?.first_name }} {{ profile?.patient?.middle_name === 'NA' ? '' : profile?.patient?.middle_name  }} {{ profile?.patient?.suffix_name === 'NA' ? '' : profile?.patient?.suffix_name }}
             </span>
 
-            <span class="block text-xs">
+            <span class="w-full block text-xs">
               -<!-- {{ profile?.address }} -->
             </span>
 
@@ -42,23 +39,25 @@
           </div>
         </div>
 
-        <!-- <div class="flex"> -->
-          <div class="grid grid-cols-12 text-left w-3/5">
-            <div class="col-span-6 text-gray-700  hover:bg-indigo-500 hover:text-white hover:cursor-pointer p-3 rounded-md text-[.85em]" (click)="openItr(profile?.patient.id, profile?.pt_group, profile?.id)">
-              <button type="button" class="justify-center" >
-                <!-- <fa-icon class="mx-0 my-0" [icon]="faFolderOpen"></fa-icon> -->
-                <span class="hidden xl:inline-block">{{ getVisitType(profile?.pt_group) }}</span>
-                <span class="xl:hidden uppercase text-xs">{{ profile?.pt_group }}</span>
-              </button>
-            </div>
-            <div class="col-span-3 px-5">
-              -<!-- {{ profile?.pt_group }} --> <!-- location -->
-            </div>
-            <div class="col-span-3 px-5 text-[.8em]">
-              {{ getDataDiff(profile?.consult_date) }} <!-- duration -->
-            </div>
+        <div class="grid grid-cols-12 text-left w-3/5">
+          <div class="col-span-6 text-gray-700  hover:bg-green-500 hover:text-white hover:cursor-pointer p-3 rounded-md text-[.85em]" (click)="openItr(profile?.patient.id, profile?.pt_group, profile?.id)">
+            <button type="button" class=" flex justify-between" >
+              <span class="hidden xl:inline-block">{{ checkVisit(profile?.pt_group) }}</span>
+              <span class="xl:hidden uppercase text-xs">{{ profile?.pt_group }}</span>
+            </button>
           </div>
-        <!-- </div> -->
+          <div class="col-span-3 px-3 text-sm">
+            <span *ngIf="profile.physician">
+              Dr. {{ profile.physician.first_name }} {{ profile.physician.last_name }}
+            </span>
+            <span *ngIf="!profile.physician">
+              -
+            </span>
+          </div>
+          <div class="col-span-3 px-3 text-[.8em]">
+            {{ getDataDiff(profile?.consult_date) }}
+          </div>
+        </div>
       </div>
     </div>
 
@@ -78,7 +77,7 @@
               of <span class="font-medium">{{ total }}</span> results
             </p>
           </div>
-          <div>
+          <div *ngIf="total >= 6">
             <nav class="relative z-0 inline-flex shadow-sm -space-x-px" aria-label="Pagination">
               <button [disabled]="current_page===1" (click)="getTodaysConsult(1)" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 enabled:bg-white disabled:bg-gray-300 text-sm font-medium text-gray-500 hover:bg-gray-50">
                 <fa-icon [icon]="faAnglesLeft" class="block h-15 w-15 text-gray-500 pr-1"></fa-icon>

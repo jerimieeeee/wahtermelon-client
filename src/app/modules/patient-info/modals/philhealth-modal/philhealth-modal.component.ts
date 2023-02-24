@@ -164,16 +164,6 @@ export class PhilhealthModalComponent implements OnInit {
     return ((this.philhealthForm.controls.member_pin.value != this.philhealthForm.controls.member_pin_confirmation.value) && this.philhealthForm.get('member_pin_confirmation')?.dirty);
   }
 
-  closeModal(){
-    this.toggleModal.emit({modal_name: 'philhealth'});
-  }
-
-  constructor(
-    private formBuilder: FormBuilder,
-    private http: HttpService,
-    private toastr: ToastrService
-  ) { }
-
   loadMainLibrary(){
     this.http.get('libraries/membership-types').subscribe({
       next: (data: any) => this.membership_types = data.data,
@@ -259,6 +249,16 @@ export class PhilhealthModalComponent implements OnInit {
     }
   }
 
+  closeModal(){
+    this.toggleModal.emit({modal_name: 'philhealth'});
+  }
+
+  constructor(
+    private formBuilder: FormBuilder,
+    private http: HttpService,
+    private toastr: ToastrService
+  ) { }
+
   ngOnInit(): void {
     this.loadMainLibrary();
     let user_id = this.http.getUserID();
@@ -299,6 +299,10 @@ export class PhilhealthModalComponent implements OnInit {
       this.philhealthForm.patchValue({membership_type_id: this.philhealth_to_edit.membership_type.id});
       this.philhealthForm.patchValue({membership_category_id: this.philhealth_to_edit.membership_category.id});
 
+      if(this.philhealth_to_edit.authorization_transaction_code !== 'WALKEDIN' && this.philhealth_to_edit.walkedin_status === 0){
+        this.is_atc_valid = 'YES';
+      }
+
       if(this.philhealthForm.value.membership_type_id === "DD"){
         this.philhealthForm.patchValue({member_birthdate: formatDate(this.philhealth_to_edit.member_birthdate, 'yyyy-MM-dd','en')});
         this.philhealthForm.patchValue({member_pin_confirmation: this.philhealth_to_edit.member_pin});
@@ -310,5 +314,4 @@ export class PhilhealthModalComponent implements OnInit {
 
     this.date = new Date().toISOString().slice(0,10);
   }
-
 }

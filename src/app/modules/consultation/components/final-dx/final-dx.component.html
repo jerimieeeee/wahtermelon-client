@@ -30,8 +30,8 @@
               notFoundText="No records found">
 
               <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
-                <div class="grid grid-flow-col auto-cols-max">
-                  <h5 class="text-gray-700" [ngOptionHighlight]="search">{{ item.icd10_code }}: {{ item.icd10_desc }}</h5>
+                <div class="whitespace-normal">
+                  <h5 class="text-gray-700" [ngOptionHighlight]="search"><strong>{{ item.icd10_code }}:</strong> {{ item.icd10_desc }}</h5>
                 </div>
               </ng-template>
             </ng-select>

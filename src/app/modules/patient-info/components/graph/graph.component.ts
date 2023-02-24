@@ -1,4 +1,5 @@
 import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
+import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
 import { BmiChart, ChartOptions, WeightChart } from './chart-option';
 
 @Component({
@@ -11,6 +12,9 @@ export class GraphComponent implements OnInit {
   public chartOptions: Partial<ChartOptions>;
   public WeightChart: Partial<WeightChart>;
   public BmiChart: Partial<BmiChart>;
+
+  faChevronUp = faChevronUp;
+  faChevronDown = faChevronDown;
 
   showChart: boolean = false;
   show_bmi: boolean = false;

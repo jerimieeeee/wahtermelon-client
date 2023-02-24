@@ -1,9 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { faChevronDown, faChevronUp, faCircleNotch, faDoorClosed, faFile, faPlus, faPlusSquare, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faChevronDown, faChevronUp, faDoorClosed, faFile } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
-import { catchError, debounceTime, distinctUntilChanged, switchMap, tap, map, filter } from 'rxjs/operators';
-import { concat, Observable, of, Subject } from 'rxjs';
-import { faFloppyDisk } from '@fortawesome/free-regular-svg-icons';
 import { ActivatedRoute } from '@angular/router';
 import { GraphsComponent } from './components/graphs/graphs.component';
 import { ToastrService } from 'ngx-toastr';
@@ -16,11 +13,6 @@ import { ToastrService } from 'ngx-toastr';
 export class ConsultationComponent implements OnInit {
   @ViewChild(GraphsComponent) graph: GraphsComponent;
 
-  faPlusSquare = faPlusSquare;
-  faSpinner = faCircleNotch;
-  faXmark = faXmark;
-  faPlus = faPlus;
-  faFloppyDisk = faFloppyDisk;
   faChevronUp = faChevronUp;
   faChevronDown = faChevronDown;
   faDoorClosed = faDoorClosed;
@@ -33,10 +25,12 @@ export class ConsultationComponent implements OnInit {
   have_complaint:boolean = false;
   show_end: boolean = false;
   enable_edit: boolean = false;
+  show_ekas: boolean = false;
 
   modules: Number;
 
   patient_details: any;
+  lab_list: any;
   visit_list: any;
   vitals: any;
   consult_details: any;
@@ -61,22 +55,6 @@ export class ConsultationComponent implements OnInit {
     this.graph.patientVitals(vitals);
   }
 
-  endVisit() {
-    let params = {
-      patient_id: this.consult_details.patient.id,
-      consult_date: this.consult_details.consult_date,
-      pt_group: 'cn',
-      consult_done: true
-    }
-
-    this.http.update('consultation/records/', this.consult_details.id, params).subscribe({
-      next: (data: any) => {
-        console.log(data)
-      },
-      error: err => console.log(err)
-    })
-  }
-
   patientInfo(info){
     this.patient_details = info;
   }
@@ -85,8 +63,6 @@ export class ConsultationComponent implements OnInit {
     this.show_end = !this.show_end;
   }
 
-  lab_list: any;
-  show_ekas: boolean = false;
   openEkas() {
     let params = {
       patient_id: this.patient_id,
@@ -115,6 +91,7 @@ export class ConsultationComponent implements OnInit {
     })
   }
 
+  with_credentials: boolean = false;
   loadConsult(){
     let params = {
       id: this.consult_id,
@@ -124,18 +101,22 @@ export class ConsultationComponent implements OnInit {
     this.http.get('consultation/records', {params}).subscribe({
       next: (data: any) => {
         this.consult_details = data.data[0];
-        console.log(this.consult_details)
+        // console.log(this.consult_details)
         if(this.consult_details.consult_notes.complaint || this.consult_details.consult_notes.complaints.length > 0  || this.consult_details.consult_notes.history) {
           this.have_complaint = true;
-        }
+          this.loadUsers();
 
-        if(this.consult_details.physician) {
-          this.referred_to = this.consult_details.physician;
-          this.enable_edit = true;
+          if(this.consult_details.physician) {
+            this.referred_to = this.consult_details.physician;
+            this.enable_edit = true;
+          }
         }
       },
       error: err => console.log(err)
-    })
+    });
+
+    let info = this.http.getUserFromJSON();
+    this.with_credentials = info.konsulta_credential ? true : false;
   }
 
   referTo(){
@@ -182,6 +163,6 @@ export class ConsultationComponent implements OnInit {
     // console.log(this.consult_id)
     this.modules = 1;
     this.loadConsult();
-    this.loadUsers()
+    // this.loadUsers()
   }
 }

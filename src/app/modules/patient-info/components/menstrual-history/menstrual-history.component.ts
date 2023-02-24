@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { faChevronDown, faChevronUp, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+import { faChevronDown, faChevronUp, faMinus, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
@@ -16,6 +16,7 @@ export class MenstrualHistoryComponent {
   faChevronUp = faChevronUp;
   faChevronDown = faChevronDown;
   faPlusCircle = faPlusCircle;
+  faMinus = faMinus;
 
   menstrual_history: any;
 

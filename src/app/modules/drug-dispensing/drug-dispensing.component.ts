@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { faEdit, faFlaskVial, faTrash, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faCircleNotch, faDoorClosed } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -10,16 +10,18 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./drug-dispensing.component.scss']
 })
 export class DrugDispensingComponent implements OnInit {
-  faFlaskVial = faFlaskVial;
-  faTrash = faTrash;
-  faEdit = faEdit;
-  faXmark = faXmark;
+  faDoorClosed = faDoorClosed;
+  faCircleNotch = faCircleNotch;
 
   patient_details: any;
-
   prescriptions: any;
   dispensed: any;
   dispensing_date: string;
+  consult_details: any;
+  modal = [];
+  dispensed_list = [];
+
+  show_form: boolean = false;
 
   libraries = {
     dosage_uom:             {var_name: 'dosage_desc',       location: 'unit-of-measurements', value: ''},
@@ -34,10 +36,7 @@ export class DrugDispensingComponent implements OnInit {
     return item.id
   }
 
-  show_form: boolean = false;
-
   onSubmit(){
-    console.log(this.prescriptions)
     Object.entries(this.prescriptions).forEach(([key, value], index) => {
       let values: any = value;
 
@@ -52,7 +51,6 @@ export class DrugDispensingComponent implements OnInit {
           total_amount: 0
         }
 
-        console.log(params);
         this.http.post('medicine/dispensing', params).subscribe({
           next: (data: any) => {
             console.log(data)
@@ -72,11 +70,9 @@ export class DrugDispensingComponent implements OnInit {
     })
   }
 
-  dispensed_list = [];
+
 
   qtyDisp(pres){
-    console.log(pres);
-
     if(pres.dispensing) {
       let dispensed: number = 0;
       Object.entries(pres.dispensing).forEach(([key, value], index) => {
@@ -84,7 +80,7 @@ export class DrugDispensingComponent implements OnInit {
         dispensed = dispensed + val.dispense_quantity
       });
 
-      console.log('dispensed_qty', pres.quantity, dispensed)
+      // console.log('dispensed_qty', pres.quantity, dispensed)
       pres.quantity = pres.quantity - dispensed;
     }
 
@@ -109,7 +105,8 @@ export class DrugDispensingComponent implements OnInit {
       next: (data: any) => {
         // console.log(data.data)
         this.dispensed_list = data.data;
-        this.show_form = true;
+        this.fetchConsult(this.route.snapshot.paramMap.get('id'));
+
       },
       error: err => console.log(err)
     })
@@ -117,11 +114,10 @@ export class DrugDispensingComponent implements OnInit {
 
   pres_length: number = 0;
   getPresciptions(id){
-    console.log('get prescription')
     let params = {patient_id: id, status: 'dispensing'};
     this.http.get('medicine/prescriptions', {params}).subscribe({
       next: (data: any) => {
-        console.log(data.data)
+        // console.log(data.data)
         this.prescriptions = data.data;
         this.pres_length = Object.keys(this.prescriptions).length;
         if(this.pres_length > 0) this.getQtyDisp(Object.keys(this.prescriptions).length);
@@ -136,18 +132,30 @@ export class DrugDispensingComponent implements OnInit {
     this.patient_details = info;
   }
 
-  modal = [];
-  selected_lab: any;
-
   checkValid(pres){
-    console.log(pres)
     if(pres.dispense_quantity > pres.quantity) pres.dispense_quantity = pres.quantity;
   }
 
-  toggleModal(form, lab?){
-    this.selected_lab = lab;
+
+  fetchConsult(id){
+    let params = {
+      consult_done: 0,
+      patient_id: id,
+      pt_group: 'cn',
+      sort: '-consult_date'
+    };
+
+    this.http.get('consultation/records', {params}).subscribe({
+      next: (data: any) => {
+        this.consult_details = data.data[0];
+        this.show_form = true;
+      },
+      error: err => console.log(err)
+    })
+  }
+
+  toggleModal(form){
     this.modal[form] = !this.modal[form];
-    if(this.modal[form] === false) this.selected_lab = null;
   }
 
   constructor(
@@ -158,6 +166,5 @@ export class DrugDispensingComponent implements OnInit {
 
   ngOnInit(): void {
     this.getPresciptions(this.route.snapshot.paramMap.get('id'));
-    // this.getDispense(this.route.snapshot.paramMap.get('id'));
   }
 }

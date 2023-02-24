@@ -6,6 +6,7 @@ import { DashboardRoutingModule } from './dashboard-routing.module';
 import { DashboardComponent } from './dashboard.component';
 import { TodaysConsultComponent } from '../dashboard/todays-consult/todays-consult.component';
 import { TodaysStatsComponent } from '../dashboard/todays-stats/todays-stats.component'
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { TodaysStatsComponent } from '../dashboard/todays-stats/todays-stats.com
   imports: [
     CommonModule,
     DashboardRoutingModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    FormsModule
   ]
 })
 export class DashboardModule { }

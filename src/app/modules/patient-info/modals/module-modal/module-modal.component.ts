@@ -149,7 +149,7 @@ export class ModuleModalComponent implements OnInit {
     let group = module.group;
     this.is_loading = true;
 
-    console.log(loc, this.router.url.split(';')[0])
+    // console.log(loc, this.router.url.split(';')[0])
     if('/patient/'+loc === this.router.url.split(';')[0]){
       // console.log(1)
       this.closeModal();
@@ -166,7 +166,7 @@ export class ModuleModalComponent implements OnInit {
               this.router.navigate(['/patient/'+loc, {id: this.patient_info.id, consult_id: data.data[0].id}])
               this.closeModal();
             }else{
-              console.log(this.selected_module);
+              // console.log(this.selected_module);
               this.show_new = true;
             }
           },
@@ -183,9 +183,7 @@ export class ModuleModalComponent implements OnInit {
 
   onCreateNew(selected_module){
     this.is_loading = true;
-    console.log(this.is_atc_valid)
-    console.log(this.pATC)
-    console.log(this.pATC)
+
     let user_id = this.http.getUserID();
     let new_visit = {
       patient_id: this.patient_info.id,
@@ -204,8 +202,14 @@ export class ModuleModalComponent implements OnInit {
         this.router.navigate(['/patient/'+selected_module.location, {id: this.patient_info.id, consult_id: data.data.id}]);
         this.closeModal()
       },
-      error: (err) => {console.log(err); this.is_loading = false;},
-      complete: () => console.log('new visit saved')
+      error: (err) => {
+        console.log(err.error.message);
+        this.toastr.error(err.error.message, 'Error', {
+          closeButton: true,
+          positionClass: 'toast-top-center',
+          disableTimeOut: true
+        })
+      }
     });
   }
 

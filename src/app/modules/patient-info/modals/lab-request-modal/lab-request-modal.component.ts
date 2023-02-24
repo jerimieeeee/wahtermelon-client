@@ -40,7 +40,10 @@ export class LabRequestModalComponent implements OnInit {
 
   loadLabs(){
     this.http.get('libraries/laboratories').subscribe({
-      next: (data: any) => this.lab_list = data.data,
+      next: (data: any) => {
+        this.lab_list = data.data;
+        // console.log(this.lab_list)
+      },
       error: err => console.log(err)
     })
 
@@ -92,10 +95,7 @@ export class LabRequestModalComponent implements OnInit {
   }
 
   max_date = formatDate(new Date, 'yyyy-MM-dd', 'en');
-
   ngOnInit(): void {
-
     this.loadLabs();
-    console.log(this.lab_req_list)
   }
 }

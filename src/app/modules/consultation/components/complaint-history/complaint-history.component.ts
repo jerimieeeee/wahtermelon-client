@@ -95,13 +95,13 @@ export class ComplaintHistoryComponent implements OnInit, OnChanges {
   loadSelected(){
     let selected_complaints = [];
     console.log(this.consult_details.consult_notes.complaints);
-    /* if(this.consult_details.consult_notes && this.consult_details.consult_notes.complaints){
+    if(this.consult_details.consult_notes && this.consult_details.consult_notes.complaints){
       Object.entries(this.consult_details.consult_notes.complaints).forEach(([key, value], index) => {
         let val: any = value;
         selected_complaints.push(val.complaint_id);
       });
     };
-    this.selectedComplaint = selected_complaints; */
+    this.selectedComplaint = selected_complaints;
   }
 
   ngOnChanges(changes){

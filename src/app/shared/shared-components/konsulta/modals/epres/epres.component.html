@@ -126,7 +126,15 @@
                   <tbody>
                     <tr *ngFor="let pres of prescriptions; first as isFirst">
                       <td class="border border-slate-700 text-[.8em]">
-                        {{ pres.konsulta_medicine ? pres.konsulta_medicine.category : '' }}
+                        <span class="uppercase" *ngIf="pres.konsulta_medicine">
+                          {{pres.konsulta_medicine.category}}
+                        </span>
+                        <span class="uppercase" *ngIf="pres.added_medicine">
+                          {{pres.purpose.desc}}
+                        </span>
+                        <!-- {{ pres.konsulta_medicine ? pres.konsulta_medicine.category : '' }}
+                        {{ pres.added_medicine ? pres.konsulta_medicine.purpose.desc : '' }}-->
+
                       </td>
 
                       <td class="border border-slate-700 text-[.8em]">
@@ -260,9 +268,8 @@
             <!-- FORM END -->
           </div>
         </div>
-
-
       </div>
+
 
       <div class="h-96 flex justify-center align-middle w-full" *ngIf="!show_form">
         <fa-icon [icon]="faCircleNotch" spin="true" size="2xl" class="mt-20 text-blue-500"></fa-icon>

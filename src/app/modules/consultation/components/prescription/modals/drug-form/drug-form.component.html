@@ -14,11 +14,11 @@
 
             <div class="col-span-3 mt-5 mx-5" *ngIf="!add_drug">
               <span class="font-semibold">Drug description:</span>
-              {{ selected_drug.desc }}
+              {{ selected_drug.konsulta_medicine ? selected_drug.konsulta_medicine.desc : selected_drug.desc }}
             </div>
 
             <div class="col-span-3 text-sm " *ngIf="add_drug">
-              <label class="font-semibold" for="added_medicine" [ngClass]="{'text-red-500': is_saving && f.added_medicine.errors}">Brand name</label>
+              <label class="font-semibold" for="added_medicine" [ngClass]="{'text-red-500': is_saving && f.added_medicine.errors}">Drug name</label>
               <input name="added_medicine" id="added_medicine" formControlName="added_medicine" type="text" class="input" [ngClass]="{'invalid-input': is_saving && f.added_medicine.errors}">
 
               <div *ngIf="is_saving && f.added_medicine.errors" class="invalid-alert">
