@@ -57,7 +57,7 @@ export class LabFormComponent implements OnChanges, OnInit {
     let request_date:any = new Date(this.selected_lab.request_date);
     let days = (request_date - birthdate) / (1000*60*60*24);
     let cat = days <= 28 ? 'NB' : this.patient_details.gender;
-
+    // console.log(data);
     let fields: any = [];
     Object.entries(data).forEach(([key, value], index) => {
       let vals: any = value;
@@ -83,8 +83,8 @@ export class LabFormComponent implements OnChanges, OnInit {
   }
 
   fillCodes(data){
-    console.log(this.selected_lab)
-    console.log(this.request_status_code)
+    // console.log(this.selected_lab)
+    // console.log(this.request_status_code)
 
     this.lab_form = this.selected_lab.result;
     switch (data.laboratory.code) {
@@ -118,7 +118,7 @@ export class LabFormComponent implements OnChanges, OnInit {
   form_with_findings_pn = ['FOBT', 'PPD']
   form_with_finding_code = ['ECG'];
   onSubmit(){
-    console.log(this.selected_lab)
+    // console.log(this.selected_lab)
     this.is_saving = true;
 
     if(!this.request_status_code) {
