@@ -1,5 +1,5 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { faEdit, faFlask, faFlaskVial, faTrash, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { faEdit, faFlask, faFlaskVial, faXmark, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 // import { PatientInfoComponent } from 'app/components/patient-info/patient-info.component';
 import { HttpService } from 'app/shared/services/http.service';
 import { PatientInfoComponent } from '../patient-info/patient-info.component';
@@ -11,7 +11,7 @@ import { eventSubscriber } from './emmitter.interface';
 })
 export class LabComponent implements OnInit, OnDestroy {
   faFlaskVial = faFlaskVial;
-  faTrash = faTrash;
+  faTrashCan = faTrashCan;
   faEdit = faEdit;
   faXmark = faXmark;
   faFlask = faFlask;
@@ -83,41 +83,49 @@ export class LabComponent implements OnInit, OnDestroy {
 
   forms_with_finding_pn = ['FOBT', 'PPD'];
 
+  delete_id: string;
+  delete_desc: string = 'Laboratory';
+  url: string = 'laboratory/consult-laboratories/'
   toggleModal(form, lab?){
     this.selected_lab = lab;
-
+console.log(form)
     if(this.selected_lab){
-      if(lab && lab.laboratory.code === 'CXRAY') {
-        if(!this.lab_cxray_findings || !this.lab_cxray_observation) {
-          this.loadCxrayLib(form);
-        } else {
-          this.modal[form] = !this.modal[form];
-        }
-      } else if(lab && lab.laboratory.code === 'ECG') {
-        if(!this.lab_findings){
-          this.loadLibraries('libraries/laboratory-findings','lab_findings', form)
-        } else {
-          this.modal[form] = !this.modal[form];
-        }
-      } else if(lab && lab.laboratory.code === 'SPTM') {
-        if(!this.lab_sputum_collection && !this.lab_result_pn) {
-          this.loadSputumCollection(form);
-        } else {
-          this.modal[form] = !this.modal[form];
-        }
-      } else if(lab && lab.laboratory.code === 'FCAL') {
-        if(!this.lab_stool_blood && !this.lab_stool_color && !this.lab_stool_consistency) {
-          this.loadStoolBlood(form);
-        } else {
-          this.modal[form] = !this.modal[form];
-        }
-      } else if(lab && this.forms_with_finding_pn.includes(lab.laboratory.code)) {
-        if(!this.lab_result_pn) {
-          this.loadLibraries('libraries/laboratory-results','lab_result_pn', form)
+      if(form === 'add') {
+        if(lab && lab.laboratory.code === 'CXRAY') {
+          if(!this.lab_cxray_findings || !this.lab_cxray_observation) {
+            this.loadCxrayLib(form);
+          } else {
+            this.modal[form] = !this.modal[form];
+          }
+        } else if(lab && lab.laboratory.code === 'ECG') {
+          if(!this.lab_findings){
+            this.loadLibraries('libraries/laboratory-findings','lab_findings', form)
+          } else {
+            this.modal[form] = !this.modal[form];
+          }
+        } else if(lab && lab.laboratory.code === 'SPTM') {
+          if(!this.lab_sputum_collection && !this.lab_result_pn) {
+            this.loadSputumCollection(form);
+          } else {
+            this.modal[form] = !this.modal[form];
+          }
+        } else if(lab && lab.laboratory.code === 'FCAL') {
+          if(!this.lab_stool_blood && !this.lab_stool_color && !this.lab_stool_consistency) {
+            this.loadStoolBlood(form);
+          } else {
+            this.modal[form] = !this.modal[form];
+          }
+        } else if(lab && this.forms_with_finding_pn.includes(lab.laboratory.code)) {
+          if(!this.lab_result_pn) {
+            this.loadLibraries('libraries/laboratory-results','lab_result_pn', form)
+          } else {
+            this.modal[form] = !this.modal[form];
+          }
         } else {
           this.modal[form] = !this.modal[form];
         }
       } else {
+        this.delete_id =  lab.id;
         this.modal[form] = !this.modal[form];
       }
 
