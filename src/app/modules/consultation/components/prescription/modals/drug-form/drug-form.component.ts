@@ -41,7 +41,8 @@ export class DrugFormComponent implements OnChanges {
     duration_frequency: new FormControl<string| null>(null),
     quantity: new FormControl<number| null>(null),
     quantity_preparation: new FormControl<string| null>(null),
-    instruction_quantity: new FormControl<number| null>(null)
+    instruction_quantity: new FormControl<number| null>(null),
+    route_code: new FormControl<string| null>(null),
   });
 
   get f(): { [key: string]: AbstractControl } {
@@ -79,7 +80,8 @@ export class DrugFormComponent implements OnChanges {
     {var_name: 'drug_regimen', location: 'dose-regimens'},
     {var_name: 'drug_purpose', location: 'purposes'},
     {var_name: 'drug_frequency', location: 'duration-frequencies'},
-    {var_name: 'drug_preparation', location: 'preparations'}
+    {var_name: 'drug_preparation', location: 'preparations'},
+    {var_name: 'drug_route', location: 'route'}
   ]
 
   loadLibraries(){
@@ -127,7 +129,8 @@ export class DrugFormComponent implements OnChanges {
       duration_frequency: [null,[Validators.required]], //libraries/duration-frequencies
       quantity: [null,[Validators.required]],
       quantity_preparation: [null,[Validators.required]], //libraries/preparations
-      instruction_quantity: [null,[Validators.required]]
+      instruction_quantity: [null,[Validators.required]],
+      route_code: [null,[Validators.required]]
     });
 
     if(this.selected_drug){
@@ -144,7 +147,8 @@ export class DrugFormComponent implements OnChanges {
           duration_frequency: this.selected_drug.frequency.code,
           quantity: this.selected_drug.quantity,
           quantity_preparation: this.selected_drug.preparation.code,
-          instruction_quantity: this.selected_drug.instruction_quantity
+          instruction_quantity: this.selected_drug.instruction_quantity,
+          route_code: this.selected_drug.route ? this.selected_drug.route.code : null
         });
 
         // console.log(this.prescriptionForm.value)
