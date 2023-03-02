@@ -89,7 +89,7 @@ export class LabComponent implements OnInit, OnDestroy {
   url: string = 'laboratory/consult-laboratories/'
   toggleModal(form, lab?){
     this.selected_lab = lab;
-console.log(form)
+console.log(this.selected_lab)
     if(this.selected_lab){
       if(form === 'add') {
         if(lab && lab.laboratory.code === 'CXRAY') {

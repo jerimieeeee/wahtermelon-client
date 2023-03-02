@@ -53,6 +53,8 @@ export class NameHelperService {
         return 'laboratory/consult-laboratory-fecal-occult'
       case 'GRMS':
         return 'laboratory/consult-laboratory-gram-stain'
+      case 'MCRP':
+        return 'laboratory/consult-laboratory-microscopy'
       default:
         return '';
     }
