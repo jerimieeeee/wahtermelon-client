@@ -18,6 +18,7 @@ export class DrugFormComponent implements OnChanges {
   @Input() drug_purpose;
   @Input() drug_frequency;
   @Input() drug_preparation;
+  @Input() drug_route;
 
   submit_errors: any;
   is_saving: boolean = false;
@@ -42,7 +43,7 @@ export class DrugFormComponent implements OnChanges {
     quantity: new FormControl<number| null>(null),
     quantity_preparation: new FormControl<string| null>(null),
     instruction_quantity: new FormControl<number| null>(null),
-    route_code: new FormControl<string| null>(null),
+    medicine_route_code: new FormControl<string| null>(null),
   });
 
   get f(): { [key: string]: AbstractControl } {
@@ -81,13 +82,13 @@ export class DrugFormComponent implements OnChanges {
     {var_name: 'drug_purpose', location: 'purposes'},
     {var_name: 'drug_frequency', location: 'duration-frequencies'},
     {var_name: 'drug_preparation', location: 'preparations'},
-    {var_name: 'drug_route', location: 'route'}
+    {var_name: 'drug_route', location: 'medicine-route'}
   ]
 
   loadLibraries(){
     this.libraries.forEach(obj => {
       this.http.get('libraries/'+obj.location).subscribe({
-        next: (data: any) => {this[obj.var_name] = data.data; /* console.log(data.data) */},
+        next: (data: any) => {this[obj.var_name] = data.data; console.log(data.data)},
         error: err => console.log(err),
         complete: () => this.show_form = true
       })
@@ -130,7 +131,7 @@ export class DrugFormComponent implements OnChanges {
       quantity: [null,[Validators.required]],
       quantity_preparation: [null,[Validators.required]], //libraries/preparations
       instruction_quantity: [null,[Validators.required]],
-      route_code: [null,[Validators.required]]
+      medicine_route_code: [null,[Validators.required]]
     });
 
     if(this.selected_drug){
@@ -148,7 +149,7 @@ export class DrugFormComponent implements OnChanges {
           quantity: this.selected_drug.quantity,
           quantity_preparation: this.selected_drug.preparation.code,
           instruction_quantity: this.selected_drug.instruction_quantity,
-          route_code: this.selected_drug.route ? this.selected_drug.route.code : null
+          medicine_route_code: this.selected_drug.medicine_route ? this.selected_drug.medicine_route.code : null
         });
 
         // console.log(this.prescriptionForm.value)

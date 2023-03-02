@@ -64,12 +64,12 @@
             </div>
 
             <div class="col-span-1 text-sm">
-              <label class="font-semibold" for="route_code" [ngClass]="{'text-red-500': is_saving && f.route_code.errors}">Medicine Route</label>
-              <select name="route" id="route_code" formControlName="route_code" [ngClass]="{'invalid-input': is_saving && f.route_code.errors}" class="input">
-                <option [value]="freq.code" *ngFor="let freq of drug_frequency">{{ freq.desc}}</option>
+              <label class="font-semibold" for="medicine_route_code" [ngClass]="{'text-red-500': is_saving && f.medicine_route_code.errors}">Medicine Route</label>
+              <select name="route" id="medicine_route_code" formControlName="medicine_route_code" [ngClass]="{'invalid-input': is_saving && f.medicine_route_code.errors}" class="input">
+                <option [value]="route.code" *ngFor="let route of drug_route">{{ route.desc}}</option>
               </select>
-              <div *ngIf="is_saving && f.route_code.errors" class="invalid-alert">
-                <div *ngIf="f.route_code.errors?.['required']">
+              <div *ngIf="is_saving && f.medicine_route_code.errors" class="invalid-alert">
+                <div *ngIf="f.medicine_route_code.errors?.['required']">
                   {{ required_message }}
                 </div>
               </div>
