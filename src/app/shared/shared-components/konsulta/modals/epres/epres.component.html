@@ -79,7 +79,10 @@
                   </div>
                   <div class="col-span-5 flex">
                     <span class="text-[.75em]">Membership type: </span>
-                    <span class="flex-1 w-full text-[.8em]">{{ patient_philhealth?.membership_type_id === "MM" ? 'Member' : 'Dependent' }}</span>
+                    <span class="flex-1 w-full text-[.8em]">
+                      <span class="underline">{{ patient_philhealth?.membership_type_id === "MM" ? '&#10004;' : '&nbsp;&nbsp;' }} </span>Member
+                      <span class="underline">{{ patient_philhealth?.membership_type_id === "DD" ? '&#10004;' : '&nbsp;&nbsp;' }} </span>Dependent
+                    </span>
                   </div>
                 </div>
               </div>

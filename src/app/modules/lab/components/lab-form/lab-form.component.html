@@ -31,6 +31,11 @@
                 </select>
               </div>
 
+              <div class="text-sm col-span-2">
+                <label class="font-semibold" >Referral Facility</label>
+                <input name="field" [(ngModel)]="lab_form['referral_facility']" type="text" class="input">
+              </div>
+
               <div *ngFor="let field of fields">
                 <div class="text-sm col-span-1" *ngIf="selected_lab.laboratory.code === 'SPTM' && field.field_name === 'findings_code'">
                   <label class="font-semibold" >{{ field.field_desc }}</label>
