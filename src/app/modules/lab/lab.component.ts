@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { faEdit, faFlask, faFlaskVial, faXmark, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 // import { PatientInfoComponent } from 'app/components/patient-info/patient-info.component';
 import { HttpService } from 'app/shared/services/http.service';
+import { NameHelperService } from 'app/shared/services/name-helper.service';
 import { PatientInfoComponent } from '../patient-info/patient-info.component';
 import { eventSubscriber } from './emmitter.interface';
 @Component({
@@ -46,7 +47,7 @@ export class LabComponent implements OnInit, OnDestroy {
     console.log('labs loaded')
     Object.entries(this.pending_list).forEach(([key, value], index) => {
       let val: any = value;
-      let url = this.http.getURL(val.laboratory.code)
+      let url = this.nameHelper.getURL(val.laboratory.code)
       if(url !== '') {
         this.http.get(url, {params: {request_id: val.id}}).subscribe({
           next: (data: any) => {
@@ -228,7 +229,8 @@ console.log(form)
 
   constructor(
     private http: HttpService,
-    private patientInfo: PatientInfoComponent
+    private patientInfo: PatientInfoComponent,
+    private nameHelper: NameHelperService
   ) {
     this.loadData = this.loadData.bind(this);
     eventSubscriber(patientInfo.reloadLabs, this.loadData)

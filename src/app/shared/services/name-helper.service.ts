@@ -51,6 +51,8 @@ export class NameHelperService {
         return 'laboratory/consult-laboratory-oral-glucose'
       case 'FOBT':
         return 'laboratory/consult-laboratory-fecal-occult'
+      case 'GRMS':
+        return 'laboratory/consult-laboratory-gram-stain'
       default:
         return '';
     }

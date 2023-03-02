@@ -2,6 +2,7 @@ import { formatDate } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, OnInit } from '@angular/core';
 import { faSave, faSearch, faSpider, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
+import { NameHelperService } from 'app/shared/services/name-helper.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -118,11 +119,11 @@ export class LabFormComponent implements OnChanges, OnInit {
   form_with_findings_pn = ['FOBT', 'PPD']
   form_with_finding_code = ['ECG'];
   onSubmit(){
-    // console.log(this.selected_lab)
+    console.log(this.selected_lab)
     this.is_saving = true;
 
     if(!this.request_status_code) {
-      let url: string = this.http.getURL(this.selected_lab.laboratory.code);
+      let url: string = this.nameHelper.getURL(this.selected_lab.laboratory.code);
       if(url || url !== null || url !== ''){
         let query;
         if(this.lab_form.request_id) {
@@ -185,7 +186,8 @@ export class LabFormComponent implements OnChanges, OnInit {
 
   constructor(
     private http: HttpService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private nameHelper: NameHelperService
   ) { }
 
   ngOnInit(): void {
