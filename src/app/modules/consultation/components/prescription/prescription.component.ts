@@ -134,7 +134,8 @@ export class PrescriptionComponent implements OnInit, OnChanges {
     {var_name: 'drug_regimen',      location: 'dose-regimens'},
     {var_name: 'drug_purpose',      location: 'purposes'},
     {var_name: 'drug_frequency',    location: 'duration-frequencies'},
-    {var_name: 'drug_preparation',  location: 'preparations'}
+    {var_name: 'drug_preparation',  location: 'preparations'},
+    {var_name: 'drug_route', location: 'medicine-route'}
   ];
 
   loadLibraries(){
@@ -143,7 +144,7 @@ export class PrescriptionComponent implements OnInit, OnChanges {
       this.http.get('libraries/'+obj.location).subscribe({
         next: (data: any) => {
           this[obj.var_name] = data.data;
-          // console.log(data.data);
+          console.log(data.data);
           if(this.libraries.length -1 === index) {
             this.show_form = true
           }

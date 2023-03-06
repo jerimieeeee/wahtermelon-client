@@ -54,7 +54,7 @@ export class PhysicalExamComponent implements OnInit, OnChanges {
     if(Object.keys(this.physical_codes).length > 0) {
       let pe_codes = [];
       Object.entries(this.physical_codes).forEach(([key, value], index) => {
-        pe_codes.push(key);
+        if(value === true) pe_codes.push(key);
       });
       this.saveCodes(pe_codes)
     } else {

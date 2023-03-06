@@ -1,9 +1,9 @@
-<!-- <div class="grid grid-cols-1 m-5">
+<div class="grid grid-cols-1 m-5">
 
   <form [formGroup]="reportForm" (ngSubmit)="onSubmit()" class="flex my-3 space-x-3">
-    <div class="col-span-6 sm:col-span-2">
+    <div class="w-32">
       <label for="report_type" class="input-label" >Report</label>
-      <select id="report_type" name="report_type" class="input" formControlName="report_type">
+      <select id="report_type" name="report_type" class="input" formControlName="report_type" (change)="changeDateOptions()">
         <option selected="true" disabled="disabled">Select report type</option>
         <optgroup label="FHSIS 2018" class="text-gray-500" >
           <option *ngFor="let type of fhsis2018" [value]="type.id">{{ type.desc }}</option>
@@ -11,7 +11,7 @@
       </select>
     </div>
 
-    <div class="col-span-6 sm:col-span-2">
+    <div class="w-32" *ngIf="reportForm.value.report_type">
       <label for="report_class" class="input-label" >Location</label>
       <select id="report_class" name="report_class" class="input" formControlName="report_class">
         <option >All</option>
@@ -21,27 +21,41 @@
       </select>
     </div>
 
-    <div class="col-span-2">
+    <div class="w-32" *ngIf="reportForm.value.report_type && f['month'].enabled">
+      <label for="start_date" class="input-label">Month</label>
+      <select id="month" name="month" class="input" formControlName="month">
+        <option [value]="month.value" *ngFor="let month of months"> {{ month.name }}</option>
+      </select>
+    </div>
+
+    <div class="w-32" *ngIf="reportForm.value.report_type && f['year'].enabled">
+      <label for="start_date" class="input-label">Year</label>
+      <select id="year" name="year" class="input" formControlName="year">
+        <option [value]="year" *ngFor="let year of years"> {{ year }}</option>
+      </select>
+    </div>
+
+    <div class="w-32" *ngIf="reportForm.value.report_type && f['start_date'].enabled">
       <label for="start_date" class="input-label">Start date</label>
       <input type="date" name="start_date" id="start_date" class="input" placeholder="mm/dd/yyyy" formControlName="start_date">
     </div>
 
-    <div class="col-span-2">
+    <div class="w-32" *ngIf="reportForm.value.report_type && f['end_date'].enabled">
       <label for="end_date" class="input-label">End date</label>
       <input type="date" name="end_date" id="end_date" class="input" placeholder="mm/dd/yyyy" formControlName="end_date">
     </div>
 
-    <div class="col-span-2">
+    <div class="w-32">
       <button [disabled]="reportForm.invalid" type="submit" class="btn-save mt-5 disabled:bg-gray-400">
         Submit
       </button>
     </div>
   </form>
 
-  <div class="flex flex-wrap border border-slate-300 rounded-xl">
+  <div class="border border-slate-300 rounded-xl px-5">
       <app-fhsis2018-cc *ngIf="report_params?.report_type=== 'fhsis2018-cc'" [report_params]="report_params"></app-fhsis2018-cc>
       <app-fhsis2018-mc class="w-full" *ngIf="report_params?.report_type === 'fhsis2018-mc'" [report_params]="report_params"></app-fhsis2018-mc>
   </div>
-</div> -->
+</div>
 
-<app-fhsis2018-cc></app-fhsis2018-cc>
+<!-- <app-fhsis2018-cc [report_params]="report_params"></app-fhsis2018-cc> -->

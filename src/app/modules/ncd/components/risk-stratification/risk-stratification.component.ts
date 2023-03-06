@@ -10,7 +10,7 @@ export class RiskStratificationComponent implements OnInit {
 
   faInfoCircle = faInfoCircle;
 
-  risk=15;
+  risk=10;
 
   constructor() { }
 

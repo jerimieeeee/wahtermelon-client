@@ -18,7 +18,7 @@
             </div>
 
             <div class="col-span-3 text-sm " *ngIf="add_drug">
-              <label class="font-semibold" for="added_medicine" [ngClass]="{'text-red-500': is_saving && f.added_medicine.errors}">Brand name</label>
+              <label class="font-semibold" for="added_medicine" [ngClass]="{'text-red-500': is_saving && f.added_medicine.errors}">Drug name</label>
               <input name="added_medicine" id="added_medicine" formControlName="added_medicine" type="text" class="input" [ngClass]="{'invalid-input': is_saving && f.added_medicine.errors}">
 
               <div *ngIf="is_saving && f.added_medicine.errors" class="invalid-alert">
@@ -64,6 +64,18 @@
             </div>
 
             <div class="col-span-1 text-sm">
+              <label class="font-semibold" for="medicine_route_code" [ngClass]="{'text-red-500': is_saving && f.medicine_route_code.errors}">Medicine Route</label>
+              <select name="route" id="medicine_route_code" formControlName="medicine_route_code" [ngClass]="{'invalid-input': is_saving && f.medicine_route_code.errors}" class="input">
+                <option [value]="route.code" *ngFor="let route of drug_route">{{ route.desc}}</option>
+              </select>
+              <div *ngIf="is_saving && f.medicine_route_code.errors" class="invalid-alert">
+                <div *ngIf="f.medicine_route_code.errors?.['required']">
+                  {{ required_message }}
+                </div>
+              </div>
+            </div>
+
+            <div class="col-span-1 text-sm">
               <label class="font-semibold" for="duration_intake" [ngClass]="{'text-red-500': is_saving && f.duration.errors}">Duration</label>
               <input name="duration_intake" id="duration_intake" formControlName="duration_intake" [ngClass]="{'invalid-input': is_saving && f.duration_intake.errors}" type="number" class="input">
 
@@ -74,7 +86,7 @@
               </div>
             </div>
 
-            <div class="col-span-2 text-sm">
+            <div class="col-span-1 text-sm">
               <label class="font-semibold" for="duration_frequency" [ngClass]="{'text-red-500': is_saving && f.duration_frequency.errors}">Duration frequency</label>
               <select name="duration_frequency" id="duration_frequency" formControlName="duration_frequency" [ngClass]="{'invalid-input': is_saving && f.duration_frequency.errors}" class="input">
                 <option [value]="freq.code" *ngFor="let freq of drug_frequency">{{ freq.desc}}</option>
