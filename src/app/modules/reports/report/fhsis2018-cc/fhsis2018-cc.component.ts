@@ -26,17 +26,33 @@ export class Fhsis2018CcComponent implements OnChanges {
         month: this.report_params.month
       };
 
-      this.http.get('reports-2018/child-care/m1', {params})
-      .subscribe({
-        next: (data: any) => {
-          this.stats = data;
-          this.showForm = true;
-
-          console.log(this.stats, 'cc reports');
-        },
-        error: err => console.log(err)
-      });
+      if(this.report_params.report_class === 'muncity') {
+        let user = this.http.getUserFacility();
+        this.http.get('libraries/facilities', {params:{'filter[code]': user}}).subscribe({
+          next: (data: any) => {
+            // console.log(data.data)
+            params['municipality_code'] = data.data[0].municipality.code;
+            this.getReport(params)
+          },
+          error: err => console.log(err)
+        })
+      } else {
+        this.getReport(params);
+      }
     }
+  }
+
+  getReport(params){
+    this.http.get('reports-2018/child-care/m1', {params})
+    .subscribe({
+      next: (data: any) => {
+        this.stats = data;
+        this.showForm = true;
+
+        console.log(this.stats, 'cc reports');
+      },
+      error: err => console.log(err)
+    });
   }
 
   openList:boolean = false;
