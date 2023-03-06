@@ -117,7 +117,7 @@
               </tr>
 
               <tr class="border text-sm">
-                <td class="p-5 border pl-9">b. HepB, within 24 hours.</td>
+                <td class="p-5 border pl-9">b. HepB, after 24 hours.</td>
                 <td class="p-5 border text-blue-500 text-center" [class]=" stats?.HEPB_Male_after_24.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.HEPB_Male_after_24)">{{ stats?.HEPB_Male_after_24.length }}</td>
                 <td class="p-5 border text-blue-500 text-center" [class]=" stats?.HEPB_Female_after_24.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.HEPB_Female_after_24)">{{ stats?.HEPB_Female_after_24.length }}</td>
                 <td class="p-5 border text-blue-500 text-center" [class]=" stats?.HEPB_Male_after_24.length !==0 || stats?.HEPB_Female_after_24.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.HEPB_Male_after_24, stats?.HEPB_Female_after_24)">{{ stats?.HEPB_Male_after_24.length +  stats?.HEPB_Female_after_24.length }}</td>
@@ -271,7 +271,7 @@
                 <td class="p-5 border text-blue-500 text-center" [class]=" stats?.ebf_5months_29days_Female.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.ebf_5months_29days_Female)">{{ stats?.ebf_5months_29days_Female.length }}</td>
                 <td class="p-5 border text-blue-500 text-center" [class]=" stats?.ebf_5months_29days_Male.length !==0 || stats?.ebf_5months_29days_stats?.ebf_5months_29days_Female.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.ebf_5months_29days_Male, stats?.ebf_5months_29days_Female)">{{ stats?.ebf_5months_29days_Male.length +  stats?.ebf_5months_29days_Female.length }}</td>
                 <td class="p-5 border"></td>
-                <td class="p-5 border">34. a.1. MAM-admitted in SFT - Total</td>
+                <td class="p-5 border">34. a. MAM - Total</td>
                 <td class="p-5 border text-blue-500 text-center">-</td>
                 <td class="p-5 border text-blue-500 text-center">-</td>
                 <td class="p-5 border text-blue-500 text-center">-</td>
@@ -357,7 +357,7 @@
               </tr>
 
               <tr class="text-sm">
-                <td colspan="5" class="p-5 bg-gray-100"></td>
+                <td colspan="5" class="p-5 bg-gray-50"></td>
                 <td class="p-5 border">34. b.2. SAM - cured in OTC - Total</td>
                 <td class="p-5 border text-blue-500 text-center">-</td>
                 <td class="p-5 border text-blue-500 text-center">-</td>
@@ -366,7 +366,7 @@
               </tr>
 
               <tr class="text-sm">
-                <td colspan="5" class="p-5 bg-gray-100"></td>
+                <td colspan="5" class="p-5 bg-gray-50"></td>
                 <td class="p-5 border">34. b.3. SAM-defaulted in OTC - Total</td>
                 <td class="p-5 border text-blue-500 text-center">-</td>
                 <td class="p-5 border text-blue-500 text-center">-</td>
@@ -375,7 +375,7 @@
               </tr>
 
               <tr class="text-sm">
-                <td colspan="5" class="p-5 bg-gray-100"></td>
+                <td colspan="5" class="p-5 bg-gray-50"></td>
                 <td class="p-5 border">34. b.4. SAM- died in OTC - Total</td>
                 <td class="p-5 border text-blue-500 text-center">-</td>
                 <td class="p-5 border text-blue-500 text-center">-</td>
@@ -384,7 +384,7 @@
               </tr>
 
               <tr class="text-sm">
-                <td colspan="5" class="p-5 bg-gray-100"></td>
+                <td colspan="5" class="p-5 bg-gray-50"></td>
                 <td class="p-5 border">35. Overweight and Obese - Total</td>
                 <td class="p-5 border text-blue-500 text-center" [class]=" stats?.obese_overweight_0_59_months_Male.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.obese_overweight_0_59_months_Male)">{{ stats?.obese_overweight_0_59_months_Male.length }}</td>
                 <td class="p-5 border text-blue-500 text-center" [class]=" stats?.obese_overweight_0_59_months_Female.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.obese_overweight_0_59_months_Female)">{{ stats?.obese_overweight_0_59_months_Female.length }}</td>
@@ -393,7 +393,7 @@
               </tr>
 
               <tr class="text-sm">
-                <td colspan="5" class="p-5 bg-gray-100"></td>
+                <td colspan="5" class="p-5 bg-gray-50"></td>
                 <td class="p-5 border">34. Normal - Total</td>
                 <td class="p-5 border text-blue-500 text-center" [class]=" stats?.normal_0_59_months_Male.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.normal_0_59_months_Male)">{{ stats?.normal_0_59_months_Male.length }}</td>
                 <td class="p-5 border text-blue-500 text-center" [class]=" stats?.normal_0_59_months_Female.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.normal_0_59_months_Female)">{{ stats?.normal_0_59_months_Female.length }}</td>
@@ -403,10 +403,10 @@
 
               <tr>
                 <td scope="col" colspan="5" class="text-xs font-semibold text-left text-gray-900 px-6 py-4 border bg-gray-100">
-                  C4. Deworming Services for Infants, Children and Adolescents
+                  C3. Deworming Services for Infants, Children and Adolescents
                 </td>
                 <td scope="col" colspan="5" class="text-xs font-semibold text-left text-gray-900 px-6 py-4 border bg-gray-100">
-                  C5. Deworming Services for Infants, Children and Adolescents
+                  C4. Management of Sick Infants and Children
                 </td>
               </tr>
 
@@ -463,7 +463,7 @@
               </tr>
 
               <tr class="text-sm">
-                <td colspan="5" class="p-5 bg-gray-100"></td>
+                <td colspan="5" class="p-5 bg-gray-50"></td>
                 <td class="p-5 border">42. Diarrhea cases 0-59 months old seen</td>
                 <td class="p-5 border text-blue-500 text-center" [class]=" stats?.diarrhea_0_59_months_Male.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.diarrhea_0_59_months_Male)">{{ stats?.diarrhea_0_59_months_Male.length }}</td>
                 <td class="p-5 border text-blue-500 text-center" [class]=" stats?.diarrhea_0_59_months_Female.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.diarrhea_0_59_months_Female)">{{ stats?.diarrhea_0_59_months_Female.length }}</td>
@@ -472,7 +472,7 @@
               </tr>
 
               <tr class="text-sm">
-                <td colspan="5" class="p-5 bg-gray-100"></td>
+                <td colspan="5" class="p-5 bg-gray-50"></td>
                 <td class="p-5 border">43. Diarrhea cases 0-59 months old received ORS</td>
                 <td class="p-5 border text-blue-500 text-center" [class]=" stats?.diarrhea_0_59_months_with_ors_Male.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.diarrhea_0_59_months_with_ors_Male)">{{ stats?.diarrhea_0_59_months_with_ors_Male.length }}</td>
                 <td class="p-5 border text-blue-500 text-center" [class]=" stats?.diarrhea_0_59_months_with_ors_Female.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.diarrhea_0_59_months_with_ors_Female)">{{ stats?.diarrhea_0_59_months_with_ors_Female.length }}</td>
@@ -481,7 +481,7 @@
               </tr>
 
               <tr class="text-sm">
-                <td colspan="5" class="p-5 bg-gray-100"></td>
+                <td colspan="5" class="p-5 bg-gray-50"></td>
                 <td class="p-5 border">44. Diarrhea cases 0-59 mos. received ORS w/ zinc</td>
                 <td class="p-5 border text-blue-500 text-center" [class]=" stats?.diarrhea_0_59_months_with_ors_zinc_Male.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.diarrhea_0_59_months_with_ors_zinc_Male)">{{ stats?.diarrhea_0_59_months_with_ors_zinc_Male.length }}</td>
                 <td class="p-5 border text-blue-500 text-center" [class]=" stats?.diarrhea_0_59_months_with_ors_zinc_Female.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.diarrhea_0_59_months_with_ors_zinc_Female)">{{ stats?.diarrhea_0_59_months_with_ors_zinc_Female.length }}</td>
@@ -490,7 +490,7 @@
               </tr>
 
               <tr class="text-sm">
-                <td colspan="5" class="p-5 bg-gray-100"></td>
+                <td colspan="5" class="p-5 bg-gray-50"></td>
                 <td class="p-5 border">45. Pneumonia cases 0-59 mos. old seen</td>
                 <td class="p-5 border text-blue-500 text-center" [class]=" stats?.pneumonia_0_59_months_Male.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.pneumonia_0_59_months_Male)">{{ stats?.pneumonia_0_59_months_Male.length }}</td>
                 <td class="p-5 border text-blue-500 text-center" [class]=" stats?.pneumonia_0_59_months_Female.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.pneumonia_0_59_months_Female)">{{ stats?.pneumonia_0_59_months_Female.length }}</td>
@@ -499,7 +499,7 @@
               </tr>
 
               <tr class="text-sm">
-                <td colspan="5" class="p-5 bg-gray-100"></td>
+                <td colspan="5" class="p-5 bg-gray-50"></td>
                 <td class="p-5 border">46. Pneumonia cases 0-59 mos. old completed treatment</td>
                 <td class="p-5 border text-blue-500 text-center" [class]=" stats?.pneumonia_0_59_months_with_treatment_Male.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.pneumonia_0_59_months_with_treatment_Male)">{{ stats?.pneumonia_0_59_months_with_treatment_Male.length }}</td>
                 <td class="p-5 border text-blue-500 text-center" [class]=" stats?.pneumonia_0_59_months_with_treatment_Female.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.pneumonia_0_59_months_with_treatment_Female)">{{ stats?.pneumonia_0_59_months_with_treatment_Female.length }}</td>
