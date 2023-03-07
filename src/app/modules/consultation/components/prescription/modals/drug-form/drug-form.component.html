@@ -63,7 +63,7 @@
               </div>
             </div>
 
-            <div class="col-span-1 text-sm">
+            <!-- <div class="col-span-1 text-sm">
               <label class="font-semibold" for="medicine_route_code" [ngClass]="{'text-red-500': is_saving && f.medicine_route_code.errors}">Medicine Route</label>
               <select name="route" id="medicine_route_code" formControlName="medicine_route_code" [ngClass]="{'invalid-input': is_saving && f.medicine_route_code.errors}" class="input">
                 <option [value]="route.code" *ngFor="let route of drug_route">{{ route.desc}}</option>
@@ -73,7 +73,7 @@
                   {{ required_message }}
                 </div>
               </div>
-            </div>
+            </div> -->
 
             <div class="col-span-1 text-sm">
               <label class="font-semibold" for="duration_intake" [ngClass]="{'text-red-500': is_saving && f.duration.errors}">Duration</label>
@@ -86,7 +86,7 @@
               </div>
             </div>
 
-            <div class="col-span-1 text-sm">
+            <div class="col-span-2 text-sm">
               <label class="font-semibold" for="duration_frequency" [ngClass]="{'text-red-500': is_saving && f.duration_frequency.errors}">Duration frequency</label>
               <select name="duration_frequency" id="duration_frequency" formControlName="duration_frequency" [ngClass]="{'invalid-input': is_saving && f.duration_frequency.errors}" class="input">
                 <option [value]="freq.code" *ngFor="let freq of drug_frequency">{{ freq.desc}}</option>
