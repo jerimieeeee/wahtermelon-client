@@ -58,7 +58,7 @@ export class XmlUploadComponent implements OnInit {
 
   file_to_upload: any = null;
   xmlFile: any = null;
-  cipher_key: string;
+  cipher_key: string = 'PHilheaLthDuMmyciPHerKeyS';
 
   readXML(files: FileList){
     // console.log(files.item(0))
