@@ -120,6 +120,8 @@ export class PrescriptionComponent implements OnInit, OnChanges {
     }
   }
 
+
+
   //loadLibraries
   drug_uom: any;
   drug_regimen: any;
@@ -133,7 +135,7 @@ export class PrescriptionComponent implements OnInit, OnChanges {
     {var_name: 'drug_purpose',      location: 'purposes'},
     {var_name: 'drug_frequency',    location: 'duration-frequencies'},
     {var_name: 'drug_preparation',  location: 'preparations'},
-    // {var_name: 'drug_route', location: 'medicine-route'}
+    {var_name: 'drug_route', location: 'medicine-route'}
   ];
 
   loadLibraries(){
