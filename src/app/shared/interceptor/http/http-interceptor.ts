@@ -9,6 +9,7 @@ import {
 import { Observable, catchError, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
+import { ToastrService } from 'ngx-toastr';
 // import { catchError } from 'rxjs/operators';
 
 @Injectable()
@@ -16,8 +17,8 @@ export class RequestsInterceptor implements HttpInterceptor {
   cookie_value;
 
   constructor(
-    private router: Router,
-    private cookieService: CookieService
+    private cookieService: CookieService,
+    private toastr: ToastrService
   ) {
     this.cookie_value = this.cookieService.get('access_token');
   }
@@ -42,6 +43,11 @@ export class RequestsInterceptor implements HttpInterceptor {
         if(error && error.status === 401){
           return this.handle401Error(request, next, error);
         } else {
+          this.toastr.error(error.error.message, 'Error', {
+            closeButton: true,
+            positionClass: 'toast-top-center',
+            disableTimeOut: true
+          })
           return throwError(() => error)
         }
 
