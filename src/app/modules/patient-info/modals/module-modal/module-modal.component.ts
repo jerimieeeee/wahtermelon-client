@@ -79,13 +79,13 @@ export class ModuleModalComponent implements OnInit {
           location: 'consultation',
           group: '',
           consult_active: false
-        },
+        }, */
         tb: {
           name: 'Tuberculosis',
-          location: 'consultation',
-          group: '',
+          location: 'tb',
+          group: 'tb',
           consult_active: false
-        }, */
+        },
         ncd: {
           name: 'NCD',
           location: 'ncd',
@@ -202,14 +202,7 @@ export class ModuleModalComponent implements OnInit {
         this.router.navigate(['/patient/'+selected_module.location, {id: this.patient_info.id, consult_id: data.data.id}]);
         this.closeModal()
       },
-      error: (err) => {
-        console.log(err.error.message);
-        this.toastr.error(err.error.message, 'Error', {
-          closeButton: true,
-          positionClass: 'toast-top-center',
-          disableTimeOut: true
-        })
-      }
+      error: (err) => console.log(err.error.message)
     });
   }
 
