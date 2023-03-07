@@ -14,10 +14,10 @@
     <div class="w-32" *ngIf="reportForm.value.report_type">
       <label for="report_class" class="input-label" >Location</label>
       <select id="report_class" name="report_class" class="input" formControlName="report_class">
-        <option >All</option>
-        <option >Region</option>
-        <option >Municipality</option>
-        <option >Facility</option>
+        <option value="all">All</option>
+        <!-- <option >Region</option> -->
+        <option value="muncity">Municipality</option>
+        <!-- <option >Facility</option> -->
       </select>
     </div>
 

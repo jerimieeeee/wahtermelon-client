@@ -12,8 +12,8 @@
     </div>
 
     <div *ngIf="visit_list?.length >= 1" class="flex">
-      <div [@halfFull]="show_details ? 'half' : 'full'" class="mr-2 flex-auto">
-        <div class="last:border-0 border-b border-slate-200 pb-2" *ngFor="let visit of visit_list" >
+      <div [@halfFull]="show_details ? 'half' : 'full'" class="mr-2 flex-auto h-3/5 overflow-y-auto">
+        <div class="last:border-0 border-b border-slate-200 pb-2 h-" *ngFor="let visit of visit_list" >
           <div class="grid grid-cols-8 gap-2 mt-2">
             <div class="col-span-2 text-sm font-semibold h-full">
               {{ visit?.consult_date | date:'MM/dd/yyyy'}}

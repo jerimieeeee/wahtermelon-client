@@ -32,7 +32,7 @@ export class LabComponent implements OnInit, OnDestroy {
     this.http.get('laboratory/consult-laboratories', {params}).subscribe({
       next: (data: any) => {
         this.pending_list = data.data
-        console.log(this.pending_list);
+        // console.log(this.pending_list);
         if(this.pending_list.length >= 1) {
           this.getResults();
         } else {
@@ -89,7 +89,7 @@ export class LabComponent implements OnInit, OnDestroy {
   url: string = 'laboratory/consult-laboratories/'
   toggleModal(form, lab?){
     this.selected_lab = lab;
-console.log(this.selected_lab)
+// console.log(this.selected_lab)
     if(this.selected_lab){
       if(form === 'add') {
         if(lab && lab.laboratory.code === 'CXRAY') {

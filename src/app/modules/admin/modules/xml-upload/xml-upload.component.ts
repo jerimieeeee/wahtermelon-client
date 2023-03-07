@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { faSpinner,  faSearch, faCalendarDays, faArrowsRotate, faUpload, faClipboardList } from '@fortawesome/free-solid-svg-icons';
+import { faSpinner,  faSearch, faCalendarDays, faArrowsRotate, faUpload, faClipboardList, faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -9,7 +9,7 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./xml-upload.component.scss']
 })
 export class XmlUploadComponent implements OnInit {
-  faSpinner = faSpinner;
+  faCircleNotch = faCircleNotch;
   faSearch = faSearch;
   faCalendarDays = faCalendarDays;
   faArrowsRotate = faArrowsRotate;
@@ -37,7 +37,7 @@ export class XmlUploadComponent implements OnInit {
 
   toggleModal(data){
     this.modals[data.name] = !this.modals[data.name];
-    console.log(data.data)
+
     if(data.data) {
       console.log(typeof this.uploaded_list)
       Object.entries(data.data).forEach(([key, value], index) => {
@@ -58,32 +58,60 @@ export class XmlUploadComponent implements OnInit {
 
   file_to_upload: any = null;
   xmlFile: any = null;
+  cipher_key: string;
 
   readXML(files: FileList){
     // console.log(files.item(0))
     this.file_to_upload = files;
   }
 
+  file_upload_count: number;
+  uploaded_count: number = 0;
+  is_uploading: boolean = false;
+
   uploadFile(fileToUpload){
-    const formData: FormData = new FormData()
+    this.is_uploading = true;
+
+    const formData: FormData = new FormData();
+    this.file_upload_count = fileToUpload.length;
+    this.uploaded_count = 0;
     for (let index = 0; index < fileToUpload.length; index++) {
-      // const element = array[index];
-      formData.append('xml[]', fileToUpload[index])
+
+      let name = fileToUpload[index].name.split('.');
+      if(name[name.length - 1] === 'enc') {
+        this.uploaded_count += 1;
+        formData.append('xml[]', fileToUpload[index])
+      }
     }
 
+    formData.append('cipher_key', this.cipher_key);
+    console.log(formData.get('cipher_key'))
+    console.log(this.file_upload_count, this.uploaded_count)
 
-    console.log(formData.get('xml'))
     this.http.post('konsulta/upload-xml', formData).subscribe({
       next: (data:any) => {
         console.log(data)
-        this.toastr.success('Successfully uploaded!','XML Upload');
-        this.file_to_upload = null;
-        this.xmlFile = null;
-        this.loadList();
-        // this.openModal();
+        this.resetInput();
+        this.showToast('success','Uploaded '+ this.uploaded_count +' of '+this.file_upload_count+' files', 'Upload Success')
       },
-      error: err => console.log('text', err)
+      error: err => {
+        this.resetInput();
+      }
     })
+  }
+
+  showToast(type, message, title) {
+    this.toastr[type](message, title, {
+      closeButton: true,
+      positionClass: 'toast-top-center',
+      disableTimeOut: true
+    })
+  }
+
+  resetInput(){
+    this.is_uploading = false;
+    this.file_to_upload = null;
+    this.xmlFile = null;
   }
 
   xml_to_view: any;

@@ -17,6 +17,7 @@ import { RequestsInterceptor } from './shared/interceptor/http/http-interceptor'
 import { ToastrModule } from 'ngx-toastr';
 import { CookieService } from 'ngx-cookie-service'
 import { provideEnvironmentNgxMask } from 'ngx-mask';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 @NgModule({
   declarations: [
@@ -51,3 +52,5 @@ import { provideEnvironmentNgxMask } from 'ngx-mask';
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+platformBrowserDynamic().bootstrapModule(AppModule);

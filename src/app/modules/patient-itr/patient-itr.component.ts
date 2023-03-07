@@ -35,15 +35,29 @@ export class PatientItrComponent implements OnInit {
     let patient_id = this.route.snapshot.paramMap.get('id');
 
     if(this.patient_id !== patient_id){
-      this.http.get('consultation/records',{params:{patient_id: patient_id, per_page: 'all', sort: '-consult_date'}}).subscribe({
+      let params = {
+        patient_id: patient_id,
+        per_page: '10',
+        sort: '-consult_date'
+      }
+      this.getVisitList(params);
+      /* this.http.get('consultation/records',{params:{patient_id: patient_id, per_page: 'all', sort: '-consult_date'}}).subscribe({
         next: (data: any) => {
           this.visit_list = data.data;
         },
         error: err => console.log(err),
-      })
+      }) */
     }
   }
 
+  getVisitList(params, page?){
+    this.http.get('consultation/records',{params}).subscribe({
+      next: (data: any) => {
+        this.visit_list = data.data;
+      },
+      error: err => console.log(err),
+    })
+  }
   showConsult(details: any){
     this.selected_visit = details;
     if(details.vitals) this.getLatestToday(details);
