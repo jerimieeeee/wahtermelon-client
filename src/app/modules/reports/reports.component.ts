@@ -18,6 +18,7 @@ export class ReportsComponent implements OnInit {
     report_type: new FormControl<string| null>(''),
     report_class: new FormControl<string| null>(''),
     barangay_code: new FormControl<[]| null>([]),
+    municipality_code: new FormControl<string| null>(''),
     month: new FormControl<string| null>(''),
     year: new FormControl<string| null>('')
   });
@@ -25,8 +26,8 @@ export class ReportsComponent implements OnInit {
   current_date = formatDate(new Date, 'yyyy', 'en');
 
   fhsis2018 = [
-    { id: 'fhsis2018-cc', desc: 'Child Care' },
-    { id: 'fhsis2018-mc', desc: 'Maternal Care' },
+    { id: 'fhsis2018-cc', desc: 'Child Care', url: 'reports-2018/child-care/m1'},
+    { id: 'fhsis2018-mc', desc: 'Maternal Care', url: 'reports-2018/child-care/m1'},
   ]
 
   months = [
@@ -83,30 +84,64 @@ export class ReportsComponent implements OnInit {
   fhsis_monthly_arr = ['fhsis2018-cc', 'fhsis2018-mc']
   report_params: any;
   years: any = [];
-  brgys: any;
   selectedBrgy: [];
+  brgys: any;
+  userLoc: string;
+  report_data: any;
+  is_fetching: boolean = false;
 
-  handleReportClass() {
-    if(this.reportForm.value.report_class === "brgys") {
+  onSubmit(){
+    this.is_fetching = true;
+    // this.reportForm.setValue(barangay_code: this.selectedBrgy)
+    this.f['barangay_code'].setValue(this.selectedBrgy)
+
+    // console.log(this.reportForm.value)
+    let params = this.reportForm.value;
+    this.http.get(params.report_type.url, {params})
+    .subscribe({
+      next: (data: any) => {
+        this.report_data = data;
+        this.is_fetching = false;
+
+        // console.log(this.report_data, 'cc reports');
+      },
+      error: err => console.log(err)
+    });
+  }
+
+  handleReportClass(report_class) {
+    if(report_class === "brgys" || report_class === "muncity") {
+      if(!this.userLoc) this.userLoc = this.http.getUserFacility();
+
+      this.http.get('libraries/facilities', {params:{'filter[code]': this.userLoc}}).subscribe({
+        next: (data: any) => this.getBrgys(data.data[0].municipality.code, report_class),
+        error: err => console.log(err)
+      })
+    } else {
+      // all
+      this.f['municipality_code'].setValue(null);
+      this.f['barangay_code'].setValue(null);
+      this.selectedBrgy = null;
+    }
+  }
+
+  getBrgys(userMun, report_class){
+    if(report_class === 'muncity') {
+      this.f['municipality_code'].setValue(userMun);
+      this.selectedBrgy = null;
+      this.f['barangay_code'].setValue(null);
+    } else {
+      this.f['municipality_code'].setValue(null);
+
       if(!this.brgys) {
-        let userLoc = this.http.getUserFacility();
-        this.http.get('libraries/facilities', {params:{'filter[code]': userLoc}}).subscribe({
+        this.http.get('libraries/municipalities/'+userMun, {params:{include: 'barangays'}}).subscribe({
           next: (data: any) => {
-            this.getBrgys(data.data[0].municipality.code);
+            this.brgys = data.data.barangays;
           },
           error: err => console.log(err)
         })
       }
     }
-  }
-
-  getBrgys(userMun){
-    this.http.get('libraries/municipalities/'+userMun, {params:{include: 'barangays'}}).subscribe({
-      next: (data: any) => {
-        this.brgys = data.data.barangays;
-      },
-      error: err => console.log(err)
-    })
   }
 
   generateYear(){
@@ -117,16 +152,9 @@ export class ReportsComponent implements OnInit {
     }
   }
 
-  onSubmit(){
-    // this.reportForm.setValue(barangay_code: this.selectedBrgy)
-    this.f['barangay_code'].setValue(this.selectedBrgy)
-    // console.log(this.reportForm.value)
-    this.report_params = this.reportForm.value;
-  }
-
-
   changeDateOptions(): void {
-    if(this.fhsis_monthly_arr.find(e => e === this.reportForm.value.report_type)) {
+    console.log(this.reportForm.value.report_type)
+    if(this.fhsis_monthly_arr.find(e => e === this.reportForm.value.report_type.id)) {
       let month = formatDate(this.current_date, 'm', 'en');
       let year = formatDate(this.current_date, 'yyyy', 'en');
 
@@ -168,10 +196,11 @@ export class ReportsComponent implements OnInit {
       report_type: ['', Validators.required],
       report_class: ['', Validators.required],
       barangay_code: [''],
+      municipality_code: [''],
       start_date: ['', Validators.required],
       end_date: ['', Validators.required],
-      month: ['', Validators.required],
-      year: ['', Validators.required]
+      month: [null, Validators.required],
+      year: [null, Validators.required]
     });
 
     this.changeDateOptions();
