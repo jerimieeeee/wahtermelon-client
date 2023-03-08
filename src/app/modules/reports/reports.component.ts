@@ -1,6 +1,7 @@
 import { formatDate } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
@@ -9,11 +10,14 @@ import { HttpService } from 'app/shared/services/http.service';
   styleUrls: ['./reports.component.scss']
 })
 export class ReportsComponent implements OnInit {
+  faCircleNotch = faCircleNotch;
+
   reportForm: FormGroup = new FormGroup({
     start_date: new FormControl<string| null>(''),
     end_date: new FormControl<string| null>(''),
     report_type: new FormControl<string| null>(''),
     report_class: new FormControl<string| null>(''),
+    barangay_code: new FormControl<[]| null>([]),
     month: new FormControl<string| null>(''),
     year: new FormControl<string| null>('')
   });
@@ -79,6 +83,31 @@ export class ReportsComponent implements OnInit {
   fhsis_monthly_arr = ['fhsis2018-cc', 'fhsis2018-mc']
   report_params: any;
   years: any = [];
+  brgys: any;
+  selectedBrgy: [];
+
+  handleReportClass() {
+    if(this.reportForm.value.report_class === "brgys") {
+      if(!this.brgys) {
+        let userLoc = this.http.getUserFacility();
+        this.http.get('libraries/facilities', {params:{'filter[code]': userLoc}}).subscribe({
+          next: (data: any) => {
+            this.getBrgys(data.data[0].municipality.code);
+          },
+          error: err => console.log(err)
+        })
+      }
+    }
+  }
+
+  getBrgys(userMun){
+    this.http.get('libraries/municipalities/'+userMun, {params:{include: 'barangays'}}).subscribe({
+      next: (data: any) => {
+        this.brgys = data.data.barangays;
+      },
+      error: err => console.log(err)
+    })
+  }
 
   generateYear(){
     let current_year =  formatDate(this.current_date, 'yyyy', 'en');
@@ -89,17 +118,12 @@ export class ReportsComponent implements OnInit {
   }
 
   onSubmit(){
-    // console.log(this.reportForm)
+    // this.reportForm.setValue(barangay_code: this.selectedBrgy)
+    this.f['barangay_code'].setValue(this.selectedBrgy)
+    // console.log(this.reportForm.value)
     this.report_params = this.reportForm.value;
   }
 
-  constructor(
-    private formBuilder: FormBuilder
-  ) { }
-
-  get f(): { [key: string]: AbstractControl } {
-    return this.reportForm.controls;
-  }
 
   changeDateOptions(): void {
     if(this.fhsis_monthly_arr.find(e => e === this.reportForm.value.report_type)) {
@@ -128,12 +152,22 @@ export class ReportsComponent implements OnInit {
     }
   }
 
+  constructor(
+    private formBuilder: FormBuilder,
+    private http: HttpService
+  ) { }
+
+  get f(): { [key: string]: AbstractControl } {
+    return this.reportForm.controls;
+  }
+
   ngOnInit(): void {
     this.current_date;
 
     this.reportForm = this.formBuilder.nonNullable.group({
       report_type: ['', Validators.required],
       report_class: ['', Validators.required],
+      barangay_code: [''],
       start_date: ['', Validators.required],
       end_date: ['', Validators.required],
       month: ['', Validators.required],
