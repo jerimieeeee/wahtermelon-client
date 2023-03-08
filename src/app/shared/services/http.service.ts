@@ -8,7 +8,7 @@ import { Subject } from 'rxjs';
   providedIn: 'root'
 })
 export class HttpService {
-  baseUrl = 'https://training-api.wah.ph/api/v1/';
+  baseUrl = 'https://cagayan-api.wah.ph/api/v1/';
 
   // public options = new HttpHeaders({
   //   'Content-Type' : 'application/json; charset=utf-8',
