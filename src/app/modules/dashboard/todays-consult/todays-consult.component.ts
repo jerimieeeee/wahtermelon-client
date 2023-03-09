@@ -1,9 +1,9 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { faQuestionCircle, faChevronDown, faFolderOpen, faHeart, faFlask, faNotesMedical, faExclamationCircle, faChevronRight, faChevronLeft, faAnglesLeft, faAnglesRight } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { NameHelperService } from 'app/shared/services/name-helper.service';
-import { interval, Subscription } from 'rxjs';
+import { interval, Subject, Subscription, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-todays-consult',
@@ -11,6 +11,8 @@ import { interval, Subscription } from 'rxjs';
   styleUrls: ['./todays-consult.component.scss']
 })
 export class TodaysConsultComponent implements OnInit, OnDestroy {
+  private unsubscribe$ = new Subject<void>();
+
   faQuestionCircle = faQuestionCircle;
   faChevronDown = faChevronDown;
   faFolderOpen = faFolderOpen;
@@ -37,6 +39,7 @@ export class TodaysConsultComponent implements OnInit, OnDestroy {
   show_form: boolean = false;
 
   getTodaysConsult(page?: number){
+    console.log('query')
     let params = {params: { }};
     params['params']['page'] = !page ? this.current_page : page;
     if (this.selected_physician !== 'all') params['params']['physician_id'] = this.selected_physician;
@@ -62,13 +65,24 @@ export class TodaysConsultComponent implements OnInit, OnDestroy {
 
 
   private updateList: Subscription;
+  todays_inteval: any;
 
   subscribeRefresh(){
-    this.updateList = interval(10000).subscribe(
+    this.todays_inteval = setInterval(() => {
+      console.log('interval')
+      this.getTodaysConsult();
+    }, 10000)
+    /* this.updateList = interval(10000).subscribe(
       () => {
         this.getTodaysConsult();
       }
-    )
+    ) */
+
+    /* interval(10000)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(() => {
+        this.getTodaysConsult();
+      }) */
   }
 
   loadPhysicians(){
@@ -126,6 +140,10 @@ export class TodaysConsultComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.updateList.unsubscribe();
+    console.log(this.todays_inteval);
+    clearInterval(this.todays_inteval)
+    // this.updateList.unsubscribe();
+    // this.unsubscribe$.next();
+    // this.unsubscribe$.complete();
   }
 }
