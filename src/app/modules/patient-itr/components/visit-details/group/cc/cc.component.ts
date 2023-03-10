@@ -29,7 +29,7 @@ export class CcComponent implements OnInit {
     .subscribe({
       next: (data: any) => {
         if(data.data.length > 0){
-          this.ccdev_record = data.data; console.log(data.data)
+          this.ccdev_record = data.data[0]; console.log(data.data)
 
           this.fetchBreastfed();
         }
