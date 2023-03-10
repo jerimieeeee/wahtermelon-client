@@ -203,7 +203,7 @@ export class FirstVisitComponent implements OnInit {
       next: (data: any) => {
 
         if(data.data.length > 0) {
-          this.patient_info = data.data;
+          this.patient_info = data.data[0];
           console.log(this.patient_info, 'info ccdev first visit')
           this.getccdevMama()
           this.visitForm.patchValue({...this.patient_info});
