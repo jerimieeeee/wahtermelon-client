@@ -119,7 +119,7 @@ export class PatientInfoComponent implements OnInit {
     this.active_loc = this.active_loc_id.loc;
     this.consult_id = this.active_loc_id.consult_id ?? null;
 
-    // console.log(this.active_loc_id)
+    console.log(this.active_loc_id)
     if(this.patient_id !== this.active_loc_id.patient_id){
       this.patient_id = this.active_loc_id.patient_id;
 

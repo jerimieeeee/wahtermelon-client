@@ -41,8 +41,20 @@
         </div>
       </div>
 
-      <div [@myInsertRemoveTrigger] *ngIf="show_details" class="my-2 w-1/2">
+      <div [@myInsertRemoveTrigger] *ngIf="show_details && user_allowed" class="my-2 w-1/2">
         <app-visit-details [selected_visit]="selected_visit" [latest_vitals]="latest_vitals"></app-visit-details>
+      </div>
+
+      <div [@myInsertRemoveTrigger] *ngIf="show_details && !user_allowed" class="my-2 w-1/2">
+        <span class="flex justify-between align-middle bg-blue-500 w-full p-2 font-semibold text-sm mb-1 text-white rounded-md">
+          <span class="py-1">VISIT DETAILS</span>
+        </span>
+        <div class="flex flex-col justify-center pt-5 text-sm">
+          <span class="mx-auto italic text-center">
+            This visit record is from other facility. <br />
+            You are not allowed to view this record.
+          </span>
+        </div>
       </div>
     </div>
   </div>

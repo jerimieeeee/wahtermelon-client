@@ -22,12 +22,17 @@ export class CcComponent implements OnInit {
   }
 
   fetchCc(){
-    this.http.get('child-care/cc-records/'+this.selected_visit.patient.id)
+    let params = {
+      patient_id: this.selected_visit.patient.id
+    }
+    this.http.get('child-care/cc-records', {params})
     .subscribe({
       next: (data: any) => {
-        this.ccdev_record = data.data; console.log(data.data)
+        if(data.data.length > 0){
+          this.ccdev_record = data.data; console.log(data.data)
 
-        this.fetchBreastfed();
+          this.fetchBreastfed();
+        }
       },
       error: err => console.log(err)
     });

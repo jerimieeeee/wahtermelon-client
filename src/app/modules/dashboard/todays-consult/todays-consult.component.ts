@@ -69,7 +69,7 @@ export class TodaysConsultComponent implements OnInit, OnDestroy {
 
   subscribeRefresh(){
     this.todays_inteval = setInterval(() => {
-      console.log('interval')
+      // console.log('interval')
       this.getTodaysConsult();
     }, 10000)
     /* this.updateList = interval(10000).subscribe(

@@ -74,7 +74,7 @@ export class FirstVisitComponent implements OnInit {
 
   // Section 2
   constructor(
-    private formBuilder: FormBuilder, 
+    private formBuilder: FormBuilder,
     private http: HttpService,
     private router: Router,
     private toastr: ToastrService
@@ -114,11 +114,11 @@ export class FirstVisitComponent implements OnInit {
 
     this.visitForm.patchValue({admission_date: formatDate(this.visitForm.value.admission_date, 'Y-MM-dd HH:mm:ss' , 'en')})
     this.visitForm.patchValue({discharge_date: formatDate(this.visitForm.value.discharge_date, 'Y-MM-dd HH:mm:ss' , 'en')})
-    
+
     } catch (err) {
-    
+
     }
-   
+
     // this.showModal = true;
 
       this.http.post('child-care/cc-records', this.visitForm.value).subscribe({
@@ -134,7 +134,7 @@ export class FirstVisitComponent implements OnInit {
           if (this.patient_info) {
             this.showToastrUpd()
           } else {
-            this.showToastr() 
+            this.showToastr()
           }
           // this.toggleAlertModal('S')
           // this.showToastr()
@@ -194,18 +194,24 @@ export class FirstVisitComponent implements OnInit {
   }
 
   getccdevDetails() {
-    this.http.get('child-care/cc-records/'+this.patient_details.id)
+    let params = {
+      patient_id: this.patient_details.id
+    }
+
+    this.http.get('child-care/cc-records',{params})
     .subscribe({
       next: (data: any) => {
-        this.patient_info = data.data;
-        console.log(this.patient_info, 'info ccdev first visit')
-        this.getccdevMama()
-        this.visitForm.patchValue({...this.patient_info});
-        this.checkCCdevDetails.emit(this.patient_info);
-        if(this.patient_info.status == 'CPAB' )
-          {
+
+        if(data.data.length > 0) {
+          this.patient_info = data.data;
+          console.log(this.patient_info, 'info ccdev first visit')
+          this.getccdevMama()
+          this.visitForm.patchValue({...this.patient_info});
+          this.checkCCdevDetails.emit(this.patient_info);
+          if(this.patient_info.status == 'CPAB' ) {
             this.cpab = 'Child Protected at Birth'
           }
+        }
       },
       error: err => console.log(err)
     });
