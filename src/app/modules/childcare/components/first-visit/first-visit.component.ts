@@ -218,14 +218,16 @@ export class FirstVisitComponent implements OnInit {
   }
 
   getccdevMama() {
-    this.http.get('patient/'+this.patient_info?.mothers_id)
-    .subscribe({
-      next: (data: any) => {
-        this.patient_info2 = data.data;
-        console.log(this.patient_info2, 'info ccdev mama first visit')
-      },
-      error: err => console.log(err)
-    });
+    if(this.patient_info && this.patient_info.mothers_id) {
+      this.http.get('patient/'+this.patient_info?.mothers_id)
+      .subscribe({
+        next: (data: any) => {
+          this.patient_info2 = data.data;
+          console.log(this.patient_info2, 'info ccdev mama first visit')
+        },
+        error: err => console.log(err)
+      });
+    }
   }
 
   hideItemName(){
