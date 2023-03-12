@@ -43,11 +43,11 @@ export class RequestsInterceptor implements HttpInterceptor {
         if(error && error.status === 401){
           return this.handle401Error(request, next, error);
         } else {
-          this.toastr.error(error.error.message, 'Error', {
+          /* this.toastr.error(error.error.message, 'Error', {
             closeButton: true,
             positionClass: 'toast-top-center',
             disableTimeOut: true
-          })
+          }) */
           return throwError(() => error)
         }
 

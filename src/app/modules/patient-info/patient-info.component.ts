@@ -59,7 +59,7 @@ export class PatientInfoComponent implements OnInit {
   ) { }
 
   loadData(field){
-    console.log(field);
+    console.log(this.patient_info);
     if(field === 'past_medical'       || field==='all') this.pastMedical.loadData(this.patient_info.id);
     if(field === 'family_medical'     || field==='all') this.familyMedical.loadData(this.patient_info.id);
     if(field === 'vaccines'           || field==='all') this.vaccine.loadData(this.patient_info.id);
@@ -119,12 +119,13 @@ export class PatientInfoComponent implements OnInit {
     this.active_loc = this.active_loc_id.loc;
     this.consult_id = this.active_loc_id.consult_id ?? null;
 
-    // console.log(this.active_loc_id)
+    console.log(this.active_loc_id)
     if(this.patient_id !== this.active_loc_id.patient_id){
       this.patient_id = this.active_loc_id.patient_id;
 
       this.http.get('patient/'+this.active_loc_id.patient_id).subscribe({
         next: (data: any) => {
+          console.log(data.data)
           this.patient_info = data.data;
           this.show_form = true;
           this.http.setPatientInfo(this.patient_info);

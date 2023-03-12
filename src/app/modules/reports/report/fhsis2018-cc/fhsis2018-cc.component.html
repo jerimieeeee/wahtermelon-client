@@ -1,4 +1,4 @@
-<div class="grid grid-cols-1 w-full" *ngIf="showForm">
+<div class="grid grid-cols-1 w-full">
   <div class="flex justify-between w-full text-blue-500 font-semibold text-lg  p-3">
     FHSIS 2018 Report - Child Care
   </div>
@@ -211,7 +211,7 @@
                 <td class="p-5 border">10. IPV 1</td>
                 <td class="p-5 border text-blue-500 text-center" [class]=" stats?.IPV1_Male.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.IPV1_Male)">{{ stats?.IPV1_Male.length }}</td>
                 <td class="p-5 border text-blue-500 text-center" [class]=" stats?.IPV1_Female.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.IPV1_Female)">{{ stats?.IPV1_Female.length }}</td>
-                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.IPV1_Male.length !==0 || stats?.IPV1_Female.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(sstats?.IPV1_Male, stats?.IPV1_Female)">{{ stats?.IPV1_Male.length +  stats?.IPV1_Female.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.IPV1_Male.length !==0 || stats?.IPV1_Female.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.IPV1_Male, stats?.IPV1_Female)">{{ stats?.IPV1_Male.length +  stats?.IPV1_Female.length }}</td>
                 <td class="p-5 border"></td>
                 <td class="p-5 border">22. Td, Grade 7 (November) - Total</td>
                 <td class="p-5 border text-blue-500 text-center" [class]=" stats?.TDRGR7_Male.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.TDRGR7_Male)">{{ stats?.TDRGR7_Male.length }}</td>
@@ -516,5 +516,6 @@
     </div>
   </div>
 </div>
+
 
 <app-name-list *ngIf="openList" (toggleModal)="toggleModal()" [name_list]="name_list"></app-name-list>

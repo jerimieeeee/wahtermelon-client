@@ -1,4 +1,5 @@
 import { Component, Input, OnChanges } from '@angular/core';
+import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
@@ -8,52 +9,14 @@ import { HttpService } from 'app/shared/services/http.service';
 })
 
 export class Fhsis2018CcComponent implements OnChanges {
-  @Input() report_params;
+  @Input() report_data;
+
+  faCircleNotch = faCircleNotch;
 
   stats : any;
-  showForm: boolean = false;
   name_list: any = [];
 
-  constructor(
-    private http: HttpService
-  ) { }
-
-  generateReport() {
-    this.report_params;
-    if(this.report_params){
-      let params = {
-        year: this.report_params.year,
-        month: this.report_params.month
-      };
-
-      if(this.report_params.report_class === 'muncity') {
-        let user = this.http.getUserFacility();
-        this.http.get('libraries/facilities', {params:{'filter[code]': user}}).subscribe({
-          next: (data: any) => {
-            // console.log(data.data)
-            params['municipality_code'] = data.data[0].municipality.code;
-            this.getReport(params)
-          },
-          error: err => console.log(err)
-        })
-      } else {
-        this.getReport(params);
-      }
-    }
-  }
-
-  getReport(params){
-    this.http.get('reports-2018/child-care/m1', {params})
-    .subscribe({
-      next: (data: any) => {
-        this.stats = data;
-        this.showForm = true;
-
-        console.log(this.stats, 'cc reports');
-      },
-      error: err => console.log(err)
-    });
-  }
+  constructor( ) { }
 
   openList:boolean = false;
   toggleModal(name_list, name_list2?){
@@ -70,6 +33,6 @@ export class Fhsis2018CcComponent implements OnChanges {
   }
 
   ngOnChanges(): void {
-    this.generateReport();
+    this.stats = this.report_data;
   }
 }
