@@ -103,7 +103,7 @@ export class ReportsComponent implements OnInit {
         this.report_data = data;
         this.is_fetching = false;
 
-        // console.log(this.report_data, 'cc reports');
+        console.log(this.report_data, 'report_data');
       },
       error: err => console.log(err)
     });
