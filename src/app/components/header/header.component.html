@@ -5,7 +5,8 @@
         <img src="./assets/img/wah_icon.png" class="rounded-full w-12 h-12 mx-auto mr-5" />
       </a>
 
-      <ng-select class="search" placeholder="search"
+      <ng-select class="search" placeholder="search" #mySelect
+        (focusout)="resetList()"
         [items]="patients$ | async"
         [minTermLength]="minLengthTerm"
         [loading]="patientLoading"
@@ -30,7 +31,7 @@
         </ng-template>
 
         <ng-template *ngIf="showCreate" ng-footer-tmp>
-          <a class="text-blue-600" routerLink="/registration"> Create a new record</a>
+          <a class="text-blue-600 hover:cursor-pointer" (click)="navigateTo('registration')"> Create a new record</a>
         </ng-template>
       </ng-select>
     </div>
