@@ -153,14 +153,13 @@ export class ReportsComponent implements OnInit {
   }
 
   changeDateOptions(): void {
-    console.log(this.reportForm.value.report_type)
+    // console.log(this.reportForm.value.report_type)
     if(this.fhsis_monthly_arr.find(e => e === this.reportForm.value.report_type.id)) {
       let month = formatDate(this.current_date, 'm', 'en');
       let year = formatDate(this.current_date, 'yyyy', 'en');
 
       this.reportForm.controls.month.enable();
       this.reportForm.controls.year.enable();
-      this.generateYear();
       this.reportForm.patchValue({
         month: month,
         year: year
@@ -190,6 +189,7 @@ export class ReportsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.generateYear();
     this.current_date;
 
     this.reportForm = this.formBuilder.nonNullable.group({
