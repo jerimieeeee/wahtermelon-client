@@ -41,7 +41,7 @@
               </button>
           
       </div>
-      <span *ngIf="getCompleCondition" class="flex px-3 ml-10 text-sm p-2.5 bg-green-50 mt-1 border border-gray-300 rounded-lg min-width"><p class="font-semibold">{{ebf_status}}</p><p *ngIf="ebf_status == 'Exclusively Breastfed'" class="px-1"> - </p><p>{{patient_breastfed?.ebf_date | date: 'MM/dd/yyyy' }}</p></span>
+      <span *ngIf="getCompleCondition" class="flex px-3 ml-10 text-sm p-2.5 bg-green-50 mt-1 border border-gray-300 rounded-lg min-width"><p class="font-semibold">{{ebf_status}}</p><p *ngIf="ebf_status == 'Exclusively Breastfed'" class="px-1"> - </p><p class="px-1">{{this.ebf_test_date | date: 'MM/dd/yyyy' }}</p></span>
       <!-- <span *ngIf="getCompleCondition" class="flex px-10 text-sm py-2"><p class="font-bold mr-2">EBF Status:</p><p class="">{{ebf_status}}</p><p *ngIf="ebf_status == 'Exclusively Breastfed'" class="px-1"> - </p><p>{{patient_breastfed?.ebf_date | date: 'MM/dd/yyyy' }}</p></span> -->
       <!-- <span class="col-start-1 flex px-10 text-sm"><p class="font-bold mr-2">Reason:</p><p class="">{{patient_breastfed?.ebf_reason}}</p></span> -->
     </div>
