@@ -280,6 +280,7 @@ export class PatientRegistrationComponent implements OnInit {
         this.orig_data = data.data;
         //load demog
         this.patchAddress(this.orig_data.household_folder, this.orig_data.household_member);
+        this.disable_save = false;
 
       },
       error: err => console.log(err)
