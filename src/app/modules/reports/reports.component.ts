@@ -92,12 +92,19 @@ export class ReportsComponent implements OnInit {
 
   onSubmit(){
     this.is_fetching = true;
-    // this.reportForm.setValue(barangay_code: this.selectedBrgy)
-    this.f['barangay_code'].setValue(this.selectedBrgy)
 
-    // console.log(this.reportForm.value)
-    let params = this.reportForm.value;
-    this.http.get(params.report_type.url, {params})
+    let params = {
+      month: this.reportForm.value.month,
+      year: this.reportForm.value.year
+    }
+
+    if (this.reportForm.value.report_class === 'muncity') {
+      params['municipality_code'] = this.reportForm.value.municipality_code;
+    } else if (this.reportForm.value.report_class === 'brgys') {
+      params['barangay_code'] = this.selectedBrgy;
+    }
+
+    this.http.get(this.reportForm.value.report_type.url, {params})
     .subscribe({
       next: (data: any) => {
         this.report_data = data;
