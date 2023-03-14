@@ -68,18 +68,6 @@ export class ModuleModalComponent implements OnInit {
     },
     'Others': {
       modules: {
-        /* cn: {
-          name: 'Laboratory',
-          location: 'consultation',
-          group: '',
-          consult_active: false
-        },
-        ab: {
-          name: 'Animal Bite',
-          location: 'consultation',
-          group: '',
-          consult_active: false
-        }, */
         tb: {
           name: 'Tuberculosis',
           location: 'tb',
