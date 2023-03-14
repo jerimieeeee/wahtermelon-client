@@ -66,20 +66,8 @@ export class ModuleModalComponent implements OnInit {
         }, */
       }
     },
-    /* 'Others': {
+    'Others': {
       modules: {
-        cn: {
-          name: 'Laboratory',
-          location: 'consultation',
-          group: '',
-          consult_active: false
-        },
-        ab: {
-          name: 'Animal Bite',
-          location: 'consultation',
-          group: '',
-          consult_active: false
-        },
         tb: {
           name: 'Tuberculosis',
           location: 'tb',
@@ -93,12 +81,12 @@ export class ModuleModalComponent implements OnInit {
           consult_active: false
         },
       }
-    } */
+    }
   };
 
   itr = { name: 'Patient ITR', location: 'itr', group: '', consult_active: false };
   lab = { name: 'Laboratory', location: 'lab', group: '', consult_active: false };
-  // cn = { name: 'Consultation', location: 'cn', group: 'cn', consult_active: false};
+  cn = { name: 'Consultation', location: 'cn', group: 'cn', consult_active: false};
   mc = { name: 'Maternal Care', location: 'mc', group: 'mc', consult_active: false };
   cc = { name: 'Child Care', location: 'cc', group: 'cc', consult_active: false };
 
@@ -220,7 +208,7 @@ export class ModuleModalComponent implements OnInit {
   checkOpenConsult(consults){
     Object.entries(consults).forEach(([keys, values], indexes) => {
       let vals: any= values;
-      // if(vals.pt_group === 'cn') this.cn.consult_active = true;
+      if(vals.pt_group === 'cn') this.cn.consult_active = true;
 
       Object.entries(this.list_modules).forEach(([key, value], index) => {
         Object.entries(value.modules).forEach(([k, v], i) => {

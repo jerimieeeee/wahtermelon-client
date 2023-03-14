@@ -23,15 +23,15 @@
                     Patient ITR
                   </button>
 
-                  <!-- <button *ngIf="list.key !== 'Others'" [disabled]="is_loading" type="button" class="col-span-1 text-white disabled:bg-gray-400 enabled:bg-blue-500 enabled:hover:ring-2 enabled:focus:outline-none enabled:hover:ring-blue-300 font-medium rounded text-sm px-6 py-2.5 text-center transition duration-150 ease-in-out transform hover:scale-110" (click)="onModuleSelect(lab)" >
+                  <button *ngIf="list.key !== 'Others'" [disabled]="is_loading" type="button" class="col-span-1 text-white disabled:bg-gray-400 enabled:bg-blue-500 enabled:hover:ring-2 enabled:focus:outline-none enabled:hover:ring-blue-300 font-medium rounded text-sm px-6 py-2.5 text-center transition duration-150 ease-in-out transform hover:scale-110" (click)="onModuleSelect(lab)" >
                     <fa-icon class="mx-0 my-0 text-white mr-2" [icon]="faFlask" size="lg"></fa-icon>
                     Laboratory
-                  </button> -->
+                  </button>
 
-                 <!--  <button *ngIf="list.key !== 'Others'" [disabled]="is_loading" type="button" [ngClass]="{'enabled:bg-green-500 enabled:hover:ring-green-300': cn.consult_active }" class="col-span-1 text-white disabled:bg-gray-400 enabled:bg-blue-500 enabled:hover:ring-2 enabled:focus:outline-none enabled:hover:ring-blue-300 font-medium rounded text-sm px-6 py-2.5 text-center transition duration-150 ease-in-out transform hover:scale-110" (click)="onModuleSelect(cn)" >
+                  <button *ngIf="list.key !== 'Others'" [disabled]="is_loading" type="button" [ngClass]="{'enabled:bg-green-500 enabled:hover:ring-green-300': cn.consult_active }" class="col-span-1 text-white disabled:bg-gray-400 enabled:bg-blue-500 enabled:hover:ring-2 enabled:focus:outline-none enabled:hover:ring-blue-300 font-medium rounded text-sm px-6 py-2.5 text-center transition duration-150 ease-in-out transform hover:scale-110" (click)="onModuleSelect(cn)" >
                     <fa-icon class="mx-0 my-0 text-white mr-2" [icon]="faUserDoctor" size="lg"></fa-icon>
                     Consultation
-                  </button> -->
+                  </button>
 
                   <button [disabled]="is_loading" *ngFor="let module of list.value.modules | keyvalue" type="button" [ngClass]="{'enabled:bg-green-500 enabled:hover:ring-green-300': module.value.consult_active }" class="col-span-1 text-white disabled:bg-gray-400 enabled:bg-blue-500 enabled:hover:ring-2 enabled:focus:outline-none enabled:hover:ring-blue-300 font-medium rounded text-sm px-6 py-2.5 text-center transition duration-150 ease-in-out transform hover:scale-110" (click)="onModuleSelect(module.value)" >
                     <fa-icon *ngIf="module.value.consult_active" class="mx-0 my-0 text-white mr-2" [icon]="faClipboard" size="lg"></fa-icon>
