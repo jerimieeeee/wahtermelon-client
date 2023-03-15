@@ -9,6 +9,7 @@ import { Fhsis2018CcComponent } from './report/fhsis2018-cc/fhsis2018-cc.compone
 import { NameListComponent } from './modals/name-list/name-list.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { HeaderFhsis2018Component } from './components/header-fhsis2018/header-fhsis2018.component';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     ReportsComponent,
     Fhsis2018McComponent,
     Fhsis2018CcComponent,
-    NameListComponent
+    NameListComponent,
+    HeaderFhsis2018Component
   ],
   imports: [
     CommonModule,

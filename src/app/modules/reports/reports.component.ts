@@ -27,7 +27,7 @@ export class ReportsComponent implements OnInit {
 
   fhsis2018 = [
     { id: 'fhsis2018-cc', desc: 'Child Care', url: 'reports-2018/child-care/m1'},
-    { id: 'fhsis2018-mc', desc: 'Maternal Care', url: 'reports-2018/child-care/m1'},
+    { id: 'fhsis2018-mc', desc: 'Maternal Care', url: 'reports-2018/maternal-care/m1'},
   ]
 
   months = [
@@ -92,12 +92,19 @@ export class ReportsComponent implements OnInit {
 
   onSubmit(){
     this.is_fetching = true;
-    // this.reportForm.setValue(barangay_code: this.selectedBrgy)
-    this.f['barangay_code'].setValue(this.selectedBrgy)
 
-    // console.log(this.reportForm.value)
-    let params = this.reportForm.value;
-    this.http.get(params.report_type.url, {params})
+    let params = {
+      month: this.reportForm.value.month,
+      year: this.reportForm.value.year
+    }
+
+    if (this.reportForm.value.report_class === 'muncity') {
+      params['municipality_code'] = this.reportForm.value.municipality_code;
+    } else if (this.reportForm.value.report_class === 'brgys') {
+      params['barangay_code'] = this.selectedBrgy;
+    }
+
+    this.http.get(this.reportForm.value.report_type.url, {params})
     .subscribe({
       next: (data: any) => {
         this.report_data = data;
@@ -153,14 +160,13 @@ export class ReportsComponent implements OnInit {
   }
 
   changeDateOptions(): void {
-    console.log(this.reportForm.value.report_type)
+    // console.log(this.reportForm.value.report_type)
     if(this.fhsis_monthly_arr.find(e => e === this.reportForm.value.report_type.id)) {
       let month = formatDate(this.current_date, 'm', 'en');
       let year = formatDate(this.current_date, 'yyyy', 'en');
 
       this.reportForm.controls.month.enable();
       this.reportForm.controls.year.enable();
-      this.generateYear();
       this.reportForm.patchValue({
         month: month,
         year: year
@@ -190,6 +196,7 @@ export class ReportsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.generateYear();
     this.current_date;
 
     this.reportForm = this.formBuilder.nonNullable.group({
