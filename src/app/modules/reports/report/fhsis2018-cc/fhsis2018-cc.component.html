@@ -397,7 +397,7 @@
                 <td class="p-5 border">36. Normal - Total</td>
                 <td class="p-5 border text-blue-500 text-center" [class]=" stats?.normal_0_59_months_Male.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.normal_0_59_months_Male)">{{ stats?.normal_0_59_months_Male.length }}</td>
                 <td class="p-5 border text-blue-500 text-center" [class]=" stats?.normal_0_59_months_Female.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.normal_0_59_months_Female)">{{ stats?.normal_0_59_months_Female.length }}</td>
-                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.normal_0_59_months_Male.length !==0 || stats?.normal_0_59_months_Female.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.normal_0_59_months_stats?.normal_0_59_months_Male, stats?.normal_0_59_months_stats?.normal_0_59_months_Female)">{{ stats?.normal_0_59_months_Male.length +  stats?.normal_0_59_months_Female.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.normal_0_59_months_Male.length !==0 || stats?.normal_0_59_months_Female.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.normal_0_59_months_Male, stats?.normal_0_59_months_Female)">{{ stats?.normal_0_59_months_Male.length +  stats?.normal_0_59_months_Female.length }}</td>
                 <td class="p-5 border"></td>
               </tr>
 
@@ -413,7 +413,7 @@
               <tr class="border text-sm">
                 <td class="p-5 border">37. 1-19 y/o given 2 doses of deworming drug</td>
                 <td class="p-5 border text-blue-500 text-center" [class]=" stats?.deworming_1_to_19_yo_Male.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.deworming_1_to_19_yo_Male)">{{ stats?.deworming_1_to_19_yo_Male.length }}</td>
-                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.deworming_1_to_19_yo_Female.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.normal_0_59_months_Female)">{{ stats?.deworming_1_to_19_yo_Female.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.deworming_1_to_19_yo_Female.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.deworming_1_to_19_yo_Female)">{{ stats?.deworming_1_to_19_yo_Female.length }}</td>
                 <td class="p-5 border text-blue-500 text-center" [class]=" stats?.deworming_1_to_19_yo_Male.length !==0 || stats?.deworming_1_to_19_yo_Female.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.deworming_1_to_19_yo_Male, stats?.deworming_1_to_19_yo_Female)">{{ stats?.deworming_1_to_19_yo_Male.length +  stats?.deworming_1_to_19_yo_Female.length }}</td>
                 <td class="p-5 border"></td>
                 <td class="p-5 border">38. Sick Infants 6-11 mos. Old seen</td>
