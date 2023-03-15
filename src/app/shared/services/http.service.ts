@@ -10,12 +10,6 @@ import { Subject } from 'rxjs';
 export class HttpService {
   baseUrl = 'https://bulacan-api.wah.ph/api/v1/';
 
-  // public options = new HttpHeaders({
-  //   'Content-Type' : 'application/json; charset=utf-8',
-  //   'Access-Control-Allow-Origin': '*',
-  //   'Authorization': `Bearer ${localStorage.getItem('token')}`,
-  // });
-
   constructor(
     private http: HttpClient,
     private router: Router,
@@ -62,9 +56,17 @@ export class HttpService {
   }
 
   removeLocalStorageItem(){
-    localStorage.removeItem('user');
-    this.cookieService.delete('access_token');
-    return 'Items removed';
+    if(localStorage.getItem('user')) localStorage.removeItem('user');
+    if(this.cookieService.get('access_token')) {
+      this.logout().subscribe({
+        next: () => {
+          window.location.reload();
+        },
+        error: err => console.log(err)
+      });
+    } else {
+      window.location.reload();
+    }
   }
 
   userToJSON(){

@@ -34,7 +34,8 @@ export class RequestsInterceptor implements HttpInterceptor {
           // 'Content-Type' : 'multipart/form-data',
           'Accept'       : 'application/json',
           'withCredentials': 'true',
-          'Authorization': `Bearer ${this.cookie_value}`
+          'Authorization': `Bearer ${this.cookie_value}`,
+          'Access-Control-Allow-Origin': '*'
         },
       });
     }
