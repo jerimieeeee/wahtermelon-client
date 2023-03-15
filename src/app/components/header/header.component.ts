@@ -5,6 +5,7 @@ import { catchError, debounceTime, distinctUntilChanged, switchMap, tap, map, fi
 import { concat, Observable, of, Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { NgSelectComponent } from '@ng-select/ng-select';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-header',
@@ -60,7 +61,8 @@ export class HeaderComponent implements OnInit {
 
   constructor(
     private http: HttpService,
-    private router: Router
+    private router: Router,
+    private cookieService: CookieService
   ) { }
 
   loadPatients() {
@@ -126,13 +128,18 @@ export class HeaderComponent implements OnInit {
   }
 
   logout(){
-    this.http.logout().subscribe({
-      next: () => {
-        this.http.removeLocalStorageItem();
-        this.router.navigate(['/']);
-      },
-      error: err => console.log(err)
-    });
+    this.http.removeLocalStorageItem();
+    /* if(this.cookieService.get('access_token')) {
+      this.http.logout().subscribe({
+        next: () => {
+          this.http.removeLocalStorageItem();
+          window.location.reload();
+        },
+        error: err => console.log(err)
+      });
+    } else {
+      window.location.reload();
+    } */
   }
 
 
