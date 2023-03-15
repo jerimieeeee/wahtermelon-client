@@ -18,15 +18,18 @@ export class Fhsis2018McComponent implements OnChanges {
   constructor( ) { }
 
   openList:boolean = false;
-  toggleModal(name_list, name_list2?){
+  toggleModal(name_list, name_list2?, name_list3?){
     let list = [];
-    if(name_list2) {
-      list = name_list.concat(name_list2)
+    if(name_list2 || name_list3) {
+      if(name_list2 && name_list3) {
+        list = name_list.concat(name_list2,name_list3)
+      } else {
+        list = name_list2 ? name_list.concat(name_list2) : name_list.concat(name_list3);
+      }
     } else {
       list = name_list
     }
 
-    // console.log(typeof name_list)
     this.name_list = list;
     this.openList = !this.openList;
   }
