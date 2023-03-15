@@ -71,7 +71,15 @@
                 <th scope="col" class="text-sm font-semibold text-gray-900 px-6 py-4 border-r">
                   20-49
                 </th>
-
+                <th scope="col" class="text-sm font-semibold text-gray-900 px-6 py-4 border-r">
+                  10-14
+                </th>
+                <th scope="col" class="text-sm font-semibold text-gray-900 px-6 py-4 border-r">
+                  15-19
+                </th>
+                <th scope="col" class="text-sm font-semibold text-gray-900 px-6 py-4 border-r">
+                  20-49
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -81,18 +89,57 @@
                 </th>
               </tr>
 
-              <!-- <tr class="border text-sm">
-                <td class="p-5 border">1. CPAB</td>
-                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.CPAB_Male.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.CPAB_Male)">{{ stats?.CPAB_Male.length }}</td>
-                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.CPAB_Female.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.CPAB_Female)">{{ stats?.CPAB_Female.length }}</td>
-                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.CPAB_Male.length !==0 || stats?.CPAB_Female.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.CPAB_Male, stats?.CPAB_Female)">{{ stats?.CPAB_Male.length +  stats?.CPAB_Female.length }}</td>
-                <td class="p-5 border"></td>
-                <td class="p-5 border">12. IPV2 (catch up)</td>
-                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.IPV2_Catch_up_Male.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.IPV2_Catch_up_Male)">{{ stats?.IPV2_Catch_up_Male.length }}</td>
-                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.IPV2_Catch_up_Female.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.IPV2_Catch_up_Female)">{{ stats?.IPV2_Catch_up_Female.length }}</td>
-                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.IPV2_Catch_up_Female.length !==0 || stats?.IPV2_Catch_up_Female.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.IPV2_Catch_up_Male, stats?.IPV2_Catch_up_Female)">{{ stats?.IPV2_Catch_up_Male.length +  stats?.IPV2_Catch_up_Female.length }}</td>
-                <td class="p-5 border"></td>
-              </tr> -->
+              <tr class="border text-sm">
+                <td class="p-5 border" rowspan="3">1. No. of pregnant women w/ at least 4 prenatal check-ups - Total</td>
+                <td class="p-5 border text-blue-500 text-center" rowspan="3" [class]=" stats?.CPAB_Male.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.CPAB_Male)">{{ stats?.CPAB_Male.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" rowspan="3" [class]=" stats?.CPAB_Female.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.CPAB_Female)">{{ stats?.CPAB_Female.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" rowspan="3" [class]=" stats?.CPAB_Male.length !==0 || stats?.CPAB_Female.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.CPAB_Male, stats?.CPAB_Female)">{{ stats?.CPAB_Male.length +  stats?.CPAB_Female.length }}</td>
+                <td class="p-5 border" rowspan="3"></td>
+                <td class="p-5 border" rowspan="2">7. No. of pregnant women given iodine capsules - Total</td>
+                <td class="p-5 border text-blue-500 text-center" rowspan="2" [class]=" stats?.IPV2_Catch_up_Male.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.IPV2_Catch_up_Male)">{{ stats?.IPV2_Catch_up_Male.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" rowspan="2" [class]=" stats?.IPV2_Catch_up_Female.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.IPV2_Catch_up_Female)">{{ stats?.IPV2_Catch_up_Female.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" rowspan="2" [class]=" stats?.IPV2_Catch_up_Female.length !==0 || stats?.IPV2_Catch_up_Female.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.IPV2_Catch_up_Male, stats?.IPV2_Catch_up_Female)">{{ stats?.IPV2_Catch_up_Male.length +  stats?.IPV2_Catch_up_Female.length }}</td>
+                <td class="p-5 border" rowspan="2"></td>
+              </tr>
+
+              <tr class="border text-sm">
+                <td class="p-5 border" rowspan="3">2. No. of pregnant women assessed of their nutritional status during the 1st tri. - Total</td>
+                <td class="p-5 border text-blue-500 text-center" rowspan="3" [class]=" stats?.CPAB_Male.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.CPAB_Male)">{{ stats?.CPAB_Male.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" rowspan="3" [class]=" stats?.CPAB_Female.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.CPAB_Female)">{{ stats?.CPAB_Female.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" rowspan="3" [class]=" stats?.CPAB_Male.length !==0 || stats?.CPAB_Female.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.CPAB_Male, stats?.CPAB_Female)">{{ stats?.CPAB_Male.length +  stats?.CPAB_Female.length }}</td>
+                <td class="p-5 border" rowspan="3"></td>
+                <td class="p-5 border" rowspan="3">8. No. of pregnant women given one dose of deworming tablet - Total</td>
+                <td class="p-5 border text-blue-500 text-center" rowspan="3" [class]=" stats?.IPV2_Catch_up_Male.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.IPV2_Catch_up_Male)">{{ stats?.IPV2_Catch_up_Male.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" rowspan="3" [class]=" stats?.IPV2_Catch_up_Female.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.IPV2_Catch_up_Female)">{{ stats?.IPV2_Catch_up_Female.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" rowspan="3" [class]=" stats?.IPV2_Catch_up_Female.length !==0 || stats?.IPV2_Catch_up_Female.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.IPV2_Catch_up_Male, stats?.IPV2_Catch_up_Female)">{{ stats?.IPV2_Catch_up_Male.length +  stats?.IPV2_Catch_up_Female.length }}</td>
+                <td class="p-5 border" rowspan="3"></td>
+              </tr>
+
+              <tr class="border text-sm">
+                <td class="p-5 border" rowspan="3">a. Number of pregnant women seen inthe first trimester who have normal BMI - Total</td>
+                <td class="p-5 border text-blue-500 text-center" rowspan="3" [class]=" stats?.CPAB_Male.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.CPAB_Male)">{{ stats?.CPAB_Male.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" rowspan="3" [class]=" stats?.CPAB_Female.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.CPAB_Female)">{{ stats?.CPAB_Female.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" rowspan="3" [class]=" stats?.CPAB_Male.length !==0 || stats?.CPAB_Female.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.CPAB_Male, stats?.CPAB_Female)">{{ stats?.CPAB_Male.length +  stats?.CPAB_Female.length }}</td>
+                <td class="p-5 border" rowspan="3"></td>
+                <td class="p-5 border" rowspan="3">9. No. of pregnant women screened for syphillis - Total</td>
+                <td class="p-5 border text-blue-500 text-center" rowspan="2" [class]=" stats?.IPV2_Catch_up_Male.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.IPV2_Catch_up_Male)">{{ stats?.IPV2_Catch_up_Male.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" rowspan="2" [class]=" stats?.IPV2_Catch_up_Female.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.IPV2_Catch_up_Female)">{{ stats?.IPV2_Catch_up_Female.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" rowspan="2" [class]=" stats?.IPV2_Catch_up_Female.length !==0 || stats?.IPV2_Catch_up_Female.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.IPV2_Catch_up_Male, stats?.IPV2_Catch_up_Female)">{{ stats?.IPV2_Catch_up_Male.length +  stats?.IPV2_Catch_up_Female.length }}</td>
+                <td class="p-5 border" rowspan="5"></td>
+              </tr>
+
+              <tr class="border text-sm">
+                <td class="p-5 border" rowspan="3">b. No of pregnant women seen in the first trimester who have low BMI- Total</td>
+                <td class="p-5 border text-blue-500 text-center" rowspan="3" [class]=" stats?.CPAB_Male.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.CPAB_Male)">{{ stats?.CPAB_Male.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" rowspan="3" [class]=" stats?.CPAB_Female.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.CPAB_Female)">{{ stats?.CPAB_Female.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" rowspan="3" [class]=" stats?.CPAB_Male.length !==0 || stats?.CPAB_Female.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.CPAB_Male, stats?.CPAB_Female)">{{ stats?.CPAB_Male.length +  stats?.CPAB_Female.length }}</td>
+                <td class="p-5 border" rowspan="3"></td>
+                <td class="p-5 border" rowspan="3">10. No. of pregnant women who tested positive for syphillis - Total</td>
+                <td class="p-5 border text-blue-500 text-center" rowspan="2" [class]=" stats?.IPV2_Catch_up_Male.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.IPV2_Catch_up_Male)">{{ stats?.IPV2_Catch_up_Male.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" rowspan="2" [class]=" stats?.IPV2_Catch_up_Female.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.IPV2_Catch_up_Female)">{{ stats?.IPV2_Catch_up_Female.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" rowspan="2" [class]=" stats?.IPV2_Catch_up_Female.length !==0 || stats?.IPV2_Catch_up_Female.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.IPV2_Catch_up_Male, stats?.IPV2_Catch_up_Female)">{{ stats?.IPV2_Catch_up_Male.length +  stats?.IPV2_Catch_up_Female.length }}</td>
+                <td class="p-5 border" rowspan="5"></td>
+              </tr>
 
               <tr>
                 <th scope="col" colspan="6" class="text-xs font-semibold text-left text-gray-900 px-6 py-4 border bg-gray-50">

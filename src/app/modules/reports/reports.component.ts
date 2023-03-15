@@ -27,7 +27,7 @@ export class ReportsComponent implements OnInit {
 
   fhsis2018 = [
     { id: 'fhsis2018-cc', desc: 'Child Care', url: 'reports-2018/child-care/m1'},
-    { id: 'fhsis2018-mc', desc: 'Maternal Care', url: 'reports-2018/child-care/m1'},
+    { id: 'fhsis2018-mc', desc: 'Maternal Care', url: 'reports-2018/maternal-care/m1'},
   ]
 
   months = [
