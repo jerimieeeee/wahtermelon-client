@@ -1,7 +1,6 @@
 import { Component, Input, OnInit, OnChanges, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
-import { faTrashCan } from '@fortawesome/free-regular-svg-icons';
-import { faAdd, faChevronCircleDown, faChevronCircleUp, faEdit, faSave, faSpinner, faTrash, faPrescriptionBottleMedical, faReceipt } from '@fortawesome/free-solid-svg-icons';
+import { faAdd, faChevronCircleDown, faChevronCircleUp, faEdit, faSave, faSpinner, faTrash, faPrescriptionBottleMedical, faReceipt, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -84,7 +83,13 @@ export class PrescriptionComponent implements OnInit, OnChanges {
     this.toggleForm();
   }
 
-
+  modal = [];
+  delete_id: string;
+  delete_desc: string = 'Prescription';
+  url: string = 'medicine/prescriptions/'
+  openDeleteModal(data){
+    console.log(data)
+  }
 
   toggleDeleteForm(){
     this.show_delete_form = !this.show_delete_form;
@@ -106,10 +111,6 @@ export class PrescriptionComponent implements OnInit, OnChanges {
     }
   }
 
-  /* resetForm(){
-    this.selected_drug = null;
-  } */
-
   ngOnChanges(changes){
     this.show_content = this.toggle_content;
     this.show_content_tx = this.toggle_content;
@@ -121,8 +122,6 @@ export class PrescriptionComponent implements OnInit, OnChanges {
       this.consult_done = this.consult_details.consult_done;
     }
   }
-
-
 
   //loadLibraries
   drug_uom: any;
