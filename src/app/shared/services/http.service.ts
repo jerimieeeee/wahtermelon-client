@@ -51,7 +51,7 @@ export class HttpService {
   }
 
   saveUserToLocalStorage(user) {
-    console.log(user)
+    // console.log(user)
     localStorage.setItem('user', JSON.stringify(user))
   }
 
@@ -60,6 +60,7 @@ export class HttpService {
     if(this.cookieService.get('access_token')) {
       this.logout().subscribe({
         next: () => {
+          this.cookieService.delete('access_token')
           window.location.reload();
         },
         error: err => console.log(err)
