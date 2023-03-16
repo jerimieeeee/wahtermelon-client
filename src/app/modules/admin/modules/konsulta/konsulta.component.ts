@@ -73,7 +73,6 @@ export class KonsultaComponent implements OnInit {
 
     query.subscribe({
       next: (data: any) => {
-        console.log(data.data);
         this.konsulta_list = data.data;
 
         if(this.form_type === "1") {
@@ -102,7 +101,6 @@ export class KonsultaComponent implements OnInit {
   }
 
   showList(data?) {
-    console.log(data)
     this.patient_list = data;
     this.toggleList();
   }
@@ -143,10 +141,8 @@ export class KonsultaComponent implements OnInit {
       }
     });
 
-    // console.log(params)
     this.http.get('konsulta/validate-report', {params}).subscribe({
       next: (data: any) => {
-        console.log(data)
         this.is_saving = false;
         if(data.errors) {
           this.toastr.error('Validation failed','Error')
