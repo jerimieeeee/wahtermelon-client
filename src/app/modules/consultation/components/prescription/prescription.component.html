@@ -60,9 +60,9 @@
               <button class="mr-3" (click)="openAddForm(prescription)">
                 <fa-icon [icon]="faEdit" class="text-amber-500"></fa-icon>
               </button>
-              <!-- <button (click)="openDeleteModal(prescription)">
+              <button (click)="toggleModal('delete-item', prescription)">
                 <fa-icon [icon]="faTrashCan" class="text-rose-500"></fa-icon>
-              </button> -->
+              </button>
             </td>
           </tr>
         </tbody>
@@ -120,8 +120,8 @@
 [consult_details]="consult_details"
 ></app-epres>
 
-<!-- <app-delete-item *ngIf="modal['delete-item']"
+<app-delete-item *ngIf="modal['delete-item']"
   [delete_id]="delete_id"
   [delete_desc]="delete_desc"
   [url]="url"
-  (toggleModal)="toggleModal($event)"></app-delete-item> -->
+  (toggleModal)="toggleModal($event)"></app-delete-item>

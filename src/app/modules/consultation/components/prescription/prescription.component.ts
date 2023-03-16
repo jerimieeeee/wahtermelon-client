@@ -88,7 +88,8 @@ export class PrescriptionComponent implements OnInit, OnChanges {
   delete_desc: string = 'Prescription';
   url: string = 'medicine/prescriptions/'
   openDeleteModal(data){
-    console.log(data)
+    this.delete_id = data.id;
+    this.modal['delete-item'] = !this.modal['delete-item'];
   }
 
   toggleDeleteForm(){
@@ -144,7 +145,7 @@ export class PrescriptionComponent implements OnInit, OnChanges {
       this.http.get('libraries/'+obj.location).subscribe({
         next: (data: any) => {
           this[obj.var_name] = data.data;
-          console.log(data.data);
+          // console.log(data.data);
           if(this.libraries.length -1 === index) {
             this.show_form = true
           }
@@ -155,8 +156,14 @@ export class PrescriptionComponent implements OnInit, OnChanges {
   }
 
   show_epress: boolean = false;
-  toggleModal(){
-    this.show_epress = !this.show_epress;
+  toggleModal(name?, data?){
+    if(name) {
+      if(data) this.delete_id = data.id;
+      this.modal[name] = !this.modal[name];
+      this.loadPrescriptions();
+    } else {
+      this.show_epress = !this.show_epress;
+    }
   }
 
   toggleList(){
