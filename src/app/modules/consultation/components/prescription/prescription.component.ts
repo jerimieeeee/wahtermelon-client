@@ -1,5 +1,6 @@
 import { Component, Input, OnInit, OnChanges, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
+import { faTrashCan } from '@fortawesome/free-regular-svg-icons';
 import { faAdd, faChevronCircleDown, faChevronCircleUp, faEdit, faSave, faSpinner, faTrash, faPrescriptionBottleMedical, faReceipt } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
@@ -32,6 +33,7 @@ export class PrescriptionComponent implements OnInit, OnChanges {
   faTrash = faTrash;
   faPrescriptionBottleMedical = faPrescriptionBottleMedical;
   faReceipt = faReceipt;
+  faTrashCan = faTrashCan;
 
   selected_drug: any;
   prescriptions: any;
@@ -139,7 +141,6 @@ export class PrescriptionComponent implements OnInit, OnChanges {
   ];
 
   loadLibraries(){
-    // this.
     this.libraries.forEach((obj, index) => {
       this.http.get('libraries/'+obj.location).subscribe({
         next: (data: any) => {
@@ -168,7 +169,6 @@ export class PrescriptionComponent implements OnInit, OnChanges {
   }
 
   loadPrescriptions(){
-    // this.selected_drug = null;
     let params = {
       sort: '-prescription_date',
       consult_id: this.consult_details.id
