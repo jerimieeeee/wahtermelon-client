@@ -150,6 +150,7 @@
             <div class="col-span-8">
               <label for="region" class="input-label" [ngClass]="{'text-red-500': is_saving && f.region.errors}">Region</label>
               <select id="region" name="region" formControlName="region" class="input disabled:bg-gray-300" (change)="loadDemog('regions', userForm.value.region, 'provinces')" [ngClass]="{'invalid-input': is_saving && f.region.errors}" >
+                <option value="0" selected>- Choose Region -</option>
                 <option *ngFor="let region of regions" [value]="region.code" >{{ region.name }}</option>
               </select>
 
@@ -162,7 +163,8 @@
 
             <div class="col-span-8">
               <label for="province" class="input-label" [ngClass]="{'text-red-500': is_saving && f.region.errors}">Province</label>
-              <select id="province" name="province" formControlName="province" class="input disabled:bg-gray-300" (change)="loadDemog('provinces', userForm.value.province, 'municipalities')" [ngClass]="{'invalid-input': is_saving && f.province.errors}" >
+              <select id="province" name="province" formControlName="province" class="first:italic input disabled:bg-gray-300" (change)="loadDemog('provinces', userForm.value.province, 'municipalities')" [ngClass]="{'invalid-input': is_saving && f.province.errors}" >
+                <option value="0" selected>- Choose Province -</option>
                 <option *ngFor="let province of provinces" [value]="province.code" >{{ province.name }}</option>
               </select>
 
@@ -173,9 +175,10 @@
               </div>
             </div>
 
-            <div class="col-span-8">
+            <div class="col-span-8" >
               <label for="municipality" class="input-label" [ngClass]="{'text-red-500': is_saving && f.municipality.errors}">Municipality</label>
               <select id="municipality" name="municipality" formControlName="municipality" class="input disabled:bg-gray-300" (change)="loadFacilities(userForm.value.municipality)" [ngClass]="{'invalid-input': is_saving && f.municipality.errors}" >
+                <option value="0" selected>- Choose Municipality/City -</option>
                 <option *ngFor="let municipality of municipalities" [value]="municipality.code" >{{ municipality.name }}</option>
               </select>
 
@@ -189,6 +192,7 @@
             <div class="col-span-8">
               <label for="facility_code" class="input-label" [ngClass]="{'text-red-500': is_saving && f.facility_code.errors}">Facility</label>
               <select id="facility_code" name="facility_code" class="input disabled:bg-gray-300" [ngClass]="{'invalid-input': is_saving && f.facility_code.errors}" formControlName="facility_code">
+                <option value="0" selected>- Choose Facility -</option>
                 <option [value]="facility.code"*ngFor="let facility of facilities" >{{ facility.facility_name }}</option>
               </select>
 
