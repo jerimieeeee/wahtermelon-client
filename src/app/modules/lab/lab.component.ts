@@ -23,7 +23,7 @@ export class LabComponent implements OnInit, OnDestroy {
   show_form: boolean = false;
 
   loadData(){
-    console.log('loaded labs')
+    // console.log('loaded labs')
     let params = {
       patient_id: this.patient_details.id,
       sort: '-request_date',
@@ -33,46 +33,16 @@ export class LabComponent implements OnInit, OnDestroy {
       next: (data: any) => {
         this.pending_list = data.data
         // console.log(this.pending_list);
-        if(this.pending_list.length >= 1) {
-          this.getResults();
-        } else {
-          this.show_form = true;
-        }
+        this.show_form = true;
       },
       error: err => console.log(err)
     })
   }
 
-  getResults(){
-    console.log('labs loaded')
-    Object.entries(this.pending_list).forEach(([key, value], index) => {
-      let val: any = value;
-      let url = this.nameHelper.getURL(val.laboratory.code)
-      if(url !== '') {
-        this.http.get(url, {params: {request_id: val.id}}).subscribe({
-          next: (data: any) => {
-            // console.log(data.data)
-            this.pending_list[key]['result'] = data.data[0];
-            if(Object.keys(this.pending_list).length - 1 === index) {
-              this.show_form = true;
-            }
-          },
-          error: err => console.log(err)
-        })
-      }
-
-      if(Object.keys(this.pending_list).length - 1 === index) {
-        this.show_form = true;
-      }
-    })
-    // console.log(this.pending_list)
-  }
-
   reloadLabs(data){
-    // console.log(data)
     this.show_form = false;
     this.pending_list = data;
-    this.getResults();
+    this.loadData();
   }
 
   modal = [];
@@ -89,7 +59,7 @@ export class LabComponent implements OnInit, OnDestroy {
   url: string = 'laboratory/consult-laboratories/'
   toggleModal(form, lab?){
     this.selected_lab = lab;
-// console.log(this.selected_lab)
+
     if(this.selected_lab){
       if(form === 'add') {
         if(lab && lab.laboratory.code === 'CXRAY') {
@@ -131,7 +101,6 @@ export class LabComponent implements OnInit, OnDestroy {
       }
 
       if(this.modal[form] === false) {
-        // this.selected_lab = null;
         this.loadData();
       }
     } else {
@@ -155,7 +124,6 @@ export class LabComponent implements OnInit, OnDestroy {
     this.http.get('libraries/laboratory-sputum-collection').subscribe({
       next: (data: any) => {
         this.lab_sputum_collection = data.data;
-        // this.loadLibraries('libraries/laboratory-results','lab_result_pn', form)
         this.loadLibraries('libraries/laboratory-findings','lab_findings', form)
       },
       error: err => console.log(err)
