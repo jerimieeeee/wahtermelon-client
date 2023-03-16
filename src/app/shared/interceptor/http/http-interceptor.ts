@@ -70,8 +70,8 @@ export class RequestsInterceptor implements HttpInterceptor {
         // localStorage.removeItem('access_token');
 
         // this.router.navigate(['/']);
-        localStorage.removeItem('user');
-        this.cookieService.delete('access_token');
+        if(localStorage.getItem('user')) localStorage.removeItem('user');
+        if(this.cookieService.get('access_token')) this.cookieService.delete('access_token');
         return throwError(() => originalError);
       /* })
     ); */

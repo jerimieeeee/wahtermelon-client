@@ -71,13 +71,10 @@ export class MyAccountComponent implements OnInit {
     this.is_saving = true;
     this.loading = true;
 
-    console.log(this.userForm)
     let user_id = this.http.getUserID();
     if(!this.userForm.invalid){
       this.http.update('users/', user_id, this.userForm.value).subscribe({
         next: (data:any) => {
-          console.log(data.data);
-
           this.loadUser();
           this.loading = false;
           this.is_saving = false;
@@ -87,8 +84,7 @@ export class MyAccountComponent implements OnInit {
           this.submit_errors = err.error.errors;
           this.loading = false;
           this.is_saving = false;
-        },
-        complete: () => console.log('complete')
+        }
       })
     } else {
       this.loading = false;
@@ -121,42 +117,72 @@ export class MyAccountComponent implements OnInit {
   loadLibraries(){
     this.libraries.forEach(obj => {
       this.http.get('libraries/'+obj.location).subscribe({
-        next: (data: any) => {this[obj.var_name] = data.data; console.log(obj.var_name, data.data)},
+        next: (data: any) => this[obj.var_name] = data.data,
         error: err => console.log(err)
       })
     });
   }
 
   loadFacilities(municipality){
-    console.log(municipality);
-    this.http.get('libraries/facilities', {params:{'filter[municipality_code]':municipality, 'per_page': 'all'}}).subscribe({
-      next: (data: any) => {
-        console.log(data)
-        this.facilities = data.data;
-      },
-      error: err => console.log(err)
-    })
+    if(municipality !== '0') {
+      this.f['facility_code'].enable();
+      this.http.get('libraries/facilities', {params:{'filter[municipality_code]':municipality, 'per_page': 'all'}}).subscribe({
+        next: (data: any) => {
+          this.facilities = data.data;
+        },
+        error: err => console.log(err)
+      })
+    } else {
+      this.facilities = null;
+      this.userForm.patchValue({facility_code: '0'})
+      this.f['facility_code'].disable();
+    }
   }
 
   loadDemog(loc, code, include){
+    if(code !== '0') {
+      this.http.get('libraries/'+loc+'/'+code,{params:{'include':include}}).subscribe({
+        next: (data: any) => {
+          this[include] = data.data[include];
+          this.disaledSelection(loc, code);
+        },
+        error: err => console.log(err)
+      });
+    } else {
+      this.disaledSelection(loc, code);
+    }
+  }
+
+  disaledSelection(loc, code) {
     if(loc == 'regions') {
+      if(this.orig_value.facility.region.code !== code) this.userForm.patchValue({province: '0'})
       this.municipalities = null;
       this.facilities = null;
-    }else if (loc == 'provinces') {
-      this.facilities = null;
-    }
 
-    this.http.get('libraries/'+loc+'/'+code,{params:{'include':include}}).subscribe({
-      next: (data: any) => {console.log(data.data); this[include] = data.data[include]},
-      error: err => console.log(err)
-    });
+      this.f['municipality'].disable();
+      this.f['facility_code'].disable();
+      if(code === '0') {
+        this.f['province'].disable();
+      } else {
+        if(this.userForm.enabled) this.f['province'].enable();
+      }
+    } else if (loc == 'provinces') {
+      if(this.orig_value.facility.province.code !== code) this.userForm.patchValue({municipality: '0'})
+      this.facilities = null;
+
+      this.f['facility_code'].disable();
+      if(code === '0') {
+        this.f['municipality'].disable();
+      } else {
+        if(this.userForm.enabled) this.f['municipality'].enable();
+      }
+    }
   }
 
   loadUser(){
     let user_id = this.http.getUserID();
     this.http.get('users/'+user_id).subscribe({
       next: (data: any) => {
-        console.log(data)
         this.orig_value = data.data;
         this.orig_value.birthdate = formatDate(this.orig_value.birthdate,'yyyy-MM-dd','en')
         this.userForm.patchValue({...this.orig_value});
@@ -175,12 +201,6 @@ export class MyAccountComponent implements OnInit {
         this.orig_value['facility_code'] = this.orig_value.facility?.code;
 
         this.http.saveUserToLocalStorage(this.orig_value);
-        console.log(this.orig_value);
-        /* localStorage.setItem('user_last_name', this.orig_value.last_name);
-        localStorage.setItem('user_first_name', this.orig_value.first_name);
-        localStorage.setItem('user_middle_name', this.orig_value.middle_name); */
-
-        // this.orig_value = this.userForm.value;
         this.userForm.disable();
       },
       error: err => console.log(err)

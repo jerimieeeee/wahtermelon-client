@@ -41,7 +41,6 @@ export class KonsultaMasterlistComponent implements OnInit {
 
   showList(data) {
     this.konsulta_list = data.ASSIGNMENT;
-    console.log(this.konsulta_list);
   }
 
   loadList(page?: number){
@@ -53,10 +52,8 @@ export class KonsultaMasterlistComponent implements OnInit {
     if (page) params['params']['page'] = page;
     params['params']['per_page'] = this.per_page;
 
-    console.log(params)
     this.http.get('konsulta/registration-lists',params).subscribe({
       next: (data: any) => {
-        console.log(data.data);
         this.konsulta_list = data.data;
 
         this.current_page = data.meta.current_page;

@@ -39,7 +39,7 @@ export class TodaysConsultComponent implements OnInit, OnDestroy {
   show_form: boolean = false;
 
   getTodaysConsult(page?: number){
-    console.log('query')
+    // console.log('query')
     let params = {params: { }};
     params['params']['page'] = !page ? this.current_page : page;
     if (this.selected_physician !== 'all') params['params']['physician_id'] = this.selected_physician;
@@ -140,7 +140,7 @@ export class TodaysConsultComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    console.log(this.todays_inteval);
+    // console.log(this.todays_inteval);
     clearInterval(this.todays_inteval)
     // this.updateList.unsubscribe();
     // this.unsubscribe$.next();
