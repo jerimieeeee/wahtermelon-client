@@ -10,6 +10,7 @@ import { NameListComponent } from './modals/name-list/name-list.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { HeaderFhsis2018Component } from './components/header-fhsis2018/header-fhsis2018.component';
+import { ExportAsModule } from 'ngx-export-as';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { HeaderFhsis2018Component } from './components/header-fhsis2018/header-f
     ReactiveFormsModule,
     FormsModule,
     NgSelectModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    ExportAsModule
   ]
 })
 export class ReportsModule { }
