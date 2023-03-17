@@ -23,8 +23,8 @@
             </div>
 
             <div class="col-span-1 text-sm px-5 py-2 mt-2">
-              <label for="confirmation_code">Enter Code</label>
-              <input name="confirmation_code" id="confirmation_code" [(ngModel)]="confirmation_code" type="text" class="mt-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+              <label for="confirmCode">Enter Code</label>
+              <input name="confirmCode" #confirmCode (keyup.enter)="onSubmit()" [(ngModel)]="confirmation_code" type="text" class="mt-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
             </div>
 
             <div class="col-span-1 mt-11">
