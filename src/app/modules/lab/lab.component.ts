@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { faEdit, faFlask, faFlaskVial, faXmark, faTrashCan } from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faFlask, faFlaskVial, faXmark, faTrashCan, faPlus } from '@fortawesome/free-solid-svg-icons';
 // import { PatientInfoComponent } from 'app/components/patient-info/patient-info.component';
 import { HttpService } from 'app/shared/services/http.service';
 import { NameHelperService } from 'app/shared/services/name-helper.service';
@@ -16,6 +16,7 @@ export class LabComponent implements OnInit, OnDestroy {
   faEdit = faEdit;
   faXmark = faXmark;
   faFlask = faFlask;
+  faPlus = faPlus;
 
   patient_details: any;
   pending_list: any;
@@ -104,7 +105,7 @@ export class LabComponent implements OnInit, OnDestroy {
         this.loadData();
       }
     } else {
-      this.modal[form] = false;
+      this.modal[form] = !this.modal[form];
       this.loadData();
     }
   }
