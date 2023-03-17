@@ -33,7 +33,7 @@ export class LabComponent implements OnInit, OnDestroy {
     this.http.get('laboratory/consult-laboratories', {params}).subscribe({
       next: (data: any) => {
         this.pending_list = data.data
-        // console.log(this.pending_list);
+        // console.log(this.pending_list)
         this.show_form = true;
       },
       error: err => console.log(err)

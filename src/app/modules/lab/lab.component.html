@@ -60,9 +60,9 @@
   [url]="url"
   (toggleModal)="toggleModal($event)"></app-delete-item>
 
-<app-lab-request-modal *ngIf="modal['lab-request']"
+<app-lab-request *ngIf="modal['lab-request']"
   (toggleModal)="toggleModal('lab-request')"
-  [lab_req_list]="lab_req_list"
-  [patient_info]="patient_info"
-  [consult_id]="consult_id"></app-lab-request-modal>
+  [lab_req_list]="pending_list"
+  [patient_info]="patient_details"
+  [consult_id]="consult_id"></app-lab-request>
 

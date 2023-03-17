@@ -1,7 +1,8 @@
-import { formatDate } from '@angular/common';
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { CommonModule, formatDate } from '@angular/common';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -10,26 +11,23 @@ import { ToastrService } from 'ngx-toastr';
   selector: 'app-lab-request',
   templateUrl: './lab-request.component.html',
   styleUrls: ['./lab-request.component.scss'],
-  imports: [FontAwesomeModule, FormsModule],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  imports: [FontAwesomeModule, FormsModule, ReactiveFormsModule, CommonModule]
 })
-export class LabRequestComponent {
+export class LabRequestComponent implements OnChanges{
   @Input() patient_info;
   @Input() consult_id;
   @Input() lab_req_list;
   @Output() toggleModal = new EventEmitter<any>();
 
-  lab_list;// = lab_list;
+  faCircleNotch = faCircleNotch;
+
+  max_date = formatDate(new Date, 'yyyy-MM-dd', 'en');
+  lab_list;
   request_date: string;
   labs: any = [];
   is_recommended: string;
 
   is_saving: boolean = false;
-
-  constructor(
-    private http: HttpService,
-    private toastr: ToastrService
-  ) { }
 
   count = 0;
   updateList(lab_code) {
@@ -41,19 +39,28 @@ export class LabRequestComponent {
   }
 
   recommended: any;
-
+  show_form: boolean = false;
   loadLabs(){
-    this.http.get('libraries/laboratories').subscribe({
-      next: (data: any) => {
-        this.lab_list = data.data;
-        // console.log(this.lab_list)
-      },
-      error: err => console.log(err)
-    })
-
     this.http.get('libraries/laboratory-recommendations').subscribe({
       next: (data: any) => {
         this.recommended = data.data;
+
+        this.http.get('libraries/laboratories').subscribe({
+          next: (data: any) => {
+            this.lab_list = data.data;
+            // console.log(this.lab_list);
+            Object.entries(this.lab_list).forEach(([key, value], index) => {
+              let val: any = value;
+              // console.log(val)
+              if(this.code_list.find(e => e === val.code)) {
+                val["lab_result"] = 'done';
+              }
+            })
+            // console.log(this.lab_list);
+            this.show_form = true;
+          },
+          error: err => console.log(err)
+        })
       },
       error: err => console.log(err)
     })
@@ -98,8 +105,32 @@ export class LabRequestComponent {
     this.toggleModal.emit('lab-request')
   }
 
-  max_date = formatDate(new Date, 'yyyy-MM-dd', 'en');
-  ngOnInit(): void {
+  pending_list: any;
+  code_list: any;
+
+  getPendingList(){
+    this.pending_list = [];
+    this.code_list = [];
+    // let pending_list = [];
+    Object.entries(this.lab_req_list).forEach(([key, value], index) => {
+      let vals: any = value;
+      // console.log(vals)
+      if(!vals.lab_result && vals.request_status_code === 'RQ') {
+        this.pending_list.push(vals)
+        this.code_list.push(vals.laboratory.code)
+      }
+    });
+
+    // this.pending_list = pending_list;
+  }
+
+  constructor(
+    private http: HttpService,
+    private toastr: ToastrService
+  ) { }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.getPendingList();
     this.loadLabs();
   }
 }
