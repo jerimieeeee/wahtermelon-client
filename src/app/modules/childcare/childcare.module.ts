@@ -9,8 +9,6 @@ import { FirstVisitComponent } from './components/first-visit/first-visit.compon
 import { ServicesComponent } from './components/services/services.component';
 import { VaccineInfoComponent } from './components/vaccine-info/vaccine-info.component';
 import { BreastfeedingComponent } from './components/breastfeeding/breastfeeding.component';
-import { StoreModule } from '@ngrx/store';
-import { reducer } from './reducers/birthinformation.reducer';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { SharedComponentsModule } from 'app/shared/shared-components/shared-components.module';
@@ -30,10 +28,11 @@ import { NgSelectModule } from '@ng-select/ng-select';
     CommonModule,
     ChildcareRoutingModule,
     SharedComponentsModule,
-    FontAwesomeModule,ReactiveFormsModule,HttpClientModule,NgSelectModule,
-    FormsModule,StoreModule.forRoot({
-      birthinfo: reducer
-    })
+    FontAwesomeModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    NgSelectModule,
+    FormsModule
   ]
 })
 export class ChildcareModule { }
