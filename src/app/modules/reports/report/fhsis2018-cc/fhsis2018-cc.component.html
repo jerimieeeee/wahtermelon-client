@@ -1,12 +1,21 @@
 <div class="grid grid-cols-1 w-full">
-  <div class="flex justify-between w-full text-blue-500 font-semibold text-lg  p-3">
-    FHSIS 2018 Report - Child Care
+  <div class="flex justify-between w-full text-blue-500 font-semibold text-lg  p-3" >
+    <span>FHSIS 2018 Report - Child Care</span>
+    <span>
+      <!-- <fa-icon *ngIf="exporting" [icon]="faCircleNotch" spin="true" class="text-blue-500 text-sm mr-3">Exporting...</fa-icon> -->
+      <button [disabled]="pdf_exported" type="button" class="text-2xl mr-5 text-red-600 disabled:text-gray-600" (click)="exportP()">
+        <fa-icon [icon]="faFilePdf"></fa-icon>
+      </button>
+      <button  type="button" class="text-2xl" (click)="exportX()">
+        <fa-icon [icon]="faFileExcel" class="text-green-700"></fa-icon>
+      </button>
+    </span>
   </div>
   <div class="flex flex-col pb-5">
     <div class="sm:-mx-6 lg:-mx-8">
       <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
         <div class="">
-          <table class="min-w-full border select-none">
+          <table class="min-w-full border select-none" id="reportForm">
             <thead class="border-b">
               <tr>
                 <th scope="col" colspan="1" class="text-sm font-medium text-gray-900 px-6 py-4 border">

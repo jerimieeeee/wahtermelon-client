@@ -43,7 +43,7 @@ export class FinalDxComponent implements OnChanges {
 
       this.http.post('consultation/final-diagnosis', fdx).subscribe({
         next: (data: any) => {
-          console.log(data);
+          // console.log(data);
           this.saveNotes();
         },
         error: err => console.log(err)
@@ -61,9 +61,9 @@ export class FinalDxComponent implements OnChanges {
         fdx_remarks: this.fdx_remarks
       }
 
-      console.log(notes_remarks);
+      // console.log(notes_remarks);
       this.http.update('consultation/notes/', this.consult_details.consult_notes.id, notes_remarks).subscribe({
-        next: (data: any) => {console.log(data); this.showToastr();},
+        next: (data: any) => {/* console.log(data);  */this.showToastr();},
         error: err => console.log(err)
       });
     } else {
