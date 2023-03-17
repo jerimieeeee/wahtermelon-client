@@ -35,36 +35,11 @@ export class LaboratoryComponent implements OnInit, OnDestroy {
         // console.log(data)
         this.lab_list = data.data;
         this.setLabList.emit(this.lab_list);
-        // this.getResults()
       },
       error: err => console.log(err)
     })
   }
 
-  getResults(){
-    Object.entries(this.lab_list).forEach(([key, value], index) => {
-      let val: any = value;
-      let url = this.http.getURL(val.laboratory.code)
-      if(url !== '') {
-        this.http.get(url, {params: {request_id: val.id}}).subscribe({
-          next: (data: any) => {
-            // console.log(data)
-            this.lab_list[key]['result'] = data.data[0];
-            if(Object.keys(this.lab_list).length - 1 === index) {
-              this.show_form = true;
-              this.setLabList.emit(this.lab_list);
-            }
-          },
-          error: err => console.log(err)
-        })
-      }else{
-        if(Object.keys(this.lab_list).length - 1 === index) {
-          this.show_form = true;
-          this.setLabList.emit(this.lab_list);
-        }
-      }
-    })
-  }
 
   navigate(loc) {
     this.navigateTo.emit(loc)

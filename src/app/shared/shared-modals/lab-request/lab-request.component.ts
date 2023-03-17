@@ -114,7 +114,6 @@ export class LabRequestComponent implements OnChanges{
     // let pending_list = [];
     Object.entries(this.lab_req_list).forEach(([key, value], index) => {
       let vals: any = value;
-      // console.log(vals)
       if(!vals.lab_result && vals.request_status_code === 'RQ') {
         this.pending_list.push(vals)
         this.code_list.push(vals.laboratory.code)
@@ -130,6 +129,7 @@ export class LabRequestComponent implements OnChanges{
   ) { }
 
   ngOnChanges(changes: SimpleChanges): void {
+    // console.log(this.lab_req_list)
     this.getPendingList();
     this.loadLabs();
   }

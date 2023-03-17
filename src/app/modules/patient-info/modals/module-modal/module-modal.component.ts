@@ -114,7 +114,7 @@ export class ModuleModalComponent implements OnInit {
     }
     this.http.get('konsulta/check-atc', {params}).subscribe({
       next: (data: any) => {
-        console.log(data)
+        // console.log(data)
         this.is_checking_atc = false;
         this.is_atc_valid = data.return === 'YES' ? true : false;
       },
@@ -185,7 +185,7 @@ export class ModuleModalComponent implements OnInit {
 
     this.http.post('consultation/records', new_visit).subscribe({
       next: (data: any) => {
-        console.log(data)
+        // console.log(data)
         this.toastr.success('Successfully created!','New visit')
         this.router.navigate(['/patient/'+selected_module.location, {id: this.patient_info.id, consult_id: data.data.id}]);
         this.closeModal()
@@ -240,7 +240,7 @@ export class ModuleModalComponent implements OnInit {
     this.consult_date = formatDate(current_date,'yyyy-MM-dd','en');
     this.consult_time = formatDate(current_date,'HH:mm','en');
 
-    console.log(this.philhealth_details)
+    // console.log(this.philhealth_details)
   }
 
 }

@@ -59,6 +59,7 @@ export class PatientInfoComponent implements OnInit {
   ) { }
 
   loadData(field){
+    // console.log(field)
     if(field === 'past_medical'       || field==='all') this.pastMedical.loadData(this.patient_info.id);
     if(field === 'family_medical'     || field==='all') this.familyMedical.loadData(this.patient_info.id);
     if(field === 'vaccines'           || field==='all') this.vaccine.loadData(this.patient_info.id);
@@ -114,6 +115,7 @@ export class PatientInfoComponent implements OnInit {
   active_loc_id: any;
 
   getPatient(){
+    // console.log('get patient')
     this.active_loc_id = this.http.getUrlParams();
     this.active_loc = this.active_loc_id.loc;
     this.consult_id = this.active_loc_id.consult_id ?? null;
@@ -151,6 +153,8 @@ export class PatientInfoComponent implements OnInit {
         this.loadData('laboratory')
         break;
       default:
+        this.loadData('laboratory')
+        this.loadData('prescription')
         break;
     }
   }

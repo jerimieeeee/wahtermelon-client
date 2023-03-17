@@ -41,19 +41,13 @@ export class PatientItrComponent implements OnInit {
         sort: '-consult_date'
       }
       this.getVisitList(params);
-      /* this.http.get('consultation/records',{params:{patient_id: patient_id, per_page: 'all', sort: '-consult_date'}}).subscribe({
-        next: (data: any) => {
-          this.visit_list = data.data;
-        },
-        error: err => console.log(err),
-      }) */
     }
   }
 
   getVisitList(params, page?){
     this.http.get('consultation/records',{params}).subscribe({
       next: (data: any) => {
-        console.log(data)
+        // console.log(data)
         this.visit_list = data.data;
       },
       error: err => console.log(err),
@@ -63,7 +57,7 @@ export class PatientItrComponent implements OnInit {
   user_allowed: boolean = false;
 
   showConsult(details: any){
-    console.log(details)
+    // console.log(details)
     if(details.facility_code === this.user_location) {
       this.user_allowed = true;
       this.selected_visit = details;
