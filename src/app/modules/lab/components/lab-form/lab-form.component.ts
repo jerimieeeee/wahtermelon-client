@@ -1,7 +1,8 @@
 import { formatDate } from '@angular/common';
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, OnInit } from '@angular/core';
-import { faSave, faSearch, faSpider, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { faSave, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
+import { NameHelperService } from 'app/shared/services/name-helper.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -9,7 +10,7 @@ import { ToastrService } from 'ngx-toastr';
   templateUrl: './lab-form.component.html',
   styleUrls: ['./lab-form.component.scss']
 })
-export class LabFormComponent implements OnChanges, OnInit {
+export class LabFormComponent implements OnChanges {
   @Output() toggleModal = new EventEmitter<any>();
   @Output() cancelModal = new EventEmitter<any>();
   @Input() selected_lab;
@@ -57,7 +58,7 @@ export class LabFormComponent implements OnChanges, OnInit {
     let request_date:any = new Date(this.selected_lab.request_date);
     let days = (request_date - birthdate) / (1000*60*60*24);
     let cat = days <= 28 ? 'NB' : this.patient_details.gender;
-
+    // console.log(data);
     let fields: any = [];
     Object.entries(data).forEach(([key, value], index) => {
       let vals: any = value;
@@ -75,7 +76,7 @@ export class LabFormComponent implements OnChanges, OnInit {
     this.fields = fields;
 
     this.request_status_code = this.selected_lab.request_status_code === 'RF' ? true : false;
-    if(this.selected_lab.result) {
+    if(this.selected_lab.lab_result) {
       this.fillCodes(this.selected_lab)
     }
 
@@ -83,32 +84,32 @@ export class LabFormComponent implements OnChanges, OnInit {
   }
 
   fillCodes(data){
-    console.log(this.selected_lab)
-    console.log(this.request_status_code)
+    // console.log(this.selected_lab)
+    // console.log(this.request_status_code)
 
-    this.lab_form = this.selected_lab.result;
+    this.lab_form = this.selected_lab.lab_result;
     switch (data.laboratory.code) {
       case 'CXRAY':
-        this.lab_form['findings_code'] = this.lab_form.findings ? this.lab_form.findings.code : null;
-        this.lab_form['observation_code'] = this.lab_form.observation ? this.lab_form.observation.code : null;
+        this.lab_form['findings_code'] = this.lab_form.findings_code;
+        this.lab_form['observation_code'] = this.lab_form.observation_code;
         break;
       case 'ECG':
-        this.lab_form['findings_code'] = this.lab_form.findings ? this.lab_form.findings.code : null;
+        this.lab_form['findings_code'] = this.lab_form.findings_code;
         break;
       case 'SPTM':
-        this.lab_form['findings_code'] = this.lab_form.findings ? this.lab_form.findings.code : null;
-        this.lab_form['data_collection_code'] = this.lab_form.data_collection ? this.lab_form.data_collection.code : null;
+        this.lab_form['findings_code'] = this.lab_form.findings_code;
+        this.lab_form['data_collection_code'] = this.lab_form.data_collection_code;
         break;
       case 'FOBT':
-        this.lab_form['findings_code'] = this.lab_form.findings ? this.lab_form.findings.code : null;
+        this.lab_form['findings_code'] = this.lab_form.findings_code;
         break;
       case 'PPD':
-        this.lab_form['findings_code'] = this.lab_form.findings ? this.lab_form.findings.code : null;
+        this.lab_form['findings_code'] = this.lab_form.findings_code;
         break;
       case 'FCAL':
-        this.lab_form['blood_code'] = this.lab_form.blood ? this.lab_form.blood.code : null;
-        this.lab_form['color_code'] = this.lab_form.color ? this.lab_form.color.code : null;
-        this.lab_form['consistency_code'] = this.lab_form.consistency ? this.lab_form.consistency.code : null;
+        this.lab_form['blood_code'] = this.lab_form.blood_code;
+        this.lab_form['color_code'] = this.lab_form.color_code;
+        this.lab_form['consistency_code'] = this.lab_form.consistency_code;
         break;
       default:
         break;
@@ -118,11 +119,11 @@ export class LabFormComponent implements OnChanges, OnInit {
   form_with_findings_pn = ['FOBT', 'PPD']
   form_with_finding_code = ['ECG'];
   onSubmit(){
-    console.log(this.selected_lab)
+    // console.log(this.lab_form)
     this.is_saving = true;
 
     if(!this.request_status_code) {
-      let url: string = this.http.getURL(this.selected_lab.laboratory.code);
+      let url: string = this.nameHelper.getURL(this.selected_lab.laboratory.code);
       if(url || url !== null || url !== ''){
         let query;
         if(this.lab_form.request_id) {
@@ -185,12 +186,9 @@ export class LabFormComponent implements OnChanges, OnInit {
 
   constructor(
     private http: HttpService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private nameHelper: NameHelperService
   ) { }
-
-  ngOnInit(): void {
-    // this.loadLibraries()
-  }
 
   ngOnChanges(changes: SimpleChanges): void {
     this.loadForm()

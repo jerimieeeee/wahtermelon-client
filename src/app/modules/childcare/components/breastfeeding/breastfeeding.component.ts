@@ -113,7 +113,7 @@ export class BreastfeedingComponent implements OnInit {
 
   patient_info: any;
 
-
+  ebf_test_date: any;
 
   constructor(
     private http: HttpService,
@@ -123,6 +123,10 @@ export class BreastfeedingComponent implements OnInit {
 
 
   }
+
+  ebf_test(){
+    this.ebf_test_date = moment(this.patient_details.birthdate).add(5, 'M').add(29, 'd').format('MM/DD/yyyy')
+   }
 
   submit() {
     this.selectedMonths = this.ccdev.filter((value, index) => {
@@ -384,6 +388,7 @@ export class BreastfeedingComponent implements OnInit {
         if(this.ebfCondition)
           {
             this.ebf_status = 'Exclusively Breastfed'
+            this.ebf_test();
           }
             else{
               this.ebf_status = 'Non - EBF'
@@ -438,7 +443,7 @@ export class BreastfeedingComponent implements OnInit {
     {"id" : "bfed_month3", "name" : "Month 3 and 15 Days", "date" : moment(this.patient_details.birthdate).add(3, 'M').add(15, 'd').format('MM/DD/yyyy'), selected: '', isDefault: 'N/A'},
     // {"id" : "bfed_month4", "name" : "Month 4", "date" : moment(this.patient_details.birthdate).add(4, 'M').format('MM/DD/yyyy'), selected: '', isDefault: 'N/A'},
     // {"id" : "bfed_month5", "name" : "Month 5", "date" : moment(this.patient_details.birthdate).add(5, 'M').format('MM/DD/yyyy'), selected: '', isDefault: 'N/A'},
-    {"id" : "bfed_month6", "name" : "Month 5 and 29 Days", "date" : moment(this.patient_details.birthdate).add(6, 'M').subtract(1, 'd').format('MM/DD/yyyy'), selected: '', isDefault: 'N/A'},
+    {"id" : "bfed_month6", "name" : "Month 5 and 29 Days", "date" : moment(this.patient_details.birthdate).add(5, 'M').add(29, 'd').format('MM/DD/yyyy'), selected: '', isDefault: 'N/A'},
   ];
 
     // this.fetchSelectedItems()

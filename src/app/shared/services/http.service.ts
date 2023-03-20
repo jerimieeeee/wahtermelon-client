@@ -10,12 +10,6 @@ import { Subject } from 'rxjs';
 export class HttpService {
   baseUrl = 'https://tarlac-api.wah.ph/api/v1/';
 
-  // public options = new HttpHeaders({
-  //   'Content-Type' : 'application/json; charset=utf-8',
-  //   'Access-Control-Allow-Origin': '*',
-  //   'Authorization': `Bearer ${localStorage.getItem('token')}`,
-  // });
-
   constructor(
     private http: HttpClient,
     private router: Router,
@@ -57,14 +51,23 @@ export class HttpService {
   }
 
   saveUserToLocalStorage(user) {
-    console.log(user)
+    // console.log(user)
     localStorage.setItem('user', JSON.stringify(user))
   }
 
   removeLocalStorageItem(){
-    localStorage.removeItem('user');
-    this.cookieService.delete('access_token');
-    return 'Items removed';
+    if(localStorage.getItem('user')) localStorage.removeItem('user');
+    if(this.cookieService.get('access_token')) {
+      this.logout().subscribe({
+        next: () => {
+          this.cookieService.delete('access_token')
+          window.location.reload();
+        },
+        error: err => console.log(err)
+      });
+    } else {
+      window.location.reload();
+    }
   }
 
   userToJSON(){
@@ -134,6 +137,8 @@ export class HttpService {
         return 'laboratory/consult-laboratory-oral-glucose'
       case 'FOBT':
         return 'laboratory/consult-laboratory-fecal-occult'
+      case 'GRMS':
+        return 'laboratory/consult-laboratory-gram-stain'
       default:
         return '';
     }

@@ -1,7 +1,7 @@
 
-<div class="bg-white border border-solid border-slate-100 rounded-xl shadow-md">
-  <div class="border border-solid border-slate-100 rounded-t-xl font-semibold justify-between">
-    <div class="flex border border-solid border-slate-100 rounded-t-xl p-3 font-semibold justify-between">
+<div class="bg-white border border-solid border-slate-100 rounded-xl shadow-md h-full">
+  <div class="border border-solid border-slate-100 rounded-t-xl font-semibold justify-between h-full">
+    <!-- <div class="flex border border-solid border-slate-100 rounded-t-xl p-3 font-semibold justify-between">
       <div class="text-blue-500 text-lg pt-2 pl-5">
         Uploaded XML
       </div>
@@ -9,7 +9,6 @@
       </div>
 
       <div class="flex">
-
         <div class="w-96">
           <input (change)="readXML($event.target.files)" class="form-control
           w-full
@@ -26,23 +25,73 @@
           m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" type="file" id="formFile" [(ngModel)]="xmlFile" multiple>
         </div>
 
-        <button type="button" (click)="uploadFile(file_to_upload)" class="px-4 mr-5 bg-blue-500 text-white rounded-r-lg text-sm">
+        <input type="text" placeholder="enter cipher key" [(ngModel)]="cipher_key" class="w-64 px-3 py-1.5 border border-solid border-gray-300 text-sm placeholder-gray-400" />
+        <button [disabled]="!file_to_upload || !cipher_key" type="button" (click)="uploadFile(file_to_upload)" class="disabled:bg-gray-400 px-4 mr-5 bg-blue-500 text-white rounded-r-lg text-sm">
           <fa-icon [icon]="faUpload" class=""></fa-icon>
         </button>
+      </div>
+    </div> -->
 
-        <!-- <input [(ngModel)]="xml_file" type="file" placeholder="Upload" class="border border-gray-300 rounded-l-lg text-sm w-64" /> -->
+    <div class="flex flex-col justify-center w-2/5 rounded-lg border border-slate-200 mx-auto my-28 ">
+      <div class="bg-blue-500 text-white text-lg rounded-t-lg p-2">
+        Upload XMLs
+      </div>
+
+      <div class="w-3/4 flex justify-center mx-auto py-5">
+        <input (change)="readXML($event.target.files)" class="form-control
+          w-full
+          px-3
+          py-1.5
+          text-base
+          font-normal
+          text-gray-700
+          bg-white bg-clip-padding
+          border border-solid border-gray-300
+          rounded-lg
+          transition
+          ease-in-out
+          m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" type="file" id="formFile" [(ngModel)]="xmlFile" multiple>
+      </div>
+
+      <div class="w-3/4 flex justify-center mx-auto pb-5">
+        <input type="text" placeholder="enter cipher key" [(ngModel)]="cipher_key" class="rounded-lg w-full px-3 py-2 border border-solid border-gray-300 text-sm placeholder-gray-400" />
+      </div>
+
+      <div class="w-3/4 flex justify-center mx-auto">
+        <button [disabled]="!file_to_upload || !cipher_key" type="button" (click)="uploadFile(file_to_upload)" class="disabled:bg-gray-400 w-full py-2 mb-5 bg-blue-500 text-white rounded-lg text-sm">
+          <fa-icon [icon]="faUpload" class=""></fa-icon> Upload XML
+        </button>
       </div>
     </div>
 
-    <div *ngIf="submit_error" class="col-span-8 bg-red-200 rounded border border-red-300 text-red-900 text-sm">
-      <div class="block p-3 pl-10" >
-        <ul class="list-disc" >
-          <li *ngFor="let error of submit_error | keyvalue">{{ error.value }}</li>
-        </ul>
-      </div>
-    </div>
+    <div class="w-full">
+      <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 mb-5 hidden">
+        <thead>
+          <tr>
+            <th class="text-center">Name</th>
+            <th class="text-center">Birthdate</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngIf="is_uploading">
+            <td colspan="2" >
+              <div class="grid grid-cols-1 w-full mt-10">
+                <div class="flex justify-center mt-3">
+                  <fa-icon [icon]="faCircleNotch" class="text-lg mr-2 text-blue-500" spin="true"></fa-icon>
+                  <div class="text-center italic pt-1"> Uploading XML... </div>
+                </div>
+              </div>
+            </td>
+          </tr>
 
-    <div>
+          <!-- <tr *ngIf="!is_uploading">
+            <td>last name, first name middle name</td>
+            <td></td>
+          </tr> -->
+        </tbody>
+      </table>
+    </div>
+    <!-- <div>
       <div class="overflow-x-auto relative shadow-md sm:rounded-lg">
         <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 mb-5">
           <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -77,41 +126,8 @@
           </tbody>
         </table>
       </div>
-    </div>
+    </div> -->
   </div>
-
-  <!-- <div *ngIf="konsulta_list?.length >= 1">
-    <div class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
-      <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
-        <div>
-          <p class="text-sm text-gray-700">
-            Showing <span class="font-medium">{{ from }}</span>
-            to <span class="font-medium">{{ to }}</span>
-            of <span class="font-medium">{{ total }}</span> results
-          </p>
-        </div>
-        <div>
-          <nav class="relative z-0 inline-flex shadow-sm -space-x-px" aria-label="Pagination">
-            <button [disabled]="current_page===1" (click)="loadList(1)" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 enabled:bg-white disabled:bg-gray-300 text-sm font-medium text-gray-500 hover:bg-gray-50">
-              <fa-icon [icon]="faAnglesLeft" class="block h-15 w-15 text-gray-500 pr-1"></fa-icon>
-            </button>
-
-              <button [disabled]="current_page===1" (click)="loadList(current_page-1)" class="relative inline-flex items-center px-4 py-2 border border-gray-300 enabled:bg-white disabled:bg-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
-                <fa-icon [icon]="faChevronLeft" class="block h-15 w-15 text-gray-500 pr-1"></fa-icon>Previous
-              </button>
-              <button [disabled]="current_page===last_page" (click)="loadList(current_page+1)" class="relative inline-flex items-center px-4 py-2 border border-gray-300 enabled:bg-white disabled:bg-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
-                Next<fa-icon [icon]="faChevronRight" class="h-5 w-5 text-gray-500"></fa-icon>
-              </button>
-
-            <button [disabled]="current_page===last_page" (click)="loadList(last_page)" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 enabled:bg-white disabled:bg-gray-300 text-sm font-medium text-gray-500 hover:bg-gray-50">
-              <fa-icon [icon]="faAnglesRight" class="h-5 w-5 text-gray-500"></fa-icon>
-            </button>
-          </nav>
-        </div>
-      </div>
-    </div>
-  </div> -->
-
 </div>
 
 <app-uploaded-xml *ngIf="modals['uploaded-xml']" (toggleModal)="toggleModal($event)" [xml_to_view]="xml_to_view"></app-uploaded-xml>

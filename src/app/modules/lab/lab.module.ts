@@ -3,11 +3,11 @@ import { CommonModule } from '@angular/common';
 
 import { LabRoutingModule } from './lab-routing.module';
 import { LabComponent } from './lab.component';
-import { SharedComponentsModule } from 'app/shared/shared-components/shared-components.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { LabFormComponent } from './components/lab-form/lab-form.component';
 import { LabDeleteComponent } from './components/lab-delete/lab-delete.component';
 import { FormsModule } from '@angular/forms';
+import { DeleteItemComponent } from 'app/shared/shared-modals/delete-item/delete-item.component';
 
 
 @NgModule({
@@ -19,9 +19,9 @@ import { FormsModule } from '@angular/forms';
   imports: [
     CommonModule,
     LabRoutingModule,
-    SharedComponentsModule,
     FontAwesomeModule,
-    FormsModule
+    FormsModule,
+    DeleteItemComponent
   ]
 })
 export class LabModule { }

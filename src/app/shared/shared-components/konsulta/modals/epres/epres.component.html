@@ -79,7 +79,10 @@
                   </div>
                   <div class="col-span-5 flex">
                     <span class="text-[.75em]">Membership type: </span>
-                    <span class="flex-1 w-full text-[.8em]">{{ patient_philhealth?.membership_type_id === "MM" ? 'Member' : 'Dependent' }}</span>
+                    <span class="flex-1 w-full text-[.8em]">
+                      <span class="underline">{{ patient_philhealth?.membership_type_id === "MM" ? '&#10004;' : '&nbsp;&nbsp;' }} </span>Member
+                      <span class="underline">{{ patient_philhealth?.membership_type_id === "DD" ? '&#10004;' : '&nbsp;&nbsp;' }} </span>Dependent
+                    </span>
                   </div>
                 </div>
               </div>
@@ -126,7 +129,15 @@
                   <tbody>
                     <tr *ngFor="let pres of prescriptions; first as isFirst">
                       <td class="border border-slate-700 text-[.8em]">
-                        {{ pres.konsulta_medicine ? pres.konsulta_medicine.category : '' }}
+                        <span class="uppercase" *ngIf="pres.konsulta_medicine">
+                          {{pres.konsulta_medicine.category}}
+                        </span>
+                        <span class="uppercase" *ngIf="pres.added_medicine">
+                          {{pres.purpose.desc}}
+                        </span>
+                        <!-- {{ pres.konsulta_medicine ? pres.konsulta_medicine.category : '' }}
+                        {{ pres.added_medicine ? pres.konsulta_medicine.purpose.desc : '' }}-->
+
                       </td>
 
                       <td class="border border-slate-700 text-[.8em]">

@@ -68,24 +68,12 @@ export class ModuleModalComponent implements OnInit {
     },
     'Others': {
       modules: {
-        /* cn: {
-          name: 'Laboratory',
-          location: 'consultation',
-          group: '',
-          consult_active: false
-        },
-        ab: {
-          name: 'Animal Bite',
-          location: 'consultation',
-          group: '',
-          consult_active: false
-        },
         tb: {
           name: 'Tuberculosis',
-          location: 'consultation',
-          group: '',
+          location: 'tb',
+          group: 'tb',
           consult_active: false
-        }, */
+        },
         ncd: {
           name: 'NCD',
           location: 'ncd',
@@ -149,7 +137,7 @@ export class ModuleModalComponent implements OnInit {
     let group = module.group;
     this.is_loading = true;
 
-    console.log(loc, this.router.url.split(';')[0])
+    // console.log(loc, this.router.url.split(';')[0])
     if('/patient/'+loc === this.router.url.split(';')[0]){
       // console.log(1)
       this.closeModal();
@@ -166,7 +154,7 @@ export class ModuleModalComponent implements OnInit {
               this.router.navigate(['/patient/'+loc, {id: this.patient_info.id, consult_id: data.data[0].id}])
               this.closeModal();
             }else{
-              console.log(this.selected_module);
+              // console.log(this.selected_module);
               this.show_new = true;
             }
           },
@@ -183,9 +171,7 @@ export class ModuleModalComponent implements OnInit {
 
   onCreateNew(selected_module){
     this.is_loading = true;
-    console.log(this.is_atc_valid)
-    console.log(this.pATC)
-    console.log(this.pATC)
+
     let user_id = this.http.getUserID();
     let new_visit = {
       patient_id: this.patient_info.id,
@@ -200,12 +186,11 @@ export class ModuleModalComponent implements OnInit {
     this.http.post('consultation/records', new_visit).subscribe({
       next: (data: any) => {
         console.log(data)
-        this.toastr.success('Successfully recorded!','New visit')
+        this.toastr.success('Successfully created!','New visit')
         this.router.navigate(['/patient/'+selected_module.location, {id: this.patient_info.id, consult_id: data.data.id}]);
         this.closeModal()
       },
-      error: (err) => {console.log(err); this.is_loading = false;},
-      complete: () => console.log('new visit saved')
+      error: (err) => console.log(err.error.message)
     });
   }
 

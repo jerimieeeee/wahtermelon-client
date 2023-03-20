@@ -20,10 +20,6 @@ const routes: Routes = [
     loadChildren: () => import('./modules/familyplanning/familyplanning.module').then(m => m.FamilyplanningModule)
   },
   {
-    path: 'tb',
-    loadChildren: () => import('./modules/tbdots/tbdots.module').then(m => m.TbdotsModule)
-  },
-  {
     path: 'ab',
     loadChildren: () => import('./modules/animalbite/animalbite.module').then(m => m.AnimalbiteModule)
   },
@@ -42,10 +38,6 @@ const routes: Routes = [
   {
     path: 'lep',
     loadChildren: () => import('./modules/leprosy/leprosy.module').then(m => m.LeprosyModule)
-  },
-  {
-    path: 'drug-list',
-    loadChildren: () => import('./modules/drug-list/drug-list.module').then(m => m.DrugListModule)
   },
   {
     path: 'facility-config',

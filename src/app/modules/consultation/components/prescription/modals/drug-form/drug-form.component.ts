@@ -18,6 +18,7 @@ export class DrugFormComponent implements OnChanges {
   @Input() drug_purpose;
   @Input() drug_frequency;
   @Input() drug_preparation;
+  @Input() drug_route;
 
   submit_errors: any;
   is_saving: boolean = false;
@@ -41,7 +42,8 @@ export class DrugFormComponent implements OnChanges {
     duration_frequency: new FormControl<string| null>(null),
     quantity: new FormControl<number| null>(null),
     quantity_preparation: new FormControl<string| null>(null),
-    instruction_quantity: new FormControl<number| null>(null)
+    instruction_quantity: new FormControl<number| null>(null),
+    medicine_route_code: new FormControl<string| null>(null),
   });
 
   get f(): { [key: string]: AbstractControl } {
@@ -79,13 +81,14 @@ export class DrugFormComponent implements OnChanges {
     {var_name: 'drug_regimen', location: 'dose-regimens'},
     {var_name: 'drug_purpose', location: 'purposes'},
     {var_name: 'drug_frequency', location: 'duration-frequencies'},
-    {var_name: 'drug_preparation', location: 'preparations'}
+    {var_name: 'drug_preparation', location: 'preparations'},
+    {var_name: 'drug_route', location: 'medicine-route'}
   ]
 
   loadLibraries(){
     this.libraries.forEach(obj => {
       this.http.get('libraries/'+obj.location).subscribe({
-        next: (data: any) => {this[obj.var_name] = data.data; /* console.log(data.data) */},
+        next: (data: any) => {this[obj.var_name] = data.data; console.log(data.data)},
         error: err => console.log(err),
         complete: () => this.show_form = true
       })
@@ -127,14 +130,16 @@ export class DrugFormComponent implements OnChanges {
       duration_frequency: [null,[Validators.required]], //libraries/duration-frequencies
       quantity: [null,[Validators.required]],
       quantity_preparation: [null,[Validators.required]], //libraries/preparations
-      instruction_quantity: [null,[Validators.required]]
+      instruction_quantity: [null,[Validators.required]],
+      medicine_route_code: [null,[Validators.required]]
     });
 
-    // console.log(this.selected_drug)
     if(this.selected_drug){
+      // console.log(this.selected_drug)
       if(this.selected_drug.id) {
         this.prescriptionForm.patchValue({
-          konsulta_medicine_code: this.selected_drug.konsulta_medicine.code,
+          konsulta_medicine_code: this.selected_drug.konsulta_medicine ? this.selected_drug.konsulta_medicine.code : null,
+          added_medicine: this.selected_drug.added_medicine ? this.selected_drug.added_medicine : null,
           dosage_quantity: this.selected_drug.dosage_quantity,
           dosage_uom: this.selected_drug.unit_of_measurement.code,
           dose_regimen: this.selected_drug.regimen.code,
@@ -143,11 +148,18 @@ export class DrugFormComponent implements OnChanges {
           duration_frequency: this.selected_drug.frequency.code,
           quantity: this.selected_drug.quantity,
           quantity_preparation: this.selected_drug.preparation.code,
-          instruction_quantity: this.selected_drug.instruction_quantity
+          instruction_quantity: this.selected_drug.instruction_quantity,
+          medicine_route_code: this.selected_drug.medicine_route ? this.selected_drug.medicine_route.code : null
         });
 
         // console.log(this.prescriptionForm.value)
-        this.prescriptionForm.controls.added_medicine.disable();
+        if(this.selected_drug.konsulta_medicine) {
+          this.prescriptionForm.controls.added_medicine.disable();
+        } else {
+          this.add_drug = true;
+          this.prescriptionForm.controls.added_medicine.enable();
+          this.prescriptionForm.controls.konsulta_medicine_code.disable();
+        }
         this.checkPurpose();
       } else {
         this.prescriptionForm.patchValue({ konsulta_medicine_code: this.selected_drug.code })

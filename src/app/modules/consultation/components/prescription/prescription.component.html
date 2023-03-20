@@ -57,8 +57,11 @@
               {{ prescription.preparation.desc }}
             </td>
             <td class="text-sm text-center mb-5  align-middle">
-              <button (click)="openAddForm(prescription)">
+              <button class="mr-3" (click)="openAddForm(prescription)">
                 <fa-icon [icon]="faEdit" class="text-amber-500"></fa-icon>
+              </button>
+              <button (click)="toggleModal('delete-item', prescription)">
+                <fa-icon [icon]="faTrashCan" class="text-rose-500"></fa-icon>
               </button>
             </td>
           </tr>
@@ -90,7 +93,6 @@
     </div>
 
 
-
   </div>
 </div>
 
@@ -108,6 +110,7 @@
   [drug_purpose]="drug_purpose"
   [drug_frequency]="drug_frequency"
   [drug_preparation]="drug_preparation"
+  [drug_route]="drug_route"
 ></app-drug-form>
 
 <!-- <app-prescription *ngIf="show_epress"></app-prescription> -->
@@ -116,3 +119,9 @@
 [prescriptions]="prescriptions"
 [consult_details]="consult_details"
 ></app-epres>
+
+<app-delete-item *ngIf="modal['delete-item']"
+  [delete_id]="delete_id"
+  [delete_desc]="delete_desc"
+  [url]="url"
+  (toggleModal)="toggleModal($event)"></app-delete-item>

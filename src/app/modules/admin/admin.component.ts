@@ -81,7 +81,7 @@ export class AdminComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    console.log(this.router.url.split('/'))
+    // console.log(this.router.url.split('/'))
     const url = this.router.url.split('/');
     if(url[2]) this.selected_route = url[2];
   }

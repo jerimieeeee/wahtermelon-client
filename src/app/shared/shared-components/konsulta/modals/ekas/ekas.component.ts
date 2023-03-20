@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { faFaceFrown, faFaceMeh, faFaceSmile, faPrint, faSpinner, faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import { AgeService } from 'app/shared/services/age.service';
 import { HttpService } from 'app/shared/services/http.service';
+import { NameHelperService } from 'app/shared/services/name-helper.service';
 
 @Component({
   selector: 'app-ekas',
@@ -30,7 +31,7 @@ export class EkasComponent implements OnInit {
   getResults(){
     Object.entries(this.lab_list).forEach(([key, value], index) => {
       let val: any = value;
-      let url = this.http.getURL(val.laboratory.code)
+      let url = this.nameService.getURL(val.laboratory.code)
       if(url !== '') {
         this.http.get(url, {params: {request_id: val.id}}).subscribe({
           next: (data: any) => {
@@ -78,7 +79,8 @@ export class EkasComponent implements OnInit {
 
   constructor(
     private http: HttpService,
-    private ageService: AgeService
+    private ageService: AgeService,
+    private nameService: NameHelperService
   ) { }
 
   ngOnInit(): void {
