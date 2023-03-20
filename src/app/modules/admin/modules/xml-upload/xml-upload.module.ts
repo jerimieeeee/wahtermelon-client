@@ -6,12 +6,14 @@ import { XmlUploadComponent } from './xml-upload.component';
 import { FormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { UploadedXmlComponent } from './modals/uploaded-xml/uploaded-xml.component';
+import { UploadedListComponent } from './modals/uploaded-list/uploaded-list.component';
 
 
 @NgModule({
   declarations: [
     XmlUploadComponent,
-    UploadedXmlComponent
+    UploadedXmlComponent,
+    UploadedListComponent
   ],
   imports: [
     CommonModule,

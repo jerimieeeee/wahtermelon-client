@@ -57,8 +57,8 @@ export class NcdComponent implements OnInit, OnChanges, OnDestroy {
 
     this.http.get('non-communicable-disease/risk-assessment', {params}).subscribe({
       next: (data: any) => {
-        console.log(params)
-        console.log(data.data)
+        // console.log(params)
+        // console.log(data.data)
         if(data.data.length > 0) {
           data.data[0]['consult_date'] = data.data[0].assessment_date;
           this.consult_details = data.data[0];
@@ -66,7 +66,7 @@ export class NcdComponent implements OnInit, OnChanges, OnDestroy {
           this.consult_details = this.consult_details_temp;
         }
 
-        // console.log(this.consult_details)
+        console.log(this.consult_details)
       },
       error: err => console.log(err)
     })

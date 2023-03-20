@@ -83,7 +83,10 @@
                 <div class="grid grid-cols-4 text-xs">
                   <div class="col-span-2 flex">
                     <span class="text-[.75em]">Membership type: </span>
-                    <span class="flex-1 w-full text-[.8em]">{{ patient_philhealth?.membership_type_id === "MM" ? 'Member' : 'Dependent' }}</span>
+                    <span class="flex-1 w-full text-[.8em]">
+                      <span class="underline">{{ patient_philhealth?.membership_type_id === "MM" ? '&#10004;' : '&nbsp;&nbsp;' }} </span>Member
+                      <span class="underline">{{ patient_philhealth?.membership_type_id === "DD" ? '&#10004;' : '&nbsp;&nbsp;' }} </span>Dependent
+                    </span>
                   </div>
                   <div class="col-span-2 flex">
                     <span class="text-[.75em]">Authorization Transaction Code (ATC):</span>
@@ -128,6 +131,17 @@
                         {{ consult_details.user.first_name }} {{ consult_details.user.middle_name }} {{ consult_details.user.last_name }}
                       </td>
                     </tr>
+                    <tr>
+                      <td class="border border-slate-700 [.8em]">Consultation</td>
+                      <td class="border border-slate-700 text-center [.8em]">&#10004;</td>
+                      <td class="border border-slate-700 [.8em]">
+                        {{ consult_details.consult_date | date: 'yyyy-MM-dd' }}
+                      </td>
+                      <td class="border border-slate-700 [.8em]">
+                        {{ consult_details.user.first_name }} {{ consult_details.user.middle_name }} {{ consult_details.user.last_name }}
+                      </td>
+                    </tr>
+                    
                     <tr *ngFor="let lab of lab_list">
                       <td class="border border-slate-700 [.8em]">{{ lab.laboratory.desc }}</td>
                       <td class="border border-slate-700 text-center [.8em]">

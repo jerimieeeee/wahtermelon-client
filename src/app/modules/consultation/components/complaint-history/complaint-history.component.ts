@@ -45,7 +45,6 @@ export class ComplaintHistoryComponent implements OnInit, OnChanges {
 
       this.http.post('consultation/complaint', complaint).subscribe({
         next: (data: any) => {
-          console.log(data);
           this.saveNotes()
         },
         error: err => console.log(err)
@@ -66,7 +65,6 @@ export class ComplaintHistoryComponent implements OnInit, OnChanges {
 
       this.http.update('consultation/notes/', this.consult_details.consult_notes.id, notes_remarks).subscribe({
         next: (data: any) => {
-          console.log(data);
           this.is_saving = false;
           this.showToastr();
           this.loadConsult.emit();
@@ -94,7 +92,6 @@ export class ComplaintHistoryComponent implements OnInit, OnChanges {
 
   loadSelected(){
     let selected_complaints = [];
-    console.log(this.consult_details.consult_notes.complaints);
     if(this.consult_details.consult_notes && this.consult_details.consult_notes.complaints){
       Object.entries(this.consult_details.consult_notes.complaints).forEach(([key, value], index) => {
         let val: any = value;

@@ -184,6 +184,7 @@ export class PatientRegistrationComponent implements OnInit {
 
   show_edit: boolean = false;
 
+  disable_save: boolean = true;
   transaction(data){
     // console.log(data);
     this.selected_family_folder = data.data ? data.data.id : null;
@@ -194,6 +195,7 @@ export class PatientRegistrationComponent implements OnInit {
     this.selected_facility = data.data ? data.data.facility_code : null;
     this.selected_members = data.data ? data.data.household_member : null;
 
+    this.disable_save = false;
     if (data.type === 'new'){
       this.isDisabled(false);
       this.show_edit = false;
@@ -278,6 +280,7 @@ export class PatientRegistrationComponent implements OnInit {
         this.orig_data = data.data;
         //load demog
         this.patchAddress(this.orig_data.household_folder, this.orig_data.household_member);
+        this.disable_save = false;
 
       },
       error: err => console.log(err)
@@ -341,7 +344,7 @@ export class PatientRegistrationComponent implements OnInit {
         address: ['', [Validators.required, Validators.minLength(2)]],
         cct_id: ['', [Validators.minLength(2)]],
         cct_date: [''],
-        is_head: [false, [Validators.required]],
+        is_head: ['', [Validators.required]],
       }),
     });
 

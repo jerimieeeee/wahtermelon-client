@@ -1,9 +1,11 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
 import { faChevronCircleDown, faBell, faSearch, faGear, faHome, faRightFromBracket, faAddressBook, faUser, faSquarePollVertical } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { catchError, debounceTime, distinctUntilChanged, switchMap, tap, map, filter } from 'rxjs/operators';
 import { concat, Observable, of, Subject } from 'rxjs';
 import { Router } from '@angular/router';
+import { NgSelectComponent } from '@ng-select/ng-select';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-header',
@@ -12,6 +14,7 @@ import { Router } from '@angular/router';
 })
 export class HeaderComponent implements OnInit {
   // @ViewChild(NgSelectComponent) ngSelectComponent: NgSelectComponent;
+  @ViewChild('mySelect') mySelect: NgSelectComponent;
   @Input() user_info;
 
   faChevronCircleDown = faChevronCircleDown;
@@ -49,11 +52,6 @@ export class HeaderComponent implements OnInit {
       location: 'my-account',
       icon: faUser
     },
-    /* {
-      name: 'Account List',
-      location: 'account-list',
-      icon: faAddressBook
-    }, */
     {
       name: 'Settings',
       location: 'admin',
@@ -63,7 +61,8 @@ export class HeaderComponent implements OnInit {
 
   constructor(
     private http: HttpService,
-    private router: Router
+    private router: Router,
+    private cookieService: CookieService
   ) { }
 
   loadPatients() {
@@ -91,26 +90,36 @@ export class HeaderComponent implements OnInit {
   }
 
   onSelect(selectedPatient){
+    this.selectedPatient = null;
     if(selectedPatient) {
-      // this.patientInfo.getPatient(selectedPatient.id);
+      this.mySelect.blur();
+      this.mySelect.handleClearClick();
       this.router.navigate(['/patient/itr', {id: selectedPatient.id}]);
     }
-    this.selectedPatient = null;
-    this.loadPatients();
   }
 
   getPatient(term: string = null): Observable<any> {
     return this.http.get('patient', {params:{'filter[search]':term, per_page: 'all'}})
     .pipe(map((resp:any) => {
-      // console.log(resp);
       this.showCreate = resp.data.length == 0 ? true : false;
-      console.log(this.showCreate)
       return resp.data;
     }))
   }
 
+  resetList(){
+    this.selectedPatient = null;
+    this.showCreate = false;
+    this.loadPatients();
+  }
+
   navigateTo(loc){
-    this.toggleMenu();
+    this.selectedPatient = null;
+    if(loc !== 'registration') {
+      this.toggleMenu();
+    } else {
+      this.mySelect.blur();
+      this.mySelect.close();
+    }
     this.router.navigate(['/'+loc]);
   }
 
@@ -119,13 +128,18 @@ export class HeaderComponent implements OnInit {
   }
 
   logout(){
-    this.http.logout().subscribe({
-      next: () => {
-        this.http.removeLocalStorageItem();
-        this.router.navigate(['/']);
-      },
-      error: err => console.log(err)
-    });
+    this.http.removeLocalStorageItem();
+    /* if(this.cookieService.get('access_token')) {
+      this.http.logout().subscribe({
+        next: () => {
+          this.http.removeLocalStorageItem();
+          window.location.reload();
+        },
+        error: err => console.log(err)
+      });
+    } else {
+      window.location.reload();
+    } */
   }
 
 

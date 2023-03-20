@@ -47,14 +47,12 @@ export class PhysicalExamComponent implements OnInit, OnChanges {
   }
 
   onSubmit(){
-    console.log(this.physical_remarks);
-    console.log(this.physical_codes);
     this.is_saving = true;
 
     if(Object.keys(this.physical_codes).length > 0) {
       let pe_codes = [];
       Object.entries(this.physical_codes).forEach(([key, value], index) => {
-        pe_codes.push(key);
+        if(value === true) pe_codes.push(key);
       });
       this.saveCodes(pe_codes)
     } else {
@@ -68,10 +66,8 @@ export class PhysicalExamComponent implements OnInit, OnChanges {
       physical_exam: codes
     }
 
-    console.log(physical_exam);
     this.http.post('consultation/physical-exam', physical_exam).subscribe({
       next: (data: any) => {
-        console.log(data);
         this.saveNotes();
       },
       error: err => console.log(err)
@@ -90,7 +86,6 @@ export class PhysicalExamComponent implements OnInit, OnChanges {
 
     query.subscribe({
       next: (data: any) => {
-        console.log(data);
         this.is_saving = false;
         this.showToastr();
       },
@@ -115,7 +110,6 @@ export class PhysicalExamComponent implements OnInit, OnChanges {
         }, {});
 
         this.pe_grouped = groups;
-        // console.log(this.pe_grouped);
       }
     );
   }

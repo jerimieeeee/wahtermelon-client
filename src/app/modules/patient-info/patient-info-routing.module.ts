@@ -35,6 +35,10 @@ const routes: Routes = [
         path: 'lab',
         loadChildren: () => import('../lab/lab.module').then(m => m.LabModule)
       },
+      {
+        path: 'tb',
+        loadChildren: () => import('../tbdots/tbdots.module').then(m => m.TbdotsModule)
+      }
     ]
   }
 ];

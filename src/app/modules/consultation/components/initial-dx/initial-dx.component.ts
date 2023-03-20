@@ -46,7 +46,7 @@ export class InitialDxComponent implements OnChanges {
 
       this.http.post('consultation/initial-diagnosis', idx).subscribe({
         next: (data: any) => {
-          console.log(data);
+          // console.log(data);
           this.saveNotes();
         },
         error: err => console.log(err)
@@ -67,7 +67,7 @@ export class InitialDxComponent implements OnChanges {
 
       this.http.update('consultation/notes/', this.consult_details.consult_notes.id, notes_remarks).subscribe({
         next: (data: any) => {
-          console.log(data);
+          // console.log(data);
           this.showToastr();
           this.is_saving = false;
         },
@@ -106,7 +106,7 @@ export class InitialDxComponent implements OnChanges {
   getIdx(term: string = null): Observable<any> {
     return this.http.get('libraries/diagnosis', {params:{'filter[search]':term}})
     .pipe(map((resp:any) => {
-      console.log(resp.data)
+      // console.log(resp.data)
       return resp.data;
     }))
   }
