@@ -10,11 +10,17 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import * as angularFontawesome from '@fortawesome/angular-fontawesome';
 
 import { CasefindingsComponent } from './modules/casefindings/casefindings.component';
+import { CaseHoldingComponent } from './modules/case-holding/case-holding.component';
+import { DotsChartComponent } from './modules/dots-chart/dots-chart.component';
+import { PrescriptionComponent } from './modules/prescription/prescription.component';
 
 @NgModule({
   declarations: [
     TbdotsComponent,
-    CasefindingsComponent
+    CasefindingsComponent,
+    CaseHoldingComponent,
+    DotsChartComponent,
+    PrescriptionComponent
   ],
   imports: [
     CommonModule,
