@@ -12,7 +12,7 @@
     </div>
 
     <div *ngIf="visit_list?.length >= 1" class="flex">
-      <div [@halfFull]="show_details ? 'half' : 'full'" class="mr-2 flex-auto h-3/5 overflow-y-auto">
+      <div [@halfFull]="show_details ? 'half' : 'full'" class="mr-2 flex-auto h-[900px] overflow-y-auto">
         <div class="last:border-0 border-b border-slate-200 pb-2 h-" *ngFor="let visit of visit_list" >
           <div class="grid grid-cols-8 gap-2 mt-2">
             <div class="col-span-2 text-sm font-semibold h-full">
@@ -41,8 +41,20 @@
         </div>
       </div>
 
-      <div [@myInsertRemoveTrigger] *ngIf="show_details" class="my-2 w-1/2">
+      <div [@myInsertRemoveTrigger] *ngIf="show_details && user_allowed" class="my-2 w-1/2">
         <app-visit-details [selected_visit]="selected_visit" [latest_vitals]="latest_vitals"></app-visit-details>
+      </div>
+
+      <div [@myInsertRemoveTrigger] *ngIf="show_details && !user_allowed" class="my-2 w-1/2">
+        <span class="flex justify-between align-middle bg-blue-500 w-full p-2 font-semibold text-sm mb-1 text-white rounded-md">
+          <span class="py-1">VISIT DETAILS</span>
+        </span>
+        <div class="flex flex-col justify-center pt-5 text-sm">
+          <span class="mx-auto italic text-center">
+            This visit record is from other facility. <br />
+            You are not allowed to view this record.
+          </span>
+        </div>
       </div>
     </div>
   </div>

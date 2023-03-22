@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { faSpinner,  faSearch, faCalendarDays, faArrowsRotate, faUpload, faClipboardList, faCircleNotch } from '@fortawesome/free-solid-svg-icons';
+import { Component } from '@angular/core';
+import { faSearch, faCalendarDays, faArrowsRotate, faUpload, faClipboardList, faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -8,7 +8,7 @@ import { ToastrService } from 'ngx-toastr';
   templateUrl: './xml-upload.component.html',
   styleUrls: ['./xml-upload.component.scss']
 })
-export class XmlUploadComponent implements OnInit {
+export class XmlUploadComponent {
   faCircleNotch = faCircleNotch;
   faSearch = faSearch;
   faCalendarDays = faCalendarDays;
@@ -39,15 +39,12 @@ export class XmlUploadComponent implements OnInit {
     this.modals[data.name] = !this.modals[data.name];
 
     if(data.data) {
-      console.log(typeof this.uploaded_list)
       Object.entries(data.data).forEach(([key, value], index) => {
-        console.log(value)
         this.uploaded_list.push(value)
       });
 
 
       localStorage.setItem('uploaded-xml', JSON.stringify(this.uploaded_list))
-      console.log(this.uploaded_list)
     }
 
   }
@@ -58,10 +55,9 @@ export class XmlUploadComponent implements OnInit {
 
   file_to_upload: any = null;
   xmlFile: any = null;
-  cipher_key: string;
+  cipher_key: string = 'PHilheaLthDuMmyciPHerKeyS';
 
   readXML(files: FileList){
-    // console.log(files.item(0))
     this.file_to_upload = files;
   }
 
@@ -85,12 +81,9 @@ export class XmlUploadComponent implements OnInit {
     }
 
     formData.append('cipher_key', this.cipher_key);
-    console.log(formData.get('cipher_key'))
-    console.log(this.file_upload_count, this.uploaded_count)
 
     this.http.post('konsulta/upload-xml', formData).subscribe({
       next: (data:any) => {
-        console.log(data)
         this.resetInput();
         this.showToast('success','Uploaded '+ this.uploaded_count +' of '+this.file_upload_count+' files', 'Upload Success')
       },
@@ -122,37 +115,9 @@ export class XmlUploadComponent implements OnInit {
     this.openModal();
   }
 
-  loadList(page?: number){
-    let params = {params: { }};
-    /* if (this.search_item) params['params']['search'] = this.search_item;
-    if (this.search_pin) params['params']['filter[philhealth_id]'] = this.search_pin;
-    if (this.search_year) params['params']['filter[effectivity_year]'] = this.search_year; */
-
-    if (page) params['params']['page'] = page;
-    params['params']['per_page'] = this.per_page;
-
-    // console.log(params)
-    this.http.get('konsulta/imported-xml',params).subscribe({
-      next: (data: any) => {
-        console.log(data.data);
-        this.xml_list = data.data;
-
-        this.current_page = data.meta.current_page;
-        this.last_page = data.meta.last_page;
-        this.from = data.meta.from;
-        this.to = data.meta.to;
-        this.total = data.meta.total;
-      },
-      error: err => console.log(err)
-    })
-  }
-
   constructor(
     private http: HttpService,
     private toastr: ToastrService
   ) { }
 
-  ngOnInit(): void {
-    this.loadList()
-  }
 }

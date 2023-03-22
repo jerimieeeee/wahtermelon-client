@@ -59,7 +59,6 @@ export class PatientInfoComponent implements OnInit {
   ) { }
 
   loadData(field){
-    console.log(field);
     if(field === 'past_medical'       || field==='all') this.pastMedical.loadData(this.patient_info.id);
     if(field === 'family_medical'     || field==='all') this.familyMedical.loadData(this.patient_info.id);
     if(field === 'vaccines'           || field==='all') this.vaccine.loadData(this.patient_info.id);
@@ -119,7 +118,6 @@ export class PatientInfoComponent implements OnInit {
     this.active_loc = this.active_loc_id.loc;
     this.consult_id = this.active_loc_id.consult_id ?? null;
 
-    // console.log(this.active_loc_id)
     if(this.patient_id !== this.active_loc_id.patient_id){
       this.patient_id = this.active_loc_id.patient_id;
 
@@ -214,7 +212,6 @@ export class PatientInfoComponent implements OnInit {
   vaccine_to_edit: any;
 
   toggleModal(modal_name, data?){
-    console.log(modal_name)
     if(modal_name === 'fam-history' || modal_name === 'history') {
       // PAST AND FAMILY HISTORY
       if(!this.history_list){
@@ -253,7 +250,6 @@ export class PatientInfoComponent implements OnInit {
         this.loadLibrary('libraries/pregnancy-delivery-type','delivery_method','preghist')
       } else {
         this.modals[modal_name] = !this.modals[modal_name];
-        console.log(this.modals['preghist'])
       }
       if(modal_name === 'preghist' && this.modals['preghist'] === false) this.loadData('pregnancy_history');
     } else {
@@ -263,7 +259,6 @@ export class PatientInfoComponent implements OnInit {
       if (modal_name === 'vitals' && this.modals[modal_name] === false) {
         if(this.modals['vitals'] == false)  this.vitals_to_edit = null;
         this.loadData('vitals');
-        // this.reloadChild('ncd');
       }
 
       if (modal_name.modal_name === 'philhealth' && this.modals[modal_name.modal_name] === false) {

@@ -68,18 +68,6 @@ export class ModuleModalComponent implements OnInit {
     },
     'Others': {
       modules: {
-        /* cn: {
-          name: 'Laboratory',
-          location: 'consultation',
-          group: '',
-          consult_active: false
-        },
-        ab: {
-          name: 'Animal Bite',
-          location: 'consultation',
-          group: '',
-          consult_active: false
-        }, */
         tb: {
           name: 'Tuberculosis',
           location: 'tb',
@@ -198,7 +186,7 @@ export class ModuleModalComponent implements OnInit {
     this.http.post('consultation/records', new_visit).subscribe({
       next: (data: any) => {
         console.log(data)
-        this.toastr.success('Successfully recorded!','New visit')
+        this.toastr.success('Successfully created!','New visit')
         this.router.navigate(['/patient/'+selected_module.location, {id: this.patient_info.id, consult_id: data.data.id}]);
         this.closeModal()
       },

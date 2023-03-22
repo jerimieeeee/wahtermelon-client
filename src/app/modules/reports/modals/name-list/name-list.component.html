@@ -15,7 +15,7 @@
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
               <tr>
                 <th scope="col" class="py-3 px-6">Name</th>
-                <th scope="col" class="py-3 px-6">Gender</th>
+                <!-- <th scope="col" class="py-3 px-6">Gender</th> -->
                 <th scope="col" class="py-3 px-6">Date of service</th>
                 <th scope="col" class="py-3 px-6">Birthdate</th>
               </tr>
@@ -25,11 +25,11 @@
                 <td class="py-4 px-6">
                   {{ list.name }}
                 </td>
-                <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
+                <!-- <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
                   {{ list.gender }}
-                </th>
+                </th> -->
                 <td class="py-4 px-6">
-                  {{ list.vax_date | date: 'MM/dd/yyyy' }}
+                  {{ list.date_of_service | date: 'MM/dd/yyyy' }}
                 </td>
                 <td class="py-4 px-6">
                   {{ list.birthdate | date: 'MM/dd/yyyy' }}

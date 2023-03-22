@@ -1,5 +1,5 @@
 import { HttpParams } from '@angular/common/http';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { faCircleCheck, faSave, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
@@ -9,7 +9,7 @@ import { ToastrService } from 'ngx-toastr';
   templateUrl: './for-validation.component.html',
   styleUrls: ['./for-validation.component.scss']
 })
-export class ForValidationComponent implements OnInit {
+export class ForValidationComponent {
   @Output() showReturn = new EventEmitter<any>();
   @Output() addSaving = new EventEmitter<any>();
   @Output() loadList = new EventEmitter<any>();
@@ -39,7 +39,6 @@ export class ForValidationComponent implements OnInit {
 
     this.http.get('konsulta/validate-report', {params}).subscribe({
       next: (data: any) => {
-        console.log(data);
         this.processReturn(data, save, kon)
       },
       error: err => console.log(err)
@@ -47,7 +46,6 @@ export class ForValidationComponent implements OnInit {
   }
 
   processReturn(data, save, kon){
-    console.log(data)
     if(data){
       if(data.errors) {
         this.toastr.error('Record error','Error')
@@ -83,8 +81,4 @@ export class ForValidationComponent implements OnInit {
     private http: HttpService,
     private toastr: ToastrService
   ) { }
-
-  ngOnInit(): void {
-  }
-
 }

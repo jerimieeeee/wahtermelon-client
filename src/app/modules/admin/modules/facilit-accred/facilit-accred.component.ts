@@ -38,7 +38,6 @@ export class FacilitAccredComponent implements OnInit {
 
     this.http.post('extract url', {params}).subscribe({
       next: (data: any) => {
-        console.log(data);
         this.loadList();
       },
       error: err => console.log(err)
@@ -73,7 +72,6 @@ export class FacilitAccredComponent implements OnInit {
     this.http.get('settings/philhealth-credentials', params).subscribe({
       next: (data: any) => {
         this.accred_list = data.data
-        console.log(data.data)
 
         this.current_page = data.meta.current_page;
         this.last_page = data.meta.last_page;
@@ -92,12 +90,8 @@ export class FacilitAccredComponent implements OnInit {
     if (page) params['params']['page'] = page;
     params['params']['per_page'] = this.per_page;
 
-    console.log(params)
     this.http.get('users',params).subscribe({
       next: (data: any) => {
-        console.log(data.data);
-        // this.account_list = data.data;
-
         this.current_page = data.meta.current_page;
         this.last_page = data.meta.last_page;
         this.from = data.meta.from;

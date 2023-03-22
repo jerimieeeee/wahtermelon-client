@@ -1,79 +1,276 @@
 <div class="grid grid-cols-1 w-full">
   <div class="flex justify-between w-full text-blue-500 font-semibold text-lg  p-3">
-    FHSIS 2018 Report - Maternal Care
+    FHSIS 2018 Report - Child Care
   </div>
-  <div class="w-full text-sm p-5 select-none">
-    
-    <div class="grid grid-cols-6 rounded-lg">
-      <div class="border border-gray-900">logo here</div>
-      <div class="border border-gray-900 col-span-4 h-32">Text here</div>
-      <div class="border border-gray-900">M1</div>
+  <div class="flex flex-col pb-5">
+    <div class="sm:-mx-6 lg:-mx-8">
+      <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
+        <div class="">
+          <table class="min-w-full border select-none">
+            <thead class="border-b">
+              <tr>
+                <th scope="col" colspan="1" class="text-sm font-medium text-gray-900 px-6 py-4 border">
+                  <img src="./assets/img/DOH_Logo.png" class="rounded-full w-28 h-28 mx-auto" />
+                </th>
+                <th scope="col" colspan="5" class="text-sm font-medium text-gray-900 px-6 py-4 border">
+                  Details
+                </th>
+                <th scope="col" colspan="4" class="text-sm font-medium text-gray-900 px-6 py-4 border">
+                  Date
+                </th>
+                <th scope="col" colspan="2" class="text-sm font-medium text-gray-900 px-6 py-4 border">
+                  M1 Barangay
+                </th>
+              </tr>
+              <tr>
+                <th scope="col" colspan="12" class="text-xs font-semibold text-gray-900 px-6 py-4 border">
+                  Section B. Maternal Care and Services
+                </th>
+              </tr>
+              <tr class="text-center sticky top-0 bg-gray-200">
+                <th scope="col" rowspan="2" class="text-sm font-semibold text-gray-900 px-6 py-4 border-r">
+                  Indicator
+                  <br /><span class="text-xs">(Col. 1)</span>
+                </th>
+                <th scope="col" colspan="3" class="text-sm font-semibold text-gray-900 px-6 py-4 border-r">
+                  Age
+                  <br /><span class="text-xs">(Col. 2)</span>
+                </th>
+                <th scope="col" rowspan="2" class="text-sm font-semibold text-gray-900 px-6 py-4 border-r">
+                  Total
+                  <br /><span class="text-xs">(Col. 3)</span>
+                </th>
+                <th scope="col" rowspan="2" class="text-sm font-semibold text-gray-900 px-6 py-4 border-r">
+                  Remarks
+                  <br /><span class="text-xs">(Col. 4)</span>
+                </th>
+                <th scope="col" rowspan="2" class="text-sm font-semibold text-gray-900 px-6 py-4 border-r">
+                  Indicators
+                  <br /><span class="text-xs">(Col. 1)</span>
+                </th>
+                <th scope="col" colspan="3" class="text-sm font-semibold text-gray-900 px-6 py-4 border-r">
+                  Age
+                  <br /><span class="text-xs">(Col. 2)</span>
+                </th>
+                <th scope="col" rowspan="2" class="text-sm font-semibold text-gray-900 px-6 py-4 border-r">
+                  Total
+                  <br /><span rowspan="2" class="text-xs">(Col. 3)</span>
+                </th>
+                <th scope="col" rowspan="2" class="text-sm font-semibold text-gray-900 px-6 py-4 border-r">
+                  Remarks
+                  <br /><span class="text-xs">(Col. 4)</span>
+                </th>
+              </tr>
+              <tr class="text-center sticky top-0 bg-gray-200">
+                <th scope="col" class="text-sm font-semibold text-gray-900 px-6 py-4 border-r">
+                  10-14
+                </th>
+                <th scope="col" class="text-sm font-semibold text-gray-900 px-6 py-4 border-r">
+                  15-19
+                </th>
+                <th scope="col" class="text-sm font-semibold text-gray-900 px-6 py-4 border-r">
+                  20-49
+                </th>
+                <th scope="col" class="text-sm font-semibold text-gray-900 px-6 py-4 border-r">
+                  10-14
+                </th>
+                <th scope="col" class="text-sm font-semibold text-gray-900 px-6 py-4 border-r">
+                  15-19
+                </th>
+                <th scope="col" class="text-sm font-semibold text-gray-900 px-6 py-4 border-r">
+                  20-49
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="col" colspan="12" class="text-xs font-semibold text-left text-gray-900 px-6 py-4 border bg-gray-100">
+                  B1. Prenatal Care
+                </th>
+              </tr>
 
-      <div class="col-span-6 grid grid-cols-6"> <!-- HEADERS STARTS HERE -->
-        <div class="border border-gray-900 col-span-6 bg-gray-400 text-center ">
-          Section B. Maternal Care Services
+              <tr class="border text-sm">
+                <td class="p-5 border">1. No. of pregnant women w/ at least 4 prenatal check-ups - Total</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.Prenatal_give_birth_10_14?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.Prenatal_give_birth_10_14)">{{ stats?.Prenatal_give_birth_10_14?.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.Prenatal_give_birth_15_19?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.Prenatal_give_birth_15_19)">{{ stats?.Prenatal_give_birth_15_19?.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.Prenatal_give_birth_20_49?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.Prenatal_give_birth_20_49)">{{ stats?.Prenatal_give_birth_20_49?.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.Prenatal_give_birth_10_14?.length !==0 || stats?.Prenatal_give_birth_15_19?.length !==0  || stats?.Prenatal_give_birth_20_49?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.Prenatal_give_birth_10_14, stats?.Prenatal_give_birth_15_19, stats?.Prenatal_give_birth_20_49)">{{ stats?.Prenatal_give_birth_10_14?.length +  stats?.Prenatal_give_birth_15_19?.length +  stats?.Prenatal_give_birth_20_49?.length}}</td>
+                <td class="p-5 border"></td>
+
+                <td class="p-5 border">7. No. of pregnant women given iodine capsules - Total</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.pregnant_with_2_iodine_capsule_10_14?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.pregnant_with_2_iodine_capsule_10_14)">{{ stats?.pregnant_with_2_iodine_capsule_10_14?.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.pregnant_with_2_iodine_capsule_15_19?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.pregnant_with_2_iodine_capsule_15_19)">{{ stats?.pregnant_with_2_iodine_capsule_15_19?.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.pregnant_with_2_iodine_capsule_20_49?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.pregnant_with_2_iodine_capsule_20_49)">{{ stats?.pregnant_with_2_iodine_capsule_20_49?.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.pregnant_with_2_iodine_capsule_10_14?.length !==0 || stats?.pregnant_with_2_iodine_capsule_15_19?.length !==0 || stats?.pregnant_with_2_iodine_capsule_20_49?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.pregnant_with_2_iodine_capsule_10_14, stats?.pregnant_with_2_iodine_capsule_15_19, stats?.pregnant_with_2_iodine_capsule_20_49)">{{ stats?.pregnant_with_2_iodine_capsule_10_14?.length + stats?.pregnant_with_2_iodine_capsule_15_19?.length + stats?.pregnant_with_2_iodine_capsule_20_49?.length }}</td>
+                <td class="p-5 border"></td>
+              </tr>
+
+              <tr class="border text-sm">
+                <td class="p-5 border">2. No. of pregnant women assessed of their nutritional status during the 1st tri. - Total</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.prenatal_assessed_10_14?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.prenatal_assessed_10_14)">{{ stats?.prenatal_assessed_10_14?.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.prenatal_assessed_15_19?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.prenatal_assessed_15_19)">{{ stats?.prenatal_assessed_15_19?.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.prenatal_assessed_20_49?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.prenatal_assessed_20_49)">{{ stats?.prenatal_assessed_20_49?.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.prenatal_assessed_10_14?.length !==0 || stats?.prenatal_assessed_15_19?.length !==0  || stats?.prenatal_assessed_20_49?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.prenatal_assessed_10_14, stats?.prenatal_assessed_15_19, stats?.prenatal_assessed_20_49)">{{ stats?.prenatal_assessed_10_14?.length +  stats?.prenatal_assessed_15_19?.length +  stats?.prenatal_assessed_20_49?.length}}</td>
+                <td class="p-5 border"></td>
+
+                <td class="p-5 border">8. No. of pregnant women given one dose deworming tablet - Total</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.pregnant_with_1_deworming_10_14?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.pregnant_with_1_deworming_10_14)">{{ stats?.pregnant_with_1_deworming_10_14?.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.pregnant_with_1_deworming_15_19?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.pregnant_with_1_deworming_15_19)">{{ stats?.pregnant_with_1_deworming_15_19?.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.pregnant_with_1_deworming_20_49?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.pregnant_with_1_deworming_20_49)">{{ stats?.pregnant_with_1_deworming_20_49?.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.pregnant_with_1_deworming_10_14?.length !==0 || stats?.pregnant_with_1_deworming_15_19?.length !==0 || stats?.pregnant_with_1_deworming_20_49?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.pregnant_with_1_deworming_10_14, stats?.pregnant_with_1_deworming_15_19, stats?.pregnant_with_1_deworming_20_49)">{{ stats?.pregnant_with_1_deworming_10_14?.length + stats?.pregnant_with_1_deworming_15_19?.length + stats?.pregnant_with_1_deworming_20_49?.length }}</td>
+                <td class="p-5 border"></td>
+              </tr>
+
+              <tr class="border text-sm">
+                <td class="p-5 border">a. Number of pregnant women seen in the first trimester who have normal BMI - Total</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.prenatal_normal_bmi_10_14?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.prenatal_normal_bmi_10_14)">{{ stats?.prenatal_normal_bmi_10_14?.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.prenatal_normal_bmi_15_19?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.prenatal_normal_bmi_15_19)">{{ stats?.prenatal_normal_bmi_15_19?.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.prenatal_normal_bmi_20_49?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.prenatal_normal_bmi_20_49)">{{ stats?.prenatal_normal_bmi_20_49?.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.prenatal_normal_bmi_10_14?.length !==0 || stats?.prenatal_normal_bmi_15_19?.length !==0  || stats?.prenatal_normal_bmi_20_49?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.prenatal_normal_bmi_10_14, stats?.prenatal_normal_bmi_15_19, stats?.prenatal_normal_bmi_20_49)">{{ stats?.prenatal_normal_bmi_10_14?.length +  stats?.prenatal_normal_bmi_15_19?.length +  stats?.prenatal_normal_bmi_20_49?.length}}</td>
+                <td class="p-5 border"></td>
+
+                <td class="p-5 border">9. No. of pregnant women screened for syphillis- Total</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.pregnant_screened_syphilis_10_14?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.pregnant_screened_syphilis_10_14)">{{ stats?.pregnant_screened_syphilis_10_14?.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.pregnant_screened_syphilis_15_19?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.pregnant_screened_syphilis_15_19)">{{ stats?.pregnant_screened_syphilis_15_19?.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.pregnant_screened_syphilis_20_49?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.pregnant_screened_syphilis_20_49)">{{ stats?.pregnant_screened_syphilis_20_49?.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.pregnant_screened_syphilis_10_14?.length !==0 || stats?.pregnant_screened_syphilis_15_19?.length !==0 || stats?.pregnant_screened_syphilis_20_49?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.pregnant_screened_syphilis_10_14, stats?.pregnant_screened_syphilis_15_19, stats?.pregnant_screened_syphilis_20_49)">{{ stats?.pregnant_screened_syphilis_10_14?.length + stats?.pregnant_screened_syphilis_15_19?.length + stats?.pregnant_screened_syphilis_20_49?.length }}</td>
+                <td class="p-5 border"></td>
+              </tr>
+
+              <tr class="border text-sm">
+                <td class="p-5 border">b. No. of pregnant women seen in the first trimester who have low BMI - Total</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.prenatal_low_bmi_10_14?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.prenatal_low_bmi_10_14)">{{ stats?.prenatal_low_bmi_10_14?.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.prenatal_low_bmi_15_19?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.prenatal_low_bmi_15_19)">{{ stats?.prenatal_low_bmi_15_19?.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.prenatal_low_bmi_20_49?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.prenatal_low_bmi_20_49)">{{ stats?.prenatal_low_bmi_20_49?.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.prenatal_low_bmi_10_14?.length !==0 || stats?.prenatal_low_bmi_15_19?.length !==0  || stats?.prenatal_low_bmi_20_49?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.prenatal_low_bmi_10_14, stats?.prenatal_low_bmi_15_19, stats?.prenatal_low_bmi_20_49)">{{ stats?.prenatal_low_bmi_10_14?.length +  stats?.prenatal_low_bmi_15_19?.length +  stats?.prenatal_low_bmi_20_49?.length}}</td>
+                <td class="p-5 border"></td>
+
+                <td class="p-5 border">10. No. of pregnant women tested positive for syphillis- Total</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.pregnant_screened_syphilis_positive_10_14?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.pregnant_screened_syphilis_positive_10_14)">{{ stats?.pregnant_screened_syphilis_positive_10_14?.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.pregnant_screened_syphilis_positive_15_19?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.pregnant_screened_syphilis_positive_15_19)">{{ stats?.pregnant_screened_syphilis_positive_15_19?.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.pregnant_screened_syphilis_positive_20_49?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.pregnant_screened_syphilis_positive_20_49)">{{ stats?.pregnant_screened_syphilis_positive_20_49?.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.pregnant_screened_syphilis_positive_10_14?.length !==0 || stats?.pregnant_screened_syphilis_positive_15_19?.length !==0 || stats?.pregnant_screened_syphilis_positive_20_49?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.pregnant_screened_syphilis_positive_10_14, stats?.pregnant_screened_syphilis_positive_15_19, stats?.pregnant_screened_syphilis_positive_20_49)">{{ stats?.pregnant_screened_syphilis_positive_10_14?.length + stats?.pregnant_screened_syphilis_positive_15_19?.length + stats?.pregnant_screened_syphilis_positive_20_49?.length }}</td>
+                <td class="p-5 border"></td>
+              </tr>
+
+              <tr class="border text-sm">
+                <td class="p-5 border">c. No. of pregnant women seen in the first trimester who have high BMI - Total</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.prenatal_high_bmi_10_14?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.prenatal_high_bmi_10_14)">{{ stats?.prenatal_high_bmi_10_14?.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.prenatal_high_bmi_15_19?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.prenatal_high_bmi_15_19)">{{ stats?.prenatal_high_bmi_15_19?.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.prenatal_high_bmi_20_49?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.prenatal_high_bmi_20_49)">{{ stats?.prenatal_high_bmi_20_49?.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.prenatal_high_bmi_10_14?.length !==0 || stats?.prenatal_high_bmi_15_19?.length !==0  || stats?.prenatal_high_bmi_20_49?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.prenatal_high_bmi_10_14, stats?.prenatal_high_bmi_15_19, stats?.prenatal_high_bmi_20_49)">{{ stats?.prenatal_high_bmi_10_14?.length +  stats?.prenatal_high_bmi_15_19?.length +  stats?.prenatal_high_bmi_20_49?.length}}</td>
+                <td class="p-5 border"></td>
+
+                <td class="p-5 border">11. No. of pregnant women screened for Hepatitis B- Total</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.pregnant_screened_hepatitis_10_14?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.pregnant_screened_hepatitis_10_14)">{{ stats?.pregnant_screened_hepatitis_10_14?.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.pregnant_screened_hepatitis_15_19?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.pregnant_screened_hepatitis_15_19)">{{ stats?.pregnant_screened_hepatitis_15_19?.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.pregnant_screened_hepatitis_20_49?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.pregnant_screened_hepatitis_20_49)">{{ stats?.pregnant_screened_hepatitis_20_49?.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.pregnant_screened_hepatitis_10_14?.length !==0 || stats?.pregnant_screened_hepatitis_15_19?.length !==0 || stats?.pregnant_screened_hepatitis_20_49?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.pregnant_screened_hepatitis_10_14, stats?.pregnant_screened_hepatitis_15_19, stats?.pregnant_screened_hepatitis_20_49)">{{ stats?.pregnant_screened_hepatitis_10_14?.length + stats?.pregnant_screened_hepatitis_15_19?.length + stats?.pregnant_screened_hepatitis_20_49?.length }}</td>
+                <td class="p-5 border"></td>
+              </tr>
+
+              <tr class="border text-sm">
+                <td class="p-5 border">3. No. of pregnant women for the first time given 2 doses of Td vaccination - Total</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.pregnant_2_TD_vaccine_10_14?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.pregnant_2_TD_vaccine_10_14)">{{ stats?.pregnant_2_TD_vaccine_10_14?.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.pregnant_2_TD_vaccine_15_19?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.pregnant_2_TD_vaccine_15_19)">{{ stats?.pregnant_2_TD_vaccine_15_19?.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.pregnant_2_TD_vaccine_20_49?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.pregnant_2_TD_vaccine_20_49)">{{ stats?.pregnant_2_TD_vaccine_20_49?.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.pregnant_2_TD_vaccine_10_14?.length !==0 || stats?.pregnant_2_TD_vaccine_15_19?.length !==0  || stats?.pregnant_2_TD_vaccine_20_49?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.pregnant_2_TD_vaccine_10_14, stats?.pregnant_2_TD_vaccine_15_19, stats?.pregnant_2_TD_vaccine_20_49)">{{ stats?.pregnant_2_TD_vaccine_10_14?.length +  stats?.pregnant_2_TD_vaccine_15_19?.length +  stats?.pregnant_2_TD_vaccine_20_49?.length}}</td>
+                <td class="p-5 border"></td>
+
+                <td class="p-5 border">12. No. of pregnant women tested positive for Hepatitis B- Total</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.pregnant_screened_hepatitis_positive_10_14?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.pregnant_screened_hepatitis_positive_10_14)">{{ stats?.pregnant_screened_hepatitis_positive_10_14?.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.pregnant_screened_hepatitis_positive_15_19?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.pregnant_screened_hepatitis_positive_15_19)">{{ stats?.pregnant_screened_hepatitis_positive_15_19?.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.pregnant_screened_hepatitis_positive_20_49?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.pregnant_screened_hepatitis_positive_20_49)">{{ stats?.pregnant_screened_hepatitis_positive_20_49?.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.pregnant_screened_hepatitis_positive_10_14?.length !==0 || stats?.pregnant_screened_hepatitis_positive_15_19?.length !==0 || stats?.pregnant_screened_hepatitis_positive_20_49?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.pregnant_screened_hepatitis_positive_10_14, stats?.pregnant_screened_hepatitis_positive_15_19, stats?.pregnant_screened_hepatitis_positive_20_49)">{{ stats?.pregnant_screened_hepatitis_positive_10_14?.length + stats?.pregnant_screened_hepatitis_positive_15_19?.length + stats?.pregnant_screened_hepatitis_positive_20_49?.length }}</td>
+                <td class="p-5 border"></td>
+              </tr>
+
+              <tr class="border text-sm">
+                <td class="p-5 border">4. No. of pregnant women for the 2nd or more times given atleast 3 doses of Td vaccination (Td2 Plus) - Total</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.pregnant_3_TD_vaccine_10_14?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.pregnant_3_TD_vaccine_10_14)">{{ stats?.pregnant_3_TD_vaccine_10_14?.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.pregnant_3_TD_vaccine_15_19?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.pregnant_3_TD_vaccine_15_19)">{{ stats?.pregnant_3_TD_vaccine_15_19?.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.pregnant_3_TD_vaccine_20_49?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.pregnant_3_TD_vaccine_20_49)">{{ stats?.pregnant_3_TD_vaccine_20_49?.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.pregnant_3_TD_vaccine_10_14?.length !==0 || stats?.pregnant_3_TD_vaccine_15_19?.length !==0  || stats?.pregnant_3_TD_vaccine_20_49?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.pregnant_3_TD_vaccine_10_14, stats?.pregnant_3_TD_vaccine_15_19, stats?.pregnant_3_TD_vaccine_20_49)">{{ stats?.pregnant_3_TD_vaccine_10_14?.length +  stats?.pregnant_3_TD_vaccine_15_19?.length +  stats?.pregnant_3_TD_vaccine_20_49?.length}}</td>
+                <td class="p-5 border"></td>
+
+                <td class="p-5 border">13. No. of pregnant women screened for HIV - Total</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.pregnant_screened_hiv_10_14?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.pregnant_screened_hiv_10_14)">{{ stats?.pregnant_screened_hiv_10_14?.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.pregnant_screened_hiv_15_19?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.pregnant_screened_hiv_15_19)">{{ stats?.pregnant_screened_hiv_15_19?.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.pregnant_screened_hiv_20_49?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.pregnant_screened_hiv_20_49)">{{ stats?.pregnant_screened_hiv_20_49?.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.pregnant_screened_hiv_10_14?.length !==0 || stats?.pregnant_screened_hiv_15_19?.length !==0 || stats?.pregnant_screened_hiv_20_49?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.pregnant_screened_hiv_10_14, stats?.pregnant_screened_hiv_15_19, stats?.pregnant_screened_hiv_20_49)">{{ stats?.pregnant_screened_hiv_10_14?.length + stats?.pregnant_screened_hiv_15_19?.length + stats?.pregnant_screened_hiv_20_49?.length }}</td>
+                <td class="p-5 border"></td>
+              </tr>
+
+              <tr class="border text-sm">
+                <td class="p-5 border">5. No. of pregnant women who completed the dose of iron with folic acid supplementation - Total</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.pregnant_with_180_iron_folic_10_14?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.pregnant_with_180_iron_folic_10_14)">{{ stats?.pregnant_with_180_iron_folic_10_14?.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.pregnant_with_180_iron_folic_15_19?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.pregnant_with_180_iron_folic_15_19)">{{ stats?.pregnant_with_180_iron_folic_15_19?.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.pregnant_with_180_iron_folic_20_49?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.pregnant_with_180_iron_folic_20_49)">{{ stats?.pregnant_with_180_iron_folic_20_49?.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.pregnant_with_180_iron_folic_10_14?.length !==0 || stats?.pregnant_with_180_iron_folic_15_19?.length !==0  || stats?.pregnant_with_180_iron_folic_20_49?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.pregnant_with_180_iron_folic_10_14, stats?.pregnant_with_180_iron_folic_15_19, stats?.pregnant_with_180_iron_folic_20_49)">{{ stats?.pregnant_with_180_iron_folic_10_14?.length +  stats?.pregnant_with_180_iron_folic_15_19?.length +  stats?.pregnant_with_180_iron_folic_20_49?.length}}</td>
+                <td class="p-5 border"></td>
+
+                <td class="p-5 border">14. No. of pregnant women tested for CBC or Hgb&Hct count - Total</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.pregnant_screened_cbc_10_14?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.pregnant_screened_cbc_10_14)">{{ stats?.pregnant_screened_cbc_10_14?.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.pregnant_screened_cbc_15_19?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.pregnant_screened_cbc_15_19)">{{ stats?.pregnant_screened_cbc_15_19?.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.pregnant_screened_cbc_20_49?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.pregnant_screened_cbc_20_49)">{{ stats?.pregnant_screened_cbc_20_49?.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.pregnant_screened_cbc_10_14?.length !==0 || stats?.pregnant_screened_cbc_15_19?.length !==0 || stats?.pregnant_screened_cbc_20_49?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.pregnant_screened_cbc_10_14, stats?.pregnant_screened_cbc_15_19, stats?.pregnant_screened_cbc_20_49)">{{ stats?.pregnant_screened_cbc_10_14?.length + stats?.pregnant_screened_cbc_15_19?.length + stats?.pregnant_screened_cbc_20_49?.length }}</td>
+                <td class="p-5 border"></td>
+              </tr>
+
+              <tr class="border text-sm">
+                <td class="p-5 border">6. No. of pregnant women who completed doses of calcium carbonate supplementation- Total</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.pregnant_with_420_calcium_carbonate_10_14?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.pregnant_with_420_calcium_carbonate_10_14)">{{ stats?.pregnant_with_420_calcium_carbonate_10_14?.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.pregnant_with_420_calcium_carbonate_15_19?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.pregnant_with_420_calcium_carbonate_15_19)">{{ stats?.pregnant_with_420_calcium_carbonate_15_19?.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.pregnant_with_420_calcium_carbonate_20_49?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.pregnant_with_420_calcium_carbonate_20_49)">{{ stats?.pregnant_with_420_calcium_carbonate_20_49?.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.pregnant_with_420_calcium_carbonate_10_14?.length !==0 || stats?.pregnant_with_420_calcium_carbonate_15_19?.length !==0  || stats?.pregnant_with_420_calcium_carbonate_20_49?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.pregnant_with_420_calcium_carbonate_10_14, stats?.pregnant_with_420_calcium_carbonate_15_19, stats?.pregnant_with_420_calcium_carbonate_20_49)">{{ stats?.pregnant_with_420_calcium_carbonate_10_14?.length +  stats?.pregnant_with_420_calcium_carbonate_15_19?.length +  stats?.pregnant_with_420_calcium_carbonate_20_49?.length}}</td>
+                <td class="p-5 border"></td>
+
+                <td class="p-5 border">15. No. of pregnant women tested for CBC or Hgb&Hct count diagnosed with anemia - Total</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.pregnant_screened_cbc_positive_10_14?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.pregnant_screened_cbc_positive_10_14)">{{ stats?.pregnant_screened_cbc_positive_10_14?.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.pregnant_screened_cbc_positive_15_19?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.pregnant_screened_cbc_positive_15_19)">{{ stats?.pregnant_screened_cbc_positive_15_19?.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.pregnant_screened_cbc_positive_20_49?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.pregnant_screened_cbc_positive_20_49)">{{ stats?.pregnant_screened_cbc_positive_20_49?.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.pregnant_screened_cbc_positive_10_14?.length !==0 || stats?.pregnant_screened_cbc_positive_15_19?.length !==0 || stats?.pregnant_screened_cbc_positive_20_49?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.pregnant_screened_cbc_positive_10_14, stats?.pregnant_screened_cbc_positive_15_19, stats?.pregnant_screened_cbc_positive_20_49)">{{ stats?.pregnant_screened_cbc_positive_10_14?.length + stats?.pregnant_screened_cbc_positive_15_19?.length + stats?.pregnant_screened_cbc_positive_20_49?.length }}</td>
+                <td class="p-5 border"></td>
+              </tr>
+
+              <tr class="border text-sm">
+                <td class="p-5 border" colspan="6"></td>
+
+                <td class="p-5 border">16. No. of pregnant women screened for gestational diabetes - Total</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.pregnant_screened_gastro_diabetes_10_14?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.pregnant_screened_gastro_diabetes_10_14)">{{ stats?.pregnant_screened_gastro_diabetes_10_14?.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.pregnant_screened_gastro_diabetes_15_19?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.pregnant_screened_gastro_diabetes_15_19)">{{ stats?.pregnant_screened_gastro_diabetes_15_19?.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.pregnant_screened_gastro_diabetes_20_49?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.pregnant_screened_gastro_diabetes_20_49)">{{ stats?.pregnant_screened_gastro_diabetes_20_49?.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.pregnant_screened_gastro_diabetes_10_14?.length !==0 || stats?.pregnant_screened_gastro_diabetes_15_19?.length !==0 || stats?.pregnant_screened_gastro_diabetes_20_49?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.pregnant_screened_gastro_diabetes_10_14, stats?.pregnant_screened_gastro_diabetes_15_19, stats?.pregnant_screened_gastro_diabetes_20_49)">{{ stats?.pregnant_screened_gastro_diabetes_10_14?.length + stats?.pregnant_screened_gastro_diabetes_15_19?.length + stats?.pregnant_screened_gastro_diabetes_20_49?.length }}</td>
+                <td class="p-5 border"></td>
+              </tr>
+
+              <tr class="border text-sm">
+                <td class="p-5 border" colspan="6"></td>
+
+                <td class="p-5 border">17. No. of pregnant women tested positive for gestational diabetes - Total</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.pregnant_screened_gastro_diabetes_positive_10_14?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.pregnant_screened_gastro_diabetes_positive_10_14)">{{ stats?.pregnant_screened_gastro_diabetes_positive_10_14?.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.pregnant_screened_gastro_diabetes_positive_15_19?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.pregnant_screened_gastro_diabetes_positive_15_19)">{{ stats?.pregnant_screened_gastro_diabetes_positive_15_19?.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.pregnant_screened_gastro_diabetes_positive_20_49?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.pregnant_screened_gastro_diabetes_positive_20_49)">{{ stats?.pregnant_screened_gastro_diabetes_positive_20_49?.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.pregnant_screened_gastro_diabetes_positive_10_14?.length !==0 || stats?.pregnant_screened_gastro_diabetes_positive_15_19?.length !==0 || stats?.pregnant_screened_gastro_diabetes_positive_20_49?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.pregnant_screened_gastro_diabetes_positive_10_14, stats?.pregnant_screened_gastro_diabetes_positive_15_19, stats?.pregnant_screened_gastro_diabetes_positive_20_49)">{{ stats?.pregnant_screened_gastro_diabetes_positive_10_14?.length + stats?.pregnant_screened_gastro_diabetes_positive_15_19?.length + stats?.pregnant_screened_gastro_diabetes_positive_20_49?.length }}</td>
+                <td class="p-5 border"></td>
+              </tr>
+
+              <tr>
+                <th scope="col" colspan="6" class="text-xs font-semibold text-left text-gray-900 px-6 py-4 border bg-gray-50">
+                  B2. Intrapartum Care and Delivery Outcome
+                </th>
+                <th scope="col" colspan="6" class="text-xs font-semibold text-left text-gray-900 px-6 py-4 border bg-gray-50">
+                  B3. Postpartum and Newborn Care
+                </th>
+              </tr>
+
+            </tbody>
+          </table>
         </div>
-
-        <div class="col-span-3 text-center grid grid-rows-3 grid-cols-12">
-          <div class="border border-gray-900 col-span-4 row-span-3"><h1>Indicators</h1><p>(Col. 1)</p></div>
-  
-          <div class="border border-gray-900 col-start-5 col-span-3 row-span-2"><h1>Age</h1><p>(Col. 2)</p></div>
-          <div class="border border-gray-900 col-start-5">10-14</div>
-          <div class="border border-gray-900">15-19</div>
-          <div class="border border-gray-900">20-49</div>
-  
-          <div class="border border-gray-900 col-span-2 col-start-8 row-start-1 row-span-3"><h1>Total</h1><p>(Col. 3)</p></div>
-  
-          <div class="border border-gray-900 col-span-3 col-start-10 row-start-1 row-span-3"><h1>Remarks</h1><p>(Col. 4)</p></div>
-        </div>
-  
-        <div class="col-span-3 text-center grid grid-rows-3 grid-cols-12">
-          <div class="border border-gray-900 col-span-4 row-span-3"><h1>Indicators</h1><p>(Col. 1)</p></div>
-  
-          <div class="border border-gray-900 col-start-5 col-span-3 row-span-2"><h1>Age</h1><p>(Col. 2)</p></div>
-          <div class="border border-gray-900 col-start-5">10-14</div>
-          <div class="border border-gray-900">15-19</div>
-          <div class="border border-gray-900">20-49</div>
-  
-          <div class="border border-gray-900 col-span-2 col-start-8 row-start-1 row-span-3"><h1>Total</h1><p>(Col. 3)</p></div>
-  
-          <div class="border border-gray-900 col-span-3 col-start-10 row-start-1 row-span-3"><h1>Remarks</h1><p>(Col. 4)</p></div>
-        </div>
-      </div>  <!-- HEADERS ENDS HERE -->
-
-      <div class="col-span-6 grid grid-cols-6">  <!-- LOOP TABLE STARTS HERE -->
-        
-        <div class="border border-gray-900 col-span-6 bg-gray-400 pl-2"> 
-          B1. Prenatal Care <!-- SECTION TITLE HERE -->
-        </div>
-
-        <div class="col-span-3 text-center grid grid-cols-12">  <!-- LOOP LEFT INDICATORS STARTS HERE -->
-          <div class="border border-gray-900 col-span-4 row-span-3 text-left pl-3">Indicators</div>  <!-- Indicator -->
-
-          <div class="border border-gray-900">0</div> <!-- 10-14 -->
-          <div class="border border-gray-900">0</div> <!-- 15-19 -->
-          <div class="border border-gray-900">0</div> <!-- 20-49 -->
-
-          <div class="border border-gray-900 col-span-2">0</div> <!-- Total -->
-
-          <div class="border border-gray-900 col-span-3"></div> <!-- REMARKS -->
-        </div> <!-- LOOP LEFT INDICATORS ENDS HERE -->
-
-        <div class="col-span-3 text-center grid grid-cols-12">  <!-- LOOP RIGHT INDICATORS STARTS HERE -->
-          <div class="border border-gray-900 col-span-4 row-span-3 text-left pl-3">Indicators</div>  <!-- Indicator -->
-
-          <div class="border border-gray-900">0</div> <!-- 10-14 -->
-          <div class="border border-gray-900">0</div> <!-- 15-19 -->
-          <div class="border border-gray-900">0</div> <!-- 20-49 -->
-
-          <div class="border border-gray-900 col-span-2">0</div> <!-- Total -->
-
-          <div class="border border-gray-900 col-span-3"></div> <!-- REMARKS -->
-        </div> <!-- LOOP RIGHT INDICATORS ENDS HERE -->
-      </div> <!-- LOOP TABLE ENDS HERE -->
-
-      
+      </div>
     </div>
-
   </div>
-</div> 
+</div>
+
+
+<app-name-list *ngIf="openList" (toggleModal)="toggleModal()" [name_list]="name_list"></app-name-list>

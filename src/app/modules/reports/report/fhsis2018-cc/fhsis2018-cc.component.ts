@@ -1,5 +1,7 @@
 import { Component, Input, OnChanges } from '@angular/core';
-import { HttpService } from 'app/shared/services/http.service';
+import { faCircleNotch, faFileExcel, faFilePdf } from '@fortawesome/free-solid-svg-icons';
+import { options } from 'app/modules/patient-registration/patient-registration.module';
+import { ExportAsConfig, ExportAsService } from 'ngx-export-as';
 
 @Component({
   selector: 'app-fhsis2018-cc',
@@ -8,52 +10,50 @@ import { HttpService } from 'app/shared/services/http.service';
 })
 
 export class Fhsis2018CcComponent implements OnChanges {
-  @Input() report_params;
+  @Input() report_data;
+
+  faCircleNotch = faCircleNotch;
+  faFileExcel = faFileExcel;
+  faFilePdf = faFilePdf;
 
   stats : any;
-  showForm: boolean = false;
   name_list: any = [];
 
-  constructor(
-    private http: HttpService
-  ) { }
+  exportAsExcel: ExportAsConfig = {
+    type: 'xlsx',
+    elementIdOrContent: 'reportForm'
+  }
 
-  generateReport() {
-    this.report_params;
-    if(this.report_params){
-      let params = {
-        year: this.report_params.year,
-        month: this.report_params.month
-      };
-
-      if(this.report_params.report_class === 'muncity') {
-        let user = this.http.getUserFacility();
-        this.http.get('libraries/facilities', {params:{'filter[code]': user}}).subscribe({
-          next: (data: any) => {
-            // console.log(data.data)
-            params['municipality_code'] = data.data[0].municipality.code;
-            this.getReport(params)
-          },
-          error: err => console.log(err)
-        })
-      } else {
-        this.getReport(params);
+  exportAsPdf: ExportAsConfig = {
+    type: 'pdf',
+    elementIdOrContent: 'reportForm',
+    options: {
+      image: { type: 'jpeg', quality: 1 },
+      jsPDF: {
+        orientation: 'landscape',
+        format: 'a4',
+        precision: 16
       }
     }
   }
 
-  getReport(params){
-    this.http.get('reports-2018/child-care/m1', {params})
-    .subscribe({
-      next: (data: any) => {
-        this.stats = data;
-        this.showForm = true;
-
-        console.log(this.stats, 'cc reports');
-      },
-      error: err => console.log(err)
+  exportX() {
+    this.exportAsService.save(this.exportAsExcel, 'test').subscribe(() => {
+      // save started
     });
   }
+
+  pdf_exported: boolean = false;
+  exportP() {
+    this.pdf_exported = true;
+    this.exportAsService.save(this.exportAsPdf, 'test').subscribe(() => {
+      // save started
+    });
+  }
+
+  constructor(
+    private exportAsService: ExportAsService
+  ) { }
 
   openList:boolean = false;
   toggleModal(name_list, name_list2?){
@@ -64,12 +64,13 @@ export class Fhsis2018CcComponent implements OnChanges {
       list = name_list
     }
 
-    console.log(typeof name_list)
+    // console.log(typeof name_list)
     this.name_list = list;
     this.openList = !this.openList;
   }
 
   ngOnChanges(): void {
-    this.generateReport();
+    this.stats = this.report_data;
+    this.pdf_exported = false;
   }
 }

@@ -1,12 +1,21 @@
-<div class="grid grid-cols-1 w-full" *ngIf="showForm">
-  <div class="flex justify-between w-full text-blue-500 font-semibold text-lg  p-3">
-    FHSIS 2018 Report - Child Care
+<div class="grid grid-cols-1 w-full">
+  <div class="flex justify-between w-full text-blue-500 font-semibold text-lg  p-3" >
+    <span>FHSIS 2018 Report - Child Care</span>
+    <span>
+      <!-- <fa-icon *ngIf="exporting" [icon]="faCircleNotch" spin="true" class="text-blue-500 text-sm mr-3">Exporting...</fa-icon> -->
+      <button [disabled]="pdf_exported" type="button" class="text-2xl mr-5 text-red-600 disabled:text-gray-600" (click)="exportP()">
+        <fa-icon [icon]="faFilePdf"></fa-icon>
+      </button>
+      <button  type="button" class="text-2xl" (click)="exportX()">
+        <fa-icon [icon]="faFileExcel" class="text-green-700"></fa-icon>
+      </button>
+    </span>
   </div>
   <div class="flex flex-col pb-5">
     <div class="sm:-mx-6 lg:-mx-8">
       <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
         <div class="">
-          <table class="min-w-full border select-none">
+          <table class="min-w-full border select-none" id="reportForm">
             <thead class="border-b">
               <tr>
                 <th scope="col" colspan="1" class="text-sm font-medium text-gray-900 px-6 py-4 border">
@@ -211,7 +220,7 @@
                 <td class="p-5 border">10. IPV 1</td>
                 <td class="p-5 border text-blue-500 text-center" [class]=" stats?.IPV1_Male.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.IPV1_Male)">{{ stats?.IPV1_Male.length }}</td>
                 <td class="p-5 border text-blue-500 text-center" [class]=" stats?.IPV1_Female.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.IPV1_Female)">{{ stats?.IPV1_Female.length }}</td>
-                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.IPV1_Male.length !==0 || stats?.IPV1_Female.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(sstats?.IPV1_Male, stats?.IPV1_Female)">{{ stats?.IPV1_Male.length +  stats?.IPV1_Female.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.IPV1_Male.length !==0 || stats?.IPV1_Female.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.IPV1_Male, stats?.IPV1_Female)">{{ stats?.IPV1_Male.length +  stats?.IPV1_Female.length }}</td>
                 <td class="p-5 border"></td>
                 <td class="p-5 border">22. Td, Grade 7 (November) - Total</td>
                 <td class="p-5 border text-blue-500 text-center" [class]=" stats?.TDRGR7_Male.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.TDRGR7_Male)">{{ stats?.TDRGR7_Male.length }}</td>
@@ -256,7 +265,7 @@
                 <td class="p-5 border">25. Preterm/LBW infants given iron <br /> supplementation</td>
                 <td class="p-5 border text-blue-500 text-center" [class]=" stats?.preterm_iron_Male.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.preterm_iron_Male)">{{ stats?.preterm_iron_Male.length }}</td>
                 <td class="p-5 border text-blue-500 text-center" [class]=" stats?.preterm_iron_Female.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.preterm_iron_Female)">{{ stats?.preterm_iron_Female.length }}</td>
-                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.preterm_iron_stats?.preterm_iron_Male.length !==0 || stats?.preterm_iron_stats?.preterm_iron_Female.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.preterm_iron_Male, stats?.preterm_iron_Female)">{{ stats?.preterm_iron_Male.length +  stats?.preterm_iron_Female.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.preterm_iron_Male.length !==0 || stats?.preterm_iron_Female.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.preterm_iron_Male, stats?.preterm_iron_Female)">{{ stats?.preterm_iron_Male.length +  stats?.preterm_iron_Female.length }}</td>
                 <td class="p-5 border"></td>
                 <td class="p-5 border">34. Wasted - Total</td>
                 <td class="p-5 border text-blue-500 text-center" [class]=" stats?.wasted_0_59_months_Male.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.wasted_0_59_months_Male)">{{ stats?.wasted_0_59_months_Male.length }}</td>
@@ -269,7 +278,7 @@
                 <td class="p-5 border">26. Infants exclusively breastfed until 5th month <br/> and 29 Days - Total</td>
                 <td class="p-5 border text-blue-500 text-center" [class]=" stats?.ebf_5months_29days_Male.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.ebf_5months_29days_Male)">{{ stats?.ebf_5months_29days_Male.length }}</td>
                 <td class="p-5 border text-blue-500 text-center" [class]=" stats?.ebf_5months_29days_Female.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.ebf_5months_29days_Female)">{{ stats?.ebf_5months_29days_Female.length }}</td>
-                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.ebf_5months_29days_Male.length !==0 || stats?.ebf_5months_29days_stats?.ebf_5months_29days_Female.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.ebf_5months_29days_Male, stats?.ebf_5months_29days_Female)">{{ stats?.ebf_5months_29days_Male.length +  stats?.ebf_5months_29days_Female.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.ebf_5months_29days_Male.length !==0 || stats?.ebf_5months_29days_Female.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.ebf_5months_29days_Male, stats?.ebf_5months_29days_Female)">{{ stats?.ebf_5months_29days_Male.length +  stats?.ebf_5months_29days_Female.length }}</td>
                 <td class="p-5 border"></td>
                 <td class="p-5 border">34. a. MAM - Total</td>
                 <td class="p-5 border text-blue-500 text-center">-</td>
@@ -282,7 +291,7 @@
                 <td class="p-5 border">27.  Infants 6 mos. old initiated to comp. feeding <br/> w/ con't. BF</td>
                 <td class="p-5 border text-blue-500 text-center" [class]=" stats?.complimentary_6_11_months_Male.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.complimentary_6_11_months_Male)">{{ stats?.complimentary_6_11_months_Male.length }}</td>
                 <td class="p-5 border text-blue-500 text-center" [class]=" stats?.complimentary_6_11_months_Female.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.complimentary_6_11_months_Female)">{{ stats?.complimentary_6_11_months_Female.length }}</td>
-                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.complimentary_6_11_months_Male.length !==0 || stats?.complimentary_6_11_months_stats?.complimentary_6_11_months_Female.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.complimentary_6_11_months_Male, stats?.complimentary_6_11_months_Female)">{{ stats?.complimentary_6_11_months_Male.length +  stats?.complimentary_6_11_months_Female.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.complimentary_6_11_months_Male.length !==0 || stats?.complimentary_6_11_months_Female.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.complimentary_6_11_months_Male, stats?.complimentary_6_11_months_Female)">{{ stats?.complimentary_6_11_months_Male.length +  stats?.complimentary_6_11_months_Female.length }}</td>
                 <td class="p-5 border"></td>
                 <td class="p-5 border">34. a.1. MAM-admitted in SFT - Total</td>
                 <td class="p-5 border text-blue-500 text-center">-</td>
@@ -295,7 +304,7 @@
                 <td class="p-5 border">28. Infants 6 mos. old who have initiated and <br/> received  comp.feeding but has stopped BF or  <br/> has never been BF at all - Total</td>
                 <td class="p-5 border text-blue-500 text-center" [class]=" stats?.stop_bfed_complimentary_6_11_months_Male.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.stop_bfed_complimentary_6_11_months_Male)">{{ stats?.stop_bfed_complimentary_6_11_months_Male.length }}</td>
                 <td class="p-5 border text-blue-500 text-center" [class]=" stats?.stop_bfed_complimentary_6_11_months_Female.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.stop_bfed_complimentary_6_11_months_Female)">{{ stats?.stop_bfed_complimentary_6_11_months_Female.length }}</td>
-                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.stop_bfed_complimentary_6_11_months_stats?.stop_bfed_complimentary_6_11_months_Male.length !==0 || stats?.stop_bfed_complimentary_6_11_months_stats?.stop_bfed_complimentary_6_11_months_Female.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.stop_bfed_complimentary_6_11_months_Male, stats?.stop_bfed_complimentary_6_11_months_Female)">{{ stats?.stop_bfed_complimentary_6_11_months_Male.length +  stats?.stop_bfed_complimentary_6_11_months_Female.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.stop_bfed_complimentary_6_11_months_Male.length !==0 || stats?.stop_bfed_complimentary_6_11_months_Female.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.stop_bfed_complimentary_6_11_months_Male, stats?.stop_bfed_complimentary_6_11_months_Female)">{{ stats?.stop_bfed_complimentary_6_11_months_Male.length +  stats?.stop_bfed_complimentary_6_11_months_Female.length }}</td>
                 <td class="p-5 border"></td>
                 <td class="p-5 border">34. a.2. MAM-cured in SFP - Total</td>
                 <td class="p-5 border text-blue-500 text-center">-</td>
@@ -308,7 +317,7 @@
                 <td class="p-5 border">29.  Infants 6-11 mos. Old given 1 dose of <br/> Vit. A 100,000 I.U.</td>
                 <td class="p-5 border text-blue-500 text-center" [class]=" stats?.vit_a_6_11_months_Male.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.vit_a_6_11_months_Male)">{{ stats?.vit_a_6_11_months_Male.length  }}</td>
                 <td class="p-5 border text-blue-500 text-center" [class]=" stats?.vit_a_6_11_months_Female.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.vit_a_6_11_months_Female)">{{ stats?.vit_a_6_11_months_Female.length }}</td>
-                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.vit_a_6_11_months_stats?.vit_a_6_11_months_Male.length !==0 || stats?.vit_a_6_11_months_stats?.vit_a_6_11_months_Female.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.vit_a_6_11_months_Male, stats?.vit_a_6_11_months_Female)">{{ stats?.vit_a_6_11_months_Male.length + stats?.vit_a_6_11_months_Female.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.vit_a_6_11_months_Male.length !==0 || stats?.vit_a_6_11_months_Female.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.vit_a_6_11_months_Male, stats?.vit_a_6_11_months_Female)">{{ stats?.vit_a_6_11_months_Male.length + stats?.vit_a_6_11_months_Female.length }}</td>
                 <td class="p-5 border"></td>
                 <td class="p-5 border">34. a.3. MAM-defaulted in SFP - Total</td>
                 <td class="p-5 border text-blue-500 text-center">-</td>
@@ -321,7 +330,7 @@
                 <td class="p-5 border">30. Children 12-59 mos. Old given 2 doses of <br/> Vit. A 200,000 I.U.</td>
                 <td class="p-5 border text-blue-500 text-center" [class]=" stats?.vit_a_12_59_months_Male.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.vit_a_12_59_months_Male)">{{ stats?.vit_a_12_59_months_Male.length }}</td>
                 <td class="p-5 border text-blue-500 text-center" [class]=" stats?.vit_a_12_59_months_Female.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.vit_a_12_59_months_Female)">{{ stats?.vit_a_12_59_months_Female.length }}</td>
-                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.vit_a_12_59_months_stats?.vit_a_12_59_months_Male.length !==0 || stats?.vit_a_12_59_months_stats?.vit_a_12_59_months_Female.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.vit_a_12_59_months_Male, stats?.vit_a_12_59_months_Female)">{{ stats?.vit_a_12_59_months_Male.length +  stats?.vit_a_12_59_months_Female.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.vit_a_12_59_months_Male.length !==0 || stats?.vit_a_12_59_months_Female.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.vit_a_12_59_months_Male, stats?.vit_a_12_59_months_Female)">{{ stats?.vit_a_12_59_months_Male.length +  stats?.vit_a_12_59_months_Female.length }}</td>
                 <td class="p-5 border"></td>
                 <td class="p-5 border">34. a.4. MAM died in SFP - Total</td>
                 <td class="p-5 border text-blue-500 text-center">-</td>
@@ -394,10 +403,10 @@
 
               <tr class="text-sm">
                 <td colspan="5" class="p-5 bg-gray-50"></td>
-                <td class="p-5 border">34. Normal - Total</td>
+                <td class="p-5 border">36. Normal - Total</td>
                 <td class="p-5 border text-blue-500 text-center" [class]=" stats?.normal_0_59_months_Male.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.normal_0_59_months_Male)">{{ stats?.normal_0_59_months_Male.length }}</td>
                 <td class="p-5 border text-blue-500 text-center" [class]=" stats?.normal_0_59_months_Female.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.normal_0_59_months_Female)">{{ stats?.normal_0_59_months_Female.length }}</td>
-                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.normal_0_59_months_Male.length !==0 || stats?.normal_0_59_months_Female.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.normal_0_59_months_stats?.normal_0_59_months_Male, stats?.normal_0_59_months_stats?.normal_0_59_months_Female)">{{ stats?.normal_0_59_months_Male.length +  stats?.normal_0_59_months_Female.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.normal_0_59_months_Male.length !==0 || stats?.normal_0_59_months_Female.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.normal_0_59_months_Male, stats?.normal_0_59_months_Female)">{{ stats?.normal_0_59_months_Male.length +  stats?.normal_0_59_months_Female.length }}</td>
                 <td class="p-5 border"></td>
               </tr>
 
@@ -413,7 +422,7 @@
               <tr class="border text-sm">
                 <td class="p-5 border">37. 1-19 y/o given 2 doses of deworming drug</td>
                 <td class="p-5 border text-blue-500 text-center" [class]=" stats?.deworming_1_to_19_yo_Male.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.deworming_1_to_19_yo_Male)">{{ stats?.deworming_1_to_19_yo_Male.length }}</td>
-                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.deworming_1_to_19_yo_Female.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.normal_0_59_months_Female)">{{ stats?.deworming_1_to_19_yo_Female.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.deworming_1_to_19_yo_Female.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.deworming_1_to_19_yo_Female)">{{ stats?.deworming_1_to_19_yo_Female.length }}</td>
                 <td class="p-5 border text-blue-500 text-center" [class]=" stats?.deworming_1_to_19_yo_Male.length !==0 || stats?.deworming_1_to_19_yo_Female.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.deworming_1_to_19_yo_Male, stats?.deworming_1_to_19_yo_Female)">{{ stats?.deworming_1_to_19_yo_Male.length +  stats?.deworming_1_to_19_yo_Female.length }}</td>
                 <td class="p-5 border"></td>
                 <td class="p-5 border">38. Sick Infants 6-11 mos. Old seen</td>
@@ -516,5 +525,6 @@
     </div>
   </div>
 </div>
+
 
 <app-name-list *ngIf="openList" (toggleModal)="toggleModal()" [name_list]="name_list"></app-name-list>

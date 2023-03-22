@@ -53,14 +53,24 @@ export class PatientItrComponent implements OnInit {
   getVisitList(params, page?){
     this.http.get('consultation/records',{params}).subscribe({
       next: (data: any) => {
+        console.log(data)
         this.visit_list = data.data;
       },
       error: err => console.log(err),
     })
   }
+
+  user_allowed: boolean = false;
+
   showConsult(details: any){
-    this.selected_visit = details;
-    if(details.vitals) this.getLatestToday(details);
+    console.log(details)
+    if(details.facility_code === this.user_location) {
+      this.user_allowed = true;
+      this.selected_visit = details;
+      if(details.vitals) this.getLatestToday(details);
+    } else {
+      this.user_allowed = false;
+    }
   }
 
   getLatestToday(details){
@@ -110,7 +120,9 @@ export class PatientItrComponent implements OnInit {
     })
   );
 
+  user_location: string;
   ngOnInit(): void {
+    this.user_location = this.http.getUserFacility();
     this.loadData();
     this.navigationEnd$.subscribe();
   }

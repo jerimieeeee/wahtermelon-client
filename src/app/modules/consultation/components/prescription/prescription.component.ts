@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, OnChanges, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
-import { faAdd, faChevronCircleDown, faChevronCircleUp, faEdit, faSave, faSpinner, faTrash, faPrescriptionBottleMedical, faReceipt } from '@fortawesome/free-solid-svg-icons';
+import { faAdd, faChevronCircleDown, faChevronCircleUp, faEdit, faSave, faSpinner, faTrash, faPrescriptionBottleMedical, faReceipt, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -32,6 +32,7 @@ export class PrescriptionComponent implements OnInit, OnChanges {
   faTrash = faTrash;
   faPrescriptionBottleMedical = faPrescriptionBottleMedical;
   faReceipt = faReceipt;
+  faTrashCan = faTrashCan;
 
   selected_drug: any;
   prescriptions: any;
@@ -82,7 +83,14 @@ export class PrescriptionComponent implements OnInit, OnChanges {
     this.toggleForm();
   }
 
-
+  modal = [];
+  delete_id: string;
+  delete_desc: string = 'Prescription';
+  url: string = 'medicine/prescriptions/'
+  openDeleteModal(data){
+    this.delete_id = data.id;
+    this.modal['delete-item'] = !this.modal['delete-item'];
+  }
 
   toggleDeleteForm(){
     this.show_delete_form = !this.show_delete_form;
@@ -103,10 +111,6 @@ export class PrescriptionComponent implements OnInit, OnChanges {
       this.loadPrescriptions();
     }
   }
-
-  /* resetForm(){
-    this.selected_drug = null;
-  } */
 
   ngOnChanges(changes){
     this.show_content = this.toggle_content;
@@ -133,16 +137,15 @@ export class PrescriptionComponent implements OnInit, OnChanges {
     {var_name: 'drug_purpose',      location: 'purposes'},
     {var_name: 'drug_frequency',    location: 'duration-frequencies'},
     {var_name: 'drug_preparation',  location: 'preparations'},
-    // {var_name: 'drug_route', location: 'medicine-route'}
+    {var_name: 'drug_route', location: 'medicine-route'}
   ];
 
   loadLibraries(){
-    // this.
     this.libraries.forEach((obj, index) => {
       this.http.get('libraries/'+obj.location).subscribe({
         next: (data: any) => {
           this[obj.var_name] = data.data;
-          console.log(data.data);
+          // console.log(data.data);
           if(this.libraries.length -1 === index) {
             this.show_form = true
           }
@@ -153,8 +156,14 @@ export class PrescriptionComponent implements OnInit, OnChanges {
   }
 
   show_epress: boolean = false;
-  toggleModal(){
-    this.show_epress = !this.show_epress;
+  toggleModal(name?, data?){
+    if(name) {
+      if(data) this.delete_id = data.id;
+      this.modal[name] = !this.modal[name];
+      this.loadPrescriptions();
+    } else {
+      this.show_epress = !this.show_epress;
+    }
   }
 
   toggleList(){
@@ -166,7 +175,6 @@ export class PrescriptionComponent implements OnInit, OnChanges {
   }
 
   loadPrescriptions(){
-    // this.selected_drug = null;
     let params = {
       sort: '-prescription_date',
       consult_id: this.consult_details.id

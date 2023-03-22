@@ -39,7 +39,6 @@ export class ManagementComponent implements OnInit {
           management_code: key,
           remarks: this.management_list.remarks[key] ? this.management_list.remarks[key] : null,
         };
-        console.log(hx)
         hx_arr.push(hx);
       }
     })
@@ -51,15 +50,12 @@ export class ManagementComponent implements OnInit {
         management: hx_arr
       }
 
-      console.log(mgmt_form)
       this.http.post('consultation/management', mgmt_form).subscribe({
         next: (data: any) => {
-          console.log(data)
           this.is_saving = false;
           this.toastr.success('Successfully recorded!','Management record')
         },
-        error: err => console.log(err),
-        complete: () => console.log('success')
+        error: err => console.log(err)
       })
     }
   }
@@ -67,7 +63,6 @@ export class ManagementComponent implements OnInit {
   loadLibraries(){
     this.http.get('libraries/management').subscribe({
       next: (data: any) => {
-        console.log(data)
         this.management_codes = data.data
       },
       error: err => console.log(err)
@@ -76,10 +71,8 @@ export class ManagementComponent implements OnInit {
 
   patchData(){
     if(this.consult_management) {
-      // console.log(this.consult_management)
       Object.entries(this.consult_management).forEach(([key, value], index) => {
         let val: any = value;
-        // console.log(val)
         this.management_list.management_code[val.management_code] = true;
         if(val.remarks) {
           this.management_list.remarks[val.management_code] = val.remarks;

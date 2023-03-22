@@ -35,9 +35,6 @@ export class ValidatedListComponent {
 
     this.http.get('konsulta/validate-report', {params}).subscribe({
       next: (data: any) => {
-        console.log(data) /*
-        let result = data.data ? data.data : data
-        console.log(result) */
         this.processReturn(data)
       },
       error: err => console.log(err)
@@ -52,11 +49,7 @@ export class ValidatedListComponent {
       raw: type === 'raw' ? 1 : 0
     }
 
-    // if(kon.xml_status === 'S') {
-    //   params['konsulta_transaction_number'] = kon.konsulta_transaction_number
-    // } else {
-      params['transmittal_number'] = kon.transmittal_number
-    // }
+    params['transmittal_number'] = kon.transmittal_number
 
     let query;
     if(type === 'raw') {
@@ -65,21 +58,18 @@ export class ValidatedListComponent {
       query = this.http.get('konsulta/download-xml', {params: params});
     }
 
-    // console.log(kon.xml_url.split('/'))
     let file_info = kon.xml_url.split('/')
     let file_name = file_info[file_info.length-1];
     query.subscribe({
       next: (response) => {
-        // console.log(response)
         if(type === 'raw') {
-          // let raw_file_info = file_info.split('.');
           let raw_file = kon.xml_status === 'S' ? kon.konsulta_transaction_number : kon.transmittal_number+'.xml'
           this.downloadFile(response, kon.xml_status === 'S' ? kon.konsulta_transaction_number : kon.transmittal_number, 'raw', raw_file)
         } else {
           this.downloadFile(response, kon.xml_status === 'S' ? kon.konsulta_transaction_number : kon.transmittal_number, 'enc', file_name)
         }
       },
-      error: err => console.log()
+      error: err => console.log(err)
     })
   }
 
@@ -112,8 +102,6 @@ export class ValidatedListComponent {
 
     this.http.get('konsulta/submit-xml', {params}).subscribe({
       next: (data: any) => {
-
-        // console.log(result)
         this.processReturn(data)
       },
       error: err => console.log(err)
@@ -129,7 +117,6 @@ export class ValidatedListComponent {
   }
 
   processReturn(data){
-    // console.log(data)
     if(data){
       let result = data.data ? data.data : data
       if(result.errors) {

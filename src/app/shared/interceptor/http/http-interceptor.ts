@@ -34,7 +34,8 @@ export class RequestsInterceptor implements HttpInterceptor {
           // 'Content-Type' : 'multipart/form-data',
           'Accept'       : 'application/json',
           'withCredentials': 'true',
-          'Authorization': `Bearer ${this.cookie_value}`
+          'Authorization': `Bearer ${this.cookie_value}`,
+          'Access-Control-Allow-Origin': '*'
         },
       });
     }
@@ -43,11 +44,11 @@ export class RequestsInterceptor implements HttpInterceptor {
         if(error && error.status === 401){
           return this.handle401Error(request, next, error);
         } else {
-          this.toastr.error(error.error.message, 'Error', {
+          /* this.toastr.error(error.error.message, 'Error', {
             closeButton: true,
             positionClass: 'toast-top-center',
             disableTimeOut: true
-          })
+          }) */
           return throwError(() => error)
         }
 
@@ -69,8 +70,8 @@ export class RequestsInterceptor implements HttpInterceptor {
         // localStorage.removeItem('access_token');
 
         // this.router.navigate(['/']);
-        localStorage.removeItem('user');
-        this.cookieService.delete('access_token');
+        if(localStorage.getItem('user')) localStorage.removeItem('user');
+        if(this.cookieService.get('access_token')) this.cookieService.delete('access_token');
         return throwError(() => originalError);
       /* })
     ); */
