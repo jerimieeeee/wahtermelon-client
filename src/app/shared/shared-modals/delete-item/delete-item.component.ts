@@ -45,6 +45,8 @@ export class DeleteItemComponent implements OnChanges, AfterViewInit{
     }else{
       this.generateCode();
       this.toastr.info('Code mismatch, please try again', 'Incorrect Code');
+      this.is_loading = false;
+      this.confirmation_code = null
     }
   }
 
