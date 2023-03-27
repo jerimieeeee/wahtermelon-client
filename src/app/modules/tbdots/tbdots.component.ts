@@ -15,6 +15,8 @@ export class TbdotsComponent implements OnInit {
   module: number = 1;
   show_end: boolean = false;
 
+  consult_details: any;
+
   switchPage(page) {
     this.pages = page;
   }
