@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import { MaternalcareRoutingModule } from './maternalcare-routing.module';
 
 import { MaternalcareComponent } from './maternalcare.component';
-import { SharedComponentsModule } from 'app/shared/shared-components/shared-components.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import * as angularFontawesome from '@fortawesome/angular-fontawesome';
@@ -15,15 +14,16 @@ import { RiskfactorsComponent } from './modules/riskfactors/riskfactors.componen
 import { PrenatalComponent } from './modules/prenatal/prenatal.component';
 import { ServicesComponent } from './modules/services/services.component';
 import { PostvisitsComponent } from './modules/postvisits/postvisits.component';
+import { EndVisitComponent } from 'app/shared/shared-modals/end-visit/end-visit.component';
 @NgModule({
   declarations: [MaternalcareComponent, McrComponent, PostpartumComponent, RiskfactorsComponent, PrenatalComponent, ServicesComponent, PostvisitsComponent],
   imports: [
     CommonModule,
     MaternalcareRoutingModule,
-    SharedComponentsModule,
     angularFontawesome.FontAwesomeModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    EndVisitComponent
   ]
 })
 export class MaternalcareModule { }

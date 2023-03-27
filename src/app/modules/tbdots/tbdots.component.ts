@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { faPersonWalking } from '@fortawesome/free-solid-svg-icons';
+import { faDoorClosed, faPersonWalking } from '@fortawesome/free-solid-svg-icons';
+import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
   selector: 'app-tbdots',
@@ -8,16 +9,29 @@ import { faPersonWalking } from '@fortawesome/free-solid-svg-icons';
 })
 export class TbdotsComponent implements OnInit {
   faPersonWalking = faPersonWalking;
+  faDoorClosed = faDoorClosed;
 
-  constructor() { }
-  module: number;
-  ngOnInit(): void {
-    this.module = 1;
+  pages: number = 1;
+  module: number = 1;
+  show_end: boolean = false;
+
+  switchPage(page) {
+    this.pages = page;
   }
 
   switchTab(tab) {
-    this.module = 0;
     this.module = tab;
-    console.log(this.module);
+  }
+
+  toggleModal() {
+    this.show_end = !this.show_end;
+  }
+
+  constructor(
+    private http: HttpService
+  ) { }
+
+  ngOnInit(): void {
+    console.log('test')
   }
 }
