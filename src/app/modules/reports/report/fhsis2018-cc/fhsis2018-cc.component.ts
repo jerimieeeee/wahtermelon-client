@@ -29,6 +29,9 @@ export class Fhsis2018CcComponent implements OnChanges {
     elementIdOrContent: 'reportForm',
     options: {
       image: { type: 'jpeg', quality: 1 },
+      html2canvas:  { scale: 3 },
+      margin:  [1, 1, 1, 1],
+      pagebreak: { mode: ['avoid-all', 'css', 'legacy'] },
       jsPDF: {
         orientation: 'landscape',
         format: 'a4',
