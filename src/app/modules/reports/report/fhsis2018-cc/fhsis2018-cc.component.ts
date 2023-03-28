@@ -21,7 +21,10 @@ export class Fhsis2018CcComponent implements OnChanges {
 
   exportAsExcel: ExportAsConfig = {
     type: 'xlsx',
-    elementIdOrContent: 'reportForm'
+    elementIdOrContent: 'reportForm',
+    options: {
+      
+    }
   }
 
   exportAsPdf: ExportAsConfig = {
@@ -29,7 +32,7 @@ export class Fhsis2018CcComponent implements OnChanges {
     elementIdOrContent: 'reportForm',
     options: {
       image: { type: 'jpeg', quality: 1 },
-      html2canvas:  { scale: 3 },
+      html2canvas:  { scale: 3},
       margin:  [1, 1, 1, 1],
       pagebreak: { mode: ['avoid-all', 'css', 'legacy'] },
       jsPDF: {
@@ -41,7 +44,7 @@ export class Fhsis2018CcComponent implements OnChanges {
   }
 
   exportX() {
-    this.exportAsService.save(this.exportAsExcel, 'test').subscribe(() => {
+    this.exportAsService.save(this.exportAsExcel, 'Childcare M1').subscribe(() => {
       // save started
     });
   }
@@ -49,7 +52,7 @@ export class Fhsis2018CcComponent implements OnChanges {
   pdf_exported: boolean = false;
   exportP() {
     this.pdf_exported = true;
-    this.exportAsService.save(this.exportAsPdf, 'test').subscribe(() => {
+    this.exportAsService.save(this.exportAsPdf, 'Childcare M1').subscribe(() => {
       // save started
     });
   }
