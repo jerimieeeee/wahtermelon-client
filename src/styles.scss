@@ -115,6 +115,15 @@
   .invalid-alert {
     @apply text-red-500 text-sm
   }
+  .tabs-main {
+    @apply block hover:font-bold py-2
+  };
+  .tabs-main-true {
+    @apply text-blue-500 border-b-2 border-blue-500 font-bold
+  };
+  .tabs-main-false {
+    @apply hover:text-sky-500 text-gray-600 transition ease-in-out duration-300
+  };
 }
 /* .ng-select.ng-select.search .ng-select-container  {
   min-height: 700px;

@@ -11,7 +11,7 @@ export class TbdotsComponent implements OnInit {
   faPersonWalking = faPersonWalking;
   faDoorClosed = faDoorClosed;
 
-  pages: number = 1;
+  pages: number = 2;
   module: number = 1;
   show_end: boolean = false;
 

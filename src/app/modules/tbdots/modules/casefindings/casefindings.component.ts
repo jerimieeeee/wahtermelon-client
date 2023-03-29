@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
   selector: 'app-casefindings',
@@ -6,12 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./casefindings.component.scss']
 })
 export class CasefindingsComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit(): void {
-    console.log('test')
-  }
+  delivery_method: any = [];
 
   createForm() {
 
@@ -19,5 +15,23 @@ export class CasefindingsComponent implements OnInit {
 
   onSubmit(data) {
 
+  }
+
+  loadLibraries(){
+    this.http.get('tbdots/tb-libraries').subscribe({
+      next: (data: any) => {
+        console.log(data);
+      },
+      error: err => console.log(err)
+    });
+  }
+
+  constructor(
+    private http: HttpService
+  ) { }
+
+  ngOnInit(): void {
+    console.log('test')
+    this.loadLibraries();
   }
 }

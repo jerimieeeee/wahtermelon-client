@@ -1,3 +1,41 @@
+
+<div class="border border-slate-200 rounded-lg mt-3 shadow-md w-full">
+  <div class="m-5 border border-slate-200 rounded-md">
+    <div class="bg-blue-500 text-white rounded-t-md py-2 pl-3 font-semibold">
+      Case Findings
+    </div>
+
+    <div class="m-5">
+      <div class="grid grid-cols-3 gap-4 w-full">
+        <div>
+          <label for="delivery_type">Delivery Type</label>
+          <select name="delivery_type" id="delivery_type" formControlName="delivery_type" class="input disabled:bg-gray-300">
+            <option *ngFor="let delivery of delivery_method" [value]="delivery.code">{{ delivery.desc }}</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="delivery_type">Delivery Type</label>
+          <select name="delivery_type" id="delivery_type" formControlName="delivery_type" class="input disabled:bg-gray-300">
+            <option *ngFor="let delivery of delivery_method" [value]="delivery.code">{{ delivery.desc }}</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="delivery_type">Delivery Type</label>
+          <select name="delivery_type" id="delivery_type" formControlName="delivery_type" class="input disabled:bg-gray-300">
+            <option *ngFor="let delivery of delivery_method" [value]="delivery.code">{{ delivery.desc }}</option>
+          </select>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+
 <!-- <div class="fade-in">
   <form [formGroup]="cf_form" (ngSubmit)="saveForm(cf_form.value)">
     <div class="grid relative animates-dropdown " style="grid-template-columns: repeat(16, minmax(0, 1fr));">
