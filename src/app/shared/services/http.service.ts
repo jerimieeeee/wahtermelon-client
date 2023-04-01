@@ -8,7 +8,7 @@ import { Subject } from 'rxjs';
   providedIn: 'root'
 })
 export class HttpService {
-  baseUrl = 'https://bulacan-api.wah.ph/api/v1/';
+  baseUrl = 'https://pangasinan-api.wah.ph/api/v1/';
 
   constructor(
     private http: HttpClient,
