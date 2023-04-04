@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons';
 import { faArrowLeft, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
+import { ToastrService } from 'ngx-toastr';
 import { openCloseTrigger } from '../patient-registration/declarations/animation';
 
 @Component({
@@ -41,7 +42,8 @@ export class UserRegistrationComponent implements OnInit {
   constructor(
     private http: HttpService,
     private formBuilder: FormBuilder,
-    private router: Router
+    private router: Router,
+    private toastr: ToastrService
   ) { }
 
   userForm: FormGroup = new FormGroup({
@@ -70,14 +72,10 @@ export class UserRegistrationComponent implements OnInit {
     this.is_saving = true;
     this.loading = true;
 
-    // console.log(this.userForm)
     if(!this.userForm.invalid){
       this.http.post('register', this.userForm.value).subscribe({
         next: (data:any) => {
-          console.log(data);
-          this.loading = false;
-          this.is_saving = false;
-          this.showModal = true;
+          this.attemptLogin(this.userForm);
         },
         error: err => {
           this.submit_errors = err.error.errors;
@@ -89,6 +87,29 @@ export class UserRegistrationComponent implements OnInit {
     } else {
       this.loading = false;
     }
+  }
+
+  attemptLogin(data){
+    let login_params = {
+      email: data.value.email,
+      password: data.value.password
+    }
+    this.http.login(login_params).subscribe({
+      next: (data: any) => { },
+      error: err => {
+        if(err.error.errors.account_status){
+          this.userForm.disable();
+
+          this.loading = false;
+          this.is_saving = false;
+          this.toastr.success(err.error.message, 'Email Verification', {
+            closeButton: true,
+            positionClass: 'toast-top-center',
+            disableTimeOut: true
+          });
+        }
+      }
+    })
   }
 
   loadDemog(loc, code, include){

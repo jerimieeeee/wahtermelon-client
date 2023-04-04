@@ -84,14 +84,14 @@
 
             <div class="col-span-8">
               <label for="suffix_name" class="input-label" >Suffix Name</label>
-              <select id="suffix_name" name="suffix_name" class="input" formControlName="suffix_name">
+              <select id="suffix_name" name="suffix_name" class="input disabled:bg-gray-300" formControlName="suffix_name">
                 <option *ngFor="let suffix_name of suffix_names" [value]="suffix_name.code">{{ suffix_name.suffix_desc }}</option>
               </select>
             </div>
 
             <div class="col-span-8">
               <label for="gender" class="input-label" [ngClass]="{'text-red-500': is_saving && f.gender.errors}">Sex</label>
-              <select id="gender" name="gender" class="input" [ngClass]="{'invalid-input': is_saving && f.gender.errors}" formControlName="gender">
+              <select id="gender" name="gender" class="input disabled:bg-gray-300" [ngClass]="{'invalid-input': is_saving && f.gender.errors}" formControlName="gender">
                 <option value="M">Male</option>
                 <option value="F">Female</option>
               </select>
@@ -105,7 +105,7 @@
 
             <div class="col-span-8">
               <label for="birthdate" class="input-label" [ngClass]="{'text-red-500': is_saving && f.birthdate.errors}">Birthdate</label>
-              <input type="date" name="birthdate" id="birthdate" class="input" placeholder="mm/dd/yyyy" max="{{ date | date: 'yyyy-MM-dd' }} " [ngClass]="{'invalid-input': is_saving && f.birthdate.errors}" formControlName="birthdate">
+              <input type="date" name="birthdate" id="birthdate" class="input disabled:bg-gray-300" placeholder="mm/dd/yyyy" max="{{ date | date: 'yyyy-MM-dd' }} " [ngClass]="{'invalid-input': is_saving && f.birthdate.errors}" formControlName="birthdate">
 
               <div *ngIf="is_saving && f.birthdate.errors" class="invalid-alert">
                 <div *ngIf="f.birthdate.errors?.['required']">
@@ -116,7 +116,7 @@
 
             <div class="col-span-8">
               <label for="email" class="input-label" [ngClass]="{'text-red-500': is_saving && f.email.errors}">email</label>
-              <input type="email" name="email" id="email" class="input" [ngClass]="{'invalid-input': is_saving && f.email.errors}" formControlName="email">
+              <input type="email" name="email" id="email" class="input disabled:bg-gray-300" [ngClass]="{'invalid-input': is_saving && f.email.errors}" formControlName="email">
 
               <div *ngIf="is_saving && f.email.errors" class="invalid-alert">
                 <div *ngIf="f.email.errors?.['required']">
@@ -130,7 +130,7 @@
 
             <div class="col-span-8">
               <label for="contact_number" class="input-label" [ngClass]="{'text-red-500': is_saving && f.contact_number.errors}">Mobile Number (0912) 354-6789</label>
-              <input type="text" mask="(9999) 999-9999" [showMaskTyped]="true" name="contact_number" id="contact_number" class="input" [ngClass]="{'invalid-input': is_saving && f.contact_number.errors}" formControlName="contact_number">
+              <input type="text" mask="(9999) 999-9999" [showMaskTyped]="true" name="contact_number" id="contact_number" class="input disabled:bg-gray-300" [ngClass]="{'invalid-input': is_saving && f.contact_number.errors}" formControlName="contact_number">
 
               <div *ngIf="is_saving && f.contact_number.errors" class="invalid-alert">
                 <div *ngIf="f.contact_number.errors?.['required']">
@@ -206,7 +206,7 @@
 
             <div class="col-span-8">
               <label for="facility_code" class="input-label" [ngClass]="{'text-red-500': is_saving && f.facility_code.errors}">Facility</label>
-              <select id="facility_code" name="facility_code" class="input" [ngClass]="{'invalid-input': is_saving && f.facility_code.errors}" formControlName="facility_code">
+              <select id="facility_code" name="facility_code" class="input disabled:bg-gray-300" [ngClass]="{'invalid-input': is_saving && f.facility_code.errors}" formControlName="facility_code">
                 <option [value]="facility.code"*ngFor="let facility of facilities" >{{ facility.facility_name }}</option>
               </select>
 
@@ -220,7 +220,7 @@
             <div class="col-span-8">
               <label for="password" class="input-label" [ngClass]="{'text-red-500': is_saving && f.password.errors}">Password</label>
               <div class="relative rounded-md">
-                <input [type]="show_pass ? 'text' : 'password'" name="password" id="password" class="input" [ngClass]="{'invalid-input': is_saving && f.password.errors}" formControlName="password">
+                <input [type]="show_pass ? 'text' : 'password'" name="password" id="password" class="input disabled:bg-gray-300" [ngClass]="{'invalid-input': is_saving && f.password.errors}" formControlName="password">
                 <button (click)="show_pass = !show_pass" class="absolute inset-y-0 right-0 flex items-center pr-2 text-gray-500" type="button">
                   <fa-icon [icon]="show_pass ? faEyeSlash : faEye"></fa-icon>
                 </button>
@@ -253,7 +253,7 @@
 
             <div class="col-span-8">
               <label for="password_confirmation" class="input-label" [ngClass]="{'text-red-500': is_saving && f.password_confirmation.errors}">Password Confirmation</label>
-              <input [type]="show_pass ? 'text' : 'password'" name="password_confirmation" id="password_confirmation" class="input" [ngClass]="{'invalid-input': is_saving && f.password_confirmation.errors}" formControlName="password_confirmation">
+              <input [type]="show_pass ? 'text' : 'password'" name="password_confirmation" id="password_confirmation" class="input disabled:bg-gray-300" [ngClass]="{'invalid-input': is_saving && f.password_confirmation.errors}" formControlName="password_confirmation">
 
               <div *ngIf="passwordMatchError" class="invalid-alert">
                 <div>
@@ -291,9 +291,14 @@
         </div>
 
         <div class="text-right pt-5 ">
-          <button type="submit" class="btn-save mr-6 w-48 mb-10">
+          <button type="submit" *ngIf="!userForm.disabled" [disabled]="userForm.invalid || passwordMatchError" class="btn-save mr-6 w-48 mb-10 disabled:bg-gray-400">
             <fa-icon *ngIf="loading" class="mr-3" [icon]="faSpinner" [spin]="true"></fa-icon>
             {{ loading ? 'Saving' : 'Create Account' }}
+          </button>
+
+          <button type="submit" *ngIf="userForm.disabled" class="btn-save mr-6 w-48 mb-10 disabled:bg-gray-400" (click)="backToLogin()">
+            <!-- <fa-icon *ngIf="loading" class="mr-3" [icon]="faSpinner" [spin]="true"></fa-icon> -->
+            Back to login
           </button>
         </div>
       </div>
@@ -305,7 +310,10 @@
   <div class="relative w-auto my-6 mx-auto max-w-6xl">
     <div class="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
       <div class="relative p-6 pb-10 pr-40 flex-auto">
-          <span>New account was created succesfully.</span>
+          <span>
+            An verification email has been sent to your email account.<br /><br />
+            Please click on the link that has been sent to your email to continue with your registration.
+          </span>
       </div>
       <div class="flex items-center justify-end p-3 rounded-b">
         <button class="bg-blue-500 text-white active:bg-blue-500 hover:bg-blue-600 text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button" (click)="backToLogin()">

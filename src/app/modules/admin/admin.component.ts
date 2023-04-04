@@ -11,11 +11,11 @@ import { faCapsules, faCommentSms, faFlaskVial, faHouseMedical, faSquarePollHori
 export class AdminComponent implements OnInit {
   // faUsers = faUsers;
   locations = [
-    {
+    /* {
       loc: 'account-list',
       name: 'Account List',
       icon: faUsers
-    },
+    }, */
     {
       loc: 'facility-config',
       name: 'Facility Config',
