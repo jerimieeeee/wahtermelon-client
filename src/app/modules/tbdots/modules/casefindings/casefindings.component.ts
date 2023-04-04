@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
-import { faAdd, faSave } from '@fortawesome/free-solid-svg-icons';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { faAdd, faEdit, faSave } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-casefindings',
@@ -9,12 +10,18 @@ import { HttpService } from 'app/shared/services/http.service';
   styleUrls: ['./casefindings.component.scss']
 })
 export class CasefindingsComponent implements OnInit {
+  @Input() patient_id;
+  @Input() consult_id;
+
   faSave = faSave;
   faAdd = faAdd;
+  faEdit = faEdit;
 
   previousTreatmentForm: FormGroup = new FormGroup({
-    previous_treatment: new FormControl<string| null>(''),
-    previous_treatment_date: new FormControl<string| null>(''),
+    id: new FormControl<string| null>(''),
+    patient_id: new FormControl<string| null>(''),
+    outcome_code: new FormControl<string| null>(''),
+    treatment_date: new FormControl<string| null>(''),
   });
 
   casefindingForm: FormGroup = new FormGroup({
@@ -44,11 +51,48 @@ export class CasefindingsComponent implements OnInit {
   });
 
   createForm() {
+    this.previousTreatmentForm = this.formBuilder.nonNullable.group({
+      id: [null],
+      patient_id: [this.patient_id],
+      outcome_code: [null, Validators.required],
+      treatment_date: [null, Validators.required]
+    });
 
+    this.loadPreviousTreatment();
+  }
+
+  identify(index: number, item) {
+    return item.id
+  }
+
+  previous_treatments: any = [];
+
+  loadPreviousTreatment(){
+    let params = {
+      patient_id: this.patient_id,
+      per_page: 'all'
+    };
+
+    this.http.get('tbdots/patient-tb-history', {params}).subscribe({
+      next: (data: any) => {
+        console.log(data);
+        this.previous_treatments = data.data;
+      },
+      error: err => console.log(err)
+    })
   }
 
   savePreviousTreatment(){
-    console.log(this.previousTreatmentForm.value);
+    this.http.post('tbdots/patient-tb-history', this.previousTreatmentForm.value).subscribe({
+      next: (data: any) => {
+        console.log(data);
+      },
+      error: err => console.log(err)
+    });
+  }
+
+  editPreviousTreatment(){
+
   }
 
   saveCase() {
@@ -81,14 +125,16 @@ export class CasefindingsComponent implements OnInit {
         this.treatment_outcomes = data.tb_treatment_outcomes;
 
         this.show_form = true;
-
+        this.createForm();
       },
       error: err => console.log(err)
     });
   }
 
   constructor(
-    private http: HttpService
+    private http: HttpService,
+    private formBuilder: FormBuilder,
+    private toastr: ToastrService
   ) { }
 
   ngOnInit(): void {

@@ -50,7 +50,10 @@
 
 <app-treatment-archive *ngIf="pages === 1"></app-treatment-archive>
 
-<app-casefindings *ngIf="pages === 2 && module === 1"></app-casefindings>
+<app-casefindings *ngIf="pages === 2 && module === 1"
+  [patient_id]="patient_id"
+  [consult_id]="consult_id"
+></app-casefindings>
 
 <app-end-visit *ngIf="show_end" (toggleModal)="toggleModal()"
   [consult_id]="consult_details?.id"

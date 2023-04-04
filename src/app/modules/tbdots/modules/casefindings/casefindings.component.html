@@ -8,15 +8,15 @@
     <form [formGroup]="previousTreatmentForm" (ngSubmit)="savePreviousTreatment()" class="grid grid-cols-3 gap-x-4 w-4/5 mx-auto">
       <div class="mx-5 col-span-3 grid grid-cols-3 gap-x-4">
         <div>
-          <label for="previous_treatment">Treatment Outcome</label>
-          <select name="previous_treatment" id="previous_treatment" formControlName="previous_treatment" class="input">
+          <label for="outcome_code">Treatment Outcome</label>
+          <select name="outcome_code" id="outcome_code" formControlName="outcome_code" class="input">
             <option *ngFor="let outcome of treatment_outcomes" [value]="outcome.code">{{ outcome.desc }}</option>
           </select>
         </div>
 
         <div>
-          <label for="previous_treatment_date">Consultation Date</label>
-          <input type="date" name="previous_treatment_date" id="previous_treatment_date" formControlName="previous_treatment_date" class="input">
+          <label for="treatment_date">Treatment Date</label>
+          <input type="date" name="treatment_date" id="treatment_date" formControlName="treatment_date" class="input">
         </div>
 
         <div>
@@ -38,14 +38,16 @@
           </tr>
         </thead>
         <tbody>
-          <tr class="bg-white border-b">
+          <tr class="bg-white border-b" *ngFor="let previous_treatment of previous_treatments; trackBy:identify"> <!--  -->
             <td class="py-4 px-6">
-              test
+              {{  previous_treatment.outcome.desc }}
             </td>
             <td class="py-4 px-6">
-              test
+              {{ previous_treatment.treatment_date | date:'MM/dd/yyyy' }}
             </td>
             <td class="py-4 px-6">
+              <fa-icon [icon]="faEdit" class="mx-0 my-0 text-orange-400 hover:cursor-pointer flex-none mr-2"></fa-icon>
+
               <!-- <fa-icon (click)="editPhilhealth(philhealth)" class="mx-0 my-0 text-amber-500 hover:cursor-pointer flex-none mr-2" [icon]="faPenToSquare"></fa-icon> -->
             </td>
           </tr>
