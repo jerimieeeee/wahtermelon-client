@@ -65,6 +65,7 @@ export class CasefindingsComponent implements OnInit {
   symptoms: any = [];
   treatment_outcomes: any = [];
 
+  show_form: boolean = false;
   loadLibraries(){
     this.http.get('tbdots/tb-libraries').subscribe({
       next: (data: any) => {
@@ -78,6 +79,8 @@ export class CasefindingsComponent implements OnInit {
         this.risk_factors = data.tb_risk_factors;
         this.symptoms = data.tb_symptoms;
         this.treatment_outcomes = data.tb_treatment_outcomes;
+
+        this.show_form = true;
 
       },
       error: err => console.log(err)
