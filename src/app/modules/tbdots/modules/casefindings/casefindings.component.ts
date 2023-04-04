@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { faAdd, faEdit, faSave, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faAdd, faEdit, faSave, faTrashCan, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -17,6 +17,8 @@ export class CasefindingsComponent implements OnInit {
   faAdd = faAdd;
   faEdit = faEdit;
   faXmark = faXmark;
+  faTrashCan = faTrashCan;
+  modals: any = [];
 
   previousTreatmentForm: FormGroup = new FormGroup({
     id: new FormControl<string| null>(''),
@@ -151,6 +153,28 @@ export class CasefindingsComponent implements OnInit {
       },
       error: err => console.log(err)
     });
+  }
+
+  delete_id: string;
+  delete_desc: string;
+  url: string;
+
+  toggleModal(name, data?){
+    this.modals[name] = !this.modals[name];
+
+    if(name === 'delete-item') {
+      if(this.modals[name] === true) {
+        this.delete_id = data.id;
+        this.delete_desc = "Previous Treatment Record";
+        this.url = "tbdots/patient-tb-history/";
+      } else {
+        this.delete_id = null;
+        this.delete_desc = null;
+        this.url = null;
+
+        this.loadPreviousTreatment();
+      }
+    }
   }
 
   constructor(

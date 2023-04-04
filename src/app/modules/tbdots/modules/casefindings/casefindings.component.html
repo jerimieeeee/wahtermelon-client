@@ -21,7 +21,7 @@
 
         <div>
           <button type="submit" class="bg-blue-500 rounded text-white px-5 py-2 mt-7 text-sm">
-            <fa-icon [icon]="faAdd"></fa-icon>
+            <fa-icon [icon]="previousTreatmentForm.value.id ? faEdit : faAdd"></fa-icon>
             {{ previousTreatmentForm.value.id ? 'Update' : 'Add' }}
           </button>
 
@@ -52,6 +52,7 @@
             </td>
             <td class="py-4 px-6">
               <fa-icon (click)="editPreviousTreatment(previous_treatment)" [icon]="faEdit" class="mx-0 my-0 text-orange-400 hover:cursor-pointer flex-none mr-2"></fa-icon>
+              <fa-icon (click)="toggleModal('delete-item', previous_treatment)" [icon]="faTrashCan" class="mx-0 my-0 text-red-500 hover:cursor-pointer flex-none mr-2"></fa-icon>
 
               <!-- <fa-icon (click)="editPhilhealth(philhealth)" class="mx-0 my-0 text-amber-500 hover:cursor-pointer flex-none mr-2" [icon]="faPenToSquare"></fa-icon> -->
             </td>
@@ -175,3 +176,9 @@
     </form>
   </div>
 </div>
+
+<app-delete-item *ngIf="modals['delete-item']"
+  [delete_id]="delete_id"
+  [delete_desc]="delete_desc"
+  [url]="url"
+  (toggleModal)="toggleModal($event)"></app-delete-item>

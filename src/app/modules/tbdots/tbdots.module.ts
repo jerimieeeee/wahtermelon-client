@@ -14,6 +14,7 @@ import { DotsChartComponent } from './modules/dots-chart/dots-chart.component';
 import { PrescriptionComponent } from './modules/prescription/prescription.component';
 import { EndVisitComponent } from 'app/shared/shared-modals/end-visit/end-visit.component';
 import { TreatmentArchiveComponent } from './modules/treatment-archive/treatment-archive.component';
+import { DeleteItemComponent } from 'app/shared/shared-modals/delete-item/delete-item.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { TreatmentArchiveComponent } from './modules/treatment-archive/treatment
     angularFontawesome.FontAwesomeModule,
     FormsModule,
     ReactiveFormsModule,
-    EndVisitComponent
+    EndVisitComponent,
+    DeleteItemComponent
   ]
 })
 export class TbdotsModule { }
