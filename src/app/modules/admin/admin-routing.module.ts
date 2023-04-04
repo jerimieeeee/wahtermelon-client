@@ -36,7 +36,7 @@ const routes: Routes = [
         loadChildren: () => import('./modules/sms/sms.module').then(m => m.SmsModule)
       },
       {
-        path: 'account-list',
+        path: 'admin-account-list',
         loadChildren: () => import('./modules/account-list/account-list.module').then(m => m.AccountListModule)
       },
       {
