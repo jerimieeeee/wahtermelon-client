@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { faAdd, faEdit, faSave } from '@fortawesome/free-solid-svg-icons';
+import { faAdd, faEdit, faSave, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -16,6 +16,7 @@ export class CasefindingsComponent implements OnInit {
   faSave = faSave;
   faAdd = faAdd;
   faEdit = faEdit;
+  faXmark = faXmark;
 
   previousTreatmentForm: FormGroup = new FormGroup({
     id: new FormControl<string| null>(''),
@@ -79,20 +80,41 @@ export class CasefindingsComponent implements OnInit {
         this.previous_treatments = data.data;
       },
       error: err => console.log(err)
-    })
+    });
   }
 
   savePreviousTreatment(){
-    this.http.post('tbdots/patient-tb-history', this.previousTreatmentForm.value).subscribe({
+    let query;
+
+    if(this.previousTreatmentForm.value.id) {
+      query = this.http.update('tbdots/patient-tb-history/', this.previousTreatmentForm.value.id, this.previousTreatmentForm.value);
+    } else {
+      query = this.http.post('tbdots/patient-tb-history', this.previousTreatmentForm.value);
+    }
+
+    query.subscribe({
       next: (data: any) => {
         console.log(data);
+        this.loadPreviousTreatment();
+        this.previousTreatmentForm.reset();
       },
       error: err => console.log(err)
     });
   }
 
-  editPreviousTreatment(){
+  clearPreviousTreatmentForm(){
+    this.previousTreatmentForm.reset();
+  }
 
+  editPreviousTreatment(data){
+    console.log(data);
+    this.previousTreatmentForm.patchValue({
+      id: data.id,
+      patient_id: data.patient_id,
+      outcome_code: data.outcome.code,
+      treatment_date: data.treatment_date
+    });
+    console.log(this.previousTreatmentForm.value);
   }
 
   saveCase() {
