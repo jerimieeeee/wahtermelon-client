@@ -1,8 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { faAdd, faEdit, faSave, faTrashCan, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faAdd, faEdit, faSave, faSpinner, faTrashCan, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-casefindings',
@@ -18,6 +19,9 @@ export class CasefindingsComponent implements OnInit {
   faEdit = faEdit;
   faXmark = faXmark;
   faTrashCan = faTrashCan;
+  faSpinner = faSpinner;
+
+  is_saving: boolean = false;
   modals: any = [];
 
   previousTreatmentForm: FormGroup = new FormGroup({
@@ -28,12 +32,17 @@ export class CasefindingsComponent implements OnInit {
   });
 
   casefindingForm: FormGroup = new FormGroup({
+    id: new FormControl<string| null>(''),
+    patient_id: new FormControl<string| null>(''),
     patient_source: new FormControl<string| null>(''),
     reg_group: new FormControl<string| null>(''),
     consult_date: new FormControl<string| null>(''),
     previous_tb_treatment: new FormControl<string| null>(''),
     tb_exposure: new FormControl<string| null>(''),
     presumptive_drtb: new FormControl<string| null>(''),
+    C: new FormControl<boolean| false>(false),
+    H: new FormControl<boolean| false>(false),
+    NC: new FormControl<boolean| false>(false),
     symptom: new FormGroup({
       bcpain: new FormControl<boolean| false>(false),
       cough: new FormControl<boolean| false>(false),
@@ -46,10 +55,20 @@ export class CasefindingsComponent implements OnInit {
       wloss: new FormControl<boolean| false>(false),
     }),
     symptom_remarks: new FormControl<string| null>(''),
-    risk_factor: new FormGroup({
-      C: new FormControl<boolean| false>(false),
-      H: new FormControl<boolean| false>(false),
-      NC: new FormControl<boolean| false>(false),
+    physical_exam: new FormGroup({
+      abdomen: new FormControl<string| null>('ND'),
+      amuscles: new FormControl<string| null>('ND'),
+      bcg: new FormControl<string| null>('ND'),
+      cardiovascular: new FormControl<string| null>('ND'),
+      endocrine: new FormControl<string| null>('ND'),
+      extremities: new FormControl<string| null>('ND'),
+      ghealth: new FormControl<string| null>('ND'),
+      gurinary: new FormControl<string| null>('ND'),
+      lnodes: new FormControl<string| null>('ND'),
+      neurological: new FormControl<string| null>('ND'),
+      oropharynx: new FormControl<string| null>('ND'),
+      skin: new FormControl<string| null>('ND'),
+      thoraxlungs: new FormControl<string| null>('ND'),
     })
   });
 
@@ -61,7 +80,48 @@ export class CasefindingsComponent implements OnInit {
       treatment_date: [null, Validators.required]
     });
 
+    this.casefindingForm = this.formBuilder.nonNullable.group({
+      id: [null],
+      patient_id: [this.patient_id],
+      source_code: ['', Validators.required],
+      reg_group_code: ['', Validators.required],
+      consult_date: ['', Validators.required],
+      previous_tb_treatment_code: ['', Validators.required],
+      exposetb_flag: ['', Validators.required],
+      drtb_flag: ['', Validators.required],
+      risk_factor1: [false],
+      risk_factor2: [false],
+      risk_factor3: [false],
+      symptom: this.formBuilder.group({
+        bcpain: [false],
+        cough: [false],
+        drest: [false],
+        dexertion: [false],
+        fever: [false],
+        hemoptysis: [false],
+        nsweats: [false],
+        pedema: [false],
+        wloss: [false],
+      }),
+      symptom_remarks: [null],
+      physical_exam: this.formBuilder.group({
+        abdomen: ['ND', Validators.required],
+        amuscles: ['ND', Validators.required],
+        bcg: ['ND', Validators.required],
+        cardiovascular: ['ND', Validators.required],
+        endocrine: ['ND', Validators.required],
+        extremities: ['ND', Validators.required],
+        ghealth: ['ND', Validators.required],
+        gurinary: ['ND', Validators.required],
+        lnodes: ['ND', Validators.required],
+        neurological: ['ND', Validators.required],
+        oropharynx: ['ND', Validators.required],
+        skin: ['ND', Validators.required],
+        thoraxlungs: ['ND', Validators.required],
+      })
+    });
     this.loadPreviousTreatment();
+    this.loadCaseFinding();
   }
 
   identify(index: number, item) {
@@ -78,8 +138,21 @@ export class CasefindingsComponent implements OnInit {
 
     this.http.get('tbdots/patient-tb-history', {params}).subscribe({
       next: (data: any) => {
-        console.log(data);
         this.previous_treatments = data.data;
+      },
+      error: err => console.log(err)
+    });
+  }
+
+  loadCaseFinding(){
+    let params = {
+      patient_id: this.patient_id,
+      per_page: 'all'
+    };
+
+    this.http.get('tbdots/patient-tb-casefinding', {params}).subscribe({
+      next: (data: any) => {
+        this.casefindingForm.patchValue({...data.data[0]});
       },
       error: err => console.log(err)
     });
@@ -96,7 +169,6 @@ export class CasefindingsComponent implements OnInit {
 
     query.subscribe({
       next: (data: any) => {
-        console.log(data);
         this.loadPreviousTreatment();
         this.previousTreatmentForm.reset();
       },
@@ -109,18 +181,53 @@ export class CasefindingsComponent implements OnInit {
   }
 
   editPreviousTreatment(data){
-    console.log(data);
     this.previousTreatmentForm.patchValue({
       id: data.id,
       patient_id: data.patient_id,
       outcome_code: data.outcome.code,
       treatment_date: data.treatment_date
     });
-    console.log(this.previousTreatmentForm.value);
   }
 
-  saveCase() {
-    console.log(this.casefindingForm.value);
+  saveCaseFindings() {
+    this.is_saving = true;
+    if(this.casefindingForm.dirty) {
+      let query;
+
+      if(this.casefindingForm.value.id) {
+        query = this.http.update('tbdots/patient-tb-casefinding/', this.casefindingForm.value.id, this.casefindingForm.value);
+      } else {
+        query = this.http.post('tbdots/patient-tb-casefinding', this.casefindingForm.value);
+      }
+
+      query.subscribe({
+        next: (data: any) => {
+          let id = this.casefindingForm.value.id ? this.casefindingForm.value.id : data.data.id;
+          this.saveSymptomsPe(id, this.casefindingForm.value.patient_id);
+        },
+        error: err => {console.log(err); this.is_saving = false;}
+      })
+    } else {
+      this.toastr.info('No changes were made.')
+      this.is_saving = false;
+    }
+  }
+
+  saveSymptomsPe(id, patient_id){
+    let paramsSymp = {...this.casefindingForm.value.symptom};
+    paramsSymp['patient_id'] = patient_id;
+    paramsSymp['patient_tb_case_findings_id'] = id;
+    const saveSymptom = this.http.post('tbdots/patient-tb-symptom', paramsSymp);
+
+    let paramsPe = {...this.casefindingForm.value.physical_exam};
+    paramsPe['patient_id'] = patient_id;
+    paramsPe['patient_tb_case_findings_id'] = id;
+    const savePe = this.http.post('tbdots/patient-tb-pe', paramsPe);
+
+    forkJoin([saveSymptom, savePe]).subscribe(([dataSymptom, dataPe]) => {
+      this.is_saving = false;
+      this.toastr.success('Case findings was ' + (this.casefindingForm.value.id ? 'updated' : 'saved') + ' successuly', 'Success')
+    })
   }
 
   answers_yn: any = [];
@@ -137,7 +244,6 @@ export class CasefindingsComponent implements OnInit {
   loadLibraries(){
     this.http.get('tbdots/tb-libraries').subscribe({
       next: (data: any) => {
-        console.log(data);
         this.answers_yn = data.tb_answers_yn
         this.patient_sources = data.tb_patient_sources;
         this.pe_answers = data.tb_pe_answers;
@@ -184,7 +290,6 @@ export class CasefindingsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    console.log('test')
     this.loadLibraries();
   }
 }
