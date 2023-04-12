@@ -9,6 +9,7 @@ import { formatDate } from '@angular/common';
 import { faCircle, faFolder, faStethoscope } from '@fortawesome/free-solid-svg-icons';
 import { faEye, faFolderOpen } from '@fortawesome/free-regular-svg-icons';
 import { VitalsChartsService } from 'app/shared/services/vitals-charts.service';
+import { NameHelperService } from 'app/shared/services/name-helper.service';
 
 @Component({
   selector: 'app-patient-itr',
@@ -85,25 +86,15 @@ export class PatientItrComponent implements OnInit {
   }
 
   getVisitType(group){
-    switch(group){
-      case 'cn':
-        return 'Consultation';
-      case 'cc':
-        return 'Child Care';
-      case 'mc':
-        return 'Maternal Care';
-      case 'dn':
-        return 'Dental';
-      case 'ncd':
-        return 'Non Communicable Disease';
-    }
+    return this.nameHelper.getVisitType(group);
   }
 
   constructor(
     private router: Router,
     private http: HttpService,
     private vitalsCharts: VitalsChartsService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private nameHelper: NameHelperService
   ) { }
 
   navigationEnd$ = this.router.events.pipe(
