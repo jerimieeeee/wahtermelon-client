@@ -80,7 +80,11 @@ const routes: Routes = [
     loadChildren: () => import('./modules/lab/lab.module').then(m => m.LabModule)
   },
   {
-    path: 'patient', loadChildren: () => import('./modules/patient-info/patient-info.module').then(m => m.PatientInfoModule)
+    path: 'patient',
+    loadChildren: () => import('./modules/patient-info/patient-info.module').then(m => m.PatientInfoModule)
+  },
+  { path: 'calendar',
+  loadChildren: () => import('./modules/calendar/calendar.module').then(m => m.CalendarModule)
   }
 ];
 
