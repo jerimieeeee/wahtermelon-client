@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { faDoorClosed, faPersonWalking } from '@fortawesome/free-solid-svg-icons';
+import { faCircleNotch, faDoorClosed, faPersonWalking, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
@@ -14,14 +14,46 @@ export class TbdotsComponent implements OnInit {
 
   faPersonWalking = faPersonWalking;
   faDoorClosed = faDoorClosed;
+  faCircleNotch = faCircleNotch;
 
-  pages: number = 2;
+  pages: number = 1;
   module: number = 1;
   show_end: boolean = false;
+  fetching_history: boolean = true;
 
   consult_details: any;
 
+  patient_tb_history: any = [];
+  selected_tb_consult: any;
+
+  openTbConsult(data) {
+    this.selected_tb_consult = data;
+    if(data.treatment_done === 1) this.consult_details = null;
+    this.pages = 2;
+  }
+
+  getPatientTbHistory(){
+    this.fetching_history = true;
+    let params = {
+      patient_id: this.patient_id,
+      per_page: 'all'
+    };
+
+    this.http.get('tbdots/patient-tb', {params}).subscribe({
+      next: (data: any) => {
+        console.log(data);
+        this.patient_tb_history = data.data;
+        if(this.patient_tb_history[0].treatment_done === 0) this.selected_tb_consult = data.data[0];
+        this.fetching_history = false;
+        this.pages = 2;
+        this.module = 4;
+      },
+      error: err => console.log(err)
+    });
+  }
+
   switchPage(page) {
+    if(page === 1) this.getPatientTbHistory();
     this.pages = page;
   }
 
@@ -41,7 +73,8 @@ export class TbdotsComponent implements OnInit {
 
     this.http.get('consultation/records', {params}).subscribe({
       next: (data: any) => {
-        this.consult_details = data.data[0]
+        this.consult_details = data.data[0];
+        this.getPatientTbHistory();
       },
       error: err => console.log(err)
     });

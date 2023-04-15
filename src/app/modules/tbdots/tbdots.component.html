@@ -48,13 +48,83 @@
   </button>
 </nav>
 
-<app-treatment-archive *ngIf="pages === 1"></app-treatment-archive>
+<div class="my-5 mx-10 border border-gray-200 shadow-md rounded-xl" *ngIf="pages === 1">
+  <div class="flex flex-col" *ngIf="fetching_history">
+    <div class="w-full flex justify-center"><fa-icon [icon]="faCircleNotch" spin="true" class="pt-10"></fa-icon></div>
+    <div class="w-full flex justify-center pb-10 font-semibold">Fetching history...</div>
+  </div>
+  <table class="w-full text-sm text-left" *ngIf="!fetching_history && patient_tb_history">
+    <thead class="text-xs text-white uppercase bg-blue-500">
+      <tr>
+        <th scope="col" class="py-3 px-6">Case Finding Date</th>
+        <th scope="col" class="py-3 px-6">Enrollment Date</th>
+        <th scope="col" class="py-3 px-6">Case number</th>
+        <th scope="col" class="py-3 px-6">Enrolled as</th>
+        <th scope="col" class="py-3 px-6">Treatment outcome</th>
+        <th scope="col" class="py-3 px-6">Treatment status</th>
+        <th scope="col" class="py-3 px-6">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="bg-white border-b" *ngFor="let tb_history of patient_tb_history; let l = count">
+        <td *ngIf="l === 0" colspan="7">
+          <div class="text-center">
+            No records to show...
+          </div>
+        </td>
+        <td class="py-4 px-6" *ngIf="l > 0">
+          {{ tb_history.case_finding.consult_date | date: 'MM/dd/yyyy'}}
+        </td>
+        <td class="py-4 px-6" *ngIf="l > 0">
+          {{ tb_history.case_holding ? (tb_history.case_holding?.registration_date | date: 'MM/dd/yyyy') : '-' }}
+        </td>
+        <td class="py-4 px-6" *ngIf="l > 0">
+          {{ tb_history.case_holding ? tb_history.case_holding?.case_number : '-' }}
+        </td>
+        <td class="py-4 px-6" *ngIf="l > 0">
+          {{ tb_history.case_holding ? tb_history.case_holding?.enroll_as.desc : '-' }}
+        </td>
+        <td class="py-4 px-6" *ngIf="l > 0">
+          {{ tb_history.tb_treatment_outcome ? tb_history.tb_treatment_outcome.desc : '-' }}
+        </td>
+        <td class="py-4 px-6" *ngIf="l > 0">
+          {{ tb_history.treatment_done === 0 ? 'Open' : 'Closed' }}
+        </td>
+        <td class="py-4 px-6" *ngIf="l > 0">
+          <button type="button" class="rounded-md bg-blue-500 text-white py-1 px-2" (click)="openTbConsult(tb_history)">
+            {{ tb_history.treatment_done === 0 ? 'Open' : 'View' }}
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- <app-treatment-archive *ngIf="pages === 1"
+  [patient_id]="patient_id"
+  [consult_id]="consult_id"
+></app-treatment-archive> -->
 
 <app-casefindings *ngIf="pages === 2 && module === 1"
   [patient_id]="patient_id"
   [consult_id]="consult_id"
+  [selected_tb_consult]="selected_tb_consult"
+  (getPatientTbHistory)="getPatientTbHistory()"
 ></app-casefindings>
 
+<app-case-holding *ngIf="pages === 2 && module === 3"
+  [patient_id]="patient_id"
+  [consult_id]="consult_id"
+  [selected_tb_consult]="selected_tb_consult"
+  (getPatientTbHistory)="getPatientTbHistory()"
+></app-case-holding>
+
+<app-dots-chart *ngIf="pages === 2 && module === 4"
+  [patient_id]="patient_id"
+  [consult_id]="consult_id"
+  [selected_tb_consult]="selected_tb_consult"
+  (getPatientTbHistory)="getPatientTbHistory()"
+></app-dots-chart>
 <app-end-visit *ngIf="show_end" (toggleModal)="toggleModal()"
   [consult_id]="consult_details?.id"
   [consult_date]="consult_details?.consult_date"

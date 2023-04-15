@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { faAdd, faEdit, faSave, faSpinner, faTrashCan, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
@@ -11,8 +11,10 @@ import { forkJoin } from 'rxjs';
   styleUrls: ['./casefindings.component.scss']
 })
 export class CasefindingsComponent implements OnInit {
+  @Output() getPatientTbHistory = new EventEmitter<any>();
   @Input() patient_id;
   @Input() consult_id;
+  @Input() selected_tb_consult;
 
   faSave = faSave;
   faAdd = faAdd;
@@ -144,18 +146,21 @@ export class CasefindingsComponent implements OnInit {
     });
   }
 
+  case_finding_id: string;
   loadCaseFinding(){
-    let params = {
-      patient_id: this.patient_id,
-      per_page: 'all'
-    };
-
-    this.http.get('tbdots/patient-tb-casefinding', {params}).subscribe({
-      next: (data: any) => {
-        this.casefindingForm.patchValue({...data.data[0]});
-      },
-      error: err => console.log(err)
-    });
+    if(this.selected_tb_consult) {
+      let data = this.selected_tb_consult;
+      this.case_finding_id = data.case_finding.id;
+      this.casefindingForm.patchValue({...data.case_finding});
+      this.casefindingForm.patchValue({
+        symptom: data.symptom ? {...data.symptom} : null,
+        physical_exam: data.physical_exam ? {...data.physical_exam} : null,
+        id: data.id,
+        source_code: data.case_finding.source_code.code,
+        reg_group_code: data.case_finding.reg_group.code,
+        previous_tb_treatment_code: data.case_finding.previous_tb_treatment_code.code
+      })
+    }
   }
 
   savePreviousTreatment(){
@@ -193,15 +198,16 @@ export class CasefindingsComponent implements OnInit {
     this.is_saving = true;
     if(this.casefindingForm.dirty) {
       let query;
-
+      console.log(this.casefindingForm.value);
       if(this.casefindingForm.value.id) {
-        query = this.http.update('tbdots/patient-tb-casefinding/', this.casefindingForm.value.id, this.casefindingForm.value);
+        query = this.http.update('tbdots/patient-tb-casefinding/', this.case_finding_id, this.casefindingForm.value);
       } else {
-        query = this.http.post('tbdots/patient-tb-casefinding', this.casefindingForm.value);
+        query = this.http.post('tbdots/patient-tb', this.casefindingForm.value);
       }
 
       query.subscribe({
         next: (data: any) => {
+          console.log(data);
           let id = this.casefindingForm.value.id ? this.casefindingForm.value.id : data.data.id;
           this.saveSymptomsPe(id, this.casefindingForm.value.patient_id);
         },
@@ -216,17 +222,19 @@ export class CasefindingsComponent implements OnInit {
   saveSymptomsPe(id, patient_id){
     let paramsSymp = {...this.casefindingForm.value.symptom};
     paramsSymp['patient_id'] = patient_id;
-    paramsSymp['patient_tb_case_findings_id'] = id;
+    paramsSymp['patient_tb_id'] = id;
     const saveSymptom = this.http.post('tbdots/patient-tb-symptom', paramsSymp);
 
     let paramsPe = {...this.casefindingForm.value.physical_exam};
     paramsPe['patient_id'] = patient_id;
-    paramsPe['patient_tb_case_findings_id'] = id;
+    paramsPe['patient_tb_id'] = id;
     const savePe = this.http.post('tbdots/patient-tb-pe', paramsPe);
 
+    console.log(paramsSymp, paramsPe);
     forkJoin([saveSymptom, savePe]).subscribe(([dataSymptom, dataPe]) => {
       this.is_saving = false;
       this.toastr.success('Case findings was ' + (this.casefindingForm.value.id ? 'updated' : 'saved') + ' successuly', 'Success')
+      this.getPatientTbHistory.emit();
     })
   }
 

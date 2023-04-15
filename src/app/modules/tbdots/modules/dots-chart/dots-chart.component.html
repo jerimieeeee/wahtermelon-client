@@ -1,1 +1,35 @@
-<p>dots-chart works!</p>
+<div class="flex flex-nowrap">
+  <div class="flex flex-col pt-10">
+    <div class="text-center font-semibold">
+      Intensive Phase
+    </div>
+    <div>
+      <table>
+        <thead>
+          <tr class="bg-blue-500 text-white">
+            <th></th>
+            <th>Month</th>
+            <th>Year</th>
+            <th class="w-8 font-normal" *ngFor="let day of days">{{ day }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let ip of intensive_phase">
+            <td>
+              <input type="checkbox" class="rounded w-4 h-4 border border-slate-400" />
+            </td>
+            <td>
+              {{ ip.month[1] }}
+            </td>
+            <td>
+              {{ ip.year }}
+            </td>
+            <td *ngFor="let day of days">
+              <input type="checkbox" *ngIf="compareDate(treatment_start, continuation_start, ip.month[0], day, ip.year)" class="rounded w-4 h-4 border border-slate-400" />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
