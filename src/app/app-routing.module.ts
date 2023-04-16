@@ -83,8 +83,9 @@ const routes: Routes = [
     path: 'patient',
     loadChildren: () => import('./modules/patient-info/patient-info.module').then(m => m.PatientInfoModule)
   },
-  { path: 'calendar',
-  loadChildren: () => import('./modules/calendar/calendar.module').then(m => m.CalendarModule)
+  {
+    path: 'calendar',
+    loadChildren: () => import('./modules/calendar-appointment/calendar-appointment.module').then(m => m.CalendarAppointmentModule)
   }
 ];
 
