@@ -19,8 +19,11 @@ export class VaccineModalComponent implements OnInit {
   vaccine_list = Vaccines;
   vaccines: any;
   vaccineForm: any = {
-    vaccine_status: [] ,
-    vaccine_date: []
+    vaccine_status: [],
+    vaccine_date: [],
+    lot_no: [],
+    batch_no: [],
+    facility_name: []
   };
   vaccine_grouped = [];
   showAlert: boolean = false;
@@ -30,6 +33,7 @@ export class VaccineModalComponent implements OnInit {
     private toastr: ToastrService
   ) { }
 
+  covid_array = ['ASTRA', 'JANDJ', 'MODER', 'NOVAV', 'PFIZE', 'SINOP', 'SPUTN'];
   onSubmit(){
     var vax_arr = [];
 
@@ -92,7 +96,7 @@ export class VaccineModalComponent implements OnInit {
             return groups;
         }, {});
 
-        let sort = ["Child Care", "General", "Animal Bite", "NCD", "Maternal Care"]
+        let sort = ["Child Care", "General", "Animal Bite", "NCD", "Maternal Care", "COVID-19"]
         let arranged_group = [];
 
         sort.forEach((item) => {
@@ -125,6 +129,9 @@ export class VaccineModalComponent implements OnInit {
         break
       case 'ncd':
         new_name = 'NCD'
+        break
+      case 'covid':
+        new_name = 'COVID-19'
         break
     }
 
