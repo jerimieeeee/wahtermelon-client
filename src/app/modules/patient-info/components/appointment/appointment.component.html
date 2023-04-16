@@ -1,0 +1,44 @@
+<div class="block justify-items-start mx-5 mb-5 mt-5">
+  <div class="flex justify-between items-center">
+    <span class="block text-blue-500 font-medium text-sm select-none" [ngClass]="{'opacity-70': (appointment_list?.length === 0 || !appointment_list)}">
+      <!-- <fa-icon *ngIf="appointment_list?.length > 0" (click)="toggle('vaccines')" class="mx-0 my-0 mr-2 hover:cursor-pointer" [icon]="accordions['vaccines'] ? faChevronUp : faChevronDown"></fa-icon>
+      <fa-icon *ngIf="appointment_list?.length === 0 || !appointment_list" class="mx-0 my-0 mr-2" [icon]="faMinus"></fa-icon> -->
+      <fa-icon (click)="toggle('appointment')" class="mx-0 my-0 mr-2 hover:cursor-pointer" [icon]="accordions['vaccines'] ? faChevronUp : faChevronDown"></fa-icon>
+      APPOINMENTS {{ appointment_list?.length > 0 ? '('+appointment_list.length+')' : '' }}
+    </span>
+    <fa-icon (click)="modalToggle('appointment-modal')" class="mx-0 my-0 text-blue-500 mr-2 hover:cursor-pointer" [icon]="faPlusCircle"></fa-icon>
+  </div>
+
+  <div *ngIf="!show_appointment" >
+    <div class="p-4 mx-auto">
+      <div class="animate-pulse grid grid-cols-2 gap-x-20 gap-y-4 justify-between">
+        <div class="h-2 bg-slate-200 rounded"></div>
+        <div class="h-2 bg-slate-200 rounded"></div>
+        <div class="h-2 bg-slate-200 rounded"></div>
+        <div class="h-2 bg-slate-200 rounded"></div>
+        <div class="h-2 bg-slate-200 rounded"></div>
+        <div class="h-2 bg-slate-200 rounded"></div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="show_appointment && appointment_list?.length > 0" >
+    <div [@openCloseAccordion] *ngIf="accordions['appointment']" class="block">
+      <!-- <div class="flex pl-3 justify-between items-center mb-5 border-b border-b-gray-100">
+        <span class="font-medium text-xs flex-auto">
+          <span class="font-semibold">IMMUNIZATION STATUS: </span> <br /><span class="font-bold text-l">{{ immunization_status?.immunization_status ?? '-' }}</span>
+        </span>
+      </div> -->
+      <div class="flex pl-3 justify-between items-center mb-3 border-b border-b-gray-100" *ngFor="let appointment of appointment_list">
+
+        <!-- <fa-icon (click)="toggleActionModal('vaccine-action', vaccine)" class="mx-0 my-0 text-amber-400 hover:cursor-pointer flex-none mr-2" [icon]="faPenToSquare"></fa-icon> -->
+        <span class="font-medium text-xs flex-auto">
+          <span class="font-bold">{{ appointment.appointment_code }} </span>
+        </span>
+        <span class="italic text-xs flex-auto text-right">
+          {{ appointment.appointment_date | date: 'MM/dd/yyyy'}}
+        </span>
+      </div>
+    </div>
+  </div>
+</div>

@@ -16,6 +16,7 @@ import { SocialHistoryComponent } from './components/social-history/social-histo
 import { SurgicalHistoryComponent } from './components/surgical-history/surgical-history.component';
 import { VaccineComponent } from './components/vaccine/vaccine.component';
 import { VitalsComponent } from './components/vitals/vitals.component';
+import { AppointmentComponent } from './components/appointment/appointment.component';
 
 @Component({
   selector: 'app-patient-info',
@@ -35,7 +36,7 @@ export class PatientInfoComponent implements OnInit {
   @ViewChild(PregnancyHistoryComponent) pregnancyHistory: PregnancyHistoryComponent;
   @ViewChild(VitalsComponent) vitals: VitalsComponent;
   @ViewChild(PreghistComponent) preghist: PreghistComponent;
-
+  @ViewChild(AppointmentComponent) appointment: AppointmentComponent;
   reloadNCDVitals: EventEmitter<any> = new EventEmitter();
   reloadLabs: EventEmitter<any> = new EventEmitter();
 
@@ -69,6 +70,8 @@ export class PatientInfoComponent implements OnInit {
     if(field === 'menstrual_history'  || field==='all') this.menstrualHistory.loadData(this.patient_info.id);
     if(field === 'pregnancy_history'  || field==='all') this.preghist.loadData(this.patient_info.id);
     if(field === 'vitals'             || field==='all') this.vitals.loadData(this.patient_info.id);
+    if(field === 'appointment'        || field==='all') this.appointment.loadData(this.patient_info.id);
+
 
     if((field === 'laboratory'         || field==='all') && this.active_loc !== 'lab') this.laboratories.loadData(this.patient_info.id);
     if((field === 'prescription'       || field==='all') && this.active_loc !== 'dispensing') this.prescriptions.loadData(this.patient_info.id);

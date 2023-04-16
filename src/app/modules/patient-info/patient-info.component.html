@@ -71,7 +71,7 @@
 
           <app-philhealth (setDetails)="setDetails($event)" (toggleAccordion)="toggleAccordion($event)" (toggleModal)="toggleModal($event)" [accordions]="accordions" ></app-philhealth>
         </div>
-
+        <app-appointment (toggleAccordion)="toggleAccordion($event)" [accordions]="accordions" (toggleModal)="toggleModal($event)"></app-appointment>
         <app-prescriptions  (toggleAccordion)="toggleAccordion($event)" (navigateTo)="navigateTo($event)" [accordions]="accordions" [consult_id]="consult_id" [patient_info]="patient_info"></app-prescriptions>
         <app-laboratory (toggleAccordion)="toggleAccordion($event)" (navigateTo)="navigateTo($event)" [accordions]="accordions" (toggleModal)="toggleModal($event)" (setLabList)="setLabList($event)"></app-laboratory>
 
@@ -122,3 +122,5 @@
 <app-medication-modal *ngIf="modals['medication']" (toggleModal)="toggleModal('medication')"></app-medication-modal>
 <app-death-modal *ngIf="modals['death']" (toggleModal)="toggleModal('death')"></app-death-modal>
 <app-photo-modal *ngIf="modals['photo']" (toggleModal)="toggleModal('photo')" [patient_info]="patient_info"></app-photo-modal>
+
+<app-set-appointment *ngIf="modals['appointment-modal']"></app-set-appointment>

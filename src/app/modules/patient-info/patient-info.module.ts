@@ -44,7 +44,7 @@ import { PreghistComponent } from './components/preghist/preghist.component';
 import { PreghistModalComponent } from './modals/preghist-modal/preghist-modal.component';
 import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 import { LabRequestComponent } from 'app/shared/shared-modals/lab-request/lab-request.component';
-
+import { AppointmentComponent } from './components/appointment/appointment.component';import { SetAppointmentComponent } from './components/appointment/modals/set-appointment/set-appointment.component';
 
 @NgModule({
   declarations: [
@@ -82,7 +82,9 @@ import { LabRequestComponent } from 'app/shared/shared-modals/lab-request/lab-re
     SurgicalActionModalComponent,
     GraphComponent,
     PreghistComponent,
-    PreghistModalComponent
+    PreghistModalComponent,
+    AppointmentComponent,
+    SetAppointmentComponent
   ],
   imports: [
     CommonModule,
