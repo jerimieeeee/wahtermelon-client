@@ -23,10 +23,26 @@ export class TodaysStatsComponent implements OnInit {
       next: (data:any) => {
         // console.log(data);
         this.side_stats = data;
+        this.loadAppointments();
       },
       error: err => console.log(err)
     })
   }
+
+  loadAppointments(){
+    // console.log(this.http.getUserFacility());
+    let params = {
+      facility_code: this.http.getUserFacility()
+    };
+
+    this.http.get('appointment/schedule', {params}).subscribe({
+      next: (data: any) => {
+        console.log(data)
+      },
+      error: err => console.log(err)
+    })
+  }
+
   ngOnInit(): void {
     // console.log(this.cookieService.get('access_token'))
     this.loadStats()

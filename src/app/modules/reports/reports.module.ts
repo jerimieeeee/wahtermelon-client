@@ -11,6 +11,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { HeaderFhsis2018Component } from './components/header-fhsis2018/header-fhsis2018.component';
 import { ExportAsModule } from 'ngx-export-as';
+import { PatientRegisteredComponent } from './report/patient-registered/patient-registered.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { ExportAsModule } from 'ngx-export-as';
     Fhsis2018McComponent,
     Fhsis2018CcComponent,
     NameListComponent,
-    HeaderFhsis2018Component
+    HeaderFhsis2018Component,
+    PatientRegisteredComponent
   ],
   imports: [
     CommonModule,
