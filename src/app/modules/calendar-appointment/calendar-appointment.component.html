@@ -49,3 +49,8 @@
     </div>
   </div>
 </div>
+
+<app-name-list *ngIf="modal['name-list']"
+[name_list]="name_list"
+(toggleModal)="toggleModal()"
+></app-name-list>

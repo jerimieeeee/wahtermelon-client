@@ -7,11 +7,13 @@ import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ReactiveFormsModule } from '@angular/forms';
+import { NameListComponent } from './modals/name-list/name-list.component';
 
 
 @NgModule({
   declarations: [
-    CalendarAppointmentComponent
+    CalendarAppointmentComponent,
+    NameListComponent
   ],
   imports: [
     CommonModule,

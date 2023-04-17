@@ -22,16 +22,17 @@
     </div>
   </div>
 
-  <div *ngIf="show_appointment && appointment_list?.length > 0" >
-    <div [@openCloseAccordion] *ngIf="accordions['appointment']" class="block">
-      <div class="flex pl-3 justify-between items-center mb-3 border-b border-b-gray-100" *ngFor="let appointment of appointment_list">
-
-       <span class="font-medium text-xs flex-auto">
-          <span class="font-bold">{{ appointment.appointment.desc }} </span>
+  <div *ngIf="show_appointment && appointment_list" >
+    <div [@openCloseAccordion] class="block">
+      <div class="flex pl-3 justify-between items-center mb-3 border-b border-b-gray-100" *ngFor="let appointment of appointment_list | keyvalue">
+        <!-- {{ appointment.key }} -->
+       <span class="font-medium text-xs flex flex-col">
+          <span class="font-bold">{{ appointment.key | date: 'MM/dd/yyyy'}} </span>
+          <span class="font-normal pl-3" *ngFor="let val of appointment.value | keyvalue">{{ val.key }} </span>
         </span>
-        <span class="italic text-xs flex-auto text-right">
-          {{ appointment.appointment_date | date: 'MM/dd/yyyy'}}
-        </span>
+        <!-- <span class="flex flex-col italic text-xs text-right" *ngFor="let val of appointment.value | keyvalue">
+          {{ val.key }}
+        </span> -->
       </div>
     </div>
   </div>

@@ -75,10 +75,17 @@ export class CalendarAppointmentComponent implements OnInit {
 
   handleEvent(action: string, event: CalendarEvent): void {
     let result: any = event;
-    console.log(result);
+    console.log(result.data);
+
+    this.name_list = result.data;
+    this.modal['name-list'] = !this.modal['name-list'];
     /* this.list_event = result.data;
     this.modalData = { event, action };
     this.modal.open(this.modalContent, { size: 'lg' }); */
+  }
+
+  toggleModal() {
+    this.modal['name-list'] = !this.modal['name-list'];
   }
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
@@ -94,6 +101,8 @@ export class CalendarAppointmentComponent implements OnInit {
       this.viewDate = date;
     }
   }
+  name_list: any = [];
+  modal: any = [];
 
   loadSchedules(){
     this.activeDayIsOpen = false;
@@ -106,25 +115,22 @@ export class CalendarAppointmentComponent implements OnInit {
       year: this.selected_year,
       per_page: 'all'
     };
-    console.log(this.selected_month, this.selected_year);
 
     this.http.get('appointment/schedule', {params}).subscribe({
       next: (data: any) => {
         console.log(data);
         let list_of_sched:any[] = [];
 
-        Object.entries(data.data).forEach(
+        Object.entries(data[0]).forEach(
         ([key, value]) => {
-          console.log(key, value);
           Object.entries(value).forEach(
-          ([key_facility, value_facility]) => {
-            console.log(value_facility);
-            let count_facility: any = value_facility;
+          ([key_patient, value_patient]) => {
+            let count_patient: any = value_patient;
             let sch: any = {
               start: new Date(key),
-              title: count_facility.length+' - '+key_facility,
+              title: count_patient.length+' - '+key_patient,
               color: colors.yellow,
-              data: count_facility
+              data: count_patient
             }
             list_of_sched.push(sch)
           });
