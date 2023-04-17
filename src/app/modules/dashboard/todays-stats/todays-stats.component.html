@@ -1,29 +1,4 @@
 <div class="block">
-  <!-- Appoinment card-->
-  <div class="mb-4 py-3 px-2 text-gray-600 border border-slate-200 rounded-xl">
-    <div class="border-b-2 border-slate-200 font-semibold text-sm text-left ">Appointment Today</div>
-
-    <div class="mb-3">
-      <div class="mt-3 font-semibold text-sm text-left">
-        -
-      </div>
-      <div class="mb-3 text-xl font-bold text-right text-cyan-400">
-
-      </div>
-    </div>
-
-
-  </div>
-
-  <!-- Birthday celebrator card -->
-  <div class="mb-4 py-3 px-2 text-gray-600 border border-slate-100 rounded-xl">
-    <div class="border-b-2 border-slate-200 font-semibold text-sm text-left ">Birthday Celebrants</div>
-
-    <div class="mt-2 font-semibold text-sm text-left">
-      -
-    </div>
-  </div>
-
   <!-- Stats card -->
   <div class="mb-4 py-3 px-2 text-gray-600 border border-slate-100 rounded-xl">
     <div class="border-b-2 border-slate-200 font-semibold text-sm text-left ">Stats Summary Today</div>
@@ -73,4 +48,34 @@
       </div>
     </div> -->
   </div>
+
+  <!-- Appoinment card-->
+ <!--  <div class="mb-4 py-3 px-2 text-gray-600 border border-slate-200 rounded-xl">
+    <div class="border-b-2 border-slate-200 font-semibold text-sm text-left ">Appointment Today</div>
+
+    <div class="mb-3">
+      <div *ngFor="let list of appointment_list | keyvalue" class="flex flex-col  mt-3 font-semibold text-sm text-left">
+        <span class="font-bold">{{ list.key  }}</span>
+        <span class="pl-3 font-normal" *ngFor="let patient of list.value">
+          <button class="pr-1" (click)="openLink(patient.patient_id)">
+            <fa-icon [icon]="faFolderOpen" class="text-slate-500"></fa-icon>
+          </button>
+          <span class="text-sm hover:cursor-pointer" (click)="openLink(patient.id)">{{ patient.name }}</span>
+        </span>
+      </div>
+    </div>
+
+
+  </div> -->
+
+  <!-- Birthday celebrator card -->
+  <div class="mb-4 py-3 px-2 text-gray-600 border border-slate-100 rounded-xl">
+    <div class="border-b-2 border-slate-200 font-semibold text-sm text-left ">Birthday Celebrants</div>
+
+    <div class="mt-2 font-semibold text-sm text-left">
+      -
+    </div>
+  </div>
+
+
 </div>

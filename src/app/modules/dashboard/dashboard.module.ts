@@ -7,12 +7,14 @@ import { DashboardComponent } from './dashboard.component';
 import { TodaysConsultComponent } from '../dashboard/todays-consult/todays-consult.component';
 import { TodaysStatsComponent } from '../dashboard/todays-stats/todays-stats.component'
 import { FormsModule } from '@angular/forms';
+import { TodaysAppointmentComponent } from './todays-appointment/todays-appointment.component';
 
 @NgModule({
   declarations: [
     DashboardComponent,
     TodaysConsultComponent,
-    TodaysStatsComponent
+    TodaysStatsComponent,
+    TodaysAppointmentComponent
   ],
   imports: [
     CommonModule,

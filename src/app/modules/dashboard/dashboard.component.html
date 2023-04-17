@@ -1,4 +1,7 @@
 <div class="grid grid-cols-11 mt-4 gap-4 w-full">
-  <app-todays-consult class="col-span-12 lg:col-span-9 "></app-todays-consult>
+  <div class="col-span-9 grid grid-cols-1">
+    <app-todays-consult></app-todays-consult>
+    <app-todays-appointment></app-todays-appointment>
+  </div>
   <app-todays-stats class="hidden lg:block lg:col-span-2 lg:overflow-auto"></app-todays-stats>
 </div>
