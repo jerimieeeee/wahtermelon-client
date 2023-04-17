@@ -123,4 +123,4 @@
 <app-death-modal *ngIf="modals['death']" (toggleModal)="toggleModal('death')"></app-death-modal>
 <app-photo-modal *ngIf="modals['photo']" (toggleModal)="toggleModal('photo')" [patient_info]="patient_info"></app-photo-modal>
 
-<app-set-appointment *ngIf="modals['appointment-modal']"></app-set-appointment>
+<app-set-appointment *ngIf="modals['appointment-modal']" (toggleModal)="toggleModal('appointment-modal')" [patient_info]="patient_info"></app-set-appointment>

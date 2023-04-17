@@ -115,9 +115,10 @@ export class CalendarAppointmentComponent implements OnInit {
 
         Object.entries(data.data).forEach(
         ([key, value]) => {
-
+          console.log(key, value);
           Object.entries(value).forEach(
           ([key_facility, value_facility]) => {
+            console.log(value_facility);
             let count_facility: any = value_facility;
             let sch: any = {
               start: new Date(key),

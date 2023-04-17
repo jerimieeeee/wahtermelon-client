@@ -1,5 +1,8 @@
+import { formatDate } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { faChevronDown, faChevronUp, faMinus, faPenToSquare, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+import { HttpService } from 'app/shared/services/http.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-appointment',
@@ -18,7 +21,7 @@ export class AppointmentComponent {
   faPenToSquare = faPenToSquare;
   faMinus = faMinus;
 
-  appointment_list: any;
+  appointment_list: any = [];
 
   show_appointment: boolean = false;
 
@@ -30,7 +33,27 @@ export class AppointmentComponent {
     this.toggleModal.emit(name);
   }
 
+
   loadData(patient_id){
     this.show_appointment = true;
+
+    let params = {
+      patient_id: patient_id,
+      per_page: 'all',
+    };
+    // console.log(this.selected_month, this.selected_year);
+
+    this.http.get('appointment/schedule', {params}).subscribe({
+      next: (data: any) => {
+        console.log(data);
+        this.appointment_list = data.data;
+      },
+      error: err => console.log(err)
+    });
   }
+
+  constructor (
+    private http: HttpService,
+    private toastr: ToastrService
+  ) { }
 }

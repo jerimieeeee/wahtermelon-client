@@ -20,15 +20,15 @@
               <div class="w-full text-sm px-5 py-2 mt-2 flex justify-center">
                 <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
                   <label for="appointment_date">Appoinment date</label>
-                  <input name="appointment_date" id="appointment_date" [(ngModel)]="appointmentForm.appointment_date" type="date" class="input disabled:bg-gray-300">
+                  <input name="appointment_date" id="appointment_date" [min]="min_date" [(ngModel)]="appointmentForm.appointment_date" type="date" class="input disabled:bg-gray-300">
                 </div>
               </div>
 
-              <div class="w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
-                <span>Type of appointment</span>
+              <div class="w-full text-sm grid grid-cols-2 gap-3 px-5 py-2 mt-2">
+                <span class="col-span-2">Type of appointment</span>
                 <div class="col-span-1" *ngFor="let type of appointment_types">
-                  <input type="checkbox" [id]="appointmentForm.appointment[type.code]" class="border border-slate-500 rounded mr-3" [(ngModel)]="appointmentForm.appointment[type.code]">
-                  <label class="font-normal" [attr.for]="appointmentForm.appointment[type.code]">{{ type.desc }}</label>
+                  <input type="checkbox" [id]="appointment[type.code]" class="border border-slate-500 rounded mr-3" [(ngModel)]="appointment[type.code]">
+                  <label class="font-normal" [attr.for]="appointment[type.code]">{{ type.desc }}</label>
                 </div>
               </div>
             </div>

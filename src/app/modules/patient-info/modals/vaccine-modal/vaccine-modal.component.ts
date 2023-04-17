@@ -59,7 +59,7 @@ export class VaccineModalComponent implements OnInit {
         vaccines: vax_arr
       }
 
-      // console.log(vax_form)
+      console.log(vax_form)
 
       this.http.post('patient-vaccines/vaccines', vax_form).subscribe({
         next: () => {

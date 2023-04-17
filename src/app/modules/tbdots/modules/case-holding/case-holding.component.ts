@@ -79,7 +79,7 @@ export class CaseHoldingComponent implements OnInit {
 
   getTreatmentEnd() {
     let date = new Date(this.caseHoldingForm.value.continuation_start);
-    date.setDate(date.getDate()+112);
+    date.setDate(date.getDate()+111);
     this.caseHoldingForm.patchValue({
       treatment_end: formatDate(date, 'yyyy-MM-dd', 'en')
     })

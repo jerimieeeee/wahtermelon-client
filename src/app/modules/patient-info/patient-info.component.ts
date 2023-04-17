@@ -136,6 +136,7 @@ export class PatientInfoComponent implements OnInit {
           this.accordions['vitals'] = true;
           this.accordions['lab_request'] = true;
           this.accordions['prescriptions'] = true;
+          this.accordions['appointment'] = true;
         },
         error: err => {
           // feature: add prompt that patient is not found. for now redirect to home
