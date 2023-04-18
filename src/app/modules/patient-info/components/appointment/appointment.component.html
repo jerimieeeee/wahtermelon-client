@@ -1,9 +1,7 @@
 <div class="block justify-items-start mx-5 mb-5 mt-5">
   <div class="flex justify-between items-center">
     <span class="block text-blue-500 font-medium text-sm select-none" [ngClass]="{'opacity-70': (appointment_list?.length === 0 || !appointment_list)}">
-      <!-- <fa-icon *ngIf="appointment_list?.length > 0" (click)="toggle('vaccines')" class="mx-0 my-0 mr-2 hover:cursor-pointer" [icon]="accordions['vaccines'] ? faChevronUp : faChevronDown"></fa-icon>
-      <fa-icon *ngIf="appointment_list?.length === 0 || !appointment_list" class="mx-0 my-0 mr-2" [icon]="faMinus"></fa-icon> -->
-      <fa-icon (click)="toggle('appointment')" class="mx-0 my-0 mr-2 hover:cursor-pointer" [icon]="accordions['vaccines'] ? faChevronUp : faChevronDown"></fa-icon>
+      <fa-icon (click)="toggle('appointment')" class="mx-0 my-0 mr-2 hover:cursor-pointer" [icon]="accordions['appointment'] ? faChevronUp : faChevronDown"></fa-icon>
       APPOINMENTS {{ appointment_list?.length > 0 ? '('+appointment_list.length+')' : '' }}
     </span>
     <fa-icon (click)="modalToggle('appointment-modal')" class="mx-0 my-0 text-blue-500 mr-2 hover:cursor-pointer" [icon]="faPlusCircle"></fa-icon>
@@ -23,16 +21,12 @@
   </div>
 
   <div *ngIf="show_appointment && appointment_list" >
-    <div [@openCloseAccordion] class="block">
+    <div [@openCloseAccordion] *ngIf="accordions['appointment']" class="block">
       <div class="flex pl-3 justify-between items-center mb-3 border-b border-b-gray-100" *ngFor="let appointment of appointment_list | keyvalue">
-        <!-- {{ appointment.key }} -->
        <span class="font-medium text-xs flex flex-col">
           <span class="font-bold">{{ appointment.key | date: 'MM/dd/yyyy'}} </span>
           <span class="font-normal pl-3" *ngFor="let val of appointment.value">{{ val.appointment_desc }} </span>
         </span>
-        <!-- <span class="flex flex-col italic text-xs text-right" *ngFor="let val of appointment.value | keyvalue">
-          {{ val.key }}
-        </span> -->
       </div>
     </div>
   </div>
