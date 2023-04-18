@@ -28,7 +28,7 @@
         <!-- {{ appointment.key }} -->
        <span class="font-medium text-xs flex flex-col">
           <span class="font-bold">{{ appointment.key | date: 'MM/dd/yyyy'}} </span>
-          <span class="font-normal pl-3" *ngFor="let val of appointment.value | keyvalue">{{ val.key }} </span>
+          <span class="font-normal pl-3" *ngFor="let val of appointment.value">{{ val.appointment_desc }} </span>
         </span>
         <!-- <span class="flex flex-col italic text-xs text-right" *ngFor="let val of appointment.value | keyvalue">
           {{ val.key }}
