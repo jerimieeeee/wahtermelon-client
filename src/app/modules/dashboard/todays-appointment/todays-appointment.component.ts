@@ -1,6 +1,7 @@
 import { formatDate } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
@@ -9,7 +10,9 @@ import { HttpService } from 'app/shared/services/http.service';
   styleUrls: ['./todays-appointment.component.scss']
 })
 export class TodaysAppointmentComponent implements OnInit {
-  todays_appointment: any = [];
+  faCircleNotch = faCircleNotch;
+
+  todays_appointment: any;
   show_form: boolean = false;
 
   per_page: number = 5;
@@ -19,6 +22,7 @@ export class TodaysAppointmentComponent implements OnInit {
   to: number;
   total: number;
 
+  today = formatDate(new Date(), 'MM/dd/yyyy', 'en');
   openItr(patient_id, ptgroup, id){
     console.log(patient_id)
     if(ptgroup === 'itr'){
@@ -39,32 +43,12 @@ export class TodaysAppointmentComponent implements OnInit {
     // console.log(params, page, this.current_page)
     this.http.get('appointment/schedule', params).subscribe({
       next: (data: any) => {
-        // console.log(data);
         this.todays_appointment = data[0];
+        // console.log(this.todays_appointment && this.todays_appointment?.length === 0);
         this.show_form = true;
-
-        /* this.current_page = data.meta.current_page;
-        this.last_page = data.meta.last_page;
-        this.from = data.meta.from;
-        this.to = data.meta.to;
-        this.total = data.meta.total; */
       },
       error: err => console.log(err)
     })
-
-    /* let params = {
-      facility_code: this.http.getUserFacility()
-    };
-
-    this.http.get('appointment/schedule', {params}).subscribe({
-      next: (data: any) => {
-        console.log(data[0])
-        this.todays_appointment = data[0];
-        this.show_form = true;
-        console.log(this.todays_appointment)
-      },
-      error: err => console.log(err)
-    }) */
   }
 
   constructor (
