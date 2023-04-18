@@ -1,7 +1,7 @@
 import { formatDate } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
+import { faAnglesLeft, faAnglesRight, faChevronLeft, faChevronRight, faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
@@ -11,6 +11,10 @@ import { HttpService } from 'app/shared/services/http.service';
 })
 export class TodaysAppointmentComponent implements OnInit {
   faCircleNotch = faCircleNotch;
+  faAnglesLeft = faAnglesLeft;
+  faChevronLeft = faChevronLeft;
+  faChevronRight = faChevronRight;
+  faAnglesRight = faAnglesRight;
 
   todays_appointment: any;
   show_form: boolean = false;
@@ -24,7 +28,7 @@ export class TodaysAppointmentComponent implements OnInit {
 
   today = formatDate(new Date(), 'MM/dd/yyyy', 'en');
   openItr(patient_id, ptgroup, id){
-    console.log(patient_id)
+    // console.log(patient_id)
     if(ptgroup === 'itr'){
       this.router.navigate(['/patient/'+ptgroup, {id: patient_id}]);
     } else {
@@ -43,8 +47,16 @@ export class TodaysAppointmentComponent implements OnInit {
     // console.log(params, page, this.current_page)
     this.http.get('appointment/schedule', params).subscribe({
       next: (data: any) => {
-        this.todays_appointment = data[0];
+
+        this.todays_appointment = data[0].data;
+        console.log(data[0])
         // console.log(this.todays_appointment && this.todays_appointment?.length === 0);
+
+        this.current_page = data[0].current_page;
+        this.last_page = data[0].last_page;
+        this.from = data[0].from;
+        this.to = data[0].to;
+        this.total = data[0].total;
         this.show_form = true;
       },
       error: err => console.log(err)
