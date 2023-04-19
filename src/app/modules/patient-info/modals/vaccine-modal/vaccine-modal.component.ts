@@ -43,7 +43,10 @@ export class VaccineModalComponent implements OnInit {
         let vacc = {
           vaccine_id: key,
           vaccine_date: this.vaccineForm.vaccine_date[key] ? this.vaccineForm.vaccine_date[key] : null,
-          status_id: value
+          status_id: value,
+          lot_no: this.vaccineForm.lot_no[key] ? this.vaccineForm.lot_no[key] : null,
+          batch_no: this.vaccineForm.batch_no[key] ? this.vaccineForm.batch_no[key] : null,
+          facility_name: this.vaccineForm.facility_name[key] ? this.vaccineForm.facility_name[key] : null,
         };
 
         vax_arr.push(vacc);
