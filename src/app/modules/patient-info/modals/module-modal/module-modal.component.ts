@@ -68,7 +68,7 @@ export class ModuleModalComponent implements OnInit {
     },
     'Others': {
       modules: {
-        tb: {
+        /* tb: {
           name: 'Tuberculosis',
           location: 'tb',
           group: 'tb',
@@ -79,13 +79,13 @@ export class ModuleModalComponent implements OnInit {
           location: 'ncd',
           group: 'ncd',
           consult_active: false
-        },
+        }, */
       }
     }
   };
 
   itr = { name: 'Patient ITR', location: 'itr', group: '', consult_active: false };
-  lab = { name: 'Laboratory', location: 'lab', group: '', consult_active: false };
+  // lab = { name: 'Laboratory', location: 'lab', group: '', consult_active: false };
   cn = { name: 'Consultation', location: 'cn', group: 'cn', consult_active: false};
   mc = { name: 'Maternal Care', location: 'mc', group: 'mc', consult_active: false };
   cc = { name: 'Child Care', location: 'cc', group: 'cc', consult_active: false };
