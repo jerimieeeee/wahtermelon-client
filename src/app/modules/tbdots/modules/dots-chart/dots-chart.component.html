@@ -1,5 +1,5 @@
-<div class="flex flex-nowrap">
-  <div class="flex flex-col pt-10">
+<div class="flex overflow-x-auto">
+  <div class="flex flex-col p-5 mt-10 border border-slate-200 rouned-md shadow-md">
     <div class="text-center font-semibold">
       Intensive Phase
     </div>
@@ -8,28 +8,91 @@
         <thead>
           <tr class="bg-blue-500 text-white">
             <th></th>
-            <th>Month</th>
-            <th>Year</th>
-            <th class="w-8 font-normal" *ngFor="let day of days">{{ day }}</th>
+            <th class="px-2">Month</th>
+            <th class="px-2">Year</th>
+            <th class="w-12 font-normal px-1"  *ngFor="let day of days">{{ day }}</th>
+            <!-- <th class="px-1" >Days</th> -->
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let ip of intensive_phase">
+          <tr *ngFor="let ip of intensive_phase; let i = index">
             <td>
-              <input type="checkbox" class="rounded w-4 h-4 border border-slate-400" />
+              <input type="checkbox"
+              [(ngModel)]="intensiveAll[i]"
+              (click)="checkAll('ip', i)"
+              class="rounded w-4 h-4 border border-slate-400" />
             </td>
-            <td>
+            <td class="px-2">
               {{ ip.month[1] }}
             </td>
-            <td>
+            <td class="px-2">
               {{ ip.year }}
             </td>
-            <td *ngFor="let day of days">
-              <input type="checkbox" *ngIf="compareDate(treatment_start, continuation_start, ip.month[0], day, ip.year)" class="rounded w-4 h-4 border border-slate-400" />
+            <td *ngFor="let day of days" class="px-1">
+              <input type="checkbox"
+                *ngIf="compareDate(treatment_start, continuation_start, ip.month[0], day, ip.year, 'ip', i)"
+                [(ngModel)]="intensiveForm[i+'-'+ip.year+'-'+ip.month[0].toString().padStart(2, '0')+'-'+day.toString().padStart(2, '0')]"
+                class="rounded w-4 h-4 border border-slate-400" />
             </td>
+            <!-- <td class="text-center">
+              {{ ip_count[i] }}
+            </td> -->
           </tr>
         </tbody>
       </table>
     </div>
   </div>
+</div>
+
+<div class="flex overflow-x-auto ">
+  <div class="flex flex-col p-5 mt-10 border border-slate-200 rouned-md shadow-md">
+    <div class="text-center font-semibold">
+      Continuation Phase
+    </div>
+    <div>
+      <table>
+        <thead>
+          <tr class="bg-blue-500 text-white">
+            <th></th>
+            <th class="px-2">Month</th>
+            <th class="px-2">Year</th>
+            <th class="w-12 font-normal px-1" *ngFor="let day of days">{{ day }}</th>
+            <!-- <th class="px-1" >Days</th> -->
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let cp of continuation_phase; let i = index">
+            <td>
+              <input type="checkbox"
+              [(ngModel)]="continuationAll[i]"
+              (click)="checkAll('cp', i)"
+              class="rounded w-4 h-4 border border-slate-400" />
+            </td>
+            <td class="px-2">
+              {{ cp.month[1] }}
+            </td>
+            <td class="px-2">
+              {{ cp.year }}
+            </td>
+            <td *ngFor="let day of days" class="px-1">
+              <input type="checkbox"
+              *ngIf="compareDate(continuation_start, treatment_end, cp.month[0], day, cp.year, 'cp', i)"
+              [(ngModel)]="continuationForm[i+'-'+cp.year+'-'+cp.month[0].toString().padStart(2, '0')+'-'+day.toString().padStart(2, '0')]"
+              class="rounded w-4 h-4 border border-slate-400" />
+            </td>
+            <!-- <td class="text-center">
+              {{ cp_count[i] }}
+            </td> -->
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="flex justify-center mt-5">
+  <button [disabled]="is_saving" type="button" (click)="onSubmit()" class="btn-save mr-5 mt-4">
+    <fa-icon [icon]="is_saving ? faCircleNotch : faSave" [spin]="is_saving ? true : false" class="mr-2"></fa-icon>
+    {{ intensiveForm ? (is_saving ? 'Updating' : 'Update') : (is_saving ? 'Saving' : 'Save') }}
+  </button>
 </div>

@@ -72,8 +72,14 @@
   <div class="mb-4 py-3 px-2 text-gray-600 border border-slate-100 rounded-xl">
     <div class="border-b-2 border-slate-200 font-semibold text-sm text-left ">Birthday Celebrants</div>
 
-    <div class="mt-2 font-semibold text-sm text-left">
-      -
+    <span class="pt-3 font-semibold"  *ngIf="side_stats?.user_birthdate.length > 0">Staff</span>
+    <div class="text-left pl-1 font-normal text-xs" *ngFor="let user of side_stats?.user_birthdate">
+      {{ user.name }}
+    </div>
+
+    <span class="pt-3 font-semibold" *ngIf="side_stats?.patient_birthdate.length > 0">Patient</span>
+    <div class="text-left pl-1 font-normal text-xs" *ngFor="let pat of side_stats?.patient_birthdate">
+      {{ pat.name }}
     </div>
   </div>
 
