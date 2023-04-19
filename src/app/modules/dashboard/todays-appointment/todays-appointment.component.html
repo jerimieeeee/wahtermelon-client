@@ -1,12 +1,12 @@
-<div class="px-4 py-2 mb-10 rounded-xl text-gray-600 h-100 border border-slate-100">
-  <div class="md:flex md:justify-between md:items-center pb-2 border-b-2">
-    <span class="font-semibold pt-2" [ngClass]="{'text-blue-500':todays_appointment?.length === 0}">Todays Appointment ({{ today }})</span>
+<div class="mb-10  text-gray-600 h-100 border border-slate-200 shadow-md rounded-md">
+  <div class="md:flex md:justify-between md:items-center pb-2 border-b-2 bg-blue-500 text-white rounded-t-md">
+    <span class="font-semibold pt-2 pl-5">Todays Appointment ({{ today }})</span>
   </div>
 
-  <div class="pt-3" *ngIf="show_form">
-    <div class="flex justify-between mb-3  pb-3 border-b border-gray-200" *ngFor="let patient of todays_appointment | keyvalue">
+  <div class="p-5" *ngIf="show_form">
+    <div class="flex justify-between border-b border-gray-100" *ngFor="let patient of todays_appointment | keyvalue">
       <div class="flex w-3/5">
-        <div class="flex justify-center text-blue-500 md:block leading-tight align-top mx-2 my-1 w-full p-1 rounded-md">
+        <div class="flex justify-center text-gray-700 md:block leading-tight align-top my-1 w-full p-1 rounded-md">
           <span class="w-full font-medium my-0 text-sm rounded-md py-2 px-3 hover:cursor-pointer hover:bg-blue-500 hover:text-white" (click)="openItr(patient.value[0].patient_id, 'itr')" >
             {{ patient.key }}
           </span>
@@ -34,7 +34,7 @@
   </div>
 
   <div *ngIf="total >= 1">
-    <div class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
+    <div class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6 rounded-b-md">
       <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
         <div>
           <p class="text-sm text-gray-700">
