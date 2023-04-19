@@ -5,7 +5,7 @@
       <!-- Modal header -->
       <div class="flex justify-between items-start py-3 px-5 rounded-t border-b bg-blue-500 dark:border-gray-600">
         <h3 class="mt-2 text-sm font-bold text-white dark:text-white">
-          List of patients
+          List of patients {{ name_list[0].appointment_date | date: 'MM/dd/yyyy' }}
         </h3>
       </div>
       <!-- Modal body -->
@@ -15,12 +15,18 @@
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
               <tr>
                 <th scope="col" class="py-3 px-6">Name</th>
+                <th scope="col" class="py-3 px-6">Appointment Type</th>
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let list of name_list" class="bg-white border-b">
                 <td class="py-4 px-6">
-                  {{ list.name }}
+                  <button (click)="openItr(list.patient_id)" class="hover:cursor-pointer hover:text-white hover:bg-blue-500 px-3 py-2 rounded-md">
+                    {{ list.name }}
+                  </button>
+                </td>
+                <td class="py-4 px-6">
+                  {{ list.appointment_desc }}
                 </td>
               </tr>
             </tbody>
