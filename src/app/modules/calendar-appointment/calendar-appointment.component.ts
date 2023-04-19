@@ -38,50 +38,18 @@ export class CalendarAppointmentComponent implements OnInit {
   calendar_loading: boolean = false;
   activeDayIsOpen: boolean = false;
 
-  events: CalendarEvent[] = [
-    /* {
-      title: 'Editable event',
-      color: colors.yellow,
-      start: new Date(),
-      actions: [
-        {
-          label: 'test',
-          onClick: (): void => {
-            console.log('Edit event');
-          },
-        },
-      ],
-    },
-    {
-      title: 'Deletable event',
-      color: colors.blue,
-      start: new Date(),
-      actions: [
-        {
-          label: '<i class="fas fa-fw fa-trash-alt"></i>',
-          onClick: ({ event }: { event: CalendarEvent }): void => {
-            this.events = this.events.filter((iEvent) => iEvent !== event);
-            console.log('Event deleted', event);
-          },
-        },
-      ],
-    },
-    {
-      title: 'Non editable and deletable event',
-      color: colors.red,
-      start: new Date(),
-    }, */
-  ];
+  events: CalendarEvent[] = [];
 
   handleEvent(action: string, event: CalendarEvent): void {
     let result: any = event;
-    console.log(result.data);
-
-    this.name_list = result.data;
-    this.modal['name-list'] = !this.modal['name-list'];
-    /* this.list_event = result.data;
-    this.modalData = { event, action };
-    this.modal.open(this.modalContent, { size: 'lg' }); */
+    // console.log(result)
+    if(result.data){
+      this.name_list = result.data ? result.data : result.day.events[0].data;
+      this.modal['name-list'] = !this.modal['name-list'];
+    } else if(result.day.events.length > 0) {
+      this.name_list = result.day.events[0].data;
+      this.modal['name-list'] = !this.modal['name-list'];
+    }
   }
 
   toggleModal() {
@@ -123,17 +91,14 @@ export class CalendarAppointmentComponent implements OnInit {
 
         Object.entries(data[0]).forEach(
         ([key, value]) => {
-          Object.entries(value).forEach(
-          ([key_patient, value_patient]) => {
-            let count_patient: any = value_patient;
-            let sch: any = {
-              start: new Date(key),
-              title: count_patient.length+' - '+key_patient,
-              color: colors.yellow,
-              data: count_patient
-            }
-            list_of_sched.push(sch)
-          });
+          let val: any = value;
+          let sch: any = {
+            start: new Date(key),
+            title: val.length,
+            color: colors.yellow,
+            data: val
+          }
+          list_of_sched.push(sch)
         });
 
         this.calendar_loading = false;

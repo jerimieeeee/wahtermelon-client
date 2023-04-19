@@ -32,8 +32,9 @@
         *ngSwitchCase="'month'"
         [viewDate]="viewDate"
         [events]="events"
-        [activeDayIsOpen]="activeDayIsOpen"
-        (dayClicked)="dayClicked($event.day)"
+        [cellTemplate]="customCellTemplate"
+
+        (dayClicked)="handleEvent('Clicked', $event)"
         (eventClicked)="handleEvent('Clicked', $event.event)"
       >
       </mwl-calendar-month-view>
@@ -49,6 +50,19 @@
     </div>
   </div>
 </div>
+
+<ng-template #customCellTemplate let-day="day" let-locale="locale">
+  <div class="cal-cell-top">
+    <span class="cal-day-badge" *ngIf="day.badgeTotal > 0">
+      {{ day.events[0].data.length }}
+    </span>
+    <span class="cal-day-number">
+      {{ day.date | calendarDate:'monthViewDayNumber':locale }}
+    </span>
+  </div>
+</ng-template>
+<!-- [activeDayIsOpen]="activeDayIsOpen"
+(dayClicked)="dayClicked($event.day)"-->
 
 <app-name-list *ngIf="modal['name-list']"
 [name_list]="name_list"
