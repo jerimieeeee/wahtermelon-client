@@ -1,15 +1,14 @@
-import { formatDate } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { faAnglesLeft, faAnglesRight, faChevronLeft, faChevronRight, faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
-  selector: 'app-todays-appointment',
-  templateUrl: './todays-appointment.component.html',
-  styleUrls: ['./todays-appointment.component.scss']
+  selector: 'app-todays-referral',
+  templateUrl: './todays-referral.component.html',
+  styleUrls: ['./todays-referral.component.scss']
 })
-export class TodaysAppointmentComponent implements OnInit {
+export class TodaysReferralComponent implements OnInit {
   @Input() date_today;
   faCircleNotch = faCircleNotch;
   faAnglesLeft = faAnglesLeft;
@@ -41,16 +40,15 @@ export class TodaysAppointmentComponent implements OnInit {
     this.show_form = false;
     let params = {params: { }};
     params['params']['page'] = !page ? this.current_page : page;
-    params['params']['facility_code'] = this.http.getUserFacility();
+    params['params']['referral_facility_code'] = this.http.getUserFacility();
     params['params']['per_page'] = this.per_page;
     params['params']['consult_done'] = 0;
 
-    // console.log(params, page, this.current_page)
+    console.log(params)
     this.http.get('appointment/schedule', params).subscribe({
       next: (data: any) => {
-
+        console.log(data)
         this.todays_appointment = data[0].data;
-        console.log(this.todays_appointment)
         // this.appointment_length = Object.keys(this.todays_appointment).length;
         // console.log(Object.keys(this.todays_appointment))
         // console.log(this.todays_appointment && this.todays_appointment?.length === 0);

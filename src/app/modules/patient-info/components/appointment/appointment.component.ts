@@ -46,7 +46,7 @@ export class AppointmentComponent {
     this.http.get('appointment/schedule', {params}).subscribe({
       next: (data: any) => {
         this.appointment_list = data[0];
-        // console.log(this.appointment_list);
+        console.log(this.appointment_list);
       },
       error: err => console.log(err)
     });

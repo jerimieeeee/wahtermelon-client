@@ -13,7 +13,7 @@ export class VisitDetailsComponent implements OnChanges {
   comps: any = [];
 
   openVisit(details: any){
-    console.log(details)
+    // console.log(details)
     let consult_id = details.id;
     let patient_id = details.patient.id; //details.pt_group === 'cc' ? details.patient_id : details.patient.id;
 

@@ -1,0 +1,68 @@
+<div id="defaultModal" tabindex="-1" class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 w-full md:inset-0 h-modal md:h-full justify-center items-center flex" aria-modal="true" role="dialog" style="z-index:60">
+  <div class="relative p-4 w-full max-w-3xl h-auto md:h-auto">
+    <!-- Modal content -->
+    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+      <!-- Modal header -->
+      <div class="flex justify-between items-start py-3 px-5 rounded-t border-b bg-blue-500 dark:border-gray-600">
+        <h3 class="mt-2 text-sm font-bold text-white dark:text-white">
+            Referral
+        </h3>
+      </div>
+      <!-- Modal body -->
+      <div class="overflow-y-auto h-96 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
+        <form [formGroup]="referralForm" (submit)="onSubmit()" class="w-full max-w-3xl text-left text-gray-500 dark:text-gray-400">
+          <div class="p-5">
+            <div class="grid grid-cols-8">
+              <div class="col-span-8">
+                <label for="appointment_date">Appointment Date</label>
+                <input type="date" name="appointment_date" id="appointment_date" [min]="max_date" formControlName="appointment_date" class="input">
+              </div>
+
+              <div class="col-span-8">
+                <label for="region" class="input-label">Region</label>
+                <select id="region" name="region" formControlName="region" class="input disabled:bg-gray-300" (change)="loadDemog('regions', referralForm.value.region, 'provinces')">
+                  <option value="0" selected>- Choose Region -</option>
+                  <option *ngFor="let region of regions" [value]="region.code" >{{ region.name }}</option>
+                </select>
+              </div>
+
+              <div class="col-span-8">
+                <label for="province" class="input-label">Province</label>
+                <select id="province" name="province" formControlName="province" class="first:italic input disabled:bg-gray-300" (change)="loadDemog('provinces', referralForm.value.province, 'municipalities')">
+                  <option value="0" selected>- Choose Province -</option>
+                  <option *ngFor="let province of provinces" [value]="province.code" >{{ province.name }}</option>
+                </select>
+              </div>
+
+              <div class="col-span-8" >
+                <label for="municipality" class="input-label">Municipality</label>
+                <select id="municipality" name="municipality" formControlName="municipality" class="input disabled:bg-gray-300" (change)="loadFacilities(referralForm.value.municipality)">
+                  <option value="0" selected>- Choose Municipality/City -</option>
+                  <option *ngFor="let mun of municipalities" [value]="mun.code" >{{ mun.name }}</option>
+                </select>
+              </div>
+
+              <div class="col-span-8">
+                <label for="referral_facility_code" class="input-label">Refer to</label>
+                <select id="referral_facility_code" name="referral_facility_code" class="input disabled:bg-gray-300" formControlName="referral_facility_code">
+                  <option value="0" selected>- Choose Facility -</option>
+                  <option [value]="facility.code"*ngFor="let facility of facilities" >{{ facility.facility_name }} ({{ facility.health_facility_type }})</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="flex justify-end py-4 px-5 space-x-4 rounded-b border-t border-gray-200 dark:border-gray-600">
+        <button type="button" class="btn-save bg-gray-400" (click)="closeModal()">Close</button>
+        <button [disabled]="is_saving || referralForm.invalid" type="submit" class="btn-save px-10 disabled:bg-gray-300" (click)="onSubmit()" >
+          {{ is_saving ? 'Saving' : 'Save' }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="opacity-50 fixed inset-0 z-50 bg-black"></div>

@@ -25,7 +25,14 @@
       <div class="flex pl-3 justify-between items-center mb-3 border-b border-b-gray-100" *ngFor="let appointment of appointment_list | keyvalue">
        <span class="font-medium text-xs flex flex-col">
           <span class="font-bold">{{ appointment.key | date: 'MM/dd/yyyy'}} </span>
-          <span class="font-normal pl-3" *ngFor="let val of appointment.value">{{ val.appointment_desc }} </span>
+          <span class="font-normal pl-3" *ngFor="let val of appointment.value">
+            <span *ngIf="!val.referral_facility">
+              {{ val.appointment_desc }}
+            </span>
+            <span  class="text-orange-500 font-medium italic" *ngIf="val.referral_facility">
+              <strong>Referred to:</strong> {{ val.referral_facility }}
+            </span>
+          </span>
         </span>
       </div>
     </div>

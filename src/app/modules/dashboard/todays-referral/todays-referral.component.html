@@ -1,6 +1,6 @@
 <div class="mb-10  text-gray-600 h-100 border border-slate-200 shadow-md rounded-md">
-  <div class="md:flex md:justify-between md:items-center pb-2 bg-blue-500 text-white rounded-t-md">
-    <span class="font-semibold pt-2 pl-5">Todays Appointment ({{ date_today }})</span>
+  <div class="md:flex md:justify-between md:items-center pb-2 bg-rose-500 text-white rounded-t-md">
+    <span class="font-semibold pt-2 pl-5">Referrals</span>
   </div>
 
   <div class="p-3" *ngIf="show_form">
@@ -15,7 +15,7 @@
 
       <div class="grid grid-cols-12 text-left w-2/5">
         <div *ngFor="let apt of patient.value | keyvalue" class="col-span-12 text-gray-700 hover:bg-green-500 hover:text-white hover:cursor-pointer p-3 rounded-md text-[.85em]" (click)="openItr(apt.value.patient_id, 'itr')">
-          {{ apt.value.appointment_desc }}
+          Referral Date: {{ apt.value.appointment_date | date: 'MM/dd/yyyy' }}
         </div>
       </div>
     </div>

@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnInit, ViewChild } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { faCamera, faClipboardUser, faExclamationCircle, faFlask, faHeart, faNotesMedical, faPenSquare } from '@fortawesome/free-solid-svg-icons';
+import { faBuildingCircleArrowRight, faCamera, faClipboardUser, faExclamationCircle, faFlask, faHeart, faNotesMedical, faPenSquare, faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 import { AgeService } from 'app/shared/services/age.service';
 import { HttpService } from 'app/shared/services/http.service';
 import { filter, tap } from 'rxjs/operators';
@@ -88,6 +88,7 @@ export class PatientInfoComponent implements OnInit {
   faPenSquare = faPenSquare;
   faClipboardUser = faClipboardUser;
   faCamera = faCamera;
+  faBuildingCircleArrowRight = faBuildingCircleArrowRight;
 
   show_form: boolean = false;
   show_vitals: boolean = false;
