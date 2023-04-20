@@ -16,7 +16,7 @@
 
         <div>
           <label for="treatment_date">Treatment Date</label>
-          <input type="date" name="treatment_date" id="treatment_date" formControlName="treatment_date" class="input">
+          <input type="date" name="treatment_date" id="treatment_date" [max]="max_date" formControlName="treatment_date" class="input">
         </div>
 
         <div>
@@ -91,7 +91,7 @@
 
           <div>
             <label for="consult_date">Consultation Date</label>
-            <input type="date" name="consult_date" id="consult_date" formControlName="consult_date" class="input">
+            <input type="date" name="consult_date" id="consult_date" [max]="max_date" formControlName="consult_date" class="input">
           </div>
         </div>
       </div>
@@ -167,7 +167,7 @@
         </div>
       </div>
 
-      <div class="flex justify-center mt-5">
+      <div class="flex justify-center mt-5" *ngIf="!selected_tb_consult || selected_tb_consult.treatment_done === 0">
         <button [disabled]="casefindingForm.invalid || is_saving" type="submit" class="btn-save mr-5 mt-4">
           <fa-icon [icon]="is_saving ? faSpinner : faSave" [spin]="is_saving ? true : false" class="mr-2"></fa-icon>
           {{ casefindingForm.value.id ? (is_saving ? 'Updating' : 'Update') : (is_saving ? 'Saving' : 'Save') }}

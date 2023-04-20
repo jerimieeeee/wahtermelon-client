@@ -13,8 +13,8 @@ import { CaseHoldingComponent } from './modules/case-holding/case-holding.compon
 import { DotsChartComponent } from './modules/dots-chart/dots-chart.component';
 import { PrescriptionComponent } from './modules/prescription/prescription.component';
 import { EndVisitComponent } from 'app/shared/shared-modals/end-visit/end-visit.component';
-import { TreatmentArchiveComponent } from './modules/treatment-archive/treatment-archive.component';
 import { DeleteItemComponent } from 'app/shared/shared-modals/delete-item/delete-item.component';
+import { TreatmentOutcomeComponent } from './modals/treatment-outcome/treatment-outcome.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +23,7 @@ import { DeleteItemComponent } from 'app/shared/shared-modals/delete-item/delete
     CaseHoldingComponent,
     DotsChartComponent,
     PrescriptionComponent,
-    TreatmentArchiveComponent
+    TreatmentOutcomeComponent
   ],
   imports: [
     CommonModule,

@@ -36,7 +36,7 @@
 
           <div>
             <label for="registration_date" [ngClass]="{'text-red-500': show_error && f.registration_date.errors}">Registration Date</label>
-            <input type="date" name="registration_date" id="registration_date" formControlName="registration_date" class="input" [ngClass]="{'invalid-input': show_error && f.registration_date.errors}">
+            <input type="date" name="registration_date" id="registration_date" [max]="max_date" formControlName="registration_date" class="input" [ngClass]="{'invalid-input': show_error && f.registration_date.errors}">
 
             <div *ngIf="show_error && f.registration_date.errors" class="invalid-alert">
               <div *ngIf="f.registration_date.errors?.['required']">
@@ -187,7 +187,7 @@
         </div>
       </div>
 
-      <div class="flex justify-center mt-5">
+      <div class="flex justify-center mt-5" *ngIf="!selected_tb_consult || selected_tb_consult.treatment_done === 0">
         <button [disabled]="is_saving" type="submit" class="btn-save mr-5 mt-4">
           <fa-icon [icon]="is_saving ? faCircleNotch : faSave" [spin]="is_saving ? true : false" class="mr-2"></fa-icon>
           {{ caseHoldingForm.value.id ? (is_saving ? 'Updating' : 'Update') : (is_saving ? 'Saving' : 'Save') }}

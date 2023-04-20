@@ -1,3 +1,4 @@
+import { formatDate } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { faCircleNotch, faDoorClosed, faPersonWalking, faSpinner } from '@fortawesome/free-solid-svg-icons';
@@ -26,6 +27,7 @@ export class TbdotsComponent implements OnInit {
   patient_tb_history: any = [];
   selected_tb_consult: any;
 
+  max_date = formatDate(new Date(), 'yyyy-MM-dd', 'en');
   openTbConsult(data) {
     this.selected_tb_consult = data;
     if(data.treatment_done === 1) this.consult_details = null;
@@ -33,6 +35,7 @@ export class TbdotsComponent implements OnInit {
   }
 
   getPatientTbHistory(){
+    this.selected_tb_consult = null;
     this.fetching_history = true;
     let params = {
       patient_id: this.patient_id,
@@ -41,12 +44,13 @@ export class TbdotsComponent implements OnInit {
 
     this.http.get('tbdots/patient-tb', {params}).subscribe({
       next: (data: any) => {
-        console.log(data);
+        // console.log(data);
         this.patient_tb_history = data.data;
-        if(this.patient_tb_history[0].treatment_done === 0) this.selected_tb_consult = data.data[0];
+        // console.log(this.patient_tb_history.length);
+        if(this.patient_tb_history[0] && this.patient_tb_history[0].treatment_done === 0) this.selected_tb_consult = data.data[0];
         this.fetching_history = false;
-        this.pages = 1;
-        this.module = 1;
+        /* this.pages = 1;
+        this.module = 1; */
       },
       error: err => console.log(err)
     });
@@ -61,8 +65,12 @@ export class TbdotsComponent implements OnInit {
     this.module = tab;
   }
 
-  toggleModal() {
-    this.show_end = !this.show_end;
+  modals: any = [];
+
+  toggleModal(modal_name) {
+    // console.log(modal_name)
+    this.modals[modal_name] = !this.modals[modal_name];
+    // console.log(this.modals[modal_name])
   }
 
   loadConsult(){

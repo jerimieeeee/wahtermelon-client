@@ -13,8 +13,8 @@ import { forkJoin } from 'rxjs';
 export class CasefindingsComponent implements OnInit {
   @Output() getPatientTbHistory = new EventEmitter<any>();
   @Input() patient_id;
-  @Input() consult_id;
   @Input() selected_tb_consult;
+  @Input() max_date;
 
   faSave = faSave;
   faAdd = faAdd;
@@ -148,6 +148,7 @@ export class CasefindingsComponent implements OnInit {
 
   case_finding_id: string;
   loadCaseFinding(){
+    // console.log(this.selected_tb_consult)
     if(this.selected_tb_consult) {
       let data = this.selected_tb_consult;
       this.case_finding_id = data.case_finding.id;
@@ -198,7 +199,7 @@ export class CasefindingsComponent implements OnInit {
     this.is_saving = true;
     if(this.casefindingForm.dirty) {
       let query;
-      console.log(this.casefindingForm.value);
+
       if(this.casefindingForm.value.id) {
         query = this.http.update('tbdots/patient-tb-casefinding/', this.case_finding_id, this.casefindingForm.value);
       } else {
@@ -207,8 +208,8 @@ export class CasefindingsComponent implements OnInit {
 
       query.subscribe({
         next: (data: any) => {
-          console.log(data);
-          let id = this.casefindingForm.value.id ? this.casefindingForm.value.id : data.data.id;
+          // console.log(data);
+          let id = this.casefindingForm.value.id ? this.casefindingForm.value.id : data.data.patient_tb_id;
           this.saveSymptomsPe(id, this.casefindingForm.value.patient_id);
         },
         error: err => {console.log(err); this.is_saving = false;}
@@ -230,7 +231,6 @@ export class CasefindingsComponent implements OnInit {
     paramsPe['patient_tb_id'] = id;
     const savePe = this.http.post('tbdots/patient-tb-pe', paramsPe);
 
-    console.log(paramsSymp, paramsPe);
     forkJoin([saveSymptom, savePe]).subscribe(([dataSymptom, dataPe]) => {
       this.is_saving = false;
       this.toastr.success('Case findings was ' + (this.casefindingForm.value.id ? 'updated' : 'saved') + ' successuly', 'Success')

@@ -13,8 +13,8 @@ import { ToastrService } from 'ngx-toastr';
 export class CaseHoldingComponent implements OnInit {
   @Output() getPatientTbHistory = new EventEmitter<any>();
   @Input() patient_id;
-  @Input() consult_id;
   @Input() selected_tb_consult;
+  @Input() max_date;
 
   faSave = faSave;
   faAdd = faAdd;
@@ -92,18 +92,19 @@ export class CaseHoldingComponent implements OnInit {
   loadCaseHolding(){
     if(this.selected_tb_consult) {
       let data = this.selected_tb_consult;
-      console.log(data);
-      this.caseHoldingForm.patchValue({...data.case_holding});
-      this.caseHoldingForm.patchValue({
-        id: data.id,
-        enroll_as_code: data.case_holding.enroll_as.code,
-        treatment_regimen_code: data.case_holding.treatment_regimen ? data.case_holding.treatment_regimen.code : null,
-        bacteriological_status_code: data.case_holding.bacteriological_status ? data.case_holding.bacteriological_status.code : null,
-        anatomical_site_code: data.case_holding.anatomical_site ? data.case_holding.anatomical_site.code : null,
-        eptb_site_id: data.case_holding.eptb_site ? data.case_holding.eptb_site.id : null
-      });
-
-      console.log(this.caseHoldingForm.controls)
+      // console.log(data);
+      if(data.case_holding){
+        this.caseHoldingForm.patchValue({...data.case_holding});
+        this.caseHoldingForm.patchValue({
+          id: data.id,
+          enroll_as_code: data.case_holding.enroll_as.code,
+          treatment_regimen_code: data.case_holding.treatment_regimen ? data.case_holding.treatment_regimen.code : null,
+          bacteriological_status_code: data.case_holding.bacteriological_status ? data.case_holding.bacteriological_status.code : null,
+          anatomical_site_code: data.case_holding.anatomical_site ? data.case_holding.anatomical_site.code : null,
+          eptb_site_id: data.case_holding.eptb_site ? data.case_holding.eptb_site.id : null
+        });
+        // console.log(this.caseHoldingForm.controls)
+      }
     }
     this.show_form = true;
     this.checkForm();
@@ -189,6 +190,7 @@ export class CaseHoldingComponent implements OnInit {
   loadLibraries(){
     this.http.get('tbdots/tb-libraries-caseholding').subscribe({
       next: (data: any) => {
+        // console.log(data)
         this.tb_anatomical_sites = data.tb_anatomical_sites;
         this.tb_answers_yn = data.tb_answers_yn;
         this.tb_bacteriological_statuses = data.tb_bacteriological_statuses;
