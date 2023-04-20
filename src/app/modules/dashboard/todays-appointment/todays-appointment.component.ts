@@ -1,5 +1,5 @@
 import { formatDate } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { faAnglesLeft, faAnglesRight, faChevronLeft, faChevronRight, faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
@@ -10,6 +10,7 @@ import { HttpService } from 'app/shared/services/http.service';
   styleUrls: ['./todays-appointment.component.scss']
 })
 export class TodaysAppointmentComponent implements OnInit {
+  @Input() date_today;
   faCircleNotch = faCircleNotch;
   faAnglesLeft = faAnglesLeft;
   faChevronLeft = faChevronLeft;
@@ -26,7 +27,6 @@ export class TodaysAppointmentComponent implements OnInit {
   to: number;
   total: number;
 
-  today = formatDate(new Date(), 'MM/dd/yyyy', 'en');
   openItr(patient_id, ptgroup, id){
     // console.log(patient_id)
     if(ptgroup === 'itr'){
@@ -36,6 +36,7 @@ export class TodaysAppointmentComponent implements OnInit {
     }
   }
 
+  appointment_length: number = 0;
   loadAppointments(page?: number){
     this.show_form = false;
     let params = {params: { }};
@@ -49,7 +50,8 @@ export class TodaysAppointmentComponent implements OnInit {
       next: (data: any) => {
 
         this.todays_appointment = data[0].data;
-        // console.log(data[0])
+        // this.appointment_length = Object.keys(this.todays_appointment).length;
+        // console.log(Object.keys(this.todays_appointment))
         // console.log(this.todays_appointment && this.todays_appointment?.length === 0);
 
         this.current_page = data[0].current_page;

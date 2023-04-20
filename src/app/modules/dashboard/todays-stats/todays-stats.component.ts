@@ -1,5 +1,5 @@
 import { formatDate } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { faFolderOpen } from '@fortawesome/free-regular-svg-icons';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
@@ -12,6 +12,7 @@ import { CookieService } from 'ngx-cookie-service';
   styleUrls: ['./todays-stats.component.scss']
 })
 export class TodaysStatsComponent implements OnInit {
+  @Input() date_today;
   faChevronDown = faChevronDown;
   faFolderOpen = faFolderOpen;
 
@@ -30,7 +31,7 @@ export class TodaysStatsComponent implements OnInit {
   loadStats(){
     this.http.get('consultation/stats').subscribe({
       next: (data:any) => {
-        console.log(data);
+        // console.log(data);
         this.side_stats = data;
         // this.loadAppointments();
       },

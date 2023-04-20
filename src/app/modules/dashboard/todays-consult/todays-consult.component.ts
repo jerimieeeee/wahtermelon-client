@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { faQuestionCircle, faChevronDown, faFolderOpen, faHeart, faFlask, faNotesMedical, faExclamationCircle, faChevronRight, faChevronLeft, faAnglesLeft, faAnglesRight } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
@@ -11,6 +11,7 @@ import { interval, Subject, Subscription, takeUntil } from 'rxjs';
   styleUrls: ['./todays-consult.component.scss']
 })
 export class TodaysConsultComponent implements OnInit, OnDestroy {
+  @Input() date_today;
   private unsubscribe$ = new Subject<void>();
 
   faQuestionCircle = faQuestionCircle;
@@ -69,20 +70,8 @@ export class TodaysConsultComponent implements OnInit, OnDestroy {
 
   subscribeRefresh(){
     this.todays_inteval = setInterval(() => {
-      // console.log('interval')
       this.getTodaysConsult();
-    }, 10000)
-    /* this.updateList = interval(10000).subscribe(
-      () => {
-        this.getTodaysConsult();
-      }
-    ) */
-
-    /* interval(10000)
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(() => {
-        this.getTodaysConsult();
-      }) */
+    }, 10000);
   }
 
   loadPhysicians(){
@@ -107,7 +96,7 @@ export class TodaysConsultComponent implements OnInit, OnDestroy {
     }
   }
 
-  getDataDiff(consult_date) {
+  getDataDiff(consult_date): string {
     let endDate = new Date();
     let startDate = new Date(consult_date);
     var diff = endDate.getTime() - startDate.getTime();
@@ -121,11 +110,11 @@ export class TodaysConsultComponent implements OnInit, OnDestroy {
     return duration_day+' '+duration_hours+' '+duration_minutes;
   }
 
-  checkVisit(group){
+  checkVisit(group): string{
     return this.nameHelper.getVisitType(group);
   }
 
-  getInitials(first_name, last_name) {
+  getInitials(first_name, last_name): string {
     return first_name.charAt(0)+last_name.charAt(0)
   }
 

@@ -1,3 +1,4 @@
+import { formatDate } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -6,6 +7,6 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent {
-
+  date_today = formatDate(new Date(), 'MM/dd/yyyy', 'en');
 
 }

@@ -16,6 +16,7 @@ export class ModuleModalComponent implements OnInit {
   @Input() patient_age;
   @Input() philhealth_details;
 
+  max_date = formatDate(new Date, 'yyyy-MM-dd', 'en');
   faClipboard = faClipboard;
   faCircleInfo = faCircleInfo;
   faHouse = faHouse;

@@ -1,9 +1,9 @@
 <div class="mb-10  text-gray-600 h-100 border border-slate-200 shadow-md rounded-md">
-  <div class="md:flex md:justify-between md:items-center pb-2 border-b-2 bg-blue-500 text-white rounded-t-md">
-    <span class="font-semibold pt-2 pl-5">Todays Appointment ({{ today }})</span>
+  <div class="md:flex md:justify-between md:items-center pb-2 bg-blue-500 text-white rounded-t-md">
+    <span class="font-semibold pt-2 pl-5">Todays Appointment ({{ date_today }})</span>
   </div>
 
-  <div class="p-5" *ngIf="show_form">
+  <div class="p-3" *ngIf="show_form">
     <div class="flex justify-between border-b border-gray-100" *ngFor="let patient of todays_appointment | keyvalue">
       <div class="flex w-3/5">
         <div class="flex justify-center text-gray-700 md:block leading-tight align-top my-1 w-full p-1 rounded-md">
@@ -21,7 +21,7 @@
     </div>
   </div>
 
-  <div class="pt-3" *ngIf="show_form && (todays_appointment && todays_appointment?.length === 0)">
+  <div class="-pt-3" *ngIf="show_form && !todays_appointment">
     <div class="text-center items-center mb-3 italic" >
       No record to show
     </div>

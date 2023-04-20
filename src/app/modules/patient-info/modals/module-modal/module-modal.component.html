@@ -50,8 +50,8 @@
               <div class="flex flex-col">
                 <div class="flex justify-start pb-3 w-full ml-10">
                   <label for="consult_date" class="input-label pr-5 inline-block align-middle pt-3 w-1/4">Consultation Date</label><br />
-                  <input type="date" name="consult_date" id="consult_date" class="input w-52" placeholder="mm/dd/yyyy" max="{{ date | date:'yyyy-MM-dd HH:mm:ss'}}" [(ngModel)]="consult_date">
-                  <input type="time" name="consult_date" id="consult_date" class="input w-52" placeholder="mm/dd/yyyy" max="{{ date | date:'yyyy-MM-dd HH:mm:ss'}}" [(ngModel)]="consult_time">
+                  <input type="date" name="consult_date" id="consult_date" class="input w-52" placeholder="mm/dd/yyyy" [max]="max_date" [(ngModel)]="consult_date">
+                  <input type="time" name="consult_time" id="consult_time" class="input w-52" placeholder="HH:mm AM/PM" [(ngModel)]="consult_time">
                 </div>
 
                 <div *ngIf="philhealth_details" class="border border-slate-200 rounded-md mx-10 shadow-md">
