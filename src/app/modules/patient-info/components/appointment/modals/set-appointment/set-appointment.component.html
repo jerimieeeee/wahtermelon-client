@@ -27,8 +27,8 @@
               <div class="w-full text-sm grid grid-cols-2 gap-3 px-5 py-2 mt-2">
                 <span class="col-span-2">Type of appointment</span>
                 <div class="col-span-1" *ngFor="let type of appointment_types">
-                  <input type="checkbox" [id]="appointment[type.code]" class="border border-slate-500 rounded mr-3" [(ngModel)]="appointment[type.code]">
-                  <label class="font-normal" [attr.for]="appointment[type.code]">{{ type.desc }}</label>
+                  <input *ngIf="type.code !== 'REF'" type="checkbox" [id]="appointment[type.code]" class="border border-slate-500 rounded mr-3" [(ngModel)]="appointment[type.code]">
+                  <label *ngIf="type.code !== 'REF'" class="font-normal" [attr.for]="appointment[type.code]">{{ type.desc }}</label>
                 </div>
               </div>
             </div>
