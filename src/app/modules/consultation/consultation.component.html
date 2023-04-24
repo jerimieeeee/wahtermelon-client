@@ -38,7 +38,7 @@
           <span class="mt-2 font-bold "> CONSULTATION <span class="text-gray-500 text-sm">({{ consult_details?.consult_date | date: 'MM/dd/yyyy hh:mm:ss a' }} | ID:{{ consult_details?.id }})</span></span>
         </div>
 
-        <div class="w-1/2 flex justify-end" *ngIf="consult_details && open_consult && have_complaint">
+        <div class="w-1/2 flex justify-end" *ngIf="(consult_details && open_consult && have_complaint) && (!consult_details?.consult_done && allowed_to_edit)">
           <div class="flex text-gray-700">
             <select [disabled]="enable_edit" class="input px-2 mr-3 disabled:bg-gray-300"  [(ngModel)]="referred_to.id">
               <option [value]="dr.id" class="pr-3" *ngFor="let dr of physicians">{{ dr.last_name }}, {{ dr.first_name }} {{ dr.middle_name }}</option>

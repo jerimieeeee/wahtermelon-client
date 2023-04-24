@@ -116,7 +116,9 @@ export class PatientItrComponent implements OnInit {
   user_location: string;
   ngOnInit(): void {
     this.user_location = this.http.getUserFacility();
-    this.loadData();
-    this.navigationEnd$.subscribe();
+    // this.loadData();
+    this.route.params.subscribe(routeParams => {
+      this.loadData();
+    });
   }
 }

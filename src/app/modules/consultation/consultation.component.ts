@@ -1,9 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { faChevronDown, faChevronUp, faDoorClosed, faFile } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { GraphsComponent } from './components/graphs/graphs.component';
 import { ToastrService } from 'ngx-toastr';
+import { filter, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-consultation',
@@ -95,6 +96,9 @@ export class ConsultationComponent implements OnInit {
   with_credentials: boolean = false;
   allowed_to_edit: boolean = false;
   loadConsult(){
+    // console.log('consult loaded')
+    this.consult_id = this.route.snapshot.paramMap.get('consult_id');
+    this.consult_details = null;
     let params = {
       id: this.consult_id,
       pt_group: 'cn',
@@ -158,15 +162,23 @@ export class ConsultationComponent implements OnInit {
   constructor(
     private http: HttpService,
     private route: ActivatedRoute,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private router: Router,
   ) { }
+
+  navigationEnd$ = this.router.events.pipe(
+    filter(event => event instanceof NavigationEnd),
+    tap(() => {
+      this.loadConsult();
+    })
+  );
 
   ngOnInit(): void {
     this.patient_id = this.route.snapshot.paramMap.get('id');
-    this.consult_id = this.route.snapshot.paramMap.get('consult_id');
     // console.log(this.consult_id)
     this.modules = 1;
     this.loadConsult();
+    this.navigationEnd$.subscribe();
     // this.loadUsers()
   }
 }
