@@ -26,11 +26,12 @@
        <span class="font-medium text-xs flex flex-col">
           <span class="font-bold">{{ appointment.key | date: 'MM/dd/yyyy'}} </span>
           <span class="font-normal pl-3" *ngFor="let val of appointment.value">
-            <span *ngIf="!val.referral_facility">
+            <span *ngIf="!val.referral_facility_name">
               {{ val.appointment_desc }}
             </span>
-            <span  class="text-orange-500 font-medium italic" *ngIf="val.referral_facility">
-              <strong>Referred to:</strong> {{ val.referral_facility }}
+            <span  class="text-orange-500 font-medium italic" *ngIf="val.referral_facility_name">
+              <strong>Referred to:</strong> {{ val.referral_facility_name }} <br />
+              Referral reason: {{ val.referral_reason }}
             </span>
           </span>
         </span>

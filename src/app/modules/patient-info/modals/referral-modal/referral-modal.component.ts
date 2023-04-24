@@ -30,6 +30,7 @@ export class ReferralModalComponent implements OnInit{
     region: new FormControl<string| null>(''),
     province: new FormControl<string| null>(''),
     municipality: new FormControl<string| null>(''),
+    referral_reason: new FormControl<string| null>('')
   });
 
   get f(): { [key: string]: AbstractControl } {
@@ -114,6 +115,7 @@ export class ReferralModalComponent implements OnInit{
         region: [null],
         province: [null],
         municipality: [null],
+        referral_reason: [null]
       });
     }
 
@@ -127,11 +129,12 @@ export class ReferralModalComponent implements OnInit{
       appointment: [{appointment_code: this.referralForm.value.appointment_code}],
       patient_id: this.referralForm.value.patient_id,
       appointment_date: this.referralForm.value.appointment_date,
-      referral_facility_code: this.referralForm.value.referral_facility_code
-    }
+      referral_facility_code: this.referralForm.value.referral_facility_code,
+      referral_reason: this.referralForm.value.referral_reason
+    };
+
     this.http.post('appointment/schedule', params).subscribe({
       next: (data: any) => {
-        console.log(data);
         this.is_saving = false;
         this.toastr.success('Successfully recorded!','Set appointment');
         this.loadData.emit('appointment');

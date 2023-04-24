@@ -12,13 +12,13 @@
       <div class="overflow-y-auto h-96 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
         <form [formGroup]="referralForm" (submit)="onSubmit()" class="w-full max-w-3xl text-left text-gray-500 dark:text-gray-400">
           <div class="p-5">
-            <div class="grid grid-cols-8">
-              <div class="col-span-8">
+            <div class="grid grid-cols-9 gap-4">
+              <div class="col-span-9">
                 <label for="appointment_date">Appointment Date</label>
                 <input type="date" name="appointment_date" id="appointment_date" [min]="max_date" formControlName="appointment_date" class="input">
               </div>
 
-              <div class="col-span-8">
+              <div class="col-span-3">
                 <label for="region" class="input-label">Region</label>
                 <select id="region" name="region" formControlName="region" class="input disabled:bg-gray-300" (change)="loadDemog('regions', referralForm.value.region, 'provinces')">
                   <option value="0" selected>- Choose Region -</option>
@@ -26,7 +26,7 @@
                 </select>
               </div>
 
-              <div class="col-span-8">
+              <div class="col-span-3">
                 <label for="province" class="input-label">Province</label>
                 <select id="province" name="province" formControlName="province" class="first:italic input disabled:bg-gray-300" (change)="loadDemog('provinces', referralForm.value.province, 'municipalities')">
                   <option value="0" selected>- Choose Province -</option>
@@ -34,7 +34,7 @@
                 </select>
               </div>
 
-              <div class="col-span-8" >
+              <div class="col-span-3" >
                 <label for="municipality" class="input-label">Municipality</label>
                 <select id="municipality" name="municipality" formControlName="municipality" class="input disabled:bg-gray-300" (change)="loadFacilities(referralForm.value.municipality)">
                   <option value="0" selected>- Choose Municipality/City -</option>
@@ -42,12 +42,17 @@
                 </select>
               </div>
 
-              <div class="col-span-8">
+              <div class="col-span-9">
                 <label for="referral_facility_code" class="input-label">Refer to</label>
                 <select id="referral_facility_code" name="referral_facility_code" class="input disabled:bg-gray-300" formControlName="referral_facility_code">
                   <option value="0" selected>- Choose Facility -</option>
                   <option [value]="facility.code"*ngFor="let facility of facilities" >{{ facility.facility_name }} ({{ facility.health_facility_type }})</option>
                 </select>
+              </div>
+
+              <div class="col-span-9">
+                <label for="referral_reason">Reason for referral</label>
+                <input type="text" name="referral_reason" id="referral_reason" formControlName="referral_reason" class="input">
               </div>
             </div>
           </div>

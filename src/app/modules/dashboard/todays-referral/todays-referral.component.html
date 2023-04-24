@@ -15,7 +15,9 @@
 
       <div class="grid grid-cols-12 text-left w-2/5">
         <div *ngFor="let apt of patient.value | keyvalue" class="col-span-12 text-gray-700 hover:bg-green-500 hover:text-white hover:cursor-pointer p-3 rounded-md text-[.85em]" (click)="openItr(apt.value.patient_id, 'itr')">
-          Referral Date: {{ apt.value.appointment_date | date: 'MM/dd/yyyy' }}
+          Referring Facility: {{ apt.value.facility_name }} <br />
+          Referral Date: {{ apt.value.appointment_date | date: 'MM/dd/yyyy' }} <br />
+          Reason for Referral {{ apt.value.referral_reason }}
         </div>
       </div>
     </div>
