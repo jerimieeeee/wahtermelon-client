@@ -26,70 +26,32 @@ export class ModuleModalComponent implements OnInit {
   faSpinner = faSpinner;
 
   list_modules = {
-    'General': {
-      modules: {
-       /*  itr:{
-          name: 'Patient ITR',
-          location: 'itr',
-          group: '',
-          consult_active: false
-        }, */
-        /* cn: {
-          name: 'Consultation',
-          location: 'consultation',
-          group: 'cn',
-          consult_active: false
-        }, */
-        /* cc: {
-          name: 'Child Care',
-          location: 'cc',
-          group: 'cc',
-          consult_active: false
-        },
-        mc: {
-          name: 'Maternal Care',
-          location: 'mc',
-          group: 'mc',
-          consult_active: false
-        }, */
-
-        /* fp: {
-          name: 'Family Planning',
-          location: 'fp',
-          group: 'fp',
-          consult_active: false
-        },
-        dn: {
-          name: 'Dental',
-          location: 'dental',
-          group: 'dn',
-          consult_active: false
-        }, */
-      }
-    },
+    'General': {modules: { }},
     'Others': {
       modules: {
         tb: {
           name: 'Tuberculosis',
           location: 'tb',
           group: 'tb',
-          consult_active: false
+          consult_active: false,
+          id: null
         },
         ncd: {
           name: 'NCD',
           location: 'ncd',
           group: 'ncd',
-          consult_active: false
+          consult_active: false,
+          id: null
         },
       }
     }
   };
 
-  itr = { name: 'Patient ITR', location: 'itr', group: '', consult_active: false };
-  lab = { name: 'Laboratory', location: 'lab', group: '', consult_active: false };
-  cn = { name: 'Consultation', location: 'cn', group: 'cn', consult_active: false};
-  mc = { name: 'Maternal Care', location: 'mc', group: 'mc', consult_active: false };
-  cc = { name: 'Child Care', location: 'cc', group: 'cc', consult_active: false };
+  itr = { name: 'Patient ITR', location: 'itr', group: '', consult_active: false, id: null };
+  lab = { name: 'Laboratory', location: 'lab', group: '', consult_active: false, id: null };
+  cn = { name: 'Consultation', location: 'cn', group: 'cn', consult_active: false, id: null };
+  mc = { name: 'Maternal Care', location: 'mc', group: 'mc', consult_active: false, id: null };
+  cc = { name: 'Child Care', location: 'cc', group: 'cc', consult_active: false, id: null };
 
   show_new: boolean = false;
   is_loading: boolean = false;
@@ -135,19 +97,37 @@ export class ModuleModalComponent implements OnInit {
 
   onModuleSelect(module){
     let loc = module.location;
-    let group = module.group;
+    // let group = module.group;
+    // console.log(module)
     this.is_loading = true;
 
     // console.log(loc, this.router.url.split(';')[0])
     if('/patient/'+loc === this.router.url.split(';')[0]){
       // console.log(1)
-      this.closeModal();
+      if(module.consult_active === false) {
+        this.show_new = true;
+        this.selected_module = module;
+        this.is_loading = false;
+      } else {
+        this.closeModal();
+      }
     } else {
       if(loc === 'itr' || loc === 'lab'){
         this.router.navigate(['/patient/'+loc, {id: this.patient_info.id}]);
         this.closeModal();
       } else {
-        this.http.get('consultation/records', {params:{'pt_group': group, 'consult_done': 0, patient_id: this.patient_info.id}}).subscribe({
+        if(module.consult_active === false) {
+          this.show_new = true;
+        } else {
+          this.show_new = false;
+          this.router.navigate(['/patient/'+loc, {id: this.patient_info.id, consult_id: module.id}]);
+          this.closeModal();
+        }
+        // this.show_new = module.consult_active === false ? true : false;
+        this.selected_module = module;
+        this.is_loading = false;
+        // console.log(this)
+        /* this.http.get('consultation/records', {params:{'pt_group': group, 'consult_done': 0, patient_id: this.patient_info.id}}).subscribe({
           next: (data: any) => {
             this.selected_module = module;
 
@@ -161,7 +141,7 @@ export class ModuleModalComponent implements OnInit {
           },
           error: err => {console.log(err);this.is_loading = false},
           complete: () => this.is_loading = false
-        });
+        }); */
       }
     }
   }
@@ -172,7 +152,7 @@ export class ModuleModalComponent implements OnInit {
 
   onCreateNew(selected_module){
     this.is_loading = true;
-
+    // console.log(selected_module)
     let user_id = this.http.getUserID();
     let new_visit = {
       patient_id: this.patient_info.id,
@@ -207,9 +187,16 @@ export class ModuleModalComponent implements OnInit {
   ) { }
 
   checkOpenConsult(consults){
+    let user_fac = this.http.getUserFacility();
     Object.entries(consults).forEach(([keys, values], indexes) => {
       let vals: any= values;
-      if(vals.pt_group === 'cn') this.cn.consult_active = true;
+      // console.log(vals)
+      if(vals.pt_group === 'cn') {
+        if(user_fac === vals.facility_code) {
+          this.cn.consult_active = true;
+          this.cn.id = vals.id;
+        }
+      }
 
       Object.entries(this.list_modules).forEach(([key, value], index) => {
         Object.entries(value.modules).forEach(([k, v], i) => {
@@ -228,7 +215,7 @@ export class ModuleModalComponent implements OnInit {
 
     this.http.get('consultation/records', {params:{consult_done: 0, patient_id: this.patient_info.id}}).subscribe({
       next: (data: any) => {
-        // console.log(data.data)
+        console.log(data.data)
         if(data.data.length > 0) this.checkOpenConsult(data.data);
         this.show_form = true;
       },
@@ -236,11 +223,6 @@ export class ModuleModalComponent implements OnInit {
     });
 
     let current_date =  new Date;
-
-    // this.consult_date = formatDate(current_date,'yyyy-MM-dd','en');
-    // this.consult_time = formatDate(current_date,'HH:mm','en');
-
-    // console.log(this.philhealth_details)
   }
 
 }

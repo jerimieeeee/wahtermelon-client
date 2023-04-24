@@ -28,7 +28,7 @@
                     Laboratory
                   </button>
 
-                  <button *ngIf="list.key !== 'Others'" [disabled]="is_loading" type="button" [ngClass]="{'enabled:bg-green-500 enabled:hover:ring-green-300': cn.consult_active }" class="col-span-1 text-white disabled:bg-gray-400 enabled:bg-blue-500 enabled:hover:ring-2 enabled:focus:outline-none enabled:hover:ring-blue-300 font-medium rounded text-sm px-6 py-2.5 text-center transition duration-150 ease-in-out transform hover:scale-110" (click)="onModuleSelect(cn)" >
+                  <button *ngIf="list.key !== 'Others'" (click)="onModuleSelect(cn)" [disabled]="is_loading" type="button" [ngClass]="{'enabled:bg-green-500 enabled:hover:ring-green-300': cn.consult_active }" class="col-span-1 text-white disabled:bg-gray-400 enabled:bg-blue-500 enabled:hover:ring-2 enabled:focus:outline-none enabled:hover:ring-blue-300 font-medium rounded text-sm px-6 py-2.5 text-center transition duration-150 ease-in-out transform hover:scale-110">
                     <fa-icon class="mx-0 my-0 text-white mr-2" [icon]="faUserDoctor" size="lg"></fa-icon>
                     Consultation
                   </button>

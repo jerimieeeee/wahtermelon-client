@@ -86,12 +86,14 @@ export class ConsultationComponent implements OnInit {
     this.http.get('consultation/records',{params:{patient_id: this.patient_id, per_page: 'all', sort: '-consult_date'}}).subscribe({
       next: (data: any) => {
         this.visit_list = data.data;
+        console.log(data.data);
       },
       error: err => console.log(err),
     })
   }
 
   with_credentials: boolean = false;
+  allowed_to_edit: boolean = false;
   loadConsult(){
     let params = {
       id: this.consult_id,
@@ -100,7 +102,9 @@ export class ConsultationComponent implements OnInit {
 
     this.http.get('consultation/records', {params}).subscribe({
       next: (data: any) => {
+        // console.log(data)
         this.consult_details = data.data[0];
+        this.allowed_to_edit = this.http.getUserFacility() === this.consult_details.facility_code ? true : false;
         // console.log(this.consult_details)
         if(this.consult_details.consult_notes.complaint || this.consult_details.consult_notes.complaints.length > 0  || this.consult_details.consult_notes.history) {
           this.have_complaint = true;

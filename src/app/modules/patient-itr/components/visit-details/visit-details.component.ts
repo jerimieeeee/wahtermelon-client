@@ -21,7 +21,7 @@ export class VisitDetailsComponent implements OnChanges {
   }
 
   displayVisit(){
-    console.log(this.selected_visit)
+    // console.log(this.selected_visit)
     if(this.selected_visit) {
       Object.entries(this.comps).forEach(([key, value], index) => {
         if(key !==  this.selected_visit.pt_group) this.comps[key] = false;

@@ -11,6 +11,7 @@ import { ToastrService } from 'ngx-toastr';
 export class PhysicalExamComponent implements OnInit, OnChanges {
   @Input() toggle_content;
   @Input() consult_details;
+  @Input() allowed_to_edit;
 
   faSave = faSave;
   faChevronCircleUp = faChevronCircleUp;

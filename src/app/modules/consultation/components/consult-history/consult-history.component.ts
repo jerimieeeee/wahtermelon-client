@@ -10,6 +10,7 @@ import { HttpService } from 'app/shared/services/http.service';
 })
 export class ConsultHistoryComponent implements OnInit, OnChanges {
   @Input() toggle_content;
+  @Input() allowed_to_edit;
 
   show_content: boolean = false;
   faChevronCircleUp = faChevronCircleUp;
@@ -42,7 +43,7 @@ export class ConsultHistoryComponent implements OnInit, OnChanges {
     this.http.get('consultation/records',{params}).subscribe({
       next: (data: any) => {
         this.visit_list = data.data;
-        console.log(data.data);
+        // console.log(data.data);
         this.current_page = data.meta.current_page;
         this.last_page = data.meta.last_page;
         this.from = data.meta.from;

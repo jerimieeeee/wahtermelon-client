@@ -14,6 +14,7 @@ export class ComplaintHistoryComponent implements OnInit, OnChanges {
   @Input() toggle_content;
   @Input() consult_details;
   @Input() have_complaint;
+  @Input() allowed_to_edit;
 
   faPlusSquare = faPlusSquare;
   faSave = faSave;
@@ -101,12 +102,14 @@ export class ComplaintHistoryComponent implements OnInit, OnChanges {
     this.selectedComplaint = selected_complaints;
   }
 
+  enable_edit: boolean = false;
   ngOnChanges(changes){
     this.show_content = this.toggle_content;
     if(this.consult_details) {
       this.loadSelected();
       this.consult_notes = this.consult_details.consult_notes;
       this.consult_done = this.consult_details.consult_done;
+      // this.enable_edit = this.consult_details.
     }
   }
 

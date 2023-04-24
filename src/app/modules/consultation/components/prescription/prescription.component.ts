@@ -13,6 +13,7 @@ export class PrescriptionComponent implements OnInit, OnChanges {
   @Input() toggle_content;
   @Input() consult_details;
   @Input() with_credentials;
+  @Input() allowed_to_edit;
 
   show_content: boolean = true;
   show_list: boolean = false;

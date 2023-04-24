@@ -24,19 +24,19 @@
             </div>
             <div *ngIf="pe_item[pe.key] === undefined ? false : pe_item[pe.key]" class="col-span-1 grid grid-cols-2 gap-y-2">
               <div *ngFor="let val of pe.value">
-                <input [disabled]="consult_done" type="checkbox" [(ngModel)]="physical_codes[val.pe_id]" class="rounded-md border border-gray-400 p-2">
+                <input [disabled]="consult_done || !allowed_to_edit" type="checkbox" [(ngModel)]="physical_codes[val.pe_id]" class="rounded-md border border-gray-400 p-2">
                 {{ val.pe_desc }}
               </div>
             </div>
             <div *ngIf="pe_item[pe.key] === undefined ? false : pe_item[pe.key]" class="flex col-span-1">
               <span class="font-semibold mt-3 mr-2 text-sm">Remarks: </span>
-              <input rows="2" type="textarea" [disabled]="consult_done" [(ngModel)]="physical_remarks[pe.key+'_remarks']" class="input placeholder-slate-400 placeholder:italic" placeholder="remarks">
+              <input rows="2" type="textarea" [disabled]="consult_done || !allowed_to_edit" [(ngModel)]="physical_remarks[pe.key+'_remarks']" class="input placeholder-slate-400 placeholder:italic" placeholder="remarks">
             </div>
           </div>
         </div>
 
         <div class="flex text-right">
-          <button *ngIf="!consult_done" [disabled]="is_saving" type="button" class="btn-save ml-auto mr-5 mb-5 px-10 disabled:bg-gray-300" (click)="onSubmit()">
+          <button *ngIf="!consult_done && allowed_to_edit" [disabled]="is_saving" type="button" class="btn-save ml-auto mr-5 mb-5 px-10 disabled:bg-gray-300" (click)="onSubmit()">
             <fa-icon *ngIf="is_saving" class="mr-2" [icon]="faSpinner" spin="true"></fa-icon>
             <fa-icon *ngIf="!is_saving" class="mr-2" [icon]="faSave"></fa-icon>
             {{ is_saving ? 'Saving' : 'Save' }}
