@@ -50,7 +50,7 @@ export class TodaysAppointmentComponent implements OnInit {
       next: (data: any) => {
 
         this.todays_appointment = data[0].data;
-        console.log(this.todays_appointment)
+        // console.log(this.todays_appointment)
         // this.appointment_length = Object.keys(this.todays_appointment).length;
         // console.log(Object.keys(this.todays_appointment))
         // console.log(this.todays_appointment && this.todays_appointment?.length === 0);

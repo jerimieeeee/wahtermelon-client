@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { faSpinner, faFolderPlus, faSave, faSearch, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
+import { faSpinner, faFolderPlus, faSave, faSearch, faPenToSquare, faHome } from '@fortawesome/free-solid-svg-icons';
 import { faClipboard } from '@fortawesome/free-regular-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { openCloseTrigger } from './declarations/animation';
@@ -19,6 +19,7 @@ export class PatientRegistrationComponent implements OnInit {
   faSave = faSave;
   faSearch = faSearch;
   faPenToSquare = faPenToSquare;
+  faHome = faHome;
 
   required_message = 'Required field';
   button_function: string = 'Save';
@@ -205,6 +206,7 @@ export class PatientRegistrationComponent implements OnInit {
       this.patientForm.controls['family']['controls']['is_head'].enable();
       this.show_demog_input = false;
     }
+    this.enableCctDate();
   }
 
   isDisabled(value: boolean, data?){
@@ -221,9 +223,10 @@ export class PatientRegistrationComponent implements OnInit {
   }
 
   newPatient(){
-    this.patientForm.reset();
+    this.router.navigate(['/'])
+    /* this.patientForm.reset();
     this.showModal = false;
-    this.is_saving = false;
+    this.is_saving = false; */
   }
 
   proceedItr(){
@@ -280,6 +283,7 @@ export class PatientRegistrationComponent implements OnInit {
         this.orig_data = data.data;
         //load demog
         this.patchAddress(this.orig_data.household_folder, this.orig_data.household_member);
+        this.enableCctDate();
         this.disable_save = false;
 
       },
@@ -313,6 +317,14 @@ export class PatientRegistrationComponent implements OnInit {
     this.isDisabled(true);
   }
 
+  enableCctDate(){
+    if(this.f['family']['controls']['cct_id'].value) {
+      this.f['family']['controls']['cct_date'].enable();
+    } else {
+      this.f['family']['controls']['cct_date'].disable();
+    }
+  }
+
   ngOnInit(): void {
     let user_id = this.http.getUserID();
     let facility_code = this.http.getUserFacility();
@@ -343,7 +355,7 @@ export class PatientRegistrationComponent implements OnInit {
         brgy: ['', Validators.required],
         address: ['', [Validators.required, Validators.minLength(2)]],
         cct_id: ['', [Validators.minLength(2)]],
-        cct_date: [''],
+        cct_date: ['',Validators.required],
         is_head: ['', [Validators.required]],
       }),
     });
@@ -355,6 +367,7 @@ export class PatientRegistrationComponent implements OnInit {
       this.show_edit = true;
       this.loadPatient(this.router.url.split('=')[1]);
     } else{
+      this.enableCctDate();
       this.isDisabled(true);
     }
   }
