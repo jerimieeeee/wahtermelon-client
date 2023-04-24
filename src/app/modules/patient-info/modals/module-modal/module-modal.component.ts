@@ -109,6 +109,9 @@ export class ModuleModalComponent implements OnInit {
         this.selected_module = module;
         this.is_loading = false;
       } else {
+        if(this.router.url.split('=')[2] != module.id) {
+          this.router.navigate(['/patient/'+loc, {id: this.patient_info.id, consult_id: module.id}]);
+        }
         this.closeModal();
       }
     } else {
@@ -215,7 +218,7 @@ export class ModuleModalComponent implements OnInit {
 
     this.http.get('consultation/records', {params:{consult_done: 0, patient_id: this.patient_info.id}}).subscribe({
       next: (data: any) => {
-        console.log(data.data)
+        // console.log(data.data)
         if(data.data.length > 0) this.checkOpenConsult(data.data);
         this.show_form = true;
       },
