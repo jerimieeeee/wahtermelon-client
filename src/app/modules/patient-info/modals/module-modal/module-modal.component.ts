@@ -206,6 +206,7 @@ export class ModuleModalComponent implements OnInit {
         Object.entries(value.modules).forEach(([k, v], i) => {
           if(vals.pt_group === k) {
             this.list_modules[key].modules[k].consult_active = true;
+            this.list_modules[key].modules[k].id = vals.id;
           }
         });
       });

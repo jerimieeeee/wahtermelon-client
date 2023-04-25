@@ -15,6 +15,7 @@ import { PrescriptionComponent } from './modules/prescription/prescription.compo
 import { EndVisitComponent } from 'app/shared/shared-modals/end-visit/end-visit.component';
 import { DeleteItemComponent } from 'app/shared/shared-modals/delete-item/delete-item.component';
 import { TreatmentOutcomeComponent } from './modals/treatment-outcome/treatment-outcome.component';
+import { CaserateComponent } from 'app/shared/shared-components/eclaims/components/caserate/caserate.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { TreatmentOutcomeComponent } from './modals/treatment-outcome/treatment-
     FormsModule,
     ReactiveFormsModule,
     EndVisitComponent,
-    DeleteItemComponent
+    DeleteItemComponent,
+    CaserateComponent
   ]
 })
 export class TbdotsModule { }
