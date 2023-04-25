@@ -13,7 +13,7 @@
       <div class=" h-96 overflow-y-auto">
         <div class="flex item-start flex-wrap pb-5">
           <div class="grid grid-cols-2 px-3 py-3 w-full mx-5 mt-5 rounded-lg" *ngIf="show_form">
-            <div class="rounded-md col-span-2 py-2 mb-2 border border-orange-300 bg-orange-100 text-orange-800">
+            <div *ngIf="user_facility !== selected_lab.facility_code" class="rounded-md col-span-2 py-2 mb-2 border border-orange-300 bg-orange-100 text-orange-800">
               This laboratory was recorded on other facility. Edit/update is not allowed.
             </div>
 
