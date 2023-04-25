@@ -334,7 +334,9 @@ export class PatientInfoComponent implements OnInit {
     })
   );
 
+  user_facility: string;
   ngOnInit(): void {
+    this.user_facility = this.http.getUserFacility();
     this.getPatient();
     this.navigationEnd$.subscribe();
   }

@@ -100,7 +100,7 @@
 
 </div>
 <!-- MODALS -->
-<app-module-modal *ngIf="modals['module']" [philhealth_details]="philhealth_details" (toggleModal)="toggleModal('module')" [patient_info]="patient_info" [patient_age]="patient_age"></app-module-modal>
+<app-module-modal *ngIf="modals['module']" [user_facility]="user_facility" [philhealth_details]="philhealth_details" (toggleModal)="toggleModal('module')" [patient_info]="patient_info" [patient_age]="patient_age"></app-module-modal>
 <!-- <app-lab-request-modal *ngIf="modals['lab-request']" (toggleModal)="toggleModal('lab-request')" [lab_req_list]="lab_req_list" [patient_info]="patient_info" [consult_id]="consult_id"></app-lab-request-modal> -->
 <app-lab-request *ngIf="modals['lab-request']" (toggleModal)="toggleModal('lab-request')" [lab_req_list]="lab_req_list" [patient_info]="patient_info" [consult_id]="consult_id"
 ></app-lab-request>
@@ -113,7 +113,7 @@
 <app-preghist-modal *ngIf="modals['preghist']" (toggleModal)="toggleModal($event)" [patient_info]="patient_info" [pregnancy_history]="pregnancy_history" [delivery_method]="delivery_method"></app-preghist-modal>
 
 <app-vitals-modal *ngIf="modals['vitals']" (toggleModal)="toggleModal('vitals')" [patient_age]="patient_age" [patient_info]="patient_info" [vitals_to_edit]="vitals_to_edit"></app-vitals-modal>
-<app-vitals-list-modal *ngIf="modals['vitals-list']" (toggleModal)="toggleModal('vitals-list')" (vitalsEdit)="vitalsEdit($event)" [patient_info]="patient_info"></app-vitals-list-modal>
+<app-vitals-list-modal *ngIf="modals['vitals-list']" [user_facility]="user_facility" (toggleModal)="toggleModal('vitals-list')" (vitalsEdit)="vitalsEdit($event)" [patient_info]="patient_info"></app-vitals-list-modal>
 
 <app-philhealth-modal *ngIf="modals['philhealth']" (toggleModal)="toggleModal($event)" [patient_info]="patient_info" [philhealth_to_edit]="philhealth_to_edit"></app-philhealth-modal>
 <app-philhealth-list-modal *ngIf="modals['philhealth-list']" (toggleModal)="toggleModal('philhealth-list')" (philhealthEdit)="philhealthEdit($event)" [patient_info]="patient_info" ></app-philhealth-list-modal>
