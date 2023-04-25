@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
-import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
+import { faCircleNotch, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { faSave } from '@fortawesome/free-regular-svg-icons';
 
 @Component({
@@ -19,6 +19,7 @@ export class SearchCaserateComponent {
 
   faSave = faSave;
   faCircleNotch = faCircleNotch;
+  faSearch = faSearch;
 
   answers: any;
   answers_yn: any;
