@@ -31,14 +31,15 @@
   <div *ngIf="modules === 1">
     <span class="text-sky-500 flex justify-between py-2">
       <span class="flex justify-between w-full">
-        <div class="w-1/2 mt-2">
+        <div class="w-2/3 mt-2">
           <button class="font-normal text-sky-500 px-2 py-1 text-sm  mr-2" type="button" (click)="toggleAll()">
             <fa-icon [icon]="toggle_content ? faChevronUp : faChevronDown" size="lg"></fa-icon>
           </button>
-          <span class="mt-2 font-bold "> CONSULTATION <span class="text-gray-500 text-sm">({{ consult_details?.consult_date | date: 'MM/dd/yyyy hh:mm:ss a' }} | ID:{{ consult_details?.id }})</span></span>
+          <span class="mt-2 font-bold "> CONSULTATION <span class="text-gray-500 text-sm">({{ consult_details?.consult_date | date: 'MM/dd/yyyy hh:mm a' }} | ID:{{ consult_details?.id }})</span></span><br />
+          <span class="text-gray-500 text-sm font-semibold">Facilty: {{ consult_details?.facility?.facility_name }}</span>
         </div>
 
-        <div class="w-1/2 flex justify-end" *ngIf="(consult_details && open_consult && have_complaint) && (!consult_details?.consult_done && allowed_to_edit)">
+        <div class="w-1/3 flex justify-end" *ngIf="(consult_details && open_consult && have_complaint) && (!consult_details?.consult_done && allowed_to_edit)">
           <div class="flex text-gray-700">
             <select [disabled]="enable_edit" class="input px-2 mr-3 disabled:bg-gray-300"  [(ngModel)]="referred_to.id">
               <option [value]="dr.id" class="pr-3" *ngFor="let dr of physicians">{{ dr.last_name }}, {{ dr.first_name }} {{ dr.middle_name }}</option>
