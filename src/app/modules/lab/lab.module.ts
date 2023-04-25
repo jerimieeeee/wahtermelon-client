@@ -5,7 +5,6 @@ import { LabRoutingModule } from './lab-routing.module';
 import { LabComponent } from './lab.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { LabFormComponent } from './components/lab-form/lab-form.component';
-import { LabDeleteComponent } from './components/lab-delete/lab-delete.component';
 import { FormsModule } from '@angular/forms';
 import { DeleteItemComponent } from 'app/shared/shared-modals/delete-item/delete-item.component';
 import { LabRequestComponent } from 'app/shared/shared-modals/lab-request/lab-request.component';
@@ -14,8 +13,7 @@ import { LabRequestComponent } from 'app/shared/shared-modals/lab-request/lab-re
 @NgModule({
   declarations: [
     LabComponent,
-    LabFormComponent,
-    LabDeleteComponent
+    LabFormComponent
   ],
   imports: [
     CommonModule,

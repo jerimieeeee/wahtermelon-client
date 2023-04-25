@@ -10,6 +10,7 @@ import { ToastrService } from 'ngx-toastr';
 export class LabDeleteComponent {
   @Output() toggleModal = new EventEmitter<any>();
   @Input() selected_lab;
+  @Input() user_facility;
 
   is_saving: boolean = false;
 

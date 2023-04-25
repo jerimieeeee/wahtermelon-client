@@ -29,7 +29,7 @@
               <fa-icon *ngIf="lab.lab_result && lab.request_status_code !== 'RF'" (click)="toggleModal('add', lab)" size="lg" class="mx-0 my-0 text-green-600 hover:cursor-pointer flex-none mr-2" [icon]="faFlask"></fa-icon>
               <fa-icon *ngIf="!lab.lab_result && lab.request_status_code !== 'RF'" (click)="toggleModal('add', lab)" size="lg" class="mx-0 my-0 text-orange-400 hover:cursor-pointer flex-none mr-2" [icon]="faFlask"></fa-icon>
               <fa-icon *ngIf="lab.request_status_code === 'RF'" (click)="toggleModal('add', lab)" size="lg" class="mx-0 my-0 text-red-500 hover:cursor-pointer flex-none mr-2" [icon]="faFlask"></fa-icon>
-              <fa-icon (click)="toggleModal('delete-item', lab)" size="lg" class="mx-0 my-0 text-red-500 hover:cursor-pointer flex-none mr-2" [icon]="faTrashCan"></fa-icon>
+              <fa-icon *ngIf="user_facility === lab.facility_code" (click)="toggleModal('delete-item', lab)" size="lg" class="mx-0 my-0 text-red-500 hover:cursor-pointer flex-none mr-2" [icon]="faTrashCan"></fa-icon>
             </td>
           </tr>
         </tbody>
@@ -52,12 +52,14 @@
     [lab_stool_blood]="lab_stool_blood"
     [lab_stool_color]="lab_stool_color"
     [lab_stool_consistency]="lab_stool_consistency"
+    [user_facility]="user_facility"
 ></app-lab-form>
 
 <app-delete-item *ngIf="modal['delete-item']"
   [delete_id]="delete_id"
   [delete_desc]="delete_desc"
   [url]="url"
+  [user_facility]="user_facility"
   (toggleModal)="toggleModal($event)"></app-delete-item>
 
 <app-lab-request *ngIf="modal['lab-request']"

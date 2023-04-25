@@ -134,7 +134,7 @@ export class LabComponent implements OnInit, OnDestroy {
   loadStoolBlood(form){
     this.http.get('libraries/laboratory-blood-stool').subscribe({
       next: (data: any) => {
-        console.log(data)
+        // console.log(data)
         this.lab_stool_blood = data.data;
         this.loadStoolColor(form);
       }
@@ -205,7 +205,10 @@ export class LabComponent implements OnInit, OnDestroy {
     eventSubscriber(patientInfo.reloadLabs, this.loadData)
   }
 
+  user_facility: string;
+
   ngOnInit(): void {
+    this.user_facility = this.http.getUserFacility();
     this.loadLabStatusLib();
     this.patient_details = this.http.getPatientInfo();
     this.loadData();
