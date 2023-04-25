@@ -4,7 +4,7 @@ import { AbstractControl, FormBuilder, FormControl, FormGroup, ReactiveFormsModu
 import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 import { faSave } from '@fortawesome/free-regular-svg-icons';
-import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
+import { faCircleNotch, faSearch } from '@fortawesome/free-solid-svg-icons';
 import * as angularFontawesome from '@fortawesome/angular-fontawesome';
 import { SearchCaserateComponent } from './modals/search-caserate/search-caserate.component';
 
@@ -22,6 +22,7 @@ export class CaserateComponent implements OnInit {
 
   faSave = faSave;
   faCircleNotch = faCircleNotch;
+  faSearch = faSearch;
 
   is_saving: boolean = false;
 

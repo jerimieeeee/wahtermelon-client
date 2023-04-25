@@ -1,7 +1,10 @@
 <div class="m-5 shadow-md rounded-md">
   <div class="bg-blue-500 text-white rounded-t-md p-3 flex justify-between">
     <span>Case Rate</span>
-    <span (click)="toggleModal('search-caserate')">test</span>
+    <button class="bg-gray-100 text-blue-500" (click)="toggleModal('search-caserate')">
+      <fa-icon [icon]="faSearch" class="text-sm"></fa-icon>
+      search
+    </button>
   </div>
 
   <div class="rounded-b-md h-96 border-x border-b border-slate-200">
