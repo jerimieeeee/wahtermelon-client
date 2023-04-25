@@ -190,12 +190,13 @@ export class ModuleModalComponent implements OnInit {
   ) { }
 
   checkOpenConsult(consults){
-    let user_fac = this.http.getUserFacility();
+    // let user_fac = this.http.getUserFacility();
     Object.entries(consults).forEach(([keys, values], indexes) => {
       let vals: any= values;
+      // console.log(this.user_fac)
       // console.log(vals)
       if(vals.pt_group === 'cn') {
-        if(user_fac === vals.facility_code) {
+        if(this.user_fac === vals.facility.code) {
           this.cn.consult_active = true;
           this.cn.id = vals.id;
         }
@@ -213,7 +214,9 @@ export class ModuleModalComponent implements OnInit {
     this.show_form = true;
   }
 
+  user_fac: string;
   ngOnInit(): void {
+    this.user_fac = this.http.getUserFacility();
     this.selectPrograms();
 
     this.http.get('consultation/records', {params:{consult_done: 0, patient_id: this.patient_info.id}}).subscribe({
