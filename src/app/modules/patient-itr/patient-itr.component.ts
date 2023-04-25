@@ -60,7 +60,7 @@ export class PatientItrComponent implements OnInit {
   showConsult(details: any){
     // console.log(details)
     if(details.pt_group != 'cn') {
-      if(details.facility_code === this.user_location) {
+      if(details.facility.code === this.user_location) {
         this.user_allowed = true;
         this.selected_visit = details;
         if(details.vitals) this.getLatestToday(details);
