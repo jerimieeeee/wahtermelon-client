@@ -56,7 +56,7 @@ export class RiskAssessmentComponent implements OnInit, OnChanges {
       }
       query.subscribe({
         next: (data: any) => {
-          console.log(data)
+          // console.log(data)
           this.is_saving = false;
           this.toastr.success('Recorded successfully!','Risk Assessment');
           this.loadRisk.emit();
@@ -105,7 +105,7 @@ export class RiskAssessmentComponent implements OnInit, OnChanges {
 
   getVitalsToday(vitals, consult_details){
     if(vitals && consult_details){
-      console.log(vitals);
+      // console.log(vitals);
       this.riskAssessForm.patchValue({assessment_date: formatDate(consult_details.consult_date,'yyyy-MM-dd','en')});
 
       Object.entries(vitals).reverse().every(([keys, values], indexes) => {
