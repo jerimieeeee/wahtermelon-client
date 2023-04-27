@@ -363,7 +363,7 @@
               </div>
 
               <div class="col-span-8 sm:col-span-2" *ngIf="show_demog_input">
-                <label for="cct_id" class="input-label" [ngClass]="{'text-red-500': is_saving && f['family']['controls']['cct_id'].errors}">CCT ID <span class="text-sm">(optional){{ (f['family']['controls']['cct_id'].value && f['family']['controls']['cct_id'].value !== '' && f['family']['controls']['cct_id'].value !== null) }}</span></label>
+                <label for="cct_id" class="input-label" [ngClass]="{'text-red-500': is_saving && f['family']['controls']['cct_id'].errors}">CCT ID <span class="text-sm">(optional)</span></label>
                 <input type="text" name="cct_id" id="cct_id" class="input disabled:bg-gray-300" (keyup)="enableCctDate()" [ngClass]="{'invalid-input': is_saving && f['family']['controls']['cct_id'].errors}" formControlName="cct_id">
 
                 <div *ngIf="is_saving && f['family']['controls']['cct_id'].errors" class="invalid-alert">

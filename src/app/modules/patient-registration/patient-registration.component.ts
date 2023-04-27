@@ -218,6 +218,7 @@ export class PatientRegistrationComponent implements OnInit {
       }
     } else {
       this.patientForm.controls['family'].enable();
+      this.enableCctDate();
       // if(data === 'edit_folder') this.selected_family_folder = '1';
     }
   }
