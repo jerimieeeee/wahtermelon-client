@@ -1,0 +1,27 @@
+<div class="font-semibold text-sm">
+  Maternal Care History
+</div>
+<div class="w-full rounded-md border border-slate-200 shadow-md overflow-auto">
+  <table class="table-auto" *ngIf="patient_mc_list">
+    <thead class="">
+      <tr>
+        <th class="px-1 text-xs font-semibold align-top">Registration Date</th>
+        <th class="px-1 text-xs font-semibold align-top">LMP Date</th>
+        <th class="px-1 text-xs font-semibold align-top">Delivery Date</th>
+        <th class="px-1 text-xs font-semibold align-top">Admission Date</th>
+        <th class="px-1 text-xs font-semibold align-top">Discharge Date</th>
+        <th class="px-1 text-xs font-semibold align-top">Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let mc of patient_mc_list">
+        <th class="px-1 text-sm font-normal">{{mc.pre_registration?'MCR: ' + (mc.pre_registration.pre_registration_date | date: 'MM/dd/yyyy'):'Post: ' + (mc.post_registration.post_registration_date | date: 'MM/dd/yyyy') }}</th>
+        <th class="px-1 text-sm font-normal">{{mc.pre_registration?(mc.pre_registration.lmp_date | date: 'MM/dd/yyyy'):'-'}}</th>
+        <th class="px-1 text-sm font-normal">{{mc.post_registration?(mc.post_registration.delivery_date | date: 'MM/dd/yyyy'):'-'}}</th>
+        <th class="px-1 text-sm font-normal">{{mc.post_registration?(mc.post_registration.admission_date | date: 'MM/dd/yyyy'):'-'}}</th>
+        <th class="px-1 text-sm font-normal">{{mc.post_registration?(mc.post_registration.discharge_date | date: 'MM/dd/yyyy'):'-'}}</th>
+        <th class="px-1 text-sm font-normal">{{mc.post_registration?(mc.post_registration.end_pregnancy?'Closed':'Open'):'Open'}}</th>
+      </tr>
+    </tbody>
+  </table>
+</div>

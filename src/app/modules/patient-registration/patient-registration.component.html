@@ -1,0 +1,440 @@
+<div class="mt-10  flex justify-center w-full">
+  <div class="w-5/6 bg-white border border-solid border-slate-100 rounded-xl shadow-md">
+    <div class="border border-solid border-slate-100 rounded-t-xl bg-blue-500 text-white text-lg p-3 font-semibold">
+      Patient Registration
+    </div>
+
+    <div class="shadow rounded-md p-4 m-5 w-5/6 mx-auto" *ngIf="!show_form">
+      <div class="animate-pulse flex space-x-4">
+        <div class="flex-1 space-y-6 py-1">
+          <div class="h-2 bg-slate-200 rounded"></div>
+          <div class="space-y-4">
+            <div class="h-2 bg-slate-200 rounded w-1/5"></div>
+            <div class="h-2 bg-slate-200 rounded"></div>
+            <div class="h-2 bg-slate-200 rounded w-1/5"></div>
+            <div class="h-2 bg-slate-200 rounded"></div>
+            <div class="h-2 bg-slate-200 rounded w-1/5"></div>
+            <div class="h-2 bg-slate-200 rounded"></div>
+            <div class="h-2 bg-slate-200 rounded w-1/5"></div>
+            <div class="h-2 bg-slate-200 rounded"></div>
+            <div class="h-2 bg-slate-200 rounded w-1/5"></div>
+            <div class="h-2 bg-slate-200 rounded"></div>
+            <div class="h-2 bg-slate-200 rounded w-1/5"></div>
+            <div class="h-2 bg-slate-200 rounded"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <form [formGroup]="patientForm" (ngSubmit)="onSubmit()" *ngIf="show_form">
+      <div class="mx-10 mb-10">
+        <!-- <div class="text-red-500">
+          All fields are required.
+        </div> -->
+        <div class="px-4 py-5 bg-white sm:p-6">
+          <div class="grid grid-cols-8 gap-x-4 mb-3">
+            <div class="col-span-8 sm:col-span-4 grid grid-cols-2">
+              <label for="consent_flag" class="input-label col-span-1 mt-3" [ngClass]="{'text-red-500': is_saving && f.consent_flag.errors}">Has the patient signed the consent?</label>
+              <select id="consent_flag" name="consent_flag" class="input col-span-1" [ngClass]="{'invalid-input': is_saving && f.consent_flag.errors}" formControlName="consent_flag">
+                <option [ngValue]="false">N</option>
+                <option [ngValue]="true">Y</option>
+              </select>
+            </div>
+          </div>
+
+          <div *ngIf="patientForm.value.consent_flag === true">
+            <div class="grid grid-cols-8 gap-x-4 mb-3">
+              <div class="col-span-8 font-semibold text-blue-500">
+                <span class="-ml-5">Basic Information</span>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-8 gap-x-4 gap-y-6">
+              <div class="col-span-6 sm:col-span-2">
+                <label for="last_name" class="input-label" [ngClass]="{'text-red-500': is_saving && f.last_name.errors}">Last name</label>
+                <input type="text" name="last_name" id="last_name" class="input capitalize" [ngClass]="{'invalid-input': is_saving && f.last_name.errors}" formControlName="last_name" required>
+
+                <div *ngIf="is_saving && f.last_name.errors" class="invalid-alert">
+                  <div *ngIf="f.last_name.errors?.['required']">
+                    {{ required_message }}
+                  </div>
+                  <div *ngIf="f.last_name.errors?.['minlength']">
+                    Minimum of 2 character.
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-span-6 sm:col-span-2">
+                <label for="first_name" class="input-label" [ngClass]="{'text-red-500': is_saving && f.first_name.errors}">First name</label>
+                <input type="text" name="first_name" id="first_name" class="input capitalize" [ngClass]="{'invalid-input': is_saving && f.first_name.errors}" formControlName="first_name">
+
+                <div *ngIf="is_saving && f.first_name.errors" class="invalid-alert">
+                  <div *ngIf="f.first_name.errors?.['required']">
+                    {{ required_message }}
+                  </div>
+                  <div *ngIf="f.first_name.errors?.['minlength']">
+                    Minimum of 2 character.
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-span-6 sm:col-span-2">
+                <label for="middle_name" class="input-label" [ngClass]="{'text-red-500': is_saving && f.middle_name.errors}">Middle name</label>
+                <input type="text" name="middle_name" id="middle_name" class="input capitalize" [ngClass]="{'invalid-input': is_saving && f.middle_name.errors}" formControlName="middle_name">
+
+                <div *ngIf="is_saving && f.middle_name.errors" class="invalid-alert">
+                  <div *ngIf="f.middle_name.errors?.['required']">
+                    {{ required_message }}
+                  </div>
+                  <div *ngIf="f.middle_name.errors?.['minlength']">
+                    Minimum of 2 character.
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-span-6 sm:col-span-2">
+                <label for="suffix_name" class="input-label" >Suffix Name</label>
+                <select id="suffix_name" name="suffix_name" class="input" formControlName="suffix_name">
+                  <option *ngFor="let suffix_name of suffix_names" [value]="suffix_name.code">{{ suffix_name.suffix_desc }}</option>
+                </select>
+              </div>
+
+              <div class="col-span-6 sm:col-span-2">
+                <label for="gender" class="input-label" [ngClass]="{'text-red-500': is_saving && f.gender.errors}">Sex</label>
+                <select id="gender" name="gender" class="input" [ngClass]="{'invalid-input': is_saving && f.gender.errors}" formControlName="gender">
+                  <option value="M">Male</option>
+                  <option value="F">Female</option>
+                  <option value="I">Intersex</option>
+                </select>
+
+                <div *ngIf="is_saving && f.gender.errors" class="invalid-alert">
+                  <div *ngIf="f.gender.errors?.['required']">
+                    {{ required_message }}
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-span-6 sm:col-span-2">
+                <label for="civil_status_code" class="input-label" [ngClass]="{'text-red-500': is_saving && f.civil_status_code.errors}">Civil Status</label>
+                <select id="civil_status_code" name="civil_status_code" class="input" [ngClass]="{'invalid-input': is_saving && f.civil_status_code.errors}" formControlName="civil_status_code">
+                  <option *ngFor="let civil_status of civil_statuses" [value]="civil_status.code">{{ civil_status.status_desc}}</option>
+                </select>
+
+                <div *ngIf="is_saving && f.civil_status_code.errors" class="invalid-alert">
+                  <div *ngIf="f.civil_status_code.errors?.['required']">
+                    {{ required_message }}
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-span-6 sm:col-span-2">
+                <label for="blood_type_code" class="input-label" [ngClass]="{'text-red-500': is_saving && f.blood_type_code.errors}">Blood Type</label>
+                <select id="blood_type_code" name="blood_type_code" class="input" [ngClass]="{'invalid-input': is_saving && f.blood_type_code.errors}" formControlName="blood_type_code">
+                  <option *ngFor="let blood_type of blood_types" [value]="blood_type.code">{{ blood_type.code }}</option>
+                </select>
+
+                <div *ngIf="is_saving && f.blood_type_code.errors" class="invalid-alert">
+                  <div *ngIf="f.blood_type_code.errors?.['required']">
+                    {{ required_message }}
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-span-6  sm:col-span-2">
+                <label for="birthdate" class="input-label" [ngClass]="{'text-red-500': is_saving && f.birthdate.errors}">Birthdate</label>
+                <input type="date" name="birthdate" id="birthdate" class="input" placeholder="mm/dd/yyyy" max="{{ date | date:'yyyy-MM-dd'}}" [ngClass]="{'invalid-input': is_saving && f.birthdate.errors}" formControlName="birthdate">
+
+                <div *ngIf="is_saving && f.birthdate.errors" class="invalid-alert">
+                  <div *ngIf="f.birthdate.errors?.['required']">
+                    {{ required_message }}
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-span-6  sm:col-span-2">
+                <label for="mobile_number" class="input-label" [ngClass]="{'text-red-500': is_saving && f.mobile_number.errors}">Mobile Number (0912) 354-6789</label>
+                <input type="text" mask="(9999) 999-9999" [showMaskTyped]="true" name="mobile_number" id="mobile_number" class="input" [ngClass]="{'invalid-input': is_saving && f.mobile_number.errors}" formControlName="mobile_number">
+
+                <div *ngIf="is_saving && f.mobile_number.errors" class="invalid-alert">
+                  <div *ngIf="f.mobile_number.errors?.['required']">
+                    {{ required_message }}
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-span-6  sm:col-span-2">
+                <label for="mothers_name" class="input-label" [ngClass]="{'text-red-500': is_saving && f.mothers_name.errors}">Mothers Maiden Name</label>
+                <input type="text" name="mothers_name" id="mothers_name" class="input" [ngClass]="{'invalid-input': is_saving && f.mothers_name.errors}" formControlName="mothers_name">
+
+                <div *ngIf="is_saving && f.mothers_name.errors" class="invalid-alert">
+                  <div *ngIf="f.mothers_name.errors?.['required']">
+                    {{ required_message }}
+                  </div>
+                  <div *ngIf="f.mothers_name.errors?.['minlength']">
+                    Minimum of 2 character.
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-span-6 sm:col-span-2">
+                <label for="education_code" class="input-label" [ngClass]="{'text-red-500': is_saving && f.education_code.errors}">Education</label>
+                <select id="education_code" name="education_code" class="input" [ngClass]="{'invalid-input': is_saving && f.education_code.errors}" formControlName="education_code">
+                  <option *ngFor="let education of educations" [value]="education.code">{{ education.education_desc }}</option>
+                </select>
+
+                <div *ngIf="is_saving && f.education_code.errors" class="invalid-alert">
+                  <div *ngIf="f.education_code.errors?.['required']">
+                    {{ required_message }}
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-span-6 sm:col-span-2">
+                <label for="religion_code" class="input-label" [ngClass]="{'text-red-500': is_saving && f.religion_code.errors}">Religion</label>
+                <select id="religion_code" name="religion_code" class="input" [ngClass]="{'invalid-input': is_saving && f.religion_code.errors}" formControlName="religion_code">
+                  <option *ngFor="let religion of religions" [value]="religion.code">{{ religion.religion_desc }}</option>
+                </select>
+
+                <div *ngIf="is_saving && f.religion_code.errors" class="invalid-alert">
+                  <div *ngIf="f.religion_code.errors?.['required']">
+                    {{ required_message }}
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-span-6 sm:col-span-2">
+                <label for="occupation_code" class="input-label" [ngClass]="{'text-red-500': is_saving && f.occupation_code.errors}">Occupation</label>
+                <select id="occupation_code" name="occupation_code" class="input" [ngClass]="{'invalid-input': is_saving && f.occupation_code.errors}" formControlName="occupation_code">
+                  <option *ngFor="let occupation of occupations" [value]="occupation.code">{{ occupation.occupation_desc }}</option>
+                </select>
+
+                <div *ngIf="is_saving && f.occupation_code.errors" class="invalid-alert">
+                  <div *ngIf="f.occupation_code.errors?.['required']">
+                    {{ required_message }}
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-span-6 sm:col-span-2">
+                <label for="pwd_type_code" class="input-label" [ngClass]="{'text-red-500': is_saving && f.pwd_type_code.errors}">Person with Disabililties</label>
+                <select id="pwd_type_code" name="pwd_type_code" class="input" [ngClass]="{'invalid-input': is_saving && f.pwd_type_code.errors}" formControlName="pwd_type_code">
+                  <option *ngFor="let pwd_type of pwd_types" [value]="pwd_type.code">{{ pwd_type.type_desc }}</option>
+                </select>
+
+                <div *ngIf="is_saving && f.pwd_type_code.errors" class="invalid-alert">
+                  <div *ngIf="f.pwd_type_code.errors?.['required']">
+                    {{ required_message }}
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-span-6 sm:col-span-2">
+                <label for="indegenous_flag" class="input-label" [ngClass]="{'text-red-500': is_saving && f.indegenous_flag.errors}">Indigenous People</label>
+                <select id="indegenous_flag" name="indegenous_flag" class="input" [ngClass]="{'invalid-input': is_saving && f.indegenous_flag.errors}" formControlName="indegenous_flag">
+                  <option [ngValue]="false">N</option>
+                  <option [ngValue]="true">Y</option>
+                </select>
+
+                <div *ngIf="is_saving && f.indegenous_flag.errors" class="invalid-alert">
+                  <div *ngIf="f.indegenous_flag.errors?.['required']">
+                    {{ required_message }}
+                  </div>
+                </div>
+              </div>
+
+              <!-- <div class="col-span-6 sm:col-span-2">
+                <label for="consent_flag" class="input-label" [ngClass]="{'text-red-500': is_saving && f.consent_flag.errors}">Has Consent</label>
+                <select id="consent_flag" name="consent_flag" class="input" [ngClass]="{'invalid-input': is_saving && f.consent_flag.errors}" formControlName="consent_flag">
+                  <option [ngValue]="false">N</option>
+                  <option [ngValue]="true">Y</option>
+                </select>
+              </div>
+
+              <div *ngIf="is_saving && f.consent_flag.errors" class="invalid-alert">
+                <div *ngIf="f.consent_flag.errors?.['required']">
+                  {{ required_message }}
+                </div>
+              </div> -->
+            </div>
+
+            <div class="grid grid-cols-8 gap-x-4 gap-y-4 pt-6">
+              <div class="col-span-8 border-b-2 border-slate-100"></div>
+              <div class="col-span-8 font-semibold text-blue-500">
+                <span class="-ml-5 mr-5">Address Information</span>
+
+                <button type="button" class="col-span-8 w-24 rounded-md text-white bg-sky-500 hover:bg-sky-600 active:bg-sky-400 focus:bg-sky-600 px-2 py-1 text-sm" (click)="toggleModal('family-folder-modal')">
+                  <fa-icon class="mr-1" [icon]="faSearch"></fa-icon>
+                  Search
+                </button>
+                <button *ngIf="show_edit" type="button" class="ml-2 w-24 col-span-8 rounded-md text-white bg-amber-500 hover:bg-amber-600 active:bg-amber-400 focus:bg-amber-600 px-2 py-1 text-sm" (click)="isDisabled((f['family'].enabled ? true : false), 'edit_folder')">
+                  <fa-icon class="mr-1" [icon]="faPenToSquare"></fa-icon>
+                  {{ f['family'].enabled ? 'Cancel' : 'Edit'}}
+                </button>
+              </div>
+            </div>
+            <!-- FAMILY FOLDER START -->
+            <div class="grid grid-cols-8 gap-x-4 gap-y-6" formGroupName="family">
+              <div *ngIf="!show_demog_input" class="col-span-8 grid grid-cols-8 bg-amber-100 border border-amber-200 rounded-lg px-5 mt-4 text-gray-700">
+                <div class="col-span-4 mt-2 mb-2">Selected Family: {{ selected_family_folder }}</div>
+                <div class="col-span-4 mt-2 mb-2 grid grid-cols-1">
+                  <span *ngFor="let member of selected_members">
+                    {{ member.patient.last_name }}, {{ member.patient.first_name }} {{ member.patient.middle_name === 'NA' ? '' : member.patient.middle_name }} {{ member.patient.suffix_name === 'NA' ? '' : member.patient.suffix_name }}
+                  </span>
+                </div>
+              </div>
+              <div class="col-span-6 sm:col-span-2" *ngIf="show_demog_input">
+                <label for="region" class="input-label" [ngClass]="{'text-red-500': is_saving && f['family']['controls']['region'].errors}">Region</label>
+                <select id="region" name="region" class="input disabled:bg-gray-300" (change)="loadDemog('regions', patientForm.value.family.region, 'provinces')" [ngClass]="{'invalid-input': is_saving && f['family']['controls']['region'].errors}" formControlName="region">
+                  <option *ngFor="let region of regions" [value]="region.code" >{{ region.name }}</option>
+                </select>
+
+                <div *ngIf="is_saving && f['family']['controls']['region'].errors" class="invalid-alert">
+                  <div *ngIf="f['family']['controls']['region'].errors?.['required']">
+                    {{ required_message }}
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-span-6 sm:col-span-2" *ngIf="show_demog_input">
+                <label for="province" class="input-label" [ngClass]="{'text-red-500': is_saving && f['family']['controls']['province'].errors}">Province</label>
+                <select id="province" name="province" class="input disabled:bg-gray-300" (change)="loadDemog('provinces', patientForm.value.family.province, 'municipalities')" [ngClass]="{'invalid-input': is_saving && f['family']['controls']['province'].errors}" formControlName="province">
+                  <option *ngFor="let province of provinces" [value]="province.code">{{ province.name }}</option>
+                </select>
+
+                <div *ngIf="is_saving && f['family']['controls']['province'].errors" class="invalid-alert">
+                  <div *ngIf="f['family']['controls']['province'].errors?.['required']">
+                    {{ required_message }}
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-span-6 sm:col-span-2" *ngIf="show_demog_input">
+                <label for="muncity" class="input-label" [ngClass]="{'text-red-500': is_saving && f['family']['controls']['municipality'].errors}">Municipality/City</label>
+                <select id="muncity" name="muncity" class="input disabled:bg-gray-300" (change)="loadDemog('municipalities', patientForm.value.family.municipality, 'barangays')" [ngClass]="{'invalid-input': is_saving && f['family']['controls']['municipality'].errors}" formControlName="municipality">
+                  <option *ngFor="let municipality of municipalities" [value]="municipality.code">{{ municipality.name }}</option>
+                </select>
+
+                <div *ngIf="is_saving && f['family']['controls']['municipality'].errors" class="invalid-alert">
+                  <div *ngIf="f['family']['controls']['municipality'].errors?.['required']">
+                    {{ required_message }}
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-span-6 sm:col-span-2" *ngIf="show_demog_input">
+                <label for="brgy" class="input-label" [ngClass]="{'text-red-500': is_saving && f['family']['controls']['brgy'].errors}">Brgy</label>
+                <select id="brgy" name="brgy" class="input disabled:bg-gray-300" [ngClass]="{'invalid-input': is_saving && f['family']['controls']['brgy'].errors}" formControlName="brgy">
+                  <option *ngFor="let barangay of barangays" [value]="barangay.code">{{ barangay.name }}</option>
+                </select>
+
+                <div *ngIf="is_saving && f['family']['controls']['brgy'].errors" class="invalid-alert">
+                  <div *ngIf="f['family']['controls']['brgy'].errors?.['required']">
+                    {{ required_message }}
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-span-6 sm:col-span-2" *ngIf="show_demog_input">
+                <label for="address" class="input-label" [ngClass]="{'text-red-500': is_saving && f['family']['controls']['address'].errors}">Address</label>
+                <input type="text" name="address" id="address" class="input disabled:bg-gray-300" [ngClass]="{'invalid-input': is_saving && f['family']['controls']['address'].errors}" formControlName="address">
+
+                <div *ngIf="is_saving && f['family']['controls']['address'].errors" class="invalid-alert">
+                  <div *ngIf="f['family']['controls']['address'].errors?.['required']">
+                    {{ required_message }}
+                  </div>
+                  <div *ngIf="f['family']['controls']['address'].errors?.['minlength']">
+                    Minimum of 2 character.
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-span-8 sm:col-span-2">
+                <label for="is_head" class="input-label" [ngClass]="{'text-red-500': is_saving && f['family']['controls']['is_head'].errors}">Family Role</label>
+                <select id="is_head" name="is_head" class="input disabled:bg-gray-300" [ngClass]="{'invalid-input': is_saving && f['family']['controls']['is_head'].errors}" formControlName="is_head">
+                  <option value="MEMBER">Member</option>
+                  <option value="HEAD">Head</option>
+                </select>
+
+                <div *ngIf="is_saving && f['family']['controls']['is_head'].errors" class="invalid-alert">
+                  <div *ngIf="f['family']['controls']['is_head'].errors?.['required']">
+                    {{ required_message }}
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-span-8 sm:col-span-2" *ngIf="show_demog_input">
+                <label for="cct_id" class="input-label" [ngClass]="{'text-red-500': is_saving && f['family']['controls']['cct_id'].errors}">CCT ID <span class="text-sm">(optional)</span></label>
+                <input type="text" name="cct_id" id="cct_id" class="input disabled:bg-gray-300" [ngClass]="{'invalid-input': is_saving && f['family']['controls']['cct_id'].errors}" formControlName="cct_id">
+
+                <div *ngIf="is_saving && f['family']['controls']['cct_id'].errors" class="invalid-alert">
+                  <div *ngIf="f['family']['controls']['cct_id'].errors?.['required']">
+                    {{ required_message }}
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-span-6 sm:col-span-2" *ngIf="show_demog_input && f['family']['controls']['cct_id'].value">
+                <label for="cct_date" class="input-label" [ngClass]="{'text-red-500': is_saving && f['family']['controls']['cct_date'].errors}">CCT Registration date</label>
+                <input type="date" name="cct_date" id="cct_date" class="input disabled:bg-gray-300" [ngClass]="{'invalid-input': is_saving && f['family']['controls']['cct_date'].errors}" formControlName="cct_date" [required]="f['family']['controls']['cct_id'].value || f['family']['controls']['cct_id'].value !== ''">
+
+                <div *ngIf="is_saving && f['family']['controls']['cct_date'].errors" class="invalid-alert">
+                  <div *ngIf="f['family']['controls']['cct_date'].errors?.['required']">
+                    {{ required_message }}
+                  </div>
+                  <div *ngIf="f['family']['controls']['cct_date'].errors?.['minlength']">
+                    Minimum of 2 character.
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- FAMILY FOLDER END -->
+          </div>
+        </div>
+
+        <div *ngIf="submit_errors" class="col-span-8 bg-red-200 rounded border border-red-300 text-red-900 text-sm mb-5">
+          <div class="block p-3 pl-10" >
+            <ul class="list-disc" >
+              <li *ngFor="let error of submit_errors | keyvalue">{{ error.value }}</li>
+            </ul>
+          </div>
+        </div>
+
+        <div *ngIf="patientForm.value.consent_flag === true" class="text-right">
+          <button type="submit" class="btn-save mr-5 w-48 disabled:bg-gray-400" [disabled]="loading || patientForm.invalid || disable_save">
+            <fa-icon *ngIf="loading" class="mr-3" [icon]="faSpinner" [spin]="true"></fa-icon>
+            <fa-icon *ngIf="!loading" class="mr-3" [icon]="faSave"></fa-icon>
+            {{ loading ? (button_function === 'Save' ? 'Saving' : 'Updating') : button_function }}
+          </button>
+        </div>
+
+      </div>
+    </form>
+  </div>
+</div>
+
+<div [@myInsertRemoveTrigger] *ngIf="showModal" class="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex">
+  <div class="relative w-auto my-6 mx-auto max-w-6xl">
+    <div class="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+      <div class="relative p-6 pb-10 pr-40 flex-auto">
+          <span>Record was saved/updated succesfully.</span>
+      </div>
+      <div class="flex items-center justify-end p-3 rounded-b">
+        <button *ngIf="!patient_to_update" class="bg-blue-500 text-white active:bg-blue-500 hover:bg-blue-600 text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button" (click)="newPatient()">
+          <fa-icon class="mr-3" [icon]="faFolderPlus"></fa-icon>New Patient
+        </button>
+        <button *ngIf="!patient_to_update" class="bg-amber-500 text-white active:bg-amber-500 hover:bg-amber-600 text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button" (click)="proceedItr()">
+          <fa-icon class="mr-3" [icon]="faClipboard"></fa-icon>Open ITR
+        </button>
+        <button *ngIf="patient_to_update" class="bg-blue-500 text-white active:bg-blue-500 hover:bg-blue-600 text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button" (click)="toggleModal('save-modal')">
+          Ok
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="showModal" class="opacity-25 fixed inset-0 z-40 bg-black"></div>
+
+<div *ngIf="familyFolderModal">
+  <app-family-folder-modal [last_name]="patientForm.value.last_name" (toggleModal)="toggleModal('family-folder-modal')" (transaction)="transaction($event)"></app-family-folder-modal>
+</div>

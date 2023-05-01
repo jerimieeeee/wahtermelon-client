@@ -1,0 +1,352 @@
+<div class="flex mt-4 mb-3">
+  <h4 class="font-bold text-gray-600 text-sm">SERVICES</h4>
+  <!-- <div class="relative">
+    <fa-icon [icon]="faInfoCircle" class="peer ml-3 text-gray-300 hover:text-gray-500 z-50"></fa-icon>
+    <div
+        class="absolute text-sm bg-gradient-to-b from-stone-500 to-gray-400 p-2 rounded-md border border-gray-500  text-white drop-shadow-lg opacity-90 border-check z-50 w-60 invisible peer-hover:visible">
+        <h1 class="font-bold drop-shadow-lg">IMPORTANT</h1>
+        <p class="font-light drop-shadow-lg">Once saved, the information will be displayed in the input boxes
+            and shall not be editable unless Edit button is pressed.</p>
+    </div>
+</div> -->
+</div>
+
+  <!--Essential Newborn Care Section-->
+<div class="card">
+
+    <div class="flex bg-yellow-500 card-header-services">
+      <h4 class="font-semibold text-white text-sm uppercase">Essential Newborn Care</h4>
+      <button  type="button" class="btn-icon -mt-0.5 relative ml-auto px-5" (click)="toggleEssentialModal('Y')" *ngIf="findEssential(service_list).length >= 1">
+        <fa-icon size="md" [icon]="faPenToSquare"></fa-icon>
+        </button>
+    </div>
+
+    <div class="flex w-full item-start flex-wrap pt-5">
+      <div *ngFor="let item of findEssential(service_list)" class="md:w-1/2 lg:w-1/2 px-10 text-sm pb-5">
+       
+          <!-- <fa-icon (click)="toggleModal('delete-vaccine-modal')" class="mx-0 my-0 text-red-400 hover:cursor-pointer flex-none mr-2" [icon]="faTrash"></fa-icon> -->
+          <span class="text-sm flex-auto" *ngIf="item.services.essential == 'Y'">
+            <span class="font-semibold">{{ item.services.service_name }}</span> <br />({{ item.status_id === 1 ? 'Done' : (item.status_id === 2 ? 'Done Outside - Private' : 'Done Outside - Public') }} -
+          </span>
+          <span class="text-sm flex-auto text-right" *ngIf="item.services.essential == 'Y'">
+            {{ !item.service_date ? '-' : item.service_date | date: 'MM/dd/yyyy'}})
+          </span>
+      </div>
+    
+    </div>
+
+    <div class="flex w-full item-start flex-wrap" *ngIf="findEssential(service_list).length == 0">
+      <p class="px-10 py-1 text-sm mt-1">No Recorded Essential Services!</p>
+          <button type="button" class="flex btn-add ml-auto mr-10" (click)="toggleEssentialModal('Y')">
+            <fa-icon class="mr-2" [icon]="faPlus"></fa-icon>
+           Add
+          </button>
+    </div>
+    <!--Essential Newborn Care Modal-->
+    <!-- Main modal -->
+  <div *ngIf="showEssentialModal" id="defaultModal" tabindex="-1" class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 w-full md:inset-0 h-modal md:h-full justify-center items-center flex" aria-modal="true" role="dialog" style="z-index:59">
+    <div class="relative p-4 w-full max-w-3xl h-auto md:h-auto">
+        <!-- Modal content -->
+        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+            <!-- Modal header -->
+            <div class="flex justify-between items-start p-4 rounded-t border-b dark:border-gray-600">
+                <h3 *ngIf="modalFilter == 'Y'" class="mt-1 text-md font-bold text-blue-500 dark:text-white">
+                    Essential Newborn Care
+                </h3>
+                <h3 *ngIf="modalFilter == 'N'" class="mt-1 text-md font-bold text-blue-500 dark:text-white">
+                  Services
+                </h3>
+                <button type="button" class="text-gray-500 bg-transparent hover:bg-red-500 hover:text-white rounded text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" (click)="toggleEssentialModal()">
+                    <svg aria-hidden="true" class="w-5 h-5 rounded" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                    <span class="sr-only">Close modal</span>
+                </button>
+            </div>
+            <!-- Modal body -->
+          <!-- <form>
+          <div class="overflow-y-auto h-96 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
+            <table class="w-full max-w-3xl text-left text-gray-500 dark:text-gray-400">
+              <thead class="text-sm text-gray-700 dark:bg-gray-700 dark:text-gray-400">
+                <tr class="sticky top-0 z-50 bg-gray-50">
+                    <th scope="col" class="p-4 pl-12">
+
+                    </th>
+                    <th scope="col" class="py-4">
+                    Service Name
+                    </th>
+                    <th scope="col" class="py-4 px-12">
+                    Service Date
+                    </th>
+                    <th scope="col" class="py-4 pr-12">
+                    Done Outside Facility
+                    </th>
+                </tr>
+              </thead>
+
+                <tbody>
+                  <tr *ngFor="let item of lib_ccservices; let i = index;" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <td *ngIf="item.service_cat == 'N'" class="p-4 w-4 pl-12">
+                      <div class="flex items-center">
+                          <input id="{{item.service_id}}" name="" type="checkbox" onselectstart="return false" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" (change)="changeSelection(i)" [(ngModel)]="item.ischecked" [checked]="">
+                      </div>
+                    </td>
+                    <td *ngIf="item.service_cat == 'N'" scope="row" class="py-4 text-sm text-gray-900 whitespace-nowrap dark:text-white select-none">
+                      <label for="{{item.service_id}}">{{item.service_name}}</label>
+                    </td>
+                    <td *ngIf="item.service_cat == 'N'" class="py-4 px-12">
+                      <input type="date" max="{{defaultDate}}" placeholder="Select Date" name="service_date_{{i}}"
+                      class=" block w-full px-3 py-1.5 text-sm text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" [(ngModel)]="item.service_date"
+                      placeholder="Select a date" />
+                    </td>
+                    <td *ngIf="item.service_cat == 'N'" class="text-sm py-4 pr-12">
+                      <select class="w-full text-sm" [(ngModel)]="item.status_id">
+                        <option>-</option>
+                        <option value="1">Done</option>
+                        <option value="2">Done Outside - Private</option>
+                        <option value="3">Done Outside - Public</option>
+                      </select>
+
+                    </td>
+                  </tr>
+                </tbody>
+            </table>
+          </div>
+        </form> -->
+
+        <div class="overflow-y-auto scrollbar-thin h-96 scrollbar-thumb-gray-400 scrollbar-track-gray-100">
+        <form class="w-full max-w-3xl text-left text-gray-500 dark:text-gray-400">
+          <div class="text-gray-600 border border-slate-100 mx-5"></div><!-- border -->
+
+          <div class="flex item-start flex-wrap pb-5 pt-5">
+            <!-- <div class="flex justify-between w-full px-5 mt-3 rounded-tl rounded-tr">
+              <h4 class="font-bold text-blue-500 text-sm mt-2">Services</h4>
+            </div> -->
+
+            <div *ngFor="let item of lib_ccservices" class="w-full mx-10">
+              <div *ngIf="item.essential == modalFilter" class="grid grid-cols-3 gap-4 mt-5">
+                <label class="col-span-1 flex items-center mt-2" for="{{ item.service_id }}">{{ item.service_name}} </label>
+                
+                <!-- <div class="col-span-1"> -->
+                  <select [(ngModel)]="serviceForm.service_status[item.service_id]"
+                        id="{{ 'service_status.'+item.service_id }}"
+                        name="{{ 'service_status.'+item.service_id }}"
+                        class="col-span-1 mt-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    <option>-</option>
+                    <option value="1">Done</option>
+                    <option value="2">Done Outside - Private</option>
+                    <option value="3">Done Outside - Public</option>
+                  </select>
+
+                  <div *ngIf="serviceForm.service_status[item.service_id] !== '-' && serviceForm.service_status[item.service_id] !== '' && serviceForm.service_status[item.service_id] !== undefined">
+                    <input  [(ngModel)]="serviceForm.service_date[item.service_id]"
+                      name="{{ 'service_date.'+item.service_id }}" id="{{ 'service_date.'+item.service_id }}" type="date" placeholder="Enter vaccine date" class="col-span-1 mt-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                  </div>
+
+                  <div *ngIf="serviceForm.service_status['NBSDONE'] !== '-' && serviceForm.service_status['NBSDONE'] !== '' && serviceForm.service_status['NBSDONE'] !== undefined && item.service_id == 'NBSDONE'" class="col-start-2">
+                    <label>NBS Filter Number</label>
+                    <input  [(ngModel)]="patient_info.nbs_filter"
+                      name="" id="" type="text" placeholder="Enter Number" class="col-span-1 col-start-2 mt-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                  </div>
+
+                  <div *ngIf="serviceForm.service_status['MNP'] !== '-' && serviceForm.service_status['MNP'] !== '' && serviceForm.service_status['MNP'] !== undefined && item.service_id == 'MNP'" class="col-start-2">
+                    <label>Quantity</label>
+                    <input  [(ngModel)]="serviceForm.quantity[item.service_id]"
+                      name="{{ 'quantity.'+item.service_id }}" id="{{ 'quantity.'+item.service_id }}" type="text" placeholder="Enter Number" class="col-span-1 col-start-2 mt-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    </div>
+
+                    <div *ngIf="serviceForm.service_status['MNP2'] !== '-' && serviceForm.service_status['MNP2'] !== '' && serviceForm.service_status['MNP2'] !== undefined && item.service_id == 'MNP2'" class="col-start-2">
+                      <label>Quantity</label>
+                      <input  [(ngModel)]="serviceForm.quantity[item.service_id]"
+                        name="{{ 'quantity.'+item.service_id }}" id="{{ 'quantity.'+item.service_id }}" type="text" placeholder="Enter Number" class="col-span-1 col-start-2 mt-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                      </div>
+
+                <!-- </div> -->
+              </div>
+              
+            </div>
+            
+          </div>
+          <div class="text-gray-600 border border-slate-100 mx-5 mt-5"></div><!-- border -->
+        </form>
+
+
+      </div>
+
+
+
+            <!-- Modal footer -->
+            <div class="flex justify-end py-4 px-6 space-x-4 rounded-b border-t border-gray-200 dark:border-gray-600">
+              <button  type="button" class="btn-cancel" (click)="toggleEssentialModal()">Close</button>
+              <button  type="button" class="btn-save"  (click)="onSubmit()" (click)="saveModal()">
+                <fa-icon *ngIf="is_saving" class="pl-0" [icon]="faSpinner" [spin]="true"></fa-icon>
+                {{ is_saving ? 'Saving' : 'Save' }}</button>
+            </div>
+        </div>
+    </div>
+  </div>
+
+</div>
+
+
+<div *ngIf="showEssentialModal" class="opacity-50 fixed inset-0 z-50 bg-black"></div>
+
+
+  <!--Services Section-->
+  <div class="card mt-6 mb-6">
+
+  <div class="flex bg-yellow-500 card-header-services">
+    <h4 class="font-semibold text-white text-sm uppercase">Services</h4>
+    <button  type="button" class="btn-icon -mt-0.5 relative ml-auto px-5" (click)="toggleEssentialModal('N')" *ngIf="findServices(service_list).length >= 1">
+      <fa-icon size="md" [icon]="faPenToSquare"></fa-icon>
+      </button>
+  </div>
+
+  <div class="flex w-full item-start flex-wrap pt-5">
+    <div *ngFor="let item of findServices(service_list)" class="md:w-1/2 lg:w-1/2 px-10 text-sm pb-5">
+     
+        <!-- <fa-icon (click)="toggleModal('delete-vaccine-modal')" class="mx-0 my-0 text-red-400 hover:cursor-pointer flex-none mr-2" [icon]="faTrash"></fa-icon> -->
+        <span class="text-sm flex-auto" *ngIf="item.services.essential == 'N'">
+          <span class="font-semibold">{{ item.services.service_name }}</span> <br />({{ item.status_id === 1 ? 'Done' : (item.status_id === 2 ? 'Done Outside - Private' : 'Done Outside - Public') }} -
+        </span>
+        <span class="text-sm flex-auto text-right" *ngIf="item.services.essential == 'N'">
+          {{ !item.service_date ? '-' : item.service_date | date: 'MM/dd/yyyy'}})
+        </span>
+    </div>
+  
+  </div>
+
+  <div class="flex w-full item-start flex-wrap" *ngIf="findServices(service_list).length == 0">
+    <p class="px-10 py-1 text-sm mt-1">No Recorded Services!</p>
+    <button type="button" class="flex btn-add ml-auto mr-10" (click)="toggleEssentialModal('N')">
+      <fa-icon class="mr-2" [icon]="faPlus"></fa-icon>
+     Add
+    </button>
+  </div>
+  </div>
+
+
+  <!--Essential Newborn Care Modal-->
+   <!-- Main modal -->
+   <div *ngIf="showServiceModal" id="defaultModal" tabindex="-1" class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 w-full md:inset-0 h-modal md:h-full justify-center items-center flex" aria-modal="true" role="dialog" style="z-index:60">
+    <div class="relative p-4 w-full max-w-4xl h-auto md:h-auto">
+        <!-- Modal content -->
+        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+            <!-- Modal header -->
+            <div class="flex w-full justify-between items-start p-4 rounded-t border-b dark:border-gray-600">
+                <h3 class="mt-1 font-bold text-md text-blue-500 dark:text-white">
+                   Services
+                </h3>
+                <button type="button" class="text-gray-500 bg-transparent hover:bg-red-500 hover:text-white rounded text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" (click)="toggleServiceModal()">
+                    <svg aria-hidden="true" class="w-5 h-5 rounded" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                    <span class="sr-only">Close modal</span>
+                </button>
+            </div>
+            <!-- Modal body -->
+          <div class="overflow-y-auto h-96 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
+            <table class="w-full max-w-4xl text-left text-gray-500 dark:text-gray-400">
+              <thead class="text-sm text-gray-700 dark:bg-gray-700 dark:text-gray-400">
+                <tr class="sticky top-0 z-50 bg-gray-50">
+                    <th scope="col" class="p-4 pl-12">
+                      <div class="flex items-center">
+                        <input id="checkbox-all-search" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 rounded-full border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                        <label for="checkbox-all-search" class="sr-only">checkbox</label>
+                      </div>
+                    </th>
+                    <th scope="col" class="py-4">
+                    Service Name
+                    </th>
+                    <th scope="col" class="py-4 px-10">
+                    Service Date
+                    </th>
+                    <th scope="col" class="py-4 pr-12">
+                    Done Outside Facility
+                    </th>
+
+                </tr>
+              </thead>
+                <tbody>
+                  <tr *ngFor="let item of lib_ccservices" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <td *ngIf="item.service_cat == 'Y'" class="p-4 w-4 pl-12">
+                      <div class="flex items-center">
+                        <input id="{{item.id}}" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 rounded-full border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" (change)="changeSelection2()" [(ngModel)]="item.ischecked" [checked]="item.ischecked">
+                      </div>
+                    </td>
+                    <td *ngIf="item.service_cat == 'Y'" scope="row" class="text-sm py-4 text-gray-900 whitespace-nowrap dark:text-white select-none">
+                      <label for="{{item.service_id}}">{{item.service_name}}</label>
+                    </td>
+                    <td *ngIf="item.service_cat == 'Y'" class="py-4 px-10">
+                      <input type="date"
+                      class="form-control block w-full px-3 py-1.5 text-sm text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" [(ngModel)]="item.service_date"
+                      placeholder="Select service date"/>
+                      <!-- onfocus="(this.type='date')" -->
+                    </td>
+                    <td *ngIf="item.service_cat == 'Y'" class="text-sm py-4 pr-12">
+                      <select class="w-full text-sm" [(ngModel)]="item.done_outside">
+                        <option  *ngFor="let option of libOptions" [value]="option.value">{{option.desc}}</option>
+                      </select>
+
+                    </td>
+                  </tr>
+                </tbody>
+            </table>
+          </div>
+
+            <!-- Modal footer -->
+            <div class="flex justify-end py-4 px-6 space-x-4 rounded-b border-t border-gray-200 dark:border-gray-600">
+              <button  type="button" class="btn-cancel" (click)="toggleServiceModal()">Close</button>
+              <button  type="button" class="btn-save"  (click)="submit2()" (click)="saveModal()">
+                <fa-icon *ngIf="is_saving" class="pl-0" [icon]="faSpinner" [spin]="true"></fa-icon>
+                {{ is_saving ? 'Saving' : 'Save' }}</button>
+            </div>
+        </div>
+    </div>
+  </div>
+
+
+<div *ngIf="showServiceModal" class="opacity-50 fixed inset-0 z-50 bg-black"></div>
+
+
+<div *ngIf="showAlert" id="defaultModal" tabindex="-1" class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 w-full md:inset-0 h-modal md:h-full justify-center items-center flex" aria-modal="true" role="dialog" style="z-index:60">
+  <div class="relative p-4 w-full max-w-sm h-auto md:h-auto">
+      <!-- Modal content -->
+      <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+          <!-- Modal header -->
+          <div class="flex w-full justify-between items-start p-4 rounded-t border-b dark:border-gray-600">
+              <h3 class="mt-1 font-bold text-md text-blue-500 dark:text-white">
+                 Alert
+              </h3>
+              <button type="button" class="text-gray-500 bg-transparent hover:bg-red-500 hover:text-white rounded text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" (click)="toggleAlertModal()">
+                  <svg aria-hidden="true" class="w-5 h-5 rounded" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                  <span class="sr-only">Close modal</span>
+              </button>
+          </div>
+          <!-- Modal body -->
+        <div class="h-20 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
+          <table class="w-full max-w-sm text-left text-gray-500 dark:text-gray-400">
+            <thead class="text-sm text-gray-700 dark:bg-gray-700 dark:text-gray-400">
+              <tr class="sticky top-0 z-50 bg-gray-50">
+                  
+              </tr>
+            </thead>
+              <tbody>
+                <div  class="px-10 pt-5 align-middle text-center">
+                  <label *ngIf="alertFilter == 'S'" for="" class="align-middle">Data Successfully Saved!</label>
+                  <label *ngIf="alertFilter == 'E'" for="" class="align-middle">Error in Saving! Please check required fields</label>
+                </div>
+                  
+               
+              </tbody>
+          </table>
+        </div>
+
+          <!-- Modal footer -->
+          <div class="flex justify-end py-4 px-6 space-x-4 rounded-b border-t border-gray-200 dark:border-gray-600">
+            <button  type="button" class="btn-cancel" (click)="toggleAlertModal()">Close</button>
+            
+          </div>
+      </div>
+  </div>
+</div>
+
+
+<div *ngIf="showAlert" class="opacity-50 fixed inset-0 bg-black" style="z-index:59"></div>
+

@@ -1,0 +1,180 @@
+<div id="defaultModal" tabindex="-1" class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 w-full md:inset-0 h-modal md:h-full justify-center items-center flex" aria-modal="true" role="dialog" style="z-index:60">
+  <div class="relative p-4 w-full max-w-3xl h-auto md:h-auto">
+    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+      <div class="flex justify-between items-start py-3 rounded-t border-b bg-blue-500 dark:border-gray-600">
+        <h3 class="mt-2 text-sm font-bold text-white dark:text-white pl-5">
+            Prescribe medicine
+        </h3>
+      </div>
+      <div class="overflow-y-auto h-96 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
+        <form [formGroup]="prescriptionForm" class="w-full max-w-3xl text-left text-gray-500 dark:text-gray-400">
+
+          <!-- START PATIENT DETAILS -->
+          <div class="grid grid-cols-3 gap-4 pb-5 px-10">
+
+            <div class="col-span-3 mt-5 mx-5" *ngIf="!add_drug">
+              <span class="font-semibold">Drug description:</span>
+              {{ selected_drug.konsulta_medicine ? selected_drug.konsulta_medicine.desc : selected_drug.desc }}
+            </div>
+
+            <div class="col-span-3 text-sm " *ngIf="add_drug">
+              <label class="font-semibold" for="added_medicine" [ngClass]="{'text-red-500': is_saving && f.added_medicine.errors}">Drug name</label>
+              <input name="added_medicine" id="added_medicine" formControlName="added_medicine" type="text" class="input" [ngClass]="{'invalid-input': is_saving && f.added_medicine.errors}">
+
+              <div *ngIf="is_saving && f.added_medicine.errors" class="invalid-alert">
+                <div *ngIf="f.added_medicine.errors?.['required']">
+                  {{ required_message }}
+                </div>
+              </div>
+            </div>
+
+            <div class="col-span-1 text-sm">
+              <label class="font-semibold" for="dosage_quantity" [ngClass]="{'text-red-500': is_saving && f.dosage_quantity.errors}">Dosage Qty.</label>
+              <input name="dosage_quantity" id="dosage_quantity" formControlName="dosage_quantity" [ngClass]="{'invalid-input': is_saving && f.dosage_quantity.errors}" type="number" class="input">
+
+              <div *ngIf="is_saving && f.dosage_quantity.errors" class="invalid-alert">
+                <div *ngIf="f.dosage_quantity.errors?.['required']">
+                  {{ required_message }}
+                </div>
+              </div>
+            </div>
+
+            <div class="col-span-1 text-sm">
+              <label class="font-semibold" for="dosage_uom" [ngClass]="{'text-red-500': is_saving && f.dosage_uom.errors}">Dosage unit</label>
+              <select name="dosage_uom" id="dosage_uom" formControlName="dosage_uom" [ngClass]="{'invalid-input': is_saving && f.dosage_uom.errors}" class="input">
+                <option [value]="uom.code" *ngFor="let uom of drug_uom">{{ uom.desc }}</option>
+              </select>
+              <div *ngIf="is_saving && f.dosage_uom.errors" class="invalid-alert">
+                <div *ngIf="f.dosage_uom.errors?.['required']">
+                  {{ required_message }}
+                </div>
+              </div>
+            </div>
+
+            <div class="col-span-1 text-sm">
+              <label class="font-semibold" for="dose_regimen" [ngClass]="{'text-red-500': is_saving && f.dose_regimen.errors}">Dosage regimen</label>
+              <select name="dose_regimen" id="dose_regimen" formControlName="dose_regimen" [ngClass]="{'invalid-input': is_saving && f.dose_regimen.errors}" class="input">
+                <option [value]="regimen.code" *ngFor="let regimen of drug_regimen">{{ regimen.desc}}</option>
+              </select>
+              <div *ngIf="is_saving && f.dose_regimen.errors" class="invalid-alert">
+                <div *ngIf="f.dose_regimen.errors?.['required']">
+                  {{ required_message }}
+                </div>
+              </div>
+            </div>
+
+            <div class="col-span-1 text-sm">
+              <label class="font-semibold" for="medicine_route_code" [ngClass]="{'text-red-500': is_saving && f.medicine_route_code.errors}">Medicine Route</label>
+              <select name="route" id="medicine_route_code" formControlName="medicine_route_code" [ngClass]="{'invalid-input': is_saving && f.medicine_route_code.errors}" class="input">
+                <option [value]="route.code" *ngFor="let route of drug_route">{{ route.desc}}</option>
+              </select>
+              <div *ngIf="is_saving && f.medicine_route_code.errors" class="invalid-alert">
+                <div *ngIf="f.medicine_route_code.errors?.['required']">
+                  {{ required_message }}
+                </div>
+              </div>
+            </div>
+
+            <div class="col-span-1 text-sm">
+              <label class="font-semibold" for="duration_intake" [ngClass]="{'text-red-500': is_saving && f.duration.errors}">Duration</label>
+              <input name="duration_intake" id="duration_intake" formControlName="duration_intake" [ngClass]="{'invalid-input': is_saving && f.duration_intake.errors}" type="number" class="input">
+
+              <div *ngIf="is_saving && f.duration_intake.errors" class="invalid-alert">
+                <div *ngIf="f.duration_intake.errors?.['required']">
+                  {{ required_message }}
+                </div>
+              </div>
+            </div>
+
+            <div class="col-span-1 text-sm">
+              <label class="font-semibold" for="duration_frequency" [ngClass]="{'text-red-500': is_saving && f.duration_frequency.errors}">Duration frequency</label>
+              <select name="duration_frequency" id="duration_frequency" formControlName="duration_frequency" [ngClass]="{'invalid-input': is_saving && f.duration_frequency.errors}" class="input">
+                <option [value]="freq.code" *ngFor="let freq of drug_frequency">{{ freq.desc}}</option>
+              </select>
+              <div *ngIf="is_saving && f.duration_frequency.errors" class="invalid-alert">
+                <div *ngIf="f.duration_frequency.errors?.['required']">
+                  {{ required_message }}
+                </div>
+              </div>
+            </div>
+
+            <div class="col-span-1 text-sm">
+              <label class="font-semibold" for="quantity" [ngClass]="{'text-red-500': is_saving && f.quantity.errors}">Quantity</label>
+              <input name="quantity" id="quantity" formControlName="quantity" [ngClass]="{'invalid-input': is_saving && f.quantity.errors}" type="number" class="input">
+
+              <div *ngIf="is_saving && f.quantity.errors" class="invalid-alert">
+                <div *ngIf="f.quantity.errors?.['required']">
+                  {{ required_message }}
+                </div>
+              </div>
+            </div>
+
+            <div class="col-span-1 text-sm">
+              <label class="font-semibold" for="quantity_preparation" [ngClass]="{'text-red-500': is_saving && f.quantity_preparation.errors}">Preparation</label>
+              <select name="quantity_preparation" id="quantity_preparation" formControlName="quantity_preparation" [ngClass]="{'invalid-input': is_saving && f.quantity_preparation.errors}" class="input">
+                <option [value]="prep.code" *ngFor="let prep of drug_preparation">{{ prep.desc}}</option>
+              </select>
+              <div *ngIf="is_saving && f.quantity_preparation.errors" class="invalid-alert">
+                <div *ngIf="f.quantity_preparation.errors?.['required']">
+                  {{ required_message }}
+                </div>
+              </div>
+            </div>
+
+            <div class="col-span-1 text-sm">
+              <label class="font-semibold" for="instruction_quantity" [ngClass]="{'text-red-500': is_saving && f.instruction_quantity.errors}">Instruction Qty.</label>
+              <input name="instruction_quantity" id="instruction_quantity" formControlName="instruction_quantity" [ngClass]="{'invalid-input': is_saving && f.instruction_quantity.errors}" type="number" class="input">
+
+              <div *ngIf="is_saving && f.instruction_quantity.errors" class="invalid-alert">
+                <div *ngIf="f.instruction_quantity.errors?.['required']">
+                  {{ required_message }}
+                </div>
+              </div>
+            </div>
+
+            <div class="col-span-3 text-sm">
+              <label class="font-semibold" for="medicine_purpose" [ngClass]="{'text-red-500': is_saving && f.medicine_purpose.errors}">Medicine purpose</label>
+              <select name="medicine_purpose" id="medicine_purpose" formControlName="medicine_purpose" (change)="checkPurpose()" [ngClass]="{'invalid-input': is_saving && f.medicine_purpose.errors}" class="input">
+                <option [value]="purpose.code" *ngFor="let purpose of drug_purpose">{{ purpose.desc}}</option>
+              </select>
+              <div *ngIf="is_saving && f.medicine_purpose.errors" class="invalid-alert">
+                <div *ngIf="f.medicine_purpose.errors?.['required']">
+                  {{ required_message }}
+                </div>
+              </div>
+            </div>
+
+            <div *ngIf="prescriptionForm.value.medicine_purpose === '99'" class="col-span-3 text-sm">
+              <label class="font-semibold" for="purpose_other" [ngClass]="{'text-red-500': is_saving && f.purpose_other.errors}">Purpose remarks</label>
+              <input name="purpose_other" id="purpose_other" formControlName="purpose_other" [ngClass]="{'invalid-input': is_saving && f.purpose_other.errors}" type="text" class="input">
+
+              <div *ngIf="is_saving && f.purpose_other.errors" class="invalid-alert">
+                <div *ngIf="f.purpose_other.errors?.['required']">
+                  {{ required_message }}
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <div *ngIf="submit_errors" id="show_errors" class="relative mx-10 col-span-8 bg-red-200 rounded border border-red-300 text-red-900 text-sm mb-5">
+            <div class="block p-3 pl-10" >
+              <ul class="list-disc" >
+                <li *ngFor="let error of submit_errors | keyvalue">{{ error.value }}</li>
+              </ul>
+            </div>
+          </div>
+        </form>
+
+
+      </div>
+      <div class="flex justify-end mr-10 py-3 rounded-b">
+        <button  type="button" class="btn-save px-10 bg-gray-400 mr-5" (click)="closeModal()">Close</button>
+        <button [disabled]="prescriptionForm.invalid" type="button" class="btn-save px-10 disabled:bg-gray-300" (click)="onSubmit()" >Save</button>
+      </div><!-- [disabled]="prescriptionForm.invalid" -->
+    </div>
+  </div>
+</div>
+
+<div class="opacity-50 fixed inset-0 z-50 bg-black"></div>
+

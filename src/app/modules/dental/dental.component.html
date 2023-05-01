@@ -1,0 +1,62 @@
+<!-- <div class="flex w-full mt-4"> -->
+  <div class="flex-wrap w-full h-full shadow-md px-4 py-4 ml-5 mr-4 border-gray-100 border-t-2 rounded-lg text-gray-600">
+    <nav class="flex flex-col sm:flex-row text-sm">
+      <button (click)="switchTab(1)" class="text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 mr-6 pb-2"
+      [class]="module===1? 'text-blue-500 border-b-2 border-blue-500 font-bold' : 'hover:-translate-y-1 hover:scale-110 transition ease-in-out delay-400 duration-300' ">
+          History
+      </button>
+      <button (click)="switchTab(2)" class="text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 mr-6 pb-2"
+      [class]="module===2? 'text-blue-500 border-b-2 border-blue-500 font-bold' : 'hover:-translate-y-1 hover:scale-110 transition ease-in-out delay-400 duration-300' ">
+          Condition
+      </button>
+      <button (click)="switchTab(3)" class="text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 mr-6 pb-2"
+      [class]="module===3? 'text-blue-500 border-b-2 border-blue-500 font-bold' : 'hover:-translate-y-1 hover:scale-110 transition ease-in-out delay-400 duration-300' ">
+          Services
+      </button>
+      <button (click)="switchTab(4)" class="text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 mr-6 pb-2"
+      [class]="module===4? 'text-blue-500 border-b-2 border-blue-500 font-bold' : 'hover:-translate-y-1 hover:scale-110 transition ease-in-out delay-400 duration-300' ">
+          Initial Dx
+      </button>
+      <button (click)="switchTab(5)" class="text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 mr-6 pb-2"
+      [class]="module===5? 'text-blue-500 border-b-2 border-blue-500 font-bold' : 'hover:-translate-y-1 hover:scale-110 transition ease-in-out delay-400 duration-300' ">
+         Final Dx
+      </button>
+      <button (click)="switchTab(6)" class="text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 mr-6 pb-2"
+      [class]="module===6? 'text-blue-500 border-b-2 border-blue-500 font-bold' : 'hover:-translate-y-1 hover:scale-110 transition ease-in-out delay-400 duration-300' ">
+          Treatment
+      </button>
+    </nav>
+
+    <div class="grid grid-col-8" *ngIf="module===1">
+      <app-history></app-history>
+    </div>
+
+    <div class="grid grid-col-8" *ngIf="module===2">
+      <app-condition></app-condition>
+    </div>
+
+     <div class="grid grid-col-8" *ngIf="module===3">
+      <app-services></app-services>
+    </div>
+
+    <!-- <div class="grid grid-col-8" *ngIf="module===4">
+      <app-risk-stratification></app-risk-stratification>
+    </div>
+
+    <div class="grid grid-col-8" *ngIf="module===5">
+      <app-patient-record></app-patient-record>
+    </div>
+
+    <div class="grid grid-col-8" *ngIf="module===6">
+      <app-casdt></app-casdt>
+    </div>
+
+    <div class="grid grid-col-8" *ngIf="module===7">
+      <app-casdt2></app-casdt2>
+    </div> -->
+  </div>
+
+  <!-- <div class="w-3/12">
+    <app-patient-info></app-patient-info>
+  </div> -->
+<!-- </div> -->

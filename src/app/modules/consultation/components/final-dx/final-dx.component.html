@@ -1,0 +1,55 @@
+<div class="grid grid-cols-10 mt-4">
+  <div class="col-span-2 pt-2">
+
+  </div>
+  <div class="col-span-8">
+    <div class="rounded-md border border-solid border-gray-300">
+      <span class="rounded-t-md m-0 p-2 font-semibold text-gray-50 bg-cyan-500 flex justify-between" [ngClass]="{'rounded-b' : !show_content}">
+        Final Diagnosis
+        <button type="button" (click)="show_content = !show_content">
+          <fa-icon [icon]="show_content ? faChevronCircleUp : faChevronCircleDown" class="pr-2" size="lg"></fa-icon>
+        </button>
+      </span>
+
+      <div *ngIf="show_content">
+        <div class="flex mb-2 p-4">
+          <button type="submit" class="inline-flex p-1 items-center text-gray-50 bg-sky-400 rounded-l-md border border-gray-300">
+            <fa-icon class="text-white fa-xl" [icon]="faPlusSquare" ></fa-icon>
+          </button>
+          <div class="chips-container">
+            <ng-select class="select-chips" placeholder="search"
+              [items]="fdx$ | async"
+              [multiple]="true"
+              [loading]="fdxLoading"
+              typeToSearchText="search..."
+              [typeahead]="searchInput$"
+              [(ngModel)]="selectedFdx"
+              [disabled]="consult_done"
+              bindValue="icd10_code"
+              bindLabel="icd10_desc"
+              notFoundText="No records found">
+
+              <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
+                <div class="whitespace-normal">
+                  <h5 class="text-gray-700" [ngOptionHighlight]="search"><strong>{{ item.icd10_code }}:</strong> {{ item.icd10_desc }}</h5>
+                </div>
+              </ng-template>
+            </ng-select>
+
+          </div>
+        </div>
+        <div class="flex px-4 pb-4">
+          <textarea [disabled]="consult_done" rows="3" id="fdx_remarks" [(ngModel)]="fdx_remarks" placeholder="Final Diagnosis remarks" class="placeholder-slate-400 w-full rounded-md border-gray-300 bg-gray-50"></textarea>
+        </div>
+        <div class="flex justify-between">
+          <button *ngIf="!consult_done" [disabled]="is_saving" type="button" class="btn-save ml-auto mr-5 mb-5 px-10 disabled:bg-gray-300" (click)="onSubmit()">
+            <fa-icon *ngIf="is_saving" class="mr-2" [icon]="faSpinner" spin="true"></fa-icon>
+            <fa-icon *ngIf="!is_saving" class="mr-2" [icon]="faSave"></fa-icon>
+            {{ is_saving ? 'Saving' : 'Save' }}
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

@@ -1,0 +1,19 @@
+body{
+  background: white
+}
+
+.tooth-chart{
+  width:450px;
+}
+
+.spots{
+  polygon, path{
+    -webkit-transition:fill .25s;
+    transition:fill .25s;
+
+    &:hover, &:active{
+      fill:#dddddd !important;
+    }
+  }
+
+}

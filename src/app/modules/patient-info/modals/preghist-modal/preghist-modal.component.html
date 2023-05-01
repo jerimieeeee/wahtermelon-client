@@ -1,0 +1,93 @@
+<div id="defaultModal" tabindex="-1" class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 w-full md:inset-0 h-modal md:h-full justify-center items-center flex" aria-modal="true" role="dialog" style="z-index:60">
+  <div class="relative p-4 w-full max-w-3xl h-auto md:h-auto">
+    <!-- Modal content -->
+    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+      <!-- Modal header -->
+      <div class="flex justify-between items-start py-3 px-5 rounded-t border-b bg-blue-500 dark:border-gray-600">
+        <h3 class="mt-2 text-sm font-bold text-white dark:text-white">
+            Pregnancy History
+        </h3>
+      </div>
+      <!-- Modal body -->
+      <div class="overflow-y-auto h-96 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
+        <form [formGroup]="pregnancyForm" class="w-full max-w-3xl text-left text-gray-500 dark:text-gray-400">
+          <div class="flex item-start flex-wrap pb-5">
+            <div class="flex px-5 w-full">
+              <div class="relative text-sm w-1/2 px-5 py-2 mt-2">
+                <label for="gravidity">Gravidity</label>
+                <input name="gravidity" id="gravidity" formControlName="gravidity" type="number" class="input disabled:bg-gray-300">
+              </div>
+
+              <div class="relative text-sm w-1/2 px-5 py-2 mt-2">
+                <label for="parity">Parity</label>
+                <input name="parity" id="parity" formControlName="parity" type="number" class="input disabled:bg-gray-300">
+              </div>
+            </div>
+
+            <div class="flex px-5 w-full">
+              <div class="relative text-sm w-1/2 px-5 py-2 mt-2">
+                <label for="full_term">Full Term</label>
+                <input name="full_term" id="full_term" formControlName="full_term" type="number" class="input disabled:bg-gray-300">
+              </div>
+
+              <div class="relative text-sm w-1/2 px-5 py-2 mt-2">
+                <label for="preterm">Preterm</label>
+                <input name="preterm" id="preterm" formControlName="preterm" type="number" class="input disabled:bg-gray-300">
+              </div>
+            </div>
+
+            <div class="flex px-5 w-full">
+              <div class="relative text-sm w-1/2 px-5 py-2 mt-2">
+                <label for="abortion">Abortion</label>
+                <input name="abortion" id="abortion" formControlName="abortion" type="number" class="input disabled:bg-gray-300">
+              </div>
+
+              <div class="relative text-sm w-1/2 px-5 py-2 mt-2">
+                <label for="livebirths">Livebirths</label>
+                <input name="livebirths" id="livebirths" formControlName="livebirths" type="number" class="input disabled:bg-gray-300">
+              </div>
+            </div>
+
+            <div class="flex px-5 w-full">
+              <div class="relative text-sm w-full px-5 py-2 mt-2">
+                <label for="delivery_type">Delivery Type</label>
+                <select name="delivery_type" id="delivery_type" formControlName="delivery_type" class="input disabled:bg-gray-300">
+                  <option *ngFor="let delivery of delivery_method" [value]="delivery.code">{{ delivery.desc }}</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="flex px-5 w-full">
+              <div class="relative text-sm w-1/2 px-5 py-2 mt-2">
+                <label for="induced_hypertension">Induced Hypertension</label>
+                <select name="induced_hypertension" id="induced_hypertension" formControlName="induced_hypertension" class="input disabled:bg-gray-300">
+                  <option value="N">No</option>
+                  <option value="Y">Yes</option>
+                </select>
+              </div>
+
+              <div class="relative text-sm w-1/2 px-5 py-2 mt-2">
+                <label for="with_family_planning">With Family Planning</label>
+                <select name="with_family_planning" id="with_family_planning" formControlName="with_family_planning" class="input disabled:bg-gray-300">
+                  <option value="N">No</option>
+                  <option value="Y">Yes</option>
+                </select></div>
+            </div>
+
+          </div>
+        </form>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="flex justify-end py-4 px-5 space-x-4 rounded-b border-t border-gray-200 dark:border-gray-600">
+        <button type="button" class="btn-save bg-gray-400" (click)="closeModal()">Close</button>
+        <button [disabled]="is_saving || pregnancyForm.invalid" type="submit" class="btn-save px-10 disabled:bg-gray-300" (click)="onSubmit()" >
+          {{ is_saving ? 'Saving' : 'Save' }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="opacity-50 fixed inset-0 z-50 bg-black"></div>
+<!--   -->

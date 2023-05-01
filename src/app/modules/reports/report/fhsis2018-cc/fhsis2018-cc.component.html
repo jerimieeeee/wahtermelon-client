@@ -1,0 +1,530 @@
+<div class="grid grid-cols-1 w-full">
+  <div class="flex justify-between w-full text-blue-500 font-semibold text-lg  p-3" >
+    <span>FHSIS 2018 Report - Child Care</span>
+    <span>
+      <!-- <fa-icon *ngIf="exporting" [icon]="faCircleNotch" spin="true" class="text-blue-500 text-sm mr-3">Exporting...</fa-icon> -->
+      <button [disabled]="pdf_exported" type="button" class="text-2xl mr-5 text-red-600 disabled:text-gray-600" (click)="exportP()">
+        <fa-icon [icon]="faFilePdf"></fa-icon>
+      </button>
+      <button  type="button" class="text-2xl" (click)="exportX()">
+        <fa-icon [icon]="faFileExcel" class="text-green-700"></fa-icon>
+      </button>
+    </span>
+  </div>
+  <div class="flex flex-col pb-5">
+    <div class="sm:-mx-6 lg:-mx-8">
+      <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
+        <div class="">
+          <table class="min-w-full border select-none" id="reportForm">
+            <thead class="border-b">
+              <tr>
+                <th scope="col" colspan="1" class="text-sm font-medium text-gray-900 px-6 py-4 border">
+                  <img src="./assets/img/DOH_Logo.png" class="rounded-full w-28 h-28 mx-auto" />
+                </th>
+                <th scope="col" colspan="4" class="text-sm font-medium text-gray-900 px-6 py-4 border">
+                  Details
+                </th>
+                <th scope="col" colspan="3" class="text-sm font-medium text-gray-900 px-6 py-4 border">
+                  Date
+                </th>
+                <th scope="col" colspan="2" class="text-sm font-medium text-gray-900 px-6 py-4 border">
+                  M1 Barangay
+                </th>
+              </tr>
+              <tr>
+                <th scope="col" colspan="10" class="text-xs font-semibold text-gray-900 px-6 py-4 border">
+                  Section C. Child Care and Services
+                </th>
+              </tr>
+              <tr class="text-center sticky top-0 bg-gray-200">
+                <th scope="col" class="text-sm font-semibold text-gray-900 px-6 py-4 border-r">
+                  Indicator
+                <br /><span class="text-xs">(Col. 1)</span>
+                </th>
+                <th scope="col" class="text-sm font-semibold text-gray-900 px-6 py-4 border-r">
+                  Male
+                <br /><span class="text-xs">(Col. 2)</span>
+                </th>
+                <th scope="col" class="text-sm font-semibold text-gray-900 px-6 py-4 border-r">
+                  Female
+                <br /><span class="text-xs">(Col. 3)</span>
+                </th>
+                <th scope="col" class="text-sm font-semibold text-gray-900 px-6 py-4 border-r">
+                  Total
+                <br /><span class="text-xs">(Col. 4)</span>
+                </th>
+                <th scope="col" class="text-sm font-semibold text-gray-900 px-6 py-4 border-r">
+                  Remarks
+                <br /><span class="text-xs">(Col. 5)</span>
+                </th>
+                <th scope="col" class="text-sm font-semibold text-gray-900 px-6 py-4 border-r">
+                  Indicator
+                <br /><span class="text-xs">(Col. 1)</span>
+                </th>
+                <th scope="col" class="text-sm font-semibold text-gray-900 px-6 py-4 border-r">
+                  Male
+                <br /><span class="text-xs">(Col. 2)</span>
+                </th>
+                <th scope="col" class="text-sm font-semibold text-gray-900 px-6 py-4 border-r">
+                  Female
+                <br /><span class="text-xs">(Col. 3)</span>
+                </th>
+                <th scope="col" class="text-sm font-semibold text-gray-900 px-6 py-4 border-r">
+                  Total
+                <br /><span class="text-xs">(Col. 4)</span>
+                </th>
+                <th scope="col" class="text-sm font-semibold text-gray-900 px-6 py-4 border-r">
+                  Remarks
+                <br /><span class="text-xs">(Col. 5)</span>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="col" colspan="10" class="text-xs font-semibold text-left text-gray-900 px-6 py-4 border bg-gray-100">
+                  C1. Immunization Services for Newborns, Infants and School-Aged Children/Adolescents
+                </th>
+              </tr>
+
+              <tr class="border text-sm">
+                <td class="p-5 border">1. CPAB</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.CPAB_Male.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.CPAB_Male)">{{ stats?.CPAB_Male.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.CPAB_Female.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.CPAB_Female)">{{ stats?.CPAB_Female.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.CPAB_Male.length !==0 || stats?.CPAB_Female.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.CPAB_Male, stats?.CPAB_Female)">{{ stats?.CPAB_Male.length +  stats?.CPAB_Female.length }}</td>
+                <td class="p-5 border"></td>
+                <td class="p-5 border">12. IPV2 (catch up)</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.IPV2_Catch_up_Male.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.IPV2_Catch_up_Male)">{{ stats?.IPV2_Catch_up_Male.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.IPV2_Catch_up_Female.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.IPV2_Catch_up_Female)">{{ stats?.IPV2_Catch_up_Female.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.IPV2_Catch_up_Female.length !==0 || stats?.IPV2_Catch_up_Female.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.IPV2_Catch_up_Male, stats?.IPV2_Catch_up_Female)">{{ stats?.IPV2_Catch_up_Male.length +  stats?.IPV2_Catch_up_Female.length }}</td>
+                <td class="p-5 border"></td>
+              </tr>
+
+              <tr class="border text-sm">
+                <td class="p-5 border select-none">2. BCG</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.BCG_Male.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.BCG_Male)">{{ stats?.BCG_Male.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.BCG_Female.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.BCG_Female)">{{ stats?.BCG_Female.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.BCG_Male.length !==0 || stats?.BCG_Female.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.BCG_Male, stats?.BCG_Female)">{{ stats?.BCG_Male.length +  stats?.BCG_Female.length }}</td>
+                <td class="p-5 border"></td>
+                <td class="p-5 border">13. PCV 1 </td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.PCV1_Male.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.PCV1_Male)">{{ stats?.PCV1_Male.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.PCV1_Female.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.PCV1_Female)">{{ stats?.PCV1_Female.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.PCV1_Male.length !==0 || stats?.PCV1_Female.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.PCV1_Male, stats?.PCV1_Female)">{{ stats?.PCV1_Male.length +  stats?.PCV1_Female.length }}</td>
+                <td class="p-5 border"></td>
+              </tr>
+
+              <tr class="border text-sm">
+                <td class="p-5 border">3. a. HepB, within 24 hours.</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.HEPB_Male_within_24.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.HEPB_Male_within_24)">{{ stats?.HEPB_Male_within_24.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.HEPB_Female_within_24.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.HEPB_Female_within_24)">{{ stats?.HEPB_Female_within_24.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.HEPB_Male_within_24.length !==0 || stats?.HEPB_Female_within_24.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.HEPB_Male_within_24, stats?.HEPB_Female_within_24)">{{ stats?.HEPB_Male_within_24.length +  stats?.HEPB_Female_within_24.length }}</td>
+                <td class="p-5 border"></td>
+                <td class="p-5 border">14. PCV 2</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.PCV2_Male.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.PCV2_Male)">{{ stats?.PCV2_Male.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.PCV2_Female.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.PCV2_Female)">{{ stats?.PCV2_Female.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.PCV2_Male.length !==0 || stats?.PCV2_Female.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.PCV2_Male, stats?.PCV2_Female)">{{ stats?.PCV2_Male.length +  stats?.PCV2_Female.length }}</td>
+                <td class="p-5 border"></td>
+              </tr>
+
+              <tr class="border text-sm">
+                <td class="p-5 border pl-9">b. HepB, after 24 hours.</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.HEPB_Male_after_24.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.HEPB_Male_after_24)">{{ stats?.HEPB_Male_after_24.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.HEPB_Female_after_24.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.HEPB_Female_after_24)">{{ stats?.HEPB_Female_after_24.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.HEPB_Male_after_24.length !==0 || stats?.HEPB_Female_after_24.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.HEPB_Male_after_24, stats?.HEPB_Female_after_24)">{{ stats?.HEPB_Male_after_24.length +  stats?.HEPB_Female_after_24.length }}</td>
+                <td class="p-5 border"></td>
+                <td class="p-5 border">15. PCV 3</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.PCV3_Male.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.PCV3_Male)">{{ stats?.PCV3_Male.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.PCV3_Female.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.PCV3_Female)">{{ stats?.PCV3_Female.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.PCV3_Male.length !==0 || stats?.PCV3_Female.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.PCV3_Male, stats?.PCV3_Female)">{{ stats?.PCV3_Male.length +  stats?.PCV3_Female.length }}</td>
+                <td class="p-5 border"></td>
+              </tr>
+
+              <tr class="border text-sm">
+                <td class="p-5 border">4. DPT-HiB-HepB 1</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.PENTA1_Male.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.PENTA1_Male)">{{ stats?.PENTA1_Male.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.PENTA1_Female.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.PENTA1_Female)">{{ stats?.PENTA1_Female.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.PENTA1_Male.length !==0 || stats?.PENTA1_Female.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.PENTA1_Male, stats?.PENTA1_Female)">{{ stats?.PENTA1_Male.length + stats?.PENTA1_Female.length}}</td>
+                <td class="p-5 border"></td>
+                <td class="p-5 border">16. MCV 1</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.MCV1_Male.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.MCV1_Male)">{{ stats?.MCV1_Male.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.MCV1_Female.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.MCV1_Female)">{{ stats?.MCV1_Female.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.MCV1_Male.length !==0 || stats?.MCV1_Female.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.MCV1_Male, stats?.MCV1_Female)">{{ stats?.MCV1_Male.length +  stats?.MCV1_Female.length }}</td>
+                <td class="p-5 border"></td>
+              </tr>
+
+              <tr class="border text-sm">
+                <td class="p-5 border">5. DPT-HiB-HepB 2</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.PENTA2_Male.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.PENTA2_Male)">{{ stats?.PENTA2_Male.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.PENTA2_Female.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.PENTA2_Female)">{{ stats?.PENTA2_Female.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.PENTA2_Male.length !==0 || stats?.PENTA2_Female.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.PENTA2_Male, stats?.PENTA2_Female)">{{ stats?.PENTA2_Male.length + stats?.PENTA2_Female.length}}</td>
+                <td class="p-5 border"></td>
+                <td class="p-5 border">17. MCV 2</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.MCV2_Male.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.MCV2_Male)">{{ stats?.MCV2_Male.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.MCV2_Female.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.MCV2_Female)">{{ stats?.MCV2_Female.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.MCV2_Male.length !==0 || stats?.MCV2_Female.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.MCV2_Male, stats?.MCV2_Female)">{{ stats?.MCV2_Male.length +  stats?.MCV2_Female.length }}</td>
+                <td class="p-5 border"></td>
+              </tr>
+
+              <tr class="border text-sm">
+                <td class="p-5 border">6. DPT-HiB-HepB 3</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.PENTA3_Male.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.PENTA3_Male)">{{ stats?.PENTA3_Male.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.PENTA3_Female.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.PENTA3_Female)">{{ stats?.PENTA3_Female.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.PENTA3_Male.length !==0 || stats?.PENTA3_Female.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.PENTA3_Male, stats?.PENTA3_Female)">{{ stats?.PENTA3_Male.length + stats?.PENTA3_Female.length}}</td>
+                <td class="p-5 border"></td>
+                <td class="p-5 border">18. FIC</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.FIC_Male.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.FIC_Male)">{{ stats?.FIC_Male.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.FIC_Female.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.FIC_Female)">{{ stats?.FIC_Female.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.FIC_Male.length !==0 || stats?.FIC_Female.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.FIC_Male, stats?.FIC_Female)">{{ stats?.FIC_Male.length +  stats?.FIC_Female.length }}</td>
+                <td class="p-5 border"></td>
+              </tr>
+
+              <tr class="border text-sm">
+                <td class="p-5 border">7. OPV 1</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.OPV1_Male.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.OPV1_Male)">{{ stats?.OPV1_Male.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.OPV1_Female.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.OPV1_Female)">{{ stats?.OPV1_Female.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.OPV1_Male.length !==0 || stats?.OPV1_Female.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.OPV1_Male, stats?.OPV1_Female)">{{ stats?.OPV1_Male.length +  stats?.OPV1_Female.length }}</td>
+                <td class="p-5 border"></td>
+                <td class="p-5 border">19. CIC</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.CIC_Male.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.CIC_Male)">{{ stats?.CIC_Male.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.CIC_Female.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.CIC_Female)">{{ stats?.CIC_Female.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.CIC_Male.length !==0 || stats?.CIC_Female.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.CIC_Male, stats?.CIC_Female)">{{ stats?.CIC_Male.length +  stats?.CIC_Female.length }}</td>
+                <td class="p-5 border"></td>
+              </tr>
+
+              <tr class="border text-sm">
+                <td class="p-5 border">8. OPV 2</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.OPV2_Male.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.OPV2_Male)">{{ stats?.OPV2_Male.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.OPV2_Female.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.OPV2_Female)">{{ stats?.OPV2_Female.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.OPV2_Male.length !==0 || stats?.OPV2_Female.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.OPV2_Male, stats?.OPV2_Female)">{{ stats?.OPV2_Male.length +  stats?.OPV2_Female.length }}</td>
+                <td class="p-5 border"></td>
+                <td class="p-5 border">20. Td, Grade 1 (November) - Total</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.TDRGR1_Male.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.TDRGR1_Male)">{{ stats?.TDRGR1_Male.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.TDRGR1_Female.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.TDRGR1_Female)">{{ stats?.TDRGR1_Female.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.TDRGR1_Male.length !==0 || stats?.TDRGR1_Female.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.TDRGR1_Male, stats?.TDRGR1_Female)">{{ stats?.TDRGR1_Male.length +  stats?.TDRGR1_Female.length }}</td>
+                <td class="p-5 border"></td>
+              </tr>
+
+              <tr class="border text-sm">
+                <td class="p-5 border">9. OPV 3</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.OPV3_Male.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.OPV3_Male)">{{ stats?.OPV3_Male.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.OPV3_Female.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.OPV3_Female)">{{ stats?.OPV3_Female.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.OPV3_Male.length !==0 || stats?.OPV3_Female.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.OPV3_Male, stats?.OPV3_Female)">{{ stats?.OPV3_Male.length +  stats?.OPV3_Female.length }}</td>
+                <td class="p-5 border"></td>
+                <td class="p-5 border">21. MR, Grade 1 (November) - Total</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.MRGR1_Male.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.MRGR1_Male)">{{ stats?.MRGR1_Male.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.MRGR1_Female.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.MRGR1_Female)">{{ stats?.MRGR1_Female.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.MRGR1_Male.length !==0 || stats?.MRGR1_Female.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.MRGR1_Male, stats?.MRGR1_Female)">{{ stats?.MRGR1_Male.length +  stats?.MRGR1_Female.length }}</td>
+                <td class="p-5 border"></td>
+              </tr>
+
+              <tr class="border text-sm">
+                <td class="p-5 border">10. IPV 1</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.IPV1_Male.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.IPV1_Male)">{{ stats?.IPV1_Male.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.IPV1_Female.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.IPV1_Female)">{{ stats?.IPV1_Female.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.IPV1_Male.length !==0 || stats?.IPV1_Female.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.IPV1_Male, stats?.IPV1_Female)">{{ stats?.IPV1_Male.length +  stats?.IPV1_Female.length }}</td>
+                <td class="p-5 border"></td>
+                <td class="p-5 border">22. Td, Grade 7 (November) - Total</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.TDRGR7_Male.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.TDRGR7_Male)">{{ stats?.TDRGR7_Male.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.TDRGR7_Female.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.TDRGR7_Female)">{{ stats?.TDRGR7_Female.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.TDRGR7_Male.length !==0 || stats?.TDRGR7_Female.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.TDRGR7_stats?.TDRGR7_Male, stats?.TDRGR7_stats?.TDRGR7_Female)">{{ stats?.TDRGR7_Male.length +  stats?.TDRGR7_Female.length }}</td>
+                <td class="p-5 border"></td>
+              </tr>
+
+              <tr class="border text-sm">
+                <td class="p-5 border">12. IPV 2 (routine)</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.IPV2_Routine_Male.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.IPV2_Routine_Male)">{{ stats?.IPV2_Routine_Male.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.IPV2_Routine_Female.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.IPV2_Routine_Female)">{{ stats?.IPV2_Routine_Female.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.IPV2_Routine_Male.length !==0 || stats?.IPV2_Routine_Female.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.IPV2_Routine_Male, stats?.IPV2_Routine_Female)">{{ stats?.IPV2_Routine_Male.length +  stats?.IPV2_Routine_Female.length }}</td>
+                <td class="p-5 border"></td>
+                <td class="p-5 border">23. MR, Grade 7 (November) - Total</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.MRGR7_Male.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.MRGR7_Male)">{{ stats?.MRGR7_Male.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.MRGR7_Female.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.MRGR7_Female)">{{ stats?.MRGR7_Female.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.MRGR7_Male.length !==0 || stats?.MRGR7_Female.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.MRGR7_Male, stats?.MRGR7_Female)">{{ stats?.MRGR7_Male.length +  stats?.MRGR7_Female.length }}</td>
+                <td class="p-5 border"></td>
+              </tr>
+
+              <tr>
+                <th scope="col" colspan="10" class="text-xs font-semibold text-left text-gray-900 px-6 py-4 border bg-gray-50">
+                  C2. Nutrition Services for Infants and Children
+                </th>
+              </tr>
+
+              <tr class="border text-sm">
+                <td class="p-5 border">24. Newborns initiated on breastfeeding<br>immediately after birth lasting to 90 mins - Total</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.Initiated_Breastfeeding_90mins_Male.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.Initiated_Breastfeeding_90mins_Male)">{{ stats?.Initiated_Breastfeeding_90mins_Male.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.Initiated_Breastfeeding_90mins_Female.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.Initiated_Breastfeeding_90mins_Female)">{{ stats?.Initiated_Breastfeeding_90mins_Female.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.Initiated_Breastfeeding_90mins_Male.length !==0 || stats?.Initiated_Breastfeeding_90mins_Female.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.Initiated_Breastfeeding_90mins_Male, stats?.Initiated_Breastfeeding_90mins_Female)">{{ stats?.Initiated_Breastfeeding_90mins_Male.length +  stats?.Initiated_Breastfeeding_90mins_Female.length }}</td>
+                <td class="p-5 border"></td>
+                <td class="p-5 border">33. Stunted - Total</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.stunted_0_59_months_Male.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.stunted_0_59_months_Male)">{{ stats?.stunted_0_59_months_Male.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.stunted_0_59_months_Female.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.stunted_0_59_months_Female)">{{ stats?.stunted_0_59_months_Female.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.stunted_0_59_months_Male.length !==0 || stats?.stunted_0_59_months_Female.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.stunted_0_59_months_Male, stats?.stunted_0_59_months_Female)">{{ stats?.stunted_0_59_months_Male.length +  stats?.stunted_0_59_months_Female.length }}</td>
+                <td class="p-5 border"></td>
+              </tr>
+
+              <tr class="border text-sm">
+                <td class="p-5 border">25. Preterm/LBW infants given iron <br /> supplementation</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.preterm_iron_Male.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.preterm_iron_Male)">{{ stats?.preterm_iron_Male.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.preterm_iron_Female.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.preterm_iron_Female)">{{ stats?.preterm_iron_Female.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.preterm_iron_Male.length !==0 || stats?.preterm_iron_Female.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.preterm_iron_Male, stats?.preterm_iron_Female)">{{ stats?.preterm_iron_Male.length +  stats?.preterm_iron_Female.length }}</td>
+                <td class="p-5 border"></td>
+                <td class="p-5 border">34. Wasted - Total</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.wasted_0_59_months_Male.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.wasted_0_59_months_Male)">{{ stats?.wasted_0_59_months_Male.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.wasted_0_59_months_Female.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.wasted_0_59_months_Female)">{{ stats?.wasted_0_59_months_Female.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.wasted_0_59_months_Male.length !==0 || stats?.wasted_0_59_months_Female.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.wasted_0_59_months_Male, stats?.wasted_0_59_months_Female)">{{ stats?.wasted_0_59_months_Male.length +  stats?.wasted_0_59_months_Female.length }}</td>
+                <td class="p-5 border"></td>
+              </tr>
+
+              <tr class="border text-sm">
+                <td class="p-5 border">26. Infants exclusively breastfed until 5th month <br/> and 29 Days - Total</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.ebf_5months_29days_Male.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.ebf_5months_29days_Male)">{{ stats?.ebf_5months_29days_Male.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.ebf_5months_29days_Female.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.ebf_5months_29days_Female)">{{ stats?.ebf_5months_29days_Female.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.ebf_5months_29days_Male.length !==0 || stats?.ebf_5months_29days_Female.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.ebf_5months_29days_Male, stats?.ebf_5months_29days_Female)">{{ stats?.ebf_5months_29days_Male.length +  stats?.ebf_5months_29days_Female.length }}</td>
+                <td class="p-5 border"></td>
+                <td class="p-5 border">34. a. MAM - Total</td>
+                <td class="p-5 border text-blue-500 text-center">-</td>
+                <td class="p-5 border text-blue-500 text-center">-</td>
+                <td class="p-5 border text-blue-500 text-center">-</td>
+                <td class="p-5 border"></td>
+              </tr>
+
+              <tr class="border text-sm">
+                <td class="p-5 border">27.  Infants 6 mos. old initiated to comp. feeding <br/> w/ con't. BF</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.complimentary_6_11_months_Male.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.complimentary_6_11_months_Male)">{{ stats?.complimentary_6_11_months_Male.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.complimentary_6_11_months_Female.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.complimentary_6_11_months_Female)">{{ stats?.complimentary_6_11_months_Female.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.complimentary_6_11_months_Male.length !==0 || stats?.complimentary_6_11_months_Female.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.complimentary_6_11_months_Male, stats?.complimentary_6_11_months_Female)">{{ stats?.complimentary_6_11_months_Male.length +  stats?.complimentary_6_11_months_Female.length }}</td>
+                <td class="p-5 border"></td>
+                <td class="p-5 border">34. a.1. MAM-admitted in SFT - Total</td>
+                <td class="p-5 border text-blue-500 text-center">-</td>
+                <td class="p-5 border text-blue-500 text-center">-</td>
+                <td class="p-5 border text-blue-500 text-center">-</td>
+                <td class="p-5 border"></td>
+              </tr>
+
+              <tr class="border text-sm">
+                <td class="p-5 border">28. Infants 6 mos. old who have initiated and <br/> received  comp.feeding but has stopped BF or  <br/> has never been BF at all - Total</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.stop_bfed_complimentary_6_11_months_Male.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.stop_bfed_complimentary_6_11_months_Male)">{{ stats?.stop_bfed_complimentary_6_11_months_Male.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.stop_bfed_complimentary_6_11_months_Female.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.stop_bfed_complimentary_6_11_months_Female)">{{ stats?.stop_bfed_complimentary_6_11_months_Female.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.stop_bfed_complimentary_6_11_months_Male.length !==0 || stats?.stop_bfed_complimentary_6_11_months_Female.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.stop_bfed_complimentary_6_11_months_Male, stats?.stop_bfed_complimentary_6_11_months_Female)">{{ stats?.stop_bfed_complimentary_6_11_months_Male.length +  stats?.stop_bfed_complimentary_6_11_months_Female.length }}</td>
+                <td class="p-5 border"></td>
+                <td class="p-5 border">34. a.2. MAM-cured in SFP - Total</td>
+                <td class="p-5 border text-blue-500 text-center">-</td>
+                <td class="p-5 border text-blue-500 text-center">-</td>
+                <td class="p-5 border text-blue-500 text-center">-</td>
+                <td class="p-5 border"></td>
+              </tr>
+
+              <tr class="border text-sm">
+                <td class="p-5 border">29.  Infants 6-11 mos. Old given 1 dose of <br/> Vit. A 100,000 I.U.</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.vit_a_6_11_months_Male.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.vit_a_6_11_months_Male)">{{ stats?.vit_a_6_11_months_Male.length  }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.vit_a_6_11_months_Female.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.vit_a_6_11_months_Female)">{{ stats?.vit_a_6_11_months_Female.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.vit_a_6_11_months_Male.length !==0 || stats?.vit_a_6_11_months_Female.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.vit_a_6_11_months_Male, stats?.vit_a_6_11_months_Female)">{{ stats?.vit_a_6_11_months_Male.length + stats?.vit_a_6_11_months_Female.length }}</td>
+                <td class="p-5 border"></td>
+                <td class="p-5 border">34. a.3. MAM-defaulted in SFP - Total</td>
+                <td class="p-5 border text-blue-500 text-center">-</td>
+                <td class="p-5 border text-blue-500 text-center">-</td>
+                <td class="p-5 border text-blue-500 text-center">-</td>
+                <td class="p-5 border"></td>
+              </tr>
+
+              <tr class="border text-sm">
+                <td class="p-5 border">30. Children 12-59 mos. Old given 2 doses of <br/> Vit. A 200,000 I.U.</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.vit_a_12_59_months_Male.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.vit_a_12_59_months_Male)">{{ stats?.vit_a_12_59_months_Male.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.vit_a_12_59_months_Female.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.vit_a_12_59_months_Female)">{{ stats?.vit_a_12_59_months_Female.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.vit_a_12_59_months_Male.length !==0 || stats?.vit_a_12_59_months_Female.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.vit_a_12_59_months_Male, stats?.vit_a_12_59_months_Female)">{{ stats?.vit_a_12_59_months_Male.length +  stats?.vit_a_12_59_months_Female.length }}</td>
+                <td class="p-5 border"></td>
+                <td class="p-5 border">34. a.4. MAM died in SFP - Total</td>
+                <td class="p-5 border text-blue-500 text-center">-</td>
+                <td class="p-5 border text-blue-500 text-center">-</td>
+                <td class="p-5 border text-blue-500 text-center">-</td>
+                <td class="p-5 border"></td>
+              </tr>
+
+              <tr class="border text-sm">
+                <td class="p-5 border">31. Infant 6-11 mos. Old who completed MNP <br/> supplementation</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.mnp_6_11_months_Male.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.mnp_6_11_months_Male)">{{ stats?.mnp_6_11_months_Male.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.mnp_6_11_months_Female.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.mnp_6_11_months_Female)">{{ stats?.mnp_6_11_months_Female.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.mnp_6_11_months_Male.length !==0 || stats?.mnp_6_11_months_Female.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.mnp_6_11_months_Male, stats?.mnp_6_11_months_Female)">{{ stats?.mnp_6_11_months_Male.length +  stats?.mnp_6_11_months_Female.length }}</td>
+                <td class="p-5 border"></td>
+                <td class="p-5 border">34. b. SAM  - Total</td>
+                <td class="p-5 border text-blue-500 text-center">-</td>
+                <td class="p-5 border text-blue-500 text-center">-</td>
+                <td class="p-5 border text-blue-500 text-center">-</td>
+                <td class="p-5 border"></td>
+              </tr>
+
+              <tr class="border text-sm">
+                <td class="p-5 border">32. Children 12-23 mos. Who completed  MNP <br/> Supplementation</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.mnp2_12_23_months_Male.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.mnp2_12_23_months_Male)">{{ stats?.mnp2_12_23_months_Male.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.mnp2_12_23_months_Female.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.mnp2_12_23_months_Female)">{{ stats?.mnp2_12_23_months_Female.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.mnp2_12_23_months_Male.length !==0 || stats?.mnp2_12_23_months_Female.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.mnp2_12_23_months_Male, stats?.mnp2_12_23_months_Female)">{{ stats?.mnp2_12_23_months_Male.length +  stats?.mnp2_12_23_months_Female.length }}</td>
+                <td class="p-5 border"></td>
+                <td class="p-5 border">34. b.1. SAM- admitted to OTC - Total</td>
+                <td class="p-5 border text-blue-500 text-center">-</td>
+                <td class="p-5 border text-blue-500 text-center">-</td>
+                <td class="p-5 border text-blue-500 text-center">-</td>
+                <td class="p-5 border"></td>
+              </tr>
+
+              <tr class="text-sm">
+                <td colspan="5" class="p-5 bg-gray-50"></td>
+                <td class="p-5 border">34. b.2. SAM - cured in OTC - Total</td>
+                <td class="p-5 border text-blue-500 text-center">-</td>
+                <td class="p-5 border text-blue-500 text-center">-</td>
+                <td class="p-5 border text-blue-500 text-center">-</td>
+                <td class="p-5 border"></td>
+              </tr>
+
+              <tr class="text-sm">
+                <td colspan="5" class="p-5 bg-gray-50"></td>
+                <td class="p-5 border">34. b.3. SAM-defaulted in OTC - Total</td>
+                <td class="p-5 border text-blue-500 text-center">-</td>
+                <td class="p-5 border text-blue-500 text-center">-</td>
+                <td class="p-5 border text-blue-500 text-center">-</td>
+                <td class="p-5 border"></td>
+              </tr>
+
+              <tr class="text-sm">
+                <td colspan="5" class="p-5 bg-gray-50"></td>
+                <td class="p-5 border">34. b.4. SAM- died in OTC - Total</td>
+                <td class="p-5 border text-blue-500 text-center">-</td>
+                <td class="p-5 border text-blue-500 text-center">-</td>
+                <td class="p-5 border text-blue-500 text-center">-</td>
+                <td class="p-5 border"></td>
+              </tr>
+
+              <tr class="text-sm">
+                <td colspan="5" class="p-5 bg-gray-50"></td>
+                <td class="p-5 border">35. Overweight and Obese - Total</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.obese_overweight_0_59_months_Male.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.obese_overweight_0_59_months_Male)">{{ stats?.obese_overweight_0_59_months_Male.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.obese_overweight_0_59_months_Female.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.obese_overweight_0_59_months_Female)">{{ stats?.obese_overweight_0_59_months_Female.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.obese_overweight_0_59_months_Male.length !==0 || stats?.obese_overweight_0_59_months_Female.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.obese_overweight_0_59_months_Male, stats?.obese_overweight_0_59_months_Female)">{{ stats?.obese_overweight_0_59_months_Male.length +  stats?.obese_overweight_0_59_months_Female.length }}</td>
+                <td class="p-5 border"></td>
+              </tr>
+
+              <tr class="text-sm">
+                <td colspan="5" class="p-5 bg-gray-50"></td>
+                <td class="p-5 border">36. Normal - Total</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.normal_0_59_months_Male.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.normal_0_59_months_Male)">{{ stats?.normal_0_59_months_Male.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.normal_0_59_months_Female.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.normal_0_59_months_Female)">{{ stats?.normal_0_59_months_Female.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.normal_0_59_months_Male.length !==0 || stats?.normal_0_59_months_Female.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.normal_0_59_months_Male, stats?.normal_0_59_months_Female)">{{ stats?.normal_0_59_months_Male.length +  stats?.normal_0_59_months_Female.length }}</td>
+                <td class="p-5 border"></td>
+              </tr>
+
+              <tr>
+                <td scope="col" colspan="5" class="text-xs font-semibold text-left text-gray-900 px-6 py-4 border bg-gray-100">
+                  C3. Deworming Services for Infants, Children and Adolescents
+                </td>
+                <td scope="col" colspan="5" class="text-xs font-semibold text-left text-gray-900 px-6 py-4 border bg-gray-100">
+                  C4. Management of Sick Infants and Children
+                </td>
+              </tr>
+
+              <tr class="border text-sm">
+                <td class="p-5 border">37. 1-19 y/o given 2 doses of deworming drug</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.deworming_1_to_19_yo_Male.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.deworming_1_to_19_yo_Male)">{{ stats?.deworming_1_to_19_yo_Male.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.deworming_1_to_19_yo_Female.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.deworming_1_to_19_yo_Female)">{{ stats?.deworming_1_to_19_yo_Female.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.deworming_1_to_19_yo_Male.length !==0 || stats?.deworming_1_to_19_yo_Female.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.deworming_1_to_19_yo_Male, stats?.deworming_1_to_19_yo_Female)">{{ stats?.deworming_1_to_19_yo_Male.length +  stats?.deworming_1_to_19_yo_Female.length }}</td>
+                <td class="p-5 border"></td>
+                <td class="p-5 border">38. Sick Infants 6-11 mos. Old seen</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.sick_infant_6_to_11_months_Male.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.sick_infant_6_to_11_months_Male)">{{ stats?.sick_infant_6_to_11_months_Male.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.sick_infant_6_to_11_months_Female.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.sick_infant_6_to_11_months_Female)">{{ stats?.sick_infant_6_to_11_months_Female.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.sick_infant_6_to_11_months_Male.length !==0 || stats?.sick_infant_6_to_11_months_Female.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.sick_infant_6_to_11_months_Male, stats?.sick_infant_6_to_11_months_Female)">{{ stats?.sick_infant_6_to_11_months_Male.length +  stats?.sick_infant_6_to_11_months_Female.length }}</td>
+                <td class="p-5 border"></td>
+              </tr>
+
+              <tr class="border text-sm">
+                <td class="p-5 border pl-8"> a. PSAC, 1-4 y.o. dewormed (2 doses)</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.deworming_1_to_4_yo_Male.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.deworming_1_to_4_yo_Male)">{{ stats?.deworming_1_to_4_yo_Male.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.deworming_1_to_4_yo_Female.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.deworming_1_to_4_yo_Female)">{{ stats?.deworming_1_to_4_yo_Female.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.deworming_1_to_4_yo_Male.length !==0 || stats?.deworming_1_to_4_yo_Female.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.deworming_1_to_4_yo_Male, stats?.deworming_1_to_4_yo_Female)">{{ stats?.deworming_1_to_4_yo_Male.length +  stats?.deworming_1_to_4_yo_Female.length }}</td>
+                <td class="p-5 border"></td>
+                <td class="p-5 border">39. Sick Infants 6-11 mos. Old received Vitamin A</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.sick_children_6_to_11_months_with_vit_a_Male.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.sick_children_6_to_11_months_with_vit_a_Male)">{{ stats?.sick_children_6_to_11_months_with_vit_a_Male.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.sick_children_6_to_11_months_with_vit_a_Female.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.sick_children_6_to_11_months_with_vit_a_Female)">{{ stats?.sick_children_6_to_11_months_with_vit_a_Female.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.sick_children_6_to_11_months_with_vit_a_Male.length !==0 || stats?.sick_children_6_to_11_months_with_vit_a_Female.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.sick_children_6_to_11_months_with_vit_a_Male, stats?.sick_children_6_to_11_months_with_vit_a_Female)">{{ stats?.sick_children_6_to_11_months_with_vit_a_Male.length +  stats?.sick_children_6_to_11_months_with_vit_a_Female.length }}</td>
+                <td class="p-5 border"></td>
+              </tr>
+
+              <tr class="border text-sm">
+                <td class="p-5 border pl-8"> b. SAC, 5-9 y.o. dewormed (2 doses)</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.deworming_5_to_9_yo_Male.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.deworming_5_to_9_yo_Male)">{{ stats?.deworming_5_to_9_yo_Male.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.deworming_5_to_9_yo_Female.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.deworming_5_to_9_yo_Female)">{{ stats?.deworming_5_to_9_yo_Female.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.deworming_1_to_4_yo_Male.length !==0 || stats?.deworming_1_to_4_yo_Female.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.deworming_1_to_4_yo_Male, stats?.deworming_1_to_4_yo_Female)">{{ stats?.deworming_5_to_9_yo_Male.length +  stats?.deworming_5_to_9_yo_Female.length }}</td>
+                <td class="p-5 border"></td>
+                <td class="p-5 border">40. Sick Children 12-59 mos. old seen</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.sick_children_12_to_59_months_Male.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.sick_children_12_to_59_months_Male)">{{ stats?.sick_children_12_to_59_months_Male.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.sick_children_12_to_59_months_Female.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.sick_children_12_to_59_months_Female)">{{ stats?.sick_children_12_to_59_months_Female.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.sick_children_12_to_59_months_Male.length !==0 || stats?.sick_children_12_to_59_months_Female.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.sick_children_12_to_59_months_Male, stats?.sick_children_12_to_59_months_Female)">{{ stats?.sick_children_12_to_59_months_Male.length +  stats?.sick_children_12_to_59_months_Female.length }}</td>
+                <td class="p-5 border"></td>
+              </tr>
+
+              <tr class="border text-sm">
+                <td class="p-5 border pl-8"> c. Adolescents, 10-19 y.o. dewormed (2 doses)</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.deworming_10_to_19_yo_Male.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.deworming_10_to_19_yo_Male)">{{ stats?.deworming_10_to_19_yo_Male.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.deworming_10_to_19_yo_Female.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.deworming_10_to_19_yo_Female)">{{ stats?.deworming_10_to_19_yo_Female.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.deworming_10_to_19_yo_Male.length !==0 || stats?.deworming_10_to_19_yo_Female.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.deworming_10_to_19_yo_Male, stats?.deworming_10_to_19_yo_Female)">{{ stats?.deworming_10_to_19_yo_Male.length +  stats?.deworming_10_to_19_yo_Female.length }}</td>
+                <td class="p-5 border"></td>
+                <td class="p-5 border">41. Sick Children 12-59 mos. old received Vitamin A</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.sick_children_12_to_59_months_with_vit_a_Male.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.sick_children_12_to_59_months_with_vit_a_Male)">{{ stats?.sick_children_12_to_59_months_with_vit_a_Male.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.sick_children_12_to_59_months_with_vit_a_Female.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.sick_children_12_to_59_months_with_vit_a_Female)">{{ stats?.sick_children_12_to_59_months_with_vit_a_Female.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.sick_children_12_to_59_months_with_vit_a_Male.length !==0 || stats?.sick_children_12_to_59_months_with_vit_a_Female.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.sick_children_12_to_59_months_with_vit_a_Male, stats?.sick_children_12_to_59_months_with_vit_a_Female)">{{ stats?.sick_children_12_to_59_months_with_vit_a_Male.length +  stats?.sick_children_12_to_59_months_with_vit_a_Female.length }}</td>
+                <td class="p-5 border"></td>
+              </tr>
+
+              <tr class="text-sm">
+                <td colspan="5" class="p-5 bg-gray-50"></td>
+                <td class="p-5 border">42. Diarrhea cases 0-59 months old seen</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.diarrhea_0_59_months_Male.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.diarrhea_0_59_months_Male)">{{ stats?.diarrhea_0_59_months_Male.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.diarrhea_0_59_months_Female.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.diarrhea_0_59_months_Female)">{{ stats?.diarrhea_0_59_months_Female.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.diarrhea_0_59_months_Male.length !==0 || stats?.diarrhea_0_59_months_Female.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.diarrhea_0_59_months_Male, stats?.diarrhea_0_59_months_Female)">{{ stats?.diarrhea_0_59_months_Male.length +  stats?.diarrhea_0_59_months_Female.length }}</td>
+                <td class="p-5 border"></td>
+              </tr>
+
+              <tr class="text-sm">
+                <td colspan="5" class="p-5 bg-gray-50"></td>
+                <td class="p-5 border">43. Diarrhea cases 0-59 months old received ORS</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.diarrhea_0_59_months_with_ors_Male.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.diarrhea_0_59_months_with_ors_Male)">{{ stats?.diarrhea_0_59_months_with_ors_Male.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.diarrhea_0_59_months_with_ors_Female.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.diarrhea_0_59_months_with_ors_Female)">{{ stats?.diarrhea_0_59_months_with_ors_Female.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.diarrhea_0_59_months_with_ors_Male.length !==0 || stats?.diarrhea_0_59_months_with_ors_Female.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.diarrhea_0_59_months_with_ors_Male, stats?.diarrhea_0_59_months_with_ors_Female)">{{ stats?.diarrhea_0_59_months_with_ors_Male.length +  stats?.diarrhea_0_59_months_with_ors_Female.length }}</td>
+                <td class="p-5 border"></td>
+              </tr>
+
+              <tr class="text-sm">
+                <td colspan="5" class="p-5 bg-gray-50"></td>
+                <td class="p-5 border">44. Diarrhea cases 0-59 mos. received ORS w/ zinc</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.diarrhea_0_59_months_with_ors_zinc_Male.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.diarrhea_0_59_months_with_ors_zinc_Male)">{{ stats?.diarrhea_0_59_months_with_ors_zinc_Male.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.diarrhea_0_59_months_with_ors_zinc_Female.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.diarrhea_0_59_months_with_ors_zinc_Female)">{{ stats?.diarrhea_0_59_months_with_ors_zinc_Female.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.diarrhea_0_59_months_with_ors_zinc_Male.length !==0 || stats?.diarrhea_0_59_months_with_ors_zinc_Female.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.diarrhea_0_59_months_with_ors_zinc_Male, stats?.diarrhea_0_59_months_with_ors_zinc_Female)">{{ stats?.diarrhea_0_59_months_with_ors_zinc_Male.length +  stats?.diarrhea_0_59_months_with_ors_zinc_Female.length }}</td>
+                <td class="p-5 border"></td>
+              </tr>
+
+              <tr class="text-sm">
+                <td colspan="5" class="p-5 bg-gray-50"></td>
+                <td class="p-5 border">45. Pneumonia cases 0-59 mos. old seen</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.pneumonia_0_59_months_Male.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.pneumonia_0_59_months_Male)">{{ stats?.pneumonia_0_59_months_Male.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.pneumonia_0_59_months_Female.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.pneumonia_0_59_months_Female)">{{ stats?.pneumonia_0_59_months_Female.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.pneumonia_0_59_months_Male.length !==0 || stats?.pneumonia_0_59_months_Female.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.pneumonia_0_59_months_Male, stats?.pneumonia_0_59_months_Female)">{{ stats?.pneumonia_0_59_months_Male.length +  stats?.pneumonia_0_59_months_Female.length }}</td>
+                <td class="p-5 border"></td>
+              </tr>
+
+              <tr class="text-sm">
+                <td colspan="5" class="p-5 bg-gray-50"></td>
+                <td class="p-5 border">46. Pneumonia cases 0-59 mos. old completed treatment</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.pneumonia_0_59_months_with_treatment_Male.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.pneumonia_0_59_months_with_treatment_Male)">{{ stats?.pneumonia_0_59_months_with_treatment_Male.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.pneumonia_0_59_months_with_treatment_Female.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.pneumonia_0_59_months_with_treatment_Female)">{{ stats?.pneumonia_0_59_months_with_treatment_Female.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.pneumonia_0_59_months_with_treatment_Male.length !==0 || stats?.pneumonia_0_59_months_with_treatment_Female.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.pneumonia_0_59_months_with_treatment_Male, stats?.pneumonia_0_59_months_with_treatment_Female)">{{ stats?.pneumonia_0_59_months_with_treatment_Male.length +  stats?.pneumonia_0_59_months_with_treatment_Female.length }}</td>
+                <td class="p-5 border"></td>
+              </tr>
+
+
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<app-name-list *ngIf="openList" (toggleModal)="toggleModal()" [name_list]="name_list"></app-name-list>

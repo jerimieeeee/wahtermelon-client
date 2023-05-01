@@ -1,0 +1,129 @@
+<div class="grid grid-cols-12 flex item-start flex-wrap shadow-md rounded-xl mb-4 mt-8">
+
+  <div class="col-span-12 flex px-5 py-3 rounded-tl rounded-tr" [ngStyle]="{'background-color': (risk <= 10) ? '#6ec46e' : ((risk > 10) ? '#f86b6b' : null) }">
+    <h4 class="font-bold text-white text-md mt-2 mb-2">Risk Stratification Details</h4>
+    <div class="">
+      <fa-icon [icon]="faInfoCircle" class="peer text-white hover:text-white z-50 px-2"></fa-icon>
+      <div
+          class="absolute text-sm bg-gradient-to-b from-stone-500 to-gray-400 p-2 rounded border border-gray-500  text-white drop-shadow-lg opacity-90 border-check z-50 w-60 invisible peer-hover:visible">
+          <h1 class="font-bold drop-shadow-lg">IMPORTANT</h1>
+          <p class="font-light drop-shadow-lg">Once saved, the information will be displayed in the input boxes
+              and shall not be editable unless Edit button is pressed.</p>
+      </div>
+  </div>
+  </div>
+
+
+  <table class="text-sm col-span-6 col-start-1 table-auto border-r-2 border-gray-200">
+    <tbody>
+
+      <tr class="border-b-2 border-gray-200">
+        <td class="px-5 py-3">Risk Level</td>
+        <td class="px-5 py-3 text-gray font-bold text-lg" [ngStyle]="{'color': (risk <= 10) ? '#6ec46e' : ((risk > 10) ? '#f86b6b' : null) }">{{risk}}%</td>
+      </tr>
+
+      <tr class="border-b-2 border-gray-200">
+        <td class="px-5 py-3">Location of Assessment</td>
+        <td class="px-5 py-3">Facility</td>
+      </tr>
+
+      <tr class="border-b-2 border-gray-200">
+        <td class="px-5 py-3">Presence of Diabetes</td>
+        <td class="px-5 py-3">Y</td>
+      </tr>
+
+      <tr class="border-b-2 border-gray-200">
+        <td class="px-5 py-3">Patient Gender</td>
+        <td class="px-5 py-3">Female</td>
+      </tr>
+
+      <tr class="border-b-2 border-gray-200">
+        <td class="px-5 py-3">Patient Age</td>
+        <td class="px-5 py-3">48.98 years old</td>
+      </tr>
+
+      <tr class="border-b-2 border-gray-200">
+        <td class="px-5 py-3">Smoking Status</td>
+        <td class="px-5 py-3">Y</td>
+      </tr>
+
+      <tr class="">
+        <td class="px-5 py-3">Actual Systolic Blood Pressure</td>
+        <td class="px-5 py-3">110</td>
+      </tr>
+
+    </tbody>
+  </table>
+
+  <div class="text-sm col-span-6 col-start-7 table-auto overflow-y-auto h-96">
+    <h1 class="px-5 py-5 font-bold">Health Information</h1>
+        <ul class="list-disc px-8">
+          <li class="py-3">All individuals with persistent raised BP ≥ 160/100 mmHg should be given antihypertensive treatment.</li>
+          <li class="py-3">All patients with established diabetes and cardiovascular disease (coronary heart disease, myocardial infarction, transient ischaemic attacks, cerebrovascular disease or peripheral vascular disease); if stable, should continue the treatment already prescribed and be considered as with risk > 30%.</li>
+          <li class="py-3">All individuals with total cholesterol at or above 8 mmol/l (320mg/dl) should be given lifestyle advise and statins.</li>
+        </ul>
+        <ul class="list-disc px-8">
+          <li class="py-3">Counsel on diet, physical activity, smoking cessation, (Protocol 3P and 4P).</li>
+          <li class="py-3">If risk < 10%, follow up in 12 months.</li>
+          <li class="py-3">If risk 10 to < 20%, follow up every 3 months until the targets are met, then 6-9 months thereafter.</li>
+        </ul>
+        <ul class="list-disc px-8">
+          <li class="py-3">Counsel on diet, physical activity, smoking cessation, (Protocols 3P and 4P).</li>
+          <li class="py-3">Persistent BP ≥ 140/90 mmHg (in DM ≥ 130/80 mmHg) consider a low dose of one of the drugs. Hydrochlorthiazide 25-50 mg daily. Enalapril 5-20 mg daily. Atenolol 50-100 mg daily. Amiodipine 5-10 mg daily</li>
+          <li class="py-3">Follow-up every 3-6 months.</li>
+        </ul>
+        <ul class="list-disc px-8 mb-4">
+          <li class="py-3">Counsel on diet, physical activity, smoking cessation.</li>
+          <li class="py-3">Persistent BP ≥ 130/80 should be given one of the drugs: thiazide, ACE inhibitor, beta blocker, calcium channel blocker. </li>
+          <li class="py-3">Give a statin.</li>
+          <li class="py-3">Follow-up every three months.</li>
+        </ul>
+
+  </div>
+
+</div>
+
+<!--border-->
+<!-- <div class="border-b-2 border-gray-200 mt-7 mb-7"></div>
+
+<div class="grid grid-cols-12 flex item-start flex-wrap shadow-md rounded-xl mb-4 mt-8">
+
+  <div class="col-span-12 flex bg-blue-500 px-5 py-3 rounded-tl rounded-tr">
+    <h4 class="font-bold text-white text-md mt-2 mb-2">Health Information</h4>
+    <div class="py-2">
+      <fa-icon [icon]="faInfoCircle" class="peer text-white hover:text-white z-50 px-2"></fa-icon>
+      <div
+          class="absolute text-sm bg-gradient-to-b from-stone-500 to-gray-400 p-2 rounded border border-gray-500  text-white drop-shadow-lg opacity-90 border-check z-50 w-60 invisible peer-hover:visible">
+          <h1 class="font-bold drop-shadow-lg">IMPORTANT</h1>
+          <p class="font-light drop-shadow-lg">Once saved, the information will be displayed in the input boxes
+              and shall not be editable unless Edit button is pressed.</p>
+      </div>
+  </div>
+  </div>
+
+  <div class="col-span-12 col-start-1 overflow-y-auto h-96">
+        <ul class="list-disc px-10">
+          <li class="py-3">All individuals with persistent raised BP ≥ 160/100 mmHg should be given antihypertensive treatment.</li>
+          <li class="py-3">All patients with established diabetes and cardiovascular disease (coronary heart disease, myocardial infarction, transient ischaemic attacks, cerebrovascular disease or peripheral vascular disease); if stable, should continue the treatment already prescribed and be considered as with risk > 30%.</li>
+          <li class="py-3">All individuals with total cholesterol at or above 8 mmol/l (320mg/dl) should be given lifestyle advise and statins.</li>
+        </ul>
+        <ul class="list-disc px-10">
+          <li class="py-3">Counsel on diet, physical activity, smoking cessation, (Protocol 3P and 4P).</li>
+          <li class="py-3">If risk < 10%, follow up in 12 months.</li>
+          <li class="py-3">If risk 10 to < 20%, follow up every 3 months until the targets are met, then 6-9 months thereafter.</li>
+        </ul>
+        <ul class="list-disc px-10">
+          <li class="py-3">Counsel on diet, physical activity, smoking cessation, (Protocols 3P and 4P).</li>
+          <li class="py-3">Persistent BP ≥ 140/90 mmHg (in DM ≥ 130/80 mmHg) consider a low dose of one of the drugs. Hydrochlorthiazide 25-50 mg daily. Enalapril 5-20 mg daily. Atenolol 50-100 mg daily. Amiodipine 5-10 mg daily</li>
+          <li class="py-3">Follow-up every 3-6 months.</li>
+        </ul>
+        <ul class="list-disc px-10 mb-4">
+          <li class="py-3">Counsel on diet, physical activity, smoking cessation.</li>
+          <li class="py-3">Persistent BP ≥ 130/80 should be given one of the drugs: thiazide, ACE inhibitor, beta blocker, calcium channel blocker. </li>
+          <li class="py-3">Give a statin.</li>
+          <li class="py-3">Follow-up every three months.</li>
+        </ul>
+
+  </div>
+
+</div> -->

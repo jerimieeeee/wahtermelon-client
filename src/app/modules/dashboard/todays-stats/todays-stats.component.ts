@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import { HttpService } from 'app/shared/services/http.service';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-todays-stats',
@@ -9,9 +11,25 @@ import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 export class TodaysStatsComponent implements OnInit {
   faChevronDown = faChevronDown;
 
-  constructor() { }
+  constructor(
+    private http: HttpService,
+    private cookieService: CookieService
+  ) { }
 
+  side_stats: any;
+
+  loadStats(){
+    this.http.get('consultation/stats').subscribe({
+      next: (data:any) => {
+        // console.log(data);
+        this.side_stats = data;
+      },
+      error: err => console.log(err)
+    })
+  }
   ngOnInit(): void {
+    // console.log(this.cookieService.get('access_token'))
+    this.loadStats()
   }
 
 }

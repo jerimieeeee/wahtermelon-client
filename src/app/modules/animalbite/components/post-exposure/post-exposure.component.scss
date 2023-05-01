@@ -1,0 +1,34 @@
+.modal-body{
+    height: 350px;
+    width: 800px;
+    overflow-y: auto;
+  }
+
+  .modal-body{
+    height: 350px;
+    width: 700px;
+    overflow-y: auto;
+  }
+
+.icon{
+    position:absolute;
+    right: 30px;
+    bottom: 5px;
+  }
+
+  .icon2{
+    position:absolute;
+    right: 30px;
+    bottom: 20px;
+  }
+
+
+// ::placeholder{
+//     color: black;
+// }
+
+select option {
+    width:100px;
+    text-overflow:ellipsis;
+    overflow:hidden;
+}

@@ -1,0 +1,107 @@
+<div class="block pt-4 justify-items-start mx-5 pb-5">
+  <div class="flex justify-between items-center">
+    <span class="block text-blue-500 font-medium text-sm select-none" [ngClass]="{'opacity-70': !menstrual_history}">
+      <fa-icon *ngIf="menstrual_history" (click)="toggle('menstrual')" class="mx-0 my-0 mr-2 hover:cursor-pointer" [icon]="accordions['menstrual'] ? faChevronUp : faChevronDown"></fa-icon>
+      <fa-icon *ngIf="!menstrual_history" class="mx-0 my-0 mr-2" [icon]="faMinus"></fa-icon>
+      MENSTRUAL HISTORY
+    </span>
+    <fa-icon (click)="modalToggle('menstrual')" class="mx-0 my-0 text-blue-500 mr-2 hover:cursor-pointer" [icon]="faPlusCircle"></fa-icon>
+  </div>
+
+  <div *ngIf="!show_form" >
+    <div class="p-4 mx-auto">
+      <div class="animate-pulse grid grid-cols-2 gap-x-20 gap-y-4 justify-between">
+        <div class="h-2 bg-slate-200 rounded"></div>
+        <div class="h-2 bg-slate-200 rounded"></div>
+        <div class="h-2 bg-slate-200 rounded"></div>
+        <div class="h-2 bg-slate-200 rounded"></div>
+        <div class="h-2 bg-slate-200 rounded"></div>
+        <div class="h-2 bg-slate-200 rounded"></div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="show_form" >
+    <div [@openCloseAccordion] *ngIf="accordions['menstrual']" class="block">
+      <div class="flex pl-3 justify-between items-center">
+        <span class="block font-medium text-xs">
+          Menarche
+        </span>
+        <span class="block text-xs">
+          {{ menstrual_history?.menarche }}
+        </span>
+      </div>
+
+      <div class="flex pl-3 justify-between items-center">
+        <span class="block font-medium text-xs">
+          Last menstrual period
+        </span>
+        <span class="block text-xs">
+          {{ menstrual_history?.lmp | date: 'MM/dd/yyyy'}}
+        </span>
+      </div>
+
+      <div class="flex pl-3 justify-between items-center">
+        <span class="block font-medium text-xs">
+          Period duration
+        </span>
+        <span class="block text-xs">
+          {{ menstrual_history?.period_duration }}
+        </span>
+      </div>
+
+      <div class="flex pl-3 justify-between items-center">
+        <span class="block font-medium text-xs">
+          Cycle
+        </span>
+        <span class="block text-xs">
+          {{ menstrual_history?.cycle }}
+        </span>
+      </div>
+
+      <div class="flex pl-3 justify-between items-center">
+        <span class="block font-medium text-xs">
+          Pads/day
+        </span>
+        <span class="block text-xs">
+          {{ menstrual_history?.pads_per_day }}
+        </span>
+      </div>
+
+      <div class="flex pl-3 justify-between items-center">
+        <span class="block font-medium text-xs">
+          Onset sexual intercourse
+        </span>
+        <span class="block text-xs">
+          {{ menstrual_history?.onset_sexual_intercourse }}
+        </span>
+      </div>
+
+      <div class="flex pl-3 justify-between items-center">
+        <span class="block font-medium text-xs">
+          FP method
+        </span>
+        <span class="block text-xs">
+          {{ menstrual_history?.method }}
+        </span>
+      </div>
+
+      <div class="flex pl-3 justify-between items-center">
+        <span class="block font-medium text-xs">
+          Menopause
+        </span>
+        <span class="block text-xs">
+          {{ menstrual_history?.menopause === 1 ? 'Yes' : 'No'}}
+        </span>
+      </div>
+
+      <div class="flex pl-3 justify-between items-center">
+        <span class="block font-medium text-xs">
+          Menopause age
+        </span>
+        <span class="block text-xs">
+          {{ menstrual_history?.menopause_age }}
+        </span>
+      </div>
+    </div>
+  </div>
+</div>

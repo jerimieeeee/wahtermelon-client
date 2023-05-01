@@ -1,0 +1,71 @@
+<div class="block pt-4 justify-items-start mx-5 pb-5">
+  <div class="flex justify-between items-center">
+    <span class="block text-blue-500 font-medium text-sm select-none" [ngClass]="{'opacity-70': !pregnancy_history}">
+      <fa-icon *ngIf="pregnancy_history" (click)="toggle('preghist')" class="mx-0 my-0 mr-2 hover:cursor-pointer" [icon]="accordions['preghist'] ? faChevronUp : faChevronDown"></fa-icon>
+      <fa-icon *ngIf="!pregnancy_history" class="mx-0 my-0 mr-2" [icon]="faMinus"></fa-icon>
+      PREGNANCY HISTORY
+    </span>
+    <fa-icon (click)="modalToggle('preghist')" class="mx-0 my-0 text-blue-500 mr-2 hover:cursor-pointer" [icon]="faPlusCircle"></fa-icon>
+  </div>
+
+  <div *ngIf="!show_form" >
+    <div class="p-4 mx-auto">
+      <div class="animate-pulse grid grid-cols-2 gap-x-20 gap-y-4 justify-between">
+        <div class="h-2 bg-slate-200 rounded"></div>
+        <div class="h-2 bg-slate-200 rounded"></div>
+        <div class="h-2 bg-slate-200 rounded"></div>
+        <div class="h-2 bg-slate-200 rounded"></div>
+        <div class="h-2 bg-slate-200 rounded"></div>
+        <div class="h-2 bg-slate-200 rounded"></div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="show_form" >
+    <div [@openCloseAccordion] *ngIf="accordions['preghist']" class="block">
+      <div class="flex pl-3 justify-between items-center">
+        <span class="block font-medium text-xs">
+          FPAL
+        </span>
+        <span class="block text-xs">
+          {{ pregnancy_history?.full_term }}, {{ pregnancy_history?.preterm }}, {{ pregnancy_history?.abortion }}, {{ pregnancy_history?.livebirths }}
+        </span>
+      </div>
+
+      <div class="flex pl-3 justify-between items-center">
+        <span class="block font-medium text-xs">
+          GP
+        </span>
+        <span class="block text-xs">
+          {{ pregnancy_history?.gravidity }}, {{ pregnancy_history?.parity }}
+        </span>
+      </div>
+
+      <div class="flex pl-3 justify-between items-center">
+        <span class="block font-medium text-xs">
+          Delivery method
+        </span>
+        <span class="block text-xs">
+          {{ pregnancy_history?.libPregnancyDeliveryType.desc }}
+        </span>
+      </div>
+
+      <div class="flex pl-3 justify-between items-center">
+        <span class="block font-medium text-xs">
+          With family planning
+        </span>
+        <span class="block text-xs">
+          {{ pregnancy_history?.withFamilyPlanning.desc }}
+        </span>
+      </div>
+
+      <div class="flex pl-3 justify-between items-center">
+        <span class="block font-medium text-xs">
+          Induced hypertension
+        </span>
+        <span class="block text-xs">
+          {{ pregnancy_history?.inducedHypertension.desc }}
+        </span>
+      </div>
+    </div>
+  </div>
+</div>

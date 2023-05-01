@@ -1,12 +1,18 @@
-import { Component, OnInit } from '@angular/core';
-import { faQuestionCircle, faChevronDown, faFolderOpen, faHeart, faFlask, faNotesMedical, faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { faQuestionCircle, faChevronDown, faFolderOpen, faHeart, faFlask, faNotesMedical, faExclamationCircle, faChevronRight, faChevronLeft, faAnglesLeft, faAnglesRight } from '@fortawesome/free-solid-svg-icons';
+import { HttpService } from 'app/shared/services/http.service';
+import { NameHelperService } from 'app/shared/services/name-helper.service';
+import { interval, Subject, Subscription, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-todays-consult',
   templateUrl: './todays-consult.component.html',
   styleUrls: ['./todays-consult.component.scss']
 })
-export class TodaysConsultComponent implements OnInit {
+export class TodaysConsultComponent implements OnInit, OnDestroy {
+  private unsubscribe$ = new Subject<void>();
+
   faQuestionCircle = faQuestionCircle;
   faChevronDown = faChevronDown;
   faFolderOpen = faFolderOpen;
@@ -14,72 +20,130 @@ export class TodaysConsultComponent implements OnInit {
   faFlask = faFlask;
   faNotesMedical = faNotesMedical;
   faExclamationCircle = faExclamationCircle;
+  faChevronRight = faChevronRight;
+  faChevronLeft = faChevronLeft;
+  faAnglesLeft = faAnglesLeft;
+  faAnglesRight = faAnglesRight;
 
-  today_consults = [
-    {
-      id: "/itr",
-      first_name: "Dal-mi",
-      last_name: "Seo",
-      address: "Gwangju, South Korea",
-      visit_type: "General Consult",
-      location: "Physician",
-      duration: "1 hour 45 mins",
-      img_name: "profile_2.jpg"
-    },
-    {
-      id: "/itr",
-      first_name: "Ji-Pyeong",
-      last_name: "Han",
-      address: "Seoul, South Korea",
-      visit_type: "General Consult",
-      location: "Physician",
-      duration: "1 hour 38 mins",
-      img_name: "003.jpg"
-    },
-    {
-      id: "/itr",
-      first_name: "Do-san",
-      last_name: "Nam",
-      address: "Seoul, South Korea",
-      visit_type: "General Consult",
-      location: "Physician",
-      duration: "1 hour 25 mins",
-      img_name: "004.jpg"
-    },
-    {
-      id: "/itr",
-      first_name: "Chul-san",
-      last_name: "Lee",
-      address: "Seoul, South Korea",
-      visit_type: "General Consult",
-      location: "Physician",
-      duration: "1 hour 24 mins",
-      img_name: "005.jpg"
-    },
-    {
-      id: "/itr",
-      first_name: "Yong-san",
-      last_name: "Kim",
-      address: "Seoul, South Korea",
-      visit_type: "General Consult",
-      location: "Physician",
-      duration: "1 hour 23 mins",
-      img_name: "006.jpg"
-    },
-    {
-      id: "/itr",
-      first_name: "Sa-Ha",
-      last_name: "Jung",
-      address: "Seoul, South Korea",
-      visit_type: "General Consult",
-      location: "Physician",
-      duration: "1 hour 12 mins",
-      img_name: "007.jpg"
-    },
-  ]
-  constructor() { }
+  today_consults: [];
+  physicians: [];
+  selected_physician: string;
 
-  ngOnInit(): void {
+  per_page: number = 5;
+  current_page: number;
+  last_page: number;
+  from: number;
+  to: number;
+  total: number;
+
+  show_form: boolean = false;
+
+  getTodaysConsult(page?: number){
+    // console.log('query')
+    let params = {params: { }};
+    params['params']['page'] = !page ? this.current_page : page;
+    if (this.selected_physician !== 'all') params['params']['physician_id'] = this.selected_physician;
+    params['params']['per_page'] = this.per_page;
+    params['params']['consult_done'] = 0;
+
+    // console.log(params, page, this.current_page)
+    this.http.get('consultation/records', params).subscribe({
+      next: (data: any) => {
+        // console.log(data);
+        this.today_consults = data.data;
+        this.show_form = true;
+
+        this.current_page = data.meta.current_page;
+        this.last_page = data.meta.last_page;
+        this.from = data.meta.from;
+        this.to = data.meta.to;
+        this.total = data.meta.total;
+      },
+      error: err => console.log(err)
+    })
   }
 
+
+  private updateList: Subscription;
+  todays_inteval: any;
+
+  subscribeRefresh(){
+    this.todays_inteval = setInterval(() => {
+      // console.log('interval')
+      this.getTodaysConsult();
+    }, 10000)
+    /* this.updateList = interval(10000).subscribe(
+      () => {
+        this.getTodaysConsult();
+      }
+    ) */
+
+    /* interval(10000)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(() => {
+        this.getTodaysConsult();
+      }) */
+  }
+
+  loadPhysicians(){
+    this.http.get('users', {params:{per_page: 'all', designation_code: 'MD'}}).subscribe({
+      next: (data: any) => {
+        this.physicians = data.data;
+        let user_info = this.http.getUserFromJSON();
+        this.selected_physician = user_info.designation_code === 'MD' ? user_info.id : 'all';
+
+        this.getTodaysConsult();
+        this.subscribeRefresh();
+      },
+      error: err => console.log(err)
+    })
+  }
+
+  openItr(patient_id, ptgroup, id){
+    if(ptgroup === 'itr'){
+      this.router.navigate(['/patient/'+ptgroup, {id: patient_id}]);
+    } else {
+      this.router.navigate(['/patient/'+ptgroup, {id: patient_id, consult_id: id}]);
+    }
+  }
+
+  getDataDiff(consult_date) {
+    let endDate = new Date();
+    let startDate = new Date(consult_date);
+    var diff = endDate.getTime() - startDate.getTime();
+    var days = Math.floor(diff / (60 * 60 * 24 * 1000));
+    var hours = Math.floor(diff / (60 * 60 * 1000)) - (days * 24);
+    var minutes = Math.floor(diff / (60 * 1000)) - ((days * 24 * 60) + (hours * 60));
+
+    let duration_day = days ? days + ' days': '';;
+    let duration_hours = hours ? hours + ' hours': '';
+    let duration_minutes = minutes ? minutes + ' minutes': '';
+    return duration_day+' '+duration_hours+' '+duration_minutes;
+  }
+
+  checkVisit(group){
+    return this.nameHelper.getVisitType(group);
+  }
+
+  getInitials(first_name, last_name) {
+    return first_name.charAt(0)+last_name.charAt(0)
+  }
+
+  constructor(
+    private http: HttpService,
+    private router: Router,
+    private nameHelper: NameHelperService
+  ) { }
+
+  ngOnInit(): void {
+    this.loadPhysicians();
+  }
+
+  ngOnDestroy(): void {
+    // console.log(this.todays_inteval);
+    clearInterval(this.todays_inteval)
+    // this.updateList.unsubscribe();
+    // this.unsubscribe$.next();
+    // this.unsubscribe$.complete();
+  }
 }

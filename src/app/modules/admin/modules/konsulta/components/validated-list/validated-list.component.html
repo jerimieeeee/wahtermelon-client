@@ -1,0 +1,93 @@
+<table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 mb-5">
+  <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+    <tr>
+      <th scope="col" class="py-3 px-3">Transmittal Number</th>
+      <th scope="col" class="py-3 px-3" *ngIf="filter_status==='S'">Konsulta Transaction Number</th>
+      <th scope="col" class="py-3 px-3 text-center w-1/12">
+        <!-- Count <br /> -->
+        SOAP Count
+      </th>
+
+      <th scope="col" class="py-3 px-3 text-center w-1/12">
+        <!-- Count <br /> -->
+        Profile Count
+      </th>
+
+      <th scope="col" class="py-3 px-3 text-center w-1/12">
+        <!-- Count <br /> -->
+        Enlistment Count
+      </th>
+
+      <th scope="col" class="py-3 px-3 text-center">List</th>
+      <!-- <th scope="col" class="py-3 px-3 text-center">Download</th> -->
+      <th scope="col" class="py-3 px-3 text-center">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let kon of konsulta_list; let odd = odd; let i = index" class="bg-white border-t" [ngClass]="{'bg-gray-50': odd}">
+      <td scope="row" class="py-4 px-3 font-medium align-top">
+        {{ kon.transmittal_number }}
+      </td>
+      <td scope="row" class="py-4 px-3 font-medium align-top" *ngIf="filter_status==='S'">
+        {{ kon.konsulta_transaction_number }}
+      </td>
+      <td class="py-4 px-3 align-top text-center">
+        {{ kon.total_soap }}
+      </td>
+      <td class="py-4 px-3 align-top text-center">
+        {{ kon.total_profile }}
+      </td>
+      <td class="py-4 px-3 align-top text-center">
+        {{ kon.total_enlistment }}
+      </td>
+
+      <td class="py-4 px-3 align-top text-center">
+        <div *ngIf="checkPatientList(kon.patient)" >
+          <button class="text-sm text-white bg-blue-400 py-1 w-28 rounded-md px-3 mr-2 disabled:bg-gray-300" (click)="openList(kon.patient)">
+            show list
+          </button>
+        </div>
+      </td>
+
+      <!-- <td class="py-4 px-3 flex justify-center">
+
+      </td> -->
+
+      <td class="py-4 px-3 flex justify-center">
+        <div>
+          <button [disabled]="downloading" class="text-sm text-white bg-blue-500 py-1 font-normal rounded-md px-1 mr-2 disabled:bg-gray-300" (click)="downloadXml(kon, 'enc')">
+            {{ downlaoding ? '' : '.enc'}}
+            <fa-icon *ngIf="downloading" [icon]="faSpinner" spin="true"></fa-icon>
+          </button>
+        </div>
+
+        <div>
+          <button [disabled]="downloading" class="text-sm text-white bg-blue-500 py-1 font-normal rounded-md px-1 mr-2 disabled:bg-gray-300" (click)="downloadXml(kon, 'raw')">
+            {{ downlaoding ? '' : '.raw'}}
+            <fa-icon *ngIf="downloading" [icon]="faSpinner" spin="true"></fa-icon>
+          </button>
+        </div>
+
+        <div *ngIf="kon.xml_status === 'F'">
+          <button class="text-sm text-white bg-red-400 py-1 w-28 rounded-md px-3 mr-2 disabled:bg-gray-300" (click)="returnData(kon.xml_errors, 0)">
+            show errors
+          </button>
+        </div>
+
+        <div *ngIf="kon.xml_status === 'F' || kon.xml_status === 'V'">
+          <button [disabled]="validating" class="text-sm text-white bg-blue-500 py-1 rounded-md px-3 mr-2 disabled:bg-gray-300" [class]="kon.xml_status === 'V' ? 'w-44' : 'w-28'" (click)="validate(kon)">
+            <fa-icon [icon]="validating ? faSpinner : faCircleCheck" [spin]="validating" class="mr-2"></fa-icon>
+            {{ validating ? 'loading' : kon.xml_status === 'V' ? 'revalidate' : 'validate' }}
+          </button>
+        </div>
+
+        <div *ngIf="kon.xml_status === 'V'">
+          <button [disabled]="submitting" class="text-sm text-white bg-green-500 py-1 w-28 rounded-md px-3 mr-2 disabled:bg-gray-300" (click)="submit(kon.transmittal_number)">
+            <fa-icon [icon]="submitting ? faSpinner : faCircleCheck" [spin]="submitting" class="mr-2"></fa-icon>
+            {{ submitting ? 'loading' : 'submit' }}
+          </button>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>

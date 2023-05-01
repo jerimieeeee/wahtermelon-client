@@ -1,179 +1,129 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import {
-  ChartComponent,
-  ApexAxisChartSeries,
-  ApexChart,
-  ApexXAxis,
-  ApexDataLabels,
-  ApexTooltip,
-  ApexStroke,
-  ApexTitleSubtitle
-} from "ng-apexcharts";
-
-export type ChartOptions = {
-  series: ApexAxisChartSeries;
-  chart: ApexChart;
-  xaxis: ApexXAxis;
-  stroke: ApexStroke;
-  tooltip: ApexTooltip;
-  dataLabels: ApexDataLabels;
-  title: ApexTitleSubtitle;
-};
-
-export type WeightChart = {
-  series: ApexAxisChartSeries;
-  chart: ApexChart;
-  xaxis: ApexXAxis;
-  stroke: ApexStroke;
-  tooltip: ApexTooltip;
-  dataLabels: ApexDataLabels;
-  title: ApexTitleSubtitle;
-};
+import { ChartComponent } from "ng-apexcharts";
+import { openCloseTrigger } from './declarations/animation';
+import { BmiChart, ChartOptions, WeightChart } from './declarations/chart-options';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { filter, tap } from "rxjs/operators";
+import { HttpService } from 'app/shared/services/http.service';
+import { formatDate } from '@angular/common';
+import { faCircle, faFolder, faStethoscope } from '@fortawesome/free-solid-svg-icons';
+import { faEye, faFolderOpen } from '@fortawesome/free-regular-svg-icons';
+import { VitalsChartsService } from 'app/shared/services/vitals-charts.service';
 
 @Component({
   selector: 'app-patient-itr',
   templateUrl: './patient-itr.component.html',
-  styleUrls: ['./patient-itr.component.scss']
+  styleUrls: ['./patient-itr.component.scss'],
+  animations: [openCloseTrigger]
 })
 export class PatientItrComponent implements OnInit {
-  medical_journal = [
-    {
-      visit_date: "July 01, 2020",
-      visits: [
-        {
-          visit_type: "GENERAL CONSULTATION",
-          assessed_by: "John Doe",
-          diagnosed_by: "Dr. Moira Santos"
+  faCircle = faCircle;
+  faEye = faEye;
+  faFolderOpen = faFolderOpen;
+  faFolder = faFolder;
+  faStethoscope = faStethoscope;
+
+  show_details:boolean = false;
+
+  visit_list: any;
+  latest_vitals: any;
+  selected_visit: any;
+  selected_id: number;
+  patient_id: string;
+
+  loadData(){
+    let patient_id = this.route.snapshot.paramMap.get('id');
+
+    if(this.patient_id !== patient_id){
+      let params = {
+        patient_id: patient_id,
+        per_page: '10',
+        sort: '-consult_date'
+      }
+      this.getVisitList(params);
+      /* this.http.get('consultation/records',{params:{patient_id: patient_id, per_page: 'all', sort: '-consult_date'}}).subscribe({
+        next: (data: any) => {
+          this.visit_list = data.data;
         },
-        {
-          visit_type: "LABORATORY - URINALYSIS",
-          assessed_by: "John Doe",
-          diagnosed_by: "Dr. Francis Gamboa"
-        }
-      ]
-    },
-    {
-      visit_date: "March 09, 2020",
-      visits: [
-        {
-          visit_type: "FAMILY PLANNING",
-          assessed_by: "Midwife 1",
-          diagnosed_by: "Nurse 1"
-        }
-      ]
-    },
-    {
-      visit_date: "March 01, 2020",
-      visits: [
-        {
-          visit_type: "FAMILY PLANNING",
-          assessed_by: "Midwife 1",
-          diagnosed_by: "Nurse 1"
-        }
-      ]
-    },
-    {
-      visit_date: "Feb 14, 2020",
-      visits: [
-        {
-          visit_type: "GENERAL CONSULTATION",
-          assessed_by: "Procorpio Pepito",
-          diagnosed_by: "Pepito Sampu"
-        }
-      ]
+        error: err => console.log(err),
+      }) */
     }
-  ];
-
-  @ViewChild("bp-chart") bp_chart: ChartComponent;
-  @ViewChild("weight-chart") weight_chart: ChartComponent;
-  public chartOptions: Partial<ChartOptions>;
-  public WeightChart: Partial<WeightChart>;
-
-  constructor() {
-    this.chartOptions = {
-      series: [
-        {
-          name: "Systolic",
-          data: [120, 120, 110, 120, 140, 120, 120]
-        },
-        {
-          name: "Diastolic",
-          data: [90, 80, 80, 84, 92, 70, 80]
-        }
-      ],
-      chart: {
-        height: 200,
-        type: "area"
-      },
-      dataLabels: {
-        enabled: false
-      },
-      stroke: {
-        curve: "smooth"
-      },
-      title: {
-        text: "Blood Pressure History"
-      },
-      xaxis: {
-        type: "datetime",
-        categories: [
-          "2018-09-19T00:00:00.000Z",
-          "2018-09-19T01:30:00.000Z",
-          "2018-09-19T02:30:00.000Z",
-          "2018-09-19T03:30:00.000Z",
-          "2018-09-19T04:30:00.000Z",
-          "2018-09-19T05:30:00.000Z",
-          "2018-09-19T06:30:00.000Z"
-        ]
-      },
-      tooltip: {
-        x: {
-          format: "dd/MM/yy HH:mm"
-        }
-      }
-    };
-
-    this.WeightChart = {
-      series: [
-        {
-          name: "Weight",
-          data: [120, 120, 110, 120, 140, 120, 120]
-        }
-      ],
-      chart: {
-        height: 200,
-        type: "line"
-      },
-      dataLabels: {
-        enabled: false
-      },
-      stroke: {
-        curve: "smooth"
-      },
-      title: {
-        text: "Weight History"
-      },
-      xaxis: {
-        type: "datetime",
-        categories: [
-          "2018-09-19T00:00:00.000Z",
-          "2018-09-19T01:30:00.000Z",
-          "2018-09-19T02:30:00.000Z",
-          "2018-09-19T03:30:00.000Z",
-          "2018-09-19T04:30:00.000Z",
-          "2018-09-19T05:30:00.000Z",
-          "2018-09-19T06:30:00.000Z"
-        ]
-      },
-      tooltip: {
-        x: {
-          format: "dd/MM/yy HH:mm"
-        }
-      }
-    };
   }
 
+  getVisitList(params, page?){
+    this.http.get('consultation/records',{params}).subscribe({
+      next: (data: any) => {
+        console.log(data)
+        this.visit_list = data.data;
+      },
+      error: err => console.log(err),
+    })
+  }
+
+  user_allowed: boolean = false;
+
+  showConsult(details: any){
+    console.log(details)
+    if(details.facility_code === this.user_location) {
+      this.user_allowed = true;
+      this.selected_visit = details;
+      if(details.vitals) this.getLatestToday(details);
+    } else {
+      this.user_allowed = false;
+    }
+  }
+
+  getLatestToday(details){
+    this.latest_vitals = this.vitalsCharts.getLatestToday(details.vitals, details.consult_date);
+
+    if(this.selected_id){
+      if(this.selected_id === details.id){
+        this.selected_id = undefined;
+        this.show_details = false;
+      } else {
+        this.selected_id = details.id;
+        this.show_details = true;
+      }
+    } else {
+      this.selected_id = details.id;
+      this.show_details = true;
+    }
+  }
+
+  getVisitType(group){
+    switch(group){
+      case 'cn':
+        return 'Consultation';
+      case 'cc':
+        return 'Child Care';
+      case 'mc':
+        return 'Maternal Care';
+      case 'dn':
+        return 'Dental';
+      case 'ncd':
+        return 'Non Communicable Disease';
+    }
+  }
+
+  constructor(
+    private router: Router,
+    private http: HttpService,
+    private vitalsCharts: VitalsChartsService,
+    private route: ActivatedRoute
+  ) { }
+
+  navigationEnd$ = this.router.events.pipe(
+    filter(event => event instanceof NavigationEnd),
+    tap(() => {
+      this.loadData();
+      this.show_details = false;
+    })
+  );
+
+  user_location: string;
   ngOnInit(): void {
+    this.user_location = this.http.getUserFacility();
+    this.loadData();
+    this.navigationEnd$.subscribe();
   }
-
 }

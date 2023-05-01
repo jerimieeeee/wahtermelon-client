@@ -1,0 +1,153 @@
+<!-- <div class="flex w-full"> -->
+  <div
+    class="w-full relative h-screen px-2 mt-5 ml-5 rounded-3xl text-gray-600 shadow-md overflow-y-scroll scrollbar-thin scrollbar-thumb-blue-300 scrollbar-track-white {{modalStats?'z-50':'z-0'}}">
+    <div class="text-sm font-medium text-center sticky top-0 text-gray-500 bg-white {{modalStats?'z-0':'z-10'}}">
+      <!-- TEST -->
+      <ul class="flex flex-wrap ">
+        <li class="mr-2">
+          <a class="select-none inline-block p-4 rounded-t-lg border-b-2 hover:text-blue-400 hover:font-semibold hover:border-blue-400"
+            [class]="module != 1? '' : 'text-blue-400 font-semibold border-blue-400'" (click)="switchTab(1)">History</a>
+        </li>
+        <li class="mr-2" *ngIf="patient_id && mcr">
+          <a class="select-none inline-block p-4 rounded-t-lg border-b-2 hover:text-blue-400 hover:font-semibold hover:border-blue-400"
+            [class]="module != 2? '' : 'text-blue-400 font-semibold border-blue-400'" (click)="switchTab(2)">Maternal
+            Care Record</a>
+        </li>
+        <li class="mr-2" *ngIf="patient_id && patient_mc_record && prenatal">
+          <a class="select-none inline-block p-4 rounded-t-lg border-b-2 hover:text-blue-400 hover:font-semibold hover:border-blue-400"
+            [class]="module != 3? '' : 'text-blue-400 font-semibold border-blue-400'"
+            (click)="switchTab(3)">Prenatal</a>
+        </li>
+        <li class="mr-2" *ngIf="patient_id">
+          <a class="select-none inline-block p-4 rounded-t-lg border-b-2 hover:text-blue-400 hover:font-semibold hover:border-blue-400"
+            [class]="module != 4? '' : 'text-blue-400 font-semibold border-blue-400'"
+            (click)="switchTab(4)">Postpartum</a>
+        </li>
+        <!-- <li class="mr-2" *ngIf="patient_id && patient_mc_record && services">
+          <a class="select-none inline-block p-4 rounded-t-lg border-b-2 hover:text-blue-400 hover:font-semibold hover:border-blue-400"
+            [class]="module != 5? '' : 'text-blue-400 font-semibold border-blue-400'" (click)="switchTab(5)">Services</a>
+        </li> -->
+        <li class="absolute right-0 " *ngIf="patient_id && patient_mc_record">
+          <a class="select-none text-base inline-block p-2 bg-gray-300 mt-3 mr-3 text-gray-400 hover:text-white rounded-md font-bold hover:bg-orange-400"
+            (click)="toggleModal()">
+            <fa-icon [icon]="faPersonWalking" size="lg" class="mx-2"></fa-icon>End Visit
+          </a>
+        </li>
+      </ul>
+    </div>
+    <!-- [class]="module != 2? '' : 'active'" (click)="switchTab(2)" -->
+    <div class="fade-in mb-20" *ngIf="module == 1">
+      <div class="w-12/12 px-8 pb-10 border-solid border-2 border-zinc-100 border-l-0 border-r-0 border-t-0 p-3">
+        <!-- <app-services></app-services> -->
+        <div class="grid gap-4 relative animates-dropdown" style="grid-template-columns: repeat(16, minmax(0, 1fr));"
+          *ngIf="!focused">
+          <div
+            class="sticky top-14 z-50 border border-blue-400 col-span-2 relative mx-2 px-2 py-1 rounded-t-lg text-sm bg-blue-500 text-white"
+            style="grid-column: span 16 / span 16;"><button class="font-bold" type="button">Records</button>
+          </div>
+          <div style="grid-column: span 16 / span 16;">
+            <div class="grid gap-0" style="grid-template-columns: repeat(14, minmax(0, 1fr));">
+              <div style="grid-column: span 14 / span 14;">
+                <div
+                  class="grid gap-4 rounded-b-lg hover:drop-shadow-lg drop-shadow-md bg-white hover:border border-gray-300 hover:border-blue-400 p-2 m-2 border -mt-5"
+                  style="grid-template-columns: repeat(9, minmax(0, 1fr));">
+                  <div class="font-light col-span-4" *ngIf="!patient_mc_list">No records found.</div>
+                  <button (click)="openNew()" *ngIf="!patient_mc_list"
+                    class="col-start-[9] bg-green-400 rounded hover:bg-green-500 font-medium text-white my-1 mx-2">Add</button>
+
+                  <div class="text-sm pb-1 font-semibold h-max" *ngIf="patient_mc_list?(patient_mc_list.length != 0?true:false):false"
+                    style="grid-column: span 9 / span 9;">
+
+                    <table class="table-auto relative w-full">
+                      <thead class="sticky top-0 ">
+                        <tr>
+                          <th class="px-2">Registration Date</th>
+                          <th class="px-2">LMP Date</th>
+                          <th class="px-2">Delivery Date</th>
+                          <th class="px-2">Admission Date</th>
+                          <th class="px-2">Discharge Date</th>
+                          <th class="px-2">Status</th>
+                          <th class="px-2">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let mc of patient_mc_list" class="hover:bg-blue-100">
+                          <!-- DATA -->
+                          <th class="px-2 font-normal">{{mc.pre_registration?'MCR: ' + (mc.pre_registration.pre_registration_date | date: 'MM/dd/yyyy'):'Post: ' + (mc.post_registration.post_registration_date | date: 'MM/dd/yyyy') }}</th>
+                          <th class="px-2 font-normal">{{mc.pre_registration?(mc.pre_registration.lmp_date | date: 'MM/dd/yyyy'):'-'}}</th>
+                          <th class="px-2 font-normal">{{mc.post_registration?(mc.post_registration.delivery_date | date: 'MM/dd/yyyy'):'-'}}</th>
+                          <th class="px-2 font-normal">{{mc.post_registration?(mc.post_registration.admission_date | date: 'MM/dd/yyyy'):'-'}}</th>
+                          <th class="px-2 font-normal">{{mc.post_registration?(mc.post_registration.discharge_date | date: 'MM/dd/yyyy'):'-'}}</th>
+                          <th class="px-2 font-normal">{{mc.post_registration?(mc.post_registration.end_pregnancy?'Closed':'Open'):'Open'}}</th>
+                          <th class="px-2 font-normal">
+                            <button class=" px-2 py-1 bg-blue-400 text-white font-bold rounded hover:bg-blue-500" (click)="openMCR(mc.id)">
+                              <fa-icon *ngIf="loading && mc.id == view_id" class="mx-3" [icon]="faSpinner" [spin]="true"></fa-icon>
+                              {{loading && mc.id == view_id?'':'View'}}
+                            </button>
+                          </th>
+                        </tr>
+                      </tbody>
+                    </table>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="fade-in mb-20" *ngIf="module == 2">
+      <div class="w-12/12 px-8 pb-10 border-solid border-2 border-zinc-100 border-l-0 border-r-0 border-t-0 p-3">
+        <app-mcr *ngIf="patient_id" (patient_mc_id)="showPreServ($event)" [patient_mc_record]="patient_mc_record"
+          [patient_id]="patient_id"></app-mcr>
+      </div>
+      <div class="w-12/12 px-8 pb-10 border-solid border-2 border-zinc-100 border-l-0 border-r-0 border-t-0 p-3">
+        <app-riskfactors *ngIf="risk_factors && patient_mc_record != ''" [risk_factors]="risk_factors" [patient_mc_record]="patient_mc_record"
+          [patient_id]="patient_id"></app-riskfactors>
+      </div>
+    </div>
+
+    <div class="fade-in mb-20" *ngIf="module == 3">
+      <div class="w-12/12 px-8 pb-10 border-solid border-2 border-zinc-100 border-l-0 border-r-0 border-t-0 p-3">
+        <app-prenatal (prenatal_mc_data)="updatePrenatal($event)" [patient_mc_record]="patient_mc_record" [patient_id]="patient_id"
+          [fetals]="fetals" [fhr_lib]="fhr_lib"></app-prenatal>
+      </div>
+      <div class=" w-12/12 px-8 pb-10 border-solid border-2 border-zinc-100 border-l-0 border-r-0 border-t-0 p-3">
+        <app-services *ngIf="visit_type" [patient_mc_record]="patient_mc_record" [module]="module"
+          (modalStats)="openModal($event)" [lib_services]="lib_services" [visit_type]="visit_type"
+          [patient_id]="patient_id"></app-services>
+      </div>
+    </div>
+
+    <div class="fade-in mb-20" *ngIf="module == 4">
+      <div class="w-12/12 px-8 pb-10 border-solid border-2 border-zinc-100 border-l-0 border-r-0 border-t-0 p-3">
+        <app-postpartum (postpartum_bool)="postValue($event)" (post_mc_data)="updatePost($event)" [patient_mc_record]="patient_mc_record"
+          [delivery_location]="delivery_location" [regions]="regions" [attendants]="attendants"
+          [preg_outcome]="preg_outcome" [patient_id]="patient_id"></app-postpartum>
+      </div>
+      <div *ngIf="post_value && patient_mc_record"
+        class="w-12/12 px-8 pb-10 border-solid border-2 border-zinc-100 border-l-0 border-r-0 border-t-0 p-3">
+        <app-postvisits *ngIf="patient_id" (post_visit_data)="updatePostVisit($event)" [patient_mc_record]="patient_mc_record"
+          [patient_id]="patient_id"></app-postvisits>
+      </div>
+      <div class=" w-12/12 px-8 pb-10 border-solid border-2 border-zinc-100 border-l-0 border-r-0 border-t-0 p-3">
+        <app-services *ngIf="visit_type" [patient_mc_record]="patient_mc_record" [module]="module"
+          (modalStats)="openModal($event)" [lib_services]="lib_services" [visit_type]="visit_type"
+          [patient_id]="patient_id"></app-services>
+      </div>
+    </div>
+
+    <div class="fade-in mb-20 z-20" *ngIf="module == 5">
+      <div class=" w-12/12 px-8 pb-10 border-solid border-2 border-zinc-100 border-l-0 border-r-0 border-t-0 p-3">
+        <app-services *ngIf="visit_type" [patient_mc_record]="patient_mc_record" [module]="module"
+          (modalStats)="openModal($event)" [lib_services]="lib_services" [visit_type]="visit_type"
+          [patient_id]="patient_id"></app-services>
+      </div>
+    </div>
+  </div>
+
+<app-end-visit  *ngIf="show_end" [consult_id]="consult_id" [toggleModal]="toggleModal()"
+          [consult_date]="consult_details[0]?.consult_date" [patient_id]="consult_details[0]?.patient.id"
+          [pt_group]="'mc'"></app-end-visit>

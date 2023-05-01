@@ -1,0 +1,439 @@
+
+<div class="my-10  flex justify-center w-full">
+
+  <div class="lg:w-3/6 md:w-5/6 bg-white border border-solid border-slate-100 rounded-xl shadow-md">
+    <div class="flex border border-solid border-slate-100 rounded-t-xl p-3 font-semibold justify-between">
+      <div class="text-blue-500 text-lg pt-2 pl-5">
+        Create your account
+      </div>
+      <div>
+        <button class="bg-white-500 text-blue-500 active:bg-gray-100 hover:bg-gray-200 text-sm px-4 py-2 rounded hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button" (click)="backToLogin()">
+          <fa-icon class="mr-3" [icon]="faArrowLeft"></fa-icon>
+          Back to login
+        </button>
+      </div>
+    </div>
+
+    <div class="shadow rounded-md p-4 m-5 w-5/6 mx-auto" *ngIf="!show_form">
+      <div class="animate-pulse flex space-x-4">
+        <div class="flex-1 space-y-6 py-1">
+          <div class="h-2 bg-slate-200 rounded"></div>
+          <div class="space-y-4">
+            <div class="h-2 bg-slate-200 rounded w-1/5"></div>
+            <div class="h-2 bg-slate-200 rounded"></div>
+            <div class="h-2 bg-slate-200 rounded w-1/5"></div>
+            <div class="h-2 bg-slate-200 rounded"></div>
+            <div class="h-2 bg-slate-200 rounded w-1/5"></div>
+            <div class="h-2 bg-slate-200 rounded"></div>
+            <div class="h-2 bg-slate-200 rounded w-1/5"></div>
+            <div class="h-2 bg-slate-200 rounded"></div>
+            <div class="h-2 bg-slate-200 rounded w-1/5"></div>
+            <div class="h-2 bg-slate-200 rounded"></div>
+            <div class="h-2 bg-slate-200 rounded w-1/5"></div>
+            <div class="h-2 bg-slate-200 rounded"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <form [formGroup]="userForm" (ngSubmit)="onSubmit()" *ngIf="show_form">
+      <div class="m-5">
+        <div class="md:px-6 sm:px-2 bg-white">
+          <div class="grid grid-cols-8 gap-x-4 gap-y-4">
+            <div class="col-span-8">
+              <label for="last_name" class="input-label" [ngClass]="{'text-red-500': is_saving && f.last_name.errors}">Last name</label>
+              <input type="text" name="last_name" id="last_name" class="input capitalize" [ngClass]="{'invalid-input': is_saving && f.last_name.errors}" formControlName="last_name" required>
+
+              <div *ngIf="is_saving && f.last_name.errors" class="invalid-alert">
+                <div *ngIf="f.last_name.errors?.['required']">
+                  {{ required_message }}
+                </div>
+                <div *ngIf="f.last_name.errors?.['minlength']">
+                  Minimum of 2 character.
+                </div>
+              </div>
+            </div>
+
+            <div class="col-span-8">
+              <label for="first_name" class="input-label" [ngClass]="{'text-red-500': is_saving && f.first_name.errors}">First name</label>
+              <input type="text" name="first_name" id="first_name" class="input capitalize" [ngClass]="{'invalid-input': is_saving && f.first_name.errors}" formControlName="first_name">
+
+              <div *ngIf="is_saving && f.first_name.errors" class="invalid-alert">
+                <div *ngIf="f.first_name.errors?.['required']">
+                  {{ required_message }}
+                </div>
+                <div *ngIf="f.first_name.errors?.['minlength']">
+                  Minimum of 2 character.
+                </div>
+              </div>
+            </div>
+
+            <div class="col-span-8">
+              <label for="middle_name" class="input-label" [ngClass]="{'text-red-500': is_saving && f.middle_name.errors}">Middle name</label>
+              <input type="text" name="middle_name" id="middle_name" class="input capitalize" [ngClass]="{'invalid-input': is_saving && f.middle_name.errors}" formControlName="middle_name">
+
+              <div *ngIf="is_saving && f.middle_name.errors" class="invalid-alert">
+                <div *ngIf="f.middle_name.errors?.['required']">
+                  {{ required_message }}
+                </div>
+                <div *ngIf="f.middle_name.errors?.['minlength']">
+                  Minimum of 2 character.
+                </div>
+              </div>
+            </div>
+
+            <div class="col-span-8">
+              <label for="suffix_name" class="input-label" >Suffix Name</label>
+              <select id="suffix_name" name="suffix_name" class="input disabled:bg-gray-300" formControlName="suffix_name">
+                <option *ngFor="let suffix_name of suffix_names" [value]="suffix_name.code">{{ suffix_name.suffix_desc }}</option>
+              </select>
+            </div>
+
+            <div class="col-span-8">
+              <label for="gender" class="input-label" [ngClass]="{'text-red-500': is_saving && f.gender.errors}">Sex</label>
+              <select id="gender" name="gender" class="input disabled:bg-gray-300" [ngClass]="{'invalid-input': is_saving && f.gender.errors}" formControlName="gender">
+                <option value="M">Male</option>
+                <option value="F">Female</option>
+              </select>
+
+              <div *ngIf="is_saving && f.gender.errors" class="invalid-alert">
+                <div *ngIf="f.gender.errors?.['required']">
+                  {{ required_message }}
+                </div>
+              </div>
+            </div>
+
+            <div class="col-span-8">
+              <label for="birthdate" class="input-label" [ngClass]="{'text-red-500': is_saving && f.birthdate.errors}">Birthdate</label>
+              <input type="date" name="birthdate" id="birthdate" class="input disabled:bg-gray-300" placeholder="mm/dd/yyyy" max="{{ date | date: 'yyyy-MM-dd' }} " [ngClass]="{'invalid-input': is_saving && f.birthdate.errors}" formControlName="birthdate">
+
+              <div *ngIf="is_saving && f.birthdate.errors" class="invalid-alert">
+                <div *ngIf="f.birthdate.errors?.['required']">
+                  {{ required_message }}
+                </div>
+              </div>
+            </div>
+
+            <div class="col-span-8">
+              <label for="email" class="input-label" [ngClass]="{'text-red-500': is_saving && f.email.errors}">email</label>
+              <input type="email" name="email" id="email" class="input disabled:bg-gray-300" [ngClass]="{'invalid-input': is_saving && f.email.errors}" formControlName="email">
+
+              <div *ngIf="is_saving && f.email.errors" class="invalid-alert">
+                <div *ngIf="f.email.errors?.['required']">
+                  {{ required_message }}
+                </div>
+                <div *ngIf="f.email.errors?.['email']">
+                  Not a valid email format
+                </div>
+              </div>
+            </div>
+
+            <div class="col-span-8">
+              <label for="contact_number" class="input-label" [ngClass]="{'text-red-500': is_saving && f.contact_number.errors}">Mobile Number (0912) 354-6789</label>
+              <input type="text" mask="(9999) 999-9999" [showMaskTyped]="true" name="contact_number" id="contact_number" class="input disabled:bg-gray-300" [ngClass]="{'invalid-input': is_saving && f.contact_number.errors}" formControlName="contact_number">
+
+              <div *ngIf="is_saving && f.contact_number.errors" class="invalid-alert">
+                <div *ngIf="f.contact_number.errors?.['required']">
+                  {{ required_message }}
+                </div>
+              </div>
+            </div>
+
+            <div class="col-span-8">
+              <label for="designation_code" class="input-label" [ngClass]="{'text-red-500': is_saving && f.designation_code.errors}">Designation</label>
+              <select id="designation_code" name="designation_code" formControlName="designation_code" class="input disabled:bg-gray-300" [ngClass]="{'invalid-input': is_saving && f.designation_code.errors}" >
+                <option *ngFor="let designation of designations" [value]="designation.code" >{{ designation.desc }}</option>
+              </select>
+
+              <div *ngIf="is_saving && f.designation_code.errors" class="invalid-alert">
+                <div *ngIf="f.designation_code.errors?.['required']">
+                  {{ required_message }}
+                </div>
+              </div>
+            </div>
+
+            <div class="col-span-8">
+              <label for="employer_code" class="input-label" [ngClass]="{'text-red-500': is_saving && f.employer_code.errors}">Employer</label>
+              <select id="employer_code" name="employer_code" formControlName="employer_code" class="input disabled:bg-gray-300" [ngClass]="{'invalid-input': is_saving && f.employer_code.errors}" >
+                <option *ngFor="let employer of employers" [value]="employer.code" >{{ employer.desc }}</option>
+              </select>
+
+              <div *ngIf="is_saving && f.employer_code.errors" class="invalid-alert">
+                <div *ngIf="f.employer_code.errors?.['required']">
+                  {{ required_message }}
+                </div>
+              </div>
+            </div>
+
+            <div class="col-span-8">
+              <label for="region" class="input-label" [ngClass]="{'text-red-500': is_saving && f.region.errors}">Region</label>
+              <select id="region" name="region" formControlName="region" class="input disabled:bg-gray-300" (change)="loadDemog('regions', userForm.value.region, 'provinces')" [ngClass]="{'invalid-input': is_saving && f.region.errors}" >
+                <option *ngFor="let region of regions" [value]="region.code" >{{ region.name }}</option>
+              </select>
+
+              <div *ngIf="is_saving && f.region.errors" class="invalid-alert">
+                <div *ngIf="f.region.errors?.['required']">
+                  {{ required_message }}
+                </div>
+              </div>
+            </div>
+
+            <div class="col-span-8">
+              <label for="province" class="input-label" [ngClass]="{'text-red-500': is_saving && f.province.errors}">Province</label>
+              <select id="province" name="province" formControlName="province" class="input disabled:bg-gray-300" (change)="loadDemog('provinces', userForm.value.province, 'municipalities')" [ngClass]="{'invalid-input': is_saving && f.province.errors}" >
+                <option *ngFor="let province of provinces" [value]="province.code" >{{ province.name }}</option>
+              </select>
+
+              <div *ngIf="is_saving && f.province.errors" class="invalid-alert">
+                <div *ngIf="f.province.errors?.['required']">
+                  {{ required_message }}
+                </div>
+              </div>
+            </div>
+
+            <div class="col-span-8">
+              <label for="municipality" class="input-label" [ngClass]="{'text-red-500': is_saving && f.municipality.errors}">Municipality</label>
+              <select id="municipality" name="municipality" formControlName="municipality" class="input disabled:bg-gray-300" (change)="loadFacilities(userForm.value.municipality)" [ngClass]="{'invalid-input': is_saving && f.municipality.errors}" >
+                <option *ngFor="let municipality of municipalities" [value]="municipality.code" >{{ municipality.name }}</option>
+              </select>
+
+              <div *ngIf="is_saving && f.municipality.errors" class="invalid-alert">
+                <div *ngIf="f.municipality.errors?.['required']">
+                  {{ required_message }}
+                </div>
+              </div>
+            </div>
+
+            <div class="col-span-8">
+              <label for="facility_code" class="input-label" [ngClass]="{'text-red-500': is_saving && f.facility_code.errors}">Facility</label>
+              <select id="facility_code" name="facility_code" class="input disabled:bg-gray-300" [ngClass]="{'invalid-input': is_saving && f.facility_code.errors}" formControlName="facility_code">
+                <option [value]="facility.code"*ngFor="let facility of facilities" >{{ facility.facility_name }}</option>
+              </select>
+
+              <div *ngIf="is_saving && f.facility_code.errors" class="invalid-alert">
+                <div *ngIf="f.facility_code.errors?.['required']">
+                  {{ required_message }}
+                </div>
+              </div>
+            </div>
+
+            <div class="col-span-8">
+              <label for="password" class="input-label" [ngClass]="{'text-red-500': is_saving && f.password.errors}">Password</label>
+              <div class="relative rounded-md">
+                <input [type]="show_pass ? 'text' : 'password'" name="password" id="password" class="input disabled:bg-gray-300" [ngClass]="{'invalid-input': is_saving && f.password.errors}" formControlName="password">
+                <button (click)="show_pass = !show_pass" class="absolute inset-y-0 right-0 flex items-center pr-2 text-gray-500" type="button">
+                  <fa-icon [icon]="show_pass ? faEyeSlash : faEye"></fa-icon>
+                </button>
+              </div>
+              <div *ngIf="!is_saving ">
+                <ol class="list-disc pl-5 text-sm">
+                  <li>Password must have at least 6 characters</li>
+                  <li>Password must have at least 1 capital letter</li>
+                  <li>Password must have at least 1 small letter</li>
+                  <li>Password must have at least 1 number</li>
+                  <li>Password must have at least 1 special character</li>
+                </ol>
+              </div>
+
+              <div *ngIf="is_saving && f.password.errors" class="invalid-alert">
+                <div *ngIf="f.password.errors?.['required']">
+                  {{ required_message }}
+                </div>
+                <div *ngIf="f.password.errors?.['pattern']">
+                  <ol class="list-disc pl-5 text-sm">
+                    <li>Password must have at least 6 characters</li>
+                    <li>Password must have at least 1 capital letter</li>
+                    <li>Password must have at least 1 small letter</li>
+                    <li>Password must have at least 1 number</li>
+                    <li>Password must have at least 1 special character</li>
+                  </ol>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-span-8">
+              <label for="password_confirmation" class="input-label" [ngClass]="{'text-red-500': is_saving && f.password_confirmation.errors}">Password Confirmation</label>
+              <input [type]="show_pass ? 'text' : 'password'" name="password_confirmation" id="password_confirmation" class="input disabled:bg-gray-300" [ngClass]="{'invalid-input': is_saving && f.password_confirmation.errors}" formControlName="password_confirmation">
+
+              <div *ngIf="passwordMatchError" class="invalid-alert">
+                <div>
+                  Password does not match
+                </div>
+              </div>
+
+              <div *ngIf="is_saving && f.password_confirmation.errors" class="invalid-alert">
+                <div *ngIf="f.password_confirmation.errors?.['required']">
+                  {{ required_message }}
+                </div>
+              </div>
+
+            </div>
+
+            <div class="col-span-8">
+              <div class="flex items-start">
+                <div class="flex items-center h-5">
+                  <input id="terms" aria-describedby="terms" type="checkbox" [ngClass]="{'border-red-500': is_saving && f.privacy.errors}" formControlName="privacy" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300">
+                </div>
+                <div class="ml-3 text-sm">
+                  <span class="text-gray-500" [ngClass]="{'text-red-500': is_saving && f.privacy.errors}" >I agree with the <span class="font-medium text-sky-600 hover:underline cursor-pointer" [ngClass]="{'text-red-500': is_saving && f.privacy.errors}" (click)="showPrivacyStatement = !showPrivacyStatement">Data Privacy Statement</span></span>
+                </div>
+              </div>
+            </div>
+
+            <div *ngIf="submit_errors" class="col-span-8 bg-red-200 rounded border border-red-300 text-red-900 text-sm">
+              <div class="block p-3 pl-10" >
+                <ul class="list-disc" >
+                  <li *ngFor="let error of submit_errors | keyvalue">{{ error.value }}</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="text-right pt-5 ">
+          <button type="submit" *ngIf="!userForm.disabled" [disabled]="userForm.invalid || passwordMatchError" class="btn-save mr-6 w-48 mb-10 disabled:bg-gray-400">
+            <fa-icon *ngIf="loading" class="mr-3" [icon]="faSpinner" [spin]="true"></fa-icon>
+            {{ loading ? 'Saving' : 'Create Account' }}
+          </button>
+
+          <button type="submit" *ngIf="userForm.disabled" class="btn-save mr-6 w-48 mb-10 disabled:bg-gray-400" (click)="backToLogin()">
+            <!-- <fa-icon *ngIf="loading" class="mr-3" [icon]="faSpinner" [spin]="true"></fa-icon> -->
+            Back to login
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div [@myInsertRemoveTrigger] *ngIf="showModal" class="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex">
+  <div class="relative w-auto my-6 mx-auto max-w-6xl">
+    <div class="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+      <div class="relative p-6 pb-10 pr-40 flex-auto">
+          <span>
+            An verification email has been sent to your email account.<br /><br />
+            Please click on the link that has been sent to your email to continue with your registration.
+          </span>
+      </div>
+      <div class="flex items-center justify-end p-3 rounded-b">
+        <button class="bg-blue-500 text-white active:bg-blue-500 hover:bg-blue-600 text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button" (click)="backToLogin()">
+          Back to login
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div *ngIf="showModal" class="opacity-25 fixed inset-0 z-40 bg-black"></div>
+
+<div [@myInsertRemoveTrigger]  *ngIf="showPrivacyStatement" id="defaultModal" tabindex="-1" class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 w-full md:inset-0 h-modal md:h-full justify-center items-center flex" aria-modal="true" role="dialog" style="z-index:60">
+  <div class="relative p-4 w-full max-w-3xl h-auto md:h-auto">
+    <!-- Modal content -->
+    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+      <!-- Modal header -->
+      <div class="flex justify-between items-start py-3 px-5 rounded-t border-b bg-white">
+        <h3 class="mt-2 text-sm font-bold text-blue-500">
+          WAHTERMELON Privacy Statement
+        </h3>
+      </div>
+      <!-- Modal body -->
+      <div class="overflow-y-auto h-96 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
+        <!-- PRIVACY START -->
+        <div class="grid grid-cols-1 m-5">
+          <!-- <div class="cols-span-1 flex justify-center font-semibold">
+            WAHTERMELON Privacy Statement
+          </div> -->
+
+          <div class="cols-span-1 flex flex-col text-justify">
+            <h3 class="font-semibold mb-3">Introduction</h3>
+            <p class="mb-5">WAHTERMELON respects your individual privacy and protects any personal information that you share with us. We commit to secure the individual’s right to privacy and ensure the trustworthiness of processing of individual’s personal information.</p>
+            <p>WAHTERMELON strives to comply with the Data Privacy Act of 2012 that is designed to protect your privacy. We intend to adhere to the principles set forth in this Privacy Statement and recognize your need for appropriate protection and management of any personal information. In other words, our goal is to provide protection for your privacy regardless of what types of device or application to access our Services. By using our Services, you consent to the collection, storage, processing, transferring, disclosure, and other usage of the Information described in this Privacy Statement and Terms of Service Agreement.</p>
+          </div>
+
+          <div class="cols-span-1 flex flex-col text-justify mt-10">
+            <h3 class="font-semibold mb-3">Information Collection</h3>
+            <p>We may collect, store and transfer the following information:</p>
+            <ul class="list-disc ml-10">
+              <li>name and address</li>
+              <li>contact information including email address</li>
+              <li>demographic information such as postcode, preferences and interests</li>
+              <li>other information relevant to individual’s request and/or offers</li>
+            </ul>
+          </div>
+
+          <div class="cols-span-1 flex flex-col text-justify mt-10">
+            <h3 class="font-semibold mb-3">Purpose of Collected Data</h3>
+            <p>You consent that your collected Personal Information may be used:</p>
+            <ul class="list-disc ml-10">
+              <li>To help improve our data and services and customize user experience;</li>
+              <li>To participate in and facilitate transactions;</li>
+              <li>To engage in data mining and build up activities;</li>
+              <li>To deliver the products and services that you have requested;</li>
+              <li>To perform research and analysis about your use of, or interest in, our products, services, or content, or products, services or content offered by others;</li>
+              <li>To communicate about relevant services, ads and/or advisories through whichever means are available the Provincial Government; </li>
+              <li>To provide better customer experience to the Provincial Government clients and improve, develop, identify and implement services; </li>
+              <li>To follow safety, security, public service or legal requirements and processes; </li>
+              <li>To process information for statistical, analytical, and research purposes; and</li>
+              <li>To identify and prevent errors and inefficiencies due to misuse of the platform;</li>
+              <li>To enforce our terms and conditions;</li>
+            </ul>
+          </div>
+
+          <div class="cols-span-1 flex flex-col text-justify mt-10">
+            <h3 class="font-semibold mb-3">Security</h3>
+            <p>We are committed to ensuring that your information is secure. In order to prevent unauthorized access or disclosure, we have put in place suitable physical, electronic and managerial procedures to safeguard and secure the information we collect.</p>
+          </div>
+
+          <div class="cols-span-1 flex flex-col text-justify mt-10">
+            <h3 class="font-semibold mb-3">Our Disclosure of your Personal Information to Third Parties</h3>
+            <p>We may share your personal information with third parties only in the ways that are described in this Privacy Statement:</p>
+            <ul class="list-disc ml-10">
+              <li>we may allow a potential acquirer or merger partner to review our databases, although we would restrict their use and disclosure of this data during the diligence phase;</li>
+              <li>as required by law enforcement, government officials, or other third parties pursuant to a subpoena, court order, or other legal process or requirement applicable to our Agency;</li>
+              <li>we may transfer personal information to third parties for any legally permissible purpose at our sole discretion; and</li>
+              <li>we may share your information with third parties with your consent or direction to do so.</li>
+            </ul>
+          </div>
+
+          <div class="cols-span-1 flex flex-col text-justify mt-10">
+            <h3 class="font-semibold mb-3">Limiting Use, Disclosure, Retention</h3>
+            <p>WAHTERMELON identifies the purposes for which the information is being collected before or at the time of collection. The collection of your personal information will be limited to that which is needed for the purposes identified by us. Unless you consent or we are required by law, we will only use the information for the purposes for which it was collected. If we will be processing your personal data for another purpose later on, we will seek your further legal permission or consent; except where the other purpose is compatible with the original purpose. We will keep your personal data only as long as required to serve those purposes. We will also retain and use your personal data for as long as necessary to comply with our legal obligations, resolve disputes, and enforce our agreements.</p>
+          </div>
+
+          <div class="cols-span-1 flex flex-col text-justify mt-10">
+            <h3 class="font-semibold mb-3">Accuracy of Personal data</h3>
+            <p>We do our best to ensure that the personal data we hold and use is accurate. We rely on the clients we do business with to disclose to us all relevant information and to inform us of any changes.</p>
+          </div>
+
+          <div class="cols-span-1 flex flex-col text-justify mt-10">
+            <h3 class="font-semibold mb-3">Additional Rights (RA 10173 Data Privacy Act of 2012)</h3>
+            <ul class="list-disc ml-10">
+              <li>Right of erasure or blocking. You may have a broader right to erasure of personal data that we hold about you.</li>
+              <li>Right to object. You may have the right to request that we stop processing your personal data and/or to stop sending you marketing communications.</li>
+              <li>Right to restrict processing. You may have the right to request that we restrict processing of your personal data in certain circumstances.</li>
+              <li>Right to access. In certain circumstances, you may have the right to be provided with your personal data in a structured, machine readable and commonly used format and to request that we transfer the personal data to another data controller without hindrance.</li>
+              <li>If you would like to exercise any of the above rights, please contact our support team or contact our Data Protection Officer. We will consider your request in accordance with applicable laws. To protect your privacy and security, we may take steps to verify your identity before complying with the request.</li>
+              <li>You also have the right to complain to a data protection authority about our collection and use of your personal data.</li>
+            </ul>
+          </div>
+
+          <div class="cols-span-1 flex flex-col text-justify mt-10">
+            <h3 class="font-semibold mb-3">Changes to our Privacy Statement</h3>
+            <p>WAHTERMELON may amend this statement at any time by posting a new version. It is your responsibility to review this statement periodically as your continued use of our products and services represents your agreement with the then-current statement.</p>
+          </div>
+        </div>
+        <!-- PRIVACY END -->
+      </div>
+
+      <!-- Modal footer -->
+      <div class="flex justify-end py-4 px-5 space-x-4 rounded-b border-t border-gray-200 dark:border-gray-600">
+        <!-- <button  type="button" class="text-white bg-red-500 hover:ring-2 focus:outline-none hover:ring-red-300 rounded text-sm font-medium px-6 py-2.5 transition duration-150 ease-in-out transform hover:scale-110 " (click)="closeModal()">Ok</button> -->
+        <button  type="button" class="text-white bg-blue-500 hover:ring-2 focus:outline-none hover:ring-blue-300 font-medium rounded text-sm px-6 py-2.5 text-center transition duration-150 ease-in-out transform hover:scale-110" (click)="showPrivacyStatement = !showPrivacyStatement" >Ok</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div *ngIf="showPrivacyStatement" class="opacity-25 fixed inset-0 z-40 bg-black"></div>

@@ -1,0 +1,39 @@
+<div class="grid grid-cols-10 my-5 pt-5 border-t border-slate-200 ">
+  <div class="col-span-2 pt-2 pr-5 font-semibold">
+    General Survey
+  </div>
+  <div class="col-span-8">
+    <div class="rounded-md border border-solid border-gray-300">
+      <span class="rounded-t-md m-0 p-2 font-semibold text-gray-50 bg-blue-500 flex justify-between" [ngClass]="{'rounded-b' : !show_content}">
+        General Survey
+        <button type="button" (click)="show_content = !show_content">
+          <fa-icon [icon]="show_content ? faChevronCircleUp : faChevronCircleDown" class="pr-2" size="lg"></fa-icon>
+        </button>
+      </span>
+
+      <div class="grid grid-cols-1" *ngIf="show_content">
+        <div class="col-span-1 flex mt-3">
+          <div class="w-1/2 grid grid-cols-1 px-4 pb-4">
+            <label for="complaint_notes" class="font-semibold pl-1">General Survey</label>
+            <select [disabled]="consult_done" rows="3" id="general_survey_code" [(ngModel)]="general_survey_code" class="placeholder-slate-400 w-full rounded-md border-gray-300 bg-gray-50">
+              <option *ngFor="let survey of survey_list" [value]="survey.code">{{ survey.desc }}</option>
+            </select>
+          </div>
+
+          <div class="w-1/2 grid grid-cols-1 px-4 pb-4">
+            <label for="complaint_notes" class="font-semibold pl-1">Remarks</label>
+            <input [disabled]="consult_done" rows="3" id="general_survey_remarks" type="text" placeholder="General Survey Remarks" [(ngModel)]="general_survey_remarks" class="placeholder-slate-400 w-full rounded-md border-gray-300 bg-gray-50" />
+          </div>
+        </div>
+
+        <div class="col-span-1 flex text-right">
+          <button *ngIf="!consult_done" [disabled]="is_saving" type="button" class="btn-save ml-auto mr-5 mb-5 px-10 disabled:bg-gray-300" (click)="onSubmit()">
+            <fa-icon *ngIf="is_saving" class="mr-2" [icon]="faSpinner" spin="true"></fa-icon>
+            <fa-icon *ngIf="!is_saving" class="mr-2" [icon]="faSave"></fa-icon>
+            {{ is_saving ? 'Saving' : 'Save' }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

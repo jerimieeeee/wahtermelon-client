@@ -1,0 +1,104 @@
+
+<div class="bg-white border border-solid border-slate-100 rounded-xl shadow-md">
+  <div class="border border-solid border-slate-100 rounded-t-xl font-semibold justify-between">
+    <div class="flex border border-solid border-slate-100 rounded-t-xl p-3 font-semibold justify-between">
+      <div class="text-blue-500 text-lg pt-2 pl-5">
+        Konsulta
+      </div>
+      <div>
+        <!-- <button *ngIf="is_updating" class="text-white-500 bg-amber-500 active:bg-amber-300 hover:bg-amber-600 text-sm px-4 py-2 rounded hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button">
+          <fa-icon class="mr-3" [icon]="faSpinner" spin="true"></fa-icon>
+          Updating
+        </button> -->
+      </div>
+
+      <div class="w-full justify-end flex">
+        <!-- <input type="text" [(ngModel)]="search_item" class="form-input border-0 text-sm p-1 m-1 border-r border-gray-400" (keyup.enter)="loadList()" placeholder="Search name"/> -->
+        <select [(ngModel)]="form_type" class="input w-44" (change)="loadList()">
+          <option value="1">For Validation</option>
+          <option value="2">Validated List</option>
+        </select>
+
+        <select [(ngModel)]="filter_tranche" class="input w-44" (change)="loadList()">
+          <option [value]="1">1st Tranche</option>
+          <option [value]="2">2nd Tranche</option>
+        </select>
+
+        <select *ngIf="form_type==='1'" [(ngModel)]="filter_year" class="input w-44" (change)="loadList()">
+          <option [value]="year" *ngFor="let year of years" >{{year}}</option>
+        </select>
+
+        <select *ngIf="form_type==='2'" [(ngModel)]="filter_status" class="input w-44" (change)="loadList()">
+          <option value="V">Validated</option>
+          <option value="S">Submitted/Success</option>
+          <option value="F">Failed</option>
+        </select>
+
+        <!-- <button [disabled]="searching" type="button" class="ml-3 text-white text-sm bg-blue-500 rounded-md h-9 w-9 mt-1 disabled:bg-gray-300" (click)="loadList()">
+          <fa-icon class="" [icon]="searching ? faSpinner : faFilter" [spin]="searching"></fa-icon>
+        </button> -->
+      </div>
+    </div>
+
+    <div *ngIf="submit_error" class="col-span-8 bg-red-200 rounded border border-red-300 text-red-900 text-sm">
+      <div class="block p-3 pl-10" >
+        <ul class="list-disc" >
+          <li *ngFor="let error of submit_error | keyvalue">{{ error.value }}</li>
+        </ul>
+      </div>
+    </div>
+
+    <div>
+      <div class="overflow-x-auto relative shadow-md sm:rounded-lg">
+        <app-for-validation *ngIf="forms['for_validation']" (addSaving)="addSaving($event)" (showReturn)="showReturn($event)" (loadList)="loadList()" [validating]="is_saving" [konsulta_list]="konsulta_list" [filter_tranche]="filter_tranche"></app-for-validation>
+        <app-validated-list *ngIf="forms['validated_list']" [filter_status]="filter_status" (showReturn)="showReturn($event)" (showList)="showList($event)" [konsulta_list]="konsulta_list" [filter_tranche]="filter_tranche"></app-validated-list>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="konsulta_list?.length >= 1">
+    <div class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
+      <div class="flex-1 flex items-center justify-start">
+
+        <div>
+          <nav class="relative z-0 inline-flex shadow-sm -space-x-px mr-5" aria-label="Pagination">
+            <button [disabled]="current_page===1" (click)="loadList(1)" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 enabled:bg-white disabled:bg-gray-300 text-sm font-medium text-gray-500 hover:bg-gray-50">
+              <fa-icon [icon]="faAnglesLeft" class="block h-15 w-15 text-gray-500 pr-1"></fa-icon>
+            </button>
+
+              <button [disabled]="current_page===1" (click)="loadList(current_page-1)" class="relative inline-flex items-center px-4 py-2 border border-gray-300 enabled:bg-white disabled:bg-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
+                <fa-icon [icon]="faChevronLeft" class="block h-15 w-15 text-gray-500 pr-1"></fa-icon>Previous
+              </button>
+              <button [disabled]="current_page===last_page" (click)="loadList(current_page+1)" class="relative inline-flex items-center px-4 py-2 border border-gray-300 enabled:bg-white disabled:bg-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
+                Next<fa-icon [icon]="faChevronRight" class="h-5 w-5 text-gray-500"></fa-icon>
+              </button>
+
+            <button [disabled]="current_page===last_page" (click)="loadList(last_page)" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 enabled:bg-white disabled:bg-gray-300 text-sm font-medium text-gray-500 hover:bg-gray-50">
+              <fa-icon [icon]="faAnglesRight" class="h-5 w-5 text-gray-500"></fa-icon>
+            </button>
+          </nav>
+        </div>
+
+        <div>
+          <p class="text-sm text-gray-700">
+            Showing <span class="font-medium">{{ from }}</span>
+            to <span class="font-medium">{{ to }}</span>
+            of <span class="font-medium">{{ total }}</span> results
+          </p>
+        </div>
+
+      </div>
+
+      <div class="flex justify-end" *ngIf="form_type==='1'">
+        <button [disabled]="save_list_length === 0 || is_saving" class="btn-save bg-orange-400 px-5 disabled:bg-gray-300" type="button" (click)="validateNewList()">
+          <fa-icon [icon]="is_saving ? faSpinner : faSave" [spin]="is_saving" class="mr-2"></fa-icon>
+          {{ is_saving ? 'Saving' : 'Save' }} {{ '('+save_list_length+')' }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<app-result-form *ngIf="show_return" (showReturn)="showReturn()" (toggleModal)="toggleModal()" [return_value]="return_value"></app-result-form>
+<app-patient-list *ngIf="show_list" (toggleList)="toggleList()" [patient_list]="patient_list"></app-patient-list>

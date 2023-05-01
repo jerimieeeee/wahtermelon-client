@@ -1,0 +1,134 @@
+
+<div class="bg-white border border-solid border-slate-100 rounded-xl shadow-md">
+  <div class="border border-solid border-slate-100 rounded-t-xl font-semibold justify-between">
+    <div class="flex border border-solid border-slate-100 rounded-t-xl p-3 font-semibold justify-between">
+      <div class="text-blue-500 text-lg pt-2 pl-5">
+        <button type="button" (click)="toggleModal('set_date')" class="text-blue-500 px-4">
+          <fa-icon [icon]="faArrowsRotate" class=""></fa-icon><!-- Get Masterlist -->
+        </button> Konsulta Masterlist
+      </div>
+      <div>
+        <!-- <button *ngIf="is_updating" class="text-white-500 bg-amber-500 active:bg-amber-300 hover:bg-amber-600 text-sm px-4 py-2 rounded hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button">
+          <fa-icon class="mr-3" [icon]="faSpinner" spin="true"></fa-icon>
+          Updating
+        </button> -->
+      </div>
+
+      <div class="flex">
+        <!-- <div class="border border-gray-400 rounded-md">
+          <input type="text" [(ngModel)]="search_item" class="form-input border-0 text-sm p-1 m-1 border-r border-gray-400" (keyup.enter)="loadList()" placeholder="Search name"/>
+          <button type="button" class="text-blue-500 w-9 h-9" (click)="loadList()">
+            <fa-icon class="-ml-1" [icon]="faSearch"></fa-icon>
+          </button>
+        </div> -->
+        <!-- ml-3 text-white bg-blue-500 h-8 w-8 mt-1 rounded-md -->
+        <input [(ngModel)]="search_item" type="text" placeholder="search name..." (keyup.enter)="loadList()" class="border border-gray-300 rounded-l-lg text-sm w-44" />
+        <input [(ngModel)]="search_pin" type="text" placeholder="search pin..." (keyup.enter)="loadList()" class="border border-gray-300 text-sm w-44" />
+        <input [(ngModel)]="search_year" type="text" placeholder="assigned year..." (keyup.enter)="loadList()" class="border border-gray-300 text-sm w-44" />
+        <button type="button" (click)="loadList()" class="px-4 mr-5 bg-blue-500 text-white rounded-r-lg">
+          <fa-icon [icon]="faSearch" class=""></fa-icon><!-- Get Masterlist -->
+        </button>
+
+        <!-- <button type="button" (click)="toggleModal('set_date')" class="btn-save px-4">
+          <fa-icon [icon]="faCalendarDays" class=""></fa-icon
+        </button> -->
+      </div>
+    </div>
+
+    <div *ngIf="submit_error" class="col-span-8 bg-red-200 rounded border border-red-300 text-red-900 text-sm">
+      <div class="block p-3 pl-10" >
+        <ul class="list-disc" >
+          <li *ngFor="let error of submit_error | keyvalue">{{ error.value }}</li>
+        </ul>
+      </div>
+    </div>
+
+    <div>
+      <div class="overflow-x-auto relative shadow-md sm:rounded-lg">
+        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 mb-5">
+          <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+              <th scope="col" class="w-1/12 py-3 px-6">Assign<br /> Date</th>
+              <th scope="col" class="w-3/12 py-3 px-6">Assigned <br /> Name</th>
+              <th scope="col" class="w-1/12 py-3 px-6">Birtdate | <br />Gender</th>
+              <th scope="col" class="w-1/12 py-3 px-6">Pin</th>
+              <th scope="col" class="w-1/12 py-3 px-6">Membership <br /> Type</th>
+              <th scope="col" class="w-3/12 py-3 px-6">Primary <br /> Name</th>
+              <th scope="col" class="w-3/12 py-3 px-6">Primary <br /> Pin</th>
+              <th scope="col" class="w-3/12 py-3 px-6">Birtdate | <br />Gender</th>
+              <!-- <th scope="col" class="w-2/12 py-3 px-6">Actions</th> -->
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let konsulta of konsulta_list; let odd = odd; let i = index" class="bg-white border-t" [ngClass]="{'bg-gray-50': odd}">
+              <td class="py-4 px-6">
+                {{ konsulta.assigned_date | date: 'MM/dd/yyyy' }}
+              </td>
+              <th scope="row" class="py-4 px-6 font-medium">
+                {{ konsulta.last_name }}, {{ konsulta.first_name }} {{ konsulta.middle_name }} {{ konsulta.suffix_name }}
+              </th>
+              <td class="py-4 px-6">
+                {{ konsulta.birthdate | date: 'MM/dd/yyyy' }} <br />
+                {{ konsulta.gender }}
+              </td>
+              <td class="py-4 px-6">
+                {{ konsulta.philhealth_id }}
+              </td>
+              <td class="py-4 px-6">
+                {{ konsulta.membership_type_id }}
+              </td>
+              <td class="py-4 px-6">
+                {{ konsulta.member_last_name }}, {{ konsulta.member_first_name }} {{ konsulta.member_middle_name }} {{ konsulta.member_suffix_name }}
+              </td>
+              <td class="py-4 px-6">
+                {{ konsulta.member_pin }}
+              </td>
+              <td class="py-4 px-6">
+                {{ konsulta.member_birthdate | date: 'MM/dd/yyyy' }} <br />
+                {{ konsulta.member_gender }}
+              </td>
+              <!-- <td class="py-4 px-6">
+
+              </td> -->
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="konsulta_list?.length >= 1">
+    <div class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
+      <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+        <div>
+          <p class="text-sm text-gray-700">
+            Showing <span class="font-medium">{{ from }}</span>
+            to <span class="font-medium">{{ to }}</span>
+            of <span class="font-medium">{{ total }}</span> results
+          </p>
+        </div>
+        <div>
+          <nav class="relative z-0 inline-flex shadow-sm -space-x-px" aria-label="Pagination">
+            <button [disabled]="current_page===1" (click)="loadList(1)" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 enabled:bg-white disabled:bg-gray-300 text-sm font-medium text-gray-500 hover:bg-gray-50">
+              <fa-icon [icon]="faAnglesLeft" class="block h-15 w-15 text-gray-500 pr-1"></fa-icon>
+            </button>
+
+              <button [disabled]="current_page===1" (click)="loadList(current_page-1)" class="relative inline-flex items-center px-4 py-2 border border-gray-300 enabled:bg-white disabled:bg-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
+                <fa-icon [icon]="faChevronLeft" class="block h-15 w-15 text-gray-500 pr-1"></fa-icon>Previous
+              </button>
+              <button [disabled]="current_page===last_page" (click)="loadList(current_page+1)" class="relative inline-flex items-center px-4 py-2 border border-gray-300 enabled:bg-white disabled:bg-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
+                Next<fa-icon [icon]="faChevronRight" class="h-5 w-5 text-gray-500"></fa-icon>
+              </button>
+
+            <button [disabled]="current_page===last_page" (click)="loadList(last_page)" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 enabled:bg-white disabled:bg-gray-300 text-sm font-medium text-gray-500 hover:bg-gray-50">
+              <fa-icon [icon]="faAnglesRight" class="h-5 w-5 text-gray-500"></fa-icon>
+            </button>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<app-set-date *ngIf="modal['set_date']" (toggleModal)="toggleModal($event)" (loadList)="loadList($event)"></app-set-date>

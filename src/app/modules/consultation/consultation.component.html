@@ -1,0 +1,107 @@
+<div class="block shadow p-4 mt-4 rounded-xl text-gray-600 border border-slate-100">
+  <div class="flex">
+    <nav class="flex justify-between text-sm w-full">
+      <button (click)="switchTabs(1)" class="text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 mr-6 pb-2"
+      [class]="modules===1? 'text-blue-500 border-b-2 border-blue-500 font-bold' : 'hover:-translate-y-1 hover:scale-110 transition ease-in-out delay-400 duration-300' ">
+          CONSULTATION
+      </button>
+      <!-- <button (click)="switchTabs(2)" class="text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 mr-6 pb-2"
+          [class]="modules===2? 'text-blue-500 border-b-2 border-blue-500 font-bold' : 'hover:-translate-y-1 hover:scale-110 transition ease-in-out delay-400 duration-300' ">
+          KONSULTA
+      </button> -->
+      <!-- <button (click)="switchTabs(3)" class="text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 mr-6 pb-2"
+          [class]="modules===3? 'text-blue-500 border-b-2 border-blue-500 font-bold' : 'hover:-translate-y-1 hover:scale-110 transition ease-in-out delay-400 duration-300' ">
+          eCLAIMS
+      </button> -->
+
+      <div>
+        <button *ngIf="consult_details && with_credentials" type="button" class="btn-end-visit bg-green-500 mr-3 hover:ring-green-400" (click)="openEkas()">
+          <fa-icon class="mr-1" [icon]="faFile"></fa-icon>
+          eKAS
+        </button>
+
+        <button *ngIf="!consult_details?.consult_done" type="button" class="btn-end-visit ml-auto" (click)="toggleModal()">
+          <fa-icon class="mr-1" [icon]="faDoorClosed"></fa-icon>
+          End Visit
+        </button>
+      </div>
+    </nav>
+  </div>
+
+  <div *ngIf="modules === 1">
+    <span class="text-sky-500 flex justify-between py-2">
+      <span class="flex justify-between w-full">
+        <div class="w-1/2 mt-2">
+          <button class="font-normal text-sky-500 px-2 py-1 text-sm  mr-2" type="button" (click)="toggleAll()">
+            <fa-icon [icon]="toggle_content ? faChevronUp : faChevronDown" size="lg"></fa-icon>
+          </button>
+          <span class="mt-2 font-bold "> CONSULTATION <span class="text-gray-500 text-sm">({{ consult_details?.consult_date | date: 'MM/dd/yyyy hh:mm:ss a' }} | ID:{{ consult_details?.id }})</span></span>
+        </div>
+
+        <div class="w-1/2 flex justify-end" *ngIf="consult_details && open_consult && have_complaint">
+          <div class="flex text-gray-700">
+            <select [disabled]="enable_edit" class="input px-2 mr-3 disabled:bg-gray-300"  [(ngModel)]="referred_to.id">
+              <option [value]="dr.id" class="pr-3" *ngFor="let dr of physicians">{{ dr.last_name }}, {{ dr.first_name }} {{ dr.middle_name }}</option>
+            </select>
+            <button (click)="referTo()" [disabled]="!referred_to.id" [ngClass]="{'bg-orange-500 hover:ring-orange-400': enable_edit}" class="disabled:bg-gray-300 bg-blue-500 text-xs text-white px-5 py-1 rounded-md  hover:ring-2 hover:ring-blue-400 h-10 mt-1 w-24">
+              {{ enable_edit ? 'Update' : 'Refer' }}
+            </button>
+          </div>
+        </div>
+      </span>
+    </span>
+
+    <div *ngIf="consult_details && open_consult">
+      <app-complaint-history [toggle_content]="toggle_content" [consult_details]="consult_details" [have_complaint]="have_complaint" (loadConsult)="loadConsult()"></app-complaint-history>
+      <app-general-survey [toggle_content]="toggle_content" [consult_details]="consult_details"></app-general-survey>
+      <app-physical-exam *ngIf="have_complaint" [toggle_content]="toggle_content" [consult_details]="consult_details"></app-physical-exam>
+
+      <app-management *ngIf="have_complaint" [toggle_content]="toggle_content" [consult_details]="consult_details"></app-management>
+
+      <app-consult-history [toggle_content]="toggle_content"></app-consult-history>
+      <app-initial-dx *ngIf="have_complaint" [toggle_content]="toggle_content" [consult_details]="consult_details"></app-initial-dx>
+      <app-final-dx *ngIf="have_complaint && consult_details.physician" [toggle_content]="toggle_content" [consult_details]="consult_details"></app-final-dx>
+      <app-prescription *ngIf="have_complaint && consult_details.physician" [toggle_content]="toggle_content" [consult_details]="consult_details" [with_credentials]="with_credentials"></app-prescription>
+
+      <div class="grid grid-cols-10" *ngIf="have_complaint && !consult_details.physician">
+        <div class="col-start-3 col-span-8 text-gray-700 p-10 border border-slate-300 shadow-md rounded-md mt-5">
+          <label for="referred_to">To open final diagnosis & prescription you must refer this patient to a physician</label>
+          <select [disabled]="enable_edit" class="input px-2 mr-3 disabled:bg-gray-300 mb-3" name="referred_to" [(ngModel)]="referred_to.id">
+            <option [value]="dr.id" class="pr-3" *ngFor="let dr of physicians">{{ dr.last_name }}, {{ dr.first_name }} {{ dr.middle_name }}</option>
+          </select>
+          <div class="w-full text-right">
+            <button (click)="referTo()" [disabled]="!referred_to.id" class="btn-save px-5 disabled:bg-gray-300">
+              {{ enable_edit ? 'Update' : 'Refer' }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="consult_details && !open_consult">
+      <app-consult-summary></app-consult-summary>
+    </div>
+  </div>
+
+  <div *ngIf="modules === 2">
+    <app-konsulta></app-konsulta>
+  </div>
+
+  <div *ngIf="modules === 3">
+    <app-eclaims></app-eclaims>
+  </div>
+</div>
+
+<app-end-visit *ngIf="show_end" (toggleModal)="toggleModal()"
+  [consult_id]="consult_details?.id"
+  [consult_date]="consult_details?.consult_date"
+  [patient_id]="consult_details?.patient.id"
+  [pt_group]="'cn'"
+></app-end-visit>
+
+<app-ekas *ngIf="show_ekas"
+  (toggleModal)="toggleEkas()"
+  [lab_list]="lab_list"
+  [consult_details]="consult_details"
+></app-ekas>
+
