@@ -8,7 +8,7 @@
       <span class="rounded-t-md m-0 p-2 font-semibold text-gray-50 bg-amber-500 flex justify-between" [ngClass]="{'rounded-b' : !show_content}">
         Prescriptions
         <div>
-          <button *ngIf="with_credentials" type="button" class="ml-3 text-sm bg-white text-green-500 px-3 rounded-full" (click)="toggleModal()">
+          <button *ngIf="with_credentials && prescriptions" type="button" class="ml-3 text-sm bg-white text-green-500 px-3 rounded-full" (click)="toggleModal()">
             <fa-icon [icon]="faReceipt" class="pr-1"></fa-icon>
             epress
           </button>
@@ -79,11 +79,11 @@
 
       <div *ngIf="show_content_tx">
         <div class="grid grid-cols-1 px-4 pb-4 mt-4">
-          <textarea [disabled]="consult_done" rows="3" id="plan" placeholder="Treatment plan" [(ngModel)]="consult_notes.plan" class="placeholder-slate-400 w-full rounded-md border-gray-300 bg-gray-50"></textarea>
+          <textarea [disabled]="consult_done || !allowed_to_edit" rows="3" id="plan" placeholder="Treatment plan" [(ngModel)]="consult_notes.plan" class="placeholder-slate-400 w-full rounded-md border-gray-300 bg-gray-50"></textarea>
         </div>
 
         <div class="flex text-right">
-          <button *ngIf="!consult_done" [disabled]="is_saving" type="button" class="btn-save ml-auto mr-5 mb-5 px-10 disabled:bg-gray-300" (click)="onSubmit()">
+          <button *ngIf="!consult_done && allowed_to_edit" [disabled]="is_saving" type="button" class="btn-save ml-auto mr-5 mb-5 px-10 disabled:bg-gray-300" (click)="onSubmit()">
             <fa-icon *ngIf="is_saving" class="mr-2" [icon]="faSpinner" spin="true"></fa-icon>
             <fa-icon *ngIf="!is_saving" class="mr-2" [icon]="faSave"></fa-icon>
             {{ is_saving ? 'Saving' : 'Save' }}

@@ -1,0 +1,198 @@
+<div class="m-5 border border-slate-200 rounded-lg" *ngIf="show_form">
+  <div class="bg-blue-500 text-white rounded-t-md py-2 pl-3 font-semibold">
+    Treatment Form
+  </div>
+
+  <div class="mx-5 mb-5">
+    <form [formGroup]="caseHoldingForm" (ngSubmit)="saveCaseFindings()">
+      <div class="grid grid-cols-3 gap-4 w-full">
+        <div class="col-span-3 border-b border-slate-200 w-full my-2 font-semibold text-sky-500">
+          Enrollment Details
+        </div>
+        <div class="mx-5 col-span-3 grid grid-cols-3 gap-x-4">
+          <div>
+            <label for="enroll_as_code" [ngClass]="{'text-red-500': show_error && f.enroll_as_code.errors}">Enrolled As</label>
+            <select name="enroll_as_code" id="enroll_as_code" formControlName="enroll_as_code" class="input" [ngClass]="{'invalid-input': show_error && f.enroll_as_code.errors}" (change)="checkForm()">
+              <option *ngFor="let enroll_as of tb_enroll_as" [value]="enroll_as.code">{{ enroll_as.desc }}</option>
+            </select>
+
+            <div *ngIf="show_error && f.enroll_as_code.errors" class="invalid-alert">
+              <div *ngIf="f.enroll_as_code.errors?.['required']">
+                {{ required_message }}
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <label for="case_number" [ngClass]="{'text-red-500': show_error && f.case_number.errors}">Case Number</label>
+            <input type="text" name="case_number" id="case_number" formControlName="case_number" class="input" [ngClass]="{'invalid-input': show_error && f.case_number.errors}">
+
+            <div *ngIf="show_error && f.case_number.errors" class="invalid-alert">
+              <div *ngIf="f.case_number.errors?.['required']">
+                {{ required_message }}
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <label for="registration_date" [ngClass]="{'text-red-500': show_error && f.registration_date.errors}">Registration Date</label>
+            <input type="date" name="registration_date" id="registration_date" [max]="max_date" formControlName="registration_date" class="input" [ngClass]="{'invalid-input': show_error && f.registration_date.errors}">
+
+            <div *ngIf="show_error && f.registration_date.errors" class="invalid-alert">
+              <div *ngIf="f.registration_date.errors?.['required']">
+                {{ required_message }}
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="f.ipt_type_code.enabled">
+            <label for="ipt_type_code" [ngClass]="{'text-red-500': show_error && f.ipt_type_code.errors}">Exposure or Infection</label>
+            <select name="ipt_type_code" id="ipt_type_code" formControlName="ipt_type_code" class="input" [ngClass]="{'invalid-input': show_error && f.ipt_type_code.errors}">
+              <option *ngFor="let ipt_type of tb_ipt_types" [value]="ipt_type.code">{{ ipt_type.desc }}</option>
+            </select>
+
+            <div *ngIf="show_error && f.ipt_type_code.errors" class="invalid-alert">
+              <div *ngIf="f.ipt_type_code.errors?.['required']">
+                {{ required_message }}
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="f.treatment_regimen_code.enabled">
+            <label for="treatment_regimen_code" [ngClass]="{'text-red-500': show_error && f.treatment_regimen_code.errors}">Treatment Regimen</label>
+            <select name="treatment_regimen_code" id="treatment_regimen_code" formControlName="treatment_regimen_code" class="input" [ngClass]="{'invalid-input': show_error && f.treatment_regimen_code.errors}">
+              <option *ngFor="let treatment_regimen of tb_treatment_regimens" [value]="treatment_regimen.code">{{ treatment_regimen.desc }}</option>
+            </select>
+
+            <div *ngIf="show_error && f.treatment_regimen_code.errors" class="invalid-alert">
+              <div *ngIf="f.treatment_regimen_code.errors?.['required']">
+                {{ required_message }}
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="f.bacteriological_status_code.enabled" class="col-span-2">
+            <label for="bacteriological_status_code" [ngClass]="{'text-red-500': show_error && f.bacteriological_status_code.errors}">Bacteriological Status</label>
+            <select name="bacteriological_status_code" id="bacteriological_status_code" formControlName="bacteriological_status_code" class="input" [ngClass]="{'invalid-input': show_error && f.bacteriological_status_code.errors}">
+              <option *ngFor="let bacteriological_status of tb_bacteriological_statuses" [value]="bacteriological_status.code">{{ bacteriological_status.desc }}</option>
+            </select>
+
+            <div *ngIf="show_error && f.bacteriological_status_code.errors" class="invalid-alert">
+              <div *ngIf="f.bacteriological_status_code.errors?.['required']">
+                {{ required_message }}
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="f.anatomical_site_code.enabled">
+            <label for="anatomical_site_code" [ngClass]="{'text-red-500': show_error && f.anatomical_site_code.errors}">Anatomical Site</label>
+            <select name="anatomical_site_code" id="anatomical_site_code" formControlName="anatomical_site_code" (change)="eptbSite()" class="input" [ngClass]="{'invalid-input': show_error && f.anatomical_site_code.errors}">
+              <option *ngFor="let anatomical_site of tb_anatomical_sites" [value]="anatomical_site.code">{{ anatomical_site.desc }}</option>
+            </select>
+
+            <div *ngIf="show_error && f.anatomical_site_code.errors" class="invalid-alert">
+              <div *ngIf="f.anatomical_site_code.errors?.['required']">
+                {{ required_message }}
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="f.eptb_site_id.enabled">
+            <label for="eptb_site_id" [ngClass]="{'text-red-500': show_error && f.eptb_site_id.errors}">EPTB Site</label>
+            <select name="eptb_site_id" id="eptb_site_id" formControlName="eptb_site_id" (change)="specificSite()" class="input" [ngClass]="{'invalid-input': show_error && f.eptb_site_id.errors}">
+              <option *ngFor="let eptb_site of tb_eptb_sites" [value]="eptb_site.id">{{ eptb_site.desc }}</option>
+            </select>
+
+            <div *ngIf="show_error && f.eptb_site_id.errors" class="invalid-alert">
+              <div *ngIf="f.eptb_site_id.errors?.['required']">
+                {{ required_message }}
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="f.specific_site.enabled">
+            <label for="specific_site" [ngClass]="{'text-red-500': show_error && f.specific_site.errors}">EPTB Site Specific</label>
+            <input type="text" name="specific_site" id="specific_site" formControlName="specific_site" class="input" [ngClass]="{'invalid-input': show_error && f.specific_site.errors}">
+
+            <div *ngIf="show_error && f.specific_site.errors" class="invalid-alert">
+              <div *ngIf="f.specific_site.errors?.['required']">
+                {{ required_message }}
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="f.drug_resistant_flag.enabled">
+            <label for="drug_resistant_flag" [ngClass]="{'text-red-500': show_error && f.drug_resistant_flag.errors}">Drug Resistant (RR/MDR-TB)</label>
+            <select name="drug_resistant_flag" id="drug_resistant_flag" formControlName="drug_resistant_flag" class="input" [ngClass]="{'invalid-input': show_error && f.drug_resistant_flag.errors}">
+              <option *ngFor="let answer_yn of tb_answers_yn" [ngValue]="answer_yn.code === 'N' ? 0 : 1">{{ answer_yn.desc }}</option>
+            </select>
+
+            <div *ngIf="show_error && f.drug_resistant_flag.errors" class="invalid-alert">
+              <div *ngIf="f.drug_resistant_flag.errors?.['required']">
+                {{ required_message }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-1 grid grid-cols-3 gap-x-4 w-full" *ngIf="f.enroll_as_code.value">
+        <div class="col-span-3 border-b border-slate-200 w-full my-2 pt-3 font-semibold text-sky-500">
+          Important Dates
+        </div>
+        <div class="mx-5 col-span-3 grid grid-cols-4 gap-x-4">
+          <div>
+            <label for="treatment_start" [ngClass]="{'text-red-500': show_error && f.treatment_start.errors}">Treatment Start Date</label>
+            <input type="date" name="treatment_start" id="treatment_start" formControlName="treatment_start" (change)="getContinuationDate()" class="input" [ngClass]="{'invalid-input': show_error && f.treatment_start.errors}">
+
+            <div *ngIf="show_error && f.treatment_start.errors" class="invalid-alert">
+              <div *ngIf="f.treatment_start.errors?.['required']">
+                {{ required_message }}
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <label for="continuation_start" [ngClass]="{'text-red-500': show_error && f.continuation_start.errors}">Continuation Date</label>
+            <input type="date" name="continuation_start" id="continuation_start" formControlName="continuation_start" class="input" [ngClass]="{'invalid-input': show_error && f.continuation_start.errors}">
+
+            <div *ngIf="show_error && f.continuation_start.errors" class="invalid-alert">
+              <div *ngIf="f.continuation_start.errors?.['required']">
+                {{ required_message }}
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <label for="treatment_end" [ngClass]="{'text-red-500': show_error && f.treatment_end.errors}">Treatment End Date</label>
+            <input type="date" name="treatment_end" id="treatment_end" formControlName="treatment_end" class="input" [ngClass]="{'invalid-input': show_error && f.treatment_end.errors}">
+
+            <div *ngIf="show_error && f.treatment_end.errors" class="invalid-alert">
+              <div *ngIf="f.treatment_end.errors?.['required']">
+                {{ required_message }}
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="f.pict_date.enabled">
+            <label for="pict_date" [ngClass]="{'text-red-500': show_error && f.pict_date.errors}">PICT Date</label>
+            <input type="date" name="pict_date" id="pict_date" formControlName="pict_date" class="input" [ngClass]="{'invalid-input': show_error && f.pict_date.errors}">
+
+            <div *ngIf="show_error && f.pict_date.errors" class="invalid-alert">
+              <div *ngIf="f.pict_date.errors?.['required']">
+                {{ required_message }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex justify-center mt-5" *ngIf="!selected_tb_consult || selected_tb_consult.treatment_done === 0">
+        <button [disabled]="is_saving" type="submit" class="btn-save mr-5 mt-4">
+          <fa-icon [icon]="is_saving ? faCircleNotch : faSave" [spin]="is_saving ? true : false" class="mr-2"></fa-icon>
+          {{ caseHoldingForm.value.id ? (is_saving ? 'Updating' : 'Update') : (is_saving ? 'Saving' : 'Save') }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

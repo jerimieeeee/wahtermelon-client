@@ -9,6 +9,7 @@ import { formatDate } from '@angular/common';
 import { faCircle, faFolder, faStethoscope } from '@fortawesome/free-solid-svg-icons';
 import { faEye, faFolderOpen } from '@fortawesome/free-regular-svg-icons';
 import { VitalsChartsService } from 'app/shared/services/vitals-charts.service';
+import { NameHelperService } from 'app/shared/services/name-helper.service';
 
 @Component({
   selector: 'app-patient-itr',
@@ -41,19 +42,13 @@ export class PatientItrComponent implements OnInit {
         sort: '-consult_date'
       }
       this.getVisitList(params);
-      /* this.http.get('consultation/records',{params:{patient_id: patient_id, per_page: 'all', sort: '-consult_date'}}).subscribe({
-        next: (data: any) => {
-          this.visit_list = data.data;
-        },
-        error: err => console.log(err),
-      }) */
     }
   }
 
   getVisitList(params, page?){
     this.http.get('consultation/records',{params}).subscribe({
       next: (data: any) => {
-        console.log(data)
+        // console.log(data)
         this.visit_list = data.data;
       },
       error: err => console.log(err),
@@ -63,14 +58,22 @@ export class PatientItrComponent implements OnInit {
   user_allowed: boolean = false;
 
   showConsult(details: any){
-    console.log(details)
-    if(details.facility_code === this.user_location) {
+    // console.log(details)
+    if(details.pt_group != 'cn') {
+      if(details.facility.code === this.user_location) {
+        this.user_allowed = true;
+        this.selected_visit = details;
+        if(details.vitals) this.getLatestToday(details);
+      } else {
+        this.user_allowed = false;
+        this.show_details = true;
+      }
+    } else {
       this.user_allowed = true;
       this.selected_visit = details;
       if(details.vitals) this.getLatestToday(details);
-    } else {
-      this.user_allowed = false;
     }
+
   }
 
   getLatestToday(details){
@@ -91,25 +94,15 @@ export class PatientItrComponent implements OnInit {
   }
 
   getVisitType(group){
-    switch(group){
-      case 'cn':
-        return 'Consultation';
-      case 'cc':
-        return 'Child Care';
-      case 'mc':
-        return 'Maternal Care';
-      case 'dn':
-        return 'Dental';
-      case 'ncd':
-        return 'Non Communicable Disease';
-    }
+    return this.nameHelper.getVisitType(group);
   }
 
   constructor(
     private router: Router,
     private http: HttpService,
     private vitalsCharts: VitalsChartsService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private nameHelper: NameHelperService
   ) { }
 
   navigationEnd$ = this.router.events.pipe(
@@ -123,7 +116,9 @@ export class PatientItrComponent implements OnInit {
   user_location: string;
   ngOnInit(): void {
     this.user_location = this.http.getUserFacility();
-    this.loadData();
-    this.navigationEnd$.subscribe();
+    // this.loadData();
+    this.route.params.subscribe(routeParams => {
+      this.loadData();
+    });
   }
 }

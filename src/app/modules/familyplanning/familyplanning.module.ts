@@ -9,7 +9,6 @@ import { FamilyplanningComponent } from './familyplanning.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import * as angularFontawesome from '@fortawesome/angular-fontawesome';
-import { SharedComponentsModule } from 'app/shared/shared-components/shared-components.module';
 
 import { FpchartComponent } from './modules/fpchart/fpchart.component';
 import { FirsvisitComponent } from './modules/firsvisit/firsvisit.component';
@@ -20,13 +19,12 @@ import { PelvicComponent } from './modules/pelvic/pelvic.component';
 import { MethodsComponent } from './modules/methods/methods.component';
 
 @NgModule({
-  declarations: [FamilyplanningComponent, FpchartComponent, FirsvisitComponent, FppeComponent, FphxComponent, ObshxComponent, PelvicComponent, MethodsComponent, 
+  declarations: [FamilyplanningComponent, FpchartComponent, FirsvisitComponent, FppeComponent, FphxComponent, ObshxComponent, PelvicComponent, MethodsComponent,
     //  FpchartComponent, FphxComponent, FppeComponent, PelvicexamComponent
   ],
   imports: [
     CommonModule,
     FamilyplanningRoutingModule,
-    SharedComponentsModule,
     angularFontawesome.FontAwesomeModule,
     FormsModule,
     ReactiveFormsModule

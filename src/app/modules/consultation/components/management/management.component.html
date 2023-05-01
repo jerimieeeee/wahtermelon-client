@@ -16,8 +16,8 @@
         <div class="flex item-start flex-wrap pt-3 px-5 first:mt-5 last:mb-10" *ngFor="let mgmt of management_codes">
 
           <div class="w-4/12 flex mb-2" >
-            <input type="checkbox" [(ngModel)]="management_list.management_code[mgmt.code]"
-            attr.id="management_list{{mgmt.code}}" class="flex-none mt-2 mr-2 border border-gray-300 sm:text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block p-2.5">
+            <input [disabled]="consult_done || !allowed_to_edit" type="checkbox" [(ngModel)]="management_list.management_code[mgmt.code]"
+            attr.id="management_list{{mgmt.code}}" class="disabled:bg-gray-300 flex-none mt-2 mr-2 border border-gray-300 sm:text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block p-2.5">
             <label attr.for="management_list{{mgmt.code}}" class="flex-1 mt-2 text-gray-800">{{ mgmt.desc }}</label>
           </div>
 
@@ -27,7 +27,7 @@
         </div>
 
         <div class="flex text-right mt-5">
-          <button *ngIf="!consult_done" [disabled]="is_saving" type="button" class="btn-save ml-auto mr-5 mb-5 px-10 disabled:bg-gray-300" (click)="onSubmit()">
+          <button *ngIf="!consult_done && allowed_to_edit" [disabled]="is_saving" type="button" class="btn-save ml-auto mr-5 mb-5 px-10 disabled:bg-gray-300" (click)="onSubmit()">
             <fa-icon *ngIf="is_saving" class="mr-2" [icon]="faSpinner" spin="true"></fa-icon>
             <fa-icon *ngIf="!is_saving" class="mr-2" [icon]="faSave"></fa-icon>
             {{ is_saving ? 'Saving' : 'Save' }}

@@ -1,12 +1,18 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
+  standalone: true,
   selector: 'app-end-visit',
   templateUrl: './end-visit.component.html',
-  styleUrls: ['./end-visit.component.scss']
+  styleUrls: ['./end-visit.component.scss'],
+  imports: [FontAwesomeModule, FormsModule, CommonModule],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EndVisitComponent {
   @Output() toggleModal = new EventEmitter<any>();

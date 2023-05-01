@@ -12,6 +12,7 @@ import { catchError, concat, debounceTime, distinctUntilChanged, filter, map, Ob
 export class InitialDxComponent implements OnChanges {
   @Input() toggle_content;
   @Input() consult_details;
+  @Input() allowed_to_edit;
 
   faPlusSquare = faPlusSquare;
   faSave = faSave;

@@ -16,13 +16,15 @@
         <div class="last:border-0 border-b border-slate-200 pb-2 h-" *ngFor="let visit of visit_list" >
           <div class="grid grid-cols-8 gap-2 mt-2">
             <div class="col-span-2 text-sm font-semibold h-full">
-              {{ visit?.consult_date | date:'MM/dd/yyyy'}}
+              {{ visit?.consult_date | date:'MM/dd/yyyy'}} <br />
+              {{ visit?.consult_date | date:'hh:mm a'}}
             </div>
             <div class="col-span-6 bg-blue-50 hover:bg-blue-200 hover:cursor-pointer p-1 pl-5 text-sm col-start-3 grid grid-cols-12 rounded-l-xl" [ngClass]="{'bg-green-200 hover:bg-green-300' : visit?.consult_done === false}" (click)="showConsult(visit)">
               <div class="col-span-11">
-                <span class="text-cyan-800 font-semibold">{{ getVisitType(visit?.pt_group) }}</span><br />
+                <span class="text-cyan-800 font-semibold">{{ getVisitType(visit?.pt_group) }} <!-- ({{ visit?.consult_date | date: 'hh:mm a' }}) --></span><br />
+                <span class="text-[.8em] ">Facility: <span class="font-semibold" *ngIf="visit?.facility">{{ visit?.facility?.facility_name }} </span></span><br />
                 <span class="text-[.8em] ">Attended by: <span class="font-semibold" *ngIf="visit?.user">{{ visit?.user?.last_name+', ' }} {{ visit?.user?.first_name }} {{ visit?.user?.middle_name === 'NA' ? ' ' : visit?.user?.middle_name }} {{ visit?.user?.suffix_name === 'NA' ? ' ' : visit?.user?.suffix_name }}</span></span><br />
-                <span class="text-[.8em] ">Referred to: <span class="font-semibold" *ngIf="visit?.physician">{{ visit?.physician?.last_name+', ' }} {{ visit?.physician?.first_name }} {{ visit?.physician?.middle_name === 'NA' ? ' ' : visit?.physician?.middle_name }} {{ visit?.physician?.suffix_name === 'NA' ? ' ' : visit?.physician?.suffix_name }}</span></span>
+                <span class="text-[.8em] ">Physician: <span class="font-semibold" *ngIf="visit?.physician">{{ visit?.physician?.last_name+', ' }} {{ visit?.physician?.first_name }} {{ visit?.physician?.middle_name === 'NA' ? ' ' : visit?.physician?.middle_name }} {{ visit?.physician?.suffix_name === 'NA' ? ' ' : visit?.physician?.suffix_name }}</span></span>
               </div>
 
               <span class="col-span-1 flex justify-center my-auto" *ngIf="show_details && (visit.id === selected_id)">
@@ -41,11 +43,22 @@
         </div>
       </div>
 
-      <div [@myInsertRemoveTrigger] *ngIf="show_details && user_allowed" class="my-2 w-1/2">
-        <app-visit-details [selected_visit]="selected_visit" [latest_vitals]="latest_vitals"></app-visit-details>
+      <div [@myInsertRemoveTrigger] *ngIf="show_details" class="my-2 w-1/2">
+        <app-visit-details *ngIf="user_allowed"  [selected_visit]="selected_visit" [latest_vitals]="latest_vitals"></app-visit-details>
+        <div *ngIf="!user_allowed" >
+          <span class="flex justify-between align-middle bg-blue-500 w-full p-2 font-semibold text-sm mb-1 text-white rounded-md">
+            <span class="py-1">VISIT DETAILS</span>
+          </span>
+          <div class="flex flex-col justify-center pt-5 text-sm">
+            <span class="mx-auto italic text-center">
+              This visit record is from other facility. <br />
+              You are not allowed to view this record.
+            </span>
+          </div>
+        </div>
       </div>
 
-      <div [@myInsertRemoveTrigger] *ngIf="show_details && !user_allowed" class="my-2 w-1/2">
+      <!-- <div [@myInsertRemoveTrigger] *ngIf="show_details && !user_allowed" class="my-2 w-1/2">
         <span class="flex justify-between align-middle bg-blue-500 w-full p-2 font-semibold text-sm mb-1 text-white rounded-md">
           <span class="py-1">VISIT DETAILS</span>
         </span>
@@ -55,7 +68,7 @@
             You are not allowed to view this record.
           </span>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </div>

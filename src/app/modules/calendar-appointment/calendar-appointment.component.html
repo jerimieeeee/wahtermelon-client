@@ -1,0 +1,70 @@
+<div class="flex flex-col pt-5">
+  <div class="flex justify-center mt-3">
+    <div class="flex justify-between text-xl font-semibold w-3/5">
+      <div>
+        <button class="bg-blue-500 rounded-full px-4 py-1 text-sm text-white font-normal" type="button"
+          [view]="view"
+          [(viewDate)]="viewDate"
+          (viewDateChange)="loadSchedules()"
+          mwlCalendarPreviousView>
+          <fa-icon [icon]="faChevronLeft"></fa-icon>
+          Previous
+        </button>
+      </div>
+      <div>
+        {{ viewDate | date: 'MMMM y' }}
+      </div>
+      <div>
+        <button class="bg-blue-500 rounded-full px-4 py-1 text-sm text-white font-normal" type="button"
+          [view]="view"
+          [(viewDate)]="viewDate"
+          (viewDateChange)="loadSchedules()"
+          mwlCalendarNextView>
+          Next
+          <fa-icon [icon]="faChevronRight"></fa-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="flex justify-center mt-3">
+    <div [ngSwitch]="view" class="w-3/5" *ngIf="!calendar_loading">
+      <mwl-calendar-month-view
+        *ngSwitchCase="'month'"
+        [viewDate]="viewDate"
+        [events]="events"
+        [cellTemplate]="customCellTemplate"
+
+        (dayClicked)="handleEvent('Clicked', $event)"
+        (eventClicked)="handleEvent('Clicked', $event.event)"
+      >
+      </mwl-calendar-month-view>
+    </div>
+
+    <div *ngIf="calendar_loading" class="w-3/5 flex flex-col">
+      <div class="flex justify-center text-blue-500">
+        <fa-icon [icon]="faCircleNotch" spin="true"></fa-icon>
+      </div>
+      <div class="flex justify-center">
+        Fetching schedule for {{ viewDate | date: 'MMMM y' }}
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #customCellTemplate let-day="day" let-locale="locale">
+  <div class="cal-cell-top">
+    <span class="cal-day-badge" *ngIf="day.badgeTotal > 0">
+      {{ day.events[0].data.length }}
+    </span>
+    <span class="cal-day-number">
+      {{ day.date | calendarDate:'monthViewDayNumber':locale }}
+    </span>
+  </div>
+</ng-template>
+<!-- [activeDayIsOpen]="activeDayIsOpen"
+(dayClicked)="dayClicked($event.day)"-->
+
+<app-name-list *ngIf="modal['name-list']"
+[name_list]="name_list"
+(toggleModal)="toggleModal()"
+></app-name-list>

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
-import { faChevronCircleDown, faBell, faSearch, faGear, faHome, faRightFromBracket, faAddressBook, faUser, faSquarePollVertical } from '@fortawesome/free-solid-svg-icons';
+import { faChevronCircleDown, faBell, faSearch, faGear, faHome, faRightFromBracket, faAddressBook, faUser, faSquarePollVertical, faCalendarDay } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { catchError, debounceTime, distinctUntilChanged, switchMap, tap, map, filter } from 'rxjs/operators';
 import { concat, Observable, of, Subject } from 'rxjs';
@@ -26,6 +26,7 @@ export class HeaderComponent implements OnInit {
   faAddressBook = faAddressBook;
   faUser = faUser;
   faSquarePollVertical = faSquarePollVertical;
+  faCalendarDay = faCalendarDay;
 
   patients$: Observable<any>;
   searchInput$ = new Subject<string>();

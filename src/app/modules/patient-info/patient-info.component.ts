@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnInit, ViewChild } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { faCamera, faClipboardUser, faExclamationCircle, faFlask, faHeart, faNotesMedical, faPenSquare } from '@fortawesome/free-solid-svg-icons';
+import { faBuildingCircleArrowRight, faCamera, faClipboardUser, faExclamationCircle, faFlask, faHeart, faNotesMedical, faPenSquare, faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 import { AgeService } from 'app/shared/services/age.service';
 import { HttpService } from 'app/shared/services/http.service';
 import { filter, tap } from 'rxjs/operators';
@@ -16,6 +16,7 @@ import { SocialHistoryComponent } from './components/social-history/social-histo
 import { SurgicalHistoryComponent } from './components/surgical-history/surgical-history.component';
 import { VaccineComponent } from './components/vaccine/vaccine.component';
 import { VitalsComponent } from './components/vitals/vitals.component';
+import { AppointmentComponent } from './components/appointment/appointment.component';
 
 @Component({
   selector: 'app-patient-info',
@@ -35,7 +36,7 @@ export class PatientInfoComponent implements OnInit {
   @ViewChild(PregnancyHistoryComponent) pregnancyHistory: PregnancyHistoryComponent;
   @ViewChild(VitalsComponent) vitals: VitalsComponent;
   @ViewChild(PreghistComponent) preghist: PreghistComponent;
-
+  @ViewChild(AppointmentComponent) appointment: AppointmentComponent;
   reloadNCDVitals: EventEmitter<any> = new EventEmitter();
   reloadLabs: EventEmitter<any> = new EventEmitter();
 
@@ -59,6 +60,7 @@ export class PatientInfoComponent implements OnInit {
   ) { }
 
   loadData(field){
+    // console.log(field)
     if(field === 'past_medical'       || field==='all') this.pastMedical.loadData(this.patient_info.id);
     if(field === 'family_medical'     || field==='all') this.familyMedical.loadData(this.patient_info.id);
     if(field === 'vaccines'           || field==='all') this.vaccine.loadData(this.patient_info.id);
@@ -68,6 +70,8 @@ export class PatientInfoComponent implements OnInit {
     if(field === 'menstrual_history'  || field==='all') this.menstrualHistory.loadData(this.patient_info.id);
     if(field === 'pregnancy_history'  || field==='all') this.preghist.loadData(this.patient_info.id);
     if(field === 'vitals'             || field==='all') this.vitals.loadData(this.patient_info.id);
+    if(field === 'appointment'        || field==='all') this.appointment.loadData(this.patient_info.id);
+
 
     if((field === 'laboratory'         || field==='all') && this.active_loc !== 'lab') this.laboratories.loadData(this.patient_info.id);
     if((field === 'prescription'       || field==='all') && this.active_loc !== 'dispensing') this.prescriptions.loadData(this.patient_info.id);
@@ -84,6 +88,7 @@ export class PatientInfoComponent implements OnInit {
   faPenSquare = faPenSquare;
   faClipboardUser = faClipboardUser;
   faCamera = faCamera;
+  faBuildingCircleArrowRight = faBuildingCircleArrowRight;
 
   show_form: boolean = false;
   show_vitals: boolean = false;
@@ -114,6 +119,7 @@ export class PatientInfoComponent implements OnInit {
   active_loc_id: any;
 
   getPatient(){
+    // console.log('get patient')
     this.active_loc_id = this.http.getUrlParams();
     this.active_loc = this.active_loc_id.loc;
     this.consult_id = this.active_loc_id.consult_id ?? null;
@@ -131,6 +137,7 @@ export class PatientInfoComponent implements OnInit {
           this.accordions['vitals'] = true;
           this.accordions['lab_request'] = true;
           this.accordions['prescriptions'] = true;
+          this.accordions['appointment'] = true;
         },
         error: err => {
           // feature: add prompt that patient is not found. for now redirect to home
@@ -151,6 +158,8 @@ export class PatientInfoComponent implements OnInit {
         this.loadData('laboratory')
         break;
       default:
+        this.loadData('laboratory')
+        this.loadData('prescription')
         break;
     }
   }
@@ -325,7 +334,9 @@ export class PatientInfoComponent implements OnInit {
     })
   );
 
+  user_facility: string;
   ngOnInit(): void {
+    this.user_facility = this.http.getUserFacility();
     this.getPatient();
     this.navigationEnd$.subscribe();
   }
