@@ -6,16 +6,32 @@ import { Injectable } from '@angular/core';
 export class NameHelperService {
   getVisitType(group): string{
     switch(group){
-      case 'cn':
-        return 'Consultation';
+      case 'ab':
+        return 'Animal Bite';
+      case 'at':
+        return 'Adolescent';
       case 'cc':
         return 'Child Care';
-      case 'mc':
-        return 'Maternal Care';
+      case 'cn':
+        return 'Consultation';
+      case 'cv':
+        return 'COVID-19';
       case 'dn':
         return 'Dental';
+      case 'fp':
+        return 'Family Planning';
+      case 'lp':
+        return 'Leprosy';
+      case 'mc':
+        return 'Maternal Care';
+      case 'mh':
+        return 'Mental Health';
+      case 'ml':
+        return 'Malaria';
       case 'ncd':
         return 'Non Communicable Disease';
+      case 'tb':
+        return 'TB Dots';
     }
   }
 

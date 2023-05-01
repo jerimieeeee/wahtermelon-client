@@ -15,19 +15,19 @@
         <div class="col-span-1 flex mt-3">
           <div class="w-1/2 grid grid-cols-1 px-4 pb-4">
             <label for="complaint_notes" class="font-semibold pl-1">General Survey</label>
-            <select [disabled]="consult_done" rows="3" id="general_survey_code" [(ngModel)]="general_survey_code" class="placeholder-slate-400 w-full rounded-md border-gray-300 bg-gray-50">
+            <select [disabled]="consult_done || !allowed_to_edit" rows="3" id="general_survey_code" [(ngModel)]="general_survey_code" class="placeholder-slate-400 w-full rounded-md border-gray-300 bg-gray-50">
               <option *ngFor="let survey of survey_list" [value]="survey.code">{{ survey.desc }}</option>
             </select>
           </div>
 
           <div class="w-1/2 grid grid-cols-1 px-4 pb-4">
             <label for="complaint_notes" class="font-semibold pl-1">Remarks</label>
-            <input [disabled]="consult_done" rows="3" id="general_survey_remarks" type="text" placeholder="General Survey Remarks" [(ngModel)]="general_survey_remarks" class="placeholder-slate-400 w-full rounded-md border-gray-300 bg-gray-50" />
+            <input [disabled]="consult_done || !allowed_to_edit" rows="3" id="general_survey_remarks" type="text" placeholder="General Survey Remarks" [(ngModel)]="general_survey_remarks" class="placeholder-slate-400 w-full rounded-md border-gray-300 bg-gray-50" />
           </div>
         </div>
 
         <div class="col-span-1 flex text-right">
-          <button *ngIf="!consult_done" [disabled]="is_saving" type="button" class="btn-save ml-auto mr-5 mb-5 px-10 disabled:bg-gray-300" (click)="onSubmit()">
+          <button *ngIf="!consult_done && allowed_to_edit" [disabled]="is_saving" type="button" class="btn-save ml-auto mr-5 mb-5 px-10 disabled:bg-gray-300" (click)="onSubmit()">
             <fa-icon *ngIf="is_saving" class="mr-2" [icon]="faSpinner" spin="true"></fa-icon>
             <fa-icon *ngIf="!is_saving" class="mr-2" [icon]="faSave"></fa-icon>
             {{ is_saving ? 'Saving' : 'Save' }}

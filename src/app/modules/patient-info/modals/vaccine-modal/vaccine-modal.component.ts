@@ -19,8 +19,11 @@ export class VaccineModalComponent implements OnInit {
   vaccine_list = Vaccines;
   vaccines: any;
   vaccineForm: any = {
-    vaccine_status: [] ,
-    vaccine_date: []
+    vaccine_status: [],
+    vaccine_date: [],
+    lot_no: [],
+    batch_no: [],
+    facility_name: []
   };
   vaccine_grouped = [];
   showAlert: boolean = false;
@@ -30,6 +33,7 @@ export class VaccineModalComponent implements OnInit {
     private toastr: ToastrService
   ) { }
 
+  covid_array = ['ASTRA', 'JANDJ', 'MODER', 'NOVAV', 'PFIZE', 'SINOP', 'SPUTN'];
   onSubmit(){
     var vax_arr = [];
 
@@ -39,7 +43,10 @@ export class VaccineModalComponent implements OnInit {
         let vacc = {
           vaccine_id: key,
           vaccine_date: this.vaccineForm.vaccine_date[key] ? this.vaccineForm.vaccine_date[key] : null,
-          status_id: value
+          status_id: value,
+          lot_no: this.vaccineForm.lot_no[key] ? this.vaccineForm.lot_no[key] : null,
+          batch_no: this.vaccineForm.batch_no[key] ? this.vaccineForm.batch_no[key] : null,
+          facility_name: this.vaccineForm.facility_name[key] ? this.vaccineForm.facility_name[key] : null,
         };
 
         vax_arr.push(vacc);
@@ -55,7 +62,7 @@ export class VaccineModalComponent implements OnInit {
         vaccines: vax_arr
       }
 
-      // console.log(vax_form)
+      console.log(vax_form)
 
       this.http.post('patient-vaccines/vaccines', vax_form).subscribe({
         next: () => {
@@ -92,7 +99,7 @@ export class VaccineModalComponent implements OnInit {
             return groups;
         }, {});
 
-        let sort = ["Child Care", "General", "Animal Bite", "NCD", "Maternal Care"]
+        let sort = ["Child Care", "General", "Animal Bite", "NCD", "Maternal Care", "COVID-19"]
         let arranged_group = [];
 
         sort.forEach((item) => {
@@ -125,6 +132,9 @@ export class VaccineModalComponent implements OnInit {
         break
       case 'ncd':
         new_name = 'NCD'
+        break
+      case 'covid':
+        new_name = 'COVID-19'
         break
     }
 

@@ -17,13 +17,13 @@ export class ConsultationComponent implements OnChanges {
       this.physical_exam[val.lib_physical_exam.category_id.toLowerCase()].push(val.lib_physical_exam);
     });
 
-    console.log(this.physical_exam)
+    // console.log(this.physical_exam)
   }
 
   constructor() { }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(this.selected_visit)
+    // console.log(this.selected_visit)
     if(this.selected_visit) {
       if(this.selected_visit.consult_notes && Object.keys(this.selected_visit.consult_notes.physical_exam).length > 0) {
         this.groupPE(this.selected_visit.consult_notes.physical_exam);

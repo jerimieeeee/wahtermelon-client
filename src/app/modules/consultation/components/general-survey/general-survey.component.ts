@@ -12,6 +12,7 @@ export class GeneralSurveyComponent implements OnInit {
   @Output() loadConsult = new EventEmitter<any>();
   @Input() toggle_content;
   @Input() consult_details;
+  @Input() allowed_to_edit;
 
   faSave = faSave;
   faChevronCircleUp = faChevronCircleUp;

@@ -13,6 +13,7 @@ export class PrescriptionComponent implements OnInit, OnChanges {
   @Input() toggle_content;
   @Input() consult_details;
   @Input() with_credentials;
+  @Input() allowed_to_edit;
 
   show_content: boolean = true;
   show_list: boolean = false;
@@ -116,7 +117,7 @@ export class PrescriptionComponent implements OnInit, OnChanges {
     this.show_content = this.toggle_content;
     this.show_content_tx = this.toggle_content;
     // console.log(this.show_content)
-    if(this.consult_details) this.show_actions = true;
+    if(this.consult_details.consult_done === false) this.show_actions = true;
 
     if(this.consult_details) {
       this.consult_notes = this.consult_details.consult_notes;
@@ -182,7 +183,9 @@ export class PrescriptionComponent implements OnInit, OnChanges {
 
     this.http.get('medicine/prescriptions',{params}).subscribe({
       next: (data: any) => {
-        this.prescriptions = data.data;
+        if(data.data.length > 0) {
+          this.prescriptions = data.data;
+        }
       },
       error: err => console.log(err)
     })

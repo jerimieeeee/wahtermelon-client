@@ -19,7 +19,7 @@ export class FamilyFolderModalComponent implements OnInit {
   family_list: any;
 
   searchFamily(){
-    console.log('attempt search')
+    // console.log('attempt search')
     this.http.get('households/household-folders', {params:{'filter[search]': this.search_item, per_page: 'all', include: 'barangay'}}).subscribe({
       next: (data: any) => {
         // console.log(data);

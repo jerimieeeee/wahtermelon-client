@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { faEdit, faFlask, faFlaskVial, faXmark, faTrashCan } from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faFlask, faFlaskVial, faXmark, faTrashCan, faPlus } from '@fortawesome/free-solid-svg-icons';
 // import { PatientInfoComponent } from 'app/components/patient-info/patient-info.component';
 import { HttpService } from 'app/shared/services/http.service';
 import { NameHelperService } from 'app/shared/services/name-helper.service';
@@ -16,6 +16,7 @@ export class LabComponent implements OnInit, OnDestroy {
   faEdit = faEdit;
   faXmark = faXmark;
   faFlask = faFlask;
+  faPlus = faPlus;
 
   patient_details: any;
   pending_list: any;
@@ -32,7 +33,7 @@ export class LabComponent implements OnInit, OnDestroy {
     this.http.get('laboratory/consult-laboratories', {params}).subscribe({
       next: (data: any) => {
         this.pending_list = data.data
-        // console.log(this.pending_list);
+        // console.log(this.pending_list)
         this.show_form = true;
       },
       error: err => console.log(err)
@@ -104,7 +105,7 @@ export class LabComponent implements OnInit, OnDestroy {
         this.loadData();
       }
     } else {
-      this.modal[form] = false;
+      this.modal[form] = !this.modal[form];
       this.loadData();
     }
   }
@@ -133,7 +134,7 @@ export class LabComponent implements OnInit, OnDestroy {
   loadStoolBlood(form){
     this.http.get('libraries/laboratory-blood-stool').subscribe({
       next: (data: any) => {
-        console.log(data)
+        // console.log(data)
         this.lab_stool_blood = data.data;
         this.loadStoolColor(form);
       }
@@ -204,7 +205,10 @@ export class LabComponent implements OnInit, OnDestroy {
     eventSubscriber(patientInfo.reloadLabs, this.loadData)
   }
 
+  user_facility: string;
+
   ngOnInit(): void {
+    this.user_facility = this.http.getUserFacility();
     this.loadLabStatusLib();
     this.patient_details = this.http.getPatientInfo();
     this.loadData();

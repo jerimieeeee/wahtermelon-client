@@ -19,6 +19,8 @@
             <webcam *ngIf="!webcamImage"
               [trigger]="invokeObservable"
               (imageCapture)="captureImg($event)"
+              [width]="1200"
+              [height]="1200"
             ></webcam>
             <img *ngIf="webcamImage"
               [src]="webcamImage?.imageAsDataUrl"  />

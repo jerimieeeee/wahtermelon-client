@@ -33,7 +33,7 @@
 
         <fa-icon (click)="toggleActionModal('vaccine-action', vaccine)" class="mx-0 my-0 text-amber-400 hover:cursor-pointer flex-none mr-2" [icon]="faPenToSquare"></fa-icon>
         <span class="font-medium text-xs flex-auto">
-          <span class="font-bold">{{ vaccine.vaccine_id }} - {{ vaccine.dose }} Dose</span> <br />({{ vaccine.status_id === 1 ? 'Done' : (vaccine.status_id === 2 ? 'Done Outside - Private' : 'Done Outside - Public') }})
+          <span class="font-bold">{{ covid_array.includes(vaccine.vaccine_id) ? vaccine.vaccines.vaccine_desc : vaccine.vaccine_id }} - {{ vaccine.dose }} Dose</span> <br />({{ vaccine.status_id === 1 ? 'Done' : (vaccine.status_id === 2 ? 'Done Outside - Private' : 'Done Outside - Public') }})
         </span>
         <span class="italic text-xs flex-auto text-right">
           {{ !vaccine.vaccine_date ? '-' : vaccine.vaccine_date | date: 'MM/dd/yyyy'}}

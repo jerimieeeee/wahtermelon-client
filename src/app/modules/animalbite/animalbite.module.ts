@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AnimalbiteRoutingModule } from './animalbite-routing.module';
-import { SharedComponentsModule } from 'app/shared/shared-components/shared-components.module';
 import { AnimalbiteComponent } from './animalbite.component';
 import { PreExposureComponent } from './components/pre-exposure/pre-exposure.component';
 import { ExposureComponent } from './components/exposure/exposure.component';
@@ -15,7 +14,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
   declarations: [AnimalbiteComponent, PreExposureComponent, ExposureComponent, PostExposureComponent, HumanRabiesComponent],
   imports: [
     CommonModule,
-    AnimalbiteRoutingModule,SharedComponentsModule,FontAwesomeModule,
+    AnimalbiteRoutingModule,FontAwesomeModule,
   ]
 })
 export class AnimalbiteModule { }

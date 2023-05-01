@@ -1,0 +1,66 @@
+<div class="m-5 shadow-md rounded-md">
+  <div class="bg-blue-500 text-white rounded-t-md p-3 flex justify-between">
+    <span>Case Rate</span>
+    <button class="bg-gray-100 text-blue-500 px-3 py-1 rounded-md" (click)="toggleModal('search-caserate')">
+      <fa-icon [icon]="faSearch" class="text-sm font-semibold"></fa-icon>
+      search
+    </button>
+  </div>
+
+  <div class="rounded-b-md h-96 border-x border-b border-slate-200">
+    <form class="grid grid-cols-4 gap-4 m-5" [formGroup]="caserateForm"  (ngSubmit)="onSubmit()">
+      <div>
+          <label for="caserate_date">Case Rate date</label>
+          <input type="date" name="caserate_date" id="caserate_date" formControlName="caserate_date" class="input">
+      </div>
+
+      <div>
+          <label for="admit_dx">Admission Diagnosis</label>
+          <input type="text" name="admit_dx" id="admit_dx" formControlName="admit_dx" class="input">
+      </div>
+
+      <div>
+        <label for="caserate_code">Case Rate Code</label>
+        <input type="text" name="caserate_code" id="caserate_code" formControlName="caserate_code" class="input">
+      </div>
+
+      <div>
+        <label for="code">ICD10 Code/RVS Code</label>
+        <input type="text" name="code" id="code" formControlName="code" class="input">
+      </div>
+
+      <div class="col-span-4">
+        <label for="code">Description</label>
+        <input type="text" name="code" id="code" formControlName="code" class="input">
+      </div>
+
+      <div>
+        <label for="hci_fee">HCI Fee</label>
+        <input type="number" name="hci_fee" id="hci_fee" formControlName="hci_fee" class="input">
+      </div>
+
+      <div>
+        <label for="prof_fee">Prof Fee</label>
+        <input type="number" name="prof_fee" id="prof_fee" formControlName="prof_fee" class="input">
+      </div>
+
+      <div>
+        <label for="caserate_fee">Case Rate Fee</label>
+        <input type="number" name="caserate_fee" id="caserate_fee" formControlName="caserate_fee" class="input">
+      </div>
+
+      <div class="col-span-4 mt-10">
+        <div class="flex justify-center">
+          <button [disabled]="is_saving" type="submit" class="btn-save font-semibold px-10">
+            <fa-icon [icon]="is_saving ? faCircleNotch : faSave" [spin]="is_saving" class="pr-2"></fa-icon>
+            {{ is_saving ? 'Saving' : 'Save' }}
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<app-search-caserate *ngIf="modals['search-caserate']"
+  (toggleModal)="toggleModal($event)"
+></app-search-caserate>

@@ -10,7 +10,6 @@ import { TempChartComponent } from './components/chart-temp/chart-temp.component
 import { HistoryComponent } from './components/history/history.component';
 import { ConditionComponent } from './components/condition/condition.component';
 import { ServicesComponent } from './components/services/services.component';
-import { SharedComponentsModule } from 'app/shared/shared-components/shared-components.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 
@@ -28,7 +27,6 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
   imports: [
     CommonModule,
     DentalRoutingModule,
-    SharedComponentsModule,
     FontAwesomeModule
   ]
 })
