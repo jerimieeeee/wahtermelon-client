@@ -1,7 +1,11 @@
 <div class="block shadow p-4 mt-4 rounded-xl text-gray-600 border border-slate-100">
   <div class="border border-slate-200 shadow-md rounded-xl" *ngIf="show_form">
-    <div class="w-full bg-blue-500 text-white rounded-t-xl p-3 font-semibold">
-      Laboratories
+    <div class="w-full bg-blue-500 text-white rounded-t-xl p-3 font-semibold flex justify-between">
+      <span>Laboratories</span>
+      <button type="button" (click)="toggleModal('lab-request')" class="text-sm bg-orange-500 text-white px-3 py-1 rounded-md">
+        <fa-icon [icon]="faPlus" class="mr-1"></fa-icon>
+        Lab Request
+      </button>
     </div>
 
     <div class="w-full p-5">
@@ -22,10 +26,10 @@
               {{ lab.request_date | date: 'MM/dd/yyyy'}}
             </th>
             <td class="w-1/3 py-4 px-6 text-center">
-              <fa-icon *ngIf="lab.lab_result && lab.request_status_code !== 'RF'" (click)="toggleModal('add', lab)" size="lg" class="mx-0 my-0 text-green-500 hover:cursor-pointer flex-none mr-2" [icon]="faFlask"></fa-icon>
-              <fa-icon *ngIf="!lab.lab_result && lab.request_status_code !== 'RF'" (click)="toggleModal('add', lab)" size="lg" class="mx-0 my-0 text-orange-500 hover:cursor-pointer flex-none mr-2" [icon]="faFlask"></fa-icon>
-              <fa-icon *ngIf="lab.request_status_code === 'RF'" (click)="toggleModal('add', lab)" size="lg" class="mx-0 my-0 text-red-700 hover:cursor-pointer flex-none mr-2" [icon]="faFlask"></fa-icon>
-              <fa-icon (click)="toggleModal('delete-item', lab)" size="lg" class="mx-0 my-0 text-red-500 hover:cursor-pointer flex-none mr-2" [icon]="faTrashCan"></fa-icon>
+              <fa-icon *ngIf="lab.lab_result && lab.request_status_code !== 'RF'" (click)="toggleModal('add', lab)" size="lg" class="mx-0 my-0 text-green-600 hover:cursor-pointer flex-none mr-2" [icon]="faFlask"></fa-icon>
+              <fa-icon *ngIf="!lab.lab_result && lab.request_status_code !== 'RF'" (click)="toggleModal('add', lab)" size="lg" class="mx-0 my-0 text-orange-400 hover:cursor-pointer flex-none mr-2" [icon]="faFlask"></fa-icon>
+              <fa-icon *ngIf="lab.request_status_code === 'RF'" (click)="toggleModal('add', lab)" size="lg" class="mx-0 my-0 text-red-500 hover:cursor-pointer flex-none mr-2" [icon]="faFlask"></fa-icon>
+              <fa-icon *ngIf="user_facility === lab.facility_code" (click)="toggleModal('delete-item', lab)" size="lg" class="mx-0 my-0 text-red-500 hover:cursor-pointer flex-none mr-2" [icon]="faTrashCan"></fa-icon>
             </td>
           </tr>
         </tbody>
@@ -48,10 +52,19 @@
     [lab_stool_blood]="lab_stool_blood"
     [lab_stool_color]="lab_stool_color"
     [lab_stool_consistency]="lab_stool_consistency"
+    [user_facility]="user_facility"
 ></app-lab-form>
 
 <app-delete-item *ngIf="modal['delete-item']"
   [delete_id]="delete_id"
   [delete_desc]="delete_desc"
   [url]="url"
+  [user_facility]="user_facility"
   (toggleModal)="toggleModal($event)"></app-delete-item>
+
+<app-lab-request *ngIf="modal['lab-request']"
+  (toggleModal)="toggleModal('lab-request')"
+  [lab_req_list]="pending_list"
+  [patient_info]="patient_details"
+  [consult_id]="consult_id"></app-lab-request>
+

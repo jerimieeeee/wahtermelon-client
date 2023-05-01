@@ -1,6 +1,6 @@
 import { Component, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { faPenToSquare, faPersonWalking, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { faDoorClosed, faPenToSquare, faPersonWalking, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
@@ -9,7 +9,7 @@ import { HttpService } from 'app/shared/services/http.service';
   styleUrls: ['./maternalcare.component.scss']
 })
 export class MaternalcareComponent implements OnInit {
-
+  faDoorClosed = faDoorClosed;
   faPersonWalking = faPersonWalking;
   faPenToSquare = faPenToSquare;
   faSpinner = faSpinner;
@@ -30,8 +30,7 @@ export class MaternalcareComponent implements OnInit {
   show_end: boolean;
 
   constructor(private http: HttpService,
-    private router: Router,
-    private route: ActivatedRoute
+    private router: Router
   ) { }
 
   module: number;
@@ -60,7 +59,7 @@ export class MaternalcareComponent implements OnInit {
     this.loadLibraries();
 
     this.active_loc_id = this.http.getUrlParams();
-    // console.log(this.active_loc_id)
+
     this.patient_id = this.active_loc_id.patient_id;
     this.consult_id = this.active_loc_id.consult_id;
     this.loadConsultDetails();
@@ -70,14 +69,13 @@ export class MaternalcareComponent implements OnInit {
   toggleModal(){
     this.show_end = !this.show_end;
   }
-  
+
   switchTab(tab) {
     this.module = 0;
     this.module = tab;
     if (this.module == 1) {
       this.patient_mc_record = ''
       this.mcr = true;
-      // this.patientInfo(this.patient_details)
     }
     console.log(this.module);
   }
@@ -90,14 +88,7 @@ export class MaternalcareComponent implements OnInit {
 
   openNew() {
     this.switchTab(2);
-    // this.patient_mc_record = this.patient_mc_record[0]
   }
-
-
-  /* patientInfo(info) {
-    this.patient_details = info;
-    this.mcrID('all', this.patient_details.id);
-  } */
 
   mcrID(type: any, id: any) {
     if (id) {
@@ -127,7 +118,7 @@ export class MaternalcareComponent implements OnInit {
   openMCR(id: any) {
     this.loading = true;
     this.view_id = id;
-    console.log(id);
+
     if (id) {
       this.http.get('maternal-care/mc-records/' + id).subscribe({
         next: (data: any) => {
@@ -135,17 +126,10 @@ export class MaternalcareComponent implements OnInit {
           this.patient_mc_record = data.data;
           this.mcr = true;
           if (this.patient_mc_record.pre_registration) {
-
             this.prenatal = true;
-            // this.services = true;
             if (this.patient_mc_record.post_registration && this.patient_mc_record.post_registration.length != 0) {
               this.post_value = true;
             }
-            // if (this.patient_mc_record.pre_registration.length == null && this.patient_mc_record.post_registration != null) {
-            //   this.module = 4;
-            // } else {
-            //   this.module = 2;
-            // }
           } else if (!this.patient_mc_record.pre_registration && this.patient_mc_record.post_registration) {
             this.prenatal = false;;
             this.mcr = false
@@ -154,8 +138,6 @@ export class MaternalcareComponent implements OnInit {
         error: err => console.log(err),
         complete: () => {
           this.loading = false;
-          // console.log(!this.patient_mc_record.pre_registration , !this.patient_mc_record.post_registration.end_pregnancy, " openMCR");
-          console.log(this.module, " logging this module before swithcnig");
 
           if (!this.patient_mc_record.pre_registration) {
             this.module = 4;
@@ -179,7 +161,6 @@ export class MaternalcareComponent implements OnInit {
         error: err => console.log(err),
       })
     });
-    console.log(this['risk_factors']);
   }
 
   showPreServ(id: any) {
@@ -191,8 +172,6 @@ export class MaternalcareComponent implements OnInit {
   }
 
   openModal(modal) {
-    console.log("Opening modal via emit mcr with ", this.modalStats);
-
     this.modalStats = modal;
   }
 
@@ -201,9 +180,7 @@ export class MaternalcareComponent implements OnInit {
   }
 
   updatePost(info) {
-    // this.mcrID('all', this.patient_details.id);
     this.openMCR(info);
-    // this.patient_mc_record.post_registration = info;
   }
 
   updatePostVisit(info) {
@@ -211,37 +188,33 @@ export class MaternalcareComponent implements OnInit {
   }
 
   endVisit(){
-
     let endbutton = {
       consult_done: 1,
       patient_id : this.consult_details[0].patient.id,
       user_id : this.consult_details[0].user.id,
       consult_date : this.consult_details[0].consult_date,
       pt_group : this.consult_details[0].pt_group,
-      // physician_id : this.consult_details[0].physician.id,
-      // is_pregnant: this.consult_details[0].is_pregnant
-    }
-      this.http.update('consultation/records/',this.consult_id, endbutton).subscribe({
-        // next: (data: any) => console.log(data.status, 'check status'),
-        error: err => console.log(err),
-        complete: () => {
-         console.log('end visited kang bata ka')
-         this.proceedItr()
-        }
-      })
-      console.log(endbutton)
     }
 
-    proceedItr(){
-      this.router.navigate(['/patient/itr', {id: this.patient_id}])
-    }
+    this.http.update('consultation/records/',this.consult_id, endbutton).subscribe({
+      error: err => console.log(err),
+      complete: () => {
+        console.log('end visited kang bata ka')
+        this.proceedItr()
+      }
+    })
+  }
 
-    loadConsultDetails(){
+  proceedItr(){
+    this.router.navigate(['/patient/itr', {id: this.patient_id}])
+  }
 
-      this.http.get('consultation/records',{params: {id: this.consult_id}}).subscribe((data: any) => {
-        this.consult_details = data.data
-      });
-    }
+  loadConsultDetails(){
+    this.http.get('consultation/records',{params: {id: this.consult_id}}).subscribe((data: any) => {
+      console.log(data.data)
+      this.consult_details = data.data[0];
+    });
+  }
 
 
 }

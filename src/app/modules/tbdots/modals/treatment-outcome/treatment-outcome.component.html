@@ -1,0 +1,79 @@
+<div id="defaultModal" tabindex="-1" class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 w-full md:inset-0 h-modal md:h-full justify-center items-center flex" aria-modal="true" role="dialog" style="z-index:60">
+  <div class="relative p-4 w-full max-w-3xl h-auto md:h-auto">
+    <!-- Modal content -->
+    <div class="relative bg-white rounded-lg shadow">
+      <!-- Modal header -->
+      <div class="flex justify-between items-start py-3 px-5 rounded-t border-b bg-orange-500">
+        <h3 class="text-sm font-bold text-white">
+            Treatment Outcome/Status Form
+        </h3>
+      </div>
+      <!-- Modal body -->
+      <div class="overflow-y-auto h-96 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
+        <form [formGroup]="tbForm" (submit)="onSubmit()" class="text-left text-gray-500 m-5">
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label for="outcome_date" [ngClass]="{'text-red-500': show_error && f.outcome_date.errors}">Outcome Date</label>
+              <input type="date" name="outcome_date" id="outcome_date" [max]="max_date" formControlName="outcome_date" class="input" [ngClass]="{'invalid-input': show_error && f.outcome_date.errors}">
+
+              <div *ngIf="show_error && f.outcome_date.errors" class="invalid-alert">
+                <div *ngIf="f.outcome_date.errors?.['required']">
+                  {{ required_message }}
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <label for="tb_treatment_outcome_code" [ngClass]="{'text-red-500': show_error && f.outcome_date.errors}">Treatment Outcome</label>
+              <select name="tb_treatment_outcome_code" (change)="disableFields()" id="tb_treatment_outcome_code" formControlName="tb_treatment_outcome_code" class="input" [ngClass]="{'invalid-input': show_error && f.tb_treatment_outcome_code.errors}">
+                <option *ngFor="let treatment_outcome of treatment_outcomes" [value]="treatment_outcome.code">{{ treatment_outcome.desc }}</option>
+              </select>
+
+              <div *ngIf="show_error && f.tb_treatment_outcome_code.errors" class="invalid-alert">
+                <div *ngIf="f.tb_treatment_outcome_code.errors?.['required']">
+                  {{ required_message }}
+                </div>
+              </div>
+            </div>
+
+            <div class="col-span-2" *ngIf="f.lib_tb_outcome_reason_id.enabled">
+              <label for="lib_tb_outcome_reason_id" [ngClass]="{'text-red-500': show_error && f.outcome_date.errors}">Treatment Outcome</label>
+              <select name="lib_tb_outcome_reason_id" id="lib_tb_outcome_reason_id" formControlName="lib_tb_outcome_reason_id" class="input" [ngClass]="{'invalid-input': show_error && f.lib_tb_outcome_reason_id.errors}">
+                <option *ngFor="let outcome_reason of outcome_reasons" [ngClass]="{'hidden': checkReason(outcome_reason.id) }" [value]="outcome_reason.id">{{ outcome_reason.desc }}</option>
+              </select>
+
+              <div *ngIf="show_error && f.lib_tb_outcome_reason_id.errors" class="invalid-alert">
+                <div *ngIf="f.lib_tb_outcome_reason_id.errors?.['required']">
+                  {{ required_message }}
+                </div>
+              </div>
+            </div>
+
+            <div class="col-span-2">
+              <label for="outcome_remarks">Brief Explanation/Remarks</label>
+              <textarea name="outcome_remarks" id="outcome_remarks" formControlName="outcome_remarks" class="input" ></textarea>
+            </div>
+
+            <div class="col-span-2">
+              <div class="flex justify-center">
+                <input type="checkbox" id="treatment_done" class="border border-slate-500 rounded mr-3" formControlName="treatment_done">
+                <label class="font-normal" for="treatment_done">Check to end this treatment</label>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="flex justify-end py-4 px-5 space-x-4 rounded-b border-t border-gray-200">
+        <button type="button" class="btn-save bg-gray-400" (click)="closeModal()">Close</button>
+        <button [disabled]="is_saving || tbForm.invalid" type="submit" class="btn-save px-10 disabled:bg-gray-300" (click)="onSubmit()" >
+          <fa-icon></fa-icon>
+          {{ is_saving ? 'Saving' : 'Save' }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="opacity-50 fixed inset-0 z-50 bg-black"></div>

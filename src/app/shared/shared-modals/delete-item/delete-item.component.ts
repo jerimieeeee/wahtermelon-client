@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
@@ -10,9 +10,11 @@ import { ToastrService } from 'ngx-toastr';
   selector: 'app-delete-item',
   templateUrl: './delete-item.component.html',
   styleUrls: ['./delete-item.component.scss'],
-  imports: [FontAwesomeModule, FormsModule]
+  imports: [FontAwesomeModule, FormsModule],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DeleteItemComponent implements OnInit{
+export class DeleteItemComponent implements OnChanges, AfterViewInit{
+  @ViewChild('confirmCode', {static: false}) inputElement: ElementRef;
   @Output() toggleModal = new EventEmitter<any>();
   @Input() url;
   @Input() delete_id;
@@ -29,10 +31,11 @@ export class DeleteItemComponent implements OnInit{
   }
 
   onSubmit() {
+    this.is_loading = true;
     if(this.confirm_code === this.confirmation_code){
       this.http.delete(this.url, this.delete_id).subscribe({
         next: () => {
-          this.is_loading = true;
+          this.is_loading = false;
           // this.showAlertDelete = true;
           this.toastr.error('Record was deleted!','Vaccine record');
           this.closeModal();
@@ -41,8 +44,9 @@ export class DeleteItemComponent implements OnInit{
       })
     }else{
       this.generateCode();
-      this.toastr.info('Code mismatch, please try again', 'Incorrect Code')
-      console.log('error');
+      this.toastr.info('Code mismatch, please try again', 'Incorrect Code');
+      this.is_loading = false;
+      this.confirmation_code = null
     }
   }
 
@@ -55,10 +59,11 @@ export class DeleteItemComponent implements OnInit{
     private toastr: ToastrService
   ) { }
 
-  ngOnInit(): void {
-    console.log(this.delete_id);
-    console.log(this.delete_desc);
-    console.log(this.url);
+  ngOnChanges(changes: SimpleChanges): void {
     this.generateCode();
+  }
+
+  ngAfterViewInit(): void {
+    this.inputElement.nativeElement.focus();
   }
 }

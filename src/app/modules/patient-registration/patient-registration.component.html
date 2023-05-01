@@ -364,7 +364,7 @@
 
               <div class="col-span-8 sm:col-span-2" *ngIf="show_demog_input">
                 <label for="cct_id" class="input-label" [ngClass]="{'text-red-500': is_saving && f['family']['controls']['cct_id'].errors}">CCT ID <span class="text-sm">(optional)</span></label>
-                <input type="text" name="cct_id" id="cct_id" class="input disabled:bg-gray-300" [ngClass]="{'invalid-input': is_saving && f['family']['controls']['cct_id'].errors}" formControlName="cct_id">
+                <input type="text" name="cct_id" id="cct_id" class="input disabled:bg-gray-300" (keyup)="enableCctDate()" [ngClass]="{'invalid-input': is_saving && f['family']['controls']['cct_id'].errors}" formControlName="cct_id">
 
                 <div *ngIf="is_saving && f['family']['controls']['cct_id'].errors" class="invalid-alert">
                   <div *ngIf="f['family']['controls']['cct_id'].errors?.['required']">
@@ -373,9 +373,9 @@
                 </div>
               </div>
 
-              <div class="col-span-6 sm:col-span-2" *ngIf="show_demog_input && f['family']['controls']['cct_id'].value">
+              <div *ngIf="f['family']['controls']['cct_date'].enabled" class="col-span-6 sm:col-span-2">
                 <label for="cct_date" class="input-label" [ngClass]="{'text-red-500': is_saving && f['family']['controls']['cct_date'].errors}">CCT Registration date</label>
-                <input type="date" name="cct_date" id="cct_date" class="input disabled:bg-gray-300" [ngClass]="{'invalid-input': is_saving && f['family']['controls']['cct_date'].errors}" formControlName="cct_date" [required]="f['family']['controls']['cct_id'].value || f['family']['controls']['cct_id'].value !== ''">
+                <input type="date" name="cct_date" id="cct_date" class="input disabled:bg-gray-300" [ngClass]="{'invalid-input': is_saving && f['family']['controls']['cct_date'].errors}" formControlName="cct_date">
 
                 <div *ngIf="is_saving && f['family']['controls']['cct_date'].errors" class="invalid-alert">
                   <div *ngIf="f['family']['controls']['cct_date'].errors?.['required']">
@@ -420,7 +420,7 @@
       </div>
       <div class="flex items-center justify-end p-3 rounded-b">
         <button *ngIf="!patient_to_update" class="bg-blue-500 text-white active:bg-blue-500 hover:bg-blue-600 text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button" (click)="newPatient()">
-          <fa-icon class="mr-3" [icon]="faFolderPlus"></fa-icon>New Patient
+          <fa-icon class="mr-3" [icon]="faHome"></fa-icon>Back to home page
         </button>
         <button *ngIf="!patient_to_update" class="bg-amber-500 text-white active:bg-amber-500 hover:bg-amber-600 text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button" (click)="proceedItr()">
           <fa-icon class="mr-3" [icon]="faClipboard"></fa-icon>Open ITR

@@ -25,11 +25,13 @@ export class VaccineComponent implements OnInit {
   immunization_status: any;
 
   show_vaccines: boolean = false;
+  covid_array = ['ASTRA', 'JANDJ', 'MODER', 'NOVAV', 'PFIZE', 'SINOP', 'SPUTN'];
 
   loadData(patient_id){
     this.http.get('patient-vaccines/vaccines-records', {params:{'patient_id': patient_id, 'sort': '-vaccine_date' }}).subscribe({
       next: (data: any) => {
         this.vaccine_list = data.data;
+        // console.log(this.vaccine_list)
         this.immunization_status = data.status;
 
         this.checkVaccineStatus(this.vaccine_list);

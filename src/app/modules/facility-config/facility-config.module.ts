@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import { FacilityConfigRoutingModule } from './facility-config-routing.module';
 import { FacilityConfigComponent } from './facility-config.component';
 
-import { SharedComponentsModule } from 'app/shared/shared-components/shared-components.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { HealthFacilityComponent } from './components/health-facility/health-facility.component';
 import { CatchmentPopulationComponent } from './components/catchment-population/catchment-population.component';
@@ -27,7 +26,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   ],
   imports: [
     CommonModule,
-    FacilityConfigRoutingModule,SharedComponentsModule,FontAwesomeModule,
+    FacilityConfigRoutingModule,FontAwesomeModule,
     FormsModule,ReactiveFormsModule
   ]
 })

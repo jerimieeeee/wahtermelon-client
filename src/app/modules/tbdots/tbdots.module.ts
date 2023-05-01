@@ -4,25 +4,37 @@ import { CommonModule } from '@angular/common';
 import { TbdotsRoutingModule } from './tbdots-routing.module';
 
 import { TbdotsComponent } from './tbdots.component';
-import { SharedComponentsModule } from 'app/shared/shared-components/shared-components.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import * as angularFontawesome from '@fortawesome/angular-fontawesome';
 
 import { CasefindingsComponent } from './modules/casefindings/casefindings.component';
+import { CaseHoldingComponent } from './modules/case-holding/case-holding.component';
+import { DotsChartComponent } from './modules/dots-chart/dots-chart.component';
+import { PrescriptionComponent } from './modules/prescription/prescription.component';
+import { EndVisitComponent } from 'app/shared/shared-modals/end-visit/end-visit.component';
+import { DeleteItemComponent } from 'app/shared/shared-modals/delete-item/delete-item.component';
+import { TreatmentOutcomeComponent } from './modals/treatment-outcome/treatment-outcome.component';
+import { CaserateComponent } from 'app/shared/shared-components/eclaims/components/caserate/caserate.component';
 
 @NgModule({
   declarations: [
     TbdotsComponent,
-    CasefindingsComponent
+    CasefindingsComponent,
+    CaseHoldingComponent,
+    DotsChartComponent,
+    PrescriptionComponent,
+    TreatmentOutcomeComponent
   ],
   imports: [
     CommonModule,
     TbdotsRoutingModule,
-    SharedComponentsModule,
     angularFontawesome.FontAwesomeModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    EndVisitComponent,
+    DeleteItemComponent,
+    CaserateComponent
   ]
 })
 export class TbdotsModule { }

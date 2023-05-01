@@ -1,0 +1,50 @@
+<div id="defaultModal" tabindex="-1" class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 w-full md:inset-0 h-modal md:h-full justify-center items-center flex" aria-modal="true" role="dialog" style="z-index:60">
+  <div class="relative p-4 w-full max-w-3xl h-auto md:h-auto">
+    <!-- Modal content -->
+    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+      <!-- Modal header -->
+      <div class="flex justify-between items-start py-3 px-5 rounded-t border-b bg-blue-500 dark:border-gray-600">
+        <h3 class="mt-2 text-sm font-bold text-white dark:text-white">
+            Set Appointment
+        </h3>
+      </div>
+      <!-- Modal body -->
+      <div class="overflow-y-auto h-96 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
+        <form (submit)="onSubmit()" class="w-full max-w-3xl text-left text-gray-500 dark:text-gray-400">
+          <div class="flex item-start flex-wrap pb-5">
+            <!-- <div class="flex justify-between w-full px-5 mt-3 rounded-tl rounded-tr">
+              <h4 class="font-bold text-blue-500 text-sm mt-2">His</h4>
+            </div> -->
+
+            <div class="flex flex-col px-5 w-full">
+              <div class="w-full text-sm px-5 py-2 mt-2 flex justify-center">
+                <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
+                  <label for="appointment_date">Appoinment date</label>
+                  <input name="appointment_date" id="appointment_date" [min]="min_date" [(ngModel)]="appointmentForm.appointment_date" type="date" class="input disabled:bg-gray-300">
+                </div>
+              </div>
+
+              <div class="w-full text-sm grid grid-cols-2 gap-3 px-5 py-2 mt-2">
+                <span class="col-span-2">Type of appointment</span>
+                <div class="col-span-1" *ngFor="let type of appointment_types">
+                  <input *ngIf="type.code !== 'REF'" type="checkbox" [id]="appointment[type.code]" class="border border-slate-500 rounded mr-3" [(ngModel)]="appointment[type.code]">
+                  <label *ngIf="type.code !== 'REF'" class="font-normal" [attr.for]="appointment[type.code]">{{ type.desc }}</label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="flex justify-end py-4 px-5 space-x-4 rounded-b border-t border-gray-200 dark:border-gray-600">
+        <button type="button" class="btn-save bg-gray-400" (click)="closeModal()">Close</button>
+        <button [disabled]="is_saving" type="submit" class="btn-save px-10 disabled:bg-gray-300" (click)="onSubmit()" >
+          {{ is_saving ? 'Saving' : 'Save' }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="opacity-50 fixed inset-0 z-50 bg-black"></div>

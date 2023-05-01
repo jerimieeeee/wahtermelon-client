@@ -11,8 +11,8 @@ import { VaccineInfoComponent } from './components/vaccine-info/vaccine-info.com
 import { BreastfeedingComponent } from './components/breastfeeding/breastfeeding.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { SharedComponentsModule } from 'app/shared/shared-components/shared-components.module';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { EndVisitComponent } from 'app/shared/shared-modals/end-visit/end-visit.component';
 
 
 
@@ -27,12 +27,12 @@ import { NgSelectModule } from '@ng-select/ng-select';
   imports: [
     CommonModule,
     ChildcareRoutingModule,
-    SharedComponentsModule,
     FontAwesomeModule,
     ReactiveFormsModule,
     HttpClientModule,
     NgSelectModule,
-    FormsModule
+    FormsModule,
+    EndVisitComponent
   ]
 })
 export class ChildcareModule { }

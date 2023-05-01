@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { faChevronCircleDown, faChevronCircleUp, faSave, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
@@ -8,9 +8,10 @@ import { ToastrService } from 'ngx-toastr';
   templateUrl: './management.component.html',
   styleUrls: ['./management.component.scss']
 })
-export class ManagementComponent implements OnInit {
+export class ManagementComponent implements OnInit, OnChanges {
   @Input() toggle_content;
   @Input() consult_details;
+  @Input() allowed_to_edit;
 
   faChevronCircleUp = faChevronCircleUp;
   faChevronCircleDown = faChevronCircleDown;
@@ -84,6 +85,7 @@ export class ManagementComponent implements OnInit {
   consult_management: any;
 
   ngOnChanges(changes: SimpleChanges): void{
+    // console.log(this.consult_details.consult_done)
     this.show_content = this.toggle_content;
     if(this.consult_details) {
       this.consult_notes = this.consult_details.consult_notes;
