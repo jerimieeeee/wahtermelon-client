@@ -79,7 +79,7 @@
         </div>
         <app-appointment (toggleAccordion)="toggleAccordion($event)" [accordions]="accordions" (toggleModal)="toggleModal($event)"></app-appointment>
         <app-prescriptions  (toggleAccordion)="toggleAccordion($event)" (navigateTo)="navigateTo($event)" [accordions]="accordions" [consult_id]="consult_id" [patient_info]="patient_info"></app-prescriptions>
-        <!-- <app-laboratory (toggleAccordion)="toggleAccordion($event)" (navigateTo)="navigateTo($event)" [accordions]="accordions" (toggleModal)="toggleModal($event)" (setLabList)="setLabList($event)"></app-laboratory> -->
+        <app-laboratory (toggleAccordion)="toggleAccordion($event)" (navigateTo)="navigateTo($event)" [accordions]="accordions" (toggleModal)="toggleModal($event)" (setLabList)="setLabList($event)"></app-laboratory>
 
         <app-vitals (toggleAccordion)="toggleAccordion($event)" (toggleModal)="toggleModal($event)" (setVitals)="setVitals($event)" [accordions]="accordions"></app-vitals>
         <app-vaccine (toggleAccordion)="toggleAccordion($event)" [accordions]="accordions" (toggleModal)="toggleModal($event)" (setVaccineGiven)="setVaccineGiven($event)"></app-vaccine>
