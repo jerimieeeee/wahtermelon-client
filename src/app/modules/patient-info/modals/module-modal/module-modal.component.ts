@@ -29,7 +29,7 @@ export class ModuleModalComponent implements OnInit {
     'General': {modules: { }},
     'Others': {
       modules: {
-        tb: {
+        /* tb: {
           name: 'Tuberculosis',
           location: 'tb',
           group: 'tb',
@@ -42,13 +42,13 @@ export class ModuleModalComponent implements OnInit {
           group: 'ncd',
           consult_active: false,
           id: null
-        },
+        }, */
       }
     }
   };
 
   itr = { name: 'Patient ITR', location: 'itr', group: '', consult_active: false, id: null };
-  lab = { name: 'Laboratory', location: 'lab', group: '', consult_active: false, id: null };
+  // lab = { name: 'Laboratory', location: 'lab', group: '', consult_active: false, id: null };
   cn = { name: 'Consultation', location: 'cn', group: 'cn', consult_active: false, id: null };
   mc = { name: 'Maternal Care', location: 'mc', group: 'mc', consult_active: false, id: null };
   cc = { name: 'Child Care', location: 'cc', group: 'cc', consult_active: false, id: null };
