@@ -115,7 +115,7 @@ export class CaseHoldingComponent implements OnInit {
       id: [null],
       patient_id: [this.patient_id],
       patient_tb_id: [this.selected_tb_consult.id],
-      case_number: ['', Validators.required],
+      case_number: ['', [Validators.required,Validators.pattern('^[a-zA-Z0-9]*$')]],
       enroll_as_code : ['', Validators.required],
       treatment_regimen_code : ['', Validators.required],
       registration_date: ['', Validators.required],

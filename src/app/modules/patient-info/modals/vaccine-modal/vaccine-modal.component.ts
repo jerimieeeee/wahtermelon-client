@@ -33,7 +33,7 @@ export class VaccineModalComponent implements OnInit {
     private toastr: ToastrService
   ) { }
 
-  covid_array = ['ASTRA', 'JANDJ', 'MODER', 'NOVAV', 'PFIZE', 'SINOP', 'SPUTN'];
+  covid_array = ['ASTRA', 'JANDJ', 'MODER', 'NOVAV', 'PFIZE', 'SINOP', 'SPUTN', 'SINOV'];
   onSubmit(){
     var vax_arr = [];
 

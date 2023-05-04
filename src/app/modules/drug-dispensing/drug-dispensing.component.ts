@@ -1,8 +1,10 @@
+import { formatDate } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { faCircleNotch, faDoorClosed } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-drug-dispensing',
@@ -21,7 +23,9 @@ export class DrugDispensingComponent implements OnInit {
   modal = [];
   dispensed_list = [];
 
+  max_date = formatDate(new Date, 'yyyy-MM-dd', 'en');
   show_form: boolean = false;
+  is_saving: boolean = false;
 
   libraries = {
     dosage_uom:             {var_name: 'dosage_desc',       location: 'unit-of-measurements', value: ''},
@@ -37,6 +41,9 @@ export class DrugDispensingComponent implements OnInit {
   }
 
   onSubmit(){
+    this.is_saving = true;
+    let requests =  {};
+
     Object.entries(this.prescriptions).forEach(([key, value], index) => {
       let values: any = value;
 
@@ -51,25 +58,36 @@ export class DrugDispensingComponent implements OnInit {
           total_amount: 0
         }
 
-        this.http.post('medicine/dispensing', params).subscribe({
-          next: (data: any) => {
-            console.log(data)
-            if(Object.keys(this.prescriptions).length-1 === index) {
-              this.getPresciptions(this.route.snapshot.paramMap.get('id'));
-              this.toastr.success('Successfully recorded!','Dispensing');
-            }
-          },
-          error: err => console.log(err)
-        })
-      } else {
-        if(Object.keys(this.prescriptions).length-1 === index) {
-          this.getPresciptions(this.route.snapshot.paramMap.get('id'));
-          this.toastr.success('Successfully recorded!','Dispensing');
-        }
+        requests[index] = this.http.post('medicine/dispensing', params)
       }
-    })
+    });
+
+    if(Object.keys(requests).length === 0) {
+      this.toastr.info('Nothing to save')
+    } else {
+      forkJoin(requests).subscribe({
+        next: (data: any) => {
+        },
+        error: err => {
+          this.showError(err)
+        },
+        complete: () => {
+          this.is_saving = false;
+          this.toastr.success('Successfully recorded!','Dispensing');
+          this.getPresciptions(this.route.snapshot.paramMap.get('id'));
+        }
+      })
+    }
   }
 
+  showError(err){
+    this.is_saving = false;
+        this.toastr.error(err.error.message, 'Error', {
+          closeButton: true,
+          positionClass: 'toast-top-center',
+          disableTimeOut: true
+        })
+  }
 
 
   qtyDisp(pres){
