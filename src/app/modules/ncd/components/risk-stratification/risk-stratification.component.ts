@@ -13,8 +13,8 @@ export class RiskStratificationComponent implements OnInit {
   @Input() consult_details;
   faInfoCircle = faInfoCircle;
 
-  risk=10;
   risk_strat: any;
+  info: any;
   show_form: boolean = false;
   loadRiskStrat(){
     let params ={
@@ -24,8 +24,9 @@ export class RiskStratificationComponent implements OnInit {
     this.http.get('non-communicable-disease/risk-stratification', {params}).subscribe({
       next: (data: any) => {
         this.show_form = true;
+        this.info = data.data[0];
         this.risk_strat = data.risk_stratification;
-        // console.log(this.risk_strat)
+        // console.log(data)
       },
       error: err => console.log(err)
     });
