@@ -5,6 +5,7 @@ import { DrugDispensingRoutingModule } from './drug-dispensing-routing.module';
 import { DrugDispensingComponent } from './drug-dispensing.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FormsModule } from '@angular/forms';
+import { EndVisitComponent } from 'app/shared/shared-modals/end-visit/end-visit.component';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { FormsModule } from '@angular/forms';
     CommonModule,
     DrugDispensingRoutingModule,
     FontAwesomeModule,
-    FormsModule
+    FormsModule,
+    EndVisitComponent
   ]
 })
 export class DrugDispensingModule { }
