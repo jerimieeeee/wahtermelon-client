@@ -68,9 +68,20 @@ export class InterviewComponent implements OnInit{
     });
   }
 
-  toggleModal(name){
-    this.modals[name] = !this.modals[name]
+  selected_abused = {
+    act_title: '',
+    url: ''
   }
+  toggleModal(name, act?, url?){
+    if(name === 'abuse_acts') {
+      this.selected_abused = {
+        act_title: act,
+        url: url
+      }
+    }
+    this.modals[name] = !this.modals[name];
+  }
+
 
   constructor (
     private http: HttpService,

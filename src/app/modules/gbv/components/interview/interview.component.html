@@ -138,7 +138,7 @@
         <div class="col-span-4 grid grid-cols-1 border-slate-200 shadow-md rounded-md mx-5 mb-5">
           <div class="bg-sky-500 text-white py-1 px-3 rounded-t-md flex justify-between">
             <spa>Sexual Abuse</spa>
-            <button type="button" (click)="toggleModal('abuse_acts')" class="bg-white text-sky-500 px-2 rounded text-xs">
+            <button type="button" (click)="toggleModal('abuse_acts', 'Sexual Abuse', 'gbv-sexual-abuse')" class="bg-white text-sky-500 px-2 rounded text-xs">
               <fa-icon [icon]="faEdit"></fa-icon>
             </button>
           </div>
@@ -152,7 +152,7 @@
         <div class="col-span-4 grid grid-cols-1 border-slate-200 shadow-md rounded-md mx-5 mb-5">
           <div class="bg-sky-500 text-white py-1 px-3 rounded-t-md flex justify-between">
             <spa>Physical Abuse</spa>
-            <button type="button" (click)="toggleModal('abuse_acts')" class="bg-white text-sky-500 px-2 rounded text-xs">
+            <button type="button" (click)="toggleModal('abuse_acts', 'Physical Abuse', 'gbv-physical-abuse')" class="bg-white text-sky-500 px-2 rounded text-xs">
               <fa-icon [icon]="faEdit"></fa-icon>
             </button>
           </div>
@@ -166,7 +166,7 @@
         <div class="col-span-4 grid grid-cols-1 border-slate-200 shadow-md rounded-md mx-5 mb-5">
           <div class="bg-sky-500 text-white py-1 px-3 rounded-t-md flex justify-between">
             <spa>Neglect</spa>
-            <button type="button" (click)="toggleModal('abuse_acts')" class="bg-white text-sky-500 px-2 rounded text-xs">
+            <button type="button" (click)="toggleModal('abuse_acts', 'Neglects', 'gbv-neglect')" class="bg-white text-sky-500 px-2 rounded text-xs">
               <fa-icon [icon]="faEdit"></fa-icon>
             </button>
           </div>
@@ -180,7 +180,7 @@
         <div class="col-span-4 grid grid-cols-1 border-slate-200 shadow-md rounded-md mx-5 mb-5">
           <div class="bg-sky-500 text-white py-1 px-3 rounded-t-md flex justify-between">
             <spa>Emotional Abuse</spa>
-            <button type="button" (click)="toggleModal('abuse_acts')" class="bg-white text-sky-500 px-2 rounded text-xs">
+            <button type="button" (click)="toggleModal('abuse_acts', 'Emotional Abuse', 'gbv-emotional-abuse')" class="bg-white text-sky-500 px-2 rounded text-xs">
               <fa-icon [icon]="faEdit"></fa-icon>
             </button>
           </div>
@@ -306,6 +306,7 @@
 
 <app-abuse-acts *ngIf="modals['abuse_acts']"
   (toggleModal)="toggleModal($event)"
+  [selected_abused]="selected_abused"
 ></app-abuse-acts>
 
 <app-perpetrators *ngIf="modals['perpetrators']"

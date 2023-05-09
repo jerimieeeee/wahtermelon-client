@@ -28,6 +28,26 @@ export class GbvReferralComponent {
 
   }
 
+  neglects: any;
+  sexual_abuses: any;
+  behavioral_changes: any;
+
+  loadLibraries(){
+    this.http.get('libraries/gbv-neglect').subscribe({
+      next: (data: any) => {
+        this.neglects = data.data;
+      },
+      error: err => console.log(err)
+    });
+
+    this.http.get('libraries/gbv-behavioral').subscribe({
+      next: (data: any) => {
+        this.behavioral_changes = data.data;
+      },
+      error: err => console.log(err)
+    });
+  }
+
   interviewForm: FormGroup = new FormGroup({
     patient_id: new FormControl<string| null>(''),
     tb_treatment_outcome_code : new FormControl<string| null>(''),
@@ -47,6 +67,7 @@ export class GbvReferralComponent {
   ) { }
 
   ngOnInit(): void {
+    this.loadLibraries();
     // console.log(this.selected_tb_consult);
     // this.createForm();
   }

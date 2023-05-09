@@ -25,6 +25,34 @@
             </div>
 
             <div class="col-span-4">
+              Behavioral Changes
+            </div>
+            <div class="col-span-4 grid grid-cols-2 gap-4">
+              <div *ngFor="let behavioral_change of behavioral_changes">
+                <input type="checkbox" class="rounded w-4 h-4 border border-slate-400" />
+                <label class="pl-3 py-0.5">{{ behavioral_change.desc }}</label>
+              </div>
+            </div>
+            <div class="col-span-4 flex">
+              <label class="mt-2 pr-3">Remarks</label>
+              <input type="text" class="input" />
+            </div>
+
+            <div class="col-span-4">
+              Neglects
+            </div>
+            <div class="col-span-4 grid grid-cols-2 gap-4">
+              <div *ngFor="let neglect of neglects">
+                <input type="checkbox" class="rounded w-4 h-4 border border-slate-400" />
+                <label class="pl-3 py-0.5">{{ neglect.desc }}</label>
+              </div>
+            </div>
+            <div class="col-span-4 flex">
+              <label class="mt-2 pr-3">Remarks</label>
+              <input type="text" class="input" />
+            </div>
+
+            <div class="col-span-4">
               <label for="case_number" [ngClass]="{'text-red-500': show_error && f.case_number.errors}">Referral reason</label>
               <textarea type="text" name="case_number" id="case_number" formControlName="case_number" class="input" [ngClass]="{'invalid-input': show_error && f.case_number.errors}">
               </textarea>
