@@ -43,6 +43,13 @@ export class ModuleModalComponent implements OnInit {
           consult_active: false,
           id: null
         },
+        gbv: {
+          name: 'GBV',
+          location: 'gbv',
+          group: 'gbv',
+          consult_active: false,
+          id: null
+        },
       }
     }
   };
