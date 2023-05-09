@@ -37,6 +37,21 @@
           </div>
         </div> -->
 
+        <div class="border border-orange-300 bg-orange-100 rounded-md grid grid-cols-1 m-5 p-5 text-sm">
+          <span class="text-orange-500 font-semibold">
+            Possible GBV Client
+          </span>
+          <span class="text-orange-500">
+            Base on the selected chief complaint, this patient is a possible Gender Based Violence case.
+            Would you like to refer it to a GBV point person for further investigation?
+          </span>
+          <span class="flex justify-end">
+            <button type="button" class="bg-orange-500 text-white rounded-md px-10 py-2 mt-3" (click)="toggleModal('gbv_referral')">
+              Refer
+            </button>
+          </span>
+        </div>
+
         <div class="grid grid-cols-1 px-4 pb-4">
           <label for="complaint_notes" class="font-semibold pl-1">Complaint notes</label>
           <textarea [disabled]="consult_done || !allowed_to_edit" rows="3" id="complaint_notes" placeholder="Complaint Notes" [(ngModel)]="consult_notes.complaint" class="placeholder-slate-400 w-full rounded-md border-gray-300 bg-gray-50"></textarea>
@@ -58,3 +73,7 @@
     </div>
   </div>
 </div>
+
+<app-gbv-referral *ngIf="modals['gbv_referral']"
+  (toggleModal)="toggleModal($event)"
+></app-gbv-referral>

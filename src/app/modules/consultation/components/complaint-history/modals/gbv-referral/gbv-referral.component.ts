@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 import { faSave } from '@fortawesome/free-regular-svg-icons';
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
@@ -16,44 +17,25 @@ export class GbvReferralComponent {
   @Input() selected_tb_consult;
   @Input() max_date;
 
-  faSave = faSave;
-  faCircleNotch = faCircleNotch;
-
-  answers: any;
-  answers_yn: any;
-
   is_saving: boolean = false;
   show_error: boolean = false;
-
-  gbv_referral = {
-    referral_facility_code: '',
-    referral_date: ''
+  tb_enroll_as: any;
+  get f(): { [key: string]: AbstractControl } {
+    return this.interviewForm.controls;
   }
+
   onSubmit(){
-    this.is_saving = true;
-
-    this.http.update('tbdots/patient-tb/', this.selected_tb_consult.id, this.gbv_referral).subscribe({
-      next: (data: any) => {
-        // console.log(data);
-        this.is_saving = false;
-        this.toastr.success('Successfully referred!','GBV Referral');
-        this.switchPage.emit(1);
-        this.closeModal();
-      },
-      error: err => console.log(err)
-    });
-  }
-
-  loadLibraries(){
-    this.http.get('libraries/tb-treatment-outcome').subscribe({
-      next: (data: any) => {},//this.treatment_outcomes = data.data,
-      error: err => console.log(err)
-    })
-  }
-
-  createForm(){
 
   }
+
+  interviewForm: FormGroup = new FormGroup({
+    patient_id: new FormControl<string| null>(''),
+    tb_treatment_outcome_code : new FormControl<string| null>(''),
+    lib_tb_outcome_reason_id : new FormControl<string| null>(''),
+    outcome_date: new FormControl<string| null>(''),
+    treatment_done: new FormControl<string| null>(''),
+    outcome_remarks: new FormControl<string| null>(''),
+  });
 
   closeModal(){
     this.toggleModal.emit('gbv_referral');
@@ -66,6 +48,6 @@ export class GbvReferralComponent {
 
   ngOnInit(): void {
     // console.log(this.selected_tb_consult);
-    this.createForm();
+    // this.createForm();
   }
 }

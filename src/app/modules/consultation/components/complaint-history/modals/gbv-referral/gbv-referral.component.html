@@ -5,34 +5,47 @@
       <!-- Modal header -->
       <div class="flex justify-between items-start py-3 px-5 rounded-t border-b bg-sky-500">
         <h3 class="text-sm font-bold text-white">
-            Family Member Details
+            Referral
         </h3>
       </div>
       <!-- Modal body -->
       <div class="overflow-y-auto h-96 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
-        <div class="grid grid-cols-4 gap-4">
-          <div class="col-span-2">
-            <label for="outcome_date">Referred to</label>
-            <input type="text" name="outcome_date" id="outcome_date" [(ngModel)]="gbv_referral.referral_facility_code" class="input">
-          </div>
+        <form [formGroup]="interviewForm" (submit)="onSubmit()" class="text-left text-gray-500 m-5">
+          <div class="grid grid-cols-4 gap-4">
+            <div class="col-span-2">
+              <label for="case_number" [ngClass]="{'text-red-500': show_error && f.case_number.errors}">Date</label>
+              <input type="date" name="case_number" id="case_number" formControlName="case_number" class="input" [ngClass]="{'invalid-input': show_error && f.case_number.errors}">
+            </div>
 
-          <div class="col-span-2">
-            <label for="outcome_date">Date</label>
-            <input type="text" name="outcome_date" id="outcome_date" [(ngModel)]="gbv_referral.referral_date" class="input">
-          </div>
+            <div class="col-span-2">
+              <label for="case_number" [ngClass]="{'text-red-500': show_error && f.case_number.errors}">Place</label>
+              <select name="enroll_as_code" id="enroll_as_code" formControlName="enroll_as_code" class="input" [ngClass]="{'invalid-input': show_error && f.enroll_as_code.errors}">
+                <option *ngFor="let enroll_as of tb_enroll_as" [value]="enroll_as.code">{{ enroll_as.desc }}</option>
+              </select>
+            </div>
 
-          <div class="col-span-4">
-            <span class="text-sky-500">Complaints</span>
+            <div class="col-span-4">
+              <label for="case_number" [ngClass]="{'text-red-500': show_error && f.case_number.errors}">Referral reason</label>
+              <textarea type="text" name="case_number" id="case_number" formControlName="case_number" class="input" [ngClass]="{'invalid-input': show_error && f.case_number.errors}">
+              </textarea>
+            </div>
+
+            <div class="col-span-4">
+              <label for="case_number" [ngClass]="{'text-red-500': show_error && f.case_number.errors}">Services requested</label>
+              <textarea type="text" name="case_number" id="case_number" formControlName="case_number" class="input" [ngClass]="{'invalid-input': show_error && f.case_number.errors}">
+              </textarea>
+            </div>
           </div>
-        </div>
+        </form>
       </div>
 
       <!-- Modal footer -->
       <div class="flex justify-end py-4 px-5 space-x-4 rounded-b border-t border-gray-200">
         <button type="button" class="btn-save bg-gray-400" (click)="closeModal()">Close</button>
         <button [disabled]="is_saving" type="submit" class="btn-save px-10 disabled:bg-gray-300" (click)="onSubmit()" >
-          <fa-icon></fa-icon>
-          {{ is_saving ? 'Saving' : 'Save' }}
+          <!-- <fa-icon></fa-icon> -->
+          <!-- {{ is_saving ? 'Saving' : 'Save' }} -->
+          Refer
         </button>
       </div>
     </div>

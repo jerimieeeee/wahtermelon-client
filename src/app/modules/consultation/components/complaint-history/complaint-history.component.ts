@@ -29,6 +29,8 @@ export class ComplaintHistoryComponent implements OnInit, OnChanges {
     history: null
   }
 
+  modals: any = [];
+
   show_content: boolean = true;
   is_saving: boolean = false;
   consult_done: boolean = false;
@@ -111,6 +113,10 @@ export class ComplaintHistoryComponent implements OnInit, OnChanges {
       this.consult_done = this.consult_details.consult_done;
       // this.enable_edit = this.consult_details.
     }
+  }
+
+  toggleModal(name) {
+    this.modals[name] = !this.modals[name];
   }
 
   constructor(
