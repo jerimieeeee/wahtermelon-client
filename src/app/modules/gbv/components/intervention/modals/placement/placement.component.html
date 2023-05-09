@@ -1,0 +1,105 @@
+<div id="defaultModal" tabindex="-1" class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 w-full md:inset-0 h-modal md:h-full justify-center items-center flex" aria-modal="true" role="dialog" style="z-index:60">
+  <div class="relative p-4 w-full max-w-3xl h-auto md:h-auto">
+    <!-- Modal content -->
+    <div class="relative bg-white rounded-lg shadow">
+      <!-- Modal header -->
+      <div class="flex justify-between items-start py-3 px-5 rounded-t border-b bg-sky-500">
+        <h3 class="text-sm font-bold text-white">
+            Placement Details
+        </h3>
+      </div>
+      <!-- Modal body -->
+      <div class="overflow-y-auto h-96 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
+        <form [formGroup]="placementForm" (submit)="onSubmit()" class="text-left text-gray-500 m-5">
+          <div class="grid grid-cols-4 gap-4">
+            <div class="col-span-2">
+              <label for="placement_location_id">Placement location</label>
+              <select name="placement_location_id" id="placement_location_id" formControlName="placement_location_id" class="input">
+                <option *ngFor="let loc of placement_locations" [value]="loc.id">{{ enroll_as.desc }}</option>
+              </select>
+            </div>
+
+            <!-- IF HOME PLACEMENT -->
+            <div class="col-span-2">
+              <label for="home_by_cpu_flag">Home Placement by</label>
+              <select name="home_by_cpu_flag" id="home_by_cpu_flag" formControlName="home_by_cpu_flag" class="input">
+                <option [ngValue]="true">By CPU</option>
+                <option [ngValue]="false">By Others</option>
+              </select>
+            </div>
+            <!-- IF HOME PLACEMENT -->
+
+            <!-- IF PLACE BY OTHERS -->
+            <div class="col-span-4">
+              <label for="home_by_other_name" >Name</label>
+              <input type="text" name="home_by_other_name" id="home_by_other_name" formControlName="home_by_other_name" class="input">
+            </div>
+            <!-- IF PLACE BY OTHERS -->
+
+            <!-- IF RELATIVE OR SHELTER PLACEMENT-->
+            <div class="col-span-2">
+              <label for="placement_type_id">Placement type</label>
+              <select name="placement_type_id" id="placement_type_id" formControlName="placement_type_id" class="input">
+                <option *ngFor="let loc of placement_locations" [value]="loc.id">{{ enroll_as.desc }}</option>
+              </select>
+            </div>
+
+            <div class="col-span-2">
+              <label for="placement_name" >Name</label>
+              <input type="text" name="placement_name" id="placement_name" formControlName="placement_name" class="input">
+            </div>
+
+            <div class="col-span-2">
+              <label for="placement_contact_info" >Contact Info</label>
+              <input type="text" name="placement_contact_info" id="placement_contact_info" formControlName="placement_contact_info" class="input">
+            </div>
+
+            <div class="col-span-2">
+              <label for="schedule_date" >Schedule Date</label>
+              <input type="date" name="schedule_date" id="schedule_date" formControlName="schedule_date" class="input">
+            </div>
+
+            <div class="col-span-2">
+              <label for="actual_date" >Actual Date</label>
+              <input type="date" name="actual_date" id="actual_date" formControlName="actual_date" class="input">
+            </div>
+            <!-- IF RELATIVE OR SHELTER PLACEMENT-->
+
+            <!-- IF HOSPITAL PLACEMENT -->
+            <div class="col-span-3">
+              <label for="hospital_name" >Hospital Name</label>
+              <input type="text" name="hospital_name" id="hospital_name" formControlName="hospital_name" class="input">
+            </div>
+
+            <div class="col-span-1">
+              <label for="hospital_ward" >Ward</label>
+              <input type="text" name="hospital_ward" id="hospital_ward" formControlName="hospital_ward" class="input">
+            </div>
+
+            <div class="col-span-2">
+              <label for="hospital_date_in" >Date In</label>
+              <input type="date" name="hospital_date_in" id="hospital_date_in" formControlName="hospital_date_in" class="input">
+            </div>
+
+            <div class="col-span-2">
+              <label for="hospital_date_out" >Date Out</label>
+              <input type="date" name="hospital_date_out" id="hospital_date_out" formControlName="hospital_date_out" class="input">
+            </div>
+            <!-- IF HOSPITAL PLACEMENT -->
+          </div>
+        </form>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="flex justify-end py-4 px-5 space-x-4 rounded-b border-t border-gray-200">
+        <button type="button" class="btn-save bg-gray-400" (click)="closeModal()">Close</button>
+        <button [disabled]="is_saving || placementForm.invalid" type="submit" class="btn-save px-10 disabled:bg-gray-300" (click)="onSubmit()" >
+          <fa-icon [icon]="is_saving ? faCircleNotch : faSave"></fa-icon>
+          {{ is_saving ? 'Saving' : 'Save' }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="opacity-50 fixed inset-0 z-50 bg-black"></div>

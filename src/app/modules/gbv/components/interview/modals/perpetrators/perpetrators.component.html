@@ -1,0 +1,188 @@
+<div id="defaultModal" tabindex="-1" class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 w-full md:inset-0 h-modal md:h-full justify-center items-center flex" aria-modal="true" role="dialog" style="z-index:60">
+  <div class="relative p-4 w-full max-w-3xl h-auto md:h-auto">
+    <!-- Modal content -->
+    <div class="relative bg-white rounded-lg shadow">
+      <!-- Modal header -->
+      <div class="flex justify-between items-start py-3 px-5 rounded-t border-b bg-sky-500">
+        <h3 class="text-sm font-bold text-white">
+          Alleged Perpetrator Details
+        </h3>
+      </div>
+      <!-- Modal body -->
+      <div class="overflow-y-auto h-[500px] scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
+        <form [formGroup]="interviewForm" (submit)="onSubmit()" class="text-left text-gray-500 m-5">
+          <div class="grid grid-cols-4 gap-4">
+            <div class="col-span-2">
+              <label for="case_number" [ngClass]="{'text-red-500': show_error && f.case_number.errors}">Gender</label>
+              <select name="enroll_as_code" id="enroll_as_code" formControlName="enroll_as_code" class="input" [ngClass]="{'invalid-input': show_error && f.enroll_as_code.errors}">
+                <option *ngFor="let loc of perpetrator_locations" [value]="loc.id">{{ enroll_as.desc }}</option>
+              </select>
+            </div>
+
+            <div class="col-span-2 mt-7">
+              <input type="checkbox" class="rounded w-4 h-4 border border-slate-400" />
+              <label class="pl-3 py-0.5">Is the perpetrator known?</label>
+            </div>
+
+            <div class="col-span-4 grid grid-cols-2 gap-4">
+              <div class="col-span-2">
+                <label for="case_number" [ngClass]="{'text-red-500': show_error && f.case_number.errors}">Full name</label>
+                <input type="text" name="case_number" id="case_number" formControlName="case_number" class="input" [ngClass]="{'invalid-input': show_error && f.case_number.errors}">
+              </div>
+
+              <div>
+                <label for="case_number" [ngClass]="{'text-red-500': show_error && f.case_number.errors}">Nickname</label>
+                <input type="text" name="case_number" id="case_number" formControlName="case_number" class="input" [ngClass]="{'invalid-input': show_error && f.case_number.errors}">
+              </div>
+
+              <div>
+                <label for="case_number" [ngClass]="{'text-red-500': show_error && f.case_number.errors}">Age</label>
+                <input type="number" name="case_number" id="case_number" formControlName="case_number" class="input" [ngClass]="{'invalid-input': show_error && f.case_number.errors}">
+              </div>
+
+              <div>
+                <label for="case_number" [ngClass]="{'text-red-500': show_error && f.case_number.errors}">Occupation</label>
+                <input type="text" name="case_number" id="case_number" formControlName="case_number" class="input" [ngClass]="{'invalid-input': show_error && f.case_number.errors}">
+              </div>
+
+
+
+              <div class="col-span-2">
+                <input type="checkbox" class="rounded w-4 h-4 border border-slate-400" />
+                <label class="pl-3 py-0.5">Is the person known to child/adolescent/woman?</label>
+              </div>
+
+              <div>
+                <label for="case_number" [ngClass]="{'text-red-500': show_error && f.case_number.errors}">Realtion to child</label>
+                <select name="enroll_as_code" id="enroll_as_code" formControlName="enroll_as_code" class="input" [ngClass]="{'invalid-input': show_error && f.enroll_as_code.errors}">
+                  <option *ngFor="let loc of perpetrator_locations" [value]="loc.id">{{ enroll_as.desc }}</option>
+                </select>
+              </div>
+
+              <div>
+                <label for="case_number" [ngClass]="{'text-red-500': show_error && f.case_number.errors}">Current location</label>
+                <select name="enroll_as_code" id="enroll_as_code" formControlName="enroll_as_code" class="input" [ngClass]="{'invalid-input': show_error && f.enroll_as_code.errors}">
+                  <option *ngFor="let loc of perpetrator_locations" [value]="loc.id">{{ enroll_as.desc }}</option>
+                </select>
+              </div>
+
+              <div class="col-span-2">
+                <label for="case_number" [ngClass]="{'text-red-500': show_error && f.case_number.errors}">Address/location</label>
+                <input type="text" name="case_number" id="case_number" formControlName="case_number" class="input" [ngClass]="{'invalid-input': show_error && f.case_number.errors}">
+              </div>
+
+              <div class="col-span-2 text-sky-500 font-semibold">
+                History of substance abuse
+              </div>
+
+              <div class="col-span-2 grid grid-cols-4 gap-4">
+                <div>
+                  <input type="checkbox" class="rounded w-4 h-4 border border-slate-400" />
+                  <label class="pl-3 py-0.5">Unkown</label>
+                </div>
+
+                <div>
+                  <input type="checkbox" class="rounded w-4 h-4 border border-slate-400" />
+                  <label class="pl-3 py-0.5">Alcohol</label>
+                </div>
+
+                <div>
+                  <input type="checkbox" class="rounded w-4 h-4 border border-slate-400" />
+                  <label class="pl-3 py-0.5">Drugs</label>
+                </div>
+
+                <div>
+                  <input type="checkbox" class="rounded w-4 h-4 border border-slate-400" />
+                  <label class="pl-3 py-0.5">Other substance</label>
+                </div>
+              </div>
+
+              <div>
+                <label for="case_number" [ngClass]="{'text-red-500': show_error && f.case_number.errors}">Name of drugs</label>
+                <input type="text" name="case_number" id="case_number" formControlName="case_number" class="input" [ngClass]="{'invalid-input': show_error && f.case_number.errors}">
+              </div>
+
+              <div>
+                <label for="case_number" [ngClass]="{'text-red-500': show_error && f.case_number.errors}">Name of substance</label>
+                <input type="text" name="case_number" id="case_number" formControlName="case_number" class="input" [ngClass]="{'invalid-input': show_error && f.case_number.errors}">
+              </div>
+
+              <div class="col-span-2 text-sky-500 font-semibold">
+                History of violence
+              </div>
+
+              <div class="col-span-2 grid grid-cols-3 gap-4">
+                <div>
+                  <input type="checkbox" class="rounded w-4 h-4 border border-slate-400" />
+                  <label class="pl-3 py-0.5">Unknown</label>
+                </div>
+
+                <div>
+                  <input type="checkbox" class="rounded w-4 h-4 border border-slate-400" />
+                  <label class="pl-3 py-0.5">Abused as a child</label>
+                </div>
+
+                <div>
+                  <input type="checkbox" class="rounded w-4 h-4 border border-slate-400" />
+                  <label class="pl-3 py-0.5">Abused as a spouse</label>
+                </div>
+
+                <div>
+                  <input type="checkbox" class="rounded w-4 h-4 border border-slate-400" />
+                  <label class="pl-3 py-0.5">Spouse abuser</label>
+                </div>
+
+                <div class="col-span-2">
+                  <input type="checkbox" class="rounded w-4 h-4 border border-slate-400" />
+                  <label class="pl-3 py-0.5">Withness family violence</label>
+                </div>
+              </div>
+
+              <div class="col-span-2 text-sky-500 font-semibold">
+                Criminal History
+              </div>
+
+              <div>
+                <input type="checkbox" class="rounded w-4 h-4 border border-slate-400" />
+                <label class="pl-3 py-0.5">Unknown</label>
+              </div>
+
+              <div>
+                <input type="checkbox" class="rounded w-4 h-4 border border-slate-400" />
+                <label class="pl-3 py-0.5">Previous conviction for similar offense</label>
+              </div>
+
+              <div>
+                <input type="checkbox" class="rounded w-4 h-4 border border-slate-400" />
+                <label class="pl-3 py-0.5">Previous conviction for other offense</label>
+              </div>
+
+              <div>
+                <input type="checkbox" class="rounded w-4 h-4 border border-slate-400" />
+                <label class="pl-3 py-0.5">Previous police blotter/barangay report</label>
+              </div>
+
+              <div class="col-span-2">
+                <label for="case_number" [ngClass]="{'text-red-500': show_error && f.case_number.errors}">Reported for</label>
+                <input type="text" name="case_number" id="case_number" formControlName="case_number" class="input" [ngClass]="{'invalid-input': show_error && f.case_number.errors}">
+              </div>
+
+            </div>
+
+          </div>
+        </form>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="flex justify-end py-4 px-5 space-x-4 rounded-b border-t border-gray-200">
+        <button type="button" class="btn-save bg-gray-400" (click)="closeModal()">Close</button>
+        <button [disabled]="is_saving || interviewForm.invalid" type="submit" class="btn-save px-10 disabled:bg-gray-300" (click)="onSubmit()" >
+          <fa-icon></fa-icon>
+          {{ is_saving ? 'Saving' : 'Save' }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="opacity-50 fixed inset-0 z-50 bg-black"></div>

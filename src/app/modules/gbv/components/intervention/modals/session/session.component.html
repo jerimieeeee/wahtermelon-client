@@ -1,0 +1,52 @@
+<div id="defaultModal" tabindex="-1" class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 w-full md:inset-0 h-modal md:h-full justify-center items-center flex" aria-modal="true" role="dialog" style="z-index:60">
+  <div class="relative p-4 w-full max-w-3xl h-auto md:h-auto">
+    <!-- Modal content -->
+    <div class="relative bg-white rounded-lg shadow">
+      <!-- Modal header -->
+      <div class="flex justify-between items-start py-3 px-5 rounded-t border-b bg-sky-500">
+        <h3 class="text-sm font-bold text-white">
+            Session Details
+        </h3>
+      </div>
+      <!-- Modal body -->
+      <div class="overflow-y-auto h-48 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
+        <form [formGroup]="sessionForm" (submit)="onSubmit()" class="text-left text-gray-500 m-5">
+          <div class="grid grid-cols-3 gap-4">
+            <div>
+              <label for="participant_id">Participants</label>
+              <select name="participant_id" id="participant_id" formControlName="participant_id" class="input">
+                <option *ngFor="let participant of participants" [value]="participant.id">{{ participant.desc }}</option>
+              </select>
+            </div>
+
+            <div>
+              <label for="schedule_date">Schedule Date</label>
+              <input type="date" name="schedule_date" id="schedule_date" formControlName="schedule_date" class="input">
+            </div>
+
+            <div>
+              <label for="actual_date">Actual Date</label>
+              <input type="date" name="actual_date" id="actual_date" formControlName="actual_date" class="input">
+            </div>
+
+            <div class="col-span-3">
+              <label for="md_name" >MD Name</label>
+              <input type="text" name="md_name" id="md_name" formControlName="md_name" class="input">
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="flex justify-end py-4 px-5 space-x-4 rounded-b border-t border-gray-200">
+        <button type="button" class="btn-save bg-gray-400" (click)="closeModal()">Close</button>
+        <button [disabled]="is_saving || sessionForm.invalid" type="submit" class="btn-save px-10 disabled:bg-gray-300" (click)="onSubmit()" >
+          <fa-icon [icon]="is_saving ? faCircleNotch : faSave"></fa-icon>
+          {{ is_saving ? 'Saving' : 'Save' }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="opacity-50 fixed inset-0 z-50 bg-black"></div>
