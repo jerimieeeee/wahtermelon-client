@@ -121,6 +121,22 @@ export class IntakeComponent implements OnInit{
     });
   }
 
+  family_members: any;
+
+  loadFamily(){
+    let params = {
+      patient_id: this.patient_id
+    };
+
+    this.http.get('gender-based-violence/patient-gbv-family-composition', {params}).subscribe({
+      next: (data: any) => {
+        console.log(data)
+        this.family_members = data.data;
+      },
+      error: err => console.log(err)
+    })
+  }
+
   loadDemog(loc, code, include){
     if(code !== '0') {
       this.http.get('libraries/'+loc+'/'+code,{params:{'include':include}}).subscribe({
@@ -184,6 +200,7 @@ export class IntakeComponent implements OnInit{
     });
 
     this.loadSelectedConsult();
+    this.loadFamily();
   }
 
   loadSelectedConsult(){
@@ -226,7 +243,9 @@ export class IntakeComponent implements OnInit{
   }
 
   toggleModal(name){
-    this.modals[name] = !this.modals[name]
+    this.modals[name] = !this.modals[name];
+
+    if(name==='add_family') this.loadFamily();
   }
 
   constructor (
