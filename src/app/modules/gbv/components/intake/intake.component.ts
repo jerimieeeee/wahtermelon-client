@@ -92,6 +92,8 @@ export class IntakeComponent implements OnInit{
     query.subscribe({
       next: (data: any) => {
         console.log(data);
+        this.toastr.success('Successfully recorded!', 'Intake Form');
+        this.selected_gbv_case = data.data
       },
       error: err => console.log(err)
     })
