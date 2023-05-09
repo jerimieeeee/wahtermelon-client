@@ -156,9 +156,16 @@
               </button>
             </div>
             <div class="min-h-24">
-              <span class="flex italic py-5 justify-center">
+              <!-- <span class="flex italic py-5 justify-center">
                 Please save an intake first before adding family members.
-              </span>
+              </span> -->
+              <div class="grid grid-cols-3 m-3" *ngFor="let member of family_members">
+                <div>
+                  Name: {{ member.name }} <br />
+                  Age: {{ member.age }} <br />
+                  Gender: {{ member.gender }}
+                </div>
+              </div>
             </div>
           </div>
         </div>
