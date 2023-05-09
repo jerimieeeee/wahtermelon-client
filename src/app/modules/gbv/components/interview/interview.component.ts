@@ -39,6 +39,35 @@ export class InterviewComponent implements OnInit{
     pict_date: new FormControl<string| null>(''),
   });
 
+  libraries = [
+    { var_name: 'abused_episodes', location: 'gbv-abused-episode' },
+    { var_name: 'info_sources', location: 'gbv-info-source' },
+    { var_name: 'abused_sites', location: 'gbv-abused-site' },
+    { var_name: 'disclosed_types', location: 'gbv-disclosed-type' },
+    { var_name: 'child_relations', location: 'child-relation' },
+    { var_name: 'child_behaviors', location: 'gbv-child-behavior' },
+    { var_name: 'developmental_screenings', location: 'gbv-developmental-screening' }
+  ]
+
+  abused_episodes: any;
+  info_sources: any;
+  abused_sites: any;
+  disclosed_types: any;
+  child_relations: any;
+  child_behaviors: any;
+  developmental_screenings: any;
+
+  loadLibraries(){
+    this.libraries.forEach(obj => {
+      this.http.get('libraries/' + obj.location).subscribe({
+        next: (data: any) => {
+          this[obj.var_name] = data.data;
+        },
+        error: err => console.log(err),
+      })
+    });
+  }
+
   toggleModal(name){
     this.modals[name] = !this.modals[name]
   }
@@ -50,5 +79,6 @@ export class InterviewComponent implements OnInit{
 
   ngOnInit(): void {
     // this.toggleModal('add_interview_notes')
+    this.loadLibraries();
   }
 }

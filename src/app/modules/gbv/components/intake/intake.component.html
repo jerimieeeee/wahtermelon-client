@@ -156,16 +156,53 @@
               </button>
             </div>
             <div class="min-h-24">
-              <!-- <span class="flex italic py-5 justify-center">
-                Please save an intake first before adding family members.
-              </span> -->
-              <div class="grid grid-cols-3 m-3" *ngFor="let member of family_members">
+              <table class="w-full text-sm text-left" *ngIf="!fetching_history">
+                <thead class="text-xs text-white uppercase bg-sky-400">
+                  <tr>
+                    <th scope="col" class="py-3 px-6">Name</th>
+                    <th scope="col" class="py-3 px-6">Age | Gender</th>
+                    <th scope="col" class="py-3 px-6">Relation</th>
+                    <th scope="col" class="py-3 px-6">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="bg-white border-b" *ngFor="let member of family_members">
+                    <td class="py-4 px-6">
+                      {{ member.name }}
+                    </td>
+                    <td class="py-4 px-6">
+                      {{ member.age }} | {{ member.gender }}
+                    </td>
+                    <td class="py-4 px-6">
+                      {{ member.relation.desc }}
+                    </td>
+                    <td class="py-4 px-6">
+                      <!-- <button type="button" class="rounded-md bg-blue-500 text-white py-1 px-2" (click)="openGbvConsult(gbv_history)">
+                        {{ (!gbv_history.outcome_reason && !gbv_history.outcome_result && !gbv_history.outcome_verdict) ? 'Open' : 'View' }}
+                      </button> -->
+                    </td>
+                  </tr>
+
+                  <tr class="bg-white border-b" *ngIf="!patient_gbv_history">
+                    <td  colspan="7">
+                      <div class="text-center py-3 flex flex-col">
+                        <div class="flex justify-center">No records to show...</div>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <!-- <div class="grid grid-cols-3 m-3" *ngFor="let member of family_members">
                 <div>
                   Name: {{ member.name }} <br />
-                  Age: {{ member.age }} <br />
-                  Gender: {{ member.gender }}
+                  {{ member.age }} | {{ member.gender }}<br />
+                  <spa class="text-sm">{{  member.living_with_child_flag === 0 ? '' : 'Living with child' }}</spa>
                 </div>
-              </div>
+                <div>
+                  Age: {{ member.age }} <br />
+                </div>
+              </div> -->
             </div>
           </div>
         </div>

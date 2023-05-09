@@ -14,13 +14,11 @@
           </div>
         </div>
 
-        <div>
-          <!-- <label for="enroll_as_code" [ngClass]="{'text-red-500': show_error && f.enroll_as_code.errors}">Reason for deferral</label> -->
+        <!-- <div>
           <select name="enroll_as_code" id="enroll_as_code" formControlName="enroll_as_code" class="input" [ngClass]="{'invalid-input': show_error && f.enroll_as_code.errors}">
-            <!-- <option>-Select reason for deferral</option> -->
             <option *ngFor="let enroll_as of tb_enroll_as" [value]="enroll_as.code">{{ enroll_as.desc }}</option>
           </select>
-        </div>
+        </div> -->
 
         <div class="col-span-3 border-b border-slate-200 w-full my-2 font-semibold text-sky-500">
           History of Abuse
@@ -30,7 +28,7 @@
             <div class="w-1/2">
               <label for="enroll_as_code" [ngClass]="{'text-red-500': show_error && f.enroll_as_code.errors}">Information source</label>
               <select name="enroll_as_code" id="enroll_as_code" formControlName="enroll_as_code" class="input" [ngClass]="{'invalid-input': show_error && f.enroll_as_code.errors}">
-                <option *ngFor="let enroll_as of tb_enroll_as" [value]="enroll_as.code">{{ enroll_as.desc }}</option>
+                <option *ngFor="let info_source of info_sources" [value]="info_source.id">{{ info_source.desc }}</option>
               </select>
             </div>
           </div>
@@ -58,7 +56,7 @@
           <div class="col-span-2">
             <label for="enroll_as_code" [ngClass]="{'text-red-500': show_error && f.enroll_as_code.errors}">Episodes of abuse</label>
             <select name="enroll_as_code" id="enroll_as_code" formControlName="enroll_as_code" class="input" [ngClass]="{'invalid-input': show_error && f.enroll_as_code.errors}">
-              <option *ngFor="let enroll_as of tb_enroll_as" [value]="enroll_as.code">{{ enroll_as.desc }}</option>
+              <option *ngFor="let abused_episode of abused_episodes" [value]="abused_episode.id">{{ abused_episode.desc }}</option>
             </select>
           </div>
 
@@ -70,7 +68,7 @@
           <div class="col-span-2">
             <label for="enroll_as_code" [ngClass]="{'text-red-500': show_error && f.enroll_as_code.errors}">Site of abuse</label>
             <select name="enroll_as_code" id="enroll_as_code" formControlName="enroll_as_code" class="input" [ngClass]="{'invalid-input': show_error && f.enroll_as_code.errors}">
-              <option *ngFor="let enroll_as of tb_enroll_as" [value]="enroll_as.code">{{ enroll_as.desc }}</option>
+              <option *ngFor="let abused_site of abused_sites" [value]="abused_site.id">{{ abused_site.desc }}</option>
             </select>
           </div>
 
@@ -107,7 +105,7 @@
               <div class="col-span-2">
                 <label for="enroll_as_code" [ngClass]="{'text-red-500': show_error && f.enroll_as_code.errors}">Type of disclosure</label>
                 <select name="enroll_as_code" id="enroll_as_code" formControlName="enroll_as_code" class="input" [ngClass]="{'invalid-input': show_error && f.enroll_as_code.errors}">
-                  <option *ngFor="let enroll_as of tb_enroll_as" [value]="enroll_as.code">{{ enroll_as.desc }}</option>
+                  <option *ngFor="let disclosed_type of disclosed_types" [value]="disclosed_type.id">{{ disclosed_type.desc }}</option>
                 </select>
               </div>
 
@@ -119,7 +117,7 @@
               <div class="col-span-3">
                 <label for="enroll_as_code" [ngClass]="{'text-red-500': show_error && f.enroll_as_code.errors}">To whom did the child/woman disclose first?</label>
                 <select name="enroll_as_code" id="enroll_as_code" formControlName="enroll_as_code" class="input" [ngClass]="{'invalid-input': show_error && f.enroll_as_code.errors}">
-                  <option *ngFor="let enroll_as of tb_enroll_as" [value]="enroll_as.code">{{ enroll_as.desc }}</option>
+                  <option *ngFor="let child_relation of child_relations" [value]="child_relation.id">{{ child_relation.desc }}</option>
                 </select>
               </div>
 
@@ -202,7 +200,7 @@
           <div class="col-span-2">
             <label for="enroll_as_code" [ngClass]="{'text-red-500': show_error && f.enroll_as_code.errors}">Behavior during the interview</label>
             <select name="enroll_as_code" id="enroll_as_code" formControlName="enroll_as_code" class="input" [ngClass]="{'invalid-input': show_error && f.enroll_as_code.errors}">
-              <option *ngFor="let enroll_as of tb_enroll_as" [value]="enroll_as.code">{{ enroll_as.desc }}</option>
+              <option *ngFor="let child_behavior of child_behaviors" [value]="child_behavior.id">{{ child_behavior.desc }}</option>
             </select>
           </div>
 
@@ -229,7 +227,7 @@
           <div class="col-span-2">
             <label for="enroll_as_code" [ngClass]="{'text-red-500': show_error && f.enroll_as_code.errors}">Further developmental assessment needed</label>
             <select name="enroll_as_code" id="enroll_as_code" formControlName="enroll_as_code" class="input" [ngClass]="{'invalid-input': show_error && f.enroll_as_code.errors}">
-              <option *ngFor="let enroll_as of tb_enroll_as" [value]="enroll_as.code">{{ enroll_as.desc }}</option>
+              <option *ngFor="let developmental_screening of developmental_screenings" [value]="developmental_screening.id">{{ developmental_screening.desc }}</option>
             </select>
           </div>
 
