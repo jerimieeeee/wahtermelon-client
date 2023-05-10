@@ -10,23 +10,23 @@
       </div>
       <!-- Modal body -->
       <div class="overflow-y-auto h-96 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
-        <form [formGroup]="interviewForm" (submit)="onSubmit()" class="text-left text-gray-500 m-5">
-          <div class="grid grid-cols-2 gap-4" *ngIf="abuses">
+        <!-- <form [formGroup]="interviewForm" (submit)="onSubmit()" class="text-left text-gray-500 m-5"> -->
+          <div class="grid grid-cols-2 gap-4 m-4" *ngIf="abuses">
             <div *ngFor="let abuse of abuses">
-              <input type="checkbox" class="rounded w-4 h-4 border border-slate-400" />
-              <label class="pl-3 py-0.5">{{ abuse.desc }}</label>
+              <input type="checkbox" attr.id="abused_acts{{ abuse.id }}" [(ngModel)]="abused_acts[abuse.id]" class="rounded w-4 h-4 border border-slate-400" />
+              <label attr.for="abused_acts{{ abuse.id }}" class="pl-3 py-0.5">{{ abuse.desc }}</label>
             </div>
           </div>
           <div class="grid grid-cols-2 gap-4" *ngIf="!abuses">
             <fa-icon [icon]="faCircleNotch" spin="true" class="text-blue-500"></fa-icon>
           </div>
-        </form>
+        <!-- </form> -->
       </div>
 
       <!-- Modal footer -->
       <div class="flex justify-end py-4 px-5 space-x-4 rounded-b border-t border-gray-200">
         <button type="button" class="btn-save bg-gray-400" (click)="closeModal()">Close</button>
-        <button [disabled]="is_saving || interviewForm.invalid" type="submit" class="btn-save px-10 disabled:bg-gray-300" (click)="onSubmit()" >
+        <button [disabled]="is_saving" type="submit" class="btn-save px-10 disabled:bg-gray-300" (click)="onSubmit()" >
           <fa-icon></fa-icon>
           {{ is_saving ? 'Saving' : 'Save' }}
         </button>

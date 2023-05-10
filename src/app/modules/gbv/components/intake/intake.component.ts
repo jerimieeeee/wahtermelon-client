@@ -35,6 +35,14 @@ export class IntakeComponent implements OnInit{
     outcome_verdict_id: new FormControl<string| null>(''),
     primary_complaint_id: new FormControl<string| null>(''),
     primary_complaint_remarks: new FormControl<string| null>(''),
+    physical_abuse_flag: new FormControl<boolean| null>(false),
+    sexual_abuse_flag: new FormControl<boolean| null>(false),
+    neglect_abuse_flag: new FormControl<boolean| null>(false),
+    emotional_abuse_flag: new FormControl<boolean| null>(false),
+    economic_abuse_flag: new FormControl<boolean| null>(false),
+    utv_abuse_flag: new FormControl<boolean| null>(false),
+    others_abuse_flag: new FormControl<boolean| null>(false),
+    others_abuse_remarks: new FormControl<string| null>(''),
     neglect_remarks: new FormControl<string| null>(''),
     behavioral_remarks : new FormControl<string| null>(''),
     service_id : new FormControl<string| null>(''),
@@ -53,7 +61,7 @@ export class IntakeComponent implements OnInit{
     number_of_children : new FormControl<string| null>(''),
     number_of_individual_members : new FormControl<string| null>(''),
     number_of_family : new FormControl<string| null>(''),
-    incest_case : new FormControl<boolean| null>(false),
+    incest_case_flag : new FormControl<boolean| null>(false),
     sleeping_arrangement_id : new FormControl<string| null>(''),
     sleeping_arrangement_remarks : new FormControl<string| null>(''),
     same_bed_adult_male_flag : new FormControl<boolean| null>(false),
@@ -89,9 +97,10 @@ export class IntakeComponent implements OnInit{
       query = this.http.post('gender-based-violence/patient-gbv', this.intakeForm.value);
     }
 
+    this.incestCase()
     query.subscribe({
       next: (data: any) => {
-        console.log(data);
+        // console.log(data);
         this.toastr.success('Successfully recorded!', 'Intake Form');
         this.selected_gbv_case = data.data
       },
@@ -99,25 +108,44 @@ export class IntakeComponent implements OnInit{
     })
   }
 
+  incestCase(){
+    if(!this.intakeForm.value.incest_case_flag) {
+      this.intakeForm.patchValue({
+        same_bed_adult_male_flag: null,
+        same_bed_adult_female_flag: null,
+        same_bed_child_male_flag: null,
+        same_bed_child_female_flag: null,
+        same_room_adult_male_flag: null,
+        same_room_adult_female_flag: null,
+        same_room_child_male_flag: null,
+        same_room_child_female_flag: null,
+        abuse_living_arrangement_id: null,
+        abuse_living_arrangement_remarks: null,
+        present_living_arrangement_id: null,
+        present_living_arrangement_remarks: null,
+      })
+    }
+  }
+
+  primary_complaints: any;
+
+  libraries = [
+    {var_name: 'regions', location: 'regions'},
+    {var_name: 'economic_statuses', location: 'gbv-economic-status'},
+    {var_name: 'living_arrangements', location: 'gbv-living-arrangement'},
+    {var_name: 'regions', location: 'child-relation'},
+  ]
   loadLibraries(){
-    this.http.get('libraries/regions').subscribe({
-      next: (data: any) => this.regions = data.data,
-      error: err => console.log(err)
-    });
-
-    this.http.get('libraries/gbv-economic-status').subscribe({
-      next: (data: any) => this.economic_statuses = data.data,
-      error: err => console.log(err)
-    });
-
-    this.http.get('libraries/gbv-living-arrangement').subscribe({
-      next: (data: any) => this.living_arrangements = data.data,
-      error: err => console.log(err)
-    });
-
-    this.http.get('libraries/child-relation').subscribe({
-      next: (data: any) => this.child_relations = data.data,
-      error: err => console.log(err)
+    this.libraries.forEach((obj, index) => {
+      this.http.get('libraries/'+obj.location).subscribe({
+        next: (data: any) => {
+          this[obj.var_name] = data.data;
+          if(this.libraries.length -1 === index) {
+            this.show_form = true
+          }
+        },
+        error: err => console.log(err)
+      });
     });
   }
 
@@ -130,7 +158,7 @@ export class IntakeComponent implements OnInit{
 
     this.http.get('gender-based-violence/patient-gbv-family-composition', {params}).subscribe({
       next: (data: any) => {
-        console.log(data)
+        // console.log(data)
         this.family_members = data.data;
       },
       error: err => console.log(err)
@@ -142,7 +170,6 @@ export class IntakeComponent implements OnInit{
       this.http.get('libraries/'+loc+'/'+code,{params:{'include':include}}).subscribe({
         next: (data: any) => {
           this[include] = data.data[include];
-          console.log(this.barangays);
           this.disaledSelection(loc, code);
         },
         error: err => console.log(err)
@@ -153,7 +180,6 @@ export class IntakeComponent implements OnInit{
   }
 
   createForm(){
-    console.log(this.selected_gbv_case);
     this.intakeForm = this.formBuilder.nonNullable.group({
       id: [null],
       patient_id: [this.patient_id],
@@ -165,6 +191,14 @@ export class IntakeComponent implements OnInit{
       outcome_verdict_id: [null],
       primary_complaint_id: [null],
       primary_complaint_remarks: [null],
+      physical_abuse_flag: [false],
+      sexual_abuse_flag: [false],
+      neglect_abuse_flag: [false],
+      emotional_abuse_flag: [false],
+      economic_abuse_flag: [false],
+      utv_abuse_flag: [false],
+      others_abuse_flag: [false],
+      others_abuse_remarks: [null],
       neglect_remarks: [null],
       behavioral_remarks: [null],
       service_remarks: [null],
@@ -182,7 +216,7 @@ export class IntakeComponent implements OnInit{
       number_of_children: [null],
       number_of_individual_members: [null],
       number_of_family: [null],
-      incest_case: [null],
+      incest_case_flag: [null],
       sleeping_arrangement_id: [null],
       sleeping_arrangement_remarks: [null],
       same_bed_adult_male_flag: [false],
@@ -204,13 +238,14 @@ export class IntakeComponent implements OnInit{
   }
 
   loadSelectedConsult(){
+    console.log(this.selected_gbv_case)
     if(this.selected_gbv_case){
       this.intakeForm.patchValue({...this.selected_gbv_case});
       this.intakeForm.patchValue({
         relation_to_child_id: this.selected_gbv_case.relation.id,
         case_date: this.selected_gbv_case ? formatDate(this.selected_gbv_case.case_date, 'yyyy-MM-dd', 'en') : null
       })
-      console.log(this.intakeForm.value)
+      // console.log(this.intakeForm.value)
     }
   }
   disaledSelection(loc, code) {

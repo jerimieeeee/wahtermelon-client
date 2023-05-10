@@ -10,18 +10,32 @@
       </div>
       <!-- Modal body -->
       <div class="overflow-y-auto h-96 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
-        <form [formGroup]="interviewForm" (submit)="onSubmit()" class="text-left text-gray-500 m-5">
+        <div class="text-left text-gray-500 m-5">
           <div class="grid grid-cols-4 gap-4">
             <div class="col-span-2">
-              <label for="case_number" [ngClass]="{'text-red-500': show_error && f.case_number.errors}">Date</label>
-              <input type="date" name="case_number" id="case_number" formControlName="case_number" class="input" [ngClass]="{'invalid-input': show_error && f.case_number.errors}">
+              <label for="case_number">Date</label>
+              <input type="date" name="case_number" id="case_number" class="input">
             </div>
 
             <div class="col-span-2">
-              <label for="case_number" [ngClass]="{'text-red-500': show_error && f.case_number.errors}">Place</label>
-              <select name="enroll_as_code" id="enroll_as_code" formControlName="enroll_as_code" class="input" [ngClass]="{'invalid-input': show_error && f.enroll_as_code.errors}">
-                <option *ngFor="let enroll_as of tb_enroll_as" [value]="enroll_as.code">{{ enroll_as.desc }}</option>
+              <label for="case_number">Refer to</label>
+              <select name="enroll_as_code" id="enroll_as_code" class="input">
+                <option *ngFor="let gbv_mdt of gbv_mdts" [value]="gbv_mdt.id">{{ gbv_mdt.last_name }}, {{ gbv_mdt.first_name }}</option>
               </select>
+            </div>
+
+            <div class="col-span-4">
+              Complaints
+            </div>
+            <div class="col-span-4 grid grid-cols-2 gap-4">
+              <div *ngFor="let complaint of complaints">
+                <input type="checkbox" [(ngModel)]="patient_complaints[complaint.complaint_id]" class="rounded w-4 h-4 border border-slate-400" />
+                <label class="pl-3 py-0.5">{{ complaint.complaint_desc }}</label>
+              </div>
+            </div>
+            <div class="col-span-4 flex">
+              <label class="mt-2 pr-3">Remarks</label>
+              <input type="text" class="input" />
             </div>
 
             <div class="col-span-4">
@@ -53,18 +67,24 @@
             </div>
 
             <div class="col-span-4">
-              <label for="case_number" [ngClass]="{'text-red-500': show_error && f.case_number.errors}">Referral reason</label>
-              <textarea type="text" name="case_number" id="case_number" formControlName="case_number" class="input" [ngClass]="{'invalid-input': show_error && f.case_number.errors}">
+              <label for="case_number">Referral reason</label>
+              <textarea type="text" name="case_number" id="case_number" class="input">
               </textarea>
             </div>
 
             <div class="col-span-4">
-              <label for="case_number" [ngClass]="{'text-red-500': show_error && f.case_number.errors}">Services requested</label>
-              <textarea type="text" name="case_number" id="case_number" formControlName="case_number" class="input" [ngClass]="{'invalid-input': show_error && f.case_number.errors}">
+              <label for="case_number">Services requested</label>
+              <textarea type="text" name="case_number" id="case_number" class="input">
+              </textarea>
+            </div>
+
+            <div class="col-span-4">
+              <label for="case_number">Remarks</label>
+              <textarea type="text" name="case_number" id="case_number" class="input">
               </textarea>
             </div>
           </div>
-        </form>
+        </div>
       </div>
 
       <!-- Modal footer -->

@@ -81,6 +81,12 @@ export class ComplaintHistoryComponent implements OnInit, OnChanges {
     }
   }
 
+  possible_gbv_case: boolean = false;
+
+  checkGbvCoplaint(){
+
+  }
+
   showToastr(){
     this.toastr.success('Successfully updated!','Complaint');
   }
@@ -88,17 +94,27 @@ export class ComplaintHistoryComponent implements OnInit, OnChanges {
   loadLib(){
     this.http.get('libraries/complaint').subscribe(
       (data: any) => {
+        // console.log(data.data)
         this.complaints = data.data;
       }
     );
   }
 
+  gbv_complaints: any;
   loadSelected(){
+    this.gbv_complaints = [];
+    this.possible_gbv_case = false;
     let selected_complaints = [];
+    // console.log(this.consult_details);
     if(this.consult_details.consult_notes && this.consult_details.consult_notes.complaints){
       Object.entries(this.consult_details.consult_notes.complaints).forEach(([key, value], index) => {
         let val: any = value;
         selected_complaints.push(val.complaint_id);
+
+        if(val.lib_complaints.gbv_library_status === 1) {
+          this.possible_gbv_case = true;
+          this.gbv_complaints.push(val.complaint_id);
+        }
       });
     };
     this.selectedComplaint = selected_complaints;

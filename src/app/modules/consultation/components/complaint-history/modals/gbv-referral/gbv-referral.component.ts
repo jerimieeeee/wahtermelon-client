@@ -16,13 +16,11 @@ export class GbvReferralComponent {
   @Output() switchPage = new EventEmitter<any>();
   @Input() selected_tb_consult;
   @Input() max_date;
+  @Input() gbv_complaints;
 
   is_saving: boolean = false;
   show_error: boolean = false;
   tb_enroll_as: any;
-  get f(): { [key: string]: AbstractControl } {
-    return this.interviewForm.controls;
-  }
 
   onSubmit(){
 
@@ -31,6 +29,20 @@ export class GbvReferralComponent {
   neglects: any;
   sexual_abuses: any;
   behavioral_changes: any;
+  complaints: any;
+  gbv_mdts: any = [];
+
+  patient_complaints: any = [];
+  patient_complaints_remarks: any = [];
+  patient_behavioral: any = [];
+  patient_neglect: any = [];
+  patient_neglect_remarks: any = [];
+  patient_referral = {
+    referral_reason: '',
+    service_remarks: '',
+    referral_remarks: '',
+    patient_id: ''
+  };
 
   loadLibraries(){
     this.http.get('libraries/gbv-neglect').subscribe({
@@ -46,16 +58,31 @@ export class GbvReferralComponent {
       },
       error: err => console.log(err)
     });
+
+    this.http.get('libraries/complaint', {params:{query_type:'gbv_complaints'}}).subscribe(
+      (data: any) => {
+        this.complaints = data.data;
+        this.loadComplaints()
+      }
+    );
+
+    this.http.get('users', {params:{per_page: 'all', designation_code: 'MD'}}).subscribe({
+      next: (data: any) => {
+        console.log(data.data)
+        this.gbv_mdts = data.data;
+      },
+      error: err => console.log(err)
+    });
   }
 
-  interviewForm: FormGroup = new FormGroup({
-    patient_id: new FormControl<string| null>(''),
-    tb_treatment_outcome_code : new FormControl<string| null>(''),
-    lib_tb_outcome_reason_id : new FormControl<string| null>(''),
-    outcome_date: new FormControl<string| null>(''),
-    treatment_done: new FormControl<string| null>(''),
-    outcome_remarks: new FormControl<string| null>(''),
-  });
+  loadComplaints(){
+    if(this.gbv_complaints) {
+      Object.entries(this.gbv_complaints).forEach(([key, value], index) => {
+        let val: any = value
+        this.patient_complaints[val] = true
+      });
+    }
+  }
 
   closeModal(){
     this.toggleModal.emit('gbv_referral');

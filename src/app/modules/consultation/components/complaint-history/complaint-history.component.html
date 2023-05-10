@@ -26,6 +26,23 @@
               bindValue="complaint_id"
               placeholder="Select Complaint"
               [(ngModel)]="selectedComplaint">
+
+              <ng-template ng-label-tmp let-item="item">
+                <span class="px-2 py-1 rounded-md" [ngClass]="{'bg-orange-500 text-white' : item.gbv_library_status, 'bg-blue-200' : !item.gbv_library_status}">{{ item.complaint_desc }}</span>
+              </ng-template>
+              <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
+                <div class="grid grid-flow-col auto-cols-max">
+                  <!-- <div class="my-auto mr-3">
+                    <div class="inline-flex overflow-hidden relative justify-center items-center w-14 h-14 bg-gray-100 rounded-full dark:bg-gray-600">
+                      <span class="font-medium text-gray-600 dark:text-gray-300">{{ getInitials(item.first_name+' '+item.last_name) }}</span>
+                    </div>
+                  </div> -->
+                  <div>
+                    <h5 [ngClass]="{'text-orange-500': item.gbv_library_status, 'font-semibold' : item.konsulta_library_status}" [ngOptionHighlight]="search">{{ item.complaint_desc }}</h5>
+                  </div>
+                </div>
+              </ng-template>
+
             </ng-select>
           </div>
         </div>
@@ -37,7 +54,7 @@
           </div>
         </div> -->
 
-        <div class="border border-orange-300 bg-orange-100 rounded-md grid grid-cols-1 m-5 p-5 text-sm">
+        <div class="border border-orange-300 bg-orange-100 rounded-md grid grid-cols-1 m-5 p-5 text-sm" *ngIf="possible_gbv_case">
           <span class="text-orange-500 font-semibold">
             Possible GBV Client
           </span>
@@ -76,4 +93,5 @@
 
 <app-gbv-referral *ngIf="modals['gbv_referral']"
   (toggleModal)="toggleModal($event)"
+  [gbv_complaints]="gbv_complaints"
 ></app-gbv-referral>

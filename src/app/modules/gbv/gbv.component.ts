@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
+import { faCircleNotch, faDoorClosed } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -11,6 +11,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class GbvComponent implements OnInit {
   faCircleNotch = faCircleNotch;
+  faDoorClosed = faDoorClosed;
   pages: number = 1;
   module: number = 1;
 
@@ -42,12 +43,15 @@ export class GbvComponent implements OnInit {
   getGbvHistory(){
     this.fetching_history = false;
 
+    // console.log(this.patient_id)
     this.http.get('gender-based-violence/patient-gbv', {params:{patient_id: this.patient_id}}).subscribe({
       next: (data: any) => {
-        console.log(data)
+        // console.log(data)
         this.patient_gbv_history = data.data;
         if(Object.keys(this.patient_gbv_history).length > 0) this.selected_gbv_case = this.patient_gbv_history[0];
-        console.log(typeof(this.selected_gbv_case))
+        // console.log(typeof(this.selected_gbv_case))
+
+        this.pages = 2;
       },
       error: err => console.log(err)
     })
@@ -63,6 +67,5 @@ export class GbvComponent implements OnInit {
     this.patient_id = this.route.snapshot.paramMap.get('id');
     this.user_facility = this.http.getUserFacility();
     this.getGbvHistory();
-    console.log('test');
   }
 }

@@ -18,22 +18,12 @@ export class AbuseActsComponent implements OnInit {
   is_saving: boolean = false;
   show_error: boolean = false;
 
-  get f(): { [key: string]: AbstractControl } {
-    return this.interviewForm.controls;
-  }
+  abused_acts: any = [];
 
   onSubmit(){
-
+    console.log(this.abused_acts)
   }
 
-  interviewForm: FormGroup = new FormGroup({
-    patient_id: new FormControl<string| null>(''),
-    tb_treatment_outcome_code : new FormControl<string| null>(''),
-    lib_tb_outcome_reason_id : new FormControl<string| null>(''),
-    outcome_date: new FormControl<string| null>(''),
-    treatment_done: new FormControl<string| null>(''),
-    outcome_remarks: new FormControl<string| null>(''),
-  });
 
   abuses: any =[];
 
