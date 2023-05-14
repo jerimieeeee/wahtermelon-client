@@ -18,7 +18,20 @@ export class InterviewComponent implements OnInit{
 
   modals: any = [];
 
-  intakeForm: FormGroup = new FormGroup({
+  deferral_reasons = [
+    {id: 1, desc: 'Child upset'},
+    {id: 2, desc: 'Not disclosing'},
+    {id: 3, desc: 'Previous statement was already taken'}
+  ];
+
+  previous_interviewers = [
+    {id: 1, desc: 'NBI'},
+    {id: 2, desc: 'PNP'},
+    {id: 3, desc: 'DSWD'},
+    {id: 4, desc: 'Other'},
+  ];
+
+  interviewForm: FormGroup = new FormGroup({
     id: new FormControl<string| null>(''),
     patient_id: new FormControl<string| null>(''),
     patient_tb_id: new FormControl<string| null>(''),
@@ -37,6 +50,11 @@ export class InterviewComponent implements OnInit{
     ipt_type_code : new FormControl<string| null>(''),
     transfer_flag: new FormControl<boolean| null>(false),
     pict_date: new FormControl<string| null>(''),
+
+    deferred: new FormControl<boolean| null>(false),
+    deferral_reason_id : new FormControl<string| null>(''),
+    deferral_previous_interviewer_id : new FormControl<string| null>(''),
+    deferral_interviewer_remarks: new FormControl<string| null>(''),
   });
 
   libraries = [

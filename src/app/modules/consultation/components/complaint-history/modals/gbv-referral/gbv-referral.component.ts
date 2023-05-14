@@ -22,10 +22,6 @@ export class GbvReferralComponent {
   show_error: boolean = false;
   tb_enroll_as: any;
 
-  onSubmit(){
-
-  }
-
   neglects: any;
   sexual_abuses: any;
   behavioral_changes: any;
@@ -35,14 +31,27 @@ export class GbvReferralComponent {
   patient_complaints: any = [];
   patient_complaints_remarks: any = [];
   patient_behavioral: any = [];
+  patient_behavioral_remarks: any = [];
   patient_neglect: any = [];
   patient_neglect_remarks: any = [];
   patient_referral = {
+    referral_date : '',
+    referral_facility_code: '',
     referral_reason: '',
     service_remarks: '',
     referral_remarks: '',
     patient_id: ''
   };
+
+  onSubmit(){
+    console.log(this.patient_referral);
+    console.log(this.patient_complaints);
+    console.log(this.patient_complaints_remarks);
+    console.log(this.patient_behavioral);
+    console.log(this.patient_behavioral_remarks);
+    console.log(this.patient_neglect);
+    console.log(this.patient_neglect_remarks);
+  }
 
   loadLibraries(){
     this.http.get('libraries/gbv-neglect').subscribe({

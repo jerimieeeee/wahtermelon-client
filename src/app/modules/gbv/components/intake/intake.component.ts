@@ -97,7 +97,7 @@ export class IntakeComponent implements OnInit{
       query = this.http.post('gender-based-violence/patient-gbv', this.intakeForm.value);
     }
 
-    this.incestCase()
+    // this.incestCase()
     query.subscribe({
       next: (data: any) => {
         // console.log(data);
@@ -108,7 +108,15 @@ export class IntakeComponent implements OnInit{
     })
   }
 
+  sexualAbuse(){
+    if(this.intakeForm.value.sexual_abuse_flag) this.intakeForm.patchValue({incest_case_flag:0});
+    /* this.intakeForm.patchValue({
+      incest_case_flag: !this.intakeForm.value.incest_case_flag
+    }); */
+  }
+
   incestCase(){
+    console.log(this.intakeForm.value.incest_case_flag)
     if(!this.intakeForm.value.incest_case_flag) {
       this.intakeForm.patchValue({
         same_bed_adult_male_flag: null,

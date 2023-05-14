@@ -4,21 +4,36 @@
   </div> -->
 
   <div class="mx-5 mb-5">
-    <form [formGroup]="intakeForm" (ngSubmit)="saveCaseFindings()">
+    <form [formGroup]="interviewForm" (ngSubmit)="saveCaseFindings()">
       <div class="grid grid-cols-3 gap-4 w-full mt-5">
 
-        <div>
-          <div class="ml-5">
-            <input type="checkbox" class="rounded w-4 h-4 border border-slate-400" />
-            <label class="pl-3 py-0.5">Deferring interview?</label>
+        <div class="col-span-3 grid grid-cols-4 gap-4">
+          <div class="col-span-2">
+            <div class="ml-5">
+              <input type="checkbox" formControlName="deferred" class="rounded w-4 h-4 border border-slate-400" />
+              <label class="pl-3 py-0.5">Deferring interview?</label>
+            </div>
+          </div>
+
+          <div class="col-span-2" *ngIf="interviewForm.value.deferred">
+            <!-- <label for="deferred">Other chronological clues</label> -->
+            <select name="deferral_reason_id" id="deferral_reason_id" formControlName="deferral_reason_id" class="input">
+              <option *ngFor="let deferral_reason of deferral_reasons" [value]="deferral_reason.id">{{ deferral_reason.desc }}</option>
+            </select>
+          </div>
+
+          <div class="col-span-2" *ngIf="interviewForm.value.deferral_reason_id === '3'">
+            <label for="deferral_previous_interviewer_id">Previous Interviewer</label>
+            <select name="deferral_previous_interviewer_id" id="deferral_previous_interviewer_id" formControlName="deferral_previous_interviewer_id" class="input">
+              <option *ngFor="let previous_interviewer of previous_interviewers" [value]="previous_interviewer.id">{{ previous_interviewer.desc }}</option>
+            </select>
+          </div>
+
+          <div class="col-span-2" *ngIf="interviewForm.value.deferral_previous_interviewer_id === '4'">
+            <label for="deferral_interviewer_remarks">Others</label>
+            <input type="text" name="deferral_interviewer_remarks" id="deferral_interviewer_remarks" formControlName="deferral_interviewer_remarks" class="input">
           </div>
         </div>
-
-        <!-- <div>
-          <select name="enroll_as_code" id="enroll_as_code" formControlName="enroll_as_code" class="input" [ngClass]="{'invalid-input': show_error && f.enroll_as_code.errors}">
-            <option *ngFor="let enroll_as of tb_enroll_as" [value]="enroll_as.code">{{ enroll_as.desc }}</option>
-          </select>
-        </div> -->
 
         <div class="col-span-3 border-b border-slate-200 w-full my-2 font-semibold text-sky-500">
           History of Abuse
@@ -73,16 +88,11 @@
           </div>
 
           <div class="col-span-2">
-            <label for="enroll_as_code" [ngClass]="{'text-red-500': show_error && f.enroll_as_code.errors}">Address/Specific site</label>
+            <label for="enroll_as_code" [ngClass]="{'text-red-500': show_error && f.enroll_as_code.errors}">Address</label>
             <input type="text" name="case_number" id="case_number" formControlName="case_number" class="input" [ngClass]="{'invalid-input': show_error && f.case_number.errors}">
           </div>
 
-          <div class="col-span-2">
-            <label for="case_number" [ngClass]="{'text-red-500': show_error && f.case_number.errors}">Address</label>
-            <input type="text" name="case_number" id="case_number" formControlName="case_number" class="input" [ngClass]="{'invalid-input': show_error && f.case_number.errors}">
-          </div>
-
-          <div class="col-span-2">
+          <div class="col-span-4">
             <label for="case_number" [ngClass]="{'text-red-500': show_error && f.case_number.errors}">Direction to address</label>
             <input type="text" name="case_number" id="case_number" formControlName="case_number" class="input" [ngClass]="{'invalid-input': show_error && f.case_number.errors}">
           </div>
@@ -99,7 +109,7 @@
             <div class="grid grid-cols-4 gap-4 mt-3 mb-5 mx-5">
               <div class="col-span-2 mt-5">
                 <input type="checkbox" class="rounded w-4 h-4 border border-slate-400" />
-                <label class="pl-3 py-0.5">Did the patient disclose?</label>
+                <label class="pl-3 py-0.5">Did the victim survivor disclose?</label>
               </div>
 
               <div class="col-span-2">
@@ -109,13 +119,13 @@
                 </select>
               </div>
 
-              <div class="col-span-2 mt-5">
+              <!-- <div class="col-span-2 mt-5">
                 <input type="checkbox" class="rounded w-4 h-4 border border-slate-400" />
                 <label class="pl-3 py-0.5">Did the patient recant?</label>
-              </div>
+              </div> -->
 
               <div class="col-span-3">
-                <label for="enroll_as_code" [ngClass]="{'text-red-500': show_error && f.enroll_as_code.errors}">To whom did the child/woman disclose first?</label>
+                <label for="enroll_as_code" [ngClass]="{'text-red-500': show_error && f.enroll_as_code.errors}">To whom did the victim survivor disclose first?</label>
                 <select name="enroll_as_code" id="enroll_as_code" formControlName="enroll_as_code" class="input" [ngClass]="{'invalid-input': show_error && f.enroll_as_code.errors}">
                   <option *ngFor="let child_relation of child_relations" [value]="child_relation.id">{{ child_relation.desc }}</option>
                 </select>
@@ -293,7 +303,7 @@
       <div class="flex justify-center mt-5" *ngIf="!selected_tb_consult || selected_tb_consult.treatment_done === 0">
         <button [disabled]="is_saving" type="submit" class="btn-save mr-5 mt-4">
           <fa-icon [icon]="is_saving ? faCircleNotch : faSave" [spin]="is_saving ? true : false" class="mr-2"></fa-icon>
-          {{ intakeForm.value.id ? (is_saving ? 'Updating' : 'Update') : (is_saving ? 'Saving' : 'Save') }}
+          {{ interviewForm.value.id ? (is_saving ? 'Updating' : 'Update') : (is_saving ? 'Saving' : 'Save') }}
         </button>
       </div>
     </form>

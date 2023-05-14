@@ -51,7 +51,8 @@ export class GbvComponent implements OnInit {
         if(Object.keys(this.patient_gbv_history).length > 0) this.selected_gbv_case = this.patient_gbv_history[0];
         // console.log(typeof(this.selected_gbv_case))
 
-        this.pages = 2;
+        // this.pages = 2;
+        // this.module = 2;
       },
       error: err => console.log(err)
     })

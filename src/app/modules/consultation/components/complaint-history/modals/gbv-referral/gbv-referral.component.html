@@ -14,13 +14,13 @@
           <div class="grid grid-cols-4 gap-4">
             <div class="col-span-2">
               <label for="case_number">Date</label>
-              <input type="date" name="case_number" id="case_number" class="input">
+              <input type="date" [(ngModel)]="patient_referral.referral_date" name="referral_date" id="referral_date" class="input">
             </div>
 
             <div class="col-span-2">
               <label for="case_number">Refer to</label>
-              <select name="enroll_as_code" id="enroll_as_code" class="input">
-                <option *ngFor="let gbv_mdt of gbv_mdts" [value]="gbv_mdt.id">{{ gbv_mdt.last_name }}, {{ gbv_mdt.first_name }}</option>
+              <select [(ngModel)]="patient_referral.referral_facility_code" class="input">
+                <option *ngFor="let gbv_mdt of gbv_mdts" [value]="gbv_mdt.facility.code">{{ gbv_mdt.last_name }}, {{ gbv_mdt.first_name }}</option>
               </select>
             </div>
 
@@ -35,7 +35,7 @@
             </div>
             <div class="col-span-4 flex">
               <label class="mt-2 pr-3">Remarks</label>
-              <input type="text" class="input" />
+              <input type="text" [(ngModel)]="patient_complaints_remarks" class="input" />
             </div>
 
             <div class="col-span-4">
@@ -43,13 +43,13 @@
             </div>
             <div class="col-span-4 grid grid-cols-2 gap-4">
               <div *ngFor="let behavioral_change of behavioral_changes">
-                <input type="checkbox" class="rounded w-4 h-4 border border-slate-400" />
+                <input type="checkbox" [(ngModel)]="patient_behavioral[behavioral_change.id]" class="rounded w-4 h-4 border border-slate-400" />
                 <label class="pl-3 py-0.5">{{ behavioral_change.desc }}</label>
               </div>
             </div>
             <div class="col-span-4 flex">
               <label class="mt-2 pr-3">Remarks</label>
-              <input type="text" class="input" />
+              <input type="text" [(ngModel)]="patient_behavioral_remarks" class="input" />
             </div>
 
             <div class="col-span-4">
@@ -57,32 +57,32 @@
             </div>
             <div class="col-span-4 grid grid-cols-2 gap-4">
               <div *ngFor="let neglect of neglects">
-                <input type="checkbox" class="rounded w-4 h-4 border border-slate-400" />
+                <input type="checkbox" [(ngModel)]="patient_neglect[neglect.id]" class="rounded w-4 h-4 border border-slate-400" />
                 <label class="pl-3 py-0.5">{{ neglect.desc }}</label>
               </div>
             </div>
             <div class="col-span-4 flex">
               <label class="mt-2 pr-3">Remarks</label>
-              <input type="text" class="input" />
+              <input type="text" [(ngModel)]="patient_neglect_remarks" name="patient_neglect_remarks" id="patient_neglect_remarks" class="input" />
             </div>
 
-            <div class="col-span-4">
+            <!-- <div class="col-span-4">
               <label for="case_number">Referral reason</label>
-              <textarea type="text" name="case_number" id="case_number" class="input">
+              <textarea type="text" [(ngModel)]="patient_referral.referral_reason"  name="referral_reason" id="referral_reason" class="input">
               </textarea>
             </div>
 
             <div class="col-span-4">
               <label for="case_number">Services requested</label>
-              <textarea type="text" name="case_number" id="case_number" class="input">
+              <textarea type="text" [(ngModel)]="patient_referral.service_remarks" name="service_requested" id="service_requested" class="input">
               </textarea>
             </div>
 
             <div class="col-span-4">
               <label for="case_number">Remarks</label>
-              <textarea type="text" name="case_number" id="case_number" class="input">
+              <textarea type="text" [(ngModel)]="patient_referral.referral_remarks" name="referral_remarks" id="referral_remarks" class="input">
               </textarea>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>

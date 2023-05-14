@@ -45,7 +45,7 @@
           </div>
 
           <div class="col-span-2">
-            <input type="checkbox" id="sexual_abuse_flag" formControlName="sexual_abuse_flag" class="rounded w-4 h-4 border border-slate-400" />
+            <input type="checkbox" id="sexual_abuse_flag" formControlName="sexual_abuse_flag" (click)="sexualAbuse()" class="rounded w-4 h-4 border border-slate-400" />
             <label for="sexual_abuse_flag" class="pl-3 py-0.5">Sexual Abuse</label>
           </div>
 
@@ -308,9 +308,9 @@
         </div>
       </div>
 
-      <div class="grid grid-cols-1 mt-5">
+      <div class="grid grid-cols-1 mt-5" *ngIf="intakeForm.value.sexual_abuse_flag">
         <div class="text-sky-500 font-semibold">
-          <input type="checkbox" name="incest_case_flag" id="incest_case_flag" formControlName="incest_case_flag" class="rounded w-4 h-4 border border-slate-400" />
+          <input type="checkbox" name="incest_case_flag" id="incest_case_flag" formControlName="incest_case_flag" (click)="incestCase()" class="rounded w-4 h-4 border border-slate-400" />
           <label for="incest_case_flag" class="pl-3 py-0.5">is this an incest case?</label>
         </div>
       </div>
@@ -417,6 +417,109 @@
         </div>
       </div>
 
+
+      <div class="mt-3 grid grid-cols-4 gap-x-4 w-full">
+        <div class="col-span-4 border-b border-slate-200 w-full my-2 pt-2 font-semibold text-sky-500">
+          Additional Information to be gathered by the WCPD
+        </div>
+        <div class="mx-5 col-span-4 grid grid-cols-4 gap-4">
+          <div class="col-span-4 font-semibold">
+            Violence Against Women
+          </div>
+          <div class="col-span-4 grid grid-cols-4 -mt-4">
+            <div>
+              <input type="checkbox" formControlName="same_bed_child_male_flag" class="rounded w-4 h-4 border border-slate-400" />
+              <label class="pl-3 py-0.5">Physical</label>
+            </div>
+
+            <div>
+              <input type="checkbox" formControlName="same_bed_child_male_flag" class="rounded w-4 h-4 border border-slate-400" />
+              <label class="pl-3 py-0.5">Sexual</label>
+            </div>
+
+            <div>
+              <input type="checkbox" formControlName="same_bed_child_male_flag" class="rounded w-4 h-4 border border-slate-400" />
+              <label class="pl-3 py-0.5">Psychological</label>
+            </div>
+
+            <div>
+              <input type="checkbox" formControlName="same_bed_child_male_flag" class="rounded w-4 h-4 border border-slate-400" />
+              <label class="pl-3 py-0.5">Economic</label>
+            </div>
+          </div>
+
+          <div class="col-span-4 font-semibold">
+            Rape
+          </div>
+          <div class="col-span-4 grid grid-cols-4 -mt-4">
+            <div>
+              <input type="checkbox" formControlName="same_bed_child_male_flag" class="rounded w-4 h-4 border border-slate-400" />
+              <label class="pl-3 py-0.5">Sexual Intercourse</label>
+            </div>
+
+            <div>
+              <input type="checkbox" formControlName="same_bed_child_male_flag" class="rounded w-4 h-4 border border-slate-400" />
+              <label class="pl-3 py-0.5">Sexual Assault</label>
+            </div>
+
+            <div>
+              <input type="checkbox" formControlName="same_bed_child_male_flag" class="rounded w-4 h-4 border border-slate-400" />
+              <label class="pl-3 py-0.5">Incest</label>
+            </div>
+
+            <div>
+              <input type="checkbox" formControlName="same_bed_child_male_flag" class="rounded w-4 h-4 border border-slate-400" />
+              <label class="pl-3 py-0.5">Statutory Rape</label>
+            </div>
+
+            <div>
+              <input type="checkbox" formControlName="same_bed_child_male_flag" class="rounded w-4 h-4 border border-slate-400" />
+              <label class="pl-3 py-0.5">Marital Rape</label>
+            </div>
+          </div>
+
+          <div class="col-span-4 font-semibold">
+            Sexual Harassment
+          </div>
+          <div class="col-span-4 grid grid-cols-4 -mt-4">
+            <div>
+              <input type="checkbox" formControlName="same_bed_child_male_flag" class="rounded w-4 h-4 border border-slate-400" />
+              <label class="pl-3 py-0.5">Verbal</label>
+            </div>
+
+            <div>
+              <input type="checkbox" formControlName="same_bed_child_male_flag" class="rounded w-4 h-4 border border-slate-400" />
+              <label class="pl-3 py-0.5">Physical</label>
+            </div>
+
+            <div class="col-span-2">
+              <input type="checkbox" formControlName="same_bed_child_male_flag" class="rounded w-4 h-4 border border-slate-400" />
+              <label class="pl-3 py-0.5">Use of object, picture, letter, notes with sexual underpinnings</label>
+            </div>
+          </div>
+
+          <div class="col-span-4 font-semibold">
+            Child abuse, exploitation and discrimination
+          </div>
+          <div class="col-span-4 grid grid-cols-4 -mt-4">
+            <div class="col-span-2">
+              <input type="checkbox" formControlName="same_bed_child_male_flag" class="rounded w-4 h-4 border border-slate-400" />
+              <label class="pl-3 py-0.5">Engage, facilitate, commit child prostitution</label>
+            </div>
+
+            <div class="col-span-2">
+              <input type="checkbox" formControlName="same_bed_child_male_flag" class="rounded w-4 h-4 border border-slate-400" />
+              <label class="pl-3 py-0.5">Sexual intercourse or lasciviousness conduct</label>
+            </div>
+          </div>
+
+          <div class="col-span-2">
+            <label for="abuse_living_arrangement_id" [ngClass]="{'text-red-500': show_error && f.abuse_living_arrangement_id.errors}">Others: Specify</label>
+            <input type="text" name="abuse_living_arrangement_remarks" id="abuse_living_arrangement_remarks" formControlName="abuse_living_arrangement_remarks" class="input" [ngClass]="{'invalid-input': show_error && f.abuse_living_arrangement_remarks.errors}">
+          </div>
+
+        </div>
+      </div>
 
       <div class="flex justify-center mt-5">
         <button [disabled]="is_saving" type="submit" class="btn-save mr-5 mt-4">
