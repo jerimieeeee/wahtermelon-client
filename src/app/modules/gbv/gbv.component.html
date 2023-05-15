@@ -21,15 +21,15 @@
   <div class="flex flex-row">
     <button (click)="switchTab(1)" class="tabs-main w-28"
         [class]="module===1? 'tabs-main-true' : 'tabs-main-false' ">
-        Intake
+        Triage
     </button>
     <button (click)="switchTab(2)" class="tabs-main w-28"
         [class]="module===2? 'tabs-main-true' : 'tabs-main-false' ">
-        Interview
+        Intake
     </button>
     <button (click)="switchTab(3)" class="tabs-main w-28"
         [class]="module===3? 'tabs-main-true' : 'tabs-main-false' ">
-        Intervention
+        Interview
     </button>
     <!-- <button (click)="switchTab(4)" class="tabs-main w-28"
         [class]="module===4? 'tabs-main-true' : 'tabs-main-false' ">
@@ -37,12 +37,16 @@
     </button> -->
     <button (click)="switchTab(5)" class="tabs-main w-28"
         [class]="module===5? 'tabs-main-true' : 'tabs-main-false' ">
-        Referral
+        Intervention
     </button>
     <!-- <button (click)="switchTab(6)" class="tabs-main w-28"
         [class]="module===6? 'tabs-main-true' : 'tabs-main-false' ">
         Forms
     </button> -->
+    <button (click)="switchTab(6)" class="tabs-main w-28"
+        [class]="module===6? 'tabs-main-true' : 'tabs-main-false' ">
+        Referral
+    </button>
   </div>
   <div class="flex flex-row">
     <button type="button" *ngIf="selected_gbv_case && selected_gbv_case.treatment_done === 0" (click)="toggleModal('treatment_outcome')" class="bg-rose-500 px-3 py-2  rounded text-white hover:opacity-75">
@@ -97,7 +101,7 @@
         </td>
       </tr>
 
-      <tr class="bg-white border-b" *ngIf="!patient_gbv_history">
+      <tr class="bg-white border-b" *ngIf="!selected_gbv_case">
         <td  colspan="7">
           <div class="text-center py-3 flex flex-col">
             <div class="flex justify-center">No records to show...</div>
@@ -117,20 +121,26 @@
   [patient_id]="patient_id"
   [consult_id]="consult_id"
 ></app-treatment-archive> -->
-<app-intake *ngIf="pages === 2 && module === 1"
+
+<app-triage *ngIf="pages === 2 && module === 1"
+  [patient_id]="patient_id"
+  [selected_gbv_case]="selected_gbv_case"
+></app-triage>
+
+<app-intake *ngIf="pages === 2 && module === 2"
   [patient_id]="patient_id"
   [selected_gbv_case]="selected_gbv_case"
 ></app-intake>
 
-<app-interview *ngIf="pages === 2 && module === 2"
+<app-interview *ngIf="pages === 2 && module === 3"
 
 ></app-interview>
 
-<app-intervention *ngIf="pages === 2 && module === 3"
+<app-intervention *ngIf="pages === 2 && module === 4"
 
 ></app-intervention>
 
-<app-referral *ngIf="pages === 2 && module === 5"
+<app-referral *ngIf="pages === 2 && module === 6"
 
 ></app-referral>
 <!-- <app-casefindings *ngIf="pages === 2 && module === 1"

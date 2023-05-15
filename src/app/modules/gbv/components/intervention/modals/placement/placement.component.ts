@@ -21,7 +21,7 @@ export class PlacementComponent implements OnInit, OnChanges{
   placementForm: FormGroup = new FormGroup({
     id: new FormControl<string| null>(null),
     patient_id: new FormControl<string| null>(null),
-    patient_gbv_id: new FormControl<string| null>(null),
+    patient_gbv_intake_id: new FormControl<string| null>(null),
     placement_location_id: new FormControl<string| null>(null),
     home_by_cpu_flag: new FormControl<string| null>(null),
     home_by_other_name: new FormControl<string| null>(null),
@@ -60,7 +60,7 @@ export class PlacementComponent implements OnInit, OnChanges{
     this.placementForm = this.formBuilder.group({
       id: [null],
       patient_id: [null],
-      patient_gbv_id: [null],
+      patient_gbv_intake_id: [null],
       placement_location_id: [null, Validators.required],
       home_by_cpu_flag: [null],
       home_by_other_name: [null],

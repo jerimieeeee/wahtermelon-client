@@ -1,24 +1,27 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { faSave } from '@fortawesome/free-regular-svg-icons';
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-gbv-referral',
-  templateUrl: './gbv-referral.component.html',
-  styleUrls: ['./gbv-referral.component.scss']
+  selector: 'app-triage',
+  templateUrl: './triage.component.html',
+  styleUrls: ['./triage.component.scss']
 })
-export class GbvReferralComponent {
+export class TriageComponent implements OnInit{
   @Output() getPatientTbHistory = new EventEmitter<any>();
   @Output() toggleModal = new EventEmitter<any>();
   @Output() switchPage = new EventEmitter<any>();
-  @Input() selected_tb_consult;
-  @Input() max_date;
-  @Input() gbv_complaints;
+  @Input() selected_gbv_case;
+  @Input() patient_id;
+  // @Input() max_date;
+  // @Input() gbv_complaints;
+  faSave = faSave;
+  faCircleNotch = faCircleNotch;
 
   is_saving: boolean = false;
+  show_form: boolean = false;
 
   neglects: any;
   sexual_abuses: any;
@@ -53,35 +56,43 @@ export class GbvReferralComponent {
 
   loadLibraries(){
     this.http.get('libraries/gbv-neglect').subscribe({
-      next: (data: any) => this.neglects = data.data,
+      next: (data: any) => {
+        this.neglects = data.data;
+      },
       error: err => console.log(err)
     });
 
     this.http.get('libraries/gbv-behavioral').subscribe({
-      next: (data: any) => this.behavioral_changes = data.data,
+      next: (data: any) => {
+        this.behavioral_changes = data.data;
+      },
       error: err => console.log(err)
     });
 
     this.http.get('libraries/complaint', {params:{query_type:'gbv_complaints'}}).subscribe(
       (data: any) => {
+        console.log(data)
         this.complaints = data.data;
-        this.loadComplaints()
+        this.show_form = true;
       }
     );
 
-    this.http.get('users', {params:{per_page: 'all', designation_code: 'MD'}}).subscribe({
-      next: (data: any) => this.gbv_mdts = data.data,
+    /* this.http.get('users', {params:{per_page: 'all', designation_code: 'MD'}}).subscribe({
+      next: (data: any) => {
+        console.log(data.data)
+        this.gbv_mdts = data.data;
+      },
       error: err => console.log(err)
-    });
+    }); */
   }
 
   loadComplaints(){
-    if(this.gbv_complaints) {
+    /* if(this.gbv_complaints) {
       Object.entries(this.gbv_complaints).forEach(([key, value], index) => {
         let val: any = value
         this.patient_complaints[val] = true
       });
-    }
+    } */
   }
 
   closeModal(){

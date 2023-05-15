@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, OnChanges, Output, EventEmitter } from '@angular/core';
-import { faPlusSquare, faChevronCircleDown, faChevronCircleUp, faSpinner, faSave } from '@fortawesome/free-solid-svg-icons';
+import { faPlusSquare, faChevronCircleDown, faChevronCircleUp, faSpinner, faSave, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
@@ -21,6 +21,7 @@ export class ComplaintHistoryComponent implements OnInit, OnChanges {
   faChevronCircleUp = faChevronCircleUp;
   faChevronCircleDown = faChevronCircleDown;
   faSpinner = faSpinner;
+  faXmark = faXmark;
 
   complaints: Observable<any[]>;
   selectedComplaint = [];

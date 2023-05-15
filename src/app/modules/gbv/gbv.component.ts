@@ -42,17 +42,18 @@ export class GbvComponent implements OnInit {
 
   getGbvHistory(){
     this.fetching_history = false;
+    this.selected_gbv_case = undefined;
 
     // console.log(this.patient_id)
     this.http.get('gender-based-violence/patient-gbv', {params:{patient_id: this.patient_id}}).subscribe({
       next: (data: any) => {
-        // console.log(data)
         this.patient_gbv_history = data.data;
+        console.log(typeof this.patient_gbv_history, this.patient_gbv_history);
         if(Object.keys(this.patient_gbv_history).length > 0) this.selected_gbv_case = this.patient_gbv_history[0];
         // console.log(typeof(this.selected_gbv_case))
 
-        // this.pages = 2;
-        // this.module = 2;
+        this.pages = 2;
+        this.module = 1;
       },
       error: err => console.log(err)
     })

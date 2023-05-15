@@ -21,7 +21,7 @@ export class SessionComponent {
   sessionForm: FormGroup = new FormGroup({
     id: new FormControl<string| null>(null),
     patient_id: new FormControl<string| null>(null),
-    patient_gbv_id: new FormControl<string| null>(null),
+    patient_gbv_intake_id: new FormControl<string| null>(null),
     schedule_date: new FormControl<string| null>(null),
     actual_date: new FormControl<string| null>(null),
     md_name: new FormControl<string| null>(null),
@@ -52,7 +52,7 @@ export class SessionComponent {
     this.sessionForm = this.formBuilder.group({
       id: [null],
       patient_id: [null],
-      patient_gbv_id: [null],
+      patient_gbv_intake_id: [null],
       schedule_date: [null, Validators.required],
       actual_date: [null, Validators.required],
       md_name: [null, Validators.required],

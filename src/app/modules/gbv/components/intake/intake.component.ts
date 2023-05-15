@@ -92,9 +92,9 @@ export class IntakeComponent implements OnInit{
     let query;
 
     if(this.intakeForm.value.id) {
-      query = this.http.update('gender-based-violence/patient-gbv/', this.intakeForm.value.id, this.intakeForm.value)
+      query = this.http.update('gender-based-violence/patient-gbv-intake/', this.intakeForm.value.id, this.intakeForm.value)
     } else {
-      query = this.http.post('gender-based-violence/patient-gbv', this.intakeForm.value);
+      query = this.http.post('gender-based-violence/patient-gbv-intake', this.intakeForm.value);
     }
 
     // this.incestCase()

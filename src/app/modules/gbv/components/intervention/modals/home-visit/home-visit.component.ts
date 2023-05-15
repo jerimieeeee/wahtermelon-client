@@ -21,7 +21,7 @@ export class HomeVisitComponent implements OnInit, OnChanges {
   homeVisitForm: FormGroup = new FormGroup({
     id: new FormControl<string| null>(null),
     patient_id: new FormControl<string| null>(null),
-    patient_gbv_id: new FormControl<string| null>(null),
+    patient_gbv_intake_id: new FormControl<string| null>(null),
     visit_date: new FormControl<string| null>(null),
     social_worker: new FormControl<string| null>(null),
   });
@@ -48,7 +48,7 @@ export class HomeVisitComponent implements OnInit, OnChanges {
     this.homeVisitForm = this.formBuilder.group({
       id: [null],
       patient_id: [null],
-      patient_gbv_id: [null],
+      patient_gbv_intake_id: [null],
       visit_date: [null, Validators.required],
       social_worker: [null, Validators.required]
     });

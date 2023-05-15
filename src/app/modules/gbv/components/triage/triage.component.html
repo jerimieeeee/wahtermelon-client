@@ -1,0 +1,93 @@
+<div class="border border-slate-200 rounded-b-lg" *ngIf="show_form">
+  <!-- <div class="bg-blue-500 text-white rounded-t-md py-2 pl-3 font-semibold">
+    Treatment Form
+  </div> -->
+
+  <div class="mx-5 mb-5">
+      <div class="grid grid-cols-3 gap-4 w-full mt-5">
+        <!-- <div class="col-span-3 border-b border-slate-200 w-full my-2 font-semibold text-sky-500">
+          Primary Complaint
+        </div> -->
+        <div class="col-span-4 grid grid-cols-4 gap-4">
+          <div class="col-span-2">
+            <label for="case_number">Date</label>
+            <input type="date" [(ngModel)]="patient_referral.referral_date" name="referral_date" id="referral_date" class="input">
+          </div>
+
+          <div class="col-span-2">
+            <label for="case_number">Refer to</label>
+            <select [(ngModel)]="patient_referral.referral_facility_code" class="input">
+              <option *ngFor="let gbv_mdt of gbv_mdts" [value]="gbv_mdt.facility.code">{{ gbv_mdt.last_name }}, {{ gbv_mdt.first_name }}</option>
+            </select>
+          </div>
+
+          <div class="col-span-4 font-semibold text-sky-500 mt-5 border-b border-slate-200">
+            Complaints
+          </div>
+          <div class="col-span-4 grid grid-cols-3 gap-4">
+            <div *ngFor="let complaint of complaints">
+              <input type="checkbox" [(ngModel)]="patient_complaints[complaint.complaint_id]" class="rounded w-4 h-4 border border-slate-400" />
+              <label class="pl-3 py-0.5">{{ complaint.complaint_desc }}</label>
+            </div>
+          </div>
+          <div class="col-span-4 flex">
+            <label class="mt-2 pr-3">Remarks</label>
+            <input type="text" [(ngModel)]="patient_complaints_remarks" class="input" />
+          </div>
+
+          <div class="col-span-4 font-semibold text-sky-500 mt-5 border-b border-slate-200">
+            Behavioral Changes
+          </div>
+          <div class="col-span-4 grid grid-cols-3 gap-4">
+            <div *ngFor="let behavioral_change of behavioral_changes">
+              <input type="checkbox" [(ngModel)]="patient_behavioral[behavioral_change.id]" class="rounded w-4 h-4 border border-slate-400" />
+              <label class="pl-3 py-0.5">{{ behavioral_change.desc }}</label>
+            </div>
+          </div>
+          <div class="col-span-4 flex">
+            <label class="mt-2 pr-3">Remarks</label>
+            <input type="text" [(ngModel)]="patient_behavioral_remarks" class="input" />
+          </div>
+
+          <div class="col-span-4 font-semibold text-sky-500 mt-5 border-b border-slate-200">
+            Neglects
+          </div>
+          <div class="col-span-4 grid grid-cols-3 gap-4">
+            <div *ngFor="let neglect of neglects">
+              <input type="checkbox" [(ngModel)]="patient_neglect[neglect.id]" class="rounded w-4 h-4 border border-slate-400" />
+              <label class="pl-3 py-0.5">{{ neglect.desc }}</label>
+            </div>
+          </div>
+          <div class="col-span-4 flex">
+            <label class="mt-2 pr-3">Remarks</label>
+            <input type="text" [(ngModel)]="patient_neglect_remarks" name="patient_neglect_remarks" id="patient_neglect_remarks" class="input" />
+          </div>
+
+          <!-- <div class="col-span-4">
+            <label for="case_number">Referral reason</label>
+            <textarea type="text" [(ngModel)]="patient_referral.referral_reason"  name="referral_reason" id="referral_reason" class="input">
+            </textarea>
+          </div>
+
+          <div class="col-span-4">
+            <label for="case_number">Services requested</label>
+            <textarea type="text" [(ngModel)]="patient_referral.service_remarks" name="service_requested" id="service_requested" class="input">
+            </textarea>
+          </div>
+
+          <div class="col-span-4">
+            <label for="case_number">Remarks</label>
+            <textarea type="text" [(ngModel)]="patient_referral.referral_remarks" name="referral_remarks" id="referral_remarks" class="input">
+            </textarea>
+          </div> -->
+        </div>
+      </div>
+
+      <div class="flex justify-center mt-5">
+        <button [disabled]="is_saving" type="submit" class="btn-save mr-5 mt-4">
+          <fa-icon [icon]="is_saving ? faCircleNotch : faSave" [spin]="is_saving ? true : false" class="mr-2"></fa-icon>
+          <!-- {{ intakeForm.value.id ? (is_saving ? 'Updating' : 'Update') : (is_saving ? 'Saving' : 'Save') }} -->
+        </button>
+      </div>
+  </div>
+</div>

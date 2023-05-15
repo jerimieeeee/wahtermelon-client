@@ -23,6 +23,7 @@ import { LegalCaseComponent } from './components/intervention/modals/legal-case/
 import { CaseConferenceComponent } from './components/intervention/modals/case-conference/case-conference.component';
 import { ReferralModalComponent } from './components/referral/modals/referral-modal/referral-modal.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { TriageComponent } from './components/triage/triage.component';
 
 
 @NgModule({
@@ -44,7 +45,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     SessionComponent,
     LegalCaseComponent,
     CaseConferenceComponent,
-    ReferralModalComponent
+    ReferralModalComponent,
+    TriageComponent
   ],
   imports: [
     CommonModule,

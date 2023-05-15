@@ -21,7 +21,7 @@ export class LegalCaseComponent implements OnInit, OnChanges {
   homeVisitForm: FormGroup = new FormGroup({
     id: new FormControl<string| null>(null),
     patient_id: new FormControl<string| null>(null),
-    patient_gbv_id: new FormControl<string| null>(null),
+    patient_gbv_intake_id: new FormControl<string| null>(null),
     complaint_filed_flag: new FormControl<string| null>(null),
     filed_by_name: new FormControl<string| null>(null),
     filed_by_relation_id: new FormControl<string| null>(null),
@@ -62,7 +62,7 @@ export class LegalCaseComponent implements OnInit, OnChanges {
     this.homeVisitForm = this.formBuilder.group({
       id: [null],
       patient_id: [null],
-      patient_gbv_id: [null],
+      patient_gbv_intake_id: [null],
       complaint_filed_flag: [null, Validators.required],
       filed_by_name: [null, Validators.required],
       filed_by_relation_id: [null],
