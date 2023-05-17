@@ -107,7 +107,9 @@ export class ComplaintHistoryComponent implements OnInit, OnChanges {
   have_open_gbv: boolean = false;
   loadSelected(){
     this.gbv_complaints = [];
+    this.show_gbv_form = false;
     this.possible_gbv_case = false;
+    this.have_open_gbv = false;
     let selected_complaints = [];
     // console.log(this.consult_details);
     if(this.consult_details.consult_notes && this.consult_details.consult_notes.complaints){
@@ -132,7 +134,7 @@ export class ComplaintHistoryComponent implements OnInit, OnChanges {
     let params = {patient_id: this.consult_details.patient.id};
     this.http.get('gender-based-violence/patient-gbv', {params}).subscribe({
       next: (data: any) => {
-        if(!data.data[0].outcome_date) this.have_open_gbv = true;
+        if(data.data.length > 0 && !data.data[0].outcome_date) this.have_open_gbv = true;
         this.show_gbv_form = true;
       },
       error: err => console.log(err)
@@ -151,6 +153,10 @@ export class ComplaintHistoryComponent implements OnInit, OnChanges {
 
   toggleModal(name) {
     this.modals[name] = !this.modals[name];
+
+    if(name === 'gbv_referral') {
+      this.getPatientGbv();
+    }
   }
 
   constructor(

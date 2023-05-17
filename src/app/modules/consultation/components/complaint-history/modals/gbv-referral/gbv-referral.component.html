@@ -99,7 +99,7 @@
       <!-- Modal footer -->
       <div class="flex justify-end py-4 px-5 space-x-4 rounded-b border-t border-gray-200">
         <button type="button" class="btn-save bg-gray-400" (click)="closeModal()">Close</button>
-        <button [disabled]="is_saving" type="submit" class="btn-save px-10 disabled:bg-gray-300" (click)="onSubmit()" >
+        <button [disabled]="is_saving || (!patient_gbv.gbv_date || !patient_gbv.referral_facility_code)" type="submit" class="btn-save px-10 disabled:bg-gray-300" (click)="onSubmit()" >
           <!-- <fa-icon></fa-icon> -->
           <!-- {{ is_saving ? 'Saving' : 'Save' }} -->
           Refer

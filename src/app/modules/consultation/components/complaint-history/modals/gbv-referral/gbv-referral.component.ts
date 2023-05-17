@@ -77,7 +77,8 @@ export class GbvReferralComponent implements OnInit{
     this.http.post('gender-based-violence/patient-gbv', this.patient_gbv).subscribe({
       next: (data: any) => {
         console.log(data);
-        this.toastr.success('Successfully recorded!', 'GBV Referral')
+        this.toastr.success('Successfully recorded!', 'GBV Referral');
+        this.closeModal();
       },
       error: err => console.log(err)
     })
