@@ -104,54 +104,39 @@ export class ModuleModalComponent implements OnInit {
 
   onModuleSelect(module){
     let loc = module.location;
-    // let group = module.group;
-    // console.log(module)
     this.is_loading = true;
 
-    // console.log(loc, this.router.url.split(';')[0])
-    if('/patient/'+loc === this.router.url.split(';')[0]){
-      // console.log(1)
-      if(module.consult_active === false) {
-        this.show_new = true;
-        this.selected_module = module;
-        this.is_loading = false;
-      } else {
-        if(this.router.url.split('=')[2] != module.id) {
-          this.router.navigate(['/patient/'+loc, {id: this.patient_info.id, consult_id: module.id}]);
-        }
-        this.closeModal();
-      }
+    if(loc==='gbv') {
+      this.router.navigate(['/patient/'+loc, {id: this.patient_info.id}]);
+      this.closeModal();
     } else {
-      if(loc === 'itr' || loc === 'lab'){
-        this.router.navigate(['/patient/'+loc, {id: this.patient_info.id}]);
-        this.closeModal();
-      } else {
+      if('/patient/'+loc === this.router.url.split(';')[0]){
         if(module.consult_active === false) {
           this.show_new = true;
+          this.selected_module = module;
+          this.is_loading = false;
         } else {
-          this.show_new = false;
-          this.router.navigate(['/patient/'+loc, {id: this.patient_info.id, consult_id: module.id}]);
+          if(this.router.url.split('=')[2] != module.id) {
+            this.router.navigate(['/patient/'+loc, {id: this.patient_info.id, consult_id: module.id}]);
+          }
           this.closeModal();
         }
-        // this.show_new = module.consult_active === false ? true : false;
-        this.selected_module = module;
-        this.is_loading = false;
-        // console.log(this)
-        /* this.http.get('consultation/records', {params:{'pt_group': group, 'consult_done': 0, patient_id: this.patient_info.id}}).subscribe({
-          next: (data: any) => {
-            this.selected_module = module;
+      } else {
+        if(loc === 'itr' || loc === 'lab'){
+          this.router.navigate(['/patient/'+loc, {id: this.patient_info.id}]);
+          this.closeModal();
+        } else {
+          if(module.consult_active === false) {
+            this.show_new = true;
+          } else {
+            this.show_new = false;
+            this.router.navigate(['/patient/'+loc, {id: this.patient_info.id, consult_id: module.id}]);
+            this.closeModal();
+          }
 
-            if(data.data.length > 0){
-              this.router.navigate(['/patient/'+loc, {id: this.patient_info.id, consult_id: data.data[0].id}])
-              this.closeModal();
-            }else{
-              // console.log(this.selected_module);
-              this.show_new = true;
-            }
-          },
-          error: err => {console.log(err);this.is_loading = false},
-          complete: () => this.is_loading = false
-        }); */
+          this.selected_module = module;
+          this.is_loading = false;
+        }
       }
     }
   }

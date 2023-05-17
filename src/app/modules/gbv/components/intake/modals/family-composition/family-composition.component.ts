@@ -111,6 +111,7 @@ export class FamilyCompositionComponent {
   }
 
   createForm(){
+    this.patient_gbv_id;
     this.familyForm = this.formBuilder.nonNullable.group({
       id: [null],
       patient_id: [this.patient_id],
