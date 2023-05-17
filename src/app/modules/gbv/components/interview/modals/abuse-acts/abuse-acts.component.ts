@@ -18,7 +18,11 @@ export class AbuseActsComponent implements OnInit {
   is_saving: boolean = false;
   show_error: boolean = false;
 
-  abused_acts: any = [];
+  abused_acts: any = {
+    victim_survivor: [],
+    historian: [],
+    sworn_statement: []
+  };
 
   onSubmit(){
     console.log(this.abused_acts)

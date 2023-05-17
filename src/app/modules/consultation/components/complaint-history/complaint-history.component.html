@@ -55,15 +55,20 @@
           </div>
         </div> -->
 
-        <div class="border border-orange-300 bg-orange-100 rounded-md grid grid-cols-1 m-5 p-5 text-sm" *ngIf="possible_gbv_case">
+        <div class="border border-orange-300 bg-orange-100 rounded-md grid grid-cols-1 m-5 p-5 text-sm" *ngIf="show_gbv_form">
           <span class="text-orange-500 font-semibold">
             Possible GBV Client
           </span>
-          <span class="text-orange-500">
+          <span class="text-orange-500" *ngIf="possible_gbv_case && !have_open_gbv">
             Base on the selected chief complaint, this patient is a possible Gender Based Violence case.
             Would you like to refer it to a GBV point person for further investigation?
           </span>
-          <span class="flex justify-end">
+
+          <span class="text-orange-500" *ngIf="possible_gbv_case && have_open_gbv">
+            This patient is already for gender-based violence assessment.
+          </span>
+
+          <span class="flex justify-end" *ngIf="possible_gbv_case && !have_open_gbv">
             <button type="button" class="bg-orange-500 text-white rounded-md px-10 py-2 mt-3" (click)="toggleModal('gbv_referral')">
               Refer
             </button>
@@ -95,4 +100,5 @@
 <app-gbv-referral *ngIf="modals['gbv_referral']"
   (toggleModal)="toggleModal($event)"
   [gbv_complaints]="gbv_complaints"
+  [patient_id]="this.consult_details.patient.id"
 ></app-gbv-referral>

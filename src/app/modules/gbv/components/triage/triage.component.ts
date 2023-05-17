@@ -1,8 +1,10 @@
+import { formatDate } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { faSave } from '@fortawesome/free-regular-svg-icons';
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-triage',
@@ -30,60 +32,68 @@ export class TriageComponent implements OnInit{
   gbv_mdts: any = [];
 
   patient_complaints: any = [];
-  patient_complaints_remarks: any = [];
-  patient_behavioral: any = [];
-  patient_behavioral_remarks: any = [];
+  patient_behavior: any = [];
   patient_neglect: any = [];
-  patient_neglect_remarks: any = [];
-  patient_referral = {
-    referral_date : '',
-    referral_facility_code: '',
-    referral_reason: '',
-    service_remarks: '',
-    referral_remarks: '',
-    patient_id: ''
+  patient_gbv = {
+    id: '',
+    patient_id: '',
+    gbv_date: '',
+    gbv_complaint_remarks: '',
+    gbv_behavioral_remarks: '',
+    gbv_neglect_remarks: '',
+    referral_reason : '',
+    complaint: [],
+    behavior: [],
+    neglect: [],
+    gbvReferral: null
   };
 
-  onSubmit(){
-    console.log(this.patient_referral);
+  /* onSubmit(){
+    console.log(this.patient_gbv);
     console.log(this.patient_complaints);
-    console.log(this.patient_complaints_remarks);
-    console.log(this.patient_behavioral);
-    console.log(this.patient_behavioral_remarks);
+    console.log(this.patient_behavior);
     console.log(this.patient_neglect);
-    console.log(this.patient_neglect_remarks);
-  }
+  } */
 
   loadLibraries(){
-    this.http.get('libraries/gbv-neglect').subscribe({
-      next: (data: any) => {
-        this.neglects = data.data;
-      },
-      error: err => console.log(err)
-    });
+    const getNeglect = this.http.get('libraries/gbv-neglect');
+    const getBehavioral = this.http.get('libraries/gbv-behavioral');
+    const getComplaints = this.http.get('libraries/complaint', {params:{query_type:'gbv_complaints'}});
+    const getMdt = this.http.get('users', {params:{per_page: 'all', designation_code: 'MD'}});
 
-    this.http.get('libraries/gbv-behavioral').subscribe({
-      next: (data: any) => {
-        this.behavioral_changes = data.data;
-      },
-      error: err => console.log(err)
-    });
+    forkJoin([getNeglect, getBehavioral, getComplaints, getMdt]).subscribe({
+      next: ([dataNeglect, dataBehavioral, dataComplaints, dataMdt]: any) => {
+        this.neglects = dataNeglect.data;
+        this.behavioral_changes = dataBehavioral.data;
+        this.complaints = dataComplaints.data;
+        this.gbv_mdts = dataMdt.data;
 
-    this.http.get('libraries/complaint', {params:{query_type:'gbv_complaints'}}).subscribe(
-      (data: any) => {
-        console.log(data)
-        this.complaints = data.data;
+        this.checkOpenGbv();
         this.show_form = true;
-      }
-    );
-
-    /* this.http.get('users', {params:{per_page: 'all', designation_code: 'MD'}}).subscribe({
-      next: (data: any) => {
-        console.log(data.data)
-        this.gbv_mdts = data.data;
       },
       error: err => console.log(err)
-    }); */
+    });
+  }
+
+  checkOpenGbv(){
+    if(this.selected_gbv_case) {
+      this.patient_gbv = {...this.selected_gbv_case};
+      this.patient_gbv.gbv_date = formatDate(this.patient_gbv.gbv_date, 'yyyy-MM-dd', 'en');
+      this.patient_gbv.referral_reason = this.patient_gbv.gbvReferral[0].referral_reason;
+      // console.log(this.patient_gbv);
+      if(this.selected_gbv_case.gbvComplaint) this.patient_complaints = this.checkSelection(this.selected_gbv_case.gbvComplaint, 'complaint_id');
+      if(this.selected_gbv_case.gbvBehavior) this.patient_behavior = this.checkSelection(this.selected_gbv_case.gbvBehavior, 'behavioral_id');
+      if(this.selected_gbv_case.gbvNeglect) this.patient_neglect = this.checkSelection(this.selected_gbv_case.gbvNeglect, 'neglect_id');
+    }
+  }
+
+  checkSelection(data, var_name):[] {
+    let content: any = [];
+    Object.entries(data).forEach(([key, value]: any, index) => {
+      content[value[var_name]] = true;
+    });
+
+    return content;
   }
 
   loadComplaints(){

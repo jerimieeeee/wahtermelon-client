@@ -10,16 +10,16 @@
       </div>
       <!-- Modal body -->
       <div class="overflow-y-auto h-96 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
-        <div class="text-left text-gray-500 m-5">
+        <div class="text-left text-gray-500 m-5" *ngIf="show_form">
           <div class="grid grid-cols-4 gap-4">
             <div class="col-span-2">
-              <label for="case_number">Date</label>
-              <input type="date" [(ngModel)]="patient_referral.referral_date" name="referral_date" id="referral_date" class="input">
+              <label for="gbv_date">Date</label>
+              <input type="date" [(ngModel)]="patient_gbv.gbv_date" name="gbv_date" id="gbv_date" class="input">
             </div>
 
             <div class="col-span-2">
               <label for="case_number">Refer to</label>
-              <select [(ngModel)]="patient_referral.referral_facility_code" class="input">
+              <select [(ngModel)]="patient_gbv.referral_facility_code" class="input">
                 <option *ngFor="let gbv_mdt of gbv_mdts" [value]="gbv_mdt.facility.code">{{ gbv_mdt.last_name }}, {{ gbv_mdt.first_name }}</option>
               </select>
             </div>
@@ -29,13 +29,13 @@
             </div>
             <div class="col-span-4 grid grid-cols-2 gap-4">
               <div *ngFor="let complaint of complaints">
-                <input type="checkbox" [(ngModel)]="patient_complaints[complaint.complaint_id]" class="rounded w-4 h-4 border border-slate-400" />
+                <input type="checkbox" [(ngModel)]="patient_complaints[complaint.complaint_id]" class="input-checkbox" />
                 <label class="pl-3 py-0.5">{{ complaint.complaint_desc }}</label>
               </div>
             </div>
             <div class="col-span-4 flex">
               <label class="mt-2 pr-3">Remarks</label>
-              <input type="text" [(ngModel)]="patient_complaints_remarks" class="input" />
+              <input type="text" [(ngModel)]="patient_gbv.gbv_complaint_remarks" name="gbv_complaint_remarks" id="gbv_complaint_remarks" class="input" />
             </div>
 
             <div class="col-span-4">
@@ -43,13 +43,13 @@
             </div>
             <div class="col-span-4 grid grid-cols-2 gap-4">
               <div *ngFor="let behavioral_change of behavioral_changes">
-                <input type="checkbox" [(ngModel)]="patient_behavioral[behavioral_change.id]" class="rounded w-4 h-4 border border-slate-400" />
+                <input type="checkbox" [(ngModel)]="patient_behavior[behavioral_change.id]" class="input-checkbox" />
                 <label class="pl-3 py-0.5">{{ behavioral_change.desc }}</label>
               </div>
             </div>
             <div class="col-span-4 flex">
               <label class="mt-2 pr-3">Remarks</label>
-              <input type="text" [(ngModel)]="patient_behavioral_remarks" class="input" />
+              <input type="text" [(ngModel)]="patient_gbv.gbv_behavioral_remarks" name="gbv_behavioral_remarks" id="gbv_behavioral_remarks" class="input" />
             </div>
 
             <div class="col-span-4">
@@ -57,13 +57,13 @@
             </div>
             <div class="col-span-4 grid grid-cols-2 gap-4">
               <div *ngFor="let neglect of neglects">
-                <input type="checkbox" [(ngModel)]="patient_neglect[neglect.id]" class="rounded w-4 h-4 border border-slate-400" />
+                <input type="checkbox" [(ngModel)]="patient_neglect[neglect.id]" class="input-checkbox" />
                 <label class="pl-3 py-0.5">{{ neglect.desc }}</label>
               </div>
             </div>
             <div class="col-span-4 flex">
               <label class="mt-2 pr-3">Remarks</label>
-              <input type="text" [(ngModel)]="patient_neglect_remarks" name="patient_neglect_remarks" id="patient_neglect_remarks" class="input" />
+              <input type="text" [(ngModel)]="patient_gbv.gbv_neglect_remarks" name="gbv_neglect_remarks" id="gbv_neglect_remarks" class="input" />
             </div>
 
             <!-- <div class="col-span-4">
@@ -83,6 +83,15 @@
               <textarea type="text" [(ngModel)]="patient_referral.referral_remarks" name="referral_remarks" id="referral_remarks" class="input">
               </textarea>
             </div> -->
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 mt-20" *ngIf="!show_form">
+          <div class="flex justify-center text-blue-500">
+            <fa-icon [icon]="faCircleNotch" spin="true"></fa-icon>
+          </div>
+          <div class="flex justify-center">
+            Loading...
           </div>
         </div>
       </div>

@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { faEdit, faSave } from '@fortawesome/free-regular-svg-icons';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-interview',
@@ -14,58 +15,48 @@ export class InterviewComponent implements OnInit{
   faPlus = faPlus;
   faEdit = faEdit;
   faSave = faSave;
-  show_form: boolean = true;
+  faCircleNotch = faCircleNotch;
+  show_form: boolean = false;
 
   modals: any = [];
-
-  deferral_reasons = [
-    {id: 1, desc: 'Child upset'},
-    {id: 2, desc: 'Not disclosing'},
-    {id: 3, desc: 'Previous statement was already taken'}
-  ];
-
-  previous_interviewers = [
-    {id: 1, desc: 'NBI'},
-    {id: 2, desc: 'PNP'},
-    {id: 3, desc: 'DSWD'},
-    {id: 4, desc: 'Other'},
-  ];
 
   interviewForm: FormGroup = new FormGroup({
     id: new FormControl<string| null>(''),
     patient_id: new FormControl<string| null>(''),
-    patient_tb_id: new FormControl<string| null>(''),
-    case_number: new FormControl<string| null>(''),
-    enroll_as_code : new FormControl<string| null>(''),
-    treatment_regimen_code : new FormControl<string| null>(''),
-    registration_date: new FormControl<string| null>(''),
-    treatment_start: new FormControl<string| null>(''),
-    continuation_start: new FormControl<string| null>(''),
-    treatment_end: new FormControl<string| null>(''),
-    bacteriological_status_code : new FormControl<string| null>(''),
-    anatomical_site_code : new FormControl<string| null>(''),
-    eptb_site_id : new FormControl<string| null>(''),
-    specific_site: new FormControl<string| null>(''),
-    drug_resistant_flag: new FormControl<boolean| null>(false),
-    ipt_type_code : new FormControl<string| null>(''),
-    transfer_flag: new FormControl<boolean| null>(false),
-    pict_date: new FormControl<string| null>(''),
+    patient_gbv_intake_id: new FormControl<string| null>(''),
 
     deferred: new FormControl<boolean| null>(false),
     deferral_reason_id : new FormControl<string| null>(''),
     deferral_previous_interviewer_id : new FormControl<string| null>(''),
     deferral_interviewer_remarks: new FormControl<string| null>(''),
-  });
 
-  libraries = [
-    { var_name: 'abused_episodes', location: 'gbv-abused-episode' },
-    { var_name: 'info_sources', location: 'gbv-info-source' },
-    { var_name: 'abused_sites', location: 'gbv-abused-site' },
-    { var_name: 'disclosed_types', location: 'gbv-disclosed-type' },
-    { var_name: 'child_relations', location: 'child-relation' },
-    { var_name: 'child_behaviors', location: 'gbv-child-behavior' },
-    { var_name: 'developmental_screenings', location: 'gbv-developmental-screening' }
-  ]
+    source_from_victim_flag: new FormControl<boolean| null>(false),
+    source_from_historian_flag: new FormControl<boolean| null>(false),
+    source_from_sworn_statement_flag: new FormControl<boolean| null>(false),
+    mental_age_id: new FormControl<string| null>(''),
+
+    incident_first_datetime: new FormControl<string| null>(''),
+    incident_first_remarks : new FormControl<string| null>(''),
+    incident_recent_datetime : new FormControl<string| null>(''),
+    incident_recent_remarks: new FormControl<string| null>(''),
+
+    abused_episode_id  : new FormControl<string| null>(''),
+    abused_episode_count  : new FormControl<number| null>(null),
+    abused_site_id : new FormControl<string| null>(''),
+    abused_site_remarks : new FormControl<string| null>(''),
+    disclosed_flag : new FormControl<boolean| null>(false),
+    disclosed_type : new FormControl<string| null>(''),
+    disclosed_relation_id : new FormControl<string| null>(''),
+
+    initial_disclosure : new FormControl<string| null>(''),
+    relation_to_child : new FormControl<string| null>(''),
+    child_behavior_id : new FormControl<string| null>(''),
+    child_caretaker_present_flag : new FormControl<boolean| null>(false),
+    child_behavior_remarks : new FormControl<string| null>(''),
+    dev_screening_id : new FormControl<string| null>(''),
+    dev_screening_remarks : new FormControl<string| null>(''),
+
+  });
 
   abused_episodes: any;
   info_sources: any;
@@ -74,15 +65,45 @@ export class InterviewComponent implements OnInit{
   child_relations: any;
   child_behaviors: any;
   developmental_screenings: any;
+  mental_ages: any;
+  deferral_reasons: any;
+  previous_interviewers: any;
 
   loadLibraries(){
-    this.libraries.forEach(obj => {
-      this.http.get('libraries/' + obj.location).subscribe({
-        next: (data: any) => {
-          this[obj.var_name] = data.data;
-        },
-        error: err => console.log(err),
-      })
+    const getAbusedEpisode = this.http.get('libraries/gbv-abused-episode');
+    const getInfoSource = this.http.get('libraries/gbv-info-source');
+    const getAbusedSite = this.http.get('libraries/gbv-abused-site');
+    const getDisclosedType = this.http.get('libraries/gbv-disclosed-type');
+    const getChildRelation = this.http.get('libraries/child-relation');
+    const getChildBehavior = this.http.get('libraries/gbv-child-behavior');
+    const getDevScreening = this.http.get('libraries/gbv-developmental-screening');
+    const getMentalAge = this.http.get('libraries/gbv-mental-age');
+    const getDeferralReason = this.http.get('libraries/gbv-deferral-reason');
+    const getPreviousInterviewer = this.http.get('libraries/gbv-previous-interviewer');
+
+    forkJoin([getAbusedEpisode, getInfoSource, getAbusedSite,
+              getDisclosedType, getChildRelation, getChildBehavior,
+              getDevScreening, getMentalAge, getDeferralReason,
+              getPreviousInterviewer]).subscribe({
+      next: ([dataAbusedEpisode, dataInfoSource, dataAbusedSite,
+              dataDisclosedType, dataChildRelation, dataChildBehavior,
+              dataDevScreening, dataMentalAge, dataDeferralReason,
+              dataPreviousInterviewer]: any) => {
+        this.abused_episodes = dataAbusedEpisode.data;
+        this.info_sources = dataInfoSource.data;
+        this.abused_sites = dataAbusedSite.data;
+        this.disclosed_types = dataDisclosedType.data;
+        this.child_relations = dataChildRelation.data;
+        this.child_behaviors = dataChildBehavior.data;
+        this.developmental_screenings = dataDevScreening.data;
+        this.mental_ages = dataMentalAge.data;
+        this.deferral_reasons = dataDeferralReason.data;
+        this.previous_interviewers = dataPreviousInterviewer.data;
+
+        this.show_form = true;
+        // this.toggleModal('abuse_acts', 'Sexual Abuse', 'gbv-sexual-abuse')
+      },
+      error: err => console.log(err)
     });
   }
 

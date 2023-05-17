@@ -11,14 +11,8 @@
         </div>
         <div class="mx-5 col-span-4 grid grid-cols-4 gap-4">
           <div class="col-span-2">
-            <label for="case_number" [ngClass]="{'text-red-500': show_error && f.case_number.errors}">Case Number</label>
-            <input type="text" name="case_number" id="case_number" formControlName="case_number" class="input" [ngClass]="{'invalid-input': show_error && f.case_number.errors}">
-
-            <div *ngIf="show_error && f.case_number.errors" class="invalid-alert">
-              <div *ngIf="f.case_number.errors?.['required']">
-                {{ required_message }}
-              </div>
-            </div>
+            <label for="case_number">Case Number</label>
+            <input type="text" disabled name="case_number" id="case_number" formControlName="case_number" class="input">
           </div>
 
           <div class="col-span-2">
@@ -40,41 +34,41 @@
         </div>
         <div class="mx-5 col-span-3 grid grid-cols-4 gap-4">
           <div class="col-span-2">
-            <input type="checkbox" id="physical_abuse_flag" formControlName="physical_abuse_flag" class="rounded w-4 h-4 border border-slate-400" />
+            <input type="checkbox" id="physical_abuse_flag" formControlName="physical_abuse_flag" class="input-checkbox" />
             <label for="physical_abuse_flag" class="pl-3 py-0.5">Physical Abuse</label>
           </div>
 
           <div class="col-span-2">
-            <input type="checkbox" id="sexual_abuse_flag" formControlName="sexual_abuse_flag" (click)="sexualAbuse()" class="rounded w-4 h-4 border border-slate-400" />
+            <input type="checkbox" id="sexual_abuse_flag" formControlName="sexual_abuse_flag" (click)="sexualAbuse()" class="input-checkbox" />
             <label for="sexual_abuse_flag" class="pl-3 py-0.5">Sexual Abuse</label>
           </div>
 
           <div class="col-span-2">
-            <input type="checkbox" id="neglect_abuse_flag" formControlName="neglect_abuse_flag" class="rounded w-4 h-4 border border-slate-400" />
+            <input type="checkbox" id="neglect_abuse_flag" formControlName="neglect_abuse_flag" class="input-checkbox" />
             <label for="neglect_abuse_flag" class="pl-3 py-0.5">Neglects</label>
           </div>
 
           <div class="col-span-2">
-            <input type="checkbox" id="emotional_abuse_flag" formControlName="emotional_abuse_flag" class="rounded w-4 h-4 border border-slate-400" />
+            <input type="checkbox" id="emotional_abuse_flag" formControlName="emotional_abuse_flag" class="input-checkbox" />
             <label for="emotional_abuse_flag" class="pl-3 py-0.5">Emotional/Psychological Abuse</label>
           </div>
 
           <div class="col-span-2">
-            <input type="checkbox" id="economic_abuse_flag" formControlName="economic_abuse_flag" class="rounded w-4 h-4 border border-slate-400" />
+            <input type="checkbox" id="economic_abuse_flag" formControlName="economic_abuse_flag" class="input-checkbox" />
             <label for="economic_abuse_flag" class="pl-3 py-0.5">Economic Abuse</label>
           </div>
 
           <div class="col-span-2">
-            <input type="checkbox" id="utv_abuse_flag" formControlName="utv_abuse_flag" class="rounded w-4 h-4 border border-slate-400" />
+            <input type="checkbox" id="utv_abuse_flag" formControlName="utv_abuse_flag" class="input-checkbox" />
             <label for="utv_abuse_flag" class="pl-3 py-0.5">UTV</label>
           </div>
 
           <div class="col-span-2">
-            <input type="checkbox" id="others_abuse_flag" formControlName="others_abuse_flag" class="rounded w-4 h-4 border border-slate-400" />
+            <input type="checkbox" id="others_abuse_flag" formControlName="others_abuse_flag" class="input-checkbox" />
             <label for="others_abuse_flag" class="pl-3 py-0.5">Others</label>
           </div>
 
-          <div class="col-span-4">
+          <div class="col-span-4" *ngIf="intakeForm.value.others_abuse_flag">
             <label for="others_abuse_remarks">Other Abuses</label>
             <input type="text" name="others_abuse_remarks" id="others_abuse_remarks" formControlName="others_abuse_remarks" class="input">
           </div>
@@ -85,10 +79,14 @@
         <div class="col-span-3 border-b border-slate-200 w-full my-2 font-semibold text-sky-500">
           Present Address
         </div>
-        <div class="mx-5 col-span-3 grid grid-cols-4 gap-4">
+        <div class="col-span-3">
+          <input type="checkbox" formControlName="same_address_flag" class="input-checkbox ml-3" checked />
+          <label class="pl-3 py-0.5">Is the clients present addresss same with the declared address?</label>
+        </div>
+        <div class="mx-5 col-span-3 grid grid-cols-4 gap-4" *ngIf="!intakeForm.value.same_address_flag">
           <div>
             <label for="region" [ngClass]="{'text-red-500': show_error && f.region.errors}">Region</label>
-            <select name="region" id="region" formControlName="region" class="input" [ngClass]="{'invalid-input': show_error && f.region.errors}" (change)="loadDemog('regions', intakeForm.value.region, 'provinces')">
+            <select name="region" id="region" formControlName="region" class="input" (change)="loadDemog('regions', intakeForm.value.region, 'provinces')">
               <option *ngFor="let reg of regions" [value]="reg.code">{{ reg.name }}</option>
             </select>
           </div>
@@ -310,7 +308,7 @@
 
       <div class="grid grid-cols-1 mt-5" *ngIf="intakeForm.value.sexual_abuse_flag">
         <div class="text-sky-500 font-semibold">
-          <input type="checkbox" name="incest_case_flag" id="incest_case_flag" formControlName="incest_case_flag" (click)="incestCase()" class="rounded w-4 h-4 border border-slate-400" />
+          <input type="checkbox" name="incest_case_flag" id="incest_case_flag" formControlName="incest_case_flag" (click)="incestCase()" class="input-checkbox" />
           <label for="incest_case_flag" class="pl-3 py-0.5">is this an incest case?</label>
         </div>
       </div>
@@ -325,22 +323,22 @@
           </div>
           <div class="col-span-4 grid grid-cols-4 -mt-4">
             <div>
-              <input type="checkbox" formControlName="same_bed_adult_male_flag" class="rounded w-4 h-4 border border-slate-400" />
+              <input type="checkbox" formControlName="same_bed_adult_male_flag" class="input-checkbox" />
               <label class="pl-3 py-0.5">Adult male</label>
             </div>
 
             <div>
-              <input type="checkbox" formControlName="same_bed_adult_female_flag" class="rounded w-4 h-4 border border-slate-400" />
+              <input type="checkbox" formControlName="same_bed_adult_female_flag" class="input-checkbox" />
               <label class="pl-3 py-0.5">Adult female</label>
             </div>
 
             <div>
-              <input type="checkbox" formControlName="same_bed_child_male_flag" class="rounded w-4 h-4 border border-slate-400" />
+              <input type="checkbox" formControlName="same_bed_child_male_flag" class="input-checkbox" />
               <label class="pl-3 py-0.5">Male child(rend)</label>
             </div>
 
             <div>
-              <input type="checkbox" formControlName="same_bed_child_female_flag" class="rounded w-4 h-4 border border-slate-400" />
+              <input type="checkbox" formControlName="same_bed_child_female_flag" class="input-checkbox" />
               <label class="pl-3 py-0.5">Female child(ren)</label>
             </div>
           </div>
@@ -350,22 +348,22 @@
           </div>
           <div class="col-span-4 grid grid-cols-4 -mt-4">
             <div>
-              <input type="checkbox" formControlName="same_room_adult_male_flag" class="rounded w-4 h-4 border border-slate-400" />
+              <input type="checkbox" formControlName="same_room_adult_male_flag" class="input-checkbox" />
               <label class="pl-3 py-0.5">Adult male</label>
             </div>
 
             <div>
-              <input type="checkbox" formControlName="same_room_adult_female_flag" class="rounded w-4 h-4 border border-slate-400" />
+              <input type="checkbox" formControlName="same_room_adult_female_flag" class="input-checkbox" />
               <label class="pl-3 py-0.5">Adult female</label>
             </div>
 
             <div>
-              <input type="checkbox" formControlName="same_room_child_male_flag" class="rounded w-4 h-4 border border-slate-400" />
+              <input type="checkbox" formControlName="same_room_child_male_flag" class="input-checkbox" />
               <label class="pl-3 py-0.5">Male child(rend)</label>
             </div>
 
             <div>
-              <input type="checkbox" formControlName="same_room_child_female_flag" class="rounded w-4 h-4 border border-slate-400" />
+              <input type="checkbox" formControlName="same_room_child_female_flag" class="input-checkbox" />
               <label class="pl-3 py-0.5">Female child(ren)</label>
             </div>
           </div>
@@ -428,23 +426,23 @@
           </div>
           <div class="col-span-4 grid grid-cols-4 -mt-4">
             <div>
-              <input type="checkbox" formControlName="same_bed_child_male_flag" class="rounded w-4 h-4 border border-slate-400" />
-              <label class="pl-3 py-0.5">Physical</label>
+              <input type="checkbox" id="vaw_physical_flag" formControlName="vaw_physical_flag" class="input-checkbox" />
+              <label for="vaw_physical_flag" class="pl-3 py-0.5">Physical</label>
             </div>
 
             <div>
-              <input type="checkbox" formControlName="same_bed_child_male_flag" class="rounded w-4 h-4 border border-slate-400" />
-              <label class="pl-3 py-0.5">Sexual</label>
+              <input type="checkbox" id="vaw_sexual_flag" formControlName="vaw_sexual_flag" class="input-checkbox" />
+              <label for="vaw_sexual_flag" class="pl-3 py-0.5">Sexual</label>
             </div>
 
             <div>
-              <input type="checkbox" formControlName="same_bed_child_male_flag" class="rounded w-4 h-4 border border-slate-400" />
-              <label class="pl-3 py-0.5">Psychological</label>
+              <input type="checkbox" id="vaw_psychological_flag" formControlName="vaw_psychological_flag" class="input-checkbox" />
+              <label for="vaw_psychological_flag" class="pl-3 py-0.5">Psychological</label>
             </div>
 
             <div>
-              <input type="checkbox" formControlName="same_bed_child_male_flag" class="rounded w-4 h-4 border border-slate-400" />
-              <label class="pl-3 py-0.5">Economic</label>
+              <input type="checkbox" id="vaw_economic_flag" formControlName="vaw_economic_flag" class="input-checkbox" />
+              <label for="vaw_economic_flag" class="pl-3 py-0.5">Economic</label>
             </div>
           </div>
 
@@ -453,28 +451,28 @@
           </div>
           <div class="col-span-4 grid grid-cols-4 -mt-4">
             <div>
-              <input type="checkbox" formControlName="same_bed_child_male_flag" class="rounded w-4 h-4 border border-slate-400" />
-              <label class="pl-3 py-0.5">Sexual Intercourse</label>
+              <input type="checkbox" id="rape_sex_intercourse_flag" formControlName="rape_sex_intercourse_flag" class="input-checkbox" />
+              <label for="rape_sex_intercourse_flag" class="pl-3 py-0.5">Sexual Intercourse</label>
             </div>
 
             <div>
-              <input type="checkbox" formControlName="same_bed_child_male_flag" class="rounded w-4 h-4 border border-slate-400" />
-              <label class="pl-3 py-0.5">Sexual Assault</label>
+              <input type="checkbox" id="rape_sex_assault_flag" formControlName="rape_sex_assault_flag" class="input-checkbox" />
+              <label for="rape_sex_assault_flag" class="pl-3 py-0.5">Sexual Assault</label>
             </div>
 
             <div>
-              <input type="checkbox" formControlName="same_bed_child_male_flag" class="rounded w-4 h-4 border border-slate-400" />
-              <label class="pl-3 py-0.5">Incest</label>
+              <input type="checkbox" id="rape_incest_flag" formControlName="rape_incest_flag" class="input-checkbox" />
+              <label for="rape_incest_flag" class="pl-3 py-0.5">Incest</label>
             </div>
 
             <div>
-              <input type="checkbox" formControlName="same_bed_child_male_flag" class="rounded w-4 h-4 border border-slate-400" />
-              <label class="pl-3 py-0.5">Statutory Rape</label>
+              <input type="checkbox" id="rape_statutory_flag" formControlName="rape_statutory_flag" class="input-checkbox" />
+              <label for="rape_statutory_flag" class="pl-3 py-0.5">Statutory Rape</label>
             </div>
 
             <div>
-              <input type="checkbox" formControlName="same_bed_child_male_flag" class="rounded w-4 h-4 border border-slate-400" />
-              <label class="pl-3 py-0.5">Marital Rape</label>
+              <input type="checkbox" id="rape_marital_flag" formControlName="rape_marital_flag" class="input-checkbox" />
+              <label for="rape_marital_flag" class="pl-3 py-0.5">Marital Rape</label>
             </div>
           </div>
 
@@ -483,18 +481,18 @@
           </div>
           <div class="col-span-4 grid grid-cols-4 -mt-4">
             <div>
-              <input type="checkbox" formControlName="same_bed_child_male_flag" class="rounded w-4 h-4 border border-slate-400" />
-              <label class="pl-3 py-0.5">Verbal</label>
+              <input type="checkbox" id="harassment_verbal_flag" formControlName="harassment_verbal_flag" class="input-checkbox" />
+              <label for="harassment_verbal_flag" class="pl-3 py-0.5">Verbal</label>
             </div>
 
             <div>
-              <input type="checkbox" formControlName="same_bed_child_male_flag" class="rounded w-4 h-4 border border-slate-400" />
-              <label class="pl-3 py-0.5">Physical</label>
+              <input type="checkbox" id="harassment_physical_flag" formControlName="harassment_physical_flag" class="input-checkbox" />
+              <label for="harassment_physical_flag" class="pl-3 py-0.5">Physical</label>
             </div>
 
             <div class="col-span-2">
-              <input type="checkbox" formControlName="same_bed_child_male_flag" class="rounded w-4 h-4 border border-slate-400" />
-              <label class="pl-3 py-0.5">Use of object, picture, letter, notes with sexual underpinnings</label>
+              <input type="checkbox" id="harassment_object_flag" formControlName="harassment_object_flag" class="input-checkbox" />
+              <label for=harassment_object_flag class="pl-3 py-0.5">Use of object, picture, letter, notes with sexual underpinnings</label>
             </div>
           </div>
 
@@ -503,19 +501,19 @@
           </div>
           <div class="col-span-4 grid grid-cols-4 -mt-4">
             <div class="col-span-2">
-              <input type="checkbox" formControlName="same_bed_child_male_flag" class="rounded w-4 h-4 border border-slate-400" />
-              <label class="pl-3 py-0.5">Engage, facilitate, commit child prostitution</label>
+              <input type="checkbox" id="child_abuse_engaged_flag" formControlName="child_abuse_engaged_flag" class="input-checkbox" />
+              <label for="child_abuse_engaged_flag" class="pl-3 py-0.5">Engage, facilitate, commit child prostitution</label>
             </div>
 
             <div class="col-span-2">
-              <input type="checkbox" formControlName="same_bed_child_male_flag" class="rounded w-4 h-4 border border-slate-400" />
-              <label class="pl-3 py-0.5">Sexual intercourse or lasciviousness conduct</label>
+              <input type="checkbox" id="child_abuse_sexual_flag" formControlName="child_abuse_sexual_flag" class="input-checkbox" />
+              <label for="child_abuse_sexual_flag" class="pl-3 py-0.5">Sexual intercourse or lasciviousness conduct</label>
             </div>
           </div>
 
           <div class="col-span-2">
-            <label for="abuse_living_arrangement_id" [ngClass]="{'text-red-500': show_error && f.abuse_living_arrangement_id.errors}">Others: Specify</label>
-            <input type="text" name="abuse_living_arrangement_remarks" id="abuse_living_arrangement_remarks" formControlName="abuse_living_arrangement_remarks" class="input" [ngClass]="{'invalid-input': show_error && f.abuse_living_arrangement_remarks.errors}">
+            <label for="wcpd_others" [ngClass]="{'text-red-500': show_error && f.wcpd_others.errors}">Others: Specify</label>
+            <input type="text" name="wcpd_others" id="wcpd_others" formControlName="wcpd_others" class="input" [ngClass]="{'invalid-input': show_error && f.wcpd_others.errors}">
           </div>
 
         </div>

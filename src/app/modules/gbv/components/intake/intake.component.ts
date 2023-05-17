@@ -5,7 +5,7 @@ import { faSave } from '@fortawesome/free-regular-svg-icons';
 import { faCircleNotch, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
-
+import { intakeForm } from './intakeForm';
 @Component({
   selector: 'app-intake',
   templateUrl: './intake.component.html',
@@ -24,60 +24,7 @@ export class IntakeComponent implements OnInit{
 
   modals: any = [];
 
-  intakeForm: FormGroup = new FormGroup({
-    id: new FormControl<string| null>(''),
-    patient_id: new FormControl<string| null>(''),
-    case_number: new FormControl<string| null>(''),
-    case_date: new FormControl<string| null>(''),
-    outcome_date: new FormControl<string| null>(''),
-    outcome_reason_id : new FormControl<string| null>(''),
-    outcome_result_id : new FormControl<string| null>(''),
-    outcome_verdict_id: new FormControl<string| null>(''),
-    primary_complaint_id: new FormControl<string| null>(''),
-    primary_complaint_remarks: new FormControl<string| null>(''),
-    physical_abuse_flag: new FormControl<boolean| null>(false),
-    sexual_abuse_flag: new FormControl<boolean| null>(false),
-    neglect_abuse_flag: new FormControl<boolean| null>(false),
-    emotional_abuse_flag: new FormControl<boolean| null>(false),
-    economic_abuse_flag: new FormControl<boolean| null>(false),
-    utv_abuse_flag: new FormControl<boolean| null>(false),
-    others_abuse_flag: new FormControl<boolean| null>(false),
-    others_abuse_remarks: new FormControl<string| null>(''),
-    neglect_remarks: new FormControl<string| null>(''),
-    behavioral_remarks : new FormControl<string| null>(''),
-    service_id : new FormControl<string| null>(''),
-    service_remarks : new FormControl<string| null>(''),
-    region : new FormControl<string| null>(''),
-    province : new FormControl<string| null>(''),
-    municipality : new FormControl<string| null>(''),
-    barangay_code : new FormControl<string| null>(''),
-    address : new FormControl<string| null>(''),
-    direction_to_address : new FormControl<string| null>(''),
-    guardian_name : new FormControl<string| null>(''),
-    guardian_address : new FormControl<string| null>(''),
-    relation_to_child_id : new FormControl<string| null>(''),
-    guardian_contact_info : new FormControl<string| null>(''),
-    economic_status_id : new FormControl<string| null>(''),
-    number_of_children : new FormControl<string| null>(''),
-    number_of_individual_members : new FormControl<string| null>(''),
-    number_of_family : new FormControl<string| null>(''),
-    incest_case_flag : new FormControl<boolean| null>(false),
-    sleeping_arrangement_id : new FormControl<string| null>(''),
-    sleeping_arrangement_remarks : new FormControl<string| null>(''),
-    same_bed_adult_male_flag : new FormControl<boolean| null>(false),
-    same_bed_adult_female_flag : new FormControl<boolean| null>(false),
-    same_bed_child_male_flag : new FormControl<boolean| null>(false),
-    same_bed_child_female_flag : new FormControl<boolean| null>(false),
-    same_room_adult_male_flag : new FormControl<boolean| null>(false),
-    same_room_adult_female_flag : new FormControl<boolean| null>(false),
-    same_room_child_male_flag : new FormControl<boolean| null>(false),
-    same_room_child_female_flag : new FormControl<boolean| null>(false),
-    abuse_living_arrangement_id : new FormControl<string| null>(''),
-    abuse_living_arrangement_remarks : new FormControl<string| null>(''),
-    present_living_arrangement_id : new FormControl<string| null>(''),
-    present_living_arrangement_remarks : new FormControl<string| null>(''),
-  });
-
+  intakeForm:FormGroup=intakeForm();
 
   regions: any;
   municipalities: any;
@@ -86,10 +33,15 @@ export class IntakeComponent implements OnInit{
   economic_statuses: any;
   living_arrangements: any;
   child_relations: any;
+  primary_complaints: any;
+  family_members: any;
+  selected_intake: any;
 
   onSubmit(){
     console.log(this.intakeForm.value);
     let query;
+
+    if(!this.intakeForm.value.others_abuse_flag) this.intakeForm.patchValue({others_abuse_remarks: null});
 
     if(this.intakeForm.value.id) {
       query = this.http.update('gender-based-violence/patient-gbv-intake/', this.intakeForm.value.id, this.intakeForm.value)
@@ -97,10 +49,8 @@ export class IntakeComponent implements OnInit{
       query = this.http.post('gender-based-violence/patient-gbv-intake', this.intakeForm.value);
     }
 
-    // this.incestCase()
     query.subscribe({
       next: (data: any) => {
-        // console.log(data);
         this.toastr.success('Successfully recorded!', 'Intake Form');
         this.selected_gbv_case = data.data
       },
@@ -108,15 +58,50 @@ export class IntakeComponent implements OnInit{
     })
   }
 
+  libraries = [
+    {var_name: 'regions', location: 'regions'},
+    {var_name: 'economic_statuses', location: 'gbv-economic-status'},
+    {var_name: 'living_arrangements', location: 'gbv-living-arrangement'},
+    {var_name: 'child_relations', location: 'child-relation'},
+  ];
+
+  loadLibraries(){
+    this.libraries.forEach((obj, index) => {
+      this.http.get('libraries/'+obj.location).subscribe({
+        next: (data: any) => {
+          this[obj.var_name] = data.data;
+          if(this.libraries.length -1 === index) {
+            this.show_form = true
+          }
+        },
+        error: err => console.log(err)
+      });
+    });
+  }
+
+  loadSelectedConsult(){
+    if(this.selected_gbv_case.gbvIntake) {
+      console.log(this.selected_gbv_case.gbvIntake);
+      this.intakeForm.patchValue({...this.selected_gbv_case.gbvIntake});
+      this.intakeForm.patchValue({
+        case_date: this.selected_gbv_case.gbvIntake ? formatDate(this.selected_gbv_case.gbvIntake.case_date, 'yyyy-MM-dd', 'en') : null
+      })
+    } else {
+      this.intakeForm.patchValue({
+        patient_id: this.selected_gbv_case.patient_id,
+        patient_gbv_id: this.selected_gbv_case.id
+      })
+    }
+
+    this.intakeForm.controls.case_number.disable();
+    console.log(this.intakeForm.value);
+  }
+
   sexualAbuse(){
     if(this.intakeForm.value.sexual_abuse_flag) this.intakeForm.patchValue({incest_case_flag:0});
-    /* this.intakeForm.patchValue({
-      incest_case_flag: !this.intakeForm.value.incest_case_flag
-    }); */
   }
 
   incestCase(){
-    console.log(this.intakeForm.value.incest_case_flag)
     if(!this.intakeForm.value.incest_case_flag) {
       this.intakeForm.patchValue({
         same_bed_adult_male_flag: null,
@@ -134,30 +119,6 @@ export class IntakeComponent implements OnInit{
       })
     }
   }
-
-  primary_complaints: any;
-
-  libraries = [
-    {var_name: 'regions', location: 'regions'},
-    {var_name: 'economic_statuses', location: 'gbv-economic-status'},
-    {var_name: 'living_arrangements', location: 'gbv-living-arrangement'},
-    {var_name: 'regions', location: 'child-relation'},
-  ]
-  loadLibraries(){
-    this.libraries.forEach((obj, index) => {
-      this.http.get('libraries/'+obj.location).subscribe({
-        next: (data: any) => {
-          this[obj.var_name] = data.data;
-          if(this.libraries.length -1 === index) {
-            this.show_form = true
-          }
-        },
-        error: err => console.log(err)
-      });
-    });
-  }
-
-  family_members: any;
 
   loadFamily(){
     let params = {
@@ -191,12 +152,9 @@ export class IntakeComponent implements OnInit{
     this.intakeForm = this.formBuilder.nonNullable.group({
       id: [null],
       patient_id: [this.patient_id],
+      patient_gbv_id: [null],
       case_number: [null],
       case_date: [null],
-      outcome_date: [null],
-      outcome_reason_id: [null],
-      outcome_result_id: [null],
-      outcome_verdict_id: [null],
       primary_complaint_id: [null],
       primary_complaint_remarks: [null],
       physical_abuse_flag: [false],
@@ -213,6 +171,7 @@ export class IntakeComponent implements OnInit{
       region: [null],
       province: [null],
       municipality: [null],
+      same_address_flag: [false],
       barangay_code: [null],
       address: [null],
       direction_to_address: [null],
@@ -238,24 +197,29 @@ export class IntakeComponent implements OnInit{
       abuse_living_arrangement_id: [null],
       abuse_living_arrangement_remarks: [null],
       present_living_arrangement_id: [null],
-      present_living_arrangement_remarks: [null]
+      present_living_arrangement_remarks: [null],
+
+      vaw_physical_flag: [false],
+      vaw_sexual_flag: [false],
+      vaw_psychological_flag: [false],
+      vaw_economic_flag: [false],
+      rape_sex_intercourse_flag: [false],
+      rape_sex_assault_flag: [false],
+      rape_incest_flag: [false],
+      rape_statutory_flag: [false],
+      rape_marital_flag: [false],
+      harassment_verbal_flag: [false],
+      harassment_physical_flag: [false],
+      harassment_object_flag: [false],
+      child_abuse_engaged_flag: [false],
+      child_abuse_sexual_flag: [false],
+      wcpd_others: [null]
     });
 
     this.loadSelectedConsult();
     this.loadFamily();
   }
 
-  loadSelectedConsult(){
-    console.log(this.selected_gbv_case)
-    if(this.selected_gbv_case){
-      this.intakeForm.patchValue({...this.selected_gbv_case});
-      this.intakeForm.patchValue({
-        relation_to_child_id: this.selected_gbv_case.relation.id,
-        case_date: this.selected_gbv_case ? formatDate(this.selected_gbv_case.case_date, 'yyyy-MM-dd', 'en') : null
-      })
-      // console.log(this.intakeForm.value)
-    }
-  }
   disaledSelection(loc, code) {
     if(loc === 'regions') {
       this.municipalities = null;

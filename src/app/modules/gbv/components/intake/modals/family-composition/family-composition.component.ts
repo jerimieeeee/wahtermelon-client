@@ -14,7 +14,7 @@ import { ToastrService } from 'ngx-toastr';
 export class FamilyCompositionComponent {
   @Output() toggleModal = new EventEmitter<any>();
   @Input() patient_id;
-  @Input() patient_gbv_intake_id;
+  @Input() patient_gbv_id;
   @Input() selected_family_member;
 
   faSave = faSave;
@@ -30,7 +30,7 @@ export class FamilyCompositionComponent {
   familyForm: FormGroup = new FormGroup({
     id: new FormControl<string| null>(''),
     patient_id: new FormControl<string| null>(''),
-    patient_gbv_intake_id  : new FormControl<string| null>(''),
+    patient_gbv_id  : new FormControl<string| null>(''),
     name : new FormControl<string| null>(''),
     child_relation_id : new FormControl<string| null>(''),
     living_with_child_flag: new FormControl<boolean| null>(false),
@@ -114,7 +114,7 @@ export class FamilyCompositionComponent {
     this.familyForm = this.formBuilder.nonNullable.group({
       id: [null],
       patient_id: [this.patient_id],
-      patient_gbv_intake_id: [this.patient_gbv_intake_id],
+      patient_gbv_id: [this.patient_gbv_id],
       name: [null, Validators.required],
       child_relation_id: [null, Validators.required],
       living_with_child_flag: [false],

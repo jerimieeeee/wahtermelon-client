@@ -13,25 +13,25 @@
         <form [formGroup]="interviewForm" (submit)="onSubmit()" class="text-left text-gray-500 m-5">
           <div class="grid grid-cols-4 gap-4">
             <div class="col-span-2">
-              <label for="case_number" [ngClass]="{'text-red-500': show_error && f.case_number.errors}">Date & time</label>
-              <input type="datetime-local" name="case_number" id="case_number" formControlName="case_number" class="input" [ngClass]="{'invalid-input': show_error && f.case_number.errors}">
+              <label for="interview_datetime" [ngClass]="{'text-red-500': show_error && f.interview_datetime.errors}">Date & time</label>
+              <input type="datetime-local" name="interview_datetime" id="interview_datetime" formControlName="interview_datetime" class="input" [ngClass]="{'invalid-input': show_error && f.interview_datetime.errors}">
             </div>
 
             <div class="col-span-2">
-              <label for="case_number" [ngClass]="{'text-red-500': show_error && f.case_number.errors}">Place</label>
-              <input type="text" name="case_number" id="case_number" formControlName="case_number" class="input" [ngClass]="{'invalid-input': show_error && f.case_number.errors}">
+              <label for="interview_place" [ngClass]="{'text-red-500': show_error && f.interview_place.errors}">Place</label>
+              <input type="text" name="interview_place" id="interview_place" formControlName="interview_place" class="input" [ngClass]="{'invalid-input': show_error && f.interview_place.errors}">
             </div>
 
             <div class="col-span-4">
-              <label for="case_number" [ngClass]="{'text-red-500': show_error && f.case_number.errors}">Perpetrator</label>
-              <select name="enroll_as_code" id="enroll_as_code" formControlName="enroll_as_code" class="input" [ngClass]="{'invalid-input': show_error && f.enroll_as_code.errors}">
+              <label for="alleged_perpetrator" [ngClass]="{'text-red-500': show_error && f.alleged_perpetrator.errors}">Perpetrator</label>
+              <select name="alleged_perpetrator" id="alleged_perpetrator" formControlName="alleged_perpetrator" class="input" [ngClass]="{'invalid-input': show_error && f.alleged_perpetrator.errors}">
                 <option *ngFor="let loc of perpetrators" [value]="loc.id">{{ enroll_as.desc }}</option>
               </select>
             </div>
 
             <div class="col-span-4">
-              <label for="case_number" [ngClass]="{'text-red-500': show_error && f.case_number.errors}">Phrases used to describe acts</label>
-              <textarea rows="4" name="case_number" id="case_number" formControlName="case_number" class="input" [ngClass]="{'invalid-input': show_error && f.case_number.errors}">
+              <label for="interview_notes" [ngClass]="{'text-red-500': show_error && f.interview_notes.errors}">Phrases used to describe acts</label>
+              <textarea rows="4" name="interview_notes" id="interview_notes" formControlName="interview_notes" class="input" [ngClass]="{'invalid-input': show_error && f.interview_notes.errors}">
               </textarea>
             </div>
           </div>

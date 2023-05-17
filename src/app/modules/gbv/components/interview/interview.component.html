@@ -1,22 +1,17 @@
-<div class="border border-slate-200 rounded-b-lg" *ngIf="show_form">
-  <!-- <div class="bg-blue-500 text-white rounded-t-md py-2 pl-3 font-semibold">
-    Treatment Form
-  </div> -->
-
-  <div class="mx-5 mb-5">
+<div class="border border-slate-200 rounded-b-lg">
+  <div class="mx-5 mb-5" *ngIf="show_form">
     <form [formGroup]="interviewForm" (ngSubmit)="saveCaseFindings()">
       <div class="grid grid-cols-3 gap-4 w-full mt-5">
 
         <div class="col-span-3 grid grid-cols-4 gap-4">
           <div class="col-span-2">
             <div class="ml-5">
-              <input type="checkbox" formControlName="deferred" class="rounded w-4 h-4 border border-slate-400" />
-              <label class="pl-3 py-0.5">Deferring interview?</label>
+              <input type="checkbox" disabled formControlName="deferred" class="input-checkbox" />
+              <label for="deferred" class="pl-3 py-0.5">Deferring interview?</label>
             </div>
           </div>
 
           <div class="col-span-2" *ngIf="interviewForm.value.deferred">
-            <!-- <label for="deferred">Other chronological clues</label> -->
             <select name="deferral_reason_id" id="deferral_reason_id" formControlName="deferral_reason_id" class="input">
               <option *ngFor="let deferral_reason of deferral_reasons" [value]="deferral_reason.id">{{ deferral_reason.desc }}</option>
             </select>
@@ -36,71 +31,80 @@
         </div>
 
         <div class="col-span-3 border-b border-slate-200 w-full my-2 font-semibold text-sky-500">
+          Source of Information
+        </div>
+        <div class="mx-5 col-span-3 grid grid-cols-3 gap-4">
+          <div>
+            <input type="checkbox" id="source_from_victim_flag" formControlName="source_from_victim_flag" class="input-checkbox" />
+            <label for="source_from_victim_flag" class="pl-3 py-0.5">Victim Survivor</label>
+          </div>
+
+          <div>
+            <input type="checkbox" id="source_from_historian_flag" formControlName="source_from_historian_flag" (click)="sexualAbuse()" class="input-checkbox" />
+            <label for="source_from_historian_flag" class="pl-3 py-0.5">Historian</label>
+          </div>
+
+          <div>
+            <input type="checkbox" id="source_from_sworn_statement_flag" formControlName="source_from_sworn_statement_flag" class="input-checkbox" />
+            <label for="source_from_sworn_statement_flag" class="pl-3 py-0.5">Sworn Statement</label>
+          </div>
+
+          <div *ngIf="interviewForm.value.source_from_victim_flag">
+            <label for="enroll_as_code">Mental Age</label>
+            <select name="mental_age_id" id="mental_age_id" formControlName="mental_age_id" class="input">
+              <option *ngFor="let age of mental_ages" [value]="age.id">{{ age.desc }}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="col-span-3 border-b border-slate-200 w-full my-2 font-semibold text-sky-500">
           History of Abuse
         </div>
         <div class="mx-5 col-span-3 grid grid-cols-4 gap-4">
-          <div class="col-span-4">
-            <div class="w-1/2">
-              <label for="enroll_as_code" [ngClass]="{'text-red-500': show_error && f.enroll_as_code.errors}">Information source</label>
-              <select name="enroll_as_code" id="enroll_as_code" formControlName="enroll_as_code" class="input" [ngClass]="{'invalid-input': show_error && f.enroll_as_code.errors}">
-                <option *ngFor="let info_source of info_sources" [value]="info_source.id">{{ info_source.desc }}</option>
-              </select>
-            </div>
+          <div class="col-span-2">
+            <label for="incident_recent_datetime" [ngClass]="{'text-red-500': show_error && f.incident_recent_datetime.errors}">Date and time of most recent abuse</label>
+            <input type="datetime-local" name="incident_recent_datetime" id="incident_recent_datetime" formControlName="incident_recent_datetime" class="input" [ngClass]="{'invalid-input': show_error && f.incident_recent_datetime.errors}">
           </div>
 
           <div class="col-span-2">
-            <label for="case_number" [ngClass]="{'text-red-500': show_error && f.case_number.errors}">Date and time of most recent abuse</label>
-            <input type="datetime-local" name="case_number" id="case_number" formControlName="case_number" class="input" [ngClass]="{'invalid-input': show_error && f.case_number.errors}">
+            <label for="incident_recent_remarks" [ngClass]="{'text-red-500': show_error && f.incident_recent_remarks.errors}">Other chronological clues</label>
+            <input type="text" name="incident_recent_remarks" id="incident_recent_remarks" formControlName="incident_recent_remarks" class="input" [ngClass]="{'invalid-input': show_error && f.incident_recent_remarks.errors}">
           </div>
 
           <div class="col-span-2">
-            <label for="case_number" [ngClass]="{'text-red-500': show_error && f.case_number.errors}">Other chronological clues</label>
-            <input type="text" name="case_number" id="case_number" formControlName="case_number" class="input" [ngClass]="{'invalid-input': show_error && f.case_number.errors}">
+            <label for="incident_first_datetime" [ngClass]="{'text-red-500': show_error && f.incident_first_datetime.errors}">Date and time of first abuse</label>
+            <input type="datetime-local" name="incident_first_datetime" id="incident_first_datetime" formControlName="incident_first_datetime" class="input" [ngClass]="{'invalid-input': show_error && f.incident_first_datetime.errors}">
           </div>
 
           <div class="col-span-2">
-            <label for="case_number" [ngClass]="{'text-red-500': show_error && f.case_number.errors}">Date and time of first abuse</label>
-            <input type="datetime-local" name="case_number" id="case_number" formControlName="case_number" class="input" [ngClass]="{'invalid-input': show_error && f.case_number.errors}">
+            <label for="incident_first_datetime" [ngClass]="{'text-red-500': show_error && f.incident_first_datetime.errors}">Other chronological clues</label>
+            <input type="text" name="incident_first_datetime" id="incident_first_datetime" formControlName="incident_first_datetime" class="input" [ngClass]="{'invalid-input': show_error && f.incident_first_datetime.errors}">
           </div>
 
           <div class="col-span-2">
-            <label for="case_number" [ngClass]="{'text-red-500': show_error && f.case_number.errors}">Other chronological clues</label>
-            <input type="text" name="case_number" id="case_number" formControlName="case_number" class="input" [ngClass]="{'invalid-input': show_error && f.case_number.errors}">
-          </div>
-
-          <div class="col-span-2">
-            <label for="enroll_as_code" [ngClass]="{'text-red-500': show_error && f.enroll_as_code.errors}">Episodes of abuse</label>
-            <select name="enroll_as_code" id="enroll_as_code" formControlName="enroll_as_code" class="input" [ngClass]="{'invalid-input': show_error && f.enroll_as_code.errors}">
+            <label for="abused_episode_id" [ngClass]="{'text-red-500': show_error && f.abused_episode_id.errors}">Episodes of abuse</label>
+            <select name="abused_episode_id" id="abused_episode_id" formControlName="abused_episode_id" class="input" [ngClass]="{'invalid-input': show_error && f.abused_episode_id.errors}">
               <option *ngFor="let abused_episode of abused_episodes" [value]="abused_episode.id">{{ abused_episode.desc }}</option>
             </select>
           </div>
 
           <div class="col-span-2">
-            <label for="case_number" [ngClass]="{'text-red-500': show_error && f.case_number.errors}">Number of episode</label>
-            <input type="text" name="case_number" id="case_number" formControlName="case_number" class="input" [ngClass]="{'invalid-input': show_error && f.case_number.errors}">
+            <label for="abused_episode_count" [ngClass]="{'text-red-500': show_error && f.abused_episode_count.errors}">Number of episode</label>
+            <input type="text" name="abused_episode_count" id="abused_episode_count" formControlName="abused_episode_count" class="input" [ngClass]="{'invalid-input': show_error && f.abused_episode_count.errors}">
           </div>
 
           <div class="col-span-2">
-            <label for="enroll_as_code" [ngClass]="{'text-red-500': show_error && f.enroll_as_code.errors}">Site of abuse</label>
-            <select name="enroll_as_code" id="enroll_as_code" formControlName="enroll_as_code" class="input" [ngClass]="{'invalid-input': show_error && f.enroll_as_code.errors}">
+            <label for="abused_site_id" [ngClass]="{'text-red-500': show_error && f.abused_site_id.errors}">Site of abuse</label>
+            <select name="abused_site_id" id="abused_site_id" formControlName="abused_site_id" class="input" [ngClass]="{'invalid-input': show_error && f.abused_site_id.errors}">
               <option *ngFor="let abused_site of abused_sites" [value]="abused_site.id">{{ abused_site.desc }}</option>
             </select>
           </div>
 
           <div class="col-span-2">
-            <label for="enroll_as_code" [ngClass]="{'text-red-500': show_error && f.enroll_as_code.errors}">Address</label>
-            <input type="text" name="case_number" id="case_number" formControlName="case_number" class="input" [ngClass]="{'invalid-input': show_error && f.case_number.errors}">
+            <label for="abused_site_remarks" [ngClass]="{'text-red-500': show_error && f.abused_site_remarks.errors}">Address</label>
+            <input type="text" name="abused_site_remarks" id="abused_site_remarks" formControlName="abused_site_remarks" class="input" [ngClass]="{'invalid-input': show_error && f.abused_site_remarks.errors}">
           </div>
 
-          <div class="col-span-4">
-            <label for="case_number" [ngClass]="{'text-red-500': show_error && f.case_number.errors}">Direction to address</label>
-            <input type="text" name="case_number" id="case_number" formControlName="case_number" class="input" [ngClass]="{'invalid-input': show_error && f.case_number.errors}">
-          </div>
-
-          <!-- <div>
-            <input type="checkbox" class="rounded w-4 h-4 border border-slate-400" />
-            <label for=""></label>
-          </div> -->
           <div class="col-span-4 grid grid-cols-1 border-slate-200 shadow-md rounded-md">
             <div class="bg-sky-500 text-white py-1 pl-3 rounded-t-md">
               Disclosure
@@ -108,32 +112,27 @@
 
             <div class="grid grid-cols-4 gap-4 mt-3 mb-5 mx-5">
               <div class="col-span-2 mt-5">
-                <input type="checkbox" class="rounded w-4 h-4 border border-slate-400" />
-                <label class="pl-3 py-0.5">Did the victim survivor disclose?</label>
+                <input type="checkbox" formControlName="disclosed_flag" class="input-checkbox" />
+                <label for="disclosed_flag" class="pl-3 py-0.5">Did the victim survivor disclose?</label>
               </div>
 
-              <div class="col-span-2">
-                <label for="enroll_as_code" [ngClass]="{'text-red-500': show_error && f.enroll_as_code.errors}">Type of disclosure</label>
-                <select name="enroll_as_code" id="enroll_as_code" formControlName="enroll_as_code" class="input" [ngClass]="{'invalid-input': show_error && f.enroll_as_code.errors}">
+              <div class="col-span-2" *ngIf="interviewForm.value.disclosed_flag">
+                <label for="disclosed_type " [ngClass]="{'text-red-500': show_error && f.disclosed_type .errors}">Type of disclosure</label>
+                <select name="disclosed_type " id="disclosed_type " formControlName="disclosed_type " class="input" [ngClass]="{'invalid-input': show_error && f.disclosed_type .errors}">
                   <option *ngFor="let disclosed_type of disclosed_types" [value]="disclosed_type.id">{{ disclosed_type.desc }}</option>
                 </select>
               </div>
 
-              <!-- <div class="col-span-2 mt-5">
-                <input type="checkbox" class="rounded w-4 h-4 border border-slate-400" />
-                <label class="pl-3 py-0.5">Did the patient recant?</label>
-              </div> -->
-
-              <div class="col-span-3">
-                <label for="enroll_as_code" [ngClass]="{'text-red-500': show_error && f.enroll_as_code.errors}">To whom did the victim survivor disclose first?</label>
-                <select name="enroll_as_code" id="enroll_as_code" formControlName="enroll_as_code" class="input" [ngClass]="{'invalid-input': show_error && f.enroll_as_code.errors}">
+              <div class="col-span-3" *ngIf="interviewForm.value.disclosed_flag">
+                <label for="disclosed_relation_id" [ngClass]="{'text-red-500': show_error && f.disclosed_relation_id.errors}">To whom did the victim survivor disclose first?</label>
+                <select name="disclosed_relation_id" id="disclosed_relation_id" formControlName="disclosed_relation_id" class="input" [ngClass]="{'invalid-input': show_error && f.disclosed_relation_id.errors}">
                   <option *ngFor="let child_relation of child_relations" [value]="child_relation.id">{{ child_relation.desc }}</option>
                 </select>
               </div>
 
-              <div class="col-span-4">
-                <label for="registration_date" [ngClass]="{'text-red-500': show_error && f.registration_date.errors}">Describe circumstances surrounding the initial disclosure:</label>
-                <textarea rows="4" name="registration_date" id="registration_date" formControlName="registration_date" class="input" [ngClass]="{'invalid-input': show_error && f.registration_date.errors}">
+              <div class="col-span-4" *ngIf="interviewForm.value.disclosed_flag">
+                <label for="initial_disclosure" [ngClass]="{'text-red-500': show_error && f.initial_disclosure.errors}">Describe circumstances surrounding the initial disclosure:</label>
+                <textarea rows="4" name="initial_disclosure" id="initial_disclosure" formControlName="initial_disclosure" class="input" [ngClass]="{'invalid-input': show_error && f.initial_disclosure.errors}">
                 </textarea>
               </div>
             </div>
@@ -208,20 +207,20 @@
         </div>
         <div class="mx-5 col-span-4 grid grid-cols-4 gap-4">
           <div class="col-span-2">
-            <label for="enroll_as_code" [ngClass]="{'text-red-500': show_error && f.enroll_as_code.errors}">Behavior during the interview</label>
-            <select name="enroll_as_code" id="enroll_as_code" formControlName="enroll_as_code" class="input" [ngClass]="{'invalid-input': show_error && f.enroll_as_code.errors}">
+            <label for="child_behavior_id" [ngClass]="{'text-red-500': show_error && f.child_behavior_id.errors}">Behavior during the interview</label>
+            <select name="child_behavior_id" id="child_behavior_id" formControlName="child_behavior_id" class="input" [ngClass]="{'invalid-input': show_error && f.child_behavior_id.errors}">
               <option *ngFor="let child_behavior of child_behaviors" [value]="child_behavior.id">{{ child_behavior.desc }}</option>
             </select>
           </div>
 
-          <div class="col-span-2">
-            <label for="continuation_start" [ngClass]="{'text-red-500': show_error && f.continuation_start.errors}">Is the caretaker present?</label>
-            <input type="text" name="continuation_start" id="continuation_start" formControlName="continuation_start" class="input" [ngClass]="{'invalid-input': show_error && f.continuation_start.errors}">
+          <div class="col-span-2 mt-8">
+            <input type="checkbox" formControlName="child_caretaker_present_flag" class="input-checkbox" />
+            <label for="child_caretaker_present_flag" class="pl-3 py-0.5">Is the caretaker present?</label>
           </div>
 
           <div class="col-span-4">
-            <label for="continuation_start" [ngClass]="{'text-red-500': show_error && f.continuation_start.errors}">Decribe the behavior and interviewer/caretaker</label>
-            <textarea row="3" name="continuation_start" id="continuation_start" formControlName="continuation_start" class="input" [ngClass]="{'invalid-input': show_error && f.continuation_start.errors}"></textarea>
+            <label for="child_behavior_remarks" [ngClass]="{'text-red-500': show_error && f.child_behavior_remarks.errors}">Decribe the behavior and interviewer/caretaker</label>
+            <textarea row="3" name="child_behavior_remarks" id="child_behavior_remarks" formControlName="child_behavior_remarks" class="input" [ngClass]="{'invalid-input': show_error && f.child_behavior_remarks.errors}"></textarea>
           </div>
         </div>
       </div>
@@ -235,15 +234,15 @@
 
         <div class="mx-5 col-span-4 grid grid-cols-4 gap-4">
           <div class="col-span-2">
-            <label for="enroll_as_code" [ngClass]="{'text-red-500': show_error && f.enroll_as_code.errors}">Further developmental assessment needed</label>
-            <select name="enroll_as_code" id="enroll_as_code" formControlName="enroll_as_code" class="input" [ngClass]="{'invalid-input': show_error && f.enroll_as_code.errors}">
+            <label for="dev_screening_id" [ngClass]="{'text-red-500': show_error && f.dev_screening_id.errors}">Further developmental assessment needed</label>
+            <select name="dev_screening_id" id="dev_screening_id" formControlName="dev_screening_id" class="input" [ngClass]="{'invalid-input': show_error && f.dev_screening_id.errors}">
               <option *ngFor="let developmental_screening of developmental_screenings" [value]="developmental_screening.id">{{ developmental_screening.desc }}</option>
             </select>
           </div>
 
           <div class="col-span-2">
-            <label for="continuation_start" [ngClass]="{'text-red-500': show_error && f.continuation_start.errors}">Decribe</label>
-            <input type="text" row="3" name="continuation_start" id="continuation_start" formControlName="continuation_start" class="input" [ngClass]="{'invalid-input': show_error && f.continuation_start.errors}">
+            <label for="dev_screening_remarks" [ngClass]="{'text-red-500': show_error && f.dev_screening_remarks.errors}">Decribe</label>
+            <input type="text" row="3" name="dev_screening_remarks" id="dev_screening_remarks" formControlName="dev_screening_remarks" class="input" [ngClass]="{'invalid-input': show_error && f.dev_screening_remarks.errors}">
           </div>
         </div>
       </div>
@@ -308,6 +307,15 @@
       </div>
     </form>
   </div>
+
+  <div class="grid grid-cols-1 my-16" *ngIf="!show_form">
+    <span class="flex justify-center">
+      <fa-icon [icon]="faCircleNotch" spin="true" class="text-sky-500"></fa-icon>
+    </span>
+    <span class="flex justify-center">
+      Loading...
+    </span>
+  </div>
 </div>
 
 <app-inteview-notes *ngIf="modals['add_interview_notes']"
@@ -322,6 +330,3 @@
 <app-perpetrators *ngIf="modals['perpetrators']"
   (toggleModal)="toggleModal($event)"
 ></app-perpetrators>
-<!-- <app-family-composition *ngIf="modals['add_family']"
-  (toggleModal)="toggleModal($event)"
-></app-family-composition> -->

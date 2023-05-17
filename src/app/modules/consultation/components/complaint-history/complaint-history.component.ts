@@ -101,7 +101,10 @@ export class ComplaintHistoryComponent implements OnInit, OnChanges {
     );
   }
 
+  enable_edit: boolean = false;
   gbv_complaints: any;
+  show_gbv_form: boolean = false;
+  have_open_gbv: boolean = false;
   loadSelected(){
     this.gbv_complaints = [];
     this.possible_gbv_case = false;
@@ -116,12 +119,26 @@ export class ComplaintHistoryComponent implements OnInit, OnChanges {
           this.possible_gbv_case = true;
           this.gbv_complaints.push(val.complaint_id);
         }
+
+        if((Object.keys(this.consult_details.consult_notes.complaints).length-1 === index) && this.possible_gbv_case){
+          this.getPatientGbv();
+        }
       });
     };
     this.selectedComplaint = selected_complaints;
   }
 
-  enable_edit: boolean = false;
+  getPatientGbv() {
+    let params = {patient_id: this.consult_details.patient.id};
+    this.http.get('gender-based-violence/patient-gbv', {params}).subscribe({
+      next: (data: any) => {
+        if(!data.data[0].outcome_date) this.have_open_gbv = true;
+        this.show_gbv_form = true;
+      },
+      error: err => console.log(err)
+    })
+  }
+
   ngOnChanges(changes){
     this.show_content = this.toggle_content;
     if(this.consult_details) {

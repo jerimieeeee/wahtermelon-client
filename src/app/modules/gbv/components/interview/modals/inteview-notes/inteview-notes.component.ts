@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
+import { HttpService } from 'app/shared/services/http.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-inteview-notes',
@@ -18,9 +20,6 @@ export class InteviewNotesComponent {
 
   perpetrators: any;
 
-  get f(): { [key: string]: AbstractControl } {
-    return this.interviewForm.controls;
-  }
 
   onSubmit(){
 
@@ -28,14 +27,23 @@ export class InteviewNotesComponent {
 
   interviewForm: FormGroup = new FormGroup({
     patient_id: new FormControl<string| null>(''),
-    tb_treatment_outcome_code : new FormControl<string| null>(''),
-    lib_tb_outcome_reason_id : new FormControl<string| null>(''),
-    outcome_date: new FormControl<string| null>(''),
-    treatment_done: new FormControl<string| null>(''),
-    outcome_remarks: new FormControl<string| null>(''),
+    intake_id : new FormControl<string| null>(''),
+    interview_datetime : new FormControl<string| null>(''),
+    interview_place: new FormControl<string| null>(''),
+    alleged_perpetrator: new FormControl<string| null>(''),
+    interview_notes: new FormControl<string| null>(''),
   });
+
+  get f(): { [key: string]: AbstractControl } {
+    return this.interviewForm.controls;
+  }
 
   closeModal(){
     this.toggleModal.emit('add_interview_notes');
   }
+
+  constructor (
+    private http: HttpService,
+    private toastr: ToastrService
+  ) { }
 }
