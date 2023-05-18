@@ -1,31 +1,24 @@
-<div class="border border-slate-200 rounded-b-lg" *ngIf="show_form">
+<div class="border border-slate-200 rounded-b-lg">
   <div class="mx-5 mb-5">
     <div class="grid grid-cols-3 gap-4 w-full mt-5">
-      <div class="col-span-4 grid grid-cols-4 gap-4">
+      <div class="col-span-4 grid grid-cols-4 gap-4" *ngIf="show_form">
         <div class="col-span-2">
           <label for="case_number">Date</label>
-          <input type="date" [disabled]="patient_gbv" [(ngModel)]="patient_gbv.gbv_date" name="gbv_date" id="gbv_date" class="input">
+          <input type="date" [disabled]="patient_gbv.id" [(ngModel)]="patient_gbv.gbv_date" name="gbv_date" id="gbv_date" class="input">
         </div>
 
-        <div class="col-span-2" *ngIf="!patient_gbv">
-          <label for="case_number">Refer to</label>
-          <select [disabled]="patient_gbv" [(ngModel)]="patient_gbv.referral_facility_code" class="input">
-            <option *ngFor="let gbv_mdt of gbv_mdts" [value]="gbv_mdt.facility.code">{{ gbv_mdt.last_name }}, {{ gbv_mdt.first_name }}</option>
-          </select>
-        </div>
-        <!--   -->
         <div class="col-span-4 font-semibold text-sky-500 mt-5 border-b border-slate-200">
           Complaints
         </div>
         <div class="col-span-4 grid grid-cols-3 gap-4">
           <div *ngFor="let complaint of complaints">
-            <input type="checkbox" [disabled]="patient_gbv" attr.id="patient_complaints{{complaint.complaint_id}}" [(ngModel)]="patient_complaints[complaint.complaint_id]" class="input-checkbox" />
+            <input type="checkbox" [disabled]="patient_gbv.id" attr.id="patient_complaints{{complaint.complaint_id}}" [(ngModel)]="patient_complaints[complaint.complaint_id]" class="input-checkbox" />
             <label attr.for="patient_complaints{{complaint.complaint_id}}" class="pl-3 py-0.5">{{ complaint.complaint_desc }}</label>
           </div>
         </div>
         <div class="col-span-4 flex">
           <label class="mt-2 pr-3">Remarks</label>
-          <input type="text" [disabled]="patient_gbv" [(ngModel)]="patient_gbv.gbv_complaint_remarks" class="input" />
+          <input type="text" [disabled]="patient_gbv.id" [(ngModel)]="patient_gbv.gbv_complaint_remarks" class="input" />
         </div>
 
         <div class="col-span-4 font-semibold text-sky-500 mt-5 border-b border-slate-200">
@@ -33,13 +26,13 @@
         </div>
         <div class="col-span-4 grid grid-cols-3 gap-4">
           <div *ngFor="let behavioral_change of behavioral_changes">
-            <input type="checkbox" [disabled]="patient_gbv" attr.id="patient_behavior{{behavioral_change.id}}" [(ngModel)]="patient_behavior[behavioral_change.id]" class="input-checkbox" />
+            <input type="checkbox" [disabled]="patient_gbv.id" attr.id="patient_behavior{{behavioral_change.id}}" [(ngModel)]="patient_behavior[behavioral_change.id]" class="input-checkbox" />
             <label attr.for="patient_behavior{{behavioral_change.id}}" class="pl-3 py-0.5">{{ behavioral_change.desc }}</label>
           </div>
         </div>
         <div class="col-span-4 flex">
           <label class="mt-2 pr-3">Remarks</label>
-          <input type="text" [disabled]="patient_gbv" [(ngModel)]="patient_gbv.gbv_behavioral_remarks" class="input" />
+          <input type="text" [disabled]="patient_gbv.id" [(ngModel)]="patient_gbv.gbv_behavioral_remarks" class="input" />
         </div>
 
         <div class="col-span-4 font-semibold text-sky-500 mt-5 border-b border-slate-200">
@@ -47,40 +40,37 @@
         </div>
         <div class="col-span-4 grid grid-cols-3 gap-4">
           <div *ngFor="let neglect of neglects">
-            <input type="checkbox" [disabled]="patient_gbv" attr.id="patient_neglect{{neglect.id}}" [(ngModel)]="patient_neglect[neglect.id]" class="input-checkbox" />
+            <input type="checkbox" [disabled]="patient_gbv.id" attr.id="patient_neglect{{neglect.id}}" [(ngModel)]="patient_neglect[neglect.id]" class="input-checkbox" />
             <label attr.for="patient_neglect{{neglect.id}}" class="pl-3 py-0.5">{{ neglect.desc }}</label>
           </div>
         </div>
         <div class="col-span-4 flex">
           <label class="mt-2 pr-3">Remarks</label>
-          <input type="text" [disabled]="patient_gbv" [(ngModel)]="patient_gbv.gbv_neglect_remarks" name="patient_neglect_remarks" id="patient_neglect_remarks" class="input" />
+          <input type="text" [disabled]="patient_gbv.id" [(ngModel)]="patient_gbv.gbv_neglect_remarks" name="patient_neglect_remarks" id="patient_neglect_remarks" class="input" />
         </div>
 
-        <div class="col-span-4">
+        <div class="col-span-4" *ngIf="patient_gbv.referral_reason">
           <label for="case_number">Referral reason</label>
-          <textarea type="text" [disabled]="patient_gbv" [(ngModel)]="patient_gbv.referral_reason"  name="referral_reason" id="referral_reason" class="input">
+          <textarea type="text" [disabled]="patient_gbv.id" [(ngModel)]="patient_gbv.referral_reason"  name="referral_reason" id="referral_reason" class="input">
           </textarea>
         </div>
+      </div>
 
-        <!-- <div class="col-span-4">
-          <label for="case_number">Services requested</label>
-          <textarea type="text" [(ngModel)]="patient_gbv.service_remarks" name="service_requested" id="service_requested" class="input">
-          </textarea>
+      <div class="col-span-4 grid grid-cols-4 gap-4 mt-20" *ngIf="!show_form">
+        <div class="col-span-4 flex justify-center text-blue-500">
+          <fa-icon [icon]="faCircleNotch" spin="true"></fa-icon>
         </div>
-
-        <div class="col-span-4">
-          <label for="case_number">Remarks</label>
-          <textarea type="text" [(ngModel)]="patient_gbv.referral_remarks" name="referral_remarks" id="referral_remarks" class="input">
-          </textarea>
-        </div> -->
+        <div class="col-span-4 flex justify-center">
+          Loading...
+        </div>
       </div>
     </div>
 
-    <!-- <div class="flex justify-center mt-5">
-      <button [disabled]="is_saving" type="submit" class="btn-save mr-5 mt-4">
+    <div class="flex justify-center mt-5" *ngIf="show_form && !patient_gbv.id">
+      <button [disabled]="is_saving || !patient_gbv.gbv_date" type="button" (click)="onSubmit()" class="btn-save mr-5 mt-4">
         <fa-icon [icon]="is_saving ? faCircleNotch : faSave" [spin]="is_saving ? true : false" class="mr-2"></fa-icon>
-        {{ intakeForm.value.id ? (is_saving ? 'Updating' : 'Update') : (is_saving ? 'Saving' : 'Save') }}
+        {{ patient_gbv.id ? (is_saving ? 'Updating' : 'Update') : (is_saving ? 'Saving' : 'Save') }}
       </button>
-    </div> -->
+    </div>
   </div>
 </div>

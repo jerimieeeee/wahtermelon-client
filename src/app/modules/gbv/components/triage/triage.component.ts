@@ -35,7 +35,7 @@ export class TriageComponent implements OnInit{
   patient_behavior: any = [];
   patient_neglect: any = [];
   patient_gbv = {
-    id: '',
+    id: null,
     patient_id: '',
     gbv_date: '',
     gbv_complaint_remarks: '',
@@ -45,15 +45,42 @@ export class TriageComponent implements OnInit{
     complaint: [],
     behavior: [],
     neglect: [],
-    gbvReferral: null
+    gbvReferral: null,
+    // referral_date: null,
   };
 
-  /* onSubmit(){
+  onSubmit(){
+    let complaints: any =[];
+    let behaviorals: any =[];
+    let neglects: any =[];
+    this.patient_gbv.patient_id = this.patient_id;
+    // this.patient_gbv.referral_date = this.patient_gbv.gbv_date;
+
+    Object.entries(this.patient_complaints).forEach(([key, value]:any, index) => {
+      if(value === true) complaints.push({complaint_id: key})
+    });
+
+    Object.entries(this.patient_behavior).forEach(([key, value]:any, index) => {
+      if(value === true) behaviorals.push({behavioral_id: key})
+    });
+
+    Object.entries(this.patient_neglect).forEach(([key, value]:any, index) => {
+      if(value === true) neglects.push({neglect_id: key})
+    });
+
+    this.patient_gbv.complaint = complaints;
+    this.patient_gbv.behavior = behaviorals;
+    this.patient_gbv.neglect = neglects;
+
     console.log(this.patient_gbv);
-    console.log(this.patient_complaints);
-    console.log(this.patient_behavior);
-    console.log(this.patient_neglect);
-  } */
+    this.http.post('gender-based-violence/patient-gbv', this.patient_gbv).subscribe({
+      next: (data: any) => {
+        console.log(data);
+        this.toastr.success('Successfully recorded!', 'GBV Referral');
+      },
+      error: err => console.log(err)
+    })
+  }
 
   loadLibraries(){
     const getNeglect = this.http.get('libraries/gbv-neglect');
@@ -79,7 +106,7 @@ export class TriageComponent implements OnInit{
     if(this.selected_gbv_case) {
       this.patient_gbv = {...this.selected_gbv_case};
       this.patient_gbv.gbv_date = formatDate(this.patient_gbv.gbv_date, 'yyyy-MM-dd', 'en');
-      this.patient_gbv.referral_reason = this.patient_gbv.gbvReferral[0].referral_reason;
+      this.patient_gbv.referral_reason = this.patient_gbv.gbvReferral.length>0 ? this.patient_gbv.gbvReferral[0].referral_reason : null;
       // console.log(this.patient_gbv);
       if(this.selected_gbv_case.gbvComplaint) this.patient_complaints = this.checkSelection(this.selected_gbv_case.gbvComplaint, 'complaint_id');
       if(this.selected_gbv_case.gbvBehavior) this.patient_behavior = this.checkSelection(this.selected_gbv_case.gbvBehavior, 'behavioral_id');
@@ -105,10 +132,6 @@ export class TriageComponent implements OnInit{
     } */
   }
 
-  closeModal(){
-    this.toggleModal.emit('gbv_referral');
-  }
-
   constructor(
     private http: HttpService,
     private toastr: ToastrService
@@ -116,7 +139,7 @@ export class TriageComponent implements OnInit{
 
   ngOnInit(): void {
     this.loadLibraries();
-    // console.log(this.selected_tb_consult);
+    console.log(this.selected_gbv_case);
     // this.createForm();
   }
 }
