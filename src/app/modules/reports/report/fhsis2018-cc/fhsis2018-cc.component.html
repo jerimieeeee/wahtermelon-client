@@ -1,6 +1,6 @@
 <div class="grid grid-cols-1 w-full">
   <div class="flex justify-between w-full text-blue-500 font-semibold text-lg  p-3" >
-    <span>FHSIS 2018 Report - Child Care</span>
+    <span>FHSIS Report - Child Care</span>
     <span>
       <!-- <fa-icon *ngIf="exporting" [icon]="faCircleNotch" spin="true" class="text-blue-500 text-sm mr-3">Exporting...</fa-icon> -->
       <button [disabled]="pdf_exported" type="button" class="text-2xl mr-5 text-red-600 disabled:text-gray-600" (click)="exportP()">
@@ -21,14 +21,33 @@
                 <th scope="col" colspan="1" class="text-sm font-medium text-gray-900 px-6 py-4 border">
                   <img src="./assets/img/DOH_Logo.png" class="rounded-full w-28 h-28 mx-auto" />
                 </th>
-                <th scope="col" colspan="4" class="text-sm font-medium text-gray-900 px-6 py-4 border">
-                  Details
+                <th scope="col" colspan="5" class="text-sm font-medium text-gray-900 px-6 py-4 border">
+                  <tr class="text-left">
+                    FHSIS Report for the Month: {{this.convertedMonth}}
+                  </tr>
+                  <tr class="text-left">
+                    Name of Barangay: {{this.selected_barangay}}
+                  </tr>
+                  <tr class="text-left">
+                    Name of BHS:
+                  </tr>
+                  <tr class="text-left">
+                    Name of Municipality/City: 
+                  </tr>
+                  <tr class="text-left">
+                    Name of Province: 
+                  </tr>
+                  <tr class="text-left">
+                    Projected Population for the Year:
+                  </tr>
                 </th>
-                <th scope="col" colspan="3" class="text-sm font-medium text-gray-900 px-6 py-4 border">
-                  Date
+                <th scope="col" colspan="2" class="relative text-sm font-medium text-gray-900 px-6 py-4 border">
+                  <tr class="absolute left-6 top-7">
+                    Year: {{this.reportform_data.value.year}}
+                  </tr>
                 </th>
-                <th scope="col" colspan="2" class="text-sm font-medium text-gray-900 px-6 py-4 border">
-                  M1 Barangay
+                <th scope="col" colspan="3" class="text-sm font-bold text-gray-900 px-6 py-4 border text-center">
+                  <img src="./assets/img/m1.png" class="mx-auto" />
                 </th>
               </tr>
               <tr>

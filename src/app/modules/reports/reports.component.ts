@@ -86,6 +86,7 @@ export class ReportsComponent implements OnInit {
   years: any = [];
   selectedBrgy: [];
   brgys: any;
+  userInfo: string;
   userLoc: string;
   report_data: any;
   is_fetching: boolean = false;
@@ -111,6 +112,7 @@ export class ReportsComponent implements OnInit {
         this.is_fetching = false;
 
         console.log(this.report_data, 'report_data');
+
       },
       error: err => console.log(err)
     });
@@ -144,6 +146,7 @@ export class ReportsComponent implements OnInit {
         this.http.get('libraries/municipalities/'+userMun, {params:{include: 'barangays'}}).subscribe({
           next: (data: any) => {
             this.brgys = data.data.barangays;
+            console.log(this.brgys, 'brgy data')
           },
           error: err => console.log(err)
         })
@@ -197,6 +200,7 @@ export class ReportsComponent implements OnInit {
 
   ngOnInit(): void {
     this.generateYear();
+    this.userInfo = this.http.getUserFromJSON();
     this.current_date;
 
     this.reportForm = this.formBuilder.nonNullable.group({
