@@ -23,11 +23,11 @@
         [class]="module===1? 'tabs-main-true' : 'tabs-main-false' ">
         Triage
     </button>
-    <button (click)="switchTab(2)" class="tabs-main w-28"
+    <button (click)="switchTab(2)" class="tabs-main w-28" *ngIf="selected_gbv_case"
         [class]="module===2? 'tabs-main-true' : 'tabs-main-false' ">
         Intake
     </button>
-    <button (click)="switchTab(3)" class="tabs-main w-28"
+    <button (click)="switchTab(3)" class="tabs-main w-28" *ngIf="selected_gbv_case?.gbvIntake"
         [class]="module===3? 'tabs-main-true' : 'tabs-main-false' ">
         Interview
     </button>
@@ -35,7 +35,7 @@
         [class]="module===4? 'tabs-main-true' : 'tabs-main-false' ">
         Medical
     </button> -->
-    <button (click)="switchTab(5)" class="tabs-main w-28"
+    <button (click)="switchTab(5)" class="tabs-main w-28" *ngIf="selected_gbv_case?.gbvIntake"
         [class]="module===5? 'tabs-main-true' : 'tabs-main-false' ">
         Intervention
     </button>
@@ -43,7 +43,7 @@
         [class]="module===6? 'tabs-main-true' : 'tabs-main-false' ">
         Forms
     </button> -->
-    <button (click)="switchTab(6)" class="tabs-main w-28"
+    <button (click)="switchTab(6)" class="tabs-main w-28" *ngIf="selected_gbv_case"
         [class]="module===6? 'tabs-main-true' : 'tabs-main-false' ">
         Referral
     </button>
