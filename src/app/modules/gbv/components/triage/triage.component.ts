@@ -12,9 +12,6 @@ import { forkJoin } from 'rxjs';
   styleUrls: ['./triage.component.scss']
 })
 export class TriageComponent implements OnInit{
-  @Output() getPatientTbHistory = new EventEmitter<any>();
-  @Output() toggleModal = new EventEmitter<any>();
-  @Output() switchPage = new EventEmitter<any>();
   @Input() selected_gbv_case;
   @Input() patient_id;
   // @Input() max_date;
