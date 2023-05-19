@@ -40,6 +40,10 @@ export class GbvComponent implements OnInit {
     this.pages = 2;
   }
 
+  updateSelectedGbv(data) {
+    this.selected_gbv_case = data;
+  }
+
   getGbvHistory(){
     this.fetching_history = false;
     this.selected_gbv_case = undefined;
@@ -50,14 +54,15 @@ export class GbvComponent implements OnInit {
         this.patient_gbv_history = data.data;
         // console.log(typeof this.patient_gbv_history, this.patient_gbv_history);
         if(Object.keys(this.patient_gbv_history).length > 0) this.selected_gbv_case = this.patient_gbv_history[0];
-        console.log(this.patient_gbv_history)
+        // console.log(this.patient_gbv_history)
 
-        // this.pages = 2;
-        // this.module = 1;
+        this.pages = 2;
+        this.module = 3;
       },
       error: err => console.log(err)
     })
   }
+
 
   constructor (
     private http: HttpService,

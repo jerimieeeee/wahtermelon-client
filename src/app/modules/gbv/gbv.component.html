@@ -132,12 +132,15 @@
 ></app-triage>
 
 <app-intake *ngIf="pages === 2 && module === 2"
+  (updateSelectedGbv)="updateSelectedGbv($event)"
   [patient_id]="patient_id"
   [selected_gbv_case]="selected_gbv_case"
 ></app-intake>
 
 <app-interview *ngIf="pages === 2 && module === 3"
-
+  (updateSelectedGbv)="updateSelectedGbv($event)"
+  [patient_id]="patient_id"
+  [selected_gbv_case]="selected_gbv_case"
 ></app-interview>
 
 <app-intervention *ngIf="pages === 2 && module === 5"
