@@ -415,6 +415,108 @@
         </div>
       </div>
 
+      <div *ngIf="intakeForm.value.id" class="mt-1 grid grid-cols-4 gap-x-4 w-full">
+        <div class="col-span-4 border-b border-slate-200 w-full my-2 pt-3 font-semibold text-sky-500">
+          Perpetrator (s)
+        </div>
+        <div class="col-span-4 grid grid-cols-1 border-slate-200 shadow-md rounded-md mx-5 mb-5">
+          <div class="bg-sky-500 text-white py-1 px-3 rounded-t-md flex justify-between">
+            <spa>Alleged Perpetrator</spa>
+            <button type="button" (click)="toggleModal('perpetrators')" class="bg-white text-sky-500 px-2 rounded text-xs">
+              <fa-icon [icon]="faPlus"></fa-icon>
+            </button>
+          </div>
+          <div class="min-h-24" *ngIf="!selected_gbv_case.gbvIntake.interview_perpetrator">
+            <span class="flex italic py-5 justify-center">
+              No records to show
+            </span>
+          </div>
+
+          <table class="m-3" *ngIf="selected_gbv_case.gbvIntake.interview_perpetrator">
+            <thead>
+              <tr>
+                <td class="w-1/12">
+
+                </td>
+                <td class="text-center font-semibold w-3/12 align-top pt-3">
+                  Name<br />
+                  (Age | Gender)<br /><br />
+                </td>
+                <td class="text-center font-semibold w-2/12 align-top pt-3">
+                  Address
+                </td>
+                <td class="text-center font-semibold w-2/12 align-top pt-3">
+                  Substance abuse
+                </td>
+                <td class="text-center font-semibold w-3/12 align-top pt-3">
+                  History
+                </td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border-t border-slate-200" *ngFor="let perp of selected_gbv_case.gbvIntake.interview_perpetrator" >
+                <td class="text-center align-top pt-3">
+                  <fa-icon [icon]="faEdit" (click)="toggleModal('perpetrators', perp)" class="hover:cursor-pointer text-orange-500"></fa-icon>
+                </td>
+                <td class="text-center align-top pt-3">
+                  {{ perp.perpetrator_name ?? '-'}} <br />
+                  ({{ perp.perpetrator_age }} | {{ perp.gender === 'M' ? 'Male' : 'Female' }})
+                </td>
+                <td class="text-center align-top pt-3">
+                  {{ perp.barangay_code }}
+                </td>
+                <td class="font-semibold italic align-top pt-3">
+                  <span *ngIf="!perp.abuse_alcohol_flag && !perp.abuse_drugs_flag && !perp.abuse_others_flag">
+                    -
+                  </span>
+                  <span *ngIf="perp.abuse_alcohol_flag">
+                    Alcohol <br /><br />
+                  </span>
+                  <span *ngIf="perp.abuse_drugs_flag">
+                    Drugs: <span class="font-normal not-italic">{{ perp.abuse_drugs_remarks }}</span><br /><br />
+                  </span>
+                  <span *ngIf="perp.abuse_others_flag">
+                    Others: <span class="font-normal not-italic">{{ perp.abuse_others_remarks }}</span>
+                  </span>
+                </td>
+                <td class="p-3">
+                  <span class="font-semibold" *ngIf="perp.abused_as_child_flag || perp.abused_as_spouse_flag || perp.spouse_abuser_flag || perp.family_violence_flag">
+                    Abuse<br />
+                  </span>
+                  <span *ngIf="perp.abused_as_child_flag">
+                    - Abused as a child<br />
+                  </span>
+                  <span *ngIf="perp.abused_as_spouse_flag">
+                    - Abused as a spouse<br />
+                  </span>
+                  <span *ngIf="perp.spouse_abuser_flag">
+                    - Spouse abuser<br />
+                  </span>
+                  <span *ngIf="perp.family_violence_flag">
+                    - Witness family violence<br />
+                  </span>
+
+                  <span class="font-semibold" *ngIf="perp.criminal_conviction_similar_flag || perp.criminal_conviction_other_flag || perp.criminal_barangay_flag">
+                    <br /> Criminal<br />
+                  </span>
+                  <span *ngIf="perp.criminal_conviction_similar_flag">
+                    - Previous conviction for similar offense<br />
+                  </span>
+                  <span *ngIf="perp.criminal_conviction_other_flag">
+                    - Previous conviction for other offense<br />
+                  </span>
+                  <span *ngIf="perp.criminal_barangay_flag">
+                    - Others: <span class="font-normal not-italic">{{ perp.criminal_barangay_remarks }}</span><br />
+                  </span>
+                </td>
+                <td>
+
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
 
       <div class="mt-3 grid grid-cols-4 gap-x-4 w-full">
         <div class="col-span-4 border-b border-slate-200 w-full my-2 pt-2 font-semibold text-sky-500">
@@ -534,3 +636,10 @@
   [patient_id]="selected_gbv_case.patient_id"
   [patient_gbv_id]="selected_gbv_case.id"
 ></app-family-composition>
+
+<app-perpetrators *ngIf="modals['perpetrators']"
+  (toggleModal)="toggleModal($event)"
+  [selected_perpetrator]="selected_perpetrator"
+  [intake_id]="intakeForm.value.id"
+  [patient_id]="selected_gbv_case.patient_id"
+></app-perpetrators>

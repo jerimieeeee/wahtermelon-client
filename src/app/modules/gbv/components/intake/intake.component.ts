@@ -1,7 +1,7 @@
 import { formatDate } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { faSave } from '@fortawesome/free-regular-svg-icons';
+import { faEdit, faSave } from '@fortawesome/free-regular-svg-icons';
 import { faCircleNotch, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
@@ -12,12 +12,14 @@ import { intakeForm } from './intakeForm';
   styleUrls: ['./intake.component.scss']
 })
 export class IntakeComponent implements OnInit{
+  @Output() updateSelectedGbv = new EventEmitter<any>();
   @Input() patient_id;
   @Input() selected_gbv_case;
 
   faPlus = faPlus;
   faSave = faSave;
   faCircleNotch = faCircleNotch;
+  faEdit = faEdit;
 
   max_date = formatDate(new Date(), 'yyyy-MM-dd', 'en');
   show_form: boolean = true;
@@ -37,6 +39,7 @@ export class IntakeComponent implements OnInit{
   family_members: any;
   selected_intake: any;
 
+  selected_perpetrator: any;
   onSubmit(){
     console.log(this.intakeForm.value);
     let query;
@@ -118,6 +121,23 @@ export class IntakeComponent implements OnInit{
         present_living_arrangement_remarks: null,
       })
     }
+  }
+
+  reloadData(){
+    let params = {
+      id: this.selected_gbv_case.id,
+      // patient_id: this.selected_gbv_case.patient_id
+    }
+    console.log(params)
+    this.http.get('gender-based-violence/patient-gbv', {params}).subscribe({
+      next: (data: any) => {
+        console.log(data);
+        this.selected_gbv_case = data.data[0];
+        this.loadSelectedConsult();
+        this.updateSelectedGbv.emit(this.selected_gbv_case);
+      },
+      error: err => console.log(err)
+    });
   }
 
   loadFamily(){
@@ -249,10 +269,17 @@ export class IntakeComponent implements OnInit{
     return this.intakeForm.controls;
   }
 
-  toggleModal(name){
+  toggleModal(name, data?){
+    if(name==='perpetrators') {
+      this.selected_perpetrator = {
+        act_title: 'Perpetrator',
+        data: data
+      }
+    }
     this.modals[name] = !this.modals[name];
 
-    if(name==='add_family') this.loadFamily();
+    if(name==='add_family' && !this.modals[name]) this.loadFamily();
+    if(name==='perpetrators' && !this.modals[name]) this.reloadData();
   }
 
   constructor (
