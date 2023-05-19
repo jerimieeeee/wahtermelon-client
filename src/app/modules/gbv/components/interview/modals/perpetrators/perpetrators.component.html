@@ -9,7 +9,7 @@
         </h3>
       </div>
       <!-- Modal body -->
-      <div class="overflow-y-auto h-[500px] scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
+      <div *ngIf="show_form" class="overflow-y-auto h-[500px] scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
         <form [formGroup]="perpetratorForm" (submit)="onSubmit()" class="text-left text-gray-500 m-5">
           <div class="grid grid-cols-4 gap-4">
             <div class="col-span-2">

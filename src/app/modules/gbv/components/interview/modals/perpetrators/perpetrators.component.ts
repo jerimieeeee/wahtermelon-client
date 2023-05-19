@@ -1,8 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 import { forkJoin } from 'rxjs';
+import { perpetratorForm } from './perpetratorForm';
 
 @Component({
   selector: 'app-perpetrators',
@@ -10,11 +11,10 @@ import { forkJoin } from 'rxjs';
   styleUrls: ['./perpetrators.component.scss']
 })
 export class PerpetratorsComponent implements OnInit{
-  @Output() getPatientTbHistory = new EventEmitter<any>();
   @Output() toggleModal = new EventEmitter<any>();
-  @Output() switchPage = new EventEmitter<any>();
-  @Input() selected_tb_consult;
-  @Input() max_date;
+  @Input() selected_perpetrator;
+  @Input() intake_id;
+  @Input() patient_id;
 
   is_saving: boolean = false;
   show_error: boolean = false;
@@ -29,41 +29,26 @@ export class PerpetratorsComponent implements OnInit{
     {id: 'F', desc: 'Female'},
   ];
 
-
-
-  perpetratorForm: FormGroup = new FormGroup({
-    patient_id: new FormControl<string| null>(null),
-    intake_id: new FormControl<string| null>(null),
-    gender: new FormControl<string| null>(null),
-    perpetrator_unknown_flag: new FormControl<boolean| null>(null),
-    perpetrator_name: new FormControl<string| null>(null),
-    perpetrator_nickname: new FormControl<string| null>(null),
-    perpetrator_age: new FormControl<number| null>(null),
-    occupation_code : new FormControl<string| null>(null),
-    known_to_child_flag: new FormControl<boolean| null>(null),
-    relation_to_child_id: new FormControl<string| null>(null),
-    location_id: new FormControl<string| null>(null),
-    perpetrator_address: new FormControl<string| null>(null),
-    // unknown_abused_flag: new FormControl<boolean| null>(null),
-    abuse_alcohol_flag: new FormControl<boolean| null>(null),
-    abuse_drugs_flag: new FormControl<boolean| null>(null),
-    abuse_others_flag: new FormControl<boolean| null>(null),
-    abuse_drugs_remarks: new FormControl<string| null>(null),
-    abuse_others_remarks: new FormControl<string| null>(null),
-
-    abused_as_child_flag: new FormControl<boolean| null>(null),
-    abused_as_spouse_flag: new FormControl<boolean| null>(null),
-    spouse_abuser_flag: new FormControl<boolean| null>(null),
-    family_violence_flag: new FormControl<boolean| null>(null),
-    criminal_conviction_similar_flag: new FormControl<boolean| null>(null),
-    criminal_conviction_other_flag: new FormControl<boolean| null>(null),
-    criminal_record_unknown_flag: new FormControl<boolean| null>(null),
-    criminal_barangay_flag: new FormControl<boolean| null>(null),
-    criminal_barangay_remarks: new FormControl<string| null>(null),
-  });
+  perpetratorForm: FormGroup = perpetratorForm();
 
   onSubmit(){
     console.log(this.perpetratorForm.value);
+
+    let query;
+
+    if(this.perpetratorForm.value.id) {
+      query = this.http.update('gender-based-violence/patient-gbv-perpetrator/', this.perpetratorForm.value.id, this.perpetratorForm.value);
+    } else {
+      query = this.http.post('gender-based-violence/patient-gbv-perpetrator', this.perpetratorForm.value);
+    }
+    query.subscribe({
+      next: (data: any) => {
+        console.log(data);
+        this.toastr.success('Successfully Recorded', 'Alleged Perpetator');
+        this.closeModal();
+      },
+      error: err => console.log(err)
+    })
   }
 
   loadLibraries(){
@@ -76,12 +61,56 @@ export class PerpetratorsComponent implements OnInit{
         this.occupations = dataOccupation.data;
         this.child_relations = dataChildRelation.data;
         this.perpetrator_locations = dataPerpetratorLocation.data;
-
-        this.show_form = true;
+        this.createForm();
         // this.toggleModal('abuse_acts', 'Sexual Abuse', 'gbv-sexual-abuse')
       },
       error: err => console.log(err)
     });
+  }
+
+  createForm() {
+    this.perpetratorForm = this.formBuilder.group({
+      id: [null],
+      patient_id: [this.patient_id],
+      intake_id: [this.intake_id],
+      gender: [null],
+      perpetrator_unknown_flag: [false],
+      perpetrator_name: [null],
+      perpetrator_nickname: [null],
+      perpetrator_age: [null],
+      occupation_code : [null],
+      known_to_child_flag: [false],
+      relation_to_child_id: [null],
+      location_id: [null],
+      perpetrator_address: [null],
+      abuse_alcohol_flag: [false],
+      abuse_drugs_flag: [false],
+      abuse_others_flag: [false],
+      abuse_drugs_remarks: [null],
+      abuse_others_remarks: [null],
+      abused_as_child_flag: [false],
+      abused_as_spouse_flag: [false],
+      spouse_abuser_flag: [false],
+      family_violence_flag: [false],
+      criminal_conviction_similar_flag: [false],
+      criminal_conviction_other_flag: [false],
+      criminal_record_unknown_flag: [false],
+      criminal_barangay_flag: [false],
+      criminal_barangay_remarks: [null],
+    });
+
+    if(this.selected_perpetrator.data) {
+      this.patchData();
+    } else {
+      this.show_form = true;
+    }
+    // console.log(this.perpetratorForm)
+  }
+
+  patchData(){
+    console.log(this.selected_perpetrator)
+    this.perpetratorForm.patchValue({...this.selected_perpetrator.data});
+    this.show_form = true;
   }
 
   closeModal(){
@@ -94,10 +123,12 @@ export class PerpetratorsComponent implements OnInit{
 
   constructor (
     private http: HttpService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private formBuilder: FormBuilder
   ) { }
 
   ngOnInit(): void {
-      this.loadLibraries();
+    // console.log(this.intake_id)
+    this.loadLibraries();
   }
 }
