@@ -38,7 +38,7 @@ export class InterviewComponent implements OnInit{
 
   selected_notes = {
     act_title: '',
-    url: ''
+    data: ''
   }
 
   selected_perpetrator = {
@@ -129,8 +129,25 @@ export class InterviewComponent implements OnInit{
       this.loadAbuses(this.selected_gbv_case.gbvIntake.interview_physical_abuses, 'physical_abuses', 'physical');
       this.loadAbuses(this.selected_gbv_case.gbvIntake.interview_neglect_abuses, 'neglect_abuses', 'neglect');
       this.loadAbuses(this.selected_gbv_case.gbvIntake.interview_emotional_abuses, 'emotional_abuses', 'emotional_abuse');
+      this.loadSummaries(this.selected_gbv_case.gbvIntake.interview_summaries)
       this.show_form = true;
     }
+  }
+
+  interview_summaries: any = [];
+  interview_social_notes: any = [];
+
+  loadSummaries(data){
+    this.interview_summaries = [];
+    this.interview_social_notes = [];
+
+    Object.entries(data).forEach(([key, value]: any, index) => {
+      // console.log(value);
+      this[value.summary_type==='IS'?'interview_summaries':'interview_social_notes'].push(value);
+    });
+
+    console.log(this.interview_summaries);
+    console.log(this.interview_social_notes);
   }
 
   sexual_abuses: any = [];
@@ -205,7 +222,11 @@ export class InterviewComponent implements OnInit{
         break;
       }
       case 'interview_notes': {
-
+        console.log(act)
+        this.selected_notes = {
+          act_title: act,
+          data: data
+        }
         break;
       }
       case 'perpetrators': {
@@ -222,6 +243,8 @@ export class InterviewComponent implements OnInit{
     }
     this.modals[name] = !this.modals[name];
     if(name==='abuse_acts' && !this.modals[name]) this.reloadData();
+    if(name==='interview_notes' && !this.modals[name]) this.reloadData();
+    if(name==='perpetrators' && !this.modals[name]) this.reloadData();
   }
 
   loadLibraries(){

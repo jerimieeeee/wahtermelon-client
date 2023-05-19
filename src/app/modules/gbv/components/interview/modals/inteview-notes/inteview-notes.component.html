@@ -5,7 +5,7 @@
       <!-- Modal header -->
       <div class="flex justify-between items-start py-3 px-5 rounded-t border-b bg-sky-500">
         <h3 class="text-sm font-bold text-white">
-            Family member details
+            {{ selected_notes?.act_title === 'IS' ? 'Interview Summary' : 'Social Worker Notes' }}
         </h3>
       </div>
       <!-- Modal body -->
@@ -25,7 +25,7 @@
             <div class="col-span-4">
               <label for="alleged_perpetrator" [ngClass]="{'text-red-500': show_error && f.alleged_perpetrator.errors}">Perpetrator</label>
               <select name="alleged_perpetrator" id="alleged_perpetrator" formControlName="alleged_perpetrator" class="input" [ngClass]="{'invalid-input': show_error && f.alleged_perpetrator.errors}">
-                <option *ngFor="let loc of perpetrators" [value]="loc.id">{{ enroll_as.desc }}</option>
+                <option *ngFor="let perp of perpetrators" [value]="perp.id">{{ perp.perpetrator_name }}</option>
               </select>
             </div>
 
