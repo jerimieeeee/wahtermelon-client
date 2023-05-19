@@ -12,6 +12,8 @@ import { ToastrService } from 'ngx-toastr';
 export class AbuseActsComponent implements OnInit {
   @Output() toggleModal = new EventEmitter<any>();
   @Input() selected_abused;
+  @Input() intake_id;
+  @Input() patient_id;
 
   faCircleNotch = faCircleNotch;
 
@@ -19,13 +21,40 @@ export class AbuseActsComponent implements OnInit {
   show_error: boolean = false;
 
   abused_acts: any = {
-    victim_survivor: [],
-    historian: [],
-    sworn_statement: []
+    1: [],
+    2: [],
+    3: []
   };
 
   onSubmit(){
-    console.log(this.abused_acts)
+    let abuses: any = [];
+    Object.entries(this.abused_acts).forEach(([key, value], index) => {
+      Object.entries(value).forEach(([k, v]: any, i) => {
+        if(v) {
+          abuses.push({
+            info_source_id: key,
+            abused_id: k
+          })
+        }
+      });
+    });
+
+    let params = {
+      patient_id: this.patient_id,
+      intake_id: this.intake_id,
+      abused_array: abuses
+    }
+
+    console.log(params);
+
+    this.http.post('gender-based-violence/'+this.selected_abused.save_url, params).subscribe({
+      next: (data: any) => {
+        console.log(data);
+        this.toastr.success('Successfully recorded', this.selected_abused.act_title);
+        this.closeModal();
+      },
+      error: err => console.log(err)
+    })
   }
 
 
@@ -35,9 +64,21 @@ export class AbuseActsComponent implements OnInit {
     this.http.get('libraries/'+this.selected_abused.url).subscribe({
       next: (data: any) => {
         this.abuses = data.data;
+        if(this.selected_abused.abused_data) this.loadAbusedData()
       },
       error: err => console.log(err)
     })
+  }
+
+  loadAbusedData() {
+    console.log(this.selected_abused.abused_data);
+    Object.entries(this.selected_abused.abused_data).forEach(([key, value]: any, index) => {
+      if(value.info_source_id === 1) this.abused_acts[1][value[this.selected_abused.abused_id_name]] = true;
+      if(value.info_source_id === 2) this.abused_acts[2][value[this.selected_abused.abused_id_name]] = true;
+      if(value.info_source_id === 3) this.abused_acts[3][value[this.selected_abused.abused_id_name]] = true;
+    })
+
+    console.log(this.abused_acts)
   }
 
   closeModal(){
@@ -50,6 +91,6 @@ export class AbuseActsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-      this.loadLibraries()
+      this.loadLibraries();
   }
 }

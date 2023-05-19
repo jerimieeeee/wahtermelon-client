@@ -34,13 +34,13 @@
                 {{ abuse.desc }}
               </td>
               <td class="py-4 text-center">
-                <input type="checkbox" [(ngModel)]="abused_acts.victim_survivor[abuse.id]" class="input-checkbox" />
+                <input type="checkbox" [(ngModel)]="abused_acts[1][abuse.id]" class="input-checkbox" />
               </td>
               <td class="py-4 text-center">
-                <input type="checkbox" [(ngModel)]="abused_acts.historian[abuse.id]" class="input-checkbox" />
+                <input type="checkbox" [(ngModel)]="abused_acts[2][abuse.id]" class="input-checkbox" />
               </td>
               <td class="py-4 text-center">
-                <input type="checkbox" [(ngModel)]="abused_acts.sworn_statement[abuse.id]" class="input-checkbox" />
+                <input type="checkbox" [(ngModel)]="abused_acts[3][abuse.id]" class="input-checkbox" />
               </td>
             </tr>
           </tbody>
