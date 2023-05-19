@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { faEdit, faSave } from '@fortawesome/free-regular-svg-icons';
 import { faPlus, faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 import { forkJoin } from 'rxjs';
+import { interviewForm } from './interviewForm';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-interview',
@@ -12,6 +14,12 @@ import { forkJoin } from 'rxjs';
   styleUrls: ['./interview.component.scss']
 })
 export class InterviewComponent implements OnInit{
+  @Output() updateSelectedGbv = new EventEmitter<any>();
+  @Input() selected_gbv_case;
+  @Input() patient_id;
+
+  interviewForm:FormGroup=interviewForm();
+
   faPlus = faPlus;
   faEdit = faEdit;
   faSave = faSave;
@@ -20,43 +28,23 @@ export class InterviewComponent implements OnInit{
 
   modals: any = [];
 
-  interviewForm: FormGroup = new FormGroup({
-    id: new FormControl<string| null>(''),
-    patient_id: new FormControl<string| null>(''),
-    patient_gbv_intake_id: new FormControl<string| null>(''),
+  selected_abused = {
+    act_title: '',
+    url: '',
+    save_url: '',
+    abused_data: null,
+    abused_id_name: ''
+  };
 
-    deferred: new FormControl<boolean| null>(false),
-    deferral_reason_id : new FormControl<string| null>(''),
-    deferral_previous_interviewer_id : new FormControl<string| null>(''),
-    deferral_interviewer_remarks: new FormControl<string| null>(''),
+  selected_notes = {
+    act_title: '',
+    url: ''
+  }
 
-    source_from_victim_flag: new FormControl<boolean| null>(false),
-    source_from_historian_flag: new FormControl<boolean| null>(false),
-    source_from_sworn_statement_flag: new FormControl<boolean| null>(false),
-    mental_age_id: new FormControl<string| null>(''),
-
-    incident_first_datetime: new FormControl<string| null>(''),
-    incident_first_remarks : new FormControl<string| null>(''),
-    incident_recent_datetime : new FormControl<string| null>(''),
-    incident_recent_remarks: new FormControl<string| null>(''),
-
-    abused_episode_id  : new FormControl<string| null>(''),
-    abused_episode_count  : new FormControl<number| null>(null),
-    abused_site_id : new FormControl<string| null>(''),
-    abused_site_remarks : new FormControl<string| null>(''),
-    disclosed_flag : new FormControl<boolean| null>(false),
-    disclosed_type : new FormControl<string| null>(''),
-    disclosed_relation_id : new FormControl<string| null>(''),
-
-    initial_disclosure : new FormControl<string| null>(''),
-    relation_to_child : new FormControl<string| null>(''),
-    child_behavior_id : new FormControl<string| null>(''),
-    child_caretaker_present_flag : new FormControl<boolean| null>(false),
-    child_behavior_remarks : new FormControl<string| null>(''),
-    dev_screening_id : new FormControl<string| null>(''),
-    dev_screening_remarks : new FormControl<string| null>(''),
-
-  });
+  selected_perpetrator = {
+    act_title: '',
+    data: ''
+  };
 
   abused_episodes: any;
   info_sources: any;
@@ -68,6 +56,173 @@ export class InterviewComponent implements OnInit{
   mental_ages: any;
   deferral_reasons: any;
   previous_interviewers: any;
+
+  show_error: boolean = false;
+  required_info_source: boolean = false;
+  required_message: string = 'required field';
+
+  onSubmit(){
+    if(this.interviewForm.valid && (this.interviewForm.value.source_from_victim_flag || this.interviewForm.value.source_from_historian_flag || this.interviewForm.value.source_from_sworn_statement_flag)) {
+      this.show_error = false;
+      this.interviewForm.patchValue({
+        incident_first_datetime: formatDate(this.interviewForm.value.incident_first_datetime, 'yyyy-MM-dd HH:mm:ss', 'en'),
+        incident_recent_datetime: formatDate(this.interviewForm.value.incident_recent_datetime, 'yyyy-MM-dd HH:mm:ss', 'en')
+      });
+
+      this.saveForm();
+    } else {
+      if(!this.interviewForm.value.source_from_victim_flag || !this.interviewForm.value.source_from_historian_flag || !this.interviewForm.value.source_from_sworn_statement_flag){
+        this.required_info_source = true;
+      }
+      this.show_error = true;
+    }
+  }
+
+  saveForm(){
+    let query;
+
+    if(this.interviewForm.value.id) {
+      query = this.http.update('gender-based-violence/patient-gbv-interview/', this.interviewForm.value.id, this.interviewForm.value);
+    } else {
+      query = this.http.post('gender-based-violence/patient-gbv-interview', this.interviewForm.value)
+    }
+
+    query.subscribe({
+      next: (data: any) => {
+        console.log(data);
+        this.toastr.success('Successfully recorded.', 'Interview');
+        this.patchData(data.data);
+      },
+      error: err => console.log(err)
+    });
+  }
+
+  reloadData(){
+    let params = {
+      id: this.selected_gbv_case.id,
+      // patient_id: this.selected_gbv_case.patient_id
+    }
+    console.log(params)
+    this.http.get('gender-based-violence/patient-gbv', {params}).subscribe({
+      next: (data: any) => {
+        console.log(data);
+        this.selected_gbv_case = data.data[0];
+        this.updateSelectedGbv.emit(this.selected_gbv_case);
+        this.patchData();
+      },
+      error: err => console.log(err)
+    });
+  }
+
+
+
+  patchData(data?) {
+    console.log(this.selected_gbv_case.gbvIntake);//interview_perpetrator
+    if(data) {
+      this.interviewForm.patchValue({...data});
+    } else {
+      if(this.selected_gbv_case.gbvIntake.interview) {
+        this.interviewForm.patchValue({...this.selected_gbv_case.gbvIntake.interview})
+      }
+
+      this.loadAbuses(this.selected_gbv_case.gbvIntake.interview_sexual_abuses, 'sexual_abuses', 'sexual');
+      this.loadAbuses(this.selected_gbv_case.gbvIntake.interview_physical_abuses, 'physical_abuses', 'physical');
+      this.loadAbuses(this.selected_gbv_case.gbvIntake.interview_neglect_abuses, 'neglect_abuses', 'neglect');
+      this.loadAbuses(this.selected_gbv_case.gbvIntake.interview_emotional_abuses, 'emotional_abuses', 'emotional_abuse');
+      this.show_form = true;
+    }
+  }
+
+  sexual_abuses: any = [];
+  physical_abuses: any =[];
+  neglect_abuses: any = [];
+  emotional_abuses: any =[];
+
+  loadAbuses(data, var_name, lib_var) {
+    let abuses: any = [];
+    Object.entries(data).forEach(([key, value]: any, index) => {
+      if(!abuses[value[lib_var].desc]) {
+        abuses[value[lib_var].desc] = [];
+      }
+      abuses[value[lib_var].desc][value.info_source_id] = true;
+    });
+
+    this[var_name] = abuses;
+  }
+
+  createForm(){
+    this.interviewForm = this.formBuilder.group({
+      id: [null],
+      patient_id: [this.patient_id],
+      patient_gbv_intake_id: [this.selected_gbv_case.gbvIntake.id],
+
+      deferred: [null],
+      deferral_reason_id: [null],
+      deferral_previous_interviewer_id : [null],
+      deferral_interviewer_remarks: [null],
+
+      source_from_victim_flag: [false],
+      source_from_historian_flag: [false],
+      source_from_sworn_statement_flag: [false],
+      mental_age_id: [null],
+
+      incident_first_datetime: [null, Validators.required],
+      incident_first_remarks : [null],
+      incident_recent_datetime : [null, Validators.required],
+      incident_recent_remarks: [null],
+
+      abused_episode_id: [null, Validators.required],
+      abused_episode_count  : [null],
+      abused_site_id : [null, Validators.required],
+      abused_site_remarks : [null],
+      disclosed_flag : [false],
+      disclosed_type : [null],
+      disclosed_relation_id : [null],
+      initial_disclosure : [null],
+
+      relation_to_child : [null],
+      child_behavior_id : [null],
+      child_caretaker_present_flag : [false],
+      child_behavior_remarks : [null],
+      dev_screening_id : [null],
+      dev_screening_remarks : [null],
+    });
+
+    this.patchData();
+  }
+
+  toggleModal(name, act?, url?, save_url?, data?, abused_id_name?){
+    switch(name) {
+      case 'abuse_acts': {
+        this.selected_abused = {
+          act_title: act,
+          url: url,
+          save_url: save_url,
+          abused_data: data,
+          abused_id_name: abused_id_name
+        }
+        // this.reloadData()
+        break;
+      }
+      case 'interview_notes': {
+
+        break;
+      }
+      case 'perpetrators': {
+        this.selected_perpetrator = {
+          act_title: act,
+          data: data
+        }
+        break;
+      }
+      default: {
+
+        break;
+      }
+    }
+    this.modals[name] = !this.modals[name];
+    if(name==='abuse_acts' && !this.modals[name]) this.reloadData();
+  }
 
   loadLibraries(){
     const getAbusedEpisode = this.http.get('libraries/gbv-abused-episode');
@@ -100,35 +255,24 @@ export class InterviewComponent implements OnInit{
         this.deferral_reasons = dataDeferralReason.data;
         this.previous_interviewers = dataPreviousInterviewer.data;
 
-        this.show_form = true;
-        // this.toggleModal('abuse_acts', 'Sexual Abuse', 'gbv-sexual-abuse')
+        this.createForm();
       },
       error: err => console.log(err)
     });
   }
 
-  selected_abused = {
-    act_title: '',
-    url: ''
-  }
-  toggleModal(name, act?, url?){
-    if(name === 'abuse_acts') {
-      this.selected_abused = {
-        act_title: act,
-        url: url
-      }
-    }
-    this.modals[name] = !this.modals[name];
-  }
-
-
   constructor (
     private http: HttpService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private formBuilder: FormBuilder
   ) { }
 
+  get f(): { [key: string]: AbstractControl } {
+    return this.interviewForm.controls;
+  }
+
   ngOnInit(): void {
-    // this.toggleModal('add_interview_notes')
+    console.log(this.selected_gbv_case.gbvIntake.id)
     this.loadLibraries();
   }
 }
