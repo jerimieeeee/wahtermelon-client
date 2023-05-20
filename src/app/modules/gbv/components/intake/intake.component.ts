@@ -55,7 +55,8 @@ export class IntakeComponent implements OnInit{
     query.subscribe({
       next: (data: any) => {
         this.toastr.success('Successfully recorded!', 'Intake Form');
-        this.selected_gbv_case = data.data
+        // this.selected_gbv_case = data.data;
+        this.reloadData();
       },
       error: err => console.log(err)
     })

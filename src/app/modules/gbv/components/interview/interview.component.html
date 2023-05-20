@@ -142,6 +142,12 @@
                   <option value="N">No</option>
                   <option value="X">Unknown</option>
                 </select>
+
+                <div *ngIf="show_error && f.disclosed_flag.errors" class="invalid-alert">
+                  <div *ngIf="f.disclosed_flag.errors?.['required']">
+                    {{ required_message }}
+                  </div>
+                </div>
               </div>
 
               <div class="col-span-2" *ngIf="interviewForm.value.disclosed_flag === 'Y'">
@@ -175,7 +181,7 @@
         <div class="col-span-4 grid grid-cols-1 border-slate-200 shadow-md rounded-md mx-5 mb-5">
           <div class="bg-sky-500 text-white py-1 px-3 rounded-t-md flex justify-between">
             <spa>Sexual Abuse</spa>
-            <button type="button" (click)="toggleModal('abuse_acts', 'Sexual Abuse', 'gbv-sexual-abuse', 'patient-gbv-sexual-abuse', selected_gbv_case.gbvIntake.interview_sexual_abuses, 'sexual_abused_id')" class="bg-white text-sky-500 px-2 rounded text-xs">
+            <button type="button" (click)="toggleModal('abuse_acts', 'Sexual Abuse', 'gbv-sexual-abuse', 'patient-gbv-sexual-abuse', selected_gbv_case?.gbvIntake.interview_sexual_abuses, 'sexual_abused_id')" class="bg-white text-sky-500 px-2 rounded text-xs">
               <fa-icon [icon]="faEdit"></fa-icon>
             </button>
           </div>
@@ -214,7 +220,7 @@
         <div class="col-span-4 grid grid-cols-1 border-slate-200 shadow-md rounded-md mx-5 mb-5">
           <div class="bg-sky-500 text-white py-1 px-3 rounded-t-md flex justify-between">
             <spa>Physical Abuse</spa>
-            <button type="button" (click)="toggleModal('abuse_acts', 'Physical Abuse', 'gbv-physical-abuse', 'patient-gbv-physical-abuse', selected_gbv_case.gbvIntake.interview_physical_abuses, 'physical_abused_id')" class="bg-white text-sky-500 px-2 rounded text-xs">
+            <button type="button" (click)="toggleModal('abuse_acts', 'Physical Abuse', 'gbv-physical-abuse', 'patient-gbv-physical-abuse', selected_gbv_case?.gbvIntake.interview_physical_abuses, 'physical_abused_id')" class="bg-white text-sky-500 px-2 rounded text-xs">
               <fa-icon [icon]="faEdit"></fa-icon>
             </button>
           </div>
@@ -253,7 +259,7 @@
         <div class="col-span-4 grid grid-cols-1 border-slate-200 shadow-md rounded-md mx-5 mb-5">
           <div class="bg-sky-500 text-white py-1 px-3 rounded-t-md flex justify-between">
             <spa>Neglect</spa>
-            <button type="button" (click)="toggleModal('abuse_acts', 'Neglects', 'gbv-neglect', 'patient-gbv-neglect-abuse', selected_gbv_case.gbvIntake.interview_neglect_abuses, 'neglect_abused_id')" class="bg-white text-sky-500 px-2 rounded text-xs">
+            <button type="button" (click)="toggleModal('abuse_acts', 'Neglects', 'gbv-neglect', 'patient-gbv-neglect-abuse', selected_gbv_case?.gbvIntake.interview_neglect_abuses, 'neglect_abused_id')" class="bg-white text-sky-500 px-2 rounded text-xs">
               <fa-icon [icon]="faEdit"></fa-icon>
             </button>
           </div>
@@ -292,7 +298,7 @@
         <div class="col-span-4 grid grid-cols-1 border-slate-200 shadow-md rounded-md mx-5 mb-5">
           <div class="bg-sky-500 text-white py-1 px-3 rounded-t-md flex justify-between">
             <spa>Emotional Abuse</spa>
-            <button type="button" (click)="toggleModal('abuse_acts', 'Emotional Abuse', 'gbv-emotional-abuse', 'patient-gbv-emotional-abuse', selected_gbv_case.gbvIntake.interview_emotional_abuses, 'emotional_id')" class="bg-white text-sky-500 px-2 rounded text-xs">
+            <button type="button" (click)="toggleModal('abuse_acts', 'Emotional Abuse', 'gbv-emotional-abuse', 'patient-gbv-emotional-abuse', selected_gbv_case?.gbvIntake.interview_emotional_abuses, 'emotional_id')" class="bg-white text-sky-500 px-2 rounded text-xs">
               <fa-icon [icon]="faEdit"></fa-icon>
             </button>
           </div>
@@ -360,13 +366,13 @@
               <fa-icon [icon]="faPlus"></fa-icon>
             </button>
           </div>
-          <div class="min-h-24" *ngIf="!selected_gbv_case.gbvIntake.interview_perpetrator">
+          <div class="min-h-24" *ngIf="!selected_gbv_case?.gbvIntake.interview_perpetrator">
             <span class="flex italic py-5 justify-center">
               No records to show
             </span>
           </div>
 
-          <table class="m-3" *ngIf="selected_gbv_case.gbvIntake.interview_perpetrator">
+          <table class="m-3" *ngIf="selected_gbv_case?.gbvIntake.interview_perpetrator">
             <thead>
               <tr>
                 <td class="w-1/12">
@@ -388,7 +394,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr class="border-t border-slate-200" *ngFor="let perp of selected_gbv_case.gbvIntake.interview_perpetrator" >
+              <tr class="border-t border-slate-200" *ngFor="let perp of selected_gbv_case?.gbvIntake.interview_perpetrator" >
                 <td class="text-center align-top pt-3">
                   <fa-icon [icon]="faEdit" (click)="toggleModal('perpetrators', 'Perpetrator', '', '', perp)" class="hover:cursor-pointer text-orange-500"></fa-icon>
                 </td>
@@ -456,7 +462,12 @@
         <div class="col-span-4 border-b border-slate-200 w-full my-2 pt-3 font-semibold text-sky-500">
           Interview summary and social worker notes
         </div>
-        <div class="col-span-4 grid grid-cols-1 border-slate-200 shadow-md rounded-md mx-5 mb-5">
+
+        <div *ngIf="!selected_gbv_case?.gbvIntake.interview_perpetrator" class="col-span-4 flex justify-center font-semibold italic my-5">
+          Please add alleged perpetrator(s) to add notes.
+        </div>
+
+        <div *ngIf="selected_gbv_case?.gbvIntake.interview_perpetrator" class="col-span-4 grid grid-cols-1 border-slate-200 shadow-md rounded-md mx-5 mb-5">
           <div class="bg-sky-500 text-white py-1 px-3 rounded-t-md flex justify-between">
             <spa>Interview Summary</spa>
             <button type="button" (click)="toggleModal('interview_notes', 'IS')" class="bg-white text-sky-500 px-2 rounded text-xs">
@@ -511,7 +522,7 @@
           </table>
         </div>
 
-        <div class="col-span-4 grid grid-cols-1 border-slate-200 shadow-md rounded-md mx-5 mb-5">
+        <div *ngIf="selected_gbv_case?.gbvIntake.interview_perpetrator" class="col-span-4 grid grid-cols-1 border-slate-200 shadow-md rounded-md mx-5 mb-5">
           <div class="bg-sky-500 text-white py-1 px-3 rounded-t-md flex justify-between">
             <spa>Social Worker Notes</spa>
             <button type="button" (click)="toggleModal('interview_notes', 'SW')" class="bg-white text-sky-500 px-2 rounded text-xs">
@@ -591,7 +602,7 @@
         </div>
       </div>
 
-      <div *ngIf="show_error || required_info_source" class="text-sm bg-red-50 border border-red-300 p-5 m-5 rounded-lg text-red-800">
+      <div *ngIf="show_error" class="text-sm bg-red-50 border border-red-300 p-5 m-5 rounded-lg text-red-800">
         Form is invalid.
       </div>
       <div class="flex justify-center mt-5">
@@ -616,20 +627,20 @@
 <app-inteview-notes *ngIf="modals['interview_notes']"
   (toggleModal)="toggleModal($event)"
   [selected_notes]="selected_notes"
-  [intake_id]="selected_gbv_case.gbvIntake.id"
+  [intake_id]="selected_gbv_case?.gbvIntake.id"
   [patient_id]="patient_id"
 ></app-inteview-notes>
 
 <app-abuse-acts *ngIf="modals['abuse_acts']"
   (toggleModal)="toggleModal($event)"
   [selected_abused]="selected_abused"
-  [intake_id]="selected_gbv_case.gbvIntake.id"
+  [intake_id]="selected_gbv_case?.gbvIntake.id"
   [patient_id]="patient_id"
 ></app-abuse-acts>
 
 <app-perpetrators *ngIf="modals['perpetrators']"
   (toggleModal)="toggleModal($event)"
   [selected_perpetrator]="selected_perpetrator"
-  [intake_id]="selected_gbv_case.gbvIntake.id"
+  [intake_id]="selected_gbv_case?.gbvIntake.id"
   [patient_id]="patient_id"
 ></app-perpetrators>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { faEdit } from '@fortawesome/free-regular-svg-icons';
 import { faPlus, faSave } from '@fortawesome/free-solid-svg-icons';
@@ -11,6 +11,10 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./intervention.component.scss']
 })
 export class InterventionComponent implements OnInit {
+  @Output() updateSelectedGbv = new EventEmitter<any>();
+  @Input() selected_gbv_case;
+  @Input() patient_id;
+
   faPlus = faPlus;
   faEdit = faEdit;
   faSave = faSave;
@@ -18,29 +22,26 @@ export class InterventionComponent implements OnInit {
 
   modals: any = [];
 
-  intakeForm: FormGroup = new FormGroup({
-    id: new FormControl<string| null>(''),
-    patient_id: new FormControl<string| null>(''),
-    patient_tb_id: new FormControl<string| null>(''),
-    case_number: new FormControl<string| null>(''),
-    enroll_as_code : new FormControl<string| null>(''),
-    treatment_regimen_code : new FormControl<string| null>(''),
-    registration_date: new FormControl<string| null>(''),
-    treatment_start: new FormControl<string| null>(''),
-    continuation_start: new FormControl<string| null>(''),
-    treatment_end: new FormControl<string| null>(''),
-    bacteriological_status_code : new FormControl<string| null>(''),
-    anatomical_site_code : new FormControl<string| null>(''),
-    eptb_site_id : new FormControl<string| null>(''),
-    specific_site: new FormControl<string| null>(''),
-    drug_resistant_flag: new FormControl<boolean| null>(false),
-    ipt_type_code : new FormControl<string| null>(''),
-    transfer_flag: new FormControl<boolean| null>(false),
-    pict_date: new FormControl<string| null>(''),
-  });
+  selected_data: any;
 
-  toggleModal(name){
-    this.modals[name] = !this.modals[name]
+  reloadData(){
+    let params = {
+      id: this.selected_gbv_case.id,
+    }
+
+    this.http.get('gender-based-violence/patient-gbv', {params}).subscribe({
+      next: (data: any) => {
+        this.selected_gbv_case = data.data[0];
+        this.updateSelectedGbv.emit(this.selected_gbv_case);
+      },
+      error: err => console.log(err)
+    });
+  }
+
+  toggleModal(name, data?){
+    this.selected_data = data ? data : null;
+    this.modals[name] = !this.modals[name];
+    if(!this.modals[name]) this.reloadData();
   }
 
   constructor (

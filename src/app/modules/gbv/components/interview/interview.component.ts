@@ -145,9 +145,6 @@ export class InterviewComponent implements OnInit{
       // console.log(value);
       this[value.summary_type==='IS'?'interview_summaries':'interview_social_notes'].push(value);
     });
-
-    console.log(this.interview_summaries);
-    console.log(this.interview_social_notes);
   }
 
   sexual_abuses: any = [];
@@ -192,7 +189,7 @@ export class InterviewComponent implements OnInit{
       abused_episode_count  : [null],
       abused_site_id : [null, Validators.required],
       abused_site_remarks : [null],
-      disclosed_flag : [false],
+      disclosed_flag : [false, Validators.required],
       disclosed_type : [null],
       disclosed_relation_id : [null],
       initial_disclosure : [null],
@@ -295,7 +292,6 @@ export class InterviewComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    console.log(this.selected_gbv_case.gbvIntake.id)
     this.loadLibraries();
   }
 }

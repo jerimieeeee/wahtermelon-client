@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { faSave } from '@fortawesome/free-regular-svg-icons';
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
@@ -12,6 +12,9 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class PlacementComponent implements OnInit, OnChanges{
   @Output() toggleModal = new EventEmitter<any>();
+  @Input() patient_gbv_intake_id;
+  @Input() patient_id;
+  @Input() selected_data;
 
   faSave = faSave;
   faCircleNotch = faCircleNotch;

@@ -1,147 +1,151 @@
 <div class="border border-slate-200 rounded-b-lg" *ngIf="show_form">
   <div class="mx-5 mb-5">
-    <form [formGroup]="intakeForm" (ngSubmit)="saveCaseFindings()">
-      <div class="mt-1 grid grid-cols-4 gap-x-4 w-full">
-        <div class="col-span-4 border-b border-slate-200 w-full my-2 pt-3 font-semibold text-sky-500">
-          Physician
+    <div class="mt-1 grid grid-cols-4 gap-x-4 w-full">
+      <div class="col-span-4 border-b border-slate-200 w-full my-2 pt-3 font-semibold text-sky-500">
+        Physician
+      </div>
+      <div class="col-span-4 grid grid-cols-1 border-slate-200 shadow-md rounded-md mx-5 mb-5">
+        <div class="bg-sky-500 text-white py-1 px-3 rounded-t-md flex justify-between">
+          <spa>Medical Consults</spa>
+          <button type="button" (click)="toggleModal('medical_consult')" class="bg-white text-sky-500 px-2 rounded text-xs">
+            <fa-icon [icon]="faPlus"></fa-icon>
+          </button>
         </div>
-        <div class="col-span-4 grid grid-cols-1 border-slate-200 shadow-md rounded-md mx-5 mb-5">
-          <div class="bg-sky-500 text-white py-1 px-3 rounded-t-md flex justify-between">
-            <spa>Medical Consults</spa>
-            <button type="button" (click)="toggleModal('medical_consult')" class="bg-white text-sky-500 px-2 rounded text-xs">
-              <fa-icon [icon]="faPlus"></fa-icon>
-            </button>
-          </div>
-          <div class="min-h-24">
-            <span class="flex italic py-5 justify-center">
-              No records to show
-            </span>
-          </div>
+        <div class="min-h-24">
+          <span class="flex italic py-5 justify-center">
+            No records to show
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-1 grid grid-cols-4 gap-x-4 w-full">
+      <div class="col-span-4 border-b border-slate-200 w-full my-2 pt-3 font-semibold text-sky-500">
+        Social Worker
+      </div>
+      <div class="col-span-4 grid grid-cols-1 border-slate-200 shadow-md rounded-md mx-5 mb-5">
+        <div class="bg-sky-500 text-white py-1 px-3 rounded-t-md flex justify-between">
+          <spa>Home Visits</spa>
+          <button type="button" (click)="toggleModal('home_visit')" class="bg-white text-sky-500 px-2 rounded text-xs">
+            <fa-icon [icon]="faPlus"></fa-icon>
+          </button>
+        </div>
+        <div class="min-h-24">
+          <span class="flex italic py-5 justify-center">
+            No records to show
+          </span>
         </div>
       </div>
 
-      <div class="mt-1 grid grid-cols-4 gap-x-4 w-full">
-        <div class="col-span-4 border-b border-slate-200 w-full my-2 pt-3 font-semibold text-sky-500">
-          Social Worker
+      <div class="col-span-4 grid grid-cols-1 border-slate-200 shadow-md rounded-md mx-5 mb-5">
+        <div class="bg-sky-500 text-white py-1 px-3 rounded-t-md flex justify-between">
+          <spa>Placements</spa>
+          <button type="button" (click)="toggleModal('placement')" class="bg-white text-sky-500 px-2 rounded text-xs">
+            <fa-icon [icon]="faPlus"></fa-icon>
+          </button>
         </div>
-        <div class="col-span-4 grid grid-cols-1 border-slate-200 shadow-md rounded-md mx-5 mb-5">
-          <div class="bg-sky-500 text-white py-1 px-3 rounded-t-md flex justify-between">
-            <spa>Home Visits</spa>
-            <button type="button" (click)="toggleModal('home_visit')" class="bg-white text-sky-500 px-2 rounded text-xs">
-              <fa-icon [icon]="faPlus"></fa-icon>
-            </button>
-          </div>
-          <div class="min-h-24">
-            <span class="flex italic py-5 justify-center">
-              No records to show
-            </span>
-          </div>
-        </div>
-
-        <div class="col-span-4 grid grid-cols-1 border-slate-200 shadow-md rounded-md mx-5 mb-5">
-          <div class="bg-sky-500 text-white py-1 px-3 rounded-t-md flex justify-between">
-            <spa>Placements</spa>
-            <button type="button" (click)="toggleModal('placement')" class="bg-white text-sky-500 px-2 rounded text-xs">
-              <fa-icon [icon]="faPlus"></fa-icon>
-            </button>
-          </div>
-          <div class="min-h-24">
-            <span class="flex italic py-5 justify-center">
-              No records to show
-            </span>
-          </div>
+        <div class="min-h-24">
+          <span class="flex italic py-5 justify-center">
+            No records to show
+          </span>
         </div>
       </div>
+    </div>
 
-      <div class="mt-1 grid grid-cols-4 gap-x-4 w-full">
-        <div class="col-span-4 border-b border-slate-200 w-full my-2 pt-3 font-semibold text-sky-500">
-          Psychiatry
+    <div class="mt-1 grid grid-cols-4 gap-x-4 w-full">
+      <div class="col-span-4 border-b border-slate-200 w-full my-2 pt-3 font-semibold text-sky-500">
+        Psychiatry
+      </div>
+      <div class="col-span-4 grid grid-cols-1 border-slate-200 shadow-md rounded-md mx-5 mb-5">
+        <div class="bg-sky-500 text-white py-1 px-3 rounded-t-md flex justify-between">
+          <spa>Sessions</spa>
+          <button type="button" (click)="toggleModal('session')" class="bg-white text-sky-500 px-2 rounded text-xs">
+            <fa-icon [icon]="faPlus"></fa-icon>
+          </button>
         </div>
-        <div class="col-span-4 grid grid-cols-1 border-slate-200 shadow-md rounded-md mx-5 mb-5">
-          <div class="bg-sky-500 text-white py-1 px-3 rounded-t-md flex justify-between">
-            <spa>Sessions</spa>
-            <button type="button" (click)="toggleModal('session')" class="bg-white text-sky-500 px-2 rounded text-xs">
-              <fa-icon [icon]="faPlus"></fa-icon>
-            </button>
-          </div>
-          <div class="min-h-24">
-            <span class="flex italic py-5 justify-center">
-              No records to show
-            </span>
-          </div>
+        <div class="min-h-24">
+          <span class="flex italic py-5 justify-center">
+            No records to show
+          </span>
         </div>
       </div>
+    </div>
 
-      <div class="mt-1 grid grid-cols-4 gap-x-4 w-full">
-        <div class="col-span-4 border-b border-slate-200 w-full my-2 pt-3 font-semibold text-sky-500">
-          Legal
+    <div class="mt-1 grid grid-cols-4 gap-x-4 w-full">
+      <div class="col-span-4 border-b border-slate-200 w-full my-2 pt-3 font-semibold text-sky-500">
+        Legal
+      </div>
+      <div class="col-span-4 grid grid-cols-1 border-slate-200 shadow-md rounded-md mx-5 mb-5">
+        <div class="bg-sky-500 text-white py-1 px-3 rounded-t-md flex justify-between">
+          <spa>Case Details</spa>
+          <button type="button" (click)="toggleModal('legal_case')" class="bg-white text-sky-500 px-2 rounded text-xs">
+            <fa-icon [icon]="faEdit"></fa-icon>
+          </button>
         </div>
-        <div class="col-span-4 grid grid-cols-1 border-slate-200 shadow-md rounded-md mx-5 mb-5">
-          <div class="bg-sky-500 text-white py-1 px-3 rounded-t-md flex justify-between">
-            <spa>Case Details</spa>
-            <button type="button" (click)="toggleModal('legal_case')" class="bg-white text-sky-500 px-2 rounded text-xs">
-              <fa-icon [icon]="faEdit"></fa-icon>
-            </button>
-          </div>
-          <div class="min-h-24">
-            <span class="flex italic py-5 justify-center">
-              No records to show
-            </span>
-          </div>
+        <div class="min-h-24">
+          <span class="flex italic py-5 justify-center">
+            No records to show
+          </span>
         </div>
       </div>
+    </div>
 
-      <div class="mt-1 grid grid-cols-4 gap-x-4 w-full">
-        <div class="col-span-4 border-b border-slate-200 w-full my-2 pt-3 font-semibold text-sky-500">
-          Multidisiplinary Case Conferences
+    <div class="mt-1 grid grid-cols-4 gap-x-4 w-full">
+      <div class="col-span-4 border-b border-slate-200 w-full my-2 pt-3 font-semibold text-sky-500">
+        Multidisiplinary Case Conferences
+      </div>
+      <div class="col-span-4 grid grid-cols-1 border-slate-200 shadow-md rounded-md mx-5 mb-5">
+        <div class="bg-sky-500 text-white py-1 px-3 rounded-t-md flex justify-between">
+          <spa>Case Conference</spa>
+          <button type="button" (click)="toggleModal('case_conference')" class="bg-white text-sky-500 px-2 rounded text-xs">
+            <fa-icon [icon]="faPlus"></fa-icon>
+          </button>
         </div>
-        <div class="col-span-4 grid grid-cols-1 border-slate-200 shadow-md rounded-md mx-5 mb-5">
-          <div class="bg-sky-500 text-white py-1 px-3 rounded-t-md flex justify-between">
-            <spa>Case Conference</spa>
-            <button type="button" (click)="toggleModal('case_conference')" class="bg-white text-sky-500 px-2 rounded text-xs">
-              <fa-icon [icon]="faPlus"></fa-icon>
-            </button>
-          </div>
-          <div class="min-h-24">
-            <span class="flex italic py-5 justify-center">
-              No records to show
-            </span>
-          </div>
+        <div class="min-h-24">
+          <span class="flex italic py-5 justify-center">
+            No records to show
+          </span>
         </div>
       </div>
-
-      <!-- <div class="flex justify-center mt-5" *ngIf="!selected_tb_consult || selected_tb_consult.treatment_done === 0">
-        <button [disabled]="is_saving" type="submit" class="btn-save mr-5 mt-4">
-          <fa-icon [icon]="is_saving ? faCircleNotch : faSave" [spin]="is_saving ? true : false" class="mr-2"></fa-icon>
-          {{ intakeForm.value.id ? (is_saving ? 'Updating' : 'Update') : (is_saving ? 'Saving' : 'Save') }}
-        </button>
-      </div> -->
-    </form>
+    </div>
   </div>
 </div>
 
 <app-medical-consult *ngIf="modals['medical_consult']"
   (toggleModal)="toggleModal($event)"
+  [patient_gbv_intake_id]="selected_gbv_case.gbvIntake.id"
+  [patient_id]="patient_id"
 ></app-medical-consult>
 
 <app-home-visit *ngIf="modals['home_visit']"
   (toggleModal)="toggleModal($event)"
+  [selected_home_visit]="selected_home_visit"
+  [patient_gbv_intake_id]="selected_gbv_case.gbvIntake.id"
+  [patient_id]="patient_id"
 ></app-home-visit>
 
 <app-placement *ngIf="modals['placement']"
   (toggleModal)="toggleModal($event)"
+  [patient_gbv_intake_id]="selected_gbv_case.gbvIntake.id"
+  [patient_id]="patient_id"
 ></app-placement>
 
 <app-session *ngIf="modals['session']"
   (toggleModal)="toggleModal($event)"
+  [patient_gbv_intake_id]="selected_gbv_case.gbvIntake.id"
+  [patient_id]="patient_id"
 ></app-session>
 
 <app-legal-case *ngIf="modals['legal_case']"
   (toggleModal)="toggleModal($event)"
+  [patient_gbv_intake_id]="selected_gbv_case.gbvIntake.id"
+  [patient_id]="patient_id"
 ></app-legal-case>
 
 <app-case-conference *ngIf="modals['case_conference']"
   (toggleModal)="toggleModal($event)"
+  [patient_gbv_intake_id]="selected_gbv_case.gbvIntake.id"
+  [patient_id]="patient_id"
 ></app-case-conference>
 <!-- <app-family-composition *ngIf="modals['add_family']"
   (toggleModal)="toggleModal($event)"
