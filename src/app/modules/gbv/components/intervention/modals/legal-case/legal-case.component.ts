@@ -4,6 +4,7 @@ import { faSave } from '@fortawesome/free-regular-svg-icons';
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-legal-case',
@@ -21,16 +22,16 @@ export class LegalCaseComponent implements OnInit, OnChanges {
 
   is_saving: boolean = false;
 
-  homeVisitForm: FormGroup = new FormGroup({
+  legalForm: FormGroup = new FormGroup({
     id: new FormControl<string| null>(null),
     patient_id: new FormControl<string| null>(null),
     patient_gbv_intake_id: new FormControl<string| null>(null),
-    complaint_filed_flag: new FormControl<string| null>(null),
+    complaint_filed_flag: new FormControl<boolean| null>(false),
     filed_by_name: new FormControl<string| null>(null),
     filed_by_relation_id: new FormControl<string| null>(null),
     filed_location_id: new FormControl<string| null>(null),
     filed_location_remarks: new FormControl<string| null>(null),
-    case_initiated_flag: new FormControl<string| null>(null),
+    case_initiated_flag: new FormControl<boolean| null>(false),
     judge_name: new FormControl<string| null>(null),
     court_name: new FormControl<string| null>(null),
     fiscal_name: new FormControl<string| null>(null),
@@ -39,45 +40,68 @@ export class LegalCaseComponent implements OnInit, OnChanges {
     verdict_id: new FormControl<string| null>(null),
   });
 
-  relations: any;
-  filed_locations: any;
-  verdicts: any;
 
   onSubmit() {
     this.is_saving = true;
     let query;
 
-    if(this.homeVisitForm.value.id) {
-      query = this.http.update('', this.homeVisitForm.value.id, this.homeVisitForm.value);
+    if(this.legalForm.value.id) {
+      query = this.http.update('gender-based-violence/patient-gbv-legal/', this.legalForm.value.id, this.legalForm.value);
     } else {
-      query = this.http.post('', this.homeVisitForm.value);
+      query = this.http.post('gender-based-violence/patient-gbv-legal', this.legalForm.value);
     }
 
     query.subscribe({
       next: (data: any) => {
         this.is_saving = false;
+        this.toastr.success('Successfully recorded', 'Legal Case');
       },
       error: err => console.log(err)
     });
   }
 
   createForm(){
-    this.homeVisitForm = this.formBuilder.group({
+    this.legalForm = this.formBuilder.group({
       id: [null],
-      patient_id: [null],
-      patient_gbv_intake_id: [null],
-      complaint_filed_flag: [null, Validators.required],
-      filed_by_name: [null, Validators.required],
+      patient_id: [this.patient_id],
+      patient_gbv_intake_id: [this.patient_gbv_intake_id],
+      complaint_filed_flag: [false, Validators.required],
+      filed_by_name: [null],
       filed_by_relation_id: [null],
       filed_location_id: [null],
       filed_location_remarks: [null],
-      case_initiated_flag: [null],
+      case_initiated_flag: [false],
       judge_name: [null],
       court_name: [null],
       fiscal_name: [null],
       criminal_case_number: [null],
       cpumd_testimony_date: [null],
       verdict_id: [null]
+    });
+
+    console.log(this.legalForm.value);
+    if(this.selected_data) {
+      this.legalForm.patchValue({...this.selected_data});
+    }
+  }
+
+  child_relations: any = [];
+  filed_locations: any =[];
+  verdicts: any;
+
+  loadLibraries(){
+    const getChildRelation = this.http.get('libraries/child-relation');
+    const getFiledLocation = this.http.get('libraries/gbv-filing-location');
+    const getVerdict = this.http.get('libraries/gbv-outcome-verdict');
+
+    forkJoin([getChildRelation, getFiledLocation, getVerdict]).subscribe({
+      next: ([dataChildRelation, dataFiledLocation, dataVerdict]: any) => {
+        this.child_relations = dataChildRelation.data;
+        this.filed_locations = dataFiledLocation.data;
+        this.verdicts = dataVerdict.data;
+        this.createForm();
+      },
+      error: err => console.log(err)
     });
   }
 
@@ -96,6 +120,6 @@ export class LegalCaseComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    this.createForm();
+    this.loadLibraries();
   }
 }

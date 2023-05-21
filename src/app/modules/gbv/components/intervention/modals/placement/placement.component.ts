@@ -4,6 +4,7 @@ import { faSave } from '@fortawesome/free-regular-svg-icons';
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-placement',
@@ -20,40 +21,40 @@ export class PlacementComponent implements OnInit, OnChanges{
   faCircleNotch = faCircleNotch;
 
   is_saving: boolean = false;
-
+  show_form: boolean = false;
   placementForm: FormGroup = new FormGroup({
     id: new FormControl<string| null>(null),
     patient_id: new FormControl<string| null>(null),
     patient_gbv_intake_id: new FormControl<string| null>(null),
-    placement_location_id: new FormControl<string| null>(null),
-    home_by_cpu_flag: new FormControl<string| null>(null),
+    location_id: new FormControl<string| null>(null),
+    home_by_cpu_flag: new FormControl<boolean| null>(false),
     home_by_other_name: new FormControl<string| null>(null),
-    schedule_date: new FormControl<string| null>(null),
+    scheduled_date: new FormControl<string| null>(null),
     actual_date: new FormControl<string| null>(null),
     placement_name: new FormControl<string| null>(null),
     placement_contact_info: new FormControl<string| null>(null),
-    placement_type_id: new FormControl<string| null>(null),
+    type_id: new FormControl<string| null>(null),
     hospital_name: new FormControl<string| null>(null),
     hospital_ward: new FormControl<string| null>(null),
     hospital_date_in: new FormControl<string| null>(null),
     hospital_date_out: new FormControl<string| null>(null),
   });
 
-  placement_locations: any;
-
   onSubmit() {
     this.is_saving = true;
     let query;
 
     if(this.placementForm.value.id) {
-      query = this.http.update('', this.placementForm.value.id, this.placementForm.value);
+      query = this.http.update('gender-based-violence/patient-gbv-placement/', this.placementForm.value.id, this.placementForm.value);
     } else {
-      query = this.http.post('', this.placementForm.value);
+      query = this.http.post('gender-based-violence/patient-gbv-placement', this.placementForm.value);
     }
 
     query.subscribe({
       next: (data: any) => {
+        this.toastr.success('Successfully recorded','Placement');
         this.is_saving = false;
+        this.closeModal();
       },
       error: err => console.log(err)
     });
@@ -62,20 +63,45 @@ export class PlacementComponent implements OnInit, OnChanges{
   createForm(){
     this.placementForm = this.formBuilder.group({
       id: [null],
-      patient_id: [null],
-      patient_gbv_intake_id: [null],
-      placement_location_id: [null, Validators.required],
-      home_by_cpu_flag: [null],
+      patient_id: [this.patient_id],
+      patient_gbv_intake_id: [this.patient_gbv_intake_id],
+      location_id: [null, Validators.required],
+      home_by_cpu_flag: [false],
       home_by_other_name: [null],
-      placement_type_id: [null],
+      scheduled_date: [null],
+      actual_date: [null],
       placement_name: [null],
       placement_contact_info: [null],
-      schedule_date: [null],
-      actual_date: [null],
+      type_id: [null],
       hospital_name: [null],
       hospital_ward: [null],
       hospital_date_in: [null],
       hospital_date_out: [null]
+    });
+
+    console.log(this.selected_data)
+    if(this.selected_data) {
+      this.placementForm.patchValue({...this.selected_data});
+    }
+
+    this.show_form = true;
+  }
+
+  placement_locations: any;
+  placement_types: any;
+
+  loadLibraries() {
+    const getAbusedEpisode = this.http.get('libraries/gbv-abused-episode');
+    const getInfoSource = this.http.get('libraries/gbv-info-source');
+
+    forkJoin([getAbusedEpisode, getInfoSource]).subscribe({
+    next: ([dataAbusedEpisode, dataInfoSource]: any) => {
+      this.placement_locations = dataAbusedEpisode.data;
+      this.placement_types = dataInfoSource.data;
+
+      this.createForm();
+    },
+      error: err => console.log(err)
     });
   }
 
@@ -94,6 +120,6 @@ export class PlacementComponent implements OnInit, OnChanges{
   }
 
   ngOnInit(): void {
-    this.createForm();
+    this.loadLibraries();
   }
 }

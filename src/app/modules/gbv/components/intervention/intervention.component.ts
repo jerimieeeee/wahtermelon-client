@@ -39,6 +39,7 @@ export class InterventionComponent implements OnInit {
   }
 
   toggleModal(name, data?){
+    console.log(data)
     this.selected_data = data ? data : null;
     this.modals[name] = !this.modals[name];
     if(!this.modals[name]) this.reloadData();
@@ -50,6 +51,7 @@ export class InterventionComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    console.log(this.selected_gbv_case);
       // this.toggleModal('case_conference');
   }
 }

@@ -10,12 +10,12 @@
       </div>
       <!-- Modal body -->
       <div class="overflow-y-auto h-96 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
-        <form [formGroup]="placementForm" (submit)="onSubmit()" class="text-left text-gray-500 m-5">
+        <form [formGroup]="placementForm" (submit)="onSubmit()" *ngIf="show_form" class="text-left text-gray-500 m-5">
           <div class="grid grid-cols-4 gap-4">
             <div class="col-span-2">
-              <label for="placement_location_id">Placement location</label>
-              <select name="placement_location_id" id="placement_location_id" formControlName="placement_location_id" class="input">
-                <option *ngFor="let loc of placement_locations" [value]="loc.id">{{ enroll_as.desc }}</option>
+              <label for="location_id">Placement location</label>
+              <select name="location_id" id="location_id" formControlName="location_id" class="input">
+                <option *ngFor="let loc of placement_locations" [value]="loc.id">{{ loc.desc }}</option>
               </select>
             </div>
 
@@ -38,14 +38,14 @@
 
             <!-- IF RELATIVE OR SHELTER PLACEMENT-->
             <div class="col-span-2">
-              <label for="placement_type_id">Placement type</label>
-              <select name="placement_type_id" id="placement_type_id" formControlName="placement_type_id" class="input">
-                <option *ngFor="let loc of placement_locations" [value]="loc.id">{{ enroll_as.desc }}</option>
+              <label for="type_id">Placement type</label>
+              <select name="type_id" id="type_id" formControlName="type_id" class="input">
+                <option *ngFor="let type of placement_types" [value]="type.id">{{ type.desc }}</option>
               </select>
             </div>
 
             <div class="col-span-2">
-              <label for="placement_name" >Name</label>
+              <label for="placement_name">Name</label>
               <input type="text" name="placement_name" id="placement_name" formControlName="placement_name" class="input">
             </div>
 
@@ -56,7 +56,7 @@
 
             <div class="col-span-2">
               <label for="schedule_date" >Schedule Date</label>
-              <input type="date" name="schedule_date" id="schedule_date" formControlName="schedule_date" class="input">
+              <input type="date" name="schedule_date" id="schedule_date" formControlName="scheduled_date" class="input">
             </div>
 
             <div class="col-span-2">
@@ -93,7 +93,7 @@
       <!-- Modal footer -->
       <div class="flex justify-end py-4 px-5 space-x-4 rounded-b border-t border-gray-200">
         <button type="button" class="btn-save bg-gray-400" (click)="closeModal()">Close</button>
-        <button [disabled]="is_saving || placementForm.invalid" type="submit" class="btn-save px-10 disabled:bg-gray-300" (click)="onSubmit()" >
+        <button [disabled]="is_saving || placementForm.invalid" type="submit" (click)="onSubmit()" class="btn-save px-10 disabled:bg-gray-300">
           <fa-icon [icon]="is_saving ? faCircleNotch : faSave"></fa-icon>
           {{ is_saving ? 'Saving' : 'Save' }}
         </button>

@@ -34,7 +34,7 @@ export class HomeVisitComponent implements OnInit, OnChanges {
     let query;
 
     if(this.homeVisitForm.value.id) {
-      query = this.http.update('gender-based-violence/patient-gbv-social-work', this.homeVisitForm.value.id, this.homeVisitForm.value);
+      query = this.http.update('gender-based-violence/patient-gbv-social-work/', this.homeVisitForm.value.id, this.homeVisitForm.value);
     } else {
       query = this.http.post('gender-based-violence/patient-gbv-social-work', this.homeVisitForm.value);
     }
@@ -44,6 +44,7 @@ export class HomeVisitComponent implements OnInit, OnChanges {
         console.log(data);
         this.toastr.success('Successfully recorded.', 'Social Work');
         this.is_saving = false;
+        this.closeModal()
       },
       error: err => console.log(err)
     });
@@ -52,12 +53,13 @@ export class HomeVisitComponent implements OnInit, OnChanges {
   createForm(){
     this.homeVisitForm = this.formBuilder.group({
       id: [null],
-      patient_id: [null],
-      patient_gbv_intake_id: [null],
+      patient_id: [this.patient_id],
+      patient_gbv_intake_id: [this.patient_gbv_intake_id],
       visit_date: [null, Validators.required],
       social_worker: [null, Validators.required]
     });
 
+    console.log(this.selected_data)
     if(this.selected_data) {
       this.homeVisitForm.patchValue({...this.selected_data});
     }

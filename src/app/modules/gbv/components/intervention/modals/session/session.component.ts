@@ -25,27 +25,27 @@ export class SessionComponent {
     id: new FormControl<string| null>(null),
     patient_id: new FormControl<string| null>(null),
     patient_gbv_intake_id: new FormControl<string| null>(null),
-    schedule_date: new FormControl<string| null>(null),
+    scheduled_date: new FormControl<string| null>(null),
     actual_date: new FormControl<string| null>(null),
     md_name: new FormControl<string| null>(null),
     participant_id: new FormControl<string| null>(null),
   });
-
-  participants: any;
 
   onSubmit() {
     this.is_saving = true;
     let query;
 
     if(this.sessionForm.value.id) {
-      query = this.http.update('', this.sessionForm.value.id, this.sessionForm.value);
+      query = this.http.update('gender-based-violence/patient-gbv-psych/', this.sessionForm.value.id, this.sessionForm.value);
     } else {
-      query = this.http.post('', this.sessionForm.value);
+      query = this.http.post('gender-based-violence/patient-gbv-psych', this.sessionForm.value);
     }
 
     query.subscribe({
       next: (data: any) => {
         this.is_saving = false;
+        this.toastr.success('Successfully recorded', 'Session');
+        this.closeModal();
       },
       error: err => console.log(err)
     });
@@ -54,13 +54,28 @@ export class SessionComponent {
   createForm(){
     this.sessionForm = this.formBuilder.group({
       id: [null],
-      patient_id: [null],
-      patient_gbv_intake_id: [null],
-      schedule_date: [null, Validators.required],
+      patient_id: [this.patient_id],
+      patient_gbv_intake_id: [this.patient_gbv_intake_id],
+      scheduled_date: [null, Validators.required],
       actual_date: [null, Validators.required],
       md_name: [null, Validators.required],
       participant_id: [null, Validators.required]
     });
+
+    if(this.selected_data) {
+      this.sessionForm.patchValue({...this.selected_data});
+    }
+  }
+
+  participants: any;
+  loadLibraries() {
+    this.http.get('libraries/gbv-psych-participant').subscribe({
+      next: (data: any) => {
+        this.participants = data.data;
+        this.createForm();
+      },
+      error: err => console.log(err)
+    })
   }
 
   closeModal() {
@@ -78,6 +93,6 @@ export class SessionComponent {
   }
 
   ngOnInit(): void {
-    this.createForm();
+    this.loadLibraries();
   }
 }

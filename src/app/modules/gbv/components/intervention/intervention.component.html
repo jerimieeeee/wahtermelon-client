@@ -30,11 +30,40 @@
             <fa-icon [icon]="faPlus"></fa-icon>
           </button>
         </div>
-        <div class="min-h-24">
+        <div class="min-h-24" *ngIf="!selected_gbv_case?.gbvIntake.intervention_social_work">
           <span class="flex italic py-5 justify-center">
             No records to show
           </span>
         </div>
+
+        <table class="m-3" *ngIf="selected_gbv_case?.gbvIntake.intervention_social_work">
+          <thead>
+            <tr>
+              <td class="w-1/12">
+
+              </td>
+              <td class="text-center font-semibold w-4/12 align-top pt-3">
+                Visit date<br />
+              </td>
+              <td class="text-center font-semibold w-7/12 align-top pt-3">
+                Social Worker
+              </td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="border-t border-slate-200" *ngFor="let social_work of selected_gbv_case?.gbvIntake.intervention_social_work" >
+              <td class="text-center align-top pt-3">
+                <fa-icon [icon]="faEdit" (click)="toggleModal('home_visit', social_work)" class="hover:cursor-pointer text-orange-500"></fa-icon>
+              </td>
+              <td class="text-center align-top pt-3">
+                {{ social_work.visit_date | date: 'MM/dd/yyyy'}}
+              </td>
+              <td class="text-center align-top pt-3">
+                {{ social_work.social_worker }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
 
       <div class="col-span-4 grid grid-cols-1 border-slate-200 shadow-md rounded-md mx-5 mb-5">
@@ -44,11 +73,47 @@
             <fa-icon [icon]="faPlus"></fa-icon>
           </button>
         </div>
-        <div class="min-h-24">
+        <div class="min-h-24" *ngIf="!selected_gbv_case?.gbvIntake.intervention_placement">
           <span class="flex italic py-5 justify-center">
             No records to show
           </span>
         </div>
+
+        <table class="m-3" *ngIf="selected_gbv_case?.gbvIntake.intervention_placement">
+          <thead>
+            <tr>
+              <td class="w-1/12">
+
+              </td>
+              <td class="text-center font-semibold w-4/12 align-top pt-3">
+                Placement
+              </td>
+              <td class="text-center font-semibold w-4/12 align-top pt-3">
+                Name and Contact Info
+              </td>
+              <td class="text-center font-semibold w-7/12 align-top pt-3">
+                Date
+              </td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="border-t border-slate-200" *ngFor="let placement of selected_gbv_case?.gbvIntake.intervention_placement" >
+              <td class="text-center align-top pt-3">
+                <fa-icon [icon]="faEdit" (click)="toggleModal('placement', placement)" class="hover:cursor-pointer text-orange-500"></fa-icon>
+              </td>
+              <td class="text-center align-top pt-3">
+                {{ placement.placement_name }}
+              </td>
+              <td class="text-center align-top pt-3">
+                {{ placement.placement_name }}
+              </td>
+              <td class="text-center align-top pt-3">
+                {{ placement.scheduled_date | date: 'MM/dd/yyyy' }} <br />
+                {{ placement.actual_date | date: 'MM/dd/yyyy' }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
 
@@ -63,11 +128,48 @@
             <fa-icon [icon]="faPlus"></fa-icon>
           </button>
         </div>
-        <div class="min-h-24">
+        <div class="min-h-24" *ngIf="!selected_gbv_case?.gbvIntake.intervention_psych">
           <span class="flex italic py-5 justify-center">
             No records to show
           </span>
         </div>
+
+        <table class="m-3" *ngIf="selected_gbv_case?.gbvIntake.intervention_psych">
+          <thead>
+            <tr>
+              <td class="w-1/12">
+
+              </td>
+              <td class="text-center font-semibold w-4/12 align-top pt-3">
+                Participant
+              </td>
+              <td class="text-center font-semibold w-4/12 align-top pt-3">
+                Psychiatrist
+              </td>
+              <td class="text-center font-semibold w-7/12 align-top pt-3">
+                Scheduled Date <br />
+                Actual Date
+              </td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="border-t border-slate-200" *ngFor="let psych of selected_gbv_case?.gbvIntake.intervention_psych" >
+              <td class="text-center align-top pt-3">
+                <fa-icon [icon]="faEdit" (click)="toggleModal('session', psych)" class="hover:cursor-pointer text-orange-500"></fa-icon>
+              </td>
+              <td class="text-center align-top pt-3">
+                {{ psych.participant.desc }}
+              </td>
+              <td class="text-center align-top pt-3">
+                {{ psych.md_name }}
+              </td>
+              <td class="text-center align-top pt-3">
+                {{ psych.scheduled_date | date: 'MM/dd/yyyy' }} <br />
+                {{ psych.actual_date | date: 'MM/dd/yyyy' }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
 
@@ -78,15 +180,70 @@
       <div class="col-span-4 grid grid-cols-1 border-slate-200 shadow-md rounded-md mx-5 mb-5">
         <div class="bg-sky-500 text-white py-1 px-3 rounded-t-md flex justify-between">
           <spa>Case Details</spa>
-          <button type="button" (click)="toggleModal('legal_case')" class="bg-white text-sky-500 px-2 rounded text-xs">
+          <button type="button" *ngIf="!selected_gbv_case?.gbvIntake.intervention_legal" (click)="toggleModal('legal_case')" class="bg-white text-sky-500 px-2 rounded text-xs">
             <fa-icon [icon]="faEdit"></fa-icon>
           </button>
         </div>
-        <div class="min-h-24">
+        <div class="min-h-24" *ngIf="!selected_gbv_case?.gbvIntake.intervention_legal">
           <span class="flex italic py-5 justify-center">
             No records to show
           </span>
         </div>
+
+        <table class="m-3" *ngIf="selected_gbv_case?.gbvIntake.intervention_legal">
+          <thead>
+            <tr>
+              <td class="w-1/12">
+
+              </td>
+              <td class="text-center font-semibold w-4/12 align-top pt-3">
+                Filed By
+              </td>
+              <td class="text-center font-semibold w-4/12 align-top pt-3">
+                Date of CPU MD Testimony
+              </td>
+              <td class="text-center font-semibold w-7/12 align-top pt-3">
+                Court Details
+              </td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="border-t border-slate-200">
+              <td class="text-center">
+                <fa-icon [icon]="faEdit" (click)="toggleModal('legal_case', selected_gbv_case?.gbvIntake.intervention_legal)" class="hover:cursor-pointer text-orange-500"></fa-icon>
+              </td>
+              <td class="text-center align-top pt-3">
+                {{ selected_gbv_case?.gbvIntake.intervention_legal.filed_by_name }} <br /><br />
+
+                Relationship to victim survivor: <br />
+                {{ selected_gbv_case?.gbvIntake.intervention_legal.relation ? selected_gbv_case?.gbvIntake.intervention_legal.relation.desc : '-' }} <br /><br />
+
+                Filed at: <br />
+                {{ selected_gbv_case?.gbvIntake.intervention_legal.filed_location ? selected_gbv_case?.gbvIntake.intervention_legal.filed_location.desc : '-' }}
+              </td>
+              <td class="text-center align-top pt-3">
+                {{ selected_gbv_case?.gbvIntake.intervention_legal.cpumd_testimony_date | date: 'MM/dd/yyyy' }}
+              </td>
+              <td class="text-center align-top pt-3">
+                Criminal Case Number: <br />
+                {{ selected_gbv_case?.gbvIntake.intervention_legal.criminal_case_number }} <br /><br />
+
+                Judge: <br />
+                {{ selected_gbv_case?.gbvIntake.intervention_legal.judge_name }} <br /><br />
+
+
+                Court: <br />
+                {{ selected_gbv_case?.gbvIntake.intervention_legal.court_name }}<br /><br />
+
+                Fiscal Name: <br />
+                {{ selected_gbv_case?.gbvIntake.intervention_legal.fiscal_name }}<br /><br />
+
+                Verdict: <br />
+                {{ selected_gbv_case?.gbvIntake.intervention_legal.verdict ? selected_gbv_case?.gbvIntake.intervention_legal.verdict.desc : '-' }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
 
@@ -113,37 +270,42 @@
 
 <app-medical-consult *ngIf="modals['medical_consult']"
   (toggleModal)="toggleModal($event)"
+  [selected_data]="selected_data"
   [patient_gbv_intake_id]="selected_gbv_case.gbvIntake.id"
   [patient_id]="patient_id"
 ></app-medical-consult>
 
 <app-home-visit *ngIf="modals['home_visit']"
   (toggleModal)="toggleModal($event)"
-  [selected_home_visit]="selected_home_visit"
+  [selected_data]="selected_data"
   [patient_gbv_intake_id]="selected_gbv_case.gbvIntake.id"
   [patient_id]="patient_id"
 ></app-home-visit>
 
 <app-placement *ngIf="modals['placement']"
   (toggleModal)="toggleModal($event)"
+  [selected_data]="selected_data"
   [patient_gbv_intake_id]="selected_gbv_case.gbvIntake.id"
   [patient_id]="patient_id"
 ></app-placement>
 
 <app-session *ngIf="modals['session']"
   (toggleModal)="toggleModal($event)"
+  [selected_data]="selected_data"
   [patient_gbv_intake_id]="selected_gbv_case.gbvIntake.id"
   [patient_id]="patient_id"
 ></app-session>
 
 <app-legal-case *ngIf="modals['legal_case']"
   (toggleModal)="toggleModal($event)"
+  [selected_data]="selected_data"
   [patient_gbv_intake_id]="selected_gbv_case.gbvIntake.id"
   [patient_id]="patient_id"
 ></app-legal-case>
 
 <app-case-conference *ngIf="modals['case_conference']"
   (toggleModal)="toggleModal($event)"
+  [selected_data]="selected_data"
   [patient_gbv_intake_id]="selected_gbv_case.gbvIntake.id"
   [patient_id]="patient_id"
 ></app-case-conference>

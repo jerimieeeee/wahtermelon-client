@@ -89,7 +89,7 @@ export class InterviewComponent implements OnInit{
 
     query.subscribe({
       next: (data: any) => {
-        console.log(data);
+        // console.log(data);
         this.toastr.success('Successfully recorded.', 'Interview');
         this.patchData(data.data);
       },
@@ -102,10 +102,10 @@ export class InterviewComponent implements OnInit{
       id: this.selected_gbv_case.id,
       // patient_id: this.selected_gbv_case.patient_id
     }
-    console.log(params)
+    // console.log(params)
     this.http.get('gender-based-violence/patient-gbv', {params}).subscribe({
       next: (data: any) => {
-        console.log(data);
+        // console.log(data);
         this.selected_gbv_case = data.data[0];
         this.updateSelectedGbv.emit(this.selected_gbv_case);
         this.patchData();
@@ -117,7 +117,7 @@ export class InterviewComponent implements OnInit{
 
 
   patchData(data?) {
-    console.log(this.selected_gbv_case.gbvIntake);//interview_perpetrator
+    // console.log(this.selected_gbv_case.gbvIntake);//interview_perpetrator
     if(data) {
       this.interviewForm.patchValue({...data});
     } else {
@@ -219,7 +219,7 @@ export class InterviewComponent implements OnInit{
         break;
       }
       case 'interview_notes': {
-        console.log(act)
+        // console.log(act)
         this.selected_notes = {
           act_title: act,
           data: data
