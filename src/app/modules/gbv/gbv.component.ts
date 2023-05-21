@@ -26,6 +26,13 @@ export class GbvComponent implements OnInit {
   patient_id: string;
 
   selected
+
+  modals: any = [];
+
+  toggleModal(name) {
+    this.modals[name] = !this.modals[name];
+  }
+
   switchPage(page) {
     if(page === 1) this.getGbvHistory();
     this.pages = page;
@@ -45,7 +52,7 @@ export class GbvComponent implements OnInit {
   }
 
   getGbvHistory(){
-    this.fetching_history = false;
+    this.fetching_history = true;
     this.selected_gbv_case = undefined;
 
     // console.log(this.patient_id)
@@ -53,9 +60,12 @@ export class GbvComponent implements OnInit {
       next: (data: any) => {
         this.patient_gbv_history = data.data;
         // console.log(typeof this.patient_gbv_history, this.patient_gbv_history);
-        if(Object.keys(this.patient_gbv_history).length > 0) this.selected_gbv_case = this.patient_gbv_history[0];
-        // console.log(this.patient_gbv_history)
+        if(Object.keys(this.patient_gbv_history).length > 0) {
+          this.selected_gbv_case = !this.patient_gbv_history[0].outcome_date ? this.patient_gbv_history[0] : null;
+        }
+        console.log(this.selected_gbv_case)
 
+        this.fetching_history = false;
         // this.pages = 2;
         // this.module = 5;
       },

@@ -5,14 +5,56 @@
         <div class="bg-sky-500 text-white py-1 px-3 rounded-t-md flex justify-between">
           <spa>Referral</spa>
           <button type="button" (click)="toggleModal('referral')" class="bg-white text-sky-500 px-2 rounded text-xs">
-            <fa-icon [icon]="faEdit"></fa-icon>
+            <fa-icon [icon]="faPlus"></fa-icon>
           </button>
         </div>
-        <div class="min-h-24">
+        <div class="min-h-24" *ngIf="referrals.length === 0">
           <span class="flex italic py-5 justify-center">
             No records to show
           </span>
         </div>
+
+        <table class="m-3" *ngIf="referrals.length>0">
+          <thead>
+            <tr>
+              <td class="w-1/12">
+
+              </td>
+              <td class="text-center font-semibold w-4/12 align-top pt-3">
+                Date
+              </td>
+              <td class="text-center font-semibold w-4/12 align-top pt-3">
+                Referred to
+              </td>
+              <td class="text-center font-semibold w-7/12 align-top pt-3">
+                Services/Reasons
+              </td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="border-t border-slate-200" *ngFor="let ref of selected_gbv_case?.gbvReferral" >
+              <td class="text-center align-top pt-3">
+                <fa-icon [icon]="faEdit" (click)="toggleModal('referral', ref)" class="hover:cursor-pointer text-orange-500"></fa-icon>
+              </td>
+              <td class="text-center align-top pt-3">
+                {{ ref.referral_date | date: 'MM/dd/yyyy' }}
+              </td>
+              <td class="text-center align-top pt-3">
+                {{ ref.referral.facility_name }}
+              </td>
+              <td class="text-center align-top pt-3">
+                Referral reason: <br />
+                {{ ref.referral_reason }}<br /><br />
+
+                Service request: <br />
+                {{ ref.service_remarks }}<br /><br />
+
+                Remarks: <br />
+                {{ ref.referral_remarks }}<br />
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
@@ -20,6 +62,9 @@
 
 <app-referral-modal *ngIf="modals['referral']"
   (toggleModal)="toggleModal($event)"
+  [patient_id]="patient_id"
+  [selected_gbv_case]="selected_gbv_case"
+  [selected_data]="selected_data"
 ></app-referral-modal>
 <!-- <app-medical-consult *ngIf="modals['medical_consult']"
   (toggleModal)="toggleModal($event)"

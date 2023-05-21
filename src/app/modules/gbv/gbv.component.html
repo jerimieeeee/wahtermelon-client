@@ -10,7 +10,7 @@
     </button>
   </nav>
   <div class="ml-auto">
-    <button *ngIf="!selected_gbv_case?.outcome_date" type="button" class="btn-end-visit ml-auto mt-5" (click)="toggleModal('case_outcome')">
+    <button *ngIf="selected_gbv_case && !selected_gbv_case?.outcome_date" type="button" class="btn-end-visit ml-auto mt-5" (click)="toggleModal('case_outcome')">
       <!-- <fa-icon class="mr-1" [icon]="faDoorClosed"></fa-icon> -->
       Case Outcome
     </button>
@@ -105,7 +105,7 @@
         </td>
       </tr>
 
-      <tr class="bg-white border-b" *ngIf="!selected_gbv_case">
+      <tr class="bg-white border-b" *ngIf="!patient_gbv_history">
         <td  colspan="7">
           <div class="text-center py-3 flex flex-col">
             <div class="flex justify-center">No records to show...</div>
@@ -152,7 +152,9 @@
 ></app-intervention>
 
 <app-referral *ngIf="pages === 2 && module === 6"
-
+  (updateSelectedGbv)="updateSelectedGbv($event)"
+  [patient_id]="patient_id"
+  [selected_gbv_case]="selected_gbv_case"
 ></app-referral>
 <!-- <app-casefindings *ngIf="pages === 2 && module === 1"
   [patient_id]="patient_id"
@@ -160,4 +162,9 @@
   [max_date]="max_date"
   (getPatientTbHistory)="getPatientTbHistory()"
 ></app-casefindings> -->
+
+<app-case-outcome *ngIf="modals['case_outcome']"
+  (toggleModal)="toggleModal($event)"
+  [selected_gbv_case]="selected_gbv_case"
+></app-case-outcome>
 

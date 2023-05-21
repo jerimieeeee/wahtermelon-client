@@ -1,1 +1,66 @@
-<p>case-outcome works!</p>
+<div id="defaultModal" tabindex="-1" class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 w-full md:inset-0 h-modal md:h-full justify-center items-center flex" aria-modal="true" role="dialog" style="z-index:60">
+  <div class="relative p-4 w-full max-w-3xl h-auto md:h-auto">
+    <!-- Modal content -->
+    <div class="relative bg-white rounded-lg shadow">
+      <!-- Modal header -->
+      <div class="flex justify-between items-start py-3 px-5 rounded-t border-b bg-sky-500">
+        <h3 class="text-sm font-bold text-white">
+            Case Outcome
+        </h3>
+      </div>
+      <!-- Modal body -->
+      <div class="overflow-y-auto h-96 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
+        <form [formGroup]="caseOutcomeForm" (submit)="onSubmit()" class="text-left text-gray-500 m-5">
+          <div class="grid grid-cols-3 gap-4">
+            <div class="col-span-3">
+              <label for="outcome_date">Outcome Date</label>
+              <input type="date" name="outcome_date" id="outcome_date" formControlName="outcome_date" class="input">
+            </div>
+
+            <div>
+              <label for="outcome_reason_id">Outcome Reason</label>
+              <select name="outcome_reason_id" id="outcome_reason_id" formControlName="outcome_reason_id" class="input">
+                <option *ngFor="let reason of outcome_reasons" [value]="reason.id">{{ reason.desc }}</option>
+              </select>
+            </div>
+
+            <div class="col-span-2">
+              <label for="outcome_reason_remarks">Outcome reason remarks</label>
+              <input type="text" name="outcome_reason_remarks" id="outcome_reason_remarks" formControlName="outcome_reason_remarks" class="input">
+            </div>
+
+            <div>
+              <label for="outcome_result_id">Outcome Result</label>
+              <select name="outcome_result_id" id="outcome_result_id" formControlName="outcome_result_id" class="input">
+                <option *ngFor="let result of outcome_results" [value]="result.id">{{ result.desc }}</option>
+              </select>
+            </div>
+
+            <div class="col-span-2">
+              <label for="outcome_result_remarks">Outcome result remarks</label>
+              <input type="text" name="outcome_result_remarks" id="outcome_result_remarks" formControlName="outcome_result_remarks" class="input">
+            </div>
+
+            <div class="col-span-3">
+              <label for="outcome_verdict_id">Outcome Verdict</label>
+              <select name="outcome_verdict_id" id="outcome_verdict_id" formControlName="outcome_verdict_id" class="input">
+                <option *ngFor="let verdict of outcome_verdicts" [value]="verdict.id">{{ verdict.desc }}</option>
+              </select>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="flex justify-end py-4 px-5 space-x-4 rounded-b border-t border-gray-200">
+        <button type="button" class="btn-save bg-gray-400" (click)="closeModal()">Close</button>
+        <button [disabled]="is_saving || caseOutcomeForm.invalid" type="submit" class="btn-save px-10 disabled:bg-gray-300" (click)="onSubmit()" >
+          <fa-icon [icon]="is_saving ? faCircleNotch : faSave"></fa-icon>
+          {{ is_saving ? 'Saving' : 'Save' }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="opacity-50 fixed inset-0 z-50 bg-black"></div>

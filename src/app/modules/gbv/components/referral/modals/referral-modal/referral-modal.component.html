@@ -10,39 +10,54 @@
       </div>
       <!-- Modal body -->
       <div class="overflow-y-auto h-96 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
-        <form [formGroup]="interviewForm" (submit)="onSubmit()" class="text-left text-gray-500 m-5">
+        <form [formGroup]="referralForm" (submit)="onSubmit()" class="text-left text-gray-500 m-5" *ngIf="show_form">
           <div class="grid grid-cols-4 gap-4">
             <div class="col-span-2">
-              <label for="case_number" [ngClass]="{'text-red-500': show_error && f.case_number.errors}">Date</label>
-              <input type="date" name="case_number" id="case_number" formControlName="case_number" class="input" [ngClass]="{'invalid-input': show_error && f.case_number.errors}">
+              <label for="referral_date" [ngClass]="{'text-red-500': show_error && f.referral_date.errors}">Date</label>
+              <input type="date" name="referral_date" id="referral_date" formControlName="referral_date" class="input" [ngClass]="{'invalid-input': show_error && f.referral_date.errors}">
             </div>
 
             <div class="col-span-2">
-              <label for="case_number" [ngClass]="{'text-red-500': show_error && f.case_number.errors}">Place</label>
-              <select name="enroll_as_code" id="enroll_as_code" formControlName="enroll_as_code" class="input" [ngClass]="{'invalid-input': show_error && f.enroll_as_code.errors}">
-                <option *ngFor="let enroll_as of tb_enroll_as" [value]="enroll_as.code">{{ enroll_as.desc }}</option>
+              <label for="referral_facility_code" [ngClass]="{'text-red-500': show_error && f.referral_facility_code.errors}">Place</label>
+              <select name="referral_facility_code" id="referral_facility_code" formControlName="referral_facility_code" class="input" [ngClass]="{'invalid-input': show_error && f.referral_facility_code.errors}">
+                <option *ngFor="let fac of facilities" [value]="fac.facility.code">{{ fac.last_name }}, {{ fac.first_name }}</option>
               </select>
             </div>
 
             <div class="col-span-4">
-              <label for="case_number" [ngClass]="{'text-red-500': show_error && f.case_number.errors}">Referral reason</label>
-              <textarea type="text" name="case_number" id="case_number" formControlName="case_number" class="input" [ngClass]="{'invalid-input': show_error && f.case_number.errors}">
+              <label for="referral_reason" [ngClass]="{'text-red-500': show_error && f.referral_reason.errors}">Referral reason</label>
+              <textarea type="text" name="referral_reason" id="referral_reason" formControlName="referral_reason" class="input" [ngClass]="{'invalid-input': show_error && f.referral_reason.errors}">
               </textarea>
             </div>
 
             <div class="col-span-4">
-              <label for="case_number" [ngClass]="{'text-red-500': show_error && f.case_number.errors}">Services requested</label>
-              <textarea type="text" name="case_number" id="case_number" formControlName="case_number" class="input" [ngClass]="{'invalid-input': show_error && f.case_number.errors}">
+              <label for="service_remarks" [ngClass]="{'text-red-500': show_error && f.service_remarks.errors}">Services requested</label>
+              <textarea type="text" name="service_remarks" id="service_remarks" formControlName="service_remarks" class="input" [ngClass]="{'invalid-input': show_error && f.service_remarks.errors}">
+              </textarea>
+            </div>
+
+            <div class="col-span-4">
+              <label for="referral_remarks" [ngClass]="{'text-red-500': show_error && f.referral_remarks.errors}">Remarks</label>
+              <textarea type="text" name="referral_remarks" id="referral_remarks" formControlName="referral_remarks" class="input" [ngClass]="{'invalid-input': show_error && f.referral_remarks.errors}">
               </textarea>
             </div>
           </div>
         </form>
+
+        <div class="grid grid-cols-1 mt-20" *ngIf="!show_form">
+          <span class="flex justify-center text-blue-500">
+            <fa-icon [icon]="faCircleNotch" spin="true"></fa-icon>
+          </span>
+          <span class="flex justify-center">
+            Loading...
+          </span>
+        </div>
       </div>
 
       <!-- Modal footer -->
       <div class="flex justify-end py-4 px-5 space-x-4 rounded-b border-t border-gray-200">
         <button type="button" class="btn-save bg-gray-400" (click)="closeModal()">Close</button>
-        <button [disabled]="is_saving || interviewForm.invalid" type="submit" class="btn-save px-10 disabled:bg-gray-300" (click)="onSubmit()" >
+        <button [disabled]="is_saving || referralForm.invalid" type="submit" class="btn-save px-10 disabled:bg-gray-300" (click)="onSubmit()" >
           <fa-icon></fa-icon>
           {{ is_saving ? 'Saving' : 'Save' }}
         </button>
