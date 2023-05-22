@@ -66,8 +66,8 @@ export class GbvComponent implements OnInit {
         console.log(this.selected_gbv_case)
 
         this.fetching_history = false;
-        // this.pages = 2;
-        // this.module = 5;
+        this.pages = 2;
+        this.module = 5;
       },
       error: err => console.log(err)
     })

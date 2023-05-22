@@ -30,13 +30,13 @@
             <fa-icon [icon]="faPlus"></fa-icon>
           </button>
         </div>
-        <div class="min-h-24" *ngIf="!selected_gbv_case?.gbvIntake.intervention_social_work">
+        <div class="min-h-24" *ngIf="selected_gbv_case?.gbvIntake.intervention_social_work.length===0">
           <span class="flex italic py-5 justify-center">
             No records to show
           </span>
         </div>
 
-        <table class="m-3" *ngIf="selected_gbv_case?.gbvIntake.intervention_social_work">
+        <table class="m-3" *ngIf="selected_gbv_case?.gbvIntake.intervention_social_work.length>0">
           <thead>
             <tr>
               <td class="w-1/12">
@@ -73,13 +73,13 @@
             <fa-icon [icon]="faPlus"></fa-icon>
           </button>
         </div>
-        <div class="min-h-24" *ngIf="!selected_gbv_case?.gbvIntake.intervention_placement">
+        <div class="min-h-24" *ngIf="selected_gbv_case?.gbvIntake.intervention_placement.length===0">
           <span class="flex italic py-5 justify-center">
             No records to show
           </span>
         </div>
 
-        <table class="m-3" *ngIf="selected_gbv_case?.gbvIntake.intervention_placement">
+        <table class="m-3" *ngIf="selected_gbv_case?.gbvIntake.intervention_placement.length>0">
           <thead>
             <tr>
               <td class="w-1/12">
@@ -258,11 +258,84 @@
             <fa-icon [icon]="faPlus"></fa-icon>
           </button>
         </div>
-        <div class="min-h-24">
+        <div class="min-h-24" *ngIf="selected_gbv_case?.gbvIntake.case_conference.length===0">
           <span class="flex italic py-5 justify-center">
             No records to show
           </span>
         </div>
+
+        <table class="m-3" *ngIf="selected_gbv_case?.gbvIntake.case_conference.length>0">
+          <thead>
+            <tr>
+              <td class="w-1/12">
+
+              </td>
+              <td class="text-center font-semibold w-3/12 align-top pt-3">
+                Date
+              </td>
+              <td class="text-center font-semibold w-4/12 align-top pt-3">
+                Invitees & Concerns
+              </td>
+              <td class="text-center font-semibold w-4/12 align-top pt-3">
+                Mitigating factors & Recommendations
+              </td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="border-t border-slate-200" *ngFor="let conference of selected_gbv_case?.gbvIntake.case_conference" >
+              <td class="text-center align-top pt-3">
+                <fa-icon [icon]="faEdit" (click)="toggleModal('case_conference', conference)" class="hover:cursor-pointer text-orange-500"></fa-icon>
+              </td>
+              <td class="text-center align-top pt-3">
+                {{ conference.conference_date | date: 'MM/dd/yyyy'}}
+              </td>
+              <td class="text-left align-top pt-3">
+                <div class="mb-5">
+                  <span class="italic font-semibold">Invitees</span><br />
+                  <span *ngIf="conference.invite.length===0">
+                    - <br />
+                  </span>
+                  <span *ngFor="let invite of conference.invite">
+                    - {{ invite.invite.desc }} <br />
+                  </span>
+                  Remarks: {{ conference.conference_invitee_remarks ?? '-' }}
+                </div>
+                <div class="mb-5">
+                  <span class="italic font-semibold">Concerns</span><br />
+                  <span *ngIf="conference.concern.length===0">
+                    - <br />
+                  </span>
+                  <span *ngFor="let concern of conference.concern">
+                    - {{ concern.concern.desc }} <br />
+                  </span>
+                  Remarks: {{ conference.conference_concern_remarks ?? '-' }}
+                </div>
+              </td>
+              <td class="text-left align-top pt-3">
+                <div class="mb-5">
+                  <span class="italic font-semibold">Mitigating factors</span><br />
+                  <span *ngIf="conference.mitigating_factor.length===0">
+                    - <br />
+                  </span>
+                  <span *ngFor="let mitigating_factor of conference.mitigating_factor">
+                    - {{ mitigating_factor.mitigating_factor.desc }} <br />
+                  </span>
+                  Remarks: {{ conference.conference_mitigating_factor_remarks ?? '-' }}
+                </div>
+                <div class="mb-5">
+                  <span class="italic font-semibold">Recommendations</span><br />
+                  <span *ngIf="conference.recommendation.length===0">
+                    - <br />
+                  </span>
+                  <span *ngFor="let recommendation of conference.recommendation">
+                    - {{ recommendation.recommendation.desc }} <br />
+                  </span>
+                  Remarks: {{ conference.conference_recommendation_remarks ?? '-' }}
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>

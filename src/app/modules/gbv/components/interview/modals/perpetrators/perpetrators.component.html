@@ -55,7 +55,7 @@
               </div>
 
               <div>
-                <label for="relation_to_child_id" [ngClass]="{'text-red-500': show_error && f.relation_to_child_id.errors}">Realtion to child</label>
+                <label for="relation_to_child_id" [ngClass]="{'text-red-500': show_error && f.relation_to_child_id.errors}">Relation to child</label>
                 <select name="relation_to_child_id" id="relation_to_child_id" formControlName="relation_to_child_id" class="input" [ngClass]="{'invalid-input': show_error && f.relation_to_child_id.errors}">
                   <option *ngFor="let relation of child_relations" [value]="relation.id">{{ relation.desc }}</option>
                 </select>
