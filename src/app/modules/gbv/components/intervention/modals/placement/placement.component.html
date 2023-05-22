@@ -88,6 +88,15 @@
             <!-- IF HOSPITAL PLACEMENT -->
           </div>
         </form>
+
+        <div class="grid grid-cols-1 mt-20" *ngIf="!show_form">
+          <span class="flex justify-center text-sky-500">
+            <fa-icon [icon]="faCircleNotch" spin="true"></fa-icon>
+          </span>
+          <span class="flex justify-center">
+            Loading
+          </span>
+        </div>
       </div>
 
       <!-- Modal footer -->

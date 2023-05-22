@@ -54,24 +54,24 @@
                 <span class="font-semibold italic">Physician </span> <br />
                 {{ consult_visit.physician }} <br /><br />
 
-                <span class="font-semibold italic">Scheduled date </span> <br />
-                {{ consult_visit.scheduled_date | date: 'MM/dd/yyyy'}} <br /><br />
+                <span class="font-semibold italic">Scheduled date: </span>
+                {{ consult_visit.scheduled_date | date: 'MM/dd/yyyy'}} <br />
 
-                <span class="font-semibold italic">Actual date </span> <br />
-                {{ consult_visit.actual_date | date: 'MM/dd/yyyy'}} <br /><br />
+                <span class="font-semibold italic">Actual date: </span>
+                {{ consult_visit.actual_date | date: 'MM/dd/yyyy'}} <br />
               </td>
               <td class="text-left align-top pt-3">
                 <span class="font-semibold italic">Lab test </span> <br />
                 {{ consult_visit.lab_test ?? '-' }} <br /><br />
 
-                <span class="font-semibold italic">Date in </span> <br />
-                {{ consult_visit.date_in | date: 'MM/dd/yyyy' ?? '-' }} <br /><br />
+                <span class="font-semibold italic">Date in: </span>
+                {{ consult_visit.date_in | date: 'MM/dd/yyyy' ?? '-' }} <br />
 
-                <span class="font-semibold italic">Date due </span> <br />
-                {{ consult_visit.date_due | date: 'MM/dd/yyyy' ?? '-' }} <br /><br />
+                <span class="font-semibold italic">Date due: </span>
+                {{ consult_visit.date_due | date: 'MM/dd/yyyy' ?? '-' }} <br />
 
-                <span class="font-semibold italic">Date out </span> <br />
-                {{ consult_visit.date_out | date: 'MM/dd/yyyy' ?? '-' }} <br /><br />
+                <span class="font-semibold italic">Date out: </span>
+                {{ consult_visit.date_out | date: 'MM/dd/yyyy' ?? '-' }} <br />
               </td>
             </tr>
           </tbody>
@@ -309,7 +309,7 @@
 
     <div class="mt-1 grid grid-cols-4 gap-x-4 w-full">
       <div class="col-span-4 border-b border-slate-200 w-full my-2 pt-3 font-semibold text-sky-500">
-        Multidisiplinary Case Conferences
+        Multidisciplinary Case Conferences
       </div>
       <div class="col-span-4 grid grid-cols-1 border-slate-200 shadow-md rounded-md mx-5 mb-5">
         <div class="bg-sky-500 text-white py-1 px-3 rounded-t-md flex justify-between">
