@@ -25,6 +25,7 @@ import { ReferralModalComponent } from './components/referral/modals/referral-mo
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { TriageComponent } from './components/triage/triage.component';
 import { CaseOutcomeComponent } from './modals/case-outcome/case-outcome.component';
+import { MedicalConsultCertificateComponent } from './components/intervention/modals/medical-consult-certificate/medical-consult-certificate.component';
 
 
 @NgModule({
@@ -48,7 +49,8 @@ import { CaseOutcomeComponent } from './modals/case-outcome/case-outcome.compone
     CaseConferenceComponent,
     ReferralModalComponent,
     TriageComponent,
-    CaseOutcomeComponent
+    CaseOutcomeComponent,
+    MedicalConsultCertificateComponent
   ],
   imports: [
     CommonModule,

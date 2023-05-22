@@ -63,7 +63,7 @@ export class GbvComponent implements OnInit {
         if(Object.keys(this.patient_gbv_history).length > 0) {
           this.selected_gbv_case = !this.patient_gbv_history[0].outcome_date ? this.patient_gbv_history[0] : null;
         }
-        console.log(this.selected_gbv_case)
+        // console.log(this.selected_gbv_case)
 
         this.fetching_history = false;
         this.pages = 2;
