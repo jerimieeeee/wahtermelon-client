@@ -181,8 +181,8 @@
               </div>
 
               <div class="col-span-2">
-                <label for="guardian_contact_info" [ngClass]="{'text-red-500': show_error && f.guardian_contact_info.errors}">Contact No.</label>
-                <input type="text" name="guardian_contact_info" id="guardian_contact_info" formControlName="guardian_contact_info" class="input" [ngClass]="{'invalid-input': show_error && f.guardian_contact_info.errors}">
+                <label for="guardian_contact_info" [ngClass]="{'text-red-500': show_error && f.guardian_contact_info.errors}">Contact No. (0912) 354-6789</label>
+                <input type="text" mask="(9999) 999-9999" [showMaskTyped]="true" name="guardian_contact_info" id="guardian_contact_info" formControlName="guardian_contact_info" class="input" [ngClass]="{'invalid-input': show_error && f.guardian_contact_info.errors}">
 
                 <div *ngIf="show_error && f.guardian_contact_info.errors" class="invalid-alert">
                   <div *ngIf="f.guardian_contact_info.errors?.['required']">

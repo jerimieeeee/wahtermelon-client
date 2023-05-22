@@ -26,6 +26,9 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { TriageComponent } from './components/triage/triage.component';
 import { CaseOutcomeComponent } from './modals/case-outcome/case-outcome.component';
 import { MedicalConsultCertificateComponent } from './components/intervention/modals/medical-consult-certificate/medical-consult-certificate.component';
+import { IConfig, NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
+
+export const options: Partial<null|IConfig> | (() => Partial<IConfig>) = null;
 
 
 @NgModule({
@@ -57,7 +60,12 @@ import { MedicalConsultCertificateComponent } from './components/intervention/mo
     GbvRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    NgxMaskDirective,
+    NgxMaskPipe
+  ],
+  providers: [
+    provideNgxMask()
   ]
 })
 export class GbvModule { }
