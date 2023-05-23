@@ -15,6 +15,7 @@ export class IntakeComponent implements OnInit{
   @Output() updateSelectedGbv = new EventEmitter<any>();
   @Input() patient_id;
   @Input() selected_gbv_case;
+  @Input() pos;
 
   faPlus = faPlus;
   faSave = faSave;
@@ -84,6 +85,24 @@ export class IntakeComponent implements OnInit{
   }
 
   loadSelectedConsult(){
+    this.intakeForm.controls.case_number.disable();
+    if(this.pos !== 'WCPD') {
+      this.f.vaw_physical_flag.disable();
+      this.f.vaw_sexual_flag.disable();
+      this.f.vaw_psychological_flag.disable();
+      this.f.rape_sex_intercourse_flag.disable();
+      this.f.rape_sex_assault_flag.disable();
+      this.f.rape_incest_flag.disable();
+      this.f.rape_statutory_flag.disable();
+      this.f.rape_marital_flag.disable();
+      this.f.harassment_verbal_flag.disable();
+      this.f.harassment_physical_flag.disable();
+      this.f.harassment_object_flag.disable();
+      this.f.child_abuse_engaged_flag.disable();
+      this.f.child_abuse_sexual_flag.disable();
+      this.f.wcpd_others.disable();
+    }
+
     if(this.selected_gbv_case.gbvIntake) {
       console.log(this.selected_gbv_case.gbvIntake);
       this.intakeForm.patchValue({...this.selected_gbv_case.gbvIntake});
@@ -97,7 +116,6 @@ export class IntakeComponent implements OnInit{
       })
     }
 
-    this.intakeForm.controls.case_number.disable();
     console.log(this.intakeForm.value);
   }
 

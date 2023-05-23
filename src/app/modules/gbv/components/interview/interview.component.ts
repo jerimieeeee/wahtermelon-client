@@ -17,6 +17,7 @@ export class InterviewComponent implements OnInit{
   @Output() updateSelectedGbv = new EventEmitter<any>();
   @Input() selected_gbv_case;
   @Input() patient_id;
+  @Input() pos;
 
   interviewForm:FormGroup=interviewForm();
 

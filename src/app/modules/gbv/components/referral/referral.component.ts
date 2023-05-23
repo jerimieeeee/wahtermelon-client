@@ -14,6 +14,7 @@ export class ReferralComponent implements OnInit {
   @Output() updateSelectedGbv = new EventEmitter<any>();
   @Input() patient_id;
   @Input() selected_gbv_case;
+  @Input() pos;
 
   faPlus = faPlus;
   faEdit = faEdit;

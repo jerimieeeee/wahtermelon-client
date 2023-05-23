@@ -15,6 +15,7 @@ export class TriageComponent implements OnInit{
   @Output() getGbvHistory = new EventEmitter<any>();
   @Input() selected_gbv_case;
   @Input() patient_id;
+  @Input() pos;
   // @Input() max_date;
   // @Input() gbv_complaints;
   faSave = faSave;

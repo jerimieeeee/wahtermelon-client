@@ -73,16 +73,19 @@ export class GbvComponent implements OnInit {
     })
   }
 
-
+  arr_allowed = ['MD','WCPD','MSWDO']
   constructor (
     private http: HttpService,
     private toastr: ToastrService,
     private route: ActivatedRoute
   ) { }
 
+  pos: string;
   ngOnInit(): void {
     this.patient_id = this.route.snapshot.paramMap.get('id');
     this.user_facility = this.http.getUserFacility();
+    this.pos = this.http.getUserFromJSON().designation.code;
+    console.log(this.pos)
     this.getGbvHistory();
   }
 }

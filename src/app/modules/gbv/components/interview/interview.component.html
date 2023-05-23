@@ -525,7 +525,10 @@
         <div *ngIf="selected_gbv_case?.gbvIntake.interview_perpetrator" class="col-span-4 grid grid-cols-1 border-slate-200 shadow-md rounded-md mx-5 mb-5">
           <div class="bg-sky-500 text-white py-1 px-3 rounded-t-md flex justify-between">
             <spa>Social Worker Notes</spa>
-            <button type="button" (click)="toggleModal('interview_notes', 'SW')" class="bg-white text-sky-500 px-2 rounded text-xs">
+            <span class="text-xs italic pt-1" *ngIf="pos!=='MSWDO'">
+              MSWDO Only
+            </span>
+            <button type="button" *ngIf="pos==='MSWDO'" (click)="toggleModal('interview_notes', 'SW')" class="bg-white text-sky-500 px-2 rounded text-xs">
               <fa-icon [icon]="faPlus"></fa-icon>
             </button>
           </div>
@@ -558,7 +561,7 @@
             <tbody>
               <tr class="border-t border-slate-200" *ngFor="let interview of interview_social_notes" >
                 <td class="text-center align-top pt-3">
-                  <fa-icon [icon]="faEdit" (click)="toggleModal('interview_notes', 'Interview', '', '', interview)" class="hover:cursor-pointer text-orange-500"></fa-icon>
+                  <fa-icon [icon]="faEdit" *ngIf="pos==='MSWDO'" (click)="toggleModal('interview_notes', 'Interview', '', '', interview)" class="hover:cursor-pointer text-orange-500"></fa-icon>
                 </td>
                 <td class="text-center align-top pt-3">
                   {{ interview.perpetrator.perpetrator_name ?? '-'}}

@@ -6,7 +6,7 @@
       </div>
       <!-- <div class="col-span-4 grid grid-cols-1 border-slate-200 shadow-md rounded-md mx-5 mb-5">
         <div class="bg-sky-500 text-white py-1 px-3 rounded-t-md flex justify-between">
-          <spa>Medical Certificate</spa>
+          <span>Medical Certificate</span>
           <button type="button" (click)="toggleModal('medical_consult')" class="bg-white text-sky-500 px-2 rounded text-xs">
             <fa-icon [icon]="faPlus"></fa-icon>
           </button>
@@ -20,8 +20,11 @@
 
       <div class="col-span-4 grid grid-cols-1 border-slate-200 shadow-md rounded-md mx-5 mb-5">
         <div class="bg-sky-500 text-white py-1 px-3 rounded-t-md flex justify-between">
-          <spa>Visits</spa>
-          <button type="button" (click)="toggleModal('medical_consult')" class="bg-white text-sky-500 px-2 rounded text-xs">
+          <span>Visits</span>
+          <span class="text-xs italic pt-1" *ngIf="pos!=='MD'">
+            Doctor Only
+          </span>
+          <button type="button" *ngIf="pos==='MD'" (click)="toggleModal('medical_consult')" class="bg-white text-sky-500 px-2 rounded text-xs">
             <fa-icon [icon]="faPlus"></fa-icon>
           </button>
         </div>
@@ -34,7 +37,7 @@
         <table class="m-3" *ngIf="selected_gbv_case?.gbvIntake.consult_visit.length>0">
           <thead>
             <tr>
-              <td class="w-1/12">
+              <td *ngIf="pos==='MD'" class="w-1/12">
 
               </td>
               <td class="text-center font-semibold w-6/12 align-top pt-3">
@@ -47,7 +50,7 @@
           </thead>
           <tbody>
             <tr class="border-t border-slate-200" *ngFor="let consult_visit of selected_gbv_case?.gbvIntake.consult_visit" >
-              <td class="text-center align-top pt-3">
+              <td *ngIf="pos==='MD'" class="text-center align-top pt-3">
                 <fa-icon [icon]="faEdit" (click)="toggleModal('medical_consult', consult_visit)" class="hover:cursor-pointer text-orange-500"></fa-icon>
               </td>
               <td class="text-left align-top pt-3">
@@ -85,8 +88,11 @@
       </div>
       <div class="col-span-4 grid grid-cols-1 border-slate-200 shadow-md rounded-md mx-5 mb-5">
         <div class="bg-sky-500 text-white py-1 px-3 rounded-t-md flex justify-between">
-          <spa>Home Visits</spa>
-          <button type="button" (click)="toggleModal('home_visit')" class="bg-white text-sky-500 px-2 rounded text-xs">
+          <span>Home Visits</span>
+          <span class="text-xs italic pt-1" *ngIf="pos!=='MSWDO'">
+            MSWDO Only
+          </span>
+          <button type="button" *ngIf="pos==='MSWDO'" (click)="toggleModal('home_visit')" class="bg-white text-sky-500 px-2 rounded text-xs">
             <fa-icon [icon]="faPlus"></fa-icon>
           </button>
         </div>
@@ -99,7 +105,7 @@
         <table class="m-3" *ngIf="selected_gbv_case?.gbvIntake.intervention_social_work.length>0">
           <thead>
             <tr>
-              <td class="w-1/12">
+              <td *ngIf="pos==='MSWDO'" class="w-1/12">
 
               </td>
               <td class="text-center font-semibold w-4/12 align-top pt-3">
@@ -112,7 +118,7 @@
           </thead>
           <tbody>
             <tr class="border-t border-slate-200" *ngFor="let social_work of selected_gbv_case?.gbvIntake.intervention_social_work" >
-              <td class="text-center align-top pt-3">
+              <td *ngIf="pos==='MSWDO'" class="text-center align-top pt-3">
                 <fa-icon [icon]="faEdit" (click)="toggleModal('home_visit', social_work)" class="hover:cursor-pointer text-orange-500"></fa-icon>
               </td>
               <td class="text-center align-top pt-3">
@@ -128,8 +134,11 @@
 
       <div class="col-span-4 grid grid-cols-1 border-slate-200 shadow-md rounded-md mx-5 mb-5">
         <div class="bg-sky-500 text-white py-1 px-3 rounded-t-md flex justify-between">
-          <spa>Placements</spa>
-          <button type="button" (click)="toggleModal('placement')" class="bg-white text-sky-500 px-2 rounded text-xs">
+          <span>Placements</span>
+          <span class="text-xs italic pt-1" *ngIf="pos!=='MSWDO'">
+            MSWDO Only
+          </span>
+          <button type="button" *ngIf="pos==='MSWDO'" (click)="toggleModal('placement')" class="bg-white text-sky-500 px-2 rounded text-xs">
             <fa-icon [icon]="faPlus"></fa-icon>
           </button>
         </div>
@@ -142,7 +151,7 @@
         <table class="m-3" *ngIf="selected_gbv_case?.gbvIntake.intervention_placement.length>0">
           <thead>
             <tr>
-              <td class="w-1/12">
+              <td *ngIf="pos==='MSWDO'" class="w-1/12">
 
               </td>
               <td class="text-center font-semibold w-4/12 align-top pt-3">
@@ -158,7 +167,7 @@
           </thead>
           <tbody>
             <tr class="border-t border-slate-200" *ngFor="let placement of selected_gbv_case?.gbvIntake.intervention_placement" >
-              <td class="text-center align-top pt-3">
+              <td *ngIf="pos==='MSWDO'" class="text-center align-top pt-3">
                 <fa-icon [icon]="faEdit" (click)="toggleModal('placement', placement)" class="hover:cursor-pointer text-orange-500"></fa-icon>
               </td>
               <td class="text-center align-top pt-3">
@@ -183,8 +192,11 @@
       </div>
       <div class="col-span-4 grid grid-cols-1 border-slate-200 shadow-md rounded-md mx-5 mb-5">
         <div class="bg-sky-500 text-white py-1 px-3 rounded-t-md flex justify-between">
-          <spa>Sessions</spa>
-          <button type="button" (click)="toggleModal('session')" class="bg-white text-sky-500 px-2 rounded text-xs">
+          <span>Sessions</span>
+          <span class="text-xs italic pt-1" *ngIf="pos!=='MD'">
+            Doctors Only
+          </span>
+          <button type="button" *ngIf="pos==='MD'" (click)="toggleModal('session')" class="bg-white text-sky-500 px-2 rounded text-xs">
             <fa-icon [icon]="faPlus"></fa-icon>
           </button>
         </div>
@@ -197,7 +209,7 @@
         <table class="m-3" *ngIf="selected_gbv_case?.gbvIntake.intervention_psych.length>0">
           <thead>
             <tr>
-              <td class="w-1/12">
+              <td *ngIf="pos==='MD'" class="w-1/12">
 
               </td>
               <td class="text-center font-semibold w-4/12 align-top pt-3">
@@ -214,7 +226,7 @@
           </thead>
           <tbody>
             <tr class="border-t border-slate-200" *ngFor="let psych of selected_gbv_case?.gbvIntake.intervention_psych" >
-              <td class="text-center align-top pt-3">
+              <td *ngIf="pos==='MD'" class="text-center align-top pt-3">
                 <fa-icon [icon]="faEdit" (click)="toggleModal('session', psych)" class="hover:cursor-pointer text-orange-500"></fa-icon>
               </td>
               <td class="text-center align-top pt-3">
@@ -239,10 +251,15 @@
       </div>
       <div class="col-span-4 grid grid-cols-1 border-slate-200 shadow-md rounded-md mx-5 mb-5">
         <div class="bg-sky-500 text-white py-1 px-3 rounded-t-md flex justify-between">
-          <spa>Case Details</spa>
-          <button type="button" *ngIf="!selected_gbv_case?.gbvIntake.intervention_legal" (click)="toggleModal('legal_case')" class="bg-white text-sky-500 px-2 rounded text-xs">
-            <fa-icon [icon]="faEdit"></fa-icon>
-          </button>
+          <span>Case Details</span>
+          <span class="text-xs italic pt-1" *ngIf="pos!=='WCPD'">
+            WCPD Only
+          </span>
+          <div *ngIf="pos==='WCPD'">
+            <button type="button" *ngIf="!selected_gbv_case?.gbvIntake.intervention_legal" (click)="toggleModal('legal_case')" class="bg-white text-sky-500 px-2 rounded text-xs">
+              <fa-icon [icon]="faEdit"></fa-icon>
+            </button>
+          </div>
         </div>
         <div class="min-h-24" *ngIf="!selected_gbv_case?.gbvIntake.intervention_legal">
           <span class="flex italic py-5 justify-center">
@@ -253,7 +270,7 @@
         <table class="m-3" *ngIf="selected_gbv_case?.gbvIntake.intervention_legal">
           <thead>
             <tr>
-              <td class="w-1/12">
+              <td *ngIf="pos==='WCPD'" class="w-1/12">
 
               </td>
               <td class="text-center font-semibold w-4/12 align-top pt-3">
@@ -269,7 +286,7 @@
           </thead>
           <tbody>
             <tr class="border-t border-slate-200">
-              <td class="text-center">
+              <td *ngIf="pos==='WCPD'" class="text-center">
                 <fa-icon [icon]="faEdit" (click)="toggleModal('legal_case', selected_gbv_case?.gbvIntake.intervention_legal)" class="hover:cursor-pointer text-orange-500"></fa-icon>
               </td>
               <td class="text-center align-top pt-3">
@@ -313,7 +330,7 @@
       </div>
       <div class="col-span-4 grid grid-cols-1 border-slate-200 shadow-md rounded-md mx-5 mb-5">
         <div class="bg-sky-500 text-white py-1 px-3 rounded-t-md flex justify-between">
-          <spa>Case Conference</spa>
+          <span>Case Conference</span>
           <button type="button" (click)="toggleModal('case_conference')" class="bg-white text-sky-500 px-2 rounded text-xs">
             <fa-icon [icon]="faPlus"></fa-icon>
           </button>

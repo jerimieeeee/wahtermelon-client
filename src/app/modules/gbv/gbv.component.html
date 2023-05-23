@@ -4,7 +4,7 @@
       [class]="pages===1? 'tabs-main-true rounded-t-md' : 'tabs-main-false' ">
       ARCHIVE
     </button>
-    <button (click)="switchPage(2)" class="tabs-main w-36"
+    <button (click)="switchPage(2)" *ngIf="arr_allowed.indexOf(pos) > -1" class="tabs-main w-36"
       [class]="pages===2? 'tabs-main-true rounded-t-md' : 'tabs-main-false' ">
       DETAILS
     </button>
@@ -131,30 +131,35 @@
   (getGbvHistory)="getGbvHistory()"
   [patient_id]="patient_id"
   [selected_gbv_case]="selected_gbv_case"
+  [pos]="pos"
 ></app-triage>
 
 <app-intake *ngIf="pages === 2 && module === 2"
   (updateSelectedGbv)="updateSelectedGbv($event)"
   [patient_id]="patient_id"
   [selected_gbv_case]="selected_gbv_case"
+  [pos]="pos"
 ></app-intake>
 
 <app-interview *ngIf="pages === 2 && module === 3"
   (updateSelectedGbv)="updateSelectedGbv($event)"
   [patient_id]="patient_id"
   [selected_gbv_case]="selected_gbv_case"
+  [pos]="pos"
 ></app-interview>
 
 <app-intervention *ngIf="pages === 2 && module === 5"
   (updateSelectedGbv)="updateSelectedGbv($event)"
   [patient_id]="patient_id"
   [selected_gbv_case]="selected_gbv_case"
+  [pos]="pos"
 ></app-intervention>
 
 <app-referral *ngIf="pages === 2 && module === 6"
   (updateSelectedGbv)="updateSelectedGbv($event)"
   [patient_id]="patient_id"
   [selected_gbv_case]="selected_gbv_case"
+  [pos]="pos"
 ></app-referral>
 <!-- <app-casefindings *ngIf="pages === 2 && module === 1"
   [patient_id]="patient_id"
@@ -166,5 +171,6 @@
 <app-case-outcome *ngIf="modals['case_outcome']"
   (toggleModal)="toggleModal($event)"
   [selected_gbv_case]="selected_gbv_case"
+  [pos]="pos"
 ></app-case-outcome>
 

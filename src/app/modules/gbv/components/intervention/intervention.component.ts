@@ -14,6 +14,7 @@ export class InterventionComponent implements OnInit {
   @Output() updateSelectedGbv = new EventEmitter<any>();
   @Input() selected_gbv_case;
   @Input() patient_id;
+  @Input() pos;
 
   faPlus = faPlus;
   faEdit = faEdit;

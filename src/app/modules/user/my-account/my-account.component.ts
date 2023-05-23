@@ -17,6 +17,7 @@ export class MyAccountComponent implements OnInit {
   is_saving: boolean = false;
   loading: boolean = false;
   showPrivacyStatement: boolean = false;
+  show_form: boolean = false;
 
   faSpinner = faSpinner;
   faArrowLeft = faArrowLeft;
@@ -75,7 +76,7 @@ export class MyAccountComponent implements OnInit {
     if(!this.userForm.invalid){
       this.http.update('users/', user_id, this.userForm.value).subscribe({
         next: (data:any) => {
-          this.loadUser();
+          console.log(data);
           this.loading = false;
           this.is_saving = false;
           this.showModal = true;
@@ -103,7 +104,8 @@ export class MyAccountComponent implements OnInit {
     this.showModal = !this.showModal;
     this.userForm.disable();
     this.userForm.markAsPristine();
-    window.location.reload();
+    this.createForm();
+    // window.location.reload();
     // this.router.navigate(['/home']);
   }
 
@@ -179,6 +181,28 @@ export class MyAccountComponent implements OnInit {
     }
   }
 
+  createForm(){
+    this.userForm = this.formBuilder.nonNullable.group({
+      last_name: ['', [Validators.required, Validators.minLength(2)]],
+      first_name: ['', [Validators.required, Validators.minLength(2)]],
+      middle_name: ['', [Validators.required, Validators.minLength(1)]],
+      suffix_name: ['NA'],
+      birthdate: ['', Validators.required],
+      gender: ['', Validators.required],
+      contact_number: ['', Validators.required],
+      photo_url: [''],
+      facility_code: [''],
+      region: ['', Validators.required],
+      province: ['', Validators.required],
+      municipality: ['', Validators.required],
+      designation_code: ['', Validators.required],
+      employer_code: ['', Validators.required],
+    });
+    this.userForm.disable();
+
+    this.loadUser();
+  }
+
   loadUser(){
     let user_id = this.http.getUserID();
     this.http.get('users/'+user_id).subscribe({
@@ -201,7 +225,6 @@ export class MyAccountComponent implements OnInit {
         this.orig_value['facility_code'] = this.orig_value.facility?.code;
 
         this.http.saveUserToLocalStorage(this.orig_value);
-        this.userForm.disable();
       },
       error: err => console.log(err)
     })
@@ -209,24 +232,7 @@ export class MyAccountComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadLibraries();
-    this.userForm = this.formBuilder.nonNullable.group({
-      last_name: ['', [Validators.required, Validators.minLength(2)]],
-      first_name: ['', [Validators.required, Validators.minLength(2)]],
-      middle_name: ['', [Validators.required, Validators.minLength(1)]],
-      suffix_name: ['NA'],
-      birthdate: ['', Validators.required],
-      gender: ['', Validators.required],
-      contact_number: ['', Validators.required],
-      photo_url: [''],
-      facility_code: [''],
-      region: ['', Validators.required],
-      province: ['', Validators.required],
-      municipality: ['', Validators.required],
-      designation_code: ['', Validators.required],
-      employer_code: ['', Validators.required],
-    });
-
-    this.loadUser();
+    this.createForm();
     this.date = new Date().toISOString().slice(0,10);
   }
 }
