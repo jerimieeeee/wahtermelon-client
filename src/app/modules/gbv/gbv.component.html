@@ -60,11 +60,14 @@
     There is an ongoing TB treatment for this patient on another facility.
     You are not allowed to create a new treatment or view previous treatment from other facilities.
   </div> -->
-  <div class="flex flex-col" *ngIf="fetching_history">
-    <div class="w-full flex justify-center"><fa-icon [icon]="faCircleNotch" spin="true" class="pt-10"></fa-icon></div>
-    <div class="w-full flex justify-center pb-10 font-semibold">Fetching history...</div>
+  <div class="flex justify-center my-24 italic" *ngIf="arr_allowed.indexOf(pos) < 0">
+    You are not allowed to access this module.
   </div>
-  <table class="w-full text-sm text-left" *ngIf="!fetching_history">
+  <div class="flex flex-col" *ngIf="fetching_history && arr_allowed.indexOf(pos) > -1">
+    <div class="w-full flex justify-center"><fa-icon [icon]="faCircleNotch" spin="true" class="pt-10"></fa-icon></div>
+    <div class="w-full flex justify-center pb-10 font-semi                             bold">Fetching history...</div>
+  </div>
+  <table class="w-full text-sm text-left" *ngIf="!fetching_history && arr_allowed.indexOf(pos) > -1">
     <thead class="text-xs text-white uppercase bg-blue-500">
       <tr>
         <th scope="col" class="py-3 px-6">Case No.</th>
