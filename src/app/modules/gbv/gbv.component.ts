@@ -85,7 +85,7 @@ export class GbvComponent implements OnInit {
     this.patient_id = this.route.snapshot.paramMap.get('id');
     this.user_facility = this.http.getUserFacility();
     this.pos = this.http.getUserFromJSON().designation_code ? this.http.getUserFromJSON().designation_code : this.http.getUserFromJSON().designation.code;
-    console.log(this.pos)
+    console.log(this.pos, this.http.getUserFromJSON())
     if(this.arr_allowed.indexOf(this.pos) > -1) this.getGbvHistory();
 
   }

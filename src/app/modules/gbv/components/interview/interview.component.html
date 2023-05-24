@@ -185,13 +185,13 @@
               <fa-icon [icon]="faEdit"></fa-icon>
             </button>
           </div>
-          <div class="min-h-24" *ngIf="sexual_abuses.length===0">
+          <div class="min-h-24" *ngIf="!sexual_abuses">
             <span class="flex italic py-5 justify-center">
               No records to show
             </span>
           </div>
 
-          <table class="m-3" *ngIf="sexual_abuses.length>0">
+          <table class="m-3" *ngIf="sexual_abuses">
             <thead>
               <tr>
                 <td class="text-center font-semibold">Name</td>
@@ -224,13 +224,13 @@
               <fa-icon [icon]="faEdit"></fa-icon>
             </button>
           </div>
-          <div class="min-h-24" *ngIf="physical_abuses.length===0">
+          <div class="min-h-24" *ngIf="!physical_abuses">
             <span class="flex italic py-5 justify-center">
               No records to show
             </span>
           </div>
 
-          <table class="m-3" *ngIf="physical_abuses.length>0">
+          <table class="m-3" *ngIf="physical_abuses">
             <thead>
               <tr>
                 <td class="text-center font-semibold">Name</td>
@@ -263,13 +263,13 @@
               <fa-icon [icon]="faEdit"></fa-icon>
             </button>
           </div>
-          <div class="min-h-24" *ngIf="neglect_abuses.length===0">
+          <div class="min-h-24" *ngIf="!neglect_abuses">
             <span class="flex italic py-5 justify-center">
               No records to show
             </span>
           </div>
 
-          <table class="m-3" *ngIf="neglect_abuses.length>0">
+          <table class="m-3" *ngIf="neglect_abuses">
             <thead>
               <tr>
                 <td class="text-center font-semibold">Name</td>
@@ -302,13 +302,13 @@
               <fa-icon [icon]="faEdit"></fa-icon>
             </button>
           </div>
-          <div class="min-h-24" *ngIf="emotional_abuses.length===0">
+          <div class="min-h-24" *ngIf="!emotional_abuses">
             <span class="flex italic py-5 justify-center">
               No records to show
             </span>
           </div>
 
-          <table class="m-3" *ngIf="emotional_abuses.length>0">
+          <table class="m-3" *ngIf="emotional_abuses">
             <thead>
               <tr>
                 <td class="text-center font-semibold">Name</td>

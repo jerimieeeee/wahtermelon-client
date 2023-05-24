@@ -163,6 +163,7 @@ export class InterviewComponent implements OnInit{
     });
 
     this[var_name] = abuses;
+    console.log(typeof this.sexual_abuses)
   }
 
   createForm(){

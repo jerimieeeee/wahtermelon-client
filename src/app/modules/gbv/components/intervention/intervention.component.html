@@ -256,7 +256,7 @@
             WCPD Only
           </span>
           <div *ngIf="pos==='WCPD'">
-            <button type="button" *ngIf="!selected_gbv_case?.gbvIntake.intervention_legal" (click)="toggleModal('legal_case')" class="bg-white text-sky-500 px-2 rounded text-xs">
+            <button type="button" *ngIf="!selected_gbv_case?.gbvIntake.intervention_legal" (click)="toggleModal('legal_case')" class="bg-white text-sky-500 px-2 py-1 rounded text-xs">
               <fa-icon [icon]="faEdit"></fa-icon>
             </button>
           </div>
