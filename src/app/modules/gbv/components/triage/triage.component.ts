@@ -1,5 +1,5 @@
 import { formatDate } from '@angular/common';
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { faSave } from '@fortawesome/free-regular-svg-icons';
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
@@ -11,7 +11,7 @@ import { forkJoin } from 'rxjs';
   templateUrl: './triage.component.html',
   styleUrls: ['./triage.component.scss']
 })
-export class TriageComponent implements OnChanges{
+export class TriageComponent implements OnInit, OnChanges{
   @Output() getGbvHistory = new EventEmitter<any>();
   @Input() selected_gbv_case;
   @Input() patient_id;
@@ -154,7 +154,10 @@ export class TriageComponent implements OnChanges{
   ) { }
 
   ngOnChanges(changes: SimpleChanges): void {
+    this.checkOpenGbv();
+  }
+
+  ngOnInit(): void {
     this.loadLibraries();
-    console.log(this.selected_gbv_case);
   }
 }
