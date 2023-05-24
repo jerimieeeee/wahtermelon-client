@@ -31,6 +31,8 @@ export class GbvComponent implements OnInit {
 
   toggleModal(name) {
     this.modals[name] = !this.modals[name];
+
+    if(!this.modals[name]) this.getGbvHistory();
   }
 
   switchPage(page) {

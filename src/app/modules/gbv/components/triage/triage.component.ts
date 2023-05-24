@@ -1,5 +1,5 @@
 import { formatDate } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { faSave } from '@fortawesome/free-regular-svg-icons';
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
@@ -11,7 +11,7 @@ import { forkJoin } from 'rxjs';
   templateUrl: './triage.component.html',
   styleUrls: ['./triage.component.scss']
 })
-export class TriageComponent implements OnInit{
+export class TriageComponent implements OnChanges{
   @Output() getGbvHistory = new EventEmitter<any>();
   @Input() selected_gbv_case;
   @Input() patient_id;
@@ -75,10 +75,27 @@ export class TriageComponent implements OnInit{
     this.http.post('gender-based-violence/patient-gbv', this.patient_gbv).subscribe({
       next: (data: any) => {
         console.log(data);
+
         this.toastr.success('Successfully recorded!', 'GBV Referral');
+        this.getGbvHistory.emit();
       },
       error: err => console.log(err)
     })
+  }
+
+  reloadData(){
+    let params = {
+      id: this.selected_gbv_case.id,
+      // patient_id: this.selected_gbv_case.patient_id
+    }
+    // console.log(params)
+    this.http.get('gender-based-violence/patient-gbv', {params}).subscribe({
+      next: (data: any) => {
+        // console.log(data);
+        this.selected_gbv_case = data.data[0];
+      },
+      error: err => console.log(err)
+    });
   }
 
   loadLibraries(){
@@ -136,9 +153,8 @@ export class TriageComponent implements OnInit{
     private toastr: ToastrService
   ) { }
 
-  ngOnInit(): void {
+  ngOnChanges(changes: SimpleChanges): void {
     this.loadLibraries();
     console.log(this.selected_gbv_case);
-    // this.createForm();
   }
 }
