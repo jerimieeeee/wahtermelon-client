@@ -185,13 +185,13 @@
               <fa-icon [icon]="faEdit"></fa-icon>
             </button>
           </div>
-          <div class="min-h-24" *ngIf="!sexual_abuses">
+          <div class="min-h-24" *ngIf="sexual_abuses.length===0">
             <span class="flex italic py-5 justify-center">
               No records to show
             </span>
           </div>
 
-          <table class="m-3" *ngIf="sexual_abuses">
+          <table class="m-3" *ngIf="sexual_abuses.length>0">
             <thead>
               <tr>
                 <td class="text-center font-semibold">Name</td>
@@ -224,13 +224,13 @@
               <fa-icon [icon]="faEdit"></fa-icon>
             </button>
           </div>
-          <div class="min-h-24" *ngIf="!physical_abuses">
+          <div class="min-h-24" *ngIf="physical_abuses.length===0">
             <span class="flex italic py-5 justify-center">
               No records to show
             </span>
           </div>
 
-          <table class="m-3" *ngIf="physical_abuses">
+          <table class="m-3" *ngIf="physical_abuses.length>0">
             <thead>
               <tr>
                 <td class="text-center font-semibold">Name</td>
@@ -263,13 +263,13 @@
               <fa-icon [icon]="faEdit"></fa-icon>
             </button>
           </div>
-          <div class="min-h-24" *ngIf="!neglect_abuses">
+          <div class="min-h-24" *ngIf="neglect_abuses.length===0">
             <span class="flex italic py-5 justify-center">
               No records to show
             </span>
           </div>
 
-          <table class="m-3" *ngIf="neglect_abuses">
+          <table class="m-3" *ngIf="neglect_abuses.length>0">
             <thead>
               <tr>
                 <td class="text-center font-semibold">Name</td>
@@ -302,13 +302,13 @@
               <fa-icon [icon]="faEdit"></fa-icon>
             </button>
           </div>
-          <div class="min-h-24" *ngIf="!emotional_abuses">
+          <div class="min-h-24" *ngIf="emotional_abuses.length===0">
             <span class="flex italic py-5 justify-center">
               No records to show
             </span>
           </div>
 
-          <table class="m-3" *ngIf="emotional_abuses">
+          <table class="m-3" *ngIf="emotional_abuses.length>0">
             <thead>
               <tr>
                 <td class="text-center font-semibold">Name</td>
@@ -366,13 +366,13 @@
               <fa-icon [icon]="faPlus"></fa-icon>
             </button>
           </div>
-          <div class="min-h-24" *ngIf="!selected_gbv_case?.gbvIntake.interview_perpetrator">
+          <div class="min-h-24" *ngIf="selected_gbv_case?.gbvIntake.interview_perpetrator.length===0">
             <span class="flex italic py-5 justify-center">
               No records to show
             </span>
           </div>
 
-          <table class="m-3" *ngIf="selected_gbv_case?.gbvIntake.interview_perpetrator">
+          <table class="m-3" *ngIf="selected_gbv_case?.gbvIntake.interview_perpetrator.length>0">
             <thead>
               <tr>
                 <td class="w-1/12">
@@ -400,7 +400,7 @@
                 </td>
                 <td class="text-center align-top pt-3">
                   {{ perp.perpetrator_name ?? '-'}} <br />
-                  ({{ perp.perpetrator_age }} | {{ perp.gender === 'M' ? 'Male' : 'Female' }})
+                  ({{ perp.perpetrator_age }} | {{ perp.gender ? (perp.gender === 'M' ? 'Male' : 'Female') : '' }})
                 </td>
                 <td class="text-center align-top pt-3">
                   {{ perp.barangay_code }}
@@ -463,24 +463,24 @@
           Interview summary and social worker notes
         </div>
 
-        <div *ngIf="!selected_gbv_case?.gbvIntake.interview_perpetrator" class="col-span-4 flex justify-center font-semibold italic my-5">
+        <div *ngIf="selected_gbv_case?.gbvIntake.interview_perpetrator.length===0" class="col-span-4 flex justify-center font-semibold italic my-5">
           Please add alleged perpetrator(s) to add notes.
         </div>
 
-        <div *ngIf="selected_gbv_case?.gbvIntake.interview_perpetrator" class="col-span-4 grid grid-cols-1 border-slate-200 shadow-md rounded-md mx-5 mb-5">
+        <div *ngIf="selected_gbv_case?.gbvIntake.interview_perpetrator.length>0" class="col-span-4 grid grid-cols-1 border-slate-200 shadow-md rounded-md mx-5 mb-5">
           <div class="bg-sky-500 text-white py-1 px-3 rounded-t-md flex justify-between">
             <spa>Interview Summary</spa>
             <button type="button" (click)="toggleModal('interview_notes', 'IS')" class="bg-white text-sky-500 px-2 rounded text-xs">
               <fa-icon [icon]="faPlus"></fa-icon>
             </button>
           </div>
-          <div class="min-h-24" *ngIf="!interview_summaries">
+          <div class="min-h-24" *ngIf="interview_summaries.length===0">
             <span class="flex italic py-5 justify-center">
               No records to show
             </span>
           </div>
 
-          <table class="m-3" *ngIf="interview_summaries">
+          <table class="m-3" *ngIf="interview_summaries.length>0">
             <thead>
               <tr>
                 <td class="w-1/12">
@@ -522,7 +522,7 @@
           </table>
         </div>
 
-        <div *ngIf="selected_gbv_case?.gbvIntake.interview_perpetrator" class="col-span-4 grid grid-cols-1 border-slate-200 shadow-md rounded-md mx-5 mb-5">
+        <div *ngIf="selected_gbv_case?.gbvIntake.interview_perpetrator.length>0" class="col-span-4 grid grid-cols-1 border-slate-200 shadow-md rounded-md mx-5 mb-5">
           <div class="bg-sky-500 text-white py-1 px-3 rounded-t-md flex justify-between">
             <spa>Social Worker Notes</spa>
             <span class="text-xs italic pt-1" *ngIf="pos!=='MSWDO'">
@@ -532,13 +532,13 @@
               <fa-icon [icon]="faPlus"></fa-icon>
             </button>
           </div>
-          <div class="min-h-24" *ngIf="!interview_social_notes">
+          <div class="min-h-24" *ngIf="interview_social_notes.length===0">
             <span class="flex italic py-5 justify-center">
               No records to show
             </span>
           </div>
 
-          <table class="m-3" *ngIf="interview_social_notes">
+          <table class="m-3" *ngIf="interview_social_notes.length>0">
             <thead>
               <tr>
                 <td class="w-1/12">

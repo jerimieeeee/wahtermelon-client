@@ -88,7 +88,7 @@ export class GbvReferralComponent implements OnInit{
     const getNeglect = this.http.get('libraries/gbv-neglect');
     const getBehavioral = this.http.get('libraries/gbv-behavioral');
     const getComplaints = this.http.get('libraries/complaint', {params:{query_type:'gbv_complaints'}});
-    const getMdt = this.http.get('users', {params:{per_page: 'all', designation_code: 'MD'}});
+    const getMdt = this.http.get('gender-based-violence/patient-gbv-user', {params: {per_page: 'all'}});
 
     forkJoin([getNeglect, getBehavioral, getComplaints, getMdt]).subscribe({
       next: ([dataNeglect, dataBehavioral, dataComplaints, dataMdt]: any) => {

@@ -79,8 +79,9 @@ export class ReferralModalComponent implements OnInit {
     this.show_form = true;
   }
 
+  // const getMdt = this.http.get('patient-gbv-user');
   loadLibraries() {
-    this.http.get('users', {params:{per_page: 'all', designation_code: 'MD'}}).subscribe({
+    this.http.get('gender-based-violence/patient-gbv-user', {params: {per_page: 'all'}}).subscribe({
       next: (data: any) => {
         // console.log(data);
         this.facilities = data.data;

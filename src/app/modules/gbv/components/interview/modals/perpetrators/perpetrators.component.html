@@ -9,8 +9,8 @@
         </h3>
       </div>
       <!-- Modal body -->
-      <div *ngIf="show_form" class="overflow-y-auto h-[500px] scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
-        <form [formGroup]="perpetratorForm" (submit)="onSubmit()" class="text-left text-gray-500 m-5">
+      <div class="overflow-y-auto h-[500px] scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
+        <form [formGroup]="perpetratorForm" *ngIf="show_form"  (submit)="onSubmit()" class="text-left text-gray-500 m-5">
           <div class="grid grid-cols-4 gap-4">
             <div class="col-span-2">
               <label for="gender" [ngClass]="{'text-red-500': show_error && f.case_number.errors}">Gender</label>
@@ -173,14 +173,23 @@
 
           </div>
         </form>
+
+        <div class="grid grid-cols-1  mt-32">
+          <span class="flex justify-center text-sky-500">
+            <fa-icon [icon]="faCircleNotch" spin="true" class=""></fa-icon>
+          </span>
+          <span class="flex justify-center">
+            Loading...
+          </span>
+        </div>
       </div>
 
       <!-- Modal footer -->
       <div class="flex justify-end py-4 px-5 space-x-4 rounded-b border-t border-gray-200">
         <button type="button" class="btn-save bg-gray-400" (click)="closeModal()">Close</button>
         <button [disabled]="is_saving || perpetratorForm.invalid" type="submit" class="btn-save px-10 disabled:bg-gray-300" (click)="onSubmit()" >
-          <fa-icon></fa-icon>
-          {{ is_saving ? 'Saving' : 'Save' }}
+          <fa-icon [icon]="is_saving ? faCircleNotch : faSave" [spin]="is_saving"></fa-icon>
+          {{ perpetratorForm.value.id ? (is_saving ? 'Updating' : 'Update') : (is_saving ? 'Saving' : 'Save') }}
         </button>
       </div>
     </div>

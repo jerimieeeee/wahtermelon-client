@@ -460,7 +460,7 @@
                 </td>
                 <td class="text-center align-top pt-3">
                   {{ perp.perpetrator_name ?? '-'}} <br />
-                  ({{ perp.perpetrator_age }} | {{ perp.gender === 'M' ? 'Male' : 'Female' }})
+                  ({{ perp.perpetrator_age }} | {{ perp.gender ? (perp.gender === 'M' ? 'Male' : 'Female') : '' }})
                 </td>
                 <td class="text-center align-top pt-3">
                   {{ perp.barangay_code }}

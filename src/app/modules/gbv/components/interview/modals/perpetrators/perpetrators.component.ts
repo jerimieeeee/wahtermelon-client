@@ -4,6 +4,8 @@ import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 import { forkJoin } from 'rxjs';
 import { perpetratorForm } from './perpetratorForm';
+import { faSave } from '@fortawesome/free-regular-svg-icons';
+import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-perpetrators',
@@ -15,6 +17,9 @@ export class PerpetratorsComponent implements OnInit{
   @Input() selected_perpetrator;
   @Input() intake_id;
   @Input() patient_id;
+
+  faSave = faSave;
+  faCircleNotch = faCircleNotch;
 
   is_saving: boolean = false;
   show_error: boolean = false;

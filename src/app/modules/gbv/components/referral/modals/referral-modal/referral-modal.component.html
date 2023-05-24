@@ -18,7 +18,7 @@
             </div>
 
             <div class="col-span-2">
-              <label for="referral_facility_code" [ngClass]="{'text-red-500': show_error && f.referral_facility_code.errors}">Place</label>
+              <label for="referral_facility_code" [ngClass]="{'text-red-500': show_error && f.referral_facility_code.errors}">Refer to</label>
               <select name="referral_facility_code" id="referral_facility_code" formControlName="referral_facility_code" class="input" [ngClass]="{'invalid-input': show_error && f.referral_facility_code.errors}">
                 <option *ngFor="let fac of facilities" [value]="fac.facility.code">{{ fac.last_name }}, {{ fac.first_name }}</option>
               </select>
