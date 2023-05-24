@@ -90,6 +90,7 @@ export class IntakeComponent implements OnInit{
       this.f.vaw_physical_flag.disable();
       this.f.vaw_sexual_flag.disable();
       this.f.vaw_psychological_flag.disable();
+      this.f.vaw_economic_flag.disable();
       this.f.rape_sex_intercourse_flag.disable();
       this.f.rape_sex_assault_flag.disable();
       this.f.rape_incest_flag.disable();
