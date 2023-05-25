@@ -25,6 +25,7 @@ export class ConsultationComponent implements OnInit {
   open_consult: boolean = true;
   have_complaint:boolean = false;
   show_end: boolean = false;
+  show_open: boolean = false;
   enable_edit: boolean = false;
   show_ekas: boolean = false;
 
@@ -60,8 +61,14 @@ export class ConsultationComponent implements OnInit {
     this.patient_details = info;
   }
 
-  toggleModal(){
-    this.show_end = !this.show_end;
+  // modals: any = [];
+
+  toggleModal(name){
+    this[name] = !this[name];
+
+    if(name==='show_open' && !this.show_open) {
+      this.loadConsult();
+    }
   }
 
   openEkas() {

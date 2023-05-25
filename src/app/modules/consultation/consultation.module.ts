@@ -24,6 +24,7 @@ import { ManagementComponent } from './components/management/management.componen
 import { DeleteItemComponent } from 'app/shared/shared-modals/delete-item/delete-item.component';
 import { EndVisitComponent } from 'app/shared/shared-modals/end-visit/end-visit.component';
 import { GbvReferralComponent } from './components/complaint-history/modals/gbv-referral/gbv-referral.component';
+import { OpenConsultComponent } from 'app/shared/shared-modals/open-consult/open-consult.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import { GbvReferralComponent } from './components/complaint-history/modals/gbv-
     FormsModule,
     ReactiveFormsModule,
     DeleteItemComponent,
-    EndVisitComponent
+    EndVisitComponent,
+    OpenConsultComponent
   ]
 })
 export class ConsultationModule { }

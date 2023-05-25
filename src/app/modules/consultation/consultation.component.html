@@ -20,9 +20,14 @@
           eKAS
         </button>
 
-        <button *ngIf="!consult_details?.consult_done && allowed_to_edit" type="button" class="btn-end-visit ml-auto" (click)="toggleModal()">
+        <button *ngIf="!consult_details?.consult_done && allowed_to_edit" type="button" class="btn-end-visit ml-auto" (click)="toggleModal('show_end')">
           <fa-icon class="mr-1" [icon]="faDoorClosed"></fa-icon>
           End Visit
+        </button>
+
+        <button *ngIf="consult_details?.consult_done && allowed_to_edit" type="button" class="btn-end-visit ml-auto" (click)="toggleModal('show_open')">
+          <!-- <fa-icon class="mr-1" [icon]="faDoorClosed"></fa-icon> -->
+          Open Visit
         </button>
       </div>
     </nav>
@@ -64,7 +69,7 @@
       <app-final-dx *ngIf="have_complaint && consult_details.physician" [allowed_to_edit]="allowed_to_edit" [toggle_content]="toggle_content" [consult_details]="consult_details"></app-final-dx>
       <app-prescription *ngIf="have_complaint && consult_details.physician" [allowed_to_edit]="allowed_to_edit" [toggle_content]="toggle_content" [consult_details]="consult_details" [with_credentials]="with_credentials"></app-prescription>
 
-      <div class="grid grid-cols-10" *ngIf="have_complaint && !consult_details.physician && allowed_to_edit">
+      <div class="grid grid-cols-10" *ngIf="!consult_details?.consult_done && have_complaint && !consult_details.physician && allowed_to_edit">
         <div class="col-start-3 col-span-8 text-gray-700 p-10 border border-slate-300 shadow-md rounded-md mt-5">
           <label for="referred_to">To open final diagnosis & prescription you must refer this patient to a physician</label>
           <select [disabled]="enable_edit" class="input px-2 mr-3 disabled:bg-gray-300 mb-3" name="referred_to" [(ngModel)]="referred_to.id">
@@ -93,12 +98,19 @@
   </div>
 </div>
 
-<app-end-visit *ngIf="show_end" (toggleModal)="toggleModal()"
+<app-end-visit *ngIf="show_end" (toggleModal)="toggleModal('show_end')"
   [consult_id]="consult_details?.id"
   [consult_date]="consult_details?.consult_date"
   [patient_id]="consult_details?.patient.id"
   [pt_group]="'cn'"
 ></app-end-visit>
+
+<app-open-consult *ngIf="show_open" (toggleModal)="toggleModal('show_open')"
+  [consult_id]="consult_details?.id"
+  [consult_date]="consult_details?.consult_date"
+  [patient_id]="consult_details?.patient.id"
+  [pt_group]="'cn'"
+></app-open-consult>
 
 <app-ekas *ngIf="show_ekas"
   (toggleModal)="toggleEkas()"
