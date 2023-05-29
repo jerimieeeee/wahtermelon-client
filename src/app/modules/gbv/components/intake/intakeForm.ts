@@ -66,6 +66,9 @@ export function intakeForm() {
     harassment_object_flag : new FormControl<boolean| null>(false),
     child_abuse_engaged_flag : new FormControl<boolean| null>(false),
     child_abuse_sexual_flag : new FormControl<boolean| null>(false),
+    child_abuse_physical_flag : new FormControl<boolean| null>(false),
+    child_abuse_emotional_flag : new FormControl<boolean| null>(false),
+    child_abuse_economic_flag : new FormControl<boolean| null>(false),
     wcpd_others : new FormControl<string| null>(''),
   });
 }
