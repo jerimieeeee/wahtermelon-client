@@ -7,7 +7,7 @@
   <div class="col-span-3">
     <div class="rounded-xl text-gray-600 border border-slate-100" >
       <div class="block m-0 relative p-0 scrollbar-thumb-white hover:scrollbar-thumb-blue-300 scrollbar-track-white">
-        <div class="flex justify-items-start sticky top-0 bg-white rounded-lg border border-gray-200 shadow-md p-2">
+        <div class="flex justify-items-start sticky top-0 bg-white rounded-lg border-2 border-gray-400 shadow-md p-2">
           <div class="mr-2">
             <div (click)="toggleModal('photo')" class="group cursor-pointer inline-flex overflow-hidden relative justify-center items-center w-24 h-24 bg-gray-100 rounded-full hover:bg-gray-700 hover:opacity-50">
               <span *ngIf="!imageData" class="font-medium text-gray-600 opacity-100 group-hover:opacity-50">{{ getInitials(patient_info?.first_name+' '+patient_info?.last_name) }}</span>
