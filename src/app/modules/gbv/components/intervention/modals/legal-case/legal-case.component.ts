@@ -26,7 +26,12 @@ export class LegalCaseComponent implements OnInit, OnChanges {
     id: new FormControl<string| null>(null),
     patient_id: new FormControl<string| null>(null),
     patient_gbv_intake_id: new FormControl<string| null>(null),
+    blotter_filed_flag: new FormControl<boolean| null>(false),
+    blotter_remarks: new FormControl<string| null>(null),
     complaint_filed_flag: new FormControl<boolean| null>(false),
+    filing_type_id: new FormControl<string| null>(null),
+    nps_docket_number: new FormControl<string| null>(null),
+    nps_status_id: new FormControl<string| null>(null),
     filed_by_name: new FormControl<string| null>(null),
     filed_by_relation_id: new FormControl<string| null>(null),
     filed_location_id: new FormControl<string| null>(null),
@@ -66,6 +71,9 @@ export class LegalCaseComponent implements OnInit, OnChanges {
       patient_id: [this.patient_id],
       patient_gbv_intake_id: [this.patient_gbv_intake_id],
       complaint_filed_flag: [false, Validators.required],
+      filing_type_id: [null],
+      nps_docket_number: [null],
+      nps_status_id: [null],
       filed_by_name: [null],
       filed_by_relation_id: [null],
       filed_location_id: [null],
@@ -76,7 +84,9 @@ export class LegalCaseComponent implements OnInit, OnChanges {
       fiscal_name: [null],
       criminal_case_number: [null],
       cpumd_testimony_date: [null],
-      verdict_id: [null]
+      verdict_id: [null],
+      blotter_filed_flag: [false],
+      blotter_remarks: [null]
     });
 
     console.log(this.legalForm.value);
@@ -86,19 +96,25 @@ export class LegalCaseComponent implements OnInit, OnChanges {
   }
 
   child_relations: any = [];
-  filed_locations: any =[];
-  verdicts: any;
+  filed_locations: any = [];
+  verdicts: any = [];
+  filing_types: any = [];
+  nps_statuses: any = [];
 
   loadLibraries(){
     const getChildRelation = this.http.get('libraries/child-relation');
     const getFiledLocation = this.http.get('libraries/gbv-filing-location');
     const getVerdict = this.http.get('libraries/gbv-outcome-verdict');
+    const getFilingType = this.http.get('libraries/gbv-filing-type');
+    const getNpsStatus = this.http.get('libraries/gbv-nps-status');
 
-    forkJoin([getChildRelation, getFiledLocation, getVerdict]).subscribe({
-      next: ([dataChildRelation, dataFiledLocation, dataVerdict]: any) => {
+    forkJoin([getChildRelation, getFiledLocation, getVerdict, getFilingType, getNpsStatus]).subscribe({
+      next: ([dataChildRelation, dataFiledLocation, dataVerdict, dataFilingType, dataNpsStatus]: any) => {
         this.child_relations = dataChildRelation.data;
         this.filed_locations = dataFiledLocation.data;
         this.verdicts = dataVerdict.data;
+        this.filing_types = dataFilingType.data;
+        this.nps_statuses = dataNpsStatus.data;
         this.createForm();
       },
       error: err => console.log(err)

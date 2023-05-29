@@ -12,12 +12,36 @@
       <div class="overflow-y-auto h-96 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
         <form [formGroup]="legalForm" (submit)="onSubmit()" class="text-left text-gray-500 m-5">
           <div class="grid grid-cols-4 gap-4">
-            <div class="col-span-4">
+            <div class="col-span-2">
               <input type="checkbox" name="complaint_filed_flag" id="complaint_filed_flag" formControlName="complaint_filed_flag" class="input-checkbox" />
-              <label for="complaint_filed_flag" class="pl-3 py-0.5">Complaint filed?</label>
+              <label for="complaint_filed_flag" class="pl-3 py-0.5">Complaint filed</label>
+            </div>
+
+            <div class="col-span-2">
+              <input type="checkbox" name="blotter_filed_flag" id="blotter_filed_flag" formControlName="blotter_filed_flag" class="input-checkbox" />
+              <label for="blotter_filed_flag" class="pl-3 py-0.5">Blotter filed</label>
             </div>
 
             <div class="col-span-4 grid grid-cols-3 gap-4">
+              <div>
+                <label for="filing_type_id">Type of Filing</label>
+                <select name="filing_type_id" id="filing_type_id" formControlName="filing_type_id" class="input">
+                  <option *ngFor="let filing_type of filing_types" [value]="filing_type.id">{{ filing_type.desc }}</option>
+                </select>
+              </div>
+
+              <div>
+                <label for="nps_docket_number" >NPS docket number</label>
+                <input type="text" name="nps_docket_number" id="nps_docket_number" formControlName="nps_docket_number" class="input">
+              </div>
+
+              <div>
+                <label for="nps_status_id">Type of Filing</label>
+                <select name="nps_status_id" id="nps_status_id" formControlName="nps_status_id" class="input">
+                  <option *ngFor="let nps_status of nps_statuses" [value]="nps_status.id">{{ nps_status.desc }}</option>
+                </select>
+              </div>
+
               <div>
                 <label for="filed_by_name" >Filed by</label>
                 <input type="text" name="filed_by_name" id="filed_by_name" formControlName="filed_by_name" class="input">
@@ -40,7 +64,7 @@
 
             <div class="col-span-4">
               <input type="checkbox" name="complaint_filed_flag" id="complaint_filed_flag" formControlName="complaint_filed_flag" class="input-checkbox" />
-              <label for="complaint_filed_flag" class="pl-3 py-0.5">Case initiated?</label>
+              <label for="complaint_filed_flag" class="pl-3 py-0.5">Case update</label>
             </div>
 
             <div class="col-span-4 grid grid-cols-6 gap-4">
