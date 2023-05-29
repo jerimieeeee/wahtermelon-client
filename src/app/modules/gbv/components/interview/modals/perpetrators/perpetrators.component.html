@@ -20,7 +20,12 @@
             </div>
 
             <div class="col-span-2 mt-7">
-              <input type="checkbox" formControlName="perpetrator_unknown_flag" class="input-checkbox" />
+              <input type="checkbox" id="lgbtq_flag" formControlName="lgbtq_flag" class="input-checkbox" />
+              <label for="lgbtq_flag" class="pl-3 py-0.5">LGBTQ</label>
+            </div>
+
+            <div class="col-span-4 mt-7">
+              <input type="checkbox" id="perpetrator_unknown_flag" formControlName="perpetrator_unknown_flag" class="input-checkbox" />
               <label for="perpetrator_unknown_flag" class="pl-3 py-0.5">Is the perpetrator unknown?</label>
             </div>
 
@@ -47,7 +52,12 @@
                 </select>
               </div>
 
-
+              <div>
+                <label for="education_code" [ngClass]="{'text-red-500': show_error && f.education_code.errors}">Education</label>
+                <select name="education_code" id="education_code" formControlName="education_code" class="input" [ngClass]="{'invalid-input': show_error && f.education_code.errors}">
+                  <option *ngFor="let education of educations" [value]="education.code">{{ education.education_desc }}</option>
+                </select>
+              </div>
 
               <div class="col-span-2">
                 <input type="checkbox" formControlName="known_to_child_flag" class="input-checkbox" />
@@ -69,8 +79,13 @@
               </div>
 
               <div class="col-span-2">
-                <label for="perpetrator_address" [ngClass]="{'text-red-500': show_error && f.perpetrator_address.errors}">Address/location</label>
+                <label for="perpetrator_address" [ngClass]="{'text-red-500': show_error && f.perpetrator_address.errors}">Permanent Address/location</label>
                 <input type="text" name="perpetrator_address" id="perpetrator_address" formControlName="perpetrator_address" class="input" [ngClass]="{'invalid-input': show_error && f.perpetrator_address.errors}">
+              </div>
+
+              <div class="col-span-2">
+                <label for="perpetrator_current_address" [ngClass]="{'text-red-500': show_error && f.perpetrator_address.errors}">Current Address/location</label>
+                <input type="text" name="perpetrator_current_address" id="perpetrator_current_address" formControlName="perpetrator_current_address" class="input" [ngClass]="{'invalid-input': show_error && f.perpetrator_address.errors}">
               </div>
 
               <div class="col-span-2 text-sky-500 font-semibold">

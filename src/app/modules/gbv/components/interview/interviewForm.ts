@@ -5,8 +5,12 @@ export function interviewForm() {
     id: new FormControl<string| null>(''),
     patient_id: new FormControl<string| null>(''),
     patient_gbv_intake_id: new FormControl<string| null>(''),
-
+    recant_flag: new FormControl<string| null>(''),
+    recant_datetime: new FormControl<string| null>(''),
+    recant_remarks: new FormControl<string| null>(''),
+    interview_datetime: new FormControl<string| null>(''),
     deferred: new FormControl<boolean| null>(false),
+    deferral_datetime: new FormControl<boolean| null>(false),
     deferral_reason_id : new FormControl<number| null>(null),
     deferral_previous_interviewer_id : new FormControl<number| null>(null),
     deferral_interviewer_remarks: new FormControl<string| null>(''),

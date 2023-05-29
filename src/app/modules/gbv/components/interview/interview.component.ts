@@ -19,6 +19,7 @@ export class InterviewComponent implements OnInit{
   @Input() patient_id;
   @Input() pos;
 
+  max_date = formatDate(new Date(), 'yyyy-MM-dd', 'en');
   interviewForm:FormGroup=interviewForm();
 
   faPlus = faPlus;
@@ -171,8 +172,12 @@ export class InterviewComponent implements OnInit{
       id: [null],
       patient_id: [this.patient_id],
       patient_gbv_intake_id: [this.selected_gbv_case.gbvIntake.id],
-
+      recant_flag:[false],
+      recant_datetime: [null],
+      recant_remarks: [null],
+      interview_datetime: [null],
       deferred: [null],
+      deferral_datetime: [null],
       deferral_reason_id: [null],
       deferral_previous_interviewer_id : [null],
       deferral_interviewer_remarks: [null],

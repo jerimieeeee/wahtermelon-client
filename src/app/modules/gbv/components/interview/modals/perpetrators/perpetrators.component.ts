@@ -56,16 +56,26 @@ export class PerpetratorsComponent implements OnInit{
     })
   }
 
+  educations: any;
   loadLibraries(){
+    /* this.http.get('libraries/education').subscribe({
+      next: (data: any) => this.educations = data.data,
+      error: err => console.log(err)
+    }); */
+
+
     const getOccupation = this.http.get('libraries/occupations');
     const getChildRelation = this.http.get('libraries/child-relation');
     const getPerpetratorLocation = this.http.get('libraries/gbv-perpetrator-location');
+    const getEducation = this.http.get('libraries/education');
 
-    forkJoin([getOccupation, getChildRelation, getPerpetratorLocation]).subscribe({
-      next: ([dataOccupation, dataChildRelation, dataPerpetratorLocation]: any) => {
+    forkJoin([getOccupation, getChildRelation, getPerpetratorLocation, getEducation]).subscribe({
+      next: ([dataOccupation, dataChildRelation, dataPerpetratorLocation, dataEducation]: any) => {
         this.occupations = dataOccupation.data;
         this.child_relations = dataChildRelation.data;
         this.perpetrator_locations = dataPerpetratorLocation.data;
+        this.educations = dataEducation.data;
+        console.log(dataEducation)
         this.createForm();
         // this.toggleModal('abuse_acts', 'Sexual Abuse', 'gbv-sexual-abuse')
       },
@@ -79,15 +89,18 @@ export class PerpetratorsComponent implements OnInit{
       patient_id: [this.patient_id],
       intake_id: [this.intake_id],
       gender: [null],
+      lgbtq_flag: [false],
       perpetrator_unknown_flag: [false],
       perpetrator_name: [null],
       perpetrator_nickname: [null],
       perpetrator_age: [null],
       occupation_code : [null],
+      education_code : [null],
       known_to_child_flag: [false],
       relation_to_child_id: [null],
       location_id: [null],
       perpetrator_address: [null],
+      perpetrator_current_address: [null],
       abuse_alcohol_flag: [false],
       abuse_drugs_flag: [false],
       abuse_others_flag: [false],

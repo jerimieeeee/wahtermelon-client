@@ -3,33 +3,73 @@
     <form [formGroup]="interviewForm" (ngSubmit)="onSubmit()">
       <div class="grid grid-cols-3 gap-4 w-full mt-5">
 
-        <div class="col-span-3 grid grid-cols-4 gap-4">
-          <div class="col-span-2">
-            <div class="ml-5">
-              <input type="checkbox" disabled formControlName="deferred" class="input-checkbox" />
+        <div class="col-span-3 border-b border-slate-200 w-full my-2 font-semibold text-sky-500">
+          Recant details
+        </div>
+        <div class="col-span-3 grid grid-cols-3 gap-4">
+          <div class="ml-5 mt-3">
+            <input type="checkbox" disabled formControlName="recant_flag" name="recant_flag" id="recant_flag" class="input-checkbox" />
+            <label for="recant_flag" class="pl-3 py-0.5">Did the patient recant?</label>
+          </div>
+
+          <div *ngIf="interviewForm.value.recant_flag">
+            <label for="recant_datetime">Recant date & time</label>
+            <input type="datetime-local" name="recant_datetime" id="recant_datetime" [max]="max_date" formControlName="recant_datetime" class="input">
+          </div>
+
+          <div *ngIf="interviewForm.value.recant_flag">
+            <label for="recant_remarks">Remarks</label>
+            <input type="text" name="recant_remarks" id="recant_remarks" formControlName="recant_remarks" class="input">
+          </div>
+        </div>
+
+        <div class="col-span-3 border-b border-slate-200 w-full my-2 font-semibold text-sky-500">
+          Deferral Details
+        </div>
+        <div class="col-span-3 grid grid-cols-3 gap-4">
+          <div>
+            <div class="ml-5 mt-3">
+              <input type="checkbox" disabled formControlName="deferred" name="deferred" id="deferred" class="input-checkbox" />
               <label for="deferred" class="pl-3 py-0.5">Deferring interview?</label>
             </div>
           </div>
 
-          <div class="col-span-2" >
+          <div *ngIf="interviewForm.value.deferred">
+            <label for="deferral_datetime">Date & time of deferral</label>
+            <input type="datetime-local" name="deferral_datetime" id="deferral_datetime" [max]="max_date" formControlName="deferral_datetime" class="input">
+          </div>
+
+          <div></div>
+
+          <div *ngIf="interviewForm.value.deferred">
+            <label for="deferral_reason_id">Reason for deferral</label>
             <select name="deferral_reason_id" id="deferral_reason_id" formControlName="deferral_reason_id" class="input">
               <option *ngFor="let deferral_reason of deferral_reasons" [value]="deferral_reason.id">{{ deferral_reason.desc }}</option>
             </select>
           </div>
 
-          <div class="col-span-2" *ngIf="interviewForm.value.deferral_reason_id === '3'">
+          <div *ngIf="interviewForm.value.deferral_reason_id === '3'">
             <label for="deferral_previous_interviewer_id">Previous Interviewer</label>
             <select name="deferral_previous_interviewer_id" id="deferral_previous_interviewer_id" formControlName="deferral_previous_interviewer_id" class="input">
               <option *ngFor="let previous_interviewer of previous_interviewers" [value]="previous_interviewer.id">{{ previous_interviewer.desc }}</option>
             </select>
           </div>
 
-          <div class="col-span-2" *ngIf="interviewForm.value.deferral_previous_interviewer_id === '4'">
+          <div *ngIf="interviewForm.value.deferral_previous_interviewer_id === '4'">
             <label for="deferral_interviewer_remarks">Others</label>
             <input type="text" name="deferral_interviewer_remarks" id="deferral_interviewer_remarks" formControlName="deferral_interviewer_remarks" class="input">
           </div>
         </div>
 
+        <div class="col-span-3 border-b border-slate-200 w-full my-2 font-semibold text-sky-500">
+          Date & Time of Interview
+        </div>
+        <div class="mx-5 col-span-3 grid grid-cols-3 gap-4">
+          <div>
+            <label for="interview_datetime">Date & time</label>
+            <input type="datetime-local" name="interview_datetime" id="interview_datetime" [max]="max_date" formControlName="interview_datetime" class="input">
+          </div>
+        </div>
         <div class="col-span-3 border-b border-slate-200 w-full my-2 font-semibold text-sky-500">
           Source of Information <span class="text-red-500 text-sm font-normal" *ngIf="required_info_source">Required atleast one information source.</span>
         </div>
@@ -509,7 +549,7 @@
                   {{ interview.perpetrator.perpetrator_name ?? '-'}}
                 </td>
                 <td class="text-center align-top pt-3">
-                  {{ interview.interview_datetime | date: 'MM/dd/yyyy hh:mm a'}}
+                  {{ interview.deferral_datetime | date: 'MM/dd/yyyy hh:mm a'}}
                 </td>
                 <td class="align-top p-3">
                   {{ interview.interview_place ?? '-'}}
@@ -567,7 +607,7 @@
                   {{ interview.perpetrator.perpetrator_name ?? '-'}}
                 </td>
                 <td class="text-center align-top pt-3">
-                  {{ interview.interview_datetime | date: 'MM/dd/yyyy hh:mm a'}}
+                  {{ interview.deferral_datetime | date: 'MM/dd/yyyy hh:mm a'}}
                 </td>
                 <td class="align-top p-3">
                   {{ interview.interview_place ?? '-'}}
