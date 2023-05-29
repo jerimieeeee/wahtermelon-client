@@ -101,6 +101,9 @@ export class IntakeComponent implements OnInit{
       this.f.harassment_object_flag.disable();
       this.f.child_abuse_engaged_flag.disable();
       this.f.child_abuse_sexual_flag.disable();
+      this.f.child_abuse_physical_flag.disable();
+      this.f.child_abuse_emotional_flag.disable();
+      this.f.child_abuse_economic_flag.disable();
       this.f.wcpd_others.disable();
     }
 
@@ -253,6 +256,9 @@ export class IntakeComponent implements OnInit{
       harassment_object_flag: [false],
       child_abuse_engaged_flag: [false],
       child_abuse_sexual_flag: [false],
+      child_abuse_physical_flag: [false],
+      child_abuse_emotional_flag: [false],
+      child_abuse_economic_flag: [false],
       wcpd_others: [null]
     });
 
