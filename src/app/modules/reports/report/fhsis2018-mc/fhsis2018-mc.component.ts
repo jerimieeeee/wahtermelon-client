@@ -1,6 +1,7 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import { faCircleNotch, faFileExcel, faFilePdf } from '@fortawesome/free-solid-svg-icons';
 import { ExportAsConfig, ExportAsService } from 'ngx-export-as';
+import * as moment from 'moment';
 import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
@@ -10,12 +11,22 @@ import { HttpService } from 'app/shared/services/http.service';
 })
 export class Fhsis2018McComponent implements OnChanges {
   @Input() report_data;
+  @Input() reportForm;
+  @Input() selectedBrgy;
+  @Input() brgys;
+  @Input() userInfo;
 
   faCircleNotch = faCircleNotch;
   faFileExcel = faFileExcel;
   faFilePdf = faFilePdf;
 
   stats : any;
+  brgy_result: any;
+  reportform_data : any;
+  selected_barangay : any;
+  info3 : any;
+  convertedMonth : any;
+  brgys_info : any;
   name_list: any = [];
 
   exportAsExcel: ExportAsConfig = {
@@ -77,8 +88,27 @@ export class Fhsis2018McComponent implements OnChanges {
     this.openList = !this.openList;
   }
 
+  convertDate(){
+    this.convertedMonth = moment(this.reportForm.value.month, 'M').format('MMMM');
+  }
+
+  convertBrgy(){
+    this.brgy_result = this.selected_barangay?.map((code) => this.brgys.find((el) => el.code == code).name);
+  }
+
   ngOnChanges(): void {
     this.stats = this.report_data;
+    this.reportform_data = this.reportForm;
+    this.selected_barangay = this.selectedBrgy;
+    this.info3 = this.userInfo;
+    this.brgys_info = this.brgys;
     this.pdf_exported = false;
+    console.log(this.reportform_data, 'test report data')
+    console.log(this.selected_barangay, 'test selected brgy')
+    console.log(this.info3, 'test user inFo')
+    console.log(this.brgys_info, 'test barangay')
+    console.log(this.brgy_result, 'test barangay convert')
+    this.convertBrgy();
+    this.convertDate();
   }
 }

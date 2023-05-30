@@ -22,6 +22,7 @@ export class Fhsis2018CcComponent implements OnChanges {
   faFilePdf = faFilePdf;
 
   stats : any;
+  brgy_result: any;
   reportform_data : any;
   selected_barangay : any;
   info3 : any;
@@ -88,6 +89,12 @@ export class Fhsis2018CcComponent implements OnChanges {
   convertDate(){
     this.convertedMonth = moment(this.reportForm.value.month, 'M').format('MMMM');
   }
+
+  convertBrgy(){
+    this.brgy_result = this.selected_barangay?.map((code) => this.brgys.find((el) => el.code == code).name);
+  }
+
+  
   
 
   ngOnChanges(): void {
@@ -101,6 +108,8 @@ export class Fhsis2018CcComponent implements OnChanges {
     console.log(this.selected_barangay, 'test selected brgy')
     console.log(this.info3, 'test user inFo')
     console.log(this.brgys_info, 'test barangay')
+    console.log(this.brgy_result, 'test barangay convert')
+    this.convertBrgy();
     this.convertDate();
   }
 }

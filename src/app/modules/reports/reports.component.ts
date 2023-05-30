@@ -164,10 +164,11 @@ export class ReportsComponent implements OnInit {
 
   changeDateOptions(): void {
     // console.log(this.reportForm.value.report_type)
+    this.report_data= '';
     if(this.fhsis_monthly_arr.find(e => e === this.reportForm.value.report_type.id)) {
       let month = formatDate(this.current_date, 'm', 'en');
       let year = formatDate(this.current_date, 'yyyy', 'en');
-
+      
       this.reportForm.controls.month.enable();
       this.reportForm.controls.year.enable();
       this.reportForm.patchValue({
@@ -186,7 +187,21 @@ export class ReportsComponent implements OnInit {
       this.reportForm.controls.end_date.disable();
       this.reportForm.controls.month.disable();
       this.reportForm.controls.year.disable();
-    }
+    }  
+  }
+
+  testFunction(){
+     
+    this.reportForm = this.formBuilder.nonNullable.group({
+      report_type: ['', Validators.required],
+      report_class: ['', Validators.required],
+      barangay_code: [''],
+      municipality_code: [''],
+      start_date: ['', Validators.required],
+      end_date: ['', Validators.required],
+      month: [null, Validators.required],
+      year: [null, Validators.required]
+    });
   }
 
   constructor(
