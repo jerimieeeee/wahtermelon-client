@@ -103,11 +103,11 @@ export class Fhsis2018McComponent implements OnChanges {
     this.info3 = this.userInfo;
     this.brgys_info = this.brgys;
     this.pdf_exported = false;
-    console.log(this.reportform_data, 'test report data')
-    console.log(this.selected_barangay, 'test selected brgy')
-    console.log(this.info3, 'test user inFo')
-    console.log(this.brgys_info, 'test barangay')
-    console.log(this.brgy_result, 'test barangay convert')
+    // console.log(this.reportform_data, 'test report data')
+    // console.log(this.selected_barangay, 'test selected brgy')
+    // console.log(this.info3, 'test user inFo')
+    // console.log(this.brgys_info, 'test barangay')
+    // console.log(this.brgy_result, 'test barangay convert')
     this.convertBrgy();
     this.convertDate();
   }
