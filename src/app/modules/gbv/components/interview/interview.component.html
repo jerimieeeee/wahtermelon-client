@@ -440,10 +440,22 @@
                 </td>
                 <td class="text-center align-top pt-3">
                   {{ perp.perpetrator_name ?? '-'}} <br />
-                  ({{ perp.perpetrator_age }} | {{ perp.gender ? (perp.gender === 'M' ? 'Male' : 'Female') : '' }})
+                  (
+                    {{ perp.perpetrator_age }} |
+                    {{ perp.gender ? (perp.gender === 'M' ? 'Male' : 'Female') : '-' }}
+                    <span *ngIf="perp.lgbtq_flag"> | LGBTQ</span>
+                  )
                 </td>
-                <td class="text-center align-top pt-3">
-                  {{ perp.barangay_code }}
+                <td class="align-top pt-3">
+                  <span *ngIf="perp.perpetrator_address">
+                    <span class="italic font-semibold">Permanent:</span> <br />
+                    {{ perp.perpetrator_address }}<br /><br />
+                  </span>
+
+                  <span *ngIf="perp.perpetrator_current_address">
+                    <span class="italic font-semibold">Current:</span> <br />
+                    {{ perp.perpetrator_address }}
+                  </span>
                 </td>
                 <td class="font-semibold italic align-top pt-3">
                   <span *ngIf="!perp.abuse_alcohol_flag && !perp.abuse_drugs_flag && !perp.abuse_others_flag">

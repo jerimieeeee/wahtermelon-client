@@ -36,7 +36,7 @@
               </div>
 
               <div>
-                <label for="nps_status_id">Type of Filing</label>
+                <label for="nps_status_id">Case Status</label>
                 <select name="nps_status_id" id="nps_status_id" formControlName="nps_status_id" class="input">
                   <option *ngFor="let nps_status of nps_statuses" [value]="nps_status.id">{{ nps_status.desc }}</option>
                 </select>
@@ -69,7 +69,7 @@
 
             <div class="col-span-4 grid grid-cols-6 gap-4">
               <div class="col-span-3">
-                <label for="cpumd_testimony_date" >Date of CPU MD Testimony</label>
+                <label for="cpumd_testimony_date" >Date of MD Testimony</label>
                 <input type="date" name="cpumd_testimony_date" id="cpumd_testimony_date" formControlName="cpumd_testimony_date" class="input">
               </div>
 

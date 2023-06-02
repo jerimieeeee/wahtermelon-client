@@ -68,7 +68,10 @@ export class InterviewComponent implements OnInit{
       this.show_error = false;
       this.interviewForm.patchValue({
         incident_first_datetime: formatDate(this.interviewForm.value.incident_first_datetime, 'yyyy-MM-dd HH:mm:ss', 'en'),
-        incident_recent_datetime: formatDate(this.interviewForm.value.incident_recent_datetime, 'yyyy-MM-dd HH:mm:ss', 'en')
+        incident_recent_datetime: formatDate(this.interviewForm.value.incident_recent_datetime, 'yyyy-MM-dd HH:mm:ss', 'en'),
+        recant_datetime: this.interviewForm.value.recant_datetime ? formatDate(this.interviewForm.value.recant_datetime, 'yyyy-MM-dd HH:mm:ss', 'en') : null,
+        interview_datetime: this.interviewForm.value.interview_datetime ? formatDate(this.interviewForm.value.interview_datetime, 'yyyy-MM-dd HH:mm:ss', 'en') : null,
+        deferral_datetime: this.interviewForm.value.deferral_datetime ? formatDate(this.interviewForm.value.deferral_datetime, 'yyyy-MM-dd HH:mm:ss', 'en') : null,
       });
 
       this.saveForm();
@@ -164,7 +167,6 @@ export class InterviewComponent implements OnInit{
     });
 
     this[var_name] = abuses;
-    console.log(typeof this.sexual_abuses)
   }
 
   createForm(){
@@ -300,5 +302,6 @@ export class InterviewComponent implements OnInit{
 
   ngOnInit(): void {
     this.loadLibraries();
+    console.log(this.selected_gbv_case)
   }
 }
