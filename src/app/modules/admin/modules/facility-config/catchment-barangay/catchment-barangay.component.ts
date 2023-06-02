@@ -1,49 +1,25 @@
 import { formatDate } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { faCircleNotch, faDoorClosed, faSave } from '@fortawesome/free-solid-svg-icons';
+import { faCircleNotch, faSave } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 
+
 @Component({
-  selector: 'app-facility-config',
-  templateUrl: './facility-config.component.html',
-  styleUrls: ['./facility-config.component.scss']
+  selector: 'app-catchment-barangay',
+  templateUrl: './catchment-barangay.component.html',
+  styleUrls: ['./catchment-barangay.component.scss']
 })
-export class FacilityConfigComponent implements OnInit {
-  current_year = formatDate(new Date(), 'yyyy', 'en');
-
-  pages: number = 1;
-  module: number = 1;
-
-  user_facility: string;
-  selected_gbv_case: any;
-  consult_details: any;
-
-  show_form: boolean = false;
-  fetching_history: boolean = true;
-
-  patient_gbv_history: any;
-  patient_id: string;
-
+export class CatchmentBarangayComponent implements OnInit {
   faSave = faSave;
   faCircleNotch = faCircleNotch;
-  faDoorClosed = faDoorClosed;
 
+  current_year = formatDate(new Date(), 'yyyy', 'en');
   barangays: any = [];
-  catchment_barangays: any = [];
   selected_catchment: any = [];
-  selected_year: any;
-  modals: any = [];
   all_selected: string;
 
-
-  switchPage(page) {
-    this.pages = page;
-  }
-
-  switchTab(tab) {
-    this.module = tab;
-  }
+  show_form: boolean = false;
 
   onSubmit() {
     console.log(this.selected_catchment);
@@ -72,17 +48,11 @@ export class FacilityConfigComponent implements OnInit {
 
   }
 
-  getCatchmentBarangay(year?) {
-    this.http.get('settings/catchment-barangay',{params:{'filter[year]': year ?? this.current_year}}).subscribe({
+  getCatchmentBarangay() {
+    this.http.get('settings/catchment-barangay').subscribe({
       next: (data: any) => {
         console.log(data);
-        this.catchment_barangays = data.data;
-        if(Object.keys(data.data).length > 0) {
-          this.loadCatchment(data.data);
-        } else {
-          this.selected_catchment = [];
-        }
-        this.pages = 3;
+        if(Object.keys(data.data).length > 0) this.loadCatchment(data.data);
       },
       error: err => console.log(err)
     });
@@ -111,19 +81,12 @@ export class FacilityConfigComponent implements OnInit {
   ) { }
 
   municipality_code: string;
-  facility_code: string;
-  years: any = [];
+
   ngOnInit(): void {
 
     let facility = this.http.getUserFromJSON().facility;
     console.log(facility)
     this.municipality_code = facility.municipality_code ?? facility.municipality.code;
-    this.facility_code = facility.code ?? facility.facility.code;
     this.loadBarangays();
-
-    this.selected_year = this.current_year;
-    for(let year = Number(this.current_year); year > 2017; year--) {
-      this.years.push(year);
-    }
   }
 }

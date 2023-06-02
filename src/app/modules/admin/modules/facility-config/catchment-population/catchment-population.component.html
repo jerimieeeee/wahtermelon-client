@@ -1,0 +1,99 @@
+<div class="grid grid-cols-1 mt-5">
+  <div class="mb-5 border border-slate-200 shadow-md rounded-xl">
+    <div class="bg-blue-500 rounded-t-xl p-3 text-white font-semibold flex justify-between">
+      <div class="pt-1">Update Population</div>
+      <div>
+        <select name="selected_year" id="selected_year" [(ngModel)]="selected_year" (change)="reloadData()" class="border border-slate rounded-md text-sm py-1 text-gray-800 w-28">
+          <option *ngFor="let year of years" [value]="year">{{ year }}</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="h-[400px] overflow-y-auto overflow-x-auto">
+      <table class="table-fixed w-full" *ngIf="show_form">
+        <thead>
+          <tr class="border-b border-slate-200 bg-gray-100 text-xs sticky top-0">
+            <th class="w-36 h-12">BRGY NAME <br />(CODE)</th>
+            <th class="w-24">YEAR</th>
+            <th class="w-36">POPULATION</th>
+            <th class="w-36">OPT</th>
+            <th class="w-36">WRA</th>
+            <th class="w-36">HOUSEHOLD</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="mb-2 border-b border-slate-100" *ngFor="let barangay of catchment_barangays; let i = index">
+            <td class="px-3 text-center">
+              <span class="font-semibold">{{ barangay.barangay.name }}</span><br />
+              <span class="italic">({{ barangay.barangay.code }})</span>
+            </td>
+            <td class="text-center">{{ barangay.year }}</td>
+            <td>
+              <input class="w-36" type="number" [(ngModel)]="catchment_barangays[i]['population']" class="input" />
+            </td>
+            <td>
+              <input class="w-36" type="number" [(ngModel)]="catchment_barangays[i]['population_opt']" class="input" />
+            </td>
+            <td>
+              <input class="w-36" type="number" [(ngModel)]="catchment_barangays[i]['population_wra']" class="input" />
+            </td>
+            <td>
+              <input class="w-36" type="number" [(ngModel)]="catchment_barangays[i]['household']" class="input" />
+            </td>
+          </tr>
+          <tr *ngIf="catchment_barangays.length === 0">
+            <td colspan="6" class="text-center italic py-5">No records to show</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="grid grid-cols-1 mt-20" *ngIf="!show_form">
+        <div class="flex justify-center text-blue-500 text-xl">
+          <fa-icon [icon]="faCircleNotch" spin="true"></fa-icon>
+        </div>
+        <div class="flex justify-center">
+          Loading...
+        </div>
+      </div>
+    </div>
+
+    <div class="rounded-b-xl p-3 text-end border-t border-slate-300" *ngIf="catchment_barangays.length > 0">
+      <button type="button" class="btn-save" (click)="onSubmit()">
+        <fa-icon [icon]="faSave" class="pr-2"></fa-icon>
+        Update
+      </button>
+    </div>
+  </div>
+
+  <div class="border border-slate-200 shadow-md rounded-xl">
+    <div class="bg-blue-500 rounded-t-xl p-3 text-white font-semibold">
+      Catchment Population
+    </div>
+
+    <div class="overflow-y-auto overflow-x-auto">
+      <!-- <table class="table-fixed w-full">
+        <thead>
+          <tr class="border-b border-slate-200 bg-gray-100 text-xs">
+            <th class="w-24">YEAR</th>
+            <th class="w-36">POPULATION</th>
+            <th class="w-36">BARANGAY LIST</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="mb-2 border-b border-slate-100" *ngFor="let barangay of catchment_barangays; let i = index; let c = count">
+            <td class="px-3 text-center">
+              <span class="font-semibold">{{ barangay.barangay.name }}</span><br />
+              <span class="italic">({{ barangay.barangay.code }})</span>
+            </td>
+            <td class="text-center">{{ barangay.year }} </td>
+            <td>
+              <input class="w-36" type="number" [(ngModel)]="catchment_barangays[i]['population']" class="input" />
+            </td>
+          </tr>
+        </tbody>
+      </table> -->
+    </div>
+  </div>
+</div>
+
+

@@ -1,1 +1,58 @@
-<p>facility-config works!</p>
+<div class="flex">
+  <nav class="mt-4 flex flex-row border-b border-slate-300 text-xs">
+    <button (click)="switchPage(1)" class="tabs-main px-4 uppercase"
+      [class]="pages===1? 'tabs-main-true rounded-t-md' : 'tabs-main-false' ">
+      Catchment Barangays
+    </button>
+    <button (click)="switchPage(2)" class="tabs-main px-4 uppercase"
+      [class]="pages===2? 'tabs-main-true rounded-t-md' : 'tabs-main-false' ">
+      Catchment Population
+    </button>
+    <button (click)="switchPage(3)" class="tabs-main px-4 uppercase"
+      [class]="pages===3? 'tabs-main-true rounded-t-md' : 'tabs-main-false' ">
+      Setup BHS
+    </button>
+  </nav>
+</div>
+
+
+<div class="my-5 w-full border border-gray-200 shadow-md rounded-xl" *ngIf="pages === 1">
+  <div class="grid grid-cols-4 border border-slate-200 rounded-xl w-full shadow-md">
+    <div class="col-span-4 bg-blue-500 rounded-t-xl p-3 text-white font-semibold flex justify-between">
+      <div class="pt-1">Catchment Barangay</div>
+      <div>
+        <select name="selected_year" id="selected_year" [(ngModel)]="selected_year" (change)="getCatchmentBarangay(selected_year)" class="border border-slate rounded-md text-sm py-1 text-gray-800 w-28">
+          <option *ngFor="let year of years" [value]="year">{{ year }}</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-span-4 grid grid-cols-3 gap-4 p-5 h-[600px] overflow-y-auto">
+      <div class="col-span-3">
+        <input class="input-checkbox" attr.id="all_selected" [(ngModel)]="all_selected" />
+        <label class="pl-2 select-none" attr.for="all_selected">Select All</label>
+      </div>
+      <div *ngFor="let brgy of barangays">
+        <input type="checkbox" class="input-checkbox" attr.id="selected_catchment{{brgy.code}}" [(ngModel)]="selected_catchment[brgy.code]" />
+        <label class="pl-2 select-none" attr.for="selected_catchment{{brgy.code}}">{{ brgy.name }}</label>
+      </div>
+    </div>
+    <div class="col-span-4 rounded-b-xl border-t border-slate-200 text-end">
+      <button class="btn-save m-5 select-none" (click)="onSubmit()" >
+        <fa-icon [icon]="faSave" class="pr-2"></fa-icon>
+        Save
+      </button>
+    </div>
+  </div>
+</div>
+
+<app-catchment-population *ngIf="pages === 2"
+  [catchment_barangays]="catchment_barangays"
+  [current_year]="current_year"
+  (getCatchmentBarangay)="getCatchmentBarangay($event)"
+></app-catchment-population>
+
+<app-catchment-bhs *ngIf="pages === 3"
+  [catchment_barangays]="catchment_barangays"
+  [facility_code]="facility_code"
+></app-catchment-bhs>
+
