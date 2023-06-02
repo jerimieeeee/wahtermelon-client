@@ -13,6 +13,7 @@ import { forkJoin } from 'rxjs';
 export class CatchmentBhsComponent implements OnInit {
   @Input() catchment_barangays;
   @Input() facility_code;
+  @Input() selected_year;
 
   faSave = faSave;
   faCircleNotch = faCircleNotch;
@@ -34,12 +35,13 @@ export class CatchmentBhsComponent implements OnInit {
   facility_bhs: any = [];
 
   editBhs(data) {
-    console.log(data);
     this.bhs = data;
+    this.bhs.assigned_user_id = data.assigned_user.id;
+    this.bhs.barangay_code = data.barangay.code;
 
     Object.entries(data.bhs_barangay).forEach(([key, value]: any, index) => {
       this.selected_barangays[value.id] = true;
-    })
+    });
   }
 
   onSubmit() {
@@ -51,11 +53,17 @@ export class CatchmentBhsComponent implements OnInit {
 
     if(barangay_arr.length > 0) {
       this.bhs.barangay = barangay_arr;
-      console.log(this.bhs)
 
-      this.http.post('settings/bhs', this.bhs).subscribe({
-        next: (data: any) => {
-          console.log(data);
+      let query;
+      if(this.bhs.id) {
+        query = this.http.update('settings/bhs/', this.bhs.id, this.bhs);
+      } else {
+        this.http.post('settings/bhs', this.bhs)
+      }
+
+      query.subscribe({
+        next: () => {
+          this.toastr.success('Successfully recorded', 'BHS')
           this.loadData();
         },
         error: err => console.log(err)
@@ -63,20 +71,6 @@ export class CatchmentBhsComponent implements OnInit {
     } else {
       this.is_loading = false;
     }
-
-  }
-
-  loadBhs() {
-    this.http.get('settings/bhs').subscribe({
-      next: (data: any) => {
-        console.log(data)
-      },
-      error: err => console.log(err)
-    })
-  }
-
-  onDelete() {
-
   }
 
   loadData() {
@@ -85,7 +79,7 @@ export class CatchmentBhsComponent implements OnInit {
 
     forkJoin([getBhs, getStaff]).subscribe({
       next: ([dataBhs, dataStaff]: any) => {
-        this.facility_bhs = dataBhs;
+        this.facility_bhs = dataBhs.data;
         this.rhu_staffs = dataStaff.data;
         this.is_loading = false;
       },
@@ -93,14 +87,10 @@ export class CatchmentBhsComponent implements OnInit {
     });
   }
 
-
-
   getStaff(){
     this.http.get('users', {params:{facility_code: this.facility_code}}).subscribe({
       next: (data: any) => {
-        console.log(data);
         this.rhu_staffs = data.data;
-        this.loadBhs();
       },
       error: err => console.log(err)
     })

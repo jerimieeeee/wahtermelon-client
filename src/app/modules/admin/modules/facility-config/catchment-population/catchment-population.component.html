@@ -22,26 +22,26 @@
           </tr>
         </thead>
         <tbody>
-          <tr class="mb-2 border-b border-slate-100" *ngFor="let barangay of catchment_barangays; let i = index">
+          <tr class="mb-2 border-b border-slate-100" *ngFor="let barangay of catchment_barangays[selected_year].data; let i = index">
             <td class="px-3 text-center">
               <span class="font-semibold">{{ barangay.barangay.name }}</span><br />
               <span class="italic">({{ barangay.barangay.code }})</span>
             </td>
             <td class="text-center">{{ barangay.year }}</td>
             <td>
-              <input class="w-36" type="number" [(ngModel)]="catchment_barangays[i]['population']" class="input" />
+              <input class="w-36" type="number" [(ngModel)]="catchment_barangays[selected_year].data[i]['population']" class="input" />
             </td>
             <td>
-              <input class="w-36" type="number" [(ngModel)]="catchment_barangays[i]['population_opt']" class="input" />
+              <input class="w-36" type="number" [(ngModel)]="catchment_barangays[selected_year].data[i]['population_opt']" class="input" />
             </td>
             <td>
-              <input class="w-36" type="number" [(ngModel)]="catchment_barangays[i]['population_wra']" class="input" />
+              <input class="w-36" type="number" [(ngModel)]="catchment_barangays[selected_year].data[i]['population_wra']" class="input" />
             </td>
             <td>
-              <input class="w-36" type="number" [(ngModel)]="catchment_barangays[i]['household']" class="input" />
+              <input class="w-36" type="number" [(ngModel)]="catchment_barangays[selected_year].data[i]['household']" class="input" />
             </td>
           </tr>
-          <tr *ngIf="catchment_barangays.length === 0">
+          <tr *ngIf="catchment_barangays[selected_year].data.length === 0">
             <td colspan="6" class="text-center italic py-5">No records to show</td>
           </tr>
         </tbody>
@@ -57,7 +57,7 @@
       </div>
     </div>
 
-    <div class="rounded-b-xl p-3 text-end border-t border-slate-300" *ngIf="catchment_barangays.length > 0">
+    <div class="rounded-b-xl p-3 text-end border-t border-slate-300" *ngIf="catchment_barangays[selected_year].data.length > 0">
       <button type="button" class="btn-save" (click)="onSubmit()">
         <fa-icon [icon]="faSave" class="pr-2"></fa-icon>
         Update
@@ -71,27 +71,38 @@
     </div>
 
     <div class="overflow-y-auto overflow-x-auto">
-      <!-- <table class="table-fixed w-full">
+      <table class="table-fixed w-full">
         <thead>
           <tr class="border-b border-slate-200 bg-gray-100 text-xs">
-            <th class="w-24">YEAR</th>
-            <th class="w-36">POPULATION</th>
-            <th class="w-36">BARANGAY LIST</th>
+            <th class="w-20">YEAR</th>
+            <th class="w-20">POPULATION</th>
+            <th class="w-20">OPT</th>
+            <th class="w-20">WRA</th>
+            <th class="w-20">HOUSEHOLD</th>
+            <th class="w-44">BARANGAY LIST</th>
+            <th class="w-12">ACTION</th>
           </tr>
         </thead>
         <tbody>
-          <tr class="mb-2 border-b border-slate-100" *ngFor="let barangay of catchment_barangays; let i = index; let c = count">
+          <tr class="mb-2 border-b border-slate-100" *ngFor="let barangay of catchment_barangays | keyvalue">
             <td class="px-3 text-center">
-              <span class="font-semibold">{{ barangay.barangay.name }}</span><br />
-              <span class="italic">({{ barangay.barangay.code }})</span>
+              <span class="font-semibold">{{ barangay.key }}</span><br />
             </td>
-            <td class="text-center">{{ barangay.year }} </td>
+            <td class="text-center">{{ barangay.value.total_population }}</td>
+            <td class="text-center">{{ barangay.value.total_population_opt }}</td>
+            <td class="text-center">{{ barangay.value.total_population_wra }}</td>
+            <td class="text-center">{{ barangay.value.total_household }}</td>
             <td>
-              <input class="w-36" type="number" [(ngModel)]="catchment_barangays[i]['population']" class="input" />
+              <span *ngFor="let barangay_item of barangay.value.data; let last = last">
+                {{ barangay_item.barangay.name }}{{ !last ? ', ' : '' }}
+              </span>
+            </td>
+            <td class="text-center">
+              <fa-icon [icon]="faEdit" class="text-orange-500 hover:cursor-pointer" (click)="editPop(catchment_barangays[barangay.key])"></fa-icon>
             </td>
           </tr>
         </tbody>
-      </table> -->
+      </table>
     </div>
   </div>
 </div>

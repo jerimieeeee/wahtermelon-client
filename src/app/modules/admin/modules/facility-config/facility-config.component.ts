@@ -46,7 +46,6 @@ export class FacilityConfigComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.selected_catchment);
     let barangays: any = [];
     Object.entries(this.selected_catchment).forEach(([key, value]: any, index) => {
       if(value) barangays.push({barangay_code: key});
@@ -56,9 +55,6 @@ export class FacilityConfigComponent implements OnInit {
       year: this.current_year,
       barangay: barangays
     };
-
-
-    console.log(params);
 
     this.http.post('settings/catchment-barangay', params).subscribe({
       next: (data: any) => {
@@ -76,19 +72,20 @@ export class FacilityConfigComponent implements OnInit {
     this.http.get('settings/catchment-barangay',{params:{'filter[year]': year ?? this.current_year}}).subscribe({
       next: (data: any) => {
         console.log(data);
-        this.catchment_barangays = data.data;
-        if(Object.keys(data.data).length > 0) {
-          this.loadCatchment(data.data);
+        this.catchment_barangays = data;
+        if(Object.keys(this.catchment_barangays[this.selected_year].data).length > 0) {
+          this.loadCatchment(this.catchment_barangays[this.selected_year].data);
         } else {
           this.selected_catchment = [];
         }
-        this.pages = 3;
+        this.pages = 2;
       },
       error: err => console.log(err)
     });
   }
 
   loadCatchment(data){
+    console.log(data)
     Object.entries(data).forEach(([key, value]: any, index) => {
       this.selected_catchment[value.barangay.code] = true;
     });
@@ -97,8 +94,7 @@ export class FacilityConfigComponent implements OnInit {
   loadBarangays(){
     this.http.get('libraries/municipalities/'+this.municipality_code,{params:{include:'barangays'}}).subscribe({
       next: (data: any) => {
-        this.barangays = data.data.barangays
-        console.log(this.barangays);
+        this.barangays = data.data.barangays;
         this.getCatchmentBarangay();
       },
       error: err => console.log(err)

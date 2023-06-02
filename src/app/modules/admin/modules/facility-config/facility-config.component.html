@@ -49,10 +49,12 @@
   [catchment_barangays]="catchment_barangays"
   [current_year]="current_year"
   (getCatchmentBarangay)="getCatchmentBarangay($event)"
+  [selected_year]="selected_year"
 ></app-catchment-population>
 
 <app-catchment-bhs *ngIf="pages === 3"
   [catchment_barangays]="catchment_barangays"
   [facility_code]="facility_code"
+  [selected_year]="selected_year"
 ></app-catchment-bhs>
 

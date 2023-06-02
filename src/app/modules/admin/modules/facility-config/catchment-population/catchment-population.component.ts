@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { faSave } from '@fortawesome/free-regular-svg-icons';
+import { faEdit, faSave } from '@fortawesome/free-regular-svg-icons';
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
@@ -15,6 +15,7 @@ export class CatchmentPopulationComponent implements OnInit, OnChanges {
   @Input() current_year;
   faSave = faSave;
   faCircleNotch = faCircleNotch;
+  faEdit = faEdit;
 
   selected_year: number;
   years: any = [];
@@ -23,15 +24,20 @@ export class CatchmentPopulationComponent implements OnInit, OnChanges {
   onSubmit() {
     let params = {
       year: this.selected_year,
-      barangay: this.catchment_barangays
+      barangay: this.catchment_barangays[this.selected_year].data
     }
 
     this.http.post('settings/catchment-barangay', params).subscribe({
       next: (data: any) => {
-        console.log(data)
+        this.reloadData();
       },
       error: err => console.log(err)
     });
+  }
+
+  editPop(data) {
+    console.log(data)
+    this.reloadData();
   }
 
   show_form: boolean = false;
