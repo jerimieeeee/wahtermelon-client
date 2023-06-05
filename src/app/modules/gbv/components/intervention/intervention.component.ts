@@ -1,5 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { faEdit } from '@fortawesome/free-regular-svg-icons';
 import { faPlus, faSave } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
@@ -10,7 +9,7 @@ import { ToastrService } from 'ngx-toastr';
   templateUrl: './intervention.component.html',
   styleUrls: ['./intervention.component.scss']
 })
-export class InterventionComponent implements OnInit {
+export class InterventionComponent implements OnChanges {
   @Output() updateSelectedGbv = new EventEmitter<any>();
   @Input() selected_gbv_case;
   @Input() patient_id;
@@ -51,8 +50,7 @@ export class InterventionComponent implements OnInit {
     private toastr: ToastrService
   ) { }
 
-  ngOnInit(): void {
+  ngOnChanges(changes: SimpleChanges): void {
     console.log(this.selected_gbv_case);
-      // this.toggleModal('case_conference');
   }
 }

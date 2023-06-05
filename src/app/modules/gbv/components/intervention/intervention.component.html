@@ -257,7 +257,7 @@
           </span>
 
           <div *ngIf="pos==='WCPD'">
-            <button type="button" *ngIf="!selected_gbv_case?.gbvIntake.intervention_legal" (click)="toggleModal('legal_case')" class="bg-white text-sky-500 px-2 py-1 rounded text-xs">
+            <button type="button" *ngIf="!selected_gbv_case?.gbvIntake.intervention_legal" (click)="toggleModal('legal_case', selected_gbv_case?.gbvIntake.intervention_legal)" class="bg-white text-sky-500 px-2 py-1 rounded text-xs">
               <fa-icon [icon]="faEdit"></fa-icon>
             </button>
           </div>
@@ -275,7 +275,7 @@
 
               </td>
               <td class="text-center font-semibold w-4/12 align-top pt-3">
-                Filed By
+                Filing Details
               </td>
               <td class="text-center font-semibold w-4/12 align-top pt-3">
                 Date of CPU MD Testimony
@@ -290,33 +290,40 @@
               <td *ngIf="pos==='WCPD'" class="text-center">
                 <fa-icon [icon]="faEdit" (click)="toggleModal('legal_case', selected_gbv_case?.gbvIntake.intervention_legal)" class="hover:cursor-pointer text-orange-500"></fa-icon>
               </td>
-              <td class="text-center align-top pt-3">
-                {{ selected_gbv_case?.gbvIntake.intervention_legal.filed_by_name }} <br /><br />
+              <td class="align-top pt-3">
+                <span class="italic font-semibold text-sm">Filed by: </span><br />
+                {{ selected_gbv_case?.gbvIntake.intervention_legal.filed_by_name ?? '-' }} <br /><br />
 
-                Relationship to victim survivor: <br />
+                <span class="italic font-semibold text-sm">Relationship to victim survivor:</span> <br />
                 {{ selected_gbv_case?.gbvIntake.intervention_legal.relation ? selected_gbv_case?.gbvIntake.intervention_legal.relation.desc : '-' }} <br /><br />
 
-                Filed at: <br />
-                {{ selected_gbv_case?.gbvIntake.intervention_legal.filed_location ? selected_gbv_case?.gbvIntake.intervention_legal.filed_location.desc : '-' }}
+                <span class="italic font-semibold text-sm">Filed at:</span> <br />
+                {{ selected_gbv_case?.gbvIntake.intervention_legal.filed_location ? selected_gbv_case?.gbvIntake.intervention_legal.filed_location.desc : '-' }}<br /><br />
+
+                <span class="italic font-semibold text-sm">Filing Type:</span> <br />
+                {{ selected_gbv_case?.gbvIntake.intervention_legal.filed_type ?  selected_gbv_case?.gbvIntake.intervention_legal.filed_type.desc : '-' }}<br /><br />
+
+                <span class="italic font-semibold text-sm">Filing Status:</span> <br />
+                {{ selected_gbv_case?.gbvIntake.intervention_legal.nps_status ?  selected_gbv_case?.gbvIntake.intervention_legal.nps_status.desc : '-' }}<br /><br />
+
               </td>
-              <td class="text-center align-top pt-3">
+              <td class="align-top pt-3">
                 {{ selected_gbv_case?.gbvIntake.intervention_legal.cpumd_testimony_date | date: 'MM/dd/yyyy' }}
               </td>
               <td class="text-center align-top pt-3">
-                Criminal Case Number: <br />
+                <span class="italic font-semibold text-sm">Criminal Case Number: </span> <br />
                 {{ selected_gbv_case?.gbvIntake.intervention_legal.criminal_case_number }} <br /><br />
 
-                Judge: <br />
+                <span class="italic font-semibold text-sm">Judge: </span> <br />
                 {{ selected_gbv_case?.gbvIntake.intervention_legal.judge_name }} <br /><br />
 
-
-                Court: <br />
+                <span class="italic font-semibold text-sm">Court: </span> <br />
                 {{ selected_gbv_case?.gbvIntake.intervention_legal.court_name }}<br /><br />
 
-                Fiscal Name: <br />
+                <span class="italic font-semibold text-sm">Fiscal Name: </span> <br />
                 {{ selected_gbv_case?.gbvIntake.intervention_legal.fiscal_name }}<br /><br />
 
-                Verdict: <br />
+                <span class="italic font-semibold text-sm">Verdict: </span><br />
                 {{ selected_gbv_case?.gbvIntake.intervention_legal.verdict ? selected_gbv_case?.gbvIntake.intervention_legal.verdict.desc : '-' }}
               </td>
             </tr>

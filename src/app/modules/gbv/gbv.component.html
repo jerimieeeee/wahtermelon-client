@@ -31,10 +31,10 @@
         [class]="module===3? 'tabs-main-true' : 'tabs-main-false' ">
         Interview
     </button>
-    <!-- <button (click)="switchTab(4)" class="tabs-main w-28"
+    <button (click)="switchTab(4)" class="tabs-main w-28"
         [class]="module===4? 'tabs-main-true' : 'tabs-main-false' ">
         Medical
-    </button> -->
+    </button>
     <button (click)="switchTab(5)" class="tabs-main w-28" *ngIf="selected_gbv_case?.gbvIntake"
         [class]="module===5? 'tabs-main-true' : 'tabs-main-false' ">
         Intervention
@@ -150,6 +150,13 @@
   [selected_gbv_case]="selected_gbv_case"
   [pos]="pos"
 ></app-interview>
+
+<app-medical *ngIf="pages === 2 && module === 3"
+(updateSelectedGbv)="updateSelectedGbv($event)"
+[patient_id]="patient_id"
+[selected_gbv_case]="selected_gbv_case"
+[pos]="pos"
+></app-medical>
 
 <app-intervention *ngIf="pages === 2 && module === 5"
   (updateSelectedGbv)="updateSelectedGbv($event)"

@@ -56,8 +56,10 @@ export class LegalCaseComponent implements OnInit, OnChanges {
       query = this.http.post('gender-based-violence/patient-gbv-legal', this.legalForm.value);
     }
 
+    console.log(this.legalForm.value);
     query.subscribe({
       next: (data: any) => {
+        console.log(data)
         this.is_saving = false;
         this.toastr.success('Successfully recorded', 'Legal Case');
       },
@@ -132,7 +134,7 @@ export class LegalCaseComponent implements OnInit, OnChanges {
   ) { }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log('test');
+    console.log(this.selected_data);
   }
 
   ngOnInit(): void {
