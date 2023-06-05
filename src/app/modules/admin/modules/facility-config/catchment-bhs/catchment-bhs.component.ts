@@ -58,7 +58,7 @@ export class CatchmentBhsComponent implements OnInit {
       if(this.bhs.id) {
         query = this.http.update('settings/bhs/', this.bhs.id, this.bhs);
       } else {
-        this.http.post('settings/bhs', this.bhs)
+        query = this.http.post('settings/bhs', this.bhs)
       }
 
       query.subscribe({

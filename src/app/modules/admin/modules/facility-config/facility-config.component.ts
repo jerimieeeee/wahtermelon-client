@@ -59,6 +59,8 @@ export class FacilityConfigComponent implements OnInit {
     this.http.post('settings/catchment-barangay', params).subscribe({
       next: (data: any) => {
         console.log(data);
+        this.toastr.success('Successfully recorded', 'Catchment Barangay');
+        this.getCatchmentBarangay(this.selected_year);
       },
       error: err => console.log(err)
     })
@@ -78,7 +80,7 @@ export class FacilityConfigComponent implements OnInit {
         } else {
           this.selected_catchment = [];
         }
-        this.pages = 2;
+        // this.pages = 2;
       },
       error: err => console.log(err)
     });
