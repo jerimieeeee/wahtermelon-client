@@ -29,6 +29,7 @@ export class CatchmentPopulationComponent implements OnInit, OnChanges {
 
     this.http.post('settings/catchment-barangay', params).subscribe({
       next: (data: any) => {
+        this.toastr.success('Successfully recorded', 'Population')
         this.reloadData();
       },
       error: err => console.log(err)
