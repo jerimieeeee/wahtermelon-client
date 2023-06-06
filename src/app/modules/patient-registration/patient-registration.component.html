@@ -28,17 +28,16 @@
 
     <form [formGroup]="patientForm" (ngSubmit)="onSubmit()" *ngIf="show_form">
       <div class="mx-10 mb-10">
-        <!-- <div class="text-red-500">
-          All fields are required.
-        </div> -->
         <div class="px-4 py-5 bg-white sm:p-6">
           <div class="grid grid-cols-8 gap-x-4 mb-3">
-            <div class="col-span-8 sm:col-span-4 grid grid-cols-2">
-              <label for="consent_flag" class="input-label col-span-1 mt-3" [ngClass]="{'text-red-500': is_saving && f.consent_flag.errors}">Has the patient signed the consent?</label>
-              <select id="consent_flag" name="consent_flag" class="input col-span-1" [ngClass]="{'invalid-input': is_saving && f.consent_flag.errors}" formControlName="consent_flag">
+            <div class="col-span-8 flex">
+              <input type="checkbox" class="input-checkbox mt-0.5" formControlName="consent_flag" />
+              <label for="consent_flag" class="input-label ml-2" [ngClass]="{'text-red-500': is_saving && f.consent_flag.errors}">Patient has signed the consent</label>
+              <!-- <label for="consent_flag" class="input-label mt-3 mr-5" [ngClass]="{'text-red-500': is_saving && f.consent_flag.errors}">Has the patient signed the consent?</label>
+              <select id="consent_flag" name="consent_flag" class="input w-36" [ngClass]="{'invalid-input': is_saving && f.consent_flag.errors}" formControlName="consent_flag">
                 <option [ngValue]="false">N</option>
                 <option [ngValue]="true">Y</option>
-              </select>
+              </select> -->
             </div>
           </div>
 
@@ -152,7 +151,7 @@
               </div>
 
               <div class="col-span-6  sm:col-span-2">
-                <label for="mobile_number" class="input-label" [ngClass]="{'text-red-500': is_saving && f.mobile_number.errors}">Mobile Number (0912) 354-6789</label>
+                <label for="mobile_number" class="input-label" [ngClass]="{'text-red-500': is_saving && f.mobile_number.errors}">Mobile Number<!--  (0912) 354-6789 --></label>
                 <input type="text" mask="(9999) 999-9999" [showMaskTyped]="true" name="mobile_number" id="mobile_number" class="input" [ngClass]="{'invalid-input': is_saving && f.mobile_number.errors}" formControlName="mobile_number">
 
                 <div *ngIf="is_saving && f.mobile_number.errors" class="invalid-alert">
@@ -216,19 +215,6 @@
               </div>
 
               <div class="col-span-6 sm:col-span-2">
-                <label for="pwd_type_code" class="input-label" [ngClass]="{'text-red-500': is_saving && f.pwd_type_code.errors}">Person with Disabililties</label>
-                <select id="pwd_type_code" name="pwd_type_code" class="input" [ngClass]="{'invalid-input': is_saving && f.pwd_type_code.errors}" formControlName="pwd_type_code">
-                  <option *ngFor="let pwd_type of pwd_types" [value]="pwd_type.code">{{ pwd_type.type_desc }}</option>
-                </select>
-
-                <div *ngIf="is_saving && f.pwd_type_code.errors" class="invalid-alert">
-                  <div *ngIf="f.pwd_type_code.errors?.['required']">
-                    {{ required_message }}
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-span-6 sm:col-span-2">
                 <label for="indegenous_flag" class="input-label" [ngClass]="{'text-red-500': is_saving && f.indegenous_flag.errors}">Indigenous People</label>
                 <select id="indegenous_flag" name="indegenous_flag" class="input" [ngClass]="{'invalid-input': is_saving && f.indegenous_flag.errors}" formControlName="indegenous_flag">
                   <option [ngValue]="false">N</option>
@@ -242,20 +228,37 @@
                 </div>
               </div>
 
-              <!-- <div class="col-span-6 sm:col-span-2">
-                <label for="consent_flag" class="input-label" [ngClass]="{'text-red-500': is_saving && f.consent_flag.errors}">Has Consent</label>
-                <select id="consent_flag" name="consent_flag" class="input" [ngClass]="{'invalid-input': is_saving && f.consent_flag.errors}" formControlName="consent_flag">
-                  <option [ngValue]="false">N</option>
-                  <option [ngValue]="true">Y</option>
+              <div class="col-span-6 sm:col-span-2">
+                <label for="pwd_type_code" class="input-label" [ngClass]="{'text-red-500': is_saving && f.pwd_type_code.errors}">Person with Disabililties</label>
+                <select id="pwd_type_code" name="pwd_type_code" class="input" [ngClass]="{'invalid-input': is_saving && f.pwd_type_code.errors}" formControlName="pwd_type_code">
+                  <option *ngFor="let pwd_type of pwd_types" [value]="pwd_type.code">{{ pwd_type.type_desc }}</option>
+                </select>
+
+                <div *ngIf="is_saving && f.pwd_type_code.errors" class="invalid-alert">
+                  <div *ngIf="f.pwd_type_code.errors?.['required']">
+                    {{ required_message }}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- WASHINGTON QUESTION -->
+            <div class="grid grid-cols-8 gap-x-4 gap-y-4 pt-6" *ngIf="f.pwd_type_code.value === 'NA' || f.pwd_type_code.value === 'UN'">
+              <div class="col-span-8 border-b-2 border-slate-100"></div>
+              <div class="col-span-8 font-semibold text-blue-500">
+                <span class="-ml-5 mr-5">Washington Group Question</span>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-8 gap-x-4 text-sm" *ngIf="f.pwd_type_code.value === 'NA' || f.pwd_type_code.value === 'UN'">
+              <div class="col-span-8 grid grid-cols-8 gap-x-4" *ngFor="let question of washington_questions; let i = index">
+                <label class="col-span-6">{{ i+1 }}. {{ question.desc }}</label>
+                <select [id]="controlName(i+1)" [name]="controlName(i+1)" class="input col-span-2" [ngClass]="{'invalid-input': is_saving && f[controlName(i+1)].errors}" [formControlName]="controlName(i+1)">
+                  <option *ngFor="let washington_answer of washington_answers" [value]="washington_answer.id">{{ washington_answer.desc }}</option>
                 </select>
               </div>
-
-              <div *ngIf="is_saving && f.consent_flag.errors" class="invalid-alert">
-                <div *ngIf="f.consent_flag.errors?.['required']">
-                  {{ required_message }}
-                </div>
-              </div> -->
             </div>
+            <!-- WASHINGTON QUESTION -->
 
             <div class="grid grid-cols-8 gap-x-4 gap-y-4 pt-6">
               <div class="col-span-8 border-b-2 border-slate-100"></div>

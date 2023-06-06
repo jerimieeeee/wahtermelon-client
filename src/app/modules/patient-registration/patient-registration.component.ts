@@ -52,7 +52,13 @@ export class PatientRegistrationComponent implements OnInit {
       cct_id: new FormControl<string| null>(''),
       cct_date: new FormControl<string| null>(''),
       is_head: new FormControl<string| null>(''),
-    })
+    }),
+    difficulty_seeing: new FormControl<string| null>(''),
+    difficulty_hearing: new FormControl<string| null>(''),
+    difficulty_walking: new FormControl<string| null>(''),
+    difficulty_remembering: new FormControl<string| null>(''),
+    difficulty_self_care: new FormControl<string| null>(''),
+    difficulty_speaking: new FormControl<string| null>('')
   });
 
   new_patient_id: string;
@@ -65,6 +71,8 @@ export class PatientRegistrationComponent implements OnInit {
   educations: object;
   religions: object;
   pwd_types: object;
+  washington_questions: object;
+  washington_answers: object;
   date;
 
   regions: object;
@@ -85,6 +93,8 @@ export class PatientRegistrationComponent implements OnInit {
     {var_name: 'religions', location: 'religions'},
     {var_name: 'regions', location: 'regions'},
     {var_name: 'pwd_types', location: 'pwd-types'},
+    {var_name: 'washington_questions', location: 'washington-disability-question'},
+    {var_name: 'washington_answers', location: 'washington-disability-answer'},
   ]
 
   showModal:boolean = false;
@@ -110,6 +120,17 @@ export class PatientRegistrationComponent implements OnInit {
 
   get f(): { [key: string]: AbstractControl } {
     return this.patientForm.controls;
+  }
+
+  controlName(id): string {
+    switch(id) {
+      case 1: { return 'difficulty_seeing'; }
+      case 2: { return 'difficulty_hearing'; }
+      case 3: { return 'difficulty_walking'; }
+      case 4: { return 'difficulty_remembering'; }
+      case 5: { return 'difficulty_self_care'; }
+      case 6: { return 'difficulty_speaking'; }
+    }
   }
 
   submit_errors: any;
@@ -187,7 +208,6 @@ export class PatientRegistrationComponent implements OnInit {
 
   disable_save: boolean = true;
   transaction(data){
-    // console.log(data);
     this.selected_family_folder = data.data ? data.data.id : null;
     this.selected_barangay_code = data.data ? data.data.barangay.code : null;
     this.selected_address = data.data ? data.data.address : null;
@@ -219,15 +239,11 @@ export class PatientRegistrationComponent implements OnInit {
     } else {
       this.patientForm.controls['family'].enable();
       this.enableCctDate();
-      // if(data === 'edit_folder') this.selected_family_folder = '1';
     }
   }
 
   newPatient(){
     this.router.navigate(['/'])
-    /* this.patientForm.reset();
-    this.showModal = false;
-    this.is_saving = false; */
   }
 
   proceedItr(){
@@ -235,7 +251,6 @@ export class PatientRegistrationComponent implements OnInit {
   }
 
   toggleModal(modal){
-    // console.log(modal);
     switch (modal){
       case 'family-folder-modal':
         this.familyFolderModal = !this.familyFolderModal;
@@ -263,7 +278,10 @@ export class PatientRegistrationComponent implements OnInit {
   loadLibraries(){
     this.libraries.forEach(obj => {
       this.http.get('libraries/'+obj.location).subscribe({
-        next: (data: any) => this[obj.var_name] = data.data,
+        next: (data: any) => {
+          this[obj.var_name] = data.data;
+          console.log(this.washington_questions);
+        },
         error: err => console.log(err),
         complete: () => this.show_form = true
       })
@@ -274,15 +292,23 @@ export class PatientRegistrationComponent implements OnInit {
   loadPatient(id){
     this.http.get('patient/'+id).subscribe({
       next: (data: any) => {
-        // console.log(data);
+        console.log(data);
         this.patientForm.patchValue({...data.data});
+        if(data.data.patientWashington) {
+          this.patientForm.patchValue({
+            difficulty_hearing: data.data.patientWashington.difficulty_hearing,
+            difficulty_remembering: data.data.patientWashington.difficulty_remembering,
+            difficulty_seeing: data.data.patientWashington.difficulty_seeing,
+            difficulty_self_care: data.data.patientWashington.difficulty_self_care,
+            difficulty_speaking: data.data.patientWashington.difficulty_speaking,
+            difficulty_walking: data.data.patientWashington.difficulty_walking,
+          });
+        }
 
-        // this.patientForm.patchValue({suffix_name: data.data.suffix_code})
         this.patient_to_update = data.data.id;
-        // console.log(this.patientForm);
         this.button_function = 'Update';
         this.orig_data = data.data;
-        //load demog
+
         this.patchAddress(this.orig_data.household_folder, this.orig_data.household_member);
         this.enableCctDate();
         this.disable_save = false;
@@ -294,7 +320,6 @@ export class PatientRegistrationComponent implements OnInit {
 
   member_count: number;
   patchAddress(address, member){
-    // console.log(address);
     if(address) {
       this.patientForm.patchValue({family:{address: address.address}});
 
@@ -318,6 +343,7 @@ export class PatientRegistrationComponent implements OnInit {
     this.isDisabled(true);
   }
 
+
   enableCctDate(){
     if(this.f['family']['controls']['cct_id'].value) {
       this.f['family']['controls']['cct_date'].enable();
@@ -325,6 +351,8 @@ export class PatientRegistrationComponent implements OnInit {
       this.f['family']['controls']['cct_date'].disable();
     }
   }
+
+  washington_required = true;
 
   ngOnInit(): void {
     let user_id = this.http.getUserID();
@@ -359,6 +387,12 @@ export class PatientRegistrationComponent implements OnInit {
         cct_date: ['',Validators.required],
         is_head: ['', [Validators.required]],
       }),
+      difficulty_seeing:  ['', this.washington_required ? Validators.required : ''],
+      difficulty_hearing:  ['', this.washington_required ? Validators.required : ''],
+      difficulty_walking:  ['', this.washington_required ? Validators.required : ''],
+      difficulty_remembering:  ['', this.washington_required ? Validators.required : ''],
+      difficulty_self_care:  ['', this.washington_required ? Validators.required : ''],
+      difficulty_speaking:  ['', this.washington_required ? Validators.required : '']
     });
 
     this.date = new Date().toISOString().slice(0,10);
