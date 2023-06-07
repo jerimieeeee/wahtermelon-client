@@ -3,10 +3,10 @@
     Catchment Barangays
   </div>
   <div class="col-span-4 grid grid-cols-3 gap-4 p-5 h-[600px] overflow-y-auto">
-    <div class="col-span-3">
+    <!-- <div class="col-span-3">
       <input class="input-checkbox" attr.id="all_selected" [(ngModel)]="all_selected" />
       <label class="pl-2 select-none" attr.for="all_selected">Select All</label>
-    </div>
+    </div> -->
     <div *ngFor="let brgy of barangays">
       <input type="checkbox" class="input-checkbox" attr.id="selected_catchment{{brgy.code}}" [(ngModel)]="selected_catchment[brgy.code]" />
       <label class="pl-2 select-none" attr.for="selected_catchment{{brgy.code}}">{{ brgy.name }}</label>
