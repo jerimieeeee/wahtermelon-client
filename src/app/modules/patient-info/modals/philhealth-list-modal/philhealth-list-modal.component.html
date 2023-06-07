@@ -17,8 +17,8 @@
                 <th scope="col" class="py-3 px-6">Philhealth ID</th>
                 <th scope="col" class="py-3 px-6">Enlistment Date</th>
                 <th scope="col" class="py-3 px-6">Effectivity Year</th>
-                <th scope="col" class="py-3 px-6">Membership type</th>
-                <th scope="col" class="py-3 px-6">Membership category</th>
+                <th scope="col" class="py-3 px-6">Membership type <br />Membership category</th>
+                <th scope="col" class="py-3 px-6">Member</th>
                 <th scope="col" class="py-3 px-6">Action</th>
               </tr>
             </thead>
@@ -34,10 +34,15 @@
                   {{ philhealth.enlistment_date | date: 'yyyy' }}
                 </td>
                 <td class="py-4 px-6">
-                  {{ philhealth.membership_type.desc }}
+                  {{ philhealth.membership_type.desc }}<br />
+                  {{ philhealth.membership_category.desc }}
                 </td>
                 <td class="py-4 px-6">
-                  {{ philhealth.membership_category.desc }}
+                  <span *ngIf="philhealth.member_last_name">
+                    {{ philhealth.member_pin }} <br />
+                    {{ philhealth.member_last_name }}, {{ philhealth.member_first_name }} {{ philhealth.member_middle_name }}
+                  </span>
+                  <span *ngIf="!philhealth.member_last_name">-</span>
                 </td>
                 <td class="py-4 px-6">
                   <fa-icon (click)="editPhilhealth(philhealth)" class="mx-0 my-0 text-amber-500 hover:cursor-pointer flex-none mr-2" [icon]="faPenToSquare"></fa-icon>
