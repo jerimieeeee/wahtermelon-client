@@ -71,7 +71,7 @@ export class GbvComponent implements OnInit {
     })
   }
 
-  arr_allowed = ['MD','WCPD','MSWDO']
+  arr_allowed = ['MD','WCPD','MSWDO'];
   constructor (
     private http: HttpService,
     private route: ActivatedRoute
@@ -82,7 +82,7 @@ export class GbvComponent implements OnInit {
     this.patient_id = this.route.snapshot.paramMap.get('id');
     this.user_facility = this.http.getUserFacility();
     this.pos = this.http.getUserFromJSON().designation_code ? this.http.getUserFromJSON().designation_code : this.http.getUserFromJSON().designation.code;
-    console.log(this.pos, this.http.getUserFromJSON())
+
     if(this.arr_allowed.indexOf(this.pos) > -1) this.getGbvHistory();
 
   }

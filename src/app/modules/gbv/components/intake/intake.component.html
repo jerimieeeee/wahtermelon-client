@@ -207,7 +207,7 @@
                     <th scope="col" class="py-3 px-6">Name</th>
                     <th scope="col" class="py-3 px-6">Age | Gender</th>
                     <th scope="col" class="py-3 px-6">Relation</th>
-                    <th scope="col" class="py-3 px-6">Action</th>
+                    <!-- <th scope="col" class="py-3 px-6">Action</th> -->
                   </tr>
                 </thead>
                 <tbody>
@@ -221,11 +221,11 @@
                     <td class="py-4 px-6">
                       {{ member.relation.desc }}
                     </td>
-                    <td class="py-4 px-6">
+                    <!-- <td class="py-4 px-6"> -->
                       <!-- <button type="button" class="rounded-md bg-blue-500 text-white py-1 px-2" (click)="openGbvConsult(gbv_history)">
                         {{ (!gbv_history.outcome_reason && !gbv_history.outcome_result && !gbv_history.outcome_verdict) ? 'Open' : 'View' }}
                       </button> -->
-                    </td>
+                    <!-- </td> -->
                   </tr>
 
                   <tr class="bg-white border-b" *ngIf="!patient_gbv_history">
@@ -456,7 +456,7 @@
             <tbody>
               <tr class="border-t border-slate-200" *ngFor="let perp of selected_gbv_case?.gbvIntake.interview_perpetrator" >
                 <td class="text-center align-top pt-3">
-                  <fa-icon [icon]="faEdit" (click)="toggleModal('perpetrators', 'Perpetrator', '', '', perp)" class="hover:cursor-pointer text-orange-500"></fa-icon>
+                  <fa-icon [icon]="faEdit" (click)="toggleModal('perpetrators', perp)" class="hover:cursor-pointer text-orange-500"></fa-icon>
                 </td>
                 <td class="text-center align-top pt-3">
                   {{ perp.perpetrator_name ?? '-'}} <br />
@@ -474,7 +474,7 @@
 
                   <span *ngIf="perp.perpetrator_current_address">
                     <span class="italic font-semibold">Current:</span> <br />
-                    {{ perp.perpetrator_address }}
+                    {{ perp.perpetrator_current_address }}
                   </span>
                 </td>
                 <td class="font-semibold italic align-top pt-3">

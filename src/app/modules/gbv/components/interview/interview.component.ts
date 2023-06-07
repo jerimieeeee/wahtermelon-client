@@ -68,8 +68,8 @@ export class InterviewComponent implements OnInit{
     if(this.interviewForm.valid && (this.interviewForm.value.source_from_victim_flag || this.interviewForm.value.source_from_historian_flag || this.interviewForm.value.source_from_sworn_statement_flag)) {
       this.show_error = false;
       this.interviewForm.patchValue({
-        incident_first_datetime: formatDate(this.interviewForm.value.incident_first_datetime, 'yyyy-MM-dd HH:mm:ss', 'en'),
-        incident_recent_datetime: formatDate(this.interviewForm.value.incident_recent_datetime, 'yyyy-MM-dd HH:mm:ss', 'en'),
+        incident_first_datetime: this.interviewForm.value.incident_first_datetime ? formatDate(this.interviewForm.value.incident_first_datetime, 'yyyy-MM-dd HH:mm:ss', 'en') : null,
+        incident_recent_datetime: this.interviewForm.value.incident_recent_datetime ? formatDate(this.interviewForm.value.incident_recent_datetime, 'yyyy-MM-dd HH:mm:ss', 'en') : null,
         recant_datetime: this.interviewForm.value.recant_datetime ? formatDate(this.interviewForm.value.recant_datetime, 'yyyy-MM-dd HH:mm:ss', 'en') : null,
         interview_datetime: this.interviewForm.value.interview_datetime ? formatDate(this.interviewForm.value.interview_datetime, 'yyyy-MM-dd HH:mm:ss', 'en') : null,
         deferral_datetime: this.interviewForm.value.deferral_datetime ? formatDate(this.interviewForm.value.deferral_datetime, 'yyyy-MM-dd HH:mm:ss', 'en') : null,
@@ -121,7 +121,6 @@ export class InterviewComponent implements OnInit{
   }
 
   checkRequired(type: string){
-    console.log(this.interviewForm.value.incident_first_unknown);
     if(!this.interviewForm.value.incident_first_unknown) {
       this.f.incident_first_datetime.setValidators([Validators.required]);
     } else {
@@ -129,7 +128,6 @@ export class InterviewComponent implements OnInit{
       this.interviewForm.patchValue({incident_first_datetime: null});
     }
 
-    console.log(this.interviewForm.value.incident_recent_unknown);
     if(!this.interviewForm.value.incident_recent_unknown) {
       this.f.incident_recent_datetime.setValidators([Validators.required]);
     } else {
@@ -138,10 +136,8 @@ export class InterviewComponent implements OnInit{
     }
 
     if(type === 'first') {
-      console.log(type);
       this.f.incident_first_datetime.updateValueAndValidity();
     } else {
-      console.log(type);
       this.f.incident_recent_datetime.updateValueAndValidity();
     }
   }

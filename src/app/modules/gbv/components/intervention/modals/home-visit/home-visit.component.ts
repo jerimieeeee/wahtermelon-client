@@ -27,6 +27,7 @@ export class HomeVisitComponent implements OnInit, OnChanges {
     patient_gbv_intake_id: new FormControl<string| null>(null),
     visit_date: new FormControl<string| null>(null),
     social_worker: new FormControl<string| null>(null),
+    social_worker_remarks: new FormControl<string| null>(null),
   });
 
   onSubmit() {
@@ -56,7 +57,8 @@ export class HomeVisitComponent implements OnInit, OnChanges {
       patient_id: [this.patient_id],
       patient_gbv_intake_id: [this.patient_gbv_intake_id],
       visit_date: [null, Validators.required],
-      social_worker: [null, Validators.required]
+      social_worker: [null, Validators.required],
+      social_worker_remarks: [null]
     });
 
     console.log(this.selected_data)

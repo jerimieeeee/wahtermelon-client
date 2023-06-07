@@ -108,11 +108,14 @@
               <td *ngIf="pos==='MSWDO'" class="w-1/12">
 
               </td>
-              <td class="text-center font-semibold w-4/12 align-top pt-3">
+              <td class="text-center font-semibold w-3/12 align-top pt-3">
                 Visit date<br />
               </td>
-              <td class="text-center font-semibold w-7/12 align-top pt-3">
+              <td class="font-semibold w-4/12 align-top pt-3">
                 Social Worker
+              </td>
+              <td class="font-semibold w-4/12 align-top pt-3">
+                Social Worker Notes
               </td>
             </tr>
           </thead>
@@ -124,8 +127,12 @@
               <td class="text-center align-top pt-3">
                 {{ social_work.visit_date | date: 'MM/dd/yyyy'}}
               </td>
-              <td class="text-center align-top pt-3">
+              <td class="align-top pt-3">
                 {{ social_work.social_worker }}
+              </td>
+
+              <td class="align-top pt-3">
+                {{ social_work.social_worker_remarks }}
               </td>
             </tr>
           </tbody>

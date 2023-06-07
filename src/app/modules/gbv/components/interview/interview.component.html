@@ -466,7 +466,7 @@
 
                   <span *ngIf="perp.perpetrator_current_address">
                     <span class="italic font-semibold">Current:</span> <br />
-                    {{ perp.perpetrator_address }}
+                    {{ perp.perpetrator_current_address }}
                   </span>
                 </td>
 
@@ -576,7 +576,8 @@
                   {{ interview.perpetrator.perpetrator_name ?? '-'}}
                 </td>
                 <td class="text-center align-top pt-3">
-                  {{ interview.deferral_datetime | date: 'MM/dd/yyyy hh:mm a'}}
+                  {{ interview.interview_datetime | date: 'MM/dd/yyyy'}} <br />
+                  {{ interview.interview_datetime | date: 'hh:mm a'}}
                 </td>
                 <td class="align-top p-3">
                   {{ interview.interview_place ?? '-'}}
