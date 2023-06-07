@@ -42,14 +42,7 @@ export class ModuleModalComponent implements OnInit {
           group: 'ncd',
           consult_active: false,
           id: null
-        },
-        gbv: {
-          name: 'GBV',
-          location: 'gbv',
-          group: 'gbv',
-          consult_active: false,
-          id: null
-        },
+        }
       }
     }
   };
@@ -59,7 +52,7 @@ export class ModuleModalComponent implements OnInit {
   cn = { name: 'Consultation', location: 'cn', group: 'cn', consult_active: false, id: null };
   mc = { name: 'Maternal Care', location: 'mc', group: 'mc', consult_active: false, id: null };
   cc = { name: 'Child Care', location: 'cc', group: 'cc', consult_active: false, id: null };
-
+  gbv = { name: 'GBV', location: 'gbv', group: 'gbv', consult_active: false, id: null };
   show_new: boolean = false;
   is_loading: boolean = false;
   show_form: boolean = false;
@@ -75,6 +68,7 @@ export class ModuleModalComponent implements OnInit {
   is_atc_valid: boolean;
   is_walk_in: boolean;
 
+  arr_allowed = ['MD','WCPD','MSWDO'];
   isATCValid(){
     this.is_checking_atc = true;
     let params = {
@@ -99,6 +93,10 @@ export class ModuleModalComponent implements OnInit {
 
     if((this.patient_age.type === 'year' && this.patient_age.age < 7) || this.patient_age.type !== 'year') {
       this.list_modules.General.modules['cc'] = this.cc;
+    }
+
+    if(this.arr_allowed.indexOf(this.pos) > -1) {
+      this.list_modules.Others.modules['gbv'] = this.gbv;
     }
   }
 
@@ -207,9 +205,12 @@ export class ModuleModalComponent implements OnInit {
     this.show_form = true;
   }
 
+  pos: any;
   user_fac: string;
   ngOnInit(): void {
     this.user_fac = this.http.getUserFacility();
+    let user = this.http.getUserFromJSON();
+    this.pos = user.designation_code ? user.designation_code : user.designation.code;
     this.selectPrograms();
 
     this.http.get('consultation/records', {params:{consult_done: 0, patient_id: this.patient_info.id}}).subscribe({
