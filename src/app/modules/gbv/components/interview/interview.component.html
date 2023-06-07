@@ -438,7 +438,8 @@
                 <td class="text-center align-top pt-3">
                   <fa-icon [icon]="faEdit" (click)="toggleModal('perpetrators', 'Perpetrator', '', '', perp)" class="hover:cursor-pointer text-orange-500"></fa-icon>
                 </td>
-                <td class="text-center align-top pt-3">
+
+                <td class="text-center align-top pt-3" *ngIf="!perp.perpetrator_unknown_flag">
                   {{ perp.perpetrator_name ?? '-'}} <br />
                   (
                     {{ perp.perpetrator_age }} |
@@ -446,7 +447,8 @@
                     <span *ngIf="perp.lgbtq_flag"> | LGBTQ</span>
                   )
                 </td>
-                <td class="align-top pt-3">
+
+                <td class="align-top pt-3" *ngIf="!perp.perpetrator_unknown_flag">
                   <span *ngIf="perp.perpetrator_address">
                     <span class="italic font-semibold">Permanent:</span> <br />
                     {{ perp.perpetrator_address }}<br /><br />
@@ -457,7 +459,8 @@
                     {{ perp.perpetrator_address }}
                   </span>
                 </td>
-                <td class="font-semibold italic align-top pt-3">
+
+                <td class="font-semibold italic align-top pt-3" *ngIf="!perp.perpetrator_unknown_flag">
                   <span *ngIf="!perp.abuse_alcohol_flag && !perp.abuse_drugs_flag && !perp.abuse_others_flag">
                     -
                   </span>
@@ -471,7 +474,8 @@
                     Others: <span class="font-normal not-italic">{{ perp.abuse_others_remarks }}</span>
                   </span>
                 </td>
-                <td class="p-3">
+
+                <td class="p-3" *ngIf="!perp.perpetrator_unknown_flag">
                   <span class="font-semibold" *ngIf="perp.abused_as_child_flag || perp.abused_as_spouse_flag || perp.spouse_abuser_flag || perp.family_violence_flag">
                     Abuse<br />
                   </span>
@@ -501,8 +505,9 @@
                     - Others: <span class="font-normal not-italic">{{ perp.criminal_barangay_remarks }}</span><br />
                   </span>
                 </td>
-                <td>
 
+                <td class="italic pt-5" *ngIf="perp.perpetrator_unknown_flag" colspan="4">
+                  Unknown Perpetrator
                 </td>
               </tr>
             </tbody>

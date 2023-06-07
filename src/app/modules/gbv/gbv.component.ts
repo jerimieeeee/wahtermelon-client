@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { faCircleNotch, faDoorClosed } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
-import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-gbv',
@@ -57,15 +56,12 @@ export class GbvComponent implements OnInit {
     this.fetching_history = true;
     this.selected_gbv_case = undefined;
 
-    // console.log(this.patient_id)
     this.http.get('gender-based-violence/patient-gbv', {params:{patient_id: this.patient_id}}).subscribe({
       next: (data: any) => {
         this.patient_gbv_history = data.data;
-        // console.log(typeof this.patient_gbv_history, this.patient_gbv_history);
         if(Object.keys(this.patient_gbv_history).length > 0) {
           this.selected_gbv_case = !this.patient_gbv_history[0].outcome_date ? this.patient_gbv_history[0] : null;
         }
-        // console.log(this.selected_gbv_case)
 
         this.fetching_history = false;
         // this.pages = 2;
@@ -78,7 +74,6 @@ export class GbvComponent implements OnInit {
   arr_allowed = ['MD','WCPD','MSWDO']
   constructor (
     private http: HttpService,
-    private toastr: ToastrService,
     private route: ActivatedRoute
   ) { }
 

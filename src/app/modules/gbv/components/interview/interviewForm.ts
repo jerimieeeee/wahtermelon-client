@@ -20,8 +20,10 @@ export function interviewForm() {
     source_from_sworn_statement_flag: new FormControl<boolean| null>(false),
     mental_age_id: new FormControl<string| null>(''),
 
+    incident_first_unknown: new FormControl<string| null>(''),
     incident_first_datetime: new FormControl<string| null>(''),
     incident_first_remarks : new FormControl<string| null>(''),
+    incident_recent_unknown: new FormControl<string| null>(''),
     incident_recent_datetime : new FormControl<string| null>(''),
     incident_recent_remarks: new FormControl<string| null>(''),
 

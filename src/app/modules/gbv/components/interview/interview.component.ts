@@ -137,6 +137,8 @@ export class InterviewComponent implements OnInit{
       this.loadSummaries(this.selected_gbv_case.gbvIntake.interview_summaries)
       this.show_form = true;
     }
+
+    this.checkIncidents();
   }
 
   interview_summaries: any = [];
@@ -169,6 +171,20 @@ export class InterviewComponent implements OnInit{
     this[var_name] = abuses;
   }
 
+  checkIncidents(){
+    if(this.interviewForm.value.incident_first_unknown) {
+      this.f.incident_first_datetime.disable();
+    } else {
+      this.f.incident_first_datetime.enable();
+    }
+
+    if(this.interviewForm.value.incident_recent_unknown) {
+      this.f.incident_recent_datetime.disable();
+    } else {
+      this.f.incident_recent_datetime.enable();
+    }
+  }
+
   createForm(){
     this.interviewForm = this.formBuilder.group({
       id: [null],
@@ -189,8 +205,10 @@ export class InterviewComponent implements OnInit{
       source_from_sworn_statement_flag: [false],
       mental_age_id: [null],
 
+      incident_first_unknown: [false],
       incident_first_datetime: [null, Validators.required],
       incident_first_remarks : [null],
+      incident_recent_unknown: [false],
       incident_recent_datetime : [null, Validators.required],
       incident_recent_remarks: [null],
 

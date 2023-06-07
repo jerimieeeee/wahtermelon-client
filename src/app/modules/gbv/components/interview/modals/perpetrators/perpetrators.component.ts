@@ -28,6 +28,7 @@ export class PerpetratorsComponent implements OnInit{
   occupations: any;
   child_relations: any;
   perpetrator_locations: any;
+  educations: any;
 
   genders = [
     {id: 'M', desc: 'Male'},
@@ -41,11 +42,16 @@ export class PerpetratorsComponent implements OnInit{
 
     let query;
 
+    if(this.perpetratorForm.value.perpetrator_unknown_flag) {
+      this.disableDetails();
+    }
+
     if(this.perpetratorForm.value.id) {
       query = this.http.update('gender-based-violence/patient-gbv-perpetrator/', this.perpetratorForm.value.id, this.perpetratorForm.value);
     } else {
       query = this.http.post('gender-based-violence/patient-gbv-perpetrator', this.perpetratorForm.value);
     }
+
     query.subscribe({
       next: (data: any) => {
         console.log(data);
@@ -56,14 +62,38 @@ export class PerpetratorsComponent implements OnInit{
     })
   }
 
-  educations: any;
+  disableDetails(){
+    this.perpetratorForm.patchValue({
+      perpetrator_name: null,
+      perpetrator_nickname: null,
+      perpetrator_age: null,
+      occupation_code : null,
+      education_code : null,
+      known_to_child_flag: null,
+      relation_to_child_id: null,
+      location_id: null,
+      perpetrator_address: null,
+      perpetrator_current_address: null,
+      abuse_alcohol_flag: null,
+      abuse_drugs_flag: null,
+      abuse_others_flag: null,
+      abuse_drugs_remarks: null,
+      abuse_others_remarks: null,
+
+      abused_as_child_flag: null,
+      abused_as_spouse_flag: null,
+      spouse_abuser_flag: null,
+      family_violence_flag: null,
+      criminal_conviction_similar_flag: null,
+      criminal_conviction_other_flag: null,
+      criminal_record_unknown_flag: null,
+      criminal_barangay_flag: null,
+      criminal_barangay_remarks: null,
+    })
+
+  }
+
   loadLibraries(){
-    /* this.http.get('libraries/education').subscribe({
-      next: (data: any) => this.educations = data.data,
-      error: err => console.log(err)
-    }); */
-
-
     const getOccupation = this.http.get('libraries/occupations');
     const getChildRelation = this.http.get('libraries/child-relation');
     const getPerpetratorLocation = this.http.get('libraries/gbv-perpetrator-location');

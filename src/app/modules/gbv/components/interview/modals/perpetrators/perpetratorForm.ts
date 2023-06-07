@@ -18,7 +18,6 @@ export function perpetratorForm() {
     location_id: new FormControl<string| null>(null),
     perpetrator_address: new FormControl<string| null>(null),
     perpetrator_current_address: new FormControl<string| null>(null),
-    // unknown_abused_flag: new FormControl<boolean| null>(null),
     abuse_alcohol_flag: new FormControl<boolean| null>(null),
     abuse_drugs_flag: new FormControl<boolean| null>(null),
     abuse_others_flag: new FormControl<boolean| null>(null),

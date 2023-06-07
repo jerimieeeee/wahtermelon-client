@@ -29,7 +29,7 @@
               <label for="perpetrator_unknown_flag" class="pl-3 py-0.5">Is the perpetrator unknown?</label>
             </div>
 
-            <div class="col-span-4 grid grid-cols-2 gap-4">
+            <div class="col-span-4 grid grid-cols-2 gap-4" *ngIf="!perpetratorForm.value.perpetrator_unknown_flag">
               <div class="col-span-2">
                 <label for="perpetrator_name" [ngClass]="{'text-red-500': show_error && f.perpetrator_name.errors}">Full name</label>
                 <input type="text" name="perpetrator_name" id="perpetrator_name" formControlName="perpetrator_name" class="input" [ngClass]="{'invalid-input': show_error && f.perpetrator_name.errors}">
@@ -189,7 +189,7 @@
           </div>
         </form>
 
-        <div class="grid grid-cols-1  mt-32">
+        <div class="grid grid-cols-1  mt-32" *ngIf="!show_form">
           <span class="flex justify-center text-sky-500">
             <fa-icon [icon]="faCircleNotch" spin="true" class=""></fa-icon>
           </span>
