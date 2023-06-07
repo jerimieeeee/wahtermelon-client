@@ -199,36 +199,53 @@ export class PhilhealthModalComponent implements OnInit {
   showMember(){
     if(this.philhealthForm.value.membership_type_id === 'DD'){
       this.show_member_form = true;
+      this.philhealthForm.controls.member_pin.setValidators([Validators.required]);
+      this.philhealthForm.controls.member_pin_confirmation.setValidators([Validators.required]);
+      this.philhealthForm.controls.member_last_name.setValidators([Validators.required]);
+      this.philhealthForm.controls.member_first_name.setValidators([Validators.required]);
+      this.philhealthForm.controls.member_middle_name.setValidators([Validators.required]);
+      this.philhealthForm.controls.member_suffix_name.setValidators([Validators.required]);
+      this.philhealthForm.controls.member_birthdate.setValidators([Validators.required]);
+      this.philhealthForm.controls.member_gender.setValidators([Validators.required]);
+      this.philhealthForm.controls.member_relation_id.setValidators([Validators.required]);
     } else {
       this.show_member_form = false;
+      this.philhealthForm.controls.member_pin.clearValidators();
+      this.philhealthForm.controls.member_pin_confirmation.clearValidators();
+      this.philhealthForm.controls.member_last_name.clearValidators();
+      this.philhealthForm.controls.member_first_name.clearValidators();
+      this.philhealthForm.controls.member_middle_name.clearValidators();
+      this.philhealthForm.controls.member_suffix_name.clearValidators();
+      this.philhealthForm.controls.member_birthdate.clearValidators();
+      this.philhealthForm.controls.member_gender.clearValidators();
+      this.philhealthForm.controls.member_relation_id.clearValidators();
+
+      this.resetMemberDetails();
     }
 
-    this.enableMemberForm(this.show_member_form);
+    this.philhealthForm.controls.member_pin.updateValueAndValidity();
+    this.philhealthForm.controls.member_pin_confirmation.updateValueAndValidity();
+    this.philhealthForm.controls.member_last_name.updateValueAndValidity();
+    this.philhealthForm.controls.member_first_name.updateValueAndValidity();
+    this.philhealthForm.controls.member_middle_name.updateValueAndValidity();
+    this.philhealthForm.controls.member_suffix_name.updateValueAndValidity();
+    this.philhealthForm.controls.member_birthdate.updateValueAndValidity();
+    this.philhealthForm.controls.member_gender.updateValueAndValidity();
+    this.philhealthForm.controls.member_relation_id.updateValueAndValidity();
   }
 
-  enableMemberForm(value: boolean){
-    // console.log(value)
-    if(value === true){
-      this.philhealthForm.controls.member_pin.enable();
-      this.philhealthForm.controls.member_pin_confirmation.enable();
-      this.philhealthForm.controls.member_last_name.enable();
-      this.philhealthForm.controls.member_first_name.enable();
-      this.philhealthForm.controls.member_middle_name.enable();
-      this.philhealthForm.controls.member_suffix_name.enable();
-      this.philhealthForm.controls.member_birthdate.enable();
-      this.philhealthForm.controls.member_gender.enable();
-      this.philhealthForm.controls.member_relation_id.enable();
-    } else {
-      this.philhealthForm.controls.member_pin.disable();
-      this.philhealthForm.controls.member_pin_confirmation.disable();
-      this.philhealthForm.controls.member_last_name.disable();
-      this.philhealthForm.controls.member_first_name.disable();
-      this.philhealthForm.controls.member_middle_name.disable();
-      this.philhealthForm.controls.member_suffix_name.disable();
-      this.philhealthForm.controls.member_birthdate.disable();
-      this.philhealthForm.controls.member_gender.disable();
-      this.philhealthForm.controls.member_relation_id.disable();
-    }
+  resetMemberDetails(){
+    this.philhealthForm.patchValue({
+      member_pin: null,
+      member_pin_confirmation: null,
+      member_last_name: null,
+      member_first_name: null,
+      member_middle_name: null,
+      member_suffix_name: null,
+      member_birthdate: null,
+      member_gender: null,
+      member_relation_id: null
+    });
   }
 
   updateEffectivity(){
@@ -293,7 +310,6 @@ export class PhilhealthModalComponent implements OnInit {
     });
 
     if(this.philhealth_to_edit){
-      console.log(this.philhealth_to_edit)
       this.philhealthForm.patchValue({...this.philhealth_to_edit});
       this.philhealthForm.patchValue({philhealth_id_confirmation: this.philhealth_to_edit.philhealth_id});
       this.philhealthForm.patchValue({membership_type_id: this.philhealth_to_edit.membership_type.id});
@@ -308,8 +324,6 @@ export class PhilhealthModalComponent implements OnInit {
         this.philhealthForm.patchValue({member_pin_confirmation: this.philhealth_to_edit.member_pin});
       }
       this.showMember();
-    }else{
-      console.log('new philhealth')
     }
 
     this.date = new Date().toISOString().slice(0,10);
