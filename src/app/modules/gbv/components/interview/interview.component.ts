@@ -64,6 +64,7 @@ export class InterviewComponent implements OnInit{
   required_message: string = 'required field';
 
   onSubmit(){
+    console.log(this.interviewForm);
     if(this.interviewForm.valid && (this.interviewForm.value.source_from_victim_flag || this.interviewForm.value.source_from_historian_flag || this.interviewForm.value.source_from_sworn_statement_flag)) {
       this.show_error = false;
       this.interviewForm.patchValue({
@@ -76,7 +77,7 @@ export class InterviewComponent implements OnInit{
 
       this.saveForm();
     } else {
-      if(!this.interviewForm.value.source_from_victim_flag || !this.interviewForm.value.source_from_historian_flag || !this.interviewForm.value.source_from_sworn_statement_flag){
+      if(!this.interviewForm.value.source_from_victim_flag && !this.interviewForm.value.source_from_historian_flag && !this.interviewForm.value.source_from_sworn_statement_flag){
         this.required_info_source = true;
       }
       this.show_error = true;
@@ -119,10 +120,33 @@ export class InterviewComponent implements OnInit{
     });
   }
 
+  checkRequired(type: string){
+    console.log(this.interviewForm.value.incident_first_unknown);
+    if(!this.interviewForm.value.incident_first_unknown) {
+      this.f.incident_first_datetime.setValidators([Validators.required]);
+    } else {
+      this.f.incident_first_datetime.clearValidators();
+      this.interviewForm.patchValue({incident_first_datetime: null});
+    }
 
+    console.log(this.interviewForm.value.incident_recent_unknown);
+    if(!this.interviewForm.value.incident_recent_unknown) {
+      this.f.incident_recent_datetime.setValidators([Validators.required]);
+    } else {
+      this.f.incident_recent_datetime.clearValidators();
+      this.interviewForm.patchValue({incident_recent_datetime: null});
+    }
+
+    if(type === 'first') {
+      console.log(type);
+      this.f.incident_first_datetime.updateValueAndValidity();
+    } else {
+      console.log(type);
+      this.f.incident_recent_datetime.updateValueAndValidity();
+    }
+  }
 
   patchData(data?) {
-    // console.log(this.selected_gbv_case.gbvIntake);//interview_perpetrator
     if(data) {
       this.interviewForm.patchValue({...data});
     } else {
@@ -139,6 +163,8 @@ export class InterviewComponent implements OnInit{
     }
 
     this.checkIncidents();
+    this.checkRequired('first');
+    this.checkRequired('recent');
   }
 
   interview_summaries: any = [];
@@ -149,7 +175,6 @@ export class InterviewComponent implements OnInit{
     this.interview_social_notes = [];
 
     Object.entries(data).forEach(([key, value]: any, index) => {
-      // console.log(value);
       this[value.summary_type==='IS'?'interview_summaries':'interview_social_notes'].push(value);
     });
   }

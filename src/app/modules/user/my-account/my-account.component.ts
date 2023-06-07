@@ -79,6 +79,7 @@ export class MyAccountComponent implements OnInit {
           console.log(data);
           this.loading = false;
           this.is_saving = false;
+          this.loadUser();
           this.showModal = true;
         },
         error: err => {

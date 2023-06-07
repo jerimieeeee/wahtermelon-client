@@ -101,7 +101,12 @@
           History of Abuse
         </div>
         <div class="mx-5 col-span-3 grid grid-cols-4 gap-4">
-          <div class="col-span-2">
+          <div class="col-span-4">
+            <input type="checkbox" id="incident_recent_unknown" formControlName="incident_recent_unknown" (change)="checkRequired('recent')" class="input-checkbox" />
+            <label for="incident_recent_unknown" class="pl-3 py-0.5">Can't recall date & time of recent incident</label>
+          </div>
+
+          <div class="col-span-2" *ngIf="!interviewForm.value.incident_recent_unknown">
             <label for="incident_recent_datetime" [ngClass]="{'text-red-500': show_error && f.incident_recent_datetime.errors}">Date and time of most recent abuse</label>
             <input type="datetime-local" name="incident_recent_datetime" id="incident_recent_datetime" formControlName="incident_recent_datetime" class="input" [ngClass]="{'invalid-input': show_error && f.incident_recent_datetime.errors}">
 
@@ -112,12 +117,17 @@
             </div>
           </div>
 
-          <div class="col-span-2">
-            <label for="incident_recent_remarks" [ngClass]="{'text-red-500': show_error && f.incident_recent_remarks.errors}">Other chronological clues</label>
-            <input type="text" name="incident_recent_remarks" id="incident_recent_remarks" formControlName="incident_recent_remarks" class="input" [ngClass]="{'invalid-input': show_error && f.incident_recent_remarks.errors}">
+          <div class="col-span-2" *ngIf="!interviewForm.value.incident_recent_unknown">
+            <label for="incident_recent_remarks">Other chronological clues</label>
+            <input type="text" name="incident_recent_remarks" id="incident_recent_remarks" formControlName="incident_recent_remarks" class="input">
           </div>
 
-          <div class="col-span-2">
+          <div class="col-span-4">
+            <input type="checkbox" id="incident_first_unknown" formControlName="incident_first_unknown" (change)="checkRequired('first')" class="input-checkbox" />
+            <label for="incident_first_unknown" class="pl-3 py-0.5">Can't recall date & time of first incident</label>
+          </div>
+
+          <div class="col-span-2" *ngIf="!interviewForm.value.incident_first_unknown">
             <label for="incident_first_datetime" [ngClass]="{'text-red-500': show_error && f.incident_first_datetime.errors}">Date and time of first abuse</label>
             <input type="datetime-local" name="incident_first_datetime" id="incident_first_datetime" formControlName="incident_first_datetime" class="input" [ngClass]="{'invalid-input': show_error && f.incident_first_datetime.errors}">
 
@@ -128,9 +138,9 @@
             </div>
           </div>
 
-          <div class="col-span-2">
-            <label for="incident_first_remarks" [ngClass]="{'text-red-500': show_error && f.incident_first_remarks.errors}">Other chronological clues</label>
-            <input type="text" name="incident_first_remarks" id="incident_first_remarks" formControlName="incident_first_remarks" class="input" [ngClass]="{'invalid-input': show_error && f.incident_first_remarks.errors}">
+          <div class="col-span-2" *ngIf="!interviewForm.value.incident_first_unknown">
+            <label for="incident_first_remarks">Other chronological clues</label>
+            <input type="text" name="incident_first_remarks" id="incident_first_remarks" formControlName="incident_first_remarks" class="input">
           </div>
 
           <div class="col-span-2">
