@@ -151,7 +151,6 @@ export class PatientRegistrationComponent implements OnInit {
       // console.log(this.patientForm);
       query.subscribe({
         next: (data: any) => {
-          // console.log(data)
           this.new_patient_id = this.button_function === 'Update' ? this.patient_to_update : data.data.id;
           this.saveFolder(this.new_patient_id);
         },
@@ -280,7 +279,6 @@ export class PatientRegistrationComponent implements OnInit {
       this.http.get('libraries/'+obj.location).subscribe({
         next: (data: any) => {
           this[obj.var_name] = data.data;
-          console.log(this.washington_questions);
         },
         error: err => console.log(err),
         complete: () => this.show_form = true
@@ -292,7 +290,6 @@ export class PatientRegistrationComponent implements OnInit {
   loadPatient(id){
     this.http.get('patient/'+id).subscribe({
       next: (data: any) => {
-        console.log(data);
         this.patientForm.patchValue({...data.data});
         if(data.data.patientWashington) {
           this.patientForm.patchValue({
