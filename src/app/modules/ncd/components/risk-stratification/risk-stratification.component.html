@@ -1,8 +1,7 @@
-<div class="grid grid-cols-12 flex item-start flex-wrap shadow-md rounded-xl mb-4 mt-8">
-
-  <div class="col-span-12 flex px-5 py-3 rounded-tl rounded-tr" [ngStyle]="{'background-color': (risk <= 10) ? '#6ec46e' : ((risk > 10) ? '#f86b6b' : null) }">
+<div *ngIf="show_form" class="grid grid-cols-12 item-start flex-wrap shadow-md rounded-xl mb-4 mt-8">
+  <div class="col-span-12 flex px-5 py-3 rounded-tl rounded-tr" [ngStyle]="{'background-color': risk_strat?.color }">
     <h4 class="font-bold text-white text-md mt-2 mb-2">Risk Stratification Details</h4>
-    <div class="">
+    <!-- <div class="">
       <fa-icon [icon]="faInfoCircle" class="peer text-white hover:text-white z-50 px-2"></fa-icon>
       <div
           class="absolute text-sm bg-gradient-to-b from-stone-500 to-gray-400 p-2 rounded border border-gray-500  text-white drop-shadow-lg opacity-90 border-check z-50 w-60 invisible peer-hover:visible">
@@ -10,7 +9,7 @@
           <p class="font-light drop-shadow-lg">Once saved, the information will be displayed in the input boxes
               and shall not be editable unless Edit button is pressed.</p>
       </div>
-  </div>
+    </div> -->
   </div>
 
 
@@ -19,37 +18,37 @@
 
       <tr class="border-b-2 border-gray-200">
         <td class="px-5 py-3">Risk Level</td>
-        <td class="px-5 py-3 text-gray font-bold text-lg" [ngStyle]="{'color': (risk <= 10) ? '#6ec46e' : ((risk > 10) ? '#f86b6b' : null) }">{{risk}}%</td>
+        <td class="px-5 py-3 text-gray font-bold text-lg" [ngStyle]="{'color': risk_strat?.color }">{{ risk_strat?.risk_level }}</td>
       </tr>
 
       <tr class="border-b-2 border-gray-200">
         <td class="px-5 py-3">Location of Assessment</td>
-        <td class="px-5 py-3">Facility</td>
+        <td class="px-5 py-3 capitalize">{{ risk_strat?.type }}</td>
       </tr>
 
       <tr class="border-b-2 border-gray-200">
         <td class="px-5 py-3">Presence of Diabetes</td>
-        <td class="px-5 py-3">Y</td>
+        <td class="px-5 py-3">{{ risk_strat?.diabetes_present ? 'Y' : 'N' }}</td>
       </tr>
 
       <tr class="border-b-2 border-gray-200">
         <td class="px-5 py-3">Patient Gender</td>
-        <td class="px-5 py-3">Female</td>
+        <td class="px-5 py-3">{{ info?.gender === 'M' ? 'Male' : 'Female' }}</td>
       </tr>
 
       <tr class="border-b-2 border-gray-200">
         <td class="px-5 py-3">Patient Age</td>
-        <td class="px-5 py-3">48.98 years old</td>
+        <td class="px-5 py-3">{{ info?.age }}</td>
       </tr>
 
       <tr class="border-b-2 border-gray-200">
         <td class="px-5 py-3">Smoking Status</td>
-        <td class="px-5 py-3">Y</td>
+        <td class="px-5 py-3">{{ risk_strat?.smoking_status ? 'Y' : 'N' }}</td>
       </tr>
 
       <tr class="">
         <td class="px-5 py-3">Actual Systolic Blood Pressure</td>
-        <td class="px-5 py-3">110</td>
+        <td class="px-5 py-3">{{ risk_strat?.sbp }}</td>
       </tr>
 
     </tbody>

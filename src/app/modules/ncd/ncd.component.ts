@@ -66,7 +66,7 @@ export class NcdComponent implements OnInit, OnChanges, OnDestroy {
           this.consult_details = this.consult_details_temp;
         }
 
-        console.log(this.consult_details)
+        // console.log(this.consult_details)
       },
       error: err => console.log(err)
     })
@@ -101,7 +101,7 @@ export class NcdComponent implements OnInit, OnChanges, OnDestroy {
 
     this.http.get('consultation/records', {params}).subscribe({
       next: (data: any) => {
-        console.log(data)
+        // console.log(data)
         this.ncd_list = data.data;
         this.consult_details_temp = data.data[0];
         this.loadRisk();
@@ -131,7 +131,7 @@ export class NcdComponent implements OnInit, OnChanges, OnDestroy {
   } */
 
   loadVitals(){
-    console.log('reload please ncd')
+    // console.log('reload please ncd')
     this.http.get('patient-vitals/vitals', {params:{patient_id: this.patient_id, sort: '-vitals_date', per_page: 15}}).subscribe({
       next: (data: any) => {
         // console.log(data.data)
@@ -166,7 +166,7 @@ export class NcdComponent implements OnInit, OnChanges, OnDestroy {
     this.modules=1;
 
     this.patient_info = this.http.getPatientInfo();
-    console.log(this.patient_info)
+    // console.log(this.patient_info)
     this.patient_id = this.route.snapshot.paramMap.get('id');
     this.consult_id = this.route.snapshot.paramMap.get('consult_id');
     this.loadConsult();

@@ -2,7 +2,6 @@ import { formatDate } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
-import { lab_list } from './lib';
 
 @Component({
   selector: 'app-lab-request-modal',

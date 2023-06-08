@@ -10,6 +10,7 @@ import { HttpService } from 'app/shared/services/http.service';
 })
 export class ConsultHistoryComponent implements OnInit, OnChanges {
   @Input() toggle_content;
+  @Input() allowed_to_edit;
 
   show_content: boolean = false;
   faChevronCircleUp = faChevronCircleUp;

@@ -12,8 +12,8 @@ import { EhfscoreComponent } from './modules/ehfscore/ehfscore.component';
 import { NfascoreComponent } from './modules/nfascore/nfascore.component';
 import { VmtestComponent } from './modules/vmtest/vmtest.component';
 import { TxrecordComponent } from './modules/txrecord/txrecord.component';
-import { SharedComponentsModule } from 'app/shared/shared-components/shared-components.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { EndVisitComponent } from 'app/shared/shared-modals/end-visit/end-visit.component';
 
 
 @NgModule({
@@ -29,10 +29,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   imports: [
     CommonModule,
     LeprosyRoutingModule,
-    SharedComponentsModule,
     angularFontawesome.FontAwesomeModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    EndVisitComponent
   ]
 })
 export class LeprosyModule { }

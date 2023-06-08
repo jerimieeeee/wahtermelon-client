@@ -43,7 +43,9 @@ import { PatientItrModule } from '../patient-itr/patient-itr.module';
 import { PreghistComponent } from './components/preghist/preghist.component';
 import { PreghistModalComponent } from './modals/preghist-modal/preghist-modal.component';
 import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
-
+import { LabRequestComponent } from 'app/shared/shared-modals/lab-request/lab-request.component';
+import { AppointmentComponent } from './components/appointment/appointment.component';import { SetAppointmentComponent } from './components/appointment/modals/set-appointment/set-appointment.component';
+import { ReferralModalComponent } from './modals/referral-modal/referral-modal.component';
 
 @NgModule({
   declarations: [
@@ -81,7 +83,10 @@ import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
     SurgicalActionModalComponent,
     GraphComponent,
     PreghistComponent,
-    PreghistModalComponent
+    PreghistModalComponent,
+    AppointmentComponent,
+    SetAppointmentComponent,
+    ReferralModalComponent
   ],
   imports: [
     CommonModule,
@@ -93,7 +98,8 @@ import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
     NgApexchartsModule,
     PatientItrModule,
     NgxMaskDirective,
-    NgxMaskPipe
+    NgxMaskPipe,
+    LabRequestComponent
   ],
   providers: [provideNgxMask()]
 })

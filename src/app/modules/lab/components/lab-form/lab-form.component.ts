@@ -24,6 +24,7 @@ export class LabFormComponent implements OnChanges {
   @Input() lab_stool_blood;
   @Input() lab_stool_color;
   @Input() lab_stool_consistency;
+  @Input() user_facility;
 
   faSave = faSave;
   faSpinner = faSpinner;

@@ -150,15 +150,22 @@ export class HttpService {
     let loc;
 
     let values = this.router.url.split(';');
-    let id = values[1].split('=');
+    if(values) {
+      let id = values[1].split('=');
 
-    patient_id = id[1];
-    let location = values[0].split('/');
-    loc = location[2]
-    if(values[2]) {
-      let consult = values[2].split('=');
-      consult_id = consult[1];
+      patient_id = id[1];
+      let location = values[0].split('/');
+      loc = location[2]
+      if(values[2]) {
+        let consult = values[2].split('=');
+        consult_id = consult[1];
+      }
+    } else {
+      patient_id = null;
+      consult_id = null;
+      loc = null;
     }
+
 
     return {
       patient_id: patient_id,

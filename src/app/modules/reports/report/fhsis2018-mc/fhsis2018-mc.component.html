@@ -264,6 +264,244 @@
                 </th>
               </tr>
 
+              <tr>
+                <td class="p-5 border">18. No. of deliveries - Total</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.no_of_deliveries_10_14?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.no_of_deliveries_10_14)">{{ stats?.no_of_deliveries_10_14?.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.no_of_deliveries_15_19?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.no_of_deliveries_15_19)">{{ stats?.no_of_deliveries_15_19?.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.no_of_deliveries_20_49?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.no_of_deliveries_20_49)">{{ stats?.no_of_deliveries_20_49?.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.no_of_deliveries_10_14?.length !==0 || stats?.no_of_deliveries_15_19?.length !==0 || stats?.no_of_deliveries_20_49?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.no_of_deliveries_10_14, stats?.no_of_deliveries_15_19, stats?.no_of_deliveries_20_49)">{{ stats?.no_of_deliveries_10_14?.length + stats?.no_of_deliveries_15_19?.length + stats?.no_of_deliveries_20_49?.length }}</td>
+                <td class="p-5 border"></td>
+
+                <td class="p-5 border" rowspan="6">25. No. of postpartum women together with their newborn who completed at least 2 postpartum check-ups - Total</td>
+                <td class="p-5 border text-blue-500 text-center" rowspan="6" [class]=" stats?.no_of_postpartum_women_with_2_checkup_10_14?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.no_of_postpartum_women_with_2_checkup_10_14)">{{ stats?.no_of_postpartum_women_with_2_checkup_10_14?.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" rowspan="6" [class]=" stats?.no_of_postpartum_women_with_2_checkup_15_19?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.no_of_postpartum_women_with_2_checkup_15_19)">{{ stats?.no_of_postpartum_women_with_2_checkup_15_19?.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" rowspan="6" [class]=" stats?.no_of_postpartum_women_with_2_checkup_20_49?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.no_of_postpartum_women_with_2_checkup_20_49)">{{ stats?.no_of_postpartum_women_with_2_checkup_20_49?.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" rowspan="6" [class]=" stats?.no_of_postpartum_women_with_2_checkup_10_14?.length !==0 || stats?.no_of_postpartum_women_with_2_checkup_15_19?.length !==0 || stats?.no_of_postpartum_women_with_2_checkup_20_49?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.no_of_postpartum_women_with_2_checkup_10_14, stats?.no_of_postpartum_women_with_2_checkup_15_19, stats?.no_of_postpartum_women_with_2_checkup_20_49)">{{ stats?.no_of_postpartum_women_with_2_checkup_10_14?.length + stats?.no_of_postpartum_women_with_2_checkup_15_19?.length + stats?.no_of_postpartum_women_with_2_checkup_20_49?.length }}</td>
+                <td class="p-5 border" rowspan="6"></td>
+              </tr>
+
+              <tr>
+                <td class="p-5 border">19. No. of live births - Total</td>
+                <td class="p-5 border text-blue-500 text-center bg-gray-400"></td>
+                <td class="p-5 border text-blue-500 text-center bg-gray-400"></td>
+                <td class="p-5 border text-blue-500 text-center bg-gray-400"></td>
+                <td class="p-5 border text-blue-500 text-center" [class]="stats?.no_of_livebirths_all?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.no_of_livebirths_all)">{{ stats?.no_of_livebirths_all?.length }}</td>
+                <td class="p-5 border"></td>
+              </tr>
+
+              <tr>
+                <td class="p-5 border"><span class="pl-3">a. No. of live births - Male</span></td>
+                <td class="p-5 border text-blue-500 text-center bg-gray-400"></td>
+                <td class="p-5 border text-blue-500 text-center bg-gray-400"></td>
+                <td class="p-5 border text-blue-500 text-center bg-gray-400"></td>
+                <td class="p-5 border text-blue-500 text-center" [class]="stats?.no_of_livebirths_male?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.no_of_livebirths_male)">{{ stats?.no_of_livebirths_male?.length }}</td>
+                <td class="p-5 border"></td>
+              </tr>
+
+              <tr>
+                <td class="p-5 border"><span class="pl-3">b. No. of live births - Female</span></td>
+                <td class="p-5 border text-blue-500 text-center bg-gray-400"></td>
+                <td class="p-5 border text-blue-500 text-center bg-gray-400"></td>
+                <td class="p-5 border text-blue-500 text-center bg-gray-400"></td>
+                <td class="p-5 border text-blue-500 text-center" [class]="stats?.no_of_livebirths_female?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.no_of_livebirths_female)">{{ stats?.no_of_livebirths_female?.length }}</td>
+                <td class="p-5 border"></td>
+              </tr>
+
+              <tr>
+                <td class="p-5 border">20. No. of livebirths by birth weight - Total</td>
+                <td class="p-5 border text-blue-500 text-center bg-gray-400"></td>
+                <td class="p-5 border text-blue-500 text-center bg-gray-400"></td>
+                <td class="p-5 border text-blue-500 text-center bg-gray-400"></td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.no_of_livebirths_by_weight_low?.length !==0 || stats?.no_of_livebirths_by_weight_normal?.length !==0 || stats?.no_of_livebirths_by_weight_unknown?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.no_of_livebirths_by_weight_low, stats?.no_of_livebirths_by_weight_normal, stats?.no_of_livebirths_by_weight_unknown)">{{ stats?.no_of_livebirths_by_weight_low?.length + stats?.no_of_livebirths_by_weight_normal?.length + stats?.no_of_livebirths_by_weight_unknown?.length }}</td>
+                <td class="p-5 border"></td>
+              </tr>
+
+              <tr>
+                <td class="p-5 border"><span class="pl-3">a. No. of livebirths with normal birth weight - Total</span></td>
+                <td class="p-5 border text-blue-500 text-center bg-gray-400"></td>
+                <td class="p-5 border text-blue-500 text-center bg-gray-400"></td>
+                <td class="p-5 border text-blue-500 text-center bg-gray-400"></td>
+                <td class="p-5 border text-blue-500 text-center" [class]="stats?.no_of_livebirths_by_weight_normal?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.no_of_livebirths_by_weight_normal)">{{ stats?.no_of_livebirths_by_weight_normal?.length }}</td>
+                <td class="p-5 border"></td>
+              </tr>
+
+              <tr>
+                <td class="p-5 border"><span class="pl-3">b. No. of livebirths with low birth weight - Total</span></td>
+                <td class="p-5 border text-blue-500 text-center bg-gray-400"></td>
+                <td class="p-5 border text-blue-500 text-center bg-gray-400"></td>
+                <td class="p-5 border text-blue-500 text-center bg-gray-400"></td>
+                <td class="p-5 border text-blue-500 text-center" [class]="stats?.no_of_livebirths_by_weight_low?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.no_of_livebirths_by_weight_low)">{{ stats?.no_of_livebirths_by_weight_low?.length }}</td>
+                <td class="p-5 border"></td>
+
+                <td class="p-5 border">26. No. of postpartum women who completed iron with folic acid supplementation - Total</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.no_of_postpartum_women_with_2_checkup_10_14?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.no_of_postpartum_women_with_2_checkup_10_14)">{{ stats?.no_of_postpartum_women_with_2_checkup_10_14?.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.no_of_postpartum_women_with_2_checkup_15_19?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.no_of_postpartum_women_with_2_checkup_15_19)">{{ stats?.no_of_postpartum_women_with_2_checkup_15_19?.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.no_of_postpartum_women_with_2_checkup_20_49?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.no_of_postpartum_women_with_2_checkup_20_49)">{{ stats?.no_of_postpartum_women_with_2_checkup_20_49?.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.no_of_postpartum_women_with_2_checkup_10_14?.length !==0 || stats?.no_of_postpartum_women_with_2_checkup_15_19?.length !==0 || stats?.no_of_postpartum_women_with_2_checkup_20_49?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.no_of_postpartum_women_with_2_checkup_10_14, stats?.no_of_postpartum_women_with_2_checkup_15_19, stats?.no_of_postpartum_women_with_2_checkup_20_49)">{{ stats?.no_of_postpartum_women_with_2_checkup_10_14?.length + stats?.no_of_postpartum_women_with_2_checkup_15_19?.length + stats?.no_of_postpartum_women_with_2_checkup_20_49?.length }}</td>
+                <td class="p-5 border"></td>
+              </tr>
+
+              <tr>
+                <td class="p-5 border"><span class="pl-3">c. No. of livebirths with unknown birth weight - Total</span></td>
+                <td class="p-5 border text-blue-500 text-center bg-gray-400"></td>
+                <td class="p-5 border text-blue-500 text-center bg-gray-400"></td>
+                <td class="p-5 border text-blue-500 text-center bg-gray-400"></td>
+                <td class="p-5 border text-blue-500 text-center" [class]="stats?.no_of_livebirths_by_weight_unknown?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.no_of_livebirths_by_weight_unknown)">{{ stats?.no_of_livebirths_by_weight_unknown?.length }}</td>
+                <td class="p-5 border"></td>
+
+                <td class="p-5 border">27. No. of postpartum women with Vitamin A supplementation - Total</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.no_of_postpartum_women_with_vita_10_14?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.no_of_postpartum_women_with_vita_10_14)">{{ stats?.no_of_postpartum_women_with_vita_10_14?.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.no_of_postpartum_women_with_vita_15_19?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.no_of_postpartum_women_with_vita_15_19)">{{ stats?.no_of_postpartum_women_with_vita_15_19?.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.no_of_postpartum_women_with_vita_20_49?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.no_of_postpartum_women_with_vita_20_49)">{{ stats?.no_of_postpartum_women_with_vita_20_49?.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.no_of_postpartum_women_with_vita_10_14?.length !==0 || stats?.no_of_postpartum_women_with_vita_15_19?.length !==0 || stats?.no_of_postpartum_women_with_vita_20_49?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.no_of_postpartum_women_with_vita_10_14, stats?.no_of_postpartum_women_with_vita_15_19, stats?.no_of_postpartum_women_with_vita_20_49)">{{ stats?.no_of_postpartum_women_with_vita_10_14?.length + stats?.no_of_postpartum_women_with_vita_15_19?.length + stats?.no_of_postpartum_women_with_vita_20_49?.length }}</td>
+                <td class="p-5 border"></td>
+              </tr>
+
+              <tr>
+                <td class="p-5 border">21. No. of deliveries attended by skilled health professionals - Total</td>
+                <td class="p-5 border text-blue-500 text-center bg-gray-400"></td>
+                <td class="p-5 border text-blue-500 text-center bg-gray-400"></td>
+                <td class="p-5 border text-blue-500 text-center bg-gray-400"></td>
+                <td class="p-5 border text-blue-500 text-center" [class]="stats?.no_of_deliveries_attended_all?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.no_of_deliveries_attended_all)">{{ stats?.no_of_deliveries_attended_all?.length }}</td>
+                <td class="p-5 border"></td>
+
+                <td class="p-5 border bg-gray-400" colspan="6" rowspan="16"></td>
+              </tr>
+
+              <tr>
+                <td class="p-5 border"><span class="pl-3">a. No. of deliveries attended by a doctor - Total</span></td>
+                <td class="p-5 border text-blue-500 text-center bg-gray-400"></td>
+                <td class="p-5 border text-blue-500 text-center bg-gray-400"></td>
+                <td class="p-5 border text-blue-500 text-center bg-gray-400"></td>
+                <td class="p-5 border text-blue-500 text-center" [class]="stats?.no_of_deliveries_attended_by_doctor?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.no_of_deliveries_attended_by_doctor)">{{ stats?.no_of_deliveries_attended_by_doctor?.length }}</td>
+                <td class="p-5 border"></td>
+              </tr>
+
+              <tr>
+                <td class="p-5 border"><span class="pl-3">a. No. of deliveries attended by a nurse - Total</span></td>
+                <td class="p-5 border text-blue-500 text-center bg-gray-400"></td>
+                <td class="p-5 border text-blue-500 text-center bg-gray-400"></td>
+                <td class="p-5 border text-blue-500 text-center bg-gray-400"></td>
+                <td class="p-5 border text-blue-500 text-center" [class]="stats?.no_of_deliveries_attended_by_nurse?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.no_of_deliveries_attended_by_nurse)">{{ stats?.no_of_deliveries_attended_by_nurse?.length }}</td>
+                <td class="p-5 border"></td>
+              </tr>
+
+              <tr>
+                <td class="p-5 border"><span class="pl-3">c. No. of deliveries attended by a midwives - Total</span></td>
+                <td class="p-5 border text-blue-500 text-center bg-gray-400"></td>
+                <td class="p-5 border text-blue-500 text-center bg-gray-400"></td>
+                <td class="p-5 border text-blue-500 text-center bg-gray-400"></td>
+                <td class="p-5 border text-blue-500 text-center" [class]="stats?.no_of_deliveries_attended_by_midwife?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.no_of_deliveries_attended_by_midwife)">{{ stats?.no_of_deliveries_attended_by_midwife?.length }}</td>
+                <td class="p-5 border"></td>
+              </tr>
+
+              <tr>
+                <td class="p-5 border">22. No. of health facility-based - Total</td>
+                <td class="p-5 border text-blue-500 text-center bg-gray-400"></td>
+                <td class="p-5 border text-blue-500 text-center bg-gray-400"></td>
+                <td class="p-5 border text-blue-500 text-center bg-gray-400"></td>
+                <td class="p-5 border text-blue-500 text-center" [class]="stats?.no_of_deliveries_health_facility_all?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.no_of_deliveries_health_facility_all)">{{ stats?.no_of_deliveries_health_facility_all?.length }}</td>
+                <td class="p-5 border"></td>
+              </tr>
+
+              <tr>
+                <td class="p-5 border"><span class="pl-3">a. No. of deliveries in public health facility - Total</span></td>
+                <td class="p-5 border text-blue-500 text-center bg-gray-400"></td>
+                <td class="p-5 border text-blue-500 text-center bg-gray-400"></td>
+                <td class="p-5 border text-blue-500 text-center bg-gray-400"></td>
+                <td class="p-5 border text-blue-500 text-center" [class]="stats?.no_of_deliveries_health_facility_public?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.no_of_deliveries_health_facility_public)">{{ stats?.no_of_deliveries_health_facility_public?.length }}</td>
+                <td class="p-5 border"></td>
+              </tr>
+
+              <tr>
+                <td class="p-5 border"><span class="pl-3">b. No. of deliveries in private health facility - Total</span></td>
+                <td class="p-5 border text-blue-500 text-center bg-gray-400"></td>
+                <td class="p-5 border text-blue-500 text-center bg-gray-400"></td>
+                <td class="p-5 border text-blue-500 text-center bg-gray-400"></td>
+                <td class="p-5 border text-blue-500 text-center" [class]="stats?.no_of_deliveries_health_facility_private?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.no_of_deliveries_health_facility_private)">{{ stats?.no_of_deliveries_health_facility_private?.length }}</td>
+                <td class="p-5 border"></td>
+              </tr>
+
+              <tr>
+                <td class="p-5 border">23. No. of non-facility-based deliveries - Total</td>
+                <td class="p-5 border text-blue-500 text-center bg-gray-400"></td>
+                <td class="p-5 border text-blue-500 text-center bg-gray-400"></td>
+                <td class="p-5 border text-blue-500 text-center bg-gray-400"></td>
+                <td class="p-5 border text-blue-500 text-center" [class]="stats?.no_of_deliveries_health_facility_non?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.no_of_deliveries_health_facility_non)">{{ stats?.no_of_deliveries_health_facility_non?.length }}</td>
+                <td class="p-5 border"></td>
+              </tr>
+
+              <tr>
+                <td class="p-5 border">24. Type of Devlivery</td>
+                <td class="p-5 border text-blue-500 text-center bg-gray-400"></td>
+                <td class="p-5 border text-blue-500 text-center bg-gray-400"></td>
+                <td class="p-5 border text-blue-500 text-center bg-gray-400"></td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.no_of_deliveries_type_of_delivery_all?.length ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.no_of_deliveries_type_of_delivery_all)">{{ stats?.no_of_deliveries_type_of_delivery_all?.length }}</td>
+                <td class="p-5 border"></td>
+              </tr>
+
+              <tr>
+                <td class="p-5 border"><span class="pl-3">a. No. of vaginal deliveries - Total</span></td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.no_of_deliveries_type_of_delivery_nsd_10_14?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.no_of_deliveries_type_of_delivery_nsd_10_14)">{{ stats?.no_of_deliveries_type_of_delivery_nsd_10_14?.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.no_of_deliveries_type_of_delivery_nsd_15_19?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.no_of_deliveries_type_of_delivery_nsd_15_19)">{{ stats?.no_of_deliveries_type_of_delivery_nsd_15_19?.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.no_of_deliveries_type_of_delivery_nsd_20_49?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.no_of_deliveries_type_of_delivery_nsd_20_49)">{{ stats?.no_of_deliveries_type_of_delivery_nsd_20_49?.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.no_of_deliveries_type_of_delivery_nsd_10_14?.length !==0 || stats?.no_of_deliveries_type_of_delivery_nsd_15_19?.length !==0 || stats?.no_of_deliveries_type_of_delivery_nsd_20_49?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.no_of_deliveries_type_of_delivery_nsd_10_14, stats?.no_of_deliveries_type_of_delivery_nsd_15_19, stats?.no_of_deliveries_type_of_delivery_nsd_20_49)">{{ stats?.no_of_deliveries_type_of_delivery_nsd_10_14?.length + stats?.no_of_deliveries_type_of_delivery_nsd_15_19?.length + stats?.no_of_deliveries_type_of_delivery_nsd_20_49?.length }}</td>
+                <td class="p-5 border"></td>
+              </tr>
+
+              <tr>
+                <td class="p-5 border"><span class="pl-3">b. No. of deliveries by cesarean section - Total</span></td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.no_of_deliveries_type_of_delivery_cs_10_14?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.no_of_deliveries_type_of_delivery_cs_10_14)">{{ stats?.no_of_deliveries_type_of_delivery_cs_10_14?.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.no_of_deliveries_type_of_delivery_cs_15_19?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.no_of_deliveries_type_of_delivery_cs_15_19)">{{ stats?.no_of_deliveries_type_of_delivery_cs_15_19?.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.no_of_deliveries_type_of_delivery_cs_20_49?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.no_of_deliveries_type_of_delivery_cs_20_49)">{{ stats?.no_of_deliveries_type_of_delivery_cs_20_49?.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.no_of_deliveries_type_of_delivery_cs_10_14?.length !==0 || stats?.no_of_deliveries_type_of_delivery_cs_15_19?.length !==0 || stats?.no_of_deliveries_type_of_delivery_cs_20_49?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.no_of_deliveries_type_of_delivery_cs_10_14, stats?.no_of_deliveries_type_of_delivery_cs_15_19, stats?.no_of_deliveries_type_of_delivery_cs_20_49)">{{ stats?.no_of_deliveries_type_of_delivery_cs_10_14?.length + stats?.no_of_deliveries_type_of_delivery_cs_15_19?.length + stats?.no_of_deliveries_type_of_delivery_cs_20_49?.length }}</td>
+                <td class="p-5 border"></td>
+              </tr>
+
+              <tr>
+                <td class="p-5 border">25. Pregnancy Outcome</td>
+                <td class="p-5 border text-blue-500 text-center bg-gray-400"></td>
+                <td class="p-5 border text-blue-500 text-center bg-gray-400"></td>
+                <td class="p-5 border text-blue-500 text-center bg-gray-400"></td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.no_of_pregnancy_outcome_all?.length ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.no_of_pregnancy_outcome_all)">{{ stats?.no_of_pregnancy_outcome_all?.length }}</td>
+                <td class="p-5 border"></td>
+              </tr>
+
+              <tr>
+                <td class="p-5 border"><span class="pl-3">a. No. of full-term births - Total</span></td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.no_of_pregnancy_outcome_fullterm_10_14?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.no_of_pregnancy_outcome_fullterm_10_14)">{{ stats?.no_of_pregnancy_outcome_fullterm_10_14?.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.no_of_pregnancy_outcome_fullterm_15_19?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.no_of_pregnancy_outcome_fullterm_15_19)">{{ stats?.no_of_pregnancy_outcome_fullterm_15_19?.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.no_of_pregnancy_outcome_fullterm_20_49?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.no_of_pregnancy_outcome_fullterm_20_49)">{{ stats?.no_of_pregnancy_outcome_fullterm_20_49?.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.no_of_pregnancy_outcome_fullterm_10_14?.length !==0 || stats?.no_of_pregnancy_outcome_fullterm_15_19?.length !==0 || stats?.no_of_pregnancy_outcome_fullterm_20_49?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.no_of_pregnancy_outcome_fullterm_10_14, stats?.no_of_pregnancy_outcome_fullterm_15_19, stats?.no_of_pregnancy_outcome_fullterm_20_49)">{{ stats?.no_of_pregnancy_outcome_fullterm_10_14?.length + stats?.no_of_pregnancy_outcome_fullterm_15_19?.length + stats?.no_of_pregnancy_outcome_fullterm_20_49?.length }}</td>
+                <td class="p-5 border"></td>
+              </tr>
+
+              <tr>
+                <td class="p-5 border"><span class="pl-3">b. No. of pre-term births - Total</span></td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.no_of_pregnancy_outcome_preterm_10_14?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.no_of_pregnancy_outcome_preterm_10_14)">{{ stats?.no_of_pregnancy_outcome_preterm_10_14?.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.no_of_pregnancy_outcome_preterm_15_19?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.no_of_pregnancy_outcome_preterm_15_19)">{{ stats?.no_of_pregnancy_outcome_preterm_15_19?.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.no_of_pregnancy_outcome_preterm_20_49?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.no_of_pregnancy_outcome_preterm_20_49)">{{ stats?.no_of_pregnancy_outcome_preterm_20_49?.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.no_of_pregnancy_outcome_preterm_10_14?.length !==0 || stats?.no_of_pregnancy_outcome_preterm_15_19?.length !==0 || stats?.no_of_pregnancy_outcome_preterm_20_49?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.no_of_pregnancy_outcome_preterm_10_14, stats?.no_of_pregnancy_outcome_preterm_15_19, stats?.no_of_pregnancy_outcome_preterm_20_49)">{{ stats?.no_of_pregnancy_outcome_preterm_10_14?.length + stats?.no_of_pregnancy_outcome_preterm_15_19?.length + stats?.no_of_pregnancy_outcome_preterm_20_49?.length }}</td>
+                <td class="p-5 border"></td>
+              </tr>
+
+              <tr>
+                <td class="p-5 border"><span class="pl-3">c. No. of fetal deaths - Total</span></td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.no_of_pregnancy_outcome_fetal_death_10_14?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.no_of_pregnancy_outcome_fetal_death_10_14)">{{ stats?.no_of_pregnancy_outcome_fetal_death_10_14?.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.no_of_pregnancy_outcome_fetal_death_15_19?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.no_of_pregnancy_outcome_fetal_death_15_19)">{{ stats?.no_of_pregnancy_outcome_fetal_death_15_19?.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.no_of_pregnancy_outcome_fetal_death_20_49?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.no_of_pregnancy_outcome_fetal_death_20_49)">{{ stats?.no_of_pregnancy_outcome_fetal_death_20_49?.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.no_of_pregnancy_outcome_fetal_death_10_14?.length !==0 || stats?.no_of_pregnancy_outcome_fetal_death_15_19?.length !==0 || stats?.no_of_pregnancy_outcome_fetal_death_20_49?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.no_of_pregnancy_outcome_fetal_death_10_14, stats?.no_of_pregnancy_outcome_fetal_death_15_19, stats?.no_of_pregnancy_outcome_fetal_death_20_49)">{{ stats?.no_of_pregnancy_outcome_fetal_death_10_14?.length + stats?.no_of_pregnancy_outcome_fetal_death_15_19?.length + stats?.no_of_pregnancy_outcome_fetal_death_20_49?.length }}</td>
+                <td class="p-5 border"></td>
+              </tr>
+
+              <tr>
+                <td class="p-5 border"><span class="pl-3">d. No. of abortion / miscarriage - Total</span></td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.no_of_pregnancy_outcome_abortion_10_14?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.no_of_pregnancy_outcome_abortion_10_14)">{{ stats?.no_of_pregnancy_outcome_abortion_10_14?.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.no_of_pregnancy_outcome_abortion_15_19?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.no_of_pregnancy_outcome_abortion_15_19)">{{ stats?.no_of_pregnancy_outcome_abortion_15_19?.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.no_of_pregnancy_outcome_abortion_20_49?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.no_of_pregnancy_outcome_abortion_20_49)">{{ stats?.no_of_pregnancy_outcome_abortion_20_49?.length }}</td>
+                <td class="p-5 border text-blue-500 text-center" [class]=" stats?.no_of_pregnancy_outcome_abortion_10_14?.length !==0 || stats?.no_of_pregnancy_outcome_abortion_15_19?.length !==0 || stats?.no_of_pregnancy_outcome_abortion_20_49?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.no_of_pregnancy_outcome_abortion_10_14, stats?.no_of_pregnancy_outcome_abortion_15_19, stats?.no_of_pregnancy_outcome_abortion_20_49)">{{ stats?.no_of_pregnancy_outcome_abortion_10_14?.length + stats?.no_of_pregnancy_outcome_abortion_15_19?.length + stats?.no_of_pregnancy_outcome_abortion_20_49?.length }}</td>
+                <td class="p-5 border"></td>
+              </tr>
             </tbody>
           </table>
         </div>

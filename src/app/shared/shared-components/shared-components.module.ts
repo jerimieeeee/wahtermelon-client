@@ -11,7 +11,6 @@ import { EkasComponent } from './konsulta/modals/ekas/ekas.component';
 import { PbefComponent } from './eclaims/modals/pbef/pbef.component';
 import { Cf1Component } from './eclaims/modals/cf1/cf1.component';
 import { Cf2Component } from './eclaims/modals/cf2/cf2.component';
-import { EndVisitComponent } from '../shared-modals/end-visit/end-visit.component';
 import { NgxPrintModule } from 'ngx-print';
 
 @NgModule({
@@ -23,7 +22,6 @@ import { NgxPrintModule } from 'ngx-print';
     PbefComponent,
     Cf1Component,
     Cf2Component,
-    EndVisitComponent,
   ],
   imports: [
     CommonModule,
@@ -37,7 +35,6 @@ import { NgxPrintModule } from 'ngx-print';
   exports: [
     KonsultaComponent,
     EclaimsComponent,
-    EndVisitComponent,
     EpresComponent,
     EkasComponent
   ]

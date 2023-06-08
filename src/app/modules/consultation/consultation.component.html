@@ -20,9 +20,14 @@
           eKAS
         </button>
 
-        <button *ngIf="!consult_details?.consult_done" type="button" class="btn-end-visit ml-auto" (click)="toggleModal()">
+        <button *ngIf="!consult_details?.consult_done && allowed_to_edit" type="button" class="btn-end-visit ml-auto" (click)="toggleModal('show_end')">
           <fa-icon class="mr-1" [icon]="faDoorClosed"></fa-icon>
           End Visit
+        </button>
+
+        <button *ngIf="consult_details?.consult_done && allowed_to_edit" type="button" class="btn-end-visit ml-auto" (click)="toggleModal('show_open')">
+          <!-- <fa-icon class="mr-1" [icon]="faDoorClosed"></fa-icon> -->
+          Open Visit
         </button>
       </div>
     </nav>
@@ -31,14 +36,15 @@
   <div *ngIf="modules === 1">
     <span class="text-sky-500 flex justify-between py-2">
       <span class="flex justify-between w-full">
-        <div class="w-1/2 mt-2">
+        <div class="w-2/3 mt-2">
           <button class="font-normal text-sky-500 px-2 py-1 text-sm  mr-2" type="button" (click)="toggleAll()">
             <fa-icon [icon]="toggle_content ? faChevronUp : faChevronDown" size="lg"></fa-icon>
           </button>
-          <span class="mt-2 font-bold "> CONSULTATION <span class="text-gray-500 text-sm">({{ consult_details?.consult_date | date: 'MM/dd/yyyy hh:mm:ss a' }} | ID:{{ consult_details?.id }})</span></span>
+          <span class="mt-2 font-bold "> CONSULTATION <span class="text-gray-500 text-sm">({{ consult_details?.consult_date | date: 'MM/dd/yyyy hh:mm a' }} | ID:{{ consult_details?.id }})</span></span><br />
+          <span class="text-gray-500 text-sm font-semibold">Facilty: {{ consult_details?.facility?.facility_name }}</span>
         </div>
 
-        <div class="w-1/2 flex justify-end" *ngIf="consult_details && open_consult && have_complaint">
+        <div class="w-1/3 flex justify-end" *ngIf="(consult_details && open_consult && have_complaint) && (!consult_details?.consult_done && allowed_to_edit)">
           <div class="flex text-gray-700">
             <select [disabled]="enable_edit" class="input px-2 mr-3 disabled:bg-gray-300"  [(ngModel)]="referred_to.id">
               <option [value]="dr.id" class="pr-3" *ngFor="let dr of physicians">{{ dr.last_name }}, {{ dr.first_name }} {{ dr.middle_name }}</option>
@@ -52,18 +58,18 @@
     </span>
 
     <div *ngIf="consult_details && open_consult">
-      <app-complaint-history [toggle_content]="toggle_content" [consult_details]="consult_details" [have_complaint]="have_complaint" (loadConsult)="loadConsult()"></app-complaint-history>
-      <app-general-survey [toggle_content]="toggle_content" [consult_details]="consult_details"></app-general-survey>
-      <app-physical-exam *ngIf="have_complaint" [toggle_content]="toggle_content" [consult_details]="consult_details"></app-physical-exam>
+      <app-complaint-history [allowed_to_edit]="allowed_to_edit" [toggle_content]="toggle_content" [consult_details]="consult_details" [have_complaint]="have_complaint" (loadConsult)="loadConsult()"></app-complaint-history>
+      <app-general-survey [allowed_to_edit]="allowed_to_edit" [toggle_content]="toggle_content" [consult_details]="consult_details"></app-general-survey>
+      <app-physical-exam *ngIf="have_complaint" [allowed_to_edit]="allowed_to_edit" [toggle_content]="toggle_content" [consult_details]="consult_details"></app-physical-exam>
 
-      <app-management *ngIf="have_complaint" [toggle_content]="toggle_content" [consult_details]="consult_details"></app-management>
+      <app-management *ngIf="have_complaint" [allowed_to_edit]="allowed_to_edit" [toggle_content]="toggle_content" [consult_details]="consult_details"></app-management>
 
       <app-consult-history [toggle_content]="toggle_content"></app-consult-history>
-      <app-initial-dx *ngIf="have_complaint" [toggle_content]="toggle_content" [consult_details]="consult_details"></app-initial-dx>
-      <app-final-dx *ngIf="have_complaint && consult_details.physician" [toggle_content]="toggle_content" [consult_details]="consult_details"></app-final-dx>
-      <app-prescription *ngIf="have_complaint && consult_details.physician" [toggle_content]="toggle_content" [consult_details]="consult_details" [with_credentials]="with_credentials"></app-prescription>
+      <app-initial-dx *ngIf="have_complaint" [allowed_to_edit]="allowed_to_edit" [toggle_content]="toggle_content" [consult_details]="consult_details"></app-initial-dx>
+      <app-final-dx *ngIf="have_complaint && consult_details.physician" [allowed_to_edit]="allowed_to_edit" [toggle_content]="toggle_content" [consult_details]="consult_details"></app-final-dx>
+      <app-prescription *ngIf="have_complaint && consult_details.physician" [allowed_to_edit]="allowed_to_edit" [toggle_content]="toggle_content" [consult_details]="consult_details" [with_credentials]="with_credentials"></app-prescription>
 
-      <div class="grid grid-cols-10" *ngIf="have_complaint && !consult_details.physician">
+      <div class="grid grid-cols-10" *ngIf="!consult_details?.consult_done && have_complaint && !consult_details.physician && allowed_to_edit">
         <div class="col-start-3 col-span-8 text-gray-700 p-10 border border-slate-300 shadow-md rounded-md mt-5">
           <label for="referred_to">To open final diagnosis & prescription you must refer this patient to a physician</label>
           <select [disabled]="enable_edit" class="input px-2 mr-3 disabled:bg-gray-300 mb-3" name="referred_to" [(ngModel)]="referred_to.id">
@@ -92,12 +98,19 @@
   </div>
 </div>
 
-<app-end-visit *ngIf="show_end" (toggleModal)="toggleModal()"
+<app-end-visit *ngIf="show_end" (toggleModal)="toggleModal('show_end')"
   [consult_id]="consult_details?.id"
   [consult_date]="consult_details?.consult_date"
   [patient_id]="consult_details?.patient.id"
   [pt_group]="'cn'"
 ></app-end-visit>
+
+<app-open-consult *ngIf="show_open" (toggleModal)="toggleModal('show_open')"
+  [consult_id]="consult_details?.id"
+  [consult_date]="consult_details?.consult_date"
+  [patient_id]="consult_details?.patient.id"
+  [pt_group]="'cn'"
+></app-open-consult>
 
 <app-ekas *ngIf="show_ekas"
   (toggleModal)="toggleEkas()"

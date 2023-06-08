@@ -1,0 +1,42 @@
+<div class="block justify-items-start mx-5 mb-5 mt-5">
+  <div class="flex justify-between items-center">
+    <span class="block text-blue-500 font-medium text-sm select-none" [ngClass]="{'opacity-70': (appointment_list?.length === 0 || !appointment_list)}">
+      <fa-icon (click)="toggle('appointment')" class="mx-0 my-0 mr-2 hover:cursor-pointer" [icon]="accordions['appointment'] ? faChevronUp : faChevronDown"></fa-icon>
+      APPOINTMENTS {{ appointment_list?.length > 0 ? '('+appointment_list.length+')' : '' }}
+    </span>
+    <fa-icon (click)="modalToggle('appointment-modal')" class="mx-0 my-0 text-blue-500 mr-2 hover:cursor-pointer" [icon]="faPlusCircle"></fa-icon>
+  </div>
+
+  <div *ngIf="!show_appointment" >
+    <div class="p-4 mx-auto">
+      <div class="animate-pulse grid grid-cols-2 gap-x-20 gap-y-4 justify-between">
+        <div class="h-2 bg-slate-200 rounded"></div>
+        <div class="h-2 bg-slate-200 rounded"></div>
+        <div class="h-2 bg-slate-200 rounded"></div>
+        <div class="h-2 bg-slate-200 rounded"></div>
+        <div class="h-2 bg-slate-200 rounded"></div>
+        <div class="h-2 bg-slate-200 rounded"></div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="show_appointment && appointment_list" >
+    <div [@openCloseAccordion] *ngIf="accordions['appointment']" class="block">
+      <div class="flex pl-3 justify-between items-center mb-3 border-b border-b-gray-100" *ngFor="let appointment of appointment_list | keyvalue">
+       <span class="font-medium text-xs flex flex-col">
+          <span class="font-bold">{{ appointment.key | date: 'MM/dd/yyyy'}} </span>
+          <span class="font-normal pl-3" *ngFor="let val of appointment.value">
+            <span *ngIf="!val.referral_facility_name">
+              {{ val.appointment_desc }}
+            </span>
+            <span  class="text-orange-500 font-medium italic" *ngIf="val.referral_facility_name">
+              <strong>Referred from:</strong> {{ val.facility_name }} <br />
+              <strong>Referred to:</strong> {{ val.referral_facility_name }} <br />
+              Referral reason: {{ val.referral_reason }}
+            </span>
+          </span>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>

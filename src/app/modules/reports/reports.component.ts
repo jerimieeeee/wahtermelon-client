@@ -30,6 +30,11 @@ export class ReportsComponent implements OnInit {
     { id: 'fhsis2018-mc', desc: 'Maternal Care', url: 'reports-2018/maternal-care/m1'},
   ]
 
+  other_stats = [
+    { id: 'patient-registered', desc: 'Patient Register', url: 'reports-2018/user/patient-registered'},
+    // { id: 'fhsis2018-mc', desc: 'Maternal Care', url: 'reports-2018/maternal-care/m1'},
+  ]
+
   months = [
     {
       value: 1,
@@ -81,7 +86,7 @@ export class ReportsComponent implements OnInit {
     },
   ];
 
-  fhsis_monthly_arr = ['fhsis2018-cc', 'fhsis2018-mc']
+  fhsis_monthly_arr = ['fhsis2018-cc', 'fhsis2018-mc', 'patient-registered']
   report_params: any;
   years: any = [];
   selectedBrgy: [];

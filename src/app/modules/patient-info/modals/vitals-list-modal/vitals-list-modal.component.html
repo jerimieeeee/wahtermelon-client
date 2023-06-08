@@ -64,7 +64,7 @@
                   {{ vitals.patient_respiratory_rate | number: '1.0-0' ?? '-' }}
                 </td> -->
                 <td class="py-4 px-6">
-                  <fa-icon (click)="editVitals(vitals)" class="mx-0 my-0 text-amber-500 hover:cursor-pointer flex-none mr-2" [icon]="faPenToSquare"></fa-icon>
+                  <fa-icon *ngIf="vitals.facility_code === user_facility" (click)="editVitals(vitals)" class="mx-0 my-0 text-amber-500 hover:cursor-pointer flex-none mr-2" [icon]="faPenToSquare"></fa-icon>
 
                   <!-- <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a> -->
                 </td>

@@ -45,7 +45,13 @@
 
         <div class="block justify-items-start mx-5 pb-5 border-b border-gray-200">
           <div class="mt-4 flex justify-center">
-            <button type="button" class="w-48 inline-flex justify-center px-5 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-sky-500 hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500" (click)="toggleModal('module')">Navigate Programs</button>
+            <button type="button" class="w-48 h-10 inline-flex mr-2 justify-center px-5 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-sky-500 hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500"
+              (click)="toggleModal('module')">
+              Navigate Programs
+            </button>
+           <!-- <button (click)="toggleModal('referral-modal')" class="pl-3 pr-2 rounded-md h-10 bg-orange-500 text-white">
+              <fa-icon [icon]="faBuildingCircleArrowRight"></fa-icon>
+            </button>-->
           </div>
 
           <div class="mt-4 leading-tight">
@@ -71,7 +77,7 @@
 
           <app-philhealth (setDetails)="setDetails($event)" (toggleAccordion)="toggleAccordion($event)" (toggleModal)="toggleModal($event)" [accordions]="accordions" ></app-philhealth>
         </div>
-
+        <app-appointment (toggleAccordion)="toggleAccordion($event)" [accordions]="accordions" (toggleModal)="toggleModal($event)"></app-appointment>
         <app-prescriptions  (toggleAccordion)="toggleAccordion($event)" (navigateTo)="navigateTo($event)" [accordions]="accordions" [consult_id]="consult_id" [patient_info]="patient_info"></app-prescriptions>
         <app-laboratory (toggleAccordion)="toggleAccordion($event)" (navigateTo)="navigateTo($event)" [accordions]="accordions" (toggleModal)="toggleModal($event)" (setLabList)="setLabList($event)"></app-laboratory>
 
@@ -90,10 +96,14 @@
       </div>
     </div>
   </div>
+
+
 </div>
 <!-- MODALS -->
-<app-module-modal *ngIf="modals['module']" [philhealth_details]="philhealth_details" (toggleModal)="toggleModal('module')" [patient_info]="patient_info" [patient_age]="patient_age"></app-module-modal>
-<app-lab-request-modal *ngIf="modals['lab-request']" (toggleModal)="toggleModal('lab-request')" [lab_req_list]="lab_req_list" [patient_info]="patient_info" [consult_id]="consult_id"></app-lab-request-modal>
+<app-module-modal *ngIf="modals['module']" [user_facility]="user_facility" [philhealth_details]="philhealth_details" (toggleModal)="toggleModal('module')" [patient_info]="patient_info" [patient_age]="patient_age"></app-module-modal>
+<!-- <app-lab-request-modal *ngIf="modals['lab-request']" (toggleModal)="toggleModal('lab-request')" [lab_req_list]="lab_req_list" [patient_info]="patient_info" [consult_id]="consult_id"></app-lab-request-modal> -->
+<app-lab-request *ngIf="modals['lab-request']" (toggleModal)="toggleModal('lab-request')" [lab_req_list]="lab_req_list" [patient_info]="patient_info" [consult_id]="consult_id"
+></app-lab-request>
 
 <app-history-modal *ngIf="modals['history']" (toggleModal)="toggleModal('history')" [patient_info]="patient_info" [history_list]="history_list" [past_medical]="past_medical"></app-history-modal>
 <app-fam-history-modal *ngIf="modals['fam-history']" (toggleModal)="toggleModal($event)" [patient_info]="patient_info" [history_list]="history_list" [family_medical]="family_medical"></app-fam-history-modal>
@@ -103,7 +113,7 @@
 <app-preghist-modal *ngIf="modals['preghist']" (toggleModal)="toggleModal($event)" [patient_info]="patient_info" [pregnancy_history]="pregnancy_history" [delivery_method]="delivery_method"></app-preghist-modal>
 
 <app-vitals-modal *ngIf="modals['vitals']" (toggleModal)="toggleModal('vitals')" [patient_age]="patient_age" [patient_info]="patient_info" [vitals_to_edit]="vitals_to_edit"></app-vitals-modal>
-<app-vitals-list-modal *ngIf="modals['vitals-list']" (toggleModal)="toggleModal('vitals-list')" (vitalsEdit)="vitalsEdit($event)" [patient_info]="patient_info"></app-vitals-list-modal>
+<app-vitals-list-modal *ngIf="modals['vitals-list']" [user_facility]="user_facility" (toggleModal)="toggleModal('vitals-list')" (vitalsEdit)="vitalsEdit($event)" [patient_info]="patient_info"></app-vitals-list-modal>
 
 <app-philhealth-modal *ngIf="modals['philhealth']" (toggleModal)="toggleModal($event)" [patient_info]="patient_info" [philhealth_to_edit]="philhealth_to_edit"></app-philhealth-modal>
 <app-philhealth-list-modal *ngIf="modals['philhealth-list']" (toggleModal)="toggleModal('philhealth-list')" (philhealthEdit)="philhealthEdit($event)" [patient_info]="patient_info" ></app-philhealth-list-modal>
@@ -118,3 +128,10 @@
 <app-medication-modal *ngIf="modals['medication']" (toggleModal)="toggleModal('medication')"></app-medication-modal>
 <app-death-modal *ngIf="modals['death']" (toggleModal)="toggleModal('death')"></app-death-modal>
 <app-photo-modal *ngIf="modals['photo']" (toggleModal)="toggleModal('photo')" [patient_info]="patient_info"></app-photo-modal>
+
+<app-set-appointment *ngIf="modals['appointment-modal']" (toggleModal)="toggleModal('appointment-modal')" (loadData)="loadData($event)" [patient_info]="patient_info"></app-set-appointment>
+<app-referral-modal *ngIf="modals['referral-modal']"
+  [patient_info]="patient_info"
+  (toggleModal)="toggleModal('referral-modal')"
+  (loadData)="loadData($event)"
+></app-referral-modal>

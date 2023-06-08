@@ -20,7 +20,10 @@
 
             <div *ngFor="let vaccine of list.value.items" class="w-full mx-10">
               <div class="grid grid-cols-3 gap-4">
-                <label class="col-span-1 pt-2" for="{{ 'vaccine_status.'+vaccine.vaccine_id }}">{{ vaccine.vaccine_desc }} ({{ vaccine.vaccine_id }})</label>
+                <label class="col-span-1 pt-2" for="{{ 'vaccine_status.'+vaccine.vaccine_id }}">
+                  {{ vaccine.vaccine_desc }}
+                  <span *ngIf="!covid_array.includes(vaccine.vaccine_id)">({{ vaccine.vaccine_id }})</span>
+                </label>
 
                 <div class="col-span-2 grid grid-cols-2">
                   <select [(ngModel)]="vaccineForm.vaccine_status[vaccine.vaccine_id]"
@@ -36,7 +39,20 @@
                     <input  [(ngModel)]="vaccineForm.vaccine_date[vaccine.vaccine_id]"
                       name="{{ 'vaccine_date.'+vaccine.vaccine_id }}" id="{{ 'vaccine_date.'+vaccine.vaccine_id }}" type="date" placeholder="Enter vaccine date" class="col-span-1 mt-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                   </div>
-
+                  <!-- START OF COVID -->
+                  <div *ngIf="covid_array.includes(vaccine.vaccine_id) && (vaccineForm.vaccine_status[vaccine.vaccine_id] !== '-' && vaccineForm.vaccine_status[vaccine.vaccine_id] !== '' && vaccineForm.vaccine_status[vaccine.vaccine_id] !== undefined)" class="col-span-1">
+                    <input  [(ngModel)]="vaccineForm.lot_no[vaccine.vaccine_id]"
+                      name="{{ 'lot_no.'+vaccine.vaccine_id }}" id="{{ 'lot_no.'+vaccine.vaccine_id }}" type="text" placeholder="Enter Lot No" class="col-span-1 mt-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                  </div>
+                  <div *ngIf="covid_array.includes(vaccine.vaccine_id) && (vaccineForm.vaccine_status[vaccine.vaccine_id] !== '-' && vaccineForm.vaccine_status[vaccine.vaccine_id] !== '' && vaccineForm.vaccine_status[vaccine.vaccine_id] !== undefined)" class="col-span-1">
+                    <input  [(ngModel)]="vaccineForm.batch_no[vaccine.vaccine_id]"
+                      name="{{ 'batch_no.'+vaccine.vaccine_id }}" id="{{ 'batch_no.'+vaccine.vaccine_id }}" type="text" placeholder="Enter Batch No" class="col-span-1 mt-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                  </div>
+                  <div *ngIf="covid_array.includes(vaccine.vaccine_id) && (vaccineForm.vaccine_status[vaccine.vaccine_id] !== '-' && vaccineForm.vaccine_status[vaccine.vaccine_id] !== '' && vaccineForm.vaccine_status[vaccine.vaccine_id] !== undefined)" class="col-span-2">
+                    <input  [(ngModel)]="vaccineForm.facility_name[vaccine.vaccine_id]"
+                      name="{{ 'facility_name.'+vaccine.vaccine_id }}" id="{{ 'facility_name.'+vaccine.vaccine_id }}" type="text" placeholder="Enter Facility Name" class="col-span-1 mt-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                  </div>
+                  <!-- END OF COVID -->
                   <div class="border border-slate-200 rounded-lg my-3 bg-slate-100 col-span-2" *ngIf="vaccines_given && vaccines_given[vaccine.vaccine_id]">
                     <table class="table-auto w-full m-3">
                       <thead>

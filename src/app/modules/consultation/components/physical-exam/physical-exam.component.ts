@@ -11,6 +11,7 @@ import { ToastrService } from 'ngx-toastr';
 export class PhysicalExamComponent implements OnInit, OnChanges {
   @Input() toggle_content;
   @Input() consult_details;
+  @Input() allowed_to_edit;
 
   faSave = faSave;
   faChevronCircleUp = faChevronCircleUp;
@@ -100,6 +101,7 @@ export class PhysicalExamComponent implements OnInit, OnChanges {
   loadLibraries() {
     this.http.get('libraries/pe').subscribe(
       (data: any) => {
+        // console.log(data.data)
         const list = data.data;
 
         const groups = list.reduce((groups, item) => {

@@ -1,9 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { faChevronDown, faChevronUp, faDoorClosed, faFile } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { GraphsComponent } from './components/graphs/graphs.component';
 import { ToastrService } from 'ngx-toastr';
+import { filter, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-consultation',
@@ -24,6 +25,7 @@ export class ConsultationComponent implements OnInit {
   open_consult: boolean = true;
   have_complaint:boolean = false;
   show_end: boolean = false;
+  show_open: boolean = false;
   enable_edit: boolean = false;
   show_ekas: boolean = false;
 
@@ -59,8 +61,14 @@ export class ConsultationComponent implements OnInit {
     this.patient_details = info;
   }
 
-  toggleModal(){
-    this.show_end = !this.show_end;
+  // modals: any = [];
+
+  toggleModal(name){
+    this[name] = !this[name];
+
+    if(name==='show_open' && !this.show_open) {
+      this.loadConsult();
+    }
   }
 
   openEkas() {
@@ -86,13 +94,18 @@ export class ConsultationComponent implements OnInit {
     this.http.get('consultation/records',{params:{patient_id: this.patient_id, per_page: 'all', sort: '-consult_date'}}).subscribe({
       next: (data: any) => {
         this.visit_list = data.data;
+        console.log(data.data);
       },
       error: err => console.log(err),
     })
   }
 
   with_credentials: boolean = false;
+  allowed_to_edit: boolean = false;
   loadConsult(){
+    // console.log('consult loaded')
+    this.consult_id = this.route.snapshot.paramMap.get('consult_id');
+    this.consult_details = null;
     let params = {
       id: this.consult_id,
       pt_group: 'cn',
@@ -100,8 +113,11 @@ export class ConsultationComponent implements OnInit {
 
     this.http.get('consultation/records', {params}).subscribe({
       next: (data: any) => {
+        // console.log(data)
         this.consult_details = data.data[0];
-        // console.log(this.consult_details)
+        this.allowed_to_edit = this.http.getUserFacility() === this.consult_details.facility.code ? true : false;
+        // console.log(this.http.getUserFacility())
+        // console.log(this.consult_details.facility.code)
         if(this.consult_details.consult_notes.complaint || this.consult_details.consult_notes.complaints.length > 0  || this.consult_details.consult_notes.history) {
           this.have_complaint = true;
           this.loadUsers();
@@ -154,15 +170,23 @@ export class ConsultationComponent implements OnInit {
   constructor(
     private http: HttpService,
     private route: ActivatedRoute,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private router: Router,
   ) { }
+
+  navigationEnd$ = this.router.events.pipe(
+    filter(event => event instanceof NavigationEnd),
+    tap(() => {
+      this.loadConsult();
+    })
+  );
 
   ngOnInit(): void {
     this.patient_id = this.route.snapshot.paramMap.get('id');
-    this.consult_id = this.route.snapshot.paramMap.get('consult_id');
     // console.log(this.consult_id)
     this.modules = 1;
     this.loadConsult();
+    this.navigationEnd$.subscribe();
     // this.loadUsers()
   }
 }

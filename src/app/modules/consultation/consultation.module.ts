@@ -16,13 +16,14 @@ import { ComplaintHistoryComponent } from './components/complaint-history/compla
 import { GraphsComponent } from './components/graphs/graphs.component';
 import { ConsultHistoryComponent } from './components/consult-history/consult-history.component';
 import { ConsultSummaryComponent } from './components/consult-summary/consult-summary.component';
-import { AlertPromptComponent } from './modals/alert-prompt/alert-prompt.component';
 import { DrugListComponent } from './components/prescription/modals/drug-list/drug-list.component';
 import { DrugFormComponent } from './components/prescription/modals/drug-form/drug-form.component';
 import { DrugDeleteComponent } from './components/prescription/modals/drug-delete/drug-delete.component';
 import { GeneralSurveyComponent } from './components/general-survey/general-survey.component';
 import { ManagementComponent } from './components/management/management.component';
 import { DeleteItemComponent } from 'app/shared/shared-modals/delete-item/delete-item.component';
+import { EndVisitComponent } from 'app/shared/shared-modals/end-visit/end-visit.component';
+import { OpenConsultComponent } from 'app/shared/shared-modals/open-consult/open-consult.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,6 @@ import { DeleteItemComponent } from 'app/shared/shared-modals/delete-item/delete
     GraphsComponent,
     ConsultHistoryComponent,
     ConsultSummaryComponent,
-    AlertPromptComponent,
     DrugListComponent,
     DrugFormComponent,
     DrugDeleteComponent,
@@ -51,7 +51,9 @@ import { DeleteItemComponent } from 'app/shared/shared-modals/delete-item/delete
     NgSelectModule,
     FormsModule,
     ReactiveFormsModule,
-    DeleteItemComponent
+    DeleteItemComponent,
+    EndVisitComponent,
+    OpenConsultComponent
   ]
 })
 export class ConsultationModule { }

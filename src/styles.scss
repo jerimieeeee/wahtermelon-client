@@ -1,3 +1,4 @@
+@import "../node_modules/angular-calendar/css/angular-calendar.css";
 @import "@ng-select/ng-select/themes/default.theme.css";
 @tailwind base;
 @tailwind components;
@@ -80,7 +81,7 @@
     @apply text-white hover:text-gray-200 ml-3 cursor-pointer;
   };
   .input {
-    @apply mt-1 py-2 px-3 focus:ring-blue-500 focus:border-indigo-500 block w-full border-gray-300 border rounded-md sm:text-sm
+    @apply mt-1 py-2 px-3 focus:ring-blue-500 focus:border-indigo-500 block w-full border-gray-300 border rounded-md sm:text-sm disabled:bg-gray-300
   };
   .input-label {
     @apply block text-sm font-medium text-gray-700 select-none
@@ -92,7 +93,7 @@
     @apply text-white transition duration-100 ease-in-out transform active:scale-90
   };
   .btn-save {
-    @apply text-white bg-blue-500 enabled:hover:ring-2 enabled:hover:ring-blue-300 focus:outline-none font-medium rounded text-sm px-6 py-2.5 text-center transition duration-100 ease-in-out transform enabled:active:scale-90
+    @apply text-white bg-blue-500 enabled:hover:ring-2 enabled:hover:ring-blue-300 focus:outline-none font-medium rounded text-sm px-6 py-2.5 text-center transition duration-100 ease-in-out transform enabled:active:scale-90 disabled:bg-gray-300
   };
   .btn-cancel {
     @apply text-white bg-rose-500 hover:ring-2 hover:ring-rose-300 focus:outline-none font-medium rounded text-sm px-6 py-2.5 text-center transition duration-100 ease-in-out transform active:scale-90
@@ -115,6 +116,15 @@
   .invalid-alert {
     @apply text-red-500 text-sm
   }
+  .tabs-main {
+    @apply block hover:font-bold py-2
+  };
+  .tabs-main-true {
+    @apply text-blue-500 border-b-2 border-blue-500 font-bold
+  };
+  .tabs-main-false {
+    @apply hover:text-sky-500 text-gray-600 transition ease-in-out duration-300
+  };
 }
 /* .ng-select.ng-select.search .ng-select-container  {
   min-height: 700px;
