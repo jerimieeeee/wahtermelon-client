@@ -196,6 +196,8 @@ export class IntakeComponent implements OnInit{
       id: [null],
       patient_id: [this.patient_id],
       patient_gbv_id: [null],
+      consent_flag: [false],
+      consent_relation_to_child_id: [null],
       case_number: [null],
       case_date: [null],
       primary_complaint_id: [null],

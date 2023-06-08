@@ -43,7 +43,10 @@ export class VitalsComponent implements OnInit {
           this.latest_vitals = null;
         }
       },
-      error: err => console.log(err),
+      error: err => {
+        this.show_vitals = true;
+        console.log(err)
+      },
     })
   }
 

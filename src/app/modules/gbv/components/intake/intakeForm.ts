@@ -5,6 +5,8 @@ export function intakeForm() {
     id: new FormControl<string| null>(''),
     patient_id: new FormControl<string| null>(''),
     patient_gbv_id: new FormControl<string| null>(''),
+    consent_flag: new FormControl<boolean| null>(false),
+    consent_relation_to_child_id: new FormControl<string| null>(''),
     case_number: new FormControl<string| null>(''),
     case_date: new FormControl<string| null>(''),
     primary_complaint_id: new FormControl<string| null>(''),
