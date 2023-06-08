@@ -32,7 +32,9 @@
           <div class="grid grid-cols-8 gap-x-4 mb-3">
             <div class="col-span-8 flex">
               <input type="checkbox" class="input-checkbox mt-0.5" formControlName="consent_flag" />
-              <label for="consent_flag" class="input-label ml-2" [ngClass]="{'text-red-500': is_saving && f.consent_flag.errors}">Patient has signed the consent</label>
+              <label for="consent_flag" class="input-label ml-2" [ngClass]="{'text-red-500': is_saving && f.consent_flag.errors}">
+                The patient has read, fully understood, and signed the patient consent form.
+              </label>
               <!-- <label for="consent_flag" class="input-label mt-3 mr-5" [ngClass]="{'text-red-500': is_saving && f.consent_flag.errors}">Has the patient signed the consent?</label>
               <select id="consent_flag" name="consent_flag" class="input w-36" [ngClass]="{'invalid-input': is_saving && f.consent_flag.errors}" formControlName="consent_flag">
                 <option [ngValue]="false">N</option>
@@ -251,8 +253,8 @@
             </div>
 
             <div class="grid grid-cols-8 gap-x-4 text-sm" *ngIf="f.pwd_type_code.value === 'NA' || f.pwd_type_code.value === 'UN'">
-              <div class="col-span-8 grid grid-cols-8 gap-x-4" *ngFor="let question of washington_questions; let i = index">
-                <label class="col-span-6">{{ i+1 }}. {{ question.desc }}</label>
+              <div class="col-span-8 grid grid-cols-8 gap-x-4 border-b border-slate-100 py-1.5" *ngFor="let question of washington_questions; let i = index">
+                <label class="col-span-6 mt-2.5">{{ i+1 }}. {{ question.desc }}</label>
                 <select [id]="controlName(i+1)" [name]="controlName(i+1)" class="input col-span-2" [ngClass]="{'invalid-input': is_saving && f[controlName(i+1)].errors}" [formControlName]="controlName(i+1)">
                   <option *ngFor="let washington_answer of washington_answers" [value]="washington_answer.id">{{ washington_answer.desc }}</option>
                 </select>
