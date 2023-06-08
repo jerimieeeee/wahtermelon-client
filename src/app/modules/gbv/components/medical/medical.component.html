@@ -1,1 +1,373 @@
-<p>medical works!</p>
+<div class="border border-slate-200 rounded-b-lg">
+  <div class="mx-5 mb-5">
+    <!-- <form [formGroup]="interviewForm" (ngSubmit)="onSubmit()"> -->
+      <div class="grid grid-cols-3 gap-4 w-full mt-5">
+
+        <div class="col-span-4 border-b border-slate-200 w-full my-2 pt-3 font-semibold text-sky-500">
+          Symptoms Described by the Adult Patient, Victim Survivor and / or a Historian
+        </div>
+        <div class="col-span-4 grid grid-cols-1 border-slate-200 shadow-md rounded-md mx-5 mb-5">
+          <div class="bg-sky-500 text-white py-1 px-3 rounded-t-md flex justify-between">
+            <span>Anogenital</span>
+            <button type="button" (click)="toggleModal('anogenital', 'Anogenital', 'gbv-symptoms-anogenital', 'patient-gbv-symptoms-anogenital')" class="bg-white text-sky-500 px-2 rounded text-xs">
+              <fa-icon [icon]="faPlus"></fa-icon>
+            </button>
+          </div>
+          <!-- <div class="min-h-24">
+            <span class="flex italic py-5 justify-center">
+              No records to show
+            </span>
+          </div> -->
+
+          <table class="m-3">
+            <thead>
+              <tr>
+                <td class="text-center uppercase text-xs">Description</td>
+                <td class="text-center uppercase text-xs">Victim Survivor</td>
+                <td class="text-center uppercase text-xs">Historian</td>
+               
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border-t border-slate-200" >
+                <td>
+
+                </td>
+                <td class="text-center">
+                  <!-- <input type="checkbox" class="input-checkbox disabled:bg-blue-500" /> -->
+                </td>
+                <td class="text-center">
+                  <!-- <input type="checkbox" class="input-checkbox disabled:bg-blue-500" /> -->
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+
+        <div class="col-span-4 grid grid-cols-1 border-slate-200 shadow-md rounded-md mx-5 mb-5">
+          <div class="bg-sky-500 text-white py-1 px-3 rounded-t-md flex justify-between">
+            <span>Corporal</span>
+            <button type="button" (click)="toggleModal('anogenital', 'Corporal', 'gbv-symptoms-corporal', 'gbv-symptoms-corporal')" class="bg-white text-sky-500 px-2 rounded text-xs">
+              <fa-icon [icon]="faPlus"></fa-icon>
+            </button>
+          </div>
+          <!-- <div class="min-h-24">
+            <span class="flex italic py-5 justify-center">
+              No records to show
+            </span>
+          </div> -->
+
+          <table class="m-3">
+            <thead>
+              <tr>
+                <td class="text-center uppercase text-xs">Description</td>
+                <td class="text-center uppercase text-xs">Victim Survivor</td>
+                <td class="text-center uppercase text-xs">Historian</td>
+               
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border-t border-slate-200" >
+                <td></td>
+                <td class="text-center">
+                  <!-- <input type="checkbox" class="input-checkbox disabled:bg-blue-500" /> -->
+                </td>
+                <td class="text-center">
+                  <!-- <input type="checkbox" class="input-checkbox disabled:bg-blue-500" /> -->
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+
+        <div class="col-span-4 grid grid-cols-1 border-slate-200 shadow-md rounded-md mx-5 mb-5">
+          <div class="bg-sky-500 text-white py-1 px-3 rounded-t-md flex justify-between">
+            <span>Behavioral</span>
+            <button type="button" (click)="toggleModal('anogenital', 'Behavioral', 'gbv-symptoms-behavioral', 'gbv-symptoms-behavioral')"class="bg-white text-sky-500 px-2 rounded text-xs">
+              <fa-icon [icon]="faPlus"></fa-icon>
+            </button>
+          </div>
+          <!-- <div class="min-h-24">
+            <span class="flex italic py-5 justify-center">
+              No records to show
+            </span>
+          </div> -->
+
+          <table class="m-3">
+            <thead>
+              <tr>
+                <td class="text-center uppercase text-xs">Description</td>
+                <td class="text-center uppercase text-xs">Victim Survivor</td>
+                <td class="text-center uppercase text-xs">Historian</td>
+               
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border-t border-slate-200" >
+                <td></td>
+                <td class="text-center">
+                  <!-- <input type="checkbox" class="input-checkbox disabled:bg-blue-500" /> -->
+                </td>
+                <td class="text-center">
+                  <!-- <input type="checkbox" class="input-checkbox disabled:bg-blue-500" /> -->
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- <div class="col-span-4 border-b border-slate-200 w-full my-2 pt-3 font-semibold text-sky-500">
+          Physical (Non-Anogenital) Examination
+        </div>
+
+        <div class="col-span-4 grid grid-cols-1 border-slate-200 shadow-md rounded-md mx-5 mb-5">
+          <div class="bg-sky-500 text-white py-1 px-3 rounded-t-md flex justify-between">
+            <span>Results</span>
+            <button type="button" (click)="toggleModal('physical-examination')" class="bg-white text-sky-500 px-2 rounded text-xs">
+              <fa-icon [icon]="faPlus"></fa-icon>
+            </button>
+          </div>
+
+          <table class="m-3">
+            <thead>
+              <tr>
+                <td class="w-1/12">
+
+                </td>
+                <td class="text-center w-3/12 align-top pt-3 uppercase text-xs">
+                  Location
+                </td>
+                <td class="text-center w-2/12 align-top pt-3 uppercase text-xs">
+                  Type
+                </td>
+                <td class="text-center w-2/12 align-top pt-3 uppercase text-xs">
+                 Notes
+                </td>
+        
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border-t border-slate-200" >
+                
+              </tr>
+              <tr></tr>
+              <tr></tr>
+              <tr></tr>
+            </tbody>
+          </table>
+        </div> -->
+
+        <!-- <div class="col-span-4 border-b border-slate-200 w-full my-2 pt-3 font-semibold text-sky-500">
+          Anogenital Examination
+        </div>
+
+        <div class="col-span-4 grid grid-cols-1 border-slate-200 shadow-md rounded-md mx-5 mb-5">
+          <div class="bg-sky-500 text-white py-1 px-3 rounded-t-md flex justify-between">
+            <span>Activities</span>
+          </div>
+
+          <div class="col-span-4 border-b border-slate-200 my-2 m-5 pt-3 font-semibold text-sky-500">
+          Anogenital Exam
+          </div>
+
+          <div class="mx-5 col-span-3 grid grid-cols-4 gap-4">
+            <div class="col-span-2">
+              <input type="checkbox" class="input-checkbox" />
+              <label for="used_type" class="pl-3 py-0.5">Colposcope</label>
+            </div>
+  
+            <div class="col-span-2">
+              <input type="checkbox" class="input-checkbox" />
+              <label for="used_type" class="pl-3 py-0.5">Direct Visualization</label>
+            </div>
+
+            <div class="col-span-2">
+              <input type="checkbox" class="input-checkbox" />
+              <label for="used_type" class="pl-3 py-0.5">Photos</label>
+            </div>
+
+            <div class="col-span-2">
+              <input type="checkbox" class="input-checkbox" />
+              <label for="used_type" class="pl-3 py-0.5">Sedation</label>
+            </div>
+
+            <div class="col-span-2">
+              <input type="checkbox" class="input-checkbox" />
+              <label for="used_type" class="pl-3 py-0.5">Speculum</label>
+            </div>
+
+            <div class="col-span-2">
+              <input type="checkbox" class="input-checkbox" />
+              <label for="used_type" class="pl-3 py-0.5">Water</label>
+            </div>
+
+            <div class="col-span-2">
+              <input type="checkbox" class="input-checkbox" />
+              <label for="used_type" class="pl-3 py-0.5">Toluidine blue</label>
+            </div>
+
+            <div class="col-span-2">
+              <input type="checkbox" class="input-checkbox" />
+              <label for="used_type" class="pl-3 py-0.5">Other</label>
+            </div>
+          </div>
+
+          <div class="col-span-4 my-2 m-5 pt-3 text-black">
+            For exams within 72 hours of the incident, record post-assault hygiene.  Collect and preserve all evidence.
+            
+            
+          <div class="m-5">
+            <div>
+              <span>Within 72 Hours?</span>
+            </div>
+
+            <div class="mt-2">
+              <input type="checkbox" id="physical_abuse_flag" class="input-checkbox" />
+              <label for="within_72_hours" class="pl-3 py-0.5">Yes</label>
+            </div>
+           
+            <div class="mt-2">
+              <input type="checkbox" id="physical_abuse_flag" class="input-checkbox" />
+              <label for="within_72_hours" class="pl-3 py-0.5">No</label>
+            </div>
+
+          </div>
+
+          <div id="accordionExample" class="mb-5">
+            <div
+              class="rounded-t-lg border border-neutral-200 bg-white dark:border-neutral-600 dark:bg-neutral-800">
+              <h2 class="mb-0" id="headingOne">
+              </h2>
+              <table class="w-full text-left">
+                <thead class="text-xs text-white bg-blue-500 uppercase">
+                  <tr>
+                    <th scope="col" class="py-3 text-center w-2/5">Activity before exam (please check the appropriate box)</th>
+                    <th scope="col" class="py-3 text-center w-1/5">Victim Survivor</th>
+                    <th scope="col" class="py-3 text-center w-1/5">Historian</th>
+                  </tr>
+                </thead>
+                <tbody class="h-96 overflow-y-auto">
+                  <tr class="bg-white border-b" *ngFor="let anogenital_list of anogenitals">
+                    <td class="py-4 pl-6">
+                      {{ anogenital_list.name }}
+                    </td>
+                    <td class="py-4 text-center">
+                      <input type="checkbox" class="input-checkbox" />
+                    </td>
+                    <td class="py-4 text-center">
+                      <input type="checkbox" class="input-checkbox" />
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          </div>
+        </div> -->
+
+        <!-- <div class="col-span-4 grid grid-cols-1 border-slate-200 shadow-md rounded-md mx-5 mb-5">
+          <div class="bg-sky-500 text-white py-1 px-3 rounded-t-md flex justify-between">
+            <span>Collected</span>
+          </div>
+
+          <div class="col-span-4 border-b border-slate-200 my-2 m-5 pt-3 font-semibold text-sky-500">
+          Anogenital Exam
+          </div>
+
+          <div class="col-span-4 my-2 m-5 pt-3 text-sm text-black">
+           
+            <div id="accordionExample" class="mb-5">
+              <div
+                class="rounded-t-lg border border-neutral-200 bg-white dark:border-neutral-600 dark:bg-neutral-800">
+                <h2 class="mb-0" id="headingOne">
+                </h2>
+                <table class="w-full text-left">
+                  <thead class="text-xs text-white bg-blue-500 uppercase">
+                    <tr>
+                      <th scope="col" class="py-3 text-center w-2/5">General Female/Male</th>
+                      <th scope="col" class="py-3 text-center w-1/5">Normal</th>
+                      <th scope="col" class="py-3 text-center w-1/5">Abnormal</th>
+                      <th scope="col" class="py-3 text-center w-1/5">Description</th>
+                    </tr>
+                  </thead>
+                  <tbody class="h-96 overflow-y-auto">
+                    <tr class="bg-white border-b" *ngFor="let anogenital_list of anogenitals">
+                      <td class="py-4 pl-6">
+                        {{ anogenital_list.name }}
+                      </td>
+                      <td class="py-4 text-center">
+                        <input type="checkbox" class="input-checkbox" />
+                      </td>
+                      <td class="py-4 text-center">
+                        <input type="checkbox" class="input-checkbox" />
+                      </td>
+                      <td class="py-4 pr-6 text-center">
+                        <input type="text" class="input" />
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div id="accordionExample" class="mb-5">
+              <div
+                class="rounded-t-lg border border-neutral-200 bg-white dark:border-neutral-600 dark:bg-neutral-800">
+                <h2 class="mb-0" id="headingOne">
+                </h2>
+                <table class="w-full text-left">
+                  <thead class="text-xs text-white bg-blue-500 uppercase">
+                    <tr>
+                      <th scope="col" class="py-3 text-center w-2/5">General Female/Male</th>
+                      <th scope="col" class="py-3 text-center w-1/5">Yes</th>
+                      <th scope="col" class="py-3 text-center w-1/5">No</th>
+                      <th scope="col" class="py-3 text-center w-1/5">Description</th>
+                    </tr>
+                  </thead>
+                  <tbody class="h-96 overflow-y-auto">
+                    <tr class="bg-white border-b" *ngFor="let anogenital_list of anogenitals">
+                      <td class="py-4 pl-6">
+                        {{ anogenital_list.name }}
+                      </td>
+                      <td class="py-4 text-center">
+                        <input type="checkbox" class="input-checkbox" />
+                      </td>
+                      <td class="py-4 text-center">
+                        <input type="checkbox" class="input-checkbox" />
+                      </td>
+                      <td class="py-4 pr-6 text-center">
+                        <input type="text" class="input" />
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+  
+          </div>
+
+        </div> -->
+
+   
+      </div>
+
+  </div>
+</div>
+
+
+
+<app-anogenital *ngIf="modals['anogenital']"
+  (toggleModal)="toggleModal($event)"
+  [selected_exam]="selected_exam"
+  [intake_id]="selected_gbv_case?.gbvIntake.id"
+  [patient_id]="patient_id"
+></app-anogenital>
+
+<!-- <app-physical-examination *ngIf="modals['physical-examination']"
+  (toggleModal)="toggleModal($event)"
+></app-physical-examination> -->
+
+

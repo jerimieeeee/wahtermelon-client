@@ -27,6 +27,8 @@ import { TriageComponent } from './components/triage/triage.component';
 import { CaseOutcomeComponent } from './modals/case-outcome/case-outcome.component';
 import { MedicalConsultCertificateComponent } from './components/intervention/modals/medical-consult-certificate/medical-consult-certificate.component';
 import { IConfig, NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
+import { AnogenitalComponent } from './components/medical/modals/anogenital/anogenital.component';
+import { PhysicalExaminationComponent } from './components/medical/modals/physical-examination/physical-examination.component';
 
 export const options: Partial<null|IConfig> | (() => Partial<IConfig>) = null;
 
@@ -53,7 +55,9 @@ export const options: Partial<null|IConfig> | (() => Partial<IConfig>) = null;
     ReferralModalComponent,
     TriageComponent,
     CaseOutcomeComponent,
-    MedicalConsultCertificateComponent
+    MedicalConsultCertificateComponent,
+    AnogenitalComponent,
+    PhysicalExaminationComponent
   ],
   imports: [
     CommonModule,

@@ -31,7 +31,7 @@
         [class]="module===3? 'tabs-main-true' : 'tabs-main-false' ">
         Interview
     </button>
-    <button (click)="switchTab(4)" class="tabs-main w-28"
+    <button (click)="switchTab(4)" class="tabs-main w-28" *ngIf="selected_gbv_case"
         [class]="module===4? 'tabs-main-true' : 'tabs-main-false' ">
         Medical
     </button>
@@ -151,7 +151,7 @@
   [pos]="pos"
 ></app-interview>
 
-<app-medical *ngIf="pages === 2 && module === 3"
+<app-medical *ngIf="pages === 2 && module === 4"
 (updateSelectedGbv)="updateSelectedGbv($event)"
 [patient_id]="patient_id"
 [selected_gbv_case]="selected_gbv_case"
