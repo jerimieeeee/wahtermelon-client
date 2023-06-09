@@ -71,7 +71,6 @@ export class AbuseActsComponent implements OnInit {
   }
 
   loadAbusedData() {
-    console.log(this.selected_abused.abused_data);
     Object.entries(this.selected_abused.abused_data).forEach(([key, value]: any, index) => {
       if(value.info_source_id === 1) this.abused_acts[1][value[this.selected_abused.abused_id_name]] = true;
       if(value.info_source_id === 2) this.abused_acts[2][value[this.selected_abused.abused_id_name]] = true;

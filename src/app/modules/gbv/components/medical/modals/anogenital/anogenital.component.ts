@@ -19,10 +19,10 @@ export class AnogenitalComponent implements OnInit {
   is_saving: boolean = false;
   show_error: boolean = false;
 
+  exams: any =[];
   medical_exam: any = {
     1: [],
     2: []
-    
   };
 
   onSubmit(){
@@ -31,9 +31,8 @@ export class AnogenitalComponent implements OnInit {
       Object.entries(value).forEach(([k, v]: any, i) => {
         if(v) {
           exams.push({
-            anogenital_symptoms_id: k,
-            info_source_id: key,
-            remarks: ''
+            [this.selected_exam.var_id]: k,
+            info_source_id: key
           })
         }
       });
@@ -42,18 +41,35 @@ export class AnogenitalComponent implements OnInit {
     let params = {
       patient_id: this.patient_id,
       patient_gbv_intake_id: this.intake_id,
-      anogenital_array: exams
+      [this.selected_exam.arr_var_name]: exams
     }
-    console.log(exams, 'test EXAMS');
-    console.log(params, 'test ito ung isubmit');
 
+    console.log(params);
     this.http.post('gender-based-violence/'+this.selected_exam.save_url, params).subscribe({
       next: (data: any) => {
-        console.log(data, 'data ng anogenital');
-        console.log(this.selected_exam.save_url, 'test URL');
-        console.log(params, 'test PARAMS');
         this.toastr.success('Successfully recorded', this.selected_exam.act_title);
         this.closeModal();
+      },
+      error: err => console.log(err)
+    })
+  }
+
+  loadSymptoms() {
+    if(this.selected_exam.data){
+      Object.entries(this.selected_exam.data).forEach(([key, value]: any, index) => {
+        if(value.info_source_id === 1) this.medical_exam[1][value[this.selected_exam.var_id]] = true;
+        if(value.info_source_id === 2) this.medical_exam[2][value[this.selected_exam.var_id]] = true;
+      })
+    }
+
+    console.log(this.medical_exam);
+  }
+
+  loadLibraries(){
+    this.http.get('libraries/'+this.selected_exam.url).subscribe({
+      next: (data: any) => {
+        this.exams = data.data;
+        this.loadSymptoms();
       },
       error: err => console.log(err)
     })
@@ -63,31 +79,14 @@ export class AnogenitalComponent implements OnInit {
     this.toggleModal.emit('anogenital');
   }
 
-  exams: any =[];
-
-  loadLibraries(){
-    this.http.get('libraries/'+this.selected_exam.url).subscribe({
-      next: (data: any) => {
-        this.exams = data.data;
-        console.log(this.exams, 'test 1')
-        console.log(this.selected_exam.url, 'test 2')
-
-        // if(this.selected_exam.abused_data) this.loadAbusedData()
-      },
-      error: err => console.log(err)
-    })
-  }
-  
   constructor (
     private http: HttpService,
     private toastr: ToastrService
   ) { }
 
-  
   ngOnInit() {
     this.loadLibraries();
-    console.log(this.medical_exam, 'test modals')
+    console.log(this.selected_exam)
   }
-  
 }
 

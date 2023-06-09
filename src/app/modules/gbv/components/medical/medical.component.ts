@@ -1,10 +1,12 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { faEdit, faSave} from '@fortawesome/free-regular-svg-icons';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faCircleNotch, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 import { forkJoin } from 'rxjs';
+import { intakeForm } from '../intake/intakeForm';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-medical',
@@ -12,6 +14,7 @@ import { forkJoin } from 'rxjs';
   styleUrls: ['./medical.component.scss']
 })
 export class MedicalComponent implements OnInit {
+  @Output() updateSelectedGbv = new EventEmitter<any>();
   @Input() selected_gbv_case;
   @Input() patient_id;
   @Input() pos;
@@ -19,6 +22,9 @@ export class MedicalComponent implements OnInit {
   faEdit = faEdit;
   faSave = faSave;
   faPlus = faPlus;
+  faCircleNotch = faCircleNotch;
+
+  intakeForm:FormGroup=intakeForm();
 
   modals: any = [];
   anogenitals = [];
@@ -28,51 +34,79 @@ export class MedicalComponent implements OnInit {
     exam_title: '',
     url: '',
     save_url: '',
-    // exam_data: null,
-    // exam_id_name: ''
+    var_id: '',
+    arr_var_name: '',
+    data: ''
   };
-  
 
-  toggleModal(name, act?, url?, save_url?){
+  is_saving: boolean = false;
+
+  gbv_files: any = [];
+
+  reloadData(){
+    let params = {
+      id: this.selected_gbv_case.id
+    }
+
+    this.http.get('gender-based-violence/patient-gbv', {params}).subscribe({
+      next: (data: any) => {
+        this.selected_gbv_case = data.data[0];
+        this.updateSelectedGbv.emit(this.selected_gbv_case);
+        this.patchData();
+      },
+      error: err => console.log(err)
+    });
+  }
+
+  onSubmit() {
+    this.http.update('gender-based-violence/patient-gbv-intake/', this.intakeForm.value.id, this.intakeForm.value).subscribe({
+      next: (data: any) => {
+        this.toastr.success('Successfully recorded!', 'Intake Form');
+        this.reloadData();
+      },
+      error: err => console.log(err)
+    })
+  }
+
+  toggleFileModal() {
+
+  }
+
+  toggleModal(name, act, url, save_url, var_id, arr_var_name, data?){
     switch(name) {
       case 'anogenital': {
         this.selected_exam = {
           exam_title: act,
           url: url,
           save_url: save_url,
-          // exam_data: data,
-          // exam_id_name: exam_id_name
+          var_id: var_id,
+          arr_var_name: arr_var_name,
+          data: data
         }
-        // this.reloadData()
         break;
       }
-      
       default: {
-
         break;
       }
     }
     this.modals[name] = !this.modals[name];
-    // if(name==='abuse_acts' && !this.modals[name]) this.reloadData();
-    // if(name==='interview_notes' && !this.modals[name]) this.reloadData();
-    // if(name==='perpetrators' && !this.modals[name]) this.reloadData();
+    if(name==='anogenital' && !this.modals[name]) this.reloadData();
   }
 
-  // patchData(data?) {
-  //   // console.log(this.selected_gbv_case.gbvIntake);//interview_perpetrator
-  //   if(data) {
-  //     this.interviewForm.patchValue({...data});
-  //   } else {
-  //     if(this.selected_gbv_case.gbvIntake.interview) {
-  //       this.interviewForm.patchValue({...this.selected_gbv_case.gbvIntake.interview})
-  //     }
+  has_consent: boolean = false;
 
-  //     this.loadExams(this.selected_gbv_case.gbvIntake.interview_sexual_abuses, 'anogenital_exam', 'sexual');
-  //     this.loadExams(this.selected_gbv_case.gbvIntake.interview_physical_abuses, 'corporal_exam', 'physical');
-  //     this.loadExams(this.selected_gbv_case.gbvIntake.interview_neglect_abuses, 'behavioral_exam', 'neglect');
+  patchData() {
+    this.intakeForm.patchValue({...this.selected_gbv_case.gbvIntake});
+    this.intakeForm.patchValue({
+      case_date: this.selected_gbv_case.gbvIntake ? formatDate(this.selected_gbv_case.gbvIntake.case_date, 'yyyy-MM-dd', 'en') : null
+    });
 
-  //   }
-  // }
+    this.has_consent = this.intakeForm.value.consent_flag ? true : false;
+
+    this.loadExams(this.selected_gbv_case.gbvIntake.symptoms_anogenital, 'anogenital_exam', 'anogenital');
+    this.loadExams(this.selected_gbv_case.gbvIntake.symptoms_corporal, 'corporal_exam', 'corporal');
+    this.loadExams(this.selected_gbv_case.gbvIntake.symptoms_behavioral, 'behavioral_exam', 'behavior');
+  }
 
   anogenital_exam: any = [];
   corporal_exam: any =[];
@@ -88,33 +122,28 @@ export class MedicalComponent implements OnInit {
     });
 
     this[var_name] = exams;
-    console.log(lib_var, 'test data')
+    console.log(this.behavioral_exam);
   }
 
-  loadLibraries(){
-    
-    const getInfoSource = this.http.get('libraries/gbv-info-source');
-    
-
-    forkJoin( [getInfoSource]).subscribe({
-      next: ([dataInfoSource]: any) => {
-       
-        this.info_sources = dataInfoSource.data;
-        console.log(this.info_sources, 'load library')
-       
+  child_relations: any;
+  loadLibraries() {
+    this.http.get('libraries/child-relation').subscribe({
+      next: (data:any) => {
+        console.log(data)
+        this.child_relations = data.data;
+        this.patchData();
       },
       error: err => console.log(err)
-    });
+    })
   }
 
   constructor (
     private http: HttpService,
-    private toastr: ToastrService,
-   
+    private toastr: ToastrService
   ) { }
 
   ngOnInit() {
     this.loadLibraries();
+    console.log(this.selected_gbv_case)
    }
-   
  }
