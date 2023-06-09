@@ -29,6 +29,8 @@ import { MedicalConsultCertificateComponent } from './components/intervention/mo
 import { IConfig, NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 import { AnogenitalComponent } from './components/medical/modals/anogenital/anogenital.component';
 import { PhysicalExaminationComponent } from './components/medical/modals/physical-examination/physical-examination.component';
+import { FileUploadComponent } from './components/medical/modals/file-upload/file-upload.component';
+import { ViewFileComponent } from './components/medical/modals/view-file/view-file.component';
 
 export const options: Partial<null|IConfig> | (() => Partial<IConfig>) = null;
 
@@ -57,7 +59,9 @@ export const options: Partial<null|IConfig> | (() => Partial<IConfig>) = null;
     CaseOutcomeComponent,
     MedicalConsultCertificateComponent,
     AnogenitalComponent,
-    PhysicalExaminationComponent
+    PhysicalExaminationComponent,
+    FileUploadComponent,
+    ViewFileComponent
   ],
   imports: [
     CommonModule,
