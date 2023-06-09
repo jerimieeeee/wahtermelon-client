@@ -70,6 +70,8 @@ export class MedicalComponent implements OnInit {
 
   toggleFileModal() {
     this.modals.file_upload = !this.modals.file_upload;
+
+    if(this.modals.file_upload) this.getFiles();
   }
 
   selected_file_id: string;
