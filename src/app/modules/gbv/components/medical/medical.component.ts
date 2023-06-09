@@ -69,7 +69,16 @@ export class MedicalComponent implements OnInit {
   }
 
   toggleFileModal() {
+    this.modals.file_upload = !this.modals.file_upload;
+  }
 
+  selected_file_id: string;
+
+  viewFile(id) {
+    this.selected_file_id = id;
+    this.modals.view_file = !this.modals.view_file;
+
+    // if(!this.modals.view_file) this.selected_file_id = null;
   }
 
   toggleModal(name, act, url, save_url, var_id, arr_var_name, data?){
@@ -106,6 +115,8 @@ export class MedicalComponent implements OnInit {
     this.loadExams(this.selected_gbv_case.gbvIntake.symptoms_anogenital, 'anogenital_exam', 'anogenital');
     this.loadExams(this.selected_gbv_case.gbvIntake.symptoms_corporal, 'corporal_exam', 'corporal');
     this.loadExams(this.selected_gbv_case.gbvIntake.symptoms_behavioral, 'behavioral_exam', 'behavior');
+
+    this.getFiles();
   }
 
   anogenital_exam: any = [];
@@ -132,6 +143,20 @@ export class MedicalComponent implements OnInit {
         console.log(data)
         this.child_relations = data.data;
         this.patchData();
+      },
+      error: err => console.log(err)
+    })
+  }
+
+  getFiles() {
+    let params = {
+      "filter[patient_id]": this.patient_id,
+      "filter[patient_gbv_id]": this.selected_gbv_case.id
+    }
+    this.http.get('gender-based-violence/patient-gbv-file-upload').subscribe({
+      next: (data: any) => {
+        console.log(data);
+        this.gbv_files = data.data;
       },
       error: err => console.log(err)
     })

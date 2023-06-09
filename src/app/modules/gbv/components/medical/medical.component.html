@@ -172,18 +172,20 @@
             </tr>
           </thead>
           <tbody>
-            <tr class="border-t border-slate-200" *ngFor="let file of gbv_files" >
+            <tr class="border-t border-slate-200 my-3" *ngFor="let file of gbv_files" >
               <td>
 
               </td>
-              <td class="text-center">
-
+              <td class="text-center py-2">
+                {{ file.file_title }}
               </td>
               <td class="text-center">
-
+                {{ file.file_desc }}
               </td>
               <td class="text-center">
-
+                <button type="button" (click)="viewFile(file.id)" class="text-xs px-3 py-1 bg-blue-500 text-white rounded-md">
+                  View
+                </button>
               </td>
             </tr>
           </tbody>
@@ -203,6 +205,16 @@
   [patient_id]="patient_id"
 ></app-anogenital>
 
+<app-file-upload *ngIf="modals['file_upload']"
+  (toggleModal)="toggleModal($event)"
+  [gbv_id]="selected_gbv_case?.id"
+  [patient_id]="patient_id"
+></app-file-upload>
+
+<app-view-file *ngIf="modals['view_file']"
+  (toggleModal)="toggleModal($event)"
+  [selected_file_id]="selected_file_id"
+></app-view-file>
 <!-- <app-physical-examination *ngIf="modals['physical-examination']"
   (toggleModal)="toggleModal($event)"
 ></app-physical-examination> -->
