@@ -152,7 +152,7 @@
 
         <div class="bg-sky-500 text-white py-1 px-3 rounded-t-md flex justify-between">
           <span>Uploaded Files</span>
-          <button type="button" (click)="toggleFileModal()"class="bg-white text-sky-500 px-2 rounded text-xs">
+          <button type="button" (click)="toggleFileModal('file_upload')" class="bg-white text-sky-500 px-2 rounded text-xs">
             <fa-icon [icon]="faPlus"></fa-icon>
           </button>
         </div>
@@ -162,7 +162,7 @@
           </span>
         </div>
 
-        <table class="m-3">
+        <table class="m-3" *ngIf="!fetchingFiles">
           <thead>
             <tr>
               <td class="text-center uppercase text-xs w-1/12"> </td>
@@ -176,10 +176,10 @@
               <td>
 
               </td>
-              <td class="text-center py-2">
+              <td class="py-2">
                 {{ file.file_title }}
               </td>
-              <td class="text-center">
+              <td>
                 {{ file.file_desc }}
               </td>
               <td class="text-center">
@@ -191,6 +191,14 @@
           </tbody>
         </table>
 
+        <div class="grid grid-cols-1" *ngIf="fetchingFiles">
+          <div class="flex justify-center text-sky-500">
+            <fa-icon [icon]="faCircleNotch" spin="true"></fa-icon>
+          </div>
+          <div class="flex justify-center">
+            Fetching Files...
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -206,7 +214,7 @@
 ></app-anogenital>
 
 <app-file-upload *ngIf="modals['file_upload']"
-  (toggleModal)="toggleModal($event)"
+  (toggleFileModal)="toggleFileModal($event)"
   [gbv_id]="selected_gbv_case?.id"
   [patient_id]="patient_id"
 ></app-file-upload>

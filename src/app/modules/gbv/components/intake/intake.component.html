@@ -224,6 +224,7 @@
               <table class="w-full text-sm text-left">
                 <thead class="text-xs text-white uppercase bg-sky-400">
                   <tr>
+                    <th scope="col" class="py-3 px-6"> </th>
                     <th scope="col" class="py-3 px-6">Name</th>
                     <th scope="col" class="py-3 px-6">Age | Gender</th>
                     <th scope="col" class="py-3 px-6">Relation</th>
@@ -232,6 +233,9 @@
                 </thead>
                 <tbody>
                   <tr class="bg-white border-b" *ngFor="let member of family_members">
+                    <td class="py-4 px-6">
+                      <fa-icon [icon]="faEdit" class="hover:cursor-pointer text-orange-500" (click)="toggleModal('add_family', member)" ></fa-icon>
+                    </td>
                     <td class="py-4 px-6">
                       {{ member.name }}
                     </td>
@@ -682,6 +686,7 @@
   (toggleModal)="toggleModal($event)"
   [patient_id]="selected_gbv_case.patient_id"
   [patient_gbv_id]="selected_gbv_case.id"
+  [selected_member]="selected_member"
 ></app-family-composition>
 
 <app-perpetrators *ngIf="modals['perpetrators']"

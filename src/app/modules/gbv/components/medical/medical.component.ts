@@ -68,10 +68,10 @@ export class MedicalComponent implements OnInit {
     })
   }
 
-  toggleFileModal() {
-    this.modals.file_upload = !this.modals.file_upload;
+  toggleFileModal(name) {
+    this.modals[name] = !this.modals[name];
 
-    if(this.modals.file_upload) this.getFiles();
+    if(!this.modals[name]) this.getFiles();
   }
 
   selected_file_id: string;
@@ -150,7 +150,9 @@ export class MedicalComponent implements OnInit {
     })
   }
 
+  fetchingFiles: boolean = false;
   getFiles() {
+    this.fetchingFiles = true;
     let params = {
       "filter[patient_id]": this.patient_id,
       "filter[patient_gbv_id]": this.selected_gbv_case.id
@@ -159,6 +161,7 @@ export class MedicalComponent implements OnInit {
       next: (data: any) => {
         console.log(data);
         this.gbv_files = data.data;
+        this.fetchingFiles = false;
       },
       error: err => console.log(err)
     })

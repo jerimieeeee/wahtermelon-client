@@ -9,7 +9,7 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./file-upload.component.scss']
 })
 export class FileUploadComponent {
-  @Output() toggleModal = new EventEmitter<any>();
+  @Output() toggleFileModal = new EventEmitter<any>();
   @Input() gbv_id;
   @Input() patient_id;
 
@@ -45,7 +45,7 @@ export class FileUploadComponent {
       this.http.post('gender-based-violence/patient-gbv-file-upload', formData).subscribe({
         next: (data:any) => {
           this.toastr.success('Successfully uploaded', 'File Upload');
-          this.resetInput();
+          this.closeModal();
           // this.showToast('success','Uploaded '+ this.uploaded_count +' of '+this.file_upload_count+' files', 'Upload Success')
         },
         error: err => {
@@ -66,7 +66,7 @@ export class FileUploadComponent {
   }
 
   closeModal(){
-    this.toggleModal.emit('file_upload');
+    this.toggleFileModal.emit('file_upload');
   }
 
   constructor (
