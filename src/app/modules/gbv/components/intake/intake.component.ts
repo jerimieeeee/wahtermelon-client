@@ -296,6 +296,7 @@ export class IntakeComponent implements OnInit{
   get f(): { [key: string]: AbstractControl } {
     return this.intakeForm.controls;
   }
+  selected_member: any;
 
   toggleModal(name, data?){
     if(name==='perpetrators') {
@@ -303,7 +304,10 @@ export class IntakeComponent implements OnInit{
         act_title: 'Perpetrator',
         data: data
       }
+    } else if (name==='add_family') {
+      this.selected_member = data ?? null
     }
+
     this.modals[name] = !this.modals[name];
 
     if(name==='add_family' && !this.modals[name]) this.loadFamily();

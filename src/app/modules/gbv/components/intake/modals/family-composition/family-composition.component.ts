@@ -15,7 +15,7 @@ export class FamilyCompositionComponent {
   @Output() toggleModal = new EventEmitter<any>();
   @Input() patient_id;
   @Input() patient_gbv_id;
-  @Input() selected_family_member;
+  @Input() selected_member;
 
   faSave = faSave;
   faCircleNotch = faCircleNotch;
@@ -56,12 +56,9 @@ export class FamilyCompositionComponent {
 
     let query;
 
-    console.log(this.selected_family_member)
-    console.log(this.familyForm.value)
-    if(this.selected_family_member) {
-      query = this.http.update('gender-based-violence/patient-gbv-family-composition/', this.selected_family_member.id, this.familyForm);
+    if(this.selected_member) {
+      query = this.http.update('gender-based-violence/patient-gbv-family-composition/', this.selected_member.id, this.familyForm);
     } else {
-      console.log('store')
       query = this.http.post('gender-based-violence/patient-gbv-family-composition', this.familyForm.value);
     }
 
@@ -132,10 +129,15 @@ export class FamilyCompositionComponent {
     });
 
     this.loadLibraries();
+    this.loadSelectedMember();
   }
 
   loadSelectedMember(){
-
+    this.familyForm.patchValue({...this.selected_member});
+    this.familyForm.patchValue({
+      child_relation_id: this.selected_member.relation ? this.selected_member.relation.id : null
+    });
+    console.log(this.selected_member);
   }
 
   closeModal(){
