@@ -251,7 +251,7 @@
             <div class="grid grid-cols-8 gap-x-4 gap-y-4 pt-6" *ngIf="f.pwd_type_code.value === 'NA' || f.pwd_type_code.value === 'UN'">
               <div class="col-span-8 border-b-2 border-slate-100"></div>
               <div class="col-span-8 font-semibold text-blue-500">
-                <span class="-ml-5 mr-5">Washington Group Question</span>
+                <span class="-ml-5 mr-5">Washington Group Questions</span>
               </div>
             </div>
 
@@ -288,15 +288,6 @@
                   <span *ngFor="let member of selected_members">
                     {{ member.patient.last_name }}, {{ member.patient.first_name }} {{ member.patient.middle_name === 'NA' ? '' : member.patient.middle_name }} {{ member.patient.suffix_name === 'NA' ? '' : member.patient.suffix_name }}
                   </span>
-                </div>
-              </div>
-              <div class="col-span-8 grid grid-cols-8" *ngIf="show_demog_input">
-                <div class="col-span-2" *ngIf="show_demog_input">
-                  <label for="residence_classification_code" class="input-label" [ngClass]="{'text-red-500': is_saving && f['family']['controls']['residence_classification_code'].errors}">Address Classification</label>
-                  <select id="residence_classification_code" name="residence_classification_code " class="input disabled:bg-gray-300" [ngClass]="{'invalid-input': is_saving && f['family']['controls']['residence_classification_code'].errors}" formControlName="residence_classification_code">
-                    <option [ngValue]="null">-</option>
-                    <option *ngFor="let classification of residence_classifications" [value]="classification.code" >{{ classification.desc }}</option>
-                  </select>
                 </div>
               </div>
 
@@ -352,7 +343,7 @@
                 </div>
               </div>
 
-              <div class="col-span-6 sm:col-span-2" *ngIf="show_demog_input">
+              <div class="col-span-6 sm:col-span-4" *ngIf="show_demog_input">
                 <label for="address" class="input-label" [ngClass]="{'text-red-500': is_saving && f['family']['controls']['address'].errors}">Address</label>
                 <input type="text" name="address" id="address" class="input disabled:bg-gray-300" [ngClass]="{'invalid-input': is_saving && f['family']['controls']['address'].errors}" formControlName="address">
 
@@ -381,29 +372,40 @@
               </div>
 
               <div class="col-span-8 sm:col-span-2" *ngIf="show_demog_input">
-                <label for="cct_id" class="input-label" [ngClass]="{'text-red-500': is_saving && f['family']['controls']['cct_id'].errors}">CCT ID <span class="text-sm">(optional)</span></label>
-                <input type="text" name="cct_id" id="cct_id" class="input disabled:bg-gray-300" (keyup)="enableCctDate()" [ngClass]="{'invalid-input': is_saving && f['family']['controls']['cct_id'].errors}" formControlName="cct_id">
+                <label for="residence_classification_code" class="input-label" [ngClass]="{'text-red-500': is_saving && f['family']['controls']['residence_classification_code'].errors}">Address Classification</label>
+                <select id="residence_classification_code" name="residence_classification_code " class="input disabled:bg-gray-300" [ngClass]="{'invalid-input': is_saving && f['family']['controls']['residence_classification_code'].errors}" formControlName="residence_classification_code">
+                  <option [ngValue]="null">-</option>
+                  <option *ngFor="let classification of residence_classifications" [value]="classification.code" >{{ classification.desc }}</option>
+                </select>
+              </div>
 
-                <div *ngIf="is_saving && f['family']['controls']['cct_id'].errors" class="invalid-alert">
-                  <div *ngIf="f['family']['controls']['cct_id'].errors?.['required']">
-                    {{ required_message }}
+              <div class="col-span-8 grid grid-cols-8 gap-4">
+                <div class="col-span-8 sm:col-span-2" *ngIf="show_demog_input">
+                  <label for="cct_id" class="input-label" [ngClass]="{'text-red-500': is_saving && f['family']['controls']['cct_id'].errors}">CCT ID <span class="text-sm">(optional)</span></label>
+                  <input type="text" name="cct_id" id="cct_id" class="input disabled:bg-gray-300" (keyup)="enableCctDate()" [ngClass]="{'invalid-input': is_saving && f['family']['controls']['cct_id'].errors}" formControlName="cct_id">
+
+                  <div *ngIf="is_saving && f['family']['controls']['cct_id'].errors" class="invalid-alert">
+                    <div *ngIf="f['family']['controls']['cct_id'].errors?.['required']">
+                      {{ required_message }}
+                    </div>
+                  </div>
+                </div>
+
+                <div *ngIf="show_cct_date" class="col-span-6 sm:col-span-2">
+                  <label for="cct_date" class="input-label" [ngClass]="{'text-red-500': is_saving && f['family']['controls']['cct_date'].errors}">CCT Registration date</label>
+                  <input type="date" name="cct_date" id="cct_date" class="input disabled:bg-gray-300" [ngClass]="{'invalid-input': is_saving && f['family']['controls']['cct_date'].errors}" formControlName="cct_date">
+
+                  <div *ngIf="is_saving && f['family']['controls']['cct_date'].errors" class="invalid-alert">
+                    <div *ngIf="f['family']['controls']['cct_date'].errors?.['required']">
+                      {{ required_message }}
+                    </div>
+                    <div *ngIf="f['family']['controls']['cct_date'].errors?.['minlength']">
+                      Minimum of 2 character.
+                    </div>
                   </div>
                 </div>
               </div>
 
-              <div *ngIf="show_cct_date" class="col-span-6 sm:col-span-2">
-                <label for="cct_date" class="input-label" [ngClass]="{'text-red-500': is_saving && f['family']['controls']['cct_date'].errors}">CCT Registration date</label>
-                <input type="date" name="cct_date" id="cct_date" class="input disabled:bg-gray-300" [ngClass]="{'invalid-input': is_saving && f['family']['controls']['cct_date'].errors}" formControlName="cct_date">
-
-                <div *ngIf="is_saving && f['family']['controls']['cct_date'].errors" class="invalid-alert">
-                  <div *ngIf="f['family']['controls']['cct_date'].errors?.['required']">
-                    {{ required_message }}
-                  </div>
-                  <div *ngIf="f['family']['controls']['cct_date'].errors?.['minlength']">
-                    Minimum of 2 character.
-                  </div>
-                </div>
-              </div>
             </div>
             <!-- FAMILY FOLDER END -->
           </div>

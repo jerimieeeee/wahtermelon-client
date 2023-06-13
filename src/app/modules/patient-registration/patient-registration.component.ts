@@ -76,6 +76,7 @@ export class PatientRegistrationComponent implements OnInit {
   pwd_types: object;
   washington_questions: object;
   washington_answers: object;
+  residence_classifications: object;
   date;
 
   regions: object;
@@ -143,6 +144,7 @@ export class PatientRegistrationComponent implements OnInit {
       // console.log(this.patientForm);
       query.subscribe({
         next: (data: any) => {
+          console.log(data);
           this.new_patient_id = this.button_function === 'Update' ? this.patient_to_update : data.data.id;
           this.saveFolder(this.new_patient_id);
         },
@@ -267,20 +269,6 @@ export class PatientRegistrationComponent implements OnInit {
     });
   }
 
-  residence_classifications: any;
-  libraries = [
-    {var_name: 'blood_types', location: 'blood-types'},
-    {var_name: 'suffix_names', location: 'suffix-names'},
-    {var_name: 'occupations', location: 'occupations'},
-    {var_name: 'civil_statuses', location: 'civil-statuses'},
-    {var_name: 'educations', location: 'education'},
-    {var_name: 'religions', location: 'religions'},
-    {var_name: 'regions', location: 'regions'},
-    {var_name: 'pwd_types', location: 'pwd-types'},
-    {var_name: 'washington_questions', location: 'washington-disability-question'},
-    {var_name: 'washington_answers', location: 'washington-disability-answer'},
-    {var_name: 'residence_classifications', location: 'residence-classifications'},
-  ]
 
   loadLibraries(){
     const getBloodType = this.http.get('libraries/blood-types');
