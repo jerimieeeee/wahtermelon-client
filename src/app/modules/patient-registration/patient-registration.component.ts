@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { faSpinner, faFolderPlus, faSave, faSearch, faPenToSquare, faHome } from '@fortawesome/free-solid-svg-icons';
+import { faSpinner, faFolderPlus, faSave, faSearch, faPenToSquare, faHome, faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import { faClipboard } from '@fortawesome/free-regular-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { openCloseTrigger } from './declarations/animation';
 import { Router } from '@angular/router';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-patient-registration',
@@ -20,6 +21,7 @@ export class PatientRegistrationComponent implements OnInit {
   faSearch = faSearch;
   faPenToSquare = faPenToSquare;
   faHome = faHome;
+  faCircleNotch = faCircleNotch;
 
   required_message = 'Required field';
   button_function: string = 'Save';
@@ -52,6 +54,7 @@ export class PatientRegistrationComponent implements OnInit {
       cct_id: new FormControl<string| null>(''),
       cct_date: new FormControl<string| null>(''),
       is_head: new FormControl<string| null>(''),
+      residence_classification_code: new FormControl<string| null>(''),
     }),
     difficulty_seeing: new FormControl<string| null>(''),
     difficulty_hearing: new FormControl<string| null>(''),
@@ -84,18 +87,7 @@ export class PatientRegistrationComponent implements OnInit {
   selectedMunicipality: string| null;
   selelectedBarangay: string| null;
 
-  libraries = [
-    {var_name: 'blood_types', location: 'blood-types'},
-    {var_name: 'suffix_names', location: 'suffix-names'},
-    {var_name: 'occupations', location: 'occupations'},
-    {var_name: 'civil_statuses', location: 'civil-statuses'},
-    {var_name: 'educations', location: 'education'},
-    {var_name: 'religions', location: 'religions'},
-    {var_name: 'regions', location: 'regions'},
-    {var_name: 'pwd_types', location: 'pwd-types'},
-    {var_name: 'washington_questions', location: 'washington-disability-question'},
-    {var_name: 'washington_answers', location: 'washington-disability-answer'},
-  ]
+
 
   showModal:boolean = false;
   is_saving: boolean = false;
@@ -177,7 +169,8 @@ export class PatientRegistrationComponent implements OnInit {
       barangay_code: this.show_demog_input ? this.patientForm.controls.family['controls'].brgy.value : this.selected_barangay_code,
       cct_date: this.show_demog_input ? this.patientForm.controls.family['controls'].cct_date.value : this.selected_cct_date,
       cct_id: this.show_demog_input ? this.patientForm.controls.family['controls'].cct_id.value : this.selected_cct_id,
-      family_role_code: this.patientForm.controls.family['controls'].is_head.value
+      family_role_code: this.patientForm.controls.family['controls'].is_head.value,
+      residence_classification_code: this.patientForm.controls.family['controls'].residence_classification_code.value
     }
 
     let query;
@@ -274,15 +267,65 @@ export class PatientRegistrationComponent implements OnInit {
     });
   }
 
+  residence_classifications: any;
+  libraries = [
+    {var_name: 'blood_types', location: 'blood-types'},
+    {var_name: 'suffix_names', location: 'suffix-names'},
+    {var_name: 'occupations', location: 'occupations'},
+    {var_name: 'civil_statuses', location: 'civil-statuses'},
+    {var_name: 'educations', location: 'education'},
+    {var_name: 'religions', location: 'religions'},
+    {var_name: 'regions', location: 'regions'},
+    {var_name: 'pwd_types', location: 'pwd-types'},
+    {var_name: 'washington_questions', location: 'washington-disability-question'},
+    {var_name: 'washington_answers', location: 'washington-disability-answer'},
+    {var_name: 'residence_classifications', location: 'residence-classifications'},
+  ]
+
   loadLibraries(){
-    this.libraries.forEach(obj => {
-      this.http.get('libraries/'+obj.location).subscribe({
-        next: (data: any) => {
-          this[obj.var_name] = data.data;
-        },
-        error: err => console.log(err),
-        complete: () => this.show_form = true
-      })
+    const getBloodType = this.http.get('libraries/blood-types');
+    const getsuffixName = this.http.get('libraries/suffix-names');
+    const getOccupation = this.http.get('libraries/occupations');
+    const getCivilStatus = this.http.get('libraries/civil-statuses');
+    const getEducation = this.http.get('libraries/education');
+    const getReligions = this.http.get('libraries/religions');
+    const getRegions = this.http.get('libraries/regions');
+    const getPwdTypes = this.http.get('libraries/pwd-types');
+    const getDisabilityQuestion = this.http.get('libraries/washington-disability-question');
+    const getDisabilityAnswer = this.http.get('libraries/washington-disability-answer');
+    const getResidenceClass = this.http.get('libraries/residence-classifications');
+
+    forkJoin([getBloodType, getsuffixName, getOccupation,
+              getCivilStatus, getEducation, getReligions,
+              getRegions, getPwdTypes, getDisabilityQuestion,
+              getDisabilityAnswer, getResidenceClass]).subscribe({
+      next: ([dataBloodType, datasuffixName, dataOccupation,
+              dataCivilStatus, dataEducation, dataReligions,
+              dataRegions, dataPwdTypes, dataDisabilityQuestion,
+              dataDisabilityAnswer, dataResidenceClass]: any) => {
+
+          this.blood_types = dataBloodType.data;
+          this.suffix_names = datasuffixName.data;
+          this.occupations = dataOccupation.data;
+          this.civil_statuses = dataCivilStatus.data;
+          this.educations = dataEducation.data;
+          this.religions = dataReligions.data;
+          this.regions = dataRegions.data;
+          this.pwd_types = dataPwdTypes.data;
+          this.washington_questions = dataDisabilityQuestion.data;
+          this.washington_answers = dataDisabilityAnswer.data;
+          this.residence_classifications = dataResidenceClass.data;
+
+          this.show_form = true;
+          if(this.router.url.split(';')[0] === '/edit-patient') {
+            this.show_edit = true;
+            this.loadPatient(this.router.url.split('=')[1]);
+          } else{
+            this.enableCctDate();
+            this.isDisabled(true);
+          }
+      },
+      error: err => console.log(err)
     });
   }
 
@@ -290,6 +333,7 @@ export class PatientRegistrationComponent implements OnInit {
   loadPatient(id){
     this.http.get('patient/'+id).subscribe({
       next: (data: any) => {
+        console.log(data)
         this.patientForm.patchValue({...data.data});
         if(data.data.patientWashington) {
           this.patientForm.patchValue({
@@ -317,6 +361,7 @@ export class PatientRegistrationComponent implements OnInit {
 
   member_count: number;
   patchAddress(address, member){
+    console.log(address)
     if(address) {
       this.patientForm.patchValue({family:{address: address.address}});
 
@@ -333,18 +378,30 @@ export class PatientRegistrationComponent implements OnInit {
       this.patientForm.patchValue({family:{cct_id: address.cct_id}});
       if(address.cct_id) this.patientForm.patchValue({family:{cct_date: address.cct_date}});
       this.patientForm.patchValue({family:{brgy: address.barangay.code}});
-      this.patientForm.patchValue({family:{is_head: member.family_role_code}});
+      this.patientForm.patchValue({family:{
+        is_head: member.family_role_code,
+        residence_classification_code: address.residence_classification_code
+      }});
 
       this.selected_family_folder = address.id;
     }
     this.isDisabled(true);
   }
 
+  show_cct_date: boolean = false;
 
   enableCctDate(){
     if(this.f['family']['controls']['cct_id'].value) {
-      this.f['family']['controls']['cct_date'].enable();
+      this.show_cct_date = true;
+      // this.f['family']['controls']['cct_date'].enable();
+
+      if(this.f['family']['controls']['cct_id'].enabled) {
+        this.f['family']['controls']['cct_date'].enable();
+      } else {
+        this.f['family']['controls']['cct_date'].disable();
+      }
     } else {
+      this.show_cct_date = true;
       this.f['family']['controls']['cct_date'].disable();
     }
   }
@@ -383,6 +440,7 @@ export class PatientRegistrationComponent implements OnInit {
         cct_id: ['', [Validators.minLength(2)]],
         cct_date: ['',Validators.required],
         is_head: ['', [Validators.required]],
+        residence_classification_code: [null],
       }),
       difficulty_seeing:  ['', this.washington_required ? Validators.required : ''],
       difficulty_hearing:  ['', this.washington_required ? Validators.required : ''],
@@ -395,12 +453,6 @@ export class PatientRegistrationComponent implements OnInit {
     this.date = new Date().toISOString().slice(0,10);
     this.loadLibraries();
 
-    if(this.router.url.split(';')[0] === '/edit-patient') {
-      this.show_edit = true;
-      this.loadPatient(this.router.url.split('=')[1]);
-    } else{
-      this.enableCctDate();
-      this.isDisabled(true);
-    }
+
   }
 }
