@@ -26,21 +26,28 @@
         </select>
       </div>
     </div>
-    <div class="col-span-4 grid grid-cols-3 gap-4 p-5 h-[600px] overflow-y-auto">
-      <!-- <div class="col-span-3">
-        <input class="input-checkbox" attr.id="all_selected" [(ngModel)]="all_selected" />
-        <label class="pl-2 select-none" attr.for="all_selected">Select All</label>
-      </div> -->
-      <div *ngFor="let brgy of barangays">
-        <input type="checkbox" class="input-checkbox" attr.id="selected_catchment{{brgy.code}}" [(ngModel)]="selected_catchment[brgy.code]" />
-        <label class="pl-2 select-none" attr.for="selected_catchment{{brgy.code}}">{{ brgy.name }}</label>
+    <div *ngIf="show_form" class="p-5 max-h-[600px] col-span-4 overflow-y-auto">
+      <div class="grid grid-cols-3 gap-4 w-full">
+        <div class="col-span-1" *ngFor="let brgy of barangays">
+          <input type="checkbox" class="input-checkbox" attr.id="selected_catchment{{brgy.code}}" [(ngModel)]="selected_catchment[brgy.code]" />
+          <label class="pl-2 select-none" attr.for="selected_catchment{{brgy.code}}">{{ brgy.name }}</label>
+        </div>
       </div>
     </div>
-    <div class="col-span-4 rounded-b-xl border-t border-slate-200 text-end">
+    <div *ngIf="show_form" class="col-span-4 rounded-b-xl border-t border-slate-200 text-end">
       <button class="btn-save m-5 select-none" (click)="onSubmit()" >
         <fa-icon [icon]="faSave" class="pr-2"></fa-icon>
         Save
       </button>
+    </div>
+
+    <div *ngIf="!show_form" class="col-span-4 grid grid-cols-1 my-32">
+      <div class="flex justify-center text-blue-500">
+        <fa-icon [icon]="faCircleNotch" spin="true"></fa-icon>
+      </div>
+      <div class="flex justify-center">
+        Loading {{ loading_text }}...
+      </div>
     </div>
   </div>
 </div>

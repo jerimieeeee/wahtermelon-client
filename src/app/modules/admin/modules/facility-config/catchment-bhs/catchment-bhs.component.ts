@@ -55,6 +55,7 @@ export class CatchmentBhsComponent implements OnInit {
       this.bhs.barangay = barangay_arr;
 
       let query;
+      // console.log(this.bhs)
       if(this.bhs.id) {
         query = this.http.update('settings/bhs/', this.bhs.id, this.bhs);
       } else {

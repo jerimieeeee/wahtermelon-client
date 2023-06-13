@@ -20,8 +20,10 @@ export class CatchmentPopulationComponent implements OnInit, OnChanges {
   selected_year: number;
   years: any = [];
   barangay_pop: any = [];
+  is_saving: boolean = false;
 
   onSubmit() {
+    this.is_saving = true;
     let params = {
       year: this.selected_year,
       barangay: this.catchment_barangays[this.selected_year].data
@@ -30,21 +32,46 @@ export class CatchmentPopulationComponent implements OnInit, OnChanges {
     this.http.post('settings/catchment-barangay', params).subscribe({
       next: (data: any) => {
         this.toastr.success('Successfully recorded', 'Population')
-        this.reloadData();
+        this.is_saving = false;
+        this.updateData();
       },
       error: err => console.log(err)
     });
   }
 
-  editPop(data) {
-    console.log(data)
-    this.reloadData();
+  editPop(year) {
+    if(this.selected_year !== year){
+      this.selected_year = year;
+      this.reloadData();
+    }
   }
 
   show_form: boolean = false;
+  updateData(){
+    // this.show_form = false;
+    this.show_pop = false;
+    // this.getCatchmentBarangay.emit(this.selected_year);
+    this.getPopulations();
+  }
+
   reloadData(){
     this.show_form = false;
     this.getCatchmentBarangay.emit(this.selected_year);
+  }
+
+  catchment_population: object;
+  show_pop: boolean = false;
+  getPopulations(){
+    this.show_pop = false;
+
+    this.http.get('settings/catchment-barangay').subscribe({
+      next: (data:any) => {
+        console.log(data)
+        this.catchment_population = data;
+        this.show_pop = true;
+      },
+      error: err => console.log(err)
+    })
   }
 
   constructor (
@@ -53,12 +80,12 @@ export class CatchmentPopulationComponent implements OnInit, OnChanges {
   ) { }
 
   ngOnChanges(change: SimpleChanges): void{
-    console.log(this.catchment_barangays);
     if(this.catchment_barangays) this.show_form = true;
   }
 
   ngOnInit(): void {
     this.selected_year = this.current_year;
+    this.getPopulations();
 
     for(let year = Number(this.current_year); year > 2017; year--) {
       this.years.push(year);

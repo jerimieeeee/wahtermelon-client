@@ -12,31 +12,24 @@ import { ToastrService } from 'ngx-toastr';
 export class FacilityConfigComponent implements OnInit {
   current_year = formatDate(new Date(), 'yyyy', 'en');
 
-  pages: number = 1;
-  module: number = 1;
-
-  user_facility: string;
-  selected_gbv_case: any;
-  consult_details: any;
-
-  show_form: boolean = false;
-  fetching_history: boolean = true;
-
-  patient_gbv_history: any;
-  patient_id: string;
-
   faSave = faSave;
   faCircleNotch = faCircleNotch;
   faDoorClosed = faDoorClosed;
+
+  pages: number = 1;
+  module: number = 1;
+
+  show_form: boolean = false;
 
   barangays: any = [];
   catchment_barangays: any = [];
   selected_catchment: any = [];
   selected_year: any;
   modals: any = [];
-  all_selected: string;
-
-
+  municipality_code: string;
+  facility_code: string;
+  years: any = [];
+  loading_text: string;
   switchPage(page) {
     this.pages = page;
   }
@@ -58,7 +51,6 @@ export class FacilityConfigComponent implements OnInit {
 
     this.http.post('settings/catchment-barangay', params).subscribe({
       next: (data: any) => {
-        console.log(data);
         this.toastr.success('Successfully recorded', 'Catchment Barangay');
         this.getCatchmentBarangay(this.selected_year);
       },
@@ -66,19 +58,18 @@ export class FacilityConfigComponent implements OnInit {
     })
   }
 
-  checkBehavior(){
-
-  }
-
   getCatchmentBarangay(year?) {
+    this.loading_text = 'catchment barangays'
+    this.show_form = false;
     this.http.get('settings/catchment-barangay',{params:{'filter[year]': year ?? this.current_year}}).subscribe({
       next: (data: any) => {
-        console.log(data);
         this.catchment_barangays = data;
-        if(Object.keys(this.catchment_barangays[this.selected_year].data).length > 0) {
+
+        if(this.catchment_barangays[this.selected_year] && Object.keys(this.catchment_barangays[this.selected_year].data).length > 0) {
           this.loadCatchment(this.catchment_barangays[this.selected_year].data);
         } else {
           this.selected_catchment = [];
+          this.show_form = true;
         }
         // this.pages = 2;
       },
@@ -87,13 +78,15 @@ export class FacilityConfigComponent implements OnInit {
   }
 
   loadCatchment(data){
-    console.log(data)
     Object.entries(data).forEach(([key, value]: any, index) => {
       this.selected_catchment[value.barangay.code] = true;
     });
+
+    this.show_form = true;
   }
 
   loadBarangays(){
+    this.loading_text = 'barangays';
     this.http.get('libraries/municipalities/'+this.municipality_code,{params:{include:'barangays'}}).subscribe({
       next: (data: any) => {
         this.barangays = data.data.barangays;
@@ -108,13 +101,8 @@ export class FacilityConfigComponent implements OnInit {
     private toastr: ToastrService,
   ) { }
 
-  municipality_code: string;
-  facility_code: string;
-  years: any = [];
   ngOnInit(): void {
-
     let facility = this.http.getUserFromJSON().facility;
-    console.log(facility)
     this.municipality_code = facility.municipality_code ?? facility.municipality.code;
     this.facility_code = facility.code ?? facility.facility.code;
     this.loadBarangays();
