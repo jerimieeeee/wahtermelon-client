@@ -66,7 +66,7 @@ export class CatchmentPopulationComponent implements OnInit, OnChanges {
 
     this.http.get('settings/catchment-barangay').subscribe({
       next: (data:any) => {
-        console.log(data)
+        // console.log(data)
         this.catchment_population = data;
         this.show_pop = true;
       },
