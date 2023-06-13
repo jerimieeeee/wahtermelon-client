@@ -361,7 +361,6 @@ export class PatientRegistrationComponent implements OnInit {
 
   member_count: number;
   patchAddress(address, member){
-    console.log(address)
     if(address) {
       this.patientForm.patchValue({family:{address: address.address}});
 
@@ -401,7 +400,7 @@ export class PatientRegistrationComponent implements OnInit {
         this.f['family']['controls']['cct_date'].disable();
       }
     } else {
-      this.show_cct_date = true;
+      this.show_cct_date = false;
       this.f['family']['controls']['cct_date'].disable();
     }
   }
