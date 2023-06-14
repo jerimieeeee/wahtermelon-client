@@ -83,6 +83,7 @@ export class GbvComponent implements OnInit {
     this.user_facility = this.http.getUserFacility();
     this.pos = this.http.getUserFromJSON().designation_code ? this.http.getUserFromJSON().designation_code : this.http.getUserFromJSON().designation.code;
 
+    // console.log(this.pos)
     if(this.arr_allowed.indexOf(this.pos) > -1) this.getGbvHistory();
 
   }
