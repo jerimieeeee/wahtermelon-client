@@ -654,16 +654,28 @@
           Behavior during the interview
         </div>
         <div class="mx-5 col-span-4 grid grid-cols-4 gap-4">
-          <div class="col-span-2">
+
+          <!-- <div class="col-span-2">
             <label for="child_behavior_id" [ngClass]="{'text-red-500': show_error && f.child_behavior_id.errors}">Behavior during the interview</label>
             <select name="child_behavior_id" id="child_behavior_id" formControlName="child_behavior_id" class="input" [ngClass]="{'invalid-input': show_error && f.child_behavior_id.errors}">
               <option *ngFor="let child_behavior of child_behaviors" [value]="child_behavior.id">{{ child_behavior.desc }}</option>
             </select>
-          </div>
+          </div> -->
 
           <div class="col-span-2 mt-8">
-            <input type="checkbox" formControlName="child_caretaker_present_flag" class="input-checkbox" />
+            <input type="checkbox" id="child_caretaker_present_flag" formControlName="child_caretaker_present_flag" class="input-checkbox" />
             <label for="child_caretaker_present_flag" class="pl-3 py-0.5">Is the caretaker present?</label>
+          </div>
+
+          <div class="col-span-4 grid grid-cols-3 gap-4">
+            <div class="col-span-3 text-sm font-semibold">
+              Behavior during the interview
+            </div>
+
+            <div *ngFor="let ib of interview_behaviors">
+              <input type="checkbox" attr.id="{{ ib.var_name }}" [formControlName]="ib.var_name" name="deferred" id="deferred" class="input-checkbox" />
+              <label attr.for="{{ ib.var_name }}" class="pl-3 py-0.5">{{ ib.desc }}</label>
+            </div>
           </div>
 
           <div class="col-span-4">

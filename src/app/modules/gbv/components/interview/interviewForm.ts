@@ -37,7 +37,22 @@ export function interviewForm() {
     initial_disclosure : new FormControl<string| null>(''),
 
     relation_to_child : new FormControl<string| null>(''),
-    child_behavior_id : new FormControl<string| null>(''),
+
+    behavior_cooperative_flag : new FormControl<boolean| null>(false),
+    behavior_crying_flag : new FormControl<boolean| null>(false),
+    behavior_clinging_flag : new FormControl<boolean| null>(false),
+    behavior_responsive_flag : new FormControl<boolean| null>(false),
+    behavior_silent_flag : new FormControl<boolean| null>(false),
+    behavior_able_to_narrate_flag : new FormControl<boolean| null>(false),
+    behavior_unable_to_narrate_flag : new FormControl<boolean| null>(false),
+    behavior_appropriate_affect_flag : new FormControl<boolean| null>(false),
+    behavior_depressed_affect_flag : new FormControl<boolean| null>(false),
+    behavior_flat_affect_flag : new FormControl<boolean| null>(false),
+    behavior_psychotic_flag : new FormControl<boolean| null>(false),
+    behavior_combative_flag : new FormControl<boolean| null>(false),
+    behavior_hyperactive_flag : new FormControl<boolean| null>(false),
+    behavior_short_attention_flag : new FormControl<boolean| null>(false),
+
     child_caretaker_present_flag : new FormControl<boolean| null>(false),
     child_behavior_remarks : new FormControl<string| null>(''),
     dev_screening_id : new FormControl<string| null>(''),
