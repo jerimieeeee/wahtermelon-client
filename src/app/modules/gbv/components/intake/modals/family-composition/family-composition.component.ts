@@ -1,5 +1,5 @@
 import { formatDate } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { faSave } from '@fortawesome/free-regular-svg-icons';
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
@@ -11,7 +11,7 @@ import { ToastrService } from 'ngx-toastr';
   templateUrl: './family-composition.component.html',
   styleUrls: ['./family-composition.component.scss']
 })
-export class FamilyCompositionComponent {
+export class FamilyCompositionComponent implements OnInit {
   @Output() toggleModal = new EventEmitter<any>();
   @Input() patient_id;
   @Input() patient_gbv_id;
@@ -57,7 +57,7 @@ export class FamilyCompositionComponent {
     let query;
 
     if(this.selected_member) {
-      query = this.http.update('gender-based-violence/patient-gbv-family-composition/', this.selected_member.id, this.familyForm);
+      query = this.http.update('gender-based-violence/patient-gbv-family-composition/', this.selected_member.id, this.familyForm.value);
     } else {
       query = this.http.post('gender-based-violence/patient-gbv-family-composition', this.familyForm.value);
     }

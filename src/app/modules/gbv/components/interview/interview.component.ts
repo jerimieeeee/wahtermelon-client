@@ -173,6 +173,8 @@ export class InterviewComponent implements OnInit{
     Object.entries(data).forEach(([key, value]: any, index) => {
       this[value.summary_type==='IS'?'interview_summaries':'interview_social_notes'].push(value);
     });
+
+    console.log(this.interview_summaries)
   }
 
   sexual_abuses: any = [];
@@ -205,6 +207,23 @@ export class InterviewComponent implements OnInit{
       this.f.incident_recent_datetime.enable();
     }
   }
+
+  interview_behaviors = [
+    {id: 1, desc: 'Cooperative', var_name: 'behavior_cooperative_flag'},
+    {id: 2, desc: 'Crying, very upset', var_name: 'behavior_crying_flag'},
+    {id: 3, desc: 'Clinging to caretaker', var_name: 'behavior_clinging_flag'},
+    {id: 4, desc: 'Responsive to most questions', var_name: 'behavior_responsive_flag'},
+    {id: 5, desc: 'Silent, unresponsive', var_name: 'behavior_silent_flag'},
+    {id: 6, desc: 'Able to narrate incident', var_name: 'behavior_able_to_narrate_flag'},
+    {id: 7, desc: 'Unable to narrate incident', var_name: 'behavior_unable_to_narrate_flag'},
+    {id: 8, desc: 'Appropriate affect', var_name: 'behavior_appropriate_affect_flag'},
+    {id: 9, desc: 'Depressed affect', var_name: 'behavior_depressed_affect_flag'},
+    {id: 10, desc: 'Flat affect, blank stares', var_name: 'behavior_flat_affect_flag'},
+    {id: 11, desc: 'Psychotic symptoms', var_name: 'behavior_psychotic_flag'},
+    {id: 12, desc: 'Combative, hostile', var_name: 'behavior_combative_flag'},
+    {id: 13, desc: 'Hyperactive, anxious', var_name: 'behavior_hyperactive_flag'},
+    {id: 14, desc: 'Short attention span', var_name: 'behavior_short_attention_flag'},
+  ];
 
   createForm(){
     this.interviewForm = this.formBuilder.group({
@@ -243,7 +262,22 @@ export class InterviewComponent implements OnInit{
       initial_disclosure : [null],
 
       relation_to_child : [null],
-      child_behavior_id : [null],
+
+      behavior_cooperative_flag : [false],
+      behavior_crying_flag : [false],
+      behavior_clinging_flag : [false],
+      behavior_responsive_flag : [false],
+      behavior_silent_flag : [false],
+      behavior_able_to_narrate_flag : [false],
+      behavior_unable_to_narrate_flag : [false],
+      behavior_appropriate_affect_flag : [false],
+      behavior_depressed_affect_flag : [false],
+      behavior_flat_affect_flag : [false],
+      behavior_psychotic_flag : [false],
+      behavior_combative_flag : [false],
+      behavior_hyperactive_flag : [false],
+      behavior_short_attention_flag : [false],
+
       child_caretaker_present_flag : [false],
       child_behavior_remarks : [null],
       dev_screening_id : [null],

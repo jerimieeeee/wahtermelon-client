@@ -92,6 +92,10 @@ export class MedicalComponent implements OnInit {
 
   submitMedicalForm(){
     this.is_saving = true;
+    this.medicalForm.patchValue({
+      lmp_date: this.medicalForm.value.lmp_date ? formatDate(this.medicalForm.value.lmp_date, 'yyyy-MM-dd', 'en') : null
+    });
+
     this.http.post('gender-based-violence/patient-gbv-medical-history', this.medicalForm.value).subscribe({
       next: (data: any) => {
         this.toastr.success('Successfully recorded!', 'Medical Form');
@@ -193,7 +197,7 @@ export class MedicalComponent implements OnInit {
       "filter[patient_id]": this.patient_id,
       "filter[patient_gbv_id]": this.selected_gbv_case.id
     }
-    this.http.get('gender-based-violence/patient-gbv-file-upload').subscribe({
+    this.http.get('gender-based-violence/patient-gbv-file-upload', {params}).subscribe({
       next: (data: any) => {
         this.gbv_files = data.data;
         this.fetchingFiles = false;

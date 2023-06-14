@@ -393,7 +393,7 @@ export class PatientRegistrationComponent implements OnInit {
     }
   }
 
-  washington_required = true;
+  washington_required = false;
 
   ngOnInit(): void {
     let user_id = this.http.getUserID();

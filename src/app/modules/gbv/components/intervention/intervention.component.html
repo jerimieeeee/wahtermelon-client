@@ -161,13 +161,13 @@
               <td *ngIf="pos==='MSWDO'" class="w-1/12">
 
               </td>
-              <td class="text-center font-semibold w-4/12 align-top pt-3">
+              <td class="text-center font-semibold w-7/12 align-top pt-3">
                 Placement
               </td>
-              <td class="text-center font-semibold w-4/12 align-top pt-3">
+              <!-- <td class="text-center font-semibold w-4/12 align-top pt-3">
                 Name and Contact Info
-              </td>
-              <td class="text-center font-semibold w-7/12 align-top pt-3">
+              </td> -->
+              <td class="text-center font-semibold w-4/12 align-top pt-3">
                 Date
               </td>
             </tr>
@@ -177,15 +177,40 @@
               <td *ngIf="pos==='MSWDO'" class="text-center align-top pt-3">
                 <fa-icon [icon]="faEdit" (click)="toggleModal('placement', placement)" class="hover:cursor-pointer text-orange-500"></fa-icon>
               </td>
-              <td class="text-center align-top pt-3">
-                {{ placement.placement_name }}
+              <td class="align-top pt-3">
+                <div *ngIf="placement.location_id===1">
+                  <div *ngIf="placement.home_by_cpu_flag">
+                    Home
+                  </div>
+                  <div *ngIf="!placement.home_by_cpu_flag">
+                    <span class="font-semibold">Placement by:</span> {{ placement.home_by_other_name }} <br />
+                  </div>
+                </div>
+
+                <div *ngIf="placement.location_id===2 || placement.location_id===3">
+                  <span class="font-semibold">Placement type:</span>{{ placement.placement_type?.desc }}<br />
+                  <span class="font-semibold">Placement name:</span>{{ placement.placement_name }}<br />
+                  <span class="font-semibold">Contact info:</span>{{ placement.placement_contact_info }}<br />
+                </div>
+
+                <div *ngIf="placement.location_id===4">
+                  <span class="font-semibold">Hospital Name:</span> {{ placement.hospital_name }} <br />
+                  <span class="font-semibold">Ward:</span> {{ placement.hospital_ward }} <br />
+                </div>
               </td>
-              <td class="text-center align-top pt-3">
+              <!-- <td class="text-center align-top pt-3">
                 {{ placement.placement_name }}
-              </td>
-              <td class="text-center align-top pt-3">
-                {{ placement.scheduled_date | date: 'MM/dd/yyyy' }} <br />
-                {{ placement.actual_date | date: 'MM/dd/yyyy' }}
+              </td> -->
+              <td class="align-top pt-3 px-3">
+                <div *ngIf="placement.location_id===2 || placement.location_id===3">
+                  <span class="font-semibold">Date in:</span> {{ placement.scheduled_date | date:'MM/dd/yyyy' }} <br />
+                  <span class="font-semibold">Date out:</span> {{ placement.actual_date | date:'MM/dd/yyyy' }} <br />
+                </div>
+
+                <div *ngIf="placement.location_id===4">
+                  <span class="font-semibold">Date in:</span> {{ placement.hospital_date_in | date:'MM/dd/yyyy' }} <br />
+                  <span class="font-semibold">Date out:</span> {{ placement.hospital_date_out | date:'MM/dd/yyyy' }} <br />
+                </div>
               </td>
             </tr>
           </tbody>

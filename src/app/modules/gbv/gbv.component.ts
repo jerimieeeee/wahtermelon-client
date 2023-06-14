@@ -65,7 +65,7 @@ export class GbvComponent implements OnInit {
 
         this.fetching_history = false;
         // this.pages = 2;
-        // this.module = 4;
+        // this.module = 3;
       },
       error: err => console.log(err)
     })
@@ -83,6 +83,7 @@ export class GbvComponent implements OnInit {
     this.user_facility = this.http.getUserFacility();
     this.pos = this.http.getUserFromJSON().designation_code ? this.http.getUserFromJSON().designation_code : this.http.getUserFromJSON().designation.code;
 
+    // console.log(this.pos)
     if(this.arr_allowed.indexOf(this.pos) > -1) this.getGbvHistory();
 
   }
