@@ -1,0 +1,101 @@
+<div id="defaultModal" tabindex="-1" class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 w-full md:inset-0 h-modal md:h-full justify-center items-center flex" aria-modal="true" role="dialog" style="z-index:60">
+  <div class="relative p-4 w-full max-w-5xl">
+    <!-- Modal content -->
+    <div class="relative bg-white rounded-lg shadow">
+      <!-- Modal header -->
+      <div class="flex justify-between items-start py-3 px-5 rounded-t border-b bg-sky-500">
+        <h3 class="text-sm font-bold text-white">
+          Export to PDF
+        </h3>
+      </div>
+      <!-- Modal body -->
+      <div class="overflow-y-auto h-[800px] scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
+        
+        <table class="w-full text-sm text-left" id="medForm">
+          <div class="text-center font-bold pt-6 text-2xl">
+            <h2>Medical Exam & Diagnosis</h2>
+          </div>
+          <tbody class="h-96 overflow-y-auto">
+            <div class="grid grid-cols-12 m-5 pl-6">
+
+              <div class="col-span-3 border border-gray-200">
+                <h4 class="py-2 pl-3">Patient Name</h4>
+              </div>
+
+              <div class="col-span-3 border border-gray-200">
+                <h4 class="py-2 pl-3">{{patient_details.first_name}} {{patient_details.middle_name}} {{patient_details.last_name}}</h4>
+              </div>
+
+              <div class="col-span-3 border border-gray-200">
+                <h4 class="py-2 pl-3">CPU Case No.</h4>
+              </div>
+
+              <div class="col-span-3 border border-gray-200">
+                <h4 class="py-2 pl-3"> </h4>
+              </div>
+
+              <div class="col-span-3 border border-gray-200">
+                <h4 class="py-2 pl-3">Date of Birth and Age</h4>
+              </div>
+
+              <div class="col-span-3 border border-gray-200">
+                <h4 class="py-2 pl-3">{{patient_details.birthdate | date: 'MM/dd/yyyy'}}, {{ getAge() }} </h4>
+              </div>
+
+              <div class="col-span-3 border border-gray-200">
+                <h4 class="py-2 pl-3">Physician</h4>
+              </div>
+
+              <div class="col-span-3 border border-gray-200">
+                <h4 class="py-2 pl-3"> </h4>
+              </div>
+
+              <div class="col-span-3 border border-gray-200">
+                <h4 class="py-2 pl-3">Date and Time</h4>
+              </div>
+
+              <div class="col-span-3 border border-gray-200">
+                <h4 class="py-2 pl-3"> </h4>
+              </div>
+
+              <div class="col-span-3 border border-gray-200">
+                <h4 class="py-2 pl-3">Physician's Signature</h4>
+              </div>
+
+              <div class="grid grid-cols-4 col-span-3">
+                <div class="col-span-2 border border-gray-200 py-2 pl-3"></div>
+                <div class="col-span-2 border border-gray-200 py-2 pl-3">RN:</div>
+              </div>
+
+              <div class="col-span-3 border border-gray-200">
+                <h4 class="py-2 pl-3">First CPU/RHU Exam</h4>
+              </div>
+
+              <div class="col-span-3 border border-gray-200">
+                <h4 class="py-2 pl-3"> </h4>
+              </div>
+
+              <div class="col-span-6 border border-gray-200">
+                <h4 class="py-2 pl-3">Examined before by</h4>
+              </div>
+
+              <div class="col-span-12 border border-gray-200">
+                <h4 class="py-2 pl-3">Persons present during exam:</h4>
+              </div>
+
+            </div>
+          </tbody>
+        </table>
+        
+      </div>
+
+      <!-- Modal footer -->
+      <div class="flex justify-end py-4 px-5 space-x-4 rounded-b border-t border-gray-200">
+        <button type="button" class="btn-save bg-gray-400" (click)="closeModal()">Close</button>
+        <button type="button" class="btn-save bg-gray-400" (click)="exportP()">Export PDF</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="opacity-50 fixed inset-0 z-50 bg-black"></div>

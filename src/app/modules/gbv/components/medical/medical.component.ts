@@ -1,13 +1,14 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
 import { faEdit, faSave} from '@fortawesome/free-regular-svg-icons';
-import { faCircleNotch, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faCircleNotch, faPlus, faFilePdf } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 import { forkJoin } from 'rxjs';
 import { formatDate } from '@angular/common';
 import { medicalForm } from './medicalForm';
 import { intakeForm } from '../intake/intakeForm';
+import { ExportAsConfig, ExportAsService } from 'ngx-export-as';
 
 @Component({
   selector: 'app-medical',
@@ -24,6 +25,7 @@ export class MedicalComponent implements OnInit {
   faSave = faSave;
   faPlus = faPlus;
   faCircleNotch = faCircleNotch;
+  faFilePdf = faFilePdf;
 
   medicalForm:FormGroup=medicalForm();
   intakeForm: FormGroup=intakeForm();
@@ -42,6 +44,8 @@ export class MedicalComponent implements OnInit {
   };
 
   is_saving: boolean = false;
+
+  pdf_exported: boolean = false;
 
   gbv_files: any = [];
 
@@ -102,6 +106,10 @@ export class MedicalComponent implements OnInit {
     this.modals[name] = !this.modals[name];
 
     if(!this.modals[name]) this.getFiles();
+  }
+
+  toggleExportPDF(name) {
+    this.modals[name] = !this.modals[name];
   }
 
   selected_file_id: string;
@@ -242,6 +250,29 @@ export class MedicalComponent implements OnInit {
     }
   }
 
+  exportAsPdf: ExportAsConfig = {
+    type: 'pdf',
+    elementIdOrContent: 'medForm',
+    options: {
+      image: { type: 'jpeg', quality: 1 },
+      html2canvas:  { scale: 3},
+      margin:  [1, 1, 1, 1],
+      pagebreak: { mode: ['avoid-all', 'css', 'legacy'] },
+      jsPDF: {
+        orientation: 'landscape',
+        format: 'a4',
+        precision: 16
+      }
+    }
+  }
+
+  exportP() {
+    this.pdf_exported = true;
+    this.exportAsService.save(this.exportAsPdf, 'GBV Medical').subscribe(() => {
+      // save started
+    });
+  }
+
   get f(): { [key: string]: AbstractControl } {
     return this.medicalForm.controls;
   }
@@ -249,7 +280,8 @@ export class MedicalComponent implements OnInit {
   constructor (
     private http: HttpService,
     private toastr: ToastrService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private exportAsService: ExportAsService
   ) { }
 
   ngOnInit() {
