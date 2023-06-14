@@ -57,7 +57,7 @@ export class FamilyCompositionComponent {
     let query;
 
     if(this.selected_member) {
-      query = this.http.update('gender-based-violence/patient-gbv-family-composition/', this.selected_member.id, this.familyForm);
+      query = this.http.update('gender-based-violence/patient-gbv-family-composition/', this.selected_member.id, this.familyForm.value);
     } else {
       query = this.http.post('gender-based-violence/patient-gbv-family-composition', this.familyForm.value);
     }
