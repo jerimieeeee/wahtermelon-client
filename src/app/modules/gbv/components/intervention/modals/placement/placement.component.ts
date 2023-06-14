@@ -91,13 +91,13 @@ export class PlacementComponent implements OnInit, OnChanges{
   placement_types: any;
 
   loadLibraries() {
-    const getAbusedEpisode = this.http.get('libraries/gbv-abused-episode');
-    const getInfoSource = this.http.get('libraries/gbv-info-source');
+    const getPlacementLocation = this.http.get('libraries/gbv-placement-location');
+    const getPlacementType = this.http.get('libraries/gbv-placement-type');
 
-    forkJoin([getAbusedEpisode, getInfoSource]).subscribe({
-    next: ([dataAbusedEpisode, dataInfoSource]: any) => {
-      this.placement_locations = dataAbusedEpisode.data;
-      this.placement_types = dataInfoSource.data;
+    forkJoin([getPlacementLocation, getPlacementType]).subscribe({
+    next: ([dataPlacementLocation, dataPlacementType]: any) => {
+      this.placement_locations = dataPlacementLocation.data;
+      this.placement_types = dataPlacementType.data;
 
       this.createForm();
     },
