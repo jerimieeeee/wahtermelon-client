@@ -1,12 +1,13 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
 import { faEdit, faSave} from '@fortawesome/free-regular-svg-icons';
 import { faCircleNotch, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 import { forkJoin } from 'rxjs';
-import { intakeForm } from '../intake/intakeForm';
 import { formatDate } from '@angular/common';
+import { medicalForm } from './medicalForm';
+import { intakeForm } from '../intake/intakeForm';
 
 @Component({
   selector: 'app-medical',
@@ -24,7 +25,8 @@ export class MedicalComponent implements OnInit {
   faPlus = faPlus;
   faCircleNotch = faCircleNotch;
 
-  intakeForm:FormGroup=intakeForm();
+  medicalForm:FormGroup=medicalForm();
+  intakeForm: FormGroup=intakeForm();
 
   modals: any = [];
   anogenitals = [];
@@ -43,6 +45,20 @@ export class MedicalComponent implements OnInit {
 
   gbv_files: any = [];
 
+  general_surveys = [
+    {id: 1,   desc: 'Normal',               var_name: 'general_survey_normal'},
+    {id: 2,   desc: 'Abnormal',             var_name: 'general_survey_abnormal'},
+    {id: 3,   desc: 'Stunting',             var_name: 'general_survey_stunting'},
+    {id: 4,   desc: 'Wasting',              var_name: 'general_survey_wasting'},
+    {id: 5,   desc: 'Dirty, Unkempt',       var_name: 'general_survey_dirty_unkempt'},
+    {id: 6,   desc: 'Stuporous',            var_name: 'general_survey_stuporous'},
+    {id: 7,   desc: 'Pale',                 var_name: 'general_survey_pale'},
+    {id: 8,   desc: 'Non-ambulant',         var_name: 'general_survey_non_ambulant'},
+    {id: 9,   desc: 'Drowsy, Irritable',    var_name: 'general_survey_drowsy'},
+    {id: 10,  desc: 'Respiratory Distress', var_name: 'general_survey_respiratory'},
+    {id: 11,  desc: 'Other Abnormality',    var_name: 'general_survey_others'}
+  ];
+
   reloadData(){
     let params = {
       id: this.selected_gbv_case.id
@@ -59,9 +75,23 @@ export class MedicalComponent implements OnInit {
   }
 
   onSubmit() {
+    this.is_saving = true;
     this.http.update('gender-based-violence/patient-gbv-intake/', this.intakeForm.value.id, this.intakeForm.value).subscribe({
       next: (data: any) => {
         this.toastr.success('Successfully recorded!', 'Intake Form');
+        this.is_saving = false;
+        this.reloadData();
+      },
+      error: err => console.log(err)
+    })
+  }
+
+  submitMedicalForm(){
+    this.is_saving = true;
+    this.http.post('gender-based-violence/patient-gbv-medical-history', this.medicalForm.value).subscribe({
+      next: (data: any) => {
+        this.toastr.success('Successfully recorded!', 'Medical Form');
+        this.is_saving = false;
         this.reloadData();
       },
       error: err => console.log(err)
@@ -79,8 +109,6 @@ export class MedicalComponent implements OnInit {
   viewFile(id) {
     this.selected_file_id = id;
     this.modals.view_file = !this.modals.view_file;
-
-    // if(!this.modals.view_file) this.selected_file_id = null;
   }
 
   toggleModal(name, act, url, save_url, var_id, arr_var_name, data?){
@@ -118,6 +146,7 @@ export class MedicalComponent implements OnInit {
     this.loadExams(this.selected_gbv_case.gbvIntake.symptoms_corporal, 'corporal_exam', 'corporal');
     this.loadExams(this.selected_gbv_case.gbvIntake.symptoms_behavioral, 'behavioral_exam', 'behavior');
 
+    this.patchMedicalValue();
     this.getFiles();
   }
 
@@ -135,16 +164,15 @@ export class MedicalComponent implements OnInit {
     });
 
     this[var_name] = exams;
-    console.log(this.behavioral_exam);
   }
 
   child_relations: any;
   loadLibraries() {
     this.http.get('libraries/child-relation').subscribe({
       next: (data:any) => {
-        console.log(data)
         this.child_relations = data.data;
         this.patchData();
+        this.createMedicalForm();
       },
       error: err => console.log(err)
     })
@@ -159,7 +187,6 @@ export class MedicalComponent implements OnInit {
     }
     this.http.get('gender-based-violence/patient-gbv-file-upload').subscribe({
       next: (data: any) => {
-        console.log(data);
         this.gbv_files = data.data;
         this.fetchingFiles = false;
       },
@@ -167,9 +194,62 @@ export class MedicalComponent implements OnInit {
     })
   }
 
+  createMedicalForm() {
+    this.medicalForm = this.formBuilder.nonNullable.group({
+      id: [null],
+      patient_id: [this.selected_gbv_case.patient_id],
+      patient_gbv_intake_id: [this.selected_gbv_case.gbvIntake.id],
+
+      patient_temp: [null],
+      patient_heart_rate: [null],
+      patient_weight: [null],
+      patient_height: [null],
+      taking_medication_flag: [null],
+      taking_medication_remarks: [null],
+
+      general_survey_normal: [false],
+      general_survey_abnormal: [false],
+      general_survey_stunting: [false],
+      general_survey_wasting: [false],
+      general_survey_dirty_unkempt: [false],
+      general_survey_stuporous: [false],
+      general_survey_pale: [false],
+      general_survey_non_ambulant: [false],
+      general_survey_drowsy: [false],
+      general_survey_respiratory: [false],
+      general_survey_others: [false],
+      gbv_general_survey_remarks: [null],
+
+      menarche_flag: [false],
+      menarche_age: [false],
+      lmp_date: [null],
+      genital_discharge_uti_flag: [false],
+      past_hospitalizations_flag: [false],
+      past_hospital_remarks: [null],
+      scar_physical_abuse_flag: [false],
+      pertinent_med_history_flag: [false],
+      medical_history_remarks: [null],
+      summary_non_abuse_findings: [null]
+    });
+
+    this.patchMedicalValue();
+  }
+
+  patchMedicalValue() {
+    if(this.selected_gbv_case.gbvIntake.medical_history) {
+      this.medicalForm.patchValue({...this.selected_gbv_case.gbvIntake.medical_history})
+      console.log(this.medicalForm.value)
+    }
+  }
+
+  get f(): { [key: string]: AbstractControl } {
+    return this.medicalForm.controls;
+  }
+
   constructor (
     private http: HttpService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private formBuilder: FormBuilder
   ) { }
 
   ngOnInit() {
