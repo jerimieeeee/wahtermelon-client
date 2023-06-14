@@ -24,6 +24,27 @@ export class ExportPdfComponent implements OnInit {
 
   pdf_exported: boolean = false;
 
+  exams2: any;
+
+  first_exam = [
+    {id: 1,   desc: 'Yes'},
+    {id: 0,   desc: 'No'},
+  ];
+
+  general_surveys = [
+    {id: 1,   desc: 'Normal',               var_name: 'general_survey_normal'},
+    {id: 2,   desc: 'Abnormal',             var_name: 'general_survey_abnormal'},
+    {id: 3,   desc: 'Stunting',             var_name: 'general_survey_stunting'},
+    {id: 4,   desc: 'Wasting',              var_name: 'general_survey_wasting'},
+    {id: 5,   desc: 'Dirty, Unkempt',       var_name: 'general_survey_dirty_unkempt'},
+    {id: 6,   desc: 'Stuporous',            var_name: 'general_survey_stuporous'},
+    {id: 7,   desc: 'Pale',                 var_name: 'general_survey_pale'},
+    {id: 8,   desc: 'Non-ambulant',         var_name: 'general_survey_non_ambulant'},
+    {id: 9,   desc: 'Drowsy, Irritable',    var_name: 'general_survey_drowsy'},
+    {id: 10,  desc: 'Respiratory Distress', var_name: 'general_survey_respiratory'},
+    {id: 11,  desc: 'Other Abnormality',    var_name: 'general_survey_others'}
+  ];
+
   closeModal(){
     this.toggleExportPDF.emit('export_pdf');
     console.log('check modal')
@@ -46,7 +67,7 @@ export class ExportPdfComponent implements OnInit {
       margin:  [1, 1, 1, 1],
       pagebreak: { mode: ['avoid-all', 'css', 'legacy'] },
       jsPDF: {
-        orientation: 'landscape',
+        orientation: 'portrait',
         format: 'a4',
         precision: 16
       }
@@ -59,6 +80,8 @@ export class ExportPdfComponent implements OnInit {
       // save started
     });
   }
+
+
 
   constructor(private http: HttpService,
               private ageService: AgeService, 
