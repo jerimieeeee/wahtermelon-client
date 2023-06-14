@@ -173,6 +173,8 @@ export class InterviewComponent implements OnInit{
     Object.entries(data).forEach(([key, value]: any, index) => {
       this[value.summary_type==='IS'?'interview_summaries':'interview_social_notes'].push(value);
     });
+
+    console.log(this.interview_summaries)
   }
 
   sexual_abuses: any = [];
