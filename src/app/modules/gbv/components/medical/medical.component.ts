@@ -189,7 +189,7 @@ export class MedicalComponent implements OnInit {
       "filter[patient_id]": this.patient_id,
       "filter[patient_gbv_id]": this.selected_gbv_case.id
     }
-    this.http.get('gender-based-violence/patient-gbv-file-upload').subscribe({
+    this.http.get('gender-based-violence/patient-gbv-file-upload', {params}).subscribe({
       next: (data: any) => {
         this.gbv_files = data.data;
         this.fetchingFiles = false;
