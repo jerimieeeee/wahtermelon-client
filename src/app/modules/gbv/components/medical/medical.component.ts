@@ -88,6 +88,10 @@ export class MedicalComponent implements OnInit {
 
   submitMedicalForm(){
     this.is_saving = true;
+    this.medicalForm.patchValue({
+      lmp_date: this.medicalForm.value.lmp_date ? formatDate(this.medicalForm.value.lmp_date, 'yyyy-MM-dd', 'en') : null
+    });
+
     this.http.post('gender-based-violence/patient-gbv-medical-history', this.medicalForm.value).subscribe({
       next: (data: any) => {
         this.toastr.success('Successfully recorded!', 'Medical Form');
