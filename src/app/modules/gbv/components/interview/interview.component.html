@@ -143,6 +143,7 @@
             <input type="text" name="incident_first_remarks" id="incident_first_remarks" formControlName="incident_first_remarks" class="input">
           </div>
 
+          <div class="col-span-4"></div>
           <div class="col-span-2">
             <label for="abused_episode_id" [ngClass]="{'text-red-500': show_error && f.abused_episode_id.errors}">Episodes of abuse</label>
             <select name="abused_episode_id" id="abused_episode_id" formControlName="abused_episode_id" class="input" [ngClass]="{'invalid-input': show_error && f.abused_episode_id.errors}">
