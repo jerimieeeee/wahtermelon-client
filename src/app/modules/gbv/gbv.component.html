@@ -31,7 +31,7 @@
         [class]="module===3? 'tabs-main-true' : 'tabs-main-false' ">
         Interview
     </button>
-    <button (click)="switchTab(4)" class="tabs-main w-28" *ngIf="selected_gbv_case"
+    <button (click)="switchTab(4)" class="tabs-main w-28" *ngIf="selected_gbv_case && pos === 'MD'"
         [class]="module===4? 'tabs-main-true' : 'tabs-main-false' ">
         Medical
     </button>
