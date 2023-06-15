@@ -31,6 +31,8 @@ import { AnogenitalComponent } from './components/medical/modals/anogenital/anog
 import { PhysicalExaminationComponent } from './components/medical/modals/physical-examination/physical-examination.component';
 import { FileUploadComponent } from './components/medical/modals/file-upload/file-upload.component';
 import { ViewFileComponent } from './components/medical/modals/view-file/view-file.component';
+import { ExportAsModule } from 'ngx-export-as';
+import { ExportPdfComponent } from './components/medical/modals/export-pdf/export-pdf.component';
 
 export const options: Partial<null|IConfig> | (() => Partial<IConfig>) = null;
 
@@ -61,7 +63,8 @@ export const options: Partial<null|IConfig> | (() => Partial<IConfig>) = null;
     AnogenitalComponent,
     PhysicalExaminationComponent,
     FileUploadComponent,
-    ViewFileComponent
+    ViewFileComponent,
+    ExportPdfComponent
   ],
   imports: [
     CommonModule,
@@ -70,7 +73,8 @@ export const options: Partial<null|IConfig> | (() => Partial<IConfig>) = null;
     ReactiveFormsModule,
     FontAwesomeModule,
     NgxMaskDirective,
-    NgxMaskPipe
+    NgxMaskPipe,
+    ExportAsModule
   ],
   providers: [
     provideNgxMask()
