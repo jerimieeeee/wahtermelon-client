@@ -226,6 +226,7 @@ export class MyAccountComponent implements OnInit {
         this.orig_value['facility_code'] = this.orig_value.facility?.code;
 
         this.http.saveUserToLocalStorage(data.data);
+        this.http.userToJSON();
       },
       error: err => console.log(err)
     })

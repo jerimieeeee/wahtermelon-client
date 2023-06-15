@@ -31,7 +31,7 @@
         [class]="module===3? 'tabs-main-true' : 'tabs-main-false' ">
         Interview
     </button>
-    <button (click)="switchTab(4)" class="tabs-main w-28" *ngIf="selected_gbv_case"
+    <button (click)="switchTab(4)" class="tabs-main w-28" *ngIf="selected_gbv_case && pos === 'MD'"
         [class]="module===4? 'tabs-main-true' : 'tabs-main-false' ">
         Medical
     </button>
@@ -108,7 +108,7 @@
         </td>
       </tr>
 
-      <tr class="bg-white border-b" *ngIf="!patient_gbv_history">
+      <tr class="bg-white border-b" *ngIf="patient_gbv_history.length === 0">
         <td  colspan="7">
           <div class="text-center py-3 flex flex-col">
             <div class="flex justify-center">No records to show...</div>
