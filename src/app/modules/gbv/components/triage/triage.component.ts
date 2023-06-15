@@ -49,6 +49,8 @@ export class TriageComponent implements OnInit, OnChanges{
   };
 
   onSubmit(){
+    this.is_saving = true;
+
     let complaints: any =[];
     let behaviorals: any =[];
     let neglects: any =[];
@@ -77,6 +79,7 @@ export class TriageComponent implements OnInit, OnChanges{
         console.log(data);
 
         this.toastr.success('Successfully recorded!', 'GBV Referral');
+        this.is_saving = false;
         this.getGbvHistory.emit();
       },
       error: err => console.log(err)
