@@ -108,7 +108,7 @@
         </td>
       </tr>
 
-      <tr class="bg-white border-b" *ngIf="!patient_gbv_history">
+      <tr class="bg-white border-b" *ngIf="patient_gbv_history.length === 0">
         <td  colspan="7">
           <div class="text-center py-3 flex flex-col">
             <div class="flex justify-center">No records to show...</div>
