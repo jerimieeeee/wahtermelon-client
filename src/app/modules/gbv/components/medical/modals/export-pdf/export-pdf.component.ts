@@ -26,6 +26,10 @@ export class ExportPdfComponent implements OnInit {
 
   exams2: any;
 
+  anogenital_list: any =[];
+  corporal_list: any =[];
+  behavioral_list: any =[];
+
   first_exam = [
     {id: 1,   desc: 'Yes'},
     {id: 0,   desc: 'No'},
@@ -60,12 +64,12 @@ export class ExportPdfComponent implements OnInit {
 
   exportAsPdf: ExportAsConfig = {
     type: 'pdf',
-    elementIdOrContent: 'medForm',
+    elementIdOrContent: 'mainForm',
     options: {
       image: { type: 'jpeg', quality: 1 },
       html2canvas:  { scale: 3},
       margin:  [1, 1, 1, 1],
-      pagebreak: { mode: ['avoid-all', 'css', 'legacy'] },
+      pagebreak: { mode: ['avoid-all', 'css', 'legacy'], after: '#medForm'},
       jsPDF: {
         orientation: 'portrait',
         format: 'a4',
@@ -81,6 +85,67 @@ export class ExportPdfComponent implements OnInit {
     });
   }
 
+  loadAnogenital(){
+    this.http.get('libraries/'+'gbv-symptoms-anogenital').subscribe({
+      next: (data: any) => {
+        this.anogenital_list = data.data;
+        this.patchData()
+      },
+      error: err => console.log(err)
+    })
+  }
+
+  loadCorporal(){
+    this.http.get('libraries/'+'gbv-symptoms-anogenital').subscribe({
+      next: (data: any) => {
+        this.corporal_list = data.data;
+        this.patchData()
+      },
+      error: err => console.log(err)
+    })
+  }
+
+  loadBeahavioral(){
+    this.http.get('libraries/'+'gbv-symptoms-anogenital').subscribe({
+      next: (data: any) => {
+        this.behavioral_list = data.data;
+        this.patchData()
+      },
+      error: err => console.log(err)
+    })
+  }
+
+  loadExams(data, var_name, lib_var) {
+    let exams: any = [];
+    Object.entries(data).forEach(([key, value]: any, index) => {
+      if(!exams[value[lib_var].desc]) {
+        exams[value[lib_var].desc] = [];
+      }
+      exams[value[lib_var].desc][value.info_source_id] = true;
+    });
+
+    this[var_name] = exams;
+  }
+
+  anogenital_exam: any = [];
+  corporal_exam: any =[];
+  behavioral_exam: any =[];
+
+  patchData() {
+    
+    this.loadExams(this.selected_gbv_case.gbvIntake.symptoms_anogenital, 'anogenital_exam', 'anogenital');
+    this.loadExams(this.selected_gbv_case.gbvIntake.symptoms_corporal, 'corporal_exam', 'corporal');
+    this.loadExams(this.selected_gbv_case.gbvIntake.symptoms_behavioral, 'behavioral_exam', 'behavior');
+    console.log(this.anogenital_exam, 'test anogenital')
+  }
+
+  loadLibs(){
+    this.loadAnogenital()
+    this.loadCorporal()
+    this.loadBeahavioral()
+  }
+
+
 
 
   constructor(private http: HttpService,
@@ -89,9 +154,11 @@ export class ExportPdfComponent implements OnInit {
   ) { }
   
   ngOnInit() {
+    this.loadLibs(); 
     this.patient_details = this.http.getPatientInfo();
-    console.log(this.patient_details,'export modal patient')
-    console.log(this.selected_gbv_case,'export modal')
+    // console.log(this.patient_details,'export modal patient')
+    // console.log(this.selected_gbv_case,'export modal')
+    // console.log(this.anogenital_list,'test hugot')
   }
 
 }

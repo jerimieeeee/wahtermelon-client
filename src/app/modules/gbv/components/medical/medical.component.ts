@@ -160,6 +160,7 @@ export class MedicalComponent implements OnInit {
 
     this.patchMedicalValue();
     this.getFiles();
+    console.log(this.corporal_exam, 'test')
   }
 
   anogenital_exam: any = [];
