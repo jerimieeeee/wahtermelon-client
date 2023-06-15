@@ -59,6 +59,13 @@
               <h4 class="font-bold text-blue-500 text-sm mt-2">Patient Details</h4>
             </div>
 
+            <div class="w-full mx-5 flex justify-center">
+              <button [disabled]="retrieving_pin" type="button" class="btn-save" (click)="getMemberPin()">
+                <fa-icon *ngIf="retrieving_pin" [icon]="faCircleNotch" spin="true"></fa-icon>
+                Get Philhealth PIN
+              </button>
+            </div>
+
             <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
               <label class="font-semibold" for="philhealth_id" [ngClass]="{'text-red-500': is_saving && f.philhealth_id.errors}">Philhealth ID</label>
               <input name="philhealth_id" id="philhealth_id" formControlName="philhealth_id" mask="99-999999999-9" [showMaskTyped]="true"  type="text" class="input" [ngClass]="{'invalid-input': is_saving && f.philhealth_id.errors}">
