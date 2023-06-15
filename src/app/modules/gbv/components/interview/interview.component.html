@@ -574,7 +574,7 @@
                   <fa-icon [icon]="faEdit" (click)="toggleModal('interview_notes', 'Interview', '', '', interview)" class="hover:cursor-pointer text-orange-500"></fa-icon>
                 </td>
                 <td class="text-center align-top pt-3">
-                  {{ interview.perpetrator.perpetrator_name ?? '-'}}
+                  {{ interview.perpetrator ? (interview.perpetrator.perpetrator_name ?? '-') : '-'}}
                 </td>
                 <td class="text-center align-top pt-3">
                   {{ interview.interview_datetime | date: 'MM/dd/yyyy'}} <br />
