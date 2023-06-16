@@ -1,5 +1,5 @@
 <div id="defaultModal" tabindex="-1" class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 w-full md:inset-0 h-modal md:h-full justify-center items-center flex" aria-modal="true" role="dialog" style="z-index:60">
-  <div class="relative p-4 w-full max-w-5xl">
+  <div class="relative p-4 w-full max-w-4xl">
     <!-- Modal content -->
     <div class="relative bg-white rounded-lg shadow">
       <!-- Modal header -->
@@ -47,7 +47,7 @@
               </div>
 
               <div class="col-span-3 border border-gray-200">
-                <h4 class="py-2 pl-3">{{selected_gbv_case.gbvIntake.consult_visit[0].physician}}</h4>
+                <h4 class="py-2 pl-3">{{selected_gbv_case.gbvIntake.consult_visit.physician}}</h4>
               </div>
 
               <div class="col-span-3 border border-gray-200">
@@ -199,13 +199,13 @@
                 <div class="border border-gray-200 py-7">
                 <h4 class="py-2 pl-3">Any scars that do not appear to result from physical abuse?</h4>
                 <label class="pl-3"><input class="py-2 pl-3 input-checkbox mr-1" type="checkbox" disabled [checked]="selected_gbv_case.gbvIntake.medical_history.scar_physical_abuse_flag === 1"> Yes</label>
-                <label class="pl-3" for=""><input class="py-2 pl-3 input-checkbox mr-1" type="checkbox" disable [checked]="selected_gbv_case.gbvIntake.medical_history.scar_physical_abuse_flag === 0"> No</label>
+                <label class="pl-3"><input class="py-2 pl-3 input-checkbox mr-1" type="checkbox" disabled [checked]="selected_gbv_case.gbvIntake.medical_history.scar_physical_abuse_flag === 0"> No</label>
                 </div>
 
                 <div class=" border border-gray-200 py-6">
                 <h4 class="py-2 pl-3">PERTINENT MEDICAL HISTORY?</h4>
-                <label class="pl-3"><input class="py-2 pl-3 input-checkbox mr-1" type="checkbox" disabled="selected_gbv_case.gbvIntake.medical_history.pertinent_med_history_flag == 1"> Yes</label>
-                <label class="pl-3" for=""><input class="py-2 pl-3 input-checkbox mr-1" type="checkbox" disabled [checked]="selected_gbv_case.gbvIntake.medical_history.pertinent_med_history_flag === 0"> No</label>
+                <label class="pl-3"><input class="py-2 pl-3 input-checkbox mr-1" type="checkbox" disabled [checked]="selected_gbv_case.gbvIntake.medical_history.pertinent_med_history_flag === 1"> Yes</label>
+                <label class="pl-3"><input class="py-2 pl-3 input-checkbox mr-1" type="checkbox" disabled [checked]="selected_gbv_case.gbvIntake.medical_history.pertinent_med_history_flag === 0"> No</label>
                 </div>
 
               </div>

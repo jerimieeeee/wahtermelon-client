@@ -136,7 +136,7 @@ export class ExportPdfComponent implements OnInit {
     this.loadExams(this.selected_gbv_case.gbvIntake.symptoms_anogenital, 'anogenital_exam', 'anogenital');
     this.loadExams(this.selected_gbv_case.gbvIntake.symptoms_corporal, 'corporal_exam', 'corporal');
     this.loadExams(this.selected_gbv_case.gbvIntake.symptoms_behavioral, 'behavioral_exam', 'behavior');
-    console.log(this.anogenital_exam, 'test anogenital')
+    // console.log(this.anogenital_exam, 'test anogenital')
   }
 
   loadLibs(){
