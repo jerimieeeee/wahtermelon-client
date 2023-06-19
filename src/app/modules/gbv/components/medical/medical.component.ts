@@ -63,6 +63,19 @@ export class MedicalComponent implements OnInit {
     {id: 11,  desc: 'Other Abnormality',    var_name: 'general_survey_others'}
   ];
 
+  physical_exams = [
+    {desc: 'Head and Neck',       var_name: 'pe_head_and_neck_remarks'},
+    {desc: 'Chest and Lungs',     var_name: 'pe_chest_and_lungs_remarks'},
+    {desc: 'Breast',              var_name: 'pe_breast_remarks'},
+    {desc: 'Abdomen',             var_name: 'pe_abdomen_remarks'},
+    {desc: 'Back',                var_name: 'pe_back_remarks'},
+    {desc: 'Extremities',         var_name: 'pe_extremities_remarks'},
+    {desc: 'Anogenital',          var_name: 'pe_anogenital_remarks'},
+    {desc: 'External Genitalia',  var_name: 'pe_external_genitalia_remarks'},
+    {desc: 'Anus',                var_name: 'pe_anus_remarks'},
+    {desc: 'Hymen',               var_name: 'pe_hymen_remarks'}
+  ]
+
   reloadData(){
     let params = {
       id: this.selected_gbv_case.id
@@ -160,7 +173,6 @@ export class MedicalComponent implements OnInit {
 
     this.patchMedicalValue();
     this.getFiles();
-    console.log(this.corporal_exam, 'test')
   }
 
   anogenital_exam: any = [];
@@ -179,16 +191,31 @@ export class MedicalComponent implements OnInit {
     this[var_name] = exams;
   }
 
-  child_relations: any;
+  child_relations: object;
+  medical_impressions: object;
+
   loadLibraries() {
-    this.http.get('libraries/child-relation').subscribe({
+    const getChildRelation = this.http.get('libraries/child-relation');
+    const getMedicalImpression = this.http.get('libraries/gbv-medical-impression');
+
+    forkJoin([getChildRelation, getMedicalImpression]).subscribe({
+      next:([dataChildRelation, dataMedicalImpression]:any) => {
+        this.child_relations = dataChildRelation.data;
+        this.medical_impressions = dataMedicalImpression.data;
+        console.log(dataMedicalImpression);
+        this.patchData();
+        this.createMedicalForm();
+      },
+      error: err => console.log(err)
+    });
+    /* this.http.get('libraries/child-relation').subscribe({
       next: (data:any) => {
         this.child_relations = data.data;
         this.patchData();
         this.createMedicalForm();
       },
       error: err => console.log(err)
-    })
+    }) */
   }
 
   fetchingFiles: boolean = false;
@@ -232,6 +259,18 @@ export class MedicalComponent implements OnInit {
       general_survey_respiratory: [false],
       general_survey_others: [false],
       gbv_general_survey_remarks: [null],
+
+      pe_head_and_neck_remarks: [null],
+      pe_chest_and_lungs_remarks: [null],
+      pe_breast_remarks: [null],
+      pe_abdomen_remarks: [null],
+      pe_back_remarks: [null],
+      pe_extremities_remarks: [null],
+      pe_anogenital_remarks: [null],
+      pe_external_genitalia_remarks: [null],
+      pe_anus_remarks: [null],
+      pe_hymen_remarks: [null],
+      medical_impression_id: [null],
 
       menarche_flag: [false],
       menarche_age: [false],
