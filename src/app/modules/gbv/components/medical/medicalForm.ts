@@ -37,6 +37,7 @@ export function medicalForm() {
     pe_anus_remarks: new FormControl<string| null>(null),
     pe_hymen_remarks: new FormControl<string| null>(null),
     medical_impression_id: new FormControl<string| null>(null),
+    medical_impression_remarks: new FormControl<string| null>(null),
 
     menarche_flag: new FormControl<boolean| null>(null),
     menarche_age: new FormControl<boolean| null>(null),

@@ -271,6 +271,7 @@ export class MedicalComponent implements OnInit {
       pe_anus_remarks: [null],
       pe_hymen_remarks: [null],
       medical_impression_id: [null],
+      medical_impression_remarks: [null],
 
       menarche_flag: [false],
       menarche_age: [false],

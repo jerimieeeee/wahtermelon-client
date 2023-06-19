@@ -150,8 +150,14 @@
               <label for="medical_impression_id">Impression</label>
               <select name="medical_impression_id" id="medical_impression_id" formControlName="medical_impression_id" class="input">
                 <option [ngValue]="null">-</option>
-                <option *ngFor="let impression of medical_impressions" [value]="impression.id">{{ impression.desc }}</option>
+                <option *ngFor="let impression of medical_impressions" [ngValue]="impression.id">{{ impression.desc }}</option>
               </select>
+            </div>
+
+            <div class="col-span-12 ml-5" *ngIf="medicalForm.value.medical_impression_id === 13">
+              <label for="medical_impression_remarks">Details</label>
+              <textarea rows="2" name="medical_impression_remarks" id="medical_impression_remarks" formControlName="medical_impression_remarks" class="input">
+              </textarea>
             </div>
           </div>
 
