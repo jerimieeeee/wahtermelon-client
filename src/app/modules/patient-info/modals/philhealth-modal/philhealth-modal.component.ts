@@ -2,7 +2,7 @@ import { formatDate, ViewportScroller } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { faCheck, faCircleInfo, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faCircleInfo, faCircleNotch, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -19,6 +19,7 @@ export class PhilhealthModalComponent implements OnInit {
   faCheck = faCheck;
   faSpinner = faSpinner;
   faCircleInfo = faCircleInfo;
+  faCircleNotch = faCircleNotch;
 
   error_message = "exceeded maximum value";
   error_message_min = "does not meet minimum length";
@@ -96,6 +97,39 @@ export class PhilhealthModalComponent implements OnInit {
         this.is_atc_valid = data.return;;
       },
       error: err => console.log(err)
+    })
+  }
+
+  retrieving_pin:boolean = false;
+  retrieving_error: string;
+  getMemberPin() {
+    this.retrieving_error = null;
+    // console.log(this.http.getPatientInfo());
+    this.retrieving_pin = true;
+    let patient = this.http.getPatientInfo();
+    let params = {
+      program_code: 'mc',
+      last_name: patient.last_name,
+      first_name: patient.first_name,
+      middle_name: patient.middle_name,
+      suffix_name: patient.suffix_name !== 'NA' ? patient.suffix_name : '',
+      birthdate: formatDate(patient.birthdate, 'MM-dd-yyyy', 'en')
+    }
+
+    this.http.post('eclaims/get-member-pin', params).subscribe({
+      next: (data:any) => {
+        console.log(data)
+        this.philhealthForm.patchValue({
+          philhealth_id: data.data,
+          philhealth_id_confirmation: data.data
+        })
+        this.retrieving_pin = false;
+      },
+      error: err => {
+        console.log(err)
+        this.retrieving_error = err.error.text;
+        this.retrieving_pin = false;
+      }
     })
   }
 
@@ -325,6 +359,7 @@ export class PhilhealthModalComponent implements OnInit {
       }
       this.showMember();
     }
+
 
     this.date = new Date().toISOString().slice(0,10);
   }

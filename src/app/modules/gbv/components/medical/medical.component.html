@@ -21,7 +21,7 @@
           </div>
 
           <div class="col-span-2">
-            <label for="consent_relation_to_child_id">Relation to child</label>
+            <label for="consent_relation_to_child_id">Relation to victim survivor</label>
             <select name="consent_relation_to_child_id" id="consent_relation_to_child_id" formControlName="consent_relation_to_child_id" class="input">
               <option [ngValue]="null">-</option>
               <option *ngFor="let child_relation of child_relations" [value]="child_relation.id">{{ child_relation.desc }}</option>
@@ -138,9 +138,39 @@
 
           <div class="col-span-12">
             <label for="summary_non_abuse_findings" [ngClass]="{'text-red-500': show_error && f.summary_non_abuse_findings.errors}">Summary of non-abuse findings</label>
-            <input type="text" name="summary_non_abuse_findings" id="summary_non_abuse_findings" formControlName="summary_non_abuse_findings" class="input" [ngClass]="{'invalid-input': show_error && f.summary_non_abuse_findings.errors}">
+            <textarea rows="2" name="summary_non_abuse_findings" id="summary_non_abuse_findings" formControlName="summary_non_abuse_findings" class="input" [ngClass]="{'invalid-input': show_error && f.summary_non_abuse_findings.errors}">
+            </textarea>
           </div>
 
+          <div class="col-span-12 grid grid-cols-3">
+            <div class="col-span-3 font-semibold text-sm">Physical Exam</div>
+
+            <div class="col-span-12 ml-5 mb-2" *ngFor="let pe of physical_exams">
+              <label for="summary_non_abuse_findings">{{ pe.desc }}</label>
+              <textarea rows="2" [name]="pe.var_name" [id]="pe.var_name" [formControlName]="pe.var_name" class="input">
+              </textarea>
+            </div>
+
+            <div class="col-span-12 ml-5">
+              <label for="medical_impression_id">Impression</label>
+              <select name="medical_impression_id" id="medical_impression_id" formControlName="medical_impression_id" class="input">
+                <option [ngValue]="null">-</option>
+                <option *ngFor="let impression of medical_impressions" [ngValue]="impression.id">{{ impression.desc }}</option>
+              </select>
+            </div>
+
+            <div class="col-span-12 ml-5" *ngIf="medicalForm.value.medical_impression_id === 13">
+              <label for="medical_impression_remarks">Details</label>
+              <textarea rows="2" name="medical_impression_remarks" id="medical_impression_remarks" formControlName="medical_impression_remarks" class="input">
+              </textarea>
+            </div>
+          </div>
+
+          <!-- <div class="col-span-12 grid grid-cols-3">
+            <div class="col-span-3 font-semibold text-sm">Impression</div>
+
+
+          </div> -->
           <div class="col-span-12 flex justify-center">
             <button [disabled]="is_saving" type="submit" class="btn-save mr-5 mt-4">
               <fa-icon [icon]="is_saving ? faCircleNotch : faSave" [spin]="is_saving ? true : false" class="mr-2"></fa-icon>

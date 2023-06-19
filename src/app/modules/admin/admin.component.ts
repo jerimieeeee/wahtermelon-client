@@ -18,7 +18,7 @@ export class AdminComponent implements OnInit {
     }, */
     {
       loc: 'facility-config',
-      name: 'Facility Config',
+      name: 'Facility Configuration',
       icon: faHouseMedical
     },
     /* {
