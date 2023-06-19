@@ -17,6 +17,7 @@ export function interviewForm() {
 
     source_from_victim_flag: new FormControl<boolean| null>(false),
     source_from_historian_flag: new FormControl<boolean| null>(false),
+    source_from_historian_remarks: new FormControl<string| null>(null),
     source_from_sworn_statement_flag: new FormControl<boolean| null>(false),
     mental_age_id: new FormControl<string| null>(''),
 
@@ -52,6 +53,22 @@ export function interviewForm() {
     behavior_combative_flag : new FormControl<boolean| null>(false),
     behavior_hyperactive_flag : new FormControl<boolean| null>(false),
     behavior_short_attention_flag : new FormControl<boolean| null>(false),
+
+    behavior_historian_cooperative_flag : new FormControl<boolean| null>(false),
+    behavior_historian_crying_flag : new FormControl<boolean| null>(false),
+    behavior_historian_clinging_flag : new FormControl<boolean| null>(false),
+    behavior_historian_responsive_flag : new FormControl<boolean| null>(false),
+    behavior_historian_silent_flag : new FormControl<boolean| null>(false),
+    behavior_historian_able_to_narrate_flag : new FormControl<boolean| null>(false),
+    behavior_historian_unable_to_narrate_flag : new FormControl<boolean| null>(false),
+    behavior_historian_appropriate_affect_flag : new FormControl<boolean| null>(false),
+    behavior_historian_depressed_affect_flag : new FormControl<boolean| null>(false),
+    behavior_historian_flat_affect_flag : new FormControl<boolean| null>(false),
+    behavior_historian_psychotic_flag : new FormControl<boolean| null>(false),
+    behavior_historian_combative_flag : new FormControl<boolean| null>(false),
+    behavior_historian_hyperactive_flag : new FormControl<boolean| null>(false),
+    behavior_historian_short_attention_flag : new FormControl<boolean| null>(false),
+    behavior_historian_remarks : new FormControl<string| null>(''),
 
     child_caretaker_present_flag : new FormControl<boolean| null>(false),
     child_behavior_remarks : new FormControl<string| null>(''),

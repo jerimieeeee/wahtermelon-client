@@ -16,7 +16,7 @@
           </div>
 
           <div class="col-span-2">
-            <label for="consent_relation_to_child_id">Relation to child</label>
+            <label for="consent_relation_to_child_id">Relation to victim survivor</label>
             <select name="consent_relation_to_child_id" id="consent_relation_to_child_id" formControlName="consent_relation_to_child_id" class="input">
               <option [ngValue]="null">-</option>
               <option *ngFor="let child_relation of child_relations" [value]="child_relation.id">{{ child_relation.desc }}</option>
