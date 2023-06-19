@@ -1,10 +1,14 @@
 import { formatDate, ViewportScroller } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { faCheck, faCircleInfo, faCircleNotch, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
+import { philhealthForm } from './philhealthForm';
+import { NgSelectComponent } from '@ng-select/ng-select';
+import { catchError, debounceTime, distinctUntilChanged, switchMap, tap, map, filter } from 'rxjs/operators';
+import { concat, Observable, of, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-philhealth-modal',
@@ -12,6 +16,7 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./philhealth-modal.component.scss']
 })
 export class PhilhealthModalComponent implements OnInit {
+  @ViewChild('mySelect') mySelect: NgSelectComponent;
   @Output() toggleModal = new EventEmitter<any>();
   @Input() patient_info;
   @Input() philhealth_to_edit;
@@ -30,33 +35,9 @@ export class PhilhealthModalComponent implements OnInit {
     { id: 'F', desc: 'Female'}
   ];
 
-  philhealthForm: FormGroup = new FormGroup({
-    philhealth_id: new FormControl<string| null>(''),
-    facility_code: new FormControl<string| null>(''),
-    patient_id: new FormControl<string| null>(''),
-    user_id: new FormControl<string| null>(''),
-    enlistment_date: new FormControl<string| null>(''),
-    effectivity_year: new FormControl<string| null>(''),
-    enlistment_status_id: new FormControl<string| null>(''),
-    package_type_id: new FormControl<string| null>(''),
-    membership_type_id: new FormControl<string| null>(''),
-    membership_category_id: new FormControl<string| null>(''),
-    member_pin: new FormControl<string| null>(''),
-    member_last_name: new FormControl<string| null>(''),
-    member_first_name: new FormControl<string| null>(''),
-    member_middle_name: new FormControl<string| null>(''),
-    member_suffix_name: new FormControl<string| null>(''),
-    member_birthdate: new FormControl<string| null>(''),
-    member_gender: new FormControl<string| null>(''),
-    member_relation_id: new FormControl<string| null>(''),
-    employer_pin: new FormControl<string| null>(''),
-    employer_name: new FormControl<string| null>(''),
-    employer_address: new FormControl<string| null>(''),
-    member_pin_confirmation: new FormControl<string| null>(''),
-    philhealth_id_confirmation: new FormControl<string| null>(''),
-    authorization_transaction_code: new FormControl<string| null>(''),
-    walkedin_status: new FormControl<boolean| null>(null)
-  });
+
+
+  philhealthForm: FormGroup = philhealthForm();
 
   date;
   showChildVitals: boolean = false;
@@ -82,6 +63,56 @@ export class PhilhealthModalComponent implements OnInit {
   is_atc_valid: any;
   is_registered: any;
 
+  // EMPLOYER
+  employer$: Observable<any>;
+  searchInput$ = new Subject<string>();
+  selectedEmployer: any;
+  minLengthTerm = 3;
+  employerLoading: boolean = false;
+
+  resetList(){
+    this.selectedEmployer = null;
+    this.loadEmployers();
+  }
+
+  loadEmployers() {
+    this.employer$ = concat(
+      of([]), // default items
+      this.searchInput$.pipe(
+        filter(res => {
+          return res !== null && res.length >= this.minLengthTerm
+        }),
+        distinctUntilChanged(),
+        debounceTime(800),
+        tap(() => this.employerLoading = true),
+        switchMap(term => {
+          return this.getEmployer(term).pipe(
+            catchError(() => of([])),
+            tap(() => this.employerLoading = false)
+          )
+        })
+      )
+    );
+  }
+
+  getEmployer(term: string = null): Observable<any> {
+    let params = {
+      'filter[search]': term,
+      program_code: 'mc'
+    };
+
+    return this.http.post('eclaims/search-employer', params)
+    .pipe(map((resp:any) => {
+      // this.showCreate = resp.data.length == 0 ? true : false;
+      return resp.data;
+    }))
+  }
+
+  onEmployerSelect(data) {
+    console.log(data)
+  }
+  // END EMPLOYER
+
   isATCValid(){
     this.is_checking_atc = true;
     let params = {
@@ -104,8 +135,8 @@ export class PhilhealthModalComponent implements OnInit {
   retrieving_error: string;
   getMemberPin() {
     this.retrieving_error = null;
-    // console.log(this.http.getPatientInfo());
     this.retrieving_pin = true;
+
     let patient = this.http.getPatientInfo();
     let params = {
       program_code: 'mc',
@@ -122,15 +153,21 @@ export class PhilhealthModalComponent implements OnInit {
         this.philhealthForm.patchValue({
           philhealth_id: data.data,
           philhealth_id_confirmation: data.data
-        })
-        this.retrieving_pin = false;
+        });
+        this.toastrMessage('success', 'Philhealth', 'Philhealth PIN retrieved', 'retrieving_pin');
       },
       error: err => {
-        console.log(err)
-        this.retrieving_error = err.error.text;
-        this.retrieving_pin = false;
+        if(err.status === 404) {
+          this.retrieving_error = err.error.data;
+        }
+        this.toastrMessage('success', 'Philhealth', 'Philhealth PIN retrieved', 'retrieving_pin');
       }
     })
+  }
+
+  toastrMessage(type, title, message, loading_var){
+    this.toastr[type](message, title)
+    this[loading_var] = false;
   }
 
   isMemberDependentRegistered() {
