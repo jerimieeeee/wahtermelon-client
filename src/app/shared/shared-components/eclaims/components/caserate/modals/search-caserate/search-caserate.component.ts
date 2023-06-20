@@ -3,13 +3,14 @@ import { CommonModule } from '@angular/common';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
-import { faCircleNotch, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faCircleNotch, faSearch, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { faSave } from '@fortawesome/free-regular-svg-icons';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @Component({
   selector: 'app-search-caserate',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, FontAwesomeModule],
   templateUrl: './search-caserate.component.html',
   styleUrls: ['./search-caserate.component.scss']
 })
@@ -20,6 +21,7 @@ export class SearchCaserateComponent {
   faSave = faSave;
   faCircleNotch = faCircleNotch;
   faSearch = faSearch;
+  faMagnifyingGlass = faMagnifyingGlass;
 
   answers: any;
   answers_yn: any;
@@ -29,18 +31,24 @@ export class SearchCaserateComponent {
   required_message = 'Required field';
 
   searchForm: FormGroup = new FormGroup({
-    diagnosis_description: new FormControl<string| null>(''),
-    icd10_code : new FormControl<string| null>(''),
-    rvs_code : new FormControl<string| null>('')
+    program_code: new FormControl<string| null>(''),
+    description: new FormControl<string| null>(''),
+    icd10 : new FormControl<string| null>(''),
+    rvs : new FormControl<string| null>('')
   });
-
 
   get f(): { [key: string]: AbstractControl } {
     return this.searchForm.controls;
   }
 
-  onSubmit(){
-    this.is_saving = true;
+  onSubmit() {
+    this.searchForm.patchValue({program_code: 'mc'});
+    this.http.post('eclaims/case-rate', this.searchForm.value).subscribe({
+      next: (data:any) => {
+        console.log(data)
+      },
+      error: err => console.log(err)
+    })
   }
 
   closeModal(){

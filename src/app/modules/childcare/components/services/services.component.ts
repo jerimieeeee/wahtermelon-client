@@ -6,6 +6,7 @@ import { HttpService } from 'app/shared/services/http.service';
 import { Services } from './data/service'
 import { DatePipe } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
+import { isNullOrUndefined } from 'util';
 
 @Component({
   selector: 'app-services',
@@ -13,7 +14,7 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./services.component.scss']
 })
 export class ServicesComponent implements OnInit {
-  
+
   x: any;
   cservices: any;
 
@@ -48,10 +49,10 @@ export class ServicesComponent implements OnInit {
     { id: 7, name: 'Newborn Screening Referred', cc_id: 'NBSREF', date: 'Mar 15 2012 10:00:00 AM', ischecked: false, service_date: '', done_outside: ''},
     { id: 8, name: 'Received Micronutrient Powder', cc_id: 'MNP', date: 'Mar 09 2012 10:00:00 AM', ischecked: false, service_date: '', done_outside: ''},
     { id: 9, name: 'Vitamin A', cc_id: 'VITA', date: 'Mar 13 2012 10:00:00 AM', ischecked: false, service_date: '', done_outside: ''},
-    
+
   ];
 
- 
+
 
  eservices2= [
     { id: 1, name: 'Cord Clamping', cc_id: 'CLAMP', ischecked: false, service_date: ''},
@@ -77,7 +78,7 @@ export class ServicesComponent implements OnInit {
       {value: 'YPR', id: '1', desc:'Yes - Private'},
       {value: 'YPB', id: '2', desc:'Yes - Public'},
       {value: 'N', id: '3', desc:'No'},
-      
+
       ];
 
  showEssentialModal = false;
@@ -131,12 +132,12 @@ export class ServicesComponent implements OnInit {
   }
 
   geteServiceName(){
-    
+
     if(!localStorage.getItem('eservice'))
     {
       localStorage.setItem('eservice', JSON.stringify([]))
     }
-      
+
     this.x = JSON.parse(localStorage.getItem('eservice'));
     console.log('retrievedeServices: ', this.x );
     this.x.forEach(m =>{
@@ -154,11 +155,11 @@ export class ServicesComponent implements OnInit {
           });
       });
       this.eservices2.sort((m, c) => (m.id) - (c.id));this.eservices2.sort
-    
+
   }
 
   getServices(){
-   
+
     if(!localStorage.getItem('service'))
     {
       localStorage.setItem('service', JSON.stringify([]))
@@ -188,15 +189,15 @@ export class ServicesComponent implements OnInit {
   fetchSelectedItems() {
 
     this.selectedServiceList = this.eservices2.filter((value, index) => {
-      
+
       if(!value.ischecked){
         this.eservices2[index].service_date=''
       }
       console.log('fetchSelectedItems');
-      
+
       return value.ischecked
     });
-    
+
   }
 
   setDate(i: any) {
@@ -208,7 +209,7 @@ export class ServicesComponent implements OnInit {
       }
       return value.ischecked
     });
-    
+
   }
 
   setDate2(i: any) {
@@ -220,9 +221,9 @@ export class ServicesComponent implements OnInit {
       }
       return value.ischecked
     });
-    
+
   }
-  
+
   fetchSelectedItems2() {
     this.selectedServiceList2 = this.services.filter((value, index) => {
       if(!value.ischecked){
@@ -231,14 +232,14 @@ export class ServicesComponent implements OnInit {
       }
       return value.ischecked
     });
-    
+
   }
 
   submit() {
     this.selectedServiceList = this.eservices2.filter((value, index) => {
       return value.ischecked,
       localStorage.setItem('eservice', JSON.stringify(this.selectedServiceList)),
-     this.x = this.selectedServiceList 
+     this.x = this.selectedServiceList
     });
   }
 
@@ -250,7 +251,7 @@ export class ServicesComponent implements OnInit {
     });
   }
 
- 
+
 
   fetchCheckedIDs() {
     this.checkedIDs = []
@@ -269,7 +270,7 @@ export class ServicesComponent implements OnInit {
       }
     });
   }
- 
+
   changeSelection(i: any) {
     // this.fetchSelectedItems()
     this.setDate(i)
@@ -286,11 +287,11 @@ export class ServicesComponent implements OnInit {
   }
 
   @Input() patient_details: any;
-  
+
   constructor(
     private http: HttpService,
     private toastr : ToastrService
-    ) { 
+    ) {
     this.services.sort(function(a,b){
       return a.date.localeCompare(b.date);
     })
@@ -312,7 +313,7 @@ export class ServicesComponent implements OnInit {
 
   //   let user_id = localStorage.getItem('user_id');
   //   var newborndata ={
-     
+
   //     patient_id: this.patient_details.id,
   //     user_id: user_id,
   //     services: this.selectedServiceList
@@ -338,11 +339,12 @@ export class ServicesComponent implements OnInit {
   }
 
   submitNBS(){
-    
-  
- 
+
+
+    console.log(this.patient_info);
+
     var nbsfilter ={
-      nbs_filter: this.patient_info.nbs_filter,
+      nbs_filter: this.patient_info ? this.patient_info.nbs_filter : null,
     }
 
     console.log(nbsfilter);
@@ -397,7 +399,7 @@ export class ServicesComponent implements OnInit {
           // this.toggleAlertModal('E')
           if (serv_form.essential == 'Y') {
             this.showToastrErrY()
-           
+
           } else {
             this.showToastrErrN()
     }},
@@ -405,7 +407,7 @@ export class ServicesComponent implements OnInit {
               // this.toggleAlertModal('S')
               if (serv_form.essential == 'Y') {
                 this.showToastrY()
-               
+
               } else {
                 this.showToastrN()
         }}
@@ -469,11 +471,11 @@ export class ServicesComponent implements OnInit {
       next: (data: any) => {
         console.log(data)
         this.service_list = data.data;
-      //   data.data.sort(function(a, b) { 
-      //     return (a.services.service_name - b.services.service_name) || a.services.service_name.localeCompare(b.services.service_id); 
+      //   data.data.sort(function(a, b) {
+      //     return (a.services.service_name - b.services.service_name) || a.services.service_name.localeCompare(b.services.service_id);
       // });
-      
-        
+
+
         // this.serviceForm = {
         //   service_status: [],
         //   service_date: [],
@@ -493,10 +495,10 @@ export class ServicesComponent implements OnInit {
       },
       error: err => console.log(err),
       complete: () => console.log(this.service_list,'services loaded')
-      
+
     })
   }
- 
+
 
 
   loadServices(){
@@ -505,7 +507,7 @@ export class ServicesComponent implements OnInit {
       next: (data: any) => {
         this.cc_newborn = data.data;
       },
-  
+
       error: err => console.log(err),
       complete: () => {
         // this.loadLibraries();
@@ -520,12 +522,12 @@ export class ServicesComponent implements OnInit {
       next: (data: any) => {
         this.patient_info = data.data;
         // console.log(this.patient_info, 'info ccdev first visit')
-        
+
       },
       error: err => {console.log(err) }
     });
   }
-  
+
   showToastrY(){
     this.toastr.success('Successfully Saved!','Essential Services');
   }
