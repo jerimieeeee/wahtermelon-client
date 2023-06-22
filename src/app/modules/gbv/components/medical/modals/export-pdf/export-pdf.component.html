@@ -23,7 +23,7 @@
               </div>
 
               <div class="col-span-3 border border-gray-200">
-                <h4 class="py-2 pl-3">{{patient_details.first_name}} {{patient_details.middle_name}} {{patient_details.last_name}}</h4>
+                <h4 class="py-2 pl-3">{{patient_details?.first_name}} {{patient_details?.middle_name}} {{patient_details?.last_name}}</h4>
               </div>
 
               <div class="col-span-3 border border-gray-200">
@@ -39,7 +39,7 @@
               </div>
 
               <div class="col-span-3 border border-gray-200">
-                <h4 class="py-2 pl-3">{{patient_details.birthdate | date: 'MM/dd/yyyy'}}, {{ getAge() }} </h4>
+                <h4 class="py-2 pl-3">{{patient_details?.birthdate | date: 'MM/dd/yyyy'}}, {{ getAge() }} </h4>
               </div>
 
               <div class="col-span-3 border border-gray-200">
@@ -47,7 +47,7 @@
               </div>
 
               <div class="col-span-3 border border-gray-200">
-                <h4 class="py-2 pl-3">{{selected_gbv_case.gbvIntake.consult_visit.physician}}</h4>
+                <h4 class="py-2 pl-3">{{selected_gbv_case.gbvIntake?.consult_visit.physician}}</h4>
               </div>
 
               <div class="col-span-3 border border-gray-200">
@@ -88,11 +88,11 @@
               </div>
 
               <div class="col-span-3 border border-gray-200">
-                <h4 class="py-2 pl-3">Temp: {{selected_gbv_case.gbvIntake.medical_history.patient_temp}}  </h4>
+                <h4 class="py-2 pl-3">Temp: {{selected_gbv_case.gbvIntake.medical_history?.patient_temp}}  </h4>
               </div>
 
               <div class="col-span-3 border border-gray-200">
-                <h4 class="py-2 pl-3">Heart rate: {{selected_gbv_case.gbvIntake.medical_history.patient_heart_rate}} / minute </h4>
+                <h4 class="py-2 pl-3">Heart rate: {{selected_gbv_case.gbvIntake.medical_history?.patient_heart_rate}} / minute </h4>
               </div>
 
               <div class="col-span-3 border border-gray-200">
@@ -100,9 +100,9 @@
               </div>
 
               <div class="col-span-3 border border-gray-200 py-2">
-                <label class="pl-3"><input class="py-2 pl-3 input-checkbox mr-1" type="checkbox" disabled [checked]="selected_gbv_case.gbvIntake.medical_history.menarche_flag === 1"> Yes</label>
-                  <label class="pl-3" *ngIf="selected_gbv_case.gbvIntake.medical_history.menarche_flag === 1">Age: {{selected_gbv_case.gbvIntake.medical_history.menarche_age}}</label>
-                <label class="pl-3" for=""><input class="py-2 pl-3 input-checkbox mr-1" type="checkbox" disabled [checked]="selected_gbv_case.gbvIntake.medical_history.menarche_flag === 0"> No</label> <br>
+                <label class="pl-3"><input class="py-2 pl-3 input-checkbox mr-1" type="checkbox" disabled [checked]="selected_gbv_case.gbvIntake.medical_history?.menarche_flag === 1"> Yes</label>
+                  <label class="pl-3" *ngIf="selected_gbv_case.gbvIntake.medical_history?.menarche_flag === 1">Age: {{selected_gbv_case.gbvIntake.medical_history?.menarche_age}}</label>
+                <label class="pl-3" for=""><input class="py-2 pl-3 input-checkbox mr-1" type="checkbox" disabled [checked]="selected_gbv_case.gbvIntake.medical_history?.menarche_flag === 0"> No</label> <br>
               </div>
 
               <div class="col-span-2 border border-gray-200">
@@ -110,7 +110,7 @@
               </div>
 
               <div class="col-span-4 border border-gray-200">
-                <h4 class="py-2 pl-3">{{selected_gbv_case.gbvIntake.medical_history.patient_weight}} kg percentile (if under 6)</h4>
+                <h4 class="py-2 pl-3">{{selected_gbv_case.gbvIntake.medical_history?.patient_weight}} kg percentile (if under 6)</h4>
               </div>
 
               <div class="col-span-3 border border-gray-200">
@@ -118,7 +118,7 @@
               </div>
 
               <div class="col-span-3 border border-gray-200">
-                <h4 class="py-2 pl-3">{{selected_gbv_case.gbvIntake.medical_history.lmp_date | date: 'MM/dd/yyyy'}}</h4>
+                <h4 class="py-2 pl-3">{{selected_gbv_case.gbvIntake.medical_history?.lmp_date | date: 'MM/dd/yyyy'}}</h4>
               </div>
 
               <div class="col-span-2 border border-gray-200">
@@ -126,7 +126,7 @@
               </div>
 
               <div class="col-span-4 border border-gray-200">
-                <h4 class="py-2 pl-3">{{selected_gbv_case.gbvIntake.medical_history.patient_height}} cm percentile (if under 6)</h4>
+                <h4 class="py-2 pl-3">{{selected_gbv_case.gbvIntake.medical_history?.patient_height}} cm percentile (if under 6)</h4>
               </div>
 
               <div class="col-span-3 border border-gray-200">
@@ -134,8 +134,8 @@
               </div>
 
               <div class="col-span-3 border border-gray-200 py-2">
-                <label class="pl-3"><input class="py-2 pl-3 input-checkbox mr-1" type="checkbox" disabled [checked]="selected_gbv_case.gbvIntake.medical_history.genital_discharge_uti_flag === 1"> Yes</label>
-                <label class="pl-3" for=""><input class="py-2 pl-3 input-checkbox mr-1" type="checkbox" disabled [checked]="selected_gbv_case.gbvIntake.medical_history.genital_discharge_uti_flag === 0"> No</label> <br>
+                <label class="pl-3"><input class="py-2 pl-3 input-checkbox mr-1" type="checkbox" disabled [checked]="selected_gbv_case.gbvIntake.medical_history?.genital_discharge_uti_flag === 1"> Yes</label>
+                <label class="pl-3" for=""><input class="py-2 pl-3 input-checkbox mr-1" type="checkbox" disabled [checked]="selected_gbv_case.gbvIntake.medical_history?.genital_discharge_uti_flag === 0"> No</label> <br>
               </div>
 
               <div class="col-span-3 border border-gray-200">
@@ -143,9 +143,9 @@
               </div>
 
               <div class="col-span-3 border border-gray-200 py-2">
-                <label class="pl-3"><input class="py-2 pl-3 input-checkbox mr-1" type="checkbox" disabled [checked]="selected_gbv_case.gbvIntake.medical_history.taking_medication_flag === 1"> Yes</label>
-                <label class="pl-3" for=""><input class="py-2 pl-3 input-checkbox mr-1" type="checkbox" disabled [checked]="selected_gbv_case.gbvIntake.medical_history.taking_medication_flag === 0"> No</label> <br>
-                <label class="pl-3" *ngIf="selected_gbv_case.gbvIntake.medical_history.taking_medication_flag === 1">If yes: {{selected_gbv_case.gbvIntake.medical_history.taking_medication_remarks}}</label>
+                <label class="pl-3"><input class="py-2 pl-3 input-checkbox mr-1" type="checkbox" disabled [checked]="selected_gbv_case.gbvIntake.medical_history?.taking_medication_flag === 1"> Yes</label>
+                <label class="pl-3" for=""><input class="py-2 pl-3 input-checkbox mr-1" type="checkbox" disabled [checked]="selected_gbv_case.gbvIntake.medical_history?.taking_medication_flag === 0"> No</label> <br>
+                <label class="pl-3" *ngIf="selected_gbv_case.gbvIntake.medical_history?.taking_medication_flag === 1">If yes: {{selected_gbv_case.gbvIntake.medical_history?.taking_medication_remarks}}</label>
               </div>
 
               <div class="col-span-3 border border-gray-200">
@@ -153,9 +153,9 @@
               </div>
 
               <div class="col-span-3 border border-gray-200 py-2">
-                <label class="pl-3"><input class="py-2 pl-3 input-checkbox mr-1" type="checkbox" disabled [checked]="selected_gbv_case.gbvIntake.medical_history.past_hospitalizations_flag === 1"> Yes</label>
-                <label class="pl-3" for=""><input class="py-2 pl-3 input-checkbox mr-1" type="checkbox" disabled [checked]="selected_gbv_case.gbvIntake.medical_history.past_hospitalizations_flag === 0"> No</label> <br>
-                <label class="pl-3" *ngIf="selected_gbv_case.gbvIntake.medical_history.menarche_flag === 1">If yes why?: {{selected_gbv_case.gbvIntake.medical_history.past_hospital_remarks}}</label>
+                <label class="pl-3"><input class="py-2 pl-3 input-checkbox mr-1" type="checkbox" disabled [checked]="selected_gbv_case.gbvIntake.medical_history?.past_hospitalizations_flag === 1"> Yes</label>
+                <label class="pl-3" for=""><input class="py-2 pl-3 input-checkbox mr-1" type="checkbox" disabled [checked]="selected_gbv_case.gbvIntake.medical_history?.past_hospitalizations_flag === 0"> No</label> <br>
+                <label class="pl-3" *ngIf="selected_gbv_case.gbvIntake.medical_history?.menarche_flag === 1">If yes why?: {{selected_gbv_case.gbvIntake.medical_history?.past_hospital_remarks}}</label>
               </div>
               
               <div class="col-span-6 border border-gray-200 py-2">
@@ -163,27 +163,27 @@
                 <label class="py-2 px-3">(check all that apply)</label> <br>
                 <div class="col-span-12 grid grid-cols-3 py-2 pl-6 select-none">
                   
-                    <label class="pt-3"><input type="checkbox" disabled class="input-checkbox mr-1" [(ngModel)]="selected_gbv_case.gbvIntake.medical_history.general_survey_normal" />
+                    <label class="pt-3"><input type="checkbox" disabled class="input-checkbox mr-1" *ngIf="selected_gbv_case.gbvIntake.medical_history" [(ngModel)]="selected_gbv_case.gbvIntake.medical_history.general_survey_normal" />
                     Normal</label>
-                    <label class="pt-3"><input type="checkbox" disabled class="input-checkbox mr-1" [(ngModel)]="selected_gbv_case.gbvIntake.medical_history.general_survey_abnormal" />
+                    <label class="pt-3"><input type="checkbox" disabled class="input-checkbox mr-1" *ngIf="selected_gbv_case.gbvIntake.medical_history" [(ngModel)]="selected_gbv_case.gbvIntake.medical_history.general_survey_abnormal" />
                     Abnormal</label>
-                    <label class="pt-3"><input type="checkbox" disabled class="input-checkbox mr-1" [(ngModel)]="selected_gbv_case.gbvIntake.medical_history.general_survey_stunting" />
+                    <label class="pt-3"><input type="checkbox" disabled class="input-checkbox mr-1" *ngIf="selected_gbv_case.gbvIntake.medical_history" [(ngModel)]="selected_gbv_case.gbvIntake.medical_history.general_survey_stunting" />
                     Stunting</label>
-                    <label class="pt-3"><input type="checkbox" disabled class="input-checkbox mr-1" [(ngModel)]="selected_gbv_case.gbvIntake.medical_history.general_survey_wasting" />
+                    <label class="pt-3"><input type="checkbox" disabled class="input-checkbox mr-1" *ngIf="selected_gbv_case.gbvIntake.medical_history" [(ngModel)]="selected_gbv_case.gbvIntake.medical_history.general_survey_wasting" />
                     Wasting</label>
-                    <label class="pt-3"><input type="checkbox" disabled class="input-checkbox mr-1" [(ngModel)]="selected_gbv_case.gbvIntake.medical_history.general_survey_dirty_unkempt" />
+                    <label class="pt-3"><input type="checkbox" disabled class="input-checkbox mr-1" *ngIf="selected_gbv_case.gbvIntake.medical_history" [(ngModel)]="selected_gbv_case.gbvIntake.medical_history.general_survey_dirty_unkempt" />
                     Dirty, Unkempt</label>
-                    <label class="pt-3"><input type="checkbox" disabled class="input-checkbox mr-1" [(ngModel)]="selected_gbv_case.gbvIntake.medical_history.general_survey_stuporous" />
+                    <label class="pt-3"><input type="checkbox" disabled class="input-checkbox mr-1" *ngIf="selected_gbv_case.gbvIntake.medical_history" [(ngModel)]="selected_gbv_case.gbvIntake.medical_history.general_survey_stuporous" />
                     Stuporous</label>
-                    <label class="pt-3"><input type="checkbox" disabled class="input-checkbox mr-1" [(ngModel)]="selected_gbv_case.gbvIntake.medical_history.general_survey_pale" />
+                    <label class="pt-3"><input type="checkbox" disabled class="input-checkbox mr-1" *ngIf="selected_gbv_case.gbvIntake.medical_history" [(ngModel)]="selected_gbv_case.gbvIntake.medical_history.general_survey_pale" />
                     Pale</label>
-                    <label class="pt-3"><input type="checkbox" disabled class="input-checkbox mr-1" [(ngModel)]="selected_gbv_case.gbvIntake.medical_history.general_survey_non_ambulant" />
+                    <label class="pt-3"><input type="checkbox" disabled class="input-checkbox mr-1" *ngIf="selected_gbv_case.gbvIntake.medical_history" [(ngModel)]="selected_gbv_case.gbvIntake.medical_history.general_survey_non_ambulant" />
                     Non-ambulant</label>
-                    <label class="pt-3"><input type="checkbox" disabled class="input-checkbox mr-1" [(ngModel)]="selected_gbv_case.gbvIntake.medical_history.general_survey_drowsy" />
+                    <label class="pt-3"><input type="checkbox" disabled class="input-checkbox mr-1" *ngIf="selected_gbv_case.gbvIntake.medical_history" [(ngModel)]="selected_gbv_case.gbvIntake.medical_history.general_survey_drowsy" />
                     Drowsy, Irritable</label>
-                    <label class="pt-3"><input type="checkbox" disabled class="input-checkbox mr-1" [(ngModel)]="selected_gbv_case.gbvIntake.medical_history.general_survey_respiratory" />
+                    <label class="pt-3"><input type="checkbox" disabled class="input-checkbox mr-1" *ngIf="selected_gbv_case.gbvIntake.medical_history" [(ngModel)]="selected_gbv_case.gbvIntake.medical_history.general_survey_respiratory" />
                     Respiratory Distress</label>
-                    <label class="pt-3"><input type="checkbox" disabled class="input-checkbox mr-1" [(ngModel)]="selected_gbv_case.gbvIntake.medical_history.general_survey_others" />
+                    <label class="pt-3"><input type="checkbox" disabled class="input-checkbox mr-1" *ngIf="selected_gbv_case.gbvIntake.medical_history" [(ngModel)]="selected_gbv_case.gbvIntake.medical_history.general_survey_others" />
                     Other Abnormality</label>
                   
       
@@ -198,20 +198,20 @@
                 
                 <div class="border border-gray-200 py-7">
                 <h4 class="py-2 pl-3">Any scars that do not appear to result from physical abuse?</h4>
-                <label class="pl-3"><input class="py-2 pl-3 input-checkbox mr-1" type="checkbox" disabled [checked]="selected_gbv_case.gbvIntake.medical_history.scar_physical_abuse_flag === 1"> Yes</label>
-                <label class="pl-3"><input class="py-2 pl-3 input-checkbox mr-1" type="checkbox" disabled [checked]="selected_gbv_case.gbvIntake.medical_history.scar_physical_abuse_flag === 0"> No</label>
+                <label class="pl-3"><input class="py-2 pl-3 input-checkbox mr-1" type="checkbox" disabled *ngIf="selected_gbv_case.gbvIntake.medical_history" [checked]="selected_gbv_case.gbvIntake.medical_history.scar_physical_abuse_flag === 1"> Yes</label>
+                <label class="pl-3"><input class="py-2 pl-3 input-checkbox mr-1" type="checkbox" disabled *ngIf="selected_gbv_case.gbvIntake.medical_history" [checked]="selected_gbv_case.gbvIntake.medical_history.scar_physical_abuse_flag === 0"> No</label>
                 </div>
 
                 <div class=" border border-gray-200 py-6">
                 <h4 class="py-2 pl-3">PERTINENT MEDICAL HISTORY?</h4>
-                <label class="pl-3"><input class="py-2 pl-3 input-checkbox mr-1" type="checkbox" disabled [checked]="selected_gbv_case.gbvIntake.medical_history.pertinent_med_history_flag === 1"> Yes</label>
-                <label class="pl-3"><input class="py-2 pl-3 input-checkbox mr-1" type="checkbox" disabled [checked]="selected_gbv_case.gbvIntake.medical_history.pertinent_med_history_flag === 0"> No</label>
+                <label class="pl-3"><input class="py-2 pl-3 input-checkbox mr-1" type="checkbox" disabled *ngIf="selected_gbv_case.gbvIntake.medical_history" [checked]="selected_gbv_case.gbvIntake.medical_history.pertinent_med_history_flag === 1"> Yes</label>
+                <label class="pl-3"><input class="py-2 pl-3 input-checkbox mr-1" type="checkbox" disabled *ngIf="selected_gbv_case.gbvIntake.medical_history" [checked]="selected_gbv_case.gbvIntake.medical_history.pertinent_med_history_flag === 0"> No</label>
                 </div>
 
               </div>
 
               <div class="col-span-12 border border-gray-200">
-                <h4 class="py-2 pl-3 font-semibold">SUMMARY OF NON-ABUSE FINDINGS: {{selected_gbv_case.gbvIntake.medical_history.summary_non_abuse_findings}} </h4>
+                <h4 class="py-2 pl-3 font-semibold">SUMMARY OF NON-ABUSE FINDINGS: {{selected_gbv_case.gbvIntake.medical_history?.summary_non_abuse_findings}} </h4>
               </div>
               </div>
             </tbody>
