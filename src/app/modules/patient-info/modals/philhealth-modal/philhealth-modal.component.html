@@ -65,6 +65,9 @@
                 Get Philhealth PIN
               </button>
             </div>
+            <div *ngIf="retrieving_error" class="w-full mt-3 py-0.5 rounded-md mx-5 flex justify-center text-red-800 text-xs border border-red-400 bg-red-100" >
+              {{ retrieving_error }}
+            </div>
 
             <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
               <label class="font-semibold" for="philhealth_id" [ngClass]="{'text-red-500': is_saving && f.philhealth_id.errors}">Philhealth ID</label>
@@ -172,6 +175,35 @@
             <div class="flex justify-between w-full -px-5 mt-3 rounded-tl rounded-tr">
               <h4 class="font-bold text-blue-500 text-sm mt-2">Employer Details</h4>
             </div>
+
+            <!-- <div class="relative w-full text-sm">
+              <ng-select class="input" placeholder="search" #mySelect
+              (focusout)="resetList()"
+              [items]="employer$ | async"
+              [minTermLength]="minLengthTerm"
+              [loading]="employerLoading"
+              typeToSearchText="search..."
+              [typeahead]="searchInput$"
+              [(ngModel)]="selectedEmployer"
+              notFoundText="No records found"
+              (change)="onEmployerSelect(selectedEmployer)"
+              [clearSearchOnAdd]>
+              <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
+
+                <div class="grid grid-flow-col auto-cols-max">
+                    <div class="my-auto mr-3">
+                      <div class="inline-flex overflow-hidden relative justify-center items-center w-14 h-14 bg-gray-100 rounded-full dark:bg-gray-600">
+                        <span class="font-medium text-gray-600 dark:text-gray-300">{{ getInitials(item.first_name+' '+item.last_name) }}</span>
+                      </div>
+                    </div>
+                    <div>
+                      <h5 class="text-blue-400" [ngOptionHighlight]="search">{{ item.last_name }}, {{ item.first_name }} {{ item.middle_name }} {{ item.suffix_name === 'NA' ? '' : item.suffix_name}}</h5>
+                      <h6 class="text-muted">{{ item.birthdate | date: 'MM/dd/yyyy'}}</h6>
+                    </div>
+                  </div>
+                </ng-template>
+              </ng-select>
+            </div> -->
 
             <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
               <label for="employer_pin" class="font-semibold" [ngClass]="{'text-red-500': is_saving && f.employer_pin.errors}">Employer PEN</label>
