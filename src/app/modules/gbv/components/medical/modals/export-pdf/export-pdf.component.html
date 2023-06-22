@@ -9,8 +9,8 @@
         </h3>
       </div>
       <!-- Modal body -->
-      <div class="overflow-y-auto h-[800px] scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
-        <table id="mainForm">
+    <div class="overflow-y-auto h-[800px] scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
+      <table id="mainForm">
         <table class="w-full text-sm text-left" id="medForm">
           <div class="text-center font-bold pt-6 text-2xl">
             <h2>MEDICAL EXAM & DIAGNOSIS</h2>
@@ -209,16 +209,111 @@
                 </div>
 
               </div>
-
-              <div class="col-span-12 border border-gray-200">
-                <h4 class="py-2 pl-3 font-semibold">SUMMARY OF NON-ABUSE FINDINGS: {{selected_gbv_case.gbvIntake.medical_history?.summary_non_abuse_findings}} </h4>
-              </div>
               </div>
             </tbody>
-            </table>
+        </table>
 
-            <table class="w-full text-sm text-left" id="medForm2">
-            <tbody class="h-96 overflow-y-auto">
+        <table class="w-full text-sm text-left" id="medForm2">
+          <tbody class="h-96 overflow-y-auto">
+              <div class="grid grid-cols-12 m-5">
+                <div class="col-span-12 text-center font-bold py-3 text-xl border border-gray-200">
+                  <h2>PHYSICAL EXAM</h2>
+              </div>
+  
+                <div class="col-span-3 border border-gray-200">
+                  <h4 class="py-2 pl-3 ">Head and Neck</h4>
+                </div>
+
+                <div class="col-span-9 border border-gray-200">
+                  <h4 class="py-2 px-3 ">{{selected_gbv_case.gbvIntake.medical_history?.pe_head_and_neck_remarks}}</h4>
+                </div>
+  
+                <div class="col-span-3 border border-gray-200">
+                  <h4 class="py-2 pl-3 ">Chest and Lungs</h4>
+                </div>
+
+                <div class="col-span-9 border border-gray-200">
+                  <h4 class="py-2 px-3 ">{{selected_gbv_case.gbvIntake.medical_history?.pe_chest_and_lungs_remarks}}</h4>
+                </div>
+  
+                <div class="col-span-3 border border-gray-200">
+                  <h4 class="py-2 pl-3 ">Breast</h4>
+                </div>
+
+                <div class="col-span-9 border border-gray-200">
+                  <h4 class="py-2 px-3 ">{{selected_gbv_case.gbvIntake.medical_history?.pe_breast_remarks}}</h4>
+                </div>
+  
+                <div class="col-span-3 border border-gray-200">
+                  <h4 class="py-2 pl-3 ">Abdomen</h4>
+                </div>
+
+                <div class="col-span-9 border border-gray-200">
+                  <h4 class="py-2 px-3 ">{{selected_gbv_case.gbvIntake.medical_history?.pe_abdomen_remarks}}</h4>
+                </div>
+  
+                <div class="col-span-3 border border-gray-200">
+                  <h4 class="py-2 pl-3 ">Back</h4>
+                </div>
+
+                <div class="col-span-9 border border-gray-200">
+                  <h4 class="py-2 px-3 ">{{selected_gbv_case.gbvIntake.medical_history?.pe_back_remarks}}</h4>
+                </div>
+  
+                <div class="col-span-3 border border-gray-200">
+                  <h4 class="py-2 pl-3 ">Extremities</h4>
+                </div>
+
+                <div class="col-span-9 border border-gray-200">
+                  <h4 class="py-2 px-3 ">{{selected_gbv_case.gbvIntake.medical_history?.pe_extremities_remarks}}</h4>
+                </div>
+  
+                <div class="col-span-3 border border-gray-200">
+                  <h4 class="py-2 pl-3 ">Anogenital</h4>
+                </div>
+
+                <div class="col-span-9 border border-gray-200">
+                  <h4 class="py-2 px-3 ">{{selected_gbv_case.gbvIntake.medical_history?.pe_anogenital_remarks}}</h4>
+                </div>
+  
+                <div class="col-span-3 border border-gray-200">
+                  <h4 class="py-2 pl-3 ">External Genitalia</h4>
+                </div>
+
+                <div class="col-span-9 border border-gray-200">
+                  <h4 class="py-2 px-3 ">{{selected_gbv_case.gbvIntake.medical_history?.pe_external_genitalia_remarks}}</h4>
+                </div>
+  
+                <div class="col-span-3 border border-gray-200">
+                  <h4 class="py-2 pl-3 ">Anus</h4>
+                </div>
+
+                <div class="col-span-9 border border-gray-200">
+                  <h4 class="py-2 px-3 ">{{selected_gbv_case.gbvIntake.medical_history?.pe_anus_remarks}}</h4>
+                </div>
+  
+                <div class="col-span-3 border border-gray-200">
+                  <h4 class="py-2 pl-3 ">Hymen</h4>
+                </div>
+
+                <div class="col-span-9 border border-gray-200">
+                  <h4 class="py-2 px-3 "> {{selected_gbv_case.gbvIntake.medical_history?.pe_hymen_remarks}}</h4>
+                </div>
+  
+                <div class="col-span-3 border border-gray-200">
+                  <h4 class="py-2 pl-3">Impression</h4>
+                </div>
+
+                <div class="col-span-9 border border-gray-200">
+                  <h4 class="py-2 px-3 " *ngIf="conv_impression"> {{conv_impression[0]?.desc}}</h4>
+                </div>
+                
+              </div>
+          </tbody>
+        </table>
+
+        <table class="w-full text-sm text-left" id="medForm3">
+          <tbody class="h-96 overflow-y-auto">
             <div class="grid grid-cols-12 m-5">
               <div class="col-span-12 text-center font-bold py-3 text-xl border border-gray-200">
                 <h2>SYMPTOMS DESCRIBED BY THE ADULT PATIENT, CHILD AND/OR A HISTORIAN</h2>
@@ -251,198 +346,6 @@
                       </td>
                     </tr>
 
-                    <!-- <tr class="bg-white border-b">
-                      <td class="py-4 pl-6">
-                        Vulvar / Penile Discomfort / Pain 
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                    </tr>
-
-                    <tr class="bg-white border-b">
-                      <td class="py-4 pl-6">
-                        Dysuria 
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                    </tr>
-
-                    <tr class="bg-white border-b">
-                      <td class="py-4 pl-6">
-                        Urinary Tract Infection 
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                    </tr>
-
-                    <tr class="bg-white border-b">
-                      <td class="py-4 pl-6">
-                        Enuresis (Day or Night) 
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                    </tr>
-
-                    <tr class="bg-white border-b">
-                      <td class="py-4 pl-6">
-                        Genital Itching 
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                    </tr>
-
-                    <tr class="bg-white border-b">
-                      <td class="py-4 pl-6">
-                        Genital Bleeding 
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                    </tr>
-
-                    <tr class="bg-white border-b">
-                      <td class="py-4 pl-6">
-                        Genital Discharge 
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                    </tr>
-
-                    <tr class="bg-white border-b">
-                      <td class="py-4 pl-6">
-                        Describe Color, Odor, Amount 
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                    </tr>
-
-                    <tr class="bg-white border-b">
-                      <td class="py-4 pl-6">
-                        Pelvic Pain 
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                    </tr>
-
-                    <tr class="bg-white border-b">
-                      <td class="py-4 pl-6">
-                        Rectal Pain 
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                    </tr>
-
-                    <tr class="bg-white border-b" id="#Dia">
-                      <td class="py-4 pl-6">
-                        Rectal Bleeding 
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                    </tr>
-
-                    <tr class="bg-white border-b">
-                      <td class="py-4 pl-6">
-                        Diarrhea 
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                    </tr>
-
-                    <tr class="bg-white border-b">
-                      <td class="py-4 pl-6">
-                        Constipation 
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                    </tr>
-
-                    <tr class="bg-white border-b">
-                      <td class="py-4 pl-6">
-                        Incontinent Stool, Encopresis 
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                    </tr>
-
-                    <tr class="bg-white border-b">
-                      <td class="py-4 pl-6">
-                        Pregnancy 
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                    </tr>
-
-                    <tr class="bg-white border-b">
-                      <td class="py-4 pl-6">
-                        Amenorrhea 
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                    </tr> -->
-
                   </tbody>
                 </table>
               </div>
@@ -469,150 +372,6 @@
                         <input type="checkbox" class="input-checkbox disabled:bg-blue-500" disabled *ngIf="corporal.value[2]" checked />
                       </td>
                     </tr>
-
-                    <!-- <tr class="bg-white border-b">
-                      <td class="py-4 pl-6">
-                        Nasal Discharge 
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                    </tr>
-
-                    <tr class="bg-white border-b">
-                      <td class="py-4 pl-6">
-                        Fever 
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                    </tr>
-
-                    <tr class="bg-white border-b">
-                      <td class="py-4 pl-6">
-                        Difficulty Breathing 
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                    </tr>
-
-                    <tr class="bg-white border-b">
-                      <td class="py-4 pl-6">
-                        Ear Pain 
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                    </tr>
-
-                    <tr class="bg-white border-b">
-                      <td class="py-4 pl-6">
-                        Ear Discharge 
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                    </tr>
-
-                    <tr class="bg-white border-b">
-                      <td class="py-4 pl-6">
-                        Describe Color, Odor, Amount 
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                    </tr>
-
-                    <tr class="bg-white border-b">
-                      <td class="py-4 pl-6">
-                        Skin Lesions 
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                    </tr>
-
-                    <tr class="bg-white border-b">
-                      <td class="py-4 pl-6">
-                        Chest Pain 
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                    </tr>
-
-                    <tr class="bg-white border-b">
-                      <td class="py-4 pl-6">
-                        Back Pain 
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                    </tr>
-
-                    <tr class="bg-white border-b">
-                      <td class="py-4 pl-6">
-                        Limping 
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                    </tr>
-
-                    <tr class="bg-white border-b">
-                      <td class="py-4 pl-6">
-                        Vomiting 
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                    </tr>
-
-                    <tr class="bg-white border-b">
-                      <td class="py-4 pl-6">
-                        Describe Other Symptoms 
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                    </tr> -->
 
                   </tbody>
                 </table>
@@ -641,160 +400,15 @@
                       </td>
                     </tr>
 
-                    <!-- <tr class="bg-white border-b">
-                      <td class="py-4 pl-6">
-                        Blank stares, Withdrawal 
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                    </tr>
-
-                    <tr class="bg-white border-b">
-                      <td class="py-4 pl-6">
-                        Nightmares, sleep disturbances 
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                    </tr>
-
-                    <tr class="bg-white border-b">
-                      <td class="py-4 pl-6">
-                        Loss of appetite 
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                    </tr>
-
-                    <tr class="bg-white border-b">
-                      <td class="py-4 pl-6">
-                        Suicide attempt, ideation 
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                    </tr>
-
-                    <tr class="bg-white border-b">
-                      <td class="py-4 pl-6">
-                        Truancy, problems at school 
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                    </tr>
-
-                    <tr class="bg-white border-b">
-                      <td class="py-4 pl-6">
-                        Anxiety, hyperactivity 
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                    </tr>
-
-                    <tr class="bg-white border-b">
-                      <td class="py-4 pl-6">
-                        Running away from home 
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                    </tr>
-
-                    <tr class="bg-white border-b">
-                      <td class="py-4 pl-6">
-                        Aggression, anger 
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                    </tr>
-
-                    <tr class="bg-white border-b">
-                      <td class="py-4 pl-6">
-                        Self-mutilation 
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                    </tr>
-
-                    <tr class="bg-white border-b">
-                      <td class="py-4 pl-6">
-                        Psychotic episodes 
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                    </tr>
-
-                    <tr class="bg-white border-b">
-                      <td class="py-4 pl-6">
-                        Rectal Bleeding 
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                    </tr>
-
-                    <tr class="bg-white border-b">
-                      <td class="py-4 pl-6">
-                        Other 
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                    </tr> -->
-
                   </tbody>
-                </table>
+                  </table>
+                </div>
               </div>
-              
+            </tbody>
+          </table>
 
-            </div>
-          </tbody>
-        </table>
       </table>
-      </div>
+    </div>
 
       <!-- Modal footer -->
       <div class="flex justify-end py-4 px-5 space-x-4 rounded-b border-t border-gray-200">

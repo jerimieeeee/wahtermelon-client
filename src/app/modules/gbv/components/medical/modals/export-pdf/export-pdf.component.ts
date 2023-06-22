@@ -30,6 +30,10 @@ export class ExportPdfComponent implements OnInit {
   corporal_list: any =[];
   behavioral_list: any =[];
 
+  impression_list: any;
+
+  conv_impression: any;
+
   first_exam = [
     {id: 1,   desc: 'Yes'},
     {id: 0,   desc: 'No'},
@@ -69,7 +73,7 @@ export class ExportPdfComponent implements OnInit {
       image: { type: 'jpeg', quality: 1 },
       html2canvas:  { scale: 3},
       margin:  [1, 1, 1, 1],
-      pagebreak: { mode: ['avoid-all', 'css', 'legacy'], after: '#medForm'},
+      pagebreak: { mode: ['avoid-all', 'css', 'legacy'], before:['#medForm2', '#medForm3'], after: ['#medForm3']},
       jsPDF: {
         orientation: 'portrait',
         format: 'a4',
@@ -115,6 +119,18 @@ export class ExportPdfComponent implements OnInit {
     })
   }
 
+  loadImpression() {
+    this.http.get('libraries/gbv-medical-impression').subscribe({
+      next:(data:any) => {
+        this.impression_list = data.data;
+        console.log(this.impression_list,'test impressions')
+        this.convertImpression()
+      },
+      error: err => console.log(err)
+    });
+  }
+
+
   loadExams(data, var_name, lib_var) {
     let exams: any = [];
     Object.entries(data).forEach(([key, value]: any, index) => {
@@ -143,9 +159,14 @@ export class ExportPdfComponent implements OnInit {
     this.loadAnogenital()
     this.loadCorporal()
     this.loadBeahavioral()
+    this.loadImpression()
+    
   }
 
-
+  convertImpression(){
+    this.conv_impression = this.impression_list.filter(x => x.id === this.selected_gbv_case?.gbvIntake?.medical_history?.medical_impression_id);
+  
+  }
 
 
   constructor(private http: HttpService,
@@ -156,7 +177,7 @@ export class ExportPdfComponent implements OnInit {
   ngOnInit() {
     this.loadLibs(); 
     this.patient_details = this.http.getPatientInfo();
-    // console.log(this.patient_details,'export modal patient')
+    
     // console.log(this.selected_gbv_case,'export modal')
     // console.log(this.anogenital_list,'test hugot')
   }
