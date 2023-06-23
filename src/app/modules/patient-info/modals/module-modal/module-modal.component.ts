@@ -42,7 +42,7 @@ export class ModuleModalComponent implements OnInit {
           group: 'ncd',
           consult_active: false,
           id: null
-        },
+        }
       }
     }
   };
@@ -52,7 +52,7 @@ export class ModuleModalComponent implements OnInit {
   cn = { name: 'Consultation', location: 'cn', group: 'cn', consult_active: false, id: null };
   mc = { name: 'Maternal Care', location: 'mc', group: 'mc', consult_active: false, id: null };
   cc = { name: 'Child Care', location: 'cc', group: 'cc', consult_active: false, id: null };
-
+  // gbv = { name: 'GBV', location: 'gbv', group: 'gbv', consult_active: false, id: null };
   show_new: boolean = false;
   is_loading: boolean = false;
   show_form: boolean = false;
@@ -68,6 +68,7 @@ export class ModuleModalComponent implements OnInit {
   is_atc_valid: boolean;
   is_walk_in: boolean;
 
+  arr_allowed = ['MD','WCPD','MSWDO'];
   isATCValid(){
     this.is_checking_atc = true;
     let params = {
@@ -93,58 +94,47 @@ export class ModuleModalComponent implements OnInit {
     if((this.patient_age.type === 'year' && this.patient_age.age < 7) || this.patient_age.type !== 'year') {
       this.list_modules.General.modules['cc'] = this.cc;
     }
+
+    /* if(this.arr_allowed.indexOf(this.pos) > -1) {
+      this.list_modules.Others.modules['gbv'] = this.gbv;
+    } */
   }
 
   onModuleSelect(module){
     let loc = module.location;
-    // let group = module.group;
-    // console.log(module)
     this.is_loading = true;
 
-    // console.log(loc, this.router.url.split(';')[0])
-    if('/patient/'+loc === this.router.url.split(';')[0]){
-      // console.log(1)
-      if(module.consult_active === false) {
-        this.show_new = true;
-        this.selected_module = module;
-        this.is_loading = false;
-      } else {
-        if(this.router.url.split('=')[2] != module.id) {
-          this.router.navigate(['/patient/'+loc, {id: this.patient_info.id, consult_id: module.id}]);
-        }
-        this.closeModal();
-      }
+    if(loc==='gbv') {
+      this.router.navigate(['/patient/'+loc, {id: this.patient_info.id}]);
+      this.closeModal();
     } else {
-      if(loc === 'itr' || loc === 'lab'){
-        this.router.navigate(['/patient/'+loc, {id: this.patient_info.id}]);
-        this.closeModal();
-      } else {
+      if('/patient/'+loc === this.router.url.split(';')[0]){
         if(module.consult_active === false) {
           this.show_new = true;
+          this.selected_module = module;
+          this.is_loading = false;
         } else {
-          this.show_new = false;
-          this.router.navigate(['/patient/'+loc, {id: this.patient_info.id, consult_id: module.id}]);
+          if(this.router.url.split('=')[2] != module.id) {
+            this.router.navigate(['/patient/'+loc, {id: this.patient_info.id, consult_id: module.id}]);
+          }
           this.closeModal();
         }
-        // this.show_new = module.consult_active === false ? true : false;
-        this.selected_module = module;
-        this.is_loading = false;
-        // console.log(this)
-        /* this.http.get('consultation/records', {params:{'pt_group': group, 'consult_done': 0, patient_id: this.patient_info.id}}).subscribe({
-          next: (data: any) => {
-            this.selected_module = module;
+      } else {
+        if(loc === 'itr' || loc === 'lab'){
+          this.router.navigate(['/patient/'+loc, {id: this.patient_info.id}]);
+          this.closeModal();
+        } else {
+          if(module.consult_active === false) {
+            this.show_new = true;
+          } else {
+            this.show_new = false;
+            this.router.navigate(['/patient/'+loc, {id: this.patient_info.id, consult_id: module.id}]);
+            this.closeModal();
+          }
 
-            if(data.data.length > 0){
-              this.router.navigate(['/patient/'+loc, {id: this.patient_info.id, consult_id: data.data[0].id}])
-              this.closeModal();
-            }else{
-              // console.log(this.selected_module);
-              this.show_new = true;
-            }
-          },
-          error: err => {console.log(err);this.is_loading = false},
-          complete: () => this.is_loading = false
-        }); */
+          this.selected_module = module;
+          this.is_loading = false;
+        }
       }
     }
   }
@@ -215,9 +205,12 @@ export class ModuleModalComponent implements OnInit {
     this.show_form = true;
   }
 
+  pos: any;
   user_fac: string;
   ngOnInit(): void {
     this.user_fac = this.http.getUserFacility();
+    let user = this.http.getUserFromJSON();
+    this.pos = user.designation_code ? user.designation_code : user.designation.code;
     this.selectPrograms();
 
     this.http.get('consultation/records', {params:{consult_done: 0, patient_id: this.patient_info.id}}).subscribe({

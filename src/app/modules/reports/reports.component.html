@@ -5,7 +5,7 @@
       <label for="report_type" class="input-label" >Report</label>
       <select id="report_type" name="report_type" class="input" formControlName="report_type" (change)="changeDateOptions()">
         <option selected="true" disabled="disabled">Select report type</option>
-        <optgroup label="FHSIS 2018" class="text-gray-500" >
+        <optgroup label="FHSIS Report" class="text-gray-500" >
           <option *ngFor="let type of fhsis2018" [ngValue]="type">{{ type.desc }}</option>
         </optgroup>
         <optgroup label="Usage Statistics" class="text-gray-500" >
@@ -98,9 +98,10 @@
   </form>
 
   <div class="border border-slate-300 rounded-xl px-5">
-    <app-fhsis2018-cc *ngIf="reportForm.value?.report_type.id === 'fhsis2018-cc' && report_data && !is_fetching" [report_data]="report_data"></app-fhsis2018-cc>
-    <app-fhsis2018-mc *ngIf="reportForm.value?.report_type.id === 'fhsis2018-mc' && report_data && !is_fetching" [report_data]="report_data"></app-fhsis2018-mc>
+    <app-fhsis2018-cc *ngIf="reportForm.value?.report_type.id === 'fhsis2018-cc' && report_data && !is_fetching" [report_data]="report_data" [reportForm]="reportForm" [selectedBrgy]="selectedBrgy" [brgys]="brgys" [userInfo]="userInfo" ></app-fhsis2018-cc>
+    <app-fhsis2018-mc *ngIf="reportForm.value?.report_type.id === 'fhsis2018-mc' && report_data && !is_fetching" [report_data]="report_data" [reportForm]="reportForm" [selectedBrgy]="selectedBrgy" [brgys]="brgys" [userInfo]="userInfo" ></app-fhsis2018-mc>
     <app-patient-registered *ngIf="reportForm.value?.report_type.id === 'patient-registered' && report_data && !is_fetching" [report_data]="report_data"></app-patient-registered>
+
     <div class="flex flex-col justify-center" *ngIf="is_fetching">
       <fa-icon class="text-blue-500 mx-auto pt-36 text-xl" [icon]="faCircleNotch" spin="true"></fa-icon>
       <span class="pt-4 mx-auto pb-36 select-none">Fetching Report...</span>

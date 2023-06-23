@@ -23,6 +23,7 @@ import { GeneralSurveyComponent } from './components/general-survey/general-surv
 import { ManagementComponent } from './components/management/management.component';
 import { DeleteItemComponent } from 'app/shared/shared-modals/delete-item/delete-item.component';
 import { EndVisitComponent } from 'app/shared/shared-modals/end-visit/end-visit.component';
+import { GbvReferralComponent } from './components/complaint-history/modals/gbv-referral/gbv-referral.component';
 import { OpenConsultComponent } from 'app/shared/shared-modals/open-consult/open-consult.component';
 
 @NgModule({
@@ -40,7 +41,8 @@ import { OpenConsultComponent } from 'app/shared/shared-modals/open-consult/open
     DrugFormComponent,
     DrugDeleteComponent,
     GeneralSurveyComponent,
-    ManagementComponent
+    ManagementComponent,
+    GbvReferralComponent
   ],
   imports: [
     CommonModule,

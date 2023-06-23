@@ -1,25 +1,53 @@
 <div class="grid grid-cols-1 w-full">
   <div class="flex justify-between w-full text-blue-500 font-semibold text-lg  p-3">
-    FHSIS 2018 Report - Child Care
+    FHSIS Report - Maternal Care
+    <span>
+      <!-- <fa-icon *ngIf="exporting" [icon]="faCircleNotch" spin="true" class="text-blue-500 text-sm mr-3">Exporting...</fa-icon> -->
+      <button [disabled]="pdf_exported" type="button" class="text-2xl mr-5 text-red-600 disabled:text-gray-600" (click)="exportP()">
+        <fa-icon [icon]="faFilePdf"></fa-icon>
+      </button>
+      <button  type="button" class="text-2xl" (click)="exportX()">
+        <fa-icon [icon]="faFileExcel" class="text-green-700"></fa-icon>
+      </button>
+    </span>
   </div>
   <div class="flex flex-col pb-5">
     <div class="sm:-mx-6 lg:-mx-8">
       <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
         <div class="">
-          <table class="min-w-full border select-none">
+          <table class="min-w-full border select-none" id="reportForm">
             <thead class="border-b">
               <tr>
                 <th scope="col" colspan="1" class="text-sm font-medium text-gray-900 px-6 py-4 border">
                   <img src="./assets/img/DOH_Logo.png" class="rounded-full w-28 h-28 mx-auto" />
                 </th>
-                <th scope="col" colspan="5" class="text-sm font-medium text-gray-900 px-6 py-4 border">
-                  Details
+                <th scope="col" colspan="6" class="text-sm font-medium text-gray-900 px-6 py-4 border">
+                  <tr class="text-left">
+                    FHSIS Report for the Month: {{this.convertedMonth}}
+                  </tr>
+                  <tr class="text-left">
+                    Name of Barangay: {{this.brgy_result}}
+                  </tr>
+                  <tr class="text-left">
+                    Name of BHS:
+                  </tr>
+                  <tr class="text-left">
+                    Name of Municipality/City: 
+                  </tr>
+                  <tr class="text-left">
+                    Name of Province: 
+                  </tr>
+                  <tr class="text-left">
+                    Projected Population for the Year:
+                  </tr>
                 </th>
-                <th scope="col" colspan="4" class="text-sm font-medium text-gray-900 px-6 py-4 border">
-                  Date
+                <th scope="col" colspan="2" class="relative text-sm font-medium text-gray-900 px-6 py-4 border">
+                  <tr class="absolute left-6 top-7">
+                    Year: {{this.reportform_data.value.year}}
+                  </tr>
                 </th>
-                <th scope="col" colspan="2" class="text-sm font-medium text-gray-900 px-6 py-4 border">
-                  M1 Barangay
+                <th scope="col" colspan="5" class="text-sm font-bold text-gray-900 px-6 py-4 border text-center">
+                  <img src="./assets/img/m1.png" class="mx-auto" />
                 </th>
               </tr>
               <tr>
@@ -36,7 +64,7 @@
                   Age
                   <br /><span class="text-xs">(Col. 2)</span>
                 </th>
-                <th scope="col" rowspan="2" class="text-sm font-semibold text-gray-900 px-6 py-4 border-r">
+                <th scope="col" rowspan="2" class="text-sm font-semibold text-gray-900 px-7 py-4 border-r">
                   Total
                   <br /><span class="text-xs">(Col. 3)</span>
                 </th>
@@ -52,7 +80,7 @@
                   Age
                   <br /><span class="text-xs">(Col. 2)</span>
                 </th>
-                <th scope="col" rowspan="2" class="text-sm font-semibold text-gray-900 px-6 py-4 border-r">
+                <th scope="col" rowspan="2" class="text-sm font-semibold text-gray-900 px-7 py-4 border-r">
                   Total
                   <br /><span rowspan="2" class="text-xs">(Col. 3)</span>
                 </th>
@@ -61,7 +89,7 @@
                   <br /><span class="text-xs">(Col. 4)</span>
                 </th>
               </tr>
-              <tr class="text-center sticky top-0 bg-gray-200">
+              <tr class="text-center sticky top-16 bg-gray-200">
                 <th scope="col" class="text-sm font-semibold text-gray-900 px-6 py-4 border-r">
                   10-14
                 </th>

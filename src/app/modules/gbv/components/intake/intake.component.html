@@ -1,0 +1,697 @@
+<div class="border border-slate-200 rounded-b-lg" *ngIf="show_form">
+  <!-- <div class="bg-blue-500 text-white rounded-t-md py-2 pl-3 font-semibold">
+    Treatment Form
+  </div> -->
+
+  <div class="mx-5 mb-5">
+    <form [formGroup]="intakeForm" (ngSubmit)="onSubmit()">
+      <!-- <div class="grid grid-cols-4 gap-4 w-full mt-5">
+        <div class="col-span-4 border-b border-slate-200 w-full my-2 font-semibold text-sky-500">
+          Consent Details
+        </div>
+        <div class="mx-5 col-span-4 grid grid-cols-4 gap-4">
+          <div class="col-span-4">
+            <input type="checkbox" id="consent_flag" formControlName="consent_flag" class="input-checkbox" />
+            <label for="consent_flag" class="pl-3 py-0.5">The victim survivor/guardian has read, fully understood, and signed the consent form.</label>
+          </div>
+
+          <div class="col-span-2">
+            <label for="consent_relation_to_child_id">Relation to child</label>
+            <select name="consent_relation_to_child_id" id="consent_relation_to_child_id" formControlName="consent_relation_to_child_id" class="input">
+              <option [ngValue]="null">-</option>
+              <option *ngFor="let child_relation of child_relations" [value]="child_relation.id">{{ child_relation.desc }}</option>
+            </select>
+          </div>
+        </div>
+      </div> -->
+
+      <div class="grid grid-cols-3 gap-4 w-full mt-5">
+        <div class="col-span-3 border-b border-slate-200 w-full my-2 font-semibold text-sky-500">
+          Case Details
+        </div>
+        <div class="mx-5 col-span-4 grid grid-cols-4 gap-4">
+          <div class="col-span-2">
+            <label for="case_number">Case Number</label>
+            <input type="text" disabled name="case_number" id="case_number" formControlName="case_number" class="input">
+          </div>
+
+          <div class="col-span-2">
+            <label for="case_date" [ngClass]="{'text-red-500': show_error && f.case_date.errors}">Date</label>
+            <input type="date" name="case_date" id="case_date" [max]="max_date" formControlName="case_date" class="input" [ngClass]="{'invalid-input': show_error && f.case_date.errors}">
+
+            <div *ngIf="show_error && f.case_date.errors" class="invalid-alert">
+              <div *ngIf="f.case_date.errors?.['required']">
+                {{ required_message }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-3 gap-4 w-full mt-5">
+        <div class="col-span-3 border-b border-slate-200 w-full my-2 font-semibold text-sky-500">
+          Primary Complaint
+        </div>
+        <div class="mx-5 col-span-3 grid grid-cols-4 gap-4">
+          <div class="col-span-2">
+            <input type="checkbox" id="physical_abuse_flag" formControlName="physical_abuse_flag" class="input-checkbox" />
+            <label for="physical_abuse_flag" class="pl-3 py-0.5">Physical Abuse</label>
+          </div>
+
+          <div class="col-span-2">
+            <input type="checkbox" id="sexual_abuse_flag" formControlName="sexual_abuse_flag" (click)="sexualAbuse()" class="input-checkbox" />
+            <label for="sexual_abuse_flag" class="pl-3 py-0.5">Sexual Abuse</label>
+          </div>
+
+          <div class="col-span-2">
+            <input type="checkbox" id="neglect_abuse_flag" formControlName="neglect_abuse_flag" class="input-checkbox" />
+            <label for="neglect_abuse_flag" class="pl-3 py-0.5">Neglects</label>
+          </div>
+
+          <div class="col-span-2">
+            <input type="checkbox" id="emotional_abuse_flag" formControlName="emotional_abuse_flag" class="input-checkbox" />
+            <label for="emotional_abuse_flag" class="pl-3 py-0.5">Emotional/Psychological Abuse</label>
+          </div>
+
+          <div class="col-span-2">
+            <input type="checkbox" id="economic_abuse_flag" formControlName="economic_abuse_flag" class="input-checkbox" />
+            <label for="economic_abuse_flag" class="pl-3 py-0.5">Economic Abuse</label>
+          </div>
+
+          <div class="col-span-2">
+            <input type="checkbox" id="utv_abuse_flag" formControlName="utv_abuse_flag" class="input-checkbox" />
+            <label for="utv_abuse_flag" class="pl-3 py-0.5">Unable to Validate</label>
+          </div>
+
+          <div class="col-span-2">
+            <input type="checkbox" id="others_abuse_flag" formControlName="others_abuse_flag" class="input-checkbox" />
+            <label for="others_abuse_flag" class="pl-3 py-0.5">Others</label>
+          </div>
+
+          <div class="col-span-4" *ngIf="intakeForm.value.others_abuse_flag">
+            <label for="others_abuse_remarks">Other Abuses</label>
+            <input type="text" name="others_abuse_remarks" id="others_abuse_remarks" formControlName="others_abuse_remarks" class="input">
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-3 gap-4 w-full mt-5">
+        <div class="col-span-3 border-b border-slate-200 w-full my-2 font-semibold text-sky-500">
+          Present Address
+        </div>
+        <div class="col-span-3">
+          <input type="checkbox" formControlName="same_address_flag" class="input-checkbox ml-3" checked />
+          <label class="pl-3 py-0.5">Is the clients present addresss same with the declared address?</label>
+        </div>
+        <div class="mx-5 col-span-3 grid grid-cols-4 gap-4">
+          <div *ngIf="!intakeForm.value.same_address_flag">
+            <label for="region" [ngClass]="{'text-red-500': show_error && f.region.errors}">Region</label>
+            <select name="region" id="region" formControlName="region" class="input" (change)="loadDemog('regions', intakeForm.value.region, 'provinces')">
+              <option *ngFor="let reg of regions" [value]="reg.code">{{ reg.name }}</option>
+            </select>
+          </div>
+
+          <div *ngIf="!intakeForm.value.same_address_flag">
+            <label for="province" [ngClass]="{'text-red-500': show_error && f.province.errors}">Province</label>
+            <select name="province" id="province" formControlName="province" class="input" [ngClass]="{'invalid-input': show_error && f.province.errors}" (change)="loadDemog('provinces', intakeForm.value.province, 'municipalities')">
+              <option *ngFor="let prov of provinces" [value]="prov.code">{{ prov.name }}</option>
+            </select>
+          </div>
+
+          <div *ngIf="!intakeForm.value.same_address_flag">
+            <label for="municipality" [ngClass]="{'text-red-500': show_error && f.municipality.errors}">Municipality</label>
+            <select name="municipality" id="municipality" formControlName="municipality" class="input" [ngClass]="{'invalid-input': show_error && f.municipality.errors}" (change)="loadDemog('municipalities', intakeForm.value.municipality, 'barangays')">
+              <option *ngFor="let mun of municipalities" [value]="mun.code">{{ mun.name }}</option>
+            </select>
+          </div>
+
+          <div *ngIf="!intakeForm.value.same_address_flag">
+            <label for="barangay_code" [ngClass]="{'text-red-500': show_error && f.barangay_code.errors}">Barangay</label>
+            <select name="barangay_code" id="barangay_code" formControlName="barangay_code" class="input" [ngClass]="{'invalid-input': show_error && f.barangay_code.errors}">
+              <option *ngFor="let barangay of barangays" [value]="barangay.code">{{ barangay.name }}</option>
+            </select>
+
+            <div *ngIf="show_error && f.barangay_code.errors" class="invalid-alert">
+              <div *ngIf="f.barangay_code.errors?.['required']">
+                {{ required_message }}
+              </div>
+            </div>
+          </div>
+
+          <div class="col-span-2" *ngIf="!intakeForm.value.same_address_flag">
+            <label for="address" [ngClass]="{'text-red-500': show_error && f.address.errors}">Address</label>
+            <input type="text" name="address" id="address" formControlName="address" class="input" [ngClass]="{'invalid-input': show_error && f.address.errors}">
+
+            <div *ngIf="show_error && f.address.errors" class="invalid-alert">
+              <div *ngIf="f.address.errors?.['required']">
+                {{ required_message }}
+              </div>
+            </div>
+          </div>
+
+          <div class="col-span-2" *ngIf="!intakeForm.value.same_address_flag">
+            <label for="direction_to_address" [ngClass]="{'text-red-500': show_error && f.direction_to_address.errors}">Direction to address</label>
+            <input type="text" name="direction_to_address" id="direction_to_address" formControlName="direction_to_address" class="input" [ngClass]="{'invalid-input': show_error && f.direction_to_address.errors}">
+
+            <div *ngIf="show_error && f.direction_to_address.errors" class="invalid-alert">
+              <div *ngIf="f.direction_to_address.errors?.['required']">
+                {{ required_message }}
+              </div>
+            </div>
+          </div>
+
+          <div class="col-span-4 grid grid-cols-1 border-slate-200 shadow-md rounded-md">
+            <div class="bg-sky-500 text-white py-1 pl-3 rounded-t-md">
+              Guardian Information
+            </div>
+            <div class="grid grid-cols-4 gap-4 mt-3 mb-5 mx-5">
+              <div class="col-span-2">
+                <label for="guardian_name" [ngClass]="{'text-red-500': show_error && f.guardian_name.errors}">Parent/caregiver/guardian name</label>
+                <input type="text" name="guardian_name" id="guardian_name" formControlName="guardian_name" class="input" [ngClass]="{'invalid-input': show_error && f.guardian_name.errors}">
+
+                <div *ngIf="show_error && f.guardian_name.errors" class="invalid-alert">
+                  <div *ngIf="f.guardian_name.errors?.['required']">
+                    {{ required_message }}
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-span-2">
+                <label for="guardian_address" [ngClass]="{'text-red-500': show_error && f.guardian_address.errors}">Address</label>
+                <input type="text" name="guardian_address" id="guardian_address" formControlName="guardian_address" class="input" [ngClass]="{'invalid-input': show_error && f.guardian_address.errors}">
+
+                <div *ngIf="show_error && f.guardian_address.errors" class="invalid-alert">
+                  <div *ngIf="f.guardian_address.errors?.['required']">
+                    {{ required_message }}
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-span-2">
+                <label for="relation_to_child_id" [ngClass]="{'text-red-500': show_error && f.relation_to_child_id.errors}">Relation to child</label>
+                <select name="relation_to_child_id" id="relation_to_child_id" formControlName="relation_to_child_id" class="input" [ngClass]="{'invalid-input': show_error && f.relation_to_child_id.errors}">
+                  <option *ngFor="let child_relation of child_relations" [value]="child_relation.id">{{ child_relation.desc }}</option>
+                </select>
+
+                <div *ngIf="show_error && f.relation_to_child_id.errors" class="invalid-alert">
+                  <div *ngIf="f.relation_to_child_id.errors?.['required']">
+                    {{ required_message }}
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-span-2">
+                <label for="guardian_contact_info" [ngClass]="{'text-red-500': show_error && f.guardian_contact_info.errors}">Contact No. (0912) 354-6789</label>
+                <input type="text" mask="(9999) 999-9999" [showMaskTyped]="true" name="guardian_contact_info" id="guardian_contact_info" formControlName="guardian_contact_info" class="input" [ngClass]="{'invalid-input': show_error && f.guardian_contact_info.errors}">
+
+                <div *ngIf="show_error && f.guardian_contact_info.errors" class="invalid-alert">
+                  <div *ngIf="f.guardian_contact_info.errors?.['required']">
+                    {{ required_message }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-span-4 grid grid-cols-1 border-slate-200 shadow-md rounded-md">
+            <div class="bg-sky-500 text-white py-1 px-3 rounded-t-md flex justify-between">
+              <spa>Family Composition</spa>
+              <button *ngIf="intakeForm.value.id" type="button" (click)="toggleModal('add_family')" class="bg-white text-sky-500 px-2 rounded text-xs">
+                <fa-icon [icon]="faPlus"></fa-icon>Add
+              </button>
+            </div>
+            <div class="min-h-24">
+              <table class="w-full text-sm text-left">
+                <thead class="text-xs text-white uppercase bg-sky-400">
+                  <tr>
+                    <th scope="col" class="py-3 px-6"> </th>
+                    <th scope="col" class="py-3 px-6">Name</th>
+                    <th scope="col" class="py-3 px-6">Age | Gender</th>
+                    <th scope="col" class="py-3 px-6">Relation</th>
+                    <!-- <th scope="col" class="py-3 px-6">Action</th> -->
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="bg-white border-b" *ngFor="let member of family_members">
+                    <td class="py-4 px-6">
+                      <fa-icon [icon]="faEdit" class="hover:cursor-pointer text-orange-500" (click)="toggleModal('add_family', member)" ></fa-icon>
+                    </td>
+                    <td class="py-4 px-6">
+                      {{ member.name }}
+                    </td>
+                    <td class="py-4 px-6">
+                      {{ member.age }} | {{ member.gender }}
+                    </td>
+                    <td class="py-4 px-6">
+                      {{ member.relation.desc }}
+                    </td>
+                    <!-- <td class="py-4 px-6"> -->
+                      <!-- <button type="button" class="rounded-md bg-blue-500 text-white py-1 px-2" (click)="openGbvConsult(gbv_history)">
+                        {{ (!gbv_history.outcome_reason && !gbv_history.outcome_result && !gbv_history.outcome_verdict) ? 'Open' : 'View' }}
+                      </button> -->
+                    <!-- </td> -->
+                  </tr>
+
+                  <tr class="bg-white border-b" *ngIf="!family_members">
+                    <td  colspan="7">
+                      <div class="text-center py-3 flex flex-col">
+                        <div class="flex justify-center">No records to show...</div>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <!-- <div class="grid grid-cols-3 m-3" *ngFor="let member of family_members">
+                <div>
+                  Name: {{ member.name }} <br />
+                  {{ member.age }} | {{ member.gender }}<br />
+                  <spa class="text-sm">{{  member.living_with_child_flag === 0 ? '' : 'Living with child' }}</spa>
+                </div>
+                <div>
+                  Age: {{ member.age }} <br />
+                </div>
+              </div> -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-1 grid grid-cols-4 gap-x-4 w-full">
+        <div class="col-span-4 border-b border-slate-200 w-full my-2 pt-3 font-semibold text-sky-500">
+          Socio-economic Status
+        </div>
+        <div class="mx-5 col-span-4 grid grid-cols-4 gap-4">
+          <div class="col-span-2">
+            <label for="economic_status_id" [ngClass]="{'text-red-500': show_error && f.economic_status_id.errors}">Economic status</label>
+            <select name="economic_status_id" id="economic_status_id" formControlName="economic_status_id" class="input" [ngClass]="{'invalid-input': show_error && f.economic_status_id.errors}">
+              <option *ngFor="let economic_status of economic_statuses" [value]="economic_status.id">{{ economic_status.desc }}</option>
+            </select>
+
+            <div *ngIf="show_error && f.economic_status_id.errors" class="invalid-alert">
+              <div *ngIf="f.economic_status_id.errors?.['required']">
+                {{ required_message }}
+              </div>
+            </div>
+          </div>
+
+          <div class="col-span-2">
+            <label for="number_of_children" [ngClass]="{'text-red-500': show_error && f.number_of_children.errors}">No. of children</label>
+            <input type="number" name="number_of_children" id="number_of_children" formControlName="number_of_children" class="input" [ngClass]="{'invalid-input': show_error && f.number_of_children.errors}">
+
+            <div *ngIf="show_error && f.number_of_children.errors" class="invalid-alert">
+              <div *ngIf="f.number_of_children.errors?.['required']">
+                {{ required_message }}
+              </div>
+            </div>
+          </div>
+
+          <div class="col-span-2">
+            <label for="number_of_individual_members" [ngClass]="{'text-red-500': show_error && f.number_of_individual_members.errors}">No. of individual family members</label>
+            <input type="number" name="number_of_individual_members" id="number_of_individual_members" formControlName="number_of_individual_members" class="input" [ngClass]="{'invalid-input': show_error && f.number_of_individual_members.errors}">
+
+            <div *ngIf="show_error && f.number_of_individual_members.errors" class="invalid-alert">
+              <div *ngIf="f.number_of_individual_members.errors?.['required']">
+                {{ required_message }}
+              </div>
+            </div>
+          </div>
+
+          <div class="col-span-2">
+            <label for="number_of_family" [ngClass]="{'text-red-500': show_error && f.number_of_family.errors}">No. of family in household</label>
+            <input type="number" name="number_of_family" id="number_of_family" formControlName="number_of_family" class="input" [ngClass]="{'invalid-input': show_error && f.number_of_family.errors}">
+
+            <div *ngIf="show_error && f.number_of_family.errors" class="invalid-alert">
+              <div *ngIf="f.number_of_family.errors?.['required']">
+                {{ required_message }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 mt-5" *ngIf="intakeForm.value.sexual_abuse_flag">
+        <div class="text-sky-500 font-semibold">
+          <input type="checkbox" name="incest_case_flag" id="incest_case_flag" formControlName="incest_case_flag" (click)="incestCase()" class="input-checkbox" />
+          <label for="incest_case_flag" class="pl-3 py-0.5">is this an incest case?</label>
+        </div>
+      </div>
+
+      <div class="-mt-1 grid grid-cols-4 gap-x-4 w-full" *ngIf="intakeForm.value.incest_case_flag">
+        <div class="col-span-4 border-b border-slate-200 w-full my-2 pt-2 font-semibold text-sky-500">
+          Sleeping and living arrangement for incest cases
+        </div>
+        <div class="mx-5 col-span-4 grid grid-cols-4 gap-4">
+          <div class="col-span-4 font-semibold">
+            Same bed/mat with (check all that applies)
+          </div>
+          <div class="col-span-4 grid grid-cols-4 -mt-4">
+            <div>
+              <input type="checkbox" formControlName="same_bed_adult_male_flag" class="input-checkbox" />
+              <label class="pl-3 py-0.5">Adult male</label>
+            </div>
+
+            <div>
+              <input type="checkbox" formControlName="same_bed_adult_female_flag" class="input-checkbox" />
+              <label class="pl-3 py-0.5">Adult female</label>
+            </div>
+
+            <div>
+              <input type="checkbox" formControlName="same_bed_child_male_flag" class="input-checkbox" />
+              <label class="pl-3 py-0.5">Male child(ren)</label>
+            </div>
+
+            <div>
+              <input type="checkbox" formControlName="same_bed_child_female_flag" class="input-checkbox" />
+              <label class="pl-3 py-0.5">Female child(ren)</label>
+            </div>
+          </div>
+
+          <div class="col-span-4 font-semibold">
+            Same room with (check all that applies)
+          </div>
+          <div class="col-span-4 grid grid-cols-4 -mt-4">
+            <div>
+              <input type="checkbox" formControlName="same_room_adult_male_flag" class="input-checkbox" />
+              <label class="pl-3 py-0.5">Adult male</label>
+            </div>
+
+            <div>
+              <input type="checkbox" formControlName="same_room_adult_female_flag" class="input-checkbox" />
+              <label class="pl-3 py-0.5">Adult female</label>
+            </div>
+
+            <div>
+              <input type="checkbox" formControlName="same_room_child_male_flag" class="input-checkbox" />
+              <label class="pl-3 py-0.5">Male child(ren)</label>
+            </div>
+
+            <div>
+              <input type="checkbox" formControlName="same_room_child_female_flag" class="input-checkbox" />
+              <label class="pl-3 py-0.5">Female child(ren)</label>
+            </div>
+          </div>
+          <div class="col-span-2">
+            <label for="abuse_living_arrangement_id" [ngClass]="{'text-red-500': show_error && f.abuse_living_arrangement_id.errors}">Living arrangement at time of abuse</label>
+            <select name="abuse_living_arrangement_id" id="abuse_living_arrangement_id" formControlName="abuse_living_arrangement_id" class="input" [ngClass]="{'invalid-input': show_error && f.abuse_living_arrangement_id.errors}">
+              <option *ngFor="let living_arrangement of living_arrangements" [value]="living_arrangement.id">{{ living_arrangement.desc }}</option>
+            </select>
+
+            <div *ngIf="show_error && f.abuse_living_arrangement_id.errors" class="invalid-alert">
+              <div *ngIf="f.abuse_living_arrangement_id.errors?.['required']">
+                {{ required_message }}
+              </div>
+            </div>
+          </div>
+          <div class="col-span-2">
+            <label for="abuse_living_arrangement_remarks" [ngClass]="{'text-red-500': show_error && f.abuse_living_arrangement_remarks.errors}">Location</label>
+            <input type="text" name="abuse_living_arrangement_remarks" id="abuse_living_arrangement_remarks" formControlName="abuse_living_arrangement_remarks" class="input" [ngClass]="{'invalid-input': show_error && f.abuse_living_arrangement_remarks.errors}">
+
+            <div *ngIf="show_error && f.abuse_living_arrangement_remarks.errors" class="invalid-alert">
+              <div *ngIf="f.abuse_living_arrangement_remarks.errors?.['required']">
+                {{ required_message }}
+              </div>
+            </div>
+          </div>
+
+          <div class="col-span-2">
+            <label for="present_living_arrangement_id" [ngClass]="{'text-red-500': show_error && f.present_living_arrangement_id.errors}">Living arrangement at present</label>
+            <select name="present_living_arrangement_id" id="present_living_arrangement_id" formControlName="present_living_arrangement_id" class="input" [ngClass]="{'invalid-input': show_error && f.present_living_arrangement_id.errors}">
+              <option *ngFor="let living_arrangement of living_arrangements" [value]="living_arrangement.id">{{ living_arrangement.desc }}</option>
+            </select>
+
+            <div *ngIf="show_error && f.present_living_arrangement_id.errors" class="invalid-alert">
+              <div *ngIf="f.present_living_arrangement_id.errors?.['required']">
+                {{ required_message }}
+              </div>
+            </div>
+          </div>
+          <div class="col-span-2">
+            <label for="present_living_arrangement_remarks" [ngClass]="{'text-red-500': show_error && f.present_living_arrangement_remarks.errors}">Location</label>
+            <input type="text" name="present_living_arrangement_remarks" id="present_living_arrangement_remarks" formControlName="present_living_arrangement_remarks" class="input" [ngClass]="{'invalid-input': show_error && f.present_living_arrangement_remarks.errors}">
+
+            <div *ngIf="show_error && f.present_living_arrangement_remarks.errors" class="invalid-alert">
+              <div *ngIf="f.present_living_arrangement_remarks.errors?.['required']">
+                {{ required_message }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="intakeForm.value.id" class="mt-1 grid grid-cols-4 gap-x-4 w-full">
+        <div class="col-span-4 border-b border-slate-200 w-full my-2 pt-3 font-semibold text-sky-500">
+          Perpetrator (s)
+        </div>
+        <div class="col-span-4 grid grid-cols-1 border-slate-200 shadow-md rounded-md mx-5 mb-5">
+          <div class="bg-sky-500 text-white py-1 px-3 rounded-t-md flex justify-between">
+            <spa>Alleged Perpetrator</spa>
+            <button type="button" (click)="toggleModal('perpetrators')" class="bg-white text-sky-500 px-2 rounded text-xs">
+              <fa-icon [icon]="faPlus"></fa-icon>
+            </button>
+          </div>
+          <div class="min-h-24" *ngIf="!selected_gbv_case?.gbvIntake.interview_perpetrator">
+            <span class="flex italic py-5 justify-center">
+              No records to show
+            </span>
+          </div>
+
+          <table class="m-3" *ngIf="selected_gbv_case?.gbvIntake.interview_perpetrator">
+            <thead>
+              <tr>
+                <td class="w-1/12">
+
+                </td>
+                <td class="text-center font-semibold w-3/12 align-top pt-3">
+                  Name<br />
+                  (Age | Gender)<br /><br />
+                </td>
+                <td class="text-center font-semibold w-2/12 align-top pt-3">
+                  Address
+                </td>
+                <td class="text-center font-semibold w-2/12 align-top pt-3">
+                  Substance abuse
+                </td>
+                <td class="text-center font-semibold w-3/12 align-top pt-3">
+                  History
+                </td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border-t border-slate-200" *ngFor="let perp of selected_gbv_case?.gbvIntake.interview_perpetrator" >
+                <td class="text-center align-top pt-3">
+                  <fa-icon [icon]="faEdit" (click)="toggleModal('perpetrators', perp)" class="hover:cursor-pointer text-orange-500"></fa-icon>
+                </td>
+                <td class="text-center align-top pt-3">
+                  {{ perp.perpetrator_name ?? '-'}} <br />
+                  (
+                    {{ perp.perpetrator_age }} |
+                    {{ perp.gender ? (perp.gender === 'M' ? 'Male' : 'Female') : '-' }}
+                    <span *ngIf="perp.lgbtq_flag"> | LGBTQ</span>
+                  )
+                </td>
+                <td class="align-top pt-3">
+                  <span *ngIf="perp.perpetrator_address">
+                    <span class="italic font-semibold">Permanent:</span> <br />
+                    {{ perp.perpetrator_address }}<br /><br />
+                  </span>
+
+                  <span *ngIf="perp.perpetrator_current_address">
+                    <span class="italic font-semibold">Current:</span> <br />
+                    {{ perp.perpetrator_current_address }}
+                  </span>
+                </td>
+                <td class="font-semibold italic align-top pt-3">
+                  <span *ngIf="!perp.abuse_alcohol_flag && !perp.abuse_drugs_flag && !perp.abuse_others_flag">
+                    -
+                  </span>
+                  <span *ngIf="perp.abuse_alcohol_flag">
+                    Alcohol <br /><br />
+                  </span>
+                  <span *ngIf="perp.abuse_drugs_flag">
+                    Drugs: <span class="font-normal not-italic">{{ perp.abuse_drugs_remarks }}</span><br /><br />
+                  </span>
+                  <span *ngIf="perp.abuse_others_flag">
+                    Others: <span class="font-normal not-italic">{{ perp.abuse_others_remarks }}</span>
+                  </span>
+                </td>
+                <td class="p-3">
+                  <span class="font-semibold" *ngIf="perp.abused_as_child_flag || perp.abused_as_spouse_flag || perp.spouse_abuser_flag || perp.family_violence_flag">
+                    Abuse<br />
+                  </span>
+                  <span *ngIf="perp.abused_as_child_flag">
+                    - Abused as a child<br />
+                  </span>
+                  <span *ngIf="perp.abused_as_spouse_flag">
+                    - Abused as a spouse<br />
+                  </span>
+                  <span *ngIf="perp.spouse_abuser_flag">
+                    - Spouse abuser<br />
+                  </span>
+                  <span *ngIf="perp.family_violence_flag">
+                    - Witness family violence<br />
+                  </span>
+
+                  <span class="font-semibold" *ngIf="perp.criminal_conviction_similar_flag || perp.criminal_conviction_other_flag || perp.criminal_barangay_flag">
+                    <br /> Criminal<br />
+                  </span>
+                  <span *ngIf="perp.criminal_conviction_similar_flag">
+                    - Previous conviction for similar offense<br />
+                  </span>
+                  <span *ngIf="perp.criminal_conviction_other_flag">
+                    - Previous conviction for other offense<br />
+                  </span>
+                  <span *ngIf="perp.criminal_barangay_flag">
+                    - Others: <span class="font-normal not-italic">{{ perp.criminal_barangay_remarks }}</span><br />
+                  </span>
+                </td>
+                <td>
+
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="mt-3 grid grid-cols-4 gap-x-4 w-full">
+        <div class="col-span-4 border-b border-slate-200 w-full my-2 pt-2 font-semibold text-sky-500">
+          Additional Information to be gathered by the WCPD
+        </div>
+        <div class="mx-5 col-span-4 grid grid-cols-4 gap-4">
+          <div class="col-span-4 font-semibold">
+            Violence Against Women
+          </div>
+          <div class="col-span-4 grid grid-cols-4 -mt-4">
+            <div>
+              <input type="checkbox" id="vaw_physical_flag" formControlName="vaw_physical_flag" class="input-checkbox" />
+              <label for="vaw_physical_flag" class="pl-3 py-0.5">Physical</label>
+            </div>
+
+            <div>
+              <input type="checkbox" id="vaw_sexual_flag" formControlName="vaw_sexual_flag" class="input-checkbox" />
+              <label for="vaw_sexual_flag" class="pl-3 py-0.5">Sexual</label>
+            </div>
+
+            <div>
+              <input type="checkbox" id="vaw_psychological_flag" formControlName="vaw_psychological_flag" class="input-checkbox" />
+              <label for="vaw_psychological_flag" class="pl-3 py-0.5">Psychological</label>
+            </div>
+
+            <div>
+              <input type="checkbox" id="vaw_economic_flag" formControlName="vaw_economic_flag" class="input-checkbox" />
+              <label for="vaw_economic_flag" class="pl-3 py-0.5">Economic</label>
+            </div>
+          </div>
+
+          <div class="col-span-4 font-semibold">
+            Sexual Abuse
+          </div>
+          <div class="col-span-4 grid grid-cols-4 -mt-4">
+            <div>
+              <input type="checkbox" id="rape_sex_intercourse_flag" formControlName="rape_sex_intercourse_flag" class="input-checkbox" />
+              <label for="rape_sex_intercourse_flag" class="pl-3 py-0.5">Sexual Intercourse</label>
+            </div>
+
+            <div>
+              <input type="checkbox" id="rape_sex_assault_flag" formControlName="rape_sex_assault_flag" class="input-checkbox" />
+              <label for="rape_sex_assault_flag" class="pl-3 py-0.5">Sexual Assault</label>
+            </div>
+
+            <div>
+              <input type="checkbox" id="rape_incest_flag" formControlName="rape_incest_flag" class="input-checkbox" />
+              <label for="rape_incest_flag" class="pl-3 py-0.5">Incest</label>
+            </div>
+
+            <div>
+              <input type="checkbox" id="rape_statutory_flag" formControlName="rape_statutory_flag" class="input-checkbox" />
+              <label for="rape_statutory_flag" class="pl-3 py-0.5">Statutory Rape</label>
+            </div>
+
+            <div>
+              <input type="checkbox" id="rape_marital_flag" formControlName="rape_marital_flag" class="input-checkbox" />
+              <label for="rape_marital_flag" class="pl-3 py-0.5">Marital Rape</label>
+            </div>
+          </div>
+
+          <div class="col-span-4 font-semibold">
+            Sexual Harassment
+          </div>
+          <div class="col-span-4 grid grid-cols-4 -mt-4">
+            <div>
+              <input type="checkbox" id="harassment_verbal_flag" formControlName="harassment_verbal_flag" class="input-checkbox" />
+              <label for="harassment_verbal_flag" class="pl-3 py-0.5">Verbal</label>
+            </div>
+
+            <div>
+              <input type="checkbox" id="harassment_physical_flag" formControlName="harassment_physical_flag" class="input-checkbox" />
+              <label for="harassment_physical_flag" class="pl-3 py-0.5">Physical</label>
+            </div>
+
+            <div class="col-span-2">
+              <input type="checkbox" id="harassment_object_flag" formControlName="harassment_object_flag" class="input-checkbox" />
+              <label for=harassment_object_flag class="pl-3 py-0.5">Use of object, picture, letter, notes with sexual underpinnings</label>
+            </div>
+          </div>
+
+          <div class="col-span-4 font-semibold">
+            Child abuse, exploitation and discrimination
+          </div>
+          <div class="col-span-4 grid grid-cols-4 -mt-4">
+            <div class="col-span-2">
+              <input type="checkbox" id="child_abuse_engaged_flag" formControlName="child_abuse_engaged_flag" class="input-checkbox" />
+              <label for="child_abuse_engaged_flag" class="pl-3 py-0.5">Engage, facilitate, commit child prostitution</label>
+            </div>
+
+            <div class="col-span-2">
+              <input type="checkbox" id="child_abuse_sexual_flag" formControlName="child_abuse_sexual_flag" class="input-checkbox" />
+              <label for="child_abuse_sexual_flag" class="pl-3 py-0.5">Sexual intercourse or lasciviousness conduct</label>
+            </div>
+
+            <div>
+              <input type="checkbox" id="child_abuse_physical_flag" formControlName="child_abuse_physical_flag" class="input-checkbox" />
+              <label for="child_abuse_physical_flag" class="pl-3 py-0.5">Physical</label>
+            </div>
+
+            <div>
+              <input type="checkbox" id="child_abuse_emotional_flag" formControlName="child_abuse_emotional_flag" class="input-checkbox" />
+              <label for="child_abuse_emotional_flag" class="pl-3 py-0.5">Emotional</label>
+            </div>
+
+            <div>
+              <input type="checkbox" id="child_abuse_economic_flag" formControlName="child_abuse_economic_flag" class="input-checkbox" />
+              <label for="child_abuse_economic_flag" class="pl-3 py-0.5">Economic</label>
+            </div>
+          </div>
+
+          <div class="col-span-2">
+            <label for="wcpd_others" [ngClass]="{'text-red-500': show_error && f.wcpd_others.errors}">Others: Specify</label>
+            <input type="text" name="wcpd_others" id="wcpd_others" formControlName="wcpd_others" class="input" [ngClass]="{'invalid-input': show_error && f.wcpd_others.errors}">
+          </div>
+
+        </div>
+      </div>
+
+      <div class="flex justify-center mt-5">
+        <button [disabled]="is_saving" type="submit" class="btn-save mr-5 mt-4">
+          <fa-icon [icon]="is_saving ? faCircleNotch : faSave" [spin]="is_saving ? true : false" class="mr-2"></fa-icon>
+          {{ intakeForm.value.id ? (is_saving ? 'Updating' : 'Update') : (is_saving ? 'Saving' : 'Save') }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<app-family-composition *ngIf="modals['add_family']"
+  (toggleModal)="toggleModal($event)"
+  [patient_id]="selected_gbv_case.patient_id"
+  [patient_gbv_id]="selected_gbv_case.id"
+  [selected_member]="selected_member"
+></app-family-composition>
+
+<app-perpetrators *ngIf="modals['perpetrators']"
+  (toggleModal)="toggleModal($event)"
+  [selected_perpetrator]="selected_perpetrator"
+  [intake_id]="intakeForm.value.id"
+  [patient_id]="selected_gbv_case.patient_id"
+></app-perpetrators>

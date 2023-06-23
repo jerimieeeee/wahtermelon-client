@@ -392,7 +392,7 @@ export class ServicesComponent implements OnInit {
       console.log(serv_form, 'ito ung isusubmit')
 
       this.http.post('child-care/cc-services', serv_form).subscribe({
-        next: (data: any) => { console.log(data.data, 'display lahat ng services') },
+        next: (data: any) => { console.log(data, 'display lahat ng services') },
         error: err => {console.log(err)
           // this.toggleAlertModal('E')
           if (serv_form.essential == 'Y') {

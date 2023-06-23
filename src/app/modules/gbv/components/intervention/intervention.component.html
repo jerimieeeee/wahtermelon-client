@@ -1,0 +1,504 @@
+<div class="border border-slate-200 rounded-b-lg" *ngIf="show_form">
+  <div class="mx-5 mb-5">
+    <div class="mt-1 grid grid-cols-4 gap-x-4 w-full">
+      <div class="col-span-4 border-b border-slate-200 w-full my-2 pt-3 font-semibold text-sky-500">
+        Consults
+      </div>
+      <!-- <div class="col-span-4 grid grid-cols-1 border-slate-200 shadow-md rounded-md mx-5 mb-5">
+        <div class="bg-sky-500 text-white py-1 px-3 rounded-t-md flex justify-between">
+          <span>Medical Certificate</span>
+          <button type="button" (click)="toggleModal('medical_consult')" class="bg-white text-sky-500 px-2 rounded text-xs">
+            <fa-icon [icon]="faPlus"></fa-icon>
+          </button>
+        </div>
+        <div class="min-h-24">
+          <span class="flex italic py-5 justify-center">
+            No records to show
+          </span>
+        </div>
+      </div> -->
+
+      <div class="col-span-4 grid grid-cols-1 border-slate-200 shadow-md rounded-md mx-5 mb-5">
+        <div class="bg-sky-500 text-white py-1 px-3 rounded-t-md flex justify-between">
+          <span>Visits</span>
+          <span class="text-xs italic pt-1" *ngIf="pos!=='MD'">
+            Doctor Only
+          </span>
+          <button type="button" *ngIf="pos==='MD'" (click)="toggleModal('medical_consult')" class="bg-white text-sky-500 px-2 rounded text-xs">
+            <fa-icon [icon]="faPlus"></fa-icon>
+          </button>
+        </div>
+        <div class="min-h-24" *ngIf="selected_gbv_case?.gbvIntake.consult_visit.length===0">
+          <span class="flex italic py-5 justify-center">
+            No records to show
+          </span>
+        </div>
+
+        <table class="m-3" *ngIf="selected_gbv_case?.gbvIntake.consult_visit.length>0">
+          <thead>
+            <tr>
+              <td *ngIf="pos==='MD'" class="w-1/12">
+
+              </td>
+              <td class="text-center font-semibold w-6/12 align-top pt-3">
+                Consultation
+              </td>
+              <td class="text-center font-semibold w-5/12 align-top pt-3">
+                Labs
+              </td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="border-t border-slate-200" *ngFor="let consult_visit of selected_gbv_case?.gbvIntake.consult_visit" >
+              <td *ngIf="pos==='MD'" class="text-center align-top pt-3">
+                <fa-icon [icon]="faEdit" (click)="toggleModal('medical_consult', consult_visit)" class="hover:cursor-pointer text-orange-500"></fa-icon>
+              </td>
+              <td class="text-left align-top pt-3">
+                <span class="font-semibold italic">Physician </span> <br />
+                {{ consult_visit.physician }} <br /><br />
+
+                <span class="font-semibold italic">Scheduled date: </span>
+                {{ consult_visit.scheduled_date | date: 'MM/dd/yyyy'}} <br />
+
+                <span class="font-semibold italic">Actual date: </span>
+                {{ consult_visit.actual_date | date: 'MM/dd/yyyy'}} <br />
+              </td>
+              <td class="text-left align-top pt-3">
+                <span class="font-semibold italic">Lab test </span> <br />
+                {{ consult_visit.lab_test ?? '-' }} <br /><br />
+
+                <span class="font-semibold italic">Date in: </span>
+                {{ consult_visit.date_in | date: 'MM/dd/yyyy' ?? '-' }} <br />
+
+                <span class="font-semibold italic">Date due: </span>
+                {{ consult_visit.date_due | date: 'MM/dd/yyyy' ?? '-' }} <br />
+
+                <span class="font-semibold italic">Date out: </span>
+                {{ consult_visit.date_out | date: 'MM/dd/yyyy' ?? '-' }} <br />
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="mt-1 grid grid-cols-4 gap-x-4 w-full">
+      <div class="col-span-4 border-b border-slate-200 w-full my-2 pt-3 font-semibold text-sky-500">
+        Social Worker
+      </div>
+      <div class="col-span-4 grid grid-cols-1 border-slate-200 shadow-md rounded-md mx-5 mb-5">
+        <div class="bg-sky-500 text-white py-1 px-3 rounded-t-md flex justify-between">
+          <span>Home Visits</span>
+          <span class="text-xs italic pt-1" *ngIf="pos!=='MSWDO'">
+            MSWDO Only
+          </span>
+          <button type="button" *ngIf="pos==='MSWDO'" (click)="toggleModal('home_visit')" class="bg-white text-sky-500 px-2 rounded text-xs">
+            <fa-icon [icon]="faPlus"></fa-icon>
+          </button>
+        </div>
+        <div class="min-h-24" *ngIf="selected_gbv_case?.gbvIntake.intervention_social_work.length===0">
+          <span class="flex italic py-5 justify-center">
+            No records to show
+          </span>
+        </div>
+
+        <table class="m-3" *ngIf="selected_gbv_case?.gbvIntake.intervention_social_work.length>0">
+          <thead>
+            <tr>
+              <td *ngIf="pos==='MSWDO'" class="w-1/12">
+
+              </td>
+              <td class="text-center font-semibold w-3/12 align-top pt-3">
+                Visit date<br />
+              </td>
+              <td class="font-semibold w-4/12 align-top pt-3">
+                Social Worker
+              </td>
+              <td class="font-semibold w-4/12 align-top pt-3">
+                Social Worker Notes
+              </td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="border-t border-slate-200" *ngFor="let social_work of selected_gbv_case?.gbvIntake.intervention_social_work" >
+              <td *ngIf="pos==='MSWDO'" class="text-center align-top pt-3">
+                <fa-icon [icon]="faEdit" (click)="toggleModal('home_visit', social_work)" class="hover:cursor-pointer text-orange-500"></fa-icon>
+              </td>
+              <td class="text-center align-top pt-3">
+                {{ social_work.visit_date | date: 'MM/dd/yyyy'}}
+              </td>
+              <td class="align-top pt-3">
+                {{ social_work.social_worker }}
+              </td>
+
+              <td class="align-top pt-3">
+                {{ social_work.social_worker_remarks }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="col-span-4 grid grid-cols-1 border-slate-200 shadow-md rounded-md mx-5 mb-5">
+        <div class="bg-sky-500 text-white py-1 px-3 rounded-t-md flex justify-between">
+          <span>Placements</span>
+          <span class="text-xs italic pt-1" *ngIf="pos!=='MSWDO'">
+            MSWDO Only
+          </span>
+          <button type="button" *ngIf="pos==='MSWDO'" (click)="toggleModal('placement')" class="bg-white text-sky-500 px-2 rounded text-xs">
+            <fa-icon [icon]="faPlus"></fa-icon>
+          </button>
+        </div>
+        <div class="min-h-24" *ngIf="selected_gbv_case?.gbvIntake.intervention_placement.length===0">
+          <span class="flex italic py-5 justify-center">
+            No records to show
+          </span>
+        </div>
+
+        <table class="m-3" *ngIf="selected_gbv_case?.gbvIntake.intervention_placement.length>0">
+          <thead>
+            <tr>
+              <td *ngIf="pos==='MSWDO'" class="w-1/12">
+
+              </td>
+              <td class="text-center font-semibold w-7/12 align-top pt-3">
+                Placement
+              </td>
+              <!-- <td class="text-center font-semibold w-4/12 align-top pt-3">
+                Name and Contact Info
+              </td> -->
+              <td class="text-center font-semibold w-4/12 align-top pt-3">
+                Date
+              </td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="border-t border-slate-200" *ngFor="let placement of selected_gbv_case?.gbvIntake.intervention_placement" >
+              <td *ngIf="pos==='MSWDO'" class="text-center align-top pt-3">
+                <fa-icon [icon]="faEdit" (click)="toggleModal('placement', placement)" class="hover:cursor-pointer text-orange-500"></fa-icon>
+              </td>
+              <td class="align-top pt-3">
+                <div *ngIf="placement.location_id===1">
+                  <div *ngIf="placement.home_by_cpu_flag">
+                    Home
+                  </div>
+                  <div *ngIf="!placement.home_by_cpu_flag">
+                    <span class="font-semibold">Placement by:</span> {{ placement.home_by_other_name }} <br />
+                  </div>
+                </div>
+
+                <div *ngIf="placement.location_id===2 || placement.location_id===3">
+                  <span class="font-semibold">Placement type:</span>{{ placement.placement_type?.desc }}<br />
+                  <span class="font-semibold">Placement name:</span>{{ placement.placement_name }}<br />
+                  <span class="font-semibold">Contact info:</span>{{ placement.placement_contact_info }}<br />
+                </div>
+
+                <div *ngIf="placement.location_id===4">
+                  <span class="font-semibold">Hospital Name:</span> {{ placement.hospital_name }} <br />
+                  <span class="font-semibold">Ward:</span> {{ placement.hospital_ward }} <br />
+                </div>
+              </td>
+              <!-- <td class="text-center align-top pt-3">
+                {{ placement.placement_name }}
+              </td> -->
+              <td class="align-top pt-3 px-3">
+                <div *ngIf="placement.location_id===2 || placement.location_id===3">
+                  <span class="font-semibold">Date in:</span> {{ placement.scheduled_date | date:'MM/dd/yyyy' }} <br />
+                  <span class="font-semibold">Date out:</span> {{ placement.actual_date | date:'MM/dd/yyyy' }} <br />
+                </div>
+
+                <div *ngIf="placement.location_id===4">
+                  <span class="font-semibold">Date in:</span> {{ placement.hospital_date_in | date:'MM/dd/yyyy' }} <br />
+                  <span class="font-semibold">Date out:</span> {{ placement.hospital_date_out | date:'MM/dd/yyyy' }} <br />
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="mt-1 grid grid-cols-4 gap-x-4 w-full">
+      <div class="col-span-4 border-b border-slate-200 w-full my-2 pt-3 font-semibold text-sky-500">
+        Psychiatry
+      </div>
+      <div class="col-span-4 grid grid-cols-1 border-slate-200 shadow-md rounded-md mx-5 mb-5">
+        <div class="bg-sky-500 text-white py-1 px-3 rounded-t-md flex justify-between">
+          <span>Sessions</span>
+          <span class="text-xs italic pt-1" *ngIf="pos!=='MD'">
+            Doctors Only
+          </span>
+          <button type="button" *ngIf="pos==='MD'" (click)="toggleModal('session')" class="bg-white text-sky-500 px-2 rounded text-xs">
+            <fa-icon [icon]="faPlus"></fa-icon>
+          </button>
+        </div>
+        <div class="min-h-24" *ngIf="selected_gbv_case?.gbvIntake.intervention_psych.length===0">
+          <span class="flex italic py-5 justify-center">
+            No records to show
+          </span>
+        </div>
+
+        <table class="m-3" *ngIf="selected_gbv_case?.gbvIntake.intervention_psych.length>0">
+          <thead>
+            <tr>
+              <td *ngIf="pos==='MD'" class="w-1/12">
+
+              </td>
+              <td class="text-center font-semibold w-4/12 align-top pt-3">
+                Participant
+              </td>
+              <td class="text-center font-semibold w-4/12 align-top pt-3">
+                Psychiatrist
+              </td>
+              <td class="text-center font-semibold w-7/12 align-top pt-3">
+                Scheduled Date <br />
+                Actual Date
+              </td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="border-t border-slate-200" *ngFor="let psych of selected_gbv_case?.gbvIntake.intervention_psych" >
+              <td *ngIf="pos==='MD'" class="text-center align-top pt-3">
+                <fa-icon [icon]="faEdit" (click)="toggleModal('session', psych)" class="hover:cursor-pointer text-orange-500"></fa-icon>
+              </td>
+              <td class="text-center align-top pt-3">
+                {{ psych.participant.desc }}
+              </td>
+              <td class="text-center align-top pt-3">
+                {{ psych.md_name }}
+              </td>
+              <td class="text-center align-top pt-3">
+                {{ psych.scheduled_date | date: 'MM/dd/yyyy' }} <br />
+                {{ psych.actual_date | date: 'MM/dd/yyyy' }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="mt-1 grid grid-cols-4 gap-x-4 w-full">
+      <div class="col-span-4 border-b border-slate-200 w-full my-2 pt-3 font-semibold text-sky-500">
+        Legal
+      </div>
+      <div class="col-span-4 grid grid-cols-1 border-slate-200 shadow-md rounded-md mx-5 mb-5">
+        <div class="bg-sky-500 text-white py-1 px-3 rounded-t-md flex justify-between">
+          <span>Case Details</span>
+          <span class="text-xs italic pt-1" *ngIf="pos!=='WCPD'">
+            WCPD Only
+          </span>
+
+          <div *ngIf="pos==='WCPD'">
+            <button type="button" *ngIf="!selected_gbv_case?.gbvIntake.intervention_legal" (click)="toggleModal('legal_case', selected_gbv_case?.gbvIntake.intervention_legal)" class="bg-white text-sky-500 px-2 py-1 rounded text-xs">
+              <fa-icon [icon]="faPlus"></fa-icon>
+            </button>
+          </div>
+        </div>
+        <div class="min-h-24" *ngIf="!selected_gbv_case?.gbvIntake.intervention_legal">
+          <span class="flex italic py-5 justify-center">
+            No records to show
+          </span>
+        </div>
+
+        <table class="m-3" *ngIf="selected_gbv_case?.gbvIntake.intervention_legal">
+          <thead>
+            <tr>
+              <td *ngIf="pos==='WCPD'" class="w-1/12">
+
+              </td>
+              <td class="text-center font-semibold w-4/12 align-top pt-3">
+                Filing Details
+              </td>
+              <td class="text-center font-semibold w-4/12 align-top pt-3">
+                Date of CPU MD Testimony
+              </td>
+              <td class="text-center font-semibold w-7/12 align-top pt-3">
+                Court Details
+              </td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="border-t border-slate-200">
+              <td *ngIf="pos==='WCPD'" class="text-center">
+                <fa-icon [icon]="faEdit" (click)="toggleModal('legal_case', selected_gbv_case?.gbvIntake.intervention_legal)" class="hover:cursor-pointer text-orange-500"></fa-icon>
+              </td>
+              <td class="align-top pt-3">
+                <span class="italic font-semibold text-sm">Filed by: </span><br />
+                {{ selected_gbv_case?.gbvIntake.intervention_legal.filed_by_name ?? '-' }} <br /><br />
+
+                <span class="italic font-semibold text-sm">Relationship to victim survivor:</span> <br />
+                {{ selected_gbv_case?.gbvIntake.intervention_legal.relation ? selected_gbv_case?.gbvIntake.intervention_legal.relation.desc : '-' }} <br /><br />
+
+                <span class="italic font-semibold text-sm">Filed at:</span> <br />
+                {{ selected_gbv_case?.gbvIntake.intervention_legal.filed_location ? selected_gbv_case?.gbvIntake.intervention_legal.filed_location.desc : '-' }}<br /><br />
+
+                <span class="italic font-semibold text-sm">Filing Type:</span> <br />
+                {{ selected_gbv_case?.gbvIntake.intervention_legal.filed_type ?  selected_gbv_case?.gbvIntake.intervention_legal.filed_type.desc : '-' }}<br /><br />
+
+                <span class="italic font-semibold text-sm">Filing Status:</span> <br />
+                {{ selected_gbv_case?.gbvIntake.intervention_legal.nps_status ?  selected_gbv_case?.gbvIntake.intervention_legal.nps_status.desc : '-' }}<br /><br />
+
+              </td>
+              <td class="align-top pt-3">
+                {{ selected_gbv_case?.gbvIntake.intervention_legal.cpumd_testimony_date | date: 'MM/dd/yyyy' }}
+              </td>
+              <td class="text-center align-top pt-3">
+                <span class="italic font-semibold text-sm">Criminal Case Number: </span> <br />
+                {{ selected_gbv_case?.gbvIntake.intervention_legal.criminal_case_number }} <br /><br />
+
+                <span class="italic font-semibold text-sm">Judge: </span> <br />
+                {{ selected_gbv_case?.gbvIntake.intervention_legal.judge_name }} <br /><br />
+
+                <span class="italic font-semibold text-sm">Court: </span> <br />
+                {{ selected_gbv_case?.gbvIntake.intervention_legal.court_name }}<br /><br />
+
+                <span class="italic font-semibold text-sm">Fiscal Name: </span> <br />
+                {{ selected_gbv_case?.gbvIntake.intervention_legal.fiscal_name }}<br /><br />
+
+                <span class="italic font-semibold text-sm">Verdict: </span><br />
+                {{ selected_gbv_case?.gbvIntake.intervention_legal.verdict ? selected_gbv_case?.gbvIntake.intervention_legal.verdict.desc : '-' }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="mt-1 grid grid-cols-4 gap-x-4 w-full">
+      <div class="col-span-4 border-b border-slate-200 w-full my-2 pt-3 font-semibold text-sky-500">
+        Multidisciplinary Case Conferences
+      </div>
+      <div class="col-span-4 grid grid-cols-1 border-slate-200 shadow-md rounded-md mx-5 mb-5">
+        <div class="bg-sky-500 text-white py-1 px-3 rounded-t-md flex justify-between">
+          <span>Case Conference</span>
+          <button type="button" (click)="toggleModal('case_conference')" class="bg-white text-sky-500 px-2 rounded text-xs">
+            <fa-icon [icon]="faPlus"></fa-icon>
+          </button>
+        </div>
+        <div class="min-h-24" *ngIf="selected_gbv_case?.gbvIntake.case_conference.length===0">
+          <span class="flex italic py-5 justify-center">
+            No records to show
+          </span>
+        </div>
+
+        <table class="m-3" *ngIf="selected_gbv_case?.gbvIntake.case_conference.length>0">
+          <thead>
+            <tr>
+              <td class="w-1/12">
+
+              </td>
+              <td class="text-center font-semibold w-3/12 align-top pt-3">
+                Date
+              </td>
+              <td class="text-center font-semibold w-4/12 align-top pt-3">
+                Invitees & Concerns
+              </td>
+              <td class="text-center font-semibold w-4/12 align-top pt-3">
+                Mitigating factors & Recommendations
+              </td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="border-t border-slate-200" *ngFor="let conference of selected_gbv_case?.gbvIntake.case_conference" >
+              <td class="text-center align-top pt-3">
+                <fa-icon [icon]="faEdit" (click)="toggleModal('case_conference', conference)" class="hover:cursor-pointer text-orange-500"></fa-icon>
+              </td>
+              <td class="text-center align-top pt-3">
+                {{ conference.conference_date | date: 'MM/dd/yyyy'}}
+              </td>
+              <td class="text-left align-top pt-3">
+                <div class="mb-5">
+                  <span class="italic font-semibold">Invitees</span><br />
+                  <span *ngIf="conference.invite.length===0">
+                    - <br />
+                  </span>
+                  <span *ngFor="let invite of conference.invite">
+                    - {{ invite.invite.desc }} <br />
+                  </span>
+                  Remarks: {{ conference.conference_invitee_remarks ?? '-' }}
+                </div>
+                <div class="mb-5">
+                  <span class="italic font-semibold">Concerns</span><br />
+                  <span *ngIf="conference.concern.length===0">
+                    - <br />
+                  </span>
+                  <span *ngFor="let concern of conference.concern">
+                    - {{ concern.concern.desc }} <br />
+                  </span>
+                  Remarks: {{ conference.conference_concern_remarks ?? '-' }}
+                </div>
+              </td>
+              <td class="text-left align-top pt-3">
+                <div class="mb-5">
+                  <span class="italic font-semibold">Mitigating factors</span><br />
+                  <span *ngIf="conference.mitigating_factor.length===0">
+                    - <br />
+                  </span>
+                  <span *ngFor="let mitigating_factor of conference.mitigating_factor">
+                    - {{ mitigating_factor.mitigating_factor.desc }} <br />
+                  </span>
+                  Remarks: {{ conference.conference_mitigating_factor_remarks ?? '-' }}
+                </div>
+                <div class="mb-5">
+                  <span class="italic font-semibold">Recommendations</span><br />
+                  <span *ngIf="conference.recommendation.length===0">
+                    - <br />
+                  </span>
+                  <span *ngFor="let recommendation of conference.recommendation">
+                    - {{ recommendation.recommendation.desc }} <br />
+                  </span>
+                  Remarks: {{ conference.conference_recommendation_remarks ?? '-' }}
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-medical-consult *ngIf="modals['medical_consult']"
+  (toggleModal)="toggleModal($event)"
+  [selected_data]="selected_data"
+  [patient_gbv_intake_id]="selected_gbv_case.gbvIntake.id"
+  [patient_id]="patient_id"
+></app-medical-consult>
+
+<app-home-visit *ngIf="modals['home_visit']"
+  (toggleModal)="toggleModal($event)"
+  [selected_data]="selected_data"
+  [patient_gbv_intake_id]="selected_gbv_case.gbvIntake.id"
+  [patient_id]="patient_id"
+></app-home-visit>
+
+<app-placement *ngIf="modals['placement']"
+  (toggleModal)="toggleModal($event)"
+  [selected_data]="selected_data"
+  [patient_gbv_intake_id]="selected_gbv_case.gbvIntake.id"
+  [patient_id]="patient_id"
+></app-placement>
+
+<app-session *ngIf="modals['session']"
+  (toggleModal)="toggleModal($event)"
+  [selected_data]="selected_data"
+  [patient_gbv_intake_id]="selected_gbv_case.gbvIntake.id"
+  [patient_id]="patient_id"
+></app-session>
+
+<app-legal-case *ngIf="modals['legal_case']"
+  (toggleModal)="toggleModal($event)"
+  [selected_data]="selected_data"
+  [patient_gbv_intake_id]="selected_gbv_case.gbvIntake.id"
+  [patient_id]="patient_id"
+></app-legal-case>
+
+<app-case-conference *ngIf="modals['case_conference']"
+  (toggleModal)="toggleModal($event)"
+  [selected_data]="selected_data"
+  [patient_gbv_intake_id]="selected_gbv_case.gbvIntake.id"
+  [patient_id]="patient_id"
+></app-case-conference>
+<!-- <app-family-composition *ngIf="modals['add_family']"
+  (toggleModal)="toggleModal($event)"
+></app-family-composition> -->

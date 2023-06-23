@@ -1,0 +1,101 @@
+<div id="defaultModal" tabindex="-1" class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 w-full md:inset-0 h-modal md:h-full justify-center items-center flex" aria-modal="true" role="dialog" style="z-index:60">
+  <div class="relative p-4 w-full max-w-3xl h-auto md:h-auto">
+    <!-- Modal content -->
+    <div class="relative bg-white rounded-lg shadow">
+      <!-- Modal header -->
+      <div class="flex justify-between items-start py-3 px-5 rounded-t border-b bg-sky-500">
+        <h3 class="text-sm font-bold text-white">
+          Case Conference
+        </h3>
+      </div>
+      <!-- Modal body -->
+      <div class="overflow-y-auto h-[500px] scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
+        <div class="text-left text-gray-500 m-5" *ngIf="show_form">
+          <div class="grid grid-cols-4 gap-4">
+            <div class="col-span-4">
+              <label for="conference_date">Conference date</label>
+              <input type="date" [(ngModel)]="patient_conference.conference_date" name="conference_date" id="conference_date" class="input">
+            </div>
+
+            <div class="col-span-4 text-sky-500 font-semibold">
+              Invitees
+            </div>
+            <div class="col-span-4 grid grid-cols-2 gap-4">
+              <div *ngFor="let invite of invites">
+                <input type="checkbox" [(ngModel)]="patient_invites[invite.id]" attr.id="patient_invites{{invite.id}}" class="input-checkbox" />
+                <label attr.for="patient_invites{{invite.id}}" class="pl-3 py-0.5 select-none">{{ invite.desc }}</label>
+              </div>
+            </div>
+            <div class="col-span-4 flex">
+              <label class="mt-2 pr-3">Remarks</label>
+              <input type="text" [(ngModel)]="patient_conference.conference_invitee_remarks" name="conference_invitee_remarks" id="conference_invitee_remarks" class="input" />
+            </div>
+
+            <div class="col-span-4 text-sky-500 font-semibold">
+              Concerns
+            </div>
+            <div class="col-span-4 grid grid-cols-2 gap-4">
+              <div *ngFor="let concern of concerns">
+                <input type="checkbox" [(ngModel)]="patient_concerns[concern.id]" attr.id="patient_concerns{{concern.id}}" class="input-checkbox" />
+                <label attr.for="patient_concerns{{concern.id}}" class="pl-3 py-0.5 select-none">{{ concern.desc }}</label>
+              </div>
+            </div>
+            <div class="col-span-4 flex">
+              <label class="mt-2 pr-3">Remarks</label>
+              <input type="text" [(ngModel)]="patient_conference.conference_concern_remarks" name="conference_concern_remarks" id="conference_concern_remarks" class="input" />
+            </div>
+
+            <div class="col-span-4 text-sky-500 font-semibold">
+              Mitigating Factors
+            </div>
+            <div class="col-span-4 grid grid-cols-2 gap-4">
+              <div *ngFor="let mitigation of mitigations">
+                <input type="checkbox" [(ngModel)]="patient_mitigations[mitigation.id]" attr.id="patient_mitigations{{mitigation.id}}" class="input-checkbox" />
+                <label attr.for="patient_mitigations{{mitigation.id}}" class="pl-3 py-0.5 select-none">{{ mitigation.desc }}</label>
+              </div>
+            </div>
+            <div class="col-span-4 flex">
+              <label class="mt-2 pr-3">Remarks</label>
+              <input type="text" [(ngModel)]="patient_conference.conference_mitigating_factor_remarks" name="conference_mitigating_factor_remarks" id="conference_mitigating_factor_remarks" class="input" />
+            </div>
+
+            <div class="col-span-4 text-sky-500 font-semibold">
+              Recommendations
+            </div>
+            <div class="col-span-4 grid grid-cols-2 gap-4">
+              <div *ngFor="let recommendation of recommendations">
+                <input type="checkbox" [(ngModel)]="patient_recommendations[recommendation.id]" attr.id="patient_recommendations{{recommendation.id}}" class="input-checkbox" />
+                <label attr.for="patient_recommendations{{recommendation.id}}" class="pl-3 py-0.5 select-none">{{ recommendation.desc }}</label>
+              </div>
+            </div>
+            <div class="col-span-4 flex">
+              <label class="mt-2 pr-3">Remarks</label>
+              <input type="text" [(ngModel)]="patient_conference.conference_recommendation_remarks" name="conference_recommendation_remarks" id="conference_recommendation_remarks" class="input" />
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 mt-20" *ngIf="!show_form">
+          <span class="flex justify-center">
+            <fa-icon [icon]="faCircleNotch" spin="true" class="text-sky-500"></fa-icon>
+          </span>
+
+          <span class="flex justify-center">
+            Loading...
+          </span>
+        </div>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="flex justify-end py-4 px-5 space-x-4 rounded-b border-t border-gray-200">
+        <button type="button" class="btn-save bg-gray-400" (click)="closeModal()">Close</button>
+        <button [disabled]="is_saving" *ngIf="show_form" type="submit" class="btn-save px-10 disabled:bg-gray-300" (click)="onSubmit()" >
+          <fa-icon [icon]="is_saving ? faCircleNotch : faSave" class="pr-2" [spin]="is_saving ? true : false"></fa-icon>
+          {{ is_saving ? (patient_conference.id ? 'Updating' : 'Saving') : (patient_conference.id ? 'Update' : 'Save') }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="opacity-50 fixed inset-0 z-50 bg-black"></div>

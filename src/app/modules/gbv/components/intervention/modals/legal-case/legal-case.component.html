@@ -1,0 +1,120 @@
+<div id="defaultModal" tabindex="-1" class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 w-full md:inset-0 h-modal md:h-full justify-center items-center flex" aria-modal="true" role="dialog" style="z-index:60">
+  <div class="relative p-4 w-full max-w-3xl h-auto md:h-auto">
+    <!-- Modal content -->
+    <div class="relative bg-white rounded-lg shadow">
+      <!-- Modal header -->
+      <div class="flex justify-between items-start py-3 px-5 rounded-t border-b bg-sky-500">
+        <h3 class="text-sm font-bold text-white">
+          Legal Case Details
+        </h3>
+      </div>
+      <!-- Modal body -->
+      <div class="overflow-y-auto h-96 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
+        <form [formGroup]="legalForm" (submit)="onSubmit()" class="text-left text-gray-500 m-5">
+          <div class="grid grid-cols-4 gap-4">
+            <div class="col-span-2">
+              <input type="checkbox" name="complaint_filed_flag" id="complaint_filed_flag" formControlName="complaint_filed_flag" class="input-checkbox" />
+              <label for="complaint_filed_flag" class="pl-3 py-0.5">Complaint filed</label>
+            </div>
+
+            <div class="col-span-2">
+              <input type="checkbox" name="blotter_filed_flag" id="blotter_filed_flag" formControlName="blotter_filed_flag" class="input-checkbox" />
+              <label for="blotter_filed_flag" class="pl-3 py-0.5">Blotter filed</label>
+            </div>
+
+            <div class="col-span-4 grid grid-cols-3 gap-4">
+              <div>
+                <label for="filing_type_id">Type of Filing</label>
+                <select name="filing_type_id" id="filing_type_id" formControlName="filing_type_id" class="input">
+                  <option *ngFor="let filing_type of filing_types" [value]="filing_type.id">{{ filing_type.desc }}</option>
+                </select>
+              </div>
+
+              <div>
+                <label for="nps_docket_number" >NPS docket number</label>
+                <input type="text" name="nps_docket_number" id="nps_docket_number" formControlName="nps_docket_number" class="input">
+              </div>
+
+              <div>
+                <label for="nps_status_id">Case Status</label>
+                <select name="nps_status_id" id="nps_status_id" formControlName="nps_status_id" class="input">
+                  <option *ngFor="let nps_status of nps_statuses" [value]="nps_status.id">{{ nps_status.desc }}</option>
+                </select>
+              </div>
+
+              <div>
+                <label for="filed_by_name" >Filed by</label>
+                <input type="text" name="filed_by_name" id="filed_by_name" formControlName="filed_by_name" class="input">
+              </div>
+
+              <div>
+                <label for="filed_by_relation_id">Relation to survivor</label>
+                <select name="filed_by_relation_id" id="filed_by_relation_id" formControlName="filed_by_relation_id" class="input">
+                  <option *ngFor="let relation of child_relations" [value]="relation.id">{{ relation.desc }}</option>
+                </select>
+              </div>
+
+              <div>
+                <label for="filed_location_id">Filed at</label>
+                <select name="filed_location_id" id="filed_location_id" formControlName="filed_location_id" class="input">
+                  <option *ngFor="let filed_location of filed_locations" [value]="filed_location.id">{{ filed_location.desc }}</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="col-span-4">
+              <input type="checkbox" name="complaint_filed_flag" id="complaint_filed_flag" formControlName="complaint_filed_flag" class="input-checkbox" />
+              <label for="complaint_filed_flag" class="pl-3 py-0.5">Case update</label>
+            </div>
+
+            <div class="col-span-4 grid grid-cols-6 gap-4">
+              <div class="col-span-3">
+                <label for="cpumd_testimony_date" >Date of MD Testimony</label>
+                <input type="date" name="cpumd_testimony_date" id="cpumd_testimony_date" formControlName="cpumd_testimony_date" class="input">
+              </div>
+
+              <div class="col-span-3">
+                <label for="criminal_case_number" >Criminal Case Number</label>
+                <input type="text" name="criminal_case_number" id="criminal_case_number" formControlName="criminal_case_number" class="input">
+              </div>
+
+              <div class="col-span-2">
+                <label for="judge_name" >Judge Name</label>
+                <input type="text" name="judge_name" id="judge_name" formControlName="judge_name" class="input">
+              </div>
+
+              <div class="col-span-2">
+                <label for="court_name" >Court Name</label>
+                <input type="text" name="court_name" id="court_name" formControlName="court_name" class="input">
+              </div>
+
+              <div class="col-span-2">
+                <label for="fiscal_name" >Fiscal Name</label>
+                <input type="text" name="fiscal_name" id="fiscal_name" formControlName="fiscal_name" class="input">
+              </div>
+
+              <div class="col-span-6">
+                <label for="verdict_id">Verdict</label>
+                <select name="verdict_id" id="verdict_id" formControlName="verdict_id" class="input">
+                  <option *ngFor="let verdict of verdicts" [value]="verdict.id">{{ verdict.desc }}</option>
+                </select>
+              </div>
+            </div>
+
+          </div>
+        </form>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="flex justify-end py-4 px-5 space-x-4 rounded-b border-t border-gray-200">
+        <button type="button" class="btn-save bg-gray-400" (click)="closeModal()">Close</button>
+        <button [disabled]="is_saving || legalForm.invalid" type="submit" class="btn-save px-10 disabled:bg-gray-300" (click)="onSubmit()" >
+          <fa-icon [icon]="is_saving ? faCircleNotch : faSave"></fa-icon>
+          {{ is_saving ? 'Saving' : 'Save' }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="opacity-50 fixed inset-0 z-50 bg-black"></div>

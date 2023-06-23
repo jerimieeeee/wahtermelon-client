@@ -1,0 +1,385 @@
+<div class="border border-slate-200 rounded-b-lg">
+  <table class="min-w-full border select-none">
+  <div class="mx-5 mb-5">
+    <form [formGroup]="intakeForm" (ngSubmit)="onSubmit()">
+      <div class="grid grid-cols-4 gap-4 w-full mt-5">
+        <div class="col-span-4 border-b border-slate-200 flex justify-between w-full my-2 font-semibold text-sky-500">
+          Consent Details
+          <button [disabled]="pdf_exported" type="button" class="text-2xl mr-5 text-red-600 disabled:text-gray-600" (click)="toggleExportPDF('export_pdf')" >
+            <fa-icon [icon]="faFilePdf"></fa-icon>
+          </button>
+        </div>
+        <div class="mx-5 col-span-4 grid grid-cols-4 gap-4">
+          <div class="col-span-4">
+            <input type="checkbox" id="consent_flag" formControlName="consent_flag" class="input-checkbox" />
+            <label for="consent_flag" class="pl-3 py-0.5">The victim survivor/guardian has read, fully understood, and signed the consent form.</label>
+          </div>
+
+          <div class="col-span-2">
+            <label for="consent_relation_to_child_id">Relation to victim survivor</label>
+            <select name="consent_relation_to_child_id" id="consent_relation_to_child_id" formControlName="consent_relation_to_child_id" class="input">
+              <option [ngValue]="null">-</option>
+              <option *ngFor="let child_relation of child_relations" [value]="child_relation.id">{{ child_relation.desc }}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="col-span-4 flex justify-center">
+          <button [disabled]="is_saving" type="submit" class="btn-save mr-5 mt-4">
+            <fa-icon [icon]="is_saving ? faCircleNotch : faSave" [spin]="is_saving ? true : false" class="mr-2"></fa-icon>
+            {{ is_saving ? 'Saving' : 'Save' }}
+          </button>
+        </div>
+      </div>
+    </form>
+
+    <form [formGroup]="medicalForm" (ngSubmit)="submitMedicalForm()" *ngIf="has_consent" >
+      <div class="grid grid-cols-4 gap-4 w-full mt-5">
+        <div class="col-span-4 border-b border-slate-200 w-full my-2 pt-3 font-semibold text-sky-500">
+          Systems Review and Medical History
+        </div>
+
+        <div class="col-span-4 grid grid-cols-12 gap-4 mx-5">
+          <div class="col-span-3">
+            <label for="patient_temp" [ngClass]="{'text-red-500': show_error && f.patient_temp.errors}">Temp (&#8451;)</label>
+            <input type="number" name="patient_temp" id="patient_temp" formControlName="patient_temp" class="input" [ngClass]="{'invalid-input': show_error && f.patient_temp.errors}">
+          </div>
+
+          <div class="col-span-3">
+            <label for="patient_heart_rate" [ngClass]="{'text-red-500': show_error && f.patient_heart_rate.errors}">Heart Rate</label>
+            <input type="number" name="patient_heart_rate" id="patient_heart_rate" formControlName="patient_heart_rate" class="input" [ngClass]="{'invalid-input': show_error && f.patient_heart_rate.errors}">
+          </div>
+
+          <div class="col-span-3">
+            <label for="patient_weight" [ngClass]="{'text-red-500': show_error && f.patient_weight.errors}">Weight (kg)</label>
+            <input type="number" name="patient_weight" id="patient_weight" formControlName="patient_weight" class="input" [ngClass]="{'invalid-input': show_error && f.patient_weight.errors}">
+          </div>
+
+          <div class="col-span-3">
+            <label for="patient_height" [ngClass]="{'text-red-500': show_error && f.patient_height.errors}">Height (cm)</label>
+            <input type="number" name="patient_height" id="patient_height" formControlName="patient_height" class="input" [ngClass]="{'invalid-input': show_error && f.patient_height.errors}">
+          </div>
+
+          <div class="col-span-12">
+            <input type="checkbox" id="taking_medication_flag" class="input-checkbox mr-1.5" formControlName="taking_medication_flag" />
+            <label for="taking_medication_flag">Currently taking medications?</label>
+          </div>
+
+          <div class="col-span-12" *ngIf="medicalForm.value.taking_medication_flag">
+            <label for="taking_medication_remarks" [ngClass]="{'text-red-500': show_error && f.taking_medication_remarks.errors}">Current Medications</label>
+            <input type="text" name="taking_medication_remarks" id="taking_medication_remarks" formControlName="taking_medication_remarks" class="input" [ngClass]="{'invalid-input': show_error && f.taking_medication_remarks.errors}">
+          </div>
+
+          <div class="col-span-12 grid grid-cols-3">
+            <div class="col-span-3 font-semibold text-sm">General Survery</div>
+
+            <div class="ml-5 my-0.5" *ngFor="let gs of general_surveys">
+              <input type="checkbox" attr.id="{{ gs.var_name }}" class="input-checkbox mr-1.5" [formControlName]="gs.var_name" />
+              <label attr.for="{{ gs.var_name }}">{{ gs.desc }}</label>
+            </div>
+
+            <div *ngIf="medicalForm.value.general_survey_others" class="col-span-3 mt-2">
+              <label for="gbv_general_survey_remarks" [ngClass]="{'text-red-500': show_error && f.patient_temp.errors}">Other Abnormality</label>
+              <input type="text" name="gbv_general_survey_remarks" id="gbv_general_survey_remarks" formControlName="gbv_general_survey_remarks" class="input" [ngClass]="{'invalid-input': show_error && f.gbv_general_survey_remarks.errors}">
+            </div>
+          </div>
+
+          <div class="col-span-12">
+            <input type="checkbox" id="menarche_flag" class="input-checkbox mr-1.5" formControlName="menarche_flag" />
+            <label for="menarche_flag">Menarche?</label>
+          </div>
+
+          <div class="col-span-12 grid grid-cols-2 gap-4" *ngIf="medicalForm.value.menarche_flag">
+            <div>
+              <label for="menarche_age" [ngClass]="{'text-red-500': show_error && f.menarche_age.errors}">Menarche Age</label>
+              <input type="number" name="menarche_age" id="menarche_age" formControlName="menarche_age" class="input" [ngClass]="{'invalid-input': show_error && f.menarche_age.errors}">
+            </div>
+
+            <div>
+              <label for="lmp_date" [ngClass]="{'text-red-500': show_error && f.lmp_date.errors}">LMP Date</label>
+              <input type="date" name="lmp_date" id="lmp_date" formControlName="lmp_date" class="input" [ngClass]="{'invalid-input': show_error && f.lmp_date.errors}">
+            </div>
+          </div>
+
+          <div class="col-span-12">
+            <input type="checkbox" id="genital_discharge_uti_flag" class="input-checkbox mr-1.5" formControlName="genital_discharge_uti_flag" />
+            <label for="genital_discharge_uti_flag">History of genital discharge or UTI</label>
+          </div>
+
+          <div class="col-span-12">
+            <input type="checkbox" id="scar_physical_abuse_flag" class="input-checkbox mr-1.5" formControlName="scar_physical_abuse_flag" />
+            <label for="scar_physical_abuse_flag">Any scars that do not appear to result from physical abuse</label>
+          </div>
+
+          <div class="col-span-12">
+            <input type="checkbox" id="past_hospitalizations_flag" class="input-checkbox mr-1.5" formControlName="past_hospitalizations_flag" />
+            <label for="past_hospitalizations_flag">Past hospitalizations</label>
+          </div>
+
+          <div class="col-span-12" *ngIf="medicalForm.value.past_hospitalizations_flag">
+            <label for="past_hospital_remarks" [ngClass]="{'text-red-500': show_error && f.past_hospital_remarks.errors}">Reason for hospitalizations</label>
+            <input type="text" name="past_hospital_remarks" id="past_hospital_remarks" formControlName="past_hospital_remarks" class="input" [ngClass]="{'invalid-input': show_error && f.past_hospital_remarks.errors}">
+          </div>
+
+          <div class="col-span-12">
+            <input type="checkbox" id="pertinent_med_history_flag" class="input-checkbox mr-1.5" formControlName="pertinent_med_history_flag" />
+            <label for="pertinent_med_history_flag">Pertinent medical history</label>
+          </div>
+
+          <div class="col-span-12" *ngIf="medicalForm.value.pertinent_med_history_flag">
+            <label for="medical_history_remarks" [ngClass]="{'text-red-500': show_error && f.medical_history_remarks.errors}">Explain pertinent medical history</label>
+            <input type="text" name="medical_history_remarks" id="medical_history_remarks" formControlName="medical_history_remarks" class="input" [ngClass]="{'invalid-input': show_error && f.medical_history_remarks.errors}">
+          </div>
+
+          <div class="col-span-12">
+            <label for="summary_non_abuse_findings" [ngClass]="{'text-red-500': show_error && f.summary_non_abuse_findings.errors}">Summary of non-abuse findings</label>
+            <textarea rows="2" name="summary_non_abuse_findings" id="summary_non_abuse_findings" formControlName="summary_non_abuse_findings" class="input" [ngClass]="{'invalid-input': show_error && f.summary_non_abuse_findings.errors}">
+            </textarea>
+          </div>
+
+          <div class="col-span-12 grid grid-cols-3">
+            <div class="col-span-3 font-semibold text-sm">Physical Exam</div>
+
+            <div class="col-span-12 ml-5 mb-2" *ngFor="let pe of physical_exams">
+              <label for="summary_non_abuse_findings">{{ pe.desc }}</label>
+              <textarea rows="2" [name]="pe.var_name" [id]="pe.var_name" [formControlName]="pe.var_name" class="input">
+              </textarea>
+            </div>
+
+            <div class="col-span-12 ml-5 mb-2">
+              <label for="medical_impression_id">Impression</label>
+              <select name="medical_impression_id" id="medical_impression_id" formControlName="medical_impression_id" class="input">
+                <option [ngValue]="null">-</option>
+                <option *ngFor="let impression of medical_impressions" [ngValue]="impression.id">{{ impression.desc }}</option>
+              </select>
+            </div>
+
+            <div class="col-span-12 ml-5" *ngIf="medicalForm.value.medical_impression_id === 13">
+              <label for="medical_impression_remarks">Details</label>
+              <textarea rows="2" name="medical_impression_remarks" id="medical_impression_remarks" formControlName="medical_impression_remarks" class="input">
+              </textarea>
+            </div>
+          </div>
+
+          <!-- <div class="col-span-12 grid grid-cols-3">
+            <div class="col-span-3 font-semibold text-sm">Impression</div>
+
+
+          </div> -->
+          <div class="col-span-12 flex justify-center">
+            <button [disabled]="is_saving" type="submit" class="btn-save mr-5 mt-4">
+              <fa-icon [icon]="is_saving ? faCircleNotch : faSave" [spin]="is_saving ? true : false" class="mr-2"></fa-icon>
+              {{ is_saving ? 'Saving' : 'Save' }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+
+
+    <div class="grid grid-cols-3 gap-4 w-full mt-5" *ngIf="has_consent" >
+      <div class="col-span-4 border-b border-slate-200 w-full my-2 pt-3 font-semibold text-sky-500">
+        Symptoms Described by the Victim Survivor and/or Historian
+      </div>
+
+      <div class="col-span-4 grid grid-cols-1 border-slate-200 shadow-md rounded-md mx-5 mb-5">
+        <div class="bg-sky-500 text-white py-1 px-3 rounded-t-md flex justify-between">
+          <span>Anogenital</span>
+          <button type="button" (click)="toggleModal('anogenital', 'Anogenital', 'gbv-symptoms-anogenital', 'patient-gbv-symptoms-anogenital', 'anogenital_symptoms_id', 'anogenital_array', selected_gbv_case?.gbvIntake.symptoms_anogenital)" class="bg-white text-sky-500 px-2 rounded text-xs">
+            <fa-icon [icon]="faEdit"></fa-icon>
+          </button>
+        </div>
+        <div class="min-h-24" *ngIf="!anogenital_exam">
+          <span class="flex italic py-5 justify-center">
+            No records to show
+          </span>
+        </div>
+
+        <table class="m-3">
+          <thead>
+            <tr>
+              <td class="text-center uppercase text-xs">Description</td>
+              <td class="text-center uppercase text-xs">Victim Survivor</td>
+              <td class="text-center uppercase text-xs">Historian</td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="border-t border-slate-200" *ngFor="let anogenital of anogenital_exam| keyvalue" >
+              <td>
+                {{ anogenital.key }}
+              </td>
+              <td class="text-center">
+                <input type="checkbox" class="input-checkbox disabled:bg-blue-500" *ngIf="anogenital.value[1]" checked />
+              </td>
+              <td class="text-center">
+                <input type="checkbox" class="input-checkbox disabled:bg-blue-500" *ngIf="anogenital.value[2]" checked />
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="col-span-4 grid grid-cols-1 border-slate-200 shadow-md rounded-md mx-5 mb-5">
+        <div class="bg-sky-500 text-white py-1 px-3 rounded-t-md flex justify-between">
+          <span>Corporal</span>
+          <button type="button" (click)="toggleModal('anogenital', 'Corporal', 'gbv-symptoms-corporal', 'patient-gbv-symptoms-corporal', 'corporal_symptoms_id', 'corporal_array', selected_gbv_case?.gbvIntake.symptoms_corporal)" class="bg-white text-sky-500 px-2 rounded text-xs">
+            <fa-icon [icon]="faEdit"></fa-icon>
+          </button>
+        </div>
+        <div class="min-h-24" *ngIf="!corporal_exam" >
+          <span class="flex italic py-5 justify-center">
+            No records to show
+          </span>
+        </div>
+
+        <table class="m-3">
+          <thead>
+            <tr>
+              <td class="text-center uppercase text-xs">Description</td>
+              <td class="text-center uppercase text-xs">Victim Survivor</td>
+              <td class="text-center uppercase text-xs">Historian</td>
+
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="border-t border-slate-200" *ngFor="let corporal of corporal_exam | keyvalue" >
+              <td> {{ corporal.key }}</td>
+              <td class="text-center">
+                <input type="checkbox" class="input-checkbox disabled:bg-blue-500" *ngIf="corporal.value[1]" checked />
+              </td>
+              <td class="text-center">
+                <input type="checkbox" class="input-checkbox disabled:bg-blue-500" *ngIf="corporal.value[2]" checked />
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="col-span-4 grid grid-cols-1 border-slate-200 shadow-md rounded-md mx-5 mb-5">
+        <div class="bg-sky-500 text-white py-1 px-3 rounded-t-md flex justify-between">
+          <span>Behavioral</span>
+          <button type="button" (click)="toggleModal('anogenital', 'Behavioral', 'gbv-symptoms-behavioral', 'patient-gbv-symptoms-behavioral', 'behavioral_symptoms_id', 'behavior_array', selected_gbv_case?.gbvIntake.symptoms_behavioral)"class="bg-white text-sky-500 px-2 rounded text-xs">
+            <fa-icon [icon]="faEdit"></fa-icon>
+          </button>
+        </div>
+        <div class="min-h-24"*ngIf="!behavioral_exam">
+          <span class="flex italic py-5 justify-center">
+            No records to show
+          </span>
+        </div>
+
+        <table class="m-3">
+          <thead>
+            <tr>
+              <td class="text-center uppercase text-xs">Description</td>
+              <td class="text-center uppercase text-xs">Victim Survivor</td>
+              <td class="text-center uppercase text-xs">Historian</td>
+
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="border-t border-slate-200" *ngFor="let behavioral of behavioral_exam| keyvalue" >
+              <td> {{ behavioral.key }}</td>
+              <td class="text-center">
+                <input type="checkbox" class="input-checkbox disabled:bg-blue-500" *ngIf="behavioral.value[1]" checked />
+              </td>
+              <td class="text-center">
+                <input type="checkbox" class="input-checkbox disabled:bg-blue-500" *ngIf="behavioral.value[2]" checked />
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-3 gap-4 w-full mt-5" *ngIf="has_consent" >
+      <div class="col-span-4 border-b border-slate-200 w-full my-2 pt-3 font-semibold text-sky-500">
+        Documents
+      </div>
+
+      <div class="col-span-4 grid grid-cols-1 border-slate-200 shadow-md rounded-md mx-5 mb-5">
+
+        <div class="bg-sky-500 text-white py-1 px-3 rounded-t-md flex justify-between">
+          <span>Uploaded Files</span>
+          <button type="button" (click)="toggleFileModal('file_upload')" class="bg-white text-sky-500 px-2 rounded text-xs">
+            <fa-icon [icon]="faPlus"></fa-icon>
+          </button>
+        </div>
+        <div class="min-h-24"*ngIf="!behavioral_exam">
+          <span class="flex italic py-5 justify-center">
+            No records to show
+          </span>
+        </div>
+
+        <table class="m-3" *ngIf="!fetchingFiles">
+          <thead>
+            <tr>
+              <td class="text-center uppercase text-xs w-1/12"> </td>
+              <td class="text-center uppercase text-xs w-4/12">File Title</td>
+              <td class="text-center uppercase text-xs w-6/12">File Description</td>
+              <td class="text-center uppercase text-xs w-1/12">Action</td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="border-t border-slate-200 my-3" *ngFor="let file of gbv_files" >
+              <td>
+
+              </td>
+              <td class="py-2">
+                {{ file.file_title }}
+              </td>
+              <td>
+                {{ file.file_desc }}
+              </td>
+              <td class="text-center">
+                <button type="button" (click)="viewFile(file.id)" class="text-xs px-3 py-1 bg-blue-500 text-white rounded-md">
+                  View
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="grid grid-cols-1" *ngIf="fetchingFiles">
+          <div class="flex justify-center text-sky-500">
+            <fa-icon [icon]="faCircleNotch" spin="true"></fa-icon>
+          </div>
+          <div class="flex justify-center">
+            Fetching Files...
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</table>
+</div>
+
+
+
+<app-anogenital *ngIf="modals['anogenital']"
+  (toggleModal)="toggleModal($event)"
+  [selected_exam]="selected_exam"
+  [intake_id]="selected_gbv_case?.gbvIntake.id"
+  [patient_id]="patient_id"
+></app-anogenital>
+
+<app-file-upload *ngIf="modals['file_upload']"
+  (toggleFileModal)="toggleFileModal($event)"
+  [gbv_id]="selected_gbv_case?.id"
+  [patient_id]="patient_id"
+></app-file-upload>
+
+<app-view-file *ngIf="modals['view_file']"
+  (toggleModal)="toggleModal($event)"
+  [selected_file_id]="selected_file_id"
+></app-view-file>
+
+<app-export-pdf *ngIf="modals['export_pdf']"
+  (toggleExportPDF)="toggleExportPDF($event)"
+  [selected_gbv_case]="selected_gbv_case"
+></app-export-pdf>
+<!-- <app-physical-examination *ngIf="modals['physical-examination']"
+  (toggleModal)="toggleModal($event)"
+></app-physical-examination> -->
+
+

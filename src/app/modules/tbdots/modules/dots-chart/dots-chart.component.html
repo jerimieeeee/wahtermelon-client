@@ -20,7 +20,7 @@
               <input type="checkbox"
               [(ngModel)]="intensiveAll[i]"
               (click)="checkAll('ip', i)"
-              class="rounded w-4 h-4 border border-slate-400" />
+              class="input-checkbox" />
             </td>
             <td class="px-2">
               {{ ip.month[1] }}
@@ -32,7 +32,7 @@
               <input type="checkbox"
                 *ngIf="compareDate(treatment_start, continuation_start, ip.month[0], day, ip.year, 'ip', i)"
                 [(ngModel)]="intensiveForm[i+'-'+ip.year+'-'+ip.month[0].toString().padStart(2, '0')+'-'+day.toString().padStart(2, '0')]"
-                class="rounded w-4 h-4 border border-slate-400" />
+                class="input-checkbox" />
             </td>
             <!-- <td class="text-center">
               {{ ip_count[i] }}
@@ -66,7 +66,7 @@
               <input type="checkbox"
               [(ngModel)]="continuationAll[i]"
               (click)="checkAll('cp', i)"
-              class="rounded w-4 h-4 border border-slate-400" />
+              class="input-checkbox" />
             </td>
             <td class="px-2">
               {{ cp.month[1] }}
@@ -78,7 +78,7 @@
               <input type="checkbox"
               *ngIf="compareDate(continuation_start, treatment_end, cp.month[0], day, cp.year, 'cp', i)"
               [(ngModel)]="continuationForm[i+'-'+cp.year+'-'+cp.month[0].toString().padStart(2, '0')+'-'+day.toString().padStart(2, '0')]"
-              class="rounded w-4 h-4 border border-slate-400" />
+              class="input-checkbox" />
             </td>
             <!-- <td class="text-center">
               {{ cp_count[i] }}

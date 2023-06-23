@@ -32,6 +32,8 @@ export class NameHelperService {
         return 'Non Communicable Disease';
       case 'tb':
         return 'TB Dots';
+      case 'gbv':
+        return 'Gender Based Violence';
     }
   }
 

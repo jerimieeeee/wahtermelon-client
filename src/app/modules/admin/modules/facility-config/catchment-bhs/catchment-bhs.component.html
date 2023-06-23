@@ -1,0 +1,72 @@
+<div class="grid grid-cols-6 gap-5 mt-5">
+  <div class="col-span-2 grid grid-cols-1 border border-slate-200 shadow-md rounded-lg p-5">
+    <div>
+      <label for="bhs_name" class="font-semibold">BHS Name</label>
+      <input type="text" name="bhs_name" id="bhs_name" [(ngModel)]="bhs.bhs_name" class="input" />
+    </div>
+    <div class="mt-5">
+      <label for="selected_staff" class="font-semibold">Assigned Midwife/Staff</label>
+      <select name="selected_staff" id="selected_staff" [(ngModel)]="bhs.assigned_user_id" class="input">
+        <option *ngFor="let staff of rhu_staffs" [value]="staff.id">{{ staff.last_name }}, {{ staff.first_name }}</option>
+      </select>
+    </div>
+    <div class="mt-5">
+      <label for="brgy_location" class="font-semibold">BHS Location</label>
+      <select name="brgy_location" id="brgy_location" [(ngModel)]="bhs.barangay_code" class="input">
+        <option *ngFor="let barangay of catchment_barangays[selected_year].data" [value]="barangay.barangay.code">{{ barangay.barangay.name }}</option>
+      </select>
+    </div>
+
+    <div class="my-5">
+      <div class="font-semibold">Catchment Barangay</div>
+      <div class="ml-5" *ngFor="let barangay of catchment_barangays[selected_year].data">
+        <input type="checkbox" attr.id="selected_barangays{{barangay.id}}" [(ngModel)]="selected_barangays[barangay.id]" class="input-checkbox mr-3">
+        <label class="select-none" attr.for="selected_barangays{{barangay.id}}">{{ barangay.barangay.name }}</label>
+      </div>
+    </div>
+    <div class="text-end border-t border-slate-300 p-3 -mx-5 -mb-5">
+      <button [disabled]="is_loading" type="button" class="btn-save" (click)="onSubmit()">
+        <fa-icon [icon]="is_loading ? faCircleNotch : faSave" class="pr-2" [spin]="is_loading"></fa-icon>
+        {{ is_loading ? (bhs.id ? 'Updating' : 'Saving') : (bhs.id ? 'Update' : 'Save') }}
+      </button>
+    </div>
+  </div>
+
+  <div class="col-span-4 border border-slate-200 shadow-md rounded-lg">
+    <div class="p-3 text-white rounded-t-lg bg-blue-500">
+      Barangay Health Stations
+    </div>
+    <div class="overflow-y-auto overflow-x-auto h-[500px]">
+      <table class="table-fixed w-full">
+        <thead>
+          <tr class="border-b border-slate-200 bg-gray-100 text-xs sticky top-0">
+            <th class="w-36 h-12">BHS NAME</th>
+            <th class="w-24">ASSIGNED STAFF</th>
+            <th class="w-36">BHS LOCATION</th>
+            <th class="w-36">CATCHMENT BARANGAY</th>
+            <th class="w-36">ACTION</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="mb-2 border-b border-slate-100" *ngFor="let bhs of facility_bhs; let i = index">
+            <td class="pl-2 align-top">
+              {{ bhs.bhs_name }}
+            </td>
+            <td>
+              {{ bhs.assigned_user.last_name }}, {{ bhs.assigned_user.first_name }}
+            </td>
+            <td>
+              {{ bhs.barangay.name }}
+            </td>
+            <td>
+              <span *ngFor="let barangay of bhs.bhs_barangay">{{ barangay.barangay.name }}, </span>
+            </td>
+            <td class="text-center">
+              <fa-icon [icon]="faEdit" class="text-orange-500 pr-5 hover:cursor-pointer" (click)="editBhs(bhs)"></fa-icon>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

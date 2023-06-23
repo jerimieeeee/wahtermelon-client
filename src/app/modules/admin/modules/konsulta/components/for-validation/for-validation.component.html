@@ -13,7 +13,7 @@
       <th scope="row" class="py-4 px-3 font-medium">
         <div class="grid grid-cols-12">
           <div class="col-span-1 align-middle">
-            <input [disabled]="!kon.validated" [(ngModel)]="saving_list[kon.patient.id]" (change)="addToSaving(kon.patient.id)" type="checkbox" class="rounded w-4 h-4 border border-slate-400 disabled:bg-gray-400" />
+            <input [disabled]="!kon.validated" [(ngModel)]="saving_list[kon.patient.id]" (change)="addToSaving(kon.patient.id)" type="checkbox" class="input-checkbox disabled:bg-gray-400" />
           </div>
           <div class="col-span-11">
             {{ kon.patient.last_name }}, {{ kon.patient.first_name }} {{ kon.patient.middle_name === 'NA' ? '' : kon.patient.middle_name }} {{ kon.patient.suffix_name === 'NA' ? '' : kon.patient.suffix_name}}
