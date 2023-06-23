@@ -26,7 +26,7 @@ export class SearchCaserateComponent {
   answers: any;
   answers_yn: any;
 
-  is_saving: boolean = false;
+  is_searching: boolean = false;
   show_error: boolean = false;
   required_message = 'Required field';
 
@@ -41,18 +41,22 @@ export class SearchCaserateComponent {
     return this.searchForm.controls;
   }
 
+  caserate_result: any = [];
   onSubmit() {
+    this.is_searching = true;
     this.searchForm.patchValue({program_code: 'mc'});
     this.http.post('eclaims/case-rate', this.searchForm.value).subscribe({
       next: (data:any) => {
-        console.log(data)
+        this.is_searching = false;
+        this.caserate_result.push(data.CASERATES);
+        console.log(typeof this.caserate_result, this.caserate_result)
       },
       error: err => console.log(err)
     })
   }
 
-  closeModal(){
-    this.toggleModal.emit('search-caserate');
+  closeModal(data?){
+    this.toggleModal.emit('search-caseate');
   }
 
   constructor(

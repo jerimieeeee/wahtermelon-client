@@ -13,36 +13,89 @@
         <form [formGroup]="searchForm" (submit)="onSubmit()" class="text-left text-gray-500 m-5">
           <div class="grid grid-cols-12 gap-4">
             <div class="col-span-4">
-              <label for="diagnosis_description">Diagnosis Description</label>
-              <input type="text" name="diagnosis_description" id="diagnosis_description" formControlName="diagnosis_description" class="input">
+              <label for="description">Description</label>
+              <input type="text" name="description" id="description" formControlName="description" class="input">
             </div>
 
-            <div class="col-span-4">
-              <label for="icd10_code">ICD10 Code</label>
-              <input type="text" name="icd10_code" id="icd10_code" formControlName="icd10_code" class="input">
+            <div class="col-span-3">
+              <label for="icd10">ICD10 Code</label>
+              <input type="text" name="icd10" id="icd10" formControlName="icd10" class="input">
             </div>
 
-            <div class="col-span-4">
-              <label for="rvs_code">RVS Code</label>
-              <input type="text" name="rvs_code" id="rvs_code" formControlName="rvs_code" class="input">
+            <div class="col-span-3">
+              <label for="rvs">RVS Code</label>
+              <input type="text" name="rvs" id="rvs" formControlName="rvs" class="input">
             </div>
 
-            <div class="col-span-12 flex justify-center">
-              <button type="submit" class="btn-save">
-                <fa-icon [icon]="faMagnifyingGlass" class="pr-2"></fa-icon>
-                Search
+            <div class="col-span-2 justify-end">
+              <button type="submit" class="btn-save mt-6 -py-0.5">
+                <fa-icon *ngIf="is_searching" [icon]="faCircleNotch" spin="true"></fa-icon>
+                {{ is_searching ? '' : 'Search' }}
               </button>
             </div>
           </div>
         </form>
+        <div>
+          <table class="table-auto text-xs border border-slate-300 border-collapse">
+            <thead>
+              <tr>
+                <th colspan="15">Case Rate Group</th>
+              </tr>
+              <tr>
+                <th rowspan="2" class="border border-slate-300">ICD10/RVS Code</th>
+                <th rowspan="2" class="border border-slate-300">Description</th>
+                <th colspan="3" class="border border-slate-300">First Case Rate</th>
+                <th colspan="3" class="border border-slate-300">Second Case Rate</th>
+                <th colspan="7" class="border border-slate-300">Applicable Health Care Institutions <br />Note: If licensed and capable to perform the procedure</th>
+              </tr>
+              <tr>
+                <th class="border border-slate-300">HCI Fee</th>
+                <th class="border border-slate-300">Prof Fee</th>
+                <th class="border border-slate-300">Case Rate</th>
+                <th class="border border-slate-300">HCI Fee</th>
+                <th class="border border-slate-300">Prof Fee</th>
+                <th class="border border-slate-300">Case Rate</th>
+                <th class="border border-slate-300">Level 1</th>
+                <th class="border border-slate-300">Level 2</th>
+                <th class="border border-slate-300">Level 3</th>
+                <th class="border border-slate-300">ASC</th>
+                <th class="border border-slate-300">PCF</th>
+                <th class="border border-slate-300">MCP</th>
+                <th class="border border-slate-300">FSDC</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border border-slate-300" *ngFor="let caserate of caserate_result">
+                <td [rowSpan]="caserate.AMOUNT.length" class="border border-slate-300">{{ caserate.pItemCode }}</td>
+                <td [rowSpan]="caserate.AMOUNT.length" class="border border-slate-300">{{ caserate.pCaseRateDescription }}</td>
+                <td colspan="13" class="border border-slate-300">
+                  <table>
+                    <tr *ngFor="let amount of caserate.AMOUNT">
+                      <td class="px-1 border border-slate-300">{{ amount.pPrimaryHCIFee }}</td>
+                      <td class="px-1 border border-slate-300">{{ amount.pPrimaryProfFee }}</td>
+                      <td class="px-1 border border-slate-300" (click)="closeModal(caserate)">{{ amount.pPrimaryCaseRate }}</td>
+                      <td class="px-1 border border-slate-300">{{ amount.pSecondaryHCIFee }}</td>
+                      <td class="px-1 border border-slate-300">{{ amount.pSecondaryProfFee }}</td>
+                      <td class="px-1 border border-slate-300">{{ amount.pSecondaryCaseRate }}</td>
+                      <td class="px-1 border border-slate-300">{{ amount.pCheckFacilityH1 }}</td>
+                      <td class="px-1 border border-slate-300">{{ amount.pCheckFacilityH2 }}</td>
+                      <td class="px-1 border border-slate-300">{{ amount.pCheckFacilityH3 }}</td>
+                      <td class="px-1 border border-slate-300">{{ amount.pCheckFacilityASC }}</td>
+                      <td class="px-1 border border-slate-300">{{ amount.pCheckFacilityPCF }}</td>
+                      <td class="px-1 border border-slate-300">{{ amount.pCheckFacilityMAT }}</td>
+                      <td class="px-1 border border-slate-300">{{ amount.pCheckFacilityFSDC }}</td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
 
       <!-- Modal footer -->
       <div class="flex justify-end py-4 px-5 space-x-4 rounded-b border-t border-gray-200">
         <button type="button" class="btn-save bg-gray-400" (click)="closeModal()">Close</button>
-        <!-- <button [disabled]="is_saving || searchForm.invalid" type="submit" class="btn-save px-10 disabled:bg-gray-300" (click)="onSubmit()" >
-          {{ is_saving ? 'Saving' : 'Save' }}
-        </button> -->
       </div>
     </div>
   </div>
