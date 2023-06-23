@@ -12,18 +12,18 @@
     <div class="overflow-y-auto h-[800px] scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
       <table id="mainForm">
         <table class="w-full text-sm text-left" id="medForm">
-          <div class="text-center font-bold pt-6 text-2xl">
+          <div class="text-center font-bold pt-3 text-2xl">
             <h2>MEDICAL EXAM & DIAGNOSIS</h2>
           </div>
           <tbody class="h-96 overflow-y-auto">
-            <div class="grid grid-cols-12 m-5">
+            <div class="grid grid-cols-12 m-3">
 
-              <div class="col-span-3 border border-gray-200">
+              <div class="col-span-2 border border-gray-200">
                 <h4 class="py-2 pl-3">Patient Name</h4>
               </div>
 
-              <div class="col-span-3 border border-gray-200">
-                <h4 class="py-2 pl-3">{{patient_details?.first_name}} {{patient_details?.middle_name}} {{patient_details?.last_name}}</h4>
+              <div class="col-span-4 border border-gray-200">
+                <h4 class="py-2 pl-3 capitalize">{{patient_details?.first_name}} {{patient_details?.middle_name}} {{patient_details?.last_name}}</h4>
               </div>
 
               <div class="col-span-3 border border-gray-200">
@@ -31,52 +31,91 @@
               </div>
 
               <div class="col-span-3 border border-gray-200">
-                <h4 class="py-2 pl-3"> </h4>
+                <h4 class="py-2 pl-3">{{selected_gbv_case.gbvIntake?.case_number}} </h4>
               </div>
 
-              <div class="col-span-3 border border-gray-200">
-                <h4 class="py-2 pl-3">Date of Birth and Age</h4>
+              <div class="col-span-2 border border-gray-200">
+                <h4 class="py-2 pl-3">DOB & Age</h4>
               </div>
 
-              <div class="col-span-3 border border-gray-200">
+              <div class="col-span-4 border border-gray-200">
                 <h4 class="py-2 pl-3">{{patient_details?.birthdate | date: 'MM/dd/yyyy'}}, {{ getAge() }} </h4>
               </div>
 
               <div class="col-span-3 border border-gray-200">
-                <h4 class="py-2 pl-3">Physician</h4>
+                <h4 class="py-2 pl-3">Contact Number</h4>
               </div>
 
               <div class="col-span-3 border border-gray-200">
-                <h4 class="py-2 pl-3">{{selected_gbv_case.gbvIntake?.consult_visit.physician}}</h4>
+                <h4 class="py-2 pl-3">{{ patient_details?.mobile_number }}</h4>
               </div>
 
-              <div class="col-span-3 border border-gray-200">
+              <div class="col-span-2 border border-gray-200">
+                <h4 class="py-2 pl-3">Address</h4>
+              </div>
+
+              <div class="col-span-10 border border-gray-200">
+                <h4 class="py-2 pl-3">
+                  {{ patient_details?.household_folder?.address ? patient_details?.household_folder?.address+', ' : '-' }} {{ patient_details?.household_folder?.barangay.name ? 'Brgy. '+patient_details?.household_folder?.barangay.name+', ' : ''}}
+                  {{ patient_details?.household_folder?.barangay.municipality.name ? patient_details?.household_folder?.barangay.municipality.name+', ' : '' }}
+                  {{ patient_details?.household_folder?.barangay.province.name ? patient_details?.household_folder?.barangay.province.name+', ' : '' }}
+                  {{ patient_details?.household_folder?.barangay.region.name ? patient_details?.household_folder?.barangay.region.name : '' }}
+                </h4>
+              </div>
+
+              <div class="col-span-2 border border-gray-200">
+                <h4 class="py-2 pl-3">Facility Name</h4>
+              </div>
+
+              <div class="col-span-10 border border-gray-200">
+                <h4 class="py-2 pl-3 capitalize">{{ userInfo.facility.facility_name }} </h4>
+              </div>
+
+              <div class="col-span-2 border border-gray-200">
                 <h4 class="py-2 pl-3">Date and Time</h4>
               </div>
 
-              <div class="col-span-3 border border-gray-200">
-                <h4 class="py-2 pl-3"> </h4>
+              <div class="col-span-4 border border-gray-200">
+                <h4 class="py-2 pl-3">{{selected_gbv_case.gbvIntake?.case_date}} </h4>
               </div>
 
-              <div class="col-span-3 border border-gray-200">
-                <h4 class="py-2 pl-3">Physician's Signature</h4>
-              </div>
-
-              <div class="grid grid-cols-4 col-span-3">
+              <!-- <div class="grid grid-cols-4 col-span-3">
                 <div class="col-span-2 border border-gray-200 py-2 pl-3"></div>
                 <div class="col-span-2 border border-gray-200 py-2 pl-3">RN:</div>
+              </div> -->
+
+              <div class="col-span-2 border border-gray-200">
+                <h4 class="py-2 pl-3">Physician</h4>
+              </div>
+
+              <div class="col-span-4 border border-gray-200">
+                <h4 class="py-2 pl-3">{{patient_details?.first_name}} {{patient_details?.middle_name}} {{patient_details?.last_name}} </h4>
               </div>
 
               <div class="col-span-3 border border-gray-200">
-                <h4 class="py-2 pl-3">First CPU/RHU Exam</h4>
+                <h4 class="py-2 pl-3">First CPU/RHU Exam:</h4>
+              </div>
+
+              <div class="col-span-9 border border-gray-200">
+                <div class="py-2">
+                <label class="pl-3"><input class="py-2 pl-3 input-checkbox mr-1" type="checkbox" disabled> Yes</label>
+                <label class="pl-3" for=""><input class="py-2 pl-3 input-checkbox mr-1" type="checkbox" disabled> No</label>
+                <label class="py-2 pl-3">Date of previous: </label>
+                </div>
               </div>
 
               <div class="col-span-3 border border-gray-200">
-                <h4 class="py-2 pl-3"> </h4>
+                <h4 class="py-2 pl-3">Examined before by:</h4>
               </div>
 
-              <div class="col-span-6 border border-gray-200">
-                <h4 class="py-2 pl-3">Examined before by</h4>
+              <div class="col-span-9 border border-gray-200">
+                <div class="py-2">
+                  <label class="pl-3"><input class="py-2 pl-3 input-checkbox mr-1" type="checkbox" disabled> None</label>
+                  <label class="pl-3" for=""><input class="py-2 pl-3 input-checkbox mr-1" type="checkbox" disabled> NBI</label>
+                  <label class="pl-3"><input class="py-2 pl-3 input-checkbox mr-1" type="checkbox" disabled> Private MD</label>
+                  <label class="pl-3" for=""><input class="py-2 pl-3 input-checkbox mr-1" type="checkbox" disabled> Others</label>
+                  <label class="py-2 pl-3">Date of previous: </label>
+                  </div>
               </div>
 
               <div class="col-span-12 border border-gray-200">
@@ -196,13 +235,13 @@
 
               <div class="col-span-6 border border-gray-200">
                 
-                <div class="border border-gray-200 py-7">
+                <div class="py-7">
                 <h4 class="py-2 pl-3">Any scars that do not appear to result from physical abuse?</h4>
                 <label class="pl-3"><input class="py-2 pl-3 input-checkbox mr-1" type="checkbox" disabled *ngIf="selected_gbv_case.gbvIntake.medical_history" [checked]="selected_gbv_case.gbvIntake.medical_history.scar_physical_abuse_flag === 1"> Yes</label>
                 <label class="pl-3"><input class="py-2 pl-3 input-checkbox mr-1" type="checkbox" disabled *ngIf="selected_gbv_case.gbvIntake.medical_history" [checked]="selected_gbv_case.gbvIntake.medical_history.scar_physical_abuse_flag === 0"> No</label>
                 </div>
 
-                <div class=" border border-gray-200 py-6">
+                <div class="py-6">
                 <h4 class="py-2 pl-3">PERTINENT MEDICAL HISTORY?</h4>
                 <label class="pl-3"><input class="py-2 pl-3 input-checkbox mr-1" type="checkbox" disabled *ngIf="selected_gbv_case.gbvIntake.medical_history" [checked]="selected_gbv_case.gbvIntake.medical_history.pertinent_med_history_flag === 1"> Yes</label>
                 <label class="pl-3"><input class="py-2 pl-3 input-checkbox mr-1" type="checkbox" disabled *ngIf="selected_gbv_case.gbvIntake.medical_history" [checked]="selected_gbv_case.gbvIntake.medical_history.pertinent_med_history_flag === 0"> No</label>
@@ -305,7 +344,7 @@
                 </div>
 
                 <div class="col-span-9 border border-gray-200">
-                  <h4 class="py-2 px-3 " *ngIf="conv_impression"> {{conv_impression[0]?.desc}}</h4>
+                  <h4 class="py-2 px-3 " *ngIf="conv_impression"> {{conv_impression[0]?.full_desc}}</h4>
                 </div>
                 
               </div>
@@ -319,21 +358,21 @@
                 <h2>SYMPTOMS DESCRIBED BY THE ADULT PATIENT, CHILD AND/OR A HISTORIAN</h2>
               </div>
 
-              <div class="col-span-12 py-3 pl-3 border border-gray-200">
+              <div class="col-span-12 pl-3 text-sm py-2 border border-gray-200">
                 <h2>Please check the appropriate box</h2>
               </div>
 
               <div class="col-span-4 border text-center border-gray-200">
-                <h4 class="py-2 pl-3">Anogenital </h4>
-                <table class="w-full text-sm text-left">
-                  <thead class="text-xs border-gray-200">
-                    <tr>
-                      <th scope="col" class="py-3 text-center font-normal">Description</th>
-                      <th scope="col" class="py-3 text-center font-normal">Victim Survivor</th>
-                      <th scope="col" class="py-3 text-center font-normal">Historian</th>
+                <h4 class="font-semibold py-2">Anogenital </h4>
+                <table class="w-full text-sm  text-sm text-left">
+                  <thead class="text-xs">
+                    <tr class="border-t border-b border-gray-200">
+                      <th scope="col" class="py-3 text-center font-normal border-r border-gray-200">Description</th>
+                      <th scope="col" class="py-3 text-center font-normal border-gray-200">Victim Survivor</th>
+                      <th scope="col" class="py-3 text-center font-normal border-l border-gray-200">Historian</th>
                     </tr>
                   </thead>
-                  <tbody class="h-96 overflow-y-auto">
+                  <tbody class="h-96 text-xs overflow-y-auto">
                     <tr class="bg-white border-b" *ngFor="let anogenital of anogenital_exam | keyvalue">
                       <td class="py-4 pl-6">
                         {{anogenital.key}}
@@ -351,16 +390,16 @@
               </div>
 
               <div class="col-span-4 border text-center border-gray-200">
-                <h4 class="py-2 pl-3">Corporal </h4>
+                <h4 class="font-semibold py-2">Corporal </h4>
                 <table class="w-full text-sm text-left">
-                  <thead class="text-xs border-gray-200">
-                    <tr>
-                      <th scope="col" class="py-3 text-center font-normal">Description</th>
-                      <th scope="col" class="py-3 text-center font-normal">Victim Survivor</th>
-                      <th scope="col" class="py-3 text-center font-normal">Historian</th>
+                  <thead class="text-xs">
+                    <tr class="border-t border-b border-gray-200">
+                      <th scope="col" class="py-3 text-center font-normal border-r border-gray-200">Description</th>
+                      <th scope="col" class="py-3 text-center font-normal border border-gray-200">Victim Survivor</th>
+                      <th scope="col" class="py-3 text-center font-normal border-l border-gray-200">Historian</th>
                     </tr>
                   </thead>
-                  <tbody class="h-96 overflow-y-auto">
+                  <tbody class="h-96 text-xs overflow-y-auto">
                     <tr class="bg-white border-b" *ngFor="let corporal of corporal_exam | keyvalue">
                       <td class="py-4 pl-6">
                         {{corporal.key}}
@@ -378,16 +417,16 @@
               </div>
 
               <div class="col-span-4 border text-center border-gray-200">
-                <h4 class="py-2 pl-3">Behavioral </h4>
-                <table class="w-full text-sm text-left text-xs">
-                  <thead class="text-xs border-gray-200">
-                    <tr>
-                      <th scope="col" class="py-3 text-center font-normal">Description</th>
-                      <th scope="col" class="py-3 text-center font-normal">Victim Survivor</th>
-                      <th scope="col" class="py-3 text-center font-normal">Historian</th>
+                <h4 class="font-semibold py-2">Behavioral </h4>
+                <table class="w-full text-left text-xs">
+                  <thead class="text-xs">
+                    <tr class="border-t border-b border-gray-200">
+                      <th scope="col" class="py-3 text-center font-normal border-r border-gray-200">Description</th>
+                      <th scope="col" class="py-3 text-center font-normal border border-gray-200">Victim Survivor</th>
+                      <th scope="col" class="py-3 text-center font-normal border-l border-gray-200">Historian</th>
                     </tr>
                   </thead>
-                  <tbody class="h-96 overflow-y-auto">
+                  <tbody class="h-96 text-xs overflow-y-auto">
                     <tr class="bg-white border-b" *ngFor="let behavioral of behavioral_exam | keyvalue">
                       <td class="py-4 pl-6">
                         {{behavioral.key}}

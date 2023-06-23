@@ -34,6 +34,8 @@ export class ExportPdfComponent implements OnInit {
 
   conv_impression: any;
 
+  userInfo: any;
+
   first_exam = [
     {id: 1,   desc: 'Yes'},
     {id: 0,   desc: 'No'},
@@ -73,7 +75,7 @@ export class ExportPdfComponent implements OnInit {
       image: { type: 'jpeg', quality: 1 },
       html2canvas:  { scale: 3},
       margin:  [1, 1, 1, 1],
-      pagebreak: { mode: ['avoid-all', 'css', 'legacy'], before:['#medForm2', '#medForm3'], after: ['#medForm3']},
+      pagebreak: { mode: ['avoid-all', 'css', 'legacy'], before:['#medForm2', '#medForm3']},
       jsPDF: {
         orientation: 'portrait',
         format: 'a4',
@@ -124,7 +126,10 @@ export class ExportPdfComponent implements OnInit {
       next:(data:any) => {
         this.impression_list = data.data;
         console.log(this.impression_list,'test impressions')
+        console.log(this.userInfo,'test impressions user')
+        console.log(this.patient_details,'test impressions patient')
         this.convertImpression()
+        
       },
       error: err => console.log(err)
     });
@@ -177,7 +182,7 @@ export class ExportPdfComponent implements OnInit {
   ngOnInit() {
     this.loadLibs(); 
     this.patient_details = this.http.getPatientInfo();
-    
+    this.userInfo = this.http.getUserFromJSON();
     // console.log(this.selected_gbv_case,'export modal')
     // console.log(this.anogenital_list,'test hugot')
   }
