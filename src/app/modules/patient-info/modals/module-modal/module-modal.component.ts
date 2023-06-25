@@ -52,7 +52,7 @@ export class ModuleModalComponent implements OnInit {
   cn = { name: 'Consultation', location: 'cn', group: 'cn', consult_active: false, id: null };
   mc = { name: 'Maternal Care', location: 'mc', group: 'mc', consult_active: false, id: null };
   cc = { name: 'Child Care', location: 'cc', group: 'cc', consult_active: false, id: null };
-  // gbv = { name: 'GBV', location: 'gbv', group: 'gbv', consult_active: false, id: null };
+  gbv = { name: 'GBV', location: 'gbv', group: 'gbv', consult_active: false, id: null };
   show_new: boolean = false;
   is_loading: boolean = false;
   show_form: boolean = false;
@@ -95,9 +95,9 @@ export class ModuleModalComponent implements OnInit {
       this.list_modules.General.modules['cc'] = this.cc;
     }
 
-    /* if(this.arr_allowed.indexOf(this.pos) > -1) {
+    if(this.arr_allowed.indexOf(this.pos) > -1) {
       this.list_modules.Others.modules['gbv'] = this.gbv;
-    } */
+    }
   }
 
   onModuleSelect(module){
