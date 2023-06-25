@@ -8,25 +8,28 @@
             <fa-icon [icon]="faPlus"></fa-icon>
           </button>
         </div>
-        <div class="min-h-24" *ngIf="referrals.length === 0">
+        <div class="min-h-24" *ngIf="selected_gbv_case?.gbvReferral.length === 0">
           <span class="flex italic py-5 justify-center">
             No records to show
           </span>
         </div>
 
-        <table class="m-3" *ngIf="referrals.length>0">
+        <table class="m-3" *ngIf="selected_gbv_case?.gbvReferral.length>0">
           <thead>
             <tr>
               <td class="w-1/12">
 
               </td>
-              <td class="text-center font-semibold w-4/12 align-top pt-3">
+              <td class="text-center font-semibold w-2/12 align-top pt-3">
                 Date
               </td>
-              <td class="text-center font-semibold w-4/12 align-top pt-3">
+              <td class="text-center font-semibold w-3/12 align-top pt-3">
+                Referring Facility
+              </td>
+              <td class="text-center font-semibold w-3/12 align-top pt-3">
                 Referred to
               </td>
-              <td class="text-center font-semibold w-7/12 align-top pt-3">
+              <td class="text-center font-semibold w-3/12 align-top pt-3">
                 Services/Reasons
               </td>
             </tr>
@@ -40,9 +43,15 @@
                 {{ ref.referral_date | date: 'MM/dd/yyyy' }}
               </td>
               <td class="text-center align-top pt-3">
+                {{ ref.facility.facility_name }}
+              </td>
+              <td class="text-center align-top pt-3">
                 {{ ref.referral.facility_name }}
               </td>
               <td class="text-center align-top pt-3">
+                For medico legal: <br />
+                {{ ref.medico_legal_flag ? 'Yes' : 'No' }}<br /><br />
+
                 Referral reason: <br />
                 {{ ref.referral_reason }}<br /><br />
 
