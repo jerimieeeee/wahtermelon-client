@@ -37,29 +37,29 @@
             <!-- IF PLACE BY OTHERS -->
 
             <!-- IF RELATIVE OR SHELTER PLACEMENT-->
-            <div class="col-span-2" *ngIf="placementForm.value.location_id === 2 || placementForm.value.location_id === 3">
+            <div class="col-span-2" *ngIf="placementForm.value.location_id === 2 || placementForm.value.location_id === 3 || placementForm.value.location_id === 5">
               <label for="type_id">Placement type</label>
               <select name="type_id" id="type_id" formControlName="type_id" class="input">
                 <option *ngFor="let type of placement_types" [value]="type.id">{{ type.desc }}</option>
               </select>
             </div>
 
-            <div class="col-span-2" *ngIf="placementForm.value.location_id === 2 || placementForm.value.location_id === 3">
+            <div class="col-span-2" *ngIf="placementForm.value.location_id === 2 || placementForm.value.location_id === 3 || placementForm.value.location_id === 5">
               <label for="placement_name">Name</label>
               <input type="text" name="placement_name" id="placement_name" formControlName="placement_name" class="input">
             </div>
 
-            <div class="col-span-2" *ngIf="placementForm.value.location_id === 2 || placementForm.value.location_id === 3">
+            <div class="col-span-2" *ngIf="placementForm.value.location_id === 2 || placementForm.value.location_id === 3 || placementForm.value.location_id === 5">
               <label for="placement_contact_info" >Contact Info</label>
               <input type="text" name="placement_contact_info" id="placement_contact_info" formControlName="placement_contact_info" class="input">
             </div>
 
-            <div class="col-span-2" *ngIf="placementForm.value.location_id === 2 || placementForm.value.location_id === 3">
+            <div class="col-span-2" *ngIf="placementForm.value.location_id === 2 || placementForm.value.location_id === 3 || placementForm.value.location_id === 5">
               <label for="schedule_date" >Schedule Date</label>
               <input type="date" name="schedule_date" id="schedule_date" formControlName="scheduled_date" class="input">
             </div>
 
-            <div class="col-span-2" *ngIf="placementForm.value.location_id === 2 || placementForm.value.location_id === 3">
+            <div class="col-span-2" *ngIf="placementForm.value.location_id === 2 || placementForm.value.location_id === 3 || placementForm.value.location_id === 5">
               <label for="actual_date" >Actual Date</label>
               <input type="date" name="actual_date" id="actual_date" formControlName="actual_date" class="input">
             </div>
