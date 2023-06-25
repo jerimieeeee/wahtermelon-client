@@ -1,0 +1,748 @@
+<div class="border border-slate-200 rounded-b-lg">
+  <div class="mx-5 mb-5" *ngIf="show_form">
+    <form [formGroup]="interviewForm" (ngSubmit)="onSubmit()">
+      <div class="grid grid-cols-3 gap-4 w-full mt-5">
+
+        <div class="col-span-3 border-b border-slate-200 w-full my-2 font-semibold text-sky-500">
+          Recant details
+        </div>
+        <div class="col-span-3 grid grid-cols-3 gap-4">
+          <div class="ml-5 mt-3">
+            <input type="checkbox" disabled formControlName="recant_flag" name="recant_flag" id="recant_flag" class="input-checkbox" />
+            <label for="recant_flag" class="pl-3 py-0.5">Did the patient recant?</label>
+          </div>
+
+          <div *ngIf="interviewForm.value.recant_flag">
+            <label for="recant_datetime">Recant date & time</label>
+            <input type="datetime-local" name="recant_datetime" id="recant_datetime" [max]="max_date" formControlName="recant_datetime" class="input">
+          </div>
+
+          <div *ngIf="interviewForm.value.recant_flag">
+            <label for="recant_remarks">Remarks</label>
+            <input type="text" name="recant_remarks" id="recant_remarks" formControlName="recant_remarks" class="input">
+          </div>
+        </div>
+
+        <div class="col-span-3 border-b border-slate-200 w-full my-2 font-semibold text-sky-500">
+          Deferral Details
+        </div>
+        <div class="col-span-3 grid grid-cols-3 gap-4">
+          <div>
+            <div class="ml-5 mt-3">
+              <input type="checkbox" disabled formControlName="deferred" name="deferred" id="deferred" class="input-checkbox" />
+              <label for="deferred" class="pl-3 py-0.5">Deferring interview?</label>
+            </div>
+          </div>
+
+          <div *ngIf="interviewForm.value.deferred">
+            <label for="deferral_datetime">Date & time of deferral</label>
+            <input type="datetime-local" name="deferral_datetime" id="deferral_datetime" [max]="max_date" formControlName="deferral_datetime" class="input">
+          </div>
+
+          <div></div>
+
+          <div *ngIf="interviewForm.value.deferred">
+            <label for="deferral_reason_id">Reason for deferral</label>
+            <select name="deferral_reason_id" id="deferral_reason_id" formControlName="deferral_reason_id" class="input">
+              <option *ngFor="let deferral_reason of deferral_reasons" [value]="deferral_reason.id">{{ deferral_reason.desc }}</option>
+            </select>
+          </div>
+
+          <div *ngIf="interviewForm.value.deferral_reason_id === '3'">
+            <label for="deferral_previous_interviewer_id">Previous Interviewer</label>
+            <select name="deferral_previous_interviewer_id" id="deferral_previous_interviewer_id" formControlName="deferral_previous_interviewer_id" class="input">
+              <option *ngFor="let previous_interviewer of previous_interviewers" [value]="previous_interviewer.id">{{ previous_interviewer.desc }}</option>
+            </select>
+          </div>
+
+          <div *ngIf="interviewForm.value.deferral_previous_interviewer_id === '4'">
+            <label for="deferral_interviewer_remarks">Others</label>
+            <input type="text" name="deferral_interviewer_remarks" id="deferral_interviewer_remarks" formControlName="deferral_interviewer_remarks" class="input">
+          </div>
+        </div>
+
+        <div class="col-span-3 border-b border-slate-200 w-full my-2 font-semibold text-sky-500">
+          Date & Time of Interview
+        </div>
+        <div class="mx-5 col-span-3 grid grid-cols-3 gap-4">
+          <div>
+            <label for="interview_datetime">Date & time</label>
+            <input type="datetime-local" name="interview_datetime" id="interview_datetime" [max]="max_date" formControlName="interview_datetime" class="input">
+          </div>
+        </div>
+        <div class="col-span-3 border-b border-slate-200 w-full my-2 font-semibold text-sky-500">
+          Source of Information <span class="text-red-500 text-sm font-normal" *ngIf="required_info_source">Required atleast one information source.</span>
+        </div>
+        <div class="mx-5 col-span-3 grid grid-cols-3 gap-4">
+          <div>
+            <input type="checkbox" id="source_from_victim_flag" formControlName="source_from_victim_flag" class="input-checkbox" />
+            <label for="source_from_victim_flag" class="pl-3 py-0.5">Victim Survivor</label>
+          </div>
+
+          <div>
+            <input type="checkbox" id="source_from_historian_flag" formControlName="source_from_historian_flag" class="input-checkbox" />
+            <label for="source_from_historian_flag" class="pl-3 py-0.5">Historian</label>
+          </div>
+
+          <div>
+            <input type="checkbox" id="source_from_sworn_statement_flag" formControlName="source_from_sworn_statement_flag" class="input-checkbox" />
+            <label for="source_from_sworn_statement_flag" class="pl-3 py-0.5">Sworn Statement</label>
+          </div>
+
+          <div *ngIf="interviewForm.value.source_from_victim_flag">
+            <label for="enroll_as_code">Mental Age</label>
+            <select name="mental_age_id" id="mental_age_id" formControlName="mental_age_id" class="input">
+              <option *ngFor="let age of mental_ages" [value]="age.id">{{ age.desc }}</option>
+            </select>
+          </div>
+
+          <div *ngIf="interviewForm.value.source_from_historian_flag">
+            <label for="source_from_historian_remarks">Historian Name</label>
+            <input type="text" name="source_from_historian_remarks" id="source_from_historian_remarks" formControlName="source_from_historian_remarks" class="input">
+          </div>
+        </div>
+
+        <div class="col-span-3 border-b border-slate-200 w-full my-2 font-semibold text-sky-500">
+          History of Abuse
+        </div>
+        <div class="mx-5 col-span-3 grid grid-cols-4 gap-4">
+          <div class="col-span-4">
+            <input type="checkbox" id="incident_recent_unknown" formControlName="incident_recent_unknown" (change)="checkRequired('recent')" class="input-checkbox" />
+            <label for="incident_recent_unknown" class="pl-3 py-0.5">Can't recall date & time of recent incident</label>
+          </div>
+
+          <div class="col-span-2" *ngIf="!interviewForm.value.incident_recent_unknown">
+            <label for="incident_recent_datetime" [ngClass]="{'text-red-500': show_error && f.incident_recent_datetime.errors}">Date and time of most recent abuse</label>
+            <input type="datetime-local" name="incident_recent_datetime" id="incident_recent_datetime" formControlName="incident_recent_datetime" class="input" [ngClass]="{'invalid-input': show_error && f.incident_recent_datetime.errors}">
+
+            <div *ngIf="show_error && f.incident_recent_datetime.errors" class="invalid-alert">
+              <div *ngIf="f.incident_recent_datetime.errors?.['required']">
+                {{ required_message }}
+              </div>
+            </div>
+          </div>
+
+          <div class="col-span-2">
+            <label for="incident_recent_remarks">Other chronological clues</label>
+            <input type="text" name="incident_recent_remarks" id="incident_recent_remarks" formControlName="incident_recent_remarks" class="input">
+          </div>
+
+          <div class="col-span-4">
+            <input type="checkbox" id="incident_first_unknown" formControlName="incident_first_unknown" (change)="checkRequired('first')" class="input-checkbox" />
+            <label for="incident_first_unknown" class="pl-3 py-0.5">Can't recall date & time of first incident</label>
+          </div>
+
+          <div class="col-span-2" *ngIf="!interviewForm.value.incident_first_unknown">
+            <label for="incident_first_datetime" [ngClass]="{'text-red-500': show_error && f.incident_first_datetime.errors}">Date and time of first abuse</label>
+            <input type="datetime-local" name="incident_first_datetime" id="incident_first_datetime" formControlName="incident_first_datetime" class="input" [ngClass]="{'invalid-input': show_error && f.incident_first_datetime.errors}">
+
+            <div *ngIf="show_error && f.incident_first_datetime.errors" class="invalid-alert">
+              <div *ngIf="f.incident_first_datetime.errors?.['required']">
+                {{ required_message }}
+              </div>
+            </div>
+          </div>
+
+          <div class="col-span-2">
+            <label for="incident_first_remarks">Other chronological clues</label>
+            <input type="text" name="incident_first_remarks" id="incident_first_remarks" formControlName="incident_first_remarks" class="input">
+          </div>
+
+          <div class="col-span-4"></div>
+          <div class="col-span-2">
+            <label for="abused_episode_id" [ngClass]="{'text-red-500': show_error && f.abused_episode_id.errors}">Episodes of abuse</label>
+            <select name="abused_episode_id" id="abused_episode_id" formControlName="abused_episode_id" class="input" [ngClass]="{'invalid-input': show_error && f.abused_episode_id.errors}">
+              <option *ngFor="let abused_episode of abused_episodes" [value]="abused_episode.id">{{ abused_episode.desc }}</option>
+            </select>
+
+            <div *ngIf="show_error && f.abused_episode_id.errors" class="invalid-alert">
+              <div *ngIf="f.abused_episode_id.errors?.['required']">
+                {{ required_message }}
+              </div>
+            </div>
+          </div>
+
+          <div class="col-span-2">
+            <label for="abused_episode_count" [ngClass]="{'text-red-500': show_error && f.abused_episode_count.errors}">Number of episode</label>
+            <input type="number" name="abused_episode_count" id="abused_episode_count" formControlName="abused_episode_count" class="input" [ngClass]="{'invalid-input': show_error && f.abused_episode_count.errors}">
+          </div>
+
+          <div class="col-span-2">
+            <label for="abused_site_id" [ngClass]="{'text-red-500': show_error && f.abused_site_id.errors}">Site of abuse</label>
+            <select name="abused_site_id" id="abused_site_id" formControlName="abused_site_id" class="input" [ngClass]="{'invalid-input': show_error && f.abused_site_id.errors}">
+              <option *ngFor="let abused_site of abused_sites" [value]="abused_site.id">{{ abused_site.desc }}</option>
+            </select>
+
+            <div *ngIf="show_error && f.abused_site_id.errors" class="invalid-alert">
+              <div *ngIf="f.abused_site_id.errors?.['required']">
+                {{ required_message }}
+              </div>
+            </div>
+          </div>
+
+          <div class="col-span-2">
+            <label for="abused_site_remarks" [ngClass]="{'text-red-500': show_error && f.abused_site_remarks.errors}">Address</label>
+            <input type="text" name="abused_site_remarks" id="abused_site_remarks" formControlName="abused_site_remarks" class="input" [ngClass]="{'invalid-input': show_error && f.abused_site_remarks.errors}">
+          </div>
+
+          <div class="col-span-4 grid grid-cols-1 border-slate-200 shadow-md rounded-md">
+            <div class="bg-sky-500 text-white py-1 pl-3 rounded-t-md">
+              Disclosure
+            </div>
+
+            <div class="grid grid-cols-4 gap-4 pt-3 mb-5 mx-5">
+              <div class="col-span-2">
+                <label for="disclosed_flag">Did the victim survivor disclose?</label>
+                <select name="disclosed_flag" id="disclosed_flag" formControlName="disclosed_flag" class="input">
+                  <option value="Y">Yes</option>
+                  <option value="N">No</option>
+                  <option value="X">Unknown</option>
+                </select>
+
+                <div *ngIf="show_error && f.disclosed_flag.errors" class="invalid-alert">
+                  <div *ngIf="f.disclosed_flag.errors?.['required']">
+                    {{ required_message }}
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-span-2" *ngIf="interviewForm.value.disclosed_flag === 'Y'">
+                <label for="disclosed_type" [ngClass]="{'text-red-500': show_error && f.disclosed_type.errors}">Type of disclosure</label>
+                <select name="disclosed_type" id="disclosed_type" formControlName="disclosed_type" class="input" [ngClass]="{'invalid-input': show_error && f.disclosed_type.errors}">
+                  <option *ngFor="let type of disclosed_types" [value]="type.id">{{ type.desc }}</option>
+                </select>
+              </div>
+
+              <div class="col-span-3" *ngIf="interviewForm.value.disclosed_flag === 'Y'">
+                <label for="disclosed_relation_id" [ngClass]="{'text-red-500': show_error && f.disclosed_relation_id.errors}">To whom did the victim survivor disclose first?</label>
+                <select name="disclosed_relation_id" id="disclosed_relation_id" formControlName="disclosed_relation_id" class="input" [ngClass]="{'invalid-input': show_error && f.disclosed_relation_id.errors}">
+                  <option *ngFor="let child_relation of child_relations" [value]="child_relation.id">{{ child_relation.desc }}</option>
+                </select>
+              </div>
+
+              <div class="col-span-4" *ngIf="interviewForm.value.disclosed_flag === 'Y'">
+                <label for="initial_disclosure" [ngClass]="{'text-red-500': show_error && f.initial_disclosure.errors}">Describe circumstances surrounding the initial disclosure:</label>
+                <textarea rows="4" name="initial_disclosure" id="initial_disclosure" formControlName="initial_disclosure" class="input" [ngClass]="{'invalid-input': show_error && f.initial_disclosure.errors}">
+                </textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="interviewForm.value.id" class="mt-1 grid grid-cols-4 gap-x-4 w-full">
+        <div class="col-span-4 border-b border-slate-200 w-full my-2 pt-3 font-semibold text-sky-500">
+          Acts of abuse
+        </div>
+        <div class="col-span-4 grid grid-cols-1 border-slate-200 shadow-md rounded-md mx-5 mb-5">
+          <div class="bg-sky-500 text-white py-1 px-3 rounded-t-md flex justify-between">
+            <spa>Sexual Abuse</spa>
+            <button type="button" (click)="toggleModal('abuse_acts', 'Sexual Abuse', 'gbv-sexual-abuse', 'patient-gbv-sexual-abuse', selected_gbv_case?.gbvIntake.interview_sexual_abuses, 'sexual_abused_id')" class="bg-white text-sky-500 px-2 rounded text-xs">
+              <fa-icon [icon]="faEdit"></fa-icon>
+            </button>
+          </div>
+          <div class="min-h-24" *ngIf="!sexual_abuses">
+            <span class="flex italic py-5 justify-center">
+              No records to show
+            </span>
+          </div>
+
+          <table class="m-3" *ngIf="sexual_abuses">
+            <thead>
+              <tr>
+                <td class="text-center font-semibold">Name</td>
+                <td class="text-center font-semibold">Victim Survivor</td>
+                <td class="text-center font-semibold">Historian</td>
+                <td class="text-center font-semibold">Sworn Statement</td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border-t border-slate-200" *ngFor="let sexual of sexual_abuses | keyvalue" >
+                <td>{{ sexual.key }}</td>
+                <td class="text-center">
+                  <input type="checkbox" class="input-checkbox disabled:bg-blue-500" *ngIf="sexual.value[1]" checked />
+                </td>
+                <td class="text-center">
+                  <input type="checkbox" class="input-checkbox disabled:bg-blue-500" *ngIf="sexual.value[2]" checked />
+                </td>
+                <td class="text-center">
+                  <input type="checkbox" class="input-checkbox disabled:bg-blue-500" *ngIf="sexual.value[3]" checked />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="col-span-4 grid grid-cols-1 border-slate-200 shadow-md rounded-md mx-5 mb-5">
+          <div class="bg-sky-500 text-white py-1 px-3 rounded-t-md flex justify-between">
+            <spa>Physical Abuse</spa>
+            <button type="button" (click)="toggleModal('abuse_acts', 'Physical Abuse', 'gbv-physical-abuse', 'patient-gbv-physical-abuse', selected_gbv_case?.gbvIntake.interview_physical_abuses, 'physical_abused_id')" class="bg-white text-sky-500 px-2 rounded text-xs">
+              <fa-icon [icon]="faEdit"></fa-icon>
+            </button>
+          </div>
+          <div class="min-h-24" *ngIf="!physical_abuses">
+            <span class="flex italic py-5 justify-center">
+              No records to show
+            </span>
+          </div>
+
+          <table class="m-3" *ngIf="physical_abuses">
+            <thead>
+              <tr>
+                <td class="text-center font-semibold">Name</td>
+                <td class="text-center font-semibold">Victim Survivor</td>
+                <td class="text-center font-semibold">Historian</td>
+                <td class="text-center font-semibold">Sworn Statement</td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border-t border-slate-200" *ngFor="let physical of physical_abuses | keyvalue" >
+                <td>{{ physical.key }}</td>
+                <td class="text-center">
+                  <input type="checkbox" class="input-checkbox disabled:bg-blue-500" *ngIf="physical.value[1]" checked />
+                </td>
+                <td class="text-center">
+                  <input type="checkbox" class="input-checkbox disabled:bg-blue-500" *ngIf="physical.value[2]" checked />
+                </td>
+                <td class="text-center">
+                  <input type="checkbox" class="input-checkbox disabled:bg-blue-500" *ngIf="physical.value[3]" checked />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="col-span-4 grid grid-cols-1 border-slate-200 shadow-md rounded-md mx-5 mb-5">
+          <div class="bg-sky-500 text-white py-1 px-3 rounded-t-md flex justify-between">
+            <spa>Neglect</spa>
+            <button type="button" (click)="toggleModal('abuse_acts', 'Neglects', 'gbv-neglect', 'patient-gbv-neglect-abuse', selected_gbv_case?.gbvIntake.interview_neglect_abuses, 'neglect_abused_id')" class="bg-white text-sky-500 px-2 rounded text-xs">
+              <fa-icon [icon]="faEdit"></fa-icon>
+            </button>
+          </div>
+          <div class="min-h-24" *ngIf="!neglect_abuses">
+            <span class="flex italic py-5 justify-center">
+              No records to show
+            </span>
+          </div>
+
+          <table class="m-3" *ngIf="neglect_abuses">
+            <thead>
+              <tr>
+                <td class="text-center font-semibold">Name</td>
+                <td class="text-center font-semibold">Victim Survivor</td>
+                <td class="text-center font-semibold">Historian</td>
+                <td class="text-center font-semibold">Sworn Statement</td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border-t border-slate-200" *ngFor="let neglect of neglect_abuses | keyvalue" >
+                <td>{{ neglect.key }}</td>
+                <td class="text-center">
+                  <input type="checkbox" class="input-checkbox disabled:bg-blue-500" *ngIf="neglect.value[1]" checked />
+                </td>
+                <td class="text-center">
+                  <input type="checkbox" class="input-checkbox disabled:bg-blue-500" *ngIf="neglect.value[2]" checked />
+                </td>
+                <td class="text-center">
+                  <input type="checkbox" class="input-checkbox disabled:bg-blue-500" *ngIf="neglect.value[3]" checked />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="col-span-4 grid grid-cols-1 border-slate-200 shadow-md rounded-md mx-5 mb-5">
+          <div class="bg-sky-500 text-white py-1 px-3 rounded-t-md flex justify-between">
+            <spa>Emotional Abuse</spa>
+            <button type="button" (click)="toggleModal('abuse_acts', 'Emotional Abuse', 'gbv-emotional-abuse', 'patient-gbv-emotional-abuse', selected_gbv_case?.gbvIntake.interview_emotional_abuses, 'emotional_id')" class="bg-white text-sky-500 px-2 rounded text-xs">
+              <fa-icon [icon]="faEdit"></fa-icon>
+            </button>
+          </div>
+          <div class="min-h-24" *ngIf="!emotional_abuses">
+            <span class="flex italic py-5 justify-center">
+              No records to show
+            </span>
+          </div>
+
+          <table class="m-3" *ngIf="emotional_abuses">
+            <thead>
+              <tr>
+                <td class="text-center font-semibold">Name</td>
+                <td class="text-center font-semibold">Victim Survivor</td>
+                <td class="text-center font-semibold">Historian</td>
+                <td class="text-center font-semibold">Sworn Statement</td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border-t border-slate-200" *ngFor="let emotional of emotional_abuses | keyvalue" >
+                <td>{{ emotional.key }}</td>
+                <td class="text-center">
+                  <input type="checkbox" class="input-checkbox disabled:bg-blue-500" *ngIf="emotional.value[1]" checked />
+                </td>
+                <td class="text-center">
+                  <input type="checkbox" class="input-checkbox disabled:bg-blue-500" *ngIf="emotional.value[2]" checked />
+                </td>
+                <td class="text-center">
+                  <input type="checkbox" class="input-checkbox disabled:bg-blue-500" *ngIf="emotional.value[3]" checked />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div *ngIf="interviewForm.value.id" class="mt-1 grid grid-cols-4 gap-x-4 w-full">
+        <div class="col-span-4 border-b border-slate-200 w-full my-2 pt-3 font-semibold text-sky-500">
+          Developmental Screening
+        </div>
+
+        <div class="mx-5 col-span-4 grid grid-cols-4 gap-4">
+          <div class="col-span-2">
+            <label for="dev_screening_id" [ngClass]="{'text-red-500': show_error && f.dev_screening_id.errors}">Further developmental assessment needed</label>
+            <select name="dev_screening_id" id="dev_screening_id" formControlName="dev_screening_id" class="input" [ngClass]="{'invalid-input': show_error && f.dev_screening_id.errors}">
+              <option *ngFor="let developmental_screening of developmental_screenings" [value]="developmental_screening.id">{{ developmental_screening.desc }}</option>
+            </select>
+          </div>
+
+          <div class="col-span-2">
+            <label for="dev_screening_remarks" [ngClass]="{'text-red-500': show_error && f.dev_screening_remarks.errors}">Decribe</label>
+            <input type="text" row="3" name="dev_screening_remarks" id="dev_screening_remarks" formControlName="dev_screening_remarks" class="input" [ngClass]="{'invalid-input': show_error && f.dev_screening_remarks.errors}">
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="interviewForm.value.id" class="mt-1 grid grid-cols-4 gap-x-4 w-full">
+        <div class="col-span-4 border-b border-slate-200 w-full my-2 pt-3 font-semibold text-sky-500">
+          Perpetrator (s)
+        </div>
+        <div class="col-span-4 grid grid-cols-1 border-slate-200 shadow-md rounded-md mx-5 mb-5">
+          <div class="bg-sky-500 text-white py-1 px-3 rounded-t-md flex justify-between">
+            <spa>Alleged Perpetrator</spa>
+            <button type="button" (click)="toggleModal('perpetrators')" class="bg-white text-sky-500 px-2 rounded text-xs">
+              <fa-icon [icon]="faPlus"></fa-icon>
+            </button>
+          </div>
+          <div class="min-h-24" *ngIf="selected_gbv_case?.gbvIntake.interview_perpetrator.length===0">
+            <span class="flex italic py-5 justify-center">
+              No records to show
+            </span>
+          </div>
+
+          <table class="m-3" *ngIf="selected_gbv_case?.gbvIntake.interview_perpetrator.length>0">
+            <thead>
+              <tr>
+                <td class="w-1/12">
+
+                </td>
+                <td class="text-center font-semibold w-3/12 align-top pt-3">
+                  Name<br />
+                  (Age | Gender)<br /><br />
+                </td>
+                <td class="text-center font-semibold w-2/12 align-top pt-3">
+                  Address
+                </td>
+                <td class="text-center font-semibold w-2/12 align-top pt-3">
+                  Substance abuse
+                </td>
+                <td class="text-center font-semibold w-3/12 align-top pt-3">
+                  History
+                </td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border-t border-slate-200" *ngFor="let perp of selected_gbv_case?.gbvIntake.interview_perpetrator" >
+                <td class="text-center align-top pt-3">
+                  <fa-icon [icon]="faEdit" (click)="toggleModal('perpetrators', 'Perpetrator', '', '', perp)" class="hover:cursor-pointer text-orange-500"></fa-icon>
+                </td>
+
+                <td class="text-center align-top pt-3" *ngIf="!perp.perpetrator_unknown_flag">
+                  {{ perp.perpetrator_name ?? '-'}} <br />
+                  (
+                    {{ perp.perpetrator_age }} |
+                    {{ perp.gender ? (perp.gender === 'M' ? 'Male' : 'Female') : '-' }}
+                    <span *ngIf="perp.lgbtq_flag"> | LGBTQ</span>
+                  )
+                </td>
+
+                <td class="align-top pt-3" *ngIf="!perp.perpetrator_unknown_flag">
+                  <span *ngIf="perp.perpetrator_address">
+                    <span class="italic font-semibold">Permanent:</span> <br />
+                    {{ perp.perpetrator_address }}<br /><br />
+                  </span>
+
+                  <span *ngIf="perp.perpetrator_current_address">
+                    <span class="italic font-semibold">Current:</span> <br />
+                    {{ perp.perpetrator_current_address }}
+                  </span>
+                </td>
+
+                <td class="font-semibold italic align-top pt-3" *ngIf="!perp.perpetrator_unknown_flag">
+                  <span *ngIf="!perp.abuse_alcohol_flag && !perp.abuse_drugs_flag && !perp.abuse_others_flag">
+                    -
+                  </span>
+                  <span *ngIf="perp.abuse_alcohol_flag">
+                    Alcohol <br /><br />
+                  </span>
+                  <span *ngIf="perp.abuse_drugs_flag">
+                    Drugs: <span class="font-normal not-italic">{{ perp.abuse_drugs_remarks }}</span><br /><br />
+                  </span>
+                  <span *ngIf="perp.abuse_others_flag">
+                    Others: <span class="font-normal not-italic">{{ perp.abuse_others_remarks }}</span>
+                  </span>
+                </td>
+
+                <td class="p-3" *ngIf="!perp.perpetrator_unknown_flag">
+                  <span class="font-semibold" *ngIf="perp.abused_as_child_flag || perp.abused_as_spouse_flag || perp.spouse_abuser_flag || perp.family_violence_flag">
+                    Abuse<br />
+                  </span>
+                  <span *ngIf="perp.abused_as_child_flag">
+                    - Abused as a child<br />
+                  </span>
+                  <span *ngIf="perp.abused_as_spouse_flag">
+                    - Abused as a spouse<br />
+                  </span>
+                  <span *ngIf="perp.spouse_abuser_flag">
+                    - Spouse abuser<br />
+                  </span>
+                  <span *ngIf="perp.family_violence_flag">
+                    - Witness family violence<br />
+                  </span>
+
+                  <span class="font-semibold" *ngIf="perp.criminal_conviction_similar_flag || perp.criminal_conviction_other_flag || perp.criminal_barangay_flag">
+                    <br /> Criminal<br />
+                  </span>
+                  <span *ngIf="perp.criminal_conviction_similar_flag">
+                    - Previous conviction for similar offense<br />
+                  </span>
+                  <span *ngIf="perp.criminal_conviction_other_flag">
+                    - Previous conviction for other offense<br />
+                  </span>
+                  <span *ngIf="perp.criminal_barangay_flag">
+                    - Others: <span class="font-normal not-italic">{{ perp.criminal_barangay_remarks }}</span><br />
+                  </span>
+                </td>
+
+                <td class="italic pt-5" *ngIf="perp.perpetrator_unknown_flag" colspan="4">
+                  Unknown Perpetrator
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div *ngIf="interviewForm.value.id" class="mt-1 grid grid-cols-4 gap-x-4 w-full">
+        <div class="col-span-4 border-b border-slate-200 w-full my-2 pt-3 font-semibold text-sky-500">
+          Interview summary and social worker notes
+        </div>
+
+        <div *ngIf="selected_gbv_case?.gbvIntake.interview_perpetrator.length===0" class="col-span-4 flex justify-center font-semibold italic my-5">
+          Please add alleged perpetrator(s) to add notes.
+        </div>
+
+        <div *ngIf="selected_gbv_case?.gbvIntake.interview_perpetrator.length>0" class="col-span-4 grid grid-cols-1 border-slate-200 shadow-md rounded-md mx-5 mb-5">
+          <div class="bg-sky-500 text-white py-1 px-3 rounded-t-md flex justify-between">
+            <spa>Interview Summary</spa>
+            <button type="button" (click)="toggleModal('interview_notes', 'IS')" class="bg-white text-sky-500 px-2 rounded text-xs">
+              <fa-icon [icon]="faPlus"></fa-icon>
+            </button>
+          </div>
+          <div class="min-h-24" *ngIf="interview_summaries.length===0">
+            <span class="flex italic py-5 justify-center">
+              No records to show
+            </span>
+          </div>
+
+          <table class="m-3" *ngIf="interview_summaries.length>0">
+            <thead>
+              <tr>
+                <td class="w-1/12">
+
+                </td>
+                <td class="text-center font-semibold w-3/12 align-top pt-3">
+                  Alleged perpetrator<br />
+                </td>
+                <td class="text-center font-semibold w-2/12 align-top pt-3">
+                  Date & Time
+                </td>
+                <td class="text-center font-semibold w-2/12 align-top pt-3">
+                  Location
+                </td>
+                <td class="text-center font-semibold w-3/12 align-top pt-3">
+                  Notes
+                </td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border-t border-slate-200" *ngFor="let interview of interview_summaries" >
+                <td class="text-center align-top pt-3">
+                  <fa-icon [icon]="faEdit" (click)="toggleModal('interview_notes', 'Interview', '', '', interview)" class="hover:cursor-pointer text-orange-500"></fa-icon>
+                </td>
+                <td class="text-center align-top pt-3">
+                  {{ interview.perpetrator ? (interview.perpetrator.perpetrator_unknown_flag ? 'Unknown' : interview.perpetrator.perpetrator_name) : '-'}}
+                  <!-- {{ interview.perpetrator.perpetrator_name ?? '-' }} -->
+                </td>
+                <td class="text-center align-top pt-3">
+                  {{ interview.interview_datetime | date: 'MM/dd/yyyy'}} <br />
+                  {{ interview.interview_datetime | date: 'hh:mm a'}}
+                </td>
+                <td class="align-top p-3">
+                  {{ interview.interview_place ?? '-'}}
+                </td>
+                <td class="align-top p-3">
+                  {{ interview.interview_notes ?? '-'}}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div *ngIf="selected_gbv_case?.gbvIntake.interview_perpetrator.length>0" class="col-span-4 grid grid-cols-1 border-slate-200 shadow-md rounded-md mx-5 mb-5">
+          <div class="bg-sky-500 text-white py-1 px-3 rounded-t-md flex justify-between">
+            <spa>Social Worker Notes</spa>
+            <span class="text-xs italic pt-1" *ngIf="pos!=='MSWDO'">
+              MSWDO Only
+            </span>
+            <button type="button" *ngIf="pos==='MSWDO'" (click)="toggleModal('interview_notes', 'SW')" class="bg-white text-sky-500 px-2 rounded text-xs">
+              <fa-icon [icon]="faPlus"></fa-icon>
+            </button>
+          </div>
+          <div class="min-h-24" *ngIf="interview_social_notes.length===0">
+            <span class="flex italic py-5 justify-center">
+              No records to show
+            </span>
+          </div>
+
+          <table class="m-3" *ngIf="interview_social_notes.length>0">
+            <thead>
+              <tr>
+                <td class="w-1/12">
+
+                </td>
+                <td class="text-center font-semibold w-3/12 align-top pt-3">
+                  Alleged perpetrator<br />
+                </td>
+                <td class="text-center font-semibold w-2/12 align-top pt-3">
+                  Date & Time
+                </td>
+                <td class="text-center font-semibold w-2/12 align-top pt-3">
+                  Location
+                </td>
+                <td class="text-center font-semibold w-3/12 align-top pt-3">
+                  Notes
+                </td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border-t border-slate-200" *ngFor="let interview of interview_social_notes" >
+                <td class="text-center align-top pt-3">
+                  <fa-icon [icon]="faEdit" *ngIf="pos==='MSWDO'" (click)="toggleModal('interview_notes', 'Interview', '', '', interview)" class="hover:cursor-pointer text-orange-500"></fa-icon>
+                </td>
+                <td class="text-center align-top pt-3">
+                  {{ interview.perpetrator.perpetrator_name ?? '-'}}
+                </td>
+                <td class="text-center align-top pt-3">
+                  {{ interview.interview_datetime | date: 'MM/dd/yyyy'}}<br />
+                  {{ interview.interview_datetime | date: 'hh:mm a'}}
+                </td>
+                <td class="align-top p-3">
+                  {{ interview.interview_place ?? '-'}}
+                </td>
+                <td class="align-top p-3">
+                  {{ interview.interview_notes ?? '-'}}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div *ngIf="interviewForm.value.id" class="-mt-1 grid grid-cols-4 gap-x-4 w-full">
+        <div class="col-span-4 border-b border-slate-200 w-full my-2 pt-2 font-semibold text-sky-500">
+          Behavior during the interview
+        </div>
+        <div class="mx-5 col-span-4 grid grid-cols-4 gap-4">
+
+          <!-- <div class="col-span-2">
+            <label for="child_behavior_id" [ngClass]="{'text-red-500': show_error && f.child_behavior_id.errors}">Behavior during the interview</label>
+            <select name="child_behavior_id" id="child_behavior_id" formControlName="child_behavior_id" class="input" [ngClass]="{'invalid-input': show_error && f.child_behavior_id.errors}">
+              <option *ngFor="let child_behavior of child_behaviors" [value]="child_behavior.id">{{ child_behavior.desc }}</option>
+            </select>
+          </div> -->
+
+          <div class="col-span-2 mt-8">
+            <input type="checkbox" id="child_caretaker_present_flag" formControlName="child_caretaker_present_flag" class="input-checkbox" />
+            <label for="child_caretaker_present_flag" class="pl-3 py-0.5">Is the caretaker present?</label>
+          </div>
+
+          <div class="col-span-4 grid grid-cols-3 gap-4">
+            <div class="col-span-3 text-sm font-semibold">
+              Victim survivor's behavior during the interview
+            </div>
+
+            <div *ngFor="let ib of interview_behaviors">
+              <input type="checkbox" attr.id="{{ ib.var_name }}" [formControlName]="ib.var_name" class="input-checkbox" />
+              <label attr.for="{{ ib.var_name }}" class="pl-3 py-0.5">{{ ib.desc }}</label>
+            </div>
+          </div>
+
+          <div class="col-span-4 grid grid-cols-3 gap-4" *ngIf="interviewForm.value.source_from_historian_flag">
+            <div class="col-span-3 text-sm font-semibold">
+              Historian's behavior during the interview
+            </div>
+
+            <div *ngFor="let ib of interview_behaviors">
+              <input type="checkbox" attr.id="{{ ib.historian_var_name }}" [formControlName]="ib.historian_var_name" class="input-checkbox" />
+              <label attr.for="{{ ib.historian_var_name }}" class="pl-3 py-0.5">{{ ib.desc }}</label>
+            </div>
+          </div>
+
+          <div class="col-span-4">
+            <label for="child_behavior_remarks" [ngClass]="{'text-red-500': show_error && f.child_behavior_remarks.errors}">Describe the behavior and interviewer/caretaker</label>
+            <textarea row="3" name="child_behavior_remarks" id="child_behavior_remarks" formControlName="child_behavior_remarks" class="input" [ngClass]="{'invalid-input': show_error && f.child_behavior_remarks.errors}"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="show_error" class="text-sm bg-red-50 border border-red-300 p-5 m-5 rounded-lg text-red-800">
+        Form is invalid.
+      </div>
+      <div class="flex justify-center mt-5">
+        <button [disabled]="is_saving" type="submit" class="btn-save mr-5 mt-4">
+          <fa-icon [icon]="is_saving ? faCircleNotch : faSave" [spin]="is_saving ? true : false" class="mr-2"></fa-icon>
+          {{ interviewForm.value.id ? (is_saving ? 'Updating' : 'Update') : (is_saving ? 'Saving' : 'Save') }}
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <div class="grid grid-cols-1 my-16" *ngIf="!show_form">
+    <span class="flex justify-center">
+      <fa-icon [icon]="faCircleNotch" spin="true" class="text-sky-500"></fa-icon>
+    </span>
+    <span class="flex justify-center">
+      Loading...
+    </span>
+  </div>
+</div>
+
+<app-inteview-notes *ngIf="modals['interview_notes']"
+  (toggleModal)="toggleModal($event)"
+  [selected_notes]="selected_notes"
+  [intake_id]="selected_gbv_case?.gbvIntake.id"
+  [patient_id]="patient_id"
+></app-inteview-notes>
+
+<app-abuse-acts *ngIf="modals['abuse_acts']"
+  (toggleModal)="toggleModal($event)"
+  [selected_abused]="selected_abused"
+  [intake_id]="selected_gbv_case?.gbvIntake.id"
+  [patient_id]="patient_id"
+></app-abuse-acts>
+
+<app-perpetrators *ngIf="modals['perpetrators']"
+  (toggleModal)="toggleModal($event)"
+  [selected_perpetrator]="selected_perpetrator"
+  [intake_id]="selected_gbv_case?.gbvIntake.id"
+  [patient_id]="patient_id"
+></app-perpetrators>

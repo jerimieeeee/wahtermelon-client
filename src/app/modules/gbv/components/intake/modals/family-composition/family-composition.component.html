@@ -1,0 +1,156 @@
+<div id="defaultModal" tabindex="-1" class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 w-full md:inset-0 h-modal md:h-full justify-center items-center flex" aria-modal="true" role="dialog" style="z-index:60">
+  <div class="relative p-4 w-full max-w-3xl h-auto md:h-auto">
+    <!-- Modal content -->
+    <div class="relative bg-white rounded-lg shadow">
+      <!-- Modal header -->
+      <div class="flex justify-between items-start py-3 px-5 rounded-t border-b bg-sky-500">
+        <h3 class="text-sm font-bold text-white">
+            Family Member Details
+        </h3>
+      </div>
+      <!-- Modal body -->
+      <div class="overflow-y-auto h-96 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
+        <form [formGroup]="familyForm" (submit)="onSubmit()" class="text-left text-gray-500 m-5">
+          <div class="grid grid-cols-4 gap-4">
+            <div class="col-span-4">
+              <input type="checkbox" formControlName="living_with_child_flag" class="input-checkbox" />
+              <label class="pl-3 py-0.5">Living with child</label>
+            </div>
+
+            <div class="col-span-4">
+              <label for="name" [ngClass]="{'text-red-500': show_error && f.name.errors}">Name</label>
+              <input type="text" name="name" id="name" formControlName="name" class="input" [ngClass]="{'invalid-input': show_error && f.name.errors}">
+
+              <div *ngIf="show_error && f.name.errors" class="invalid-alert">
+                <div *ngIf="f.name.errors?.['required']">
+                  {{ required_message }}
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <label for="child_relation_id" [ngClass]="{'text-red-500': show_error && f.child_relation_id.errors}">Relation to child</label>
+              <select name="child_relation_id" id="child_relation_id" formControlName="child_relation_id" class="input" [ngClass]="{'invalid-input': show_error && f.child_relation_id.errors}">
+                <option *ngFor="let relation of child_relations" [value]="relation.id">{{ relation.desc }}</option>
+              </select>
+
+              <div *ngIf="show_error && f.child_relation_id.errors" class="invalid-alert">
+                <div *ngIf="f.child_relation_id.errors?.['required']">
+                  {{ required_message }}
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <label for="gender" [ngClass]="{'text-red-500': show_error && f.gender.errors}">Gender</label>
+              <select name="gender" id="gender" formControlName="gender" class="input" [ngClass]="{'invalid-input': show_error && f.gender.errors}">
+                <option value="M">Male</option>
+                <option value="F">Female</option>
+              </select>
+
+              <div *ngIf="show_error && f.gender.errors" class="invalid-alert">
+                <div *ngIf="f.gender.errors?.['required']">
+                  {{ required_message }}
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <label for="age" [ngClass]="{'text-red-500': show_error && f.age.errors}">Age</label>
+              <input type="number" name="casagee_number" id="age" formControlName="age" class="input" [ngClass]="{'invalid-input': show_error && f.age.errors}">
+
+              <div *ngIf="show_error && f.tb_treatment_outcome_code.errors" class="invalid-alert">
+                <div *ngIf="f.tb_treatment_outcome_code.errors?.['required']">
+                  {{ required_message }}
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <label for="civil_status_code" [ngClass]="{'text-red-500': show_error && f.outcome_date.errors}">Civil Status</label>
+              <select name="civil_status_code" id="civil_status_code" formControlName="civil_status_code" class="input" [ngClass]="{'invalid-input': show_error && f.civil_status_code.errors}">
+                <option *ngFor="let civil_status of civil_statuses" [value]="civil_status.code">{{ civil_status.status_desc }}</option>
+              </select>
+
+              <div *ngIf="show_error && f.civil_status_code.errors" class="invalid-alert">
+                <div *ngIf="f.civil_status_code.errors?.['required']">
+                  {{ required_message }}
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <label for="occupation_code" [ngClass]="{'text-red-500': show_error && f.outcome_date.errors}">Employement</label>
+              <select name="occupation_code" id="occupation_code" formControlName="occupation_code" class="input" [ngClass]="{'invalid-input': show_error && f.occupation_code.errors}">
+                <option *ngFor="let occupation of occupations" [value]="occupation.code">{{ occupation.occupation_desc }}</option>
+              </select>
+
+              <div *ngIf="show_error && f.occupation.errors" class="invalid-alert">
+                <div *ngIf="f.occupation.errors?.['required']">
+                  {{ required_message }}
+                </div>
+              </div>
+            </div>
+
+            <div class="col-span-3">
+              <label for="company" [ngClass]="{'text-red-500': show_error && f.company.errors}">Company</label>
+              <input type="text" name="company" id="company" formControlName="company" class="input" [ngClass]="{'invalid-input': show_error && f.company.errors}">
+
+              <div *ngIf="show_error && f.company.errors" class="invalid-alert">
+                <div *ngIf="f.company.errors?.['required']">
+                  {{ required_message }}
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <label for="education_code" [ngClass]="{'text-red-500': show_error && f.outcome_date.errors}">Education</label>
+              <select name="education_code" id="education_code" formControlName="education_code" class="input" [ngClass]="{'invalid-input': show_error && f.education_code.errors}">
+                <option *ngFor="let education of educations" [value]="education.code">{{ education.education_desc }}</option>
+              </select>
+
+              <div *ngIf="show_error && f.education_code.errors" class="invalid-alert">
+                <div *ngIf="f.education_code.errors?.['required']">
+                  {{ required_message }}
+                </div>
+              </div>
+            </div>
+
+            <div class="col-span-3">
+              <label for="school" [ngClass]="{'text-red-500': show_error && f.school.errors}">School</label>
+              <input type="text" name="school" id="school" formControlName="school" class="input" [ngClass]="{'invalid-input': show_error && f.school.errors}">
+
+              <div *ngIf="show_error && f.school.errors" class="invalid-alert">
+                <div *ngIf="f.school.errors?.['required']">
+                  {{ required_message }}
+                </div>
+              </div>
+            </div>
+            <!-- <div class="col-span-2">
+              <label for="outcome_remarks">Brief Explanation/Remarks</label>
+              <textarea name="outcome_remarks" id="outcome_remarks" formControlName="outcome_remarks" class="input" ></textarea>
+            </div>
+
+            <div class="col-span-2">
+              <div class="flex justify-center">
+                <input type="checkbox" id="treatment_done" class="border border-slate-500 rounded mr-3" formControlName="treatment_done">
+                <label class="font-normal" for="treatment_done">Check to end this treatment</label>
+              </div>
+            </div> -->
+          </div>
+        </form>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="flex justify-end py-4 px-5 space-x-4 rounded-b border-t border-gray-200">
+        <button type="button" class="btn-save bg-gray-400" (click)="closeModal()">Close</button>
+        <button [disabled]="is_saving || familyForm.invalid" type="submit" class="btn-save px-10 disabled:bg-gray-300" (click)="onSubmit()" >
+          <fa-icon></fa-icon>
+          {{ is_saving ? 'Saving' : 'Save' }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="opacity-50 fixed inset-0 z-50 bg-black"></div>

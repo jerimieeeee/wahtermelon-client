@@ -53,7 +53,7 @@ export class HttpService {
 
   saveUserToLocalStorage(user) {
     // console.log(user)
-    localStorage.setItem('user', JSON.stringify(user))
+    localStorage.setItem('user', JSON.stringify(user));
   }
 
   removeLocalStorageItem(){

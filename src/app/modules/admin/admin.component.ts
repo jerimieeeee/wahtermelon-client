@@ -16,12 +16,12 @@ export class AdminComponent implements OnInit {
       name: 'Account List',
       icon: faUsers
     }, */
-    /* {
+    {
       loc: 'facility-config',
-      name: 'Facility Config',
+      name: 'Facility Configuration',
       icon: faHouseMedical
     },
-    {
+    /* {
       loc: 'lab-config',
       name: 'Laboratory Config',
       icon: faFlaskVial

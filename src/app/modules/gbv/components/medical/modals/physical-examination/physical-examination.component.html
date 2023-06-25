@@ -1,0 +1,64 @@
+<div id="defaultModal" tabindex="-1" class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 w-full md:inset-0 h-modal md:h-full justify-center items-center flex" aria-modal="true" role="dialog" style="z-index:60">
+  <div class="relative p-4 w-full max-w-3xl h-auto md:h-auto">
+    <!-- Modal content -->
+    <div class="relative bg-white rounded-lg shadow">
+      <!-- Modal header -->
+      <div class="flex justify-between items-start py-3 px-5 rounded-t border-b bg-sky-500">
+        <h3 class="text-sm font-bold text-white">
+          Physical (Non-Anogenital) Examination
+        </h3>
+      </div>
+      <!-- Modal body -->
+      <div class="overflow-y-auto h-96 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
+        <div class="grid grid-cols-2 gap-4 m-5">
+          <div class="col-span-2 text-sky-500 border-b font-semibold">
+            Location
+          </div>
+
+          <div class="col-span-4 grid grid-cols-3 gap-4">
+            <div *ngFor="let location of locations">
+              <input type="checkbox"  class="input-checkbox" />
+              <label class="pl-3 py-0.5">{{ location.name }}</label>
+            </div>
+          </div>
+
+          <div class="col-span-2 text-sky-500 border-b font-semibold">
+            Type
+          </div>
+
+          <div class="col-span-4 grid grid-cols-3 gap-4">
+            <div *ngFor="let type of types">
+              <input type="checkbox"  class="input-checkbox" />
+              <label class="pl-3 py-0.5">{{ type.name }}</label>
+            </div>
+          </div>
+
+          <div class="col-span-2 text-sky-500 border-b font-semibold">
+            Notes
+          </div>
+
+          <div class="col-span-4 flex">
+            <input type="text" class="input" />
+          </div>
+
+        </div>
+        <!-- <div class="grid grid-cols-2 gap-4" *ngIf="!abuses">
+          <fa-icon [icon]="faCircleNotch" spin="true" class="text-blue-500"></fa-icon>
+        </div> -->
+        
+        
+      </div>
+
+      <!-- Modal footer -->
+      <div class="flex justify-end py-4 px-5 space-x-4 rounded-b border-t border-gray-200">
+        <button type="button" class="btn-save bg-gray-400" (click)="closeModal()">Close</button>
+        <button [disabled]="is_saving" type="submit" class="btn-save px-10 disabled:bg-gray-300" (click)="onSubmit()" >
+          <fa-icon></fa-icon>
+          {{ is_saving ? 'Saving' : 'Save' }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="opacity-50 fixed inset-0 z-50 bg-black"></div>

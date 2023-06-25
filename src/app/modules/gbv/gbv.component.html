@@ -1,0 +1,186 @@
+<div class="flex">
+  <nav class="mt-4 flex flex-row border-b border-slate-300 text-xs">
+    <button (click)="switchPage(1)" class="tabs-main w-36"
+      [class]="pages===1? 'tabs-main-true rounded-t-md' : 'tabs-main-false' ">
+      ARCHIVE
+    </button>
+    <button (click)="switchPage(2)" *ngIf="arr_allowed.indexOf(pos) > -1" class="tabs-main w-36"
+      [class]="pages===2? 'tabs-main-true rounded-t-md' : 'tabs-main-false' ">
+      DETAILS
+    </button>
+  </nav>
+  <div class="ml-auto">
+    <button *ngIf="selected_gbv_case && !selected_gbv_case?.outcome_date" type="button" class="btn-end-visit ml-auto mt-5" (click)="toggleModal('case_outcome')">
+      <!-- <fa-icon class="mr-1" [icon]="faDoorClosed"></fa-icon> -->
+      Case Outcome
+    </button>
+  </div>
+</div>
+
+<nav *ngIf="pages===2" class="mt-2 flex justify-between border-b border-slate-300 text-xs">
+  <div class="flex flex-row">
+    <button (click)="switchTab(1)" class="tabs-main w-28"
+        [class]="module===1? 'tabs-main-true' : 'tabs-main-false' ">
+        Triage
+    </button>
+    <button (click)="switchTab(2)" class="tabs-main w-28" *ngIf="selected_gbv_case"
+        [class]="module===2? 'tabs-main-true' : 'tabs-main-false' ">
+        Intake
+    </button>
+    <button (click)="switchTab(3)" class="tabs-main w-28" *ngIf="selected_gbv_case?.gbvIntake"
+        [class]="module===3? 'tabs-main-true' : 'tabs-main-false' ">
+        Interview
+    </button>
+    <button (click)="switchTab(4)" class="tabs-main w-28" *ngIf="selected_gbv_case?.gbvIntake && pos === 'MD'"
+        [class]="module===4? 'tabs-main-true' : 'tabs-main-false' ">
+        Medical
+    </button>
+    <button (click)="switchTab(5)" class="tabs-main w-28" *ngIf="selected_gbv_case?.gbvIntake"
+        [class]="module===5? 'tabs-main-true' : 'tabs-main-false' ">
+        Intervention
+    </button>
+    <!-- <button (click)="switchTab(6)" class="tabs-main w-28"
+        [class]="module===6? 'tabs-main-true' : 'tabs-main-false' ">
+        Forms
+    </button> -->
+    <button (click)="switchTab(6)" class="tabs-main w-28" *ngIf="selected_gbv_case"
+        [class]="module===6? 'tabs-main-true' : 'tabs-main-false' ">
+        Referral
+    </button>
+  </div>
+  <div class="flex flex-row">
+    <button type="button" *ngIf="selected_gbv_case && selected_gbv_case.treatment_done === 0" (click)="toggleModal('treatment_outcome')" class="bg-rose-500 px-3 py-2  rounded text-white hover:opacity-75">
+      Case Outome
+    </button>
+  </div>
+</nav>
+
+<div class="my-5 w-full border border-gray-200 shadow-md rounded-xl" *ngIf="pages === 1">
+  <!-- <div *ngIf="selected_gbv_case && (selected_gbv_case?.facility_code !== user_facility)" class="text-orange-800 border border-orange-400 bg-orange-100 rounded-md p-3 mb-2 w-full">
+    There is an ongoing TB treatment for this patient on another facility.
+    You are not allowed to create a new treatment or view previous treatment from other facilities.
+  </div> -->
+  <div class="flex justify-center my-24 italic" *ngIf="arr_allowed.indexOf(pos) < 0">
+    You are not allowed to access this module.
+  </div>
+  <div class="flex flex-col" *ngIf="fetching_history && arr_allowed.indexOf(pos) > -1">
+    <div class="w-full flex justify-center"><fa-icon [icon]="faCircleNotch" spin="true" class="pt-10"></fa-icon></div>
+    <div class="w-full flex justify-center pb-10 font-semi                             bold">Fetching history...</div>
+  </div>
+  <table class="w-full text-sm text-left" *ngIf="!fetching_history && arr_allowed.indexOf(pos) > -1">
+    <thead class="text-xs text-white uppercase bg-blue-500">
+      <tr>
+        <th scope="col" class="py-3 px-6">Case No.</th>
+        <th scope="col" class="py-3 px-6">Date</th>
+        <th scope="col" class="py-3 px-6">Outcome Date</th>
+        <th scope="col" class="py-3 px-6">Status</th>
+        <th scope="col" class="py-3 px-6">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- <tr *ngIf="!patient_gbv_history" >
+        <td colspan="3">
+          <div class="text-center py-5" >
+            No records to show...
+          </div>
+        </td>
+      </tr> -->
+      <tr class="bg-white border-b" *ngFor="let gbv_history of patient_gbv_history">
+        <td class="py-4 px-6">
+          {{ gbv_history.gbvIntake?.case_number ?? 'For GBV Assessment' }}
+        </td>
+        <td class="py-4 px-6">
+          {{ gbv_history.gbv_date | date: 'MM/dd/yyyy' }}
+        </td>
+        <td class="py-4 px-6">
+          {{ gbv_history.outcome_date | date: 'MM/dd/yyyy' ?? '-' }}
+        </td>
+        <td class="py-4 px-6">
+          {{ (!gbv_history.outcome_reason && !gbv_history.outcome_result && !gbv_history.outcome_verdict) ? 'Open' : ''}}
+          {{ gbv_history.outcome_reason ? 'Reason: '+ gbv_history.outcome_reason.desc : '' }}
+          {{ gbv_history.outcome_result ? 'Result: '+ gbv_history.outcome_result.desc : '' }}
+          {{ gbv_history.outcome_verdict ? 'Verdict: '+ gbv_history.outcome_verdict.desc : '' }}
+        </td>
+        <td class="py-4 px-6">
+          <button type="button" class="rounded-md bg-blue-500 text-white py-1 px-2" (click)="openGbvConsult(gbv_history)">
+            {{ (!gbv_history.outcome_reason && !gbv_history.outcome_result && !gbv_history.outcome_verdict) ? 'Open' : 'View' }}
+          </button>
+        </td>
+      </tr>
+
+      <tr class="bg-white border-b" *ngIf="patient_gbv_history.length === 0">
+        <td  colspan="7">
+          <div class="text-center py-3 flex flex-col">
+            <div class="flex justify-center">No records to show...</div>
+            <!-- <div class="flex justify-center">
+              <button type="button" class="mt-3 bg-blue-500 px-3 py-1 rounded-md text-white hover:opacity-75" (click)="switchPage(2)">
+                create record
+              </button>
+            </div> -->
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- <app-treatment-archive *ngIf="pages === 1"
+  [patient_id]="patient_id"
+  [consult_id]="consult_id"
+></app-treatment-archive> -->
+
+
+<app-triage *ngIf="pages === 2 && module === 1"
+  (getGbvHistory)="getGbvHistory()"
+  [patient_id]="patient_id"
+  [selected_gbv_case]="selected_gbv_case"
+  [pos]="pos"
+></app-triage>
+
+<app-intake *ngIf="pages === 2 && module === 2"
+  (updateSelectedGbv)="updateSelectedGbv($event)"
+  [patient_id]="patient_id"
+  [selected_gbv_case]="selected_gbv_case"
+  [pos]="pos"
+></app-intake>
+
+<app-interview *ngIf="pages === 2 && module === 3"
+  (updateSelectedGbv)="updateSelectedGbv($event)"
+  [patient_id]="patient_id"
+  [selected_gbv_case]="selected_gbv_case"
+  [pos]="pos"
+></app-interview>
+
+<app-medical *ngIf="pages === 2 && module === 4"
+(updateSelectedGbv)="updateSelectedGbv($event)"
+[patient_id]="patient_id"
+[selected_gbv_case]="selected_gbv_case"
+[pos]="pos"
+></app-medical>
+
+<app-intervention *ngIf="pages === 2 && module === 5"
+  (updateSelectedGbv)="updateSelectedGbv($event)"
+  [patient_id]="patient_id"
+  [selected_gbv_case]="selected_gbv_case"
+  [pos]="pos"
+></app-intervention>
+
+<app-referral *ngIf="pages === 2 && module === 6"
+  (updateSelectedGbv)="updateSelectedGbv($event)"
+  [patient_id]="patient_id"
+  [selected_gbv_case]="selected_gbv_case"
+  [pos]="pos"
+></app-referral>
+<!-- <app-casefindings *ngIf="pages === 2 && module === 1"
+  [patient_id]="patient_id"
+  [selected_gbv_case]="selected_gbv_case"
+  [max_date]="max_date"
+  (getPatientTbHistory)="getPatientTbHistory()"
+></app-casefindings> -->
+
+<app-case-outcome *ngIf="modals['case_outcome']"
+  (toggleModal)="toggleModal($event)"
+  [selected_gbv_case]="selected_gbv_case"
+  [pos]="pos"
+></app-case-outcome>
+

@@ -105,7 +105,7 @@ export class ConsultationComponent implements OnInit {
   loadConsult(){
     // console.log('consult loaded')
     this.consult_id = this.route.snapshot.paramMap.get('consult_id');
-    this.consult_details = null;
+    // this.consult_details = null;
     let params = {
       id: this.consult_id,
       pt_group: 'cn',

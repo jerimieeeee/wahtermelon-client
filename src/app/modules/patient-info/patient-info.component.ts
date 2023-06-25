@@ -17,6 +17,7 @@ import { SurgicalHistoryComponent } from './components/surgical-history/surgical
 import { VaccineComponent } from './components/vaccine/vaccine.component';
 import { VitalsComponent } from './components/vitals/vitals.component';
 import { AppointmentComponent } from './components/appointment/appointment.component';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-patient-info',
@@ -57,6 +58,7 @@ export class PatientInfoComponent implements OnInit {
     private router: Router,
     private http: HttpService,
     private ageService: AgeService,
+    private sanitizer: DomSanitizer
   ) { }
 
   loadData(field){
@@ -138,6 +140,7 @@ export class PatientInfoComponent implements OnInit {
           this.accordions['lab_request'] = true;
           this.accordions['prescriptions'] = true;
           this.accordions['appointment'] = true;
+          this.getImage(data.data)
         },
         error: err => {
           // feature: add prompt that patient is not found. for now redirect to home
@@ -147,6 +150,21 @@ export class PatientInfoComponent implements OnInit {
     } else {
       this.reloadData();
     }
+  }
+
+  imageData: SafeUrl | null = null;
+  getImage(data) {
+    this.http.get('images/'+data.id, { responseType: 'blob' }).subscribe({
+      next: (data: any) => {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          const base64data = reader.result as string;
+          this.imageData = this.sanitizer.bypassSecurityTrustUrl(base64data);
+        };
+        reader.readAsDataURL(data);
+      },
+      error: err => console.log(err)
+    });
   }
 
   reloadData(){
@@ -290,6 +308,7 @@ export class PatientInfoComponent implements OnInit {
         }
       }
 
+      if(modal_name='photo' && !this.modals['photo']) this.getImage(this.patient_info);
       // if(modal_name === 'preghist' && this.modals[modal_name] === false) this.loadData('pregnancy_history')
       if(modal_name === 'lifestyle' && this.modals['lifestyle'] === false) this.loadData('social_history');
       if (modal_name === 'lab-request' && this.modals[modal_name] === false) this.loadData('laboratory');
