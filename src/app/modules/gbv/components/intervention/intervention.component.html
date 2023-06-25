@@ -187,7 +187,7 @@
                   </div>
                 </div>
 
-                <div *ngIf="placement.location_id===2 || placement.location_id===3">
+                <div *ngIf="placement.location_id===2 || placement.location_id===3 || placement.location_id===5">
                   <span class="font-semibold">Placement type:</span>{{ placement.placement_type?.desc }}<br />
                   <span class="font-semibold">Placement name:</span>{{ placement.placement_name }}<br />
                   <span class="font-semibold">Contact info:</span>{{ placement.placement_contact_info }}<br />
@@ -202,7 +202,7 @@
                 {{ placement.placement_name }}
               </td> -->
               <td class="align-top pt-3 px-3">
-                <div *ngIf="placement.location_id===2 || placement.location_id===3">
+                <div *ngIf="placement.location_id===2 || placement.location_id===3 || placement.location_id===5">
                   <span class="font-semibold">Date in:</span> {{ placement.scheduled_date | date:'MM/dd/yyyy' }} <br />
                   <span class="font-semibold">Date out:</span> {{ placement.actual_date | date:'MM/dd/yyyy' }} <br />
                 </div>
