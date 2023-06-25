@@ -11,57 +11,46 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class PbefComponent implements OnInit {
   @Output() toggleModal = new EventEmitter<any>();
-  @Input() selected_tb_consult;
+  @Input() selected_case;
 
-  faSave = faSave;
-  faCircleNotch = faCircleNotch;
-  faSearch = faSearch;
-  faMagnifyingGlass = faMagnifyingGlass;
+  getPbef(){
+    let params = {
+      program_code: '',
+      member_pin: '',
+      member_last_name: '',
+      member_first_name: '',
+      member_middle_name: '',
+      member_suffix_name: '',
+      member_birthdate: '',
+      patient_is: '',
+      admission_date: '',
+      discharge_date: '',
+      patient_last_name: '',
+      patient_first_name: '',
+      patient_middle_name: '',
+      patient_suffix_name: '',
+      patient_birthdate: '',
+      patient_gender: ''
+    }
 
-  answers: any;
-  answers_yn: any;
-
-  is_searching: boolean = false;
-  show_error: boolean = false;
-  required_message = 'Required field';
-
-  searchForm: FormGroup = new FormGroup({
-    program_code: new FormControl<string| null>(''),
-    description: new FormControl<string| null>(''),
-    icd10 : new FormControl<string| null>(''),
-    rvs : new FormControl<string| null>('')
-  });
-
-  get f(): { [key: string]: AbstractControl } {
-    return this.searchForm.controls;
-  }
-
-  caserate_result: any = [];
-  onSubmit() {
-    this.is_searching = true;
-    this.searchForm.patchValue({program_code: 'mc'});
-    this.http.post('eclaims/case-rate', this.searchForm.value).subscribe({
-      next: (data:any) => {
-        this.is_searching = false;
-        this.caserate_result.push(data.CASERATES);
-        console.log(typeof this.caserate_result, this.caserate_result)
+    this.http.post('eclaims/check-claim-eligibility', params).subscribe({
+      next: (data: any) => {
+        console.log(data)
       },
       error: err => console.log(err)
     })
   }
 
-  ngOnInit(): void {
-    console.log('test');
-  }
-
-  closeModal(data?){
+  closeModal() {
     this.toggleModal.emit('pbef');
   }
 
-  constructor(
-    private formBuilder: FormBuilder,
+  constructor (
     private http: HttpService,
     private toastr: ToastrService
   ) { }
 
+  ngOnInit(): void {
+      console.log('test');
+  }
 }
