@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
 import { faEdit, faSave} from '@fortawesome/free-regular-svg-icons';
-import { faCircleNotch, faPlus, faFilePdf } from '@fortawesome/free-solid-svg-icons';
+import { faCircleNotch, faPlus, faFilePdf, faFileContract } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 import { forkJoin } from 'rxjs';
@@ -26,6 +26,7 @@ export class MedicalComponent implements OnInit {
   faPlus = faPlus;
   faCircleNotch = faCircleNotch;
   faFilePdf = faFilePdf;
+  faFileContract = faFileContract;
 
   medicalForm:FormGroup=medicalForm();
   intakeForm: FormGroup=intakeForm();
@@ -126,6 +127,10 @@ export class MedicalComponent implements OnInit {
   }
 
   toggleExportPDF(name) {
+    this.modals[name] = !this.modals[name];
+  }
+
+  toggleMedCert(name) {
     this.modals[name] = !this.modals[name];
   }
 

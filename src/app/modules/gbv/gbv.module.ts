@@ -33,6 +33,8 @@ import { FileUploadComponent } from './components/medical/modals/file-upload/fil
 import { ViewFileComponent } from './components/medical/modals/view-file/view-file.component';
 import { ExportAsModule } from 'ngx-export-as';
 import { ExportPdfComponent } from './components/medical/modals/export-pdf/export-pdf.component';
+import { LegalVisitComponent } from './components/intervention/modals/legal-visit/legal-visit.component';
+import { MedicalCertificateComponent } from './components/medical/modals/medical-certificate/medical-certificate.component';
 
 export const options: Partial<null|IConfig> | (() => Partial<IConfig>) = null;
 
@@ -64,7 +66,9 @@ export const options: Partial<null|IConfig> | (() => Partial<IConfig>) = null;
     PhysicalExaminationComponent,
     FileUploadComponent,
     ViewFileComponent,
-    ExportPdfComponent
+    ExportPdfComponent,
+    LegalVisitComponent,
+    MedicalCertificateComponent
   ],
   imports: [
     CommonModule,
