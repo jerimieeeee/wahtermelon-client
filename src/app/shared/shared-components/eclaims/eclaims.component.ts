@@ -26,6 +26,7 @@ export class EclaimsComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    console.log('test');
   }
 
 }

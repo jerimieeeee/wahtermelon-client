@@ -51,6 +51,7 @@ export class PbefComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-      console.log('test');
+    console.log(this.http.getPatientInfo());
+      // console.log('test');
   }
 }
