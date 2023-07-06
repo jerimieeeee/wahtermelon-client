@@ -43,6 +43,7 @@ export class SearchCaserateComponent {
 
   caserate_result: any = [];
   onSubmit() {
+    this.caserate_result = [];
     this.is_searching = true;
     this.searchForm.patchValue({program_code: 'mc'});
     this.http.post('eclaims/case-rate', this.searchForm.value).subscribe({
@@ -55,8 +56,14 @@ export class SearchCaserateComponent {
     })
   }
 
-  closeModal(data?){
-    this.toggleModal.emit('search-caseate');
+  closeModal(data?, amount?){
+    let content;
+    if(data) {
+      content = {name: 'search-caserate', amount: amount, data: data};
+    } else {
+      content = 'search-caserate';
+    }
+    this.toggleModal.emit(content);
   }
 
   constructor(

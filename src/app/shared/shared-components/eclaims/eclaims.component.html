@@ -15,10 +15,10 @@
           <button type="button" class="w-32 px-3 py-2 rounded-md bg-blue-500 text-sm text-white ml-auto mr-1" (click)="toggleModal('pbef')">
             PBEF
           </button>
-          <button type="button" class="w-32 px-3 py-2 rounded-md bg-blue-500 text-sm text-white ml-auto  mr-1" (click)="toggleModal('cf1')">
+          <button *ngIf="caserate_list" type="button" class="w-32 px-3 py-2 rounded-md bg-blue-500 text-sm text-white ml-auto  mr-1" (click)="toggleModal('cf1')">
             CF1
           </button>
-          <button type="button" class="w-32 px-3 py-2 rounded-md bg-blue-500 text-sm text-white ml-auto  mr-1" (click)="toggleModal('cf2')">
+          <button *ngIf="caserate_list" type="button" class="w-32 px-3 py-2 rounded-md bg-blue-500 text-sm text-white ml-auto  mr-1" (click)="toggleModal('cf2')">
             CF2
           </button>
           <button type="button" class="w-32 px-3 py-2 rounded-md bg-green-500 text-sm text-white ml-auto " (click)="toggleModal('upload')">
@@ -71,6 +71,25 @@
 <app-ekas *ngIf="modal['ekas']" (toggleModal)="toggleModal($event)"></app-ekas>
 <app-epres *ngIf="modal['epres']" (toggleModal)="toggleModal($event)"></app-epres> -->
 
-<app-pbef *ngIf="modal['pbef']" (toggleModal)="toggleModal($event)"></app-pbef>
-<app-cf1 *ngIf="modal['cf1']" (toggleModal)="toggleModal($event)"></app-cf1>
-<app-cf2 *ngIf="modal['cf2']" (toggleModal)="toggleModal($event)"></app-cf2>
+<app-pbef *ngIf="modal['pbef']"
+  (toggleModal)="toggleModal($event)"
+  [patient]="patient"
+  [patient_philhealth]="patient_philhealth"
+  [program_creds]="program_creds"
+></app-pbef>
+
+<app-cf1 *ngIf="modal['cf1']"
+  (toggleModal)="toggleModal($event)"
+  [patient]="patient"
+  [patient_philhealth]="patient_philhealth"
+  [program_creds]="program_creds"
+></app-cf1>
+
+<app-cf2 *ngIf="modal['cf2']"
+  (toggleModal)="toggleModal($event)"
+  [patient]="patient"
+  [program_name]="program_name"
+  [program_id]="program_id"
+  [caserate_list]="caserate_list"
+  [selected_case]="selected_case"
+></app-cf2>

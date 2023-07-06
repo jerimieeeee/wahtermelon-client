@@ -48,7 +48,7 @@ export class TbdotsComponent implements OnInit {
         this.patient_tb_history = data.data;
         // console.log(this.patient_tb_history.length);
         if(this.patient_tb_history[0] && this.patient_tb_history[0].treatment_done === 0) this.selected_tb_consult = data.data[0];
-        // console.log(this.selected_tb_consult)
+        console.log(this.selected_tb_consult)
         this.fetching_history = false;
         // this.pages = 2;
         // this.module = 8;

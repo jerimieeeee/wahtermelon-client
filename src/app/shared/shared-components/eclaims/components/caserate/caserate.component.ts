@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
-import { faSave } from '@fortawesome/free-regular-svg-icons';
+import { faEdit, faSave } from '@fortawesome/free-regular-svg-icons';
 import { faCircleNotch, faSearch } from '@fortawesome/free-solid-svg-icons';
 import * as angularFontawesome from '@fortawesome/angular-fontawesome';
 import { SearchCaserateComponent } from './modals/search-caserate/search-caserate.component';
@@ -16,23 +16,23 @@ import { SearchCaserateComponent } from './modals/search-caserate/search-caserat
   styleUrls: ['./caserate.component.scss']
 })
 export class CaserateComponent implements OnInit {
-  @Input() consult_details;
-  @Input() program_details;
+  @Input() program_id;
+  @Input() program_name;
   @Input() patient_id;
 
   faSave = faSave;
   faCircleNotch = faCircleNotch;
   faSearch = faSearch;
-
-  is_saving: boolean = false;
+  faEdit = faEdit;
 
   modals: any = [];
+  attendant: any;
 
-  toggleModal(name) {
-    this.modals[name] = !this.modals[name];
-  }
+  show_form: boolean = false;
+  is_saving: boolean = false;
 
   caserateForm: FormGroup =  new FormGroup({
+    id: new FormControl<string|null>(''),
     patient_id: new FormControl<string|null>(''),
     program_desc: new FormControl<string|null>(''),
     program_id: new FormControl<string|null>(''),
@@ -47,20 +47,48 @@ export class CaserateComponent implements OnInit {
     caserate_attendant: new FormControl<string|null>(null),
   });
 
-  get f(): { [key: string]: AbstractControl } {
-    return this.caserateForm.controls;
+  selectCaserate(i) {
+    this.patchData(this.caserate_list[i]);
   }
 
   onSubmit() {
     this.is_saving = true;
+
+    this.http.post('eclaims/eclaims-caserate', this.caserateForm.value).subscribe({
+      next:(data:any) => {
+        this.toastr.success('Successfuly recorded.', 'Caserate');
+        this.is_saving = false;
+        this.getCaserate();
+      },
+      error: err => {console.log(err); this.is_saving = false;}
+    })
+  }6
+
+  caserate_list: any;
+
+  getCaserate() {
+    this.show_form = false;
+    let params = {
+      program_id: this.program_id,
+      program_desc: this.program_name
+    };
+
+    this.http.get('eclaims/eclaims-caserate', {params}).subscribe({
+      next:(data:any) => {
+        this.caserate_list = data.data;
+        console.log(this.caserate_list);
+        this.createForm()
+      },
+      error: err => console.log(err)
+    })
   }
 
-  createForm(){
+  createForm(data?){
     this.caserateForm = this.formBuilder.nonNullable.group({
       id: [null],
       patient_id: [this.patient_id],
-      program_desc: [this.program_details],
-      program_id: [this.program_details.id],
+      program_desc: [this.program_name],
+      program_id: [this.program_id],
       caserate_date: [null, Validators.required],
       admit_dx: [null, Validators.required],
       caserate_code: [null, Validators.required],
@@ -71,6 +99,52 @@ export class CaserateComponent implements OnInit {
       caserate_fee: [null, Validators.required],
       caserate_attendant: [null, Validators.required]
     });
+
+    if(data) this.patchData(data);
+    this.show_form = true;
+  }
+
+  patchData(data){
+    this.caserateForm.patchValue({...data});
+  }
+
+  loadContent(content) {
+    this.caserateForm.patchValue({
+      id: null,
+      caserate_date: null,
+      admit_dx: '',
+      caserate_code: content.data.pCaseRateCode,
+      code: content.data.pItemCode,
+      description: content.data.pCaseRateDescription,
+      hci_fee: content.amount.pPrimaryHCIFee,
+      prof_fee: content.amount.pPrimaryProfFee,
+      caserate_fee: content.amount.pPrimaryCaseRate,
+      caserate_attendant: '',
+    })
+  }
+
+  toggleModal(content) {
+    let name: string;
+    if(content.data) {
+      name = content.name
+      this.loadContent(content);
+    } else {
+      name = content;
+    }
+    this.modals[name] = !this.modals[name];
+  }
+
+  get f(): { [key: string]: AbstractControl } {
+    return this.caserateForm.controls;
+  }
+
+  loadLibraries() {
+    this.http.get('users', {params: {attendant_flag: 'tb'}}).subscribe({
+      next: (data: any) => {
+        this.attendant = data.data;
+        this.getCaserate();
+      }
+    })
   }
 
   constructor (
@@ -80,6 +154,6 @@ export class CaserateComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    console.log('test');
+    this.loadLibraries();
   }
 }

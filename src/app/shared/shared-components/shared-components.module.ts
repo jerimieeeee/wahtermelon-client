@@ -12,6 +12,7 @@ import { PbefComponent } from './eclaims/modals/pbef/pbef.component';
 import { Cf1Component } from './eclaims/modals/cf1/cf1.component';
 import { Cf2Component } from './eclaims/modals/cf2/cf2.component';
 import { NgxPrintModule } from 'ngx-print';
+import { ExportAsModule } from 'ngx-export-as';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { NgxPrintModule } from 'ngx-print';
     ReactiveFormsModule,
     FormsModule,
     WebcamModule,
-    NgxPrintModule
+    NgxPrintModule,
+    ExportAsModule
   ],
   exports: [
     KonsultaComponent,

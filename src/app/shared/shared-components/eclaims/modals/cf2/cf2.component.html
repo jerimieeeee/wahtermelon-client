@@ -1,1 +1,58 @@
-<p>cf2 works!</p>
+<div id="defaultModal" tabindex="-1" class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 w-full md:inset-0 h-modal md:h-full justify-center items-center flex" aria-modal="true" role="dialog" style="z-index:60">
+  <div class="relative p-4 w-full max-w-4xl h-auto md:h-auto">
+    <!-- Modal content -->
+    <div class="relative bg-white rounded-lg shadow">
+      <!-- Modal header -->
+      <div class="flex justify-between items-start py-3 px-5 rounded-t border-b bg-orange-400">
+        <h3 class="text-sm font-bold text-white">
+          Eligibility
+        </h3>
+        <button [disabled]="pdf_exported" class="bg-white text-orange-400 rounded-md px-2 py-1" (click)="exportP()">
+          <fa-icon [icon]="faFilePdf"></fa-icon>
+        </button>
+      </div>
+      <!-- Modal body -->
+      <div class="overflow-y-auto max-h-[500px] scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
+
+        <!-- <img src="./assets/img/philhealth-cf2-1.jpg" hidden /> -->
+        <div *ngIf="!selected_caserate" class="flex">
+          <div>
+            <label for="caserate_field">Caserate attendant</label>
+            <select name="caserate_field" id="caserate_field" [(ngModel)]="caserate_field" class="input">
+              <option *ngFor="let cr of caserate_list" [ngValue]="cr">{{ cr.caserate_code }}</option>
+            </select>
+          </div>
+          <div>
+            <button type="button" class="btn-save" (click)="selectCaserate()">
+              Select
+            </button>
+          </div>
+        </div>
+
+        <div *ngIf="selected_caserate" class="w-full">
+          <div *ngIf="show_form" class="relative text-xs w-[216mm] h-[660mm]" id="mainForm">
+            <img src="./assets/img/philhealth-cf2-1.jpg" />
+            <img src="./assets/img/philhealth-cf2-2.jpg" />
+          </div>
+
+          <div  *ngIf="!show_form" class="grid grid-cols-1 my-20">
+            <div class="flex justify-center text-blue-500">
+              <fa-icon [icon]="faCircleNotch" spin="true"></fa-icon>
+            </div>
+
+            <div class="flex justify-center">
+              Checking PhilHealth Claims Eligibility...
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="flex justify-end py-4 px-5 space-x-4 rounded-b border-t border-gray-200">
+        <button type="button" class="btn-save bg-gray-400" (click)="closeModal()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="opacity-50 fixed inset-0 z-50 bg-black"></div>
