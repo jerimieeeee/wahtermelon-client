@@ -145,7 +145,7 @@
           <span class="text-xs italic pt-1" *ngIf="pos!=='MSWDO'">
             MSWDO Only
           </span><!-- *ngIf="pos==='MSWDO'"  -->
-          <button type="button" (click)="toggleModal('placement')" class="bg-white text-sky-500 px-2 rounded text-xs">
+          <button type="button" *ngIf="pos==='MSWDO'" (click)="toggleModal('placement')" class="bg-white text-sky-500 px-2 rounded text-xs">
             <fa-icon [icon]="faPlus"></fa-icon>
           </button>
         </div>
