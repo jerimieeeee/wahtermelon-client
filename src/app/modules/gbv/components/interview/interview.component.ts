@@ -298,6 +298,7 @@ export class InterviewComponent implements OnInit{
       child_caretaker_present_flag: [false],
       child_behavior_remarks: [null],
       dev_screening_id: [null],
+      other_abuse_acts: [null],
       dev_screening_remarks: [null],
     });
 
