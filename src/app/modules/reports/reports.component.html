@@ -11,6 +11,9 @@
         <optgroup label="Usage Statistics" class="text-gray-500" >
           <option *ngFor="let type of other_stats" [ngValue]="type">{{ type.desc }}</option>
         </optgroup>
+        <optgroup label="GBV Report" class="text-gray-500" >
+          <option *ngFor="let type of gbv_stats" [ngValue]="type">{{ type.desc }}</option>
+        </optgroup>
       </select>
     </div>
 
@@ -101,6 +104,7 @@
     <app-fhsis2018-cc *ngIf="reportForm.value?.report_type.id === 'fhsis2018-cc' && report_data && !is_fetching" [report_data]="report_data" [reportForm]="reportForm" [selectedBrgy]="selectedBrgy" [brgys]="brgys" [userInfo]="userInfo" ></app-fhsis2018-cc>
     <app-fhsis2018-mc *ngIf="reportForm.value?.report_type.id === 'fhsis2018-mc' && report_data && !is_fetching" [report_data]="report_data" [reportForm]="reportForm" [selectedBrgy]="selectedBrgy" [brgys]="brgys" [userInfo]="userInfo" ></app-fhsis2018-mc>
     <app-patient-registered *ngIf="reportForm.value?.report_type.id === 'patient-registered' && report_data && !is_fetching" [report_data]="report_data"></app-patient-registered>
+    <app-catalyst-report *ngIf="reportForm.value?.report_type.id === 'catalyst-report'"></app-catalyst-report>
 
     <div class="flex flex-col justify-center" *ngIf="is_fetching">
       <fa-icon class="text-blue-500 mx-auto pt-36 text-xl" [icon]="faCircleNotch" spin="true"></fa-icon>

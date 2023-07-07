@@ -9,7 +9,7 @@
         </h3>
       </div>
       <!-- Modal body -->
-    <div class="overflow-y-auto h-[800px] scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
+    <div class="overflow-y-auto h-[800px] scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100 select-none">
       <table id="mainForm">
         <table class="w-full text-sm text-left" id="medForm">
           <div class="text-center font-bold pt-3 text-2xl">
@@ -68,7 +68,7 @@
               </div>
 
               <div class="col-span-10 border border-gray-200">
-                <h4 class="py-2 pl-3 capitalize">{{ userInfo.facility.facility_name }} </h4>
+                <h4 class="py-2 pl-3 capitalize">{{conv_facility}} </h4>
               </div>
 
               <div class="col-span-2 border border-gray-200">
@@ -119,7 +119,11 @@
               </div>
 
               <div class="col-span-12 border border-gray-200">
-                <h4 class="py-2 pl-3">Persons present during exam:</h4>
+                <h4 class="py-2 pl-3">Requesting Party: {{conv_referral_facility}}</h4>
+              </div>
+
+              <div class="col-span-12 border border-gray-200">
+                <h4 class="py-2 pl-3">Persons present during exam: </h4>
               </div>
 
               <div class="col-span-12 text-center font-bold py-3 text-2xl border border-gray-200">

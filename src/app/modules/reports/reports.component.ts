@@ -35,6 +35,10 @@ export class ReportsComponent implements OnInit {
     // { id: 'fhsis2018-mc', desc: 'Maternal Care', url: 'reports-2018/maternal-care/m1'},
   ]
 
+  gbv_stats = [
+    { id: 'catalyst-report', desc: 'Catalyst Report', url: 'reports-2018/gbv-stats/catalyst-report'},
+  ]
+
   months = [
     {
       value: 1,
@@ -86,7 +90,7 @@ export class ReportsComponent implements OnInit {
     },
   ];
 
-  fhsis_monthly_arr = ['fhsis2018-cc', 'fhsis2018-mc', 'patient-registered']
+  fhsis_monthly_arr = ['fhsis2018-cc', 'fhsis2018-mc', 'patient-registered', 'catalyst-report']
   report_params: any;
   years: any = [];
   selectedBrgy: [];
