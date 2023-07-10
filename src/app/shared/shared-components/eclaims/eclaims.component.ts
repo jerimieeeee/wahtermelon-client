@@ -19,27 +19,8 @@ export class EclaimsComponent implements OnInit {
 
   caserate_list: any;
   is_refreshing: boolean = false;
-  program_code: string = 'mc';
-  program_creds: object;
-
-  getCreds(){
-    let params = {
-      'filter[program_code]': this.program_code
-    }
-
-    this.http.get('settings/philhealth-credentials').subscribe({
-      next:(data:any) => {
-        console.log(data)
-        this.program_creds = data.data[0];
-        // this.getPbef();
-      },
-      error: err => console.log(err)
-    })
-  }
-
-  createXml() {
-
-  }
+  patient:any;
+  patient_philhealth:any;
 
   getCaserate() {
     let params = {
@@ -50,7 +31,6 @@ export class EclaimsComponent implements OnInit {
     this.http.get('eclaims/eclaims-caserate', {params}).subscribe({
       next:(data:any) => {
         this.caserate_list = data.data;
-        console.log(this.caserate_list);
       },
       error: err => console.log(err)
     })
@@ -76,10 +56,7 @@ export class EclaimsComponent implements OnInit {
 
   }
 
-  patient:any;
-  patient_philhealth:any;
   ngOnInit(): void {
-    console.log(this.selected_case);
     this.patient = this.http.getPatientInfo();
     this.patient_philhealth = this.patient.philhealthLatest;
 

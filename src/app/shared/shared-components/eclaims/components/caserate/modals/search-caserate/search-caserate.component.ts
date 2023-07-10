@@ -17,6 +17,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 export class SearchCaserateComponent {
   @Output() toggleModal = new EventEmitter<any>();
   @Input() selected_tb_consult;
+  @Input() program_name;
 
   faSave = faSave;
   faCircleNotch = faCircleNotch;
@@ -45,7 +46,7 @@ export class SearchCaserateComponent {
   onSubmit() {
     this.caserate_result = [];
     this.is_searching = true;
-    this.searchForm.patchValue({program_code: 'mc'});
+    this.searchForm.patchValue({program_code: this.program_name});
     this.http.post('eclaims/case-rate', this.searchForm.value).subscribe({
       next: (data:any) => {
         this.is_searching = false;

@@ -16,12 +16,12 @@ export class PbefComponent implements OnInit {
   @Input() selected_case;
   @Input() patient;
   @Input() patient_philhealth;
+  @Input() program_name;
 
   faFilePdf = faFilePdf;
   faCircleNotch = faCircleNotch;
 
   pbef_result: any;
-  program_code: string = 'mc';
   program_creds: any;
 
   pdf_exported: boolean = false;
@@ -52,7 +52,7 @@ export class PbefComponent implements OnInit {
 
   getCreds(){
     let params = {
-      'filter[program_code]': this.program_code
+      'filter[program_code]': this.program_name
     }
 
     this.http.get('settings/philhealth-credentials').subscribe({
@@ -69,7 +69,7 @@ export class PbefComponent implements OnInit {
     this.show_form = false;
     let test_date = formatDate(new Date(), 'MM-dd-yyyy', 'en');
     let params = {
-      program_code: this.program_code,
+      program_code: this.program_name,
       member_pin: this.patient_philhealth.philhealth_id,
       member_last_name: this.patient_philhealth.membership_type_id === 'DD' ? this.patient_philhealth.member_last_name.toUpperCase() : this.patient.last_name.toUpperCase(),
       member_first_name: this.patient_philhealth.membership_type_id === 'DD' ? this.patient_philhealth.member_first_name.toUpperCase() : this.patient.first_name.toUpperCase(),
@@ -109,8 +109,6 @@ export class PbefComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    console.log(this.patient);
     this.getCreds();
-      // console.log('test');
   }
 }
