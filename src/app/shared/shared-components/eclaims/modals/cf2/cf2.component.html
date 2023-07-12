@@ -23,7 +23,7 @@
         <!-- <img src="./assets/img/philhealth-cf2-1.jpg" hidden /> -->
         <div *ngIf="!selected_caserate" class="flex">
           <div class="p-2 w-1/2">
-            <label for="caserate_field">Caserate attendant</label>
+            <label for="caserate_field">Caserate</label>
             <select name="caserate_field" id="caserate_field" [(ngModel)]="caserate_field" class="input">
               <option *ngFor="let cr of caserate_list" [ngValue]="cr">{{ cr.caserate_code }}</option>
             </select>

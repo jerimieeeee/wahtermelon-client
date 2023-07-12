@@ -21,10 +21,26 @@ export class EclaimsComponent implements OnInit {
   is_refreshing: boolean = false;
   patient:any;
   patient_philhealth:any;
+  eclaims_list: any;
+
+  getEclaimsList() {
+    let params = {
+      patient_id: this.patient.id,
+      program_code: this.program_name
+    };
+
+    this.http.get('eclaims/eclaims-upload', {params}).subscribe({
+      next:(data:any) => {
+        console.log(data);
+        this.eclaims_list = data.data;
+      },
+      error: err => console.log(err)
+    })
+  }
 
   getCaserate() {
     let params = {
-      program_id: this.program_id,
+      program_code: this.program_id,
       program_desc: this.program_name
     };
 
@@ -33,7 +49,9 @@ export class EclaimsComponent implements OnInit {
         this.caserate_list = data.data;
       },
       error: err => console.log(err)
-    })
+    });
+
+    this.getEclaimsList();
   }
 
   refreshClaims(){
@@ -47,14 +65,6 @@ export class EclaimsComponent implements OnInit {
   constructor(
     private http: HttpService
   ) { }
-
-  paramsTb(){
-
-  }
-
-  paramsCc(){
-
-  }
 
   ngOnInit(): void {
     this.patient = this.http.getPatientInfo();

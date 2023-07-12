@@ -42,25 +42,34 @@
           <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
               <tr>
-                <th scope="col" class="py-3 px-6">Claim Series Lhio</th>
-                <th scope="col" class="py-3 px-6">Transmittal Date</th>
-                <th scope="col" class="py-3 px-6">Claim Status</th>
-                <th scope="col" class="py-3 px-6">As of</th>
-                <th scope="col" class="py-3 px-6">Action</th>
+                <th scope="col" class="py-3 px-3">Transmittal No.</th>
+                <th scope="col" class="py-3 px-3">Claim Series Lhio</th>
+                <th scope="col" class="py-3 px-3">Transmittal Date</th>
+                <th scope="col" class="py-3 px-3">Caserate</th>
+                <th scope="col" class="py-3 px-3">Claim Status</th>
+                <th scope="col" class="py-3 px-3">Action</th>
               </tr>
             </thead>
             <tbody> <!-- *ngFor="let philhealth of philhealth_infos"  -->
-              <tr *ngFor="let lab of pending_list" class="bg-white border-b last:border-0">
-                <td class="w-1/3 py-4 px-6">
-                  <fa-icon (click)="toggleModal('delete', lab)" size="lg" class="mx-0 my-0 text-rose-400 hover:cursor-pointer flex-none mr-2" [icon]="faXmark"></fa-icon>
-                  {{ lab.type }}
+              <tr *ngFor="let eclaims of eclaims_list" class="bg-white border-b last:border-0">
+                <td class="py-4 px-3">
+                  {{ eclaims.pHospitalTransmittalNo }}
                 </td>
-                <th scope="row" class="w-1/3 py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
-                  {{ lab.date_requested }}
-                </th>
-                <td class="w-1/3 py-4 px-6">
+                <td class="py-4 px-3">
+                  {{ eclaims.pClaimSeriesLhio ?? '-' }}
+                </td>
+                <td class="py-4 px-3">
+                  {{ eclaims.pTransmissionDate ?? '-' }}
+                </td>
+                <td>
+                  <!-- {{ eclaims.pTransmissionDate }} -->
+                </td>
+                <td class="py-4 px-3">
+                  {{ eclaims.pStatus ?? 'IN QUEUE'  }}
+                </td>
+                <td class="py-4 px-3">
                   <!-- <fa-icon (click)="toggleModal('delete')" size="xl" class="mr-5 mx-0 my-0 text-rose-400 hover:cursor-pointer flex-none mr-2" [icon]="faTrash"></fa-icon> -->
-                  <fa-icon (click)="toggleModal('add', lab)" size="lg" class="mx-0 my-0 text-blue-500 hover:cursor-pointer flex-none mr-2" [icon]="faEdit"></fa-icon>
+                  <!-- <fa-icon (click)="toggleModal('add', lab)" size="lg" class="mx-0 my-0 text-blue-500 hover:cursor-pointer flex-none mr-2" [icon]="faEdit"></fa-icon> -->
                 </td>
               </tr>
             </tbody>
