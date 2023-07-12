@@ -192,6 +192,8 @@ export class Cf2Component implements OnInit {
       caserate_code: [null, Validators.required],
       code: [null, Validators.required],
       description: [null, Validators.required],
+      discharge_dx: [null, Validators.required],
+      icd10_code: [null, Validators.required],
       hci_fee: [null, Validators.required],
       prof_fee: [null, Validators.required],
       caserate_fee: [null, Validators.required],
@@ -199,6 +201,7 @@ export class Cf2Component implements OnInit {
       admission_time: [null, Validators.required],
       discharge_date: [null, Validators.required],
       discharge_time: [null, Validators.required],
+      eclaims_caserate_list_id: [null, Validators.required],
       attendant_accreditation_code: [null, Validators.required],
       attendant_last_name: [null, Validators.required],
       attendant_first_name: [null, Validators.required],
@@ -226,6 +229,7 @@ export class Cf2Component implements OnInit {
 
     this.eclaimsForm.patchValue({...this.selected_caserate});
     this.eclaimsForm.patchValue({
+      eclaims_caserate_list_id: this.selected_caserate.id,
       attendant_accreditation_code: this.selected_caserate.attendant.accreditation_number,
       attendant_last_name: this.selected_caserate.attendant.last_name,
       attendant_first_name: this.selected_caserate.attendant.first_name,

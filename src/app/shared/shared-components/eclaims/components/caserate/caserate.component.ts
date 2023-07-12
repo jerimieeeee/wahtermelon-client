@@ -7,11 +7,13 @@ import { faEdit, faSave } from '@fortawesome/free-regular-svg-icons';
 import { faCircleNotch, faSearch } from '@fortawesome/free-solid-svg-icons';
 import * as angularFontawesome from '@fortawesome/angular-fontawesome';
 import { SearchCaserateComponent } from './modals/search-caserate/search-caserate.component';
+import { catchError, concat, debounceTime, distinctUntilChanged, filter, map, Observable, of, Subject, switchMap, tap } from 'rxjs';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @Component({
   selector: 'app-caserate',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, angularFontawesome.FontAwesomeModule, SearchCaserateComponent],
+  imports: [CommonModule, ReactiveFormsModule, angularFontawesome.FontAwesomeModule, SearchCaserateComponent, NgSelectModule],
   templateUrl: './caserate.component.html',
   styleUrls: ['./caserate.component.scss']
 })
@@ -41,6 +43,8 @@ export class CaserateComponent implements OnInit {
     caserate_code: new FormControl<string|null>(''),
     code: new FormControl<string|null>(''),
     description: new FormControl<string|null>(''),
+    discharge_dx: new FormControl<string|null>(''),
+    icd10_code: new FormControl<string|null>(''),
     hci_fee: new FormControl<number|null>(null),
     prof_fee: new FormControl<number|null>(null),
     caserate_fee: new FormControl<number|null>(null),
@@ -94,6 +98,8 @@ export class CaserateComponent implements OnInit {
       caserate_code: [null, Validators.required],
       code: [null, Validators.required],
       description: [null, Validators.required],
+      discharge_dx: [null, Validators.required],
+      icd10_code: [null, Validators.required],
       hci_fee: [null, Validators.required],
       prof_fee: [null, Validators.required],
       caserate_fee: [null, Validators.required],
@@ -103,6 +109,61 @@ export class CaserateComponent implements OnInit {
     if(data) this.patchData(data);
     this.show_form = true;
   }
+
+  // Final dx
+  fdx$: Observable<any>;
+  searchInput$ = new Subject<string>();
+  selectedFdx: any;
+  minLengthTerm = 3;
+  fdxLoading:boolean = false;
+  loadFdx(val) {
+    console.log('test')
+    this.fdx$ = concat(
+      of(val),
+      this.searchInput$.pipe(
+        filter(res => {
+          return res !== null && res.length >= this.minLengthTerm
+        }),
+        distinctUntilChanged(),
+        debounceTime(800),
+        tap(() => this.fdxLoading = true),
+        switchMap(term => {
+          return this.getFdx(term).pipe(
+            catchError(() => of([])),
+            tap(() => this.fdxLoading = false)
+          )
+        })
+      )
+    );
+  }
+
+  getFdx(term: string = null): Observable<any> {
+    return this.http.get('libraries/icd10', {params:{'filter[search]':term}})
+    .pipe(map((resp:any) => {
+      console.log(resp)
+      return resp.data;
+    }))
+  }
+
+  final_dx: any;
+  loadSelected(){
+    let selected_fdx = [];
+    let temp_fdx = [];
+
+    if(this.final_dx && Object.keys(this.final_dx).length > 0){
+      Object.entries(this.final_dx).forEach(([key, value], index) => {
+        let val: any = value;
+        selected_fdx.push(val.icd10_code.toString());
+        temp_fdx.push(val.lib_icd10);
+      });
+
+      this.loadFdx(temp_fdx);
+      this.selectedFdx = selected_fdx;
+    } else {
+      this.loadFdx([]);
+    };
+  }
+  // Final dx
 
   patchData(data){
     this.caserateForm.patchValue({...data});
@@ -155,5 +216,6 @@ export class CaserateComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadLibraries();
+    this.loadSelected();
   }
 }

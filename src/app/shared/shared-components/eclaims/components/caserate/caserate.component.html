@@ -43,12 +43,46 @@
           </div>
 
           <div>
+            <label for="discharge_dx">Discharge Diagnosis</label>
+            <input type="text" name="discharge_dx" id="discharge_dx" formControlName="discharge_dx" class="input" />
+          </div>
+
+          <div>
+            <label for="icd10_code">ICD10 Code</label>
+            <ng-select class="select-chips" placeholder="search"
+              [items]="fdx$ | async"
+              [multiple]="true"
+              [loading]="fdxLoading"
+              typeToSearchText="search..."
+              [typeahead]="searchInput$"
+              formControlName="icd10_code"
+              bindValue="icd10_code"
+              bindLabel="icd10_desc"
+              [multiple]="false"
+              notFoundText="No records found">
+
+              <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
+                <div class="whitespace-normal">
+                  <h5 class="text-gray-700" [ngOptionHighlight]="search"><strong>{{ item.icd10_code }}:</strong> {{ item.icd10_desc }}</h5>
+                </div>
+              </ng-template>
+
+
+              <ng-template ng-label-tmp let-item="item" let-clear="clear">
+                <div>
+                  {{ item.icd10_code }}: {{ item.icd10_desc }}
+                </div>
+              </ng-template>
+            </ng-select>
+          </div>
+
+          <div>
             <label for="caserate_code">Case Rate Code</label>
             <input type="text" name="caserate_code" id="caserate_code" formControlName="caserate_code" class="input" />
           </div>
 
           <div>
-            <label for="code">ICD10 Code/RVS Code</label>
+            <label for="code">RVS Code</label>
             <input type="text" name="code" id="code" formControlName="code" class="input" />
           </div>
 
@@ -56,6 +90,7 @@
             <label for="description">Description</label>
             <input type="text" name="description" id="description" formControlName="description" class="input" />
           </div>
+
 
           <div>
             <label for="hci_fee">HCI Fee</label>
