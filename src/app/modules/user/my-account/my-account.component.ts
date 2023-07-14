@@ -81,6 +81,7 @@ export class MyAccountComponent implements OnInit {
     this.loading = true;
 
     let user_id = this.http.getUserID();
+    console.log(this.userForm.value);
     if(!this.userForm.invalid){
       this.http.update('users/', user_id, this.userForm.value).subscribe({
         next: (data:any) => {

@@ -11,9 +11,7 @@ describe('AnimalbiteComponent', () => {
       declarations: [ AnimalbiteComponent ]
     })
     .compileComponents();
-  });
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(AnimalbiteComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
