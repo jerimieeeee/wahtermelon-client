@@ -37,7 +37,7 @@ export class EclaimsComponent implements OnInit {
         if(Object.keys(this.eclaims_list).length > 0) {
           let eclaims_id_arr = [];
           Object.entries(this.eclaims_list).forEach(([key,value]:any, index) => {
-            console.log(value)
+            // console.log(value)
             eclaims_id_arr.push(value.caserate.id);
           });
 
@@ -52,19 +52,21 @@ export class EclaimsComponent implements OnInit {
     })
   }
 
+  show_cf2: boolean = false;
+
   getCaserate(eclaims_id_arr?) {
     let params = {
       program_code: this.program_id,
       program_desc: this.program_name
     };
 
-    params['eclaims_id_arr'] = eclaims_id_arr ?? null;
+    params['eclaims_id_arr'] = eclaims_id_arr.join(',') ?? null;
 
-    console.log(params)
     this.http.get('eclaims/eclaims-caserate', {params}).subscribe({
       next:(data:any) => {
-        console.log(data);
         this.caserate_list = data.data;
+
+        this.show_cf2 = Object.keys(this.caserate_list).length > 0 ? true:false;
       },
       error: err => console.log(err)
     });

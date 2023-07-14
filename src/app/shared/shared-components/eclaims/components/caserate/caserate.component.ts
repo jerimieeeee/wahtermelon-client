@@ -80,7 +80,7 @@ export class CaserateComponent implements OnInit {
     this.http.get('eclaims/eclaims-caserate', {params}).subscribe({
       next:(data:any) => {
         this.caserate_list = data.data;
-        console.log(this.caserate_list);
+        // console.log(this.caserate_list);
         this.createForm()
       },
       error: err => console.log(err)
@@ -117,7 +117,7 @@ export class CaserateComponent implements OnInit {
   minLengthTerm = 3;
   fdxLoading:boolean = false;
   loadFdx(val) {
-    console.log('test')
+    // console.log('test')
     this.fdx$ = concat(
       of(val),
       this.searchInput$.pipe(
@@ -140,7 +140,7 @@ export class CaserateComponent implements OnInit {
   getFdx(term: string = null): Observable<any> {
     return this.http.get('libraries/icd10', {params:{'filter[search]':term}})
     .pipe(map((resp:any) => {
-      console.log(resp)
+      // console.log(resp)
       return resp.data;
     }))
   }
