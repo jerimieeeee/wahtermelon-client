@@ -18,15 +18,15 @@
           <!-- <button *ngIf="caserate_list" type="button" class="w-32 px-3 py-2 rounded-md bg-blue-500 text-sm text-white ml-auto  mr-1" (click)="toggleModal('cf1')">
             CF1
           </button> -->
-          <button *ngIf="caserate_list" type="button" class="w-32 px-3 py-2 rounded-md bg-blue-500 text-sm text-white ml-auto  mr-1" (click)="toggleModal('cf2')">
+          <button *ngIf="caserate_list?.length>0" type="button" class="w-32 px-3 py-2 rounded-md bg-blue-500 text-sm text-white ml-auto  mr-1" (click)="toggleModal('cf2')">
             CF2
           </button>
           <!-- <button *ngIf="caserate_list" type="button" class="w-32 px-3 py-2 rounded-md bg-blue-500 text-sm text-white ml-auto  mr-1" (click)="toggleModal('csf')">
             CSF
           </button> -->
-          <button type="button" class="w-32 px-3 py-2 rounded-md bg-green-500 text-sm text-white ml-auto " (click)="toggleModal('upload')">
+          <!-- <button type="button" class="w-32 px-3 py-2 rounded-md bg-green-500 text-sm text-white ml-auto " (click)="toggleModal('upload')">
             Upload
-          </button>
+          </button> -->
         </div>
       </span>
 
@@ -62,13 +62,15 @@
                   {{ eclaims.pTransmissionDate ?? '-' }}
                 </td>
                 <td>
-                  <!-- {{ eclaims.pTransmissionDate }} -->
+                  {{ eclaims.caserate.caserate_code }} <br />
+                  {{ eclaims.caserate.description }}
                 </td>
                 <td class="py-4 px-3">
                   {{ eclaims.pStatus ?? 'IN QUEUE'  }}
                 </td>
-                <td class="py-4 px-3">
-                  <!-- <fa-icon (click)="toggleModal('delete')" size="xl" class="mr-5 mx-0 my-0 text-rose-400 hover:cursor-pointer flex-none mr-2" [icon]="faTrash"></fa-icon> -->
+                <td class="py-4 px-3 text-center">
+                  <fa-icon [icon]="faUpload" (click)="toggleModal('upload-claims', eclaims)" class="text-blue-500 hover:cursor-pointer"></fa-icon>
+                  <!-- <fa-icon [icon]="faUpload" (click)="toggleModal('upload-claims')" size="xl" class="mx-0 my-0 text-rose-400 hover:cursor-pointer flex-none mr-2" ></fa-icon> -->
                   <!-- <fa-icon (click)="toggleModal('add', lab)" size="lg" class="mx-0 my-0 text-blue-500 hover:cursor-pointer flex-none mr-2" [icon]="faEdit"></fa-icon> -->
                 </td>
               </tr>
@@ -106,3 +108,11 @@
   [caserate_list]="caserate_list"
   [selected_case]="selected_case"
 ></app-cf2>
+
+<app-upload-claims *ngIf="modal['upload-claims']"
+  (toggleModal)="toggleModal($event)"
+  [patient]="patient"
+  [program_name]="program_name"
+  [selected_pHospitalTransmittalNo]="selected_pHospitalTransmittalNo"
+  [caserate_code]="selected_caserate_code"
+></app-upload-claims>
