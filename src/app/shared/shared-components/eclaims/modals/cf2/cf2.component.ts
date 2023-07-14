@@ -41,6 +41,8 @@ export class Cf2Component implements OnInit {
     this.http.post('eclaims/eclaims-xml', this.eclaimsForm.value).subscribe({
       next: (data:any) => {
         console.log(data)
+        this.toastr.success('Successfully saved', 'Queue Claim');
+        this.closeModal();
       },
       error: err => console.log(err)
     })
