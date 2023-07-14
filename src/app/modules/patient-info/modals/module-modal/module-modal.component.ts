@@ -104,7 +104,8 @@ export class ModuleModalComponent implements OnInit {
     let loc = module.location;
     this.is_loading = true;
 
-    if(loc==='gbv') {
+
+    if(loc==='gbv' || loc === 'itr' || loc === 'lab') {
       this.router.navigate(['/patient/'+loc, {id: this.patient_info.id}]);
       this.closeModal();
     } else {
@@ -120,21 +121,16 @@ export class ModuleModalComponent implements OnInit {
           this.closeModal();
         }
       } else {
-        if(loc === 'itr' || loc === 'lab'){
-          this.router.navigate(['/patient/'+loc, {id: this.patient_info.id}]);
-          this.closeModal();
+        if(module.consult_active === false) {
+          this.show_new = true;
         } else {
-          if(module.consult_active === false) {
-            this.show_new = true;
-          } else {
-            this.show_new = false;
-            this.router.navigate(['/patient/'+loc, {id: this.patient_info.id, consult_id: module.id}]);
-            this.closeModal();
-          }
-
-          this.selected_module = module;
-          this.is_loading = false;
+          this.show_new = false;
+          this.router.navigate(['/patient/'+loc, {id: this.patient_info.id, consult_id: module.id}]);
+          this.closeModal();
         }
+
+        this.selected_module = module;
+        this.is_loading = false;
       }
     }
   }
