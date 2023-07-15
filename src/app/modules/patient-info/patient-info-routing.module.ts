@@ -42,9 +42,13 @@ const routes: Routes = [
       {
         path: 'gbv',
         loadChildren: () => import('../gbv/gbv.module').then(m => m.GbvModule)
+      },
+      {
+        path: 'ab',
+        loadChildren: () => import('../animalbite/animalbite.module').then(m => m.AnimalbiteModule)
       }
     ]
-  }
+  },
 ];
 
 @NgModule({

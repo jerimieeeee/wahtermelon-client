@@ -144,7 +144,7 @@
           <span>Placements</span>
           <span class="text-xs italic pt-1" *ngIf="pos!=='MSWDO'">
             MSWDO Only
-          </span>
+          </span><!-- *ngIf="pos==='MSWDO'"  -->
           <button type="button" *ngIf="pos==='MSWDO'" (click)="toggleModal('placement')" class="bg-white text-sky-500 px-2 rounded text-xs">
             <fa-icon [icon]="faPlus"></fa-icon>
           </button>
@@ -187,7 +187,7 @@
                   </div>
                 </div>
 
-                <div *ngIf="placement.location_id===2 || placement.location_id===3">
+                <div *ngIf="placement.location_id===2 || placement.location_id===3 || placement.location_id===5">
                   <span class="font-semibold">Placement type:</span>{{ placement.placement_type?.desc }}<br />
                   <span class="font-semibold">Placement name:</span>{{ placement.placement_name }}<br />
                   <span class="font-semibold">Contact info:</span>{{ placement.placement_contact_info }}<br />
@@ -202,7 +202,7 @@
                 {{ placement.placement_name }}
               </td> -->
               <td class="align-top pt-3 px-3">
-                <div *ngIf="placement.location_id===2 || placement.location_id===3">
+                <div *ngIf="placement.location_id===2 || placement.location_id===3 || placement.location_id===5">
                   <span class="font-semibold">Date in:</span> {{ placement.scheduled_date | date:'MM/dd/yyyy' }} <br />
                   <span class="font-semibold">Date out:</span> {{ placement.actual_date | date:'MM/dd/yyyy' }} <br />
                 </div>
@@ -362,6 +362,58 @@
           </tbody>
         </table>
       </div>
+
+      <div class="col-span-4 grid grid-cols-1 border-slate-200 shadow-md rounded-md mx-5 mb-5">
+        <div class="bg-sky-500 text-white py-1 px-3 rounded-t-md flex justify-between">
+          <span>Case Visits</span>
+          <span class="text-xs italic pt-1" *ngIf="pos!=='WCPD'">
+            WCPD Only
+          </span>
+          <button type="button" *ngIf="pos==='WCPD'" (click)="toggleModal('legal_visit')" class="bg-white text-sky-500 px-2 rounded text-xs">
+            <fa-icon [icon]="faPlus"></fa-icon>
+          </button>
+        </div>
+        <div class="min-h-24" *ngIf="selected_gbv_case?.gbvIntake.intervention_legal_visit.length===0">
+          <span class="flex italic py-5 justify-center">
+            No records to show
+          </span>
+        </div>
+
+        <table class="m-3" *ngIf="selected_gbv_case?.gbvIntake.intervention_legal_visit.length>0">
+          <thead>
+            <tr>
+              <td *ngIf="pos==='MD'" class="w-1/12">
+
+              </td>
+              <td class="text-center font-semibold w-4/12 align-top pt-3">
+                Name
+              </td>
+              <td class="text-center font-semibold w-4/12 align-top pt-3">
+                Schedule Date
+              </td>
+              <td class="text-center font-semibold w-4/12 align-top pt-3">
+                Actual Date
+              </td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="border-t border-slate-200" *ngFor="let intervention_legal_visit of selected_gbv_case?.gbvIntake.intervention_legal_visit" >
+              <td *ngIf="pos==='MD'" class="text-center align-top pt-3">
+                <fa-icon [icon]="faEdit" (click)="toggleModal('legal_visit', intervention_legal_visit)" class="hover:cursor-pointer text-orange-500"></fa-icon>
+              </td>
+              <td class="text-center align-top pt-3">
+                {{ intervention_legal_visit.person_in_charge }}
+              </td>
+              <td class="text-center align-top pt-3">
+                {{ intervention_legal_visit.scheduled_date | date: 'MM/dd/yyyy' }}
+              </td>
+              <td class="text-center align-top pt-3">
+                {{ intervention_legal_visit.actual_date | date: 'MM/dd/yyyy' }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
 
     <div class="mt-1 grid grid-cols-4 gap-x-4 w-full">
@@ -492,6 +544,13 @@
   [patient_gbv_intake_id]="selected_gbv_case.gbvIntake.id"
   [patient_id]="patient_id"
 ></app-legal-case>
+
+<app-legal-visit *ngIf="modals['legal_visit']"
+  (toggleModal)="toggleModal($event)"
+  [selected_data]="selected_data"
+  [patient_gbv_intake_id]="selected_gbv_case.gbvIntake.id"
+  [patient_id]="patient_id"
+></app-legal-visit>
 
 <app-case-conference *ngIf="modals['case_conference']"
   (toggleModal)="toggleModal($event)"

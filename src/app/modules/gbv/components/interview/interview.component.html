@@ -389,6 +389,12 @@
             </tbody>
           </table>
         </div>
+
+        <div class="col-span-4 mx-5">
+          <label for="other_abuse_acts" [ngClass]="{'text-red-500': show_error && f.other_abuse_acts.errors}">Other acts of abuse</label>
+          <textarea rows="4" name="other_abuse_acts" id="other_abuse_acts" formControlName="other_abuse_acts" class="input" [ngClass]="{'invalid-input': show_error && f.other_abuse_acts.errors}">
+          </textarea>
+        </div>
       </div>
 
       <div *ngIf="interviewForm.value.id" class="mt-1 grid grid-cols-4 gap-x-4 w-full">
@@ -543,7 +549,10 @@
         <div *ngIf="selected_gbv_case?.gbvIntake.interview_perpetrator.length>0" class="col-span-4 grid grid-cols-1 border-slate-200 shadow-md rounded-md mx-5 mb-5">
           <div class="bg-sky-500 text-white py-1 px-3 rounded-t-md flex justify-between">
             <spa>Interview Summary</spa>
-            <button type="button" (click)="toggleModal('interview_notes', 'IS')" class="bg-white text-sky-500 px-2 rounded text-xs">
+            <span class="text-xs italic pt-1" *ngIf="pos!=='MSWDO'">
+              MSWDO Only
+            </span>
+            <button type="button" *ngIf="pos==='MSWDO'" (click)="toggleModal('interview_notes', 'IS')" class="bg-white text-sky-500 px-2 rounded text-xs">
               <fa-icon [icon]="faPlus"></fa-icon>
             </button>
           </div>

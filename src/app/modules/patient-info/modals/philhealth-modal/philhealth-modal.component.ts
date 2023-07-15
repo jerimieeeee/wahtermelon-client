@@ -139,7 +139,7 @@ export class PhilhealthModalComponent implements OnInit {
 
     let patient = this.http.getPatientInfo();
     let params = {
-      program_code: 'mc',
+      program_code: 'tb',
       last_name: patient.last_name,
       first_name: patient.first_name,
       middle_name: patient.middle_name,

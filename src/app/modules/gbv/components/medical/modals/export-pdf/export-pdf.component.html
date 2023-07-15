@@ -1,5 +1,5 @@
 <div id="defaultModal" tabindex="-1" class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 w-full md:inset-0 h-modal md:h-full justify-center items-center flex" aria-modal="true" role="dialog" style="z-index:60">
-  <div class="relative p-4 w-full max-w-5xl">
+  <div class="relative p-4 w-full max-w-4xl">
     <!-- Modal content -->
     <div class="relative bg-white rounded-lg shadow">
       <!-- Modal header -->
@@ -9,21 +9,21 @@
         </h3>
       </div>
       <!-- Modal body -->
-      <div class="overflow-y-auto h-[800px] scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
-        <table id="mainForm">
+    <div class="overflow-y-auto h-[800px] scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
+      <table id="mainForm">
         <table class="w-full text-sm text-left" id="medForm">
-          <div class="text-center font-bold pt-6 text-2xl">
+          <div class="text-center font-bold pt-3 text-2xl">
             <h2>MEDICAL EXAM & DIAGNOSIS</h2>
           </div>
           <tbody class="h-96 overflow-y-auto">
-            <div class="grid grid-cols-12 m-5">
+            <div class="grid grid-cols-12 m-3">
 
-              <div class="col-span-3 border border-gray-200">
+              <div class="col-span-2 border border-gray-200">
                 <h4 class="py-2 pl-3">Patient Name</h4>
               </div>
 
-              <div class="col-span-3 border border-gray-200">
-                <h4 class="py-2 pl-3">{{patient_details.first_name}} {{patient_details.middle_name}} {{patient_details.last_name}}</h4>
+              <div class="col-span-4 border border-gray-200">
+                <h4 class="py-2 pl-3 capitalize">{{patient_details?.first_name}} {{patient_details?.middle_name}} {{patient_details?.last_name}}</h4>
               </div>
 
               <div class="col-span-3 border border-gray-200">
@@ -31,52 +31,91 @@
               </div>
 
               <div class="col-span-3 border border-gray-200">
-                <h4 class="py-2 pl-3"> </h4>
+                <h4 class="py-2 pl-3">{{selected_gbv_case.gbvIntake?.case_number}} </h4>
+              </div>
+
+              <div class="col-span-2 border border-gray-200">
+                <h4 class="py-2 pl-3">DOB & Age</h4>
+              </div>
+
+              <div class="col-span-4 border border-gray-200">
+                <h4 class="py-2 pl-3">{{patient_details?.birthdate | date: 'MM/dd/yyyy'}}, {{ getAge() }} </h4>
               </div>
 
               <div class="col-span-3 border border-gray-200">
-                <h4 class="py-2 pl-3">Date of Birth and Age</h4>
+                <h4 class="py-2 pl-3">Contact Number</h4>
               </div>
 
               <div class="col-span-3 border border-gray-200">
-                <h4 class="py-2 pl-3">{{patient_details.birthdate | date: 'MM/dd/yyyy'}}, {{ getAge() }} </h4>
+                <h4 class="py-2 pl-3">{{ patient_details?.mobile_number }}</h4>
               </div>
 
-              <div class="col-span-3 border border-gray-200">
-                <h4 class="py-2 pl-3">Physician</h4>
+              <div class="col-span-2 border border-gray-200">
+                <h4 class="py-2 pl-3">Address</h4>
               </div>
 
-              <div class="col-span-3 border border-gray-200">
-                <h4 class="py-2 pl-3">{{selected_gbv_case.gbvIntake.consult_visit[0].physician}}</h4>
+              <div class="col-span-10 border border-gray-200">
+                <h4 class="py-2 pl-3">
+                  {{ patient_details?.household_folder?.address ? patient_details?.household_folder?.address+', ' : '-' }} {{ patient_details?.household_folder?.barangay.name ? 'Brgy. '+patient_details?.household_folder?.barangay.name+', ' : ''}}
+                  {{ patient_details?.household_folder?.barangay.municipality.name ? patient_details?.household_folder?.barangay.municipality.name+', ' : '' }}
+                  {{ patient_details?.household_folder?.barangay.province.name ? patient_details?.household_folder?.barangay.province.name+', ' : '' }}
+                  {{ patient_details?.household_folder?.barangay.region.name ? patient_details?.household_folder?.barangay.region.name : '' }}
+                </h4>
               </div>
 
-              <div class="col-span-3 border border-gray-200">
+              <div class="col-span-2 border border-gray-200">
+                <h4 class="py-2 pl-3">Facility Name</h4>
+              </div>
+
+              <div class="col-span-10 border border-gray-200">
+                <h4 class="py-2 pl-3 capitalize">{{ userInfo.facility.facility_name }} </h4>
+              </div>
+
+              <div class="col-span-2 border border-gray-200">
                 <h4 class="py-2 pl-3">Date and Time</h4>
               </div>
 
-              <div class="col-span-3 border border-gray-200">
-                <h4 class="py-2 pl-3"> </h4>
+              <div class="col-span-4 border border-gray-200">
+                <h4 class="py-2 pl-3">{{selected_gbv_case.gbvIntake?.case_date}} </h4>
               </div>
 
-              <div class="col-span-3 border border-gray-200">
-                <h4 class="py-2 pl-3">Physician's Signature</h4>
-              </div>
-
-              <div class="grid grid-cols-4 col-span-3">
+              <!-- <div class="grid grid-cols-4 col-span-3">
                 <div class="col-span-2 border border-gray-200 py-2 pl-3"></div>
                 <div class="col-span-2 border border-gray-200 py-2 pl-3">RN:</div>
+              </div> -->
+
+              <div class="col-span-2 border border-gray-200">
+                <h4 class="py-2 pl-3">Physician</h4>
+              </div>
+
+              <div class="col-span-4 border border-gray-200">
+                <h4 class="py-2 pl-3">{{patient_details?.first_name}} {{patient_details?.middle_name}} {{patient_details?.last_name}} </h4>
               </div>
 
               <div class="col-span-3 border border-gray-200">
-                <h4 class="py-2 pl-3">First CPU/RHU Exam</h4>
+                <h4 class="py-2 pl-3">First CPU/RHU Exam:</h4>
+              </div>
+
+              <div class="col-span-9 border border-gray-200">
+                <div class="py-2">
+                <label class="pl-3"><input class="py-2 pl-3 input-checkbox mr-1" type="checkbox" disabled> Yes</label>
+                <label class="pl-3" for=""><input class="py-2 pl-3 input-checkbox mr-1" type="checkbox" disabled> No</label>
+                <label class="py-2 pl-3">Date of previous: </label>
+                </div>
               </div>
 
               <div class="col-span-3 border border-gray-200">
-                <h4 class="py-2 pl-3"> </h4>
+                <h4 class="py-2 pl-3">Examined before by:</h4>
               </div>
 
-              <div class="col-span-6 border border-gray-200">
-                <h4 class="py-2 pl-3">Examined before by</h4>
+              <div class="col-span-9 border border-gray-200">
+                <div class="py-2">
+                  <label class="pl-3"><input class="py-2 pl-3 input-checkbox mr-1" type="checkbox" disabled> None</label>
+                  <label class="pl-3" for=""><input class="py-2 pl-3 input-checkbox mr-1" type="checkbox" disabled> NBI</label>
+                  <label class="pl-3"><input class="py-2 pl-3 input-checkbox mr-1" type="checkbox" disabled> Private MD</label>
+                  <label class="pl-3" for=""><input class="py-2 pl-3 input-checkbox mr-1" type="checkbox" disabled> Others</label>
+                  <label class="py-2 pl-3">Date of previous: </label>
+                  </div>
               </div>
 
               <div class="col-span-12 border border-gray-200">
@@ -88,11 +127,11 @@
               </div>
 
               <div class="col-span-3 border border-gray-200">
-                <h4 class="py-2 pl-3">Temp: {{selected_gbv_case.gbvIntake.medical_history.patient_temp}}  </h4>
+                <h4 class="py-2 pl-3">Temp: {{selected_gbv_case.gbvIntake.medical_history?.patient_temp}}  </h4>
               </div>
 
               <div class="col-span-3 border border-gray-200">
-                <h4 class="py-2 pl-3">Heart rate: {{selected_gbv_case.gbvIntake.medical_history.patient_heart_rate}} / minute </h4>
+                <h4 class="py-2 pl-3">Heart rate: {{selected_gbv_case.gbvIntake.medical_history?.patient_heart_rate}} / minute </h4>
               </div>
 
               <div class="col-span-3 border border-gray-200">
@@ -100,9 +139,9 @@
               </div>
 
               <div class="col-span-3 border border-gray-200 py-2">
-                <label class="pl-3"><input class="py-2 pl-3 input-checkbox mr-1" type="checkbox" disabled [checked]="selected_gbv_case.gbvIntake.medical_history.menarche_flag === 1"> Yes</label>
-                  <label class="pl-3" *ngIf="selected_gbv_case.gbvIntake.medical_history.menarche_flag === 1">Age: {{selected_gbv_case.gbvIntake.medical_history.menarche_age}}</label>
-                <label class="pl-3" for=""><input class="py-2 pl-3 input-checkbox mr-1" type="checkbox" disabled [checked]="selected_gbv_case.gbvIntake.medical_history.menarche_flag === 0"> No</label> <br>
+                <label class="pl-3"><input class="py-2 pl-3 input-checkbox mr-1" type="checkbox" disabled [checked]="selected_gbv_case.gbvIntake.medical_history?.menarche_flag === 1"> Yes</label>
+                  <label class="pl-3" *ngIf="selected_gbv_case.gbvIntake.medical_history?.menarche_flag === 1">Age: {{selected_gbv_case.gbvIntake.medical_history?.menarche_age}}</label>
+                <label class="pl-3" for=""><input class="py-2 pl-3 input-checkbox mr-1" type="checkbox" disabled [checked]="selected_gbv_case.gbvIntake.medical_history?.menarche_flag === 0"> No</label> <br>
               </div>
 
               <div class="col-span-2 border border-gray-200">
@@ -110,7 +149,7 @@
               </div>
 
               <div class="col-span-4 border border-gray-200">
-                <h4 class="py-2 pl-3">{{selected_gbv_case.gbvIntake.medical_history.patient_weight}} kg percentile (if under 6)</h4>
+                <h4 class="py-2 pl-3">{{selected_gbv_case.gbvIntake.medical_history?.patient_weight}} kg percentile (if under 6)</h4>
               </div>
 
               <div class="col-span-3 border border-gray-200">
@@ -118,7 +157,7 @@
               </div>
 
               <div class="col-span-3 border border-gray-200">
-                <h4 class="py-2 pl-3">{{selected_gbv_case.gbvIntake.medical_history.lmp_date | date: 'MM/dd/yyyy'}}</h4>
+                <h4 class="py-2 pl-3">{{selected_gbv_case.gbvIntake.medical_history?.lmp_date | date: 'MM/dd/yyyy'}}</h4>
               </div>
 
               <div class="col-span-2 border border-gray-200">
@@ -126,7 +165,7 @@
               </div>
 
               <div class="col-span-4 border border-gray-200">
-                <h4 class="py-2 pl-3">{{selected_gbv_case.gbvIntake.medical_history.patient_height}} cm percentile (if under 6)</h4>
+                <h4 class="py-2 pl-3">{{selected_gbv_case.gbvIntake.medical_history?.patient_height}} cm percentile (if under 6)</h4>
               </div>
 
               <div class="col-span-3 border border-gray-200">
@@ -134,8 +173,8 @@
               </div>
 
               <div class="col-span-3 border border-gray-200 py-2">
-                <label class="pl-3"><input class="py-2 pl-3 input-checkbox mr-1" type="checkbox" disabled [checked]="selected_gbv_case.gbvIntake.medical_history.genital_discharge_uti_flag === 1"> Yes</label>
-                <label class="pl-3" for=""><input class="py-2 pl-3 input-checkbox mr-1" type="checkbox" disabled [checked]="selected_gbv_case.gbvIntake.medical_history.genital_discharge_uti_flag === 0"> No</label> <br>
+                <label class="pl-3"><input class="py-2 pl-3 input-checkbox mr-1" type="checkbox" disabled [checked]="selected_gbv_case.gbvIntake.medical_history?.genital_discharge_uti_flag === 1"> Yes</label>
+                <label class="pl-3" for=""><input class="py-2 pl-3 input-checkbox mr-1" type="checkbox" disabled [checked]="selected_gbv_case.gbvIntake.medical_history?.genital_discharge_uti_flag === 0"> No</label> <br>
               </div>
 
               <div class="col-span-3 border border-gray-200">
@@ -143,9 +182,9 @@
               </div>
 
               <div class="col-span-3 border border-gray-200 py-2">
-                <label class="pl-3"><input class="py-2 pl-3 input-checkbox mr-1" type="checkbox" disabled [checked]="selected_gbv_case.gbvIntake.medical_history.taking_medication_flag === 1"> Yes</label>
-                <label class="pl-3" for=""><input class="py-2 pl-3 input-checkbox mr-1" type="checkbox" disabled [checked]="selected_gbv_case.gbvIntake.medical_history.taking_medication_flag === 0"> No</label> <br>
-                <label class="pl-3" *ngIf="selected_gbv_case.gbvIntake.medical_history.taking_medication_flag === 1">If yes: {{selected_gbv_case.gbvIntake.medical_history.taking_medication_remarks}}</label>
+                <label class="pl-3"><input class="py-2 pl-3 input-checkbox mr-1" type="checkbox" disabled [checked]="selected_gbv_case.gbvIntake.medical_history?.taking_medication_flag === 1"> Yes</label>
+                <label class="pl-3" for=""><input class="py-2 pl-3 input-checkbox mr-1" type="checkbox" disabled [checked]="selected_gbv_case.gbvIntake.medical_history?.taking_medication_flag === 0"> No</label> <br>
+                <label class="pl-3" *ngIf="selected_gbv_case.gbvIntake.medical_history?.taking_medication_flag === 1">If yes: {{selected_gbv_case.gbvIntake.medical_history?.taking_medication_remarks}}</label>
               </div>
 
               <div class="col-span-3 border border-gray-200">
@@ -153,9 +192,9 @@
               </div>
 
               <div class="col-span-3 border border-gray-200 py-2">
-                <label class="pl-3"><input class="py-2 pl-3 input-checkbox mr-1" type="checkbox" disabled [checked]="selected_gbv_case.gbvIntake.medical_history.past_hospitalizations_flag === 1"> Yes</label>
-                <label class="pl-3" for=""><input class="py-2 pl-3 input-checkbox mr-1" type="checkbox" disabled [checked]="selected_gbv_case.gbvIntake.medical_history.past_hospitalizations_flag === 0"> No</label> <br>
-                <label class="pl-3" *ngIf="selected_gbv_case.gbvIntake.medical_history.menarche_flag === 1">If yes why?: {{selected_gbv_case.gbvIntake.medical_history.past_hospital_remarks}}</label>
+                <label class="pl-3"><input class="py-2 pl-3 input-checkbox mr-1" type="checkbox" disabled [checked]="selected_gbv_case.gbvIntake.medical_history?.past_hospitalizations_flag === 1"> Yes</label>
+                <label class="pl-3" for=""><input class="py-2 pl-3 input-checkbox mr-1" type="checkbox" disabled [checked]="selected_gbv_case.gbvIntake.medical_history?.past_hospitalizations_flag === 0"> No</label> <br>
+                <label class="pl-3" *ngIf="selected_gbv_case.gbvIntake.medical_history?.menarche_flag === 1">If yes why?: {{selected_gbv_case.gbvIntake.medical_history?.past_hospital_remarks}}</label>
               </div>
               
               <div class="col-span-6 border border-gray-200 py-2">
@@ -163,27 +202,27 @@
                 <label class="py-2 px-3">(check all that apply)</label> <br>
                 <div class="col-span-12 grid grid-cols-3 py-2 pl-6 select-none">
                   
-                    <label class="pt-3"><input type="checkbox" disabled class="input-checkbox mr-1" [(ngModel)]="selected_gbv_case.gbvIntake.medical_history.general_survey_normal" />
+                    <label class="pt-3"><input type="checkbox" disabled class="input-checkbox mr-1" *ngIf="selected_gbv_case.gbvIntake.medical_history" [(ngModel)]="selected_gbv_case.gbvIntake.medical_history.general_survey_normal" />
                     Normal</label>
-                    <label class="pt-3"><input type="checkbox" disabled class="input-checkbox mr-1" [(ngModel)]="selected_gbv_case.gbvIntake.medical_history.general_survey_abnormal" />
+                    <label class="pt-3"><input type="checkbox" disabled class="input-checkbox mr-1" *ngIf="selected_gbv_case.gbvIntake.medical_history" [(ngModel)]="selected_gbv_case.gbvIntake.medical_history.general_survey_abnormal" />
                     Abnormal</label>
-                    <label class="pt-3"><input type="checkbox" disabled class="input-checkbox mr-1" [(ngModel)]="selected_gbv_case.gbvIntake.medical_history.general_survey_stunting" />
+                    <label class="pt-3"><input type="checkbox" disabled class="input-checkbox mr-1" *ngIf="selected_gbv_case.gbvIntake.medical_history" [(ngModel)]="selected_gbv_case.gbvIntake.medical_history.general_survey_stunting" />
                     Stunting</label>
-                    <label class="pt-3"><input type="checkbox" disabled class="input-checkbox mr-1" [(ngModel)]="selected_gbv_case.gbvIntake.medical_history.general_survey_wasting" />
+                    <label class="pt-3"><input type="checkbox" disabled class="input-checkbox mr-1" *ngIf="selected_gbv_case.gbvIntake.medical_history" [(ngModel)]="selected_gbv_case.gbvIntake.medical_history.general_survey_wasting" />
                     Wasting</label>
-                    <label class="pt-3"><input type="checkbox" disabled class="input-checkbox mr-1" [(ngModel)]="selected_gbv_case.gbvIntake.medical_history.general_survey_dirty_unkempt" />
+                    <label class="pt-3"><input type="checkbox" disabled class="input-checkbox mr-1" *ngIf="selected_gbv_case.gbvIntake.medical_history" [(ngModel)]="selected_gbv_case.gbvIntake.medical_history.general_survey_dirty_unkempt" />
                     Dirty, Unkempt</label>
-                    <label class="pt-3"><input type="checkbox" disabled class="input-checkbox mr-1" [(ngModel)]="selected_gbv_case.gbvIntake.medical_history.general_survey_stuporous" />
+                    <label class="pt-3"><input type="checkbox" disabled class="input-checkbox mr-1" *ngIf="selected_gbv_case.gbvIntake.medical_history" [(ngModel)]="selected_gbv_case.gbvIntake.medical_history.general_survey_stuporous" />
                     Stuporous</label>
-                    <label class="pt-3"><input type="checkbox" disabled class="input-checkbox mr-1" [(ngModel)]="selected_gbv_case.gbvIntake.medical_history.general_survey_pale" />
+                    <label class="pt-3"><input type="checkbox" disabled class="input-checkbox mr-1" *ngIf="selected_gbv_case.gbvIntake.medical_history" [(ngModel)]="selected_gbv_case.gbvIntake.medical_history.general_survey_pale" />
                     Pale</label>
-                    <label class="pt-3"><input type="checkbox" disabled class="input-checkbox mr-1" [(ngModel)]="selected_gbv_case.gbvIntake.medical_history.general_survey_non_ambulant" />
+                    <label class="pt-3"><input type="checkbox" disabled class="input-checkbox mr-1" *ngIf="selected_gbv_case.gbvIntake.medical_history" [(ngModel)]="selected_gbv_case.gbvIntake.medical_history.general_survey_non_ambulant" />
                     Non-ambulant</label>
-                    <label class="pt-3"><input type="checkbox" disabled class="input-checkbox mr-1" [(ngModel)]="selected_gbv_case.gbvIntake.medical_history.general_survey_drowsy" />
+                    <label class="pt-3"><input type="checkbox" disabled class="input-checkbox mr-1" *ngIf="selected_gbv_case.gbvIntake.medical_history" [(ngModel)]="selected_gbv_case.gbvIntake.medical_history.general_survey_drowsy" />
                     Drowsy, Irritable</label>
-                    <label class="pt-3"><input type="checkbox" disabled class="input-checkbox mr-1" [(ngModel)]="selected_gbv_case.gbvIntake.medical_history.general_survey_respiratory" />
+                    <label class="pt-3"><input type="checkbox" disabled class="input-checkbox mr-1" *ngIf="selected_gbv_case.gbvIntake.medical_history" [(ngModel)]="selected_gbv_case.gbvIntake.medical_history.general_survey_respiratory" />
                     Respiratory Distress</label>
-                    <label class="pt-3"><input type="checkbox" disabled class="input-checkbox mr-1" [(ngModel)]="selected_gbv_case.gbvIntake.medical_history.general_survey_others" />
+                    <label class="pt-3"><input type="checkbox" disabled class="input-checkbox mr-1" *ngIf="selected_gbv_case.gbvIntake.medical_history" [(ngModel)]="selected_gbv_case.gbvIntake.medical_history.general_survey_others" />
                     Other Abnormality</label>
                   
       
@@ -196,49 +235,144 @@
 
               <div class="col-span-6 border border-gray-200">
                 
-                <div class="border border-gray-200 py-7">
+                <div class="py-7">
                 <h4 class="py-2 pl-3">Any scars that do not appear to result from physical abuse?</h4>
-                <label class="pl-3"><input class="py-2 pl-3 input-checkbox mr-1" type="checkbox" disabled [checked]="selected_gbv_case.gbvIntake.medical_history.scar_physical_abuse_flag === 1"> Yes</label>
-                <label class="pl-3" for=""><input class="py-2 pl-3 input-checkbox mr-1" type="checkbox" disable [checked]="selected_gbv_case.gbvIntake.medical_history.scar_physical_abuse_flag === 0"> No</label>
+                <label class="pl-3"><input class="py-2 pl-3 input-checkbox mr-1" type="checkbox" disabled *ngIf="selected_gbv_case.gbvIntake.medical_history" [checked]="selected_gbv_case.gbvIntake.medical_history.scar_physical_abuse_flag === 1"> Yes</label>
+                <label class="pl-3"><input class="py-2 pl-3 input-checkbox mr-1" type="checkbox" disabled *ngIf="selected_gbv_case.gbvIntake.medical_history" [checked]="selected_gbv_case.gbvIntake.medical_history.scar_physical_abuse_flag === 0"> No</label>
                 </div>
 
-                <div class=" border border-gray-200 py-6">
+                <div class="py-6">
                 <h4 class="py-2 pl-3">PERTINENT MEDICAL HISTORY?</h4>
-                <label class="pl-3"><input class="py-2 pl-3 input-checkbox mr-1" type="checkbox" disabled="selected_gbv_case.gbvIntake.medical_history.pertinent_med_history_flag == 1"> Yes</label>
-                <label class="pl-3" for=""><input class="py-2 pl-3 input-checkbox mr-1" type="checkbox" disabled [checked]="selected_gbv_case.gbvIntake.medical_history.pertinent_med_history_flag === 0"> No</label>
+                <label class="pl-3"><input class="py-2 pl-3 input-checkbox mr-1" type="checkbox" disabled *ngIf="selected_gbv_case.gbvIntake.medical_history" [checked]="selected_gbv_case.gbvIntake.medical_history.pertinent_med_history_flag === 1"> Yes</label>
+                <label class="pl-3"><input class="py-2 pl-3 input-checkbox mr-1" type="checkbox" disabled *ngIf="selected_gbv_case.gbvIntake.medical_history" [checked]="selected_gbv_case.gbvIntake.medical_history.pertinent_med_history_flag === 0"> No</label>
                 </div>
 
-              </div>
-
-              <div class="col-span-12 border border-gray-200">
-                <h4 class="py-2 pl-3 font-semibold">SUMMARY OF NON-ABUSE FINDINGS: {{selected_gbv_case.gbvIntake.medical_history.summary_non_abuse_findings}} </h4>
               </div>
               </div>
             </tbody>
-            </table>
+        </table>
 
-            <table class="w-full text-sm text-left" id="medForm2">
-            <tbody class="h-96 overflow-y-auto">
+        <table class="w-full text-sm text-left" id="medForm2">
+          <tbody class="h-96 overflow-y-auto">
+              <div class="grid grid-cols-12 m-5">
+                <div class="col-span-12 text-center font-bold py-3 text-xl border border-gray-200">
+                  <h2>PHYSICAL EXAM</h2>
+              </div>
+  
+                <div class="col-span-3 border border-gray-200">
+                  <h4 class="py-2 pl-3 ">Head and Neck</h4>
+                </div>
+
+                <div class="col-span-9 border border-gray-200">
+                  <h4 class="py-2 px-3 ">{{selected_gbv_case.gbvIntake.medical_history?.pe_head_and_neck_remarks}}</h4>
+                </div>
+  
+                <div class="col-span-3 border border-gray-200">
+                  <h4 class="py-2 pl-3 ">Chest and Lungs</h4>
+                </div>
+
+                <div class="col-span-9 border border-gray-200">
+                  <h4 class="py-2 px-3 ">{{selected_gbv_case.gbvIntake.medical_history?.pe_chest_and_lungs_remarks}}</h4>
+                </div>
+  
+                <div class="col-span-3 border border-gray-200">
+                  <h4 class="py-2 pl-3 ">Breast</h4>
+                </div>
+
+                <div class="col-span-9 border border-gray-200">
+                  <h4 class="py-2 px-3 ">{{selected_gbv_case.gbvIntake.medical_history?.pe_breast_remarks}}</h4>
+                </div>
+  
+                <div class="col-span-3 border border-gray-200">
+                  <h4 class="py-2 pl-3 ">Abdomen</h4>
+                </div>
+
+                <div class="col-span-9 border border-gray-200">
+                  <h4 class="py-2 px-3 ">{{selected_gbv_case.gbvIntake.medical_history?.pe_abdomen_remarks}}</h4>
+                </div>
+  
+                <div class="col-span-3 border border-gray-200">
+                  <h4 class="py-2 pl-3 ">Back</h4>
+                </div>
+
+                <div class="col-span-9 border border-gray-200">
+                  <h4 class="py-2 px-3 ">{{selected_gbv_case.gbvIntake.medical_history?.pe_back_remarks}}</h4>
+                </div>
+  
+                <div class="col-span-3 border border-gray-200">
+                  <h4 class="py-2 pl-3 ">Extremities</h4>
+                </div>
+
+                <div class="col-span-9 border border-gray-200">
+                  <h4 class="py-2 px-3 ">{{selected_gbv_case.gbvIntake.medical_history?.pe_extremities_remarks}}</h4>
+                </div>
+  
+                <div class="col-span-3 border border-gray-200">
+                  <h4 class="py-2 pl-3 ">Anogenital</h4>
+                </div>
+
+                <div class="col-span-9 border border-gray-200">
+                  <h4 class="py-2 px-3 ">{{selected_gbv_case.gbvIntake.medical_history?.pe_anogenital_remarks}}</h4>
+                </div>
+  
+                <div class="col-span-3 border border-gray-200">
+                  <h4 class="py-2 pl-3 ">External Genitalia</h4>
+                </div>
+
+                <div class="col-span-9 border border-gray-200">
+                  <h4 class="py-2 px-3 ">{{selected_gbv_case.gbvIntake.medical_history?.pe_external_genitalia_remarks}}</h4>
+                </div>
+  
+                <div class="col-span-3 border border-gray-200">
+                  <h4 class="py-2 pl-3 ">Anus</h4>
+                </div>
+
+                <div class="col-span-9 border border-gray-200">
+                  <h4 class="py-2 px-3 ">{{selected_gbv_case.gbvIntake.medical_history?.pe_anus_remarks}}</h4>
+                </div>
+  
+                <div class="col-span-3 border border-gray-200">
+                  <h4 class="py-2 pl-3 ">Hymen</h4>
+                </div>
+
+                <div class="col-span-9 border border-gray-200">
+                  <h4 class="py-2 px-3 "> {{selected_gbv_case.gbvIntake.medical_history?.pe_hymen_remarks}}</h4>
+                </div>
+  
+                <div class="col-span-3 border border-gray-200">
+                  <h4 class="py-2 pl-3">Impression</h4>
+                </div>
+
+                <div class="col-span-9 border border-gray-200">
+                  <h4 class="py-2 px-3 " *ngIf="conv_impression"> {{conv_impression[0]?.full_desc}}</h4>
+                </div>
+                
+              </div>
+          </tbody>
+        </table>
+
+        <table class="w-full text-sm text-left" id="medForm3">
+          <tbody class="h-96 overflow-y-auto">
             <div class="grid grid-cols-12 m-5">
               <div class="col-span-12 text-center font-bold py-3 text-xl border border-gray-200">
                 <h2>SYMPTOMS DESCRIBED BY THE ADULT PATIENT, CHILD AND/OR A HISTORIAN</h2>
               </div>
 
-              <div class="col-span-12 py-3 pl-3 border border-gray-200">
+              <div class="col-span-12 pl-3 text-sm py-2 border border-gray-200">
                 <h2>Please check the appropriate box</h2>
               </div>
 
               <div class="col-span-4 border text-center border-gray-200">
-                <h4 class="py-2 pl-3">Anogenital </h4>
-                <table class="w-full text-sm text-left">
-                  <thead class="text-xs border-gray-200">
-                    <tr>
-                      <th scope="col" class="py-3 text-center font-normal">Description</th>
-                      <th scope="col" class="py-3 text-center font-normal">Victim Survivor</th>
-                      <th scope="col" class="py-3 text-center font-normal">Historian</th>
+                <h4 class="font-semibold py-2">Anogenital </h4>
+                <table class="w-full text-sm  text-sm text-left">
+                  <thead class="text-xs">
+                    <tr class="border-t border-b border-gray-200">
+                      <th scope="col" class="py-3 text-center font-normal border-r border-gray-200">Description</th>
+                      <th scope="col" class="py-3 text-center font-normal border-gray-200">Victim Survivor</th>
+                      <th scope="col" class="py-3 text-center font-normal border-l border-gray-200">Historian</th>
                     </tr>
                   </thead>
-                  <tbody class="h-96 overflow-y-auto">
+                  <tbody class="h-96 text-xs overflow-y-auto">
                     <tr class="bg-white border-b" *ngFor="let anogenital of anogenital_exam | keyvalue">
                       <td class="py-4 pl-6">
                         {{anogenital.key}}
@@ -251,213 +385,21 @@
                       </td>
                     </tr>
 
-                    <!-- <tr class="bg-white border-b">
-                      <td class="py-4 pl-6">
-                        Vulvar / Penile Discomfort / Pain 
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                    </tr>
-
-                    <tr class="bg-white border-b">
-                      <td class="py-4 pl-6">
-                        Dysuria 
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                    </tr>
-
-                    <tr class="bg-white border-b">
-                      <td class="py-4 pl-6">
-                        Urinary Tract Infection 
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                    </tr>
-
-                    <tr class="bg-white border-b">
-                      <td class="py-4 pl-6">
-                        Enuresis (Day or Night) 
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                    </tr>
-
-                    <tr class="bg-white border-b">
-                      <td class="py-4 pl-6">
-                        Genital Itching 
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                    </tr>
-
-                    <tr class="bg-white border-b">
-                      <td class="py-4 pl-6">
-                        Genital Bleeding 
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                    </tr>
-
-                    <tr class="bg-white border-b">
-                      <td class="py-4 pl-6">
-                        Genital Discharge 
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                    </tr>
-
-                    <tr class="bg-white border-b">
-                      <td class="py-4 pl-6">
-                        Describe Color, Odor, Amount 
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                    </tr>
-
-                    <tr class="bg-white border-b">
-                      <td class="py-4 pl-6">
-                        Pelvic Pain 
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                    </tr>
-
-                    <tr class="bg-white border-b">
-                      <td class="py-4 pl-6">
-                        Rectal Pain 
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                    </tr>
-
-                    <tr class="bg-white border-b" id="#Dia">
-                      <td class="py-4 pl-6">
-                        Rectal Bleeding 
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                    </tr>
-
-                    <tr class="bg-white border-b">
-                      <td class="py-4 pl-6">
-                        Diarrhea 
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                    </tr>
-
-                    <tr class="bg-white border-b">
-                      <td class="py-4 pl-6">
-                        Constipation 
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                    </tr>
-
-                    <tr class="bg-white border-b">
-                      <td class="py-4 pl-6">
-                        Incontinent Stool, Encopresis 
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                    </tr>
-
-                    <tr class="bg-white border-b">
-                      <td class="py-4 pl-6">
-                        Pregnancy 
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                    </tr>
-
-                    <tr class="bg-white border-b">
-                      <td class="py-4 pl-6">
-                        Amenorrhea 
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                    </tr> -->
-
                   </tbody>
                 </table>
               </div>
 
               <div class="col-span-4 border text-center border-gray-200">
-                <h4 class="py-2 pl-3">Corporal </h4>
+                <h4 class="font-semibold py-2">Corporal </h4>
                 <table class="w-full text-sm text-left">
-                  <thead class="text-xs border-gray-200">
-                    <tr>
-                      <th scope="col" class="py-3 text-center font-normal">Description</th>
-                      <th scope="col" class="py-3 text-center font-normal">Victim Survivor</th>
-                      <th scope="col" class="py-3 text-center font-normal">Historian</th>
+                  <thead class="text-xs">
+                    <tr class="border-t border-b border-gray-200">
+                      <th scope="col" class="py-3 text-center font-normal border-r border-gray-200">Description</th>
+                      <th scope="col" class="py-3 text-center font-normal border border-gray-200">Victim Survivor</th>
+                      <th scope="col" class="py-3 text-center font-normal border-l border-gray-200">Historian</th>
                     </tr>
                   </thead>
-                  <tbody class="h-96 overflow-y-auto">
+                  <tbody class="h-96 text-xs overflow-y-auto">
                     <tr class="bg-white border-b" *ngFor="let corporal of corporal_exam | keyvalue">
                       <td class="py-4 pl-6">
                         {{corporal.key}}
@@ -470,165 +412,21 @@
                       </td>
                     </tr>
 
-                    <!-- <tr class="bg-white border-b">
-                      <td class="py-4 pl-6">
-                        Nasal Discharge 
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                    </tr>
-
-                    <tr class="bg-white border-b">
-                      <td class="py-4 pl-6">
-                        Fever 
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                    </tr>
-
-                    <tr class="bg-white border-b">
-                      <td class="py-4 pl-6">
-                        Difficulty Breathing 
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                    </tr>
-
-                    <tr class="bg-white border-b">
-                      <td class="py-4 pl-6">
-                        Ear Pain 
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                    </tr>
-
-                    <tr class="bg-white border-b">
-                      <td class="py-4 pl-6">
-                        Ear Discharge 
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                    </tr>
-
-                    <tr class="bg-white border-b">
-                      <td class="py-4 pl-6">
-                        Describe Color, Odor, Amount 
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                    </tr>
-
-                    <tr class="bg-white border-b">
-                      <td class="py-4 pl-6">
-                        Skin Lesions 
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                    </tr>
-
-                    <tr class="bg-white border-b">
-                      <td class="py-4 pl-6">
-                        Chest Pain 
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                    </tr>
-
-                    <tr class="bg-white border-b">
-                      <td class="py-4 pl-6">
-                        Back Pain 
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                    </tr>
-
-                    <tr class="bg-white border-b">
-                      <td class="py-4 pl-6">
-                        Limping 
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                    </tr>
-
-                    <tr class="bg-white border-b">
-                      <td class="py-4 pl-6">
-                        Vomiting 
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                    </tr>
-
-                    <tr class="bg-white border-b">
-                      <td class="py-4 pl-6">
-                        Describe Other Symptoms 
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                    </tr> -->
-
                   </tbody>
                 </table>
               </div>
 
               <div class="col-span-4 border text-center border-gray-200">
-                <h4 class="py-2 pl-3">Behavioral </h4>
-                <table class="w-full text-sm text-left text-xs">
-                  <thead class="text-xs border-gray-200">
-                    <tr>
-                      <th scope="col" class="py-3 text-center font-normal">Description</th>
-                      <th scope="col" class="py-3 text-center font-normal">Victim Survivor</th>
-                      <th scope="col" class="py-3 text-center font-normal">Historian</th>
+                <h4 class="font-semibold py-2">Behavioral </h4>
+                <table class="w-full text-left text-xs">
+                  <thead class="text-xs">
+                    <tr class="border-t border-b border-gray-200">
+                      <th scope="col" class="py-3 text-center font-normal border-r border-gray-200">Description</th>
+                      <th scope="col" class="py-3 text-center font-normal border border-gray-200">Victim Survivor</th>
+                      <th scope="col" class="py-3 text-center font-normal border-l border-gray-200">Historian</th>
                     </tr>
                   </thead>
-                  <tbody class="h-96 overflow-y-auto">
+                  <tbody class="h-96 text-xs overflow-y-auto">
                     <tr class="bg-white border-b" *ngFor="let behavioral of behavioral_exam | keyvalue">
                       <td class="py-4 pl-6">
                         {{behavioral.key}}
@@ -641,160 +439,15 @@
                       </td>
                     </tr>
 
-                    <!-- <tr class="bg-white border-b">
-                      <td class="py-4 pl-6">
-                        Blank stares, Withdrawal 
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                    </tr>
-
-                    <tr class="bg-white border-b">
-                      <td class="py-4 pl-6">
-                        Nightmares, sleep disturbances 
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                    </tr>
-
-                    <tr class="bg-white border-b">
-                      <td class="py-4 pl-6">
-                        Loss of appetite 
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                    </tr>
-
-                    <tr class="bg-white border-b">
-                      <td class="py-4 pl-6">
-                        Suicide attempt, ideation 
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                    </tr>
-
-                    <tr class="bg-white border-b">
-                      <td class="py-4 pl-6">
-                        Truancy, problems at school 
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                    </tr>
-
-                    <tr class="bg-white border-b">
-                      <td class="py-4 pl-6">
-                        Anxiety, hyperactivity 
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                    </tr>
-
-                    <tr class="bg-white border-b">
-                      <td class="py-4 pl-6">
-                        Running away from home 
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                    </tr>
-
-                    <tr class="bg-white border-b">
-                      <td class="py-4 pl-6">
-                        Aggression, anger 
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                    </tr>
-
-                    <tr class="bg-white border-b">
-                      <td class="py-4 pl-6">
-                        Self-mutilation 
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                    </tr>
-
-                    <tr class="bg-white border-b">
-                      <td class="py-4 pl-6">
-                        Psychotic episodes 
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                    </tr>
-
-                    <tr class="bg-white border-b">
-                      <td class="py-4 pl-6">
-                        Rectal Bleeding 
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                    </tr>
-
-                    <tr class="bg-white border-b">
-                      <td class="py-4 pl-6">
-                        Other 
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                      <td class="py-4 text-center">
-                        <input type="checkbox" class="input-checkbox" />
-                      </td>
-                    </tr> -->
-
                   </tbody>
-                </table>
+                  </table>
+                </div>
               </div>
-              
+            </tbody>
+          </table>
 
-            </div>
-          </tbody>
-        </table>
       </table>
-      </div>
+    </div>
 
       <!-- Modal footer -->
       <div class="flex justify-end py-4 px-5 space-x-4 rounded-b border-t border-gray-200">

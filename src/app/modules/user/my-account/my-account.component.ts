@@ -57,6 +57,14 @@ export class MyAccountComponent implements OnInit {
     municipality: new FormControl<string| null>(''),
     designation_code: new FormControl<string| null>(''),
     employer_code: new FormControl<string| null>(''),
+    accreditation_number: new FormControl<string| null>(''),
+    attendant_cc_flag: new FormControl<boolean| null>(false),
+    attendant_mc_flag: new FormControl<boolean| null>(false),
+    attendant_tb_flag: new FormControl<boolean| null>(false),
+    attendant_ab_flag: new FormControl<boolean| null>(false),
+    attendant_ml_flag: new FormControl<boolean| null>(false),
+    attendant_fp_flag: new FormControl<boolean| null>(false),
+    attendant_cv_flag: new FormControl<boolean| null>(false),
   });
 
   enbaleEdit(){
@@ -73,6 +81,7 @@ export class MyAccountComponent implements OnInit {
     this.loading = true;
 
     let user_id = this.http.getUserID();
+    console.log(this.userForm.value);
     if(!this.userForm.invalid){
       this.http.update('users/', user_id, this.userForm.value).subscribe({
         next: (data:any) => {
@@ -198,6 +207,14 @@ export class MyAccountComponent implements OnInit {
       municipality: ['', Validators.required],
       designation_code: ['', Validators.required],
       employer_code: ['', Validators.required],
+      accreditation_number: [null],
+      attendant_cc_flag: [null],
+      attendant_mc_flag: [null],
+      attendant_tb_flag: [null],
+      attendant_ab_flag: [null],
+      attendant_ml_flag: [null],
+      attendant_fp_flag: [null],
+      attendant_cv_flag: [null],
     });
     this.userForm.disable();
 

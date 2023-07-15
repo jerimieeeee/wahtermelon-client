@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AnimalbiteComponent } from './animalbite.component';
+import { UploadClaimsComponent } from './upload-claims.component';
 
-describe('AnimalbiteComponent', () => {
-  let component: AnimalbiteComponent;
-  let fixture: ComponentFixture<AnimalbiteComponent>;
+describe('UploadClaimsComponent', () => {
+  let component: UploadClaimsComponent;
+  let fixture: ComponentFixture<UploadClaimsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AnimalbiteComponent ]
+      declarations: [ UploadClaimsComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(AnimalbiteComponent);
+    fixture = TestBed.createComponent(UploadClaimsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

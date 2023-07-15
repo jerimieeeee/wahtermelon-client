@@ -25,6 +25,11 @@
             </div>
 
             <div class="col-span-4">
+              <input type="checkbox" id="medico_legal_flag" class="input-checkbox" formControlName="medico_legal_flag">
+              <label for="medico_legal_flag" class="pl-2">For medico legal</label>
+            </div>
+
+            <div class="col-span-4">
               <label for="referral_reason" [ngClass]="{'text-red-500': show_error && f.referral_reason.errors}">Referral reason</label>
               <textarea type="text" name="referral_reason" id="referral_reason" formControlName="referral_reason" class="input" [ngClass]="{'invalid-input': show_error && f.referral_reason.errors}">
               </textarea>

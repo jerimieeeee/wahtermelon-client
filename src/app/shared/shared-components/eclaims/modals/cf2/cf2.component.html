@@ -1,1 +1,160 @@
-<p>cf2 works!</p>
+<div id="defaultModal" tabindex="-1" class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 w-full md:inset-0 h-modal md:h-full justify-center items-center flex" aria-modal="true" role="dialog" style="z-index:60">
+  <div class="relative p-4 w-full max-w-4xl h-auto md:h-auto">
+    <!-- Modal content -->
+    <div class="relative bg-white rounded-lg shadow">
+      <!-- Modal header -->
+      <div class="flex justify-between items-start py-3 px-5 rounded-t border-b bg-orange-400">
+        <h3 class="text-sm font-bold text-white">
+          Claim Form 2
+        </h3>
+        <div>
+          <button class="bg-white text-orange-400 rounded-md px-2 py-1 mr-3" (click)="submitQue()">
+            Queue
+          </button>
+          <button [disabled]="pdf_exported" class="bg-white text-orange-400 rounded-md px-2 py-1" (click)="exportP()">
+            <fa-icon [icon]="faFilePdf"></fa-icon>
+          </button>
+        </div>
+      </div>
+      <!-- Modal body -->
+      <div class="overflow-y-auto max-h-[500px] scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
+        <img class="w-[216mm] h-[330mm]" src="./assets/img/philhealth-cf2-1.jpg" hidden />
+        <img class="w-[216mm] h-[330mm]" src="./assets/img/philhealth-cf2-2.jpg" hidden />
+        <!-- <img src="./assets/img/philhealth-cf2-1.jpg" hidden /> -->
+        <div *ngIf="!selected_caserate" class="flex w-2/3 mx-auto">
+          <div class="p-2 w-1/2">
+            <label for="caserate_field">Caserate</label>
+            <select name="caserate_field" id="caserate_field" [(ngModel)]="caserate_field" class="input">
+              <option *ngFor="let cr of caserate_list" [ngValue]="cr">{{ cr.code }} - {{ cr.caserate_code }}</option>
+            </select>
+          </div>
+          <div class="mt-8">
+            <button type="button" class="btn-save" (click)="selectCaserate()">
+              Select
+            </button>
+          </div>
+        </div>
+
+        <div *ngIf="selected_caserate"  class="w-full">
+          <div *ngIf="show_form && eclaimsForm.valid" class="text-sm text-center uppercase font-semibold relative w-[216mm] h-[660mm]" id="mainForm">
+            <img class="w-[216mm] h-[330mm]" src="./assets/img/philhealth-cf2-1.jpg" />
+            <img class="w-[216mm] h-[330mm]" src="./assets/img/philhealth-cf2-2.jpg" />
+
+            <span class="absolute top-[67.8mm] left-[117mm] tracking-[0.45em]">{{ program_creds?.accreditation_number }}</span>
+            <span class="absolute top-[73mm] left-[61mm] w-[147mm]">{{ program_creds?.facility_name }}</span>
+            <span class="absolute top-[79mm] left-[28mm] w-[73mm]">{{ facility?.barangay.name }}</span>
+            <span class="absolute top-[79mm] left-[104mm] w-[51mm]">{{ facility?.municipality.name }}</span>
+            <span class="absolute top-[79mm] left-[159mm] w-[48mm]">{{ facility?.province.name }}</span>
+
+            <span class="absolute top-[95.3mm] left-[44mm] w-[38.5mm]">{{ patient?.last_name }}</span>
+            <span class="absolute top-[95.3mm] left-[87mm] w-[41.5mm]">{{ patient?.first_name }}</span>
+            <span class="absolute top-[95.3mm] left-[1320mm] w-[29.5mm]">{{ patient?.suffix_name!=='NA' ? patient?.suffix_name : '' }}</span>
+            <span class="absolute top-[95.3mm] left-[165mm] w-[42.2mm]">{{ patient?.middle_name }}</span>
+
+            <span class="absolute top-[126mm] left-[70mm] w-[8.5mm] tracking-[0.4em]">{{ eclaimsForm.value.admission_date | date:'MM' }}</span>
+            <span class="absolute top-[126mm] left-[81.5mm] w-[8.5mm] tracking-[0.4em]">{{ eclaimsForm.value.admission_date | date:'dd' }}</span>
+            <span class="absolute top-[126mm] left-[93.5mm] w-[17mm] tracking-[0.55em]">{{ eclaimsForm.value.admission_date | date:'yyyy' }}</span>
+
+            <span class="absolute top-[131.5mm] left-[70mm] w-[8.5mm] tracking-[0.4em]">{{ eclaimsForm.value.discharge_date | date:'MM' }}</span>
+            <span class="absolute top-[131.5mm] left-[81.5mm] w-[8.5mm] tracking-[0.4em]">{{ eclaimsForm.value.discharge_date | date:'dd' }}</span>
+            <span class="absolute top-[131.5mm] left-[93.5mm] w-[17mm] tracking-[0.55em]">{{ eclaimsForm.value.discharge_date | date:'yyyy' }}</span>
+
+            <span class="absolute top-[142.6mm] left-[11.8mm]">&#x2714;</span>
+
+            <span class="absolute top-[176.5mm] left-[10mm] w-[196mm]">{{ eclaimsForm.value.admit_dx }}</span>
+
+            <span class="absolute top-[193.5mm] left-[15mm] w-[24.5mm]">{{ eclaimsForm.value.discharge_dx }}</span>
+            <span class="absolute top-[193.5mm] left-[43.5mm] w-[20mm]">{{ eclaimsForm.value.icd10_code }}</span>
+            <span class="absolute top-[193.5mm] left-[115mm] w-[20.5mm]">{{ eclaimsForm.value.code }}</span>
+            <span class="absolute top-[193.5mm] left-[139.5mm] w-[22mm]">{{ eclaimsForm.value.attendant_sign_date|date:'MM-dd-yyyy' }}</span>
+
+            <span class="absolute top-[317.5mm] left-[60mm] w-[61mm]">{{ eclaimsForm.value.code }}</span> <!-- Caserate code -->
+
+            <!-- MC Case -->
+            <div *ngIf="program_name==='mc'">
+              <span class="absolute top-[264mm] left-[17.5mm] w-[45mm]">01-01-2023</span>
+              <span class="absolute top-[264mm] left-[70mm] w-[41mm]">01-01-2023</span>
+              <span class="absolute top-[264mm] left-[117.5mm] w-[37mm]">01-01-2023</span>
+              <span class="absolute top-[264mm] left-[161.5mm] w-[45mm]">01-01-2023</span>
+            </div>
+            <!-- MC CASE -->
+
+            <!-- TB CASE -->
+            <div *ngIf="program_name==='tb'">
+              <span *ngIf="eclaimsForm.value.code==='89221'" class="absolute top-[270.5mm] left-[46.3mm]">&#x2714;</span> <!-- Instensive -->
+              <span *ngIf="eclaimsForm.value.code==='89222'" class="absolute top-[270.5mm] left-[80mm]">&#x2714;</span> <!-- Maintenance -->
+              <span class="absolute top-[270.5mm] left-[115mm]">NEW CAT I</span>
+            </div>
+            <!-- TB CASE -->
+
+            <!-- NCP -->
+            <div *ngIf="program_name==='cc'">
+              <span class="absolute top-[297mm] left-[15mm]">&#x2714;</span>
+              <span class="absolute top-[297mm] left-[57.7mm]">&#x2714;</span>
+              <span class="absolute top-[297mm] left-[93.5mm]">&#x2714;</span>
+              <span class="absolute top-[297mm] left-[133mm]">&#x2714;</span>
+              <span class="absolute top-[297mm] left-[166.5mm]">&#x2714;</span>
+              <span class="absolute top-[302mm] left-[15mm]">&#x2714;</span>
+              <span class="absolute top-[302mm] left-[57.7mm]">&#x2714;</span>
+              <span class="absolute top-[302mm] left-[93.5mm]">&#x2714;</span>
+              <span class="absolute top-[302mm] left-[133mm]">&#x2714;</span>
+            </div>
+            <!-- NCP -->
+
+            <!-- PROFESSIONAL -->
+            <span class="absolute top-[352mm] left-[35mm] w-[17mm] tracking-[0.4em]">{{ eclaimsForm.value.attendant_accreditation_code|slice:0:4 }}</span>
+            <span class="absolute top-[352mm] left-[55mm] w-[29.8mm] tracking-[0.5em]">{{ eclaimsForm.value.attendant_accreditation_code|slice:4:11 }}</span>
+            <span class="absolute top-[352mm] left-[87.5mm] w-[4.5mm]">{{ eclaimsForm.value.attendant_accreditation_code|slice:11:12 }}</span>
+            <span class="absolute top-[358.5mm] left-[20mm] w-[83mm]">{{ eclaimsForm.value.attendant_last_name }}, {{ eclaimsForm.value.attendant_last_name }} {{ eclaimsForm.value.attendant_middle_name }} {{ eclaimsForm.value.attendant_suffix_name!=='NA' ? eclaimsForm.value.attendant_suffix_name : '' }}</span>
+            <span class="absolute top-[368mm] left-[44mm] w-[8.7mm] tracking-[0.45em]">{{ eclaimsForm.value.attendant_sign_date|date:'MM' }}</span>
+            <span class="absolute top-[368mm] left-[55mm] w-[8.7mm] tracking-[0.45em]">{{ eclaimsForm.value.attendant_sign_date|date:'dd' }}</span>
+            <span class="absolute top-[368mm] left-[66.5mm] w-[17.3mm] tracking-[0.5em]">{{ eclaimsForm.value.attendant_sign_date|date:'yyyy' }}</span>
+            <span class="absolute top-[358.5mm] left-[117.5mm]">&#x2714;</span>
+            <!-- PROFESSIONAL -->
+
+            <!-- FEES -->
+            <span class="absolute top-[438.5mm] left-[12.5mm]">&#x2714;</span>
+            <span class="absolute top-[451mm] left-[113mm] w-[83.5mm]">Php {{ eclaimsForm.value.hci_fee }}</span>
+            <span class="absolute top-[456.5mm] left-[113mm] w-[83.5mm]">Php {{ eclaimsForm.value.prof_fee }}</span>
+            <span class="absolute top-[461.5mm] left-[113mm] w-[83.5mm]">Php {{ eclaimsForm.value.caserate_fee }}</span>
+            <!-- FEES -->
+
+            <!-- SIGN -->
+            <!-- <span class="absolute top-[583mm] left-[10mm] w-[85mm]">{{ patient?.last_name }}, {{ patient?.first_name }} {{ patient?.middle_name }} {{ patient?.suffix_name!=='NA' ? patient?.suffix_name : '' }}</span>
+            <span class="absolute top-[593mm] left-[44mm] w-[8.7mm] tracking-[0.45em]">{{ date_today|date:'MM' }}</span>
+            <span class="absolute top-[593mm] left-[55mm] w-[8.7mm] tracking-[0.45em]">{{ date_today|date:'dd' }}</span>
+            <span class="absolute top-[593mm] left-[66.5mm] w-[17.3mm] tracking-[0.45em]">{{ date_today|date:'yyyy' }}</span> -->
+            <!-- SIGN -->
+          </div>
+
+          <div *ngIf="show_form && eclaimsForm.invalid">
+            <div class="border border-orange-400 bg-orange-50 text-orange-700 rounded-md m-5 p-3">
+              <ul *ngFor="let field of eclaimsForm.controls|keyvalue">
+                <li class="text-sm font-semibold" *ngIf="field.value.status === 'INVALID'">
+                  {{ field.key }} is required
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div  *ngIf="!show_form" class="grid grid-cols-1 my-20">
+            <div class="flex justify-center text-blue-500">
+              <fa-icon [icon]="faCircleNotch" spin="true"></fa-icon>
+            </div>
+
+            <div class="flex justify-center">
+              Checking PhilHealth Claims Eligibility...
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="flex justify-end py-4 px-5 space-x-4 rounded-b border-t border-gray-200">
+        <button type="button" class="btn-save bg-gray-400" (click)="closeModal()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="opacity-50 fixed inset-0 z-50 bg-black"></div>

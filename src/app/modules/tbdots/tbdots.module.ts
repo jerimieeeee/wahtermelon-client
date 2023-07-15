@@ -16,6 +16,8 @@ import { EndVisitComponent } from 'app/shared/shared-modals/end-visit/end-visit.
 import { DeleteItemComponent } from 'app/shared/shared-modals/delete-item/delete-item.component';
 import { TreatmentOutcomeComponent } from './modals/treatment-outcome/treatment-outcome.component';
 import { CaserateComponent } from 'app/shared/shared-components/eclaims/components/caserate/caserate.component';
+import { EclaimsComponent } from 'app/shared/shared-components/eclaims/eclaims.component';
+import { SharedComponentsModule } from 'app/shared/shared-components/shared-components.module';
 
 @NgModule({
   declarations: [
@@ -34,7 +36,8 @@ import { CaserateComponent } from 'app/shared/shared-components/eclaims/componen
     ReactiveFormsModule,
     EndVisitComponent,
     DeleteItemComponent,
-    CaserateComponent
+    CaserateComponent,
+    SharedComponentsModule
   ]
 })
 export class TbdotsModule { }
