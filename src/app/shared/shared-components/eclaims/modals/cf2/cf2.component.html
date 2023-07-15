@@ -5,7 +5,7 @@
       <!-- Modal header -->
       <div class="flex justify-between items-start py-3 px-5 rounded-t border-b bg-orange-400">
         <h3 class="text-sm font-bold text-white">
-          Eligibility
+          Claim Form 2
         </h3>
         <div>
           <button class="bg-white text-orange-400 rounded-md px-2 py-1 mr-3" (click)="submitQue()">
@@ -21,14 +21,14 @@
         <img class="w-[216mm] h-[330mm]" src="./assets/img/philhealth-cf2-1.jpg" hidden />
         <img class="w-[216mm] h-[330mm]" src="./assets/img/philhealth-cf2-2.jpg" hidden />
         <!-- <img src="./assets/img/philhealth-cf2-1.jpg" hidden /> -->
-        <div *ngIf="!selected_caserate" class="flex">
+        <div *ngIf="!selected_caserate" class="flex w-2/3 mx-auto">
           <div class="p-2 w-1/2">
             <label for="caserate_field">Caserate</label>
             <select name="caserate_field" id="caserate_field" [(ngModel)]="caserate_field" class="input">
-              <option *ngFor="let cr of caserate_list" [ngValue]="cr">{{ cr.caserate_code }}</option>
+              <option *ngFor="let cr of caserate_list" [ngValue]="cr">{{ cr.code }} - {{ cr.caserate_code }}</option>
             </select>
           </div>
-          <div>
+          <div class="mt-8">
             <button type="button" class="btn-save" (click)="selectCaserate()">
               Select
             </button>
@@ -113,9 +113,10 @@
             <!-- PROFESSIONAL -->
 
             <!-- FEES -->
-            <span class="absolute top-[451mm] left-[113mm] w-[83.5mm]">Php. {{ eclaimsForm.value.hci_fee }}</span>
-            <span class="absolute top-[456.5mm] left-[113mm] w-[83.5mm]">Php. {{ eclaimsForm.value.prof_fee }}</span>
-            <span class="absolute top-[461.5mm] left-[113mm] w-[83.5mm]">Php. {{ eclaimsForm.value.caserate_fee }}</span>
+            <span class="absolute top-[438.5mm] left-[12.5mm]">&#x2714;</span>
+            <span class="absolute top-[451mm] left-[113mm] w-[83.5mm]">Php {{ eclaimsForm.value.hci_fee }}</span>
+            <span class="absolute top-[456.5mm] left-[113mm] w-[83.5mm]">Php {{ eclaimsForm.value.prof_fee }}</span>
+            <span class="absolute top-[461.5mm] left-[113mm] w-[83.5mm]">Php {{ eclaimsForm.value.caserate_fee }}</span>
             <!-- FEES -->
 
             <!-- SIGN -->

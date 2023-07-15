@@ -12,13 +12,13 @@
           <!-- <button type="button" class="w-32 px-3 py-2 rounded-md bg-blue-500 text-sm text-white ml-auto mr-3" (click)="toggleModal('check_claims')">
             Check claims
           </button> -->
-          <button type="button" class="w-32 px-3 py-2 rounded-md bg-blue-500 text-sm text-white ml-auto mr-1" (click)="toggleModal('pbef')">
+          <button [disabled]="caserate_list?.length===0" type="button" class="w-32 px-3 py-2 rounded-md bg-blue-500 text-sm text-white ml-auto mr-1" (click)="toggleModal('pbef')">
             PBEF
           </button>
           <!-- <button *ngIf="caserate_list" type="button" class="w-32 px-3 py-2 rounded-md bg-blue-500 text-sm text-white ml-auto  mr-1" (click)="toggleModal('cf1')">
             CF1
           </button> -->
-          <button *ngIf="caserate_list?.length>0" type="button" class="w-32 px-3 py-2 rounded-md bg-blue-500 text-sm text-white ml-auto  mr-1" (click)="toggleModal('cf2')">
+          <button [disabled]="caserate_list?.length===0" type="button" class="w-32 px-3 py-2 rounded-md bg-blue-500 text-sm text-white ml-auto mr-1 disabled:bg-gray-400" (click)="toggleModal('cf2')">
             CF2
           </button>
           <!-- <button *ngIf="caserate_list" type="button" class="w-32 px-3 py-2 rounded-md bg-blue-500 text-sm text-white ml-auto  mr-1" (click)="toggleModal('csf')">
@@ -50,7 +50,7 @@
                 <th scope="col" class="py-3 px-3">Action</th>
               </tr>
             </thead>
-            <tbody> <!-- *ngFor="let philhealth of philhealth_infos"  -->
+            <tbody *ngIf="show_form"> <!-- *ngFor="let philhealth of philhealth_infos"  -->
               <tr *ngFor="let eclaims of eclaims_list" class="bg-white border-b last:border-0">
                 <td class="py-4 px-3">
                   {{ eclaims.pHospitalTransmittalNo }}
@@ -74,6 +74,25 @@
                   <!-- <fa-icon (click)="toggleModal('add', lab)" size="lg" class="mx-0 my-0 text-blue-500 hover:cursor-pointer flex-none mr-2" [icon]="faEdit"></fa-icon> -->
                 </td>
               </tr>
+              <tr *ngIf="eclaims_list.length===0">
+                <td colspan="6" class="text-center italic">
+                  No record found
+                </td>
+              </tr>
+            </tbody>
+            <tbody *ngIf="!show_form">
+              <tr>
+                <td colspan="6">
+                  <div class="grid grid-cols-1 my-16">
+                    <div class="flex justify-center text-blue-500">
+                      <fa-icon [icon]="faCircleNotch" spin="true"></fa-icon>
+                    </div>
+                    <div class="flex justify-center">
+                      Fetching claims...
+                    </div>
+                  </div>
+                </td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -91,6 +110,8 @@
   [patient_philhealth]="patient_philhealth"
   [program_name]="program_name"
   [program_creds]="program_creds"
+  [selected_case]="selected_case"
+  [caserate_list]="caserate_list"
 ></app-pbef>
 
 <app-cf1 *ngIf="modal['cf1']"

@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { faRotate, faUpload } from '@fortawesome/free-solid-svg-icons';
+import { faCircleNotch, faRotate, faUpload } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
@@ -14,16 +14,28 @@ export class EclaimsComponent implements OnInit {
 
   faRotate = faRotate;
   faUpload = faUpload;
+  faCircleNotch = faCircleNotch;
+
   pending_list: any = [];
   modal: any = [];
 
   caserate_list: any;
-  is_refreshing: boolean = false;
   patient:any;
   patient_philhealth:any;
   eclaims_list: any;
+  program_creds:any;
+
+  selected_pHospitalTransmittalNo: string;
+  selected_caserate_code: string;
+
+  is_refreshing: boolean = false;
+  show_form:boolean = false;
+  show_cf2: boolean = false;
+
 
   getEclaimsList() {
+    this.show_form = false;
+
     let params = {
       patient_id: this.patient.id,
       program_code: this.program_name
@@ -37,13 +49,10 @@ export class EclaimsComponent implements OnInit {
         if(Object.keys(this.eclaims_list).length > 0) {
           let eclaims_id_arr = [];
           Object.entries(this.eclaims_list).forEach(([key,value]:any, index) => {
-            // console.log(value)
             eclaims_id_arr.push(value.caserate.id);
           });
 
-          // if(eclaims_id_arr.length>0) {
-            this.getCaserate(eclaims_id_arr)
-          // }
+          this.getCaserate(eclaims_id_arr);
         } else {
           this.getCaserate()
         }
@@ -52,21 +61,21 @@ export class EclaimsComponent implements OnInit {
     })
   }
 
-  show_cf2: boolean = false;
-
   getCaserate(eclaims_id_arr?) {
+    console.log(eclaims_id_arr)
     let params = {
       program_code: this.program_id,
       program_desc: this.program_name
     };
 
-    params['eclaims_id_arr'] = eclaims_id_arr.join(',') ?? null;
+    params['eclaims_id_arr'] = eclaims_id_arr ? eclaims_id_arr.join(',') : null;
 
     this.http.get('eclaims/eclaims-caserate', {params}).subscribe({
       next:(data:any) => {
         this.caserate_list = data.data;
 
         this.show_cf2 = Object.keys(this.caserate_list).length > 0 ? true:false;
+        this.show_form = true;
       },
       error: err => console.log(err)
     });
@@ -76,8 +85,19 @@ export class EclaimsComponent implements OnInit {
     this.is_refreshing = true;
   }
 
-  selected_pHospitalTransmittalNo: string;
-  selected_caserate_code: string;
+  getCreds(){
+    let params = { 'filter[program_code]': this.program_name };
+
+    this.http.get('settings/philhealth-credentials', {params}).subscribe({
+      next:(data:any) => {
+        console.log(data)
+        this.program_creds = data.data[0];
+        this.getEclaimsList();
+      },
+      error: err => console.log(err)
+    })
+  }
+
   toggleModal(name, eclaims?) {
     this.selected_pHospitalTransmittalNo = eclaims?.pHospitalTransmittalNo ?? null;
     this.selected_caserate_code = eclaims?.caserate.caserate_code ?? null;
@@ -93,7 +113,7 @@ export class EclaimsComponent implements OnInit {
     this.patient_philhealth = this.patient.philhealthLatest;
 
     if(this.patient_philhealth) {
-      this.getEclaimsList();
+      this.getCreds();
     }
   }
 

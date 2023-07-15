@@ -17,12 +17,15 @@ export class PbefComponent implements OnInit {
   @Input() patient;
   @Input() patient_philhealth;
   @Input() program_name;
+  @Input() caserate_list;
+  @Input() program_creds;
+
 
   faFilePdf = faFilePdf;
   faCircleNotch = faCircleNotch;
 
   pbef_result: any;
-  program_creds: any;
+  // program_creds: any;
 
   pdf_exported: boolean = false;
   show_form: boolean = false;
@@ -50,7 +53,7 @@ export class PbefComponent implements OnInit {
     });
   }
 
-  getCreds(){
+  /* getCreds(admission_date, discharge_date){
     let params = {
       'filter[program_code]': this.program_name
     }
@@ -59,15 +62,67 @@ export class PbefComponent implements OnInit {
       next:(data:any) => {
         console.log(data)
         this.program_creds = data.data[0];
-        this.getPbef();
+        this.getPbef(admission_date, discharge_date)
+        // this.getPbef();
       },
       error: err => console.log(err)
     })
+  } */
+
+  selected_caserate: any;
+  caserate_field: any;
+
+  selectCaserate() {
+    this.selected_caserate = this.caserate_field;
+    this.getDate();
   }
 
-  getPbef(){
+  getDate() {
     this.show_form = false;
-    let test_date = formatDate(new Date(), 'MM-dd-yyyy', 'en');
+    switch(this.program_name) {
+      case 'tb': {
+        this.paramsTb();
+        break;
+      }
+      case 'cc': {
+        this.paramsCc();
+        break;
+      }
+    }
+  }
+
+  paramsTb() {
+    let admission_date: Date;
+    let discharge_date: Date;
+
+    if(this.selected_caserate.code === '89221'){
+      admission_date = this.selected_case.case_holding.treatment_start;
+
+      discharge_date = new Date(this.selected_case.case_holding.continuation_start);
+      discharge_date.setDate(discharge_date.getDate()-1);
+      console.log('discharge_date', discharge_date)
+    }
+
+    if(this.selected_caserate.code === '89222'){
+      admission_date = this.selected_case.case_holding.continuation_start;
+      discharge_date = this.selected_case.case_holding.treatment_end;
+    }
+
+    console.log(this.selected_case.case_holding);
+    console.log(admission_date, discharge_date)
+    this.getPbef(admission_date, discharge_date)
+  }
+
+  paramsCc() {
+
+  }
+
+  getPbef(admission_date, discharge_date){
+    let admit_date = formatDate(admission_date, 'MM-dd-yyyy', 'en');
+    let disch_date = formatDate(discharge_date, 'MM-dd-yyyy', 'en');
+
+    this.show_form = false;
+    // let test_date = formatDate(new Date(), 'MM-dd-yyyy', 'en');
     let params = {
       program_code: this.program_name,
       member_pin: this.patient_philhealth.philhealth_id,
@@ -77,8 +132,8 @@ export class PbefComponent implements OnInit {
       member_suffix_name: this.patient_philhealth.membership_type_id === 'DD' ? (this.patient_philhealth.member_suffix_name === 'NA' ? '' : this.patient_philhealth.member_suffix_name.toUpperCase()) : (this.patient.suffix_name === 'NA' ? '' : this.patient.suffix_name.toUpperCase()),
       member_birthdate: formatDate(this.patient_philhealth.membership_type_id === 'DD' ? this.patient_philhealth.member_birthdate : this.patient.birthdate, 'MM-dd-yyyy', 'en'),
       patient_is: this.patient_philhealth.membership_type_id === 'DD' ? this.patient_philhealth.member_relation_id : 'M',
-      admission_date: test_date,
-      discharge_date: test_date,
+      admission_date: admit_date,
+      discharge_date: disch_date,
       patient_last_name: this.patient.last_name.toUpperCase(),
       patient_first_name: this.patient.first_name.toUpperCase(),
       patient_middle_name: this.patient.middle_name.toUpperCase(),
@@ -109,6 +164,9 @@ export class PbefComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.getCreds();
+    if(this.caserate_list.length === 1) {
+      this.selected_caserate = this.caserate_list[0];
+      this.getDate();
+    }
   }
 }
