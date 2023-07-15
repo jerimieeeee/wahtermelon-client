@@ -43,7 +43,7 @@ export class EclaimsComponent implements OnInit {
 
     this.http.get('eclaims/eclaims-upload', {params}).subscribe({
       next:(data:any) => {
-        console.log(data);
+        // console.log(data);
         this.eclaims_list = data.data;
 
         if(Object.keys(this.eclaims_list).length > 0) {

@@ -97,10 +97,8 @@ export class PbefComponent implements OnInit {
 
     if(this.selected_caserate.code === '89221'){
       admission_date = this.selected_case.case_holding.treatment_start;
-
       discharge_date = new Date(this.selected_case.case_holding.continuation_start);
       discharge_date.setDate(discharge_date.getDate()-1);
-      console.log('discharge_date', discharge_date)
     }
 
     if(this.selected_caserate.code === '89222'){
@@ -108,13 +106,12 @@ export class PbefComponent implements OnInit {
       discharge_date = this.selected_case.case_holding.treatment_end;
     }
 
-    console.log(this.selected_case.case_holding);
-    console.log(admission_date, discharge_date)
-    this.getPbef(admission_date, discharge_date)
+    this.getPbef(admission_date, discharge_date);
   }
 
   paramsCc() {
-
+    let admission_date: Date;
+    let discharge_date: Date;
   }
 
   getPbef(admission_date, discharge_date){
