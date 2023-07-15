@@ -9,6 +9,7 @@ import { TodaysStatsComponent } from '../dashboard/todays-stats/todays-stats.com
 import { FormsModule } from '@angular/forms';
 import { TodaysAppointmentComponent } from './todays-appointment/todays-appointment.component';
 import { TodaysReferralComponent } from './todays-referral/todays-referral.component';
+import { GbvPatientsComponent } from './gbv-patients/gbv-patients.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { TodaysReferralComponent } from './todays-referral/todays-referral.compo
     TodaysConsultComponent,
     TodaysStatsComponent,
     TodaysAppointmentComponent,
-    TodaysReferralComponent
+    TodaysReferralComponent,
+    GbvPatientsComponent
   ],
   imports: [
     CommonModule,

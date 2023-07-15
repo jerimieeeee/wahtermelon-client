@@ -8,9 +8,8 @@ import { Subject } from 'rxjs';
   providedIn: 'root'
 })
 export class HttpService {
-
   baseUrl = 'https://training-api.wah.ph/api/v1/';
-
+  
   constructor(
     private http: HttpClient,
     private router: Router,
@@ -53,7 +52,7 @@ export class HttpService {
 
   saveUserToLocalStorage(user) {
     // console.log(user)
-    localStorage.setItem('user', JSON.stringify(user))
+    localStorage.setItem('user', JSON.stringify(user));
   }
 
   removeLocalStorageItem(){

@@ -5,7 +5,15 @@
     </div>
 
     <div class="shadow rounded-md p-4 m-5 w-5/6 mx-auto" *ngIf="!show_form">
-      <div class="animate-pulse flex space-x-4">
+      <div class="grid grid-cols-1 my-32">
+        <div class="flex justify-center text-blue-500">
+          <fa-icon [icon]="faCircleNotch" spin="true"></fa-icon>
+        </div>
+        <div class="flex justify-center">
+          Loading libraries...
+        </div>
+      </div>
+      <!-- <div class="animate-pulse flex space-x-4">
         <div class="flex-1 space-y-6 py-1">
           <div class="h-2 bg-slate-200 rounded"></div>
           <div class="space-y-4">
@@ -23,22 +31,18 @@
             <div class="h-2 bg-slate-200 rounded"></div>
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
 
     <form [formGroup]="patientForm" (ngSubmit)="onSubmit()" *ngIf="show_form">
       <div class="mx-10 mb-10">
-        <!-- <div class="text-red-500">
-          All fields are required.
-        </div> -->
         <div class="px-4 py-5 bg-white sm:p-6">
           <div class="grid grid-cols-8 gap-x-4 mb-3">
-            <div class="col-span-8 sm:col-span-4 grid grid-cols-2">
-              <label for="consent_flag" class="input-label col-span-1 mt-3" [ngClass]="{'text-red-500': is_saving && f.consent_flag.errors}">Has the patient signed the consent?</label>
-              <select id="consent_flag" name="consent_flag" class="input col-span-1" [ngClass]="{'invalid-input': is_saving && f.consent_flag.errors}" formControlName="consent_flag">
-                <option [ngValue]="false">N</option>
-                <option [ngValue]="true">Y</option>
-              </select>
+            <div class="col-span-8 flex">
+              <input type="checkbox" class="input-checkbox mt-0.5" id="consent_flag" formControlName="consent_flag" />
+              <label for="consent_flag" class="input-label ml-2" [ngClass]="{'text-red-500': is_saving && f.consent_flag.errors}">
+                The patient has read, fully understood, and signed the patient consent form.
+              </label>
             </div>
           </div>
 
@@ -152,7 +156,7 @@
               </div>
 
               <div class="col-span-6  sm:col-span-2">
-                <label for="mobile_number" class="input-label" [ngClass]="{'text-red-500': is_saving && f.mobile_number.errors}">Mobile Number (0912) 354-6789</label>
+                <label for="mobile_number" class="input-label" [ngClass]="{'text-red-500': is_saving && f.mobile_number.errors}">Mobile Number<!--  (0912) 354-6789 --></label>
                 <input type="text" mask="(9999) 999-9999" [showMaskTyped]="true" name="mobile_number" id="mobile_number" class="input" [ngClass]="{'invalid-input': is_saving && f.mobile_number.errors}" formControlName="mobile_number">
 
                 <div *ngIf="is_saving && f.mobile_number.errors" class="invalid-alert">
@@ -216,19 +220,6 @@
               </div>
 
               <div class="col-span-6 sm:col-span-2">
-                <label for="pwd_type_code" class="input-label" [ngClass]="{'text-red-500': is_saving && f.pwd_type_code.errors}">Person with Disabililties</label>
-                <select id="pwd_type_code" name="pwd_type_code" class="input" [ngClass]="{'invalid-input': is_saving && f.pwd_type_code.errors}" formControlName="pwd_type_code">
-                  <option *ngFor="let pwd_type of pwd_types" [value]="pwd_type.code">{{ pwd_type.type_desc }}</option>
-                </select>
-
-                <div *ngIf="is_saving && f.pwd_type_code.errors" class="invalid-alert">
-                  <div *ngIf="f.pwd_type_code.errors?.['required']">
-                    {{ required_message }}
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-span-6 sm:col-span-2">
                 <label for="indegenous_flag" class="input-label" [ngClass]="{'text-red-500': is_saving && f.indegenous_flag.errors}">Indigenous People</label>
                 <select id="indegenous_flag" name="indegenous_flag" class="input" [ngClass]="{'invalid-input': is_saving && f.indegenous_flag.errors}" formControlName="indegenous_flag">
                   <option [ngValue]="false">N</option>
@@ -242,20 +233,37 @@
                 </div>
               </div>
 
-              <!-- <div class="col-span-6 sm:col-span-2">
-                <label for="consent_flag" class="input-label" [ngClass]="{'text-red-500': is_saving && f.consent_flag.errors}">Has Consent</label>
-                <select id="consent_flag" name="consent_flag" class="input" [ngClass]="{'invalid-input': is_saving && f.consent_flag.errors}" formControlName="consent_flag">
-                  <option [ngValue]="false">N</option>
-                  <option [ngValue]="true">Y</option>
+              <div class="col-span-6 sm:col-span-2">
+                <label for="pwd_type_code" class="input-label" [ngClass]="{'text-red-500': is_saving && f.pwd_type_code.errors}">Person with Disabililties</label>
+                <select id="pwd_type_code" name="pwd_type_code" class="input" [ngClass]="{'invalid-input': is_saving && f.pwd_type_code.errors}" formControlName="pwd_type_code">
+                  <option *ngFor="let pwd_type of pwd_types" [value]="pwd_type.code">{{ pwd_type.type_desc }}</option>
+                </select>
+
+                <div *ngIf="is_saving && f.pwd_type_code.errors" class="invalid-alert">
+                  <div *ngIf="f.pwd_type_code.errors?.['required']">
+                    {{ required_message }}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- WASHINGTON QUESTION -->
+            <!-- <div class="grid grid-cols-8 gap-x-4 gap-y-4 pt-6" *ngIf="f.pwd_type_code.value === 'NA' || f.pwd_type_code.value === 'UN'">
+              <div class="col-span-8 border-b-2 border-slate-100"></div>
+              <div class="col-span-8 font-semibold text-blue-500">
+                <span class="-ml-5 mr-5">Washington Group Questions</span>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-8 gap-x-4 text-sm" *ngIf="f.pwd_type_code.value === 'NA' || f.pwd_type_code.value === 'UN'">
+              <div class="col-span-8 grid grid-cols-8 gap-x-4 border-b border-slate-100 py-1.5" *ngFor="let question of washington_questions; let i = index">
+                <label class="col-span-6 mt-2.5">{{ i+1 }}. {{ question.desc }}</label>
+                <select [id]="controlName(i+1)" [name]="controlName(i+1)" class="input col-span-2" [ngClass]="{'invalid-input': is_saving && f[controlName(i+1)].errors}" [formControlName]="controlName(i+1)">
+                  <option *ngFor="let washington_answer of washington_answers" [value]="washington_answer.id">{{ washington_answer.desc }}</option>
                 </select>
               </div>
-
-              <div *ngIf="is_saving && f.consent_flag.errors" class="invalid-alert">
-                <div *ngIf="f.consent_flag.errors?.['required']">
-                  {{ required_message }}
-                </div>
-              </div> -->
-            </div>
+            </div> -->
+            <!-- WASHINGTON QUESTION -->
 
             <div class="grid grid-cols-8 gap-x-4 gap-y-4 pt-6">
               <div class="col-span-8 border-b-2 border-slate-100"></div>
@@ -282,6 +290,7 @@
                   </span>
                 </div>
               </div>
+
               <div class="col-span-6 sm:col-span-2" *ngIf="show_demog_input">
                 <label for="region" class="input-label" [ngClass]="{'text-red-500': is_saving && f['family']['controls']['region'].errors}">Region</label>
                 <select id="region" name="region" class="input disabled:bg-gray-300" (change)="loadDemog('regions', patientForm.value.family.region, 'provinces')" [ngClass]="{'invalid-input': is_saving && f['family']['controls']['region'].errors}" formControlName="region">
@@ -362,30 +371,41 @@
                 </div>
               </div>
 
-              <div class="col-span-8 sm:col-span-2" *ngIf="show_demog_input">
-                <label for="cct_id" class="input-label" [ngClass]="{'text-red-500': is_saving && f['family']['controls']['cct_id'].errors}">CCT ID <span class="text-sm">(optional)</span></label>
-                <input type="text" name="cct_id" id="cct_id" class="input disabled:bg-gray-300" (keyup)="enableCctDate()" [ngClass]="{'invalid-input': is_saving && f['family']['controls']['cct_id'].errors}" formControlName="cct_id">
+              <!-- <div class="col-span-8 sm:col-span-2" *ngIf="show_demog_input">
+                <label for="residence_classification_code" class="input-label" [ngClass]="{'text-red-500': is_saving && f['family']['controls']['residence_classification_code'].errors}">Address Classification</label>
+                <select id="residence_classification_code" name="residence_classification_code " class="input disabled:bg-gray-300" [ngClass]="{'invalid-input': is_saving && f['family']['controls']['residence_classification_code'].errors}" formControlName="residence_classification_code">
+                  <option [ngValue]="null">-</option>
+                  <option *ngFor="let classification of residence_classifications" [value]="classification.code" >{{ classification.desc }}</option>
+                </select>
+              </div> -->
 
-                <div *ngIf="is_saving && f['family']['controls']['cct_id'].errors" class="invalid-alert">
-                  <div *ngIf="f['family']['controls']['cct_id'].errors?.['required']">
-                    {{ required_message }}
+              <!-- <div class="col-span-8 grid grid-cols-8 gap-4"> -->
+                <div class="col-span-8 sm:col-span-2" *ngIf="show_demog_input">
+                  <label for="cct_id" class="input-label" [ngClass]="{'text-red-500': is_saving && f['family']['controls']['cct_id'].errors}">CCT ID <span class="text-sm">(optional)</span></label>
+                  <input type="text" name="cct_id" id="cct_id" class="input disabled:bg-gray-300" (keyup)="enableCctDate()" [ngClass]="{'invalid-input': is_saving && f['family']['controls']['cct_id'].errors}" formControlName="cct_id">
+
+                  <div *ngIf="is_saving && f['family']['controls']['cct_id'].errors" class="invalid-alert">
+                    <div *ngIf="f['family']['controls']['cct_id'].errors?.['required']">
+                      {{ required_message }}
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              <div *ngIf="f['family']['controls']['cct_date'].enabled" class="col-span-6 sm:col-span-2">
-                <label for="cct_date" class="input-label" [ngClass]="{'text-red-500': is_saving && f['family']['controls']['cct_date'].errors}">CCT Registration date</label>
-                <input type="date" name="cct_date" id="cct_date" class="input disabled:bg-gray-300" [ngClass]="{'invalid-input': is_saving && f['family']['controls']['cct_date'].errors}" formControlName="cct_date">
+                <div *ngIf="show_cct_date" class="col-span-6 sm:col-span-2">
+                  <label for="cct_date" class="input-label" [ngClass]="{'text-red-500': is_saving && f['family']['controls']['cct_date'].errors}">CCT Registration date</label>
+                  <input type="date" name="cct_date" id="cct_date" class="input disabled:bg-gray-300" [ngClass]="{'invalid-input': is_saving && f['family']['controls']['cct_date'].errors}" formControlName="cct_date">
 
-                <div *ngIf="is_saving && f['family']['controls']['cct_date'].errors" class="invalid-alert">
-                  <div *ngIf="f['family']['controls']['cct_date'].errors?.['required']">
-                    {{ required_message }}
-                  </div>
-                  <div *ngIf="f['family']['controls']['cct_date'].errors?.['minlength']">
-                    Minimum of 2 character.
+                  <div *ngIf="is_saving && f['family']['controls']['cct_date'].errors" class="invalid-alert">
+                    <div *ngIf="f['family']['controls']['cct_date'].errors?.['required']">
+                      {{ required_message }}
+                    </div>
+                    <div *ngIf="f['family']['controls']['cct_date'].errors?.['minlength']">
+                      Minimum of 2 character.
+                    </div>
                   </div>
                 </div>
-              </div>
+              <!-- </div> -->
+
             </div>
             <!-- FAMILY FOLDER END -->
           </div>

@@ -38,6 +38,10 @@ const routes: Routes = [
       {
         path: 'tb',
         loadChildren: () => import('../tbdots/tbdots.module').then(m => m.TbdotsModule)
+      },
+      {
+        path: 'gbv',
+        loadChildren: () => import('../gbv/gbv.module').then(m => m.GbvModule)
       }
     ]
   }

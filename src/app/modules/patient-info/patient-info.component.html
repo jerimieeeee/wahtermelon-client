@@ -6,23 +6,19 @@
 
   <div class="col-span-3">
     <div class="rounded-xl text-gray-600 border border-slate-100" >
-      <div class="block m-0 relative p-0  scrollbar-thumb-white hover:scrollbar-thumb-blue-300 scrollbar-track-white">
-        <div class="flex justify-items-start sticky top-0 bg-white rounded-lg border border-gray-200 shadow-md p-2">
-          <div class="m-3">
-            <!-- <div class="inline-flex overflow-hidden relative justify-center items-center w-16 h-16 bg-gray-300 rounded-full opacity-60">
-              <span class="font-medium text-gray-600 opacity-100">
-                <fa-icon [icon]="faCamera"></fa-icon>
-              </span>
-            </div> -->
-            <div (click)="toggleModal('photo')" class="group cursor-pointer inline-flex overflow-hidden relative justify-center items-center w-16 h-16 bg-gray-100 rounded-full hover:bg-gray-700 hover:opacity-50">
-              <span class="font-medium text-gray-600 opacity-100 group-hover:opacity-50">{{ getInitials(patient_info?.first_name+' '+patient_info?.last_name) }}</span>
+      <div class="block m-0 relative p-0 scrollbar-thumb-white hover:scrollbar-thumb-blue-300 scrollbar-track-white">
+        <div class="flex justify-items-start sticky top-0 bg-white rounded-lg border-2 border-gray-400 shadow-md p-2">
+          <div class="mr-2">
+            <div (click)="toggleModal('photo')" class="group cursor-pointer inline-flex overflow-hidden relative justify-center items-center w-24 h-24 bg-gray-100 rounded-full hover:bg-gray-700 hover:opacity-50">
+              <span *ngIf="!imageData" class="font-medium text-gray-600 opacity-100 group-hover:opacity-50">{{ getInitials(patient_info?.first_name+' '+patient_info?.last_name) }}</span>
+              <img [src]="imageData" class="scale-[1.4]" *ngIf="imageData" alt="Profile Image">
               <span class="absolute text-white opacity-0 group-hover:opacity-100">
                 <fa-icon [icon]="faCamera" size="xl"></fa-icon>
               </span>
             </div>
           </div>
-          <div class="mt-4 leading-tight">
-            <span class="block text-blue-500 font-medium">
+          <div class="m-1 leading-tight">
+            <span class="block text-sm text-blue-500 font-medium">
               {{ patient_info?.last_name }}, {{ patient_info?.first_name }} {{ patient_info?.middle_name }} {{ patient_info?.suffix_name === "NA" ? "" : patient_info?.suffix_name }}
             </span>
 
@@ -30,7 +26,7 @@
               {{ patient_info?.birthdate | date: 'MM/dd/yyyy' }} [{{ getAge() }}][{{patient_info?.gender}}]
             </span>
 
-            <div class="flex pt-2 justify-between">
+            <div class="flex mb-0 justify-between">
               <div>
                 <fa-icon (click)="navigateTo('itr')" class="cursor-pointer mx-0 my-0 text-blue-500 mr-2" [icon]="faClipboardUser" size="lg"></fa-icon>
                 <fa-icon (click)="toggleModal('vitals-list')" class="cursor-pointer mx-0 my-0 text-gray-500 mr-2" [icon]="faHeart" [ngClass]="{'text-rose-400' : latest_vitals }" size="lg"></fa-icon>
@@ -49,7 +45,7 @@
               (click)="toggleModal('module')">
               Navigate Programs
             </button>
-            <button (click)="toggleModal('referral-modal')" class="pl-3 pr-2 rounded-md h-10 bg-orange-500 text-white">
+           <button (click)="toggleModal('referral-modal')" class="pl-3 pr-2 rounded-md h-10 bg-orange-500 text-white">
               <fa-icon [icon]="faBuildingCircleArrowRight"></fa-icon>
             </button>
           </div>
@@ -127,7 +123,7 @@
 <app-allergies-modal *ngIf="modals['allergies']" (toggleModal)="toggleModal('allergies')"></app-allergies-modal>
 <app-medication-modal *ngIf="modals['medication']" (toggleModal)="toggleModal('medication')"></app-medication-modal>
 <app-death-modal *ngIf="modals['death']" (toggleModal)="toggleModal('death')"></app-death-modal>
-<app-photo-modal *ngIf="modals['photo']" (toggleModal)="toggleModal('photo')" [patient_info]="patient_info"></app-photo-modal>
+<app-photo-modal *ngIf="modals['photo']" (toggleModal)="toggleModal('photo')" [imageData]="imageData" [patient_info]="patient_info"></app-photo-modal>
 
 <app-set-appointment *ngIf="modals['appointment-modal']" (toggleModal)="toggleModal('appointment-modal')" (loadData)="loadData($event)" [patient_info]="patient_info"></app-set-appointment>
 <app-referral-modal *ngIf="modals['referral-modal']"

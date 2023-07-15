@@ -1,0 +1,59 @@
+<div id="defaultModal" tabindex="-1" class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 w-full md:inset-0 h-modal md:h-full justify-center items-center flex" aria-modal="true" role="dialog" style="z-index:60">
+  <div class="relative p-4 w-full max-w-3xl h-auto md:h-auto">
+    <!-- Modal content -->
+    <div class="relative bg-white rounded-lg shadow">
+      <!-- Modal header -->
+      <div class="flex justify-between items-start py-3 px-5 rounded-t border-b bg-sky-500">
+        <h3 class="text-sm font-bold text-white">
+          File Upload
+        </h3>
+      </div>
+      <!-- Modal body -->
+      <div class="overflow-y-auto h-96 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
+        <div class="grid grid-cols-1 m-5">
+          <div>
+            <label for="file_title">Document title</label>
+            <input type="text" name="file_title" id="file_title" [(ngModel)]="file_title" class="input">
+          </div>
+
+          <div>
+            <label for="file_description">Document description</label>
+            <textarea name="file_description" id="file_description" [(ngModel)]="file_description" class="input">
+            </textarea>
+          </div>
+
+          <div class="flex justify-center mx-auto py-5">
+            <input (change)="onFileChange($event)" accept="application/pdf" class="form-control
+              w-full
+              px-3
+              py-1.5
+              text-base
+              font-normal
+              text-gray-700
+              bg-white bg-clip-padding
+              border border-solid border-gray-300
+              rounded-lg
+              transition
+              ease-in-out
+              m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" type="file" id="file" [(ngModel)]="file">
+          </div>
+
+          <div class="text-red-500" *ngIf="file_error">
+            Invalid File
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="flex justify-end py-4 px-5 space-x-4 rounded-b border-t border-gray-200">
+        <button type="button" class="btn-save bg-gray-400" (click)="closeModal()">Close</button>
+        <button [disabled]="is_uploading" type="submit" class="btn-save px-10 disabled:bg-gray-300" (click)="uploadFile(file_to_upload)" >
+          <fa-icon [icon]="is_uploading ? faCircleNotch : faFileUpload" [spin]="is_uploading"></fa-icon>
+          {{ is_uploading ? 'Uploading' : 'Upload' }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="opacity-50 fixed inset-0 z-50 bg-black"></div>
