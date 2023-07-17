@@ -56,7 +56,7 @@ export class UploadClaimsComponent implements OnInit {
   arr_CR0456 = ['CF2', 'CSF', 'SOA'];
   arr_CR4655 = ['CF2', 'CSF', 'Smear Test for OMP'];
 
-  is_uploading_claim: boolean = false;
+  is_retrieving_xml: boolean = false;
   confirm_upload: boolean = false;
   show_confirm_form: boolean = false;
   confirmUpload() {
@@ -68,8 +68,10 @@ export class UploadClaimsComponent implements OnInit {
     return name[6];
   }
 
-  uploadClaim() {
-    this.is_uploading_claim = true;
+  encryptedXml: any;
+
+  getEncryptedXml() {
+    this.is_retrieving_xml = true;
 
     let params = {
       pHospitalTransmittalNo: this.selected_pHospitalTransmittalNo,
@@ -78,11 +80,17 @@ export class UploadClaimsComponent implements OnInit {
 
     this.http.post('eclaims/eclaims-upload', params).subscribe({
       next:(data:any) => {
+        this.is_retrieving_xml = false;
+        this.confirmUpload();
         console.log(data);
-        // this.
+        // this.encryptedXml = '';
       },
       error: err => console.log(err)
     });
+  }
+
+  uploadClaim(){
+
   }
 
   deleteDocs(data){

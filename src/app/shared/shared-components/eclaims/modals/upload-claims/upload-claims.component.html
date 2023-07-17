@@ -8,7 +8,7 @@
             CLAIM: {{ selected_pHospitalTransmittalNo }}
         </h3>
         <div>
-          <button type="button" [disabled]="is_uploading || !show_form || show_confirm_form" class="disabled:bg-gray-400 bg-white px-3 py-1 text-blue-500 rounded-md" (click)="confirmUpload()">
+          <button type="button" [disabled]="is_uploading || !show_form || show_confirm_form" class="disabled:bg-gray-400 bg-white px-3 py-1 text-blue-500 rounded-md" (click)="getEncryptedXml()">
             <fa-icon [icon]="faUpload" class="pr-2"></fa-icon>
             Upload Claim
           </button>
@@ -16,7 +16,7 @@
       </div>
       <!-- Modal body -->
       <div class="overflow-y-auto h-96 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
-        <div *ngIf="!show_confirm_form" class="grid grid-cols-3 gap-x-4 mx-5 my-2">
+        <div *ngIf="!is_retrieving_xml && !show_confirm_form" class="grid grid-cols-3 gap-x-4 mx-5 my-2">
           <div>
             <select id="suffix_name" name="suffix_name" class="input mt-5" [(ngModel)]="doc_type">
               <option *ngFor="let doc of doc_list" [value]="doc.code">{{ doc.desc }}</option>
@@ -45,7 +45,7 @@
             </button>
           </div>
         </div>
-        <div *ngIf="!show_confirm_form" class="shadow-md sm:rounded-lg m-4">
+        <div *ngIf="!is_retrieving_xml && !show_confirm_form" class="shadow-md sm:rounded-lg m-4">
           <table class="table-fixed w-full text-sm text-left text-gray-500 dark:text-gray-400">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
               <tr>
@@ -85,7 +85,7 @@
           </table>
         </div>
 
-        <div *ngIf="show_confirm_form" class="grid grid-cols-1 m-8 rounded-md border border-rose-500 bg-rose-100 text-rose-700 p-5">
+        <div *ngIf="!is_retrieving_xml && show_confirm_form" class="grid grid-cols-1 m-8 rounded-md border border-rose-500 bg-rose-100 text-rose-700 p-5">
           <div class="flex mb-5">
             Are you sure all requirose documents have been uploaded and want to proceed on uploading this claim?
           </div>
@@ -104,6 +104,15 @@
                 Upload
               </button>
             </div>
+          </div>
+        </div>
+
+        <div *ngIf="is_retrieving_xml" class="grid grid-cols-1 mt-16">
+          <div class="flex justify-center text-blue-500">
+            <fa-icon [icon]="faCircleNotch" spin="true"></fa-icon>
+          </div>
+          <div class="flex justify-center">
+            Retrieving XML...
           </div>
         </div>
       </div>
