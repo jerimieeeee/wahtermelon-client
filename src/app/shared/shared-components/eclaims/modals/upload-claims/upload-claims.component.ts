@@ -57,14 +57,24 @@ export class UploadClaimsComponent implements OnInit {
   arr_CR0456 = ['CF2', 'CSF', 'SOA'];
   arr_CR4655 = ['CF2', 'CSF', 'Smear Test for OMP'];
 
+  is_uploading_claim: boolean = false;
+  confirm_upload: boolean = false;
+  show_confirm_form: boolean = true;
+  confirmUpload() {
+    this.show_confirm_form = !this.show_confirm_form;
+  }
+
   uploadClaim() {
+    this.is_uploading_claim = true;
+
     let params = {
       pHospitalTransmittalNo: this.selected_pHospitalTransmittalNo
     };
 
     this.http.post('eclaims/eclaims-upload', params).subscribe({
       next:(data:any) => {
-        console.log(data)
+        console.log(data);
+        // this.
       },
       error: err => console.log(err)
     });

@@ -1,5 +1,5 @@
 <div id="defaultModal" tabindex="-1" class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 w-full md:inset-0 h-modal md:h-full justify-center items-center flex" aria-modal="true" role="dialog" style="z-index:60">
-  <div class="relative p-4 w-full max-w-7xl h-full md:h-auto">
+  <div class="relative p-4 w-full max-w-4xl h-full md:h-auto">
     <!-- Modal content -->
     <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
       <!-- Modal header -->
@@ -8,7 +8,7 @@
             CLAIM: {{ selected_pHospitalTransmittalNo }}
         </h3>
         <div>
-          <button type="button" [disabled]="is_uploading || !show_form" class="disabled:bg-gray-400 bg-white px-3 py-1 text-blue-500 rounded-md" (click)="uploadClaim()">
+          <button type="button" [disabled]="is_uploading || !show_form" class="disabled:bg-gray-400 bg-white px-3 py-1 text-blue-500 rounded-md" (click)="confirmUpload()">
             <fa-icon [icon]="faUpload" class="pr-2"></fa-icon>
             Upload Claim
           </button>
@@ -16,7 +16,7 @@
       </div>
       <!-- Modal body -->
       <div class="overflow-y-auto h-96 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
-        <div class="grid grid-cols-3 gap-x-4 mx-5 my-2">
+        <div *ngIf="!show_confirm_form" class="grid grid-cols-3 gap-x-4 mx-5 my-2">
           <div class="flex justify-center mx-auto py-5">
             <input (change)="readXML($event.target.files[0])" class="form-control
               w-full
@@ -45,7 +45,7 @@
             </button>
           </div>
         </div>
-        <div class="overflow-x-auto relative shadow-md sm:rounded-lg m-4">
+        <div *ngIf="!show_confirm_form" class="overflow-x-auto relative shadow-md sm:rounded-lg m-4">
           <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
               <tr>
@@ -59,7 +59,7 @@
                   {{ docs.doc_type_code }}
                 </td>
                 <td class="py-4 px-6 text-center">
-                  <fa-icon (click)="deleteDocs(docs)" class="mx-0 my-0 text-red-500 hover:cursor-pointer flex-none mr-2" [icon]="faTrash"></fa-icon>
+                  <fa-icon (click)="deleteDocs(docs)" class="mx-0 my-0 text-rose-500 hover:cursor-pointer flex-none mr-2" [icon]="faTrash"></fa-icon>
                 </td>
               </tr>
             </tbody>
@@ -79,8 +79,22 @@
               </tr>
             </tbody>
           </table>
+        </div>
 
-
+        <div *ngIf="show_confirm_form" class="grid grid-cols-1 m-8 rounded-md border border-rose-500 bg-rose-100 text-rose-700 p-5">
+          <div class="flex justify-center mb-5">
+            Are you sure all requirose documents have been uploaded and want to proceed on uploading this claim?
+          </div>
+          <div class="flex justify-end">
+            <div>
+              <button type="button" class="btn-save bg-gray-300" (click)="confirmUpload()">
+                Cancel
+              </button>
+              <button type="button" class="btn-save bg-rose-500 ml-5" (click)="uploadClaim()">
+                Upload
+              </button>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -88,7 +102,7 @@
       <!-- Modal footer -->
       <div class="flex justify-between py-4 px-5 space-x-4 rounded-b border-t border-gray-200 dark:border-gray-600">
         <div>
-          <strong>Required documents:</strong>
+          <strong>Requirose documents:</strong>
           <span *ngFor="let docs of required_docs; let last = last">
             {{ docs }}<span *ngIf="!last">,</span>
           </span>

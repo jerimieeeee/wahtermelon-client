@@ -8,10 +8,11 @@
           Claim Form 2
         </h3>
         <div>
-          <button class="bg-white text-orange-400 rounded-md px-2 py-1 mr-3" (click)="submitQue()">
+          <button [disabled]="!selected_caserate || que_form" class="bg-white text-orange-400 rounded-md px-2 py-1 mr-3 disabled:opacity-50" (click)="submitQue()">
+            <fa-icon *ngIf="que_form" [icon]="faCircleNotch" spin="true" class="pr-1"></fa-icon>
             Queue
           </button>
-          <button [disabled]="pdf_exported" class="bg-white text-orange-400 rounded-md px-2 py-1" (click)="exportP()">
+          <button [disabled]="!selected_caserate || pdf_exported || que_form" class="bg-white text-orange-400 rounded-md px-2 py-1 disabled:opacity-50" (click)="exportP()">
             <fa-icon [icon]="faFilePdf"></fa-icon>
           </button>
         </div>

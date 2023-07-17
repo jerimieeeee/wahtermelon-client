@@ -102,6 +102,8 @@ export class EclaimsComponent implements OnInit {
     this.selected_pHospitalTransmittalNo = eclaims?.pHospitalTransmittalNo ?? null;
     this.selected_caserate_code = eclaims?.caserate.caserate_code ?? null;
     this.modal[name] = !this.modal[name];
+
+    if(name==='cf2' && !this.modal['cf2']) this.getEclaimsList();
   }
 
   constructor(

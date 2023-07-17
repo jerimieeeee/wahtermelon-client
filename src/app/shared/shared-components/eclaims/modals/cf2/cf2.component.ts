@@ -30,7 +30,7 @@ export class Cf2Component implements OnInit {
 
   pdf_exported: boolean = false;
   show_form: boolean = true;
-
+  que_form: boolean = false;
   caserate_field: any;
   selected_caserate: any;
 
@@ -38,10 +38,12 @@ export class Cf2Component implements OnInit {
 
   date_today = formatDate(new Date(), 'yyyy-MM-dd', 'en');
   submitQue() {
+    this.que_form = true;
     this.http.post('eclaims/eclaims-xml', this.eclaimsForm.value).subscribe({
       next: (data:any) => {
         console.log(data)
         this.toastr.success('Successfully saved', 'Queue Claim');
+        this.que_form = false;
         this.closeModal();
       },
       error: err => console.log(err)
