@@ -131,7 +131,7 @@
 ></app-cf2>
 
 <app-upload-claims *ngIf="modal['upload-claims']"
-  (toggleModal)="toggleModal($event)"
+  (modalToggle)="toggleModal($event)"
   [patient]="patient"
   [program_name]="program_name"
   [selected_pHospitalTransmittalNo]="selected_pHospitalTransmittalNo"
