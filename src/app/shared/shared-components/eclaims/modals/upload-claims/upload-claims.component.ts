@@ -14,7 +14,6 @@ export class UploadClaimsComponent implements OnInit {
   @Input() program_name;
   @Input() patient;
   @Input() caserate_code;
-
   faPenToSquare = faPenToSquare;
   faUpload = faUpload;
   faTrash = faTrash;
@@ -59,16 +58,22 @@ export class UploadClaimsComponent implements OnInit {
 
   is_uploading_claim: boolean = false;
   confirm_upload: boolean = false;
-  show_confirm_form: boolean = true;
+  show_confirm_form: boolean = false;
   confirmUpload() {
     this.show_confirm_form = !this.show_confirm_form;
+  }
+
+  getFileName(value:string): string{
+    let name = value.split('/')
+    return name[6];
   }
 
   uploadClaim() {
     this.is_uploading_claim = true;
 
     let params = {
-      pHospitalTransmittalNo: this.selected_pHospitalTransmittalNo
+      pHospitalTransmittalNo: this.selected_pHospitalTransmittalNo,
+      program_desc: this.program_name
     };
 
     this.http.post('eclaims/eclaims-upload', params).subscribe({
