@@ -8,6 +8,10 @@
       [class]="pages===2? 'tabs-main-true rounded-t-md' : 'tabs-main-false' ">
       TREATMENT
     </button>
+    <button *ngIf="!selected_tb_consult || (selected_tb_consult?.facility_code === user_facility)" (click)="switchPage(3)" class="tabs-main w-36"
+      [class]="pages===3? 'tabs-main-true rounded-t-md' : 'tabs-main-false' ">
+      ECLAIMS
+    </button>
   </nav>
   <div class="ml-auto">
     <button *ngIf="!consult_details?.consult_done && (selected_tb_consult?.facility_code === user_facility)" type="button" class="btn-end-visit ml-auto mt-5" (click)="toggleModal('end_visit')">
@@ -47,10 +51,10 @@
         [class]="module===7? 'tabs-main-true' : 'tabs-main-false' ">
         DRUG DISPENSING
     </button> -->
-    <!-- <button (click)="switchTab(8)" class="tabs-main w-28"
+    <button (click)="switchTab(8)" class="tabs-main w-28"
         [class]="module===8? 'tabs-main-true' : 'tabs-main-false' ">
         CASE RATE
-    </button> -->
+    </button>
   </div>
   <div class="flex flex-row">
     <button type="button" *ngIf="selected_tb_consult && selected_tb_consult.treatment_done === 0" (click)="toggleModal('treatment_outcome')" class="bg-rose-500 px-3 py-2  rounded text-white hover:opacity-75">
@@ -171,3 +175,6 @@
 
 <app-caserate *ngIf="pages === 2 && module === 8"
 ></app-caserate>
+
+<app-eclaims *ngIf="pages === 1"
+></app-eclaims>

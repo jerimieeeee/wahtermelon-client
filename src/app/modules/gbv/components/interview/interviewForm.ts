@@ -35,6 +35,7 @@ export function interviewForm() {
     disclosed_flag : new FormControl<boolean| null>(false),
     disclosed_type : new FormControl<string| null>(''),
     disclosed_relation_id : new FormControl<string| null>(''),
+    other_abuse_acts: new FormControl<string| null>(''),
     initial_disclosure : new FormControl<string| null>(''),
 
     relation_to_child : new FormControl<string| null>(''),
