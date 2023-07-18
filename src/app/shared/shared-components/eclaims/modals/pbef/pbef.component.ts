@@ -47,8 +47,9 @@ export class PbefComponent implements OnInit {
   }
 
   exportP() {
+    let file_name = 'PBEF_'+this.patient.last_name.toUpperCase()+'_'+this.patient.first_name.toUpperCase()+'_'+formatDate(new Date(), 'yyyyMMdd', 'en');
     this.pdf_exported = true;
-    this.exportAsService.save(this.exportAsPdf, 'GBV Medical').subscribe(() => {
+    this.exportAsService.save(this.exportAsPdf, file_name).subscribe(() => {
       this.pdf_exported = false;
     });
   }
@@ -74,10 +75,10 @@ export class PbefComponent implements OnInit {
 
   selectCaserate() {
     this.selected_caserate = this.caserate_field;
-    this.getDate();
+    this.getParams();
   }
 
-  getDate() {
+  getParams() {
     this.show_form = false;
     switch(this.program_name) {
       case 'tb': {
@@ -162,8 +163,9 @@ export class PbefComponent implements OnInit {
 
   ngOnInit(): void {
     if(this.caserate_list.length === 1) {
+      console.log(this.caserate_list)
       this.selected_caserate = this.caserate_list[0];
-      this.getDate();
+      this.getParams();
     }
   }
 }
