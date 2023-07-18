@@ -49,10 +49,7 @@ export class ServicesComponent implements OnInit {
     { id: 7, name: 'Newborn Screening Referred', cc_id: 'NBSREF', date: 'Mar 15 2012 10:00:00 AM', ischecked: false, service_date: '', done_outside: ''},
     { id: 8, name: 'Received Micronutrient Powder', cc_id: 'MNP', date: 'Mar 09 2012 10:00:00 AM', ischecked: false, service_date: '', done_outside: ''},
     { id: 9, name: 'Vitamin A', cc_id: 'VITA', date: 'Mar 13 2012 10:00:00 AM', ischecked: false, service_date: '', done_outside: ''},
-
   ];
-
-
 
  eservices2= [
     { id: 1, name: 'Cord Clamping', cc_id: 'CLAMP', ischecked: false, service_date: ''},
@@ -72,16 +69,15 @@ export class ServicesComponent implements OnInit {
     {value: 'W', id: '2', desc:'lactation and milk-pumping problems'},
     {value: 'W', id: '2', desc:'mother returns to work'},
     {value: 'W', id: '2', desc:'introduced water or solid food'},
-    ];
+  ];
 
-    libOptions = [
-      {value: 'YPR', id: '1', desc:'Yes - Private'},
-      {value: 'YPB', id: '2', desc:'Yes - Public'},
-      {value: 'N', id: '3', desc:'No'},
+  libOptions = [
+    {value: 'YPR', id: '1', desc:'Yes - Private'},
+    {value: 'YPB', id: '2', desc:'Yes - Public'},
+    {value: 'N', id: '3', desc:'No'},
+  ];
 
-      ];
-
- showEssentialModal = false;
+  showEssentialModal = false;
 
   ccservicename: any;
   lib_ccservices: any;
@@ -332,29 +328,23 @@ export class ServicesComponent implements OnInit {
   //   })
 
   // }
-  onChange(){
+  /* onChange(){
     console.log(this.serviceForm.service_status, 'ng model check')
     console.log(this.serviceForm.service_date, 'ng model check')
     console.log(this.serviceForm.quantity, 'ng model check')
-  }
+  } */
 
   submitNBS(){
-
-
-    console.log(this.patient_info);
-
-    var nbsfilter ={
+    let params = {
       nbs_filter: this.patient_info ? this.patient_info.nbs_filter : null,
     }
 
-    console.log(nbsfilter);
-
-    this.http.update('child-care/cc-records/', this.patient_info.id, nbsfilter).subscribe({
+    this.http.update('child-care/cc-records/', this.patient_info.id, params).subscribe({
       // next: (data: any) => console.log(data.status, 'check status'),
       error: err => console.log(err),
       complete: () => {
         // this.loadLibraries();
-        console.log(nbsfilter,'nbs filter data saved')
+        // console.log(params,'nbs filter data saved')
         this.is_saving = false;
       }
     })
@@ -399,23 +389,23 @@ export class ServicesComponent implements OnInit {
           // this.toggleAlertModal('E')
           if (serv_form.essential == 'Y') {
             this.showToastrErrY()
-
           } else {
             this.showToastrErrN()
-    }},
+          }
+        },
         complete: () => {
-              // this.toggleAlertModal('S')
-              if (serv_form.essential == 'Y') {
-                this.showToastrY()
-
-              } else {
-                this.showToastrN()
-        }}
+            // this.toggleAlertModal('S')
+          if (serv_form.essential == 'Y') {
+            this.showToastrY()
+          } else {
+            this.showToastrN()
+          }
+        }
       })
     }
   }
 
-  checkServiceStatus(services){
+  /* checkServiceStatus(services){
     var new_serv = [];
     Object.entries(services).reverse().forEach(([key, value], index) => {
       var val:any = value
@@ -433,9 +423,9 @@ export class ServicesComponent implements OnInit {
 
     this.services_given = new_serv;
     this.addDose(new_serv)
-  }
+  } */
 
-  getNumberSuffix(i){
+  /* getNumberSuffix(i){
     var j = i % 10,
     k = i % 100;
     if (j == 1 && k != 11) {
@@ -448,18 +438,18 @@ export class ServicesComponent implements OnInit {
         return i + "rd";
     }
     return i + "th";
-  }
+  } */
 
-  addDose(new_serv){
+  /* addDose(new_serv){
     Object.entries(this.service_list).forEach(([key, value], index) => {
       var val:any = value;
 
       this.service_list[key]['dose'] = new_serv[val.services.service_id][val.id].dose;
     });
-  }
+  } */
 
-  findEssential(service_list: any[]): any[] {
-    return service_list.filter(e => e.services.essential == 'Y');
+  findEssential(service_list: any[], is_essential: string): any[] {
+    return service_list.filter(e => e.services.essential === is_essential);
   }
 
   findServices(service_list: any[]): any[] {

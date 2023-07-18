@@ -1,62 +1,71 @@
+<div class="flex">
+  <nav class="mt-4 flex flex-row border-b border-slate-300 text-xs">
+    <button (click)="switchPage(1)" class="tabs-main w-36"
+      [class]="pages===1? 'tabs-main-true rounded-t-md' : 'tabs-main-false' ">
+      VISIT
+    </button>
+    <button (click)="switchPage(2)" class="tabs-main w-36"
+      [class]="pages===2? 'tabs-main-true rounded-t-md' : 'tabs-main-false' ">
+      ECLAIMS
+    </button>
+  </nav>
+  <div class="ml-auto">
+    <button type="button" class="btn-end-visit ml-auto mt-5" (click)="toggleModal('end_visit')">
+      <fa-icon class="mr-1" [icon]="faDoorClosed"></fa-icon>
+      End Visit
+    </button>
+  </div>
+</div>
+
+<nav *ngIf="pages===1" class="mt-2 flex justify-between border-b border-slate-300 text-xs">
+  <div class="flex flex-row">
+    <button (click)="switchTab(1)" class="tabs-main w-28"
+        [class]="module===1? 'tabs-main-true' : 'tabs-main-false' ">
+        DETAILS
+    </button>
+    <button (click)="switchTab(2)" class="tabs-main w-28"
+        [class]="module===2? 'tabs-main-true' : 'tabs-main-false' ">
+        CASE RATE
+    </button>
+  </div>
+</nav>
+
+<div class="my-5 p-5 w-full border border-gray-200 shadow-md rounded-xl" *ngIf="pages === 1 && module === 1">
+  <app-first-visit *ngIf="patient_details"
+    [ccdev_data]="ccdev_data"
+    (checkCCdevDetails)="checkCCdevDetails($event)"
+  ></app-first-visit>
+  <!-- <app-services *ngIf="patient_details" [patient_details]="patient_details"></app-services> -->
+  <!-- <app-breastfeeding *ngIf="patient_details" [patient_details]="patient_details"></app-breastfeeding> -->
+</div>
 <!-- <div class="body-up flex w-full mt-4 mb-4"> -->
 
-  <div class="flex-wrap w-full h-full rounded-xl text-gray-600 border border-slate-100 px-4 py-4 ml-5 mr-1" *ngIf="module==1">
+  <!-- <div class="flex-wrap w-full h-full rounded-xl text-gray-600 border border-slate-100 px-4 py-4 ml-5 mr-1" *ngIf="module===1">
 
     <nav class="flex w-full flex-col sm:flex-row text-sm">
       <button (click)="switchTab(1)" class="text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 mr-6 pb-2"
-      [class]="module==1? 'text-blue-500 border-b-2 border-blue-500 font-bold' : 'hover:-translate-y-1 hover:scale-110 transition ease-in-out delay-400 duration-300' ">
+      [class]="module===1? 'text-blue-500 border-b-2 border-blue-500 font-bold' : 'hover:-translate-y-1 hover:scale-110 transition ease-in-out delay-400 duration-300' ">
          NEW VISIT
       </button>
-      <!-- <button (click)="switchTab(2)" class="transition ease-in-out delay-400 hover:-translate-y-1 hover:scale-110 duration-300 text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 focus:text-blue-500 focus:border-b-2 focus:border-blue-500 focus:font-bold mr-6 pb-2">
-          E-CLAIMS
-      </button>
-      <button (click)="switchTab(3)" class="transition ease-in-out delay-400 hover:-translate-y-1 hover:scale-110 duration-300 text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 focus:text-blue-500 focus:border-b-2 focus:border-blue-500 focus:font-bold mr-6 pb-2">
-          VISIT HISTORY
-      </button> -->
 
       <button type="button" class="btn-end-visit ml-auto" (click)="toggleModal()">
         <fa-icon class="mr-1" [icon]="faDoorClosed"></fa-icon>
         End Visit
       </button>
-
-  </nav>
-
-
-
-      <!--FIRST VISIT SECTION-->
+    </nav>
 
     <div class="grid grid-col-8">
       <app-first-visit *ngIf="patient_details" [patient_details]="patient_details" (checkCCdevDetails)="checkCCdevDetails($event)"></app-first-visit>
     </div>
 
-    <!--border-->
-    <!-- <div class="border-b-2"></div> -->
-
-    <!--SERVICES SECTION-->
-
     <div class="grid grid-col-8" *ngIf="show_forms">
       <app-services *ngIf="patient_details" [patient_details]="patient_details"></app-services>
     </div>
 
-    <!--border-->
-    <!-- <div class="border-b-2"></div> -->
-
-    <!--VACCINNE SECTION-->
-
-    <!-- <div class="grid grid-col-8">
-      <app-vaccine-info></app-vaccine-info>
-    </div> -->
-
-    <!--border-->
-    <!-- <div class="border-b-2 py-4"></div> -->
-
-    <!--BREASTFEEDING SECTION-->
-
     <div class="grid grid-col-8" *ngIf="show_forms">
       <app-breastfeeding *ngIf="patient_details" [patient_details]="patient_details"></app-breastfeeding>
     </div>
-
-  </div>
+  </div> -->
 
 
   <!-- <div class="w-3/12">
@@ -65,5 +74,24 @@
 
 <!-- </div> -->
 
-<app-end-visit *ngIf="show_end" (toggleModal)="toggleModal()" [consult_id]="consult_id" [consult_date]="consult_details[0]?.consult_date" [patient_id]="consult_details[0]?.patient.id" [pt_group]="consult_details[0]?.pt_group"></app-end-visit>
+<app-end-visit *ngIf="modals['end-visit']"
+  (toggleModal)="toggleModal()"
+  [consult_id]="consult_id"
+  [consult_date]="consult_details[0]?.consult_date"
+  [patient_id]="consult_details[0]?.patient.id"
+  [pt_group]="consult_details[0]?.pt_group"
+></app-end-visit>
 
+<!-- <app-caserate *ngIf="pages ==== 1 && module ==== 1"
+  [patient_id]="selected_tb_consult.patient_id"
+  [program_id]="selected_tb_consult.id"
+  [program_name]="'tb'"
+  [max_date]="max_date"
+></app-caserate>
+
+<app-eclaims *ngIf="pages ==== 2"
+  [program_id]="selected_tb_consult.id"
+  [program_name]="'tb'"
+  [max_date]="max_date"
+  [selected_case]="selected_tb_consult"
+></app-eclaims> -->

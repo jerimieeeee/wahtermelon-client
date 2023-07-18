@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { faSearch, faPlus, faCalendar, faInfoCircle, faCircleNotch, faFloppyDisk,} from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faPlus, faCalendar, faInfoCircle, faCircleNotch, faFloppyDisk, faSpinner,} from '@fortawesome/free-solid-svg-icons';
 import { faSave, faPenToSquare, faPlusSquare } from '@fortawesome/free-regular-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { catchError, debounceTime, distinctUntilChanged, switchMap, tap, map, filter } from 'rxjs/operators';
@@ -20,13 +20,10 @@ import { ToastrService } from 'ngx-toastr';
 
 export class FirstVisitComponent implements OnInit {
   @Output() checkCCdevDetails = new EventEmitter<any>();
-  faSearch = faSearch;
-  faPlus = faPlus;
-  faCalendar = faCalendar;
-  faInfoCircle = faInfoCircle;
-  faSpinner = faCircleNotch;
-  faFloppyDisk = faFloppyDisk;
+  @Input() ccdev_data;
+
   faSave = faSave;
+  faSpinner = faSpinner;
 
   patients$: Observable<any>;
   patientLoading = false;
@@ -66,7 +63,6 @@ export class FirstVisitComponent implements OnInit {
     nbs_filter: new FormControl<string| null>(''),
   });
 
-  @Input() patient_details: any;
   patient_listing: any;
   hideName: boolean;
 
@@ -151,7 +147,7 @@ export class FirstVisitComponent implements OnInit {
       discharge_date: ['', [Validators.required]],
       birth_weight: ['', [Validators.required, Validators.minLength(1)]],
       mothers_id: ['', [Validators.required, Validators.minLength(2)]],
-      patient_id: [this.patient_details.id, [Validators.required, Validators.minLength(2)]],
+      patient_id: [this.ccdev_data.patient_id, [Validators.required, Validators.minLength(2)]],
       user_id: [user_id, [Validators.required, Validators.minLength(2)]],
       ccdev_ended: ['0', [Validators.required, Validators.minLength(2)]],
       nbs_filter: ['', [Validators.required, Validators.minLength(2)]],
@@ -195,13 +191,11 @@ export class FirstVisitComponent implements OnInit {
 
   getccdevDetails() {
     let params = {
-      patient_id: this.patient_details.id
+      patient_id: this.ccdev_data.patient_id
     }
 
-    this.http.get('child-care/cc-records',{params})
-    .subscribe({
+    this.http.get('child-care/cc-records',{params}).subscribe({
       next: (data: any) => {
-
         if(data.data.length > 0) {
           this.patient_info = data.data[0];
           console.log(this.patient_info, 'info ccdev first visit')
@@ -291,7 +285,5 @@ export class FirstVisitComponent implements OnInit {
     this.saved = true;
     this.loadPatients();
     this.getccdevDetails();
-
   }
-
 }

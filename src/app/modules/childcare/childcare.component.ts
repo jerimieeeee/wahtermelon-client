@@ -14,8 +14,6 @@ export class ChildcareComponent implements OnInit {
 
   faDoorClosed = faDoorClosed;
 
-  module: Number;
-
   patient_details: any;
 
   consult_details: any;
@@ -25,55 +23,53 @@ export class ChildcareComponent implements OnInit {
   consult_id: any
 
   show_end: boolean = false;
-
+  pages: number = 1;
+  module: number = 1;
+  modals: any =[];
 
   // Section 2
-  constructor(private http: HttpService,
-  private router: Router,
-  private route: ActivatedRoute) { }
+  constructor(
+    private http: HttpService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) { }
 
-  /* patientInfo(info){
-   this.patient_details = info;
-   this.loadConsultDetails()
-    console.log(this.patient_details, 'get patient from ccdev');
-  } */
+  switchPage(page) {
+    this.pages = page;
+  }
 
+  toggleModal(name){
+    this.modals[name] = !this.modals[name];
+  }
 
-  // endVisit(){
-  //   let endbutton = {
-  //     consult_done: 1,
-  //     patient_id : this.consult_details[0].patient.id,
-  //     user_id : this.consult_details[0].user.id,
-  //     consult_date : this.consult_details[0].consult_date,
-  //     pt_group : this.consult_details[0].pt_group,
-  //     // physician_id : this.consult_details[0].physician.id,
-  //     // is_pregnant: this.consult_details[0].is_pregnant
-  //   }
-  //     this.http.update('consultation/records/',this.consult_id, endbutton).subscribe({
-  //       // next: (data: any) => console.log(data.status, 'check status'),
-  //       error: err => console.log(err),
-  //       complete: () => {
-  //       //  console.log('end visited kang bata ka')
-  //        this.proceedItr()
-  //       }
-  //     })
-  //     console.log(endbutton)
-  //   }
-
-    toggleModal(){
-      this.show_end = !this.show_end;
-    }
-
-  // proceedItr(){
-  //   this.router.navigate(['/patient/itr', {id: this.patient_details.id}])
-  // }
+  switchTab(tab){
+    this.module = tab;
+  }
 
   loadConsultDetails(){
-      this.http.get('consultation/records',{params: {patient_id: this.patient_details.id, id: this.consult_id}}).subscribe((data: any) => {
-        this.consult_details = data.data
-        console.log(this.consult_details, 'kunin mo consult');
-      });
+    this.http.get('consultation/records',{params: {patient_id: this.patient_details.id, id: this.consult_id}}).subscribe({
+      next: (data: any) => {
+        this.consult_details = data.data;
+        this.loadCcDetails();
+      },
+      error: err => console.log(err)
+    });
+  }
+
+  ccdev_data: any;
+
+  loadCcDetails(){
+    let params = {
+      patient_id: this.patient_details.id
     }
+    this.http.get('child-care/cc-records', {params}).subscribe({
+      next: (data:any) => {
+        console.log(data)
+        this.ccdev_data = data.data[0];
+      },
+      error: err => console.log(err)
+    })
+  }
 
   show_forms: boolean;
   checkCCdevDetails(e){
@@ -93,12 +89,5 @@ export class ChildcareComponent implements OnInit {
 
     this.loadConsultDetails()
     console.log(this.consult_id, 'test consult ids')
-  }
-
-
-
-  switchTab(tab){
-    this.module = 0;
-    this.module = tab;
   }
 }
