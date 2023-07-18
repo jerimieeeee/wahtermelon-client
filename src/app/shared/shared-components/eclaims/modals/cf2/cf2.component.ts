@@ -180,7 +180,7 @@ export class Cf2Component implements OnInit {
 
   exportP() {
     this.pdf_exported = true;
-    this.exportAsService.save(this.exportAsPdf, 'GBV Medical').subscribe(() => {
+    this.exportAsService.save(this.exportAsPdf, formatDate(new Date(), 'yyyyMMHHss', 'en')+'CF2').subscribe(() => {
       this.pdf_exported = false;
     });
   }
