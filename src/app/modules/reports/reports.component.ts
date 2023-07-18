@@ -36,7 +36,7 @@ export class ReportsComponent implements OnInit {
   ]
 
   gbv_stats = [
-    { id: 'catalyst-report', desc: 'Catalyst Report', url: 'reports-2018/gbv-stats/catalyst-report'},
+    { id: 'catalyst-report', desc: 'Catalyst Report', url: 'gbv-report/catalyst-report'},
   ]
 
   months = [
@@ -90,7 +90,7 @@ export class ReportsComponent implements OnInit {
     },
   ];
 
-  fhsis_monthly_arr = ['fhsis2018-cc', 'fhsis2018-mc', 'patient-registered', 'catalyst-report']
+  fhsis_monthly_arr = ['fhsis2018-cc', 'fhsis2018-mc', 'patient-registered']
   report_params: any;
   years: any = [];
   selectedBrgy: [];
@@ -105,7 +105,10 @@ export class ReportsComponent implements OnInit {
 
     let params = {
       month: this.reportForm.value.month,
-      year: this.reportForm.value.year
+      year: this.reportForm.value.year,
+      start_date: this.reportForm.value.start_date,
+      end_date: this.reportForm.value.end_date
+      
     }
 
     if (this.reportForm.value.report_class === 'muncity') {
@@ -125,7 +128,7 @@ export class ReportsComponent implements OnInit {
         this.is_fetching = false;
 
         console.log(this.report_data, 'report_data');
-
+        console.log(this.selectedBrgy, 'report_data');
       },
       error: err => console.log(err)
     });
