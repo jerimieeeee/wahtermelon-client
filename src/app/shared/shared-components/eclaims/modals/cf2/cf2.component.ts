@@ -179,8 +179,9 @@ export class Cf2Component implements OnInit {
   }
 
   exportP() {
+    let file_name = 'CF2_'+this.patient.last_name.toUpperCase()+'_'+this.patient.first_name.toUpperCase()+'_'+formatDate(new Date(), 'yyyyMMdd', 'en');
     this.pdf_exported = true;
-    this.exportAsService.save(this.exportAsPdf, formatDate(new Date(), 'yyyyMMHHss', 'en')+'CF2').subscribe(() => {
+    this.exportAsService.save(this.exportAsPdf, file_name).subscribe(() => {
       this.pdf_exported = false;
     });
   }
