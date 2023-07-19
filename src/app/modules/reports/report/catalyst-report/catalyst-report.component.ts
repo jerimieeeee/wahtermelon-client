@@ -1,4 +1,6 @@
 import { Component, Input, OnChanges } from '@angular/core';
+import { faFilePdf, faFileExcel } from '@fortawesome/free-solid-svg-icons';
+import { ExportAsConfig, ExportAsService } from 'ngx-export-as';
 
 @Component({
   selector: 'app-catalyst-report',
@@ -8,62 +10,88 @@ import { Component, Input, OnChanges } from '@angular/core';
 export class CatalystReportComponent implements OnChanges {
   @Input() report_data;
 
+  faFilePdf = faFilePdf;
+
+  faFileExcel = faFileExcel;
+
   stats : any;
 
   entries: any;
 
   barangay_list: any;
 
-  indicators = [
-    {id: 0,   desc: 'Sexual'},
-    {id: 1,   desc: 'Physical'},
-    {id: 2,   desc: 'Neglect'},
-    {id: 3,   desc: 'Emotional'},
-    {id: 4,   desc: 'Economic'},
-    {id: 5,   desc: 'Unable to Validate'},
-    {id: 6,   desc: 'Multiple Abuse'},
-    {id: 7,   desc: 'Others'},
-  ];
+  pdf_exported: boolean = false;
 
-  x = 
-    {
-      'sexual_abuse': [
-        'male_age_0_to_5',
-        'female_age_0_to_5',
+  // x = 
+  //   {
+  //     'sexual_abuse': [
+  //       'male_age_0_to_5',
+  //       'female_age_0_to_5',
 
-        'male_age_6_to_11',
-        'female_age_6_to_11',        
-      ],
+  //       'male_age_6_to_11',
+  //       'female_age_6_to_11',        
+  //     ],
 
-      'economic_abuse': [
-        'male_age_0_to_5',
-        'female_age_0_to_5',
+  //     'economic_abuse': [
+  //       'male_age_0_to_5',
+  //       'female_age_0_to_5',
 
-        'male_age_6_to_11',
-        'female_age_6_to_11',        
-]
+  //       'male_age_6_to_11',
+  //       'female_age_6_to_11',        
+  //     ]
   
-    }
-  
-
-  barangays = [
-    {id: 1,   desc: 'Barangay 1'},
-    {id: 2,   desc: 'Barangay 2'},
-    {id: 3,   desc: 'Barangay 3'},
-    {id: 4,   desc: 'Barangay 4'},
-    {id: 5,   desc: 'Barangay 5'},
-    {id: 6,   desc: 'Barangay 6'},
-    {id: 7,   desc: 'Barangay 7'},
-    {id: 8,   desc: 'Barangay 8'},
-    
-  ];
+  //   }
 
   getReport(){
-    const entries = Object.entries(this.stats.sexual_abuse.female_age_0_to_5);
+    const entries = Object.entries(this.stats['Sexual Abuse'].female_age_0_to_5);
     this.barangay_list = entries
     console.log(entries);
   }
- 
+
+  exportAsExcel: ExportAsConfig = {
+    type: 'xlsx',
+    elementIdOrContent: 'catalystForm',
+    options: {
+      
+    }
+  }
+
+  exportAsPdf: ExportAsConfig = {
+    type: 'pdf',
+    elementIdOrContent: 'catalystForm',
+    options: {
+      image: { type: 'jpeg', quality: 1 },
+      html2canvas:  { scale: 3},
+      margin:  [1, 1, 1, 1],
+      pagebreak: { mode: ['avoid-all', 'css', 'legacy']},
+      jsPDF: {
+        orientation: 'landscape',
+        format: 'a4',
+        precision: 16
+      }
+    }
+  }
+
+  exportP() {
+    this.pdf_exported = true;
+    this.exportAsService.save(this.exportAsPdf, 'GBV Medical').subscribe(() => {
+      // save started
+    });
+  }
+
+  exportX() {
+    this.exportAsService.save(this.exportAsExcel, 'Childcare M1').subscribe(() => {
+      // save started
+    });
+  }
+
+  returnZero() {
+    return 0
+    }
+  
+  constructor(
+      private exportAsService: ExportAsService
+  ) { }
 
   ngOnChanges(): void {
     this.stats = this.report_data;
