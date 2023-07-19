@@ -69,6 +69,8 @@ export class ReferralComponent implements OnInit {
 
   ngOnInit(): void {
       // this.getReferrals();
+      // console.log(this.selected_gbv_case)
+      // console.log(this.selected_gbv_case.gbvReferral)
       this.referrals = this.selected_gbv_case.gbvReferral;
   }
 }
