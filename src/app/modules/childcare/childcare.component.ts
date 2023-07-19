@@ -23,6 +23,8 @@ export class ChildcareComponent implements OnInit {
   consult_id: any
 
   show_end: boolean = false;
+  show_form: boolean = false;
+
   pages: number = 1;
   module: number = 1;
   modals: any =[];
@@ -47,6 +49,7 @@ export class ChildcareComponent implements OnInit {
   }
 
   loadConsultDetails(){
+    this.show_form = false;
     this.http.get('consultation/records',{params: {patient_id: this.patient_details.id, id: this.consult_id}}).subscribe({
       next: (data: any) => {
         this.consult_details = data.data;
@@ -65,6 +68,7 @@ export class ChildcareComponent implements OnInit {
     this.http.get('child-care/cc-records', {params}).subscribe({
       next: (data:any) => {
         console.log(data)
+        this.show_form = true;
         this.ccdev_data = data.data[0];
       },
       error: err => console.log(err)

@@ -38,7 +38,7 @@ export class EclaimsComponent implements OnInit {
 
     let params = {
       patient_id: this.patient.id,
-      program_code: this.program_name
+      program_desc: this.program_name
     };
 
     this.http.get('eclaims/eclaims-upload', {params}).subscribe({
@@ -64,7 +64,7 @@ export class EclaimsComponent implements OnInit {
   getCaserate(eclaims_id_arr?) {
     console.log(eclaims_id_arr)
     let params = {
-      program_code: this.program_id,
+      program_id: this.program_id,
       program_desc: this.program_name
     };
 
@@ -86,12 +86,14 @@ export class EclaimsComponent implements OnInit {
   }
 
   getCreds(){
+    // let params = { 'filter[program_code]': this.program_name };
     let params = { 'filter[program_code]': this.program_name };
-
     this.http.get('settings/philhealth-credentials', {params}).subscribe({
       next:(data:any) => {
         console.log(data)
-        this.program_creds = data.data[0];
+        if(data.data[0]) {
+          this.program_creds = data.data[0];
+        }
         this.getEclaimsList();
       },
       error: err => console.log(err)

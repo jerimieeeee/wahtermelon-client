@@ -33,6 +33,7 @@ export class Cf2Component implements OnInit {
   que_form: boolean = false;
   caserate_field: any;
   selected_caserate: any;
+  facility: any;
 
   eclaimsForm:FormGroup=eclaimsForm();
 
@@ -95,7 +96,7 @@ export class Cf2Component implements OnInit {
 
   getCreds(){
     let params = {
-      'filter[program_code]': this.program_name
+      'filter[program_code]': this.program_name !== 'cc' ? this.program_name : 'mc'
     }
 
     this.http.get('settings/philhealth-credentials').subscribe({
@@ -108,11 +109,55 @@ export class Cf2Component implements OnInit {
     })
   }
 
-  paramsCc() {
+  paramsCc(vaccine) {
+    console.log(vaccine);
     this.f.pEssentialNewbornCare.setValidators([Validators.required]);
     this.f.pNewbornHearingScreeningTest.setValidators([Validators.required]);
     this.f.pNewbornScreeningTest.setValidators([Validators.required]);
     this.f.pFilterCardNo.setValidators([Validators.required]);
+
+    let hearing_done: string = 'N';
+    let service_count: number = 0;
+    let bcg_vaccine: boolean = false;
+    if(this.selected_case.consultccdevservices){
+      Object.entries(this.selected_case.consultccdevservices).forEach(([key,value]:any, index) => {
+        if(value.service_id === 'HEAR') {
+          hearing_done = 'Y';
+        } else {
+          service_count += 1;
+        }
+      });
+
+      console.log(service_count);
+    }
+
+    if(vaccine){
+      Object.entries(vaccine).forEach(([key,value]:any, index) => {
+        if(value.vaccine_id === 'HEPB') {
+          bcg_vaccine = true;
+          return 1;
+        }
+      });
+    }
+
+    this.eclaimsForm.patchValue({
+      attendant_sign_date: formatDate(this.selected_case.admission_date, 'yyyy-MM-dd', 'en'),
+      admission_date: formatDate(this.selected_case.admission_date, 'yyyy-MM-dd', 'en'),
+      admission_time: formatDate(this.selected_case.admission_date, 'HH:mm a', 'en'),
+      discharge_date: formatDate(this.selected_case.discharge_date, 'yyyy-MM-dd', 'en'),
+      discharge_time: formatDate(this.selected_case.discharge_date, 'HH:mm a', 'en'),
+      pNewbornHearingScreeningTest: hearing_done,
+      pNewbornScreeningTest: this.selected_case.nbs_filter ? 'Y' : 'N',
+      pFilterCardNo: this.selected_case.nbs_filter,
+      pEssentialNewbornCare: hearing_done === 'Y' && bcg_vaccine ? 'Y' : 'N'
+    });
+
+    console.log(this.eclaimsForm.value);
+    this.getCreds();
+  }
+
+  getVaccine(): string{
+    return 'Y'
   }
 
   paramsAb() {
@@ -151,7 +196,13 @@ export class Cf2Component implements OnInit {
         break;
       }
       case 'cc': {
-        this.paramsCc();
+        let params = { patient_id: this.selected_case.patient_id };
+
+        this.http.get('patient-vaccines/vaccines-records', {params}).subscribe({
+          next: (data:any) => {
+            this.paramsCc(data.data);
+          }
+        });
         break;
       }
     }
@@ -187,6 +238,7 @@ export class Cf2Component implements OnInit {
   }
 
   createForm(){
+    this.show_form = false;
     this.eclaimsForm = this.formBuilder.group({
       patient_id: [null, Validators.required],
       facility_code: [this.facility.code, Validators.required],
@@ -256,10 +308,9 @@ export class Cf2Component implements OnInit {
     private formBuilder: FormBuilder
   ) { }
 
-  facility: any;
   ngOnInit(): void {
     this.facility = this.http.getUserFromJSON().facility;
-    console.log(this.facility)
+    console.log(this.program_name, this.selected_case)
     if(this.caserate_list.length === 1) {
       this.selected_caserate = this.caserate_list[0];
       this.createForm();

@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 import { faEdit, faSave } from '@fortawesome/free-regular-svg-icons';
@@ -9,11 +9,12 @@ import * as angularFontawesome from '@fortawesome/angular-fontawesome';
 import { SearchCaserateComponent } from './modals/search-caserate/search-caserate.component';
 import { catchError, concat, debounceTime, distinctUntilChanged, filter, map, Observable, of, Subject, switchMap, tap } from 'rxjs';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { cc_caserate, tb_caserate } from './caserateLib';
 
 @Component({
   selector: 'app-caserate',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, angularFontawesome.FontAwesomeModule, SearchCaserateComponent, NgSelectModule],
+  imports: [CommonModule, ReactiveFormsModule, angularFontawesome.FontAwesomeModule, SearchCaserateComponent, NgSelectModule, FormsModule],
   templateUrl: './caserate.component.html',
   styleUrls: ['./caserate.component.scss']
 })
@@ -51,6 +52,13 @@ export class CaserateComponent implements OnInit {
     caserate_attendant: new FormControl<string|null>(null),
   });
 
+  selectPreloadedCaserate(){
+    console.log(this.loaded_caserate);
+    this.caserateForm.patchValue({
+      ...this.loaded_caserate
+    });
+  }
+
   selectCaserate(i) {
     this.patchData(this.caserate_list[i]);
   }
@@ -66,7 +74,7 @@ export class CaserateComponent implements OnInit {
       },
       error: err => {console.log(err); this.is_saving = false;}
     })
-  }6
+  }
 
   caserate_list: any;
 
@@ -214,8 +222,22 @@ export class CaserateComponent implements OnInit {
     private formBuilder: FormBuilder
   ) { }
 
+  preloaded_caserate: any;
+  tb_caserate = tb_caserate;
+  cc_caserate = cc_caserate;
+  loaded_caserate: any;
+
   ngOnInit(): void {
     this.loadLibraries();
     this.loadSelected();
+
+    switch(this.program_name){
+      case 'tb':
+        this.preloaded_caserate = this.tb_caserate;
+        break;
+      case 'cc':
+        this.preloaded_caserate = this.cc_caserate;
+        break;
+    }
   }
 }

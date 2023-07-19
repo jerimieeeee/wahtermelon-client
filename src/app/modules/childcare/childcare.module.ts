@@ -13,6 +13,8 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { EndVisitComponent } from 'app/shared/shared-modals/end-visit/end-visit.component';
+import { SharedComponentsModule } from 'app/shared/shared-components/shared-components.module';
+import { CaserateComponent } from 'app/shared/shared-components/eclaims/components/caserate/caserate.component';
 
 
 
@@ -32,7 +34,9 @@ import { EndVisitComponent } from 'app/shared/shared-modals/end-visit/end-visit.
     HttpClientModule,
     NgSelectModule,
     FormsModule,
-    EndVisitComponent
+    EndVisitComponent,
+    CaserateComponent,
+    SharedComponentsModule
   ]
 })
 export class ChildcareModule { }

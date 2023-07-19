@@ -46,14 +46,22 @@ export class SearchCaserateComponent {
   onSubmit() {
     this.caserate_result = [];
     this.is_searching = true;
-    this.searchForm.patchValue({program_code: this.program_name});
+    this.searchForm.patchValue({program_code: this.program_name !== 'cc' ? this.program_name : 'mc'});
     this.http.post('eclaims/case-rate', this.searchForm.value).subscribe({
       next: (data:any) => {
         this.is_searching = false;
         this.caserate_result.push(data.CASERATES);
         console.log(typeof this.caserate_result, this.caserate_result)
       },
-      error: err => console.log(err)
+      error: err => {
+        console.log(err)
+        this.is_searching = false;
+        this.toastr.error(err.error.message, 'Caserate error', {
+          closeButton: true,
+          positionClass: 'toast-top-center',
+          disableTimeOut: true
+        });
+      }
     })
   }
 

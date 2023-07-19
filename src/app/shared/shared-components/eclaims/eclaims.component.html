@@ -2,23 +2,20 @@
   <div class="mb-16 w-full">
     <div class="block shadow p-4 mt-4 rounded-xl text-gray-600">
       <span class="text-sky-500 font-bold flex justify-between py-2">
-        <span class="flex">
-          <!-- <button class="font-normal text-sky-500 px-2 py-1 text-sm  mr-2" type="button" (click)="toggleAll()">
-            <fa-icon [icon]="toggle_content ? faChevronUp : faChevronDown" size="lg"></fa-icon>
-          </button> -->
-          <span class="mt-2"> <span class="text-gray-500 text-sm"><!-- ({{ consult_details?.consult_date | date: 'MM/dd/yyyy hh:mm:ss a' }} | ID:{{ consult_details?.id }}) --></span></span>
+        <span class="flex rounded-md border border-yellow-500 bg-yellow-100 text-yellow-700 text-sm font-normal p-3">
+          There are no credential for the selected program
         </span>
         <div class="text-sm font-normal">
           <!-- <button type="button" class="w-32 px-3 py-2 rounded-md bg-blue-500 text-sm text-white ml-auto mr-3" (click)="toggleModal('check_claims')">
             Check claims
           </button> -->
-          <button [disabled]="caserate_list?.length===0" type="button" class="w-32 px-3 py-2 rounded-md bg-blue-500 text-sm text-white ml-auto mr-1" (click)="toggleModal('pbef')">
+          <button [disabled]="!program_creds || caserate_list?.length===0" type="button" class="w-32 px-3 py-2 rounded-md bg-blue-500 text-sm text-white ml-auto mr-1 disabled:bg-gray-400" (click)="toggleModal('pbef')">
             PBEF
           </button>
           <!-- <button *ngIf="caserate_list" type="button" class="w-32 px-3 py-2 rounded-md bg-blue-500 text-sm text-white ml-auto  mr-1" (click)="toggleModal('cf1')">
             CF1
           </button> -->
-          <button [disabled]="caserate_list?.length===0" type="button" class="w-32 px-3 py-2 rounded-md bg-blue-500 text-sm text-white ml-auto mr-1 disabled:bg-gray-400" (click)="toggleModal('cf2')">
+          <button [disabled]="!program_creds || caserate_list?.length===0" type="button" class="w-32 px-3 py-2 rounded-md bg-blue-500 text-sm text-white ml-auto mr-1 disabled:bg-gray-400" (click)="toggleModal('cf2')">
             CF2
           </button>
           <!-- <button *ngIf="caserate_list" type="button" class="w-32 px-3 py-2 rounded-md bg-blue-500 text-sm text-white ml-auto  mr-1" (click)="toggleModal('csf')">
