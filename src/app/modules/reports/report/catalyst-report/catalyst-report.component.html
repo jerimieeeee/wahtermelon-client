@@ -18,220 +18,39 @@
           <table class="min-w-full border select-none overflow-x-auto" id="reportForm">
             <thead>
               <tr>
-
-                <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 border">
+                <th  class="text-sm font-medium text-gray-900 px-6 py-4 border">
                  Indicator
                 </th>
 
                 <th class="text-sm font-normal text-gray-900 border pt-2">
-                 Age Group
+                 Gender & Age Group
                 </th>
 
-                <th class="text-sm font-normal text-gray-900 border pt-2">
-                  Gender
+                <th *ngFor="let item of barangay_list | keyvalue" class="text-sm font-normal text-gray-900 border pt-2">
+                  {{item.value[0]}}
                 </th>
-
-                <th *ngFor="let barangay of barangays" class="text-sm font-normal text-gray-900 border pt-2">
-                  {{barangay.desc}}
-                </th>
-
-                
-
-
-                      
-                       <!-- <th class="text-sm font-normal text-gray-900 border pt-2">
-                          Others
-                          <tr class="grid grid-cols-12 pt-2">
-                            <th class="col-span-3 border-t border-r font-normal py-2">
-                              20-59
-                            </th>
-                            <th class="col-span-3 border-t border-r font-normal py-2">
-                              60 and Above
-                            </th>
-                            <th class="col-span-3 border-t border-r font-normal py-2">
-                              18-59
-                            </th>
-                            <th class="col-span-3 border-t font-normal py-2">
-                              60 and Above
-                            </th>
-                          </tr>
-                          <tr class="grid grid-cols-12">
-                            <th class="col-span-6 border-t border-r font-normal py-2">
-                             Male
-                            </th>
-                            <th class="col-span-6 border-t font-normal py-2">
-                            Female
-                            </th>
-                          </tr>
-                        </th> -->
-  
               </tr>  
+
             </thead>
-            <tbody *ngFor="let indicator of general_surveys">
+            <tbody *ngFor="let indicator of stats | keyvalue">
+             
               <tr>
-                <td rowspan="7" class="border-r border-b text-center text-sm">{{indicator.desc}}</td>
-                <td class="border-b border-r text-center text-sm">0-5</td> 
-                <td class="border-r border-b">
-                    <div class="border-b text-center text-sm">M</div>
-                    <div class="text-center text-sm">F</div>
+                <td rowspan="13" class="border-r border-b text-center text-sm">{{indicator.key}}</td>
+              </tr>
+              <tr *ngFor="let items of indicator.value | keyvalue">
+                <td class="border-r border-b text-center text-sm">{{items.key}}</td>
+                <td *ngFor="let items2 of items.value | keyvalue" class="text-center border-b border-r">{{items2.value}}</td>
+              </tr>
+              
+              <!-- <tr *ngFor="let ind of x | keyvalue">
+                <td rowspan="14">
+                  {{ ind.key }}
                 </td>
-                <td class="border-r border-b">
-                    <div class="border-b text-center text-sm">{{indicator.sexual}}</div>
-                    <div class="text-center text-sm">{{indicator.physical}}</div>
+                <td *ngFor="let age_group of ind.value">
+                  {{ stats[ind.key][age_group] }}
                 </td>
-                
-               
-              </tr>
-    
-              <tr>
-                <td class="border-b border-r text-center text-sm">6-9</td>
-                <td class="border-r border-b">
-                    <div class="border-b text-center text-sm">M</div>
-                    <div class="text-center text-sm">F</div>
-                </td>
-                <td class="border-r border-b">
-                  <div class="border-b text-center text-sm">{{indicator.sexual}}</div>
-                  <div class="text-center text-sm">{{indicator.physical}}</div>
-              </td>
-              <!-- <td class="border-r border-b">
-                  <div class="border-b text-center text-sm">10</div>
-                  <div class="text-center text-sm">20</div>
-              </td>
-              <td class="border-r border-b">
-                  <div class="border-b text-center text-sm">10</div>
-                  <div class="text-center text-sm">20</div>
-              </td>
-              <td class="border-r border-b">
-                  <div class="border-b text-center text-sm">10</div>
-                  <div class="text-center text-sm">20</div>
-              </td> -->
-             
-              </tr>
-
-              <tr>
-                <td class="border-b border-r text-center text-sm">10-17</td>
-                <td class="border-r border-b">
-                  <div class="border-b text-center text-sm">M</div>
-                  <div class="text-center text-sm">F</div>
-              </td>
-              <td class="border-r border-b">
-                <div class="border-b text-center text-sm">{{indicator.sexual}}</div>
-                <div class="text-center text-sm">{{indicator.physical}}</div>
-            </td>
-              <!-- <td class="border-r border-b">
-                  <div class="border-b text-center text-sm">10</div>
-                  <div class="text-center text-sm">20</div>
-              </td>
-              <td class="border-r border-b">
-                  <div class="border-b text-center text-sm">10</div>
-                  <div class="text-center text-sm">20</div>
-              </td>
-              <td class="border-r border-b">
-                  <div class="border-b text-center text-sm">10</div>
-                  <div class="text-center text-sm">20</div>
-              </td> -->
-             
-              </tr>
-
-              <tr>
-                <td class="border-b border-r text-center text-sm">18-19</td>
-                <td class="border-r border-b">
-                  <div class="border-b text-center text-sm">M</div>
-                  <div class="text-center text-sm">F</div>
-              </td>
-              <td class="border-r border-b">
-                <div class="border-b text-center text-sm">{{indicator.sexual}}</div>
-                <div class="text-center text-sm">{{indicator.physical}}</div>
-            </td>
-              <!-- <td class="border-r border-b">
-                  <div class="border-b text-center text-sm">10</div>
-                  <div class="text-center text-sm">20</div>
-              </td>
-              <td class="border-r border-b">
-                  <div class="border-b text-center text-sm">10</div>
-                  <div class="text-center text-sm">20</div>
-              </td>
-              <td class="border-r border-b">
-                  <div class="border-b text-center text-sm">10</div>
-                  <div class="text-center text-sm">20</div>
-              </td> -->
-             
-              </tr>
-             
-              <tr>
-                <td class="border-b border-r text-center text-sm">20-59</td>
-                <td class="border-r border-b">
-                  <div class="border-b text-center text-sm">M</div>
-                  <div class="text-center text-sm">F</div>
-              </td>
-              <td class="border-r border-b">
-                <div class="border-b text-center text-sm">{{indicator.sexual}}</div>
-                <div class="text-center text-sm">{{indicator.physical}}</div>
-            </td>
-              <!-- <td class="border-r border-b">
-                <div class="border-b text-center text-sm">10</div>
-                <div class="text-center text-sm">20</div>
-              </td>
-              <td class="border-r border-b">
-                <div class="border-b text-center text-sm">10</div>
-                <div class="text-center text-sm">20</div>
-              </td>
-              <td class="border-r border-b">
-                <div class="border-b text-center text-sm">10</div>
-                <div class="text-center text-sm">20</div>
-              </td> -->
+              </tr> -->
               
-              </tr>
-
-              <tr>
-                <td class="border-b border-r text-center text-sm">60 and Above</td>
-                <td class="border-r border-b">
-                  <div class="border-b text-center text-sm">M</div>
-                  <div class="text-center text-sm">F</div>
-              </td>
-              <td class="border-r border-b">
-                <div class="border-b text-center text-sm">{{indicator.sexual}}</div>
-                <div class="text-center text-sm">{{indicator.physical}}</div>
-            </td>
-              <!-- <td class="border-r border-b">
-                <div class="border-b text-center text-sm">10</div>
-                <div class="text-center text-sm">20</div>
-              </td>
-              <td class="border-r border-b">
-                <div class="border-b text-center text-sm">10</div>
-                <div class="text-center text-sm">20</div>
-              </td>
-              <td class="border-r border-b">
-                <div class="border-b text-center text-sm">10</div>
-                <div class="text-center text-sm">20</div>
-              </td> -->
-              
-              </tr>
-              
-              <tr class="bg-gray-100">
-                <td class="border-r text-center text-sm">Total</td>
-                <td class="border-r border-b">
-                  <div class="border-b text-center text-sm">M</div>
-                  <div class="text-center text-sm">F</div>
-              </td>
-              <td class="border-r border-b">
-                <div class="border-b text-center text-sm">{{indicator.sexual}}</div>
-                <div class="text-center text-sm">{{indicator.physical}}</div>
-            </td>
-              <!-- <td class="border-r border-b">
-                <div class="border-b text-center text-sm">10</div>
-                <div class="text-center text-sm">20</div>
-              </td>
-              <td class="border-r border-b">
-                <div class="border-b text-center text-sm">10</div>
-                <div class="text-center text-sm">20</div>
-              </td>
-              <td class="border-r border-b">
-                <div class="border-b text-center text-sm">10</div>
-                <div class="text-center text-sm">20</div>
-              </td> -->
-              
-              </tr>
             </tbody>
           </table>
         </div>

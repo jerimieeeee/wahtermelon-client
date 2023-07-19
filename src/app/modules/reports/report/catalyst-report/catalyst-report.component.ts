@@ -10,32 +10,58 @@ export class CatalystReportComponent implements OnChanges {
 
   stats : any;
 
-  general_surveys = [
-    {id: 1,   desc: 'Sexual',               var_name: 'Sexual', sexual: ['10','10','20', '30'] , physical: '100'},
-    {id: 2,   desc: 'Physical',             var_name: 'Physical', sexual: '10', physical: '10'},
-    {id: 3,   desc: 'Neglect',             var_name: 'Neglect', sexual: '10', physical: '10'},
-    {id: 4,   desc: 'Emotional',              var_name: 'Emotional', sexual: '10', physical: '10'},
-    {id: 5,   desc: 'Economic',       var_name: 'Economic', sexual: '10', physical: '10'},
-    {id: 6,   desc: 'Unable to Validate',            var_name: 'Unable to Validate', sexual: '10', physical: '10'},
-    {id: 7,   desc: 'Multiple Abuse',                 var_name: 'Multiple Abuse', sexual: '10', physical: '10'},
-    {id: 8,   desc: 'Others',         var_name: 'Others', sexual: '10', physical: '10'},
-    
+  entries: any;
+
+  barangay_list: any;
+
+  indicators = [
+    {id: 0,   desc: 'Sexual'},
+    {id: 1,   desc: 'Physical'},
+    {id: 2,   desc: 'Neglect'},
+    {id: 3,   desc: 'Emotional'},
+    {id: 4,   desc: 'Economic'},
+    {id: 5,   desc: 'Unable to Validate'},
+    {id: 6,   desc: 'Multiple Abuse'},
+    {id: 7,   desc: 'Others'},
   ];
 
+  x = 
+    {
+      'sexual_abuse': [
+        'male_age_0_to_5',
+        'female_age_0_to_5',
+
+        'male_age_6_to_11',
+        'female_age_6_to_11',        
+      ],
+
+      'economic_abuse': [
+        'male_age_0_to_5',
+        'female_age_0_to_5',
+
+        'male_age_6_to_11',
+        'female_age_6_to_11',        
+]
+  
+    }
+  
+
   barangays = [
-    {id: 1,   desc: 'Barangay 1',               var_name: 'Sexual'},
-    {id: 2,   desc: 'Barangay 2',             var_name: 'Physical'},
-    {id: 3,   desc: 'Barangay 3',             var_name: 'Neglect'},
-    {id: 4,   desc: 'Barangay 4',              var_name: 'Emotional'},
-    {id: 5,   desc: 'Barangay 5',       var_name: 'Economic'},
-    {id: 6,   desc: 'Barangay 6',            var_name: 'Unable to Validate'},
-    {id: 7,   desc: 'Barangay 7',                 var_name: 'Multiple Abuse'},
-    {id: 8,   desc: 'Barangay 8',         var_name: 'Others'},
+    {id: 1,   desc: 'Barangay 1'},
+    {id: 2,   desc: 'Barangay 2'},
+    {id: 3,   desc: 'Barangay 3'},
+    {id: 4,   desc: 'Barangay 4'},
+    {id: 5,   desc: 'Barangay 5'},
+    {id: 6,   desc: 'Barangay 6'},
+    {id: 7,   desc: 'Barangay 7'},
+    {id: 8,   desc: 'Barangay 8'},
     
   ];
 
   getReport(){
-  
+    const entries = Object.entries(this.stats.sexual_abuse.female_age_0_to_5);
+    this.barangay_list = entries
+    console.log(entries);
   }
  
 

@@ -108,7 +108,6 @@ export class ReportsComponent implements OnInit {
       year: this.reportForm.value.year,
       start_date: this.reportForm.value.start_date,
       end_date: this.reportForm.value.end_date
-      
     }
 
     if (this.reportForm.value.report_class === 'muncity') {
@@ -162,7 +161,6 @@ export class ReportsComponent implements OnInit {
         this.http.get('libraries/municipalities/'+userMun, {params:{include: 'barangays'}}).subscribe({
           next: (data: any) => {
             this.brgys = data.data.barangays;
-            console.log(this.brgys, 'brgy data')
           },
           error: err => console.log(err)
         })
