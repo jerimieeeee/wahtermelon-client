@@ -26,6 +26,12 @@ export class ExportPdfComponent implements OnInit {
 
   exams2: any;
 
+  last_referral: any;
+
+  conv_facility: any;
+
+  conv_referral_facility: any;
+
   anogenital_list: any =[];
   corporal_list: any =[];
   behavioral_list: any =[];
@@ -170,7 +176,17 @@ export class ExportPdfComponent implements OnInit {
 
   convertImpression(){
     this.conv_impression = this.impression_list.filter(x => x.id === this.selected_gbv_case?.gbvIntake?.medical_history?.medical_impression_id);
-  
+    this.last_referral = this.selected_gbv_case?.gbvReferral[Object.keys(this.selected_gbv_case?.gbvReferral).length - 1];
+    
+    this.conv_facility = this.userInfo.facility.facility_name.split(' ')
+   .map(w => w[0].toUpperCase() + w.substring(1).toLowerCase())
+   .join(' ');
+    console.log(this.conv_facility, 'test proper case');
+
+    this.conv_referral_facility = this.last_referral.facility.facility_name.split(' ')
+   .map(w => w[0].toUpperCase() + w.substring(1).toLowerCase())
+   .join(' ');
+    console.log(this.last_referral,'test last referral')
   }
 
 

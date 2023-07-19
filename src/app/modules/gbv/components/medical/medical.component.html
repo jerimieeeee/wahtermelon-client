@@ -6,9 +6,9 @@
         <div class="col-span-4 border-b border-slate-200 flex justify-between w-full my-2 font-semibold text-sky-500">
           Consent Details
           <div>
-            <button [disabled]="pdf_exported" type="button" class="text-2xl mr-5 text-blue-600 disabled:text-gray-600" (click)="toggleMedCert('med_cert')" >
+            <!-- <button [disabled]="pdf_exported" type="button" class="text-2xl mr-5 text-blue-600 disabled:text-gray-600" (click)="toggleMedCert('med_cert')" >
               <fa-icon [icon]="faFileContract"></fa-icon>
-            </button>
+            </button> -->
             <button [disabled]="pdf_exported" type="button" class="text-2xl mr-5 text-red-600 disabled:text-gray-600" (click)="toggleExportPDF('export_pdf')" >
               <fa-icon [icon]="faFilePdf"></fa-icon>
             </button>

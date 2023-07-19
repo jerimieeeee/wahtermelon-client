@@ -1,0 +1,56 @@
+<div class="grid grid-cols-1 w-full">
+  <div class="flex justify-between w-full text-blue-500 font-semibold text-lg  p-3" >
+    <span>Catalyst Report</span>
+    <button [disabled]="pdf_exported" type="button" class="text-2xl mr-5 text-green-600 disabled:text-gray-600" (click)="exportX()">
+      <fa-icon [icon]="faFileExcel"></fa-icon>
+    </button>
+  </div>
+  <div class="flex flex-col pb-5">
+    <div class="sm:-mx-6 lg:-mx-8">
+      <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
+        <div class="">
+          
+          <table class="min-w-full block border select-none overflow-y-auto" id="catalystForm">
+            <thead>
+              <tr>
+                <th  class="text-sm font-medium text-gray-900 px-6 py-4 border">
+                 Indicator
+                </th>
+
+                <th class="text-sm font-normal text-gray-900 border pt-2">
+                 Gender & Age Group
+                </th>
+
+                <th *ngFor="let item of barangay_list | keyvalue : returnZero" class="text-sm font-normal text-gray-900 border pt-2">
+                  {{item.value[0]}}
+                </th>
+              </tr>  
+
+            </thead>
+            <tbody *ngFor="let indicator of stats | keyvalue : returnZero">
+             
+              <tr>
+                <td rowspan="13" class="border-r border-b text-center text-sm">{{indicator.key}}</td>
+              </tr>
+              <tr *ngFor="let items of indicator.value | keyvalue : returnZero">
+                <td class="border-r border-b text-center text-sm">{{items.key.split('_age_').join(' ').split('_to_').join(' - ').split('_and_').join(' and ') | titlecase}}</td>
+                <td *ngFor="let items2 of items.value | keyvalue : returnZero" class="text-center border-b border-r">{{items2.value}}</td>
+              </tr>
+              
+              <!-- <tr *ngFor="let ind of x | keyvalue">
+                <td rowspan="14">
+                  {{ ind.key }}
+                </td>
+                <td *ngFor="let age_group of ind.value">
+                  {{ stats[ind.key][age_group] }}
+                </td>
+              </tr> -->
+              
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
