@@ -35,6 +35,7 @@ export class GbvPatientsComponent implements OnInit{
     let params = {params: { }};
     params['params']['page'] = !page ? this.current_page : page;
     params['params']['per_page'] = this.per_page;
+    params['params']['disable_filter'] = 1;
 
     this.http.get('gender-based-violence/patient-gbv-list', params).subscribe({
       next: (data:any) => {
