@@ -39,8 +39,8 @@ export class PatientItrComponent implements OnInit {
       let params = {
         patient_id: patient_id,
         per_page: '10',
-        disable_filter: 1,
-        sort: '-consult_date'
+        sort: '-consult_date',
+        disable_filter: 1
       }
       this.getVisitList(params);
     }
