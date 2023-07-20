@@ -9,7 +9,7 @@ import { Subject } from 'rxjs';
 })
 export class HttpService {
 
-  baseUrl = 'https://quezon-api.wah.ph/api/v1/';
+  baseUrl = 'https://training-api.wah.ph/api/v1/';
 
   constructor(
     private http: HttpClient,
