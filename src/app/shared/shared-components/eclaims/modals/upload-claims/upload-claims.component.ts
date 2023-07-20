@@ -99,7 +99,7 @@ export class UploadClaimsComponent implements OnInit {
 
     let params = {
       encryptedXml: this.encryptedXml,
-      program_code: this.program_name
+      program_code: this.program_name !== 'cc' ? this.program_name : 'mc'
     }
 
     //ECLAIMS SERVICES
@@ -108,7 +108,15 @@ export class UploadClaimsComponent implements OnInit {
         console.log(data.data)
         this.updateUploadData(data.data);
       },
-      error: err => console.log(err)
+      error: err => {
+        console.log(err);
+        this.is_uploading_claim = false;
+        this.toastr.error(err.error.message, 'Upload Claim', {
+          closeButton: true,
+          positionClass: 'toast-top-center',
+          disableTimeOut: true
+        });
+      }
     })
   }
 
