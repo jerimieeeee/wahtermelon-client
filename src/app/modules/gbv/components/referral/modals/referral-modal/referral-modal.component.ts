@@ -30,6 +30,7 @@ export class ReferralModalComponent implements OnInit {
     patient_gbv_id: new FormControl<string| null>(''),
     referral_facility_code : new FormControl<string| null>(''),
     referral_date: new FormControl<string| null>(''),
+    medico_legal_flag: new FormControl<boolean| null>(null),
     referral_reason: new FormControl<string| null>(''),
     service_remarks: new FormControl<string| null>(''),
     referral_remarks: new FormControl<string| null>('')
@@ -67,6 +68,7 @@ export class ReferralModalComponent implements OnInit {
       patient_gbv_id: [this.selected_gbv_case.id],
       referral_facility_code : [null],
       referral_date: [null],
+      medico_legal_flag: [null],
       referral_reason: [null],
       service_remarks: [null],
       referral_remarks: [null]

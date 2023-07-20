@@ -1,9 +1,9 @@
 <div id="defaultModal" tabindex="-1" class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 w-full md:inset-0 h-modal md:h-full justify-center items-center flex" aria-modal="true" role="dialog" style="z-index:60">
-  <div class="relative p-4 w-full max-w-3xl h-auto md:h-auto">
+  <div class="relative p-4 w-full max-w-5xl h-auto md:h-auto">
     <!-- Modal content -->
     <div class="relative bg-white rounded-lg shadow">
       <!-- Modal header -->
-      <div class="flex justify-between items-start py-3 px-5 rounded-t border-b bg-orange-500">
+      <div class="flex justify-between items-start py-3 px-5 rounded-t border-b bg-orange-400">
         <h3 class="text-sm font-bold text-white">
             Search Case Rate
         </h3>
@@ -11,32 +11,111 @@
       <!-- Modal body -->
       <div class="overflow-y-auto h-96 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
         <form [formGroup]="searchForm" (submit)="onSubmit()" class="text-left text-gray-500 m-5">
-          <div class="grid grid-cols-10 gap-4">
-            <div class="col-span-3">
-              <label for="diagnosis_description">Diagnosis Description</label>
-              <input type="text" name="diagnosis_description" id="diagnosis_description" formControlName="diagnosis_description" class="input">
+          <div class="grid grid-cols-12 gap-4">
+            <div class="col-span-4">
+              <label for="description">Description</label>
+              <input type="text" name="description" id="description" formControlName="description" class="input">
             </div>
 
             <div class="col-span-3">
-              <label for="icd10_code">ICD10 Code</label>
-              <input type="text" name="icd10_code" id="icd10_code" formControlName="icd10_code" class="input">
+              <label for="icd10">ICD10 Code</label>
+              <input type="text" name="icd10" id="icd10" formControlName="icd10" class="input">
             </div>
 
             <div class="col-span-3">
-              <label for="rvs_code">RVS Code</label>
-              <input type="text" name="rvs_code" id="rvs_code" formControlName="rvs_code" class="input">
+              <label for="rvs">RVS Code</label>
+              <input type="text" name="rvs" id="rvs" formControlName="rvs" class="input">
             </div>
 
+            <div class="col-span-2 justify-end">
+              <button type="submit" class="btn-save mt-6 -py-0.5">
+                <fa-icon *ngIf="is_searching" [icon]="faCircleNotch" spin="true"></fa-icon>
+                {{ is_searching ? '' : 'Search' }}
+              </button>
+            </div>
           </div>
         </form>
+        <div class="flex mx-3 justify-center">
+          <table class="table-auto text-xs border border-slate-300 border-collapse">
+            <thead>
+              <tr>
+                <th colspan="15" class="w-[900px]">Case Rate Group</th>
+              </tr>
+              <tr>
+                <th rowspan="3" class="border border-slate-300 w-[70px]">ICD10/ <br />RVS Code</th>
+                <th rowspan="3" class="border border-slate-300 w-[198px]">Description</th>
+                <th colspan="3" class="border border-slate-300 w-[216px]">First Case Rate</th>
+                <th colspan="3" class="border border-slate-300 w-[216px]">Second Case Rate</th>
+                <th colspan="7" class="border border-slate-300 w-[200px]">Applicable Health Care Institutions <br />Note: If licensed and capable to perform the procedure</th>
+              </tr>
+              <tr>
+                <th class="border border-slate-300 w-[72px]" rowspan="2">HCI <br /> Fee</th>
+                <th class="border border-slate-300 w-[72px]" rowspan="2">Prof <br /> Fee</th>
+                <th class="border border-slate-300 w-[72px]" rowspan="2">Case<br />  Rate</th>
+                <th class="border border-slate-300 w-[72px]" rowspan="2">HCI <br /> Fee</th>
+                <th class="border border-slate-300 w-[72px]" rowspan="2">Prof <br /> Fee</th>
+                <th class="border border-slate-300 w-[72px]" rowspan="2">Case <br /> Rate</th>
+                <th class="border border-slate-300 text-[0.7rem] w-[100px]" colspan="3">Level</th>
+                <th class="border border-slate-300" rowspan="2">ASC</th>
+                <th class="border border-slate-300" rowspan="2">PCF</th>
+                <th class="border border-slate-300" rowspan="2">MCP</th>
+                <th class="border border-slate-300" rowspan="2">FSDC</th>
+              </tr>
+              <tr>
+                <th class="border border-slate-300 text-[0.7rem]">1</th>
+                <th class="border border-slate-300 text-[0.7rem]">2</th>
+                <th class="border border-slate-300 text-[0.7rem]">3</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border border-slate-300" *ngFor="let caserate of caserate_result">
+                <td [rowSpan]="caserate.AMOUNT.length" class="border border-slate-300">{{ caserate.pItemCode }}</td>
+                <td [rowSpan]="caserate.AMOUNT.length" class="border border-slate-300">{{ caserate.pCaseRateDescription }}</td>
+                <td colspan="13" class="p-0 m-0">
+                  <table class="table-auto p-0 m-0 w-full border-0" *ngIf="caserate.AMOUNT.length">
+                    <tr *ngFor="let amount of caserate.AMOUNT; let last = last; let first = first">
+                      <td class="px-1 border border-slate-300 w-[72px] border-l-0" [ngClass]="{'border-b-0': last, 'border-t-0': first}">{{ amount.pPrimaryHCIFee }}</td>
+                      <td class="px-1 border border-slate-300 w-[72px]" [ngClass]="{'border-b-0': last, 'border-t-0': first}">{{ amount.pPrimaryProfFee }}</td>
+                      <td class="px-1 border border-slate-300 w-[72px] text-blue-500 font-semibold hover:cursor-pointer" (click)="closeModal(caserate, amount)" [ngClass]="{'border-b-0': last, 'border-t-0': first}">{{ amount.pPrimaryCaseRate }}</td>
+                      <td class="px-1 border border-slate-300 w-[72px]" [ngClass]="{'border-b-0': last, 'border-t-0': first}">{{ amount.pSecondaryHCIFee }}</td>
+                      <td class="px-1 border border-slate-300 w-[72px]" [ngClass]="{'border-b-0': last, 'border-t-0': first}">{{ amount.pSecondaryProfFee }}</td>
+                      <td class="px-1 border border-slate-300 w-[72px]" [ngClass]="{'border-b-0': last, 'border-t-0': first}">{{ amount.pSecondaryCaseRate }}</td>
+                      <td class="px-1 border border-slate-300" [ngClass]="{'border-b-0': last, 'border-t-0': first}">{{ amount.pCheckFacilityH1 }}</td>
+                      <td class="px-1 border border-slate-300" [ngClass]="{'border-b-0': last, 'border-t-0': first}">{{ amount.pCheckFacilityH2 }}</td>
+                      <td class="px-1 border border-slate-300" [ngClass]="{'border-b-0': last, 'border-t-0': first}">{{ amount.pCheckFacilityH3 }}</td>
+                      <td class="px-1 border border-slate-300" [ngClass]="{'border-b-0': last, 'border-t-0': first}">{{ amount.pCheckFacilityASC }}</td>
+                      <td class="px-1 border border-slate-300" [ngClass]="{'border-b-0': last, 'border-t-0': first}">{{ amount.pCheckFacilityPCF }}</td>
+                      <td class="px-1 border border-slate-300" [ngClass]="{'border-b-0': last, 'border-t-0': first}">{{ amount.pCheckFacilityMAT }}</td>
+                      <td class="px-1 border border-slate-300 border-r-0" [ngClass]="{'border-b-0': last, 'border-t-0': first}">{{ amount.pCheckFacilityFSDC }}</td>
+                    </tr>
+                  </table>
+                  <table class="table-auto p-0 m-0 w-full" *ngIf="!caserate.AMOUNT.length">
+                    <tr class="h-full py-8">
+                      <td class="px-1 border border-slate-300 border-y-0 border-l-0 w-[72px]">{{ caserate.AMOUNT.pPrimaryHCIFee }}</td>
+                      <td class="px-1 border border-slate-300 border-y-0 w-[72px]">{{ caserate.AMOUNT.pPrimaryProfFee }}</td>
+                      <td class="px-1 border border-slate-300 border-y-0 w-[72px] text-blue-500 font-semibold hover:cursor-pointer" (click)="closeModal(caserate, caserate.AMOUNT)">{{ caserate.AMOUNT.pPrimaryCaseRate }}</td>
+                      <td class="px-1 border border-slate-300 border-y-0 w-[72px]">{{ caserate.AMOUNT.pSecondaryHCIFee }}</td>
+                      <td class="px-1 border border-slate-300 border-y-0 w-[72px]">{{ caserate.AMOUNT.pSecondaryProfFee }}</td>
+                      <td class="px-1 border border-slate-300 border-y-0 w-[72px]">{{ caserate.AMOUNT.pSecondaryCaseRate }}</td>
+                      <td class="px-1 border border-slate-300 border-y-0">{{ caserate.AMOUNT.pCheckFacilityH1 }}</td>
+                      <td class="px-1 border border-slate-300 border-y-0">{{ caserate.AMOUNT.pCheckFacilityH2 }}</td>
+                      <td class="px-1 border border-slate-300 border-y-0">{{ caserate.AMOUNT.pCheckFacilityH3 }}</td>
+                      <td class="px-1 border border-slate-300 border-y-0">{{ caserate.AMOUNT.pCheckFacilityASC }}</td>
+                      <td class="px-1 border border-slate-300 border-y-0">{{ caserate.AMOUNT.pCheckFacilityPCF }}</td>
+                      <td class="px-1 border border-slate-300 border-y-0">{{ caserate.AMOUNT.pCheckFacilityMAT }}</td>
+                      <td class="px-1 border border-slate-300 border-y-0 border-r-0">{{ caserate.AMOUNT.pCheckFacilityFSDC }}</td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
 
       <!-- Modal footer -->
       <div class="flex justify-end py-4 px-5 space-x-4 rounded-b border-t border-gray-200">
         <button type="button" class="btn-save bg-gray-400" (click)="closeModal()">Close</button>
-        <!-- <button [disabled]="is_saving || searchForm.invalid" type="submit" class="btn-save px-10 disabled:bg-gray-300" (click)="onSubmit()" >
-          {{ is_saving ? 'Saving' : 'Save' }}
-        </button> -->
       </div>
     </div>
   </div>

@@ -105,9 +105,13 @@ export class ReportsComponent implements OnInit {
     }
 
     if (this.reportForm.value.report_class === 'muncity') {
-      params['municipality_code'] = this.reportForm.value.municipality_code;
+      params['category'] = 'municipality';
+      params['code'] = this.reportForm.value.municipality_code;
     } else if (this.reportForm.value.report_class === 'brgys') {
-      params['barangay_code'] = this.selectedBrgy;
+      params['category'] = 'barangay';
+      params['code'] = this.selectedBrgy;
+    } else {
+      params['category'] = 'facility';
     }
 
     this.http.get(this.reportForm.value.report_type.url, {params})
@@ -173,7 +177,7 @@ export class ReportsComponent implements OnInit {
     if(this.fhsis_monthly_arr.find(e => e === this.reportForm.value.report_type.id)) {
       let month = formatDate(this.current_date, 'm', 'en');
       let year = formatDate(this.current_date, 'yyyy', 'en');
-      
+
       this.reportForm.controls.month.enable();
       this.reportForm.controls.year.enable();
       this.reportForm.patchValue({
@@ -192,11 +196,11 @@ export class ReportsComponent implements OnInit {
       this.reportForm.controls.end_date.disable();
       this.reportForm.controls.month.disable();
       this.reportForm.controls.year.disable();
-    }  
+    }
   }
 
   testFunction(){
-     
+
     this.reportForm = this.formBuilder.nonNullable.group({
       report_type: ['', Validators.required],
       report_class: ['', Validators.required],

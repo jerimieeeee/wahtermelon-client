@@ -1,1 +1,77 @@
-<p>pbef works!</p>
+<div id="defaultModal" tabindex="-1" class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 w-full md:inset-0 h-modal md:h-full justify-center items-center flex" aria-modal="true" role="dialog" style="z-index:60">
+  <div class="relative p-4 w-full max-w-4xl h-auto md:h-auto">
+    <!-- Modal content -->
+    <div class="relative bg-white rounded-lg shadow">
+      <!-- Modal header -->
+      <div class="flex justify-between items-start py-3 px-5 rounded-t border-b bg-orange-400">
+        <h3 class="text-sm font-bold text-white">
+          Eligibility
+        </h3>
+        <button [disabled]="!show_form && pdf_exported" class="bg-white text-orange-400 rounded-md px-2 py-1" (click)="exportP()">
+          <fa-icon [icon]="faFilePdf"></fa-icon>
+        </button>
+      </div>
+      <!-- Modal body -->
+      <div class="overflow-y-auto max-h-[500px] scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
+
+        <img src="./assets/img/philhealth-pbef.jpg" hidden />
+        <div *ngIf="!selected_caserate" class="flex w-2/3 mx-auto">
+          <div class="p-2 w-1/2">
+            <label for="caserate_field">Caserate</label>
+            <select name="caserate_field" id="caserate_field" [(ngModel)]="caserate_field" class="input">
+              <option *ngFor="let cr of caserate_list" [ngValue]="cr">{{ cr.code }} - {{ cr.caserate_code }}</option>
+            </select>
+          </div>
+          <div class="mt-8">
+            <button type="button" class="btn-save" (click)="selectCaserate()">
+              Select
+            </button>
+          </div>
+        </div>
+
+        <div *ngIf="selected_caserate"  class="w-full">
+          <div *ngIf="show_form" class="relative text-xs w-[210mm] h-[297mm]" id="mainForm">
+            <img src="./assets/img/philhealth-pbef.jpg" />
+            <div class="ml-60">
+              <span class="absolute top-[53.3mm]">{{ pbef_result?.ASOF }}</span>
+              <span class="absolute top-[58.7mm]">{{ pbef_result?.TRACKING_NUMBER }}</span>
+
+              <span class="absolute top-[70mm]">{{ program_creds?.facility_name }}</span>
+              <span class="absolute top-[75.5mm]">{{ program_creds?.accreditation_number }}</span>
+
+              <span class="absolute top-[87.9mm]">{{ pbef_result?.MEMBER.PIN }}</span>
+              <span class="absolute top-[91.8mm]">{{ pbef_result?.MEMBER.LASTNAME }}, {{ pbef_result?.MEMBER.FIRSTNAME }} {{ pbef_result?.MEMBER.MIDDLENAME }} {{ pbef_result?.MEMBER.SUFFIX }}</span>
+              <span class="absolute top-[95.7mm]">{{ patient_philhealth.membership_type_id === 'DD' ? patient_philhealth.member_gender : patient.gender }}</span>
+              <span class="absolute top-[99.7mm]">{{ pbef_result?.MEMBER.BIRTHDATE | date:'MM/dd/yyyy' }}</span>
+              <span class="absolute top-[103.6mm]">{{ pbef_result?.MEMBER.MEMBER_CATEGORY_DESC }}</span>
+
+              <span class="absolute top-[120.1mm]">{{ pbef_result?.PATIENT.LASTNAME }}, {{ pbef_result?.PATIENT.FIRSTNAME }} {{ pbef_result?.PATIENT.MIDDLENAME }} {{ pbef_result?.PATIENT.SUFFIX }}</span>
+              <span class="absolute top-[123.8mm]">{{ pbef_result?.CONFINMENT.ADMITTED }}</span>
+              <span class="absolute top-[127.8mm]">{{ patient.gender }}</span>
+              <span class="absolute top-[131.8mm]">{{ pbef_result?.PATIENT.BIRTHDATE | date:'MM/dd/yyyy' }}</span>
+
+              <span class="absolute top-[144.3mm] left-[105mm]">{{  pbef_result?.ISOK }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div  *ngIf="selected_caserate && !show_form" class="grid grid-cols-1 my-20">
+          <div class="flex justify-center text-blue-500">
+            <fa-icon [icon]="faCircleNotch" spin="true"></fa-icon>
+          </div>
+
+          <div class="flex justify-center">
+            Checking PhilHealth Claims Eligibility...
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="flex justify-end py-4 px-5 space-x-4 rounded-b border-t border-gray-200">
+        <button type="button" class="btn-save bg-gray-400" (click)="closeModal()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="opacity-50 fixed inset-0 z-50 bg-black"></div>
