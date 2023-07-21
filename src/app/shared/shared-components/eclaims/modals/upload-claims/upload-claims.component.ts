@@ -105,8 +105,8 @@ export class UploadClaimsComponent implements OnInit {
     //ECLAIMS SERVICES
     this.http.post('eclaims/upload-claim', params).subscribe({
       next:(data:any) => {
-        console.log(data.data)
-        this.updateUploadData(data.data);
+        console.log(data)
+        this.updateUploadData(data);
       },
       error: err => {
         console.log(err);
@@ -129,21 +129,10 @@ export class UploadClaimsComponent implements OnInit {
       pReceiptTicketNumber: data.pReceiptTicketNumber,
       pStatus: 'IN PROCESS',
       pTransmissionDate: formatDate(data.pTransmissionDate, 'yyyy-MM-dd', 'en'),
-      pTransmissionTime: data.pTransmissionTime,
-      isSuccess:'Y',
-      program_desc: this.program_name
-    }
-
-    /* let params = {
-      pHospitalTransmittalNo: this.selected_pHospitalTransmittalNo,
-      pTransmissionControlNumber: 'lakjshdf98712435b',
-      pReceiptTicketNumber: 'a9klhasfdhiv912695',
-      pStatus: 'IN PROCESS',
-      pTransmissionDate: formatDate(new Date(), 'yyyy-MM-dd', 'en'),
       pTransmissionTime: formatDate(new Date(), 'HH:mm:ss', 'en'),
       isSuccess:'Y',
       program_desc: this.program_name
-    } */
+    }
 
     console.log(params);
     this.http.post('eclaims/eclaims-upload', params).subscribe({
