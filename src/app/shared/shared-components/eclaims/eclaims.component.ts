@@ -181,6 +181,7 @@ export class EclaimsComponent implements OnInit {
     this.modal[name] = !this.modal[name];
 
     if(name==='cf2' && !this.modal['cf2']) this.getEclaimsList();
+    if(name==='upload-claims' && !this.modal['upload-claims']) this.getEclaimsList();
   }
 
   constructor(
