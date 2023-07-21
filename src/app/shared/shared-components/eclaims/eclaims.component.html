@@ -32,27 +32,36 @@
       <div class="border border-slate-200 shadow-md rounded-xl">
         <div class="w-full bg-blue-500 text-white rounded-t-xl p-3 font-semibold flex justify-between">
           <span>Eclaims</span>
-          <button type="button" (click)="refreshClaims()">
+          <!-- <button type="button" (click)="refreshClaims()">
             <fa-icon [icon]="faRotate" [spin]="is_refreshing"></fa-icon>
-          </button>
+          </button> -->
         </div>
 
         <div class="w-full p-5">
           <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
               <tr>
+                <th scope="col" class="py-3 px-3">Caserate</th>
                 <th scope="col" class="py-3 px-3">Transmittal No.</th>
+                <th scope="col" class="py-3 px-3">Ticket Number</th>
                 <th scope="col" class="py-3 px-3">Claim Series Lhio</th>
                 <th scope="col" class="py-3 px-3">Transmittal Date</th>
-                <th scope="col" class="py-3 px-3">Caserate</th>
                 <th scope="col" class="py-3 px-3">Claim Status</th>
                 <th scope="col" class="py-3 px-3">Action</th>
               </tr>
             </thead>
             <tbody *ngIf="show_form"> <!-- *ngFor="let philhealth of philhealth_infos"  -->
               <tr *ngFor="let eclaims of eclaims_list" class="bg-white border-b last:border-0">
+                <td>
+                  {{ eclaims.caserate.caserate_code }} <br />
+                  {{ eclaims.caserate.code }}
+                  <!-- {{ eclaims.caserate.description }} -->
+                </td>
                 <td class="py-4 px-3">
                   {{ eclaims.pHospitalTransmittalNo }}
+                </td>
+                <td class="py-4 px-3">
+                  {{ eclaims.pReceiptTicketNumber ?? '-' }}
                 </td>
                 <td class="py-4 px-3">
                   {{ eclaims.pClaimSeriesLhio ?? '-' }}
@@ -60,15 +69,13 @@
                 <td class="py-4 px-3">
                   {{ eclaims.pTransmissionDate ?? '-' }}
                 </td>
-                <td>
-                  {{ eclaims.caserate.caserate_code }} <br />
-                  {{ eclaims.caserate.description }}
-                </td>
                 <td class="py-4 px-3">
                   {{ eclaims.pStatus ?? 'IN QUEUE'  }}
                 </td>
                 <td class="py-4 px-3 text-center">
-                  <fa-icon [icon]="faUpload" (click)="toggleModal('upload-claims', eclaims)" class="text-blue-500 hover:cursor-pointer"></fa-icon>
+                  <fa-icon *ngIf="!eclaims.pReceiptTicketNumber" [icon]="faUpload" (click)="toggleModal('upload-claims', eclaims)" class="text-blue-500 hover:cursor-pointer"></fa-icon>
+                  <fa-icon *ngIf="eclaims.pReceiptTicketNumber && !eclaims.pClaimSeriesLhio" [icon]="faRotate" (click)="checkSeries(eclaims)" [spin]="is_refreshing" [disabled]="is_refreshing" class="text-blue-500 hover:cursor-pointer"></fa-icon>
+                  <fa-icon *ngIf="eclaims.pClaimSeriesLhio" [icon]="faRotate" (click)="getClaimStatus(eclaims)" [spin]="is_refreshing" [disabled]="is_refreshing" class="text-blue-500 hover:cursor-pointer"></fa-icon>
                   <!-- <fa-icon [icon]="faUpload" (click)="toggleModal('upload-claims')" size="xl" class="mx-0 my-0 text-rose-400 hover:cursor-pointer flex-none mr-2" ></fa-icon> -->
                   <!-- <fa-icon (click)="toggleModal('add', lab)" size="lg" class="mx-0 my-0 text-blue-500 hover:cursor-pointer flex-none mr-2" [icon]="faEdit"></fa-icon> -->
                 </td>

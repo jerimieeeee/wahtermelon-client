@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { faCircleNotch, faRotate, faUpload } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-eclaims',
@@ -85,6 +86,80 @@ export class EclaimsComponent implements OnInit {
     this.is_refreshing = true;
   }
 
+  checkSeries(data){
+    console.log(data)
+    this.is_refreshing = true;
+
+    let params = {
+      pReceiptTicketNumber: data.pReceiptTicketNumber,
+      program_code: this.program_name !== 'cc' ? this.program_name : 'mc'
+    }
+
+    this.http.post('eclaims/get-claims-map', params).subscribe({
+      next: (resp: any) => {
+        console.log(resp);
+        data.pClaimSeriesLhio = resp.MAPPING.pClaimSeriesLhio;
+        data.pStatus = 'IN PROCESS';
+
+        this.updateUploadClaim(data);
+      },
+      error: err => {
+        console.log(err);
+        this.is_refreshing = false;
+        this.toastr.error(err.error.message, 'Series LHIO', {
+          closeButton: true,
+          positionClass: 'toast-top-center',
+          disableTimeOut: true
+        });
+      }
+    })
+  }
+
+  getClaimStatus(data) {
+    this.is_refreshing = true;
+
+    let params = {
+      series_lhio: data.pClaimSeriesLhio,
+      program_code: this.program_name !== 'cc' ? this.program_name : 'mc'
+    }
+
+    this.http.post('eclaims/get-claim-status', params).subscribe({
+      next:(resp: any) => {
+        console.log(resp)
+        this.is_refreshing = false;
+        this.toastr.info('As of: '+resp.pAsOf+ ' '+resp.pAsOfTime, resp.CLAIM.pStatus, {
+          closeButton: true,
+          positionClass: 'toast-top-center',
+          disableTimeOut: true
+        });
+        data.pStatus = resp.CLAIM.pStatus;
+        this.updateUploadClaim(data);
+      },
+      error: err => {
+        console.log(err);
+        this.is_refreshing = false;
+        this.toastr.error(err.error.message, 'Claims Status', {
+          closeButton: true,
+          positionClass: 'toast-top-center',
+          disableTimeOut: true
+        });
+      }
+    })
+  }
+
+  updateUploadClaim(data) {
+    console.log(data);
+    this.http.post('eclaims/eclaims-upload', data).subscribe({
+      next:(data:any) => {
+        console.log(data)
+        this.is_refreshing = false;
+      },
+      error: err => {
+        console.log(err)
+      }
+    })
+  }
+
   getCreds(){
     // let params = { 'filter[program_code]': this.program_name };
     let params = { 'filter[program_code]': this.program_name  !== 'cc' ? this.program_name : 'mc' };
@@ -109,7 +184,8 @@ export class EclaimsComponent implements OnInit {
   }
 
   constructor(
-    private http: HttpService
+    private http: HttpService,
+    private toastr: ToastrService
   ) { }
 
   ngOnInit(): void {
