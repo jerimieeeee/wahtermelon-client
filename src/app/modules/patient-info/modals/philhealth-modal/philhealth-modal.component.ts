@@ -160,7 +160,12 @@ export class PhilhealthModalComponent implements OnInit {
         if(err.status === 404) {
           this.retrieving_error = err.error.data;
         }
-        this.toastrMessage('success', 'Philhealth', 'Philhealth PIN retrieved', 'retrieving_pin');
+        this.toastr.error(err.error.message, 'Member PIN', {
+          closeButton: true,
+          positionClass: 'toast-top-center',
+          disableTimeOut: true
+        });
+        // this.toastrMessage('success', 'Philhealth', 'Philhealth PIN retrieved', 'retrieving_pin');
       }
     })
   }
