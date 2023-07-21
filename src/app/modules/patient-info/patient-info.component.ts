@@ -309,7 +309,7 @@ export class PatientInfoComponent implements OnInit {
         }
       }
 
-      if(modal_name='photo' && !this.modals['photo']) this.getImage(this.patient_info);
+      if(modal_name ==='photo' && !this.modals['photo']) this.getImage(this.patient_info);
       // if(modal_name === 'preghist' && this.modals[modal_name] === false) this.loadData('pregnancy_history')
       if(modal_name === 'lifestyle' && this.modals['lifestyle'] === false) this.loadData('social_history');
       if (modal_name === 'lab-request' && this.modals[modal_name] === false) this.loadData('laboratory');
