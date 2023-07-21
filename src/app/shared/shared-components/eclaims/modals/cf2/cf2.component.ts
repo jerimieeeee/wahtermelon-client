@@ -85,9 +85,9 @@ export class Cf2Component implements OnInit {
       pTBType: tb.pTBType,
       pNTPCardNo: this.selected_case.case_holding.case_number,
       admission_date: tb.admission_date,
-      admission_time: '8:00 AM',
+      admission_time: '8:00AM',
       discharge_date:tb.discharge_date,
-      discharge_time: '8:00 AM',
+      discharge_time: '8:00AM',
     });
 
     console.log(this.eclaimsForm)
@@ -99,7 +99,7 @@ export class Cf2Component implements OnInit {
       'filter[program_code]': this.program_name !== 'cc' ? this.program_name : 'mc'
     }
 
-    this.http.get('settings/philhealth-credentials').subscribe({
+    this.http.get('settings/philhealth-credentials', {params}).subscribe({
       next:(data:any) => {
         console.log(data.data)
         this.program_creds = data.data[0];
@@ -143,9 +143,9 @@ export class Cf2Component implements OnInit {
     this.eclaimsForm.patchValue({
       attendant_sign_date: formatDate(this.selected_case.admission_date, 'yyyy-MM-dd', 'en'),
       admission_date: formatDate(this.selected_case.admission_date, 'yyyy-MM-dd', 'en'),
-      admission_time: formatDate(this.selected_case.admission_date, 'HH:mm a', 'en'),
+      admission_time: formatDate(this.selected_case.admission_date, 'HH:mma', 'en'),
       discharge_date: formatDate(this.selected_case.discharge_date, 'yyyy-MM-dd', 'en'),
-      discharge_time: formatDate(this.selected_case.discharge_date, 'HH:mm a', 'en'),
+      discharge_time: formatDate(this.selected_case.discharge_date, 'HH:mma', 'en'),
       pNewbornHearingScreeningTest: hearing_done,
       pNewbornScreeningTest: this.selected_case.nbs_filter ? 'Y' : 'N',
       pFilterCardNo: this.selected_case.nbs_filter,
@@ -281,7 +281,8 @@ export class Cf2Component implements OnInit {
       pCheckUpDate2: [null],
       pCheckUpDate3: [null],
       pCheckUpDate4: [null],
-      pICDCode: [null]
+      pICDCode: [null],
+      transmittalNumber: [null]
     });
 
     this.eclaimsForm.patchValue({...this.selected_caserate});
