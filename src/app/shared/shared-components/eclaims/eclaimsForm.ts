@@ -44,5 +44,6 @@ export function eclaimsForm() {
     pCheckUpDate3: new FormControl<string|null>(null),
     pCheckUpDate4: new FormControl<string|null>(null),
     pICDCode: new FormControl<string|null>(null),
+    transmittalNumber: new FormControl<string|null>(null),
   });
 }
