@@ -16,6 +16,8 @@ export class UploadClaimsComponent implements OnInit {
   @Input() program_name;
   @Input() patient;
   @Input() caserate_code;
+  @Input() selected_ticket_number;
+
   faPenToSquare = faPenToSquare;
   faUpload = faUpload;
   faTrash = faTrash;

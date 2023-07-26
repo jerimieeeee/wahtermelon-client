@@ -28,6 +28,7 @@ export class EclaimsComponent implements OnInit {
 
   selected_pHospitalTransmittalNo: string;
   selected_caserate_code: string;
+  selected_ticket_number: string;
 
   is_refreshing: boolean = false;
   show_form:boolean = false;
@@ -176,8 +177,10 @@ export class EclaimsComponent implements OnInit {
   }
 
   toggleModal(name, eclaims?) {
+    console.log(eclaims)
     this.selected_pHospitalTransmittalNo = eclaims?.pHospitalTransmittalNo ?? null;
     this.selected_caserate_code = eclaims?.caserate.caserate_code ?? null;
+    this.selected_ticket_number = eclaims?.pReceiptTicketNumber ?? null;
     this.modal[name] = !this.modal[name];
 
     if(name==='cf2' && !this.modal['cf2']) this.getEclaimsList();
