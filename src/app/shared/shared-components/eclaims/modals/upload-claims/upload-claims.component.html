@@ -8,7 +8,7 @@
             CLAIM: {{ selected_pHospitalTransmittalNo }}
         </h3>
         <div>
-          <button type="button" [disabled]="is_uploading || !show_form || show_confirm_form" class="disabled:bg-gray-400 bg-white px-3 py-1 text-blue-500 rounded-md" (click)="getEncryptedXml()">
+          <button *ngIf="!selected_ticket_number" type="button" [disabled]="is_uploading || !show_form || show_confirm_form" class="disabled:bg-gray-400 bg-white px-3 py-1 text-blue-500 rounded-md" (click)="getEncryptedXml()">
             <fa-icon [icon]="faUpload" class="pr-2"></fa-icon>
             Upload Claim
           </button>
@@ -122,7 +122,7 @@
       <!-- Modal footer -->
       <div class="flex justify-between py-4 px-5 space-x-4 rounded-b border-t border-gray-200 dark:border-gray-600">
         <div>
-          <strong>Requirose documents:</strong>
+          <strong>Required documents:</strong>
           <span *ngFor="let docs of required_docs; let last = last">
             {{ docs }}<span *ngIf="!last">,</span>
           </span>
