@@ -46,6 +46,10 @@ const routes: Routes = [
       {
         path: 'ab',
         loadChildren: () => import('../animalbite/animalbite.module').then(m => m.AnimalbiteModule)
+      },
+      {
+        path: 'fp',
+        loadChildren: () => import('../familyplanning/familyplanning.module').then(m => m.FamilyplanningModule)
       }
     ]
   },

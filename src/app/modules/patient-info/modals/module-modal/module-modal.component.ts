@@ -53,6 +53,7 @@ export class ModuleModalComponent implements OnInit {
   mc = { name: 'Maternal Care', location: 'mc', group: 'mc', consult_active: false, id: null };
   cc = { name: 'Child Care', location: 'cc', group: 'cc', consult_active: false, id: null };
   gbv = { name: 'GBV', location: 'gbv', group: 'gbv', consult_active: false, id: null };
+  fp = { name: 'Family Planning', location: 'fp', group: 'fp', consult_active: false, id: null };
   show_new: boolean = false;
   is_loading: boolean = false;
   show_form: boolean = false;
@@ -93,6 +94,10 @@ export class ModuleModalComponent implements OnInit {
 
     if((this.patient_age.type === 'year' && this.patient_age.age < 7) || this.patient_age.type !== 'year') {
       this.list_modules.General.modules['cc'] = this.cc;
+    }
+
+    if(this.patient_age.type === 'year' && this.patient_age.age >= 9) {
+      this.list_modules.General.modules['fp'] = this.fp;
     }
 
     if(this.arr_allowed.indexOf(this.pos) > -1) {
