@@ -80,7 +80,7 @@ export class CatalystReportComponent implements OnChanges {
   }
 
   exportX() {
-    this.exportAsService.save(this.exportAsExcel, 'Catalyst Report').subscribe(() => {
+    this.exportAsService.save(this.exportAsExcel, 'GBV Report').subscribe(() => {
       // save started
     });
   }
