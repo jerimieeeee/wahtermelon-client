@@ -202,6 +202,33 @@
               </div>
             </div>
 
+            <div class="col-span-8">
+              <label for="accreditation_number" class="input-label" [ngClass]="{'text-red-500': is_saving && f.accreditation_number.errors}">Accreditation Number</label>
+              <input type="text" name="accreditation_number" id="accreditation_number" class="input capitalize disabled:bg-gray-200 disabled:text-gray-500" [ngClass]="{'invalid-input': is_saving && f.accreditation_number.errors}" formControlName="accreditation_number">
+
+              <div *ngIf="is_saving && f.accreditation_number.errors" class="invalid-alert">
+                <div *ngIf="f.accreditation_number.errors?.['required']">
+                  {{ required_message }}
+                </div>
+              </div>
+            </div>
+
+            <div class="col-span-8 grid grid-cols-2">
+              <div class="col-span-4">
+                <input type="checkbox" class="input-checkbox" id="attendant_cc_flag" formControlName="attendant_cc_flag" />
+                <label for="attendant_cc_flag">CC</label>
+              </div>
+
+              <div class="col-span-4">
+                <input type="checkbox" class="input-checkbox" id="attendant_mc_flag" formControlName="attendant_mc_flag" />
+                <label for="attendant_mc_flag">MC</label>
+              </div>
+
+              <div class="col-span-4">
+                <input type="checkbox" class="input-checkbox" id="attendant_tb_flag" formControlName="attendant_tb_flag" />
+                <label for="attendant_tb_flag">TB</label>
+              </div>
+            </div>
             <!-- <div class="col-span-8">
               <label for="password" class="input-label" [ngClass]="{'text-red-500': is_saving && f.password.errors}">Password</label>
               <input type="password" name="password" id="password" class="input disabled:bg-gray-200 disabled:text-gray-500" [ngClass]="{'invalid-input': is_saving && f.password.errors}" formControlName="password">

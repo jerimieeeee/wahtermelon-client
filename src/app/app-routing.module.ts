@@ -20,10 +20,6 @@ const routes: Routes = [
     loadChildren: () => import('./modules/familyplanning/familyplanning.module').then(m => m.FamilyplanningModule)
   },
   {
-    path: 'ab',
-    loadChildren: () => import('./modules/animalbite/animalbite.module').then(m => m.AnimalbiteModule)
-  },
-  {
     path: 'registration',
     loadChildren: () => import('./modules/patient-registration/patient-registration.module').then(m => m.PatientRegistrationModule)
   },

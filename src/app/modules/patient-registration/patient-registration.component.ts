@@ -6,6 +6,7 @@ import { HttpService } from 'app/shared/services/http.service';
 import { openCloseTrigger } from './declarations/animation';
 import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-patient-registration',
@@ -323,6 +324,9 @@ export class PatientRegistrationComponent implements OnInit {
       next: (data: any) => {
         // console.log(data)
         this.patientForm.patchValue({...data.data});
+        this.patientForm.patchValue({
+          birthdate: formatDate(data.data.birthdate,'yyyy-MM-dd', 'en')
+        })
         if(data.data.patientWashington) {
           this.patientForm.patchValue({
             difficulty_hearing: data.data.patientWashington.difficulty_hearing,

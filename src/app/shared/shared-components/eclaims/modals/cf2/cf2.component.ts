@@ -1,4 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { faFilePdf } from '@fortawesome/free-regular-svg-icons';
+import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
+import { HttpService } from 'app/shared/services/http.service';
+import { ExportAsConfig, ExportAsService } from 'ngx-export-as';
+import { ToastrService } from 'ngx-toastr';
+import { eclaimsForm } from '../../eclaimsForm';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-cf2',
@@ -6,10 +14,363 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./cf2.component.scss']
 })
 export class Cf2Component implements OnInit {
+  @Output() toggleModal = new EventEmitter<any>();
+  @Input() patient;
+  @Input() program_id;
+  @Input() program_name;
+  @Input() caserate_list;
+  @Input() selected_case;
 
-  constructor() { }
+  faFilePdf = faFilePdf;
+  faCircleNotch = faCircleNotch;
 
-  ngOnInit(): void {
+  pbef_result: any;
+  program_code: string;
+  program_creds: any;
+
+  pdf_exported: boolean = false;
+  show_form: boolean = true;
+  que_form: boolean = false;
+  caserate_field: any;
+  selected_caserate: any;
+  facility: any;
+
+  eclaimsForm:FormGroup=eclaimsForm();
+
+  date_today = formatDate(new Date(), 'yyyy-MM-dd', 'en');
+  submitQue() {
+    this.que_form = true;
+    console.log(this.eclaimsForm.value)
+    this.http.post('eclaims/eclaims-xml', this.eclaimsForm.value).subscribe({
+      next: (data:any) => {
+        console.log(data)
+        this.toastr.success('Successfully saved', 'Queue Claim');
+        this.que_form = false;
+        this.closeModal();
+      },
+      error: err => console.log(err)
+    })
   }
 
+  paramsTb() {
+    this.f.pTBType.setValidators([Validators.required]);
+    this.f.pNTPCardNo.setValidators([Validators.required]);
+
+    let tb = {
+      attendant_sign_date: null,
+      pTBType: null,
+      admission_date: null,
+      discharge_date: null,
+    }
+
+    if(this.selected_caserate.code === '89221') {
+      tb.pTBType = 'I';
+      tb.attendant_sign_date = formatDate(this.selected_case.case_holding.treatment_start, 'yyyy-MM-dd', 'en');
+      tb.admission_date = formatDate(this.selected_case.case_holding.treatment_start, 'yyyy-MM-dd', 'en');
+
+      let cont_date = new Date(this.selected_case.case_holding.continuation_start);
+          cont_date.setDate(cont_date.getDate()-1);
+
+      tb.discharge_date = formatDate(cont_date, 'yyyy-MM-dd', 'en');
+    }
+
+    if(this.selected_caserate.code === '89222') {
+      tb.pTBType = 'M';
+      tb.attendant_sign_date = formatDate(this.selected_case.case_holding.treatment_start, 'yyyy-MM-dd', 'en');
+      tb.admission_date = formatDate(this.selected_case.case_holding.continuation_start, 'yyyy-MM-dd', 'en');
+      tb.discharge_date = formatDate(this.selected_case.case_holding.treatment_end, 'yyyy-MM-dd', 'en');
+    }
+
+    this.eclaimsForm.patchValue({
+      attendant_sign_date: tb.attendant_sign_date,
+      pTBType: tb.pTBType,
+      pNTPCardNo: this.selected_case.case_holding.case_number,
+      admission_date: tb.admission_date,
+      admission_time: '8:00AM',
+      discharge_date:tb.discharge_date,
+      discharge_time: '8:00AM',
+    });
+
+    console.log(this.eclaimsForm)
+    this.getCreds();
+  }
+
+  getCreds(){
+    let params = {
+      'filter[program_code]': this.program_name !== 'cc' ? this.program_name : 'mc'
+    }
+
+    this.http.get('settings/philhealth-credentials', {params}).subscribe({
+      next:(data:any) => {
+        console.log(data.data)
+        this.program_creds = data.data[0];
+        this.show_form = true;
+      },
+      error: err => console.log(err)
+    })
+  }
+
+  paramsCc(vaccine) {
+    console.log(vaccine);
+    this.f.pEssentialNewbornCare.setValidators([Validators.required]);
+    this.f.pNewbornHearingScreeningTest.setValidators([Validators.required]);
+    this.f.pNewbornScreeningTest.setValidators([Validators.required]);
+    this.f.pFilterCardNo.setValidators([Validators.required]);
+
+    let hearing_done: string = 'N';
+    let service_count: number = 0;
+    let bcg_vaccine: boolean = false;
+    if(this.selected_case.consultccdevservices){
+      Object.entries(this.selected_case.consultccdevservices).forEach(([key,value]:any, index) => {
+        if(value.service_id === 'HEAR') {
+          hearing_done = 'Y';
+        } else {
+          service_count += 1;
+        }
+      });
+
+      console.log(service_count);
+    }
+
+    if(vaccine){
+      Object.entries(vaccine).forEach(([key,value]:any, index) => {
+        if(value.vaccine_id === 'HEPB') {
+          bcg_vaccine = true;
+          return 1;
+        }
+      });
+    }
+
+    this.eclaimsForm.patchValue({
+      attendant_sign_date: formatDate(this.selected_case.admission_date, 'yyyy-MM-dd', 'en'),
+      admission_date: formatDate(this.selected_case.admission_date, 'yyyy-MM-dd', 'en'),
+      admission_time: formatDate(this.selected_case.admission_date, 'HH:mma', 'en'),
+      discharge_date: formatDate(this.selected_case.discharge_date, 'yyyy-MM-dd', 'en'),
+      discharge_time: formatDate(this.selected_case.discharge_date, 'HH:mma', 'en'),
+      pNewbornHearingScreeningTest: hearing_done,
+      pNewbornScreeningTest: this.selected_case.nbs_filter ? 'Y' : 'N',
+      pFilterCardNo: this.selected_case.nbs_filter,
+      pEssentialNewbornCare: hearing_done === 'Y' && bcg_vaccine ? 'Y' : 'N'
+    });
+
+    console.log(this.eclaimsForm.value);
+    this.getCreds();
+  }
+
+  getVaccine(): string{
+    return 'Y'
+  }
+
+  paramsAb() {
+    this.f.pDay0ARV.setValidators([Validators.required]);
+    this.f.pDay3ARV.setValidators([Validators.required]);
+    this.f.pDay7ARV.setValidators([Validators.required]);
+    this.f.pRIG.setValidators([Validators.required]);
+    this.f.pABPOthers.setValidators([Validators.required]);
+    this.f.pABPSpecify.setValidators([Validators.required]);
+    this.f.pICDCode.setValidators([Validators.required]);
+  }
+
+  mc_error: boolean = false;
+
+  paramsMc() {
+    this.f.pCheckUpDate1.setValidators([Validators.required]);
+    this.f.pCheckUpDate2.setValidators([Validators.required]);
+    this.f.pCheckUpDate3.setValidators([Validators.required]);
+    this.f.pCheckUpDate4.setValidators([Validators.required]);
+
+    console.log(this.selected_case);
+    if(Object.keys(this.selected_case.prenatal_visit).length < 4 && this.selected_case.prenatal_visit[0].trimester < 3) {
+      this.mc_error = true;
+      this.show_form = true;
+    } else {
+      let visit1: string = null;
+      let visit2: string = null;
+      let visit3: string = null;
+      let visit4: string = null;
+      let signDate: Date;
+      let admitDate: Date;
+      let dischargeDate: Date;
+
+      Object.entries(this.selected_case.prenatal_visit).reverse().forEach(([key, value]:any, index) => {
+        if(index === 0 && !visit1) visit1 = value.prenatal_date;
+        if(index === 1 && !visit2) visit2 = value.prenatal_date;
+        if(index === 2 && !visit3) visit3 = value.prenatal_date;
+
+        if((index > 2 && !visit4) && value.trimester === 3) {
+          visit4 = value.prenatal_date;
+          return true;
+        }
+      });
+
+      if(this.selected_caserate.code === 'ANC01' || this.selected_caserate.code === 'ANC02') {
+        signDate = new Date(visit4);
+        admitDate = new Date(visit1);
+        dischargeDate = new Date(visit4);
+      } else {
+        signDate = this.selected_case.post_registration.discharge_date;
+        admitDate = this.selected_case.post_registration.admission_date;
+        dischargeDate = this.selected_case.post_registration.discharge_date;
+      }
+
+      this.eclaimsForm.patchValue({
+        pCheckUpDate1: visit1,
+        pCheckUpDate2: visit2,
+        pCheckUpDate3: visit3,
+        pCheckUpDate4: visit4,
+        attendant_sign_date: formatDate(signDate, 'yyyy-MM-dd', 'en'),
+        admission_date: formatDate(admitDate, 'yyyy-MM-dd', 'en'),
+        admission_time: formatDate(admitDate, 'HH:mma', 'en'),
+        discharge_date: formatDate(dischargeDate, 'yyyy-MM-dd', 'en'),
+        discharge_time: formatDate(dischargeDate, 'HH:mma', 'en'),
+      });
+
+      this.getCreds();
+    }
+  }
+
+  paramsMl() {
+    this.f.pICDCode.setValidators([Validators.required]);
+  }
+
+  paramsFp(){
+    this.f.pICDCode.setValidators([Validators.required]);
+  }
+
+  get f(): { [key: string]: AbstractControl } {
+    return this.eclaimsForm.controls;
+  }
+
+  loadCf2Params() {
+    switch(this.program_name) {
+      case 'tb': {
+        this.paramsTb();
+        break;
+      }
+      case 'cc': {
+        let params = { patient_id: this.selected_case.patient_id };
+
+        this.http.get('patient-vaccines/vaccines-records', {params}).subscribe({
+          next: (data:any) => {
+            this.paramsCc(data.data);
+          }
+        });
+        break;
+      }
+      case 'mc': {
+        this.paramsMc();
+        break;
+      }
+    }
+  }
+
+  selectCaserate() {
+    this.selected_caserate = this.caserate_field;
+    this.createForm();
+  }
+
+  exportAsPdf: ExportAsConfig = {
+    type: 'pdf',
+    elementIdOrContent: 'mainForm',
+    options: {
+      image: { type: 'jpeg', quality: 1 },
+      html2canvas:  { scale: 2},
+      margin:  [0, 0, 0, 0],
+      pagebreak: { mode: ['avoid-all', 'css', 'legacy']},
+      jsPDF: {
+        orientation: 'portrait',
+        unit: 'mm',
+        format: [216, 330]
+      }
+    }
+  }
+
+  exportP() {
+    let file_name = 'CF2_'+this.patient.last_name.toUpperCase()+'_'+this.patient.first_name.toUpperCase()+'_'+formatDate(new Date(), 'yyyyMMdd', 'en');
+    this.pdf_exported = true;
+    this.exportAsService.save(this.exportAsPdf, file_name).subscribe(() => {
+      this.pdf_exported = false;
+    });
+  }
+
+  createForm(){
+    this.show_form = false;
+    this.eclaimsForm = this.formBuilder.group({
+      patient_id: [null, Validators.required],
+      facility_code: [this.facility.code, Validators.required],
+      program_desc: [null, Validators.required],
+      program_id: [null, Validators.required],
+      admit_dx: [null, Validators.required],
+      caserate_date: [null, Validators.required],
+      caserate_code: [null, Validators.required],
+      code: [null, Validators.required],
+      description: [null, Validators.required],
+      discharge_dx: [null, Validators.required],
+      icd10_code: [null, Validators.required],
+      hci_fee: [null, Validators.required],
+      prof_fee: [null, Validators.required],
+      caserate_fee: [null, Validators.required],
+      admission_date: [null, Validators.required],
+      admission_time: [null, Validators.required],
+      discharge_date: [null, Validators.required],
+      discharge_time: [null, Validators.required],
+      eclaims_caserate_list_id: [null, Validators.required],
+      attendant_accreditation_code: [null, Validators.required],
+      attendant_last_name: [null, Validators.required],
+      attendant_first_name: [null, Validators.required],
+      attendant_middle_name: [null],
+      attendant_suffix_name: [null],
+      attendant_sign_date: [null, Validators.required],
+      pTBType: [null],
+      pNTPCardNo: [null],
+      pDay0ARV: [null],
+      pDay3ARV: [null],
+      pDay7ARV: [null],
+      pRIG: [null],
+      pABPOthers: [null],
+      pABPSpecify: [null],
+      pEssentialNewbornCare: [null],
+      pNewbornHearingScreeningTest: [null],
+      pNewbornScreeningTest: [null],
+      pFilterCardNo: [null],
+      pCheckUpDate1: [null],
+      pCheckUpDate2: [null],
+      pCheckUpDate3: [null],
+      pCheckUpDate4: [null],
+      pICDCode: [null],
+      transmittalNumber: [null]
+    });
+
+    this.eclaimsForm.patchValue({...this.selected_caserate});
+    this.eclaimsForm.patchValue({
+      eclaims_caserate_list_id: this.selected_caserate.id,
+      attendant_accreditation_code: this.selected_caserate.attendant.accreditation_number,
+      attendant_last_name: this.selected_caserate.attendant.last_name,
+      attendant_first_name: this.selected_caserate.attendant.first_name,
+      attendant_middle_name: this.selected_caserate.attendant.middle_name,
+      attendant_suffix_name: this.selected_caserate.attendant.suffix_name !== 'NA' ? this.selected_caserate.attendant.suffix_name : '',
+    });
+
+    this.loadCf2Params();
+  }
+
+  closeModal() {
+    this.toggleModal.emit('cf2');
+  }
+
+  constructor (
+    private http: HttpService,
+    private toastr: ToastrService,
+    private exportAsService: ExportAsService,
+    private formBuilder: FormBuilder
+  ) { }
+
+  ngOnInit(): void {
+    this.facility = this.http.getUserFromJSON().facility;
+    console.log(this.program_name, this.selected_case)
+    if(this.caserate_list.length === 1) {
+      this.selected_caserate = this.caserate_list[0];
+      this.createForm();
+    }
+  }
 }

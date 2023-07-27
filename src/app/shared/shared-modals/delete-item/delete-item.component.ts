@@ -27,6 +27,8 @@ export class DeleteItemComponent implements OnChanges, AfterViewInit{
   is_loading: boolean = false;
 
   generateCode(){
+    this.is_loading = false;
+    this.confirmation_code = null
     this.confirm_code = Math.floor(Math.random() * 1000).toString().padStart(4, '0');
   }
 
@@ -40,13 +42,15 @@ export class DeleteItemComponent implements OnChanges, AfterViewInit{
           this.toastr.error('Record was deleted!','Vaccine record');
           this.closeModal();
         },
-        error: err => console.log(err)
+        error: err => {
+          console.log(err)
+          this.is_loading = false;
+          this.generateCode();
+        }
       })
     }else{
       this.generateCode();
       this.toastr.info('Code mismatch, please try again', 'Incorrect Code');
-      this.is_loading = false;
-      this.confirmation_code = null
     }
   }
 

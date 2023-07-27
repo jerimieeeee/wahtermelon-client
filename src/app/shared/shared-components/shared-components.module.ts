@@ -12,6 +12,9 @@ import { PbefComponent } from './eclaims/modals/pbef/pbef.component';
 import { Cf1Component } from './eclaims/modals/cf1/cf1.component';
 import { Cf2Component } from './eclaims/modals/cf2/cf2.component';
 import { NgxPrintModule } from 'ngx-print';
+import { ExportAsModule } from 'ngx-export-as';
+import { UploadClaimsComponent } from './eclaims/modals/upload-claims/upload-claims.component';
+import { DeleteItemComponent } from '../shared-modals/delete-item/delete-item.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +25,7 @@ import { NgxPrintModule } from 'ngx-print';
     PbefComponent,
     Cf1Component,
     Cf2Component,
+    UploadClaimsComponent,
   ],
   imports: [
     CommonModule,
@@ -30,7 +34,9 @@ import { NgxPrintModule } from 'ngx-print';
     ReactiveFormsModule,
     FormsModule,
     WebcamModule,
-    NgxPrintModule
+    NgxPrintModule,
+    ExportAsModule,
+    DeleteItemComponent
   ],
   exports: [
     KonsultaComponent,

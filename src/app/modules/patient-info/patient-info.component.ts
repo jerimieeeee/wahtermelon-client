@@ -132,6 +132,7 @@ export class PatientInfoComponent implements OnInit {
       this.http.get('patient/'+this.active_loc_id.patient_id).subscribe({
         next: (data: any) => {
           this.patient_info = data.data;
+          console.log(this.patient_info);
           this.show_form = true;
           this.http.setPatientInfo(this.patient_info);
           this.loadData('all');
@@ -140,7 +141,7 @@ export class PatientInfoComponent implements OnInit {
           this.accordions['lab_request'] = true;
           this.accordions['prescriptions'] = true;
           this.accordions['appointment'] = true;
-          this.getImage(data.data)
+          if(this.patient_info.image_url) this.getImage(data.data)
         },
         error: err => {
           // feature: add prompt that patient is not found. for now redirect to home
@@ -308,7 +309,7 @@ export class PatientInfoComponent implements OnInit {
         }
       }
 
-      if(modal_name='photo' && !this.modals['photo']) this.getImage(this.patient_info);
+      if(modal_name ==='photo' && !this.modals['photo']) this.getImage(this.patient_info);
       // if(modal_name === 'preghist' && this.modals[modal_name] === false) this.loadData('pregnancy_history')
       if(modal_name === 'lifestyle' && this.modals['lifestyle'] === false) this.loadData('social_history');
       if (modal_name === 'lab-request' && this.modals[modal_name] === false) this.loadData('laboratory');

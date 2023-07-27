@@ -17,6 +17,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 export class SearchCaserateComponent {
   @Output() toggleModal = new EventEmitter<any>();
   @Input() selected_tb_consult;
+  @Input() program_name;
 
   faSave = faSave;
   faCircleNotch = faCircleNotch;
@@ -43,20 +44,42 @@ export class SearchCaserateComponent {
 
   caserate_result: any = [];
   onSubmit() {
+    this.caserate_result = [];
     this.is_searching = true;
-    this.searchForm.patchValue({program_code: 'mc'});
+    this.searchForm.patchValue({program_code: this.program_name !== 'cc' ? this.program_name : 'mc'});
+
+    this.searchForm.patchValue({
+      rvs: this.searchForm.value.rvs.toUpperCase(),
+      description: this.searchForm.value.description.toUpperCase(),
+      icd10: this.searchForm.value.icd10.toUpperCase(),
+    });
+
     this.http.post('eclaims/case-rate', this.searchForm.value).subscribe({
       next: (data:any) => {
         this.is_searching = false;
         this.caserate_result.push(data.CASERATES);
         console.log(typeof this.caserate_result, this.caserate_result)
       },
-      error: err => console.log(err)
+      error: err => {
+        console.log(err)
+        this.is_searching = false;
+        this.toastr.error(err.error.message, 'Caserate error', {
+          closeButton: true,
+          positionClass: 'toast-top-center',
+          disableTimeOut: true
+        });
+      }
     })
   }
 
-  closeModal(data?){
-    this.toggleModal.emit('search-caseate');
+  closeModal(data?, amount?){
+    let content;
+    if(data) {
+      content = {name: 'search-caserate', amount: amount, data: data};
+    } else {
+      content = 'search-caserate';
+    }
+    this.toggleModal.emit(content);
   }
 
   constructor(

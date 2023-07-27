@@ -1,5 +1,5 @@
 <div id="defaultModal" tabindex="-1" class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 w-full md:inset-0 h-modal md:h-full justify-center items-center flex" aria-modal="true" role="dialog" style="z-index:60">
-  <div class="relative p-4 w-full max-w-3xl h-auto md:h-auto">
+  <div class="relative p-4 w-full max-w-5xl h-auto md:h-auto">
     <!-- Modal content -->
     <div class="relative bg-white rounded-lg shadow">
       <!-- Modal header -->
@@ -35,55 +35,75 @@
             </div>
           </div>
         </form>
-        <div>
+        <div class="flex mx-3 justify-center">
           <table class="table-auto text-xs border border-slate-300 border-collapse">
             <thead>
               <tr>
-                <th colspan="15">Case Rate Group</th>
+                <th colspan="15" class="w-[900px]">Case Rate Group</th>
               </tr>
               <tr>
-                <th rowspan="2" class="border border-slate-300">ICD10/RVS Code</th>
-                <th rowspan="2" class="border border-slate-300">Description</th>
-                <th colspan="3" class="border border-slate-300">First Case Rate</th>
-                <th colspan="3" class="border border-slate-300">Second Case Rate</th>
-                <th colspan="7" class="border border-slate-300">Applicable Health Care Institutions <br />Note: If licensed and capable to perform the procedure</th>
+                <th rowspan="3" class="border border-slate-300 w-[70px]">ICD10/ <br />RVS Code</th>
+                <th rowspan="3" class="border border-slate-300 w-[198px]">Description</th>
+                <th colspan="3" class="border border-slate-300 w-[216px]">First Case Rate</th>
+                <th colspan="3" class="border border-slate-300 w-[216px]">Second Case Rate</th>
+                <th colspan="7" class="border border-slate-300 w-[200px]">Applicable Health Care Institutions <br />Note: If licensed and capable to perform the procedure</th>
               </tr>
               <tr>
-                <th class="border border-slate-300">HCI Fee</th>
-                <th class="border border-slate-300">Prof Fee</th>
-                <th class="border border-slate-300">Case Rate</th>
-                <th class="border border-slate-300">HCI Fee</th>
-                <th class="border border-slate-300">Prof Fee</th>
-                <th class="border border-slate-300">Case Rate</th>
-                <th class="border border-slate-300">Level 1</th>
-                <th class="border border-slate-300">Level 2</th>
-                <th class="border border-slate-300">Level 3</th>
-                <th class="border border-slate-300">ASC</th>
-                <th class="border border-slate-300">PCF</th>
-                <th class="border border-slate-300">MCP</th>
-                <th class="border border-slate-300">FSDC</th>
+                <th class="border border-slate-300 w-[72px]" rowspan="2">HCI <br /> Fee</th>
+                <th class="border border-slate-300 w-[72px]" rowspan="2">Prof <br /> Fee</th>
+                <th class="border border-slate-300 w-[72px]" rowspan="2">Case<br />  Rate</th>
+                <th class="border border-slate-300 w-[72px]" rowspan="2">HCI <br /> Fee</th>
+                <th class="border border-slate-300 w-[72px]" rowspan="2">Prof <br /> Fee</th>
+                <th class="border border-slate-300 w-[72px]" rowspan="2">Case <br /> Rate</th>
+                <th class="border border-slate-300 text-[0.7rem] w-[100px]" colspan="3">Level</th>
+                <th class="border border-slate-300" rowspan="2">ASC</th>
+                <th class="border border-slate-300" rowspan="2">PCF</th>
+                <th class="border border-slate-300" rowspan="2">MCP</th>
+                <th class="border border-slate-300" rowspan="2">FSDC</th>
+              </tr>
+              <tr>
+                <th class="border border-slate-300 text-[0.7rem]">1</th>
+                <th class="border border-slate-300 text-[0.7rem]">2</th>
+                <th class="border border-slate-300 text-[0.7rem]">3</th>
               </tr>
             </thead>
             <tbody>
               <tr class="border border-slate-300" *ngFor="let caserate of caserate_result">
                 <td [rowSpan]="caserate.AMOUNT.length" class="border border-slate-300">{{ caserate.pItemCode }}</td>
                 <td [rowSpan]="caserate.AMOUNT.length" class="border border-slate-300">{{ caserate.pCaseRateDescription }}</td>
-                <td colspan="13" class="border border-slate-300">
-                  <table>
-                    <tr *ngFor="let amount of caserate.AMOUNT">
-                      <td class="px-1 border border-slate-300">{{ amount.pPrimaryHCIFee }}</td>
-                      <td class="px-1 border border-slate-300">{{ amount.pPrimaryProfFee }}</td>
-                      <td class="px-1 border border-slate-300" (click)="closeModal(caserate)">{{ amount.pPrimaryCaseRate }}</td>
-                      <td class="px-1 border border-slate-300">{{ amount.pSecondaryHCIFee }}</td>
-                      <td class="px-1 border border-slate-300">{{ amount.pSecondaryProfFee }}</td>
-                      <td class="px-1 border border-slate-300">{{ amount.pSecondaryCaseRate }}</td>
-                      <td class="px-1 border border-slate-300">{{ amount.pCheckFacilityH1 }}</td>
-                      <td class="px-1 border border-slate-300">{{ amount.pCheckFacilityH2 }}</td>
-                      <td class="px-1 border border-slate-300">{{ amount.pCheckFacilityH3 }}</td>
-                      <td class="px-1 border border-slate-300">{{ amount.pCheckFacilityASC }}</td>
-                      <td class="px-1 border border-slate-300">{{ amount.pCheckFacilityPCF }}</td>
-                      <td class="px-1 border border-slate-300">{{ amount.pCheckFacilityMAT }}</td>
-                      <td class="px-1 border border-slate-300">{{ amount.pCheckFacilityFSDC }}</td>
+                <td colspan="13" class="p-0 m-0">
+                  <table class="table-auto p-0 m-0 w-full border-0" *ngIf="caserate.AMOUNT.length">
+                    <tr *ngFor="let amount of caserate.AMOUNT; let last = last; let first = first">
+                      <td class="px-1 border border-slate-300 w-[72px] border-l-0" [ngClass]="{'border-b-0': last, 'border-t-0': first}">{{ amount.pPrimaryHCIFee }}</td>
+                      <td class="px-1 border border-slate-300 w-[72px]" [ngClass]="{'border-b-0': last, 'border-t-0': first}">{{ amount.pPrimaryProfFee }}</td>
+                      <td class="px-1 border border-slate-300 w-[72px] text-blue-500 font-semibold hover:cursor-pointer" (click)="closeModal(caserate, amount)" [ngClass]="{'border-b-0': last, 'border-t-0': first}">{{ amount.pPrimaryCaseRate }}</td>
+                      <td class="px-1 border border-slate-300 w-[72px]" [ngClass]="{'border-b-0': last, 'border-t-0': first}">{{ amount.pSecondaryHCIFee }}</td>
+                      <td class="px-1 border border-slate-300 w-[72px]" [ngClass]="{'border-b-0': last, 'border-t-0': first}">{{ amount.pSecondaryProfFee }}</td>
+                      <td class="px-1 border border-slate-300 w-[72px]" [ngClass]="{'border-b-0': last, 'border-t-0': first}">{{ amount.pSecondaryCaseRate }}</td>
+                      <td class="px-1 border border-slate-300" [ngClass]="{'border-b-0': last, 'border-t-0': first}">{{ amount.pCheckFacilityH1 }}</td>
+                      <td class="px-1 border border-slate-300" [ngClass]="{'border-b-0': last, 'border-t-0': first}">{{ amount.pCheckFacilityH2 }}</td>
+                      <td class="px-1 border border-slate-300" [ngClass]="{'border-b-0': last, 'border-t-0': first}">{{ amount.pCheckFacilityH3 }}</td>
+                      <td class="px-1 border border-slate-300" [ngClass]="{'border-b-0': last, 'border-t-0': first}">{{ amount.pCheckFacilityASC }}</td>
+                      <td class="px-1 border border-slate-300" [ngClass]="{'border-b-0': last, 'border-t-0': first}">{{ amount.pCheckFacilityPCF }}</td>
+                      <td class="px-1 border border-slate-300" [ngClass]="{'border-b-0': last, 'border-t-0': first}">{{ amount.pCheckFacilityMAT }}</td>
+                      <td class="px-1 border border-slate-300 border-r-0" [ngClass]="{'border-b-0': last, 'border-t-0': first}">{{ amount.pCheckFacilityFSDC }}</td>
+                    </tr>
+                  </table>
+                  <table class="table-auto p-0 m-0 w-full" *ngIf="!caserate.AMOUNT.length">
+                    <tr class="h-full py-8">
+                      <td class="px-1 border border-slate-300 border-y-0 border-l-0 w-[72px]">{{ caserate.AMOUNT.pPrimaryHCIFee }}</td>
+                      <td class="px-1 border border-slate-300 border-y-0 w-[72px]">{{ caserate.AMOUNT.pPrimaryProfFee }}</td>
+                      <td class="px-1 border border-slate-300 border-y-0 w-[72px] text-blue-500 font-semibold hover:cursor-pointer" (click)="closeModal(caserate, caserate.AMOUNT)">{{ caserate.AMOUNT.pPrimaryCaseRate }}</td>
+                      <td class="px-1 border border-slate-300 border-y-0 w-[72px]">{{ caserate.AMOUNT.pSecondaryHCIFee }}</td>
+                      <td class="px-1 border border-slate-300 border-y-0 w-[72px]">{{ caserate.AMOUNT.pSecondaryProfFee }}</td>
+                      <td class="px-1 border border-slate-300 border-y-0 w-[72px]">{{ caserate.AMOUNT.pSecondaryCaseRate }}</td>
+                      <td class="px-1 border border-slate-300 border-y-0">{{ caserate.AMOUNT.pCheckFacilityH1 }}</td>
+                      <td class="px-1 border border-slate-300 border-y-0">{{ caserate.AMOUNT.pCheckFacilityH2 }}</td>
+                      <td class="px-1 border border-slate-300 border-y-0">{{ caserate.AMOUNT.pCheckFacilityH3 }}</td>
+                      <td class="px-1 border border-slate-300 border-y-0">{{ caserate.AMOUNT.pCheckFacilityASC }}</td>
+                      <td class="px-1 border border-slate-300 border-y-0">{{ caserate.AMOUNT.pCheckFacilityPCF }}</td>
+                      <td class="px-1 border border-slate-300 border-y-0">{{ caserate.AMOUNT.pCheckFacilityMAT }}</td>
+                      <td class="px-1 border border-slate-300 border-y-0 border-r-0">{{ caserate.AMOUNT.pCheckFacilityFSDC }}</td>
                     </tr>
                   </table>
                 </td>

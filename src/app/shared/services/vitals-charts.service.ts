@@ -15,11 +15,11 @@ export class VitalsChartsService {
     Object.entries(details).reverse().forEach(([keys, values], indexes) => {
       let val:any = values;
 
-      if(val.patient_height) latest_vitals.patient_height = val.patient_height;
-      if(val.patient_weight) latest_vitals.patient_weight = val.patient_weight;
+      if(!latest_vitals.patient_height && val.patient_height) latest_vitals.patient_height = val.patient_height;
+      if(!latest_vitals.patient_weight && val.patient_weight) latest_vitals.patient_weight = val.patient_weight;
 
-      if(val.patient_right_vision_acuity) latest_vitals.patient_right_vision_acuity = val.patient_right_vision_acuity;
-      if(val.patient_left_vision_acuity) latest_vitals.patient_left_vision_acuity = val.patient_left_vision_acuity;
+      if(!latest_vitals.patient_right_vision_acuity && val.patient_right_vision_acuity) latest_vitals.patient_right_vision_acuity = val.patient_right_vision_acuity;
+      if(!latest_vitals.patient_left_vision_acuity && val.patient_left_vision_acuity) latest_vitals.patient_left_vision_acuity = val.patient_left_vision_acuity;
 
       let vitals_date = formatDate(val.vitals_date, 'yyyy-MM-dd','en', 'en')
       let date_today;

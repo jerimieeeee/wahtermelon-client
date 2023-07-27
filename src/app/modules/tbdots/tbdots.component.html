@@ -51,7 +51,7 @@
         [class]="module===7? 'tabs-main-true' : 'tabs-main-false' ">
         DRUG DISPENSING
     </button> -->
-    <button (click)="switchTab(8)" class="tabs-main w-28"
+    <button (click)="switchTab(8)" *ngIf="selected_tb_consult?.id" class="tabs-main w-28"
         [class]="module===8? 'tabs-main-true' : 'tabs-main-false' ">
         CASE RATE
     </button>
@@ -174,7 +174,17 @@
 ></app-treatment-outcome>
 
 <app-caserate *ngIf="pages === 2 && module === 8"
+  (switchPage)="switchPage($event)"
+  [patient_id]="selected_tb_consult.patient_id"
+  [program_id]="selected_tb_consult.id"
+  [program_name]="'tb'"
+  [max_date]="max_date"
 ></app-caserate>
 
-<app-eclaims *ngIf="pages === 1"
+<app-eclaims *ngIf="pages === 3"
+  (switchPage)="switchPage($event)"
+  [program_id]="selected_tb_consult.id"
+  [program_name]="'tb'"
+  [max_date]="max_date"
+  [selected_case]="selected_tb_consult"
 ></app-eclaims>

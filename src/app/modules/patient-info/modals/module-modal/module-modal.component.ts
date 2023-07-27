@@ -53,6 +53,7 @@ export class ModuleModalComponent implements OnInit {
   mc = { name: 'Maternal Care', location: 'mc', group: 'mc', consult_active: false, id: null };
   cc = { name: 'Child Care', location: 'cc', group: 'cc', consult_active: false, id: null };
   gbv = { name: 'GBV', location: 'gbv', group: 'gbv', consult_active: false, id: null };
+  fp = { name: 'Family Planning', location: 'fp', group: 'fp', consult_active: false, id: null };
   show_new: boolean = false;
   is_loading: boolean = false;
   show_form: boolean = false;
@@ -95,6 +96,10 @@ export class ModuleModalComponent implements OnInit {
       this.list_modules.General.modules['cc'] = this.cc;
     }
 
+    if(this.patient_age.type === 'year' && this.patient_age.age >= 9) {
+      this.list_modules.General.modules['fp'] = this.fp;
+    }
+
     if(this.arr_allowed.indexOf(this.pos) > -1) {
       this.list_modules.Others.modules['gbv'] = this.gbv;
     }
@@ -104,7 +109,8 @@ export class ModuleModalComponent implements OnInit {
     let loc = module.location;
     this.is_loading = true;
 
-    if(loc==='gbv') {
+
+    if(loc==='gbv' || loc === 'itr' || loc === 'lab') {
       this.router.navigate(['/patient/'+loc, {id: this.patient_info.id}]);
       this.closeModal();
     } else {
@@ -120,21 +126,16 @@ export class ModuleModalComponent implements OnInit {
           this.closeModal();
         }
       } else {
-        if(loc === 'itr' || loc === 'lab'){
-          this.router.navigate(['/patient/'+loc, {id: this.patient_info.id}]);
-          this.closeModal();
+        if(module.consult_active === false) {
+          this.show_new = true;
         } else {
-          if(module.consult_active === false) {
-            this.show_new = true;
-          } else {
-            this.show_new = false;
-            this.router.navigate(['/patient/'+loc, {id: this.patient_info.id, consult_id: module.id}]);
-            this.closeModal();
-          }
-
-          this.selected_module = module;
-          this.is_loading = false;
+          this.show_new = false;
+          this.router.navigate(['/patient/'+loc, {id: this.patient_info.id, consult_id: module.id}]);
+          this.closeModal();
         }
+
+        this.selected_module = module;
+        this.is_loading = false;
       }
     }
   }

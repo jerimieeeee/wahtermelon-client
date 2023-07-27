@@ -139,7 +139,7 @@ export class PhilhealthModalComponent implements OnInit {
 
     let patient = this.http.getPatientInfo();
     let params = {
-      program_code: 'mc',
+      program_code: 'tb',
       last_name: patient.last_name,
       first_name: patient.first_name,
       middle_name: patient.middle_name,
@@ -160,7 +160,12 @@ export class PhilhealthModalComponent implements OnInit {
         if(err.status === 404) {
           this.retrieving_error = err.error.data;
         }
-        this.toastrMessage('success', 'Philhealth', 'Philhealth PIN retrieved', 'retrieving_pin');
+        this.toastr.error(err.error.message, 'Member PIN', {
+          closeButton: true,
+          positionClass: 'toast-top-center',
+          disableTimeOut: true
+        });
+        // this.toastrMessage('success', 'Philhealth', 'Philhealth PIN retrieved', 'retrieving_pin');
       }
     })
   }
