@@ -36,7 +36,7 @@ export class ReportsComponent implements OnInit {
   ]
 
   gbv_stats = [
-    { id: 'catalyst-report', desc: 'Catalyst Report', url: 'gbv-report/catalyst-report'},
+    { id: 'gbv-report', desc: 'GBV Report', url: 'gbv-report/catalyst-report'},
   ]
 
   months = [
