@@ -15,6 +15,8 @@ import { PrenatalComponent } from './modules/prenatal/prenatal.component';
 import { ServicesComponent } from './modules/services/services.component';
 import { PostvisitsComponent } from './modules/postvisits/postvisits.component';
 import { EndVisitComponent } from 'app/shared/shared-modals/end-visit/end-visit.component';
+import { CaserateComponent } from 'app/shared/shared-components/eclaims/components/caserate/caserate.component';
+import { SharedComponentsModule } from 'app/shared/shared-components/shared-components.module';
 @NgModule({
   declarations: [MaternalcareComponent, McrComponent, PostpartumComponent, RiskfactorsComponent, PrenatalComponent, ServicesComponent, PostvisitsComponent],
   imports: [
@@ -23,7 +25,9 @@ import { EndVisitComponent } from 'app/shared/shared-modals/end-visit/end-visit.
     angularFontawesome.FontAwesomeModule,
     FormsModule,
     ReactiveFormsModule,
-    EndVisitComponent
+    EndVisitComponent,
+    CaserateComponent,
+    SharedComponentsModule
   ]
 })
 export class MaternalcareModule { }
