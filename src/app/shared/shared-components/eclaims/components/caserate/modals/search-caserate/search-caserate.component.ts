@@ -47,6 +47,13 @@ export class SearchCaserateComponent {
     this.caserate_result = [];
     this.is_searching = true;
     this.searchForm.patchValue({program_code: this.program_name !== 'cc' ? this.program_name : 'mc'});
+
+    this.searchForm.patchValue({
+      rvs: this.searchForm.value.rvs.toUpperCase(),
+      description: this.searchForm.value.description.toUpperCase(),
+      icd10: this.searchForm.value.icd10.toUpperCase(),
+    });
+
     this.http.post('eclaims/case-rate', this.searchForm.value).subscribe({
       next: (data:any) => {
         this.is_searching = false;

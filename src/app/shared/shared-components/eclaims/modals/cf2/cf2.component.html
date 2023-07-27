@@ -73,10 +73,10 @@
 
             <!-- MC Case -->
             <div *ngIf="program_name==='mc'">
-              <span class="absolute top-[264mm] left-[17.5mm] w-[45mm]">01-01-2023</span>
-              <span class="absolute top-[264mm] left-[70mm] w-[41mm]">01-01-2023</span>
-              <span class="absolute top-[264mm] left-[117.5mm] w-[37mm]">01-01-2023</span>
-              <span class="absolute top-[264mm] left-[161.5mm] w-[45mm]">01-01-2023</span>
+              <span class="absolute top-[264mm] left-[17.5mm] w-[45mm]">{{ eclaimsForm.value.pCheckUpDate1 | date:'MM-dd-yyyy' }}</span>
+              <span class="absolute top-[264mm] left-[70mm] w-[41mm]">{{ eclaimsForm.value.pCheckUpDate2 | date:'MM-dd-yyyy' }}</span>
+              <span class="absolute top-[264mm] left-[117.5mm] w-[37mm]">{{ eclaimsForm.value.pCheckUpDate3 | date:'MM-dd-yyyy' }}</span>
+              <span class="absolute top-[264mm] left-[161.5mm] w-[45mm]">{{ eclaimsForm.value.pCheckUpDate4 | date:'MM-dd-yyyy' }}</span>
             </div>
             <!-- MC CASE -->
 
@@ -133,6 +133,17 @@
               <ul *ngFor="let field of eclaimsForm.controls|keyvalue">
                 <li class="text-sm font-semibold" *ngIf="field.value.status === 'INVALID'">
                   {{ field.key }} is required
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div *ngIf="show_form && mc_error">
+            <div class="border border-orange-400 bg-orange-50 text-orange-700 rounded-md m-5 p-3">
+              Maternal care visits invalid or incomplete
+              <ul *ngFor="let prenatal_visit of selected_case?.prenatal_visit">
+                <li class="text-sm font-semibold">
+                  Trimester {{ prenatal_visit.trimester }}: {{ prenatal_visit.prenatal_date }}
                 </li>
               </ul>
             </div>

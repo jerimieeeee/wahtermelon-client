@@ -40,6 +40,7 @@ export class Cf2Component implements OnInit {
   date_today = formatDate(new Date(), 'yyyy-MM-dd', 'en');
   submitQue() {
     this.que_form = true;
+    console.log(this.eclaimsForm.value)
     this.http.post('eclaims/eclaims-xml', this.eclaimsForm.value).subscribe({
       next: (data:any) => {
         console.log(data)
@@ -170,11 +171,62 @@ export class Cf2Component implements OnInit {
     this.f.pICDCode.setValidators([Validators.required]);
   }
 
+  mc_error: boolean = false;
+
   paramsMc() {
     this.f.pCheckUpDate1.setValidators([Validators.required]);
     this.f.pCheckUpDate2.setValidators([Validators.required]);
     this.f.pCheckUpDate3.setValidators([Validators.required]);
     this.f.pCheckUpDate4.setValidators([Validators.required]);
+
+    console.log(this.selected_case);
+    if(Object.keys(this.selected_case.prenatal_visit).length < 4 && this.selected_case.prenatal_visit[0].trimester < 3) {
+      this.mc_error = true;
+      this.show_form = true;
+    } else {
+      let visit1: string = null;
+      let visit2: string = null;
+      let visit3: string = null;
+      let visit4: string = null;
+      let signDate: Date;
+      let admitDate: Date;
+      let dischargeDate: Date;
+
+      Object.entries(this.selected_case.prenatal_visit).reverse().forEach(([key, value]:any, index) => {
+        if(index === 0 && !visit1) visit1 = value.prenatal_date;
+        if(index === 1 && !visit2) visit2 = value.prenatal_date;
+        if(index === 2 && !visit3) visit3 = value.prenatal_date;
+
+        if((index > 2 && !visit4) && value.trimester === 3) {
+          visit4 = value.prenatal_date;
+          return true;
+        }
+      });
+
+      if(this.selected_caserate.code === 'ANC01' || this.selected_caserate.code === 'ANC02') {
+        signDate = new Date(visit4);
+        admitDate = new Date(visit1);
+        dischargeDate = new Date(visit4);
+      } else {
+        signDate = this.selected_case.post_registration.discharge_date;
+        admitDate = this.selected_case.post_registration.admission_date;
+        dischargeDate = this.selected_case.post_registration.discharge_date;
+      }
+
+      this.eclaimsForm.patchValue({
+        pCheckUpDate1: visit1,
+        pCheckUpDate2: visit2,
+        pCheckUpDate3: visit3,
+        pCheckUpDate4: visit4,
+        attendant_sign_date: formatDate(signDate, 'yyyy-MM-dd', 'en'),
+        admission_date: formatDate(admitDate, 'yyyy-MM-dd', 'en'),
+        admission_time: formatDate(admitDate, 'HH:mma', 'en'),
+        discharge_date: formatDate(dischargeDate, 'yyyy-MM-dd', 'en'),
+        discharge_time: formatDate(dischargeDate, 'HH:mma', 'en'),
+      });
+
+      this.getCreds();
+    }
   }
 
   paramsMl() {
@@ -203,6 +255,10 @@ export class Cf2Component implements OnInit {
             this.paramsCc(data.data);
           }
         });
+        break;
+      }
+      case 'mc': {
+        this.paramsMc();
         break;
       }
     }
