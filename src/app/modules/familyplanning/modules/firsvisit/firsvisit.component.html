@@ -1,89 +1,74 @@
-<form [formGroup]="fv_form" (ngSubmit)="saveForm(fv_form.value)">
-    <div class="grid relative animates-dropdown " style="grid-template-columns: repeat(16, minmax(0, 1fr));"
-        *ngIf="!focused">
-    
-        <div class="sticky top-0 z-50 border border-blue-400 col-span-2 relative mx-2 px-2 py-1 rounded-t-lg text-sm bg-blue-500 text-white"
-            style="grid-column: span 16 / span 16;">
-            <button class="font-bold" type="button">First Visit</button>
-            <div class="absolute left-16 top-1">
-                <fa-icon [icon]="faInfoCircle" class=" peer ml-4 text-white hover:text-gray-500 z-50"></fa-icon>
-                <div
-                    class="absolute text-sm bg-gradient-to-b from-stone-500 to-gray-400 p-2 rounded-md border border-gray-500  text-white drop-shadow-lg opacity-90 border-check z-50 w-64 invisible peer-hover:visible">
-                    <h1 class="font-bold drop-shadow-lg">IMPORTANT</h1>
-                    <p class="font-light drop-shadow-lg">Once saved, the information will be displayed in the input
-                        boxes and shall not be editable unless Edit button is pressed.</p>
-                </div>
-            </div>
-        </div>
 
-        <div style="grid-column: span 16 / span 16;">
-            <div class="grid gap-4 hover:drop-shadow-lg drop-shadow-md bg-white rounded-b-lg hover:border border-gray-300 hover:border-blue-400 p-2 m-2 -mt-1 border"
-                style="grid-template-columns: repeat(14, minmax(0, 1fr));">
-                <div class="transitions col-span-7 border-check relative select-none group" *ngIf="!focused">
-                    <h3>Actual Living Children Count</h3>
-                    <input [type]="fv_form.disabled?'text':'number'" formControlName="alc"
-                        class="font-medium group-hover:font-semibold peer invalid:border-red-500 border-check  focus:ring-1 focus:ring-blue-300 outline-none rounded-md border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed"
-                        (keyup)="onKeyUp($event.target.value, $event.target.id)" (change)="onKeyUp($event.target.value, $event.target.id)"
-                        (keyup.escape)="clearForm($event.target.id)" id="alc" autofocus min="0">
-                    <small class="hidden peer-invalid:block text-red-400 ">{{ error_message }}</small>
-                </div>
-
-                <div class="transitions col-span-7 border-check relative select-none group" *ngIf="!focused">
-                    <h3>Desired Living Children Count</h3>
-                    <input [type]="fv_form.disabled?'text':'number'" formControlName="dlc"
-                        class="font-medium group-hover:font-semibold peer invalid:border-red-500 border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded-md border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed"
-                        (change)="onKeyUp($event.target.value, $event.target.id)"
-                        (keyup.escape)="clearForm($event.target.id)" id="dlc" min="0">
-                    <small class="hidden peer-invalid:block text-red-400 ">{{ error_message }}</small>
-                </div>
-
-                <div class="transitions col-span-7 border-check relative select-none group" *ngIf="!focused">
-                    <h3>Birth Interval</h3>
-                    <input [type]="fv_form.disabled?'text':'number'" formControlName="bi"
-                        class="font-medium group-hover:font-semibold peer invalid:border-red-500 border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded-md border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed"
-                        (keyup)="onKeyUp($event.target.value, $event.target.id)"
-                        (change)="onKeyUp($event.target.value, $event.target.id)"
-                        (keyup.escape)="clearForm($event.target.id)" id="bi" min="0">
-                    <small class="hidden peer-invalid:block text-red-400 ">{{ error_message }}</small>
-                </div>
-
-                <div class="transitions col-span-7 border-check relative select-none group" *ngIf="!focused">
-                    <h3>Average Monthly Income</h3>
-                    <input [type]="fv_form.disabled?'text':'number'" formControlName="ami"
-                        class="font-medium group-hover:font-semibold peer invalid:border-red-500 border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded-md border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed"
-                        (keyup)="onKeyUp($event.target.value, $event.target.id)"
-                        (change)="onKeyUp($event.target.value, $event.target.id)"
-                        (keyup.escape)="clearForm($event.target.id)" id="ami" min="0">
-                    <small class="hidden peer-invalid:block text-red-400 ">{{ error_message }}</small>
-                </div>
-
-            </div>
-        </div>
-        
+<div class="m-5 border border-slate-200 rounded-lg">
+    <div class="bg-blue-500 text-sm text-white rounded-t-md py-2 pl-3 font-semibold">
+     Details
     </div>
-    <div class="relative w-auto border-check mt-2 mb-7 w-12/12" *ngIf="!focused && !fv_form.disabled">
-        <div class="absolute inline-flex right-0 ">
-            <div (click)="cancel()"
-                class="cursor-pointer flex border-check bg-white hover:drop-shadow-md hover:bg-gray-400 py-1 rounded-full text-gray-300 hover:text-white peer">
-                <button type="button" class="font-bold button-out border-check-red mx-2">Cancel</button>
-            </div>
-            <div (click)="saveForm(fv_form.value)"
-                class="cursor-pointer flex border-check hover:drop-shadow-md bg-green-300 hover:bg-green-400 py-1 rounded-full text-white px-3 peer-hover:bg-white peer-hover:text-green-400">
-                <fa-icon [icon]="faSave" size="lg" class="mr-2">
-                </fa-icon>
-                <button type="submit" class="font-bold button-out border-check-red"
-                    (keyup.enter)="saveForm(fv_form.value)">Save</button>
-            </div>
-        </div>
+
+    <div class="grid grid-cols-12">
+  
+    <div class="col-span-6 px-10 pt-5">
+        <label for="case_number" class="text-sm font-semibold">Number of Living Childred (Actual)</label>
+        <input type="text" name="case_number" id="case_number" formControlName="case_number" class="input">
+
+        <!-- <div *ngIf="show_error && f.case_number.errors" class="invalid-alert">
+          <div *ngIf="f.case_number.errors?.['required']">
+            {{ required_message }}
+          </div> -->
+
+          <!-- <div *ngIf="f.case_number.errors?.['pattern']">
+            Only letters and numbers are allowed.
+          </div> -->
     </div>
-    <div class="relative w-auto border-check mt-2 mb-7 w-12/12" *ngIf="!focused && fv_form.disabled">
-        <div class="absolute inline-flex right-0 cursor-pointer" (click)="edit()">
-            <div class="flex border-check bg-orange-300 hover:bg-orange-400 py-1 rounded-full  text-white px-2">
-                <fa-icon [icon]="faPencil" size="lg" class="mr-2 ">
-                </fa-icon>
-                <button type="submit" class="font-bold button-out border-check-red typed-out"
-                    (keyup.enter)="uncheck($event.target.id + fphx_cat)">Edit</button>
-            </div>
-        </div>
+
+    <div class="col-span-6 px-10 pt-5">
+        <label for="case_number" class="text-sm font-semibold">Number of Living Childred (Desired)</label>
+        <input type="text" name="case_number" id="case_number" formControlName="case_number" class="input">
+
+        <!-- <div *ngIf="show_error && f.case_number.errors" class="invalid-alert">
+          <div *ngIf="f.case_number.errors?.['required']">
+            {{ required_message }}
+          </div> -->
+
+          <!-- <div *ngIf="f.case_number.errors?.['pattern']">
+            Only letters and numbers are allowed.
+          </div> -->
     </div>
-</form>
+
+    <div class="col-span-6 px-10 pb-8 pt-6">
+        <label for="case_number" class="text-sm font-semibold">Birth Interval Desired</label>
+        <input type="text" name="case_number" id="case_number" formControlName="case_number" class="input">
+
+        <!-- <div *ngIf="show_error && f.case_number.errors" class="invalid-alert">
+          <div *ngIf="f.case_number.errors?.['required']">
+            {{ required_message }}
+          </div> -->
+
+          <!-- <div *ngIf="f.case_number.errors?.['pattern']">
+            Only letters and numbers are allowed.
+          </div> -->
+    </div>
+
+    <div class="col-span-6 px-10 pb-8 pt-6">
+        <label for="case_number" class="text-sm font-semibold">Average Monthly Income</label>
+        <input type="text" name="case_number" id="case_number" formControlName="case_number" class="input">
+
+        <!-- <div *ngIf="show_error && f.case_number.errors" class="invalid-alert">
+          <div *ngIf="f.case_number.errors?.['required']">
+            {{ required_message }}
+          </div> -->
+
+          <!-- <div *ngIf="f.case_number.errors?.['pattern']">
+            Only letters and numbers are allowed.
+          </div> -->
+    </div>
+
+    </div>
+      
+</div>
+  
+  <!-- <app-delete-item *ngIf="modals['delete-item']"
+    [delete_id]="delete_id"
+    [delete_desc]="delete_desc"
+    [url]="url"
+    (toggleModal)="toggleModal($event)"></app-delete-item> -->
+  

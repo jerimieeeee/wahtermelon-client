@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { faCalendarDay, faPlus, faSave, faTimes, faClose, faTimesCircle, faPencil, faCaretDown, faAngleDown, faInfoCircle, faCaretRight } from '@fortawesome/free-solid-svg-icons';
+import { faCalendarDay, faPlus, faSave, faTimes, faClose, faTimesCircle, faPencil, faCaretDown, faAngleDown, faInfoCircle, faCaretRight, faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-firsvisit',
@@ -12,6 +12,10 @@ export class FirsvisitComponent implements OnInit {
   focused: boolean;
   focused2: boolean;
   modal: boolean;
+
+  faSpinner = faSpinner;
+
+  is_saving: boolean = false;
 
   faTimes = faTimes;
   faClose = faClose;
