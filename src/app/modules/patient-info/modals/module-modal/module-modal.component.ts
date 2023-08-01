@@ -29,6 +29,13 @@ export class ModuleModalComponent implements OnInit {
     'General': {modules: { }},
     'Others': {
       modules: {
+        ab: {
+          name: 'Animal Bite',
+          location: 'ab',
+          group: 'ab',
+          consult_active: false,
+          id: null
+        },
         tb: {
           name: 'Tuberculosis',
           location: 'tb',
