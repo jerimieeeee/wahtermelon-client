@@ -79,7 +79,6 @@ export class ChildcareComponent implements OnInit {
 
   show_forms: boolean;
   checkCCdevDetails(e){
-    console.log(e, 'show form with condition ', e != '')
     if(e) this.show_forms = true;
   }
 
@@ -89,11 +88,9 @@ export class ChildcareComponent implements OnInit {
 
     this.patient_details = this.http.getPatientInfo();
 
-    console.log(this.patient_details)
     this.active_loc_id = this.http.getUrlParams();
     this.consult_id = this.active_loc_id.consult_id;
 
-    this.loadConsultDetails()
-    console.log(this.consult_id, 'test consult ids')
+    this.loadConsultDetails();
   }
 }
