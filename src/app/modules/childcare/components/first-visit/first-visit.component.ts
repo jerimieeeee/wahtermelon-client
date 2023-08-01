@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, Output, EventEmitter, SimpleChanges, OnChanges } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { faSearch, faPlus, faCalendar, faInfoCircle, faCircleNotch, faFloppyDisk, faSpinner,} from '@fortawesome/free-solid-svg-icons';
 import { faSave, faPenToSquare, faPlusSquare } from '@fortawesome/free-regular-svg-icons';
@@ -18,9 +18,10 @@ import { ToastrService } from 'ngx-toastr';
 })
 
 
-export class FirstVisitComponent implements OnInit {
-  @Output() checkCCdevDetails = new EventEmitter<any>();
+export class FirstVisitComponent implements OnInit, OnChanges {
+  @Output() loadCcDetails = new EventEmitter<any>();
   @Input() ccdev_data;
+  @Input() patient_details;
 
   faSave = faSave;
   faSpinner = faSpinner;
@@ -101,13 +102,19 @@ export class FirstVisitComponent implements OnInit {
   // }
 
   onSubmit(){
-    this.visitForm.patchValue({admission_date: formatDate(this.visitForm.value.admission_date, 'Y-MM-dd HH:mm:ss' , 'en')})
-    this.visitForm.patchValue({discharge_date: formatDate(this.visitForm.value.discharge_date, 'Y-MM-dd HH:mm:ss' , 'en')})
+    this.visitForm.patchValue({
+      admission_date: formatDate(this.visitForm.value.admission_date, 'Y-MM-dd HH:mm:ss' , 'en'),
+      discharge_date: formatDate(this.visitForm.value.discharge_date, 'Y-MM-dd HH:mm:ss' , 'en')
+    });
 
     // this.showModal = true;
 
       this.http.post('child-care/cc-records', this.visitForm.value).subscribe({
-        next: (data: any) =>  this.getccdevDetails(),
+        next: (data: any) =>  {
+          console.log(data);
+          this.loadCcDetails.emit(this.patient_info);
+          // this.getccdevDetails(data)
+        },
         error: err => {console.log(err),
           this.is_saving = false;
           // this.toggleAlertModal('E')},
@@ -136,7 +143,7 @@ export class FirstVisitComponent implements OnInit {
       discharge_date: ['', [Validators.required]],
       birth_weight: ['', [Validators.required, Validators.minLength(1)]],
       mothers_id: ['', [Validators.required, Validators.minLength(2)]],
-      patient_id: [this.ccdev_data.patient_id, [Validators.required, Validators.minLength(2)]],
+      patient_id: [this.patient_details.id, [Validators.required, Validators.minLength(2)]],
       user_id: [user_id, [Validators.required, Validators.minLength(2)]],
       ccdev_ended: ['0', [Validators.required, Validators.minLength(2)]],
       nbs_filter: ['', [Validators.required, Validators.minLength(2)]],
@@ -170,13 +177,15 @@ export class FirstVisitComponent implements OnInit {
     return [...string.matchAll(/\b\w/g)].join('')
   }
 
-  getccdevDetails() {
-    this.patient_info = this.ccdev_data;
+  getccdevDetails(data) {
+    this.patient_info = this.ccdev_data ?? data;
     this.getccdevMama();
     this.visitForm.patchValue({...this.patient_info});
-    if(this.patient_info.status == 'CPAB' ) {
+    console.log(this.patient_info)
+    if(this.patient_info && this.patient_info.status == 'CPAB' ) {
       this.cpab = 'Child Protected at Birth'
     }
+    // this.loadCcDetails.emit(this.patient_info);
     /* let params = {
       patient_id: this.ccdev_data.patient_id
     }
@@ -259,12 +268,19 @@ export class FirstVisitComponent implements OnInit {
     this.toastr.warning('Error in Saving!','Admission Info');
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log('change')
+    this.patient_info = this.ccdev_data;
+    this.getccdevDetails(null);
+  }
+
   ngOnInit(): void {
+    console.log('on init')
     this.validateForm();
     // this.getData();
     console.log(this.ccdev_data)
     this.saved = true;
+    this.getccdevDetails(null);
     this.loadPatients();
-    this.getccdevDetails();
   }
 }

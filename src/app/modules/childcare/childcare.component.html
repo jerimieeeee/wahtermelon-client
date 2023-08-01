@@ -31,10 +31,10 @@
 </nav>
 
 <div class="my-5 p-5 w-full border border-gray-200 shadow-md rounded-xl" *ngIf="pages === 1 && module === 1">
-  <app-first-visit *ngIf="show_form" [ccdev_data]="ccdev_data" (checkCCdevDetails)="checkCCdevDetails($event)" ></app-first-visit>
+  <app-first-visit *ngIf="show_form" [ccdev_data]="ccdev_data" [patient_details]="patient_details" [ccdev_data]="ccdev_data" (loadCcDetails)="loadCcDetails()" ></app-first-visit>
 
-  <app-services *ngIf="patient_details" [patient_details]="patient_details"></app-services>
-  <app-breastfeeding *ngIf="patient_details" [patient_details]="patient_details"></app-breastfeeding>
+  <app-services *ngIf="show_forms" [patient_details]="patient_details"></app-services>
+  <app-breastfeeding *ngIf="show_forms" [patient_details]="patient_details"></app-breastfeeding>
 </div>
 <!-- <div class="body-up flex w-full mt-4 mb-4"> -->
 

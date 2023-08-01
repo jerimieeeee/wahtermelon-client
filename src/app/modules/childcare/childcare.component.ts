@@ -70,6 +70,8 @@ export class ChildcareComponent implements OnInit {
         console.log(data)
         this.show_form = true;
         this.ccdev_data = data.data[0];
+
+        if(this.ccdev_data) this.show_forms = true;
       },
       error: err => console.log(err)
     })
@@ -78,7 +80,7 @@ export class ChildcareComponent implements OnInit {
   show_forms: boolean;
   checkCCdevDetails(e){
     console.log(e, 'show form with condition ', e != '')
-    if(e != '') this.show_forms = true;
+    if(e) this.show_forms = true;
   }
 
   ngOnInit(): void {
