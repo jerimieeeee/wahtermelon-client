@@ -52,7 +52,7 @@
               <div class="relative text-sm w-1/2 px-5 py-2 mt-2">
                 <label for="method">Family planning method</label>
                 <select name="method" id="method" formControlName="method" class="input disabled:bg-gray-300">
-                  <option *ngFor="let fp of fp_method" [value]="fp.id">{{ fp.method_desc }}</option>
+                  <option *ngFor="let fp of fp_method" [value]="fp.code">{{ fp.desc }}</option>
                 </select>
               </div>
             </div>
