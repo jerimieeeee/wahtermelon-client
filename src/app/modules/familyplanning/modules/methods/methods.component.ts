@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup,FormControl } from '@angular/forms';
-import { faCalendarDay, faCaretDown, faInfoCircle, faPencil, faSave, faTimes, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
+import { FormControl, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
+import { faCalendarDay, faPlus, faSave, faTimes, faClose, faTimesCircle, faPencil, faCaretDown, faAngleDown, faInfoCircle, faCaretRight, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { HttpService } from 'app/shared/services/http.service';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-methods',
@@ -8,94 +11,64 @@ import { faCalendarDay, faCaretDown, faInfoCircle, faPencil, faSave, faTimes, fa
   styleUrls: ['./methods.component.scss']
 })
 export class MethodsComponent implements OnInit {
-  show: boolean;
+  focused: boolean;
+  focused2: boolean;
+  modal: boolean;
 
-  constructor() { }
-  public focused: boolean;
-  faCalendarDay = faCalendarDay;
+  faSpinner = faSpinner;
+
+  is_saving: boolean = false;
+
   faTimes = faTimes;
-  faSave = faSave;
+  faClose = faClose;
   faTimesCircle = faTimesCircle;
+  faSave = faSave;
   faPencil = faPencil;
+  faAngleDown = faAngleDown;
   faInfoCircle = faInfoCircle;
-   
-  methods_form : FormGroup;
-  method : String = new String();
-  partner : String = new String();
-  type : String = new String();
+  faCaretRight = faCaretRight;
+  error_message = '';
+  public buttons = [];
 
   public keyUp = [];
-  public buttons = [];
-  public fp_methods = [
-    {"id": 1, "method": "Condom"},
-    {"id": 2, "method": "Injectibles"},
-    {"id": 3, "method": "Implant"},
-    {"id": 4, "method": "NA"},
-  ];
+
+  fp_methods: any = [];
+  client_list: any = [];
+
+  // loadLibraries(){
+  //   this.http.get('libraries/family-planning-method').subscribe({
+  //     next: (data: any) => {
+        
+  //       this.fp_methods = data.data;
+  //      console.log(this.fp_methods, 'test methods')
+  //     },
+  //     error: err => console.log(err)
+  //   });
+  // }
+
+  loadLibraries() {
+    const getMethod = this.http.get('libraries/family-planning-method');
+    const getClient = this.http.get('libraries/family-planning-client-type');
+
+    forkJoin([getMethod, getClient]).subscribe({
+      next:([dataMethod, dataClient]:any) => {
+        this.fp_methods = dataMethod.data;
+        this.client_list = dataClient.data;
+        console.log(this.fp_methods, 'new function');
+        console.log(this.client_list, 'new function');
+      },
+      error: err => console.log(err)
+    });
+  }
+  
+
+  constructor(
+    private router: Router,
+    private http: HttpService,) { }
+
   ngOnInit(): void {
-    this.focused = false;
-    this.createForm();
-    this.methods_form.enable();
-  }
-  createForm(){
-    this.methods_form = new FormGroup({
-      date : new FormControl(new Date().toISOString().substring(0,10)),
-      method : new FormControl(this.method),
-      partner : new FormControl(this.partner),
-      type : new FormControl(this.type),
-    });
-  }
-  onKeyUp(data_input: string, id: string){
-    // console.log(data_input + ' this is my data input');
-    
-        if(this.keyUp.includes(id)){
-          if(data_input == ''){
-            this.keyUp.splice(this.keyUp.indexOf(id), 1);
-          }
-        }else{
-          this.keyUp.push(id);
-        }
-
-        // console.log(this.keyUp.length);
-        // console.log(this.keyUp);
-  }
-  saveForm(data){
-    this.methods_form.setValue({
-      date : data.date,
-      method : data.method,
-      partner : data.partner,
-      type : data.type,
-    });
-    console.log(this.methods_form.value, " tis my methods my lady");
-    
-    this.methods_form.disable();
-  }
-  cancel(){
-    this.keyUp = [];
-    this.methods_form.reset();
-  }
-  flip(){
-    console.log('flip');
-    this.focused = !this.focused;
-  }
-
-  drop(){
-    this.show = !this.show;
-  }
-  edit(){
-    this.methods_form.enable();
-  }
-  buttonShow(name){
-    this.buttons = [];
-    if(!this.buttons.includes(name)){
-      this.buttons.push(name);
-    }
-    // console.log(this.buttons);
-    
-  }
-  clearForm(id){
-    this.methods_form.get(id).reset();
-    this.keyUp.splice(this.keyUp.indexOf(id),1);
-    // this.onKeyUp('', id);
-  }
+    this.loadLibraries();
+    this.error_message = '**please enter numbers only';
+  } 
 }
+

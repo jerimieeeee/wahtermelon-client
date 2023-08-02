@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { faCalendar, faTimes, faDoorClosed } from '@fortawesome/free-solid-svg-icons';
 import { ActivatedRoute } from '@angular/router';
 import { HttpService } from 'app/shared/services/http.service';
+
 @Component({
   selector: 'app-familyplanning',
   templateUrl: './familyplanning.component.html',
@@ -23,6 +24,7 @@ export class FamilyplanningComponent implements OnInit {
   patient_id: any;
   consult_id: any;
   user_facility: any;
+  modals: any = [];
   
 
   switchPage(page) {
@@ -32,6 +34,7 @@ export class FamilyplanningComponent implements OnInit {
   switchTab(tab) {
     this.module = tab;
   }
+
 
   constructor(
     private http: HttpService,

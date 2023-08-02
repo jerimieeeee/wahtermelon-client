@@ -17,9 +17,10 @@ import { FphxComponent } from './modules/fphx/fphx.component';
 import { ObshxComponent } from './modules/obshx/obshx.component';
 import { PelvicComponent } from './modules/pelvic/pelvic.component';
 import { MethodsComponent } from './modules/methods/methods.component';
+import { ModalsComponent } from './modules/fpchart/modals/modals.component';
 
 @NgModule({
-  declarations: [FamilyplanningComponent, FpchartComponent, FirsvisitComponent, FppeComponent, FphxComponent, ObshxComponent, PelvicComponent, MethodsComponent,
+  declarations: [FamilyplanningComponent, FpchartComponent, FirsvisitComponent, FppeComponent, FphxComponent, ObshxComponent, PelvicComponent, MethodsComponent, ModalsComponent,
     //  FpchartComponent, FphxComponent, FppeComponent, PelvicexamComponent
   ],
   imports: [
@@ -27,7 +28,7 @@ import { MethodsComponent } from './modules/methods/methods.component';
     FamilyplanningRoutingModule,
     angularFontawesome.FontAwesomeModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ]
 })
 export class FamilyplanningModule { }

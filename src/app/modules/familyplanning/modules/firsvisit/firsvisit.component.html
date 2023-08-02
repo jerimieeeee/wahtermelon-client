@@ -1,14 +1,14 @@
 
 <div class="m-5 border border-slate-200 rounded-lg">
     <div class="bg-blue-500 text-sm text-white rounded-t-md py-2 pl-3 font-semibold">
-     Details
+     Visit
     </div>
 
     <div class="grid grid-cols-12">
   
     <div class="col-span-6 px-10 pt-5">
         <label for="case_number" class="text-sm font-semibold">Number of Living Childred (Actual)</label>
-        <input type="text" name="case_number" id="case_number" formControlName="case_number" class="input">
+        <input type="text" name="case_number" id="case_number"  class="input">
 
         <!-- <div *ngIf="show_error && f.case_number.errors" class="invalid-alert">
           <div *ngIf="f.case_number.errors?.['required']">
@@ -22,7 +22,7 @@
 
     <div class="col-span-6 px-10 pt-5">
         <label for="case_number" class="text-sm font-semibold">Number of Living Childred (Desired)</label>
-        <input type="text" name="case_number" id="case_number" formControlName="case_number" class="input">
+        <input type="text" name="case_number" id="case_number"  class="input">
 
         <!-- <div *ngIf="show_error && f.case_number.errors" class="invalid-alert">
           <div *ngIf="f.case_number.errors?.['required']">
@@ -34,9 +34,9 @@
           </div> -->
     </div>
 
-    <div class="col-span-6 px-10 pb-8 pt-6">
+    <div class="col-span-6 px-10 pt-6">
         <label for="case_number" class="text-sm font-semibold">Birth Interval Desired</label>
-        <input type="text" name="case_number" id="case_number" formControlName="case_number" class="input">
+        <input type="text" name="case_number" id="case_number"  class="input">
 
         <!-- <div *ngIf="show_error && f.case_number.errors" class="invalid-alert">
           <div *ngIf="f.case_number.errors?.['required']">
@@ -48,9 +48,9 @@
           </div> -->
     </div>
 
-    <div class="col-span-6 px-10 pb-8 pt-6">
+    <div class="col-span-6 px-10 pt-6">
         <label for="case_number" class="text-sm font-semibold">Average Monthly Income</label>
-        <input type="text" name="case_number" id="case_number" formControlName="case_number" class="input">
+        <input type="text" name="case_number" id="case_number"  class="input">
 
         <!-- <div *ngIf="show_error && f.case_number.errors" class="invalid-alert">
           <div *ngIf="f.case_number.errors?.['required']">
@@ -62,6 +62,15 @@
           </div> -->
     </div>
 
+    
+
+    </div>
+
+    <div class="flex justify-center py-5">
+      <button class="btn-save mr-5 mt-4">
+        <fa-icon [icon]="is_saving ? faSpinner : faSave" [spin]="is_saving ? true : false" class="mr-2"></fa-icon>
+        Save
+      </button>
     </div>
       
 </div>

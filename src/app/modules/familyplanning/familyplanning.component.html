@@ -31,10 +31,10 @@
         [class]="module===2? 'tabs-main-true' : 'tabs-main-false' ">
         FP HX
     </button>
-    <button (click)="switchTab(3)" *ngIf="selected_tb_consult?.id" class="tabs-main w-28"
+    <!-- <button (click)="switchTab(3)" *ngIf="selected_tb_consult?.id" class="tabs-main w-28"
         [class]="module===3? 'tabs-main-true' : 'tabs-main-false' ">
         OBSTETRICAL HX
-    </button>
+    </button> -->
     <button (click)="switchTab(4)" class="tabs-main w-28"
         [class]="module===4? 'tabs-main-true' : 'tabs-main-false' ">
         FP PE
@@ -59,10 +59,10 @@
 </nav>
 
 <div class="my-5 w-full border border-gray-200 shadow-md rounded-xl" *ngIf="pages === 1">
-  <div *ngIf="selected_tb_consult && (selected_tb_consult?.facility_code !== user_facility)" class="text-orange-800 border border-orange-400 bg-orange-100 rounded-md p-3 mb-2 w-full">
+  <!-- <div *ngIf="selected_tb_consult && (selected_tb_consult?.facility_code !== user_facility)" class="text-orange-800 border border-orange-400 bg-orange-100 rounded-md p-3 mb-2 w-full">
     There is an ongoing TB treatment for this patient on another facility.
     You are not allowed to create a new treatment or view previous treatment from other facilities.
-  </div>
+  </div> -->
   <div class="flex flex-col" *ngIf="fetching_history">
     <div class="w-full flex justify-center"><fa-icon [icon]="faCircleNotch" spin="true" class="pt-10"></fa-icon></div>
     <div class="w-full flex justify-center pb-10 font-semibold">Fetching history...</div>
@@ -127,3 +127,18 @@
 <app-firsvisit *ngIf="pages === 2 && module === 1"
   [patient_id]="patient_id"
 ></app-firsvisit>
+<app-fphx *ngIf="pages === 2 && module === 2"
+  [patient_id]="patient_id"
+></app-fphx>
+<app-fppe *ngIf="pages === 2 && module === 4"
+  [patient_id]="patient_id"
+></app-fppe>
+<app-pelvic *ngIf="pages === 2 && module === 5"
+  [patient_id]="patient_id"
+></app-pelvic>
+<app-methods *ngIf="pages === 2 && module === 6"
+  [patient_id]="patient_id"
+></app-methods>
+<app-fpchart *ngIf="pages === 2 && module === 7"
+  [patient_id]="patient_id"
+></app-fpchart>

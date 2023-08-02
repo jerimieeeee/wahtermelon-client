@@ -20,6 +20,7 @@ import { provideEnvironmentNgxMask } from 'ngx-mask';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { NgPipesModule } from 'ngx-pipes';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
     FormsModule,
     NgApexchartsModule,
     NgApexchartsModule,
+    NgPipesModule,
     ReactiveFormsModule,
     ToastrModule.forRoot(),
     CalendarModule.forRoot({

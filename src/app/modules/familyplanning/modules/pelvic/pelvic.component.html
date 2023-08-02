@@ -1,117 +1,38 @@
 
-<div class="grid max-h-fit relative border-check" style="grid-template-columns: repeat(16, minmax(0, 1fr));"
-    *ngIf="!focused">
-    <div class="sticky top-0 z-50 border border-blue-400 col-span-2 cursor-pointer relative mx-2 px-2 py-1 rounded-lg text-sm bg-blue-500 text-white"
-        style="grid-column: span 16 / span 16;"><button class="font-bold" type="button">Pelvic Exam</button>
-        <div class="absolute top-1" style="left: 5.5rem;">
-            <fa-icon [icon]="faInfoCircle" class=" peer ml-4 text-white hover:text-gray-500 z-50"></fa-icon>
-            <div
-                class="absolute text-sm bg-gradient-to-b from-stone-500 to-gray-400 p-2 rounded-md border border-gray-500  text-white drop-shadow-lg opacity-90 border-check z-50 w-64 invisible peer-hover:visible">
-                <h1 class="font-bold drop-shadow-lg">IMPORTANT</h1>
-                <p class="font-light drop-shadow-lg">Once saved, the information will be displayed in the input
-                    boxes and shall not be editable unless Edit button is pressed.</p>
+<div class="m-5 border border-slate-200 rounded-lg">
+    <div class="bg-blue-500 text-sm text-white rounded-t-md py-2 pl-3 font-semibold">
+     Pelvic Excam
+    </div>
+
+    <div class="mx-5 mb-5">
+
+        <div *ngFor="let pe of pe_grouped | keyvalue" class="mt-1 grid grid-cols-3 gap-x-4 w-full">
+            <div  class="col-span-3 border-b border-slate-200 w-full my-2 pt-3 gap-x-4 font-semibold text-sky-500">
+            {{ pe.key | titlecase}}
+            </div>
+            <div class="col-span-3 grid grid-cols-3 gap-x-4 mx-5">
+                <div *ngFor="let val of pe.value" >
+                    <input type="checkbox" class="input-checkbox" />
+                    <label class="pl-3 py-0.5"> {{ val.desc }}</label>
+                </div>
             </div>
         </div>
-    </div>
-    <div style="grid-column: span 16 / span 16;" class="">
 
-        <div *ngFor="let fppelvic_cat of fp_pelvic_cat;  let i = index;">
-
-            <form action="">
-                <div class="grid sm:grid-cols-1 lg:grid-cols-2 mb-2 bg-white rounded-lg border m-2"
-                    [style]="module_strings.includes(i) && !saved? 'border-color: rgb(244 114 182); filter: drop-shadow(0 10px 8px rgb(0 0 0 / 0.04)) drop-shadow(0 4px 3px rgb(0 0 0 / 0.1)); margin-bottom: 1.25rem; padding-bottom: 0.5rem;' : ' '"
-                    [class]="saved? 'hover:drop-shadow-lg drop-shadow-md hover:border border-gray-300 hover:border-gray-500':'hover:border-gray-400 border-gray-200'">
-
-                    <div (click)="showModule(fppelvic_cat, i)" (keyup.tab)="nextModule(fp_pelvic_cat[i+1], i+1);"
-                        (keyup.enter)="selectAll('select' + fppelvic_cat)"
-                        class="text-gray-500 form-check sm:col-span-1 lg:col-span-2 p-2 font-semibold text-sm"
-                        [style]="module_strings.includes(i)? 'border-bottom-width: 1px; border-style: dashed; border-color: rgb(244 114 182); border-top-width: 0px; border-left-width: 0px; border-right-width: 0px;' : ''">
-                        <div *ngFor="let cat_name of lib_cat_name">
-                            <h1 class="select-none" *ngIf="fppelvic_cat == cat_name.pelvic_cat_id">
-                                {{cat_name.pelvic_cat_name}}
-                            </h1>
-                        </div>
-
-
-                        <div *ngFor="let fppelvic of pelvic_symptoms">
-                            <div *ngFor="let string of fppelvic_strings; let x = index">
-                                <div *ngIf="fppelvic_cat == fppelvic.pelvic_cat_id && fppelvic.pelvic_name == string">
-                                    <h1 class="group select-none m-0.5 px-2 border-check font-normal text-sm rounded-full text-gray-600 typed-out hover:bg-pink-200 hover:text-gray-800"
-                                        style="margin-top: 0;" *ngIf="!module_strings.includes(i)" id="test">
-                                        <!-- <fa-icon [icon]="faCaretRight" *ngIf="!module_strings.includes(i)"
-                                            class="group-hover:text-rose-400 text-gray-300"></fa-icon> -->
-                                        {{fppelvic.pelvic_name}}
-                                    </h1>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="absolute right-1 top-1 hover:text-white text-green-400"
-                        *ngIf="module_strings.includes(i)">
-                        <div class="inline-flex float-right" *ngIf="!cat_strings.includes(fppelvic_cat)">
-                            <div class="flex hover:   bg-white hover:bg-gray-400 text-gray-300 py-1 rounded-full hover:text-white px-2"
-                                (click)="selectAll('select' + fppelvic_cat)">
-                                <fa-icon [icon]="faCircleCheck" size="lg" class="mr-2"
-                                    *ngIf="!cat_strings.includes(fppelvic_cat)">
-                                </fa-icon>
-                                <button type="button" class="font-bold button-out  -red"
-                                    *ngIf="!cat_strings.includes(fppelvic_cat)">Select
-                                    All</button>
-                            </div>
-                        </div>
-                        <div class="inline-flex float-right"
-                            *ngIf="cat_strings.includes(fppelvic_cat) && fppelvic_strings.length > 0">
-                            <div class="flex hover:   bg-white hover:bg-gray-400 text-gray-400 py-1 rounded-full hover:text-white px-2"
-                                (click)="uncheck(fppelvic_cat)">
-                                <fa-icon [icon]="faTimes" size="lg" class="mr-2">
-                                </fa-icon>
-                                <button type="button" class="font-bold button-out  -red">Cancel</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div *ngFor="let check of check_list;">
-                        <div class=" -red p-2 group" *ngIf="module_strings.includes(i)">
-                            <input
-                                class=" h-6 w-6 border border-gray-400 rounded-md checked:border-2 bg-white checked:bg-blue-400 checked:border-blue-500 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
-                                type="checkbox" value="check" [attr.id]="check" (change)="onChange(check,fppelvic_cat)"
-                                [checked]="fppelvic_strings.includes(check)" (keyup.escape)="uncheck(fppelvic_cat)"
-                                (keyup.enter)="saveModule()" (keyup.tab)="nextModule(fp_pelvic_cat[i+1], i+1);">
-                            <label class="text-gray-800 cursor-pointer" name="check" [attr.for]="check"
-                                value="check.id">
-                                {{ check }}
-                            </label>
-                        </div>
-                    </div>
-                </div>
-            </form>
-
+        <div class="flex justify-center mt-5">
+            <button class="btn-save mr-5 mt-4">
+              <fa-icon [icon]="is_saving ? faSpinner : faSave" [spin]="is_saving ? true : false" class="mr-2"></fa-icon>
+              Save
+            </button>
         </div>
+
+
     </div>
+    
 </div>
-<div class="relative w-auto border-check mt-2 mb-7 w-12/12" *ngIf="!saved">
-    <div class="absolute inline-flex right-0 ">
-        <div (click)="uncheck('')"
-            class="cursor-pointer flex border-check bg-white hover:drop-shadow-md hover:bg-gray-400 py-1 rounded-full text-gray-400 hover:text-white pl-2 pr-2 peer">
-            <fa-icon [icon]="faTimes" size="lg" class="mr-2">
-            </fa-icon>
-            <button type="button" class="font-bold button-out border-check-red">Cancel</button>
-        </div>
-        <div (click)="saveModule()"
-            class="cursor-pointer flex border-check hover:drop-shadow-md bg-green-300 hover:bg-green-400 py-1 rounded-full text-white px-3 peer-hover:bg-white peer-hover:text-green-400">
-            <fa-icon [icon]="faSave" size="lg" class="mr-2">
-            </fa-icon>
-            <button type="submit" class="font-bold button-out border-check-red"
-                (keyup.enter)="saveModule()">Save</button>
-        </div>
-    </div>
-</div>
-<div class="relative w-auto border-check mt-2 mb-7 w-12/12" *ngIf="saved">
-    <div class="absolute inline-flex right-0 cursor-pointer" (click)="editModule()">
-        <div class="flex border-check bg-orange-300 hover:bg-orange-400 py-1 rounded-full  text-white px-2">
-            <fa-icon [icon]="faPencil" size="lg" class="mr-2 ">
-            </fa-icon>
-            <button type="submit" class="font-bold button-out border-check-red typed-out"
-                (keyup.enter)="editModule()">Edit</button>
-        </div>
-    </div>
-</div>
+  
+  <!-- <app-delete-item *ngIf="modals['delete-item']"
+    [delete_id]="delete_id"
+    [delete_desc]="delete_desc"
+    [url]="url"
+    (toggleModal)="toggleModal($event)"></app-delete-item> -->
+  
