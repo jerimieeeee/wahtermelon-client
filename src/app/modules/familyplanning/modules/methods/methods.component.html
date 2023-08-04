@@ -22,7 +22,7 @@
 
     <div class="col-span-6 px-10 pt-5">
       <div>
-        <label for="source_code">Family Planning Method</label>
+        <label for="source_code" class="text-sm font-semibold">Family Planning Method</label>
         <select name="source_code" id="source_code" class="input">
           <option *ngFor="let method of fp_methods" [value]="method.code">{{ method.desc }}</option>
         </select>
@@ -54,7 +54,7 @@
 
     <div class="col-span-6 px-10 pt-6">
       <div>
-        <label for="source_code">Client Type</label>
+        <label for="source_code" class="text-sm font-semibold">Client Type</label>
         <select name="source_code" id="source_code" class="input">
           <option *ngFor="let client of client_list" [value]="client.code">{{ client.desc }}</option>
         </select>
@@ -75,7 +75,7 @@
     </div>
 
     <div class="flex justify-center py-5">
-      <button class="btn-save mr-5 mt-4">
+      <button class="btn-save mr-5 mt-4" (click)="toggleModal('methods-modal')">
         <fa-icon [icon]="is_saving ? faSpinner : faSave" [spin]="is_saving ? true : false" class="mr-2"></fa-icon>
         Save
       </button>
@@ -98,7 +98,9 @@
        </div>
 </div>       
       
-
+<app-methods-modal *ngIf="modals['methods-modal']"
+  (toggleModal)="toggleModal($event)"
+></app-methods-modal>
 
   
   <!-- <app-delete-item *ngIf="modals['delete-item']"

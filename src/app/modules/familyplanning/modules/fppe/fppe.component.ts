@@ -34,6 +34,7 @@ export class FppeComponent implements OnInit {
   extremities_pes: any = [];
   neck_pes: any = [];
   thorax_pes: any = [];
+  physical_codes: any = [];
 
   category = [
     {"name" : "Conjunctiva"},
@@ -43,6 +44,36 @@ export class FppeComponent implements OnInit {
     {"name" : "Abdomen"},
     {"name" : "Extremities"}
   ];
+
+  onSubmit(){
+    this.is_saving = true;
+
+    if(Object.keys(this.physical_codes).length > 0) {
+      let pe_codes = [];
+      Object.entries(this.physical_codes).forEach(([key, value], index) => {
+        if(value === true) pe_codes.push(key);
+      });
+      this.saveCodes(pe_codes)
+    } else {
+      // this.saveNotes();
+      // console.log(pe_codes, 'ito ung submit')
+    }
+  }
+
+  saveCodes(codes) {
+    let physical_exam = {
+      // notes_id: this.consult_notes.id,
+      physical_exam: {
+        pe_id: codes}
+    }
+      console.log(physical_exam, 'ito ung submit')
+    // this.http.post('consultation/physical-exam', physical_exam).subscribe({
+    //   next: (data: any) => {
+    //     this.saveNotes();
+    //   },
+    //   error: err => console.log(err)
+    // })
+  }
 
   loadLibraries() {
     this.http.get('libraries/family-planning-physical-exam').subscribe(

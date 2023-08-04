@@ -25,9 +25,14 @@ export class FamilyplanningComponent implements OnInit {
   consult_id: any;
   user_facility: any;
   modals: any = [];
+
+  fp_details: any;
+
+  fp_visit_history: any = [];
   
 
   switchPage(page) {
+    if(page === 1) this.loadFP();
     this.pages = page;
   }
 
@@ -47,11 +52,39 @@ export class FamilyplanningComponent implements OnInit {
     this.hideButton = !this.hideButton;
   }
 
+  openFPConsult(data) {
+    this.fp_visit_history = data;
+    this.pages = 2;
+  }
+
+  loadFP() {
+    let params = {
+      patient_id: this.patient_id,
+      per_page: 'all'
+    };
+
+    this.http.get('family-planning/fp-records', {params}).subscribe({
+      next: (data: any) => { 
+
+       this.fp_visit_history = data.data
+      },
+      complete: () => {
+        console.log(this.fp_visit_history, 'display fp visit details') 
+      },
+      error: err => {console.log(err)
+  
+      },
+    })
+  }
 
   ngOnInit(): void {
-    this.user_facility = this.http.getUserFacility();
     this.patient_id = this.route.snapshot.paramMap.get('id');
+    console.log(this.patient_id, 'check patient')
     this.consult_id = this.route.snapshot.paramMap.get('consult_id');
+
+    this.loadFP();
+    
+    
   }
 
 }

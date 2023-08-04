@@ -1,0 +1,98 @@
+<div id="defaultModal" tabindex="-1" class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 w-full md:inset-0 h-modal md:h-full justify-center items-center flex" aria-modal="true" role="dialog" style="z-index:60">
+  <div class="relative p-4 w-full max-w-3xl h-auto md:h-auto">
+    <!-- Modal content -->
+    <div class="relative bg-white rounded-lg shadow">
+      <!-- Modal header -->
+      <div class="flex justify-between items-start py-3 px-5 rounded-t border-b bg-blue-500">
+        <h3 class="text-sm font-bold text-white">
+          Dropout Details
+        </h3>
+      </div>
+      <!-- Modal body -->
+      <div class="grid grid-cols-12 h-96 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
+
+        <div class="col-span-4 px-10 pt-2.5">
+          <label for="case_number" class="text-sm font-semibold">Date of Service Given</label>
+          <input type="date" name="case_number" id="case_number"  class="input">
+  
+          <!-- <div *ngIf="show_error && f.case_number.errors" class="invalid-alert">
+            <div *ngIf="f.case_number.errors?.['required']">
+              {{ required_message }}
+            </div> -->
+  
+            <!-- <div *ngIf="f.case_number.errors?.['pattern']">
+              Only letters and numbers are allowed.
+            </div> -->
+        </div>
+
+        <div class="col-span-12 px-10 pt-2.5">
+        <label for="case_number" class="text-sm font-semibold">Source of Supply</label>
+        <input type="text" name="case_number" id="case_number"  class="input">
+
+        <!-- <div *ngIf="show_error && f.case_number.errors" class="invalid-alert">
+          <div *ngIf="f.case_number.errors?.['required']">
+            {{ required_message }}
+          </div> -->
+
+          <!-- <div *ngIf="f.case_number.errors?.['pattern']">
+            Only letters and numbers are allowed.
+          </div> -->
+        </div>
+
+        <div class="col-span-12 px-10 pt-2.5">
+          <label for="case_number" class="text-sm font-semibold">Quantity if applicable</label>
+          <input type="number" name="case_number" id="case_number"  class="input">
+  
+          <!-- <div *ngIf="show_error && f.case_number.errors" class="invalid-alert">
+            <div *ngIf="f.case_number.errors?.['required']">
+              {{ required_message }}
+            </div> -->
+  
+            <!-- <div *ngIf="f.case_number.errors?.['pattern']">
+              Only letters and numbers are allowed.
+            </div> -->
+          </div>
+
+          <div class="col-span-4 px-10 pt-2.5">
+            <label for="case_number" class="text-sm font-semibold">Next Service Date</label>
+            <input type="date" name="case_number" id="case_number"  class="input">
+    
+            <!-- <div *ngIf="show_error && f.case_number.errors" class="invalid-alert">
+              <div *ngIf="f.case_number.errors?.['required']">
+                {{ required_message }}
+              </div> -->
+    
+              <!-- <div *ngIf="f.case_number.errors?.['pattern']">
+                Only letters and numbers are allowed.
+              </div> -->
+          </div>
+
+          <div class="col-span-12 px-10 pt-2.5 pb-5">
+            <label for="case_number" class="text-sm font-semibold">Remarks</label>
+            <input type="text" name="case_number" id="case_number"  class="input">
+    
+            <!-- <div *ngIf="show_error && f.case_number.errors" class="invalid-alert">
+              <div *ngIf="f.case_number.errors?.['required']">
+                {{ required_message }}
+              </div> -->
+    
+              <!-- <div *ngIf="f.case_number.errors?.['pattern']">
+                Only letters and numbers are allowed.
+              </div> -->
+            </div>
+        
+      </div>
+
+      <!-- Modal footer -->
+      <div class="flex justify-end py-4 px-5 space-x-4 rounded-b border-t border-gray-200">
+        <button type="button" class="btn-save bg-red-500" (click)="closeModal()" >Close</button>
+        <button [disabled]="is_saving" type="submit" class="btn-save px-10 disabled:bg-gray-300" >
+          <fa-icon></fa-icon>
+          {{ is_saving ? 'Saving' : 'Save' }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="opacity-50 fixed inset-0 z-50 bg-black"></div>

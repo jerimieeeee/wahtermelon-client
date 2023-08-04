@@ -35,16 +35,11 @@ export class MethodsComponent implements OnInit {
   fp_methods: any = [];
   client_list: any = [];
 
-  // loadLibraries(){
-  //   this.http.get('libraries/family-planning-method').subscribe({
-  //     next: (data: any) => {
-        
-  //       this.fp_methods = data.data;
-  //      console.log(this.fp_methods, 'test methods')
-  //     },
-  //     error: err => console.log(err)
-  //   });
-  // }
+  modals: any = [];
+  
+  toggleModal(name) {
+    this.modals[name] = !this.modals[name];
+  }
 
   loadLibraries() {
     const getMethod = this.http.get('libraries/family-planning-method');

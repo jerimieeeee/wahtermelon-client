@@ -4,11 +4,12 @@
      Visit
     </div>
 
+    <form [formGroup]="visitForm" (submit)="onSubmit()">
     <div class="grid grid-cols-12">
   
     <div class="col-span-6 px-10 pt-5">
-        <label for="case_number" class="text-sm font-semibold">Number of Living Childred (Actual)</label>
-        <input type="text" name="case_number" id="case_number"  class="input">
+        <label for="no_of_living_children_actual" class="text-sm font-semibold">Number of Living Children (Actual)</label>
+        <input type="number" name="no_of_living_children_actual" id="no_of_living_children_actual" class="input" placeholder="Input Number of Children" formControlName="no_of_living_children_actual">
 
         <!-- <div *ngIf="show_error && f.case_number.errors" class="invalid-alert">
           <div *ngIf="f.case_number.errors?.['required']">
@@ -21,8 +22,8 @@
     </div>
 
     <div class="col-span-6 px-10 pt-5">
-        <label for="case_number" class="text-sm font-semibold">Number of Living Childred (Desired)</label>
-        <input type="text" name="case_number" id="case_number"  class="input">
+        <label for="no_of_living_children_desired" class="text-sm font-semibold">Number of Living Children (Desired)</label>
+        <input type="number" name="no_of_living_children_desired" id="no_of_living_children_desired" class="input" placeholder="Input Number of Children" formControlName="no_of_living_children_desired">
 
         <!-- <div *ngIf="show_error && f.case_number.errors" class="invalid-alert">
           <div *ngIf="f.case_number.errors?.['required']">
@@ -35,8 +36,8 @@
     </div>
 
     <div class="col-span-6 px-10 pt-6">
-        <label for="case_number" class="text-sm font-semibold">Birth Interval Desired</label>
-        <input type="text" name="case_number" id="case_number"  class="input">
+        <label for="birth_interval_desired" class="text-sm font-semibold">Birth Interval Desired</label>
+        <input type="number" name="birth_interval_desired" id="birth_interval_desired" class="input" placeholder="Input Interval" formControlName="birth_interval_desired">
 
         <!-- <div *ngIf="show_error && f.case_number.errors" class="invalid-alert">
           <div *ngIf="f.case_number.errors?.['required']">
@@ -49,8 +50,8 @@
     </div>
 
     <div class="col-span-6 px-10 pt-6">
-        <label for="case_number" class="text-sm font-semibold">Average Monthly Income</label>
-        <input type="text" name="case_number" id="case_number"  class="input">
+        <label for="average_monthly_income" class="text-sm font-semibold">Average Monthly Income</label>
+        <input type="text" name="average_monthly_income" id="average_monthly_income" class="input" placeholder="Input Average Monthly Income" formControlName="average_monthly_income">
 
         <!-- <div *ngIf="show_error && f.case_number.errors" class="invalid-alert">
           <div *ngIf="f.case_number.errors?.['required']">
@@ -67,11 +68,12 @@
     </div>
 
     <div class="flex justify-center py-5">
-      <button class="btn-save mr-5 mt-4">
+      <button class="btn-save mr-5 mt-4" (click)="onSubmit()">
         <fa-icon [icon]="is_saving ? faSpinner : faSave" [spin]="is_saving ? true : false" class="mr-2"></fa-icon>
-        Save
+        {{ visitForm.value.id ? (is_saving ? 'Updating' : 'Update') : (is_saving ? 'Saving' : 'Save') }}
       </button>
     </div>
+    </form>
       
 </div>
   

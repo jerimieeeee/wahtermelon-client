@@ -18,9 +18,10 @@ import { ObshxComponent } from './modules/obshx/obshx.component';
 import { PelvicComponent } from './modules/pelvic/pelvic.component';
 import { MethodsComponent } from './modules/methods/methods.component';
 import { ModalsComponent } from './modules/fpchart/modals/modals.component';
+import { MethodsModalComponent } from './modules/methods/methods-modal/methods-modal.component';
 
 @NgModule({
-  declarations: [FamilyplanningComponent, FpchartComponent, FirsvisitComponent, FppeComponent, FphxComponent, ObshxComponent, PelvicComponent, MethodsComponent, ModalsComponent,
+  declarations: [FamilyplanningComponent, FpchartComponent, FirsvisitComponent, FppeComponent, FphxComponent, ObshxComponent, PelvicComponent, MethodsComponent, ModalsComponent, MethodsModalComponent,
     //  FpchartComponent, FphxComponent, FppeComponent, PelvicexamComponent
   ],
   imports: [
