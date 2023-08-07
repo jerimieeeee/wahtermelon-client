@@ -1,0 +1,155 @@
+<div id="defaultModal" tabindex="-1" class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 w-full md:inset-0 h-modal md:h-full justify-center items-center flex" aria-modal="true" role="dialog" style="z-index:60">
+  <div class="relative p-4 w-full max-w-3xl h-auto md:h-auto">
+    <!-- Modal content -->
+    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+      <!-- Modal header -->
+      <div class="flex justify-between items-start py-3 px-5 rounded-t border-b bg-blue-500 dark:border-gray-600">
+        <h3 class="mt-2 text-sm font-bold text-white dark:text-white">
+            PRE-EXPOSURE
+        </h3>
+      </div>
+      <!-- Modal body -->
+      <div class="overflow-y-auto max-h-96 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
+        <form *ngIf="show_form" [formGroup]="preExposureForm" class="w-full max-w-3xl text-left text-gray-500 dark:text-gray-400">
+          <div class="flex item-start flex-wrap pb-5">
+            <div class="flex justify-between w-full px-5 mt-3 rounded-tl rounded-tr">
+              <h4 class="font-bold text-blue-500 text-sm mt-2">Client Type *</h4>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4 w-full ml-10 mr-5">
+              <div class="col-span-1">
+                <label class="font-semibold" for="vitals_date_temp">Indication Option</label>
+                <select name="indication_option_code" id="indication_option_code" formControlName="indication_option_code" [ngClass]="{'invalid-input': is_saving && f.indication_option_code.errors}" class="input">
+                  <option [value]="indication.code" *ngFor="let indication of indication_options">{{ indication.desc }}</option>
+                </select>
+              </div>
+
+              <div *ngIf="preExposureForm.value.indication_option_code === 'OTHERS'" class="col-span-1">
+                <label class="font-semibold" for="indication_option_remarks">Specify</label>
+                <input name="indication_option_remarks" id="indication_option_remarks" formControlName="indication_option_remarks" type="text" class="input">
+              </div>
+            </div>
+          </div>
+          <div class="text-gray-600 border border-slate-100 mx-5"></div><!-- border -->
+
+          <div class="flex item-start flex-wrap pb-5">
+            <div class="flex justify-between w-full px-5 mt-3 rounded-tl rounded-tr">
+              <h4 class="font-bold text-blue-500 text-sm mt-2">Day 0 *</h4>
+            </div>
+
+            <div class="grid grid-cols-3 gap-4 w-full ml-10 mr-5">
+              <div class="col-span-1">
+                <label class="font-semibold" for="day0_date">Date</label>
+                <input name="day0_date" id="day0_date" formControlName="day0_date" type="date" [max]="max_date" placeholder="MM/dd/yyyy" class="input">
+              </div>
+
+              <div class="col-span-1">
+                <label class="font-semibold" for="day0_vaccine_code">Vaccine</label>
+                <select name="day0_vaccine_code" id="day0_vaccine_code" formControlName="day0_vaccine_code" [ngClass]="{'invalid-input': is_saving && f.day0_vaccine_code.errors}" class="input">
+                  <option [value]="vaccine.code" *ngFor="let vaccine of ab_vaccines">{{ vaccine.desc }}</option>
+                </select>
+              </div>
+
+              <div class="col-span-1">
+                <label class="font-semibold" for="day0_vaccine_route_code">Vaccine Route</label>
+                <select name="day0_vaccine_route_code" id="day0_vaccine_route_code" formControlName="day0_vaccine_route_code" [ngClass]="{'invalid-input': is_saving && f.day0_vaccine_route_code.errors}" class="input">
+                  <option [value]="vaccine_route.code" *ngFor="let vaccine_route of ab_vaccine_routes">{{ vaccine_route.desc }}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex item-start flex-wrap pb-5">
+            <div class="flex justify-between w-full px-5 mt-3 rounded-tl rounded-tr">
+              <h4 class="font-bold text-blue-500 text-sm mt-2">Day 7</h4>
+            </div>
+
+            <div class="grid grid-cols-3 gap-4 w-full ml-10 mr-5">
+              <div class="col-span-1">
+                <label class="font-semibold" for="day7_date">Date</label>
+                <input name="day7_date" id="day7_date" formControlName="day7_date" type="date" [max]="max_date" placeholder="MM/dd/yyyy" class="input">
+              </div>
+
+              <div class="col-span-1">
+                <label class="font-semibold" for="day7_vaccine_code">Vaccine</label>
+                <select name="day7_vaccine_code" id="day7_vaccine_code" formControlName="day7_vaccine_code" [ngClass]="{'invalid-input': is_saving && f.day7_vaccine_code.errors}" class="input">
+                  <option [value]="vaccine.code" *ngFor="let vaccine of ab_vaccines">{{ vaccine.desc }}</option>
+                </select>
+              </div>
+
+              <div class="col-span-1">
+                <label class="font-semibold" for="day7_vaccine_route_code">Vaccine Route</label>
+                <select name="day7_vaccine_route_code" id="day7_vaccine_route_code" formControlName="day7_vaccine_route_code" [ngClass]="{'invalid-input': is_saving && f.day7_vaccine_route_code.errors}" class="input">
+                  <option [value]="vaccine_route.code" *ngFor="let vaccine_route of ab_vaccine_routes">{{ vaccine_route.desc }}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex item-start flex-wrap pb-5">
+            <div class="flex justify-between w-full px-5 mt-3 rounded-tl rounded-tr">
+              <h4 class="font-bold text-blue-500 text-sm mt-2">Day 21</h4>
+            </div>
+
+            <div class="grid grid-cols-3 gap-4 w-full ml-10 mr-5">
+              <div class="col-span-1">
+                <label class="font-semibold" for="day21_date">Date</label>
+                <input name="day21_date" id="day21_date" formControlName="day21_date" type="date" [max]="max_date" placeholder="MM/dd/yyyy" class="input">
+              </div>
+
+              <div class="col-span-1">
+                <label class="font-semibold" for="day21_vaccine_code">Vaccine</label>
+                <select name="day21_vaccine_code" id="day21_vaccine_code" formControlName="day21_vaccine_code" [ngClass]="{'invalid-input': is_saving && f.day21_vaccine_code.errors}" class="input">
+                  <option [value]="vaccine.code" *ngFor="let vaccine of ab_vaccines">{{ vaccine.desc }}</option>
+                </select>
+              </div>
+
+              <div class="col-span-1">
+                <label class="font-semibold" for="day21_vaccine_route_code">Vaccine Route</label>
+                <select name="day21_vaccine_route_code" id="day21_vaccine_route_code" formControlName="day21_vaccine_route_code" [ngClass]="{'invalid-input': is_saving && f.day21_vaccine_route_code.errors}" class="input">
+                  <option [value]="vaccine_route.code" *ngFor="let vaccine_route of ab_vaccine_routes">{{ vaccine_route.desc }}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex item-start flex-wrap pb-5">
+            <div class="flex justify-between w-full px-5 mt-3 rounded-tl rounded-tr">
+              <h4 class="font-bold text-blue-500 text-sm mt-2">Remarks</h4>
+            </div>
+
+            <div class="grid grid-cols-1 gap-4 w-full ml-10 mr-5">
+              <div class="col-span-1">
+                <label class="font-semibold" for="remarks">Remarks</label>
+                <input name="remarks" id="remarks" formControlName="remarks" type="text" class="input">
+              </div>
+            </div>
+          </div>
+          <div class="text-gray-600 border border-slate-100 mx-5"></div><!-- border -->
+
+
+        </form>
+
+        <div *ngIf="!show_form" class="grid grid-cols-1 my-16">
+          <div class="flex justify-center text-blue-500">
+            <fa-icon [icon]="faCircleNotch" spin="true"></fa-icon>
+          </div>
+          <div class="flex justify-center">
+            Loadin libraries...
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="flex justify-end py-4 px-5 space-x-4 rounded-b border-t border-gray-200 dark:border-gray-600">
+        <button [disabled]="is_saving" type="button" class="btn-cancel" (click)="closeModal()">Close</button>
+        <button [disabled]="is_saving || preExposureForm.pristine || preExposureForm.invalid" type="button" class="btn-save" (click)="onSubmit()">
+          <fa-icon [icon]="is_saving ? faCircleNotch : faSave" [spin]="is_saving"></fa-icon>
+          {{ is_saving ? 'Saving' : "Save" }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="opacity-50 fixed inset-0 z-50 bg-black"></div>
