@@ -1,0 +1,85 @@
+<div class="flex flex-col" *ngIf="fetching_history">
+  <div class="w-full flex justify-center"><fa-icon [icon]="faCircleNotch" spin="true" class="pt-10"></fa-icon></div>
+  <div class="w-full flex justify-center pb-10 font-semibold">Fetching history...</div>
+</div>
+
+<div class="border border-slate-200 rounded-lg mt-5" *ngIf="!fetching_history">
+  <div class="bg-blue-500 text-white rounded-t-md p-3 font-semibold flex justify-between">
+    <span>PRE-EXPOSURE RECORD</span>
+    <span>
+      <button type="button" class="bg-white text-blue-500 px-1 rounded-md text-sm hover:opacity-70" (click)="toggleModal('preexp-modal')">
+        <fa-icon [icon]="faPlus"></fa-icon>
+      </button>
+    </span>
+  </div>
+  <div class="mt-3">
+    <table class="w-full text-sm text-left rounded-b-md" *ngIf="!fetching_history && pre_exposure_list">
+      <thead class="text-xs uppercase">
+        <tr>
+          <th scope="col" class="py-3 px-6">Indication</th>
+          <th scope="col" class="py-3 px-6">Day 0 Vaccine</th>
+          <th scope="col" class="py-3 px-6">Day 7 Vaccine</th>
+          <th scope="col" class="py-3 px-6">Day 21/28 Vaccine</th>
+          <th scope="col" class="py-3 px-6">Remarks</th>
+          <th scope="col" class="py-3 px-6">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="bg-white border-b" *ngFor="let pre_exposure of pre_exposure_list">
+          <td *ngIf="!pre_exposure" colspan="7">
+            <div class="text-center">
+              No records to show...
+            </div>
+          </td>
+          <td class="py-4 px-6">
+            {{ pre_exposure.indication_option.desc }}
+          </td>
+          <td class="py-4 px-6">
+            <span class="grid grid-cols-1" *ngIf="pre_exposure.day0_date">
+              <span>{{ pre_exposure.day0_date ? (pre_exposure.day0_date | date: 'MM/dd/yyyy') : '-' }}</span>
+              <span>{{ pre_exposure.day0_vaccine ? pre_exposure.day0_vaccine.desc : '-' }}</span>
+              <span>{{ pre_exposure.day0_vaccine_route ? pre_exposure.day0_vaccine_route.desc : '-' }}</span>
+            </span>
+          </td>
+          <td class="py-4 px-6">
+            <span class="grid grid-cols-1" *ngIf="pre_exposure.day7_date">
+              <span>{{ pre_exposure.day7_date ? (pre_exposure.day7_date | date: 'MM/dd/yyyy') : '-' }}</span>
+              <span>{{ pre_exposure.day7_vaccine ? pre_exposure.day7_vaccine.desc : '-' }}</span>
+              <span>{{ pre_exposure.day7_vaccine_route ? pre_exposure.day7_vaccine_route.desc : '-' }}</span>
+            </span>
+          </td>
+          <td class="py-4 px-6">
+            <span class="grid grid-cols-1" *ngIf="pre_exposure.day21_date">
+              <span>{{ pre_exposure.day21_date ? (pre_exposure.day21_date | date: 'MM/dd/yyyy') : '-' }}</span>
+              <span>{{ pre_exposure.day21_vaccine ? pre_exposure.day21_vaccine.desc : '-' }}</span>
+              <span>{{ pre_exposure.day21_vaccine_route ? pre_exposure.day21_vaccine_route.desc : '-' }}</span>
+            </span>
+          </td>
+          <td class="py-4 px-6">
+            {{ pre_exposure.remarks ? pre_exposure.remarks : '-' }}
+          </td>
+          <td class="py-4 px-6">
+            <button type="button" class="rounded-md text-orange-500 py-1 px-2" (click)="editPreExposure('preexp-modal', pre_exposure)">
+              <fa-icon [icon]="faEdit"></fa-icon>
+              <!-- {{ pre_exposure.treatment_done === 0 ? 'Open' : 'View' }} -->
+            </button>
+          </td>
+        </tr>
+
+        <tr class="bg-white border-b" *ngIf="!pre_exposure_list[0]">
+          <td class="text-center h-16" colspan="7">
+            <span>No records found...</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<app-pre-exposure-modal *ngIf="modals['preexp-modal']"
+  (toggleModal)="toggleModal($event)"
+  [patient_id]="patient_id"
+  [selected_pre_exposure]="selected_pre_exposure"
+></app-pre-exposure-modal>
+<!-- <app-pre-exposure *ngIf="modals['pre-exposure']"
+></app-pre-exposure> -->
