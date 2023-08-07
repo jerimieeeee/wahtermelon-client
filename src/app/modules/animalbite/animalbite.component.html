@@ -25,20 +25,26 @@
   <div class="flex flex-row">
     <button (click)="switchTab(1)" class="tabs-main w-28"
         [class]="module===1 ? 'tabs-main-true' : 'tabs-main-false' ">
-        PRE-EXPOSURE
+        EXPOSURE DETAILS
     </button>
     <button (click)="switchTab(2)" *ngIf="selected_ab_consult?.id" class="tabs-main w-28"
         [class]="module===2 ? 'tabs-main-true' : 'tabs-main-false' ">
-        EXPOSURE DETAILS
+        POST EXPOSURE
     </button>
     <button (click)="switchTab(8)" *ngIf="selected_ab_consult?.id" class="tabs-main w-28"
         [class]="module===8? 'tabs-main-true' : 'tabs-main-false' ">
         CASE RATE
     </button>
   </div>
+
+  <div class="flex flex-row">
+    <button type="button" *ngIf="selected_ab_consult && !selected_ab_consult.date_outcome" (click)="toggleModal('treatment_outcome')" class="bg-rose-500 px-3 py-2  rounded text-white hover:opacity-75">
+      Treatment Outome
+    </button>
+  </div>
 </nav>
 
-<div class="my-5 w-full border border-gray-200 shadow-md rounded-xl" *ngIf="pages === 1">
+<div class="my-5 w-full" *ngIf="pages === 1">
   <div *ngIf="selected_ab_consult && (selected_ab_consult?.facility_code !== user_facility)" class="text-orange-800 border border-orange-400 bg-orange-100 rounded-md p-3 mb-2 w-full">
     There is an ongoing Animal Bite treatment for this patient on another facility.
     You are not allowed to create a new treatment or view previous treatment from other facilities.
@@ -47,65 +53,77 @@
     <div class="w-full flex justify-center"><fa-icon [icon]="faCircleNotch" spin="true" class="pt-10"></fa-icon></div>
     <div class="w-full flex justify-center pb-10 font-semibold">Fetching history...</div>
   </div>
-  <table class="w-full text-sm text-left" *ngIf="!fetching_history && patient_ab_history">
-    <thead class="text-xs text-white uppercase bg-blue-500">
-      <tr>
-        <th scope="col" class="py-3 px-6">Case Finding Date</th>
-        <th scope="col" class="py-3 px-6">Enrollment Date</th>
-        <th scope="col" class="py-3 px-6">Case number</th>
-        <th scope="col" class="py-3 px-6">Enrolled as</th>
-        <th scope="col" class="py-3 px-6">Treatment outcome</th>
-        <th scope="col" class="py-3 px-6">Treatment status</th>
-        <th scope="col" class="py-3 px-6">Action</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr class="bg-white border-b" *ngFor="let tb_history of patient_ab_history">
-        <td *ngIf="!patient_ab_history" colspan="7">
-          <div class="text-center">
-            No records to show...
-          </div>
-        </td>
-        <td class="py-4 px-6">
-          {{ tb_history.case_finding.consult_date | date: 'MM/dd/yyyy'}}
-        </td>
-        <td class="py-4 px-6">
-          {{ tb_history.case_holding ? (tb_history.case_holding?.registration_date | date: 'MM/dd/yyyy') : '-' }}
-        </td>
-        <td class="py-4 px-6">
-          {{ tb_history.case_holding ? tb_history.case_holding?.case_number : '-' }}
-        </td>
-        <td class="py-4 px-6">
-          {{ tb_history.case_holding ? tb_history.case_holding?.enroll_as.desc : '-' }}
-        </td>
-        <td class="py-4 px-6">
-          {{ tb_history.tb_treatment_outcome ? tb_history.tb_treatment_outcome.desc : '-' }}
-        </td>
-        <td class="py-4 px-6">
-          {{ tb_history.treatment_done === 0 ? 'Open' : 'Closed' }}
-        </td>
-        <td class="py-4 px-6">
-          <button *ngIf="user_facility === tb_history.facility_code" type="button" class="rounded-md bg-blue-500 text-white py-1 px-2" (click)="openTbConsult(tb_history)">
-            {{ tb_history.treatment_done === 0 ? 'Open' : 'View' }}
-          </button>
-        </td>
-      </tr>
-
-      <tr class="bg-white border-b" *ngIf="!patient_ab_history[0]">
-        <td  colspan="7">
-          <div class="text-center py-3 flex flex-col">
-            <div class="flex justify-center">No records to show...</div>
-            <div class="flex justify-center">
-              <button type="button" class="mt-3 bg-blue-500 px-3 py-1 rounded-md text-white hover:opacity-75" (click)="switchPage(2)">
-                create record
+  <div class="mb-5 rounded-lg border border-slate-200" *ngIf="!fetching_history && patient_ab_history">
+    <div class="bg-blue-500 text-white p-3 font-semibold rounded-t-lg flex justify-between">
+      EXPOSURE HISTORY
+    </div>
+    <div>
+      <table class="w-full text-sm text-left rounded-b-lg" >
+        <thead class="text-xs uppercase">
+          <tr>
+            <th scope="col" class="py-3 px-6">Consult Date</th>
+            <th scope="col" class="py-3 px-6">Exposure Date</th>
+            <th scope="col" class="py-3 px-6">Outcome Date</th>
+            <th scope="col" class="py-3 px-6">Outcome</th>
+            <th scope="col" class="py-3 px-6">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="bg-white border-b" *ngFor="let ab_history of patient_ab_history">
+            <td *ngIf="!patient_ab_history" colspan="7">
+              <div class="text-center">
+                No records to show...
+              </div>
+            </td>
+            <td class="py-4 px-6">
+              {{ ab_history.consult_date | date: 'MM/dd/yyyy' }}
+            </td>
+            <td class="py-4 px-6">
+              {{ ab_history.exposure_date | date: 'MM/dd/yyyy' }}
+            </td>
+            <td class="py-4 px-6">
+              {{ ab_history.date_outcome ? (ab_history.date_outcome | date: 'MM/dd/yyyy') : '-' }}
+            </td>
+            <td class="py-4 px-6">
+              {{ ab_history.ab_treatment_outcome ? ab_history.ab_treatment_outcome.desc : '-' }}
+            </td>
+            <td class="py-4 px-6">
+              <button *ngIf="user_facility === ab_history.facility_code" type="button" class="rounded-md bg-blue-500 text-white py-1 px-2" (click)="openAbConsult(ab_history)">
+                {{ ab_history.date_outcome ? 'Open' : 'View' }}
               </button>
-            </div>
-          </div>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+            </td>
+          </tr>
+
+          <tr class="bg-white" *ngIf="!patient_ab_history[0]">
+            <td  colspan="7" class="py-3">
+              <div class="text-center flex flex-col">
+                <div class="flex justify-center">No records to show...</div>
+                <div class="flex justify-center">
+                  <button type="button" class="mt-3 bg-blue-500 px-3 py-1 rounded-md text-white hover:opacity-75" (click)="switchPage(2)">
+                    create record
+                  </button>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <app-ab-preexposure class="mt-5" *ngIf="!fetching_history"
+    [patient_id]="patient_id"></app-ab-preexposure>
 </div>
+
+<app-ab-exposure *ngIf="pages === 2 && module === 1"
+  [patient_id]="patient_id"
+  [selected_ab_consult]="selected_ab_consult"
+></app-ab-exposure>
+
+<app-ab-postexposure *ngIf="pages === 2 && module === 2"
+[patient_id]="patient_id"
+[selected_ab_consult]="selected_ab_consult"
+></app-ab-postexposure>
 
 <app-end-visit *ngIf="modals['end_visit']"
   (toggleModal)="toggleModal($event)"
@@ -127,14 +145,14 @@
   (switchPage)="switchPage($event)"
   [patient_id]="selected_ab_consult.patient_id"
   [program_id]="selected_ab_consult.id"
-  [program_name]="'tb'"
+  [program_name]="'ab'"
   [max_date]="max_date"
 ></app-caserate>
 
 <app-eclaims *ngIf="pages === 3"
   (switchPage)="switchPage($event)"
   [program_id]="selected_ab_consult.id"
-  [program_name]="'tb'"
+  [program_name]="'ab'"
   [max_date]="max_date"
   [selected_case]="selected_ab_consult"
 ></app-eclaims>

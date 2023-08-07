@@ -31,7 +31,7 @@ export class AnimalbiteComponent implements OnInit{
 
   max_date = formatDate(new Date(), 'yyyy-MM-dd', 'en');
 
-  openTbConsult(data) {
+  openAbConsult(data) {
     this.selected_ab_consult = data;
     if(data.treatment_done === 1) this.consult_details = null;
     this.pages = 2;
@@ -41,16 +41,16 @@ export class AnimalbiteComponent implements OnInit{
     this.selected_ab_consult = null;
     this.fetching_history = true;
     let params = {
-      patient_id: this.patient_id,
-      per_page: 'all'
+      patient_id: this.patient_id
     };
 
-    this.http.get('tbdots/patient-tb', {params}).subscribe({
+    this.http.get('animal-bite/patient-ab', {params}).subscribe({
       next: (data: any) => {
         this.patient_ab_history = data.data;
-        if(this.patient_ab_history[0] && this.patient_ab_history[0].treatment_done === 0) this.selected_ab_consult = data.data[0];
-        console.log(this.selected_ab_consult)
+        if(this.patient_ab_history[0] && !this.patient_ab_history[0].ab_treatment_outcome) this.selected_ab_consult = data.data[0];
+        console.log(data.data)
         this.fetching_history = false;
+        // this.pages = 2;
       },
       error: err => console.log(err)
     });
