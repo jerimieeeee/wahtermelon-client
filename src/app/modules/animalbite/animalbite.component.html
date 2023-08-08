@@ -4,11 +4,11 @@
       [class]="pages===1? 'tabs-main-true rounded-t-md' : 'tabs-main-false' ">
       HISTORY
     </button>
-    <button *ngIf="!selected_ab_consult || (selected_ab_consult?.facility_code === user_facility)" (click)="switchPage(2)" class="tabs-main w-36"
+    <button *ngIf="!fetching_history || !selected_ab_consult || (selected_ab_consult?.facility_code === user_facility)" (click)="switchPage(2)" class="tabs-main w-36"
       [class]="pages===2? 'tabs-main-true rounded-t-md' : 'tabs-main-false' ">
-      DETAILS
+      {{ !selected_ab_consult ? 'NEW EXPOSURE' : 'DETAILS' }}
     </button>
-    <button *ngIf="!selected_ab_consult || (selected_ab_consult?.facility_code === user_facility)" (click)="switchPage(3)" class="tabs-main w-36"
+    <button *ngIf="showEclaims && selected_ab_consult?.facility_code === user_facility" (click)="switchPage(3)" class="tabs-main w-36"
       [class]="pages===3? 'tabs-main-true rounded-t-md' : 'tabs-main-false' ">
       ECLAIMS
     </button>
@@ -89,7 +89,7 @@
             </td>
             <td class="py-4 px-6">
               <button *ngIf="user_facility === ab_history.facility_code" type="button" class="rounded-md bg-blue-500 text-white py-1 px-2" (click)="openAbConsult(ab_history)">
-                {{ ab_history.date_outcome ? 'Open' : 'View' }}
+                {{ ab_history.date_outcome ? 'View' : 'Open' }}
               </button>
             </td>
           </tr>
@@ -116,13 +116,15 @@
 </div>
 
 <app-ab-exposure *ngIf="pages === 2 && module === 1"
+  (updateSelectedAb)="updateSelectedAb($event)"
   [patient_id]="patient_id"
   [selected_ab_consult]="selected_ab_consult"
 ></app-ab-exposure>
 
 <app-ab-postexposure *ngIf="pages === 2 && module === 2"
-[patient_id]="patient_id"
-[selected_ab_consult]="selected_ab_consult"
+  (updateSelectedAb)="updateSelectedAb($event)"
+  [patient_id]="patient_id"
+  [selected_ab_consult]="selected_ab_consult"
 ></app-ab-postexposure>
 
 <app-end-visit *ngIf="modals['end_visit']"
@@ -133,13 +135,12 @@
   [pt_group]="'tb'"
 ></app-end-visit>
 
-<app-treatment-outcome *ngIf="modals['treatment_outcome']"
+<app-ab-outcome *ngIf="modals['treatment_outcome']"
   [selected_ab_consult]="selected_ab_consult"
   [max_date]="max_date"
   (toggleModal)="toggleModal($event)"
   (switchPage)="switchPage($event)"
-  (getPatientTbHistory)="getPatientTbHistory()"
-></app-treatment-outcome>
+></app-ab-outcome>
 
 <app-caserate *ngIf="pages === 2 && module === 8"
   (switchPage)="switchPage($event)"

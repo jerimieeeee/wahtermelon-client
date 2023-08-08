@@ -56,6 +56,17 @@ export class AnimalbiteComponent implements OnInit{
     });
   }
 
+  updateSelectedAb(data){
+    console.log(data);
+    this.selected_ab_consult = data.data[0];
+  }
+
+  get showEclaims(): boolean{
+    return  this.selected_ab_consult?.abPostExposure?.day0_date && this.selected_ab_consult?.abPostExposure?.day3_date &&
+            this.selected_ab_consult?.abPostExposure?.day7_date && this.selected_ab_consult?.abPostExposure?.rig_date &&
+            this.selected_ab_consult?.abPostExposure?.other_vacc_date
+  }
+
   switchPage(page) {
     if(page === 1) this.getAbHistory();
     this.pages = page;

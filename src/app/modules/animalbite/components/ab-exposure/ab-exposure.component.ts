@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
@@ -13,7 +13,8 @@ import { formatDate } from '@angular/common';
   templateUrl: './ab-exposure.component.html',
   styleUrls: ['./ab-exposure.component.scss']
 })
-export class AbExposureComponent implements OnInit {
+export class AbExposureComponent implements OnInit, OnChanges {
+  @Output() updateSelectedAb = new EventEmitter<any>();
   @Input() patient_id;
   @Input() selected_ab_consult;
 
@@ -42,10 +43,9 @@ export class AbExposureComponent implements OnInit {
   ];
 
   onSubmit(){
+    this.is_saving = true;
     let query;
-    let params = {...this.abExposureForm.value};
 
-    console.log(params)
     if(this.abExposureForm.value.id) {
       query = this.http.update('animal-bite/patient-ab-exposure/', this.abExposureForm.value.id, this.abExposureForm.value);
     } else {
@@ -53,9 +53,10 @@ export class AbExposureComponent implements OnInit {
     }
 
     query.subscribe({
-      next: (data:any) => {
-        console.log(data);
-        this.toastr.success('Successfully recorded!', 'Exposure Details')
+      next: (data: any) => {
+        this.is_saving = false;
+        this.toastr.success('Successfully recorded!', 'Exposure Details');
+        this.updateSelectedAb.emit(data);
       },
       error: err => console.log(err)
     });
@@ -107,15 +108,18 @@ export class AbExposureComponent implements OnInit {
       remarks: [null]
     })
 
-    console.log(this.selected_ab_consult);
+    this.patchData();
+    this.show_form =true;
+  }
+
+  patchData(){
     if(this.selected_ab_consult && this.selected_ab_consult.abExposure) {
       this.abExposureForm.patchValue({...this.selected_ab_consult.abExposure});
       this.abExposureForm.patchValue({
-        consult_date: formatDate(this.selected_ab_consult.consult_date, 'yyyy-MM-dd', 'en'),
-        exposure_date: formatDate(this.selected_ab_consult.exposure_date, 'yyyy-MM-dd', 'en')
+        consult_date: this.selected_ab_consult.consult_date ? formatDate(this.selected_ab_consult.consult_date, 'yyyy-MM-dd', 'en') : null,
+        exposure_date: this.selected_ab_consult.exposure_date ? formatDate(this.selected_ab_consult.exposure_date, 'yyyy-MM-dd', 'en') : null
       });
     }
-    this.show_form =true;
   }
 
   constructor(
@@ -123,6 +127,10 @@ export class AbExposureComponent implements OnInit {
     private toastr: ToastrService,
     private formBuilder: FormBuilder
   ) { }
+
+  ngOnChanges(change: SimpleChanges): void{
+    this.patchData();
+  }
 
   ngOnInit(): void {
     this.loadLibraries();

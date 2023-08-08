@@ -11,13 +11,13 @@
         </div>
         <div class="col-span-3 grid grid-cols-3 gap-x-4 gpa-y-2">
           <div>
-            <label for="consult_date">Consulation Date</label>
-            <input type="date" name="consult_date" id="consult_date" [max]="max_date" formControlName="consult_date" class="input">
+            <label for="exposure_date">Exposure Date *</label>
+            <input type="date" name="exposure_date" id="exposure_date" [max]="max_date" formControlName="exposure_date" class="input">
           </div>
 
           <div>
-            <label for="exposure_date">Exposure Date</label>
-            <input type="date" name="exposure_date" id="exposure_date" [max]="max_date" formControlName="exposure_date" class="input">
+            <label for="consult_date">Consulation Date *</label>
+            <input type="date" name="consult_date" id="consult_date" [max]="max_date" formControlName="consult_date" class="input">
           </div>
         </div>
 
@@ -31,14 +31,14 @@
           </div>
 
           <div>
-            <label for="animal_type_id">Type of Animal</label>
+            <label for="animal_type_id">Type of Animal *</label>
             <select name="animal_type_id" id="animal_type_id" formControlName="animal_type_id" class="input">
               <option *ngFor="let type of animal_types" [value]="type.id">{{ type.desc }}</option>
             </select>
           </div>
 
           <div>
-            <label for="animal_ownership_id">Type of Ownership</label>
+            <label for="animal_ownership_id">Type of Ownership *</label>
             <select name="animal_ownership_id" id="animal_ownership_id" formControlName="animal_ownership_id" class="input">
               <option *ngFor="let ownership of animal_ownerships" [value]="ownership.id">{{ ownership.desc }}</option>
             </select>
@@ -73,7 +73,7 @@
           </div>
 
           <div class="col-span-3">
-            <label for="exposure_type_code">Type of Exposure</label>
+            <label for="exposure_type_code">Type of Exposure *</label>
             <select name="exposure_type_code" id="exposure_type_code" formControlName="exposure_type_code" class="input">
               <option *ngFor="let exposure_type of exposure_types" [value]="exposure_type.code">{{ exposure_type.desc }}</option>
             </select>
@@ -115,7 +115,7 @@
         </div>
       </div>
       <!-- *ngIf="!selected_tb_consult || selected_tb_consult.treatment_done === 0" -->
-      <div class="flex justify-center mt-5" >
+      <div *ngIf="!selected_ab_consult?.date_outcome" class="flex justify-center mt-5" >
         <button [disabled]="is_saving || abExposureForm.invalid" type="submit" class="btn-save mr-5 mt-4">
           <fa-icon [icon]="is_saving ? faCircleNotch : faSave" [spin]="is_saving ? true : false" class="mr-2"></fa-icon>
           {{ abExposureForm.value.id ? (is_saving ? 'Updating' : 'Update') : (is_saving ? 'Saving' : 'Save') }}
@@ -132,7 +132,7 @@
     </div>
 
     <div class="flex justify-center">
-      Fetching data...
+      Fetching exposure record...
     </div>
   </div>
 </div>

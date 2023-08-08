@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { faSave } from '@fortawesome/free-regular-svg-icons';
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
@@ -13,7 +13,8 @@ import { forkJoin } from 'rxjs';
   templateUrl: './ab-postexposure.component.html',
   styleUrls: ['./ab-postexposure.component.scss']
 })
-export class AbPostexposureComponent implements OnInit {
+export class AbPostexposureComponent implements OnInit, OnChanges{
+  @Output() updateSelectedAb = new EventEmitter<any>();
   @Input() patient_id;
   @Input() selected_ab_consult
   show_form: boolean = false;
@@ -31,15 +32,16 @@ export class AbPostexposureComponent implements OnInit {
   vaccine_routes:  {};
 
   onSubmit(){
+    this.is_saving = true;
     this.http.post('animal-bite/patient-ab-post-exposure', this.abPostExposureForm.value).subscribe({
       next: (data: any) => {
-        console.log(data);
+        this.is_saving = false;
         this.toastr.success('Successfully recorded!', 'Post Exposure');
+        this.updateSelectedAb.emit(data);
       },
       error: err => console.log(err)
     })
   }
-
 
   loadLibraries () {
     this.show_form = false;
@@ -71,11 +73,11 @@ export class AbPostexposureComponent implements OnInit {
       animal_status_code: [null, Validators.required],
       animal_status_date: [null],
       rig_type_code: [null, Validators.required],
-      rig_type_date: [null],
-      booster_1_flag: [null],
-      booster_2_flag: [null],
+      rig_date: [null, Validators.required],
+      booster_1_flag: [false],
+      booster_2_flag: [false],
       other_vacc_date: [null],
-      other_vacc_dec: [null],
+      other_vacc_desc: [null],
       other_vacc_route_code: [null],
       day0_date: [null],
       day0_vaccine_code: [null],
@@ -94,11 +96,26 @@ export class AbPostexposureComponent implements OnInit {
       day28_vaccine_route_code: [null],
     });
 
-    if(this.selected_ab_consult && this.selected_ab_consult.abPostExposure) {
-      this.abPostExposureForm.patchValue({...this.selected_ab_consult.abPostExposure});
-    }
+    this.patchData();
 
     this.show_form = true;
+  }
+
+  patchData() {
+    if(this.selected_ab_consult && this.selected_ab_consult.abPostExposure) {
+      this.abPostExposureForm.patchValue({...this.selected_ab_consult.abPostExposure});
+
+      this.abPostExposureForm.patchValue({
+        animal_status_date: this.abPostExposureForm.value.animal_status_date ? formatDate(this.abPostExposureForm.value.animal_status_date, 'yyyy-MM-dd', 'en'): null,
+        rig_type_date: this.abPostExposureForm.value.rig_type_date ? formatDate(this.abPostExposureForm.value.rig_type_date, 'yyyy-MM-dd', 'en'): null,
+        other_vacc_date: this.abPostExposureForm.value.other_vacc_date ? formatDate(this.abPostExposureForm.value.other_vacc_date, 'yyyy-MM-dd', 'en'): null,
+        day0_date: this.abPostExposureForm.value.day0_date ? formatDate(this.abPostExposureForm.value.day0_date, 'yyyy-MM-dd', 'en'): null,
+        day3_date: this.abPostExposureForm.value.day3_date ? formatDate(this.abPostExposureForm.value.day3_date, 'yyyy-MM-dd', 'en'): null,
+        day7_date: this.abPostExposureForm.value.day7_date ? formatDate(this.abPostExposureForm.value.day7_date, 'yyyy-MM-dd', 'en'): null,
+        day14_date: this.abPostExposureForm.value.day14_date ? formatDate(this.abPostExposureForm.value.day14_date, 'yyyy-MM-dd', 'en'): null,
+        day28_date: this.abPostExposureForm.value.day28_date ? formatDate(this.abPostExposureForm.value.day28_date, 'yyyy-MM-dd', 'en'): null,
+      })
+    }
   }
 
   constructor (
@@ -106,6 +123,10 @@ export class AbPostexposureComponent implements OnInit {
     private toastr: ToastrService,
     private formBuilder: FormBuilder
   ) { }
+
+  ngOnChanges(change: SimpleChanges): void{
+    this.patchData();
+  }
 
   ngOnInit(): void {
     this.loadLibraries();

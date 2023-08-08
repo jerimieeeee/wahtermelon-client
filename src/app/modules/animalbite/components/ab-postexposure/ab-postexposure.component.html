@@ -32,8 +32,8 @@
           </div>
 
           <div>
-            <label for="animal_status_date">RIG Date</label>
-            <input type="date" name="animal_status_date" id="animal_status_date" [max]="max_date" formControlName="animal_status_date" class="input">
+            <label for="rig_date">RIG Date</label>
+            <input type="date" name="rig_date" id="rig_date" [max]="max_date" formControlName="rig_date" class="input">
           </div>
         </div>
 
@@ -47,8 +47,8 @@
           </div>
 
           <div>
-            <label for="animal_status_date">Specify</label>
-            <input type="text" name="animal_status_date" id="animal_status_date" formControlName="animal_status_date" class="input">
+            <label for="other_vacc_desc">Specify</label>
+            <input type="text" name="other_vacc_desc" id="other_vacc_desc" formControlName="other_vacc_desc" class="input">
           </div>
 
           <div>
@@ -80,7 +80,7 @@
 
           <!-- Day 3 -->
           <div>
-            <label for="day3_date">Day 0 Date</label>
+            <label for="day3_date">Day 3 Date</label>
             <input type="date" name="day3_date" id="day3_date" [max]="max_date" formControlName="day3_date" class="input">
           </div>
 
@@ -100,7 +100,7 @@
 
           <!-- Day 7 -->
           <div>
-            <label for="day7_date">Day 0 Date</label>
+            <label for="day7_date">Day 7 Date</label>
             <input type="date" name="day7_date" id="day7_date" [max]="max_date" formControlName="day7_date" class="input">
           </div>
 
@@ -120,7 +120,7 @@
 
           <!-- Day 14 -->
           <div>
-            <label for="day14_date">Day 0 Date</label>
+            <label for="day14_date">Day 14 Date</label>
             <input type="date" name="day14_date" id="day14_date" [max]="max_date" formControlName="day14_date" class="input">
           </div>
 
@@ -138,9 +138,9 @@
             </select>
           </div>
 
-          <!-- Day 14 -->
+          <!-- Day 28 -->
           <div>
-            <label for="day28_date">Day 0 Date</label>
+            <label for="day28_date">Day 28 Date</label>
             <input type="date" name="day28_date" id="day28_date" [max]="max_date" formControlName="day28_date" class="input">
           </div>
 
@@ -160,9 +160,9 @@
         </div>
       </div>
       <!-- *ngIf="!selected_tb_consult || selected_tb_consult.treatment_done === 0" -->
-      <div class="flex justify-center mt-5" >
+      <div *ngIf="!selected_ab_consult?.date_outcome" class="flex justify-center mt-5" >
         <button [disabled]="is_saving || abPostExposureForm.invalid" type="submit" class="btn-save mr-5 mt-4">
-          <fa-icon [icon]="is_saving ? faCircleNotch : faSave" [spin]="is_saving ? true : false" class="mr-2"></fa-icon>
+          <fa-icon [icon]="is_saving ? faCircleNotch : faSave" [spin]="is_saving" class="mr-2"></fa-icon>
           {{ abPostExposureForm.value.id ? (is_saving ? 'Updating' : 'Update') : (is_saving ? 'Saving' : 'Save') }}
         </button>
       </div>
@@ -177,7 +177,7 @@
     </div>
 
     <div class="flex justify-center">
-      Fetching data...
+      Fetching post exposure record...
     </div>
   </div>
 </div>
