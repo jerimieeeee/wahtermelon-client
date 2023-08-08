@@ -43,11 +43,12 @@ export class TodaysReferralComponent implements OnInit {
     params['params']['referral_facility_code'] = this.http.getUserFacility();
     params['params']['per_page'] = this.per_page;
     params['params']['consult_done'] = 0;
+    params['params']['disable_filter'] = 1;
 
     // console.log(params)
     this.http.get('appointment/schedule', params).subscribe({
       next: (data: any) => {
-        // console.log(data)
+        console.log(data)
         this.todays_appointment = data[0].data;
         // this.appointment_length = Object.keys(this.todays_appointment).length;
         // console.log(Object.keys(this.todays_appointment))
