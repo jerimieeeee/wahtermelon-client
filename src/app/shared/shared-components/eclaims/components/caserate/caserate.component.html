@@ -98,7 +98,6 @@
             <input type="text" name="description" id="description" formControlName="description" class="input" />
           </div>
 
-
           <div>
             <label for="hci_fee">HCI Fee</label>
             <input type="number" name="hci_fee" id="hci_fee" formControlName="hci_fee" class="input" />
@@ -119,6 +118,87 @@
             <select name="caserate_attendant" id="caserate_attendant" formControlName="caserate_attendant" class="input">
               <option *ngFor="let att of attendant" [value]="att.id">{{ att.last_name }}, {{ att.first_name }}</option>
             </select>
+          </div>
+
+
+          <div>
+            <input type="checkbox" class="input-checkbox" name="enough_benefit_flag" id="enough_benefit_flag" formControlName="enough_benefit_flag" />
+            <label for="enough_benefit_flag" class="pl-2">With Enough Benefit?</label>
+          </div>
+
+          <div *ngIf="!caserateForm.value.enough_benefit_flag">
+            <!-- HCI NOT ENOUGH -->
+            <div>
+              <label for="hci_pTotalActualCharges">HCI Total Actual Charges</label>
+              <input type="number" name="hci_pTotalActualCharges" id="hci_pTotalActualCharges" formControlName="hci_pTotalActualCharges" class="input" />
+            </div>
+
+            <div>
+              <label for="hci_pDiscount">HCI Discount</label>
+              <input type="number" name="hci_pDiscount" id="hci_pDiscount" formControlName="hci_pDiscount" class="input" />
+            </div>
+
+            <div>
+              <label for="hci_pPhilhealthBenefit">HCI Philhealth Benefit</label>
+              <input type="number" name="hci_pPhilhealthBenefit" id="hci_pPhilhealthBenefit" formControlName="hci_pPhilhealthBenefit" class="input" />
+            </div>
+
+            <div>
+              <label for="hci_pTotalAmount">HCI Total Amount</label>
+              <input type="number" name="hci_pTotalAmount" id="hci_pTotalAmount" formControlName="hci_pTotalAmount" class="input" />
+            </div>
+
+            <!-- PROF NOT ENOUGH -->
+            <div>
+              <label for="prof_pTotalActualCharges">Professional Total Actual Charges</label>
+              <input type="number" name="prof_pTotalActualCharges" id="prof_pTotalActualCharges" formControlName="prof_pTotalActualCharges" class="input" />
+            </div>
+
+            <div>
+              <label for="prof_pDiscount">Professional Discount</label>
+              <input type="number" name="prof_pDiscount" id="prof_pDiscount" formControlName="prof_pDiscount" class="input" />
+            </div>
+
+            <div>
+              <label for="prof_pPhilhealthBenefit">Professional Philhealth Benefit</label>
+              <input type="number" name="prof_pPhilhealthBenefit" id="prof_pPhilhealthBenefit" formControlName="prof_pPhilhealthBenefit" class="input" />
+            </div>
+
+            <div>
+              <label for="prof_pTotalAmount">Professional Total Amount</label>
+              <input type="number" name="prof_pTotalAmount" id="prof_pTotalAmount" formControlName="prof_pTotalAmount" class="input" />
+            </div>
+
+            <!-- MEDICINE NOT ENOUGH -->
+            <div class="mt-2">
+              <input type="checkbox" class="input-checkbox" name="meds_flag" id="meds_flag" formControlName="meds_flag" />
+              <label for="meds_flag" class="pl-2">With Medicine?</label>
+            </div>
+
+            <div *ngIf="caserateForm.value.meds_flag">
+              <label for="meds_pDMSTotalAmount">Medicine Total Amount</label>
+              <input type="number" name="meds_pDMSTotalAmount" id="meds_pDMSTotalAmount" formControlName="meds_pDMSTotalAmount" class="input" />
+            </div>
+
+            <div class="mt-2">
+              <input type="checkbox" class="input-checkbox" name="meds_pExaminations_flag" id="meds_pExaminations_flag" formControlName="meds_pExaminations_flag" />
+              <label for="meds_pExaminations_flag" class="pl-2">With Examination</label>
+            </div>
+
+            <div *ngIf="caserateForm.value.meds_pExaminations_flag">
+              <label for="meds_pExamTotalAmount">Examitation Total Amount</label>
+              <input type="number" name="meds_pExamTotalAmount" id="meds_pExamTotalAmount" formControlName="meds_pExamTotalAmount" class="input" />
+            </div>
+
+            <div class="mt-2">
+              <input type="checkbox" class="input-checkbox" name="hmo_flag" id="hmo_flag" formControlName="hmo_flag" />
+              <label for="hmo_flag" class="pl-2">With HMO</label>
+            </div>
+
+            <div class="mt-2">
+              <input type="checkbox" class="input-checkbox" name="others_flag" id="others_flag" formControlName="others_flag" />
+              <label for="others_flag" class="pl-2">Others (i.e., PCSO, Promissory note, etc.)</label>
+            </div>
           </div>
 
           <div class="my-5">

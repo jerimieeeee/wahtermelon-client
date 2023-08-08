@@ -354,7 +354,23 @@ export class Cf2Component implements OnInit {
       pCheckUpDate3: [null],
       pCheckUpDate4: [null],
       pICDCode: [null],
-      transmittalNumber: [null]
+      transmittalNumber: [null],
+
+      enough_benefit_flag: [null],
+      hci_pTotalActualCharges: [null],
+      hci_pDiscount: [null],
+      hci_pPhilhealthBenefit: [null],
+      hci_pTotalAmount: [null],
+      prof_pTotalActualCharges: [null],
+      prof_pDiscount: [null],
+      prof_pPhilhealthBenefit: [null],
+      prof_pTotalAmount: [null],
+      meds_flag: [null],
+      meds_pDMSTotalAmount: [null],
+      meds_pExaminations_flag: [null],
+      meds_pExamTotalAmount: [null],
+      hmo_flag: [null],
+      others_flag: [null]
     });
 
     this.eclaimsForm.patchValue({...this.selected_caserate});

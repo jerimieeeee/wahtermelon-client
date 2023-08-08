@@ -4,7 +4,7 @@
       [class]="pages===1? 'tabs-main-true rounded-t-md' : 'tabs-main-false' ">
       HISTORY
     </button>
-    <button *ngIf="!fetching_history || !selected_ab_consult || (selected_ab_consult?.facility_code === user_facility)" (click)="switchPage(2)" class="tabs-main w-36"
+    <button *ngIf="!selected_ab_consult || (selected_ab_consult?.facility_code === user_facility)" (click)="switchPage(2)" class="tabs-main w-36"
       [class]="pages===2? 'tabs-main-true rounded-t-md' : 'tabs-main-false' ">
       {{ !selected_ab_consult ? 'NEW EXPOSURE' : 'DETAILS' }}
     </button>

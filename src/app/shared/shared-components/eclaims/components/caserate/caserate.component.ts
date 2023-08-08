@@ -10,6 +10,7 @@ import { SearchCaserateComponent } from './modals/search-caserate/search-caserat
 import { catchError, concat, debounceTime, distinctUntilChanged, filter, map, Observable, of, Subject, switchMap, tap } from 'rxjs';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { cc_caserate, tb_caserate } from './caserateLib';
+import { caserateForm } from './caserateForm';
 
 @Component({
   selector: 'app-caserate',
@@ -34,23 +35,7 @@ export class CaserateComponent implements OnInit {
   show_form: boolean = false;
   is_saving: boolean = false;
 
-  caserateForm: FormGroup =  new FormGroup({
-    id: new FormControl<string|null>(''),
-    patient_id: new FormControl<string|null>(''),
-    program_desc: new FormControl<string|null>(''),
-    program_id: new FormControl<string|null>(''),
-    caserate_date: new FormControl<string|null>(''),
-    admit_dx: new FormControl<string|null>(''),
-    caserate_code: new FormControl<string|null>(''),
-    code: new FormControl<string|null>(''),
-    description: new FormControl<string|null>(''),
-    discharge_dx: new FormControl<string|null>(''),
-    icd10_code: new FormControl<string|null>(''),
-    hci_fee: new FormControl<number|null>(null),
-    prof_fee: new FormControl<number|null>(null),
-    caserate_fee: new FormControl<number|null>(null),
-    caserate_attendant: new FormControl<string|null>(null),
-  });
+  caserateForm:FormGroup=caserateForm();
 
   selectPreloadedCaserate(){
     console.log(this.loaded_caserate);
@@ -87,6 +72,7 @@ export class CaserateComponent implements OnInit {
 
     this.http.get('eclaims/eclaims-caserate', {params}).subscribe({
       next:(data:any) => {
+        console.log(data)
         this.caserate_list = data.data;
         // console.log(this.caserate_list);
         this.createForm()
@@ -111,7 +97,23 @@ export class CaserateComponent implements OnInit {
       hci_fee: [null, Validators.required],
       prof_fee: [null, Validators.required],
       caserate_fee: [null, Validators.required],
-      caserate_attendant: [null, Validators.required]
+      caserate_attendant: [null, Validators.required],
+
+      enough_benefit_flag: [true],
+      hmo_flag: [false],
+      others_flag: [false],
+      hci_pTotalActualCharges: [null],
+      hci_pDiscount: [null],
+      hci_pPhilhealthBenefit: [null],
+      hci_pTotalAmount: [null],
+      prof_pTotalActualCharges: [null],
+      prof_pDiscount: [null],
+      prof_pPhilhealthBenefit: [null],
+      prof_pTotalAmount: [null],
+      meds_flag: [false],
+      meds_pDMSTotalAmount: [null],
+      meds_pExaminations_flag: [false],
+      meds_pExamTotalAmount: [null],
     });
 
     if(data) this.patchData(data);
@@ -175,6 +177,7 @@ export class CaserateComponent implements OnInit {
 
   patchData(data){
     this.caserateForm.patchValue({...data});
+    console.log(this.caserateForm.value)
   }
 
   loadContent(content) {
