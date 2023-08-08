@@ -80,6 +80,16 @@
             </div>
             <!-- MC CASE -->
 
+            <!-- AB Case -->
+            <div *ngIf="program_name==='ab'">
+              <span class="absolute top-[280.5mm] left-[17mm] w-[45mm]">{{ eclaimsForm.value.pDay0ARV | date:'MM-dd-yyyy' }}</span>
+              <span class="absolute top-[280.5mm] left-[55mm] w-[45mm]">{{ eclaimsForm.value.pDay3ARV | date:'MM-dd-yyyy' }}</span>
+              <span class="absolute top-[280.5mm] left-[97mm] w-[45mm]">{{ eclaimsForm.value.pDay7ARV | date:'MM-dd-yyyy' }}</span>
+              <span class="absolute top-[280.5mm] left-[125mm] w-[45mm]">{{ eclaimsForm.value.pRIG | date:'MM-dd-yyyy' }}</span>
+              <span class="absolute top-[280.5mm] left-[174mm] w-[45mm]">{{ eclaimsForm.value.pABPOthers | date:'MM-dd-yyyy' }}</span>
+            </div>
+            <!-- AB CASE -->
+
             <!-- TB CASE -->
             <div *ngIf="program_name==='tb'">
               <span *ngIf="eclaimsForm.value.code==='89221'" class="absolute top-[270.5mm] left-[46.3mm]">&#x2714;</span> <!-- Instensive -->

@@ -36,8 +36,8 @@ export class Cf2Component implements OnInit {
   facility: any;
 
   eclaimsForm:FormGroup=eclaimsForm();
+  date_today = formatDate(new Date(), 'MM-dd-yyyy', 'en');
 
-  date_today = formatDate(new Date(), 'yyyy-MM-dd', 'en');
   submitQue() {
     this.que_form = true;
     console.log(this.eclaimsForm.value)
@@ -65,20 +65,20 @@ export class Cf2Component implements OnInit {
 
     if(this.selected_caserate.code === '89221') {
       tb.pTBType = 'I';
-      tb.attendant_sign_date = formatDate(this.selected_case.case_holding.treatment_start, 'yyyy-MM-dd', 'en');
-      tb.admission_date = formatDate(this.selected_case.case_holding.treatment_start, 'yyyy-MM-dd', 'en');
+      tb.attendant_sign_date = formatDate(this.selected_case.case_holding.treatment_start, 'MM-dd-yyyy', 'en');
+      tb.admission_date = formatDate(this.selected_case.case_holding.treatment_start, 'MM-dd-yyyy', 'en');
 
       let cont_date = new Date(this.selected_case.case_holding.continuation_start);
           cont_date.setDate(cont_date.getDate()-1);
 
-      tb.discharge_date = formatDate(cont_date, 'yyyy-MM-dd', 'en');
+      tb.discharge_date = formatDate(cont_date, 'MM-dd-yyyy', 'en');
     }
 
     if(this.selected_caserate.code === '89222') {
       tb.pTBType = 'M';
-      tb.attendant_sign_date = formatDate(this.selected_case.case_holding.treatment_start, 'yyyy-MM-dd', 'en');
-      tb.admission_date = formatDate(this.selected_case.case_holding.continuation_start, 'yyyy-MM-dd', 'en');
-      tb.discharge_date = formatDate(this.selected_case.case_holding.treatment_end, 'yyyy-MM-dd', 'en');
+      tb.attendant_sign_date = formatDate(this.selected_case.case_holding.treatment_start, 'MM-dd-yyyy', 'en');
+      tb.admission_date = formatDate(this.selected_case.case_holding.continuation_start, 'MM-dd-yyyy', 'en');
+      tb.discharge_date = formatDate(this.selected_case.case_holding.treatment_end, 'MM-dd-yyyy', 'en');
     }
 
     this.eclaimsForm.patchValue({
@@ -91,23 +91,7 @@ export class Cf2Component implements OnInit {
       discharge_time: '8:00AM',
     });
 
-    console.log(this.eclaimsForm)
     this.getCreds();
-  }
-
-  getCreds(){
-    let params = {
-      'filter[program_code]': this.program_name !== 'cc' ? this.program_name : 'mc'
-    }
-
-    this.http.get('settings/philhealth-credentials', {params}).subscribe({
-      next:(data:any) => {
-        console.log(data.data)
-        this.program_creds = data.data[0];
-        this.show_form = true;
-      },
-      error: err => console.log(err)
-    })
   }
 
   paramsCc(vaccine) {
@@ -142,10 +126,10 @@ export class Cf2Component implements OnInit {
     }
 
     this.eclaimsForm.patchValue({
-      attendant_sign_date: formatDate(this.selected_case.admission_date, 'yyyy-MM-dd', 'en'),
-      admission_date: formatDate(this.selected_case.admission_date, 'yyyy-MM-dd', 'en'),
+      attendant_sign_date: formatDate(this.selected_case.admission_date, 'MM-dd-yyyy', 'en'),
+      admission_date: formatDate(this.selected_case.admission_date, 'MM-dd-yyyy', 'en'),
       admission_time: formatDate(this.selected_case.admission_date, 'HH:mma', 'en'),
-      discharge_date: formatDate(this.selected_case.discharge_date, 'yyyy-MM-dd', 'en'),
+      discharge_date: formatDate(this.selected_case.discharge_date, 'MM-dd-yyyy', 'en'),
       discharge_time: formatDate(this.selected_case.discharge_date, 'HH:mma', 'en'),
       pNewbornHearingScreeningTest: hearing_done,
       pNewbornScreeningTest: this.selected_case.nbs_filter ? 'Y' : 'N',
@@ -157,29 +141,38 @@ export class Cf2Component implements OnInit {
     this.getCreds();
   }
 
-  getVaccine(): string{
-    return 'Y'
-  }
-
   paramsAb() {
     this.f.pDay0ARV.setValidators([Validators.required]);
     this.f.pDay3ARV.setValidators([Validators.required]);
     this.f.pDay7ARV.setValidators([Validators.required]);
     this.f.pRIG.setValidators([Validators.required]);
     this.f.pABPOthers.setValidators([Validators.required]);
-    this.f.pABPSpecify.setValidators([Validators.required]);
-    this.f.pICDCode.setValidators([Validators.required]);
+
+    this.eclaimsForm.patchValue({
+      pDay0ARV: formatDate(this.selected_case.abPostExposure.day0_date, 'MM-dd-yyyy', 'en'),
+      pDay3ARV: formatDate(this.selected_case.abPostExposure.day3_date, 'MM-dd-yyyy', 'en'),
+      pDay7ARV: formatDate(this.selected_case.abPostExposure.day7_date, 'MM-dd-yyyy', 'en'),
+      pRIG: formatDate(this.selected_case.abPostExposure.rig_date, 'MM-dd-yyyy', 'en'),
+      pABPOthers: formatDate(this.selected_case.abPostExposure.other_vacc_date, 'MM-dd-yyyy', 'en'),
+      pABPSpecify: this.selected_case.abPostExposure.remarks,
+
+      attendant_sign_date: formatDate(this.selected_case.abPostExposure.day0_date, 'MM-dd-yyyy', 'en'),
+      admission_date: formatDate(this.selected_case.abPostExposure.day0_date, 'MM-dd-yyyy', 'en'),
+      admission_time: '8:00AM',
+      discharge_date: formatDate(this.selected_case.abPostExposure.day7_date, 'MM-dd-yyyy', 'en'),
+      discharge_time: '8:00AM',
+    });
+
+    this.getCreds();
   }
 
   mc_error: boolean = false;
-
   paramsMc() {
     this.f.pCheckUpDate1.setValidators([Validators.required]);
     this.f.pCheckUpDate2.setValidators([Validators.required]);
     this.f.pCheckUpDate3.setValidators([Validators.required]);
     this.f.pCheckUpDate4.setValidators([Validators.required]);
 
-    console.log(this.selected_case);
     if(Object.keys(this.selected_case.prenatal_visit).length < 4 && this.selected_case.prenatal_visit[0].trimester < 3) {
       this.mc_error = true;
       this.show_form = true;
@@ -218,10 +211,10 @@ export class Cf2Component implements OnInit {
         pCheckUpDate2: visit2,
         pCheckUpDate3: visit3,
         pCheckUpDate4: visit4,
-        attendant_sign_date: formatDate(signDate, 'yyyy-MM-dd', 'en'),
-        admission_date: formatDate(admitDate, 'yyyy-MM-dd', 'en'),
+        attendant_sign_date: formatDate(signDate, 'MM-dd-yyyy', 'en'),
+        admission_date: formatDate(admitDate, 'MM-dd-yyyy', 'en'),
         admission_time: formatDate(admitDate, 'HH:mma', 'en'),
-        discharge_date: formatDate(dischargeDate, 'yyyy-MM-dd', 'en'),
+        discharge_date: formatDate(dischargeDate, 'MM-dd-yyyy', 'en'),
         discharge_time: formatDate(dischargeDate, 'HH:mma', 'en'),
       });
 
@@ -235,6 +228,25 @@ export class Cf2Component implements OnInit {
 
   paramsFp(){
     this.f.pICDCode.setValidators([Validators.required]);
+  }
+
+  getCreds(){
+    let params = {
+      'filter[program_code]': this.program_name !== 'cc' ? this.program_name : 'mc'
+    }
+
+    this.http.get('settings/philhealth-credentials', {params}).subscribe({
+      next:(data:any) => {
+        console.log(data.data)
+        this.program_creds = data.data[0];
+        this.show_form = true;
+      },
+      error: err => console.log(err)
+    })
+  }
+
+  getVaccine(): string{
+    return 'Y'
   }
 
   get f(): { [key: string]: AbstractControl } {
@@ -259,6 +271,10 @@ export class Cf2Component implements OnInit {
       }
       case 'mc': {
         this.paramsMc();
+        break;
+      }
+      case 'ab': {
+        this.paramsAb();
         break;
       }
     }
