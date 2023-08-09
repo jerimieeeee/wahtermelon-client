@@ -247,6 +247,7 @@ export class MedicalComponent implements OnInit {
 
       patient_temp: [null],
       patient_heart_rate: [null],
+      patient_resp_rate: [null],
       patient_weight: [null],
       patient_height: [null],
       taking_medication_flag: [null],

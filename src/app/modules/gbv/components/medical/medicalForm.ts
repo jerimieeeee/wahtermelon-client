@@ -8,6 +8,7 @@ export function medicalForm() {
 
     patient_temp: new FormControl<number| null>(null),
     patient_heart_rate: new FormControl<number| null>(null),
+    patient_resp_rate: new FormControl<number| null>(null),
     patient_weight: new FormControl<number| null>(null),
     patient_height: new FormControl<number| null>(null),
     taking_medication_flag: new FormControl<boolean| null>(null),
