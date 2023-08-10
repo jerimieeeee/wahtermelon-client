@@ -106,7 +106,7 @@ export class RiskAssessmentComponent implements OnInit, OnChanges {
   getVitalsToday(vitals, consult_details){
     if(vitals && consult_details){
       // console.log(vitals);
-      this.riskAssessForm.patchValue({assessment_date: formatDate(consult_details.consult_date,'yyyy-MM-dd','en')});
+      this.riskAssessForm.patchValue({assessment_date: formatDate(consult_details.consult_date,'yyyy-MM-dd','en', 'Asia/Singapore')});
 
       Object.entries(vitals).reverse().every(([keys, values], indexes) => {
         let val:any = values;
@@ -115,8 +115,8 @@ export class RiskAssessmentComponent implements OnInit, OnChanges {
         if(val.patient_bmi) this.riskAssessForm.patchValue({obesity: val.patient_bmi >= 25});
         if(val.patient_bmi_class) this.vitals_today.patient_bmi_class = val.patient_bmi_class;
 
-        let vitals_date = formatDate(val.vitals_date, 'yyyy-MM-dd','en', 'en')
-        let date_today = formatDate(consult_details.consult_date, 'yyyy-MM-dd','en', 'en')
+        let vitals_date = formatDate(val.vitals_date, 'yyyy-MM-dd','en', 'Asia/Singapore')
+        let date_today = formatDate(consult_details.consult_date, 'yyyy-MM-dd','en', 'Asia/Singapore')
 
         if(vitals_date === date_today){
           if(val.bp_systolic) {
@@ -246,7 +246,7 @@ export class RiskAssessmentComponent implements OnInit, OnChanges {
     if(this.consult_details && this.consult_details.assessment_date){
       // this.getVitalsToday(this.vitals, this.consult_details);
       this.riskAssessForm.patchValue({...this.consult_details});
-      this.riskAssessForm.patchValue({assessment_date: formatDate(this.consult_details.assessment_date, 'yyyy-MM-dd', 'en')})
+      this.riskAssessForm.patchValue({assessment_date: formatDate(this.consult_details.assessment_date, 'yyyy-MM-dd', 'en', 'Asia/Singapore')})
       this.checkDiabetes()
       this.show_form = true;
     } else {

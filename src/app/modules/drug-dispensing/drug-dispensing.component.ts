@@ -23,7 +23,7 @@ export class DrugDispensingComponent implements OnInit {
   modal = [];
   dispensed_list = [];
 
-  max_date = formatDate(new Date, 'yyyy-MM-dd', 'en');
+  max_date = formatDate(new Date, 'yyyy-MM-dd', 'en', 'Asia/Singapore');
   show_form: boolean = false;
   is_saving: boolean = false;
 

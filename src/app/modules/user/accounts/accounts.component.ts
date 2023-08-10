@@ -60,7 +60,7 @@ export class AccountsComponent implements OnInit {
     const user_id = params.id
     const temp_email = params.email
 
-    params.birthdate = formatDate(params.birthdate,'yyyy-MM-dd','en');
+    params.birthdate = formatDate(params.birthdate,'yyyy-MM-dd','en', 'Asia/Singapore');
     params['employer_code'] = params.employer ? params.employer.code : null;
     params['designation_code'] = params.designation ? params.designation.code : null;
     params['facility_code'] = params.facility ? params.facility.code : null;

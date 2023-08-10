@@ -130,8 +130,8 @@ export class UploadClaimsComponent implements OnInit {
       pTransmissionControlNumber: data.pTransmissionControlNumber,
       pReceiptTicketNumber: data.pReceiptTicketNumber,
       pStatus: 'IN PROCESS',
-      pTransmissionDate: formatDate(data.pTransmissionDate, 'yyyy-MM-dd', 'en'),
-      pTransmissionTime: formatDate(new Date(), 'HH:mm:ss', 'en'),
+      pTransmissionDate: formatDate(data.pTransmissionDate, 'yyyy-MM-dd', 'en', 'Asia/Singapore'),
+      pTransmissionTime: formatDate(new Date(), 'HH:mm:ss', 'en', 'Asia/Singapore'),
       isSuccess:'Y',
       program_desc: this.program_name
     }

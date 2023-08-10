@@ -113,7 +113,7 @@ export class TreatmentOutcomeComponent implements OnInit {
     this.tbForm.patchValue({
       tb_treatment_outcome_code: this.selected_tb_consult.tb_treatment_outcome ? this.selected_tb_consult.tb_treatment_outcome.code : null,
       lib_tb_outcome_reason_id: this.selected_tb_consult.outcome_reason ? this.selected_tb_consult.outcome_reason.id : null,
-      outcome_date: this.selected_tb_consult.outcome_date ? formatDate(this.selected_tb_consult.outcome_date, 'yyyy-MM-dd', 'en') : null,
+      outcome_date: this.selected_tb_consult.outcome_date ? formatDate(this.selected_tb_consult.outcome_date, 'yyyy-MM-dd', 'en', 'Asia/Singapore') : null,
       treatment_done: this.selected_tb_consult.treatment_done,
       outcome_remarks: this.selected_tb_consult.outcome_remarks
     });

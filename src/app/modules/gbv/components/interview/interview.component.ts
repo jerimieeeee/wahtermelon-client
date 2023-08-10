@@ -19,7 +19,7 @@ export class InterviewComponent implements OnInit{
   @Input() patient_id;
   @Input() pos;
 
-  max_date = formatDate(new Date(), 'yyyy-MM-dd', 'en');
+  max_date = formatDate(new Date(), 'yyyy-MM-dd', 'en', 'Asia/Singapore');
   interviewForm:FormGroup=interviewForm();
 
   faPlus = faPlus;
@@ -68,11 +68,11 @@ export class InterviewComponent implements OnInit{
     if(this.interviewForm.valid && (this.interviewForm.value.source_from_victim_flag || this.interviewForm.value.source_from_historian_flag || this.interviewForm.value.source_from_sworn_statement_flag)) {
       this.show_error = false;
       this.interviewForm.patchValue({
-        incident_first_datetime: this.interviewForm.value.incident_first_datetime ? formatDate(this.interviewForm.value.incident_first_datetime, 'yyyy-MM-dd HH:mm:ss', 'en'): null,
-        incident_recent_datetime: this.interviewForm.value.incident_recent_datetime ? formatDate(this.interviewForm.value.incident_recent_datetime, 'yyyy-MM-dd HH:mm:ss', 'en'): null,
-        recant_datetime: this.interviewForm.value.recant_datetime ? formatDate(this.interviewForm.value.recant_datetime, 'yyyy-MM-dd HH:mm:ss', 'en'): null,
-        interview_datetime: this.interviewForm.value.interview_datetime ? formatDate(this.interviewForm.value.interview_datetime, 'yyyy-MM-dd HH:mm:ss', 'en'): null,
-        deferral_datetime: this.interviewForm.value.deferral_datetime ? formatDate(this.interviewForm.value.deferral_datetime, 'yyyy-MM-dd HH:mm:ss', 'en'): null,
+        incident_first_datetime: this.interviewForm.value.incident_first_datetime ? formatDate(this.interviewForm.value.incident_first_datetime, 'yyyy-MM-dd HH:mm:ss', 'en', 'Asia/Singapore'): null,
+        incident_recent_datetime: this.interviewForm.value.incident_recent_datetime ? formatDate(this.interviewForm.value.incident_recent_datetime, 'yyyy-MM-dd HH:mm:ss', 'en', 'Asia/Singapore'): null,
+        recant_datetime: this.interviewForm.value.recant_datetime ? formatDate(this.interviewForm.value.recant_datetime, 'yyyy-MM-dd HH:mm:ss', 'en', 'Asia/Singapore'): null,
+        interview_datetime: this.interviewForm.value.interview_datetime ? formatDate(this.interviewForm.value.interview_datetime, 'yyyy-MM-dd HH:mm:ss', 'en', 'Asia/Singapore'): null,
+        deferral_datetime: this.interviewForm.value.deferral_datetime ? formatDate(this.interviewForm.value.deferral_datetime, 'yyyy-MM-dd HH:mm:ss', 'en', 'Asia/Singapore'): null,
       });
 
       this.saveForm();

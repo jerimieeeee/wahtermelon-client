@@ -23,7 +23,7 @@ export class ReportsComponent implements OnInit {
     year: new FormControl<string| null>('')
   });
 
-  current_date = formatDate(new Date, 'yyyy', 'en');
+  current_date = formatDate(new Date, 'yyyy', 'en', 'Asia/Singapore');
 
   fhsis2018 = [
     { id: 'fhsis2018-cc', desc: 'Child Care', url: 'reports-2018/child-care/m1'},
@@ -169,7 +169,7 @@ export class ReportsComponent implements OnInit {
   }
 
   generateYear(){
-    let current_year =  formatDate(this.current_date, 'yyyy', 'en');
+    let current_year =  formatDate(this.current_date, 'yyyy', 'en', 'Asia/Singapore');
     let date = parseInt(current_year);
     for(let year = date; year > date-5; year--) {
       this.years.push(year);
@@ -180,8 +180,8 @@ export class ReportsComponent implements OnInit {
     // console.log(this.reportForm.value.report_type)
     this.report_data= '';
     if(this.fhsis_monthly_arr.find(e => e === this.reportForm.value.report_type.id)) {
-      let month = formatDate(this.current_date, 'm', 'en');
-      let year = formatDate(this.current_date, 'yyyy', 'en');
+      let month = formatDate(this.current_date, 'm', 'en', 'Asia/Singapore');
+      let year = formatDate(this.current_date, 'yyyy', 'en', 'Asia/Singapore');
 
       this.reportForm.controls.month.enable();
       this.reportForm.controls.year.enable();

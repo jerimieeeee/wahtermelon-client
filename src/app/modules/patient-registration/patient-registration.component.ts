@@ -325,7 +325,7 @@ export class PatientRegistrationComponent implements OnInit {
         // console.log(data)
         this.patientForm.patchValue({...data.data});
         this.patientForm.patchValue({
-          birthdate: formatDate(data.data.birthdate,'yyyy-MM-dd', 'en')
+          birthdate: formatDate(data.data.birthdate,'yyyy-MM-dd', 'en', 'Asia/Singapore')
         })
         if(data.data.patientWashington) {
           this.patientForm.patchValue({
@@ -338,6 +338,7 @@ export class PatientRegistrationComponent implements OnInit {
           });
         }
 
+        console.log(this.patientForm.value);
         this.patient_to_update = data.data.id;
         this.button_function = 'Update';
         this.orig_data = data.data;

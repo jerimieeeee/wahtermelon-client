@@ -27,8 +27,8 @@ export class SetDateComponent {
     this.is_loading = true;
 
     let params = {
-      pStartDate: formatDate(this.pStartDate,'MM/dd/yyyy','en'),
-      pEndDate: formatDate(this.pEndDate,'MM/dd/yyyy','en')
+      pStartDate: formatDate(this.pStartDate,'MM/dd/yyyy','en', 'Asia/Singapore'),
+      pEndDate: formatDate(this.pEndDate,'MM/dd/yyyy','en', 'Asia/Singapore')
     }
 
     this.http.get('konsulta/registration-list', {params}).subscribe({

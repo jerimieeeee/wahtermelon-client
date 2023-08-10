@@ -29,7 +29,7 @@ export class AnimalbiteComponent implements OnInit{
   selected_ab_consult: any;
   user_facility: string;
 
-  max_date = formatDate(new Date(), 'yyyy-MM-dd', 'en');
+  max_date = formatDate(new Date(), 'yyyy-MM-dd', 'en', 'Asia/Singapore');
 
   openAbConsult(data) {
     this.selected_ab_consult = data;

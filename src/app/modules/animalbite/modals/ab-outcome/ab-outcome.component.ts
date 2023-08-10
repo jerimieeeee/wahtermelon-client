@@ -88,10 +88,10 @@ export class AbOutcomeComponent implements OnInit{
 
     this.abForm.patchValue({...this.selected_ab_consult});
     this.abForm.patchValue({
-      consult_date: this.abForm.value.consult_date ? formatDate(this.abForm.value.consult_date, 'yyyy-MM-dd', 'en') : null,
-      exposure_date: this.abForm.value.exposure_date ? formatDate(this.abForm.value.exposure_date, 'yyyy-MM-dd', 'en') : null,
-      date_onset: this.abForm.value.date_onset ? formatDate(this.abForm.value.date_onset, 'yyyy-MM-dd', 'en') : null,
-      date_died: this.abForm.value.date_died ? formatDate(this.abForm.value.date_died, 'yyyy-MM-dd', 'en') : null,
+      consult_date: this.abForm.value.consult_date ? formatDate(this.abForm.value.consult_date, 'yyyy-MM-dd', 'en', 'Asia/Singapore') : null,
+      exposure_date: this.abForm.value.exposure_date ? formatDate(this.abForm.value.exposure_date, 'yyyy-MM-dd', 'en', 'Asia/Singapore') : null,
+      date_onset: this.abForm.value.date_onset ? formatDate(this.abForm.value.date_onset, 'yyyy-MM-dd', 'en', 'Asia/Singapore') : null,
+      date_died: this.abForm.value.date_died ? formatDate(this.abForm.value.date_died, 'yyyy-MM-dd', 'en', 'Asia/Singapore') : null,
     });
 
     this.show_form = true;

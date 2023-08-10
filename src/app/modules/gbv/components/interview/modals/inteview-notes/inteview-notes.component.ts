@@ -26,7 +26,7 @@ export class InteviewNotesComponent implements OnInit{
     let query;
 
     this.interviewForm.patchValue({
-      interview_datetime: formatDate(this.interviewForm.value.interview_datetime, 'yyyy-MM-dd HH:mm:ss', 'en')
+      interview_datetime: formatDate(this.interviewForm.value.interview_datetime, 'yyyy-MM-dd HH:mm:ss', 'en', 'Asia/Singapore')
     });
 
     if(this.interviewForm.value.id) {
