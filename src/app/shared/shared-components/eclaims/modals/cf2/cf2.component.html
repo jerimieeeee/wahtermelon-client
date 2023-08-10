@@ -124,10 +124,33 @@
             <!-- PROFESSIONAL -->
 
             <!-- FEES -->
-            <span class="absolute top-[438.5mm] left-[12.5mm]">&#x2714;</span>
-            <span class="absolute top-[451mm] left-[113mm] w-[83.5mm]">Php {{ eclaimsForm.value.hci_fee }}</span>
-            <span class="absolute top-[456.5mm] left-[113mm] w-[83.5mm]">Php {{ eclaimsForm.value.prof_fee }}</span>
-            <span class="absolute top-[461.5mm] left-[113mm] w-[83.5mm]">Php {{ eclaimsForm.value.caserate_fee }}</span>
+            <div *ngIf="eclaimsForm.value.enough_benefit_flag">
+              <span class="absolute top-[438.5mm] left-[12.5mm]">&#x2714;</span>
+              <span class="absolute top-[451mm] left-[113mm] w-[83.5mm]">{{ 'PHP '+eclaimsForm.value.hci_fee }}</span>
+              <span class="absolute top-[456.5mm] left-[113mm] w-[83.5mm]">{{ 'PHP '+eclaimsForm.value.prof_fee }}</span>
+              <span class="absolute top-[461.5mm] left-[113mm] w-[83.5mm]">{{ 'PHP '+eclaimsForm.value.caserate_fee }}</span>
+            </div>
+
+            <div *ngIf="!eclaimsForm.value.enough_benefit_flag">
+              <span class="absolute top-[468mm] left-[12.5mm]">&#x2714;</span>
+              <span class="absolute top-[500mm] left-[50mm]">{{ 'PHP '+eclaimsForm.value.hci_pTotalActualCharges }}</span>
+              <span class="absolute top-[500mm] left-[82mm]">{{ 'PHP '+eclaimsForm.value.hci_pDiscount }}</span>
+              <span class="absolute top-[500mm] left-[117mm]">{{ 'PHP '+eclaimsForm.value.hci_pPhilhealthBenefit }}</span>
+              <span class="absolute top-[495mm] left-[165mm]">{{ eclaimsForm.value.hci_pTotalAmount }}</span>
+
+              <span class="absolute top-[520mm] left-[50mm]">{{ 'PHP '+eclaimsForm.value.prof_pTotalActualCharges }}</span>
+              <span class="absolute top-[520mm] left-[82mm]">{{ 'PHP '+eclaimsForm.value.prof_pDiscount }}</span>
+              <span class="absolute top-[520mm] left-[117mm]">{{ 'PHP '+eclaimsForm.value.prof_pPhilhealthBenefit }}</span>
+              <span class="absolute top-[512mm] left-[165mm]">{{ eclaimsForm.value.prof_pTotalAmount }}</span>
+
+              <span class="absolute top-[537mm] left-[148mm]">{{ eclaimsForm.value.meds_flag ? '&#x2714;' : '' }}</span>
+              <span class="absolute top-[537mm] left-[126mm]">{{ eclaimsForm.value.meds_flag ? '' : '&#x2714;' }}</span>
+              <span class="absolute top-[537mm] left-[175mm]">{{ eclaimsForm.value.meds_pDMSTotalAmount }}</span>
+
+              <span class="absolute top-[545mm] left-[148mm]">{{ eclaimsForm.value.meds_pExaminations_flag ? '&#x2714;' : '' }}</span>
+              <span class="absolute top-[545mm] left-[126mm]">{{ eclaimsForm.value.meds_pExaminations_flag ? '' : '&#x2714;' }}</span>
+              <span class="absolute top-[545mm] left-[175mm]">{{ eclaimsForm.value.meds_pExamTotalAmount }}</span>
+            </div>
             <!-- FEES -->
 
             <!-- SIGN -->
