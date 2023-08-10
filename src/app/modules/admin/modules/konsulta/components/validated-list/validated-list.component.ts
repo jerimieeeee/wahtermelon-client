@@ -33,6 +33,8 @@ export class ValidatedListComponent {
       save: 1
     }
 
+    if(kon.xml_status === 'F') params['revalidate'] = true;
+
     this.http.get('konsulta/validate-report', {params}).subscribe({
       next: (data: any) => {
         this.processReturn(data)
