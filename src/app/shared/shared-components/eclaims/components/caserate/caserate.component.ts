@@ -230,6 +230,28 @@ export class CaserateComponent implements OnInit {
   cc_caserate = cc_caserate;
   loaded_caserate: any;
 
+  computeTotal(total_name) {
+    if(total_name === 'prof_pTotalAmount') {
+      this.caserateForm.patchValue({
+        prof_pTotalAmount: Number(this.caserateForm.value.prof_pDiscount) - Number(this.caserateForm.value.prof_pPhilhealthBenefit)
+      });
+    }
+
+    if (total_name === 'hci_pTotalAmount') {
+      this.caserateForm.patchValue({
+        hci_pTotalAmount: Number(this.caserateForm.value.hci_pDiscount) - Number(this.caserateForm.value.hci_pPhilhealthBenefit)
+      });
+    }
+
+    if (total_name === 'caserate_fee') {
+      this.caserateForm.patchValue({
+        caserate_fee: Number(this.caserateForm.value.hci_fee) + Number(this.caserateForm.value.prof_fee)
+      })
+    }
+
+
+  }
+
   ngOnInit(): void {
     this.loadLibraries();
     this.loadSelected();

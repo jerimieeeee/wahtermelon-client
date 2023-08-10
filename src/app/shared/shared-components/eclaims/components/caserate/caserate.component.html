@@ -100,18 +100,18 @@
 
           <div>
             <label for="hci_fee">HCI Fee</label>
-            <input type="number" name="hci_fee" id="hci_fee" formControlName="hci_fee" class="input" />
+            <input type="number" name="hci_fee" id="hci_fee" formControlName="hci_fee" (change)="computeTotal('caserate_fee')" class="input" />
           </div>
 
           <div>
             <label for="prof_fee">Prof Fee</label>
-            <input type="number" name="prof_fee" id="prof_fee" formControlName="prof_fee" class="input" />
+            <input type="number" name="prof_fee" id="prof_fee" formControlName="prof_fee" (change)="computeTotal('caserate_fee')" class="input" />
           </div>
 
-          <div>
+          <fieldset disabled>
             <label for="caserate_fee">Case Rate Fee</label>
             <input type="number" name="caserate_fee" id="caserate_fee" formControlName="caserate_fee" class="input" />
-          </div>
+          </fieldset>
 
           <div>
             <label for="caserate_attendant">Caserate attendant</label>
@@ -135,18 +135,18 @@
 
             <div>
               <label for="hci_pDiscount">Amount after application of HCI Discount</label>
-              <input type="number" name="hci_pDiscount" id="hci_pDiscount" formControlName="hci_pDiscount" class="input" />
+              <input type="number" name="hci_pDiscount" id="hci_pDiscount" formControlName="hci_pDiscount" (change)="computeTotal('hci_pTotalAmount')" class="input" />
             </div>
 
             <div>
               <label for="hci_pPhilhealthBenefit">HCI Philhealth Benefit</label>
-              <input type="number" name="hci_pPhilhealthBenefit" id="hci_pPhilhealthBenefit" formControlName="hci_pPhilhealthBenefit" class="input" />
+              <input type="number" name="hci_pPhilhealthBenefit" id="hci_pPhilhealthBenefit" formControlName="hci_pPhilhealthBenefit" (change)="computeTotal('hci_pTotalAmount')" class="input" />
             </div>
 
-            <div>
+            <fieldset disabled>
               <label for="hci_pTotalAmount">HCI Total Amount</label>
-              <input type="number" name="hci_pTotalAmount" id="hci_pTotalAmount" formControlName="hci_pTotalAmount" class="input" />
-            </div>
+              <input type="number" name="hci_pTotalAmount" id="hci_pTotalAmount" formControlName="hci_pTotalAmount" class="input" disabled />
+            </fieldset>
 
             <!-- PROF NOT ENOUGH -->
             <div>
@@ -156,18 +156,18 @@
 
             <div>
               <label for="prof_pDiscount">Amount after application of Professional Discount</label>
-              <input type="number" name="prof_pDiscount" id="prof_pDiscount" formControlName="prof_pDiscount" class="input" />
+              <input type="number" name="prof_pDiscount" id="prof_pDiscount" formControlName="prof_pDiscount" (change)="computeTotal('prof_pTotalAmount')" class="input" />
             </div>
 
             <div>
               <label for="prof_pPhilhealthBenefit">Professional Philhealth Benefit</label>
-              <input type="number" name="prof_pPhilhealthBenefit" id="prof_pPhilhealthBenefit" formControlName="prof_pPhilhealthBenefit" class="input" />
+              <input type="number" name="prof_pPhilhealthBenefit" id="prof_pPhilhealthBenefit" formControlName="prof_pPhilhealthBenefit" (change)="computeTotal('prof_pTotalAmount')" class="input" />
             </div>
 
-            <div>
+            <fieldset disabled>
               <label for="prof_pTotalAmount">Professional Total Amount</label>
               <input type="number" name="prof_pTotalAmount" id="prof_pTotalAmount" formControlName="prof_pTotalAmount" class="input" />
-            </div>
+            </fieldset>
 
             <!-- MEDICINE NOT ENOUGH -->
             <div class="mt-2">
