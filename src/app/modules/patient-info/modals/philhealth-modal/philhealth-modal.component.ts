@@ -118,7 +118,7 @@ export class PhilhealthModalComponent implements OnInit {
     let params = {
       pPIN: this.philhealthForm.value.philhealth_id,
       pATC: this.philhealthForm.value.authorization_transaction_code,
-      pEffectivityDate: formatDate(this.pATC_date, 'MM/dd/yyyy', 'en')
+      pEffectivityDate: formatDate(this.pATC_date, 'MM/dd/yyyy', 'en', 'Asia/Singapore')
     }
 
     this.http.get('konsulta/check-atc', {params}).subscribe({
@@ -139,12 +139,12 @@ export class PhilhealthModalComponent implements OnInit {
 
     let patient = this.http.getPatientInfo();
     let params = {
-      program_code: 'tb',
+      program_code: 'hf',
       last_name: patient.last_name,
       first_name: patient.first_name,
       middle_name: patient.middle_name,
       suffix_name: patient.suffix_name !== 'NA' ? patient.suffix_name : '',
-      birthdate: formatDate(patient.birthdate, 'MM-dd-yyyy', 'en')
+      birthdate: formatDate(patient.birthdate, 'MM-dd-yyyy', 'en', 'Asia/Singapore')
     }
 
     this.http.post('eclaims/get-member-pin', params).subscribe({
@@ -160,7 +160,12 @@ export class PhilhealthModalComponent implements OnInit {
         if(err.status === 404) {
           this.retrieving_error = err.error.data;
         }
-        this.toastrMessage('success', 'Philhealth', 'Philhealth PIN retrieved', 'retrieving_pin');
+        this.toastr.error(err.error.message, 'Member PIN', {
+          closeButton: true,
+          positionClass: 'toast-top-center',
+          disableTimeOut: true
+        });
+        // this.toastrMessage('success', 'Philhealth', 'Philhealth PIN retrieved', 'retrieving_pin');
       }
     })
   }
@@ -320,7 +325,7 @@ export class PhilhealthModalComponent implements OnInit {
   }
 
   updateEffectivity(){
-    this.philhealthForm.patchValue({effectivity_year: formatDate(this.philhealthForm.value.enlistment_date, 'yyyy', 'en')});
+    this.philhealthForm.patchValue({effectivity_year: formatDate(this.philhealthForm.value.enlistment_date, 'yyyy', 'en', 'Asia/Singapore')});
   }
 
   isATCrequired(){
@@ -391,7 +396,7 @@ export class PhilhealthModalComponent implements OnInit {
       }
 
       if(this.philhealthForm.value.membership_type_id === "DD"){
-        this.philhealthForm.patchValue({member_birthdate: formatDate(this.philhealth_to_edit.member_birthdate, 'yyyy-MM-dd','en')});
+        this.philhealthForm.patchValue({member_birthdate: formatDate(this.philhealth_to_edit.member_birthdate, 'yyyy-MM-dd','en', 'Asia/Singapore')});
         this.philhealthForm.patchValue({member_pin_confirmation: this.philhealth_to_edit.member_pin});
       }
       this.showMember();

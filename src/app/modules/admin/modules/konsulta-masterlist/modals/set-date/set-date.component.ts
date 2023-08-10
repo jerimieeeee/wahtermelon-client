@@ -1,5 +1,5 @@
 import { formatDate } from '@angular/common';
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
@@ -9,7 +9,7 @@ import { ToastrService } from 'ngx-toastr';
   templateUrl: './set-date.component.html',
   styleUrls: ['./set-date.component.scss']
 })
-export class SetDateComponent implements OnInit {
+export class SetDateComponent {
   @Output() toggleModal = new EventEmitter<any>();
   @Output() loadList = new EventEmitter<any>();
 
@@ -27,13 +27,9 @@ export class SetDateComponent implements OnInit {
     this.is_loading = true;
 
     let params = {
-      pStartDate: formatDate(this.pStartDate,'MM/dd/yyyy','en'),
-      pEndDate: formatDate(this.pEndDate,'MM/dd/yyyy','en')
+      pStartDate: formatDate(this.pStartDate,'MM/dd/yyyy','en', 'Asia/Singapore'),
+      pEndDate: formatDate(this.pEndDate,'MM/dd/yyyy','en', 'Asia/Singapore')
     }
-    /* let params = {
-      pStartDate: "01/01/2022",
-      pEndDate: "12/31/2022"
-    } */
 
     this.http.get('konsulta/registration-list', {params}).subscribe({
       next: (data: any) => {
@@ -42,7 +38,14 @@ export class SetDateComponent implements OnInit {
         this.is_loading = false;
         this.closeModal()
       },
-      error: err => console.log(err)
+      error: err => {
+        this.is_loading = false;
+        this.toastr.error(err.error.message, 'Masterlist', {
+          closeButton: true,
+          positionClass: 'toast-top-center',
+          disableTimeOut: true
+        });
+      }
     })
   }
 
@@ -50,8 +53,4 @@ export class SetDateComponent implements OnInit {
     private http: HttpService,
     private toastr: ToastrService
   ) { }
-
-  ngOnInit(): void {
-  }
-
 }

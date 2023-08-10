@@ -81,6 +81,7 @@ export class CalendarAppointmentComponent implements OnInit {
     let params = {
       month: this.selected_month,
       year: this.selected_year,
+      disable_filter: 1,
       per_page: 'all'
     };
 

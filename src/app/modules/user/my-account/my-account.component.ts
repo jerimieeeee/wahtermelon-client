@@ -226,7 +226,7 @@ export class MyAccountComponent implements OnInit {
     this.http.get('users/'+user_id).subscribe({
       next: (data: any) => {
         this.orig_value = data.data;
-        this.orig_value.birthdate = formatDate(this.orig_value.birthdate,'yyyy-MM-dd','en')
+        this.orig_value.birthdate = formatDate(this.orig_value.birthdate,'yyyy-MM-dd','en', 'Asia/Singapore')
         this.userForm.patchValue({...this.orig_value});
 
         this.loadDemog('regions', this.orig_value.facility.region.code, 'provinces');

@@ -19,7 +19,7 @@ export class GbvPatientsComponent implements OnInit{
   gbv_lists: any;
   show_form: boolean = false;
 
-  per_page: number = 5;
+  per_page: number = 10;
   current_page: number;
   last_page: number;
   from: number;
@@ -35,17 +35,18 @@ export class GbvPatientsComponent implements OnInit{
     let params = {params: { }};
     params['params']['page'] = !page ? this.current_page : page;
     params['params']['per_page'] = this.per_page;
+    // params['params']['disable_filter'] = 1;
 
     this.http.get('gender-based-violence/patient-gbv-list', params).subscribe({
       next: (data:any) => {
-        console.log(data);
+        // console.log(data);
         this.gbv_lists = data.data;
 
-        this.current_page = data.current_page;
-        this.last_page = data.last_page;
-        this.from = data.from;
-        this.to = data.to;
-        this.total = data.total;
+        this.current_page = data.meta.current_page;
+        this.last_page = data.meta.last_page;
+        this.from = data.meta.from;
+        this.to = data.meta.to;
+        this.total = data.meta.total;
         this.show_form = true;
       },
       error: err => console.log(err)

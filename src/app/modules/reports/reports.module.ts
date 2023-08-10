@@ -12,6 +12,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { HeaderFhsis2018Component } from './components/header-fhsis2018/header-fhsis2018.component';
 import { ExportAsModule } from 'ngx-export-as';
 import { PatientRegisteredComponent } from './report/patient-registered/patient-registered.component';
+import { CatalystReportComponent } from './report/catalyst-report/catalyst-report.component';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { PatientRegisteredComponent } from './report/patient-registered/patient-
     Fhsis2018CcComponent,
     NameListComponent,
     HeaderFhsis2018Component,
-    PatientRegisteredComponent
+    PatientRegisteredComponent,
+    CatalystReportComponent
   ],
   imports: [
     CommonModule,

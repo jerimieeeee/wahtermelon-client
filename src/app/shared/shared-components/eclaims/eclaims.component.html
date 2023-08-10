@@ -2,23 +2,22 @@
   <div class="mb-16 w-full">
     <div class="block shadow p-4 mt-4 rounded-xl text-gray-600">
       <span class="text-sky-500 font-bold flex justify-between py-2">
-        <span class="flex">
-          <!-- <button class="font-normal text-sky-500 px-2 py-1 text-sm  mr-2" type="button" (click)="toggleAll()">
-            <fa-icon [icon]="toggle_content ? faChevronUp : faChevronDown" size="lg"></fa-icon>
-          </button> -->
-          <span class="mt-2"> <span class="text-gray-500 text-sm"><!-- ({{ consult_details?.consult_date | date: 'MM/dd/yyyy hh:mm:ss a' }} | ID:{{ consult_details?.id }}) --></span></span>
-        </span>
+        <div>
+          <span *ngIf="!program_creds" class="flex rounded-md border border-yellow-500 bg-yellow-100 text-yellow-700 text-sm font-normal p-3">
+            There are no credential for the selected program
+          </span>
+        </div>
         <div class="text-sm font-normal">
           <!-- <button type="button" class="w-32 px-3 py-2 rounded-md bg-blue-500 text-sm text-white ml-auto mr-3" (click)="toggleModal('check_claims')">
             Check claims
           </button> -->
-          <button [disabled]="caserate_list?.length===0" type="button" class="w-32 px-3 py-2 rounded-md bg-blue-500 text-sm text-white ml-auto mr-1" (click)="toggleModal('pbef')">
+          <button [disabled]="!program_creds || caserate_list?.length===0" type="button" class="w-32 px-3 py-2 rounded-md bg-blue-500 text-sm text-white ml-auto mr-1 disabled:bg-gray-400" (click)="toggleModal('pbef')">
             PBEF
           </button>
           <!-- <button *ngIf="caserate_list" type="button" class="w-32 px-3 py-2 rounded-md bg-blue-500 text-sm text-white ml-auto  mr-1" (click)="toggleModal('cf1')">
             CF1
           </button> -->
-          <button [disabled]="caserate_list?.length===0" type="button" class="w-32 px-3 py-2 rounded-md bg-blue-500 text-sm text-white ml-auto mr-1 disabled:bg-gray-400" (click)="toggleModal('cf2')">
+          <button [disabled]="!program_creds || caserate_list?.length===0" type="button" class="w-32 px-3 py-2 rounded-md bg-blue-500 text-sm text-white ml-auto mr-1 disabled:bg-gray-400" (click)="toggleModal('cf2')">
             CF2
           </button>
           <!-- <button *ngIf="caserate_list" type="button" class="w-32 px-3 py-2 rounded-md bg-blue-500 text-sm text-white ml-auto  mr-1" (click)="toggleModal('csf')">
@@ -33,27 +32,36 @@
       <div class="border border-slate-200 shadow-md rounded-xl">
         <div class="w-full bg-blue-500 text-white rounded-t-xl p-3 font-semibold flex justify-between">
           <span>Eclaims</span>
-          <button type="button" (click)="refreshClaims()">
+          <!-- <button type="button" (click)="refreshClaims()">
             <fa-icon [icon]="faRotate" [spin]="is_refreshing"></fa-icon>
-          </button>
+          </button> -->
         </div>
 
-        <div class="w-full p-5">
-          <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+        <div class="w-full p-5 overflow-x-auto">
+          <table class=" text-sm text-left text-gray-500 dark:text-gray-400">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
               <tr>
+                <th scope="col" class="py-3 px-3">Caserate</th>
                 <th scope="col" class="py-3 px-3">Transmittal No.</th>
+                <th scope="col" class="py-3 px-3">Ticket Number</th>
                 <th scope="col" class="py-3 px-3">Claim Series Lhio</th>
                 <th scope="col" class="py-3 px-3">Transmittal Date</th>
-                <th scope="col" class="py-3 px-3">Caserate</th>
                 <th scope="col" class="py-3 px-3">Claim Status</th>
                 <th scope="col" class="py-3 px-3">Action</th>
               </tr>
             </thead>
             <tbody *ngIf="show_form"> <!-- *ngFor="let philhealth of philhealth_infos"  -->
               <tr *ngFor="let eclaims of eclaims_list" class="bg-white border-b last:border-0">
+                <td>
+                  {{ eclaims.caserate.caserate_code }} <br />
+                  {{ eclaims.caserate.code }}
+                  <!-- {{ eclaims.caserate.description }} -->
+                </td>
                 <td class="py-4 px-3">
                   {{ eclaims.pHospitalTransmittalNo }}
+                </td>
+                <td class="py-4 px-3">
+                  {{ eclaims.pReceiptTicketNumber ?? '-' }}
                 </td>
                 <td class="py-4 px-3">
                   {{ eclaims.pClaimSeriesLhio ?? '-' }}
@@ -61,17 +69,24 @@
                 <td class="py-4 px-3">
                   {{ eclaims.pTransmissionDate ?? '-' }}
                 </td>
-                <td>
-                  {{ eclaims.caserate.caserate_code }} <br />
-                  {{ eclaims.caserate.description }}
-                </td>
                 <td class="py-4 px-3">
                   {{ eclaims.pStatus ?? 'IN QUEUE'  }}
                 </td>
-                <td class="py-4 px-3 text-center">
-                  <fa-icon [icon]="faUpload" (click)="toggleModal('upload-claims', eclaims)" class="text-blue-500 hover:cursor-pointer"></fa-icon>
-                  <!-- <fa-icon [icon]="faUpload" (click)="toggleModal('upload-claims')" size="xl" class="mx-0 my-0 text-rose-400 hover:cursor-pointer flex-none mr-2" ></fa-icon> -->
-                  <!-- <fa-icon (click)="toggleModal('add', lab)" size="lg" class="mx-0 my-0 text-blue-500 hover:cursor-pointer flex-none mr-2" [icon]="faEdit"></fa-icon> -->
+                <td class="py-4 px-3 text-center grid grid-cols-1">
+                  <button class="bg-blue-500 text-white rounded-md p-0.5 mb-3" type="button" (click)="toggleModal('upload-claims', eclaims)"> <!-- *ngIf="!eclaims.pReceiptTicketNumber"  -->
+                    <fa-icon [icon]="faUpload"></fa-icon>
+                    {{ eclaims.pReceiptTicketNumber ? 'Reupload Docs' : 'Upload Claim' }}
+                  </button>
+
+                  <button class="bg-green-500 text-white rounded-md p-0.5 mb-3`" type="button" *ngIf="eclaims.pReceiptTicketNumber && !eclaims.pClaimSeriesLhio" (click)="checkSeries(eclaims)" [disabled]="is_refreshing">
+                    <fa-icon [icon]="faRotate" [spin]="is_refreshing"></fa-icon>
+                    Get Series Lhio
+                  </button>
+
+                  <button class="bg-green-500 text-white rounded-md p-0.5 mb-3" type="button" *ngIf="eclaims.pClaimSeriesLhio" (click)="getClaimStatus(eclaims)" [disabled]="is_refreshing">
+                    <fa-icon [icon]="faRotate" [spin]="is_refreshing"></fa-icon>
+                    Check Status
+                  </button>
                 </td>
               </tr>
               <tr *ngIf="eclaims_list.length===0">
@@ -82,7 +97,7 @@
             </tbody>
             <tbody *ngIf="!show_form">
               <tr>
-                <td colspan="6">
+                <td colspan="7">
                   <div class="grid grid-cols-1 my-16">
                     <div class="flex justify-center text-blue-500">
                       <fa-icon [icon]="faCircleNotch" spin="true"></fa-icon>
@@ -131,9 +146,10 @@
 ></app-cf2>
 
 <app-upload-claims *ngIf="modal['upload-claims']"
-  (toggleModal)="toggleModal($event)"
+  (modalToggle)="toggleModal($event)"
   [patient]="patient"
   [program_name]="program_name"
   [selected_pHospitalTransmittalNo]="selected_pHospitalTransmittalNo"
   [caserate_code]="selected_caserate_code"
+  [selected_ticket_number]="selected_ticket_number"
 ></app-upload-claims>

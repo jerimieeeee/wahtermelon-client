@@ -10,7 +10,7 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./facility-config.component.scss']
 })
 export class FacilityConfigComponent implements OnInit {
-  current_year = formatDate(new Date(), 'yyyy', 'en');
+  current_year = formatDate(new Date(), 'yyyy', 'en', 'Asia/Singapore');
 
   faSave = faSave;
   faCircleNotch = faCircleNotch;

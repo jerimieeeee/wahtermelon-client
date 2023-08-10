@@ -35,7 +35,7 @@ export class PhilhealthComponent implements OnInit {
 
   get philhealthColor(){
     if(this.philhealth_info){
-      return (formatDate(this.philhealth_info.enlistment_date, 'yyyy', 'en') < formatDate(new Date(), 'yyyy', 'en'))
+      return (formatDate(this.philhealth_info.enlistment_date, 'yyyy', 'en', 'Asia/Singapore') < formatDate(new Date(), 'yyyy', 'en', 'Asia/Singapore'))
     } else {
       return false;
     }

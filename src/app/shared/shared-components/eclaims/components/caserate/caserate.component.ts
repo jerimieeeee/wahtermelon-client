@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 import { faEdit, faSave } from '@fortawesome/free-regular-svg-icons';
@@ -9,11 +9,13 @@ import * as angularFontawesome from '@fortawesome/angular-fontawesome';
 import { SearchCaserateComponent } from './modals/search-caserate/search-caserate.component';
 import { catchError, concat, debounceTime, distinctUntilChanged, filter, map, Observable, of, Subject, switchMap, tap } from 'rxjs';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { cc_caserate, tb_caserate } from './caserateLib';
+import { caserateForm } from './caserateForm';
 
 @Component({
   selector: 'app-caserate',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, angularFontawesome.FontAwesomeModule, SearchCaserateComponent, NgSelectModule],
+  imports: [CommonModule, ReactiveFormsModule, angularFontawesome.FontAwesomeModule, SearchCaserateComponent, NgSelectModule, FormsModule],
   templateUrl: './caserate.component.html',
   styleUrls: ['./caserate.component.scss']
 })
@@ -33,23 +35,14 @@ export class CaserateComponent implements OnInit {
   show_form: boolean = false;
   is_saving: boolean = false;
 
-  caserateForm: FormGroup =  new FormGroup({
-    id: new FormControl<string|null>(''),
-    patient_id: new FormControl<string|null>(''),
-    program_desc: new FormControl<string|null>(''),
-    program_id: new FormControl<string|null>(''),
-    caserate_date: new FormControl<string|null>(''),
-    admit_dx: new FormControl<string|null>(''),
-    caserate_code: new FormControl<string|null>(''),
-    code: new FormControl<string|null>(''),
-    description: new FormControl<string|null>(''),
-    discharge_dx: new FormControl<string|null>(''),
-    icd10_code: new FormControl<string|null>(''),
-    hci_fee: new FormControl<number|null>(null),
-    prof_fee: new FormControl<number|null>(null),
-    caserate_fee: new FormControl<number|null>(null),
-    caserate_attendant: new FormControl<string|null>(null),
-  });
+  caserateForm:FormGroup=caserateForm();
+
+  selectPreloadedCaserate(){
+    console.log(this.loaded_caserate);
+    this.caserateForm.patchValue({
+      ...this.loaded_caserate
+    });
+  }
 
   selectCaserate(i) {
     this.patchData(this.caserate_list[i]);
@@ -66,7 +59,7 @@ export class CaserateComponent implements OnInit {
       },
       error: err => {console.log(err); this.is_saving = false;}
     })
-  }6
+  }
 
   caserate_list: any;
 
@@ -79,6 +72,7 @@ export class CaserateComponent implements OnInit {
 
     this.http.get('eclaims/eclaims-caserate', {params}).subscribe({
       next:(data:any) => {
+        console.log(data)
         this.caserate_list = data.data;
         // console.log(this.caserate_list);
         this.createForm()
@@ -103,7 +97,23 @@ export class CaserateComponent implements OnInit {
       hci_fee: [null, Validators.required],
       prof_fee: [null, Validators.required],
       caserate_fee: [null, Validators.required],
-      caserate_attendant: [null, Validators.required]
+      caserate_attendant: [null, Validators.required],
+
+      enough_benefit_flag: [true],
+      hmo_flag: [false],
+      others_flag: [false],
+      hci_pTotalActualCharges: [null],
+      hci_pDiscount: [null],
+      hci_pPhilhealthBenefit: [null],
+      hci_pTotalAmount: [null],
+      prof_pTotalActualCharges: [null],
+      prof_pDiscount: [null],
+      prof_pPhilhealthBenefit: [null],
+      prof_pTotalAmount: [null],
+      meds_flag: [false],
+      meds_pDMSTotalAmount: [null],
+      meds_pExaminations_flag: [false],
+      meds_pExamTotalAmount: [null],
     });
 
     if(data) this.patchData(data);
@@ -167,6 +177,7 @@ export class CaserateComponent implements OnInit {
 
   patchData(data){
     this.caserateForm.patchValue({...data});
+    console.log(this.caserateForm.value)
   }
 
   loadContent(content) {
@@ -214,8 +225,44 @@ export class CaserateComponent implements OnInit {
     private formBuilder: FormBuilder
   ) { }
 
+  preloaded_caserate: any;
+  tb_caserate = tb_caserate;
+  cc_caserate = cc_caserate;
+  loaded_caserate: any;
+
+  computeTotal(total_name) {
+    if(total_name === 'prof_pTotalAmount') {
+      this.caserateForm.patchValue({
+        prof_pTotalAmount: Number(this.caserateForm.value.prof_pDiscount) - Number(this.caserateForm.value.prof_pPhilhealthBenefit)
+      });
+    }
+
+    if (total_name === 'hci_pTotalAmount') {
+      this.caserateForm.patchValue({
+        hci_pTotalAmount: Number(this.caserateForm.value.hci_pDiscount) - Number(this.caserateForm.value.hci_pPhilhealthBenefit)
+      });
+    }
+
+    if (total_name === 'caserate_fee') {
+      this.caserateForm.patchValue({
+        caserate_fee: Number(this.caserateForm.value.hci_fee) + Number(this.caserateForm.value.prof_fee)
+      })
+    }
+
+
+  }
+
   ngOnInit(): void {
     this.loadLibraries();
     this.loadSelected();
+
+    switch(this.program_name){
+      case 'tb':
+        this.preloaded_caserate = this.tb_caserate;
+        break;
+      case 'cc':
+        this.preloaded_caserate = this.cc_caserate;
+        break;
+    }
   }
 }

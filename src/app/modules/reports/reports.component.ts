@@ -23,7 +23,7 @@ export class ReportsComponent implements OnInit {
     year: new FormControl<string| null>('')
   });
 
-  current_date = formatDate(new Date, 'yyyy', 'en');
+  current_date = formatDate(new Date, 'yyyy', 'en', 'Asia/Singapore');
 
   fhsis2018 = [
     { id: 'fhsis2018-cc', desc: 'Child Care', url: 'reports-2018/child-care/m1'},
@@ -33,6 +33,10 @@ export class ReportsComponent implements OnInit {
   other_stats = [
     { id: 'patient-registered', desc: 'Patient Register', url: 'reports-2018/user/patient-registered'},
     // { id: 'fhsis2018-mc', desc: 'Maternal Care', url: 'reports-2018/maternal-care/m1'},
+  ]
+
+  gbv_stats = [
+    { id: 'gbv-report', desc: 'GBV Report', url: 'gbv-report/catalyst-report'},
   ]
 
   months = [
@@ -101,7 +105,9 @@ export class ReportsComponent implements OnInit {
 
     let params = {
       month: this.reportForm.value.month,
-      year: this.reportForm.value.year
+      year: this.reportForm.value.year,
+      start_date: this.reportForm.value.start_date,
+      end_date: this.reportForm.value.end_date
     }
 
     if (this.reportForm.value.report_class === 'muncity') {
@@ -121,7 +127,7 @@ export class ReportsComponent implements OnInit {
         this.is_fetching = false;
 
         console.log(this.report_data, 'report_data');
-
+        console.log(this.selectedBrgy, 'report_data');
       },
       error: err => console.log(err)
     });
@@ -155,7 +161,6 @@ export class ReportsComponent implements OnInit {
         this.http.get('libraries/municipalities/'+userMun, {params:{include: 'barangays'}}).subscribe({
           next: (data: any) => {
             this.brgys = data.data.barangays;
-            console.log(this.brgys, 'brgy data')
           },
           error: err => console.log(err)
         })
@@ -164,7 +169,7 @@ export class ReportsComponent implements OnInit {
   }
 
   generateYear(){
-    let current_year =  formatDate(this.current_date, 'yyyy', 'en');
+    let current_year =  formatDate(this.current_date, 'yyyy', 'en', 'Asia/Singapore');
     let date = parseInt(current_year);
     for(let year = date; year > date-5; year--) {
       this.years.push(year);
@@ -175,8 +180,8 @@ export class ReportsComponent implements OnInit {
     // console.log(this.reportForm.value.report_type)
     this.report_data= '';
     if(this.fhsis_monthly_arr.find(e => e === this.reportForm.value.report_type.id)) {
-      let month = formatDate(this.current_date, 'm', 'en');
-      let year = formatDate(this.current_date, 'yyyy', 'en');
+      let month = formatDate(this.current_date, 'm', 'en', 'Asia/Singapore');
+      let year = formatDate(this.current_date, 'yyyy', 'en', 'Asia/Singapore');
 
       this.reportForm.controls.month.enable();
       this.reportForm.controls.year.enable();

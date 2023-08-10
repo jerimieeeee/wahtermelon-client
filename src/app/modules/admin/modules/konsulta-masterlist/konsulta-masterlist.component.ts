@@ -62,12 +62,14 @@ export class KonsultaMasterlistComponent implements OnInit {
         this.to = data.meta.to;
         this.total = data.meta.total;
       },
-      error: err => console.log(err)
+      error: err => {
+        console.log(err)
+      }
     })
   }
 
   constructor(
-    private http: HttpService
+    private http: HttpService,
   ) { }
 
   ngOnInit(): void {

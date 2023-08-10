@@ -1,7 +1,9 @@
+import { formatDate } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { faPenToSquare } from '@fortawesome/free-regular-svg-icons';
 import { faCircleNotch, faFileArrowUp, faTrash, faUpload } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-upload-claims',
@@ -9,11 +11,12 @@ import { HttpService } from 'app/shared/services/http.service';
   styleUrls: ['./upload-claims.component.scss']
 })
 export class UploadClaimsComponent implements OnInit {
-  @Output() toggleModal = new EventEmitter<any>();
+  @Output() modalToggle = new EventEmitter<any>();
   @Input() selected_pHospitalTransmittalNo;
   @Input() program_name;
   @Input() patient;
   @Input() caserate_code;
+  @Input() selected_ticket_number;
 
   faPenToSquare = faPenToSquare;
   faUpload = faUpload;
@@ -30,6 +33,7 @@ export class UploadClaimsComponent implements OnInit {
 
   is_uploading: boolean = false;
   uploading_claim: boolean = false;
+  modals: any =[];
 
   /* arr_CR4652 = ['CF2', 'CSF', 'CF3', 'SOA'];
   arr_CR4651 = ['CF2', 'CSF', 'CF3', 'SOA'];
@@ -57,17 +61,99 @@ export class UploadClaimsComponent implements OnInit {
   arr_CR0456 = ['CF2', 'CSF', 'SOA'];
   arr_CR4655 = ['CF2', 'CSF', 'Smear Test for OMP'];
 
-  uploadClaim() {
+  is_retrieving_xml: boolean = false;
+  confirm_upload: boolean = false;
+  show_confirm_form: boolean = false;
+  is_uploading_claim: boolean = false;
+
+  confirmUpload() {
+    this.show_confirm_form = !this.show_confirm_form;
+  }
+
+  getFileName(value:string): string{
+    let name = value.split('/')
+    return name[6];
+  }
+
+  encryptedXml: any;
+
+  getEncryptedXml() {
+    this.is_retrieving_xml = true;
+
     let params = {
-      pHospitalTransmittalNo: this.selected_pHospitalTransmittalNo
+      pHospitalTransmittalNo: this.selected_pHospitalTransmittalNo,
+      program_desc: this.program_name
     };
 
-    this.http.post('eclaims/eclaims-upload', params).subscribe({
+    this.http.post('eclaims/create-enc-xml', params).subscribe({
       next:(data:any) => {
-        console.log(data)
+        this.is_retrieving_xml = false;
+        this.confirmUpload();
+        console.log(data);
+        this.encryptedXml = data.xml;
       },
       error: err => console.log(err)
     });
+  }
+
+  uploadClaim(){
+    this.is_uploading_claim = true;
+
+    let params = {
+      encryptedXml: this.encryptedXml,
+      program_code: this.program_name !== 'cc' ? this.program_name : 'mc'
+    }
+
+    //ECLAIMS SERVICES
+    this.http.post('eclaims/upload-claim', params).subscribe({
+      next:(data:any) => {
+        console.log(data)
+        this.updateUploadData(data);
+      },
+      error: err => {
+        console.log(err);
+        this.is_uploading_claim = false;
+        this.toastr.error(err.error.message, 'Upload Claim', {
+          closeButton: true,
+          positionClass: 'toast-top-center',
+          disableTimeOut: true
+        });
+      }
+    })
+  }
+
+  show_ticket_number: boolean = false;
+  ticket_number: string;
+  updateUploadData(data){
+    let params = {
+      pHospitalTransmittalNo: this.selected_pHospitalTransmittalNo,
+      pTransmissionControlNumber: data.pTransmissionControlNumber,
+      pReceiptTicketNumber: data.pReceiptTicketNumber,
+      pStatus: 'IN PROCESS',
+      pTransmissionDate: formatDate(data.pTransmissionDate, 'yyyy-MM-dd', 'en', 'Asia/Singapore'),
+      pTransmissionTime: formatDate(new Date(), 'HH:mm:ss', 'en', 'Asia/Singapore'),
+      isSuccess:'Y',
+      program_desc: this.program_name
+    }
+
+    console.log(params);
+    this.http.post('eclaims/eclaims-upload', params).subscribe({
+      next: (res: any) => {
+        console.log(res);
+
+        this.ticket_number = res.data.pReceiptTicketNumber;
+
+        this.toastr.success('Ticket Number: '+this.ticket_number, 'Claim Uploaded!', {
+          closeButton: true,
+          positionClass: 'toast-top-center',
+          disableTimeOut: true
+        });
+
+        this.is_uploading_claim = false;
+        this.closeModal();
+      },
+      error: err => console.log(err)
+    })
   }
 
   deleteDocs(data){
@@ -110,6 +196,7 @@ export class UploadClaimsComponent implements OnInit {
         this.loadDocs();
         this.resetForm();
         this.is_uploading = false;
+        this.toastr.success('Successfully uploaded.', 'EClaims Docs');
       },
       error: err => console.log(err)
     })
@@ -137,11 +224,24 @@ export class UploadClaimsComponent implements OnInit {
   }
 
   closeModal(){
-    this.toggleModal.emit('upload-claims');
+    this.modalToggle.emit('upload-claims');
+  }
+
+  delete_url: string = 'eclaims/eclaims-doc/';
+  delete_desc: string = 'eClaims Document';
+  selected_doc_id: string;
+  toggleModal(name, data?) {
+    if(data) {
+      console.log(data);
+    }
+    this.selected_doc_id = data ? data.id : null;
+    this.delete_desc = this.delete_desc+" "+(data ? data.doc_type_code : '');
+    this.modals[name] = !this.modals[name];
   }
 
   constructor(
-    private http: HttpService
+    private http: HttpService,
+    private toastr: ToastrService
   ) { }
 
   required_docs: any;

@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { faCircleNotch, faRotate, faUpload } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-eclaims',
@@ -27,6 +28,7 @@ export class EclaimsComponent implements OnInit {
 
   selected_pHospitalTransmittalNo: string;
   selected_caserate_code: string;
+  selected_ticket_number: string;
 
   is_refreshing: boolean = false;
   show_form:boolean = false;
@@ -38,7 +40,7 @@ export class EclaimsComponent implements OnInit {
 
     let params = {
       patient_id: this.patient.id,
-      program_code: this.program_name
+      program_desc: this.program_name
     };
 
     this.http.get('eclaims/eclaims-upload', {params}).subscribe({
@@ -64,7 +66,7 @@ export class EclaimsComponent implements OnInit {
   getCaserate(eclaims_id_arr?) {
     console.log(eclaims_id_arr)
     let params = {
-      program_code: this.program_id,
+      program_id: this.program_id,
       program_desc: this.program_name
     };
 
@@ -85,13 +87,89 @@ export class EclaimsComponent implements OnInit {
     this.is_refreshing = true;
   }
 
-  getCreds(){
-    let params = { 'filter[program_code]': this.program_name };
+  checkSeries(data){
+    console.log(data)
+    this.is_refreshing = true;
 
+    let params = {
+      pReceiptTicketNumber: data.pReceiptTicketNumber,
+      program_code: this.program_name !== 'cc' ? this.program_name : 'mc'
+    }
+
+    this.http.post('eclaims/get-claims-map', params).subscribe({
+      next: (resp: any) => {
+        console.log(resp);
+        data.pClaimSeriesLhio = resp.MAPPING.pClaimSeriesLhio;
+        data.pStatus = 'IN PROCESS';
+
+        this.updateUploadClaim(data);
+      },
+      error: err => {
+        console.log(err);
+        this.is_refreshing = false;
+        this.toastr.error(err.error.message, 'Series LHIO', {
+          closeButton: true,
+          positionClass: 'toast-top-center',
+          disableTimeOut: true
+        });
+      }
+    })
+  }
+
+  getClaimStatus(data) {
+    this.is_refreshing = true;
+
+    let params = {
+      series_lhio: data.pClaimSeriesLhio,
+      program_code: this.program_name !== 'cc' ? this.program_name : 'mc'
+    }
+
+    this.http.post('eclaims/get-claim-status', params).subscribe({
+      next:(resp: any) => {
+        console.log(resp)
+        this.is_refreshing = false;
+        this.toastr.info('As of: '+resp.pAsOf+ ' '+resp.pAsOfTime, resp.CLAIM.pStatus, {
+          closeButton: true,
+          positionClass: 'toast-top-center',
+          disableTimeOut: true
+        });
+        data.pStatus = resp.CLAIM.pStatus;
+        this.updateUploadClaim(data);
+      },
+      error: err => {
+        console.log(err);
+        this.is_refreshing = false;
+        this.toastr.error(err.error.message, 'Claims Status', {
+          closeButton: true,
+          positionClass: 'toast-top-center',
+          disableTimeOut: true
+        });
+      }
+    })
+  }
+
+  updateUploadClaim(data) {
+    console.log(data);
+    this.http.post('eclaims/eclaims-upload', data).subscribe({
+      next:(data:any) => {
+        console.log(data)
+        this.is_refreshing = false;
+      },
+      error: err => {
+        console.log(err)
+      }
+    })
+  }
+
+  getCreds(){
+    // let params = { 'filter[program_code]': this.program_name };
+    let params = { 'filter[program_code]': this.program_name  !== 'cc' ? this.program_name : 'mc' };
     this.http.get('settings/philhealth-credentials', {params}).subscribe({
       next:(data:any) => {
         console.log(data)
-        this.program_creds = data.data[0];
+        if(data.data[0]) {
+          this.program_creds = data.data[0];
+        }
         this.getEclaimsList();
       },
       error: err => console.log(err)
@@ -99,13 +177,19 @@ export class EclaimsComponent implements OnInit {
   }
 
   toggleModal(name, eclaims?) {
+    console.log(eclaims)
     this.selected_pHospitalTransmittalNo = eclaims?.pHospitalTransmittalNo ?? null;
     this.selected_caserate_code = eclaims?.caserate.caserate_code ?? null;
+    this.selected_ticket_number = eclaims?.pReceiptTicketNumber ?? null;
     this.modal[name] = !this.modal[name];
+
+    if(name==='cf2' && !this.modal['cf2']) this.getEclaimsList();
+    if(name==='upload-claims' && !this.modal['upload-claims']) this.getEclaimsList();
   }
 
   constructor(
-    private http: HttpService
+    private http: HttpService,
+    private toastr: ToastrService
   ) { }
 
   ngOnInit(): void {

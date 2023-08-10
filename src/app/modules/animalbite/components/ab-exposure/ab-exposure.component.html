@@ -1,0 +1,138 @@
+<div class="m-5 border border-slate-200 rounded-lg" *ngIf="show_form">
+  <div class="bg-blue-500 text-white rounded-t-md py-2 pl-3 font-semibold">
+    Exposure Record
+  </div>
+
+  <div class="mx-5 mb-5">
+    <form [formGroup]="abExposureForm" (ngSubmit)="onSubmit()">
+      <div class="grid grid-cols-3 gap-x-4 w-full">
+        <div class="col-span-3 border-b border-slate-200 w-full my-2 font-semibold text-sky-500">
+          Date
+        </div>
+        <div class="col-span-3 grid grid-cols-3 gap-x-4 gpa-y-2">
+          <div>
+            <label for="exposure_date">Exposure Date *</label>
+            <input type="date" name="exposure_date" id="exposure_date" [max]="max_date" formControlName="exposure_date" class="input">
+          </div>
+
+          <div>
+            <label for="consult_date">Consulation Date *</label>
+            <input type="date" name="consult_date" id="consult_date" [max]="max_date" formControlName="consult_date" class="input">
+          </div>
+        </div>
+
+        <div class="col-span-3 border-b border-slate-200 w-full my-2 font-semibold text-sky-500">
+          Exposure Details
+        </div>
+        <div class="col-span-3 grid grid-cols-3 gap-x-4 gap-y-2">
+          <div>
+            <label for="exposure_place">Place of exposure</label>
+            <input type="text" name="exposure_place" id="exposure_place" formControlName="exposure_place" class="input">
+          </div>
+
+          <div>
+            <label for="animal_type_id">Type of Animal *</label>
+            <select name="animal_type_id" id="animal_type_id" formControlName="animal_type_id" class="input">
+              <option *ngFor="let type of animal_types" [value]="type.id">{{ type.desc }}</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="animal_ownership_id">Type of Ownership *</label>
+            <select name="animal_ownership_id" id="animal_ownership_id" formControlName="animal_ownership_id" class="input">
+              <option *ngFor="let ownership of animal_ownerships" [value]="ownership.id">{{ ownership.desc }}</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="bite_flag">Bite/Non Bite</label>
+            <select name="bite_flag" id="bite_flag" formControlName="bite_flag" class="input">
+              <option [ngValue]="1">Bite</option>
+              <option [ngValue]="0">Non Bite</option>
+            </select>
+          </div>
+
+          <div class="col-span-3" *ngIf="abExposureForm.value.animal_type_id === 1" >
+            <label for="animal_type_remarks">Please specify Type of Animal</label>
+            <input type="text" name="animal_type_remarks" id="animal_type_remarks" formControlName="animal_type_remarks" class="input">
+          </div>
+
+          <div class="col-span-3 grid grid-cols-3 gap-x-4">
+            <div class="col-span-3">
+              Bite Location
+            </div>
+            <div *ngFor="let bite_location of bite_locations" class="mx-5">
+              <input type="checkbox" class="input-checkbox" attr.id="{{ bite_location.bite_code }}" [formControlName]="bite_location.bite_code" />
+              <label class="pl-2" attr.for="{{ bite_location.bite_code }}">{{ bite_location.bite_desc }}</label>
+            </div>
+          </div>
+
+          <div class="col-span-3" *ngIf="abExposureForm.value.others_flag">
+            <label for="al_remarks">Please specify Bite Location</label>
+            <input type="text" name="al_remarks" id="al_remarks" formControlName="al_remarks" class="input">
+          </div>
+
+          <div class="col-span-3">
+            <label for="exposure_type_code">Type of Exposure *</label>
+            <select name="exposure_type_code" id="exposure_type_code" formControlName="exposure_type_code" class="input">
+              <option *ngFor="let exposure_type of exposure_types" [value]="exposure_type.code">{{ exposure_type.desc }}</option>
+            </select>
+          </div>
+
+          <div class="col-span-3 grid grid-cols-2 gap-x-4">
+            <div>
+              <label for="wash_flag">Washing of Bite</label>
+              <select name="wash_flag" id="wash_flag" formControlName="wash_flag" class="input">
+                <option [ngValue]="1">Yes</option>
+                <option [ngValue]="0">No</option>
+              </select>
+            </div>
+            <div>
+              <label for="pep_flag">With PEP?</label>
+              <select name="pep_flag" id="pep_flag" formControlName="pep_flag" class="input">
+                <option [ngValue]="1">Yes</option>
+                <option [ngValue]="0">No</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="col-span-3 grid grid-cols-2 gap-x-4">
+            <div>
+              <label for="tandok_name">Name of Tandok/Supsup</label>
+              <input type="text" name="tandok_name" id="tandok_name" formControlName="tandok_name" class="input">
+            </div>
+
+            <div>
+              <label for="tandok_addresss">Address</label>
+              <input type="text" name="tandok_addresss" id="tandok_addresss" formControlName="tandok_addresss" class="input">
+            </div>
+          </div>
+
+          <div class="col-span-3">
+            <label for="remarks">Remarks</label>
+            <input type="text" name="remarks" id="remarks" formControlName="remarks" class="input">
+          </div>
+        </div>
+      </div>
+      <!-- *ngIf="!selected_tb_consult || selected_tb_consult.treatment_done === 0" -->
+      <div *ngIf="!selected_ab_consult?.date_outcome" class="flex justify-center mt-5" >
+        <button [disabled]="is_saving || abExposureForm.invalid" type="submit" class="btn-save mr-5 mt-4">
+          <fa-icon [icon]="is_saving ? faCircleNotch : faSave" [spin]="is_saving ? true : false" class="mr-2"></fa-icon>
+          {{ abExposureForm.value.id ? (is_saving ? 'Updating' : 'Update') : (is_saving ? 'Saving' : 'Save') }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div *ngIf="!show_form">
+  <div class="grid grid-cols-1 my-16">
+    <div class="flex justify-center">
+      <fa-icon [icon]="faCircleNotch" spin="true"></fa-icon>
+    </div>
+
+    <div class="flex justify-center">
+      Fetching exposure record...
+    </div>
+  </div>
+</div>

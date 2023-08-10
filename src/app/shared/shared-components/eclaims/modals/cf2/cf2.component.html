@@ -8,10 +8,11 @@
           Claim Form 2
         </h3>
         <div>
-          <button class="bg-white text-orange-400 rounded-md px-2 py-1 mr-3" (click)="submitQue()">
+          <button [disabled]="!selected_caserate || que_form" class="bg-white text-orange-400 rounded-md px-2 py-1 mr-3 disabled:opacity-50" (click)="submitQue()">
+            <fa-icon *ngIf="que_form" [icon]="faCircleNotch" spin="true" class="pr-1"></fa-icon>
             Queue
           </button>
-          <button [disabled]="pdf_exported" class="bg-white text-orange-400 rounded-md px-2 py-1" (click)="exportP()">
+          <button [disabled]="!selected_caserate || pdf_exported || que_form" class="bg-white text-orange-400 rounded-md px-2 py-1 disabled:opacity-50" (click)="exportP()">
             <fa-icon [icon]="faFilePdf"></fa-icon>
           </button>
         </div>
@@ -35,7 +36,7 @@
           </div>
         </div>
 
-        <div *ngIf="selected_caserate"  class="w-full">
+        <div *ngIf="selected_caserate" class="w-full">
           <div *ngIf="show_form && eclaimsForm.valid" class="text-sm text-center uppercase font-semibold relative w-[216mm] h-[660mm]" id="mainForm">
             <img class="w-[216mm] h-[330mm]" src="./assets/img/philhealth-cf2-1.jpg" />
             <img class="w-[216mm] h-[330mm]" src="./assets/img/philhealth-cf2-2.jpg" />
@@ -72,12 +73,22 @@
 
             <!-- MC Case -->
             <div *ngIf="program_name==='mc'">
-              <span class="absolute top-[264mm] left-[17.5mm] w-[45mm]">01-01-2023</span>
-              <span class="absolute top-[264mm] left-[70mm] w-[41mm]">01-01-2023</span>
-              <span class="absolute top-[264mm] left-[117.5mm] w-[37mm]">01-01-2023</span>
-              <span class="absolute top-[264mm] left-[161.5mm] w-[45mm]">01-01-2023</span>
+              <span class="absolute top-[264mm] left-[17.5mm] w-[45mm]">{{ eclaimsForm.value.pCheckUpDate1 | date:'MM-dd-yyyy' }}</span>
+              <span class="absolute top-[264mm] left-[70mm] w-[41mm]">{{ eclaimsForm.value.pCheckUpDate2 | date:'MM-dd-yyyy' }}</span>
+              <span class="absolute top-[264mm] left-[117.5mm] w-[37mm]">{{ eclaimsForm.value.pCheckUpDate3 | date:'MM-dd-yyyy' }}</span>
+              <span class="absolute top-[264mm] left-[161.5mm] w-[45mm]">{{ eclaimsForm.value.pCheckUpDate4 | date:'MM-dd-yyyy' }}</span>
             </div>
             <!-- MC CASE -->
+
+            <!-- AB Case -->
+            <div *ngIf="program_name==='ab'">
+              <span class="absolute top-[280.5mm] left-[17mm] w-[45mm]">{{ eclaimsForm.value.pDay0ARV | date:'MM-dd-yyyy' }}</span>
+              <span class="absolute top-[280.5mm] left-[55mm] w-[45mm]">{{ eclaimsForm.value.pDay3ARV | date:'MM-dd-yyyy' }}</span>
+              <span class="absolute top-[280.5mm] left-[97mm] w-[45mm]">{{ eclaimsForm.value.pDay7ARV | date:'MM-dd-yyyy' }}</span>
+              <span class="absolute top-[280.5mm] left-[125mm] w-[45mm]">{{ eclaimsForm.value.pRIG | date:'MM-dd-yyyy' }}</span>
+              <span class="absolute top-[280.5mm] left-[174mm] w-[45mm]">{{ eclaimsForm.value.pABPOthers | date:'MM-dd-yyyy' }}</span>
+            </div>
+            <!-- AB CASE -->
 
             <!-- TB CASE -->
             <div *ngIf="program_name==='tb'">
@@ -105,7 +116,7 @@
             <span class="absolute top-[352mm] left-[35mm] w-[17mm] tracking-[0.4em]">{{ eclaimsForm.value.attendant_accreditation_code|slice:0:4 }}</span>
             <span class="absolute top-[352mm] left-[55mm] w-[29.8mm] tracking-[0.5em]">{{ eclaimsForm.value.attendant_accreditation_code|slice:4:11 }}</span>
             <span class="absolute top-[352mm] left-[87.5mm] w-[4.5mm]">{{ eclaimsForm.value.attendant_accreditation_code|slice:11:12 }}</span>
-            <span class="absolute top-[358.5mm] left-[20mm] w-[83mm]">{{ eclaimsForm.value.attendant_last_name }}, {{ eclaimsForm.value.attendant_last_name }} {{ eclaimsForm.value.attendant_middle_name }} {{ eclaimsForm.value.attendant_suffix_name!=='NA' ? eclaimsForm.value.attendant_suffix_name : '' }}</span>
+            <span class="absolute top-[358.5mm] left-[20mm] w-[83mm]">{{ eclaimsForm.value.attendant_last_name }}, {{ eclaimsForm.value.attendant_first_name }} {{ eclaimsForm.value.attendant_middle_name }} {{ eclaimsForm.value.attendant_suffix_name!=='NA' ? eclaimsForm.value.attendant_suffix_name : '' }}</span>
             <span class="absolute top-[368mm] left-[44mm] w-[8.7mm] tracking-[0.45em]">{{ eclaimsForm.value.attendant_sign_date|date:'MM' }}</span>
             <span class="absolute top-[368mm] left-[55mm] w-[8.7mm] tracking-[0.45em]">{{ eclaimsForm.value.attendant_sign_date|date:'dd' }}</span>
             <span class="absolute top-[368mm] left-[66.5mm] w-[17.3mm] tracking-[0.5em]">{{ eclaimsForm.value.attendant_sign_date|date:'yyyy' }}</span>
@@ -113,10 +124,33 @@
             <!-- PROFESSIONAL -->
 
             <!-- FEES -->
-            <span class="absolute top-[438.5mm] left-[12.5mm]">&#x2714;</span>
-            <span class="absolute top-[451mm] left-[113mm] w-[83.5mm]">Php {{ eclaimsForm.value.hci_fee }}</span>
-            <span class="absolute top-[456.5mm] left-[113mm] w-[83.5mm]">Php {{ eclaimsForm.value.prof_fee }}</span>
-            <span class="absolute top-[461.5mm] left-[113mm] w-[83.5mm]">Php {{ eclaimsForm.value.caserate_fee }}</span>
+            <div *ngIf="eclaimsForm.value.enough_benefit_flag">
+              <span class="absolute top-[438.5mm] left-[12.5mm]">&#x2714;</span>
+              <span class="absolute top-[451mm] left-[113mm] w-[83.5mm]">{{ 'PHP '+eclaimsForm.value.hci_fee }}</span>
+              <span class="absolute top-[456.5mm] left-[113mm] w-[83.5mm]">{{ 'PHP '+eclaimsForm.value.prof_fee }}</span>
+              <span class="absolute top-[461.5mm] left-[113mm] w-[83.5mm]">{{ 'PHP '+eclaimsForm.value.caserate_fee }}</span>
+            </div>
+
+            <div *ngIf="!eclaimsForm.value.enough_benefit_flag">
+              <span class="absolute top-[468mm] left-[12.5mm]">&#x2714;</span>
+              <span class="absolute top-[500mm] left-[50mm]">{{ 'PHP '+eclaimsForm.value.hci_pTotalActualCharges }}</span>
+              <span class="absolute top-[500mm] left-[82mm]">{{ 'PHP '+eclaimsForm.value.hci_pDiscount }}</span>
+              <span class="absolute top-[500mm] left-[117mm]">{{ 'PHP '+eclaimsForm.value.hci_pPhilhealthBenefit }}</span>
+              <span class="absolute top-[495mm] left-[165mm]">{{ eclaimsForm.value.hci_pTotalAmount }}</span>
+
+              <span class="absolute top-[520mm] left-[50mm]">{{ 'PHP '+eclaimsForm.value.prof_pTotalActualCharges }}</span>
+              <span class="absolute top-[520mm] left-[82mm]">{{ 'PHP '+eclaimsForm.value.prof_pDiscount }}</span>
+              <span class="absolute top-[520mm] left-[117mm]">{{ 'PHP '+eclaimsForm.value.prof_pPhilhealthBenefit }}</span>
+              <span class="absolute top-[512mm] left-[165mm]">{{ eclaimsForm.value.prof_pTotalAmount }}</span>
+
+              <span class="absolute top-[537mm] left-[148mm]">{{ eclaimsForm.value.meds_flag ? '&#x2714;' : '' }}</span>
+              <span class="absolute top-[537mm] left-[126mm]">{{ eclaimsForm.value.meds_flag ? '' : '&#x2714;' }}</span>
+              <span class="absolute top-[537mm] left-[175mm]">{{ eclaimsForm.value.meds_pDMSTotalAmount }}</span>
+
+              <span class="absolute top-[545mm] left-[148mm]">{{ eclaimsForm.value.meds_pExaminations_flag ? '&#x2714;' : '' }}</span>
+              <span class="absolute top-[545mm] left-[126mm]">{{ eclaimsForm.value.meds_pExaminations_flag ? '' : '&#x2714;' }}</span>
+              <span class="absolute top-[545mm] left-[175mm]">{{ eclaimsForm.value.meds_pExamTotalAmount }}</span>
+            </div>
             <!-- FEES -->
 
             <!-- SIGN -->
@@ -137,13 +171,24 @@
             </div>
           </div>
 
+          <div *ngIf="show_form && mc_error">
+            <div class="border border-orange-400 bg-orange-50 text-orange-700 rounded-md m-5 p-3">
+              Maternal care visits invalid or incomplete
+              <ul *ngFor="let prenatal_visit of selected_case?.prenatal_visit">
+                <li class="text-sm font-semibold">
+                  Trimester {{ prenatal_visit.trimester }}: {{ prenatal_visit.prenatal_date }}
+                </li>
+              </ul>
+            </div>
+          </div>
+
           <div  *ngIf="!show_form" class="grid grid-cols-1 my-20">
             <div class="flex justify-center text-blue-500">
               <fa-icon [icon]="faCircleNotch" spin="true"></fa-icon>
             </div>
 
             <div class="flex justify-center">
-              Checking PhilHealth Claims Eligibility...
+              Checking PhilHealth Claims CF2...
             </div>
           </div>
         </div>

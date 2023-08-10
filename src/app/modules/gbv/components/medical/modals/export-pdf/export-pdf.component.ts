@@ -3,6 +3,7 @@ import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { AgeService } from 'app/shared/services/age.service';
 import { ExportAsConfig, ExportAsService } from 'ngx-export-as';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-export-pdf',
@@ -26,11 +27,21 @@ export class ExportPdfComponent implements OnInit {
 
   exams2: any;
 
+  last_referral: any;
+
+  conv_facility: any;
+
+  conv_relation: any;
+
+  conv_referral_facility: any;
+
   anogenital_list: any =[];
   corporal_list: any =[];
   behavioral_list: any =[];
 
   impression_list: any;
+
+  relations_list: any;
 
   conv_impression: any;
 
@@ -57,7 +68,7 @@ export class ExportPdfComponent implements OnInit {
 
   closeModal(){
     this.toggleExportPDF.emit('export_pdf');
-    console.log('check modal')
+    // console.log('check modal')
   }
 
   getAge(){
@@ -86,7 +97,7 @@ export class ExportPdfComponent implements OnInit {
 
   exportP() {
     this.pdf_exported = true;
-    this.exportAsService.save(this.exportAsPdf, 'GBV Medical').subscribe(() => {
+    this.exportAsService.save(this.exportAsPdf, 'Medico Legal').subscribe(() => {
       // save started
     });
   }
@@ -121,15 +132,31 @@ export class ExportPdfComponent implements OnInit {
     })
   }
 
-  loadImpression() {
-    this.http.get('libraries/gbv-medical-impression').subscribe({
-      next:(data:any) => {
-        this.impression_list = data.data;
-        console.log(this.impression_list,'test impressions')
-        console.log(this.userInfo,'test impressions user')
-        console.log(this.patient_details,'test impressions patient')
-        this.convertImpression()
+  // loadImpression() {
+  //   this.http.get('libraries/gbv-medical-impression').subscribe({
+  //     next:(data:any) => {
+  //       this.impression_list = data.data;
+  //       // console.log(this.impression_list,'test impressions')
+  //       // console.log(this.userInfo,'test impressions user')
+  //       // console.log(this.patient_details,'test impressions patient')
+  //       this.convertImpression()
         
+  //     },
+  //     error: err => console.log(err)
+  //   });
+  // }
+
+  loadLibraries() {
+    const getChildRelation = this.http.get('libraries/child-relation');
+    const getMedicalImpression = this.http.get('libraries/gbv-medical-impression');
+
+    forkJoin([getChildRelation, getMedicalImpression]).subscribe({
+      next:([dataChildRelation, dataMedicalImpression]:any) => {
+        this.relations_list = dataChildRelation.data;
+        this.impression_list = dataMedicalImpression.data;
+        console.log(this.relations_list, 'new function');
+        console.log(this.impression_list, 'new function');
+        this.convertImpression();
       },
       error: err => console.log(err)
     });
@@ -164,13 +191,25 @@ export class ExportPdfComponent implements OnInit {
     this.loadAnogenital()
     this.loadCorporal()
     this.loadBeahavioral()
-    this.loadImpression()
     
   }
 
   convertImpression(){
     this.conv_impression = this.impression_list.filter(x => x.id === this.selected_gbv_case?.gbvIntake?.medical_history?.medical_impression_id);
-  
+    this.conv_relation = this.relations_list.filter(x => x.id === this.selected_gbv_case?.gbvIntake?.consent_relation_to_child_id);
+    this.last_referral = this.selected_gbv_case?.gbvReferral[Object.keys(this.selected_gbv_case?.gbvReferral).length - 1];
+
+    console.log(this.conv_relation, 'relationship')
+    
+    this.conv_facility = this.userInfo.facility.facility_name.split(' ')
+   .map(w => w[0].toUpperCase() + w.substring(1).toLowerCase())
+   .join(' ');
+    // console.log(this.conv_facility, 'test proper case');
+
+    this.conv_referral_facility = this.last_referral.facility.facility_name.split(' ')
+   .map(w => w[0].toUpperCase() + w.substring(1).toLowerCase())
+   .join(' ');
+    // console.log(this.last_referral,'test last referral')
   }
 
 
@@ -181,8 +220,10 @@ export class ExportPdfComponent implements OnInit {
   
   ngOnInit() {
     this.loadLibs(); 
+    this.loadLibraries();
     this.patient_details = this.http.getPatientInfo();
     this.userInfo = this.http.getUserFromJSON();
+    console.log(this.userInfo, 'user')
     // console.log(this.selected_gbv_case,'export modal')
     // console.log(this.anogenital_list,'test hugot')
   }

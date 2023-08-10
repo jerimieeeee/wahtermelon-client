@@ -2,6 +2,7 @@ import { Component, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { faDoorClosed, faPenToSquare, faPersonWalking, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-maternalcare',
@@ -29,11 +30,7 @@ export class MaternalcareComponent implements OnInit {
   consult_details: any;
   show_end: boolean;
 
-  constructor(private http: HttpService,
-    private router: Router
-  ) { }
 
-  module: number;
 
   libraries = [
     { var_name: 'risk_factors', location: 'mc-risk-factors' },
@@ -51,26 +48,22 @@ export class MaternalcareComponent implements OnInit {
   patient_id: any;
   consult_id: any;
 
-  ngOnInit(): void {
-    this.mcr = true;
-    this.module = 1;
-    this.post_value = false;
-    this.loading = false
-    this.loadLibraries();
+  pages: number = 1;
+  module: number = 1;
 
-    this.active_loc_id = this.http.getUrlParams();
+  switchPage(page) {
+    this.pages = page;
+  }
 
-    this.patient_id = this.active_loc_id.patient_id;
-    this.consult_id = this.active_loc_id.consult_id;
-    this.loadConsultDetails();
-    this.mcrID('all', this.patient_id);
+  switchTab(tab) {
+    this.module = tab;
   }
 
   toggleModal(){
     this.show_end = !this.show_end;
   }
 
-  switchTab(tab) {
+  /* switchTab(tab) {
     this.module = 0;
     this.module = tab;
     if (this.module == 1) {
@@ -78,7 +71,7 @@ export class MaternalcareComponent implements OnInit {
       this.mcr = true;
     }
     console.log(this.module);
-  }
+  } */
 
   postValue(post_data) {
     if (post_data) {
@@ -99,7 +92,7 @@ export class MaternalcareComponent implements OnInit {
 
       this.http.get('maternal-care/mc-records', { params }).subscribe({
         next: (data: any) => {
-          console.log(data.data);
+          // console.log(data.data);
           if (data.data.length > 0) {
             this.patient_mc_list = data.data;
 
@@ -122,8 +115,8 @@ export class MaternalcareComponent implements OnInit {
     if (id) {
       this.http.get('maternal-care/mc-records/' + id).subscribe({
         next: (data: any) => {
-          console.log(data, " openMCR");
           this.patient_mc_record = data.data;
+          console.log(data, " patient_mc_record");
           this.mcr = true;
           if (this.patient_mc_record.pre_registration) {
             this.prenatal = true;
@@ -140,9 +133,11 @@ export class MaternalcareComponent implements OnInit {
           this.loading = false;
 
           if (!this.patient_mc_record.pre_registration) {
+            this.pages = 2;
             this.module = 4;
           } else {
-            if (this.module == 1) {
+            if (this.pages === 1) {
+              this.pages = 2;
               this.module = 2;
             }
           }
@@ -216,5 +211,24 @@ export class MaternalcareComponent implements OnInit {
     });
   }
 
+  constructor(
+    private http: HttpService,
+    private router: Router,
+    private toastr: ToastrService
+  ) { }
 
+  ngOnInit(): void {
+    this.mcr = true;
+    this.module = 1;
+    this.post_value = false;
+    this.loading = false
+    this.loadLibraries();
+
+    this.active_loc_id = this.http.getUrlParams();
+
+    this.patient_id = this.active_loc_id.patient_id;
+    this.consult_id = this.active_loc_id.consult_id;
+    this.loadConsultDetails();
+    this.mcrID('all', this.patient_id);
+  }
 }

@@ -44,5 +44,22 @@ export function eclaimsForm() {
     pCheckUpDate3: new FormControl<string|null>(null),
     pCheckUpDate4: new FormControl<string|null>(null),
     pICDCode: new FormControl<string|null>(null),
+    transmittalNumber: new FormControl<string|null>(null),
+
+    enough_benefit_flag: new FormControl<string|null>(null),
+    hci_pTotalActualCharges: new FormControl<string|null>(null),
+    hci_pDiscount: new FormControl<string|null>(null),
+    hci_pPhilhealthBenefit: new FormControl<string|null>(null),
+    hci_pTotalAmount: new FormControl<string|null>(null),
+    prof_pTotalActualCharges: new FormControl<string|null>(null),
+    prof_pDiscount: new FormControl<string|null>(null),
+    prof_pPhilhealthBenefit: new FormControl<string|null>(null),
+    prof_pTotalAmount: new FormControl<string|null>(null),
+    meds_flag: new FormControl<string|null>(null),
+    meds_pDMSTotalAmount: new FormControl<string|null>(null),
+    meds_pExaminations_flag: new FormControl<string|null>(null),
+    meds_pExamTotalAmount: new FormControl<string|null>(null),
+    hmo_flag: new FormControl<string|null>(null),
+    others_flag: new FormControl<string|null>(null)
   });
 }

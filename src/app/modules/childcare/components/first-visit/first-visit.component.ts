@@ -1,6 +1,6 @@
-import { Component, OnInit, ViewChild, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, Output, EventEmitter, SimpleChanges, OnChanges } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { faSearch, faPlus, faCalendar, faInfoCircle, faCircleNotch, faFloppyDisk,} from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faPlus, faCalendar, faInfoCircle, faCircleNotch, faFloppyDisk, faSpinner,} from '@fortawesome/free-solid-svg-icons';
 import { faSave, faPenToSquare, faPlusSquare } from '@fortawesome/free-regular-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { catchError, debounceTime, distinctUntilChanged, switchMap, tap, map, filter } from 'rxjs/operators';
@@ -18,15 +18,13 @@ import { ToastrService } from 'ngx-toastr';
 })
 
 
-export class FirstVisitComponent implements OnInit {
-  @Output() checkCCdevDetails = new EventEmitter<any>();
-  faSearch = faSearch;
-  faPlus = faPlus;
-  faCalendar = faCalendar;
-  faInfoCircle = faInfoCircle;
-  faSpinner = faCircleNotch;
-  faFloppyDisk = faFloppyDisk;
+export class FirstVisitComponent implements OnInit, OnChanges {
+  @Output() loadCcDetails = new EventEmitter<any>();
+  @Input() ccdev_data;
+  @Input() patient_details;
+
   faSave = faSave;
+  faSpinner = faSpinner;
 
   patients$: Observable<any>;
   patientLoading = false;
@@ -66,7 +64,6 @@ export class FirstVisitComponent implements OnInit {
     nbs_filter: new FormControl<string| null>(''),
   });
 
-  @Input() patient_details: any;
   patient_listing: any;
   hideName: boolean;
 
@@ -105,24 +102,19 @@ export class FirstVisitComponent implements OnInit {
   // }
 
   onSubmit(){
-
-    console.log(this.visitForm.value, 'form first visit');
-    console.log(this.visitForm.invalid);
-    this.form_saving = true;
-    this.is_saving = true;
-    try {
-
-    this.visitForm.patchValue({admission_date: formatDate(this.visitForm.value.admission_date, 'Y-MM-dd HH:mm:ss' , 'en')})
-    this.visitForm.patchValue({discharge_date: formatDate(this.visitForm.value.discharge_date, 'Y-MM-dd HH:mm:ss' , 'en')})
-
-    } catch (err) {
-
-    }
+    this.visitForm.patchValue({
+      admission_date: formatDate(this.visitForm.value.admission_date, 'Y-MM-dd HH:mm:ss' , 'en', 'Asia/Singapore'),
+      discharge_date: formatDate(this.visitForm.value.discharge_date, 'Y-MM-dd HH:mm:ss' , 'en', 'Asia/Singapore')
+    });
 
     // this.showModal = true;
 
       this.http.post('child-care/cc-records', this.visitForm.value).subscribe({
-        next: (data: any) =>  this.getccdevDetails(),
+        next: (data: any) =>  {
+          console.log(data);
+          this.loadCcDetails.emit(this.patient_info);
+          // this.getccdevDetails(data)
+        },
         error: err => {console.log(err),
           this.is_saving = false;
           // this.toggleAlertModal('E')},
@@ -185,23 +177,21 @@ export class FirstVisitComponent implements OnInit {
     return [...string.matchAll(/\b\w/g)].join('')
   }
 
-  getPatient(term: string = null): Observable<any> {
-    return this.http.get('patient', {params:{'filter[search]':term}})
-    .pipe(map((resp:any) => {
-      this.patient_listing = resp.data;
-      return resp.data;
-    }))
-  }
-
-  getccdevDetails() {
-    let params = {
-      patient_id: this.patient_details.id
+  getccdevDetails(data) {
+    this.patient_info = this.ccdev_data ?? data;
+    this.getccdevMama();
+    this.visitForm.patchValue({...this.patient_info});
+    console.log(this.patient_info)
+    if(this.patient_info && this.patient_info.status == 'CPAB' ) {
+      this.cpab = 'Child Protected at Birth'
+    }
+    // this.loadCcDetails.emit(this.patient_info);
+    /* let params = {
+      patient_id: this.ccdev_data.patient_id
     }
 
-    this.http.get('child-care/cc-records',{params})
-    .subscribe({
+    this.http.get('child-care/cc-records',{params}).subscribe({
       next: (data: any) => {
-
         if(data.data.length > 0) {
           this.patient_info = data.data[0];
           console.log(this.patient_info, 'info ccdev first visit')
@@ -214,7 +204,7 @@ export class FirstVisitComponent implements OnInit {
         }
       },
       error: err => console.log(err)
-    });
+    }); */
   }
 
   getccdevMama() {
@@ -233,13 +223,10 @@ export class FirstVisitComponent implements OnInit {
   hideItemName(){
     if(this.patient_listing != 0){
       this.hideName = true
-      console.log('name hidden')
     }else{
       this.hideName = false
-      console.log('name is visible')
     }
   }
-
 
   loadPatients() {
     this.patients$ = concat(
@@ -261,6 +248,14 @@ export class FirstVisitComponent implements OnInit {
     );
   }
 
+  getPatient(term: string = null): Observable<any> {
+    return this.http.get('patient', {params:{'filter[search]':term}})
+    .pipe(map((resp:any) => {
+      this.patient_listing = resp.data;
+      return resp.data;
+    }))
+  }
+
   showToastr(){
     this.toastr.success('Successfully saved!','Admission Info');
   }
@@ -273,25 +268,19 @@ export class FirstVisitComponent implements OnInit {
     this.toastr.warning('Error in Saving!','Admission Info');
   }
 
-  // saveBirth(){
-  //   console.log(this.visitForm);
-  //   this.is_saving3 = true;
-  //   this.is_saving4 = false;
-  //   setTimeout(() => {
-  //     this.is_saving3 = false;
-  //     this.is_saving4 = true;
-  //   }, 5000);
-  // }
-
-
-
-  ngOnInit(): void {
-    this.validateForm();
-    // this.getData();
-    this.saved = true;
-    this.loadPatients();
-    this.getccdevDetails();
-
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log('change')
+    this.patient_info = this.ccdev_data;
+    this.getccdevDetails(null);
   }
 
+  ngOnInit(): void {
+    console.log('on init')
+    this.validateForm();
+    // this.getData();
+    console.log(this.ccdev_data)
+    this.saved = true;
+    this.getccdevDetails(null);
+    this.loadPatients();
+  }
 }

@@ -1,0 +1,183 @@
+<div class="m-5 border border-slate-200 rounded-lg" *ngIf="show_form">
+  <div class="bg-blue-500 text-white rounded-t-md py-2 pl-3 font-semibold">
+    Post Exposure Record
+  </div>
+
+  <div class="mx-5 mb-5">
+    <form [formGroup]="abPostExposureForm" (ngSubmit)="onSubmit()">
+      <div class="grid grid-cols-3 gap-x-4 w-full">
+        <div class="col-span-3 border-b border-slate-200 w-full my-2 font-semibold text-sky-500">
+          Post Exposure Details
+        </div>
+        <div class="col-span-3 grid grid-cols-3 gap-x-4 gap-y-2 ml-5">
+          <div class="col-span-3 grid grid-cols-2 gap-x-4">
+            <div>
+              <label for="animal_status_code">Status of Biting Animal</label>
+              <select name="animal_status_code" id="animal_status_code" formControlName="animal_status_code" class="input">
+                <option *ngFor="let animal_status of animal_statuses" [value]="animal_status.code">{{ animal_status.desc }}</option>
+              </select>
+            </div>
+
+            <div>
+              <label for="animal_status_date">Date Killed/Died</label>
+              <input type="date" name="animal_status_date" id="animal_status_date" [max]="max_date" formControlName="animal_status_date" class="input">
+            </div>
+          </div>
+
+          <div>
+            <label for="rig_type_code">RIG Type</label>
+            <select name="rig_type_code" id="rig_type_code" formControlName="rig_type_code" class="input">
+              <option *ngFor="let rig_type of rig_types" [value]="rig_type.code">{{ rig_type.desc }}</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="rig_date">RIG Date</label>
+            <input type="date" name="rig_date" id="rig_date" [max]="max_date" formControlName="rig_date" class="input">
+          </div>
+        </div>
+
+        <div class="col-span-3 border-b border-slate-200 w-full my-2 font-semibold text-sky-500">
+          Vaccine Details
+        </div>
+        <div class="col-span-3 grid grid-cols-3 gap-x-4 gap-y-2 ml-5">
+          <div>
+            <label for="other_vacc_date">Others</label>
+            <input type="date" name="other_vacc_date" id="other_vacc_date" [max]="max_date" formControlName="other_vacc_date" class="input">
+          </div>
+
+          <div>
+            <label for="other_vacc_desc">Specify</label>
+            <input type="text" name="other_vacc_desc" id="other_vacc_desc" formControlName="other_vacc_desc" class="input">
+          </div>
+
+          <div>
+            <label for="other_vacc_route_code">Route of Delivery</label>
+            <select name="other_vacc_route_code" id="other_vacc_route_code" formControlName="other_vacc_route_code" class="input">
+              <option *ngFor="let vaccine_route of vaccine_routes" [value]="vaccine_route.code">{{ vaccine_route.desc }}</option>
+            </select>
+          </div>
+
+          <!-- Day 0 -->
+          <div>
+            <label for="day0_date">Day 0 Date</label>
+            <input type="date" name="day0_date" id="day0_date" [max]="max_date" formControlName="day0_date" class="input">
+          </div>
+
+          <div>
+            <label for="day0_vaccine_code">Vaccine</label>
+            <select name="day0_vaccine_code" id="day0_vaccine_code" formControlName="day0_vaccine_code" class="input">
+              <option *ngFor="let vaccine of vaccines" [value]="vaccine.code">{{ vaccine.desc }}</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="day0_vaccine_route_code">Route of Delivery</label>
+            <select name="day0_vaccine_route_code" id="day0_vaccine_route_code" formControlName="day0_vaccine_route_code" class="input">
+              <option *ngFor="let vaccine_route of vaccine_routes" [value]="vaccine_route.code">{{ vaccine_route.desc }}</option>
+            </select>
+          </div>
+
+          <!-- Day 3 -->
+          <div>
+            <label for="day3_date">Day 3 Date</label>
+            <input type="date" name="day3_date" id="day3_date" [max]="max_date" formControlName="day3_date" class="input">
+          </div>
+
+          <div>
+            <label for="day3_vaccine_code">Vaccine</label>
+            <select name="day3_vaccine_code" id="day3_vaccine_code" formControlName="day3_vaccine_code" class="input">
+              <option *ngFor="let vaccine of vaccines" [value]="vaccine.code">{{ vaccine.desc }}</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="day3_vaccine_route_code">Route of Delivery</label>
+            <select name="day3_vaccine_route_code" id="day3_vaccine_route_code" formControlName="day3_vaccine_route_code" class="input">
+              <option *ngFor="let vaccine_route of vaccine_routes" [value]="vaccine_route.code">{{ vaccine_route.desc }}</option>
+            </select>
+          </div>
+
+          <!-- Day 7 -->
+          <div>
+            <label for="day7_date">Day 7 Date</label>
+            <input type="date" name="day7_date" id="day7_date" [max]="max_date" formControlName="day7_date" class="input">
+          </div>
+
+          <div>
+            <label for="day7_vaccine_code">Vaccine</label>
+            <select name="day7_vaccine_code" id="day7_vaccine_code" formControlName="day7_vaccine_code" class="input">
+              <option *ngFor="let vaccine of vaccines" [value]="vaccine.code">{{ vaccine.desc }}</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="day7_vaccine_route_code">Route of Delivery</label>
+            <select name="day7_vaccine_route_code" id="day7_vaccine_route_code" formControlName="day7_vaccine_route_code" class="input">
+              <option *ngFor="let vaccine_route of vaccine_routes" [value]="vaccine_route.code">{{ vaccine_route.desc }}</option>
+            </select>
+          </div>
+
+          <!-- Day 14 -->
+          <div>
+            <label for="day14_date">Day 14 Date</label>
+            <input type="date" name="day14_date" id="day14_date" [max]="max_date" formControlName="day14_date" class="input">
+          </div>
+
+          <div>
+            <label for="day14_vaccine_code">Vaccine</label>
+            <select name="day14_vaccine_code" id="day14_vaccine_code" formControlName="day14_vaccine_code" class="input">
+              <option *ngFor="let vaccine of vaccines" [value]="vaccine.code">{{ vaccine.desc }}</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="day14_vaccine_route_code">Route of Delivery</label>
+            <select name="day14_vaccine_route_code" id="day14_vaccine_route_code" formControlName="day14_vaccine_route_code" class="input">
+              <option *ngFor="let vaccine_route of vaccine_routes" [value]="vaccine_route.code">{{ vaccine_route.desc }}</option>
+            </select>
+          </div>
+
+          <!-- Day 28 -->
+          <div>
+            <label for="day28_date">Day 28 Date</label>
+            <input type="date" name="day28_date" id="day28_date" [max]="max_date" formControlName="day28_date" class="input">
+          </div>
+
+          <div>
+            <label for="day28_vaccine_code">Vaccine</label>
+            <select name="day28_vaccine_code" id="day28_vaccine_code" formControlName="day28_vaccine_code" class="input">
+              <option *ngFor="let vaccine of vaccines" [value]="vaccine.code">{{ vaccine.desc }}</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="day28_vaccine_route_code">Route of Delivery</label>
+            <select name="day28_vaccine_route_code" id="day28_vaccine_route_code" formControlName="day28_vaccine_route_code" class="input">
+              <option *ngFor="let vaccine_route of vaccine_routes" [value]="vaccine_route.code">{{ vaccine_route.desc }}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <!-- *ngIf="!selected_tb_consult || selected_tb_consult.treatment_done === 0" -->
+      <div *ngIf="!selected_ab_consult?.date_outcome" class="flex justify-center mt-5" >
+        <button [disabled]="is_saving || abPostExposureForm.invalid" type="submit" class="btn-save mr-5 mt-4">
+          <fa-icon [icon]="is_saving ? faCircleNotch : faSave" [spin]="is_saving" class="mr-2"></fa-icon>
+          {{ abPostExposureForm.value.id ? (is_saving ? 'Updating' : 'Update') : (is_saving ? 'Saving' : 'Save') }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div *ngIf="!show_form">
+  <div class="grid grid-cols-1 my-16">
+    <div class="flex justify-center">
+      <fa-icon [icon]="faCircleNotch" spin="true"></fa-icon>
+    </div>
+
+    <div class="flex justify-center">
+      Fetching post exposure record...
+    </div>
+  </div>
+</div>

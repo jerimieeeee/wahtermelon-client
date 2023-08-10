@@ -16,7 +16,7 @@ export class ModuleModalComponent implements OnInit {
   @Input() patient_age;
   @Input() philhealth_details;
 
-  max_date = formatDate(new Date, 'yyyy-MM-dd', 'en');
+  max_date = formatDate(new Date, 'yyyy-MM-dd', 'en', 'Asia/Singapore');
   faClipboard = faClipboard;
   faCircleInfo = faCircleInfo;
   faHouse = faHouse;
@@ -29,6 +29,13 @@ export class ModuleModalComponent implements OnInit {
     'General': {modules: { }},
     'Others': {
       modules: {
+        ab: {
+          name: 'Animal Bite',
+          location: 'ab',
+          group: 'ab',
+          consult_active: false,
+          id: null
+        },
         tb: {
           name: 'Tuberculosis',
           location: 'tb',
@@ -53,6 +60,7 @@ export class ModuleModalComponent implements OnInit {
   mc = { name: 'Maternal Care', location: 'mc', group: 'mc', consult_active: false, id: null };
   cc = { name: 'Child Care', location: 'cc', group: 'cc', consult_active: false, id: null };
   gbv = { name: 'GBV', location: 'gbv', group: 'gbv', consult_active: false, id: null };
+  fp = { name: 'Family Planning', location: 'fp', group: 'fp', consult_active: false, id: null };
   show_new: boolean = false;
   is_loading: boolean = false;
   show_form: boolean = false;
@@ -74,7 +82,7 @@ export class ModuleModalComponent implements OnInit {
     let params = {
       pPIN: this.philhealth_details.philhealth_id,
       pATC: this.pATC,
-      pEffectivityDate: formatDate(this.pATC_date, 'MM/dd/yyyy', 'en')
+      pEffectivityDate: formatDate(this.pATC_date, 'MM/dd/yyyy', 'en', 'Asia/Singapore')
     }
     this.http.get('konsulta/check-atc', {params}).subscribe({
       next: (data: any) => {
@@ -95,9 +103,13 @@ export class ModuleModalComponent implements OnInit {
       this.list_modules.General.modules['cc'] = this.cc;
     }
 
-    if(this.arr_allowed.indexOf(this.pos) > -1) {
+    /* if(this.patient_age.type === 'year' && this.patient_age.age >= 9) {
+      this.list_modules.General.modules['fp'] = this.fp;
+    } */
+
+    /* if(this.arr_allowed.indexOf(this.pos) > -1) {
       this.list_modules.Others.modules['gbv'] = this.gbv;
-    }
+    } */
   }
 
   onModuleSelect(module){

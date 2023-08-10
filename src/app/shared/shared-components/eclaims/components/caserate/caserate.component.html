@@ -7,7 +7,7 @@
     <div class="rounded-b-md grid grid-cols-1">
       <div class="grid grid-cols-6 border-t border-slate-200" *ngFor="let caserate of caserate_list; let i = index">
           <div class="col-span-5 m-2 text-sm">
-            <strong>{{ caserate.caserate_code }}</strong> <br />
+            <strong>{{ caserate.code }} - {{ caserate.caserate_code }}</strong> <br />
             {{ caserate.caserate_date | date:'MM/dd/yyyy'}} <br />
             {{ caserate.description }} <br />
           </div>
@@ -29,8 +29,15 @@
       </button>
     </div>
 
-    <div class="rounded-b-md border-x border-b border-slate-200 flex">
-      <form class="w-full m-5" [formGroup]="caserateForm" (ngSubmit)="onSubmit()">
+    <div class="rounded-b-md border-x border-b border-slate-200 grid grid-cols-1">
+      <div *ngIf="show_form" class="flex mt-5 mx-5">
+        <label class="w-1/2 mt-2" for="loaded_caserate">Select preloaded caserate</label>
+        <select name="loaded_caserate" id="loaded_caserate" (change)="selectPreloadedCaserate()" [(ngModel)]="loaded_caserate" class="w-1/2 input">
+          <option *ngFor="let pre_case of preloaded_caserate" [ngValue]="pre_case">{{ pre_case.caserate_code }} - {{ pre_case.code }}</option>
+        </select>
+      </div>
+
+      <form class="m-5" [formGroup]="caserateForm" (ngSubmit)="onSubmit()">
         <div *ngIf="show_form" class="grid grid-cols-1 gap-2 w-full">
           <div>
               <label for="caserate_date">Caserate date</label>
@@ -91,21 +98,20 @@
             <input type="text" name="description" id="description" formControlName="description" class="input" />
           </div>
 
-
           <div>
             <label for="hci_fee">HCI Fee</label>
-            <input type="number" name="hci_fee" id="hci_fee" formControlName="hci_fee" class="input" />
+            <input type="number" name="hci_fee" id="hci_fee" formControlName="hci_fee" (change)="computeTotal('caserate_fee')" class="input" />
           </div>
 
           <div>
             <label for="prof_fee">Prof Fee</label>
-            <input type="number" name="prof_fee" id="prof_fee" formControlName="prof_fee" class="input" />
+            <input type="number" name="prof_fee" id="prof_fee" formControlName="prof_fee" (change)="computeTotal('caserate_fee')" class="input" />
           </div>
 
-          <div>
+          <fieldset disabled>
             <label for="caserate_fee">Case Rate Fee</label>
             <input type="number" name="caserate_fee" id="caserate_fee" formControlName="caserate_fee" class="input" />
-          </div>
+          </fieldset>
 
           <div>
             <label for="caserate_attendant">Caserate attendant</label>
@@ -114,9 +120,90 @@
             </select>
           </div>
 
+
+          <div>
+            <input type="checkbox" class="input-checkbox" name="enough_benefit_flag" id="enough_benefit_flag" formControlName="enough_benefit_flag" />
+            <label for="enough_benefit_flag" class="pl-2">With Enough Benefit?</label>
+          </div>
+
+          <div *ngIf="!caserateForm.value.enough_benefit_flag">
+            <!-- HCI NOT ENOUGH -->
+            <div>
+              <label for="hci_pTotalActualCharges">HCI Total Actual Charges</label>
+              <input type="number" name="hci_pTotalActualCharges" id="hci_pTotalActualCharges" formControlName="hci_pTotalActualCharges" class="input" />
+            </div>
+
+            <div>
+              <label for="hci_pDiscount">Amount after application of HCI Discount</label>
+              <input type="number" name="hci_pDiscount" id="hci_pDiscount" formControlName="hci_pDiscount" (change)="computeTotal('hci_pTotalAmount')" class="input" />
+            </div>
+
+            <div>
+              <label for="hci_pPhilhealthBenefit">HCI Philhealth Benefit</label>
+              <input type="number" name="hci_pPhilhealthBenefit" id="hci_pPhilhealthBenefit" formControlName="hci_pPhilhealthBenefit" (change)="computeTotal('hci_pTotalAmount')" class="input" />
+            </div>
+
+            <fieldset disabled>
+              <label for="hci_pTotalAmount">HCI Total Amount</label>
+              <input type="number" name="hci_pTotalAmount" id="hci_pTotalAmount" formControlName="hci_pTotalAmount" class="input" disabled />
+            </fieldset>
+
+            <!-- PROF NOT ENOUGH -->
+            <div>
+              <label for="prof_pTotalActualCharges">Professional Total Actual Charges</label>
+              <input type="number" name="prof_pTotalActualCharges" id="prof_pTotalActualCharges" formControlName="prof_pTotalActualCharges" class="input" />
+            </div>
+
+            <div>
+              <label for="prof_pDiscount">Amount after application of Professional Discount</label>
+              <input type="number" name="prof_pDiscount" id="prof_pDiscount" formControlName="prof_pDiscount" (change)="computeTotal('prof_pTotalAmount')" class="input" />
+            </div>
+
+            <div>
+              <label for="prof_pPhilhealthBenefit">Professional Philhealth Benefit</label>
+              <input type="number" name="prof_pPhilhealthBenefit" id="prof_pPhilhealthBenefit" formControlName="prof_pPhilhealthBenefit" (change)="computeTotal('prof_pTotalAmount')" class="input" />
+            </div>
+
+            <fieldset disabled>
+              <label for="prof_pTotalAmount">Professional Total Amount</label>
+              <input type="number" name="prof_pTotalAmount" id="prof_pTotalAmount" formControlName="prof_pTotalAmount" class="input" />
+            </fieldset>
+
+            <!-- MEDICINE NOT ENOUGH -->
+            <div class="mt-2">
+              <input type="checkbox" class="input-checkbox" name="meds_flag" id="meds_flag" formControlName="meds_flag" />
+              <label for="meds_flag" class="pl-2">With Medicine?</label>
+            </div>
+
+            <div *ngIf="caserateForm.value.meds_flag">
+              <label for="meds_pDMSTotalAmount">Medicine Total Amount</label>
+              <input type="number" name="meds_pDMSTotalAmount" id="meds_pDMSTotalAmount" formControlName="meds_pDMSTotalAmount" class="input" />
+            </div>
+
+            <div class="mt-2">
+              <input type="checkbox" class="input-checkbox" name="meds_pExaminations_flag" id="meds_pExaminations_flag" formControlName="meds_pExaminations_flag" />
+              <label for="meds_pExaminations_flag" class="pl-2">With Examination</label>
+            </div>
+
+            <div *ngIf="caserateForm.value.meds_pExaminations_flag">
+              <label for="meds_pExamTotalAmount">Examitation Total Amount</label>
+              <input type="number" name="meds_pExamTotalAmount" id="meds_pExamTotalAmount" formControlName="meds_pExamTotalAmount" class="input" />
+            </div>
+
+            <div class="mt-2">
+              <input type="checkbox" class="input-checkbox" name="hmo_flag" id="hmo_flag" formControlName="hmo_flag" />
+              <label for="hmo_flag" class="pl-2">With HMO</label>
+            </div>
+
+            <div class="mt-2">
+              <input type="checkbox" class="input-checkbox" name="others_flag" id="others_flag" formControlName="others_flag" />
+              <label for="others_flag" class="pl-2">Others (i.e., PCSO, Promissory note, etc.)</label>
+            </div>
+          </div>
+
           <div class="my-5">
             <div class="flex justify-center">
-              <button [disabled]="is_saving" type="submit" class="btn-save font-semibold px-10">
+              <button [disabled]="caserateForm.invalid || is_saving" type="submit" class="btn-save font-semibold px-10">
                 <fa-icon [icon]="is_saving ? faCircleNotch : faSave" [spin]="is_saving" class="pr-2"></fa-icon>
                 {{ caserateForm.value.id ? (is_saving ? 'Updating' : 'Update') : (is_saving ? 'Saving' : 'Save') }}
               </button>
