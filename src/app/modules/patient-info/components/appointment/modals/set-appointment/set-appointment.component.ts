@@ -19,7 +19,7 @@ export class SetAppointmentComponent implements OnInit, OnChanges {
   is_saving: boolean = false;
 
   appointment: any = {};
-  min_date = formatDate((new Date()).setDate((new Date).getDate()+1), 'yyyy-MM-dd', 'en');
+  min_date = formatDate((new Date()).setDate((new Date).getDate()+1), 'yyyy-MM-dd', 'en', 'Asia/Singapore');
 
   appointmentForm: any = {
     patient_id: null,

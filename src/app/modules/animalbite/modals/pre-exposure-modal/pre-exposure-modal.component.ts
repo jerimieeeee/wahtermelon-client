@@ -22,7 +22,7 @@ export class PreExposureModalComponent implements OnInit {
   faSave = faSave;
 
   preExposureForm:FormGroup=preExposureForm();
-  max_date: string = formatDate(new Date(), 'yyyy-MM-dd', 'en');
+  max_date: string = formatDate(new Date(), 'yyyy-MM-dd', 'en', 'Asia/Singapore');
 
   show_form: boolean = false;
   is_saving: boolean = false;

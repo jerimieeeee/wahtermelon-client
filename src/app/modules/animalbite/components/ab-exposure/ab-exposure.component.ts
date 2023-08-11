@@ -22,7 +22,7 @@ export class AbExposureComponent implements OnInit, OnChanges {
   faSave = faSave;
 
   abExposureForm:FormGroup=abExposureForm();
-  max_date: string = formatDate(new Date(), 'yyyy-MM-dd', 'en');
+  max_date: string = formatDate(new Date(), 'yyyy-MM-dd', 'en', 'Asia/Singapore');
 
   is_saving: boolean = false;
   show_form: boolean = false;
@@ -116,8 +116,8 @@ export class AbExposureComponent implements OnInit, OnChanges {
     if(this.selected_ab_consult && this.selected_ab_consult.abExposure) {
       this.abExposureForm.patchValue({...this.selected_ab_consult.abExposure});
       this.abExposureForm.patchValue({
-        consult_date: this.selected_ab_consult.consult_date ? formatDate(this.selected_ab_consult.consult_date, 'yyyy-MM-dd', 'en') : null,
-        exposure_date: this.selected_ab_consult.exposure_date ? formatDate(this.selected_ab_consult.exposure_date, 'yyyy-MM-dd', 'en') : null
+        consult_date: this.selected_ab_consult.consult_date ? formatDate(this.selected_ab_consult.consult_date, 'yyyy-MM-dd', 'en', 'Asia/Singapore') : null,
+        exposure_date: this.selected_ab_consult.exposure_date ? formatDate(this.selected_ab_consult.exposure_date, 'yyyy-MM-dd', 'en', 'Asia/Singapore') : null
       });
     }
   }

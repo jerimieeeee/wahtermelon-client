@@ -22,7 +22,7 @@ export class IntakeComponent implements OnInit{
   faCircleNotch = faCircleNotch;
   faEdit = faEdit;
 
-  max_date = formatDate(new Date(), 'yyyy-MM-dd', 'en');
+  max_date = formatDate(new Date(), 'yyyy-MM-dd', 'en', 'Asia/Singapore');
   show_form: boolean = true;
 
   modals: any = [];
@@ -111,7 +111,7 @@ export class IntakeComponent implements OnInit{
       console.log(this.selected_gbv_case.gbvIntake);
       this.intakeForm.patchValue({...this.selected_gbv_case.gbvIntake});
       this.intakeForm.patchValue({
-        case_date: this.selected_gbv_case.gbvIntake ? formatDate(this.selected_gbv_case.gbvIntake.case_date, 'yyyy-MM-dd', 'en') : null
+        case_date: this.selected_gbv_case.gbvIntake ? formatDate(this.selected_gbv_case.gbvIntake.case_date, 'yyyy-MM-dd', 'en', 'Asia/Singapore') : null
       })
     } else {
       this.intakeForm.patchValue({

@@ -3,7 +3,7 @@
     <div class="block shadow p-4 mt-4 rounded-xl text-gray-600">
       <span class="text-sky-500 font-bold flex justify-between py-2">
         <div>
-          <span *ngIf="!program_creds" class="flex rounded-md border border-yellow-500 bg-yellow-100 text-yellow-700 text-sm font-normal p-3">
+          <span *ngIf="show_form && !program_creds" class="flex rounded-md border border-yellow-500 bg-yellow-100 text-yellow-700 text-sm font-normal p-3">
             There are no credential for the selected program
           </span>
         </div>
@@ -38,7 +38,7 @@
         </div>
 
         <div class="w-full p-5 overflow-x-auto">
-          <table class=" text-sm text-left text-gray-500 dark:text-gray-400">
+          <table class="text-sm text-left text-gray-500 dark:text-gray-400">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
               <tr>
                 <th scope="col" class="py-3 px-3">Caserate</th>

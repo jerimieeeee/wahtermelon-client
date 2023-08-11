@@ -107,7 +107,7 @@ export class MedicalComponent implements OnInit {
   submitMedicalForm(){
     this.is_saving = true;
     this.medicalForm.patchValue({
-      lmp_date: this.medicalForm.value.lmp_date ? formatDate(this.medicalForm.value.lmp_date, 'yyyy-MM-dd', 'en') : null
+      lmp_date: this.medicalForm.value.lmp_date ? formatDate(this.medicalForm.value.lmp_date, 'yyyy-MM-dd', 'en', 'Asia/Singapore') : null
     });
 
     this.http.post('gender-based-violence/patient-gbv-medical-history', this.medicalForm.value).subscribe({
@@ -167,7 +167,7 @@ export class MedicalComponent implements OnInit {
   patchData() {
     this.intakeForm.patchValue({...this.selected_gbv_case.gbvIntake});
     this.intakeForm.patchValue({
-      case_date: this.selected_gbv_case.gbvIntake ? formatDate(this.selected_gbv_case.gbvIntake.case_date, 'yyyy-MM-dd', 'en') : null
+      case_date: this.selected_gbv_case.gbvIntake ? formatDate(this.selected_gbv_case.gbvIntake.case_date, 'yyyy-MM-dd', 'en', 'Asia/Singapore') : null
     });
 
     this.has_consent = this.intakeForm.value.consent_flag ? true : false;

@@ -7,6 +7,6 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent {
-  date_today = formatDate(new Date(), 'MM/dd/yyyy', 'en');
+  date_today = formatDate(new Date(), 'MM/dd/yyyy', 'en', 'Asia/Singapore');
 
 }

@@ -124,7 +124,7 @@ export class TriageComponent implements OnInit, OnChanges{
   checkOpenGbv(){
     if(this.selected_gbv_case) {
       this.patient_gbv = {...this.selected_gbv_case};
-      this.patient_gbv.gbv_date = formatDate(this.patient_gbv.gbv_date, 'yyyy-MM-dd', 'en');
+      this.patient_gbv.gbv_date = formatDate(this.patient_gbv.gbv_date, 'yyyy-MM-dd', 'en', 'Asia/Singapore');
       this.patient_gbv.referral_reason = this.patient_gbv.gbvReferral.length>0 ? this.patient_gbv.gbvReferral[0].referral_reason : null;
       // console.log(this.patient_gbv);
       if(this.selected_gbv_case.gbvComplaint) this.patient_complaints = this.checkSelection(this.selected_gbv_case.gbvComplaint, 'complaint_id');

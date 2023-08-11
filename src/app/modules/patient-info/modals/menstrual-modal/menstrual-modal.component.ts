@@ -17,7 +17,7 @@ export class MenstrualModalComponent implements OnInit, OnChanges {
   @Input() fp_method;
 
   is_saving: boolean = false;
-  max_date = formatDate(new Date, 'yyyy-MM-dd', 'en');
+  max_date = formatDate(new Date, 'yyyy-MM-dd', 'en', 'Asia/Singapore');
 
   menstrualForm: FormGroup = new FormGroup({
     patient_id: new FormControl<string| null>(null),
@@ -69,7 +69,7 @@ export class MenstrualModalComponent implements OnInit, OnChanges {
     this.menstrualForm.patchValue({...this.menstrual_history[0]})
     this.menstrualForm.patchValue({
       menopause: this.menstrual_history[0].menopause === 0 ? false: true,
-      lmp: formatDate(this.menstrual_history[0].lmp, 'yyyy-MM-dd', 'en')
+      lmp: formatDate(this.menstrual_history[0].lmp, 'yyyy-MM-dd', 'en', 'Asia/Singapore')
     })
     console.log(this.menstrualForm.value)
   }
@@ -88,7 +88,7 @@ export class MenstrualModalComponent implements OnInit, OnChanges {
       // this.menstrualForm.patchValue({...this.menstrual_history[0]});
       this.menstrualForm.patchValue({
         menopause: this.menstrual_history[0].menopause === 0 ? false: true,
-        lmp: formatDate(this.menstrual_history[0].lmp, 'yyyy-MM-dd', 'en')
+        lmp: formatDate(this.menstrual_history[0].lmp, 'yyyy-MM-dd', 'en', 'Asia/Singapore')
       })
       console.log(this.menstrualForm.value)
     } */
