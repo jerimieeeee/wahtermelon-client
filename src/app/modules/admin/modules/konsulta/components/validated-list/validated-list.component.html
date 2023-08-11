@@ -74,10 +74,10 @@
           </button>
         </div>
 
-        <div *ngIf="kon.xml_status === 'F' || kon.xml_status === 'V'">
+        <div *ngIf="kon.xml_status === 'F'">
           <button [disabled]="validating" class="text-sm text-white bg-blue-500 py-1 rounded-md px-3 mr-2 disabled:bg-gray-300" [class]="kon.xml_status === 'F' ? 'w-44' : 'w-28'" (click)="validate(kon)">
             <fa-icon [icon]="validating ? faSpinner : faCircleCheck" [spin]="validating" class="mr-2"></fa-icon>
-            {{ validating ? 'loading' : kon.xml_status === 'F' ? 'revalidate' : 'validate' }}
+            {{ validating ? 'loading' : 'revalidate' }}
           </button>
         </div>
 
