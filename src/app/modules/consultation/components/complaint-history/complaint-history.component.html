@@ -29,7 +29,7 @@
               [(ngModel)]="selectedComplaint">
 
               <ng-template ng-label-tmp let-item="item" let-clear="clear">
-                <span class="px-2 py-1 rounded-md text-sm" [ngClass]="{'bg-orange-500 text-white' : item.gbv_library_status, 'bg-blue-200' : !item.gbv_library_status}">
+                <span class="px-2 py-1 rounded-md text-sm">
                   <span>
                     <fa-icon [icon]="faXmark" class="text-xs mr-1 hover:text-slate-100 hover:cursor-pointer" (click)="clear(item)"></fa-icon>
                   </span>
@@ -39,7 +39,7 @@
               <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
                 <div class="grid grid-flow-col auto-cols-max">
                   <div>
-                    <h5 [ngClass]="{'text-orange-500': item.gbv_library_status, 'font-semibold' : item.konsulta_library_status}" [ngOptionHighlight]="search">{{ item.complaint_desc }}</h5>
+                    <h5 [ngOptionHighlight]="search">{{ item.complaint_desc }}</h5>
                   </div>
                 </div>
               </ng-template>
@@ -55,7 +55,7 @@
           </div>
         </div> -->
 
-        <div class="border border-orange-300 bg-orange-100 rounded-md grid grid-cols-1 m-5 p-5 text-sm" *ngIf="show_gbv_form">
+        <!-- <div class="border border-orange-300 bg-orange-100 rounded-md grid grid-cols-1 m-5 p-5 text-sm" *ngIf="show_gbv_form">
           <span class="text-orange-500 font-semibold">
             Possible GBV Client
           </span>
@@ -73,7 +73,7 @@
               Refer
             </button>
           </span>
-        </div>
+        </div> -->
 
         <div class="grid grid-cols-1 px-4 pb-4">
           <label for="complaint_notes" class="font-semibold pl-1">Complaint notes</label>

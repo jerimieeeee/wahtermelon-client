@@ -28,12 +28,12 @@ export class ValidatedListComponent {
 
     let params = {
       tranche: [this.filter_tranche],
-      // revalidate: 1,
+      revalidate: 1,
       transmittal_number: [kon.transmittal_number],
       save: 1
     }
 
-    if(kon.xml_status === 'F') params['revalidate'] = true;
+    // if(kon.xml_status === 'F') params['revalidate'] = true;
 
     this.http.get('konsulta/validate-report', {params}).subscribe({
       next: (data: any) => {

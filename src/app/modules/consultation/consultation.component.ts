@@ -109,14 +109,14 @@ export class ConsultationComponent implements OnInit {
     let params = {
       id: this.consult_id,
       pt_group: 'cn',
+      disable_filter: 1
     }
 
     this.http.get('consultation/records', {params}).subscribe({
       next: (data: any) => {
-        // console.log(data)
+        console.log(data)
         this.consult_details = data.data[0];
         this.allowed_to_edit = this.http.getUserFacility() === this.consult_details.facility.code ? true : false;
-        // console.log(this.http.getUserFacility())
         // console.log(this.consult_details.facility.code)
         if(this.consult_details.consult_notes.complaint || this.consult_details.consult_notes.complaints.length > 0  || this.consult_details.consult_notes.history) {
           this.have_complaint = true;

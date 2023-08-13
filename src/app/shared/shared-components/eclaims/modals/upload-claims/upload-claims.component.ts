@@ -184,22 +184,31 @@ export class UploadClaimsComponent implements OnInit {
 
     const formData: FormData = new FormData();
 
-    formData.append('doc', this.file_to_upload);
-    formData.append('doc_type_code', this.doc_type);
-    formData.append('pHospitalTransmittalNo', this.selected_pHospitalTransmittalNo);
-    formData.append('program_desc', this.program_name);
-    formData.append('patient_id', this.patient.id);
+    if(this.file_to_upload.size > (2*1024*1024)) {
+      this.is_uploading = false;
+      this.toastr.error('File size exceeds the allowed limit 2MB', 'File Upload', {
+        closeButton: true,
+        positionClass: 'toast-top-center',
+        disableTimeOut: true
+      });
+    } else {
+      formData.append('doc', this.file_to_upload);
+      formData.append('doc_type_code', this.doc_type);
+      formData.append('pHospitalTransmittalNo', this.selected_pHospitalTransmittalNo);
+      formData.append('program_desc', this.program_name);
+      formData.append('patient_id', this.patient.id);
 
-    this.http.post('eclaims/eclaims-doc', formData).subscribe({
-      next: (data:any) => {
-        console.log(data)
-        this.loadDocs();
-        this.resetForm();
-        this.is_uploading = false;
-        this.toastr.success('Successfully uploaded.', 'EClaims Docs');
-      },
-      error: err => console.log(err)
-    })
+      this.http.post('eclaims/eclaims-doc', formData).subscribe({
+        next: (data:any) => {
+          console.log(data)
+          this.loadDocs();
+          this.resetForm();
+          this.is_uploading = false;
+          this.toastr.success('Successfully uploaded.', 'EClaims Docs');
+        },
+        error: err => console.log(err)
+      })
+    }
   }
 
   resetForm(){
