@@ -120,7 +120,7 @@ export class ConsultationComponent implements OnInit {
         // console.log(this.consult_details.facility.code)
         if(this.consult_details.consult_notes.complaint || this.consult_details.consult_notes.complaints.length > 0  || this.consult_details.consult_notes.history) {
           this.have_complaint = true;
-          this.loadUsers();
+
 
           if(this.consult_details.physician) {
             this.referred_to = this.consult_details.physician;
@@ -185,6 +185,7 @@ export class ConsultationComponent implements OnInit {
     this.patient_id = this.route.snapshot.paramMap.get('id');
     // console.log(this.consult_id)
     this.modules = 1;
+    this.loadUsers();
     this.loadConsult();
     this.navigationEnd$.subscribe();
     // this.loadUsers()

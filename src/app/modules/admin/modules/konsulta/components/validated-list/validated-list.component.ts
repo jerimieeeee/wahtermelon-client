@@ -15,6 +15,7 @@ export class ValidatedListComponent {
   @Input() konsulta_list;
   @Input() filter_tranche;
   @Input() filter_status;
+  @Input() filter_year;
 
   faSpinner = faSpinner;
   faCircleCheck = faCircleCheck;
@@ -30,7 +31,8 @@ export class ValidatedListComponent {
       tranche: [this.filter_tranche],
       revalidate: 1,
       transmittal_number: [kon.transmittal_number],
-      save: 1
+      save: 1,
+      effectivity_year: this.filter_year
     }
 
     // if(kon.xml_status === 'F') params['revalidate'] = true;
