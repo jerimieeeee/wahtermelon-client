@@ -124,8 +124,8 @@ export class VitalsModalComponent implements OnInit {
       vitals_waist_in: [null],
       vitals_height_ft: [null, Validators.max(8)],
       vitals_height_in: [null, Validators.max(11)],
-      vitals_date_temp: [formatDate(date,'yyyy-MM-dd','en', 'Asia/Singapore'), Validators.required],
-      vitals_time_temp: [formatDate(date,'HH:mm:ss','en', 'Asia/Singapore'), Validators.required],
+      vitals_date_temp: [formatDate(date,'yyyy-MM-dd','en', 'Asia/Manila'), Validators.required],
+      vitals_time_temp: [formatDate(date,'HH:mm:ss','en', 'Asia/Manila'), Validators.required],
       patient_right_vision_acuity: [null, Validators.max(20)],
       patient_left_vision_acuity: [null, Validators.max(20)],
     });
@@ -133,8 +133,8 @@ export class VitalsModalComponent implements OnInit {
     if(this.vitals_to_edit){
       console.log(this.vitals_to_edit)
       this.vitalsForm.patchValue({...this.vitals_to_edit});
-      this.vitalsForm.patchValue({vitals_date_temp: formatDate(this.vitalsForm.value.vitals_date,'yyyy-MM-dd','en', 'Asia/Singapore')});
-      this.vitalsForm.patchValue({vitals_time_temp: formatDate(this.vitalsForm.value.vitals_date,'HH:mm:ss','en', 'Asia/Singapore')});
+      this.vitalsForm.patchValue({vitals_date_temp: formatDate(this.vitalsForm.value.vitals_date,'yyyy-MM-dd','en', 'Asia/Manila')});
+      this.vitalsForm.patchValue({vitals_time_temp: formatDate(this.vitalsForm.value.vitals_date,'HH:mm:ss','en', 'Asia/Manila')});
 
       console.log(this.vitalsForm);
       this.cmChange();

@@ -29,7 +29,7 @@
           {{ lab.laboratory.desc }}
         </span>
         <span class="block text-xs" *ngIf="!lab.result || (lab.result.lab_status_code === 'N')">
-          {{ lab.request_date | date: 'MM/dd/yyyy'  }}
+          {{ lab.request_date | date: 'MM/dd/yyyy':'Asia/Manila'  }}
         </span>
       </div>
 

@@ -125,7 +125,7 @@ export class BreastfeedingComponent implements OnInit {
   }
 
   ebf_test(){
-    this.ebf_test_date = moment(this.patient_details.birthdate).add(5, 'M').add(29, 'd').format('MM/DD/yyyy')
+    this.ebf_test_date = moment(this.patient_details.birthdate).add(5, 'M').add(29, 'd').format('MM/dd/yyyy')
    }
 
   submit() {
@@ -344,16 +344,16 @@ export class BreastfeedingComponent implements OnInit {
   }
 
   get getCompleCondition(){
-    if(this.ccdev[0].selected !== 'null' && this.ccdev[1].selected !== 'null' && this.ccdev[2].selected !== 'null' && 
+    if(this.ccdev[0].selected !== 'null' && this.ccdev[1].selected !== 'null' && this.ccdev[2].selected !== 'null' &&
       this.ccdev[3].selected !== 'null' &&
-      this.ccdev[0].selected !== '' && this.ccdev[1].selected !== '' && this.ccdev[2].selected !== '' && 
+      this.ccdev[0].selected !== '' && this.ccdev[1].selected !== '' && this.ccdev[2].selected !== '' &&
       this.ccdev[3].selected !== ''){
       return true
     }
   }
 
   get editCondition(){
-    if(this.ccdev[0].selected == 'null' && this.ccdev[1].selected == 'null' && this.ccdev[2].selected == 'null' && 
+    if(this.ccdev[0].selected == 'null' && this.ccdev[1].selected == 'null' && this.ccdev[2].selected == 'null' &&
     this.ccdev[3].selected == 'null'){
       return true
     }
@@ -420,7 +420,7 @@ export class BreastfeedingComponent implements OnInit {
             this.ccdev[3].selected = 'null'
             // this.ccdev[4].selected = 'null'
             // this.ccdev[5].selected = 'null'
-         
+
           // this.getSelected()
         }
       }
@@ -438,12 +438,12 @@ export class BreastfeedingComponent implements OnInit {
 
   ngOnInit(){
     this.ccdev = [
-    {"id" : "bfed_month1", "name" : "Month 1 and 15 Days", "date" : moment(this.patient_details.birthdate).add(1, 'M').add(15, 'd').format('MM/DD/yyyy'), selected: '', isDefault: 'N/A'},
-    {"id" : "bfed_month2", "name" : "Month 2 and 15 Days", "date" : moment(this.patient_details.birthdate).add(2, 'M').add(15, 'd').format('MM/DD/yyyy'), selected: '', isDefault: 'N/A'},
-    {"id" : "bfed_month3", "name" : "Month 3 and 15 Days", "date" : moment(this.patient_details.birthdate).add(3, 'M').add(15, 'd').format('MM/DD/yyyy'), selected: '', isDefault: 'N/A'},
-    // {"id" : "bfed_month4", "name" : "Month 4", "date" : moment(this.patient_details.birthdate).add(4, 'M').format('MM/DD/yyyy'), selected: '', isDefault: 'N/A'},
-    // {"id" : "bfed_month5", "name" : "Month 5", "date" : moment(this.patient_details.birthdate).add(5, 'M').format('MM/DD/yyyy'), selected: '', isDefault: 'N/A'},
-    {"id" : "bfed_month6", "name" : "Month 5 and 29 Days", "date" : moment(this.patient_details.birthdate).add(5, 'M').add(29, 'd').format('MM/DD/yyyy'), selected: '', isDefault: 'N/A'},
+    {"id" : "bfed_month1", "name" : "Month 1 and 15 Days", "date" : moment(this.patient_details.birthdate).add(1, 'M').add(15, 'd').format('MM/dd/yyyy'), selected: '', isDefault: 'N/A'},
+    {"id" : "bfed_month2", "name" : "Month 2 and 15 Days", "date" : moment(this.patient_details.birthdate).add(2, 'M').add(15, 'd').format('MM/dd/yyyy'), selected: '', isDefault: 'N/A'},
+    {"id" : "bfed_month3", "name" : "Month 3 and 15 Days", "date" : moment(this.patient_details.birthdate).add(3, 'M').add(15, 'd').format('MM/dd/yyyy'), selected: '', isDefault: 'N/A'},
+    // {"id" : "bfed_month4", "name" : "Month 4", "date" : moment(this.patient_details.birthdate).add(4, 'M').format('MM/dd/yyyy'), selected: '', isDefault: 'N/A'},
+    // {"id" : "bfed_month5", "name" : "Month 5", "date" : moment(this.patient_details.birthdate).add(5, 'M').format('MM/dd/yyyy'), selected: '', isDefault: 'N/A'},
+    {"id" : "bfed_month6", "name" : "Month 5 and 29 Days", "date" : moment(this.patient_details.birthdate).add(5, 'M').add(29, 'd').format('MM/dd/yyyy'), selected: '', isDefault: 'N/A'},
   ];
 
     // this.fetchSelectedItems()

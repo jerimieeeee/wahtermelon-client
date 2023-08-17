@@ -340,7 +340,7 @@
                         <tr *ngFor="let post of postpartum_data; let i = index;" class="hover:bg-blue-100 group">
                             <th class="font-normal">{{post.visit_sequence}}</th>
                             <th class="font-normal">{{post.postpartum_week}}</th>
-                            <th class="font-normal">{{post.postpartum_date | date: 'MM/dd/yyyy'}}</th>
+                            <th class="font-normal">{{post.postpartum_date | date: 'MM/dd/yyyy':'Asia/Manila'}}</th>
                             <th class="font-normal">{{post.patient_height}}</th>
                             <th class="font-normal">{{post.patient_weight}}</th>
                             <th class="font-normal">{{post.bp_systolic}}/{{post.bp_diastolic}}</th>

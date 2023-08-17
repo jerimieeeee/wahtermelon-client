@@ -36,21 +36,21 @@
           </td>
           <td class="py-4 px-6">
             <span class="grid grid-cols-1" *ngIf="pre_exposure.day0_date">
-              <span>{{ pre_exposure.day0_date ? (pre_exposure.day0_date | date: 'MM/dd/yyyy') : '-' }}</span>
+              <span>{{ pre_exposure.day0_date ? (pre_exposure.day0_date | date: 'MM/dd/yyyy':'Asia/Manila') : '-' }}</span>
               <span>{{ pre_exposure.day0_vaccine ? pre_exposure.day0_vaccine.desc : '-' }}</span>
               <span>{{ pre_exposure.day0_vaccine_route ? pre_exposure.day0_vaccine_route.desc : '-' }}</span>
             </span>
           </td>
           <td class="py-4 px-6">
             <span class="grid grid-cols-1" *ngIf="pre_exposure.day7_date">
-              <span>{{ pre_exposure.day7_date ? (pre_exposure.day7_date | date: 'MM/dd/yyyy') : '-' }}</span>
+              <span>{{ pre_exposure.day7_date ? (pre_exposure.day7_date | date: 'MM/dd/yyyy':'Asia/Manila') : '-' }}</span>
               <span>{{ pre_exposure.day7_vaccine ? pre_exposure.day7_vaccine.desc : '-' }}</span>
               <span>{{ pre_exposure.day7_vaccine_route ? pre_exposure.day7_vaccine_route.desc : '-' }}</span>
             </span>
           </td>
           <td class="py-4 px-6">
             <span class="grid grid-cols-1" *ngIf="pre_exposure.day21_date">
-              <span>{{ pre_exposure.day21_date ? (pre_exposure.day21_date | date: 'MM/dd/yyyy') : '-' }}</span>
+              <span>{{ pre_exposure.day21_date ? (pre_exposure.day21_date | date: 'MM/dd/yyyy':'Asia/Manila') : '-' }}</span>
               <span>{{ pre_exposure.day21_vaccine ? pre_exposure.day21_vaccine.desc : '-' }}</span>
               <span>{{ pre_exposure.day21_vaccine_route ? pre_exposure.day21_vaccine_route.desc : '-' }}</span>
             </span>

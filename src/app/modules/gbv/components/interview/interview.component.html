@@ -592,7 +592,7 @@
                   <!-- {{ interview.perpetrator.perpetrator_name ?? '-' }} -->
                 </td>
                 <td class="text-center align-top pt-3">
-                  {{ interview.interview_datetime | date: 'MM/dd/yyyy'}} <br />
+                  {{ interview.interview_datetime | date: 'MM/dd/yyyy':'Asia/Manila'}} <br />
                   {{ interview.interview_datetime | date: 'hh:mm a'}}
                 </td>
                 <td class="align-top p-3">
@@ -651,7 +651,7 @@
                   {{ interview.perpetrator.perpetrator_name ?? '-'}}
                 </td>
                 <td class="text-center align-top pt-3">
-                  {{ interview.interview_datetime | date: 'MM/dd/yyyy'}}<br />
+                  {{ interview.interview_datetime | date: 'MM/dd/yyyy':'Asia/Manila'}}<br />
                   {{ interview.interview_datetime | date: 'hh:mm a'}}
                 </td>
                 <td class="align-top p-3">

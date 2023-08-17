@@ -58,23 +58,23 @@
                 {{ consult_visit.physician }} <br /><br />
 
                 <span class="font-semibold italic">Scheduled date: </span>
-                {{ consult_visit.scheduled_date | date: 'MM/dd/yyyy'}} <br />
+                {{ consult_visit.scheduled_date | date: 'MM/dd/yyyy':'Asia/Manila'}} <br />
 
                 <span class="font-semibold italic">Actual date: </span>
-                {{ consult_visit.actual_date | date: 'MM/dd/yyyy'}} <br />
+                {{ consult_visit.actual_date | date: 'MM/dd/yyyy':'Asia/Manila'}} <br />
               </td>
               <td class="text-left align-top pt-3">
                 <span class="font-semibold italic">Lab test </span> <br />
                 {{ consult_visit.lab_test ?? '-' }} <br /><br />
 
                 <span class="font-semibold italic">Date in: </span>
-                {{ consult_visit.date_in | date: 'MM/dd/yyyy' ?? '-' }} <br />
+                {{ consult_visit.date_in | date: 'MM/dd/yyyy':'Asia/Manila' ?? '-' }} <br />
 
                 <span class="font-semibold italic">Date due: </span>
-                {{ consult_visit.date_due | date: 'MM/dd/yyyy' ?? '-' }} <br />
+                {{ consult_visit.date_due | date: 'MM/dd/yyyy':'Asia/Manila' ?? '-' }} <br />
 
                 <span class="font-semibold italic">Date out: </span>
-                {{ consult_visit.date_out | date: 'MM/dd/yyyy' ?? '-' }} <br />
+                {{ consult_visit.date_out | date: 'MM/dd/yyyy':'Asia/Manila' ?? '-' }} <br />
               </td>
             </tr>
           </tbody>
@@ -125,7 +125,7 @@
                 <fa-icon [icon]="faEdit" (click)="toggleModal('home_visit', social_work)" class="hover:cursor-pointer text-orange-500"></fa-icon>
               </td>
               <td class="text-center align-top pt-3">
-                {{ social_work.visit_date | date: 'MM/dd/yyyy'}}
+                {{ social_work.visit_date | date: 'MM/dd/yyyy':'Asia/Manila'}}
               </td>
               <td class="align-top pt-3">
                 {{ social_work.social_worker }}
@@ -203,13 +203,13 @@
               </td> -->
               <td class="align-top pt-3 px-3">
                 <div *ngIf="placement.location_id===2 || placement.location_id===3 || placement.location_id===5">
-                  <span class="font-semibold">Date in:</span> {{ placement.scheduled_date | date:'MM/dd/yyyy' }} <br />
-                  <span class="font-semibold">Date out:</span> {{ placement.actual_date | date:'MM/dd/yyyy' }} <br />
+                  <span class="font-semibold">Date in:</span> {{ placement.scheduled_date | date:'MM/dd/yyyy':'Asia/Manila' }} <br />
+                  <span class="font-semibold">Date out:</span> {{ placement.actual_date | date:'MM/dd/yyyy':'Asia/Manila' }} <br />
                 </div>
 
                 <div *ngIf="placement.location_id===4">
-                  <span class="font-semibold">Date in:</span> {{ placement.hospital_date_in | date:'MM/dd/yyyy' }} <br />
-                  <span class="font-semibold">Date out:</span> {{ placement.hospital_date_out | date:'MM/dd/yyyy' }} <br />
+                  <span class="font-semibold">Date in:</span> {{ placement.hospital_date_in | date:'MM/dd/yyyy':'Asia/Manila' }} <br />
+                  <span class="font-semibold">Date out:</span> {{ placement.hospital_date_out | date:'MM/dd/yyyy':'Asia/Manila' }} <br />
                 </div>
               </td>
             </tr>
@@ -268,8 +268,8 @@
                 {{ psych.md_name }}
               </td>
               <td class="text-center align-top pt-3">
-                {{ psych.scheduled_date | date: 'MM/dd/yyyy' }} <br />
-                {{ psych.actual_date | date: 'MM/dd/yyyy' }}
+                {{ psych.scheduled_date | date: 'MM/dd/yyyy':'Asia/Manila' }} <br />
+                {{ psych.actual_date | date: 'MM/dd/yyyy':'Asia/Manila' }}
               </td>
             </tr>
           </tbody>
@@ -340,7 +340,7 @@
 
               </td>
               <td class="align-top pt-3">
-                {{ selected_gbv_case?.gbvIntake.intervention_legal.cpumd_testimony_date | date: 'MM/dd/yyyy' }}
+                {{ selected_gbv_case?.gbvIntake.intervention_legal.cpumd_testimony_date | date: 'MM/dd/yyyy':'Asia/Manila' }}
               </td>
               <td class="text-center align-top pt-3">
                 <span class="italic font-semibold text-sm">Criminal Case Number: </span> <br />
@@ -405,10 +405,10 @@
                 {{ intervention_legal_visit.person_in_charge }}
               </td>
               <td class="text-center align-top pt-3">
-                {{ intervention_legal_visit.scheduled_date | date: 'MM/dd/yyyy' }}
+                {{ intervention_legal_visit.scheduled_date | date: 'MM/dd/yyyy':'Asia/Manila' }}
               </td>
               <td class="text-center align-top pt-3">
-                {{ intervention_legal_visit.actual_date | date: 'MM/dd/yyyy' }}
+                {{ intervention_legal_visit.actual_date | date: 'MM/dd/yyyy':'Asia/Manila' }}
               </td>
             </tr>
           </tbody>
@@ -456,7 +456,7 @@
                 <fa-icon [icon]="faEdit" (click)="toggleModal('case_conference', conference)" class="hover:cursor-pointer text-orange-500"></fa-icon>
               </td>
               <td class="text-center align-top pt-3">
-                {{ conference.conference_date | date: 'MM/dd/yyyy'}}
+                {{ conference.conference_date | date: 'MM/dd/yyyy':'Asia/Manila'}}
               </td>
               <td class="text-left align-top pt-3">
                 <div class="mb-5">

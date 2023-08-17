@@ -35,7 +35,7 @@ export class LabFormComponent implements OnChanges {
   request_status_code: boolean;
 
   lab_form: any = {};
-  max_date = formatDate(new Date, 'yyyy-MM-dd', 'en', 'Asia/Singapore');
+  max_date = formatDate(new Date, 'yyyy-MM-dd', 'en', 'Asia/Manila');
 
   spl_val = ['observation_code', 'findings_code', 'data_collection_code', 'blood_code', 'color_code', 'consistency_code'];
 

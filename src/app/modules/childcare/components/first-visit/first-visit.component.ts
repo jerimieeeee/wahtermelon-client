@@ -103,8 +103,8 @@ export class FirstVisitComponent implements OnInit, OnChanges {
 
   onSubmit(){
     this.visitForm.patchValue({
-      admission_date: formatDate(this.visitForm.value.admission_date, 'Y-MM-dd HH:mm:ss' , 'en', 'Asia/Singapore'),
-      discharge_date: formatDate(this.visitForm.value.discharge_date, 'Y-MM-dd HH:mm:ss' , 'en', 'Asia/Singapore')
+      admission_date: formatDate(this.visitForm.value.admission_date, 'Y-MM-dd HH:mm:ss' , 'en', 'Asia/Manila'),
+      discharge_date: formatDate(this.visitForm.value.discharge_date, 'Y-MM-dd HH:mm:ss' , 'en', 'Asia/Manila')
     });
 
     // this.showModal = true;

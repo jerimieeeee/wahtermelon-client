@@ -43,7 +43,7 @@
               <span class="col-span-2">Requested Labs</span>
               <div class="col-span-1 mb-2 flex justify-between" *ngFor="let req of lab_req_list">
                 <span class="w-1/2">{{ req.laboratory.desc }} </span>
-                <span class="w-1/2 text-right mr-5">{{ req.request_date | date: 'MM/dd/yyyy' }} </span>
+                <span class="w-1/2 text-right mr-5">{{ req.request_date | date: 'MM/dd/yyyy':'Asia/Manila' }} </span>
               </div>
             </div>
             <div class="col-span-2 flex flex-wrap pt-5 pl-5">

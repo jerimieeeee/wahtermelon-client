@@ -48,7 +48,7 @@
                 {{ account.last_name }}, {{ account.first_name }} {{ account.middle_name === 'NA' ? '' : account.middle_name }} {{ account.suffix_name === 'NA' ? '' : account.suffix_name}}
               </th>
               <td class="py-4 px-6">
-                {{ account.birtdate | date: 'MM/dd/yyyy' }}
+                {{ account.birtdate | date: 'MM/dd/yyyy':'Asia/Manila' }}
               </td>
               <td class="py-4 px-6">
                 {{ account.gender }}

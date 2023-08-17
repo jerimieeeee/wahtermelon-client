@@ -17,7 +17,7 @@ export class PreghistModalComponent implements OnInit {
   @Input() delivery_method;
 
   is_saving: boolean = false;
-  max_date = formatDate(new Date, 'yyyy-MM-dd', 'en', 'Asia/Singapore');
+  max_date = formatDate(new Date, 'yyyy-MM-dd', 'en', 'Asia/Manila');
 
   pregnancyForm: FormGroup = new FormGroup({
     patient_id: new FormControl<string| null>(null),
@@ -92,7 +92,7 @@ export class PreghistModalComponent implements OnInit {
       // this.pregnancyForm.patchValue({...this.pregnancy_history[0]});
       this.pregnancyForm.patchValue({
         menopause: this.pregnancy_history[0].menopause === 0 ? false: true,
-        lmp: formatDate(this.pregnancy_history[0].lmp, 'yyyy-MM-dd', 'en', 'Asia/Singapore')
+        lmp: formatDate(this.pregnancy_history[0].lmp, 'yyyy-MM-dd', 'en', 'Asia/Manila')
       })
       console.log(this.pregnancyForm.value)
     } */

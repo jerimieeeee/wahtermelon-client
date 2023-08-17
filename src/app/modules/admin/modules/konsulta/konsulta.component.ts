@@ -20,7 +20,7 @@ export class KonsultaComponent implements OnInit {
   faFilter = faFilter;
   faSave = faSave;
 
-  current_year = formatDate(new Date, 'yyyy', 'en', 'Asia/Singapore')
+  current_year = formatDate(new Date, 'yyyy', 'en', 'Asia/Manila')
   years: any = [];
 
   per_page: number = 10;

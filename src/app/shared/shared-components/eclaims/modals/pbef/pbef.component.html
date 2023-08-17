@@ -42,13 +42,13 @@
               <span class="absolute top-[87.9mm]">{{ pbef_result?.MEMBER.PIN }}</span>
               <span class="absolute top-[91.8mm]">{{ pbef_result?.MEMBER.LASTNAME }}, {{ pbef_result?.MEMBER.FIRSTNAME }} {{ pbef_result?.MEMBER.MIDDLENAME }} {{ pbef_result?.MEMBER.SUFFIX }}</span>
               <span class="absolute top-[95.7mm]">{{ patient_philhealth.membership_type_id === 'DD' ? patient_philhealth.member_gender : patient.gender }}</span>
-              <span class="absolute top-[99.7mm]">{{ pbef_result?.MEMBER.BIRTHDATE | date:'MM/dd/yyyy' }}</span>
+              <span class="absolute top-[99.7mm]">{{ pbef_result?.MEMBER.BIRTHDATE | date:'MM/dd/yyyy':'Asia/Manila' }}</span>
               <span class="absolute top-[103.6mm]">{{ pbef_result?.MEMBER.MEMBER_CATEGORY_DESC }}</span>
 
               <span class="absolute top-[120.1mm]">{{ pbef_result?.PATIENT.LASTNAME }}, {{ pbef_result?.PATIENT.FIRSTNAME }} {{ pbef_result?.PATIENT.MIDDLENAME }} {{ pbef_result?.PATIENT.SUFFIX }}</span>
               <span class="absolute top-[123.8mm]">{{ pbef_result?.CONFINMENT.ADMITTED }}</span>
               <span class="absolute top-[127.8mm]">{{ patient.gender }}</span>
-              <span class="absolute top-[131.8mm]">{{ pbef_result?.PATIENT.BIRTHDATE | date:'MM/dd/yyyy' }}</span>
+              <span class="absolute top-[131.8mm]">{{ pbef_result?.PATIENT.BIRTHDATE | date:'MM/dd/yyyy':'Asia/Manila' }}</span>
 
               <span class="absolute top-[144.3mm] left-[105mm]">{{  pbef_result?.ISOK }}</span>
             </div>

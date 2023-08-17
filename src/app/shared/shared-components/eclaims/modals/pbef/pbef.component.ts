@@ -47,7 +47,7 @@ export class PbefComponent implements OnInit {
   }
 
   exportP() {
-    let file_name = 'PBEF_'+this.patient.last_name.toUpperCase()+'_'+this.patient.first_name.toUpperCase()+'_'+formatDate(new Date(), 'yyyyMMdd', 'en', 'Asia/Singapore');
+    let file_name = 'PBEF_'+this.patient.last_name.toUpperCase()+'_'+this.patient.first_name.toUpperCase()+'_'+formatDate(new Date(), 'yyyyMMdd', 'en', 'Asia/Manila');
     this.pdf_exported = true;
     this.exportAsService.save(this.exportAsPdf, file_name).subscribe(() => {
       this.pdf_exported = false;
@@ -116,11 +116,11 @@ export class PbefComponent implements OnInit {
   }
 
   getPbef(admission_date, discharge_date){
-    let admit_date = formatDate(admission_date, 'MM-dd-yyyy', 'en', 'Asia/Singapore');
-    let disch_date = formatDate(discharge_date, 'MM-dd-yyyy', 'en', 'Asia/Singapore');
+    let admit_date = formatDate(admission_date, 'MM-dd-yyyy', 'en', 'Asia/Manila');
+    let disch_date = formatDate(discharge_date, 'MM-dd-yyyy', 'en', 'Asia/Manila');
 
     this.show_form = false;
-    // let test_date = formatDate(new Date(), 'MM-dd-yyyy', 'en', 'Asia/Singapore');
+    // let test_date = formatDate(new Date(), 'MM-dd-yyyy', 'en', 'Asia/Manila');
     let params = {
       program_code: this.program_name,
       member_pin: this.patient_philhealth.philhealth_id,
@@ -128,7 +128,7 @@ export class PbefComponent implements OnInit {
       member_first_name: this.patient_philhealth.membership_type_id === 'DD' ? this.patient_philhealth.member_first_name.toUpperCase() : this.patient.first_name.toUpperCase(),
       member_middle_name: this.patient_philhealth.membership_type_id === 'DD' ? this.patient_philhealth.member_middle_name.toUpperCase() : this.patient.middle_name.toUpperCase(),
       member_suffix_name: this.patient_philhealth.membership_type_id === 'DD' ? (this.patient_philhealth.member_suffix_name === 'NA' ? '' : this.patient_philhealth.member_suffix_name.toUpperCase()) : (this.patient.suffix_name === 'NA' ? '' : this.patient.suffix_name.toUpperCase()),
-      member_birthdate: formatDate(this.patient_philhealth.membership_type_id === 'DD' ? this.patient_philhealth.member_birthdate : this.patient.birthdate, 'MM-dd-yyyy', 'en', 'Asia/Singapore'),
+      member_birthdate: formatDate(this.patient_philhealth.membership_type_id === 'DD' ? this.patient_philhealth.member_birthdate : this.patient.birthdate, 'MM-dd-yyyy', 'en', 'Asia/Manila'),
       patient_is: this.patient_philhealth.membership_type_id === 'DD' ? this.patient_philhealth.member_relation_id : 'M',
       admission_date: admit_date,
       discharge_date: disch_date,
@@ -136,7 +136,7 @@ export class PbefComponent implements OnInit {
       patient_first_name: this.patient.first_name.toUpperCase(),
       patient_middle_name: this.patient.middle_name.toUpperCase(),
       patient_suffix_name: this.patient.suffix_name === 'NA' ? '' : this.patient.suffix_name.toUpperCase(),
-      patient_birthdate: formatDate(this.patient.birthdate, 'MM-dd-yyyy', 'en', 'Asia/Singapore'),
+      patient_birthdate: formatDate(this.patient.birthdate, 'MM-dd-yyyy', 'en', 'Asia/Manila'),
       patient_gender: this.patient.gender
     }
 

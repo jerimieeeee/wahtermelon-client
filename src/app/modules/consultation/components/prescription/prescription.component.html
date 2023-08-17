@@ -48,7 +48,7 @@
               Instruction Qty: {{ prescription.instruction_quantity }}
             </td>
             <td scope="row" class="py-4 px-3 font-medium text-gray-900">
-              {{ prescription.prescription_date | date : 'MM/dd/yyyy'}}
+              {{ prescription.prescription_date | date : 'MM/dd/yyyy':'Asia/Manila'}}
             </td>
             <td scope="row" class="py-4 px-3 font-medium text-gray-900">
               {{ prescription.quantity }}

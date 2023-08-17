@@ -27,7 +27,7 @@
         <span class="font-medium text-xs flex-auto">
           <span class="font-semibold">IMMUNIZATION STATUS: </span> <br /><span class="font-bold text-l">{{ immunization_status?.immunization_status ?? '-' }}</span>
         </span>
-        <span class="italic text-xs flex-auto text-right"><br />{{ immunization_status?.immunization_status ? (immunization_status?.vaccine_date | date: 'MM/dd/yyyy') : '-' }}</span>
+        <span class="italic text-xs flex-auto text-right"><br />{{ immunization_status?.immunization_status ? (immunization_status?.vaccine_date | date: 'MM/dd/yyyy':'Asia/Manila') : '-' }}</span>
       </div>
       <div class="flex pl-3 justify-between items-center mb-3 border-b border-b-gray-100" *ngFor="let vaccine of vaccine_list">
 
@@ -36,7 +36,7 @@
           <span class="font-bold">{{ covid_array.includes(vaccine.vaccine_id) ? vaccine.vaccines.vaccine_desc : vaccine.vaccine_id }} - {{ vaccine.dose }} Dose</span> <br />({{ vaccine.status_id === 1 ? 'Done' : (vaccine.status_id === 2 ? 'Done Outside - Private' : 'Done Outside - Public') }})
         </span>
         <span class="italic text-xs flex-auto text-right">
-          {{ !vaccine.vaccine_date ? '-' : vaccine.vaccine_date | date: 'MM/dd/yyyy'}}
+          {{ !vaccine.vaccine_date ? '-' : vaccine.vaccine_date | date: 'MM/dd/yyyy':'Asia/Manila'}}
         </span>
       </div>
     </div>

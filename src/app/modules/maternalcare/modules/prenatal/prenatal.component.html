@@ -10,11 +10,11 @@
                         Important Dates
                     </h1>
                 </div>
-                <h3 class="bg-white col-span-2 rounded-md mx-2 font-semibold text-center">EDC Date<p class="font-medium">{{patient_mc_record.pre_registration.edc_date | date: 'MM/dd/yyyy'}}</p></h3>
-                <h3 class="bg-white col-span-2 rounded-md mx-2 font-semibold text-center">LMP Date<p class="font-medium">{{patient_mc_record.pre_registration.lmp_date | date: 'MM/dd/yyyy'}}</p></h3>
-                <h3 class="bg-white col-span-3 rounded-md mx-2 font-semibold text-center">End of 1st Trimester<p class="font-medium">{{patient_mc_record.pre_registration.trimester1_date | date: 'MM/dd/yyyy'}}</p></h3>
-                <h3 class="bg-white col-span-3 rounded-md mx-2 font-semibold text-center">End of 2nd Trimester<p class="font-medium">{{patient_mc_record.pre_registration.trimester2_date | date: 'MM/dd/yyyy'}}</p></h3>
-                <h3 class="bg-white col-span-3 rounded-md mx-2 font-semibold text-center">End of 3rd Trimester<p class="font-medium">{{patient_mc_record.pre_registration.trimester3_date | date: 'MM/dd/yyyy'}}</p></h3>
+                <h3 class="bg-white col-span-2 rounded-md mx-2 font-semibold text-center">EDC Date<p class="font-medium">{{patient_mc_record.pre_registration.edc_date | date: 'MM/dd/yyyy':'Asia/Manila'}}</p></h3>
+                <h3 class="bg-white col-span-2 rounded-md mx-2 font-semibold text-center">LMP Date<p class="font-medium">{{patient_mc_record.pre_registration.lmp_date | date: 'MM/dd/yyyy':'Asia/Manila'}}</p></h3>
+                <h3 class="bg-white col-span-3 rounded-md mx-2 font-semibold text-center">End of 1st Trimester<p class="font-medium">{{patient_mc_record.pre_registration.trimester1_date | date: 'MM/dd/yyyy':'Asia/Manila'}}</p></h3>
+                <h3 class="bg-white col-span-3 rounded-md mx-2 font-semibold text-center">End of 2nd Trimester<p class="font-medium">{{patient_mc_record.pre_registration.trimester2_date | date: 'MM/dd/yyyy':'Asia/Manila'}}</p></h3>
+                <h3 class="bg-white col-span-3 rounded-md mx-2 font-semibold text-center">End of 3rd Trimester<p class="font-medium">{{patient_mc_record.pre_registration.trimester3_date | date: 'MM/dd/yyyy':'Asia/Manila'}}</p></h3>
             </div>
         </div>
 
@@ -259,7 +259,7 @@
                         (keyup.escape)="clearForm($event.target.id)" id="remarks"
                         (change)="onKeyUp($event.target.value, $event.target.id)">
                     </textarea>
-                   
+
                 </div>
 
             </div>
@@ -343,7 +343,7 @@
                         </tbody>
                     </table>
                 </div>
-                
+
             </div>
         </div>
 

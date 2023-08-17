@@ -135,7 +135,7 @@ export class PatientRecordComponent implements OnInit, OnChanges {
     this.ncd_record['patient_ncd_id'] = this.consult_details.patient_ncd_id;
     this.ncd_record['consult_ncd_risk_id'] = this.consult_details.id;
     this.ncd_record['patient_id'] = this.consult_details.patient_id;
-    this.ncd_record['consultation_date'] = formatDate(this.consult_details.assessment_date, 'yyyy-MM-dd', 'en', 'Asia/Singapore');
+    this.ncd_record['consultation_date'] = formatDate(this.consult_details.assessment_date, 'yyyy-MM-dd', 'en', 'Asia/Manila');
 
     this.ncd_record['diagnosis_code'] = this.getIndexVal(this.patient_diagnosis);
     this.ncd_record['counselling_code'] = this.getIndexVal(this.patient_counseling);

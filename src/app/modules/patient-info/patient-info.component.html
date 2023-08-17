@@ -23,7 +23,7 @@
             </span>
 
             <span class="block text-xs">
-              {{ patient_info?.birthdate | date: 'MM/dd/yyyy' }} [{{ getAge() }}][{{patient_info?.gender}}]
+              {{ patient_info?.birthdate | date: 'MM/dd/yyyy':'Asia/Manila' }} [{{ getAge() }}][{{patient_info?.gender}}]
             </span>
 
             <div class="flex mb-0 justify-between">

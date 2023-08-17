@@ -64,7 +64,7 @@
                       <tbody>
                         <tr *ngFor="let vax of vaccines_given[vaccine.vaccine_id] | keyvalue ; let i = index">
                           <td>{{ vax.value.dose }} Dose </td>
-                          <td class="pl-5" >: {{ !vax.value.vaccine_date ? '-' : vax.value.vaccine_date | date : 'MM/dd/yyyy' }}</td>
+                          <td class="pl-5" >: {{ !vax.value.vaccine_date ? '-' : vax.value.vaccine_date | date : 'MM/dd/yyyy':'Asia/Manila' }}</td>
                         </tr>
                       </tbody>
                     </table>

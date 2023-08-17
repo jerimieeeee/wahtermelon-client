@@ -8,6 +8,6 @@ import { Injectable } from "@angular/core";
 
 export class dateHelper {
   dateFormat(date) {
-    return formatDate(date, 'yyyy-MM-dd', 'en', 'Asia/Singapore');
+    return formatDate(date, 'yyyy-MM-dd', 'en', 'Asia/Manila');
   }
 }

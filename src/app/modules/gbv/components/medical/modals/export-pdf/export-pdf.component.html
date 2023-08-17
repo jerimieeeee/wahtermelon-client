@@ -39,7 +39,7 @@
               </div>
 
               <div class="col-span-4 border border-gray-200">
-                <h4 class="py-2 pl-3">{{patient_details?.birthdate | date: 'MM/dd/yyyy'}}, {{ getAge() }} </h4>
+                <h4 class="py-2 pl-3">{{patient_details?.birthdate | date: 'MM/dd/yyyy':'Asia/Manila'}}, {{ getAge() }} </h4>
               </div>
 
               <div class="col-span-3 border border-gray-200">
@@ -161,7 +161,7 @@
               </div>
 
               <div class="col-span-3 border border-gray-200">
-                <h4 class="py-2 pl-3">{{selected_gbv_case.gbvIntake.medical_history?.lmp_date | date: 'MM/dd/yyyy'}}</h4>
+                <h4 class="py-2 pl-3">{{selected_gbv_case.gbvIntake.medical_history?.lmp_date | date: 'MM/dd/yyyy':'Asia/Manila'}}</h4>
               </div>
 
               <div class="col-span-2 border border-gray-200">
@@ -200,12 +200,12 @@
                 <label class="pl-3" for=""><input class="py-2 pl-3 input-checkbox mr-1" type="checkbox" disabled [checked]="selected_gbv_case.gbvIntake.medical_history?.past_hospitalizations_flag === 0"> No</label> <br>
                 <label class="pl-3" *ngIf="selected_gbv_case.gbvIntake.medical_history?.menarche_flag === 1">If yes why?: {{selected_gbv_case.gbvIntake.medical_history?.past_hospital_remarks}}</label>
               </div>
-              
+
               <div class="col-span-6 border border-gray-200 py-2">
                 <label class="py-2 px-3 font-semibold">GENERAL SURVEY </label>
                 <label class="py-2 px-3">(check all that apply)</label> <br>
                 <div class="col-span-12 grid grid-cols-3 py-2 pl-6 select-none">
-                  
+
                     <label class="pt-3"><input type="checkbox" disabled class="input-checkbox mr-1" *ngIf="selected_gbv_case.gbvIntake.medical_history" [(ngModel)]="selected_gbv_case.gbvIntake.medical_history.general_survey_normal" />
                     Normal</label>
                     <label class="pt-3"><input type="checkbox" disabled class="input-checkbox mr-1" *ngIf="selected_gbv_case.gbvIntake.medical_history" [(ngModel)]="selected_gbv_case.gbvIntake.medical_history.general_survey_abnormal" />
@@ -228,8 +228,8 @@
                     Respiratory Distress</label>
                     <label class="pt-3"><input type="checkbox" disabled class="input-checkbox mr-1" *ngIf="selected_gbv_case.gbvIntake.medical_history" [(ngModel)]="selected_gbv_case.gbvIntake.medical_history.general_survey_others" />
                     Other Abnormality</label>
-                  
-      
+
+
                   <!-- <div class="col-span-3 mt-2">
                     <label for="gbv_general_survey_remarks">Other Abnormality</label>
                     <input type="text" name="gbv_general_survey_remarks" id="gbv_general_survey_remarks" formControlName="gbv_general_survey_remarks" class="input">
@@ -238,7 +238,7 @@
               </div>
 
               <div class="col-span-6 border border-gray-200">
-                
+
                 <div class="py-7">
                 <h4 class="py-2 pl-3">Any scars that do not appear to result from physical abuse?</h4>
                 <label class="pl-3"><input class="py-2 pl-3 input-checkbox mr-1" type="checkbox" disabled *ngIf="selected_gbv_case.gbvIntake.medical_history" [checked]="selected_gbv_case.gbvIntake.medical_history.scar_physical_abuse_flag === 1"> Yes</label>
@@ -262,7 +262,7 @@
                 <div class="col-span-12 text-center font-bold py-3 text-xl border border-gray-200">
                   <h2>PHYSICAL EXAM</h2>
               </div>
-  
+
                 <div class="col-span-3 border border-gray-200">
                   <h4 class="py-2 pl-3 ">Head and Neck</h4>
                 </div>
@@ -270,7 +270,7 @@
                 <div class="col-span-9 border border-gray-200">
                   <h4 class="py-2 px-3 ">{{selected_gbv_case.gbvIntake.medical_history?.pe_head_and_neck_remarks}}</h4>
                 </div>
-  
+
                 <div class="col-span-3 border border-gray-200">
                   <h4 class="py-2 pl-3 ">Chest and Lungs</h4>
                 </div>
@@ -278,7 +278,7 @@
                 <div class="col-span-9 border border-gray-200">
                   <h4 class="py-2 px-3 ">{{selected_gbv_case.gbvIntake.medical_history?.pe_chest_and_lungs_remarks}}</h4>
                 </div>
-  
+
                 <div class="col-span-3 border border-gray-200">
                   <h4 class="py-2 pl-3 ">Breast</h4>
                 </div>
@@ -286,7 +286,7 @@
                 <div class="col-span-9 border border-gray-200">
                   <h4 class="py-2 px-3 ">{{selected_gbv_case.gbvIntake.medical_history?.pe_breast_remarks}}</h4>
                 </div>
-  
+
                 <div class="col-span-3 border border-gray-200">
                   <h4 class="py-2 pl-3 ">Abdomen</h4>
                 </div>
@@ -294,7 +294,7 @@
                 <div class="col-span-9 border border-gray-200">
                   <h4 class="py-2 px-3 ">{{selected_gbv_case.gbvIntake.medical_history?.pe_abdomen_remarks}}</h4>
                 </div>
-  
+
                 <div class="col-span-3 border border-gray-200">
                   <h4 class="py-2 pl-3 ">Back</h4>
                 </div>
@@ -302,7 +302,7 @@
                 <div class="col-span-9 border border-gray-200">
                   <h4 class="py-2 px-3 ">{{selected_gbv_case.gbvIntake.medical_history?.pe_back_remarks}}</h4>
                 </div>
-  
+
                 <div class="col-span-3 border border-gray-200">
                   <h4 class="py-2 pl-3 ">Extremities</h4>
                 </div>
@@ -310,7 +310,7 @@
                 <div class="col-span-9 border border-gray-200">
                   <h4 class="py-2 px-3 ">{{selected_gbv_case.gbvIntake.medical_history?.pe_extremities_remarks}}</h4>
                 </div>
-  
+
                 <div class="col-span-3 border border-gray-200">
                   <h4 class="py-2 pl-3 ">Anogenital</h4>
                 </div>
@@ -318,7 +318,7 @@
                 <div class="col-span-9 border border-gray-200">
                   <h4 class="py-2 px-3 ">{{selected_gbv_case.gbvIntake.medical_history?.pe_anogenital_remarks}}</h4>
                 </div>
-  
+
                 <div class="col-span-3 border border-gray-200">
                   <h4 class="py-2 pl-3 ">External Genitalia</h4>
                 </div>
@@ -326,7 +326,7 @@
                 <div class="col-span-9 border border-gray-200">
                   <h4 class="py-2 px-3 ">{{selected_gbv_case.gbvIntake.medical_history?.pe_external_genitalia_remarks}}</h4>
                 </div>
-  
+
                 <div class="col-span-3 border border-gray-200">
                   <h4 class="py-2 pl-3 ">Anus</h4>
                 </div>
@@ -334,7 +334,7 @@
                 <div class="col-span-9 border border-gray-200">
                   <h4 class="py-2 px-3 ">{{selected_gbv_case.gbvIntake.medical_history?.pe_anus_remarks}}</h4>
                 </div>
-  
+
                 <div class="col-span-3 border border-gray-200">
                   <h4 class="py-2 pl-3 ">Hymen</h4>
                 </div>
@@ -342,7 +342,7 @@
                 <div class="col-span-9 border border-gray-200">
                   <h4 class="py-2 px-3 "> {{selected_gbv_case.gbvIntake.medical_history?.pe_hymen_remarks}}</h4>
                 </div>
-  
+
                 <div class="col-span-3 border border-gray-200">
                   <h4 class="py-2 pl-3">Impression</h4>
                 </div>
@@ -350,7 +350,7 @@
                 <div class="col-span-9 border border-gray-200">
                   <h4 class="py-2 px-3 " *ngIf="conv_impression"> {{conv_impression[0]?.full_desc}}</h4>
                 </div>
-                
+
               </div>
           </tbody>
         </table>
@@ -449,18 +449,18 @@
               </div>
             </tbody>
             <div>
-              <h4 class="text-xs px-5">*This form was adopted from the Women and Children Protection Unit (WCPU) of UP-PGH through WCPU-Sta. Margarita, Samar with the initiative of Jhpiego.</h4> 
+              <h4 class="text-xs px-5">*This form was adopted from the Women and Children Protection Unit (WCPU) of UP-PGH through WCPU-Sta. Margarita, Samar with the initiative of Jhpiego.</h4>
             </div>
             <div class="flex justify-end items-end pt-20">
               <div class="justify-end">
-                <h4 class="text-sm px-5 py-5">Prepared by:</h4> 
+                <h4 class="text-sm px-5 py-5">Prepared by:</h4>
                 <h4 class="text-sm px-5 pb-5 font-semibold">{{userInfo?.first_name}} {{userInfo?.middle_name}} {{userInfo?.last_name}} </h4>
-              </div> 
+              </div>
             </div>
           </table>
 
       </table>
-      
+
     </div>
 
       <!-- Modal footer -->

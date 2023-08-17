@@ -96,7 +96,7 @@ export class CaseConferenceComponent implements OnInit {
   patchData(){
     if(this.selected_data) {
       this.patient_conference = {...this.selected_data};
-      this.patient_conference.conference_date = formatDate(this.selected_data.conference_date, 'yyyy-MM-dd', 'en', 'Asia/Singapore');
+      this.patient_conference.conference_date = formatDate(this.selected_data.conference_date, 'yyyy-MM-dd', 'en', 'Asia/Manila');
 
       if(this.selected_data.invite) this.patient_invites = this.checkSelection(this.selected_data.invite, 'invite_code');
       if(this.selected_data.concern) this.patient_concerns = this.checkSelection(this.selected_data.concern, 'concern_code');

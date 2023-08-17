@@ -76,13 +76,13 @@
               </div>
             </td>
             <td class="py-4 px-6">
-              {{ ab_history.consult_date | date: 'MM/dd/yyyy' }}
+              {{ ab_history.consult_date | date: 'MM/dd/yyyy':'Asia/Manila' }}
             </td>
             <td class="py-4 px-6">
-              {{ ab_history.exposure_date | date: 'MM/dd/yyyy' }}
+              {{ ab_history.exposure_date | date: 'MM/dd/yyyy':'Asia/Manila' }}
             </td>
             <td class="py-4 px-6">
-              {{ ab_history.date_outcome ? (ab_history.date_outcome | date: 'MM/dd/yyyy') : '-' }}
+              {{ ab_history.date_outcome ? (ab_history.date_outcome | date: 'MM/dd/yyyy':'Asia/Manila') : '-' }}
             </td>
             <td class="py-4 px-6">
               {{ ab_history.ab_treatment_outcome ? ab_history.ab_treatment_outcome.desc : '-' }}

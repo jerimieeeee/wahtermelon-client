@@ -48,7 +48,7 @@
               {{  previous_treatment.outcome.desc }}
             </td>
             <td class="py-4 px-6">
-              {{ previous_treatment.treatment_date | date:'MM/dd/yyyy' }}
+              {{ previous_treatment.treatment_date | date:'MM/dd/yyyy':'Asia/Manila' }}
             </td>
             <td class="py-4 px-6">
               <fa-icon (click)="editPreviousTreatment(previous_treatment)" [icon]="faEdit" class="mx-0 my-0 text-orange-400 hover:cursor-pointer flex-none mr-2"></fa-icon>

@@ -80,7 +80,7 @@
         <tbody *ngIf="ncd_list">
           <tr *ngFor="let ncd of ncd_list; trackBy:identify" class="bg-white border-b last:border-0">
             <td class="py-4 px-3 text-center">
-              {{ ncd.assessment_date ? (ncd.assessment_date | date: 'MM/dd/yyyy') : (ncd.consult_date | date: 'MM/dd/yyyy')}}
+              {{ ncd.assessment_date ? (ncd.assessment_date | date: 'MM/dd/yyyy':'Asia/Manila') : (ncd.consult_date | date: 'MM/dd/yyyy':'Asia/Manila')}}
             </td>
             <td scope="row" class="py-4 px-3 font-medium text-gray-900 text-center">
 

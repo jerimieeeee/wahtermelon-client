@@ -10,11 +10,11 @@
                         Important Dates
                     </h1>
                 </div>
-                <h3 class="bg-white col-span-2 rounded-md mx-2 font-semibold text-center">EDC Date<p class="font-medium">{{!patient_mc_record?'No Date':(!patient_mc_record.pre_registration?'No Date':(patient_mc_record.pre_registration.edc_date | date: 'MM/dd/yyyy'))}}</p></h3>
-                <h3 class="bg-white col-span-2 rounded-md mx-2 font-semibold text-center">LMP Date<p class="font-medium">{{!patient_mc_record?'No Date':(!patient_mc_record.pre_registration?'No Date':(patient_mc_record.pre_registration.lmp_date | date: 'MM/dd/yyyy'))}}</p></h3>
-                <h3 class="bg-white col-span-3 rounded-md mx-2 font-semibold text-center">End of 1st Trimester<p class="font-medium">{{!patient_mc_record?'No Date':(!patient_mc_record.pre_registration?'No Date':(patient_mc_record.pre_registration.trimester1_date | date: 'MM/dd/yyyy'))}}</p></h3>
-                <h3 class="bg-white col-span-3 rounded-md mx-2 font-semibold text-center">End of 2nd Trimester<p class="font-medium">{{!patient_mc_record?'No Date':(!patient_mc_record.pre_registration?'No Date':(patient_mc_record.pre_registration.trimester2_date | date: 'MM/dd/yyyy'))}}</p></h3>
-                <h3 class="bg-white col-span-3 rounded-md mx-2 font-semibold text-center">End of 3rd Trimester<p class="font-medium">{{!patient_mc_record?'No Date':(!patient_mc_record.pre_registration?'No Date':(patient_mc_record.pre_registration.trimester3_date | date: 'MM/dd/yyyy'))}}</p></h3>
+                <h3 class="bg-white col-span-2 rounded-md mx-2 font-semibold text-center">EDC Date<p class="font-medium">{{!patient_mc_record?'No Date':(!patient_mc_record.pre_registration?'No Date':(patient_mc_record.pre_registration.edc_date | date: 'MM/dd/yyyy':'Asia/Manila'))}}</p></h3>
+                <h3 class="bg-white col-span-2 rounded-md mx-2 font-semibold text-center">LMP Date<p class="font-medium">{{!patient_mc_record?'No Date':(!patient_mc_record.pre_registration?'No Date':(patient_mc_record.pre_registration.lmp_date | date: 'MM/dd/yyyy':'Asia/Manila'))}}</p></h3>
+                <h3 class="bg-white col-span-3 rounded-md mx-2 font-semibold text-center">End of 1st Trimester<p class="font-medium">{{!patient_mc_record?'No Date':(!patient_mc_record.pre_registration?'No Date':(patient_mc_record.pre_registration.trimester1_date | date: 'MM/dd/yyyy':'Asia/Manila'))}}</p></h3>
+                <h3 class="bg-white col-span-3 rounded-md mx-2 font-semibold text-center">End of 2nd Trimester<p class="font-medium">{{!patient_mc_record?'No Date':(!patient_mc_record.pre_registration?'No Date':(patient_mc_record.pre_registration.trimester2_date | date: 'MM/dd/yyyy':'Asia/Manila'))}}</p></h3>
+                <h3 class="bg-white col-span-3 rounded-md mx-2 font-semibold text-center">End of 3rd Trimester<p class="font-medium">{{!patient_mc_record?'No Date':(!patient_mc_record.pre_registration?'No Date':(patient_mc_record.pre_registration.trimester3_date | date: 'MM/dd/yyyy':'Asia/Manila'))}}</p></h3>
             </div>
         </div>
 
@@ -288,9 +288,9 @@
                                     {{reg.name}}
                                 </option>
                             </select>
-                           
+
                         </div>
-                        
+
                         <div class="transitions col-span-4  border-check relative mx-2 {{demo.name == 'Municipality' || demo.name == 'Barangay'? 'mb-2':''}}" *ngFor="let demo of demog">
                             <div class="" *ngIf="this[demo.loc]">
                                 <h3 class="capitalize">{{demo.name}}</h3>
@@ -298,14 +298,14 @@
                                     (change)="onKeyUp($event.target.value, $event.target.id)" id="{{demo.fname}}"
                                     (change)="loadDemog(demo.loc, $event.target.value , demo.includes)"
                                     class="text-ellipsis bg-white text-align-left drop_btn border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed">
-                                    <option 
+                                    <option
                                     *ngFor="let opt of this[demo.loc]"
                                     [value]="opt.code">
                                         {{opt.name}}
                                     </option>
                                 </select>
                             </div>
-                            
+
                         </div>
 
                     </div>
@@ -383,7 +383,7 @@
                                         width="auto">
                                 </div>
                             </div>
-                            
+
                         </div>
 
                         <!-- <div class="transitions col-span-6 mx-2" *ngIf="!focused" hidden> -->
@@ -404,7 +404,7 @@
                                 </label>
                             </div>
                         </div> -->
-                        
+
                     </div>
                 </div>
             </div>
