@@ -36,7 +36,7 @@ export class Cf2Component implements OnInit {
   facility: any;
 
   eclaimsForm:FormGroup=eclaimsForm();
-  date_today = formatDate(new Date(), 'MM-dd-yyyy', 'en', 'Asia/Singapore');
+  date_today = formatDate(new Date(), 'yyyy-MM-dd', 'en', 'Asia/Singapore');
 
   submitQue() {
     this.que_form = true;
@@ -65,20 +65,20 @@ export class Cf2Component implements OnInit {
 
     if(this.selected_caserate.code === '89221') {
       tb.pTBType = 'I';
-      tb.attendant_sign_date = formatDate(this.selected_case.case_holding.treatment_start, 'MM-dd-yyyy', 'en', 'Asia/Singapore');
-      tb.admission_date = formatDate(this.selected_case.case_holding.treatment_start, 'MM-dd-yyyy', 'en', 'Asia/Singapore');
+      tb.attendant_sign_date = formatDate(this.selected_case.case_holding.treatment_start, 'yyyy-MM-dd', 'en', 'Asia/Singapore');
+      tb.admission_date = formatDate(this.selected_case.case_holding.treatment_start, 'yyyy-MM-dd', 'en', 'Asia/Singapore');
 
       let cont_date = new Date(this.selected_case.case_holding.continuation_start);
           cont_date.setDate(cont_date.getDate()-1);
 
-      tb.discharge_date = formatDate(cont_date, 'MM-dd-yyyy', 'en', 'Asia/Singapore');
+      tb.discharge_date = formatDate(cont_date, 'yyyy-MM-dd', 'en', 'Asia/Singapore');
     }
 
     if(this.selected_caserate.code === '89222') {
       tb.pTBType = 'M';
-      tb.attendant_sign_date = formatDate(this.selected_case.case_holding.treatment_start, 'MM-dd-yyyy', 'en', 'Asia/Singapore');
-      tb.admission_date = formatDate(this.selected_case.case_holding.continuation_start, 'MM-dd-yyyy', 'en', 'Asia/Singapore');
-      tb.discharge_date = formatDate(this.selected_case.case_holding.treatment_end, 'MM-dd-yyyy', 'en', 'Asia/Singapore');
+      tb.attendant_sign_date = formatDate(this.selected_case.case_holding.treatment_start, 'yyyy-MM-dd', 'en', 'Asia/Singapore');
+      tb.admission_date = formatDate(this.selected_case.case_holding.continuation_start, 'yyyy-MM-dd', 'en', 'Asia/Singapore');
+      tb.discharge_date = formatDate(this.selected_case.case_holding.treatment_end, 'yyyy-MM-dd', 'en', 'Asia/Singapore');
     }
 
     this.eclaimsForm.patchValue({
@@ -126,10 +126,10 @@ export class Cf2Component implements OnInit {
     }
 
     this.eclaimsForm.patchValue({
-      attendant_sign_date: formatDate(this.selected_case.admission_date, 'MM-dd-yyyy', 'en', 'Asia/Singapore'),
-      admission_date: formatDate(this.selected_case.admission_date, 'MM-dd-yyyy', 'en', 'Asia/Singapore'),
+      attendant_sign_date: formatDate(this.selected_case.admission_date, 'yyyy-MM-dd', 'en', 'Asia/Singapore'),
+      admission_date: formatDate(this.selected_case.admission_date, 'yyyy-MM-dd', 'en', 'Asia/Singapore'),
       admission_time: formatDate(this.selected_case.admission_date, 'HH:mma', 'en', 'Asia/Singapore'),
-      discharge_date: formatDate(this.selected_case.discharge_date, 'MM-dd-yyyy', 'en', 'Asia/Singapore'),
+      discharge_date: formatDate(this.selected_case.discharge_date, 'yyyy-MM-dd', 'en', 'Asia/Singapore'),
       discharge_time: formatDate(this.selected_case.discharge_date, 'HH:mma', 'en', 'Asia/Singapore'),
       pNewbornHearingScreeningTest: hearing_done,
       pNewbornScreeningTest: this.selected_case.nbs_filter ? 'Y' : 'N',
@@ -149,17 +149,17 @@ export class Cf2Component implements OnInit {
     this.f.pABPOthers.setValidators([Validators.required]);
 
     this.eclaimsForm.patchValue({
-      pDay0ARV: formatDate(this.selected_case.abPostExposure.day0_date, 'MM-dd-yyyy', 'en', 'Asia/Singapore'),
-      pDay3ARV: formatDate(this.selected_case.abPostExposure.day3_date, 'MM-dd-yyyy', 'en', 'Asia/Singapore'),
-      pDay7ARV: formatDate(this.selected_case.abPostExposure.day7_date, 'MM-dd-yyyy', 'en', 'Asia/Singapore'),
-      pRIG: formatDate(this.selected_case.abPostExposure.rig_date, 'MM-dd-yyyy', 'en', 'Asia/Singapore'),
-      pABPOthers: formatDate(this.selected_case.abPostExposure.other_vacc_date, 'MM-dd-yyyy', 'en', 'Asia/Singapore'),
+      pDay0ARV: formatDate(this.selected_case.abPostExposure.day0_date, 'yyyy-MM-dd', 'en', 'Asia/Singapore'),
+      pDay3ARV: formatDate(this.selected_case.abPostExposure.day3_date, 'yyyy-MM-dd', 'en', 'Asia/Singapore'),
+      pDay7ARV: formatDate(this.selected_case.abPostExposure.day7_date, 'yyyy-MM-dd', 'en', 'Asia/Singapore'),
+      pRIG: formatDate(this.selected_case.abPostExposure.rig_date, 'yyyy-MM-dd', 'en', 'Asia/Singapore'),
+      pABPOthers: formatDate(this.selected_case.abPostExposure.other_vacc_date, 'yyyy-MM-dd', 'en', 'Asia/Singapore'),
       pABPSpecify: this.selected_case.abPostExposure.remarks,
 
-      attendant_sign_date: formatDate(this.selected_case.abPostExposure.day0_date, 'MM-dd-yyyy', 'en', 'Asia/Singapore'),
-      admission_date: formatDate(this.selected_case.abPostExposure.day0_date, 'MM-dd-yyyy', 'en', 'Asia/Singapore'),
+      attendant_sign_date: formatDate(this.selected_case.abPostExposure.day0_date, 'yyyy-MM-dd', 'en', 'Asia/Singapore'),
+      admission_date: formatDate(this.selected_case.abPostExposure.day0_date, 'yyyy-MM-dd', 'en', 'Asia/Singapore'),
       admission_time: '8:00AM',
-      discharge_date: formatDate(this.selected_case.abPostExposure.day7_date, 'MM-dd-yyyy', 'en', 'Asia/Singapore'),
+      discharge_date: formatDate(this.selected_case.abPostExposure.day7_date, 'yyyy-MM-dd', 'en', 'Asia/Singapore'),
       discharge_time: '8:00AM',
     });
 
@@ -211,10 +211,10 @@ export class Cf2Component implements OnInit {
         pCheckUpDate2: visit2,
         pCheckUpDate3: visit3,
         pCheckUpDate4: visit4,
-        attendant_sign_date: formatDate(signDate, 'MM-dd-yyyy', 'en', 'Asia/Singapore'),
-        admission_date: formatDate(admitDate, 'MM-dd-yyyy', 'en', 'Asia/Singapore'),
+        attendant_sign_date: formatDate(signDate, 'yyyy-MM-dd', 'en', 'Asia/Singapore'),
+        admission_date: formatDate(admitDate, 'yyyy-MM-dd', 'en', 'Asia/Singapore'),
         admission_time: formatDate(admitDate, 'HH:mma', 'en', 'Asia/Singapore'),
-        discharge_date: formatDate(dischargeDate, 'MM-dd-yyyy', 'en', 'Asia/Singapore'),
+        discharge_date: formatDate(dischargeDate, 'yyyy-MM-dd', 'en', 'Asia/Singapore'),
         discharge_time: formatDate(dischargeDate, 'HH:mma', 'en', 'Asia/Singapore'),
       });
 

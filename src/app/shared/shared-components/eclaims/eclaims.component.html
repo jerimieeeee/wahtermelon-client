@@ -38,15 +38,20 @@
         </div>
 
         <div class="w-full p-5 overflow-x-auto">
-          <table class="text-sm text-left text-gray-500 dark:text-gray-400">
-            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+          <table class="table-fixed w-full text-sm text-left text-gray-500">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700">
               <tr>
                 <th scope="col" class="py-3 px-3">Caserate</th>
-                <th scope="col" class="py-3 px-3">Transmittal No.</th>
-                <th scope="col" class="py-3 px-3">Ticket Number</th>
-                <th scope="col" class="py-3 px-3">Claim Series Lhio</th>
+                <th scope="col" class="py-3 w-1/5">
+                  1. Transmittal Number <br />
+                  2. Ticket Number <br />
+                  3. Claim Series Lhio
+                </th>
+                <!-- <th scope="col" class="py-3 px-3">Ticket Number</th> -->
+                <!-- <th scope="col" class="py-3 px-3">Claim Series Lhio</th> -->
                 <th scope="col" class="py-3 px-3">Transmittal Date</th>
                 <th scope="col" class="py-3 px-3">Claim Status</th>
+                <th scope="col" class="py-3 px-3">Details</th>
                 <th scope="col" class="py-3 px-3">Action</th>
               </tr>
             </thead>
@@ -57,35 +62,40 @@
                   {{ eclaims.caserate.code }}
                   <!-- {{ eclaims.caserate.description }} -->
                 </td>
-                <td class="py-4 px-3">
-                  {{ eclaims.pHospitalTransmittalNo }}
+                <td class="py-4 px-3 text-xs">
+                  1. {{ eclaims.pHospitalTransmittalNo }} <br />
+                  2. {{ eclaims.pReceiptTicketNumber ?? '-' }} <br />
+                  3. {{ eclaims.pClaimSeriesLhio ?? '-' }}
                 </td>
-                <td class="py-4 px-3">
+                <!-- <td class="py-4 px-3">
                   {{ eclaims.pReceiptTicketNumber ?? '-' }}
-                </td>
-                <td class="py-4 px-3">
+                </td> -->
+                <!-- <td class="py-4 px-3">
                   {{ eclaims.pClaimSeriesLhio ?? '-' }}
-                </td>
+                </td> -->
                 <td class="py-4 px-3">
                   {{ eclaims.pTransmissionDate ?? '-' }}
                 </td>
                 <td class="py-4 px-3">
                   {{ eclaims.pStatus ?? 'IN QUEUE'  }}
                 </td>
+                <td class="py-4 px-3">
+                  {{ eclaims.denied_reason ?? '-'  }}
+                </td>
                 <td class="py-4 px-3 text-center grid grid-cols-1">
-                  <button class="bg-blue-500 text-white rounded-md p-0.5 mb-3" type="button" (click)="toggleModal('upload-claims', eclaims)"> <!-- *ngIf="!eclaims.pReceiptTicketNumber"  -->
+                  <button *ngIf="eclaims.pStatus !== 'DENIED' && eclaims.pStatus !== 'WITH CHEQUE'" class="bg-blue-500 text-white rounded-md p-0.5 mb-3 disabled:opacity-75" type="button" (click)="toggleModal('upload-claims', eclaims)"> <!-- *ngIf="!eclaims.pReceiptTicketNumber"  -->
                     <fa-icon [icon]="faUpload"></fa-icon>
                     {{ eclaims.pReceiptTicketNumber ? 'Reupload Docs' : 'Upload Claim' }}
                   </button>
 
-                  <button class="bg-green-500 text-white rounded-md p-0.5 mb-3`" type="button" *ngIf="eclaims.pReceiptTicketNumber && !eclaims.pClaimSeriesLhio" (click)="checkSeries(eclaims)" [disabled]="is_refreshing">
-                    <fa-icon [icon]="faRotate" [spin]="is_refreshing"></fa-icon>
+                  <button class="bg-green-500 text-white rounded-md p-0.5 mb-3 disabled:opacity-75" type="button" *ngIf="eclaims.pReceiptTicketNumber && !eclaims.pClaimSeriesLhio" (click)="checkSeries(eclaims)" [disabled]="is_refreshing">
+                    <fa-icon [icon]="is_refreshing ? faRotate : faReceipt" [spin]="is_refreshing"></fa-icon>
                     Get Series Lhio
                   </button>
 
-                  <button class="bg-green-500 text-white rounded-md p-0.5 mb-3" type="button" *ngIf="eclaims.pClaimSeriesLhio" (click)="getClaimStatus(eclaims)" [disabled]="is_refreshing">
-                    <fa-icon [icon]="faRotate" [spin]="is_refreshing"></fa-icon>
-                    Check Status
+                  <button class="bg-green-500 text-white rounded-md p-0.5 mb-3 disabled:opacity-75" type="button" *ngIf="eclaims.pClaimSeriesLhio && !eclaims.denied_reason" (click)="getClaimStatus(eclaims, eclaims.pStatus)" [disabled]="is_refreshing">
+                    <fa-icon [icon]="is_refreshing ? faRotate : faClipboardQuestion" [spin]="is_refreshing"></fa-icon>
+                    Check {{ eclaims.pStatus === 'DENIED' ? 'Reason' : 'Status' }}
                   </button>
                 </td>
               </tr>

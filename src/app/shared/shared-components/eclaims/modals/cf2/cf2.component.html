@@ -176,7 +176,7 @@
               Maternal care visits invalid or incomplete
               <ul *ngFor="let prenatal_visit of selected_case?.prenatal_visit">
                 <li class="text-sm font-semibold">
-                  Trimester {{ prenatal_visit.trimester }}: {{ prenatal_visit.prenatal_date }}
+                  Trimester {{ prenatal_visit.trimester }}: {{ prenatal_visit.prenatal_date | date: 'MM-dd-yyyy' }}
                 </li>
               </ul>
             </div>
