@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
+import { ToastrService } from 'ngx-toastr';
 import { Subject } from 'rxjs';
 
 @Injectable({
@@ -9,13 +10,14 @@ import { Subject } from 'rxjs';
 })
 export class HttpService {
   // baseUrl = 'https://apiwahtermelon-staging.wah.ph/api/v1/'; //staging-api
-  // baseUrl = 'https://api.wah.ph/api/v1/'; //staging-api
+  baseUrl = 'https://training-api.wah.ph/api/v1/'; //staging-api
 
-  baseUrl = 'http://127.0.0.1:8000/api/v1/'; //local api
+  // baseUrl = 'http://127.0.0.1:8000/api/v1/'; //local api
   constructor(
     private http: HttpClient,
     private router: Router,
-    private cookieService: CookieService
+    private cookieService: CookieService,
+    private toastr: ToastrService
   ) { }
 
   user_json: any;
@@ -100,14 +102,14 @@ export class HttpService {
     return this.user_json.facility_code;
   }
 
-  toastr(type: string, message: string) {
+  /* toastr(type: string, message: string) {
     return {
       type: type,
       message: message
     }
-  }
+  } */
 
-  getURL(lab_code): string{
+  /* getURL(lab_code): string{
     switch (lab_code) {
       case 'CBC':
         return 'laboratory/consult-laboratory-cbc'
@@ -144,7 +146,7 @@ export class HttpService {
       default:
         return '';
     }
-  }
+  } */
 
   getUrlParams() {
     let patient_id;
@@ -193,5 +195,13 @@ export class HttpService {
 
   getPhilhealhtInfo(){
     return this.philhealth_info;
+  }
+
+  showError(message, title) {
+    this.toastr.error(message, title, {
+      closeButton: true,
+      positionClass: 'toast-top-center',
+      disableTimeOut: true
+    });
   }
 }
