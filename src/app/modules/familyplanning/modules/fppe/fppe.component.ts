@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { faCalendarDay, faCaretLeft, faCaretRight, faCircleCheck, faInfoCircle, faPencil, faPlus, faSave, faTimes, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { FormControl, FormGroup } from '@angular/forms';
 import { HttpService } from 'app/shared/services/http.service';
+import { ToastrService } from 'ngx-toastr';
 
 
 
@@ -12,6 +13,10 @@ import { HttpService } from 'app/shared/services/http.service';
 })
 
 export class FppeComponent implements OnInit {
+  @Output() loadFP = new EventEmitter<any>();
+  @Input() patient_id;
+  @Input() fp_visit_history;
+  
   faCalendarDay = faCalendarDay;
   faPlus = faPlus;
   faSave = faSave;
@@ -27,6 +32,7 @@ export class FppeComponent implements OnInit {
   pe_grouped = [];
 
   is_saving: boolean = false;
+  show_form: boolean = false;
 
   abdomen_pes: any = [];
   breast_pes: any = [];
@@ -35,6 +41,8 @@ export class FppeComponent implements OnInit {
   neck_pes: any = [];
   thorax_pes: any = [];
   physical_codes: any = [];
+  
+  fp_visit_history_details: any;
 
   category = [
     {"name" : "Conjunctiva"},
@@ -46,33 +54,101 @@ export class FppeComponent implements OnInit {
   ];
 
   onSubmit(){
+    var pe_arr = [];
     this.is_saving = true;
+    // console.log(this.vaccineForm)
+    Object.entries(this.physical_codes).forEach(([key, value], index) => {
+      if(value != false){
+        let pes = {
+          pe_id: key
+        };
 
-    if(Object.keys(this.physical_codes).length > 0) {
-      let pe_codes = [];
-      Object.entries(this.physical_codes).forEach(([key, value], index) => {
-        if(value === true) pe_codes.push(key);
-      });
-      this.saveCodes(pe_codes)
-    } else {
-      // this.saveNotes();
-      // console.log(pe_codes, 'ito ung submit')
-    }
+        pe_arr.push(pes);
+        console.log(pe_arr, 'ito ung array sa for loop')
+      }
+    })
+
+    
+      let fp_id = this.fp_visit_history_details.id
+      let p_id = this.patient_id
+      var physical_exam_details ={
+        patient_fp_id: fp_id,
+        patient_id: p_id,
+        physical_exam: pe_arr,
+        pe_remarks: '',
+        
+
+      }
+
+      console.log(physical_exam_details)
+
+      this.http.post('family-planning/fp-physical-exam', physical_exam_details).subscribe({
+        next: () => {
+          this.toastr.success('First Visit was ' + (physical_exam_details ? 'updated' : 'saved') + ' successuly', 'Success')
+          this.is_saving = false;
+          this.loadFP.emit();
+          this.loadSelected();
+          console.log(physical_exam_details, 'ito ung submit sa PE')
+        },
+        error: err => console.log(err),
+        complete: () => {
+        console.log('success')
+        }
+      })
+    
   }
 
-  saveCodes(codes) {
-    let physical_exam = {
-      // notes_id: this.consult_notes.id,
-      physical_exam: {
-        pe_id: codes}
-    }
-      console.log(physical_exam, 'ito ung submit')
-    // this.http.post('consultation/physical-exam', physical_exam).subscribe({
-    //   next: (data: any) => {
-    //     this.saveNotes();
-    //   },
-    //   error: err => console.log(err)
-    // })
+
+
+  //   this.is_saving = true;
+
+  //   if(Object.keys(this.physical_codes).length > 0) {
+  //     let pe_codes = [];
+  //     Object.entries(this.physical_codes).forEach(([key, value], index) => {
+  //       if(value === true) pe_codes.push(key);
+  //     });
+  //     this.saveCodes(pe_codes)
+  //   } else {
+  //     // this.saveNotes();
+  //     // console.log(pe_codes, 'ito ung submit')
+  //   }
+  // }
+
+  // saveCodes(codes) {
+  //   let physical_exam_details = {
+  //     // notes_id: this.consult_notes.id,
+      
+  //     patient_id: this.patient_id,
+  //     patient_fp_id: this.fp_visit_history_details.id,
+  //     physical_exam: {
+  //       pe_id: codes
+  //     },
+  //     pe_remarks: ''
+  //   }
+  //     console.log(this.fp_visit_history_details.id, 'ito ung submit sa PE')
+  //   this.http.post('family-planning/fp-physical-exam', physical_exam_details).subscribe({
+  //     next: (data: any) => {
+  //       // this.saveNotes();
+  //     },
+  //     error: err => console.log(err)
+  //   })
+  // }
+
+  loadSelected() {
+    
+      Object.entries(this.fp_visit_history_details.physical_exam).forEach(([key, value], index) => {
+        let val: any = value;
+        this.physical_codes[val.pe_id] = true;
+
+        // this.fp_visit_history_details.physical_exam.forEach((value) => {
+        //   // console.log(value)
+        //   this.physical_codes[val.pe_id] = value.pe_id;
+        //   // serv2.service_date['value.status_id'] = value.s
+        // })
+      });
+      console.log(this.fp_visit_history.physical_exam, 'test')
+    
+   
   }
 
   loadLibraries() {
@@ -89,10 +165,15 @@ export class FppeComponent implements OnInit {
         }, {});
 
         this.pe_grouped = groups;
+        this.loadFP.emit();
+        this.loadSelected();
+        this.show_form = true;
         console.log(this.pe_grouped, 'grouped')
       }
     );
   }
+
+  
 
 
   // loadLibraries(){
@@ -119,12 +200,13 @@ export class FppeComponent implements OnInit {
 
   constructor(
     private http: HttpService,
-    // private formBuilder: FormBuilder,
-    // private toastr: ToastrService
+    private toastr: ToastrService
   ) { }
 
   ngOnInit(): void {
     this.loadLibraries();
+    this.fp_visit_history_details = this.fp_visit_history[0] 
+    console.log(this.fp_visit_history_details.physical_exam, 'test')
   }
 
 }

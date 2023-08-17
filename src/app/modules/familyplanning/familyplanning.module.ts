@@ -17,11 +17,12 @@ import { FphxComponent } from './modules/fphx/fphx.component';
 import { ObshxComponent } from './modules/obshx/obshx.component';
 import { PelvicComponent } from './modules/pelvic/pelvic.component';
 import { MethodsComponent } from './modules/methods/methods.component';
-import { ModalsComponent } from './modules/fpchart/modals/modals.component';
 import { MethodsModalComponent } from './modules/methods/methods-modal/methods-modal.component';
+import { EndVisitComponent } from 'app/shared/shared-modals/end-visit/end-visit.component';
+import { SharedComponentsModule } from 'app/shared/shared-components/shared-components.module';
 
 @NgModule({
-  declarations: [FamilyplanningComponent, FpchartComponent, FirsvisitComponent, FppeComponent, FphxComponent, ObshxComponent, PelvicComponent, MethodsComponent, ModalsComponent, MethodsModalComponent,
+  declarations: [FamilyplanningComponent, FpchartComponent, FirsvisitComponent, FppeComponent, FphxComponent, ObshxComponent, PelvicComponent, MethodsComponent, MethodsModalComponent,
     //  FpchartComponent, FphxComponent, FppeComponent, PelvicexamComponent
   ],
   imports: [
@@ -30,6 +31,8 @@ import { MethodsModalComponent } from './modules/methods/methods-modal/methods-m
     angularFontawesome.FontAwesomeModule,
     FormsModule,
     ReactiveFormsModule,
+    SharedComponentsModule,
+    EndVisitComponent
   ]
 })
 export class FamilyplanningModule { }

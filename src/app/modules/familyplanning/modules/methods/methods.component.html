@@ -1,14 +1,15 @@
 
-<div class="m-5 border border-slate-200 rounded-lg">
+<div class="m-5 border border-slate-200 rounded-lg" *ngIf="show_form">
     <div class="bg-blue-500 text-sm text-white rounded-t-md py-2 pl-3 font-semibold">
      Family Planning Method
     </div>
 
+    <form  [formGroup]="methodForm" (submit)="onSubmit()">
     <div class="grid grid-cols-12">
   
     <div class="col-span-6 px-10 pt-5">
         <label for="case_number" class="text-sm font-semibold">Enrollment Date</label>
-        <input type="date" name="case_number" id="case_number"  class="input">
+        <input type="date" name="case_number" id="case_number" class="input" formControlName="enrollment_date">
 
         <!-- <div *ngIf="show_error && f.case_number.errors" class="invalid-alert">
           <div *ngIf="f.case_number.errors?.['required']">
@@ -23,7 +24,8 @@
     <div class="col-span-6 px-10 pt-5">
       <div>
         <label for="source_code" class="text-sm font-semibold">Family Planning Method</label>
-        <select name="source_code" id="source_code" class="input">
+        <select name="source_code" id="source_code" class="input" formControlName="method_code">
+          <option [ngValue]="0" selected> </option>
           <option *ngFor="let method of fp_methods" [value]="method.code">{{ method.desc }}</option>
         </select>
       </div>
@@ -40,7 +42,7 @@
 
     <div class="col-span-6 px-10 pt-6">
         <label for="case_number" class="text-sm font-semibold">Treatment Partner</label>
-        <input type="text" name="case_number" id="case_number"  class="input">
+        <input type="text" name="case_number" id="case_number"  class="input" formControlName="treatment_partner">
 
         <!-- <div *ngIf="show_error && f.case_number.errors" class="invalid-alert">
           <div *ngIf="f.case_number.errors?.['required']">
@@ -55,7 +57,8 @@
     <div class="col-span-6 px-10 pt-6">
       <div>
         <label for="source_code" class="text-sm font-semibold">Client Type</label>
-        <select name="source_code" id="source_code" class="input">
+        <select name="source_code" id="source_code" class="input" formControlName="client_code">
+          <option [ngValue]="0" selected> </option>
           <option *ngFor="let client of client_list" [value]="client.code">{{ client.desc }}</option>
         </select>
       </div>
@@ -73,12 +76,22 @@
     
 
     </div>
+    </form>
 
     <div class="flex justify-center py-5">
-      <button class="btn-save mr-5 mt-4" (click)="toggleModal('methods-modal')">
+      <div>
+      <button *ngIf="!showButton || showButton && fp_visit_history[0].method === null" class="btn-save mr-5 mt-4" (click)="onSubmit()">
         <fa-icon [icon]="is_saving ? faSpinner : faSave" [spin]="is_saving ? true : false" class="mr-2"></fa-icon>
-        Save
+       Save
       </button>
+    </div>
+
+    <div>
+      <button *ngIf="showButton || !showButton && fp_visit_history[0].method !== null" (click)="toggleModal('methods-modal')" [disabled]="is_saving" type="submit" class="btn-cancel mr-5 mt-4">
+        <fa-icon [icon]="is_saving ? faSpinner : faSave" [spin]="is_saving ? true : false" class="mr-2"></fa-icon>
+        Dropout
+      </button>
+    </div>
     </div>
 
 </div>
@@ -90,16 +103,84 @@
         Family Planning Method History
        </div>
    
-       <div class="flex justify-center">
+       <div *ngIf="fp_method_history.length === 0" class="flex justify-center">
         <div class="py-3 flex flex-col">
             <div class="flex justify-center text-sm py-5">No records to show...</div>
           </div>
    
        </div>
-</div>       
+
+       <table *ngIf="fp_method_history.length >= 1" class="w-full text-sm text-left">
+        <thead class="text-xs uppercase">
+          <tr>
+            <th scope="col" class="py-3 px-6">Method</th>
+            <th scope="col" class="py-3 px-6">Type of Client</th>
+            <th scope="col" class="py-3 px-6">Date Registered</th>
+            <th scope="col" class="py-3 px-6">Date of Dropout</th>
+            <th scope="col" class="py-3 px-6">Droupout Reason</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="bg-white border-b" *ngFor="let method_history of fp_method_history">
+            <td class="py-4 px-6">
+              {{ method_history.method.desc ? method_history.method.desc : '-'}}
+            </td>
+            <td class="py-4 px-6">
+              {{ method_history.client.desc ? method_history.client.desc : '-' }}
+            </td>
+            <td class="py-4 px-6">
+              {{ method_history.enrollment_date | date: 'MM/dd/yyyy' }}
+            </td>
+            <td class="py-4 px-6">
+              {{ method_history.dropout_date | date: 'MM/dd/yyyy' }}
+            </td>
+            <td class="py-4 px-6">
+              {{ method_history.dropout.desc ? method_history.dropout.desc : '-' }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      
+      <div *ngIf="total >= 1">
+        <div class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
+          <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+            <div>
+              <p class="text-sm text-gray-700">
+                Showing <span class="font-medium">{{ from }}</span>
+                to <span class="font-medium">{{ to }}</span>
+                of <span class="font-medium">{{ total }}</span> results
+              </p>
+            </div>
+            <div *ngIf="total >= 2">
+              <nav class="relative z-0 inline-flex shadow-sm -space-x-px" aria-label="Pagination">
+                <button [disabled]="current_page===1" (click)="getMethodHistory(1)" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 enabled:bg-white disabled:bg-gray-300 text-sm font-medium text-gray-500 hover:bg-gray-50">
+                  <fa-icon [icon]="faAnglesLeft" class="block h-15 w-15 text-gray-500 pr-1"></fa-icon>
+                </button>
+  
+                  <button [disabled]="current_page===1" (click)="getMethodHistory(current_page-1)" class="relative inline-flex items-center px-4 py-2 border border-gray-300 enabled:bg-white disabled:bg-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
+                    <fa-icon [icon]="faChevronLeft" class="block h-15 w-15 text-gray-500 pr-1"></fa-icon>Previous
+                  </button>
+                  <button [disabled]="current_page===last_page" (click)="getMethodHistory(current_page+1)" class="relative inline-flex items-center px-4 py-2 border border-gray-300 enabled:bg-white disabled:bg-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
+                    Next<fa-icon [icon]="faChevronRight" class="h-5 w-5 text-gray-500"></fa-icon>
+                  </button>
+  
+                <button [disabled]="current_page===last_page" (click)="getMethodHistory(last_page)" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 enabled:bg-white disabled:bg-gray-300 text-sm font-medium text-gray-500 hover:bg-gray-50">
+                  <fa-icon [icon]="faAnglesRight" class="h-5 w-5 text-gray-500"></fa-icon>
+                </button>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+</div>
+     
       
 <app-methods-modal *ngIf="modals['methods-modal']"
   (toggleModal)="toggleModal($event)"
+  [fp_visit_history]="fp_visit_history"
+  (loadFP)="loadFP()"
+  (loadFPDetails)="loadFPDetails()"
+  (anotherFunction)="anotherFunction()"
 ></app-methods-modal>
 
   

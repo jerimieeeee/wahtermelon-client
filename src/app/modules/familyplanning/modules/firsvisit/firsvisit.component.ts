@@ -3,6 +3,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { Router } from '@angular/router';
 import { faCalendarDay, faPlus, faSave, faTimes, faClose, faTimesCircle, faPencil, faCaretDown, faAngleDown, faInfoCircle, faCaretRight, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-firsvisit',
@@ -17,13 +18,14 @@ export class FirsvisitComponent implements OnInit {
   faSpinner = faSpinner;
 
   is_saving: boolean = false;
+  showButton: boolean = false;
 
   faSave = faSave;
   faPencil = faPencil;
   
   faInfoCircle = faInfoCircle;
 
-  show_form: boolean = false;
+  show_form = false;
   fp_visit_details: any;
 
   visitForm: FormGroup = new FormGroup({
@@ -36,10 +38,15 @@ export class FirsvisitComponent implements OnInit {
   });
 
   onSubmit(){
+    this.is_saving = true;
     this.http.post('family-planning/fp-records', this.visitForm.value).subscribe({
-      next: (data: any) => { 
-        this.loadFP.emit(),
+      next: (data: any) => {
+        this.toastr.success('First Visit was ' + (this.visitForm.value ? 'updated' : 'saved') + ' successuly', 'Success')
+        this.is_saving = false;
+        this.showButton = !this.showButton;
+        this.loadFP.emit();
         console.log(data, 'display visit details')
+        console.log(this.fp_visit_history, 'checker FV 2')
          },
       complete: () => {
        
@@ -51,17 +58,18 @@ export class FirsvisitComponent implements OnInit {
   }
   
   validateForm(){
-   
+    
     this.visitForm = this.formBuilder.group({
-      id: ['', [Validators.required]],
-      patient_id: [this.patient_id, [Validators.required, Validators.minLength(2)]],
-      no_of_living_children_actual: ['', [Validators.required, Validators.minLength(2)]],
-      no_of_living_children_desired: ['', [Validators.required, Validators.minLength(2)]],
-      birth_interval_desired: ['', [Validators.required, Validators.minLength(2)]],
-      average_monthly_income: ['', [Validators.required, Validators.minLength(2)]],
+      id: [''],
+      patient_id: [this.patient_id],
+      no_of_living_children_actual: ['', [Validators.required, Validators.minLength(1)]],
+      no_of_living_children_desired: ['', [Validators.required, Validators.minLength(1)]],
+      birth_interval_desired: ['', [Validators.required, Validators.minLength(1)]],
+      average_monthly_income: ['', [Validators.required, Validators.minLength(1)]],
     });
 
     this.loadFPDetails();
+    this.show_form = true;
   }
 
   loadFPDetails(){
@@ -76,10 +84,11 @@ export class FirsvisitComponent implements OnInit {
     private router: Router,
     private http: HttpService,
     private formBuilder: FormBuilder,
+    private toastr: ToastrService,
   ) { }
 
   ngOnInit(): void {
     this.validateForm();
-    console.log(this.fp_visit_history, 'checker')
+    console.log(this.fp_visit_history, 'checker FV')
   } 
 }

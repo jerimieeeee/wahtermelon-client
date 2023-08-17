@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { faCalendarDay, faPlus, faSave, faTimes, faClose, faTimesCircle, faPencil, faCaretDown, faAngleDown, faInfoCircle, faCaretRight, faSpinner, faPlusSquare } from '@fortawesome/free-solid-svg-icons';
@@ -9,6 +9,10 @@ import { faCalendarDay, faPlus, faSave, faTimes, faClose, faTimesCircle, faPenci
   styleUrls: ['./fpchart.component.scss']
 })
 export class FpchartComponent implements OnInit {
+  @Output() loadFP = new EventEmitter<any>();
+  @Input() patient_id;
+  @Input() fp_visit_history;
+  
   focused: boolean;
   focused2: boolean;
   modal: boolean;
@@ -32,6 +36,8 @@ export class FpchartComponent implements OnInit {
   public keyUp = [];
 
   modals: any = [];
+
+  fp_visit_history_details: any;
   
   toggleModal(name) {
     this.modals[name] = !this.modals[name];
@@ -40,6 +46,8 @@ export class FpchartComponent implements OnInit {
   constructor(private router: Router) { }
 
   ngOnInit(): void {
-    this.error_message = '**please enter numbers only';
+    this.fp_visit_history_details = this.fp_visit_history[0];
+    this.loadFP.emit();
+    console.log(this.fp_visit_history_details)
   } 
 }

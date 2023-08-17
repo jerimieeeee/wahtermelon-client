@@ -1,5 +1,5 @@
 
-<div class="m-5 border border-slate-200 rounded-lg">
+<div class="m-5 border border-slate-200 rounded-lg" *ngIf="show_form">
     <div class="bg-blue-500 text-sm text-white rounded-t-md py-2 pl-3 font-semibold">
      Visit
     </div>
@@ -68,7 +68,7 @@
     </div>
 
     <div class="flex justify-center py-5">
-      <button class="btn-save mr-5 mt-4" (click)="onSubmit()">
+      <button class="btn-save mr-5 mt-4" [disabled]="visitForm.invalid || is_saving">
         <fa-icon [icon]="is_saving ? faSpinner : faSave" [spin]="is_saving ? true : false" class="mr-2"></fa-icon>
         {{ visitForm.value.id ? (is_saving ? 'Updating' : 'Update') : (is_saving ? 'Saving' : 'Save') }}
       </button>

@@ -1,5 +1,5 @@
 
-<div class="m-5 border border-slate-200 rounded-lg">
+<div class="m-5 border border-slate-200 rounded-lg" *ngIf="show_form">
     <div class="bg-blue-500 text-sm text-white rounded-t-md py-2 pl-3 font-semibold">
      Physical Exam
     </div>
@@ -12,8 +12,8 @@
             </div>
             <div class="col-span-3 grid grid-cols-3 gap-x-4 mx-5">
                 <div *ngFor="let val of pe.value" >
-                    <input type="checkbox" class="input-checkbox" [(ngModel)]="physical_codes[val.pe_id]" />
-                    <label class="pl-1 py-0.5 text-black font-semibold"> {{ val.pe_desc }}</label>
+                    <input type="checkbox" [id]="val.pe_id" class="input-checkbox" [(ngModel)]="physical_codes[val.pe_id]" />
+                    <label class="pl-1 py-0.5 text-black font-semibold" [attr.for]="val.pe_id"> {{ val?.pe_desc }}</label>
                 </div>
             </div>
         </div>
@@ -26,7 +26,7 @@
            
           
         <div class="flex justify-center mt-5">
-            <button class="btn-save mr-5 mt-4" (click)="onSubmit()">
+            <button class="btn-save mr-5 mt-4" [disabled]="is_saving" (click)="onSubmit()">
               <fa-icon [icon]="is_saving ? faSpinner : faSave" [spin]="is_saving ? true : false" class="mr-2"></fa-icon>
               Save
             </button>

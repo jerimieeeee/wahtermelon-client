@@ -14,7 +14,7 @@
     </button>
   </nav>
   <div class="ml-auto">
-    <button  type="button" class="btn-end-visit ml-auto mt-5">
+    <button type="button" class="btn-end-visit ml-auto mt-5" (click)="toggleModal('end-visit')">
       <fa-icon class="mr-1" [icon]="faDoorClosed"></fa-icon>
       End Visit
     </button>
@@ -27,7 +27,7 @@
         [class]="module===1? 'tabs-main-true' : 'tabs-main-false' ">
         FIRST VISIT
     </button>
-    <button (click)="switchTab(2)" class="tabs-main w-28"
+    <button (click)="switchTab(2)" class="tabs-main w-28" *ngIf="fp_visit_history[0]?.id"
         [class]="module===2? 'tabs-main-true' : 'tabs-main-false' ">
         FP HX
     </button>
@@ -35,19 +35,19 @@
         [class]="module===3? 'tabs-main-true' : 'tabs-main-false' ">
         OBSTETRICAL HX
     </button> -->
-    <button (click)="switchTab(4)" class="tabs-main w-28"
+    <button (click)="switchTab(4)" class="tabs-main w-28" *ngIf="fp_visit_history[0]?.id"
         [class]="module===4? 'tabs-main-true' : 'tabs-main-false' ">
         FP PE
     </button>
-    <button (click)="switchTab(5)" class="tabs-main w-28"
+    <button (click)="switchTab(5)" class="tabs-main w-28" *ngIf="fp_visit_history[0]?.id"
         [class]="module===5? 'tabs-main-true' : 'tabs-main-false' ">
         PELVIC EXAM
     </button>
-    <button (click)="switchTab(6)" class="tabs-main w-28"
+    <button (click)="switchTab(6)" class="tabs-main w-28" *ngIf="fp_visit_history[0]?.id"
         [class]="module===6? 'tabs-main-true' : 'tabs-main-false' ">
         METHODS
     </button>
-    <button (click)="switchTab(7)" class="tabs-main w-28"
+    <button (click)="switchTab(7)" class="tabs-main w-28" *ngIf="fp_visit_history[0]?.id"
         [class]="module===7? 'tabs-main-true' : 'tabs-main-false' ">
         FP CHART
     </button>
@@ -68,7 +68,7 @@
       <tr>
         <th scope="col" class="py-3 px-6">Visit Date</th>
         <th scope="col" class="py-3 px-6">Current Method</th>
-        <th scope="col" class="py-3 px-6">Service History</th>
+        <th scope="col" class="py-3 px-6">Client Type</th>
         <th scope="col" class="py-3 px-6">Action</th>
       </tr>
     </thead>
@@ -83,10 +83,10 @@
           {{ fp_history.created_at | date: 'MM/dd/yyyy'}}
         </td>
         <td class="py-4 px-6">
-          {{ fp_history.method ? fp_history?.method : '-' }}
+          {{ fp_history?.method?.desc ? fp_history?.method?.desc : '-' }}
         </td>
         <td class="py-4 px-6">
-          {{ fp_history.method ? fp_history?.method : '-' }}
+          {{ fp_history?.method?.client?.desc ? fp_history?.method?.client?.desc : '-' }}
         </td>
         <td class="py-4 px-6">
           <button type="button" class="rounded-md bg-blue-500 text-white py-1 px-2" (click)="openFPConsult(fp_visit_history)">
@@ -118,16 +118,48 @@
 ></app-firsvisit>
 <app-fphx *ngIf="pages === 2 && module === 2"
   [patient_id]="patient_id"
+  [fp_visit_history]="fp_visit_history"
+  (loadFP)="loadFP()"
 ></app-fphx>
 <app-fppe *ngIf="pages === 2 && module === 4"
   [patient_id]="patient_id"
+  [fp_visit_history]="fp_visit_history"
+  (loadFP)="loadFP()"
 ></app-fppe>
 <app-pelvic *ngIf="pages === 2 && module === 5"
   [patient_id]="patient_id"
+  [fp_visit_history]="fp_visit_history"
+  (loadFP)="loadFP()"
 ></app-pelvic>
 <app-methods *ngIf="pages === 2 && module === 6"
   [patient_id]="patient_id"
+  [fp_visit_history]="fp_visit_history"
+  (loadFP)="loadFP()"
 ></app-methods>
 <app-fpchart *ngIf="pages === 2 && module === 7"
   [patient_id]="patient_id"
+  [fp_visit_history]="fp_visit_history"
+  (loadFP)="loadFP()"
 ></app-fpchart>
+
+<app-end-visit *ngIf="modals['end-visit']"
+  (toggleModal)="toggleModal($event)"
+  [consult_id]="consult_id"
+  [consult_date]="consult_details[0]?.consult_date"
+  [patient_id]="consult_details[0]?.patient.id"
+  [pt_group]="consult_details[0]?.pt_group"
+></app-end-visit>
+
+<app-methods-modal *ngIf="modals['methods-modal']"
+  (toggleModal)="toggleModal($event)"
+  [fp_visit_history]="fp_visit_history"
+  (loadFP)="loadFP()"
+></app-methods-modal>
+
+<!-- <app-fpchart-modal *ngIf="modals['fpchart-modal']"
+  [patient_id]="patient_id"
+  (toggleModal)="toggleModal($event)"
+  [fp_visit_history]="fp_visit_history"
+  (loadFP)="loadFP()"
+></app-fpchart-modal> -->
+
