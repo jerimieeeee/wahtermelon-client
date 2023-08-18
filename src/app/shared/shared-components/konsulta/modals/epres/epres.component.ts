@@ -1,6 +1,7 @@
 import { Component, EventEmitter, OnInit, Output, Input } from '@angular/core';
 import { faCircleNotch, faFaceFrown, faFaceMeh, faFaceSmile, faPrint } from '@fortawesome/free-solid-svg-icons';
 import { AgeService } from 'app/shared/services/age.service';
+import { dateHelper } from 'app/shared/services/date-helper.service';
 import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
@@ -55,7 +56,7 @@ export class EpresComponent implements OnInit {
         this.philhealth_info = data.data[0];
 
         let params = {
-          date_from: this.patient_info.birthdate,
+          date_from: this.dateHelper.dateFormat(this.patient_info.birthdate),
           date_to: data.data[0].enlistment_date
         }
 
@@ -74,7 +75,7 @@ export class EpresComponent implements OnInit {
 
   constructor(
     private http: HttpService,
-    private ageService: AgeService
+    private dateHelper: dateHelper
   ) { }
 
   ngOnInit(): void {
