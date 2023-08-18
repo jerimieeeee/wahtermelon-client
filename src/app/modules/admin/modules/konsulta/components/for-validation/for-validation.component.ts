@@ -43,7 +43,11 @@ export class ForValidationComponent {
       next: (data: any) => {
         this.processReturn(data, save, kon)
       },
-      error: err => console.log(err) //show error
+      error: err => {
+        console.log(err) //show error
+        this.http.showError(err.error.message, 'Konsulta Validation');
+        this.validating = false;
+      }
     })
   }
 
