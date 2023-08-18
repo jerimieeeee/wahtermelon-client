@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { faCircleNotch, faClipboardQuestion, faReceipt, faRotate, faUpload } from '@fortawesome/free-solid-svg-icons';
+import { faCircleNotch, faClipboardQuestion, faPenToSquare, faReceipt, faRotate, faUpload } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -18,6 +18,7 @@ export class EclaimsComponent implements OnInit {
   faCircleNotch = faCircleNotch;
   faReceipt = faReceipt;
   faClipboardQuestion = faClipboardQuestion;
+  faPenToSquare = faPenToSquare;
 
   pending_list: any = [];
   modal: any = [];
@@ -178,10 +179,8 @@ export class EclaimsComponent implements OnInit {
   }
 
   updateUploadClaim(data) {
-    console.log(data);
     this.http.post('eclaims/eclaims-upload', data).subscribe({
-      next:(data:any) => {
-        console.log(data)
+      next: (data:any) => {
         this.is_refreshing = false;
       },
       error: err => {
@@ -191,18 +190,21 @@ export class EclaimsComponent implements OnInit {
   }
 
   getCreds(){
-    // let params = { 'filter[program_code]': this.program_name };
     let params = { 'filter[program_code]': this.program_name  !== 'cc' ? this.program_name : 'mc' };
     this.http.get('settings/philhealth-credentials', {params}).subscribe({
       next:(data:any) => {
-        console.log(data)
-        if(data.data[0]) {
-          this.program_creds = data.data[0];
-        }
+        if(data.data[0]) this.program_creds = data.data[0];
         this.getEclaimsList();
       },
       error: err => console.log(err)
     })
+  }
+
+  selected_transmittalNumber: string;
+  reopenCf2(name, eclaims){
+    this.caserate_list = [eclaims.caserate];
+    this.selected_transmittalNumber = eclaims.pHospitalTransmittalNo;
+    this.modal[name] = !this.modal[name];
   }
 
   toggleModal(name, eclaims?) {
