@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { faCalendarDay, faPlus, faSave, faTimes, faClose, faTimesCircle, faPencil, faCaretDown, faAngleDown, faInfoCircle, faCaretRight, faSpinner, faAnglesLeft, faAnglesRight, faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
@@ -23,6 +23,7 @@ export class MethodsComponent implements OnInit {
 
   is_saving: boolean = false;
   show_form: boolean = false;
+  show_error: boolean = false;
   showButton: boolean = false;
 
   faTimes = faTimes;
@@ -56,6 +57,10 @@ export class MethodsComponent implements OnInit {
   from: number;
   to: number;
   total: number;
+
+  partner: any;
+
+  required_message = 'Required field';
   
   toggleModal(name) {
     this.modals[name] = !this.modals[name];
@@ -121,6 +126,7 @@ export class MethodsComponent implements OnInit {
         // this.total = dataMethodHistory.meta.total;
         this.getMethodHistory();
         this.validateForm();
+        this.loadFPUsers();
         // this.loadFP.emit();
         console.log(this.fp_methods, 'new function methods');
         console.log(this.client_list, 'new function client list');
@@ -141,6 +147,10 @@ export class MethodsComponent implements OnInit {
     treatment_partner: new FormControl<string| null>(''),
   });
 
+  get f(): { [key: string]: AbstractControl } {
+    return this.methodForm.controls;
+  }
+
   onSubmit(){
     this.is_saving = true;
     this.http.post('family-planning/fp-method', this.methodForm.value).subscribe({
@@ -151,14 +161,16 @@ export class MethodsComponent implements OnInit {
         this.loadFP.emit();
         this.loadFPDetails();
         this.fp_visit_history_details = this.fp_visit_history[0] 
-        console.log(data, 'display visit details')
-        console.log(this.showButton, 'display button details')
+        console.log(data, 'display method on submit')
+        console.log(this.showButton, 'display button details on submit')
          },
       complete: () => {
        
       },
       error: err => {console.log(err)
-  
+        this.show_error = true
+        this.is_saving = false;
+        this.toastr.error('Form invalid or incomplete', 'Error')
       },
     })
   }
@@ -166,13 +178,13 @@ export class MethodsComponent implements OnInit {
   validateForm(){
     this.methodForm.reset();
     this.methodForm = this.formBuilder.group({
-      id: ['', [Validators.required]],
+      id: [''],
       patient_id: [this.patient_id, [Validators.required, Validators.minLength(1)]],
       patient_fp_id: [this.fp_visit_history_details.id, [Validators.required, Validators.minLength(1)]],
       enrollment_date: ['', [Validators.required, Validators.minLength(1)]],
       method_code: ['', [Validators.required, Validators.minLength(1)]],
       client_code: ['', [Validators.required, Validators.minLength(1)]],
-      treatment_partner: ['', [Validators.required, Validators.minLength(1)]],
+      treatment_partner: ['', [Validators.required]],
     });
 
     this.loadFPDetails();
@@ -187,6 +199,15 @@ export class MethodsComponent implements OnInit {
     }
   }
 
+  loadFPUsers() {
+    this.http.get('users', {params: {attendant_flag: 'tb'}}).subscribe({
+      next: (data: any) => {
+        this.partner = data.data;
+        console.log(this.partner, 'load users')
+      }
+    })
+  }
+
   // formInit() {
   
   //   this.methodForm = this.formBuilder.group({
@@ -199,12 +220,13 @@ export class MethodsComponent implements OnInit {
    anotherFunction() {
     
     this.showButton = !this.showButton;
-    this.methodForm.reset();
+    // this.methodForm.reset();
     this.loadFP.emit();
-    this.fp_visit_history_details = this.fp_visit_history[0] 
+    this.getMethodHistory();
+    // this.fp_visit_history_details = this.fp_visit_history[0] 
+    // this.loadLibraries();
     // this.loadFPDetails();
-    this.loadLibraries();
-
+    this.methodForm.reset();
     
    
     console.log('test another function')
@@ -223,9 +245,9 @@ export class MethodsComponent implements OnInit {
     this.fp_visit_history_details = this.fp_visit_history[0] 
     this.loadLibraries();
     this.loadFP.emit();
-    console.log(this.fp_visit_history_details, 'checking patient id fp details')
-    console.log(this.patient_id, 'display patient ID METHOD')
-    this.error_message = '**please enter numbers only';
+    console.log(this.fp_visit_history_details, 'display fp visit history on init method ')
+    // console.log(this.patient_id, 'display patient ID METHOD')
+    // this.error_message = '**please enter numbers only';
   } 
 }
 

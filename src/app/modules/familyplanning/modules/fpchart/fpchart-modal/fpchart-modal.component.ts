@@ -5,11 +5,11 @@ import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-methods-modal',
-  templateUrl: './methods-modal.component.html',
-  styleUrls: ['./methods-modal.component.scss']
+  selector: 'app-fpchart-modal',
+  templateUrl: './fpchart-modal.component.html',
+  styleUrls: ['./fpchart-modal.component.scss']
 })
-export class MethodsModalComponent implements OnInit {
+export class FpchartModalComponent implements OnInit {
   @Output() toggleModal = new EventEmitter<any>();
   @Output() loadFP = new EventEmitter<any>();
   @Output() loadFPDetails = new EventEmitter<any>();
@@ -24,32 +24,35 @@ export class MethodsModalComponent implements OnInit {
 
   fp_visit_history_details: any;
 
-  reasons: any;
+  source_supplies: any;
 
   closeModal(){
-    this.toggleModal.emit('methods-modal');
+    this.toggleModal.emit('fpchart-modal');
     // console.log('check modal')
   }
 
-  dropForm: FormGroup = new FormGroup({
-    
-    dropout_date: new FormControl<string| null>(''),
-    dropout_reason_code: new FormControl<string| null>(''),
-    dropout_remarks: new FormControl<string| null>(''),
+  sourceForm: FormGroup = new FormGroup({
+
+    patient_id: new FormControl<string| null>(''),
+    patient_fp_id: new FormControl<string| null>(''),
+    patient_fp_method_id: new FormControl<string| null>(''),
+    service_date: new FormControl<string| null>(''),
+    source_supply_code: new FormControl<string| null>(''),
+    quantity: new FormControl<string| null>(''),
     
   });
 
   onSubmit(){
-    console.log(this.dropForm)
+    console.log(this.sourceForm)
     this.is_saving = true;
-    this.http.update('family-planning/fp-method/', this.fp_visit_history_details.method.id, this.dropForm.value).subscribe({
+    this.http.post('family-planning/fp-chart', this.sourceForm.value).subscribe({
       next: (data: any) => {
-        this.toastr.success('Dropout was ' + (this.dropForm.value ? 'saved' : 'saved') + ' successuly', 'Success')
+        this.toastr.success('Chart was ' + (this.sourceForm.value ? 'updated' : 'saved') + ' successuly', 'Success')
         this.is_saving = false;
         // this.loadFP.emit();
         // this.loadFPDetails.emit();
         this.anotherFunction.emit();
-        console.log(data, 'display dropout details')
+        console.log(data, 'display chart details')
          },
       complete: () => {
        this.closeModal();
@@ -63,11 +66,11 @@ export class MethodsModalComponent implements OnInit {
   loadLib() {
 
 
-    this.http.get('libraries/family-planning-dropout-reason').subscribe({
+    this.http.get('libraries/family-planning-source-supply').subscribe({
       next: (data: any) => { 
 
-       this.reasons = data.data
-       console.log(this.reasons, 'display reasons') 
+       this.source_supplies = data.data
+       console.log(this.source_supplies, 'display supplies') 
       },
       complete: () => {
         
@@ -80,11 +83,15 @@ export class MethodsModalComponent implements OnInit {
   
   validateForm(){
     
-    this.dropForm = this.formBuilder.group({
+    this.sourceForm = this.formBuilder.group({
       
-      dropout_date: ['', [Validators.required, Validators.minLength(1)]],
-      dropout_reason_code: ['', [Validators.required, Validators.minLength(1)]],
-      dropout_remarks: ['', [Validators.required, Validators.minLength(1)]],
+      patient_id: [this.patient_id, [Validators.required, Validators.minLength(1)]],
+      patient_fp_id: [this.fp_visit_history_details.id, [Validators.required, Validators.minLength(1)]],
+      patient_fp_method_id: [this.fp_visit_history_details.method.id, [Validators.required, Validators.minLength(1)]],
+      service_date: ['', [Validators.required, Validators.minLength(1)]],
+      source_supply_code: ['', [Validators.required, Validators.minLength(1)]],
+      quantity: ['', [Validators.required, Validators.minLength(1)]],
+      
     });
 
     // this.loadFPDetails();
@@ -111,6 +118,6 @@ export class MethodsModalComponent implements OnInit {
     this.fp_visit_history_details = this.fp_visit_history[0]
     this.validateForm();
     this.loadLib();
-    console.log(this.fp_visit_history_details, 'fp history in method modal')
+    console.log(this.fp_visit_history_details, 'fp history in fp chart modal')
   } 
 }

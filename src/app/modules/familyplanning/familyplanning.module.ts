@@ -20,9 +20,10 @@ import { MethodsComponent } from './modules/methods/methods.component';
 import { MethodsModalComponent } from './modules/methods/methods-modal/methods-modal.component';
 import { EndVisitComponent } from 'app/shared/shared-modals/end-visit/end-visit.component';
 import { SharedComponentsModule } from 'app/shared/shared-components/shared-components.module';
+import { FpchartModalComponent } from './modules/fpchart/fpchart-modal/fpchart-modal.component';
 
 @NgModule({
-  declarations: [FamilyplanningComponent, FpchartComponent, FirsvisitComponent, FppeComponent, FphxComponent, ObshxComponent, PelvicComponent, MethodsComponent, MethodsModalComponent,
+  declarations: [FamilyplanningComponent, FpchartComponent, FirsvisitComponent, FppeComponent, FphxComponent, ObshxComponent, PelvicComponent, MethodsComponent, MethodsModalComponent, FpchartModalComponent,
     //  FpchartComponent, FphxComponent, FppeComponent, PelvicexamComponent
   ],
   imports: [

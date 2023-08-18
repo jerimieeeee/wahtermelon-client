@@ -2,7 +2,7 @@
 <div class="m-5 border border-slate-200 rounded-lg">
     <div class="bg-blue-500 text-sm text-white w-full flex justify-between rounded-t-md py-2 pl-3 font-semibold text-center items-center">
      Chart
-        <button class="text-black bg-white mr-3 px-3 py-2 rounded text-sm">
+        <button *ngIf="fp_visit_history[0]?.method !== null" class="text-black bg-white mr-3 px-3 py-2 rounded text-sm" (click)="toggleModal('fpchart-modal')">
         <fa-icon  [icon]="is_saving ? faSpinner : faPlusSquare" [spin]="is_saving ? true : false" class="mr-2"></fa-icon>
         Add Service
         </button>
@@ -42,24 +42,27 @@
                 </tr>
             </thead>
             <tbody>
-                <tr class="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
-                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        08-21-2023
-                    </th>
-                    <td class="px-6 py-4">
-                        Silver
+                <tr class="bg-white border-b dark:bg-gray-900 dark:border-gray-700" *ngFor="let chart_history of fp_visit_history[0].chart">
+                    <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        {{ chart_history.service_date | date: 'MM/dd/yyyy'}}
+                    </td>
+                    <td *ngFor="let method_history of fp_visit_history[0].method" class="px-6 py-4">
+                        {{ method_history?.method?.desc ? method_history?.method?.desc : '-' }}  
                     </td>
                     <td class="px-6 py-4">
-                      LGU
+                        {{ chart_history.source.desc ? chart_history.source.desc : '-' }} 
                     </td>
                     <td class="px-6 py-4">
-                        200
+                      
                     </td>
                     <td class="px-6 py-4">
-                        08-21-2023
+                       
                     </td>
                     <td class="px-6 py-4">
                         
+                    </td>
+                    <td class="px-6 py-4">
+                       
                     </td>
                     <td class="px-6 py-4">
                        
@@ -187,10 +190,11 @@
     [url]="url"
     (toggleModal)="toggleModal($event)"></app-delete-item> -->
 
-<!-- <app-fpchart-modal *ngIf="modals['fpchart-modal']"
-  (toggleModal)="toggleModal($event)"
-  [fp_visit_history]="fp_visit_history"
-  (loadFP)="loadFP()"
-  (loadFPDetails)="loadFPDetails()"
-></app-fpchart-modal> -->
+<app-fpchart-modal *ngIf="modals['fpchart-modal']"
+    [patient_id]="patient_id"
+    (toggleModal)="toggleModal($event)"
+    [fp_visit_history]="fp_visit_history"
+    (loadFP)="loadFP()"
+    (loadFPDetails)="loadFPDetails()"
+></app-fpchart-modal>
   
