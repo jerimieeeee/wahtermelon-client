@@ -20,6 +20,7 @@ export class Cf2Component implements OnInit {
   @Input() program_name;
   @Input() caserate_list;
   @Input() selected_case;
+  @Input() selected_transmittalNumber;
 
   faFilePdf = faFilePdf;
   faCircleNotch = faCircleNotch;
@@ -44,7 +45,8 @@ export class Cf2Component implements OnInit {
     this.http.post('eclaims/eclaims-xml', this.eclaimsForm.value).subscribe({
       next: (data:any) => {
         console.log(data)
-        this.toastr.success('Successfully saved', 'Queue Claim');
+        let save_type: string = this.eclaimsForm.value.transmittalNumber ? 'Update' : 'Queue';
+        this.toastr.success('Successfully saved', save_type+' Claim');
         this.que_form = false;
         this.closeModal();
       },
@@ -381,8 +383,10 @@ export class Cf2Component implements OnInit {
       attendant_first_name: this.selected_caserate.attendant.first_name,
       attendant_middle_name: this.selected_caserate.attendant.middle_name,
       attendant_suffix_name: this.selected_caserate.attendant.suffix_name !== 'NA' ? this.selected_caserate.attendant.suffix_name : '',
+      transmittalNumber: this.selected_transmittalNumber ?? null
     });
 
+    console.log(this.eclaimsForm.value);
     this.loadCf2Params();
   }
 
@@ -399,8 +403,9 @@ export class Cf2Component implements OnInit {
 
   ngOnInit(): void {
     this.facility = this.http.getUserFromJSON().facility;
-    console.log(this.program_name, this.selected_case)
+    console.log(this.selected_case, this.caserate_list.length)
     if(this.caserate_list.length === 1) {
+      console.log(this.caserate_list, typeof this.caserate_list.length)
       this.selected_caserate = this.caserate_list[0];
       this.createForm();
     }
