@@ -16,6 +16,7 @@ export class ForValidationComponent {
   @Input() konsulta_list;
   @Input() filter_tranche;
   @Input() validating;
+  @Input() filter_year;
 
   faCircleCheck = faCircleCheck;
   faSpinner = faSpinner;
@@ -33,7 +34,8 @@ export class ForValidationComponent {
         'patient_id[]': [kon.patient.id],
         'tranche': this.filter_tranche,
         'revalidate': 0,
-        'save': save
+        'save': save,
+        'effectivity_year': this.filter_year
       }
     });
 
@@ -41,7 +43,11 @@ export class ForValidationComponent {
       next: (data: any) => {
         this.processReturn(data, save, kon)
       },
-      error: err => console.log(err)
+      error: err => {
+        console.log(err) //show error
+        this.http.showError(err.error.message, 'Konsulta Validation');
+        this.validating = false;
+      }
     })
   }
 

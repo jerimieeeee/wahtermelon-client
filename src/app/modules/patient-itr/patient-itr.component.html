@@ -16,7 +16,7 @@
         <div class="last:border-0 border-b border-slate-200 pb-2 h-" *ngFor="let visit of visit_list" >
           <div class="grid grid-cols-8 gap-2 mt-2">
             <div class="col-span-2 text-sm font-semibold h-full">
-              {{ visit?.consult_date | date:'MM/dd/yyyy'}} <br />
+              {{ visit?.consult_date | date:'MM/dd/yyyy':'Asia/Manila'}} <br />
               {{ visit?.consult_date | date:'hh:mm a'}}
             </div>
             <div class="col-span-6 bg-blue-50 hover:bg-blue-200 hover:cursor-pointer p-1 pl-5 text-sm col-start-3 grid grid-cols-12 rounded-l-xl" [ngClass]="{'bg-green-200 hover:bg-green-300' : visit?.consult_done === false}" (click)="showConsult(visit)">

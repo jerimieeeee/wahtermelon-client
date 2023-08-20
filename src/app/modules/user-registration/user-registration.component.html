@@ -207,7 +207,7 @@
             <div class="col-span-8">
               <label for="facility_code" class="input-label" [ngClass]="{'text-red-500': is_saving && f.facility_code.errors}">Facility</label>
               <select id="facility_code" name="facility_code" class="input disabled:bg-gray-300" [ngClass]="{'invalid-input': is_saving && f.facility_code.errors}" formControlName="facility_code">
-                <option [value]="facility.code"*ngFor="let facility of facilities" >{{ facility.facility_name }}</option>
+                <option [value]="facility.code"*ngFor="let facility of facilities" >{{ facility.facility_name }} ({{ facility.health_facility_type }})</option>
               </select>
 
               <div *ngIf="is_saving && f.facility_code.errors" class="invalid-alert">

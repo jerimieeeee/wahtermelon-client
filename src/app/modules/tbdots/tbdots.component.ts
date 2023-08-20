@@ -27,10 +27,10 @@ export class TbdotsComponent implements OnInit {
   patient_tb_history: any = [];
   selected_tb_consult: any;
 
-  max_date = formatDate(new Date(), 'yyyy-MM-dd', 'en', 'Asia/Singapore');
+  max_date = formatDate(new Date(), 'yyyy-MM-dd', 'en', 'Asia/Manila');
   openTbConsult(data) {
     this.selected_tb_consult = data;
-    if(data.treatment_done === 1) this.consult_details = null;
+    // if(data.treatment_done === 1) this.consult_details = null;
     this.pages = 2;
   }
 

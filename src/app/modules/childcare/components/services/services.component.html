@@ -29,7 +29,7 @@
             <span class="font-semibold">{{ item.services.service_name }}</span> <br />({{ item.status_id === 1 ? 'Done' : (item.status_id === 2 ? 'Done Outside - Private' : 'Done Outside - Public') }} -
           </span>
           <span class="text-sm flex-auto text-right" *ngIf="item.services.essential === 'Y'">
-            {{ !item.service_date ? '-' : item.service_date | date: 'MM/dd/yyyy'}})
+            {{ !item.service_date ? '-' : item.service_date | date: 'MM/dd/yyyy':'Asia/Manila'}})
           </span>
       </div>
 
@@ -208,7 +208,7 @@
           <span class="font-semibold">{{ item.services.service_name }}</span> <br />({{ item.status_id === 1 ? 'Done' : (item.status_id === 2 ? 'Done Outside - Private' : 'Done Outside - Public') }} -
         </span>
         <span class="text-sm flex-auto text-right" *ngIf="item.services.essential === 'N'">
-          {{ !item.service_date ? '-' : item.service_date | date: 'MM/dd/yyyy'}})
+          {{ !item.service_date ? '-' : item.service_date | date: 'MM/dd/yyyy':'Asia/Manila'}})
         </span>
     </div>
 

@@ -38,7 +38,7 @@
                            class="hover:bg-blue-100 group">
                            <td class="px-2 font-normal">{{service.service.desc}}</td>
                            <th class="px-2 font-normal">
-                              <p *ngIf="edit !== i">{{service.service_date | date: 'MM/dd/yyyy'}}</p>
+                              <p *ngIf="edit !== i">{{service.service_date | date: 'MM/dd/yyyy':'Asia/Manila'}}</p>
                               <input [(ngModel)]="service_list[i].service_date" id="service_date" name="service_date"
                                  type="date" *ngIf="edit === i"
                                  class="calendar-style col-span-8 rounded border-solid border border-zinc-300 focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none disabled:cursor-not-allowed">
@@ -80,7 +80,7 @@
                            </th>
                            <th class="px-2 font-normal">
                               <button (click)="enableEdit(i)">
-                                 <fa-icon [icon]="faPencil" *ngIf="edit !== i" size="lg" 
+                                 <fa-icon [icon]="faPencil" *ngIf="edit !== i" size="lg"
                                     class="text-gray-400 hover:text-orange-400 invisible group-hover:visible"></fa-icon>
                               </button>
                               <button (click)="enableEdit(i)">

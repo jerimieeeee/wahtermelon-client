@@ -118,7 +118,7 @@ export class DrugFormComponent implements OnChanges {
       patient_id: [this.consult_details.patient.id],
       prescribed_by: [physician,[Validators.required]],
       consult_id: [this.consult_details.id,[Validators.required]],
-      prescription_date: [formatDate(this.consult_details.consult_date, 'yyyy-MM-dd', 'en', 'Asia/Singapore'),[Validators.required]],
+      prescription_date: [formatDate(this.consult_details.consult_date, 'yyyy-MM-dd', 'en', 'Asia/Manila'),[Validators.required]],
       konsulta_medicine_code: [null,[Validators.required]],
       added_medicine: [null,[Validators.required]],
       dosage_quantity: [null,[Validators.required]],

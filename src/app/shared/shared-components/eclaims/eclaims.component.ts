@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { faCircleNotch, faRotate, faUpload } from '@fortawesome/free-solid-svg-icons';
+import { faCircleNotch, faClipboardQuestion, faPenToSquare, faReceipt, faRotate, faUpload } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -16,6 +16,9 @@ export class EclaimsComponent implements OnInit {
   faRotate = faRotate;
   faUpload = faUpload;
   faCircleNotch = faCircleNotch;
+  faReceipt = faReceipt;
+  faClipboardQuestion = faClipboardQuestion;
+  faPenToSquare = faPenToSquare;
 
   pending_list: any = [];
   modal: any = [];
@@ -33,7 +36,6 @@ export class EclaimsComponent implements OnInit {
   is_refreshing: boolean = false;
   show_form:boolean = false;
   show_cf2: boolean = false;
-
 
   getEclaimsList() {
     this.show_form = false;
@@ -116,7 +118,7 @@ export class EclaimsComponent implements OnInit {
     })
   }
 
-  getClaimStatus(data) {
+  getClaimStatus(data, type) {
     this.is_refreshing = true;
 
     let params = {
@@ -126,33 +128,59 @@ export class EclaimsComponent implements OnInit {
 
     this.http.post('eclaims/get-claim-status', params).subscribe({
       next:(resp: any) => {
-        console.log(resp)
-        this.is_refreshing = false;
-        this.toastr.info('As of: '+resp.pAsOf+ ' '+resp.pAsOfTime, resp.CLAIM.pStatus, {
-          closeButton: true,
-          positionClass: 'toast-top-center',
-          disableTimeOut: true
-        });
-        data.pStatus = resp.CLAIM.pStatus;
-        this.updateUploadClaim(data);
+        this.iterateMessage(resp, data, type);
       },
       error: err => {
-        console.log(err);
         this.is_refreshing = false;
-        this.toastr.error(err.error.message, 'Claims Status', {
-          closeButton: true,
-          positionClass: 'toast-top-center',
-          disableTimeOut: true
-        });
+        this.http.showError(err.error.message, 'Claims Status');
       }
     })
   }
 
+  iterateMessage(resp, data, type) {
+    console.log(resp);
+    data.pStatus = resp.CLAIM.pStatus;
+    let message: string;
+
+    switch(type) {
+      case 'DENIED': {
+        data.denied_reason = resp.CLAIM.DENIED.REASON.pReason;
+        message = 'As of: '+resp.pAsOf+ ' '+resp.pAsOfTime+ '<br />'+resp.CLAIM.DENIED.REASON.pReason;
+        break;
+      }
+      case 'WITH CHEQUE': {
+        console.log(resp.CLAIM.PAYMENT.PAYEE);
+        message = 'As of: '+resp.pAsOf+ ' '+resp.pAsOfTime;
+
+        Object.entries(resp.CLAIM.PAYMENT.PAYEE).forEach(([key, value]:any, index) => {
+          console.log(value)
+          message = 'As of: '+resp.pAsOf+ ' '+resp.pAsOfTime;
+          message += '<br />Voucher No: '+value.pVoucherNo;
+          message += '<br />Check Amount: '+value.pCheckAmount;
+        });
+      }
+      default: {
+        message = 'As of: '+resp.pAsOf+ ' '+resp.pAsOfTime;
+      }
+    }
+
+    this.showInfoToastr(message, resp.CLAIM.pStatus);
+    this.updateUploadClaim(data);
+    this.is_refreshing = false;
+  }
+
+  showInfoToastr(message, title) {
+    this.toastr.info(message, title, {
+      closeButton: true,
+      positionClass: 'toast-top-center',
+      disableTimeOut: true,
+      enableHtml: true
+    });
+  }
+
   updateUploadClaim(data) {
-    console.log(data);
     this.http.post('eclaims/eclaims-upload', data).subscribe({
-      next:(data:any) => {
-        console.log(data)
+      next: (data:any) => {
         this.is_refreshing = false;
       },
       error: err => {
@@ -162,18 +190,21 @@ export class EclaimsComponent implements OnInit {
   }
 
   getCreds(){
-    // let params = { 'filter[program_code]': this.program_name };
     let params = { 'filter[program_code]': this.program_name  !== 'cc' ? this.program_name : 'mc' };
     this.http.get('settings/philhealth-credentials', {params}).subscribe({
       next:(data:any) => {
-        console.log(data)
-        if(data.data[0]) {
-          this.program_creds = data.data[0];
-        }
+        if(data.data[0]) this.program_creds = data.data[0];
         this.getEclaimsList();
       },
       error: err => console.log(err)
     })
+  }
+
+  selected_transmittalNumber: string;
+  reopenCf2(name, eclaims){
+    this.caserate_list = [eclaims.caserate];
+    this.selected_transmittalNumber = eclaims.pHospitalTransmittalNo;
+    this.modal[name] = !this.modal[name];
   }
 
   toggleModal(name, eclaims?) {

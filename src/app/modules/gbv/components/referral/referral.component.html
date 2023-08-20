@@ -40,7 +40,7 @@
                 <fa-icon [icon]="faEdit" (click)="toggleModal('referral', ref)" class="hover:cursor-pointer text-orange-500"></fa-icon>
               </td>
               <td class="text-center align-top pt-3">
-                {{ ref.referral_date | date: 'MM/dd/yyyy' }}
+                {{ ref.referral_date | date: 'MM/dd/yyyy':'Asia/Manila' }}
               </td>
               <td class="text-center align-top pt-3">
                 {{ ref.facility.facility_name }}

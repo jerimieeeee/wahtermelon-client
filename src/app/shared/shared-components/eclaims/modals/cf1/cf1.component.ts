@@ -68,7 +68,7 @@ export class Cf1Component implements OnInit {
 
   /* getPbef(){
     this.show_form = false;
-    let test_date = formatDate(new Date(), 'MM-dd-yyyy', 'en', 'Asia/Singapore');
+    let test_date = formatDate(new Date(), 'MM-dd-yyyy', 'en', 'Asia/Manila');
     let params = {
       program_code: this.program_code,
       member_pin: this.patient_philhealth.philhealth_id,
@@ -76,7 +76,7 @@ export class Cf1Component implements OnInit {
       member_first_name: this.patient_philhealth.membership_type_id === 'DD' ? this.patient_philhealth.member_first_name.toUpperCase() : this.patient.first_name.toUpperCase(),
       member_middle_name: this.patient_philhealth.membership_type_id === 'DD' ? this.patient_philhealth.member_middle_name.toUpperCase() : this.patient.middle_name.toUpperCase(),
       member_suffix_name: this.patient_philhealth.membership_type_id === 'DD' ? (this.patient_philhealth.member_suffix_name === 'NA' ? '' : this.patient_philhealth.member_suffix_name.toUpperCase()) : (this.patient.suffix_name === 'NA' ? '' : this.patient.suffix_name.toUpperCase()),
-      member_birthdate: formatDate(this.patient_philhealth.membership_type_id === 'DD' ? this.patient_philhealth.member_birthdate : this.patient.birthdate, 'MM-dd-yyyy', 'en', 'Asia/Singapore'),
+      member_birthdate: formatDate(this.patient_philhealth.membership_type_id === 'DD' ? this.patient_philhealth.member_birthdate : this.patient.birthdate, 'MM-dd-yyyy', 'en', 'Asia/Manila'),
       patient_is: this.patient_philhealth.membership_type_id === 'DD' ? this.patient_philhealth.member_relation_id : 'M',
       admission_date: test_date,
       discharge_date: test_date,
@@ -84,7 +84,7 @@ export class Cf1Component implements OnInit {
       patient_first_name: this.patient.first_name.toUpperCase(),
       patient_middle_name: this.patient.middle_name.toUpperCase(),
       patient_suffix_name: this.patient.suffix_name === 'NA' ? '' : this.patient.suffix_name.toUpperCase(),
-      patient_birthdate: formatDate(this.patient.birthdate, 'MM-dd-yyyy', 'en', 'Asia/Singapore'),
+      patient_birthdate: formatDate(this.patient.birthdate, 'MM-dd-yyyy', 'en', 'Asia/Manila'),
       patient_gender: this.patient.gender
     }
 

@@ -16,7 +16,7 @@ export class ModuleModalComponent implements OnInit {
   @Input() patient_age;
   @Input() philhealth_details;
 
-  max_date = formatDate(new Date, 'yyyy-MM-dd', 'en', 'Asia/Singapore');
+  max_date = formatDate(new Date, 'yyyy-MM-dd', 'en', 'Asia/Manila');
   faClipboard = faClipboard;
   faCircleInfo = faCircleInfo;
   faHouse = faHouse;
@@ -82,7 +82,7 @@ export class ModuleModalComponent implements OnInit {
     let params = {
       pPIN: this.philhealth_details.philhealth_id,
       pATC: this.pATC,
-      pEffectivityDate: formatDate(this.pATC_date, 'MM/dd/yyyy', 'en', 'Asia/Singapore')
+      pEffectivityDate: formatDate(this.pATC_date, 'MM/dd/yyyy', 'en', 'Asia/Manila')
     }
     this.http.get('konsulta/check-atc', {params}).subscribe({
       next: (data: any) => {

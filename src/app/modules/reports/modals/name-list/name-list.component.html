@@ -29,10 +29,10 @@
                   {{ list.gender }}
                 </th> -->
                 <td class="py-4 px-6">
-                  {{ list.date_of_service | date: 'MM/dd/yyyy' }}
+                  {{ list.date_of_service | date: 'MM/dd/yyyy':'Asia/Manila' }}
                 </td>
                 <td class="py-4 px-6">
-                  {{ list.birthdate | date: 'MM/dd/yyyy' }}
+                  {{ list.birthdate | date: 'MM/dd/yyyy':'Asia/Manila' }}
                 </td>
               </tr>
             </tbody>

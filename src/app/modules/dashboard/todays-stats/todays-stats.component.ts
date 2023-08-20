@@ -48,7 +48,7 @@ export class TodaysStatsComponent implements OnInit {
 
     this.http.get('appointment/schedule', {params}).subscribe({
       next: (data: any) => {
-        this.appointment_list = data[0][formatDate(new Date(), 'yyyy-MM-dd', 'en', 'Asia/Singapore')];
+        this.appointment_list = data[0][formatDate(new Date(), 'yyyy-MM-dd', 'en', 'Asia/Manila')];
         console.log(this.appointment_list)
       },
       error: err => console.log(err)

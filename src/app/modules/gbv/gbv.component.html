@@ -90,10 +90,10 @@
           {{ gbv_history.gbvIntake?.case_number ?? 'For GBV Assessment' }}
         </td>
         <td class="py-4 px-6">
-          {{ gbv_history.gbv_date | date: 'MM/dd/yyyy' }}
+          {{ gbv_history.gbv_date | date: 'MM/dd/yyyy':'Asia/Manila' }}
         </td>
         <td class="py-4 px-6">
-          {{ gbv_history.outcome_date | date: 'MM/dd/yyyy' ?? '-' }}
+          {{ gbv_history.outcome_date | date: 'MM/dd/yyyy':'Asia/Manila' ?? '-' }}
         </td>
         <td class="py-4 px-6">
           {{ (!gbv_history.outcome_reason && !gbv_history.outcome_result && !gbv_history.outcome_verdict) ? 'Open' : ''}}

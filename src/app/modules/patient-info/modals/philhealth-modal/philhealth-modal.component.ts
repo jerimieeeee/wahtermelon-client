@@ -118,7 +118,7 @@ export class PhilhealthModalComponent implements OnInit {
     let params = {
       pPIN: this.philhealthForm.value.philhealth_id,
       pATC: this.philhealthForm.value.authorization_transaction_code,
-      pEffectivityDate: formatDate(this.pATC_date, 'MM/dd/yyyy', 'en', 'Asia/Singapore')
+      pEffectivityDate: formatDate(this.pATC_date, 'MM/dd/yyyy', 'en', 'Asia/Manila')
     }
 
     this.http.get('konsulta/check-atc', {params}).subscribe({
@@ -144,7 +144,7 @@ export class PhilhealthModalComponent implements OnInit {
       first_name: patient.first_name,
       middle_name: patient.middle_name,
       suffix_name: patient.suffix_name !== 'NA' ? patient.suffix_name : '',
-      birthdate: formatDate(patient.birthdate, 'MM-dd-yyyy', 'en', 'Asia/Singapore')
+      birthdate: formatDate(patient.birthdate, 'MM-dd-yyyy', 'en', 'Asia/Manila')
     }
 
     this.http.post('eclaims/get-member-pin', params).subscribe({
@@ -325,7 +325,7 @@ export class PhilhealthModalComponent implements OnInit {
   }
 
   updateEffectivity(){
-    this.philhealthForm.patchValue({effectivity_year: formatDate(this.philhealthForm.value.enlistment_date, 'yyyy', 'en', 'Asia/Singapore')});
+    this.philhealthForm.patchValue({effectivity_year: formatDate(this.philhealthForm.value.enlistment_date, 'yyyy', 'en', 'Asia/Manila')});
   }
 
   isATCrequired(){
@@ -396,7 +396,7 @@ export class PhilhealthModalComponent implements OnInit {
       }
 
       if(this.philhealthForm.value.membership_type_id === "DD"){
-        this.philhealthForm.patchValue({member_birthdate: formatDate(this.philhealth_to_edit.member_birthdate, 'yyyy-MM-dd','en', 'Asia/Singapore')});
+        this.philhealthForm.patchValue({member_birthdate: formatDate(this.philhealth_to_edit.member_birthdate, 'yyyy-MM-dd','en', 'Asia/Manila')});
         this.philhealthForm.patchValue({member_pin_confirmation: this.philhealth_to_edit.member_pin});
       }
       this.showMember();

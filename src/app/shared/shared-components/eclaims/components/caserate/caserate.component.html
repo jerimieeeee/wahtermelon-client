@@ -8,7 +8,7 @@
       <div class="grid grid-cols-6 border-t border-slate-200" *ngFor="let caserate of caserate_list; let i = index">
           <div class="col-span-5 m-2 text-sm">
             <strong>{{ caserate.code }} - {{ caserate.caserate_code }}</strong> <br />
-            {{ caserate.caserate_date | date:'MM/dd/yyyy'}} <br />
+            {{ caserate.caserate_date | date:'MM/dd/yyyy':'Asia/Manila'}} <br />
             {{ caserate.description }} <br />
           </div>
           <div class="col-span-1 text-orange-500 m-2">

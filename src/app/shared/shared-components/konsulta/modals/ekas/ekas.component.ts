@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { faFaceFrown, faFaceMeh, faFaceSmile, faPrint, faSpinner, faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import { AgeService } from 'app/shared/services/age.service';
+import { dateHelper } from 'app/shared/services/date-helper.service';
 import { HttpService } from 'app/shared/services/http.service';
 import { NameHelperService } from 'app/shared/services/name-helper.service';
 
@@ -56,7 +57,7 @@ export class EkasComponent implements OnInit {
         this.philhealth_info = data.data[0];
 
         let params = {
-          date_from: this.patient_info.birthdate,
+          date_from: this.dateHelper.dateFormat(this.patient_info.birthdate),
           date_to: data.data[0].enlistment_date
         }
 
@@ -80,7 +81,8 @@ export class EkasComponent implements OnInit {
   constructor(
     private http: HttpService,
     private ageService: AgeService,
-    private nameService: NameHelperService
+    private nameService: NameHelperService,
+    private dateHelper: dateHelper
   ) { }
 
   ngOnInit(): void {

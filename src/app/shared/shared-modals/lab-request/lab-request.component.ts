@@ -21,7 +21,7 @@ export class LabRequestComponent implements OnChanges{
 
   faCircleNotch = faCircleNotch;
 
-  max_date = formatDate(new Date, 'yyyy-MM-dd', 'en', 'Asia/Singapore');
+  max_date = formatDate(new Date, 'yyyy-MM-dd', 'en', 'Asia/Manila');
   lab_list;
   request_date: string;
   labs: any = [];

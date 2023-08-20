@@ -22,27 +22,27 @@
 
     <div class="w-full pt-4 grid grid-cols-2">
       <div class="px-10 text-sm">
-        <span *ngFor="let months of ccdev, index as i" class="flex"><p *ngIf="months.selected == 1" class="font-semibold mr-2 py-2">Breastfeeding {{months.name}}:</p><p *ngIf="months.selected == 1" class="py-2">{{months.date}}</p></span> 
+        <span *ngFor="let months of ccdev, index as i" class="flex"><p *ngIf="months.selected == 1" class="font-semibold mr-2 py-2">Breastfeeding {{months.name}}:</p><p *ngIf="months.selected == 1" class="py-2">{{months.date}}</p></span>
       </div>
       <div class="px-10 text-sm">
         <div *ngIf="getCompleCondition" class="py-2">
-          
-          <span class="flex"><p class="font-semibold mr-2">Complementary Feeding Date:</p><p class="">{{patient_breastfed?.comp_fed_date | date: 'MM/dd/yyyy'}}</p></span>
+
+          <span class="flex"><p class="font-semibold mr-2">Complementary Feeding Date:</p><p class="">{{patient_breastfed?.comp_fed_date | date: 'MM/dd/yyyy':'Asia/Manila'}}</p></span>
         </div>
       </div>
       <div class="flex w-full item-start flex-wrap col-span-2" *ngIf="editCondition">
         <!-- <div *ngFor="let ccmonths of ccdev" class=" md:w-1/2 lg:w-1/2 px-10 text-sm">
           <p class="py-1">{{ccmonths.name}} - {{ccmonths.isDefault}}</p> -->
           <p class="px-10 py-1 text-sm mt-1">No Recorded Breastfeeding / Complementary Feeding!</p>
-          
+
               <button type="button" class="flex btn-add ml-auto mr-10" (click)="toggleBreastfeedingModal()">
                 <fa-icon class="mr-2" [icon]="faPlus"></fa-icon>
                   Add
               </button>
-          
+
       </div>
-      <span *ngIf="getCompleCondition" class="flex px-3 ml-10 text-sm p-2.5 bg-green-50 mt-1 border border-gray-300 rounded-lg min-width"><p class="font-semibold">{{ebf_status}}</p><p *ngIf="ebf_status == 'Exclusively Breastfed'" class="px-1"> - </p><p class="px-1">{{this.ebf_test_date | date: 'MM/dd/yyyy' }}</p></span>
-      <!-- <span *ngIf="getCompleCondition" class="flex px-10 text-sm py-2"><p class="font-bold mr-2">EBF Status:</p><p class="">{{ebf_status}}</p><p *ngIf="ebf_status == 'Exclusively Breastfed'" class="px-1"> - </p><p>{{patient_breastfed?.ebf_date | date: 'MM/dd/yyyy' }}</p></span> -->
+      <span *ngIf="getCompleCondition" class="flex px-3 ml-10 text-sm p-2.5 bg-green-50 mt-1 border border-gray-300 rounded-lg min-width"><p class="font-semibold">{{ebf_status}}</p><p *ngIf="ebf_status == 'Exclusively Breastfed'" class="px-1"> - </p><p class="px-1">{{this.ebf_test_date | date: 'MM/dd/yyyy':'Asia/Manila' }}</p></span>
+      <!-- <span *ngIf="getCompleCondition" class="flex px-10 text-sm py-2"><p class="font-bold mr-2">EBF Status:</p><p class="">{{ebf_status}}</p><p *ngIf="ebf_status == 'Exclusively Breastfed'" class="px-1"> - </p><p>{{patient_breastfed?.ebf_date | date: 'MM/dd/yyyy':'Asia/Manila' }}</p></span> -->
       <!-- <span class="col-start-1 flex px-10 text-sm"><p class="font-bold mr-2">Reason:</p><p class="">{{patient_breastfed?.ebf_reason}}</p></span> -->
     </div>
 

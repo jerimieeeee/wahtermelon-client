@@ -15,11 +15,11 @@
     </thead>
     <tbody>
       <tr *ngFor="let mc of patient_mc_list">
-        <th class="px-1 text-sm font-normal">{{mc.pre_registration?'MCR: ' + (mc.pre_registration.pre_registration_date | date: 'MM/dd/yyyy'):'Post: ' + (mc.post_registration.post_registration_date | date: 'MM/dd/yyyy') }}</th>
-        <th class="px-1 text-sm font-normal">{{mc.pre_registration?(mc.pre_registration.lmp_date | date: 'MM/dd/yyyy'):'-'}}</th>
-        <th class="px-1 text-sm font-normal">{{mc.post_registration?(mc.post_registration.delivery_date | date: 'MM/dd/yyyy'):'-'}}</th>
-        <th class="px-1 text-sm font-normal">{{mc.post_registration?(mc.post_registration.admission_date | date: 'MM/dd/yyyy'):'-'}}</th>
-        <th class="px-1 text-sm font-normal">{{mc.post_registration?(mc.post_registration.discharge_date | date: 'MM/dd/yyyy'):'-'}}</th>
+        <th class="px-1 text-sm font-normal">{{mc.pre_registration?'MCR: ' + (mc.pre_registration.pre_registration_date | date: 'MM/dd/yyyy':'Asia/Manila'):'Post: ' + (mc.post_registration.post_registration_date | date: 'MM/dd/yyyy':'Asia/Manila') }}</th>
+        <th class="px-1 text-sm font-normal">{{mc.pre_registration?(mc.pre_registration.lmp_date | date: 'MM/dd/yyyy':'Asia/Manila'):'-'}}</th>
+        <th class="px-1 text-sm font-normal">{{mc.post_registration?(mc.post_registration.delivery_date | date: 'MM/dd/yyyy':'Asia/Manila'):'-'}}</th>
+        <th class="px-1 text-sm font-normal">{{mc.post_registration?(mc.post_registration.admission_date | date: 'MM/dd/yyyy':'Asia/Manila'):'-'}}</th>
+        <th class="px-1 text-sm font-normal">{{mc.post_registration?(mc.post_registration.discharge_date | date: 'MM/dd/yyyy':'Asia/Manila'):'-'}}</th>
         <th class="px-1 text-sm font-normal">{{mc.post_registration?(mc.post_registration.end_pregnancy?'Closed':'Open'):'Open'}}</th>
       </tr>
     </tbody>

@@ -64,7 +64,7 @@
                 {{ drug.last_name }}, {{ drug.first_name }} {{ drug.middle_name === 'NA' ? '' : drug.middle_name }} {{ drug.suffix_name === 'NA' ? '' : drug.suffix_name}}
               </th>
               <td class="py-4 px-6">
-                {{ drug.birtdate | date: 'MM/dd/yyyy' }}
+                {{ drug.birtdate | date: 'MM/dd/yyyy':'Asia/Manila' }}
               </td>
               <td class="py-4 px-6">
                 {{ drug.gender }}

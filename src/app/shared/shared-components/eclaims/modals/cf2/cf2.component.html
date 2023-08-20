@@ -10,7 +10,7 @@
         <div>
           <button [disabled]="!selected_caserate || que_form" class="bg-white text-orange-400 rounded-md px-2 py-1 mr-3 disabled:opacity-50" (click)="submitQue()">
             <fa-icon *ngIf="que_form" [icon]="faCircleNotch" spin="true" class="pr-1"></fa-icon>
-            Queue
+            {{ eclaimsForm.value.transmittalNumber ? 'Update' : 'Queue' }}
           </button>
           <button [disabled]="!selected_caserate || pdf_exported || que_form" class="bg-white text-orange-400 rounded-md px-2 py-1 disabled:opacity-50" (click)="exportP()">
             <fa-icon [icon]="faFilePdf"></fa-icon>
@@ -176,7 +176,7 @@
               Maternal care visits invalid or incomplete
               <ul *ngFor="let prenatal_visit of selected_case?.prenatal_visit">
                 <li class="text-sm font-semibold">
-                  Trimester {{ prenatal_visit.trimester }}: {{ prenatal_visit.prenatal_date }}
+                  Trimester {{ prenatal_visit.trimester }}: {{ prenatal_visit.prenatal_date | date: 'MM-dd-yyyy' }}
                 </li>
               </ul>
             </div>

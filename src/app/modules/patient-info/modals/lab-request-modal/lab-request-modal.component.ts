@@ -93,7 +93,7 @@ export class LabRequestModalComponent implements OnInit {
     this.toggleModal.emit('lab-request')
   }
 
-  max_date = formatDate(new Date, 'yyyy-MM-dd', 'en', 'Asia/Singapore');
+  max_date = formatDate(new Date, 'yyyy-MM-dd', 'en', 'Asia/Manila');
   ngOnInit(): void {
     this.loadLabs();
   }

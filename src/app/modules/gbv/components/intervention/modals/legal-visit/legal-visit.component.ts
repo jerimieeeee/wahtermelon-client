@@ -22,7 +22,7 @@ export class LegalVisitComponent implements OnInit {
 
   is_saving: boolean = false;
 
-  max_date = formatDate(new Date(), 'yyyy-MM-dd', 'en', 'Asia/Singapore');
+  max_date = formatDate(new Date(), 'yyyy-MM-dd', 'en', 'Asia/Manila');
   legalVisitForm: FormGroup = new FormGroup({
     id: new FormControl<string| null>(null),
     patient_id: new FormControl<string| null>(null),

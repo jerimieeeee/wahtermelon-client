@@ -26,7 +26,7 @@
           {{ services.services.service_name }}
         </div>
         <div class="text-xs text-right">
-          {{ services.service_date ? (services.service_date | date: 'MM/dd/yyyy') : '-' }}
+          {{ services.service_date ? (services.service_date | date: 'MM/dd/yyyy':'Asia/Manila') : '-' }}
         </div>
 
         <div *ngIf="services.service_id === 'NBSDONE'" class="pl-5 col-span-2 text-xs">
@@ -71,7 +71,7 @@
         Date Assessed
       </div>
       <div class="text-xs text-right">
-        {{ ccdev_breastfed?.ebf_date ? (ccdev_breastfed?.ebf_date | date: 'MM/dd/yyyy') : '-' }}
+        {{ ccdev_breastfed?.ebf_date ? (ccdev_breastfed?.ebf_date | date: 'MM/dd/yyyy':'Asia/Manila') : '-' }}
       </div>
     </div>
 

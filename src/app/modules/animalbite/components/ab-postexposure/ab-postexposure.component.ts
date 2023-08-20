@@ -24,7 +24,7 @@ export class AbPostexposureComponent implements OnInit, OnChanges{
   faSave = faSave;
 
   abPostExposureForm:FormGroup=abPostExposureForm();
-  max_date: string = formatDate(new Date(), 'yyyy-MM-dd', 'en', 'Asia/Singapore');
+  max_date: string = formatDate(new Date(), 'yyyy-MM-dd', 'en', 'Asia/Manila');
 
   animal_statuses:  {};
   rig_types:  {};
@@ -106,14 +106,14 @@ export class AbPostexposureComponent implements OnInit, OnChanges{
       this.abPostExposureForm.patchValue({...this.selected_ab_consult.abPostExposure});
 
       this.abPostExposureForm.patchValue({
-        animal_status_date: this.abPostExposureForm.value.animal_status_date ? formatDate(this.abPostExposureForm.value.animal_status_date, 'yyyy-MM-dd', 'en', 'Asia/Singapore'): null,
-        rig_type_date: this.abPostExposureForm.value.rig_type_date ? formatDate(this.abPostExposureForm.value.rig_type_date, 'yyyy-MM-dd', 'en', 'Asia/Singapore'): null,
-        other_vacc_date: this.abPostExposureForm.value.other_vacc_date ? formatDate(this.abPostExposureForm.value.other_vacc_date, 'yyyy-MM-dd', 'en', 'Asia/Singapore'): null,
-        day0_date: this.abPostExposureForm.value.day0_date ? formatDate(this.abPostExposureForm.value.day0_date, 'yyyy-MM-dd', 'en', 'Asia/Singapore'): null,
-        day3_date: this.abPostExposureForm.value.day3_date ? formatDate(this.abPostExposureForm.value.day3_date, 'yyyy-MM-dd', 'en', 'Asia/Singapore'): null,
-        day7_date: this.abPostExposureForm.value.day7_date ? formatDate(this.abPostExposureForm.value.day7_date, 'yyyy-MM-dd', 'en', 'Asia/Singapore'): null,
-        day14_date: this.abPostExposureForm.value.day14_date ? formatDate(this.abPostExposureForm.value.day14_date, 'yyyy-MM-dd', 'en', 'Asia/Singapore'): null,
-        day28_date: this.abPostExposureForm.value.day28_date ? formatDate(this.abPostExposureForm.value.day28_date, 'yyyy-MM-dd', 'en', 'Asia/Singapore'): null,
+        animal_status_date: this.abPostExposureForm.value.animal_status_date ? formatDate(this.abPostExposureForm.value.animal_status_date, 'yyyy-MM-dd', 'en', 'Asia/Manila'): null,
+        rig_type_date: this.abPostExposureForm.value.rig_type_date ? formatDate(this.abPostExposureForm.value.rig_type_date, 'yyyy-MM-dd', 'en', 'Asia/Manila'): null,
+        other_vacc_date: this.abPostExposureForm.value.other_vacc_date ? formatDate(this.abPostExposureForm.value.other_vacc_date, 'yyyy-MM-dd', 'en', 'Asia/Manila'): null,
+        day0_date: this.abPostExposureForm.value.day0_date ? formatDate(this.abPostExposureForm.value.day0_date, 'yyyy-MM-dd', 'en', 'Asia/Manila'): null,
+        day3_date: this.abPostExposureForm.value.day3_date ? formatDate(this.abPostExposureForm.value.day3_date, 'yyyy-MM-dd', 'en', 'Asia/Manila'): null,
+        day7_date: this.abPostExposureForm.value.day7_date ? formatDate(this.abPostExposureForm.value.day7_date, 'yyyy-MM-dd', 'en', 'Asia/Manila'): null,
+        day14_date: this.abPostExposureForm.value.day14_date ? formatDate(this.abPostExposureForm.value.day14_date, 'yyyy-MM-dd', 'en', 'Asia/Manila'): null,
+        day28_date: this.abPostExposureForm.value.day28_date ? formatDate(this.abPostExposureForm.value.day28_date, 'yyyy-MM-dd', 'en', 'Asia/Manila'): null,
       })
     }
   }

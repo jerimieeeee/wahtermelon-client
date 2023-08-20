@@ -28,7 +28,7 @@
                   {{ philhealth.philhealth_id }}
                 </td>
                 <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
-                  {{ philhealth.enlistment_date | date: 'MM/dd/yyyy' }}
+                  {{ philhealth.enlistment_date | date: 'MM/dd/yyyy':'Asia/Manila' }}
                 </th>
                 <td class="py-4 px-6">
                   {{ philhealth.enlistment_date | date: 'yyyy' }}

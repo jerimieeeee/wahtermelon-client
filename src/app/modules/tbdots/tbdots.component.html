@@ -92,10 +92,10 @@
           </div>
         </td>
         <td class="py-4 px-6">
-          {{ tb_history.case_finding.consult_date | date: 'MM/dd/yyyy'}}
+          {{ tb_history.case_finding.consult_date | date: 'MM/dd/yyyy':'Asia/Manila'}}
         </td>
         <td class="py-4 px-6">
-          {{ tb_history.case_holding ? (tb_history.case_holding?.registration_date | date: 'MM/dd/yyyy') : '-' }}
+          {{ tb_history.case_holding ? (tb_history.case_holding?.registration_date | date: 'MM/dd/yyyy':'Asia/Manila') : '-' }}
         </td>
         <td class="py-4 px-6">
           {{ tb_history.case_holding ? tb_history.case_holding?.case_number : '-' }}

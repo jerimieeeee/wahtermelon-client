@@ -14,7 +14,7 @@ export class CatchmentBarangayComponent implements OnInit {
   faSave = faSave;
   faCircleNotch = faCircleNotch;
 
-  current_year = formatDate(new Date(), 'yyyy', 'en', 'Asia/Singapore');
+  current_year = formatDate(new Date(), 'yyyy', 'en', 'Asia/Manila');
   barangays: any = [];
   selected_catchment: any = [];
   all_selected: string;

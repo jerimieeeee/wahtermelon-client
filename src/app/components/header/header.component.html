@@ -25,7 +25,7 @@
             </div>
             <div>
               <h5 class="text-blue-400" [ngOptionHighlight]="search">{{ item.last_name }}, {{ item.first_name }} {{ item.middle_name }} {{ item.suffix_name === 'NA' ? '' : item.suffix_name}}</h5>
-              <h6 class="text-muted">{{ item.birthdate | date: 'MM/dd/yyyy'}}</h6>
+              <h6 class="text-muted">{{ item.birthdate | date: 'MM/dd/yyyy':'Asia/Manila'}}</h6>
             </div>
           </div>
         </ng-template>

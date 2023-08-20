@@ -62,13 +62,13 @@
           <tbody>
             <tr *ngFor="let konsulta of konsulta_list; let odd = odd; let i = index" class="bg-white border-t" [ngClass]="{'bg-gray-50': odd}">
               <td class="py-4 px-6">
-                {{ konsulta.assigned_date | date: 'MM/dd/yyyy' }}
+                {{ konsulta.assigned_date | date: 'MM/dd/yyyy':'Asia/Manila' }}
               </td>
               <th scope="row" class="py-4 px-6 font-medium">
                 {{ konsulta.last_name }}, {{ konsulta.first_name }} {{ konsulta.middle_name }} {{ konsulta.suffix_name }}
               </th>
               <td class="py-4 px-6">
-                {{ konsulta.birthdate | date: 'MM/dd/yyyy' }} <br />
+                {{ konsulta.birthdate | date: 'MM/dd/yyyy':'Asia/Manila' }} <br />
                 {{ konsulta.gender }}
               </td>
               <td class="py-4 px-6">
@@ -84,7 +84,7 @@
                 {{ konsulta.member_pin }}
               </td>
               <td class="py-4 px-6">
-                {{ konsulta.member_birthdate | date: 'MM/dd/yyyy' }} <br />
+                {{ konsulta.member_birthdate | date: 'MM/dd/yyyy':'Asia/Manila' }} <br />
                 {{ konsulta.member_gender }}
               </td>
               <!-- <td class="py-4 px-6">

@@ -23,7 +23,7 @@
               {{ lab.laboratory.desc }}
             </td>
             <th scope="row" class="w-1/3 py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
-              {{ lab.request_date | date: 'MM/dd/yyyy'}}
+              {{ lab.request_date | date: 'MM/dd/yyyy':'Asia/Manila'}}
             </th>
             <td class="w-1/3 py-4 px-6 text-center">
               <fa-icon *ngIf="lab.lab_result && lab.request_status_code !== 'RF'" (click)="toggleModal('add', lab)" size="lg" class="mx-0 my-0 text-green-600 hover:cursor-pointer flex-none mr-2" [icon]="faFlask"></fa-icon>

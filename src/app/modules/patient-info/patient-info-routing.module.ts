@@ -50,7 +50,11 @@ const routes: Routes = [
       {
         path: 'fp',
         loadChildren: () => import('../familyplanning/familyplanning.module').then(m => m.FamilyplanningModule)
-      }
+      },
+      {
+        path: 'environmental',
+        loadChildren: () => import('../environmental/environmental.module').then(m => m.EnvironmentalModule)
+      },
     ]
   },
 ];

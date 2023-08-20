@@ -14,7 +14,7 @@ export class ReferralModalComponent implements OnInit{
   @Output() toggleModal = new EventEmitter<any>();
   @Input() patient_info;
 
-  max_date = formatDate(new Date(), 'yyyy-MM-dd', 'en', 'Asia/Singapore');
+  max_date = formatDate(new Date(), 'yyyy-MM-dd', 'en', 'Asia/Manila');
   is_saving: boolean = false;
 
   regions: object;
