@@ -34,7 +34,7 @@ export class Fhsis2018CcComponent implements OnChanges {
     type: 'xlsx',
     elementIdOrContent: 'reportForm',
     options: {
-      
+
     }
   }
 
@@ -94,9 +94,6 @@ export class Fhsis2018CcComponent implements OnChanges {
     this.brgy_result = this.selected_barangay?.map((code) => this.brgys.find((el) => el.code == code).name);
   }
 
-  
-  
-
   ngOnChanges(): void {
     this.stats = this.report_data;
     this.reportform_data = this.reportForm;
@@ -104,11 +101,7 @@ export class Fhsis2018CcComponent implements OnChanges {
     this.info3 = this.userInfo;
     this.brgys_info = this.brgys;
     this.pdf_exported = false;
-    // console.log(this.reportform_data, 'test report data')
-    // console.log(this.selected_barangay, 'test selected brgy')
-    // console.log(this.info3, 'test user inFo')
-    // console.log(this.brgys_info, 'test barangay')
-    // console.log(this.brgy_result, 'test barangay convert')
+
     this.convertBrgy();
     this.convertDate();
   }

@@ -11,9 +11,12 @@
         <optgroup label="Usage Statistics" class="text-gray-500" >
           <option *ngFor="let type of other_stats" [ngValue]="type">{{ type.desc }}</option>
         </optgroup>
-        <optgroup label="GBV Report" class="text-gray-500" >
-          <option *ngFor="let type of gbv_stats" [ngValue]="type">{{ type.desc }}</option>
+        <optgroup label="Diagnosis" class="text-gray-500" >
+          <option *ngFor="let type of diagnosis_stats" [ngValue]="type">{{ type.desc }}</option>
         </optgroup>
+        <!-- <optgroup label="GBV Report" class="text-gray-500" >
+          <option *ngFor="let type of gbv_stats" [ngValue]="type">{{ type.desc }}</option>
+        </optgroup> -->
       </select>
     </div>
 
@@ -84,12 +87,12 @@
       </select>
     </div>
 
-    <div class="w-40" *ngIf="reportForm.value?.report_type.id === 'gbv-report' && reportForm.value.report_type && f['start_date'].enabled">
+    <div class="w-40" *ngIf="reportForm.value.report_type && f['start_date'].enabled">
       <label for="start_date" class="input-label">Start date</label>
       <input type="date" name="start_date" id="start_date" class="input" placeholder="mm/dd/yyyy" formControlName="start_date">
     </div>
 
-    <div class="w-40" *ngIf="reportForm.value?.report_type.id === 'gbv-report' && reportForm.value.report_type && f['end_date'].enabled">
+    <div class="w-40" *ngIf="reportForm.value.report_type && f['end_date'].enabled">
       <label for="end_date" class="input-label">End date</label>
       <input type="date" name="end_date" id="end_date" class="input" placeholder="mm/dd/yyyy" formControlName="end_date">
     </div>
@@ -106,7 +109,7 @@
     <app-fhsis2018-mc *ngIf="reportForm.value?.report_type.id === 'fhsis2018-mc' && report_data && !is_fetching" [report_data]="report_data" [reportForm]="reportForm" [selectedBrgy]="selectedBrgy" [brgys]="brgys" [userInfo]="userInfo" ></app-fhsis2018-mc>
     <app-patient-registered *ngIf="reportForm.value?.report_type.id === 'patient-registered' && report_data && !is_fetching" [report_data]="report_data"></app-patient-registered>
     <app-catalyst-report *ngIf="reportForm.value?.report_type.id === 'gbv-report' && report_data && !is_fetching" [report_data]="report_data"></app-catalyst-report>
-
+    <app-fhsis2018-morbidity *ngIf="reportForm.value?.report_type.id === 'morbidity-report' && report_data && !is_fetching" [report_data]="report_data"></app-fhsis2018-morbidity>
     <div class="flex flex-col justify-center" *ngIf="is_fetching">
       <fa-icon class="text-blue-500 mx-auto pt-36 text-xl" [icon]="faCircleNotch" spin="true"></fa-icon>
       <span class="pt-4 mx-auto pb-36 select-none">Fetching Report...</span>
