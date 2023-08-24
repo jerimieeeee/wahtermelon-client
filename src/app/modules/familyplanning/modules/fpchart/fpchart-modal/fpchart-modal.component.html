@@ -14,7 +14,7 @@
 
         <div class="col-span-4 px-10 pt-2.5">
           <label for="case_number" class="text-sm font-semibold">Date of Service Given</label>
-          <input type="date" name="case_number" id="case_number" formControlName="service_date" class="input">
+          <input type="date" name="case_number" id="case_number" [max]="max_date" formControlName="service_date" class="input">
   
           <!-- <div *ngIf="show_error && f.case_number.errors" class="invalid-alert">
             <div *ngIf="f.case_number.errors?.['required']">
@@ -58,7 +58,7 @@
 
         <div class="col-span-4 px-10 pt-2.5">
             <label for="case_number" class="text-sm font-semibold">Next Service Date</label>
-            <input type="date" name="case_number" id="case_number"  class="input">
+            <input type="date" name="case_number" id="case_number" [min]="min_date" formControlName="next_service_date"  class="input">
     
             <!-- <div *ngIf="show_error && f.case_number.errors" class="invalid-alert">
               <div *ngIf="f.case_number.errors?.['required']">
@@ -72,7 +72,7 @@
 
         <div class="col-span-12 px-10 pt-2.5 pb-5">
             <label for="case_number" class="text-sm font-semibold">Remarks</label>
-            <input type="text" name="case_number" id="case_number"  class="input">
+            <input type="text" name="case_number" id="case_number" formControlName="remarks" class="input">
     
             <!-- <div *ngIf="show_error && f.case_number.errors" class="invalid-alert">
               <div *ngIf="f.case_number.errors?.['required']">

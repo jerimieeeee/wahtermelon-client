@@ -11,6 +11,7 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./fpchart.component.scss']
 })
 export class FpchartComponent implements OnInit {
+  @Output() sourceForm;
   @Output() loadFP = new EventEmitter<any>();
   @Input() patient_id;
   @Input() fp_visit_history;
@@ -56,6 +57,7 @@ export class FpchartComponent implements OnInit {
   from: number;
   to: number;
   total: number;
+
   
   toggleModal(name) {
     this.modals[name] = !this.modals[name];
@@ -65,8 +67,8 @@ export class FpchartComponent implements OnInit {
     // console.log('query')
     let params = {
       patient_id: this.fp_visit_history_details.patient_id,
-      per_page: 10,
-      page: !page ? this.current_page : page
+      // per_page: 10,
+      // page: !page ? this.current_page : page
     }
 
     // params['params']['page'] = !page ? this.current_page : page;
@@ -76,7 +78,7 @@ export class FpchartComponent implements OnInit {
     // params['params']['consult_done'] = 0;
 
     // console.log(params, page, this.current_page)
-    this.http.get('family-planning/fp-method', {params}).subscribe({
+    this.http.get('family-planning/fp-records', {params}).subscribe({
       next: (data: any) => {
         // console.log(data);
         this.show_form = true;
@@ -101,8 +103,8 @@ export class FpchartComponent implements OnInit {
 
   ngOnInit(): void {
     this.fp_visit_history_details = this.fp_visit_history[0];
-    this.loadFP.emit();
     this.getChartHistory();
+    this.loadFP.emit();
     console.log(this.fp_visit_history_details)
   } 
 }

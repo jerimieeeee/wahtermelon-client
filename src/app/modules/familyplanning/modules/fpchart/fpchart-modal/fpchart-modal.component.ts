@@ -1,3 +1,4 @@
+import { formatDate } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -26,6 +27,10 @@ export class FpchartModalComponent implements OnInit {
 
   source_supplies: any;
 
+  min_date = formatDate((new Date()).setDate((new Date).getDate()+1), 'yyyy-MM-dd', 'en');
+
+  max_date = formatDate(new Date(), 'yyyy-MM-dd', 'en');
+
   closeModal(){
     this.toggleModal.emit('fpchart-modal');
     // console.log('check modal')
@@ -39,16 +44,20 @@ export class FpchartModalComponent implements OnInit {
     service_date: new FormControl<string| null>(''),
     source_supply_code: new FormControl<string| null>(''),
     quantity: new FormControl<string| null>(''),
+    next_service_date: new FormControl<string| null>(''),
+    remarks: new FormControl<string| null>(''),
     
   });
 
   onSubmit(){
-    console.log(this.sourceForm)
+    
+    
     this.is_saving = true;
     this.http.post('family-planning/fp-chart', this.sourceForm.value).subscribe({
       next: (data: any) => {
         this.toastr.success('Chart was ' + (this.sourceForm.value ? 'updated' : 'saved') + ' successuly', 'Success')
         this.is_saving = false;
+        this.saveAppointment();
         // this.loadFP.emit();
         // this.loadFPDetails.emit();
         this.anotherFunction.emit();
@@ -61,6 +70,23 @@ export class FpchartModalComponent implements OnInit {
   
       },
     })
+  }
+
+  saveAppointment(){
+    let appointmentForm = {
+      patient_id: this.patient_id,
+      appointment_date: this.sourceForm.value.next_service_date,
+      appointment: [{appointment_code: 'FP'}]
+    };
+
+    this.http.post('appointment/schedule', appointmentForm).subscribe({
+      next: (data: any) => {
+        console.log(data.data);
+        this.is_saving = false;
+        this.closeModal();
+      },
+      error: err => console.log(err)
+    });
   }
 
   loadLib() {
@@ -91,6 +117,9 @@ export class FpchartModalComponent implements OnInit {
       service_date: ['', [Validators.required, Validators.minLength(1)]],
       source_supply_code: ['', [Validators.required, Validators.minLength(1)]],
       quantity: ['', [Validators.required, Validators.minLength(1)]],
+      next_service_date: ['', [Validators.required, Validators.minLength(1)]],
+      remarks: ['', [Validators.required]],
+      
       
     });
 

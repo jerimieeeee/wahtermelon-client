@@ -1,5 +1,5 @@
 
-<div class="m-5 border border-slate-200 rounded-lg">
+<div class="m-5 border border-slate-200 rounded-lg" *ngIf="show_form">
     <div class="bg-blue-500 text-sm text-white w-full flex justify-between rounded-t-md py-2 pl-3 font-semibold text-center items-center">
      Chart
         <button *ngIf="fp_visit_history[0]?.method !== null" class="text-black bg-white mr-3 px-3 py-2 rounded text-sm" (click)="toggleModal('fpchart-modal')">
@@ -42,33 +42,30 @@
                 </tr>
             </thead>
             <tbody>
-                <tr class="bg-white border-b dark:bg-gray-900 dark:border-gray-700" *ngFor="let chart_history of fp_visit_history[0].chart">
+                <tr class="bg-white border-b dark:bg-gray-900 dark:border-gray-700" *ngFor="let chart_history of fpchart_history[0]?.chart">
                     <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        {{ chart_history.service_date | date: 'MM/dd/yyyy'}}
-                    </td>
-                    <td *ngFor="let method_history of fp_visit_history[0].method" class="px-6 py-4">
-                        {{ method_history?.method?.desc ? method_history?.method?.desc : '-' }}  
+                        {{ chart_history?.service_date | date: 'MM/dd/yyyy' }}  
                     </td>
                     <td class="px-6 py-4">
-                        {{ chart_history.source.desc ? chart_history.source.desc : '-' }} 
+                        {{ chart_history?.fp_method?.method?.desc ? chart_history?.fp_method?.method?.desc : '-' }}  
                     </td>
                     <td class="px-6 py-4">
-                      
+                        {{ chart_history?.source?.desc ? chart_history?.source?.desc : '-' }} 
                     </td>
                     <td class="px-6 py-4">
-                       
+                        {{ chart_history?.quantity ? chart_history?.quantity : '-' }}
                     </td>
                     <td class="px-6 py-4">
-                        
+                        {{ chart_history?.next_service_date ? chart_history?.next_service_date : '-' }}
                     </td>
                     <td class="px-6 py-4">
-                       
+                        {{ chart_history?.fp_method?.dropout_date | date: 'MM/dd/yyyy'  }}
                     </td>
                     <td class="px-6 py-4">
                        
                     </td>
                     <td class="px-6 py-4">
-                        <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                        <button type="button" class="rounded-md bg-blue-500 text-white py-1 px-2" (click)="toggleModal('fpchart-modal', fp_visit_history)">Edit</button>
                     </td>
                 </tr>
                 <!-- <tr class="border-b bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
