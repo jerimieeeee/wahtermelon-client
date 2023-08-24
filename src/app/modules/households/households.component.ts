@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { faPenToSquare, faSearch, faChevronLeft, faChevronRight, faAnglesLeft, faAnglesRight } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 
@@ -25,6 +26,11 @@ export class HouseholdsComponent implements OnInit {
   to: number;
   total: number;
 
+  navigateTo(loc, data){
+    // console.log(data)
+    this.router.navigate(['/'+loc, {id: data.id}])
+  }
+
   loadHouseholds(page?: number){
     let params = {params: { }};
     if (this.search_item) params['params']['filter[search]'] = this.search_item;
@@ -47,7 +53,8 @@ export class HouseholdsComponent implements OnInit {
   }
 
   constructor(
-    private http: HttpService
+    private http: HttpService,
+    private router: Router,
   ) { }
 
   ngOnInit(): void {
