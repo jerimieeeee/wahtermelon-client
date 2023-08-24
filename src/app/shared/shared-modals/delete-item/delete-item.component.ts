@@ -39,7 +39,7 @@ export class DeleteItemComponent implements OnChanges, AfterViewInit{
         next: () => {
           this.is_loading = false;
           // this.showAlertDelete = true;
-          this.toastr.error('Record was deleted!','Vaccine record');
+          this.toastr.error('Record was deleted!');
           this.closeModal();
         },
         error: err => {
