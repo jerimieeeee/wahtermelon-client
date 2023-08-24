@@ -121,7 +121,7 @@ export class ReportsComponent implements OnInit {
       params['category'] = 'barangay';
       params['code'] = this.selectedBrgy;
     } else {
-      params['category'] = 'facility';
+      params['category'] = this.reportForm.value.report_class;
     }
 
     this.http.get(this.reportForm.value.report_type.url, {params}).subscribe({
