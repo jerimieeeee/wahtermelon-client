@@ -22,7 +22,7 @@ export class FirsvisitComponent implements OnInit {
 
   faSave = faSave;
   faPencil = faPencil;
-  
+
   faInfoCircle = faInfoCircle;
 
   show_form = false;
@@ -49,16 +49,16 @@ export class FirsvisitComponent implements OnInit {
         console.log(this.fp_visit_history, 'checker FV 2')
          },
       complete: () => {
-       
+
       },
       error: err => {console.log(err)
-  
+
       },
     })
   }
-  
+
   validateForm(){
-    
+
     this.visitForm = this.formBuilder.group({
       id: [''],
       patient_id: [this.patient_id],
@@ -73,9 +73,9 @@ export class FirsvisitComponent implements OnInit {
   }
 
   loadFPDetails(){
-    
+
     if(this.fp_visit_history) {
-      this.visitForm.patchValue({...this.fp_visit_history[0]});
+      this.visitForm.patchValue({...this.fp_visit_history});
       this.show_form = true;
     }
   }
@@ -90,5 +90,5 @@ export class FirsvisitComponent implements OnInit {
   ngOnInit(): void {
     this.validateForm();
     console.log(this.fp_visit_history, 'checker FV')
-  } 
+  }
 }

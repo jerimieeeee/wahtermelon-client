@@ -6,7 +6,7 @@
       <div class="flex justify-between items-start py-3 px-5 rounded-t border-b bg-blue-500">
         <h3 class="text-sm font-bold text-white">
           Service Details
-          <!-- Service Details - {{fp_visit_history[0]?.method?.method?.desc}} -->
+          <!-- Service Details - {{fp_visit_history?.method?.method?.desc}} -->
         </h3>
       </div>
       <!-- Modal body -->
@@ -16,12 +16,12 @@
         <div class="col-span-4 px-10 pt-2.5">
           <label for="case_number" class="text-sm font-semibold">Date of Service Given</label>
           <input type="date" name="case_number" id="case_number" [max]="max_date" formControlName="service_date" class="input">
-  
+
           <!-- <div *ngIf="show_error && f.case_number.errors" class="invalid-alert">
             <div *ngIf="f.case_number.errors?.['required']">
               {{ required_message }}
             </div> -->
-  
+
             <!-- <div *ngIf="f.case_number.errors?.['pattern']">
               Only letters and numbers are allowed.
             </div> -->
@@ -46,19 +46,19 @@
         <div class="col-span-12 px-10 pt-2.5">
           <label for="case_number" class="text-sm font-semibold">Quantity if applicable</label>
           <input type="number" name="case_number" id="case_number" formControlName="quantity"  class="input">
-  
+
           <!-- <div *ngIf="show_error && f.case_number.errors" class="invalid-alert">
             <div *ngIf="f.case_number.errors?.['required']">
               {{ required_message }}
             </div> -->
-  
+
             <!-- <div *ngIf="f.case_number.errors?.['pattern']">
               Only letters and numbers are allowed.
             </div> -->
         </div>
 
         <div class="col-span-8 px-10 pt-2.5">
-          
+
           <label for="case_number" class="text-sm font-semibold">Next Service Date</label>
             <div class="grid grid-cols-12">
               <div class="col-span-5 pr-5">
@@ -73,33 +73,33 @@
               <div *ngIf="f.case_number.errors?.['required']">
                 {{ required_message }}
               </div> -->
-    
+
               <!-- <div *ngIf="f.case_number.errors?.['pattern']">
                 Only letters and numbers are allowed.
               </div> -->
 
           <!-- <div class="bg-green-200">
-            
+
           </div> -->
         </div>
 
-        
-        
+
+
 
         <div class="col-span-12 px-10 pt-2.5 pb-5">
             <label for="case_number" class="text-sm font-semibold">Remarks</label>
             <input type="text" name="case_number" id="case_number" formControlName="remarks" class="input">
-    
+
             <!-- <div *ngIf="show_error && f.case_number.errors" class="invalid-alert">
               <div *ngIf="f.case_number.errors?.['required']">
                 {{ required_message }}
               </div> -->
-    
+
               <!-- <div *ngIf="f.case_number.errors?.['pattern']">
                 Only letters and numbers are allowed.
               </div> -->
           </div>
-        
+
       </div>
       </form>
       <!-- Modal footer -->

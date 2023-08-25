@@ -21,6 +21,7 @@ import { DeleteItemComponent } from 'app/shared/shared-modals/delete-item/delete
 import { SharedComponentsModule } from 'app/shared/shared-components/shared-components.module';
 import { FpchartModalComponent } from './modules/fpchart/fpchart-modal/fpchart-modal.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { CaserateComponent } from 'app/shared/shared-components/eclaims/components/caserate/caserate.component';
 
 @NgModule({
   declarations: [FamilyplanningComponent, FpchartComponent, FirsvisitComponent, FppeComponent, FphxComponent, ObshxComponent, PelvicComponent, MethodsComponent, MethodsModalComponent, FpchartModalComponent,
@@ -34,7 +35,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     ReactiveFormsModule,
     SharedComponentsModule,
     EndVisitComponent,
-    DeleteItemComponent
+    DeleteItemComponent,
+    CaserateComponent
   ]
 })
 export class FamilyplanningModule { }

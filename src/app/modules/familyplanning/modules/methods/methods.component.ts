@@ -16,7 +16,7 @@ export class MethodsComponent implements OnInit {
   @Input() patient_id;
   @Input() fp_visit_history;
 
-  
+
   modal: boolean;
 
   faSpinner = faSpinner;
@@ -62,7 +62,7 @@ export class MethodsComponent implements OnInit {
   partner: any;
 
   required_message = 'Required field';
-  
+
   delete_id: string;
   delete_desc: string;
   url: string;
@@ -124,7 +124,7 @@ export class MethodsComponent implements OnInit {
     let params2 = {
       per_page: 5
     }
-    
+
 
     // const getMethodHistory = this.http.get('family-planning/fp-method', {params});
     const getMethod = this.http.get('libraries/family-planning-method');
@@ -148,7 +148,7 @@ export class MethodsComponent implements OnInit {
         console.log(this.fp_methods, 'new function methods');
         console.log(this.client_list, 'new function client list');
         console.log(this.fp_method_history, 'new function method history');
-        
+
       },
       error: err => console.log(err)
     });
@@ -177,12 +177,12 @@ export class MethodsComponent implements OnInit {
         this.showButton = true;
         this.loadFP.emit();
         this.loadFPDetails();
-        this.fp_visit_history_details = this.fp_visit_history[0] 
+        this.fp_visit_history_details = this.fp_visit_history
         console.log(data, 'display method on submit')
         console.log(this.showButton, 'display button details on submit')
          },
       complete: () => {
-       
+
       },
       error: err => {console.log(err)
         this.show_error = true
@@ -191,7 +191,7 @@ export class MethodsComponent implements OnInit {
       },
     })
   }
-  
+
   validateForm(){
     this.methodForm.reset();
     this.methodForm = this.formBuilder.group({
@@ -209,9 +209,9 @@ export class MethodsComponent implements OnInit {
   }
 
   loadFPDetails(){
-    
+
     if(this.fp_visit_history) {
-      this.methodForm.patchValue({...this.fp_visit_history[0]?.method});
+      this.methodForm.patchValue({...this.fp_visit_history?.method});
       this.show_form = true;
     }
   }
@@ -226,7 +226,7 @@ export class MethodsComponent implements OnInit {
   }
 
   // formInit() {
-  
+
   //   this.methodForm = this.formBuilder.group({
   //     id: ['', [Validators.required]],
   //     patient_id: [this.patient_id, [Validators.required, Validators.minLength(1)]],
@@ -235,21 +235,21 @@ export class MethodsComponent implements OnInit {
   //  }
 
    anotherFunction() {
-    
+
     this.showButton = !this.showButton;
     // this.methodForm.reset();
     this.loadFP.emit();
     this.getMethodHistory();
-    // this.fp_visit_history_details = this.fp_visit_history[0] 
+    // this.fp_visit_history_details = this.fp_visit_history
     // this.loadLibraries();
     // this.loadFPDetails();
     this.methodForm.reset();
-    
-   
+
+
     console.log('test another function')
     console.log(this.showButton, 'test button')
   }
-  
+
 
   constructor(
     private router: Router,
@@ -259,12 +259,12 @@ export class MethodsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.fp_visit_history_details = this.fp_visit_history[0] 
+    this.fp_visit_history_details = this.fp_visit_history
     this.loadLibraries();
     this.loadFP.emit();
     console.log(this.fp_visit_history_details, 'display fp visit history on init method ')
     // console.log(this.patient_id, 'display patient ID METHOD')
     // this.error_message = '**please enter numbers only';
-  } 
+  }
 }
 

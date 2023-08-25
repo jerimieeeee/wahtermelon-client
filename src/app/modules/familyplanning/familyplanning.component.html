@@ -27,7 +27,7 @@
         [class]="module===1? 'tabs-main-true' : 'tabs-main-false' ">
         FIRST VISIT
     </button>
-    <button (click)="switchTab(2)" class="tabs-main w-28" *ngIf="fp_visit_history[0]?.id"
+    <button (click)="switchTab(2)" class="tabs-main w-28" *ngIf="selected_fp_consult?.id"
         [class]="module===2? 'tabs-main-true' : 'tabs-main-false' ">
         FP HX
     </button>
@@ -35,23 +35,23 @@
         [class]="module===3? 'tabs-main-true' : 'tabs-main-false' ">
         OBSTETRICAL HX
     </button> -->
-    <button (click)="switchTab(4)" class="tabs-main w-28" *ngIf="fp_visit_history[0]?.id"
+    <button (click)="switchTab(4)" class="tabs-main w-28" *ngIf="selected_fp_consult?.id"
         [class]="module===4? 'tabs-main-true' : 'tabs-main-false' ">
         FP PE
     </button>
-    <button (click)="switchTab(5)" class="tabs-main w-28" *ngIf="fp_visit_history[0]?.id"
+    <button (click)="switchTab(5)" class="tabs-main w-28" *ngIf="selected_fp_consult?.id"
         [class]="module===5? 'tabs-main-true' : 'tabs-main-false' ">
         PELVIC EXAM
     </button>
-    <button (click)="switchTab(6)" class="tabs-main w-28" *ngIf="fp_visit_history[0]?.id"
+    <button (click)="switchTab(6)" class="tabs-main w-28" *ngIf="selected_fp_consult?.id"
         [class]="module===6? 'tabs-main-true' : 'tabs-main-false' ">
         METHODS
     </button>
-    <button (click)="switchTab(7)" class="tabs-main w-28" *ngIf="fp_visit_history[0]?.id"
+    <button (click)="switchTab(7)" class="tabs-main w-28" *ngIf="selected_fp_consult?.id"
         [class]="module===7? 'tabs-main-true' : 'tabs-main-false' ">
         FP CHART
     </button>
-    <button (click)="switchTab(8)" *ngIf="selected_tb_consult?.id" class="tabs-main w-28"
+    <button (click)="switchTab(8)" *ngIf="selected_fp_consult?.id" class="tabs-main w-28"
         [class]="module===8? 'tabs-main-true' : 'tabs-main-false' ">
         CASE RATE
     </button>
@@ -89,13 +89,13 @@
           {{ fp_history?.method?.client?.desc ? fp_history?.method?.client?.desc : '-' }}
         </td>
         <td class="py-4 px-6">
-          <button type="button" class="rounded-md bg-blue-500 text-white py-1 px-2" (click)="openFPConsult(fp_visit_history)">
+          <button type="button" class="rounded-md bg-blue-500 text-white py-1 px-2" (click)="openFPConsult(fp_history)">
            Open
           </button>
         </td>
       </tr>
 
-      <tr class="bg-white border-b" *ngIf="!fp_visit_history[0]">
+      <tr class="bg-white border-b" *ngIf="!fp_visit_history">
         <td  colspan="7">
           <div class="text-center py-3 flex flex-col">
             <div class="flex justify-center">No records to show...</div>
@@ -113,32 +113,32 @@
 
 <app-firsvisit *ngIf="pages === 2 && module === 1"
   [patient_id]="patient_id"
-  [fp_visit_history]="fp_visit_history"
+  [fp_visit_history]="selected_fp_consult"
   (loadFP)="loadFP()"
 ></app-firsvisit>
 <app-fphx *ngIf="pages === 2 && module === 2"
   [patient_id]="patient_id"
-  [fp_visit_history]="fp_visit_history"
+  [fp_visit_history]="selected_fp_consult"
   (loadFP)="loadFP()"
 ></app-fphx>
 <app-fppe *ngIf="pages === 2 && module === 4"
   [patient_id]="patient_id"
-  [fp_visit_history]="fp_visit_history"
+  [fp_visit_history]="selected_fp_consult"
   (loadFP)="loadFP()"
 ></app-fppe>
 <app-pelvic *ngIf="pages === 2 && module === 5"
   [patient_id]="patient_id"
-  [fp_visit_history]="fp_visit_history"
+  [fp_visit_history]="selected_fp_consult"
   (loadFP)="loadFP()"
 ></app-pelvic>
 <app-methods *ngIf="pages === 2 && module === 6"
   [patient_id]="patient_id"
-  [fp_visit_history]="fp_visit_history"
+  [fp_visit_history]="selected_fp_consult"
   (loadFP)="loadFP()"
 ></app-methods>
 <app-fpchart *ngIf="pages === 2 && module === 7"
   [patient_id]="patient_id"
-  [fp_visit_history]="fp_visit_history"
+  [fp_visit_history]="selected_fp_consult"
   (loadFP)="loadFP()"
 ></app-fpchart>
 
@@ -152,15 +152,31 @@
 
 <app-methods-modal *ngIf="modals['methods-modal']"
   (toggleModal)="toggleModal($event)"
-  [fp_visit_history]="fp_visit_history"
+  [fp_visit_history]="selected_fp_consult"
   (loadFP)="loadFP()"
 ></app-methods-modal>
 
 <app-fpchart-modal *ngIf="modals['fpchart-modal']"
   [patient_id]="patient_id"
   (toggleModal)="toggleModal($event)"
-  [fp_visit_history]="fp_visit_history"
+  [fp_visit_history]="selected_fp_consult"
   (loadFP)="loadFP()"
   (loadChart)="loadChart()"
 ></app-fpchart-modal>
 
+
+<app-caserate *ngIf="pages === 2 && module === 8"
+  (switchPage)="switchPage($event)"
+  [patient_id]="selected_fp_consult.patient_id"
+  [program_id]="selected_fp_consult.id"
+  [program_name]="'fp'"
+  [max_date]="max_date"
+></app-caserate>
+
+<app-eclaims *ngIf="pages === 3"
+  (switchPage)="switchPage($event)"
+  [program_id]="selected_fp_consult.id"
+  [program_name]="'fp'"
+  [max_date]="max_date"
+  [selected_case]="selected_fp_consult"
+></app-eclaims>

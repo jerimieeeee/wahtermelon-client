@@ -13,10 +13,10 @@ export class FamilyplanningComponent implements OnInit {
   faTimes = faTimes;
   faDoorClosed = faDoorClosed;
   faCircleNotch = faCircleNotch;
-  
+
   showModal: boolean = false;
   hideButton: boolean = true;
- 
+
   pages: number = 1;
   module: number = 1;
   show_end: boolean = false;
@@ -34,7 +34,7 @@ export class FamilyplanningComponent implements OnInit {
   consult_details: any;
 
   show_form: boolean = false;
-  
+
 
   switchPage(page) {
     if(page === 1) this.loadFP();
@@ -48,11 +48,11 @@ export class FamilyplanningComponent implements OnInit {
 
   constructor(
     private http: HttpService,
-    private route: ActivatedRoute) 
+    private route: ActivatedRoute)
   { }
 
   openModal() {
-    
+
     this.showModal = !this.showModal;
     this.hideButton = !this.hideButton;
   }
@@ -61,8 +61,10 @@ export class FamilyplanningComponent implements OnInit {
     this.modals[name] = !this.modals[name];
   }
 
+  selected_fp_consult: {};
   openFPConsult(data) {
-    this.fp_visit_history = data;
+    console.log(data)
+    this.selected_fp_consult = data;
     this.pages = 2;
   }
 
@@ -73,16 +75,16 @@ export class FamilyplanningComponent implements OnInit {
     };
 
     this.http.get('family-planning/fp-records', {params}).subscribe({
-      next: (data: any) => { 
+      next: (data: any) => {
 
        this.fp_visit_history = data.data
        this.fetching_history = false;
       },
       complete: () => {
-        console.log(this.fp_visit_history, 'display fp visit details main hsitory') 
+        console.log(this.fp_visit_history, 'display fp visit details main hsitory')
       },
       error: err => {console.log(err)
-  
+
       },
     })
   }
@@ -105,7 +107,7 @@ export class FamilyplanningComponent implements OnInit {
     console.log(this.consult_id, 'check patient consult id')
     this.loadFP();
     this.loadConsultDetails();
-    
+
   }
 
 }

@@ -13,7 +13,7 @@ export class PelvicComponent implements OnInit {
   @Output() loadFP = new EventEmitter<any>();
   @Input() patient_id;
   @Input() fp_visit_history;
-  
+
   faCalendarDay = faCalendarDay;
   faPlus = faPlus;
   faSave = faSave;
@@ -87,15 +87,15 @@ export class PelvicComponent implements OnInit {
       }
     })
 
-    
+
       let fp_id = this.fp_visit_history_details.id
       let p_id = this.patient_id
       var pelvic_exam = {
         patient_fp_id: fp_id,
         patient_id: p_id,
         pelvic_exam: pelvic_arr,
-       
-        
+
+
 
       }
 
@@ -114,7 +114,7 @@ export class PelvicComponent implements OnInit {
         console.log('success')
         }
       })
-    
+
   }
 
   loadSelected() {
@@ -133,8 +133,8 @@ export class PelvicComponent implements OnInit {
       });
     }
     console.log(this.fp_visit_history_details.pelvic_exam, 'test')
-  
- 
+
+
 }
 
   constructor(
@@ -145,7 +145,7 @@ export class PelvicComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadLibraries();
-    this.fp_visit_history_details = this.fp_visit_history[0]
+    this.fp_visit_history_details = this.fp_visit_history
   }
 
 }

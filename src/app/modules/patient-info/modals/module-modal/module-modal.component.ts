@@ -103,9 +103,9 @@ export class ModuleModalComponent implements OnInit {
       this.list_modules.General.modules['cc'] = this.cc;
     }
 
-    /* if(this.patient_age.type === 'year' && this.patient_age.age >= 9) {
+    if(this.patient_age.type === 'year' && this.patient_age.age >= 9) {
       this.list_modules.General.modules['fp'] = this.fp;
-    } */
+    }
 
     /* if(this.arr_allowed.indexOf(this.pos) > -1) {
       this.list_modules.Others.modules['gbv'] = this.gbv;

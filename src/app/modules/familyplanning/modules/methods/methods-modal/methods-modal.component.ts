@@ -16,8 +16,8 @@ export class MethodsModalComponent implements OnInit {
   @Output() anotherFunction = new EventEmitter<any>();
   @Input() patient_id;
   @Input() fp_visit_history;
-  
-  
+
+
   is_saving: boolean = false;
 
   show_form: boolean = false;
@@ -32,11 +32,11 @@ export class MethodsModalComponent implements OnInit {
   }
 
   dropForm: FormGroup = new FormGroup({
-    
+
     dropout_date: new FormControl<string| null>(''),
     dropout_reason_code: new FormControl<string| null>(''),
     dropout_remarks: new FormControl<string| null>(''),
-    
+
   });
 
   onSubmit(){
@@ -55,7 +55,7 @@ export class MethodsModalComponent implements OnInit {
        this.closeModal();
       },
       error: err => {console.log(err)
-  
+
       },
     })
   }
@@ -64,24 +64,24 @@ export class MethodsModalComponent implements OnInit {
 
 
     this.http.get('libraries/family-planning-dropout-reason').subscribe({
-      next: (data: any) => { 
+      next: (data: any) => {
 
        this.reasons = data.data
-       console.log(this.reasons, 'display reasons') 
+       console.log(this.reasons, 'display reasons')
       },
       complete: () => {
-        
+
       },
       error: err => {console.log(err)
-  
+
       },
     })
   }
-  
+
   validateForm(){
-    
+
     this.dropForm = this.formBuilder.group({
-      
+
       dropout_date: ['', [Validators.required, Validators.minLength(1)]],
       dropout_reason_code: ['', [Validators.required, Validators.minLength(1)]],
       dropout_remarks: ['', [Validators.required, Validators.minLength(1)]],
@@ -92,13 +92,13 @@ export class MethodsModalComponent implements OnInit {
   }
 
   // loadFPDetails(){
-    
+
   //   if(this.fp_visit_history) {
-  //     this.methodForm.patchValue({...this.fp_visit_history[0]?.method});
+  //     this.methodForm.patchValue({...this.fp_visit_history?.method});
   //     this.show_form = true;
   //   }
   // }
-  
+
 
   constructor(
     private router: Router,
@@ -108,9 +108,9 @@ export class MethodsModalComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.fp_visit_history_details = this.fp_visit_history[0]
+    this.fp_visit_history_details = this.fp_visit_history
     this.validateForm();
     this.loadLib();
     console.log(this.fp_visit_history_details, 'fp history in method modal')
-  } 
+  }
 }

@@ -14,7 +14,7 @@ export class FphxComponent implements OnInit {
   @Output() loadFP = new EventEmitter<any>();
   @Input() patient_id;
   @Input() fp_visit_history;
-  
+
   faCalendarDay = faCalendarDay;
   faPlus = faPlus;
   faSave = faSave;
@@ -33,7 +33,7 @@ export class FphxComponent implements OnInit {
   show_form = false;
 
   hx_codes: any = [];
-  
+
   fp_visit_history_details: any;
 
   category = [
@@ -83,15 +83,15 @@ export class FphxComponent implements OnInit {
       }
     })
 
-    
+
       let fp_id = this.fp_visit_history_details.id
       let p_id = this.patient_id
       var history ={
         patient_fp_id: fp_id,
         patient_id: p_id,
         history: hx_arr,
-       
-        
+
+
 
       }
 
@@ -110,7 +110,7 @@ export class FphxComponent implements OnInit {
         console.log('success')
         }
       })
-    
+
   }
 
   loadSelected() {
@@ -129,8 +129,8 @@ export class FphxComponent implements OnInit {
       });
     }
     console.log(this.fp_visit_history_details.history, 'test')
-  
- 
+
+
 }
 
   constructor(
@@ -141,7 +141,7 @@ export class FphxComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadLibraries();
-    this.fp_visit_history_details = this.fp_visit_history[0]
+    this.fp_visit_history_details = this.fp_visit_history
     console.log(this.fp_visit_history_details.history, 'testing')
   }
 

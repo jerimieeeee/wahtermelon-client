@@ -11,12 +11,12 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./fpchart.component.scss']
 })
 export class FpchartComponent implements OnInit {
- 
+
   @Output() loadFP = new EventEmitter<any>();
   @Input() patient_id;
   @Input() fp_visit_history;
-  
-  
+
+
   focused: boolean;
   focused2: boolean;
   modal: boolean;
@@ -64,7 +64,7 @@ export class FpchartComponent implements OnInit {
   delete_id: string;
   delete_desc: string;
   url: string;
-  
+
   selected_fpchart: any;
 
   toggleModal(name, data?){
@@ -125,7 +125,7 @@ export class FpchartComponent implements OnInit {
   }
 
   anotherFunction() {
-    
+
     this.loadFP.emit();
     this.getChartHistory();
 
@@ -139,9 +139,9 @@ export class FpchartComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
-    this.fp_visit_history_details = this.fp_visit_history[0];
+    this.fp_visit_history_details = this.fp_visit_history;
     this.getChartHistory();
     this.loadFP.emit();
     console.log(this.fp_visit_history_details)
-  } 
+  }
 }

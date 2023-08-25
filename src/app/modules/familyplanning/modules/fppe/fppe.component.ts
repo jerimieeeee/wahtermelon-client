@@ -16,7 +16,7 @@ export class FppeComponent implements OnInit {
   @Output() loadFP = new EventEmitter<any>();
   @Input() patient_id;
   @Input() fp_visit_history;
-  
+
   faCalendarDay = faCalendarDay;
   faPlus = faPlus;
   faSave = faSave;
@@ -41,7 +41,7 @@ export class FppeComponent implements OnInit {
   neck_pes: any = [];
   thorax_pes: any = [];
   physical_codes: any = [];
-  
+
   fp_visit_history_details: any;
 
   category = [
@@ -68,7 +68,7 @@ export class FppeComponent implements OnInit {
       }
     })
 
-    
+
       let fp_id = this.fp_visit_history_details.id
       let p_id = this.patient_id
       var physical_exam_details ={
@@ -76,7 +76,7 @@ export class FppeComponent implements OnInit {
         patient_id: p_id,
         physical_exam: pe_arr,
         pe_remarks: '',
-        
+
 
       }
 
@@ -95,7 +95,7 @@ export class FppeComponent implements OnInit {
         console.log('success')
         }
       })
-    
+
   }
 
 
@@ -117,7 +117,7 @@ export class FppeComponent implements OnInit {
   // saveCodes(codes) {
   //   let physical_exam_details = {
   //     // notes_id: this.consult_notes.id,
-      
+
   //     patient_id: this.patient_id,
   //     patient_fp_id: this.fp_visit_history_details.id,
   //     physical_exam: {
@@ -135,7 +135,7 @@ export class FppeComponent implements OnInit {
   // }
 
   loadSelected() {
-    
+
       Object.entries(this.fp_visit_history_details.physical_exam).forEach(([key, value], index) => {
         let val: any = value;
         this.physical_codes[val.pe_id] = true;
@@ -147,8 +147,8 @@ export class FppeComponent implements OnInit {
         // })
       });
       console.log(this.fp_visit_history.physical_exam, 'test')
-    
-   
+
+
   }
 
   loadLibraries() {
@@ -173,16 +173,16 @@ export class FppeComponent implements OnInit {
     );
   }
 
-  
+
 
 
   // loadLibraries(){
   //   this.http.get('libraries/family-planning-physical-exam').subscribe({
   //     next: (data: any) => {
-        
+
   //       this.pes = data.data;
 
-        
+
   //       this.abdomen_pes = this.pes.filter(t=>t.category_id ==='ABDOMEN');
   //       this.breast_pes = this.pes.filter(t=>t.category_id ==='BREAST');
   //       this.conjunctiva_pes = this.pes.filter(t=>t.category_id ==='CONJUNCTIVA');
@@ -192,7 +192,7 @@ export class FppeComponent implements OnInit {
 
   //       console.log(this.pes, 'pes')
   //       console.log(this.abdomen_pes, 'pes abdomen')
-        
+
   //     },
   //     error: err => console.log(err)
   //   });
@@ -205,7 +205,7 @@ export class FppeComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadLibraries();
-    this.fp_visit_history_details = this.fp_visit_history[0] 
+    this.fp_visit_history_details = this.fp_visit_history
     console.log(this.fp_visit_history_details.physical_exam, 'test')
   }
 

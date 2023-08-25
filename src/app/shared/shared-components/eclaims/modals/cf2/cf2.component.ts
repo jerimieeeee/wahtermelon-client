@@ -219,7 +219,15 @@ export class Cf2Component implements OnInit {
   }
 
   paramsMl() {
-    this.f.pICDCode.setValidators([Validators.required]);
+    this.eclaimsForm.patchValue({
+      attendant_sign_date: formatDate(this.eclaimsForm.value.caserate_date, 'yyyy-MM-dd', 'en', 'Asia/Manila'),
+      admission_date: formatDate(this.eclaimsForm.value.caserate_date, 'yyyy-MM-dd', 'en', 'Asia/Manila'),
+      admission_time: '8:00AM',
+      discharge_date: formatDate(this.eclaimsForm.value.caserate_date, 'yyyy-MM-dd', 'en', 'Asia/Manila'),
+      discharge_time: '5:00PM',
+    });
+
+    this.getCreds();
   }
 
   paramsFp(){

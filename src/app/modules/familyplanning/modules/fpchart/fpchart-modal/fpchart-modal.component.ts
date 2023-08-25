@@ -19,8 +19,8 @@ export class FpchartModalComponent implements OnInit {
   @Input() patient_id;
   @Input() fp_visit_history;
   @Input() fpchart_history;
-  
-  
+
+
   is_saving: boolean = false;
 
   show_form: boolean = false;
@@ -60,12 +60,12 @@ export class FpchartModalComponent implements OnInit {
     quantity: new FormControl<string| null>(''),
     next_service_date: new FormControl<string| null>(''),
     remarks: new FormControl<string| null>(''),
-    
+
   });
 
   // onSubmit(){
-    
-    
+
+
   //   this.is_saving = true;
   //   this.http.post('family-planning/fp-chart', this.sourceForm.value).subscribe({
   //     next: (data: any) => {
@@ -81,7 +81,7 @@ export class FpchartModalComponent implements OnInit {
   //      this.closeModal();
   //     },
   //     error: err => {console.log(err)
-  
+
   //     },
   //   })
   // }
@@ -135,8 +135,8 @@ export class FpchartModalComponent implements OnInit {
   }
 
   // onUpdate(){
-    
-    
+
+
   //   this.is_saving = true;
   //   this.http.update('family-planning/fp-chart/', this.fpchart_history?.id, this.sourceForm.value).subscribe({
   //     next: (data: any) => {
@@ -152,7 +152,7 @@ export class FpchartModalComponent implements OnInit {
   //      this.closeModal();
   //     },
   //     error: err => {console.log(err)
-  
+
   //     },
   //   })
   // }
@@ -161,25 +161,25 @@ export class FpchartModalComponent implements OnInit {
 
 
     this.http.get('libraries/family-planning-source-supply').subscribe({
-      next: (data: any) => { 
+      next: (data: any) => {
 
        this.source_supplies = data.data
        this.loadChart();
        this.show_form = true;
       },
       complete: () => {
-        
+
       },
       error: err => {console.log(err)
-  
+
       },
     })
   }
-  
+
   validateForm(){
-    
+
     this.sourceForm = this.formBuilder.group({
-      
+
       patient_id: [this.patient_id, [Validators.required, Validators.minLength(1)]],
       patient_fp_id: [this.fp_visit_history_details.id, [Validators.required, Validators.minLength(1)]],
       patient_fp_method_id: [this.fp_visit_history_details.method.id, [Validators.required, Validators.minLength(1)]],
@@ -188,15 +188,15 @@ export class FpchartModalComponent implements OnInit {
       quantity: ['', [Validators.required, Validators.minLength(1)]],
       next_service_date: ['', [Validators.required, Validators.minLength(1)]],
       remarks: ['', [Validators.required]],
-      
-      
+
+
     });
 
     // this.loadFPDetails();
     this.show_form = true;
   }
 
-  loadChart(){  
+  loadChart(){
     if(this.fpchart_history?.id){
       this.sourceForm.patchValue({
         service_date: formatDate(this.fpchart_history?.service_date, 'yyyy-MM-dd', 'en'),
@@ -210,9 +210,9 @@ export class FpchartModalComponent implements OnInit {
     } else {
       console.log('test ng load chart function else')
     }
-      
+
   }
-  
+
 
   constructor(
     private router: Router,
@@ -222,10 +222,10 @@ export class FpchartModalComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.fp_visit_history_details = this.fp_visit_history[0]
+    this.fp_visit_history_details = this.fp_visit_history
     this.validateForm();
     this.loadLib();
     console.log(this.fp_visit_history_details, 'fp history in fp chart modal')
-    console.log(this.fpchart_history, 'display supplies') 
-  } 
+    console.log(this.fpchart_history, 'display supplies')
+  }
 }
