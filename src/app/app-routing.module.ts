@@ -16,10 +16,6 @@ const routes: Routes = [
     component: AppComponent
   },
   {
-    path: 'fp',
-    loadChildren: () => import('./modules/familyplanning/familyplanning.module').then(m => m.FamilyplanningModule)
-  },
-  {
     path: 'registration',
     loadChildren: () => import('./modules/patient-registration/patient-registration.module').then(m => m.PatientRegistrationModule)
   },

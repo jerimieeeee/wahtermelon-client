@@ -8,8 +8,6 @@ import { FamilyplanningComponent } from './familyplanning.component';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import * as angularFontawesome from '@fortawesome/angular-fontawesome';
-
 import { FpchartComponent } from './modules/fpchart/fpchart.component';
 import { FirsvisitComponent } from './modules/firsvisit/firsvisit.component';
 import { FppeComponent } from './modules/fppe/fppe.component';
@@ -22,6 +20,7 @@ import { EndVisitComponent } from 'app/shared/shared-modals/end-visit/end-visit.
 import { DeleteItemComponent } from 'app/shared/shared-modals/delete-item/delete-item.component';
 import { SharedComponentsModule } from 'app/shared/shared-components/shared-components.module';
 import { FpchartModalComponent } from './modules/fpchart/fpchart-modal/fpchart-modal.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [FamilyplanningComponent, FpchartComponent, FirsvisitComponent, FppeComponent, FphxComponent, ObshxComponent, PelvicComponent, MethodsComponent, MethodsModalComponent, FpchartModalComponent,
@@ -30,7 +29,7 @@ import { FpchartModalComponent } from './modules/fpchart/fpchart-modal/fpchart-m
   imports: [
     CommonModule,
     FamilyplanningRoutingModule,
-    angularFontawesome.FontAwesomeModule,
+    FontAwesomeModule,
     FormsModule,
     ReactiveFormsModule,
     SharedComponentsModule,
