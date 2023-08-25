@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 
+
 @Component({
   selector: 'app-fpchart-modal',
   templateUrl: './fpchart-modal.component.html',
@@ -28,9 +29,21 @@ export class FpchartModalComponent implements OnInit {
 
   source_supplies: any;
 
+  isAccepted: boolean;
+
   min_date = formatDate((new Date()).setDate((new Date).getDate()+1), 'yyyy-MM-dd', 'en');
 
   max_date = formatDate(new Date(), 'yyyy-MM-dd', 'en');
+
+  isCheck(e){
+    if(e.target.checked){
+       this.isAccepted = true;
+    }
+    else{
+       this.isAccepted = false;
+    }
+    console.log(this.isAccepted);
+  }
 
   closeModal(){
     this.toggleModal.emit('fpchart-modal');
@@ -92,6 +105,13 @@ export class FpchartModalComponent implements OnInit {
         this.anotherFunction.emit();
         this.closeModal();
         console.log(data, 'display chart details')
+        // console.log(this.isAccepted,'checkb checkbox value')
+        if(this.isAccepted === true){
+          this.saveAppointment();
+          console.log(this.isAccepted,'checkbox is working')
+        } else {
+          console.log(this.isAccepted,'checkbox is not working')
+        }
       },
       error: err => console.log(err)
     })
