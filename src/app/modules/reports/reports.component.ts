@@ -39,6 +39,10 @@ export class ReportsComponent implements OnInit {
     { id: 'gbv-report', desc: 'GBV Report', url: 'gbv-report/catalyst-report'},
   ]
 
+  diagnosis_stats = [
+    { id: 'morbidity-report', desc: 'Morbidity Report', url: 'reports-2018/morbidity/report'},
+  ];
+
   months = [
     {
       value: 1,
@@ -104,10 +108,10 @@ export class ReportsComponent implements OnInit {
     this.is_fetching = true;
 
     let params = {
-      month: this.reportForm.value.month,
-      year: this.reportForm.value.year,
-      start_date: this.reportForm.value.start_date,
-      end_date: this.reportForm.value.end_date
+      month: this.reportForm.value.month ?? null,
+      year: this.reportForm.value.year ?? null,
+      start_date: this.reportForm.value.start_date ?? null,
+      end_date: this.reportForm.value.end_date ?? null
     }
 
     if (this.reportForm.value.report_class === 'muncity') {
@@ -117,17 +121,16 @@ export class ReportsComponent implements OnInit {
       params['category'] = 'barangay';
       params['code'] = this.selectedBrgy;
     } else {
-      params['category'] = 'facility';
+      params['category'] = this.reportForm.value.report_class;
     }
 
-    this.http.get(this.reportForm.value.report_type.url, {params})
-    .subscribe({
+    this.http.get(this.reportForm.value.report_type.url, {params}).subscribe({
       next: (data: any) => {
         this.report_data = data;
         this.is_fetching = false;
 
-        console.log(this.report_data, 'report_data');
-        console.log(this.selectedBrgy, 'report_data');
+        // console.log(this.report_data, 'report_data');
+        // console.log(this.selectedBrgy, 'report_data');
       },
       error: err => console.log(err)
     });
@@ -177,7 +180,7 @@ export class ReportsComponent implements OnInit {
   }
 
   changeDateOptions(): void {
-    // console.log(this.reportForm.value.report_type)
+    console.log(this.reportForm.value.report_type)
     this.report_data= '';
     if(this.fhsis_monthly_arr.find(e => e === this.reportForm.value.report_type.id)) {
       let month = formatDate(this.current_date, 'm', 'en', 'Asia/Manila');
