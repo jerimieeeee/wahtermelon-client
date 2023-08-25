@@ -4,7 +4,7 @@
      Chart
         <button *ngIf="fp_visit_history[0]?.method !== null" class="text-black bg-white mr-3 px-3 py-2 rounded text-sm" (click)="toggleModal('fpchart-modal')">
         <fa-icon  [icon]="is_saving ? faSpinner : faPlusSquare" [spin]="is_saving ? true : false" class="mr-2"></fa-icon>
-        Add Service
+        Add Service  {{fpchart_history?.patientFpMethod?.method?.desc}}
         </button>
       
     </div>
@@ -12,8 +12,8 @@
     <div class="grid grid-cols-12">
   
     <div class="relative col-span-12 overflow-x-auto shadow-md sm:rounded-lg">
-        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+        <table class="w-full text-sm text-left">
+            <thead class="text-xs uppercase bg-gray-50 whitespace-nowrap">
                 <tr>
                     <th scope="col" class="px-6 py-3">
                     Date Service Given
@@ -42,30 +42,31 @@
                 </tr>
             </thead>
             <tbody>
-                <tr class="bg-white border-b dark:bg-gray-900 dark:border-gray-700" *ngFor="let chart_history of fpchart_history[0]?.chart">
-                    <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                <tr class="bg-white border-b" *ngFor="let chart_history of fpchart_history">
+                    <td class="px-6 py-4">
                         {{ chart_history?.service_date | date: 'MM/dd/yyyy' }}  
                     </td>
                     <td class="px-6 py-4">
-                        {{ chart_history?.fp_method?.method?.desc ? chart_history?.fp_method?.method?.desc : '-' }}  
+                        {{ chart_history?.patientFpMethod?.method ? chart_history?.patientFpMethod?.method?.desc : '-' }}  
                     </td>
                     <td class="px-6 py-4">
-                        {{ chart_history?.source?.desc ? chart_history?.source?.desc : '-' }} 
+                        {{ chart_history?.source ? chart_history?.source?.desc : '-' }} 
                     </td>
                     <td class="px-6 py-4">
-                        {{ chart_history?.quantity ? chart_history?.quantity : '-' }}
+                        {{ chart_history ? chart_history?.quantity : '-' }}
                     </td>
                     <td class="px-6 py-4">
-                        {{ chart_history?.next_service_date ? chart_history?.next_service_date : '-' }}
+                        {{ chart_history?.next_service_date | date: 'MM/dd/yyyy' }}
                     </td>
                     <td class="px-6 py-4">
-                        {{ chart_history?.fp_method?.dropout_date | date: 'MM/dd/yyyy'  }}
+                        {{ chart_history?.patientFpMethod?.dropout_date ? (chart_history?.patientFpMethod?.dropout_date | date: 'MM/dd/yyyy') : '-' }}  
                     </td>
                     <td class="px-6 py-4">
-                       
+                        {{ chart_history?.patientFpMethod?.dropout?.desc ? chart_history?.patientFpMethod?.dropout?.desc : '-' }} 
                     </td>
                     <td class="px-6 py-4">
-                        <button type="button" class="rounded-md bg-blue-500 text-white py-1 px-2" (click)="toggleModal('fpchart-modal', fp_visit_history)">Edit</button>
+                        <fa-icon [icon]="faEdit" class="mx-0 my-0 text-orange-500 hover:cursor-pointer mr-2 text-center" (click)="editChart('fpchart-modal', chart_history)"></fa-icon>
+                        <fa-icon (click)="toggleModal('delete-item', chart_history)" [icon]="faTrashCan" class="mx-0 my-0 text-red-500 hover:cursor-pointer mr-2 text-center"></fa-icon>
                     </td>
                 </tr>
                 <!-- <tr class="border-b bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
@@ -174,11 +175,44 @@
                 </tr> -->
             </tbody>
         </table>
+
+        <div *ngIf="total >= 1">
+            <div class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
+              <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+                <div>
+                  <p class="text-sm text-gray-700">
+                    Showing <span class="font-medium">{{ from }}</span>
+                    to <span class="font-medium">{{ to }}</span>
+                    of <span class="font-medium">{{ total }}</span> results
+                  </p>
+                </div>
+                <div *ngIf="total >= 2">
+                  <nav class="relative z-0 inline-flex shadow-sm -space-x-px" aria-label="Pagination">
+                    <button [disabled]="current_page===1" (click)="getChartHistory(1)" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 enabled:bg-white disabled:bg-gray-300 text-sm font-medium text-gray-500 hover:bg-gray-50">
+                      <fa-icon [icon]="faAnglesLeft" class="block h-15 w-15 text-gray-500 pr-1"></fa-icon>
+                    </button>
+      
+                      <button [disabled]="current_page===1" (click)="getChartHistory(current_page-1)" class="relative inline-flex items-center px-4 py-2 border border-gray-300 enabled:bg-white disabled:bg-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
+                        <fa-icon [icon]="faChevronLeft" class="block h-15 w-15 text-gray-500 pr-1"></fa-icon>Previous
+                      </button>
+                      <button [disabled]="current_page===last_page" (click)="getChartHistory(current_page+1)" class="relative inline-flex items-center px-4 py-2 border border-gray-300 enabled:bg-white disabled:bg-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
+                        Next<fa-icon [icon]="faChevronRight" class="h-5 w-5 text-gray-500"></fa-icon>
+                      </button>
+      
+                    <button [disabled]="current_page===last_page" (click)="getChartHistory(last_page)" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 enabled:bg-white disabled:bg-gray-300 text-sm font-medium text-gray-500 hover:bg-gray-50">
+                      <fa-icon [icon]="faAnglesRight" class="h-5 w-5 text-gray-500"></fa-icon>
+                    </button>
+                  </nav>
+                </div>
+              </div>
+            </div>
+          </div>
+
     </div>
 
     
     </div>
-      
+     
 </div>
   
   <!-- <app-delete-item *ngIf="modals['delete-item']"
@@ -190,8 +224,17 @@
 <app-fpchart-modal *ngIf="modals['fpchart-modal']"
     [patient_id]="patient_id"
     (toggleModal)="toggleModal($event)"
+  
     [fp_visit_history]="fp_visit_history"
+    [fpchart_history]="selected_fpchart"
     (loadFP)="loadFP()"
-    (loadFPDetails)="loadFPDetails()"
+    (anotherFunction)="anotherFunction()"
+   
 ></app-fpchart-modal>
+
+<app-delete-item *ngIf="modals['delete-item']"
+  [delete_id]="delete_id"
+  [delete_desc]="delete_desc"
+  [url]="url"
+  (toggleModal)="toggleModal($event)"></app-delete-item>
   

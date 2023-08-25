@@ -1,4 +1,4 @@
-<div class="flex">
+<div class="flex" *ngIf="show_form">
   <nav class="mt-4 flex flex-row border-b border-slate-300 text-xs">
     <button (click)="switchPage(1)" class="tabs-main w-36"
       [class]="pages===1? 'tabs-main-true rounded-t-md' : 'tabs-main-false' ">
@@ -14,7 +14,7 @@
     </button>
   </nav>
   <div class="ml-auto">
-    <button type="button" class="btn-end-visit ml-auto mt-5" (click)="toggleModal('end-visit')">
+    <button type="button" *ngIf="this.consult_details[0]?.consult_done === false" class="btn-end-visit ml-auto mt-5" (click)="toggleModal('end_visit')">
       <fa-icon class="mr-1" [icon]="faDoorClosed"></fa-icon>
       End Visit
     </button>
@@ -142,7 +142,7 @@
   (loadFP)="loadFP()"
 ></app-fpchart>
 
-<app-end-visit *ngIf="modals['end-visit']"
+<app-end-visit *ngIf="modals['end_visit']"
   (toggleModal)="toggleModal($event)"
   [consult_id]="consult_id"
   [consult_date]="consult_details[0]?.consult_date"
@@ -161,5 +161,6 @@
   (toggleModal)="toggleModal($event)"
   [fp_visit_history]="fp_visit_history"
   (loadFP)="loadFP()"
+  (loadChart)="loadChart()"
 ></app-fpchart-modal>
 

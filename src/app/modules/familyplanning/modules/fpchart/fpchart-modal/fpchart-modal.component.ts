@@ -17,6 +17,7 @@ export class FpchartModalComponent implements OnInit {
   @Output() anotherFunction = new EventEmitter<any>();
   @Input() patient_id;
   @Input() fp_visit_history;
+  @Input() fpchart_history;
   
   
   is_saving: boolean = false;
@@ -49,26 +50,50 @@ export class FpchartModalComponent implements OnInit {
     
   });
 
-  onSubmit(){
+  // onSubmit(){
     
     
-    this.is_saving = true;
-    this.http.post('family-planning/fp-chart', this.sourceForm.value).subscribe({
+  //   this.is_saving = true;
+  //   this.http.post('family-planning/fp-chart', this.sourceForm.value).subscribe({
+  //     next: (data: any) => {
+  //       this.toastr.success('Chart was ' + (this.sourceForm.value ? 'updated' : 'saved') + ' successuly', 'Success')
+  //       this.is_saving = false;
+  //       this.saveAppointment();
+  //       this.loadFP.emit();
+  //       this.loadFPDetails.emit();
+  //       this.anotherFunction.emit();
+  //       console.log(data, 'display chart details')
+  //        },
+  //     complete: () => {
+  //      this.closeModal();
+  //     },
+  //     error: err => {console.log(err)
+  
+  //     },
+  //   })
+  // }
+
+  Submit(){
+    let query;
+
+    if(this.fpchart_history?.id) {
+      query = this.http.update('family-planning/fp-chart/', this.fpchart_history.id, this.sourceForm.value);
+    } else {
+      query = this.http.post('family-planning/fp-chart', this.sourceForm.value);
+    }
+
+    query.subscribe({
       next: (data: any) => {
         this.toastr.success('Chart was ' + (this.sourceForm.value ? 'updated' : 'saved') + ' successuly', 'Success')
         this.is_saving = false;
-        this.saveAppointment();
+        // this.saveAppointment();
         // this.loadFP.emit();
         // this.loadFPDetails.emit();
         this.anotherFunction.emit();
+        this.closeModal();
         console.log(data, 'display chart details')
-         },
-      complete: () => {
-       this.closeModal();
       },
-      error: err => {console.log(err)
-  
-      },
+      error: err => console.log(err)
     })
   }
 
@@ -89,6 +114,29 @@ export class FpchartModalComponent implements OnInit {
     });
   }
 
+  // onUpdate(){
+    
+    
+  //   this.is_saving = true;
+  //   this.http.update('family-planning/fp-chart/', this.fpchart_history?.id, this.sourceForm.value).subscribe({
+  //     next: (data: any) => {
+  //       this.toastr.success('Chart was ' + (this.sourceForm.value ? 'updated' : 'saved') + ' successuly', 'Success')
+  //       this.is_saving = false;
+  //       this.saveAppointment();
+  //       this.loadFP.emit();
+  //       this.loadFPDetails.emit();
+  //       this.anotherFunction.emit();
+  //       console.log(data, 'display chart details')
+  //        },
+  //     complete: () => {
+  //      this.closeModal();
+  //     },
+  //     error: err => {console.log(err)
+  
+  //     },
+  //   })
+  // }
+
   loadLib() {
 
 
@@ -96,7 +144,8 @@ export class FpchartModalComponent implements OnInit {
       next: (data: any) => { 
 
        this.source_supplies = data.data
-       console.log(this.source_supplies, 'display supplies') 
+       this.loadChart();
+       this.show_form = true;
       },
       complete: () => {
         
@@ -127,13 +176,22 @@ export class FpchartModalComponent implements OnInit {
     this.show_form = true;
   }
 
-  // loadFPDetails(){
-    
-  //   if(this.fp_visit_history) {
-  //     this.methodForm.patchValue({...this.fp_visit_history[0]?.method});
-  //     this.show_form = true;
-  //   }
-  // }
+  loadChart(){  
+    if(this.fpchart_history?.id){
+      this.sourceForm.patchValue({
+        service_date: formatDate(this.fpchart_history?.service_date, 'yyyy-MM-dd', 'en'),
+        source_supply_code: this.fpchart_history?.source.code,
+        quantity: this.fpchart_history?.quantity,
+        next_service_date: formatDate(this.fpchart_history?.next_service_date, 'yyyy-MM-dd', 'en'),
+        remarks: this.fpchart_history?.remarks,
+      });
+      this.show_form = true;
+      console.log('test ng load chart function')
+    } else {
+      console.log('test ng load chart function else')
+    }
+      
+  }
   
 
   constructor(
@@ -148,5 +206,6 @@ export class FpchartModalComponent implements OnInit {
     this.validateForm();
     this.loadLib();
     console.log(this.fp_visit_history_details, 'fp history in fp chart modal')
+    console.log(this.fpchart_history, 'display supplies') 
   } 
 }

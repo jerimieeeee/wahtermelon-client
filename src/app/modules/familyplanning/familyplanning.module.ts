@@ -19,6 +19,7 @@ import { PelvicComponent } from './modules/pelvic/pelvic.component';
 import { MethodsComponent } from './modules/methods/methods.component';
 import { MethodsModalComponent } from './modules/methods/methods-modal/methods-modal.component';
 import { EndVisitComponent } from 'app/shared/shared-modals/end-visit/end-visit.component';
+import { DeleteItemComponent } from 'app/shared/shared-modals/delete-item/delete-item.component';
 import { SharedComponentsModule } from 'app/shared/shared-components/shared-components.module';
 import { FpchartModalComponent } from './modules/fpchart/fpchart-modal/fpchart-modal.component';
 
@@ -33,7 +34,8 @@ import { FpchartModalComponent } from './modules/fpchart/fpchart-modal/fpchart-m
     FormsModule,
     ReactiveFormsModule,
     SharedComponentsModule,
-    EndVisitComponent
+    EndVisitComponent,
+    DeleteItemComponent
   ]
 })
 export class FamilyplanningModule { }

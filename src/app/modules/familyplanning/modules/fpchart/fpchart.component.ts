@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { faCalendarDay, faPlus, faSave, faTimes, faClose, faTimesCircle, faPencil, faCaretDown, faAngleDown, faInfoCircle, faCaretRight, faSpinner, faPlusSquare, faAnglesLeft, faAnglesRight, faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import { faCalendarDay, faPlus, faSave, faTimes, faClose, faTimesCircle, faPencil, faCaretDown, faAngleDown, faInfoCircle, faCaretRight, faSpinner, faPlusSquare, faAnglesLeft, faAnglesRight, faChevronLeft, faChevronRight, faEdit, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -11,10 +11,11 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./fpchart.component.scss']
 })
 export class FpchartComponent implements OnInit {
-  @Output() sourceForm;
+ 
   @Output() loadFP = new EventEmitter<any>();
   @Input() patient_id;
   @Input() fp_visit_history;
+  
   
   focused: boolean;
   focused2: boolean;
@@ -37,6 +38,8 @@ export class FpchartComponent implements OnInit {
   faAnglesRight = faAnglesRight;
   faChevronLeft = faChevronLeft;
   faChevronRight = faChevronRight;
+  faEdit = faEdit;
+  faTrashCan = faTrashCan;
 
   error_message = '';
   public buttons = [];
@@ -58,17 +61,44 @@ export class FpchartComponent implements OnInit {
   to: number;
   total: number;
 
+  delete_id: string;
+  delete_desc: string;
+  url: string;
   
-  toggleModal(name) {
+  selected_fpchart: any;
+
+  toggleModal(name, data?){
     this.modals[name] = !this.modals[name];
+
+    if(name === 'delete-item') {
+      if(this.modals[name] === true) {
+        this.delete_id = data.id;
+        this.delete_desc = "Previous Chart Record";
+        this.url = "family-planning/fp-chart/";
+      } else {
+        this.delete_id = null;
+        this.delete_desc = null;
+        this.url = null;
+      }
+      this.getChartHistory();
+    }
+
+    this.selected_fpchart = null;
+  }
+
+  editChart(name, data) {
+    this.modals[name] = !this.modals[name];
+    // this.fpchart_history[0] = data
+    this.selected_fpchart = data;
+    // this.loadChart.emit();
   }
 
   getChartHistory(page?: number){
     // console.log('query')
     let params = {
       patient_id: this.fp_visit_history_details.patient_id,
-      // per_page: 10,
-      // page: !page ? this.current_page : page
+      per_page: 10,
+      page: !page ? this.current_page : page
     }
 
     // params['params']['page'] = !page ? this.current_page : page;
@@ -78,7 +108,7 @@ export class FpchartComponent implements OnInit {
     // params['params']['consult_done'] = 0;
 
     // console.log(params, page, this.current_page)
-    this.http.get('family-planning/fp-records', {params}).subscribe({
+    this.http.get('family-planning/fp-chart', {params}).subscribe({
       next: (data: any) => {
         // console.log(data);
         this.show_form = true;
@@ -92,6 +122,13 @@ export class FpchartComponent implements OnInit {
       },
       error: err => console.log(err)
     })
+  }
+
+  anotherFunction() {
+    
+    this.loadFP.emit();
+    this.getChartHistory();
+
   }
 
   constructor(

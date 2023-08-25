@@ -32,6 +32,8 @@ export class FamilyplanningComponent implements OnInit {
   fp_visit_history: any = [];
 
   consult_details: any;
+
+  show_form: boolean = false;
   
 
   switchPage(page) {
@@ -90,6 +92,7 @@ export class FamilyplanningComponent implements OnInit {
       next: (data: any) => {
         this.consult_details = data.data;
         console.log(this.consult_details, 'consult details')
+        this.show_form = true;
       },
       error: err => console.log(err)
     });

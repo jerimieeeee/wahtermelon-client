@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { faCalendarDay, faPlus, faSave, faTimes, faClose, faTimesCircle, faPencil, faCaretDown, faAngleDown, faInfoCircle, faCaretRight, faSpinner, faAnglesLeft, faAnglesRight, faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import { faCalendarDay, faPlus, faSave, faTimes, faClose, faTimesCircle, faPencil, faCaretDown, faAngleDown, faInfoCircle, faCaretRight, faSpinner, faAnglesLeft, faAnglesRight, faChevronLeft, faChevronRight, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 import { forkJoin } from 'rxjs';
@@ -38,6 +38,7 @@ export class MethodsComponent implements OnInit {
   faAnglesRight = faAnglesRight;
   faChevronLeft = faChevronLeft;
   faChevronRight = faChevronRight;
+  faTrashCan = faTrashCan;
   error_message = '';
   public buttons = [];
 
@@ -62,10 +63,25 @@ export class MethodsComponent implements OnInit {
 
   required_message = 'Required field';
   
-  toggleModal(name) {
+  delete_id: string;
+  delete_desc: string;
+  url: string;
+
+  toggleModal(name, data?){
     this.modals[name] = !this.modals[name];
-    // this.showButton = !this.showButton;
-    // this.loadLibraries();
+
+    if(name === 'delete-item') {
+      if(this.modals[name] === true) {
+        this.delete_id = data.id;
+        this.delete_desc = "Previous Method Record";
+        this.url = "family-planning/fp-method/";
+      } else {
+        this.delete_id = null;
+        this.delete_desc = null;
+        this.url = null;
+      }
+      this.getMethodHistory();
+    }
   }
 
   getMethodHistory(page?: number){
@@ -93,6 +109,7 @@ export class MethodsComponent implements OnInit {
         this.from = data.meta.from;
         this.to = data.meta.to;
         this.total = data.meta.total;
+        console.log(this.fp_method_history, 'check method history')
       },
       error: err => console.log(err)
     })

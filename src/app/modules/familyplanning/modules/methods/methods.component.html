@@ -115,31 +115,35 @@
        </div>
 
        <table *ngIf="fp_method_history.length >= 1" class="w-full text-sm text-left">
-        <thead class="text-xs uppercase">
+        <thead class="text-xs uppercase bg-gray-50 whitespace-nowrap">
           <tr>
             <th scope="col" class="py-3 px-6">Method</th>
             <th scope="col" class="py-3 px-6">Type of Client</th>
             <th scope="col" class="py-3 px-6">Date Registered</th>
             <th scope="col" class="py-3 px-6">Date of Dropout</th>
             <th scope="col" class="py-3 px-6">Droupout Reason</th>
+            <th scope="col" class="py-3 px-6">Action</th>
           </tr>
         </thead>
         <tbody>
           <tr class="bg-white border-b" *ngFor="let method_history of fp_method_history">
             <td class="py-4 px-6">
-              {{ method_history.method.desc ? method_history.method.desc : '-'}}
+              {{ method_history?.method ? method_history.method.desc : '-'}}
             </td>
             <td class="py-4 px-6">
-              {{ method_history.client.desc ? method_history.client.desc : '-' }}
+              {{ method_history?.client ? method_history.client.desc : '-' }}
             </td>
             <td class="py-4 px-6">
-              {{ method_history.enrollment_date | date: 'MM/dd/yyyy' }}
+              {{ method_history?.enrollment_date | date: 'MM/dd/yyyy' }}
             </td>
             <td class="py-4 px-6">
-              {{ method_history.dropout_date | date: 'MM/dd/yyyy' }}
+              {{ method_history?.dropout_date | date: 'MM/dd/yyyy' }}
             </td>
             <td class="py-4 px-6">
-              {{ method_history.dropout.desc ? method_history.dropout.desc : '-' }}
+              {{ method_history?.dropout ? method_history.dropout.desc : '-' }}
+            </td>
+            <td class="py-4 px-10">
+              <fa-icon (click)="toggleModal('delete-item', method_history)" [icon]="faTrashCan" class="mx-0 my-0 text-red-500 hover:cursor-pointer mr-2 text-center"></fa-icon>
             </td>
           </tr>
         </tbody>
@@ -188,9 +192,9 @@
 ></app-methods-modal>
 
   
-  <!-- <app-delete-item *ngIf="modals['delete-item']"
-    [delete_id]="delete_id"
-    [delete_desc]="delete_desc"
-    [url]="url"
-    (toggleModal)="toggleModal($event)"></app-delete-item> -->
+<app-delete-item *ngIf="modals['delete-item']"
+  [delete_id]="delete_id"
+  [delete_desc]="delete_desc"
+  [url]="url"
+  (toggleModal)="toggleModal($event)"></app-delete-item>
   
