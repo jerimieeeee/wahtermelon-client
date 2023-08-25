@@ -1,0 +1,121 @@
+<div id="defaultModal" tabindex="-1" class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 w-full md:inset-0 h-modal md:h-full justify-center items-center flex" aria-modal="true" role="dialog" style="z-index:60" *ngIf="show_form">
+  <div class="relative p-4 w-full max-w-3xl h-auto md:h-auto">
+    <!-- Modal content -->
+    <div class="relative bg-white rounded-lg shadow">
+      <!-- Modal header -->
+      <div class="flex justify-between items-start py-3 px-5 rounded-t border-b bg-blue-500">
+        <h3 class="text-sm font-bold text-white">
+          Service Details
+          <!-- Service Details - {{fp_visit_history[0]?.method?.method?.desc}} -->
+        </h3>
+      </div>
+      <!-- Modal body -->
+      <form [formGroup]="sourceForm" (submit)="onSubmit()">
+      <div class="grid grid-cols-12 h-96 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
+
+        <div class="col-span-4 px-10 pt-2.5">
+          <label for="case_number" class="text-sm font-semibold">Date of Service Given</label>
+          <input type="date" name="case_number" id="case_number" [max]="max_date" formControlName="service_date" class="input">
+  
+          <!-- <div *ngIf="show_error && f.case_number.errors" class="invalid-alert">
+            <div *ngIf="f.case_number.errors?.['required']">
+              {{ required_message }}
+            </div> -->
+  
+            <!-- <div *ngIf="f.case_number.errors?.['pattern']">
+              Only letters and numbers are allowed.
+            </div> -->
+        </div>
+
+        <div class="col-span-12 px-10 pt-2.5">
+        <label for="source_supply" class="text-sm font-semibold">Source of Supply</label>
+        <select name="supply_source_code" id="supply_source_code" formControlName="source_supply_code" class="input">
+          <option *ngFor="let source of source_supplies" [value]="source.code">{{ source.desc }}</option>
+        </select>
+
+        <!-- <div *ngIf="show_error && f.case_number.errors" class="invalid-alert">
+          <div *ngIf="f.case_number.errors?.['required']">
+            {{ required_message }}
+          </div> -->
+
+          <!-- <div *ngIf="f.case_number.errors?.['pattern']">
+            Only letters and numbers are allowed.
+          </div> -->
+        </div>
+
+        <div class="col-span-12 px-10 pt-2.5">
+          <label for="case_number" class="text-sm font-semibold">Quantity if applicable</label>
+          <input type="number" name="case_number" id="case_number" formControlName="quantity"  class="input">
+  
+          <!-- <div *ngIf="show_error && f.case_number.errors" class="invalid-alert">
+            <div *ngIf="f.case_number.errors?.['required']">
+              {{ required_message }}
+            </div> -->
+  
+            <!-- <div *ngIf="f.case_number.errors?.['pattern']">
+              Only letters and numbers are allowed.
+            </div> -->
+        </div>
+
+        <div class="col-span-8 px-10 pt-2.5">
+          
+          <label for="case_number" class="text-sm font-semibold">Next Service Date</label>
+            <div class="grid grid-cols-12">
+              <div class="col-span-5 pr-5">
+                <input *ngIf="fpchart_history" type="date" name="case_number" id="case_number" [min]="min_date" formControlName="next_service_date"  class="input select-none" readonly>
+                <input *ngIf="!fpchart_history" type="date" name="case_number" id="case_number" [min]="min_date" formControlName="next_service_date"  class="input">
+              </div>
+              <div *ngIf="!fpchart_history" class="col-span-7">
+                <input [checked]="isAccepted" type="checkbox" (change)="isCheck($event)" class="input-checkbox"><label for="case_number" class="text-sm font-semibold pl-2 align-middle">Create an appointment?</label>
+              </div>
+            </div>
+            <!-- <div *ngIf="show_error && f.case_number.errors" class="invalid-alert">
+              <div *ngIf="f.case_number.errors?.['required']">
+                {{ required_message }}
+              </div> -->
+    
+              <!-- <div *ngIf="f.case_number.errors?.['pattern']">
+                Only letters and numbers are allowed.
+              </div> -->
+
+          <!-- <div class="bg-green-200">
+            
+          </div> -->
+        </div>
+
+        
+        
+
+        <div class="col-span-12 px-10 pt-2.5 pb-5">
+            <label for="case_number" class="text-sm font-semibold">Remarks</label>
+            <input type="text" name="case_number" id="case_number" formControlName="remarks" class="input">
+    
+            <!-- <div *ngIf="show_error && f.case_number.errors" class="invalid-alert">
+              <div *ngIf="f.case_number.errors?.['required']">
+                {{ required_message }}
+              </div> -->
+    
+              <!-- <div *ngIf="f.case_number.errors?.['pattern']">
+                Only letters and numbers are allowed.
+              </div> -->
+          </div>
+        
+      </div>
+      </form>
+      <!-- Modal footer -->
+      <div class="flex justify-end py-4 px-5 space-x-4 rounded-b border-t border-gray-200">
+        <button type="button" class="btn-save bg-red-500" (click)="closeModal()" >Close</button>
+        <button  [disabled]="is_saving" (click)="Submit()" type="submit" class="btn-save px-10 disabled:bg-gray-300" >
+          <fa-icon></fa-icon>
+          {{ fpchart_history ? (is_saving ? 'Updating' : 'Update') : (is_saving ? 'Saving' : 'Save') }}
+        </button>
+        <!-- <button  [disabled]="is_saving" (click)="onUpdate()" type="submit" class="btn-save px-10 disabled:bg-gray-300" >
+          <fa-icon></fa-icon>
+        Update
+        </button> -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="opacity-50 fixed inset-0 z-50 bg-black"></div>

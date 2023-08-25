@@ -1,6 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { faHome, faCalendarDay, faFlask, faTimes, faSave, faTimesCircle, faPencil, faCaretLeft, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
-import { FormControl, FormGroup } from '@angular/forms';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
+import { faCalendarDay, faPlus, faSave, faTimes, faClose, faTimesCircle, faPencil, faCaretDown, faAngleDown, faInfoCircle, faCaretRight, faSpinner, faPlusSquare, faAnglesLeft, faAnglesRight, faChevronLeft, faChevronRight, faEdit, faTrashCan } from '@fortawesome/free-solid-svg-icons';
+import { HttpService } from 'app/shared/services/http.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-fpchart',
@@ -8,104 +11,137 @@ import { FormControl, FormGroup } from '@angular/forms';
   styleUrls: ['./fpchart.component.scss']
 })
 export class FpchartComponent implements OnInit {
+ 
+  @Output() loadFP = new EventEmitter<any>();
+  @Input() patient_id;
+  @Input() fp_visit_history;
+  
+  
   focused: boolean;
-  faCalendarDay = faCalendarDay;
-  faTimes = faTimes;
-  faSave = faSave;
-  faTimesCircle = faTimesCircle;
-  faPencil = faPencil;
-  faInfoCircle = faInfoCircle;
-  textbox: boolean;
   focused2: boolean;
-  typing: boolean;
-  public keyUp = [];
+  modal: boolean;
+
+  faSpinner = faSpinner;
+
+  is_saving: boolean = false;
+
+  faTimes = faTimes;
+  faClose = faClose;
+  faTimesCircle = faTimesCircle;
+  faSave = faSave;
+  faPlusSquare = faPlusSquare;
+  faPencil = faPencil;
+  faAngleDown = faAngleDown;
+  faInfoCircle = faInfoCircle;
+  faCaretRight = faCaretRight;
+  faAnglesLeft = faAnglesLeft;
+  faAnglesRight = faAnglesRight;
+  faChevronLeft = faChevronLeft;
+  faChevronRight = faChevronRight;
+  faEdit = faEdit;
+  faTrashCan = faTrashCan;
+
+  error_message = '';
   public buttons = [];
-  constructor() { }
-  public form = {
-  service_date: '',
-  source: '',
-  quantity: '',
-  next_service: '',
-  remarks: '',
- };
- date = new Date();
 
- fp_form : FormGroup;
- source: String = new String();
- quantity: Number = new Number();
- next_service : Date = new Date();
- remarks: String = new String();
+  public keyUp = [];
 
-  ngOnInit(){
-    this.createForm();
+  modals: any = [];
 
-    console.log("init fpchart");
-    
-    this.focused = false;
-    this.typing = true;
-    // this.fp_form.reset();
-  }
-  createForm(){
-    this.fp_form = new FormGroup({
-      service_date: new FormControl(new Date().toISOString().substring(0,10)),
-      source : new FormControl(this.source),
-      quantity : new FormControl(this.quantity),
-      next_service : new FormControl(),
-      remarks : new FormControl(this.remarks),
-    });
-  }
-  cancel(){
-    this.keyUp = [];
-    this.fp_form.reset();
-  }
-  saveForm(data){
-    this.fp_form.setValue({
-      service_date : data.service_date,
-      source : data.source,
-      quantity : data.quantity,
-      next_service : data.next_service,
-      remarks : data.remarks
-    });
-    this.fp_form.disable();
-  }
-  flip(): void{
-    this.focused = !this.focused;
-    this.keyUp = [];
-    this.buttons = [];
-    this.buttons.push('save');
-    // this.fp_form.reset();
-  }
+  show_form: boolean = false;
 
-  edit(){
-    this.fp_form.enable();
-  }
+  fp_visit_history_details: any;
 
-  clearForm(id){
-    this.fp_form.get(id).reset();
-    this.keyUp.splice(this.keyUp.indexOf(id),1);
-    // this.onKeyUp('', id);
-  }
-  onKeyUp(data_input: string, id: string){
-    // console.log(data_input + ' this is my data input');
-    
-        if(this.keyUp.includes(id)){
-          if(data_input == ''){
-            this.keyUp.splice(this.keyUp.indexOf(id), 1);
-          }
-        }else{
-          this.keyUp.push(id);
-          
-        }
-        // console.log(this.keyUp.length);
-        // console.log(this.keyUp);
-        
-  }
-  buttonShow(name){
-    this.buttons = [];
-    if(!this.buttons.includes(name)){
-      this.buttons.push(name);
+  fpchart_history: any;
+
+  per_page: number = 5;
+  current_page: number;
+  last_page: number;
+  from: number;
+  to: number;
+  total: number;
+
+  delete_id: string;
+  delete_desc: string;
+  url: string;
+  
+  selected_fpchart: any;
+
+  toggleModal(name, data?){
+    this.modals[name] = !this.modals[name];
+
+    if(name === 'delete-item') {
+      if(this.modals[name] === true) {
+        this.delete_id = data.id;
+        this.delete_desc = "Previous Chart Record";
+        this.url = "family-planning/fp-chart/";
+      } else {
+        this.delete_id = null;
+        this.delete_desc = null;
+        this.url = null;
+      }
+      this.getChartHistory();
     }
-    // console.log(this.buttons);
-    
+
+    this.selected_fpchart = null;
   }
+
+  editChart(name, data) {
+    this.modals[name] = !this.modals[name];
+    // this.fpchart_history[0] = data
+    this.selected_fpchart = data;
+    // this.loadChart.emit();
+  }
+
+  getChartHistory(page?: number){
+    // console.log('query')
+    let params = {
+      patient_id: this.fp_visit_history_details.patient_id,
+      per_page: 10,
+      page: !page ? this.current_page : page
+    }
+
+    // params['params']['page'] = !page ? this.current_page : page;
+    // if (this.selected_physician !== 'all') params['params']['physician_id'] = this.selected_physician;
+    // params['params']['per_page'] = this.per_page;
+    // params['params']['patient_id'] = this.fp_visit_history_details.patient_id;
+    // params['params']['consult_done'] = 0;
+
+    // console.log(params, page, this.current_page)
+    this.http.get('family-planning/fp-chart', {params}).subscribe({
+      next: (data: any) => {
+        // console.log(data);
+        this.show_form = true;
+        this.fpchart_history = data.data
+        this.current_page = data.meta.current_page;
+        this.last_page = data.meta.last_page;
+        this.from = data.meta.from;
+        this.to = data.meta.to;
+        this.total = data.meta.total;
+        console.log(this.fpchart_history, 'chart history')
+      },
+      error: err => console.log(err)
+    })
+  }
+
+  anotherFunction() {
+    
+    this.loadFP.emit();
+    this.getChartHistory();
+
+  }
+
+  constructor(
+    private router: Router,
+    private http: HttpService,
+    private formBuilder: FormBuilder,
+    private toastr: ToastrService,
+    ) { }
+
+  ngOnInit(): void {
+    this.fp_visit_history_details = this.fp_visit_history[0];
+    this.getChartHistory();
+    this.loadFP.emit();
+    console.log(this.fp_visit_history_details)
+  } 
 }
