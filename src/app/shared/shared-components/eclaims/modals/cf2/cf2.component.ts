@@ -41,10 +41,8 @@ export class Cf2Component implements OnInit {
 
   submitQue() {
     this.que_form = true;
-    console.log(this.eclaimsForm.value)
     this.http.post('eclaims/eclaims-xml', this.eclaimsForm.value).subscribe({
       next: (data:any) => {
-        console.log(data)
         let save_type: string = this.eclaimsForm.value.transmittalNumber ? 'Update' : 'Queue';
         this.toastr.success('Successfully saved', save_type+' Claim');
         this.que_form = false;
@@ -97,7 +95,6 @@ export class Cf2Component implements OnInit {
   }
 
   paramsCc(vaccine) {
-    console.log(vaccine);
     this.f.pEssentialNewbornCare.setValidators([Validators.required]);
     this.f.pNewbornHearingScreeningTest.setValidators([Validators.required]);
     this.f.pNewbornScreeningTest.setValidators([Validators.required]);
@@ -114,8 +111,6 @@ export class Cf2Component implements OnInit {
           service_count += 1;
         }
       });
-
-      console.log(service_count);
     }
 
     if(vaccine){
@@ -130,16 +125,15 @@ export class Cf2Component implements OnInit {
     this.eclaimsForm.patchValue({
       attendant_sign_date: formatDate(this.selected_case.admission_date, 'yyyy-MM-dd', 'en', 'Asia/Manila'),
       admission_date: formatDate(this.selected_case.admission_date, 'yyyy-MM-dd', 'en', 'Asia/Manila'),
-      admission_time: formatDate(this.selected_case.admission_date, 'HH:mma', 'en', 'Asia/Manila'),
+      admission_time: formatDate(this.selected_case.admission_date, 'hh:mma', 'en', 'Asia/Manila'),
       discharge_date: formatDate(this.selected_case.discharge_date, 'yyyy-MM-dd', 'en', 'Asia/Manila'),
-      discharge_time: formatDate(this.selected_case.discharge_date, 'HH:mma', 'en', 'Asia/Manila'),
+      discharge_time: formatDate(this.selected_case.discharge_date, 'hh:mma', 'en', 'Asia/Manila'),
       pNewbornHearingScreeningTest: hearing_done,
       pNewbornScreeningTest: this.selected_case.nbs_filter ? 'Y' : 'N',
       pFilterCardNo: this.selected_case.nbs_filter,
       pEssentialNewbornCare: hearing_done === 'Y' && bcg_vaccine ? 'Y' : 'N'
     });
 
-    console.log(this.eclaimsForm.value);
     this.getCreds();
   }
 
@@ -215,9 +209,9 @@ export class Cf2Component implements OnInit {
         pCheckUpDate4: visit4,
         attendant_sign_date: formatDate(signDate, 'yyyy-MM-dd', 'en', 'Asia/Manila'),
         admission_date: formatDate(admitDate, 'yyyy-MM-dd', 'en', 'Asia/Manila'),
-        admission_time: formatDate(admitDate, 'HH:mma', 'en', 'Asia/Manila'),
+        admission_time: formatDate(admitDate, 'hh:mma', 'en', 'Asia/Manila'),
         discharge_date: formatDate(dischargeDate, 'yyyy-MM-dd', 'en', 'Asia/Manila'),
-        discharge_time: formatDate(dischargeDate, 'HH:mma', 'en', 'Asia/Manila'),
+        discharge_time: formatDate(dischargeDate, 'hh:mma', 'en', 'Asia/Manila'),
       });
 
       this.getCreds();
@@ -239,7 +233,6 @@ export class Cf2Component implements OnInit {
 
     this.http.get('settings/philhealth-credentials', {params}).subscribe({
       next:(data:any) => {
-        console.log(data.data)
         this.program_creds = data.data[0];
         this.show_form = true;
       },
@@ -277,6 +270,10 @@ export class Cf2Component implements OnInit {
       }
       case 'ab': {
         this.paramsAb();
+        break;
+      }
+      case 'fb': {
+        this.paramsFp();
         break;
       }
     }
@@ -386,7 +383,6 @@ export class Cf2Component implements OnInit {
       transmittalNumber: this.selected_transmittalNumber ?? null
     });
 
-    console.log(this.eclaimsForm.value);
     this.loadCf2Params();
   }
 
@@ -403,9 +399,7 @@ export class Cf2Component implements OnInit {
 
   ngOnInit(): void {
     this.facility = this.http.getUserFromJSON().facility;
-    console.log(this.selected_case, this.caserate_list.length)
     if(this.caserate_list.length === 1) {
-      console.log(this.caserate_list, typeof this.caserate_list.length)
       this.selected_caserate = this.caserate_list[0];
       this.createForm();
     }
