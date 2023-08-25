@@ -12,8 +12,10 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class FirsvisitComponent implements OnInit {
   @Output() loadFP = new EventEmitter<any>();
+  @Output() updateSelectedFp = new EventEmitter<any>();
   @Input() patient_id;
   @Input() fp_visit_history;
+  @Input() selected_fp_consult;
 
   faSpinner = faSpinner;
 
@@ -45,6 +47,7 @@ export class FirsvisitComponent implements OnInit {
         this.is_saving = false;
         this.showButton = !this.showButton;
         this.loadFP.emit();
+        this.reloadData();
         console.log(data, 'display visit details')
         console.log(this.fp_visit_history, 'checker FV 2')
          },
@@ -70,6 +73,21 @@ export class FirsvisitComponent implements OnInit {
 
     this.loadFPDetails();
     this.show_form = true;
+  }
+
+  reloadData(){
+    let params = {
+      patient_id: this.patient_id
+    }
+
+    this.http.get('family-planning/fp-records', {params}).subscribe({
+      next: (data: any) => {
+        this.selected_fp_consult = data.data[0];
+        this.updateSelectedFp.emit(this.selected_fp_consult);
+        console.log(this.selected_fp_consult, 'check mo selected')
+      },
+      error: err => console.log(err)
+    });
   }
 
   loadFPDetails(){

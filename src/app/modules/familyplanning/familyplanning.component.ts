@@ -62,10 +62,15 @@ export class FamilyplanningComponent implements OnInit {
   }
 
   selected_fp_consult: {};
+  
   openFPConsult(data) {
-    console.log(data)
+    console.log(data, 'test open fp consult')
     this.selected_fp_consult = data;
     this.pages = 2;
+  }
+
+ updateSelectedFp(data) {
+    this.selected_fp_consult = data;
   }
 
   loadFP() {
@@ -93,7 +98,7 @@ export class FamilyplanningComponent implements OnInit {
     this.http.get('consultation/records',{params: {patient_id: this.patient_id, id: this.consult_id}}).subscribe({
       next: (data: any) => {
         this.consult_details = data.data;
-        console.log(this.consult_details, 'consult details')
+        // console.log(this.consult_details, 'consult details')
         this.show_form = true;
       },
       error: err => console.log(err)
@@ -102,9 +107,9 @@ export class FamilyplanningComponent implements OnInit {
 
   ngOnInit(): void {
     this.patient_id = this.route.snapshot.paramMap.get('id');
-    console.log(this.patient_id, 'check patient')
+    // console.log(this.patient_id, 'check patient')
     this.consult_id = this.route.snapshot.paramMap.get('consult_id');
-    console.log(this.consult_id, 'check patient consult id')
+    // console.log(this.consult_id, 'check patient consult id')
     this.loadFP();
     this.loadConsultDetails();
 

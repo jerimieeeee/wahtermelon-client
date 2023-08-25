@@ -11,8 +11,10 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class PelvicComponent implements OnInit {
   @Output() loadFP = new EventEmitter<any>();
+  @Output() updateSelectedFp = new EventEmitter<any>();
   @Input() patient_id;
   @Input() fp_visit_history;
+  @Input() selected_fp_consult;
 
   faCalendarDay = faCalendarDay;
   faPlus = faPlus;
@@ -106,6 +108,7 @@ export class PelvicComponent implements OnInit {
           this.toastr.success('Pelvic was ' + (pelvic_exam ? 'updated' : 'saved') + ' successuly', 'Success')
           this.is_saving = false;
           this.loadFP.emit();
+          this.reloadData();
           this.loadSelected();
           console.log(pelvic_exam, 'ito ung submit sa FPHX')
         },
@@ -115,6 +118,21 @@ export class PelvicComponent implements OnInit {
         }
       })
 
+  }
+
+  reloadData(){
+    let params = {
+      patient_id: this.patient_id
+    }
+
+    this.http.get('family-planning/fp-records', {params}).subscribe({
+      next: (data: any) => {
+        this.selected_fp_consult = data.data[0];
+        this.updateSelectedFp.emit(this.selected_fp_consult);
+        console.log(this.selected_fp_consult, 'check mo selected')
+      },
+      error: err => console.log(err)
+    });
   }
 
   loadSelected() {

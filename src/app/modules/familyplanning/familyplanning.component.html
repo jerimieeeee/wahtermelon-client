@@ -95,7 +95,7 @@
         </td>
       </tr>
 
-      <tr class="bg-white border-b" *ngIf="!fp_visit_history">
+      <tr class="bg-white border-b" *ngIf="fp_visit_history.length === 0">
         <td  colspan="7">
           <div class="text-center py-3 flex flex-col">
             <div class="flex justify-center">No records to show...</div>
@@ -114,31 +114,37 @@
 <app-firsvisit *ngIf="pages === 2 && module === 1"
   [patient_id]="patient_id"
   [fp_visit_history]="selected_fp_consult"
+  (updateSelectedFp)="updateSelectedFp($event)"
   (loadFP)="loadFP()"
 ></app-firsvisit>
 <app-fphx *ngIf="pages === 2 && module === 2"
   [patient_id]="patient_id"
-  [fp_visit_history]="selected_fp_consult"
   (loadFP)="loadFP()"
+  (updateSelectedFp)="updateSelectedFp($event)"
+  [fp_visit_history]="selected_fp_consult"
 ></app-fphx>
 <app-fppe *ngIf="pages === 2 && module === 4"
   [patient_id]="patient_id"
   [fp_visit_history]="selected_fp_consult"
+  (updateSelectedFp)="updateSelectedFp($event)"
   (loadFP)="loadFP()"
 ></app-fppe>
 <app-pelvic *ngIf="pages === 2 && module === 5"
   [patient_id]="patient_id"
-  [fp_visit_history]="selected_fp_consult"
+  [fp_visit_history]="(selected_fp_consult)"
+  (updateSelectedFp)="updateSelectedFp($event)"
   (loadFP)="loadFP()"
 ></app-pelvic>
 <app-methods *ngIf="pages === 2 && module === 6"
   [patient_id]="patient_id"
   [fp_visit_history]="selected_fp_consult"
+  (updateSelectedFp)="updateSelectedFp($event)"
   (loadFP)="loadFP()"
 ></app-methods>
 <app-fpchart *ngIf="pages === 2 && module === 7"
   [patient_id]="patient_id"
   [fp_visit_history]="selected_fp_consult"
+  (updateSelectedFp)="updateSelectedFp($event)"
   (loadFP)="loadFP()"
 ></app-fpchart>
 

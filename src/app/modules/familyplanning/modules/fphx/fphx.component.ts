@@ -12,8 +12,11 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class FphxComponent implements OnInit {
   @Output() loadFP = new EventEmitter<any>();
+  @Output() updateSelectedFp = new EventEmitter<any>();
   @Input() patient_id;
   @Input() fp_visit_history;
+  @Input() selected_fp_consult;
+
 
   faCalendarDay = faCalendarDay;
   faPlus = faPlus;
@@ -34,7 +37,7 @@ export class FphxComponent implements OnInit {
 
   hx_codes: any = [];
 
-  fp_visit_history_details: any;
+  // fp_visit_history_details: any;
 
   category = [
     {"name" : "Abdomen"},
@@ -52,7 +55,7 @@ export class FphxComponent implements OnInit {
         // console.log(data.data)
         const list = data.data;
 
-        console.log(list, 'history list')
+        // console.log(list, 'history list')
         const groups = list.reduce((groups, item) => {
           const group = (groups[item.category.toLowerCase()] || []);
           group.push(item);
@@ -71,7 +74,7 @@ export class FphxComponent implements OnInit {
   onSubmit(){
     var hx_arr = [];
     this.is_saving = true;
-    console.log(this.hx_codes)
+    // console.log(this.hx_codes)
     Object.entries(this.hx_codes).forEach(([key, value], index) => {
       if(value != false){
         let hxs = {
@@ -79,20 +82,16 @@ export class FphxComponent implements OnInit {
         };
 
         hx_arr.push(hxs);
-        console.log(hx_arr, 'ito ung array sa for loop')
+        // console.log(hx_arr, 'ito ung array sa for loop')
       }
     })
 
-
-      let fp_id = this.fp_visit_history_details.id
+      let fp_id = this.fp_visit_history.id
       let p_id = this.patient_id
       var history ={
         patient_fp_id: fp_id,
         patient_id: p_id,
         history: hx_arr,
-
-
-
       }
 
       console.log(history, 'history submit')
@@ -102,6 +101,7 @@ export class FphxComponent implements OnInit {
           this.toastr.success('FP History was ' + (history ? 'updated' : 'saved') + ' successuly', 'Success')
           this.is_saving = false;
           this.loadFP.emit();
+          this.reloadData();
           this.loadSelected();
           console.log(history, 'ito ung submit sa FPHX')
         },
@@ -110,17 +110,31 @@ export class FphxComponent implements OnInit {
         console.log('success')
         }
       })
+  }
 
+  reloadData(){
+    let params = {
+      patient_id: this.patient_id
+    }
+
+    this.http.get('family-planning/fp-records', {params}).subscribe({
+      next: (data: any) => {
+        this.selected_fp_consult = data.data[0];
+        this.updateSelectedFp.emit(this.selected_fp_consult);
+        console.log(this.selected_fp_consult, 'check mo selected')
+      },
+      error: err => console.log(err)
+    });
   }
 
   loadSelected() {
-    if(this.fp_visit_history_details.history){
-      Object.entries(this.fp_visit_history_details.history).forEach(([key, value]:any, index) => {
+    if(this.fp_visit_history.history){
+      Object.entries(this.fp_visit_history.history).forEach(([key, value]:any, index) => {
         // let val: any = value;
         this.hx_codes[value.history_code] = true;
 
-        console.log(key)
-        console.log(value)
+        // console.log(key)
+        // console.log(value)
         // this.fp_visit_history_details.physical_exam.forEach((value) => {
         //   // console.log(value)
         //   this.physical_codes[val.pe_id] = value.pe_id;
@@ -128,10 +142,11 @@ export class FphxComponent implements OnInit {
         // })
       });
     }
-    console.log(this.fp_visit_history_details.history, 'test')
+    console.log(this.fp_visit_history.history, 'test')
 
 
 }
+
 
   constructor(
     private http: HttpService,
@@ -141,8 +156,9 @@ export class FphxComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadLibraries();
-    this.fp_visit_history_details = this.fp_visit_history
-    console.log(this.fp_visit_history_details.history, 'testing')
+    // this.fp_visit_history_details = this.fp_visit_history
+    console.log(this.fp_visit_history.history, 'testing history')
+    // console.log(this.fp_visit_history, 'testing fp visit history on history')
   }
 
 }

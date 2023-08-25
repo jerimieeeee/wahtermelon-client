@@ -13,9 +13,10 @@ import { ToastrService } from 'ngx-toastr';
 export class FpchartComponent implements OnInit {
 
   @Output() loadFP = new EventEmitter<any>();
+  @Output() updateSelectedFp = new EventEmitter<any>();
   @Input() patient_id;
   @Input() fp_visit_history;
-
+  @Input() selected_fp_consult;
 
   focused: boolean;
   focused2: boolean;
@@ -124,9 +125,25 @@ export class FpchartComponent implements OnInit {
     })
   }
 
+  reloadData(){
+    let params = {
+      patient_id: this.patient_id
+    }
+
+    this.http.get('family-planning/fp-records', {params}).subscribe({
+      next: (data: any) => {
+        this.selected_fp_consult = data.data[0];
+        this.updateSelectedFp.emit(this.selected_fp_consult);
+        console.log(this.selected_fp_consult, 'check mo selected')
+      },
+      error: err => console.log(err)
+    });
+  }
+
   anotherFunction() {
 
     this.loadFP.emit();
+    this.reloadData();
     this.getChartHistory();
 
   }

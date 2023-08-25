@@ -13,8 +13,10 @@ import { forkJoin } from 'rxjs';
 })
 export class MethodsComponent implements OnInit {
   @Output() loadFP = new EventEmitter<any>();
+  @Output() updateSelectedFp = new EventEmitter<any>();
   @Input() patient_id;
   @Input() fp_visit_history;
+  @Input() selected_fp_consult;
 
 
   modal: boolean;
@@ -176,6 +178,7 @@ export class MethodsComponent implements OnInit {
         this.is_saving = false;
         this.showButton = true;
         this.loadFP.emit();
+        this.reloadData();
         this.loadFPDetails();
         this.fp_visit_history_details = this.fp_visit_history
         console.log(data, 'display method on submit')
@@ -190,6 +193,21 @@ export class MethodsComponent implements OnInit {
         this.toastr.error('Form invalid or incomplete', 'Error')
       },
     })
+  }
+
+  reloadData(){
+    let params = {
+      patient_id: this.patient_id
+    }
+
+    this.http.get('family-planning/fp-records', {params}).subscribe({
+      next: (data: any) => {
+        this.selected_fp_consult = data.data[0];
+        this.updateSelectedFp.emit(this.selected_fp_consult);
+        console.log(this.selected_fp_consult, 'check mo selected')
+      },
+      error: err => console.log(err)
+    });
   }
 
   validateForm(){
@@ -239,6 +257,7 @@ export class MethodsComponent implements OnInit {
     this.showButton = !this.showButton;
     // this.methodForm.reset();
     this.loadFP.emit();
+    this.reloadData();
     this.getMethodHistory();
     // this.fp_visit_history_details = this.fp_visit_history
     // this.loadLibraries();
