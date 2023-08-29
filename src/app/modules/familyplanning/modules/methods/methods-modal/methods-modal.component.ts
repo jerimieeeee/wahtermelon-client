@@ -84,7 +84,7 @@ export class MethodsModalComponent implements OnInit {
 
       dropout_date: ['', [Validators.required, Validators.minLength(1)]],
       dropout_reason_code: ['', [Validators.required, Validators.minLength(1)]],
-      dropout_remarks: ['', [Validators.required, Validators.minLength(1)]],
+      dropout_remarks: [''],
     });
 
     // this.loadFPDetails();

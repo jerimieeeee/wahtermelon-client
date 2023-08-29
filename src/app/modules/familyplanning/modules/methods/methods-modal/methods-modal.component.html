@@ -9,53 +9,53 @@
         </h3>
       </div>
       <!-- Modal body -->
-      <form [formGroup]="dropForm">
-      <div class="grid grid-cols-12 h-65 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100 pb-5">
-        <div class="col-span-4 px-10 pt-2.5">
-          <label for="case_number" class="text-sm font-semibold">Dropout Date</label>
-          <input type="date" name="droupout_date" id="droupout_date"  class="input" formControlName="dropout_date">
-  
+        <form [formGroup]="dropForm">
+        <div class="grid grid-cols-12 h-65 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100 pb-5">
+          <div class="col-span-4 px-10 pt-2.5">
+            <label for="case_number" class="text-sm font-semibold">Dropout Date</label>
+            <input type="date" name="droupout_date" id="droupout_date"  class="input" formControlName="dropout_date">
+    
+            <!-- <div *ngIf="show_error && f.case_number.errors" class="invalid-alert">
+              <div *ngIf="f.case_number.errors?.['required']">
+                {{ required_message }}
+              </div> -->
+    
+              <!-- <div *ngIf="f.case_number.errors?.['pattern']">
+                Only letters and numbers are allowed.
+              </div> -->
+          </div>
+
+          <div class="col-span-12 px-10 pt-2.5">
+          <label for="case_number" class="text-sm font-semibold">Reason for Drop out</label>
+          <select name="dropout_reason_code" id="dropout_reason_code" formControlName="dropout_reason_code" class="input">
+            <option *ngFor="let reason of reasons" [value]="reason.code">{{ reason.desc }}</option>
+          </select>
+
           <!-- <div *ngIf="show_error && f.case_number.errors" class="invalid-alert">
             <div *ngIf="f.case_number.errors?.['required']">
               {{ required_message }}
             </div> -->
-  
-            <!-- <div *ngIf="f.case_number.errors?.['pattern']">
-              Only letters and numbers are allowed.
-            </div> -->
-        </div>
 
-        <div class="col-span-12 px-10 pt-2.5">
-        <label for="case_number" class="text-sm font-semibold">Reason for Drop out</label>
-        <select name="dropout_reason_code" id="dropout_reason_code" formControlName="dropout_reason_code" class="input">
-          <option *ngFor="let reason of reasons" [value]="reason.code">{{ reason.desc }}</option>
-        </select>
-
-        <!-- <div *ngIf="show_error && f.case_number.errors" class="invalid-alert">
-          <div *ngIf="f.case_number.errors?.['required']">
-            {{ required_message }}
-          </div> -->
-
-          <!-- <div *ngIf="f.case_number.errors?.['pattern']">
-            Only letters and numbers are allowed.
-          </div> -->
-        </div>
-
-        <div class="col-span-12 px-10 pt-2.5">
-          <label for="case_number" class="text-sm font-semibold">Remarks</label>
-          <input type="text" name="remarks" id="remarks"  class="input" formControlName="dropout_remarks">
-  
-          <!-- <div *ngIf="show_error && f.case_number.errors" class="invalid-alert">
-            <div *ngIf="f.case_number.errors?.['required']">
-              {{ required_message }}
-            </div> -->
-  
             <!-- <div *ngIf="f.case_number.errors?.['pattern']">
               Only letters and numbers are allowed.
             </div> -->
           </div>
-      </div>
-      </form>
+
+          <div class="col-span-12 px-10 pt-2.5">
+            <label for="case_number" class="text-sm font-semibold">Remarks</label>
+            <input type="text" name="remarks" id="remarks"  class="input" formControlName="dropout_remarks">
+    
+            <!-- <div *ngIf="show_error && f.case_number.errors" class="invalid-alert">
+              <div *ngIf="f.case_number.errors?.['required']">
+                {{ required_message }}
+              </div> -->
+    
+              <!-- <div *ngIf="f.case_number.errors?.['pattern']">
+                Only letters and numbers are allowed.
+              </div> -->
+            </div>
+        </div>
+        </form>
 
       <!-- Modal footer -->
       <div class="flex justify-end py-4 px-5 space-x-4 rounded-b border-t border-gray-200">

@@ -211,7 +211,6 @@ export class MethodsComponent implements OnInit {
   }
 
   validateForm(){
-    this.methodForm.reset();
     this.methodForm = this.formBuilder.group({
       id: [''],
       patient_id: [this.patient_id, [Validators.required, Validators.minLength(1)]],
@@ -252,6 +251,11 @@ export class MethodsComponent implements OnInit {
   //   });
   //  }
 
+  resetMethodForm(){
+    this.fp_visit_history.method = null
+    this.validateForm();
+  }
+
    anotherFunction() {
 
     this.showButton = !this.showButton;
@@ -262,11 +266,12 @@ export class MethodsComponent implements OnInit {
     // this.fp_visit_history_details = this.fp_visit_history
     // this.loadLibraries();
     // this.loadFPDetails();
-    this.methodForm.reset();
+    this.resetMethodForm();
 
 
-    console.log('test another function')
+    console.log('test another function v2')
     console.log(this.showButton, 'test button')
+    console.log(this.methodForm, 'form')
   }
 
 

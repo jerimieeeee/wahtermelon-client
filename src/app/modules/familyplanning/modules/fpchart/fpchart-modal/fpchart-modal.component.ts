@@ -178,19 +178,32 @@ export class FpchartModalComponent implements OnInit {
 
   validateForm(){
 
-    this.sourceForm = this.formBuilder.group({
-
-      patient_id: [this.patient_id, [Validators.required, Validators.minLength(1)]],
-      patient_fp_id: [this.fp_visit_history_details.id, [Validators.required, Validators.minLength(1)]],
-      patient_fp_method_id: [this.fp_visit_history_details.method.id, [Validators.required, Validators.minLength(1)]],
-      service_date: ['', [Validators.required, Validators.minLength(1)]],
-      source_supply_code: ['', [Validators.required, Validators.minLength(1)]],
-      quantity: ['', [Validators.required, Validators.minLength(1)]],
-      next_service_date: ['', [Validators.required, Validators.minLength(1)]],
-      remarks: ['', [Validators.required]],
-
-
-    });
+    if(this.fp_visit_history.method){
+      this.sourceForm = this.formBuilder.group({
+      
+        patient_id: [this.patient_id, [Validators.required, Validators.minLength(1)]],
+        patient_fp_id: [this.fp_visit_history.id, [Validators.required, Validators.minLength(1)]],
+        patient_fp_method_id: [this.fp_visit_history.method.id, [Validators.required, Validators.minLength(1)]],
+        service_date: ['', [Validators.required, Validators.minLength(1)]],
+        source_supply_code: ['', [Validators.required, Validators.minLength(1)]],
+        quantity: ['', [Validators.required, Validators.minLength(1)]],
+        next_service_date: ['', [Validators.required, Validators.minLength(1)]],
+        remarks: ['', [Validators.required]],
+      });
+    }else {
+      this.sourceForm = this.formBuilder.group({
+      
+        patient_id: [this.patient_id, [Validators.required, Validators.minLength(1)]],
+        patient_fp_id: [this.fp_visit_history.id, [Validators.required, Validators.minLength(1)]],
+        // patient_fp_method_id: [this.fp_visit_history.method.id, [Validators.required, Validators.minLength(1)]],
+        service_date: ['', [Validators.required, Validators.minLength(1)]],
+        source_supply_code: ['', [Validators.required, Validators.minLength(1)]],
+        quantity: ['', [Validators.required, Validators.minLength(1)]],
+        next_service_date: ['', [Validators.required, Validators.minLength(1)]],
+        remarks: ['', [Validators.required]], 
+      });
+    }
+    
 
     // this.loadFPDetails();
     this.show_form = true;
