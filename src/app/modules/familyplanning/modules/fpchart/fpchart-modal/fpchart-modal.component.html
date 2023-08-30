@@ -15,7 +15,7 @@
 
         <div class="col-span-4 px-10 pt-2.5">
           <label for="case_number" class="text-sm font-semibold">Date of Service Given</label>
-          <input type="date" name="case_number" id="case_number" [max]="max_date" formControlName="service_date" class="input">
+          <input type="date" name="case_number" id="case_number" formControlName="service_date" class="input">
 
           <!-- <div *ngIf="show_error && f.case_number.errors" class="invalid-alert">
             <div *ngIf="f.case_number.errors?.['required']">
@@ -62,8 +62,8 @@
           <label for="case_number" class="text-sm font-semibold">Next Service Date</label>
             <div class="grid grid-cols-12">
               <div class="col-span-5 pr-5">
-                <input *ngIf="fpchart_history" type="date" name="case_number" id="case_number" [min]="min_date" formControlName="next_service_date"  class="input select-none" readonly>
-                <input *ngIf="!fpchart_history" type="date" name="case_number" id="case_number" [min]="min_date" formControlName="next_service_date"  class="input">
+                <input *ngIf="fpchart_history" type="date" name="case_number" id="case_number" formControlName="next_service_date"  class="input select-none" readonly>
+                <input *ngIf="!fpchart_history" type="date" name="case_number" id="case_number" formControlName="next_service_date"  class="input">
               </div>
               <div *ngIf="!fpchart_history" class="col-span-7">
                 <input [checked]="isAccepted" type="checkbox" (change)="isCheck($event)" class="input-checkbox"><label for="case_number" class="text-sm font-semibold pl-2 align-middle">Create an appointment?</label>
