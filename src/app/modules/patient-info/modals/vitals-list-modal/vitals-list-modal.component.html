@@ -17,7 +17,7 @@
                 <th scope="col" class="py-3 px-3">Date & Time</th>
                 <th scope="col" class="py-3 px-3">Blood Pressure</th>
                 <th scope="col" class="py-3 px-3">Weight & <br /> Height</th>
-                <th scope="col" class="py-3 px-3">Visual Acuity <br /> (R|L)</th>
+                <th scope="col" class="py-3 px-3">Visual Acuity</th>
                 <th scope="col" class="py-3 px-3">Temp (C)</th>
                 <th scope="col" class="py-3 px-3">O2 sat, Heart/Pulse/Resp Rate</th>
                 <th scope="col" class="py-3 px-3">Body Measurement</th>
@@ -29,7 +29,7 @@
             <tbody>
               <tr *ngFor="let vitals of vitals_list; let odd = odd" class="bg-white border-b" [ngClass]="{'bg-gray-50': odd}">
                 <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap align-top">
-                  {{ vitals.vitals_date | date: 'MM/dd/yyyy h:mm:ss a' }}
+                  {{ vitals.vitals_date  }} <!-- | date: 'MM/dd/yyyy h:mm:ss a' -->
                 </th>
                 <td class="py-4 px-6 align-top">
                   {{ vitals.bp_systolic }}{{ vitals.bp_systolic ? '/' : '-' }}{{ vitals.bp_diastolic }}
@@ -39,7 +39,8 @@
                   {{ vitals.patient_weight ? vitals.patient_weight+' kg' : '-' }}
                 </td>
                 <td class="py-4 px-6 align-top">
-                  {{ vitals.patient_right_vision_acuity ? vitals.patient_right_vision_acuity+' | ' : '' }}  {{ vitals.patient_left_vision_acuity ?? '-' }}
+                  Right: {{ vitals.patient_right_vision_acuity_distance ? vitals.patient_right_vision_acuity_distance : '-' }}|{{ vitals.patient_right_vision_acuity ? vitals.patient_right_vision_acuity : '-' }} <br />
+                  Left: {{ vitals.patient_left_vision_acuity_distance ? vitals.patient_left_vision_acuity_distance : '-' }}|{{ vitals.patient_left_vision_acuity ? vitals.patient_left_vision_acuity : '-' }}
                 </td>
                 <td class="py-4 px-6 align-top">
                   {{ vitals.patient_temp ?? '-' }}

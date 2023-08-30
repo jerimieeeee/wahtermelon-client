@@ -5,6 +5,7 @@ import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from
 import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 import { vitalsForm } from './forms';
+import { dateHelper } from 'app/shared/services/date-helper.service';
 
 @Component({
   selector: 'app-vitals-modal',
@@ -28,12 +29,12 @@ export class VitalsModalComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private http: HttpService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private dateHelper: dateHelper
   ) { }
 
   onSubmit(){
     this.vitalsForm.patchValue({vitals_date: this.vitalsForm.value.vitals_date_temp+' '+this.vitalsForm.value.vitals_time_temp});
-    // console.log(this.vitalsForm);
     let query;
 
     if(this.vitals_to_edit){
@@ -48,10 +49,8 @@ export class VitalsModalComponent implements OnInit {
 
         this.toastr.success('Successfully recorded!', 'Vital signs')
         this.closeModal();
-        // console.log(data)
       },
-      error: err => console.log(err),
-      complete: () => console.log('vitals saved')
+      error: err => console.log(err)
     })
   }
 
@@ -126,24 +125,20 @@ export class VitalsModalComponent implements OnInit {
       vitals_height_in: [null, Validators.max(11)],
       vitals_date_temp: [formatDate(date,'yyyy-MM-dd','en', 'Asia/Manila'), Validators.required],
       vitals_time_temp: [formatDate(date,'HH:mm:ss','en', 'Asia/Manila'), Validators.required],
-      patient_right_vision_acuity: [null, Validators.max(20)],
-      patient_left_vision_acuity: [null, Validators.max(20)],
+      patient_right_vision_acuity_distance: [20],
+      patient_right_vision_acuity: [null],
+      patient_left_vision_acuity_distance: [20],
+      patient_left_vision_acuity: [null],
     });
 
     if(this.vitals_to_edit){
-      console.log(this.vitals_to_edit)
       this.vitalsForm.patchValue({...this.vitals_to_edit});
-      this.vitalsForm.patchValue({vitals_date_temp: formatDate(this.vitalsForm.value.vitals_date,'yyyy-MM-dd','en', 'Asia/Manila')});
-      this.vitalsForm.patchValue({vitals_time_temp: formatDate(this.vitalsForm.value.vitals_date,'HH:mm:ss','en', 'Asia/Manila')});
+      this.vitalsForm.patchValue({vitals_date_temp: this.dateHelper.dateFormat(this.vitalsForm.value.vitals_date)});
+      this.vitalsForm.patchValue({vitals_time_temp: this.dateHelper.timeFormat(this.vitalsForm.value.vitals_date)});
 
-      console.log(this.vitalsForm);
       this.cmChange();
-    }else{
-      // console.log('new vitals')
     }
 
-
-    // console.log(this.vitalsForm.value);
     this.date = new Date().toISOString().slice(0,10);
     this.checkIfChild();
   }
