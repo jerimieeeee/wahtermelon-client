@@ -89,7 +89,7 @@ export class FppeComponent implements OnInit {
 
       this.http.post('family-planning/fp-physical-exam', physical_exam_details).subscribe({
         next: () => {
-          this.toastr.success('First Visit was ' + (physical_exam_details ? 'updated' : 'saved') + ' successuly', 'Success')
+          this.toastr.success('First Visit was ' + (physical_exam_details ? 'updated' : 'saved') + ' successfully', 'Success')
           this.is_saving = false;
           this.loadFP.emit();
           this.reloadData();

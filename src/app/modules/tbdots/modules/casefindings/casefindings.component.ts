@@ -233,7 +233,7 @@ export class CasefindingsComponent implements OnInit {
 
     forkJoin([saveSymptom, savePe]).subscribe(([dataSymptom, dataPe]) => {
       this.is_saving = false;
-      this.toastr.success('Case findings was ' + (this.casefindingForm.value.id ? 'updated' : 'saved') + ' successuly', 'Success')
+      this.toastr.success('Case findings was ' + (this.casefindingForm.value.id ? 'updated' : 'saved') + ' successfully', 'Success')
       this.getPatientTbHistory.emit();
     })
   }

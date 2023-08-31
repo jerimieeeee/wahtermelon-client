@@ -98,7 +98,7 @@ export class FphxComponent implements OnInit {
 
       this.http.post('family-planning/fp-history', history).subscribe({
         next: () => {
-          this.toastr.success('FP History was ' + (history ? 'updated' : 'saved') + ' successuly', 'Success')
+          this.toastr.success('FP History was ' + (history ? 'updated' : 'saved') + ' successfully', 'Success')
           this.is_saving = false;
           this.loadFP.emit();
           this.reloadData();
