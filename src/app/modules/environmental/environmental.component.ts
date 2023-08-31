@@ -23,6 +23,28 @@ export class EnvironmentalComponent implements OnInit {
   env_waste_managements: {};
   env_water_types: {};
 
+  ans_yn = [
+    {desc: 'Yes', value: true},
+    {desc: 'No', value: false}
+  ];
+
+  sanition_flags = [
+    {title: 'Using safety managed drinking water services', var_name: 'safety_managed_flag'},
+    {title: 'Using managed sanitation services', var_name: 'sanitation_managed_flag'},
+    {title: 'Satisfaction solid waste management', var_name: 'satisfaction_management_flag'},
+    {title: 'Complete sanitation facilities', var_name: 'complete_sanitation_flag'},
+    {title: 'Located within premises', var_name: 'located_premises_flag'},
+    {title: 'Available at least 12 hours per day', var_name: 'availability_flag'},
+
+    {title: 'Open Defecation', var_name: 'open_defecation_flag'},
+    {title: 'Toilet not shared', var_name: 'toilet_shared_flag'},
+  ];
+
+  test_lists = [
+    {title: 'Microbiological Validation', date_var: 'validation_date', result_var: 'microbiological_result'},
+    {title: 'Physico-chemical test for Arsenic', date_var: 'arsenic_date', result_var: 'arsenic_result'}
+  ];
+
   onSubmit(){
 
   }

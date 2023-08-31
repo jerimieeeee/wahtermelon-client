@@ -19,7 +19,8 @@
           "options": {
             "allowedCommonJsDependencies": [
               "apexcharts",
-              "moment"
+              "moment",
+              "canvg"
             ],
             "outputPath": "dist/wahtermelon-client",
             "index": "src/index.html",

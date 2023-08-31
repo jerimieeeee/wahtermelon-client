@@ -84,7 +84,7 @@ export class Fhsis2018MorbidityComponent implements OnChanges {
   ];
 
   exportX() {
-    this.exportAsService.save(this.exportAsExcel, 'Childcare M1').subscribe(() => {
+    this.exportAsService.save(this.exportAsExcel, 'Morbidity').subscribe(() => {
       // save started
     });
   }
@@ -92,7 +92,7 @@ export class Fhsis2018MorbidityComponent implements OnChanges {
   pdf_exported: boolean = false;
   exportP() {
     this.pdf_exported = true;
-    this.exportAsService.save(this.exportAsPdf, 'Childcare M1').subscribe(() => {
+    this.exportAsService.save(this.exportAsPdf, 'Morbidity').subscribe(() => {
       // save started
     });
   }

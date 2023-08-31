@@ -1,1 +1,85 @@
-<p>environmental works!</p>
+
+<div class="my-10  flex justify-center w-full">
+
+  <div class="w-full bg-white border border-solid border-slate-100 rounded-xl shadow-md">
+    <div class="border border-solid border-slate-100 rounded-t-xl font-semibold justify-between">
+      <div class="flex border border-solid border-slate-100 rounded-t-xl p-3 font-semibold justify-between">
+        <div class="text-blue-500 text-lg pt-2 pl-5">
+          Environmental Health and Sanitation
+        </div>
+      </div>
+
+      <div class="overflow-x-auto relative grid grid-cols-3 gap-4 m-10">
+        <div>
+          <label for="registration_date">Registration Date</label>
+          <input type="date" name="registration_date" id="registration_date" formControlName="registration_date" class="input">
+        </div>
+
+        <div class="col-span-2">
+          <label for="water_type_code">Type of Water</label>
+          <select name="water_type_code" id="water_type_code" formControlName="water_type_code" class="input">
+            <option *ngFor="let water_type of env_water_types" [value]="water_type.id">{{ water_type.desc }}</option>
+          </select>
+        </div>
+
+        <div *ngFor="let sanitation of sanition_flags">
+          <label [for]="sanitation.var_name">{{ sanitation.title }}</label>
+          <select [name]="sanitation.var_name" [id]="sanitation.var_name" [formControlName]="sanitation.var_name" class="input">
+            <option [ngValue]="null">-</option>
+            <option *ngFor="let yn of ans_yn" [ngValue]="yn.value">{{ yn.desc }}</option>
+          </select>
+        </div>
+
+        <div>&nbsp;</div>
+
+        <fieldset *ngFor="let test_list of test_lists" class="col-span-3 grid grid-cols-3 gap-4 border border-blue-300 p-5 mx-10">
+          <legend>{{ test_list.title }}</legend>
+          <div>
+            <label [for]="test_list.date_var">Date of validation</label>
+            <input type="date" [name]="test_list.date_var" [id]="test_list.date_var" [formControlName]="test_list.date_var" class="input">
+          </div>
+          <div>
+            <label [for]="test_list.result_var">Result</label>
+            <select [name]="test_list.result_var" [id]="test_list.result_var" [formControlName]="test_list.result_var" class="input">
+              <option [value]="null">-</option>
+              <option value="POSITIVE">Positive</option>
+              <option value="NEGATIVE">Negative</option>
+            </select>
+          </div>
+        </fieldset>
+
+        <div>
+          <label for="toilet_facility_code">Type of Sanitary Toilet Facility</label>
+          <select name="toilet_facility_code" id="toilet_facility_code" formControlName="toilet_facility_code" class="input">
+            <option *ngFor="let env_toilet of env_toilet_facilities" [value]="env_toilet.id">{{ env_toilet.desc }}</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="sewage_code">Disposal/Treatment of Excreta/Sewage</label>
+          <select name="sewage_code" id="sewage_code" formControlName="sewage_code" class="input">
+            <option *ngFor="let env_sewage of env_sewages" [value]="env_sewage.id">{{ env_sewage.desc }}</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="waste_management_code">Waste Management</label>
+          <select name="waste_management_code" id="waste_management_code" formControlName="waste_management_code" class="input">
+            <option *ngFor="let env_waste of env_waste_managements" [value]="env_waste.id">{{ env_waste.desc }}</option>
+          </select>
+        </div>
+
+        <div class="col-span-3">
+          <label for="remarks">Remarks</label>
+          <input type="text" name="remarks" id="remarks" formControlName="remarks" class="input">
+        </div>
+
+        <div class="col-span-3 flex justify-center">
+          <button type="submit" class="btn-save">
+            Save
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

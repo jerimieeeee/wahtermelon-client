@@ -1,12 +1,15 @@
 import { formatDate } from '@angular/common';
 import { Injectable } from '@angular/core';
+import { dateHelper } from './date-helper.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class VitalsChartsService {
 
-  constructor() { }
+  constructor(
+    private dateHelper: dateHelper
+  ) { }
 
   getLatestToday(details, date?){
     // console.log(details)
@@ -21,7 +24,7 @@ export class VitalsChartsService {
       if(!latest_vitals.patient_right_vision_acuity && val.patient_right_vision_acuity) latest_vitals.patient_right_vision_acuity = val.patient_right_vision_acuity;
       if(!latest_vitals.patient_left_vision_acuity && val.patient_left_vision_acuity) latest_vitals.patient_left_vision_acuity = val.patient_left_vision_acuity;
 
-      let vitals_date = formatDate(val.vitals_date, 'yyyy-MM-dd','en', 'Asia/Manila')
+      let vitals_date = this.dateHelper.dateFormat(val.vitals_date);// formatDate(val.vitals_date, 'yyyy-MM-dd','en', 'Asia/Manila')
       let date_today;
       if(date) {
         date_today = formatDate(date, 'yyyy-MM-dd','en', 'Asia/Manila')

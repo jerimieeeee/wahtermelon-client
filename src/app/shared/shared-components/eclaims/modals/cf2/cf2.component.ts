@@ -86,9 +86,9 @@ export class Cf2Component implements OnInit {
       pTBType: tb.pTBType,
       pNTPCardNo: this.selected_case.case_holding.case_number,
       admission_date: tb.admission_date,
-      admission_time: '8:00AM',
+      admission_time: formatDate(new Date().setHours(8), 'hh:mma', 'en', 'Asia/Manila'),
       discharge_date:tb.discharge_date,
-      discharge_time: '8:00AM',
+      discharge_time: formatDate(new Date().setHours(8), 'hh:mma', 'en', 'Asia/Manila'),
     });
 
     this.getCreds();
@@ -154,11 +154,13 @@ export class Cf2Component implements OnInit {
 
       attendant_sign_date: formatDate(this.selected_case.abPostExposure.day0_date, 'yyyy-MM-dd', 'en', 'Asia/Manila'),
       admission_date: formatDate(this.selected_case.abPostExposure.day0_date, 'yyyy-MM-dd', 'en', 'Asia/Manila'),
-      admission_time: '8:00AM',
+      admission_time: formatDate(new Date().setHours(8), 'hh:mma', 'en', 'Asia/Manila'),
       discharge_date: formatDate(this.selected_case.abPostExposure.day7_date, 'yyyy-MM-dd', 'en', 'Asia/Manila'),
-      discharge_time: '8:00AM',
+      discharge_time: formatDate(new Date().setHours(8), 'hh:mma', 'en', 'Asia/Manila'),
     });
 
+    console.log(this.eclaimsForm.value)
+    console.log(this.selected_case.abPostExposure)
     this.getCreds();
   }
 
@@ -219,7 +221,15 @@ export class Cf2Component implements OnInit {
   }
 
   paramsMl() {
-    this.f.pICDCode.setValidators([Validators.required]);
+    this.eclaimsForm.patchValue({
+      attendant_sign_date: formatDate(this.eclaimsForm.value.caserate_date, 'yyyy-MM-dd', 'en', 'Asia/Manila'),
+      admission_date: formatDate(this.eclaimsForm.value.caserate_date, 'yyyy-MM-dd', 'en', 'Asia/Manila'),
+      admission_time: formatDate(new Date().setHours(8), 'hh:mma', 'en', 'Asia/Manila'),
+      discharge_date: formatDate(this.eclaimsForm.value.caserate_date, 'yyyy-MM-dd', 'en', 'Asia/Manila'),
+      discharge_time: formatDate(new Date().setHours(17), 'hh:mma', 'en', 'Asia/Manila'),
+    });
+
+    this.getCreds();
   }
 
   paramsFp(){
@@ -397,6 +407,7 @@ export class Cf2Component implements OnInit {
     private formBuilder: FormBuilder
   ) { }
 
+  afternoonTime: Date;
   ngOnInit(): void {
     this.facility = this.http.getUserFromJSON().facility;
     if(this.caserate_list.length === 1) {

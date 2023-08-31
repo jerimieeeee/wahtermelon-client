@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { faChevronDown, faChevronUp, faPlusCircle, faTableList } from '@fortawesome/free-solid-svg-icons';
+import { dateHelper } from 'app/shared/services/date-helper.service';
 import { HttpService } from 'app/shared/services/http.service';
 import { VitalsChartsService } from 'app/shared/services/vitals-charts.service';
 
@@ -68,7 +69,8 @@ export class VitalsComponent implements OnInit {
 
   constructor(
     private http: HttpService,
-    private vitalsCharts: VitalsChartsService
+    private vitalsCharts: VitalsChartsService,
+    private dateHelper: dateHelper
   ) { }
 
   ngOnInit(): void {
