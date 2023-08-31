@@ -11,7 +11,7 @@
       </div>
       <!-- Modal body -->
       <form [formGroup]="sourceForm" (submit)="onSubmit()">
-      <div class="grid grid-cols-12 h-96 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
+      <div class="grid grid-cols-12 h-[100] scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
 
         <div class="col-span-4 px-10 pt-2.5">
           <label for="case_number" class="text-sm font-semibold">Date of Service Given</label>
@@ -105,7 +105,7 @@
       <!-- Modal footer -->
       <div class="flex justify-end py-4 px-5 space-x-4 rounded-b border-t border-gray-200">
         <button type="button" class="btn-save bg-red-500" (click)="closeModal()" >Close</button>
-        <button  [disabled]="is_saving" (click)="Submit()" type="submit" class="btn-save px-10 disabled:bg-gray-300" >
+        <button  [disabled]="sourceForm.invalid || is_saving" (click)="Submit()" type="submit" class="btn-save px-10 disabled:bg-gray-300" >
           <fa-icon></fa-icon>
           {{ fpchart_history ? (is_saving ? 'Updating' : 'Update') : (is_saving ? 'Saving' : 'Save') }}
         </button>
