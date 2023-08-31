@@ -55,10 +55,18 @@
             <span class="absolute top-[126mm] left-[70mm] w-[8.5mm] tracking-[0.4em]">{{ eclaimsForm.value.admission_date | date:'MM' }}</span>
             <span class="absolute top-[126mm] left-[81.5mm] w-[8.5mm] tracking-[0.4em]">{{ eclaimsForm.value.admission_date | date:'dd' }}</span>
             <span class="absolute top-[126mm] left-[93.5mm] w-[17mm] tracking-[0.55em]">{{ eclaimsForm.value.admission_date | date:'yyyy' }}</span>
+            <span class="absolute top-[126mm] left-[139mm] w-[8.5mm] tracking-[0.55em]">{{ eclaimsForm.value.admission_time | slice:0:2 }}</span>
+            <span class="absolute top-[126mm] left-[150mm] w-[8.5mm] tracking-[0.55em]">{{ eclaimsForm.value.admission_time | slice:3:5 }}</span>
+            <span class="absolute top-[126mm] left-[165mm] w-[8.5mm] tracking-[0.55em]" *ngIf="(eclaimsForm.value.admission_time | slice:5:7) === 'AM'">&#x2714;</span>
+            <span class="absolute top-[126mm] left-[180mm] w-[8.5mm] tracking-[0.55em]" *ngIf="(eclaimsForm.value.admission_time | slice:5:7) === 'PM'">&#x2714;</span>
 
             <span class="absolute top-[131.5mm] left-[70mm] w-[8.5mm] tracking-[0.4em]">{{ eclaimsForm.value.discharge_date | date:'MM' }}</span>
             <span class="absolute top-[131.5mm] left-[81.5mm] w-[8.5mm] tracking-[0.4em]">{{ eclaimsForm.value.discharge_date | date:'dd' }}</span>
             <span class="absolute top-[131.5mm] left-[93.5mm] w-[17mm] tracking-[0.55em]">{{ eclaimsForm.value.discharge_date | date:'yyyy' }}</span>
+            <span class="absolute top-[131.5mm] left-[139mm] w-[8.5mm] tracking-[0.55em]">{{ eclaimsForm.value.discharge_time | slice:0:2 }}</span>
+            <span class="absolute top-[131.5mm] left-[150mm] w-[8.5mm] tracking-[0.55em]">{{ eclaimsForm.value.discharge_time | slice:3:5 }}</span>
+            <span class="absolute top-[131.5mm] left-[165mm] w-[8.5mm] tracking-[0.55em]" *ngIf="(eclaimsForm.value.discharge_time | slice:5:7) === 'AM'">&#x2714;</span>
+            <span class="absolute top-[131.5mm] left-[180mm] w-[8.5mm] tracking-[0.55em]" *ngIf="(eclaimsForm.value.discharge_time | slice:5:7) === 'PM'">&#x2714;</span>
 
             <span class="absolute top-[142.6mm] left-[11.8mm]">&#x2714;</span>
 
