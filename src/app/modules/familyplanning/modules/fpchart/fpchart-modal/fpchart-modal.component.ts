@@ -188,7 +188,7 @@ export class FpchartModalComponent implements OnInit {
         source_supply_code: ['', [Validators.required, Validators.minLength(1)]],
         quantity: ['', [Validators.required, Validators.minLength(1)]],
         next_service_date: ['', [Validators.required, Validators.minLength(1)]],
-        remarks: ['', [Validators.required]],
+        remarks: [''],
       });
     }else {
       this.sourceForm = this.formBuilder.group({
@@ -200,7 +200,7 @@ export class FpchartModalComponent implements OnInit {
         source_supply_code: ['', [Validators.required, Validators.minLength(1)]],
         quantity: ['', [Validators.required, Validators.minLength(1)]],
         next_service_date: ['', [Validators.required, Validators.minLength(1)]],
-        remarks: ['', [Validators.required]], 
+        remarks: [''], 
       });
     }
     
@@ -216,10 +216,11 @@ export class FpchartModalComponent implements OnInit {
         source_supply_code: this.fpchart_history?.source.code,
         quantity: this.fpchart_history?.quantity,
         next_service_date: formatDate(this.fpchart_history?.next_service_date, 'yyyy-MM-dd', 'en'),
-        remarks: this.fpchart_history?.remarks,
+        remarks: this.fpchart_history?.remarks
       });
       this.show_form = true;
       console.log('test ng load chart function')
+      console.log(this.fp_visit_history.remarks, 'test ng load remarks')
     } else {
       console.log('test ng load chart function else')
     }

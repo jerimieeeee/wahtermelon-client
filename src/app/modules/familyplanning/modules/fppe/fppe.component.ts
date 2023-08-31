@@ -45,6 +45,7 @@ export class FppeComponent implements OnInit {
   physical_codes: any = [];
 
   fp_visit_history_details: any;
+  pe_remarks: any;
 
   category = [
     {"name" : "Conjunctiva"},
@@ -73,11 +74,13 @@ export class FppeComponent implements OnInit {
 
       let fp_id = this.fp_visit_history_details.id
       let p_id = this.patient_id
-      var physical_exam_details ={
+      let remarks = this.fp_visit_history ? this.fp_visit_history.pe_remarks : null
+
+      var physical_exam_details = {
         patient_fp_id: fp_id,
         patient_id: p_id,
         physical_exam: pe_arr,
-        pe_remarks: '',
+        pe_remarks: remarks,
 
 
       }

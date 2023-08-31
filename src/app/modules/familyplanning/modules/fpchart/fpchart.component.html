@@ -9,10 +9,17 @@
 
     </div>
 
+    <div *ngIf="fpchart_history.length === 0" class="flex justify-center">
+        <div class="py-3 flex flex-col">
+            <div class="flex justify-center text-sm py-5">No records to show...</div>
+          </div>
+
+       </div>
+
     <div class="grid grid-cols-12">
 
     <div class="relative col-span-12 overflow-x-auto shadow-md sm:rounded-lg">
-        <table class="w-full text-sm text-left">
+        <table class="w-full text-sm text-left" *ngIf="fpchart_history.length >= 1">
             <thead class="text-xs uppercase bg-gray-50 whitespace-nowrap">
                 <tr>
                     <th scope="col" class="px-6 py-3">
