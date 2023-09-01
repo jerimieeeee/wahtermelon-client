@@ -69,7 +69,7 @@ export class FpchartModalComponent implements OnInit {
   //   this.is_saving = true;
   //   this.http.post('family-planning/fp-chart', this.sourceForm.value).subscribe({
   //     next: (data: any) => {
-  //       this.toastr.success('Chart was ' + (this.sourceForm.value ? 'updated' : 'saved') + ' successuly', 'Success')
+  //       this.toastr.success('Chart was ' + (this.sourceForm.value ? 'updated' : 'saved') + ' successfully', 'Success')
   //       this.is_saving = false;
   //       this.saveAppointment();
   //       this.loadFP.emit();
@@ -97,7 +97,7 @@ export class FpchartModalComponent implements OnInit {
 
     query.subscribe({
       next: (data: any) => {
-        this.toastr.success('Chart was ' + (this.sourceForm.value ? 'updated' : 'saved') + ' successuly', 'Success')
+        this.toastr.success('Chart was ' + (this.sourceForm.value ? 'updated' : 'saved') + ' successfully', 'Success')
         this.is_saving = false;
         // this.saveAppointment();
         // this.loadFP.emit();
@@ -140,7 +140,7 @@ export class FpchartModalComponent implements OnInit {
   //   this.is_saving = true;
   //   this.http.update('family-planning/fp-chart/', this.fpchart_history?.id, this.sourceForm.value).subscribe({
   //     next: (data: any) => {
-  //       this.toastr.success('Chart was ' + (this.sourceForm.value ? 'updated' : 'saved') + ' successuly', 'Success')
+  //       this.toastr.success('Chart was ' + (this.sourceForm.value ? 'updated' : 'saved') + ' successfully', 'Success')
   //       this.is_saving = false;
   //       this.saveAppointment();
   //       this.loadFP.emit();
@@ -180,7 +180,7 @@ export class FpchartModalComponent implements OnInit {
 
     if(this.fp_visit_history.method){
       this.sourceForm = this.formBuilder.group({
-      
+
         patient_id: [this.patient_id, [Validators.required, Validators.minLength(1)]],
         patient_fp_id: [this.fp_visit_history.id, [Validators.required, Validators.minLength(1)]],
         patient_fp_method_id: [this.fp_visit_history.method.id, [Validators.required, Validators.minLength(1)]],
@@ -192,7 +192,7 @@ export class FpchartModalComponent implements OnInit {
       });
     }else {
       this.sourceForm = this.formBuilder.group({
-      
+
         patient_id: [this.patient_id, [Validators.required, Validators.minLength(1)]],
         patient_fp_id: [this.fp_visit_history.id, [Validators.required, Validators.minLength(1)]],
         // patient_fp_method_id: [this.fp_visit_history.method.id, [Validators.required, Validators.minLength(1)]],
@@ -200,10 +200,10 @@ export class FpchartModalComponent implements OnInit {
         source_supply_code: ['', [Validators.required, Validators.minLength(1)]],
         quantity: ['', [Validators.required, Validators.minLength(1)]],
         next_service_date: ['', [Validators.required, Validators.minLength(1)]],
-        remarks: [''], 
+        remarks: [''],
       });
     }
-    
+
 
     // this.loadFPDetails();
     this.show_form = true;

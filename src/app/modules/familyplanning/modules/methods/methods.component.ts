@@ -174,7 +174,7 @@ export class MethodsComponent implements OnInit {
     this.is_saving = true;
     this.http.post('family-planning/fp-method', this.methodForm.value).subscribe({
       next: (data: any) => {
-        this.toastr.success('Method was ' + (this.methodForm.value ? 'updated' : 'saved') + ' successuly', 'Success')
+        this.toastr.success('Method was ' + (this.methodForm.value ? 'updated' : 'saved') + ' successfully', 'Success')
         this.is_saving = false;
         this.showButton = true;
         this.loadFP.emit();

@@ -105,7 +105,7 @@ export class PelvicComponent implements OnInit {
 
       this.http.post('family-planning/fp-pelvic-exam', pelvic_exam).subscribe({
         next: () => {
-          this.toastr.success('Pelvic was ' + (pelvic_exam ? 'updated' : 'saved') + ' successuly', 'Success')
+          this.toastr.success('Pelvic exam was ' + (pelvic_exam ? 'updated' : 'saved') + ' successfully', 'Success')
           this.is_saving = false;
           this.loadFP.emit();
           this.reloadData();

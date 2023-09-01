@@ -44,7 +44,7 @@ export class MethodsModalComponent implements OnInit {
     this.is_saving = true;
     this.http.update('family-planning/fp-method/', this.fp_visit_history_details.method.id, this.dropForm.value).subscribe({
       next: (data: any) => {
-        this.toastr.success('Dropout was ' + (this.dropForm.value ? 'saved' : 'saved') + ' successuly', 'Success')
+        this.toastr.success('Dropout was ' + (this.dropForm.value ? 'saved' : 'saved') + ' successfully', 'Success')
         this.is_saving = false;
         // this.loadFP.emit();
         // this.loadFPDetails.emit();
