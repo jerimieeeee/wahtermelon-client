@@ -1,6 +1,6 @@
 import { FormControl, FormGroup } from "@angular/forms";
 
-export function eclaimsForm() {
+export function environmentalForm() {
   return new FormGroup({
     household_folder_id: new FormControl<string|null>(null),
     number_of_families: new FormControl<number|null>(null),

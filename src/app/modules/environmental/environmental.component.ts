@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 import { forkJoin } from 'rxjs';
+import { environmentalForm } from './environmentalForm';
 
 @Component({
   selector: 'app-environmental',
@@ -16,6 +17,8 @@ export class EnvironmentalComponent implements OnInit {
   fetchData(id) {
 
   }
+
+  environmentalForm:FormGroup=environmentalForm();
 
   env_results: {};
   env_sewages: {};
@@ -46,7 +49,7 @@ export class EnvironmentalComponent implements OnInit {
   ];
 
   onSubmit(){
-
+    console.log(this.environmentalForm.value);
   }
 
   createForm(){
@@ -82,6 +85,7 @@ export class EnvironmentalComponent implements OnInit {
   ngOnInit(): void {
     console.log(this.http.getUrlParams())
     this.household_id = this.http.getUrlParams().patient_id; //url params is the id of households, the naming convention on the function just returns it as patient id
-    this.fetchData(this.household_id)
+    this.fetchData(this.household_id);
+    this.loadLibraries();
   }
 }
