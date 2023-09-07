@@ -126,7 +126,7 @@
             <label for="enough_benefit_flag" class="pl-2">With Enough Benefit?</label>
           </div>
 
-          <div *ngIf="!caserateForm.value.enough_benefit_flag">
+          <div class="grid grid-cols-2 gap-4" *ngIf="!caserateForm.value.enough_benefit_flag">
             <!-- HCI NOT ENOUGH -->
             <div>
               <label for="hci_pTotalActualCharges">HCI Total Actual Charges</label>
@@ -134,16 +134,21 @@
             </div>
 
             <div>
-              <label for="hci_pDiscount">Amount after application of HCI Discount</label>
-              <input type="number" name="hci_pDiscount" id="hci_pDiscount" formControlName="hci_pDiscount" (change)="computeTotal('hci_pTotalAmount')" class="input" />
+              <label for="hci_discount">Discount  (%)</label>
+              <input type="number" name="hci_discount" id="hci_discount" max="100" step="1" [(ngModel)]="hci_discount" [ngModelOptions]="{standalone: true}" (change)="computeTotal('hci_pTotalAmount')" class="input" />
             </div>
+
+            <fieldset disabled>
+              <label for="hci_pDiscount">Amount after HCI Discount</label>
+              <input type="number" name="hci_pDiscount" id="hci_pDiscount" formControlName="hci_pDiscount" (change)="computeTotal('hci_pTotalAmount')" class="input" />
+            </fieldset>
 
             <div>
               <label for="hci_pPhilhealthBenefit">HCI Philhealth Benefit</label>
               <input type="number" name="hci_pPhilhealthBenefit" id="hci_pPhilhealthBenefit" formControlName="hci_pPhilhealthBenefit" (change)="computeTotal('hci_pTotalAmount')" class="input" />
             </div>
 
-            <fieldset disabled>
+            <fieldset class="col-span-2" disabled>
               <label for="hci_pTotalAmount">HCI Total Amount</label>
               <input type="number" name="hci_pTotalAmount" id="hci_pTotalAmount" formControlName="hci_pTotalAmount" class="input" disabled />
             </fieldset>
@@ -155,16 +160,21 @@
             </div>
 
             <div>
-              <label for="prof_pDiscount">Amount after application of Professional Discount</label>
-              <input type="number" name="prof_pDiscount" id="prof_pDiscount" formControlName="prof_pDiscount" (change)="computeTotal('prof_pTotalAmount')" class="input" />
+              <label for="prof_discount">Discount (%)</label>
+              <input type="number" name="prof_discount" id="prof_discount" [(ngModel)]="prof_discount" [ngModelOptions]="{standalone: true}" (change)="computeTotal('prof_pTotalAmount')" class="input" />
             </div>
+
+            <fieldset disabled>
+              <label for="prof_pDiscount">Amount after Professional Discount</label>
+              <input type="number" name="prof_pDiscount" id="prof_pDiscount" formControlName="prof_pDiscount" (change)="computeTotal('prof_pTotalAmount')" class="input" />
+            </fieldset>
 
             <div>
               <label for="prof_pPhilhealthBenefit">Professional Philhealth Benefit</label>
               <input type="number" name="prof_pPhilhealthBenefit" id="prof_pPhilhealthBenefit" formControlName="prof_pPhilhealthBenefit" (change)="computeTotal('prof_pTotalAmount')" class="input" />
             </div>
 
-            <fieldset disabled>
+            <fieldset class="col-span-2" disabled>
               <label for="prof_pTotalAmount">Professional Total Amount</label>
               <input type="number" name="prof_pTotalAmount" id="prof_pTotalAmount" formControlName="prof_pTotalAmount" class="input" />
             </fieldset>
