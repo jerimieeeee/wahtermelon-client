@@ -33,6 +33,10 @@
               <input rows="2" type="textarea" [disabled]="consult_done || !allowed_to_edit" [(ngModel)]="physical_remarks[pe.key+'_remarks']" class="input placeholder-slate-400 placeholder:italic" placeholder="remarks">
             </div>
           </div>
+          <div>
+            <label for="">PE Remarks</label>
+            <input type="text" class="input" [(ngModel)]="physical_remarks.remarks" />
+          </div>
         </div>
 
         <div class="flex text-right">
