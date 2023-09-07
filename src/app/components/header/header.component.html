@@ -60,23 +60,24 @@
       </div>
 
       <div class="flex items-center">
-        <a class="relative text-gray-700 hover:text-gray-600 mx-1" href="#">
+        <!-- <a class="relative text-gray-700 hover:text-gray-600 mx-1" href="#">
           <fa-icon [icon]="faBell" [styles]="{'color': '#3B82F6'}" size="lg"></fa-icon>
           <span class="absolute top-0 left-0 rounded-full bg-red-600 text-white p-1 text-xs"></span>
-        </a>
+        </a> -->
 
-        <div class="flex justify-center md:block leading-tight mx-2 my-1">
+        <!-- <div class="flex justify-center md:block leading-tight mx-2 my-1">
           <div class="inline-flex overflow-hidden relative justify-center items-center w-14 h-14 bg-gray-100 rounded-full dark:bg-gray-600">
             <span class="font-medium text-gray-600 dark:text-gray-300">{{ getInitials(user?.first_name+' '+user?.last_name) }}</span>
           </div>
-        </div>
+        </div> -->
 
         <div class="flex justify-center md:block leading-tight mx-2 my-1">
-          <span class="block text-xs">
-            Hello,
-          </span>
+
           <span class="block text-blue-500 font-medium">
             {{ user?.first_name }} {{ user?.middle_name }} {{ user?.last_name }} {{ user?.suffix_name }}
+          </span>
+          <span class="block text-xs font-semibold">
+            {{ user?.facility.facility_name }}
           </span>
         </div>
 
