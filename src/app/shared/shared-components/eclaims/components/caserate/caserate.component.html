@@ -33,7 +33,7 @@
       <div *ngIf="show_form" class="flex mt-5 mx-5">
         <label class="w-1/2 mt-2" for="loaded_caserate">Select preloaded caserate</label>
         <select name="loaded_caserate" id="loaded_caserate" (change)="selectPreloadedCaserate()" [(ngModel)]="loaded_caserate" class="w-1/2 input">
-          <option *ngFor="let pre_case of preloaded_caserate" [ngValue]="pre_case">{{ pre_case.caserate_code }} - {{ pre_case.code }}</option>
+          <option *ngFor="let pre_case of preloaded_caserate" [ngValue]="pre_case">{{ pre_case.caserate_code }} - {{ pre_case.code }} <span *ngIf="program_name === 'cc'">({{ pre_case.caserate_fee }})</span></option>
         </select>
       </div>
 

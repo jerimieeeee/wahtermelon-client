@@ -9,7 +9,7 @@ import * as angularFontawesome from '@fortawesome/angular-fontawesome';
 import { SearchCaserateComponent } from './modals/search-caserate/search-caserate.component';
 import { catchError, concat, debounceTime, distinctUntilChanged, filter, map, Observable, of, Subject, switchMap, tap } from 'rxjs';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { cc_caserate, tb_caserate } from './caserateLib';
+import { ab_caserate, cc_caserate, fp_caserate, mc_caserate, ml_caserate, tb_caserate } from './caserateLib';
 import { caserateForm } from './caserateForm';
 
 @Component({
@@ -178,7 +178,6 @@ export class CaserateComponent implements OnInit {
 
   patchData(data){
     this.caserateForm.patchValue({...data});
-
     // if(this.caserateForm.value.hci_pTotalActualCharges) this.hci_discount = Number(((this.caserateForm.value.hci_pTotalActualCharges-this.caserateForm.value.hci_pDiscount)/this.caserateForm.value.hci_pTotalActualCharges)*100)
     // if(this.caserateForm.value.prof_pTotalActualCharges) this.prof_discount = Number(((this.caserateForm.value.prof_pTotalActualCharges-this.caserateForm.value.prof_pDiscount)/this.caserateForm.value.prof_pTotalActualCharges)*100)
     console.log(this.caserateForm.value)
@@ -230,8 +229,6 @@ export class CaserateComponent implements OnInit {
   ) { }
 
   preloaded_caserate: any;
-  tb_caserate = tb_caserate;
-  cc_caserate = cc_caserate;
   loaded_caserate: any;
   hci_discount: number;
   prof_discount: number;
@@ -266,10 +263,22 @@ export class CaserateComponent implements OnInit {
 
     switch(this.program_name){
       case 'tb':
-        this.preloaded_caserate = this.tb_caserate;
+        this.preloaded_caserate = tb_caserate;
         break;
       case 'cc':
-        this.preloaded_caserate = this.cc_caserate;
+        this.preloaded_caserate = cc_caserate;
+        break;
+      case 'mc':
+        this.preloaded_caserate = mc_caserate;
+        break;
+      case 'ab':
+        this.preloaded_caserate = ab_caserate;
+        break;
+      case 'fp':
+        this.preloaded_caserate = fp_caserate;
+        break;
+      case 'ml':
+        this.preloaded_caserate = ml_caserate;
         break;
     }
   }
