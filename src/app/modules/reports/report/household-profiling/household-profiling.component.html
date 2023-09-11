@@ -1,0 +1,628 @@
+<div class="grid grid-cols-1 w-full">
+  <div class="flex justify-between w-full text-blue-500 font-semibold text-lg  p-3" >
+    <span>GBV Report</span>
+    <button [disabled]="pdf_exported" type="button" class="text-2xl mr-5 text-green-600 disabled:text-gray-600" (click)="exportX()">
+      <fa-icon [icon]="faFileExcel"></fa-icon>
+    </button>
+  </div>
+  <div class="flex flex-col pb-5">
+    <div class="sm:-mx-6 lg:-mx-8">
+      <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
+        <div class="">
+
+          <table class="profiling min-w-full block select-none overflow-y-auto w-full table-fixed" id="profilingReport">
+            <thead>
+              <tr class="bg-slate-200">
+                <th>Summary</th>
+                <th>4Ps</th>
+                <th>Non-4Ps</th>
+                <th>Unknown</th>
+                <th>Total</th>
+                <th>Water Source</th>
+                <th>4Ps</th>
+                <th>Non-4Ps</th>
+                <th>Unknown</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr>
+                <td>Household</td>
+                <td>{{ stats.summary_household_4ps.length }}</td>
+                <td>{{ stats.summary_household_non_4ps.length }}</td>
+                <td>-</td>
+                <td>{{ stats.summary_household_4ps.length + stats.summary_household_non_4ps.length }}</td>
+                <td>Level I</td>
+                <td>{{ stats.water_source_level1_4ps.length }}</td>
+                <td>{{ stats.water_source_level1_non_4ps.length }}</td>
+                <td>-</td>
+                <td>{{ stats.water_source_level1_4ps.length + stats.water_source_level1_non_4ps.length}}</td>
+              </tr>
+
+              <tr>
+                <td>Family</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>Level II</td>
+                <td>{{ stats.water_source_level2_4ps.length }}</td>
+                <td>{{ stats.water_source_level2_non_4ps.length }}</td>
+                <td>-</td>
+                <td>{{ stats.water_source_level2_4ps.length + stats.water_source_level2_non_4ps.length}}</td>
+              </tr>
+
+              <tr>
+                <td>Toilet Facility</td>
+                <td>4Ps</td>
+                <td>Non-4Ps</td>
+                <td>Unknown</td>
+                <td>Total</td>
+                <td>Level III</td>
+                <td>{{ stats.water_source_level3_4ps.length }}</td>
+                <td>{{ stats.water_source_level3_non_4ps.length }}</td>
+                <td>-</td>
+                <td>{{ stats.water_source_level3_4ps.length + stats.water_source_level3_non_4ps.length}}</td>
+              </tr>
+
+              <tr>
+                <td class="bg-slate-200" colspan="5">Sanitary Toilet Facility</td>
+                <td>Unkown</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+              </tr>
+
+              <tr>
+                <td>Pour/flush toilet connected to septic tank</td>
+                <td>{{ stats.sanitary_toilet_facility_1_4ps.length }}</td>
+                <td>{{ stats.sanitary_toilet_facility_1_non_4ps.length }}</td>
+                <td>-</td>
+                <td>{{ stats.sanitary_toilet_facility_1_4ps.length + stats.sanitary_toilet_facility_1_non_4ps.length}}</td>
+                <td class="bg-slate-200" colspan="5" class="text-center">Philhealth Category</td>
+              </tr>
+
+              <tr>
+                <td>Pour/flush toilet connected to septic tank & to sewarage system</td>
+                <td>{{ stats.sanitary_toilet_facility_2_4ps.length }}</td>
+                <td>{{ stats.sanitary_toilet_facility_2_non_4ps.length }}</td>
+                <td>-</td>
+                <td>{{ stats.sanitary_toilet_facility_2_4ps.length + stats.sanitary_toilet_facility_2_non_4ps.length}}</td>
+                <td colspan="2">Direct Contributors</td>
+                <td colspan="3">{{ stats.philhealth_direct_contributors.length }}</td>
+              </tr>
+
+              <tr>
+                <td>Ventilated improved pit latrine</td>
+                <td>{{ stats.sanitary_toilet_facility_3_4ps.length }}</td>
+                <td>{{ stats.sanitary_toilet_facility_3_non_4ps.length }}</td>
+                <td>-</td>
+                <td>{{ stats.sanitary_toilet_facility_3_4ps.length + stats.sanitary_toilet_facility_3_non_4ps.length}}</td>
+                <td colspan="2">Direct Contributors</td>
+                <td colspan="3">{{ stats.philhealth_indirect_contributors.length }}</td>
+              </tr>
+
+              <tr>
+                <td class="bg-slate-200" colspan="5">Unsanitary Toilet Facility</td>
+                <td colspan="2">Unknown</td>
+                <td colspan="3">-</td>
+              </tr>
+
+              <tr>
+                <td>Water-sealed connected to open drain</td>
+                <td>{{ stats.unsanitary_toilet_facility_5_4ps.length }}</td>
+                <td>{{ stats.unsanitary_toilet_facility_5_non_4ps.length }}</td>
+                <td>-</td>
+                <td>{{ stats.unsanitary_toilet_facility_5_4ps.length + stats.unsanitary_toilet_facility_5_non_4ps.length}}</td>
+                <td class="bg-slate-200" colspan="2">Sex</td>
+                <td class="bg-slate-200" colspan="3">Ethnicity</td>
+              </tr>
+
+              <tr>
+                <td>Overhung latrine</td>
+                <td>{{ stats.unsanitary_toilet_facility_6_4ps.length }}</td>
+                <td>{{ stats.unsanitary_toilet_facility_6_non_4ps.length }}</td>
+                <td>-</td>
+                <td>{{ stats.unsanitary_toilet_facility_6_4ps.length + stats.unsanitary_toilet_facility_6_non_4ps.length}}</td>
+                <td>Male</td>
+                <td>{{ stats.sex_male.length }}</td>
+                <td>IP's</td>
+                <td colspan="2">{{ stats.indegenous.length }}</td>
+              </tr>
+
+              <tr>
+                <td>Open-pit latrine</td>
+                <td>{{ stats.unsanitary_toilet_facility_7_4ps.length }}</td>
+                <td>{{ stats.unsanitary_toilet_facility_7_non_4ps.length }}</td>
+                <td>-</td>
+                <td>{{ stats.unsanitary_toilet_facility_7_4ps.length + stats.unsanitary_toilet_facility_7_non_4ps.length}}</td>
+                <td>Female</td>
+                <td>{{ stats.sex_female.length }}</td>
+                <td>Non IP's</td>
+                <td colspan="2">{{ stats.non_indegenous.length }}</td>
+              </tr>
+
+              <tr>
+                <td>Without toilet</td>
+                <td>{{ stats.unsanitary_toilet_facility_8_4ps.length }}</td>
+                <td>{{ stats.unsanitary_toilet_facility_8_non_4ps.length }}</td>
+                <td>-</td>
+                <td>{{ stats.unsanitary_toilet_facility_8_4ps.length + stats.unsanitary_toilet_facility_8_non_4ps.length}}</td>
+                <td>Total</td>
+                <td>{{ stats.sex_male.length + stats.sex_female.length }}</td>
+                <td>Total</td>
+                <td colspan="2">{{ stats.indegenous.length + stats.non_indegenous.length }}</td>
+              </tr>
+
+              <tr class="bg-slate-200">
+                <td>Education Attainment</td>
+                <td>4Ps</td>
+                <td>Non-4Ps</td>
+                <td>Unknown</td>
+                <td>Total</td>
+                <td class="bg-slate-200" rowspan="3">Civil Status</td>
+                <td class="bg-slate-200">Single</td>
+                <td class="bg-slate-200">Married</td>
+                <td class="bg-slate-200">Live in</td>
+                <td class="bg-slate-200">Widowed</td>
+              </tr>
+
+              <tr>
+                <td>Pre-school</td>
+                <td>{{ stats.pre_school_4ps.length }}</td>
+                <td>{{ stats.pre_school_non_4ps.length }}</td>
+                <td>-</td>
+                <td>{{ stats.pre_school_4ps.length + stats.pre_school_non_4ps.length }}</td>
+                <td>{{ stats.single.length }}</td>
+                <td>{{ stats.maried.length }}</td>
+                <td>{{ stats.livein.length }}</td>
+                <td>{{ stats.widowed.length }}</td>
+              </tr>
+
+              <tr>
+                <td>Elementay Undergraduate</td>
+                <td>{{ stats.elementary_undergraduate_4ps.length }}</td>
+                <td>{{ stats.elementary_undergraduate_non_4ps.length }}</td>
+                <td>-</td>
+                <td>{{ stats.elementary_undergraduate_4ps.length + stats.elementary_undergraduate_non_4ps.length }}</td>
+                <td class="bg-slate-200">Separated</td>
+                <td>{{ stats.separated.length }}</td>
+                <td class="bg-slate-200">Cohabitation</td>
+                <td>{{ stats.cohabit.length }}</td>
+              </tr>
+
+              <tr>
+                <td>Elementay Student</td>
+                <td>{{ stats.elementary_student_4ps.length }}</td>
+                <td>{{ stats.elementary_student_non_4ps.length }}</td>
+                <td>-</td>
+                <td>{{ stats.elementary_student_4ps.length + stats.elementary_student_non_4ps.length }}</td>
+                <td class="bg-slate-200" colspan="5">Religion</td>
+              </tr>
+
+              <tr>
+                <td>Elementay Graduate</td>
+                <td>{{ stats.elementary_graduate_4ps.length }}</td>
+                <td>{{ stats.elementary_graduate_non_4ps.length }}</td>
+                <td>-</td>
+                <td>{{ stats.elementary_graduate_4ps.length + stats.elementary_graduate_non_4ps.length }}</td>
+                <td colspan="2">Roman Catholic</td>
+                <td>{{ stats.roman_catholic.length }}</td>
+                <td>Pentecostal</td>
+                <td>{{ stats.pentecostal.length }}</td>
+              </tr>
+
+              <tr>
+                <td>High School Undergraduate</td>
+                <td>{{ stats.highschool_undergraduate_4ps.length }}</td>
+                <td>{{ stats.highschool_undergraduate_non_4ps.length }}</td>
+                <td>-</td>
+                <td>{{ stats.highschool_undergraduate_4ps.length + stats.highschool_undergraduate_non_4ps.length }}</td>
+                <td colspan="2">Christian</td>
+                <td>{{ stats.christian.length }}</td>
+                <td>Unknown</td>
+                <td>-</td>
+              </tr>
+
+              <tr>
+                <td>High School Student</td>
+                <td>{{ stats.highschool_student_4ps.length }}</td>
+                <td>{{ stats.highschool_student_non_4ps.length }}</td>
+                <td>-</td>
+                <td>{{ stats.highschool_student_4ps.length + stats.highschool_student_non_4ps.length }}</td>
+                <td colspan="2">Iglesia ni Cristo</td>
+                <td>{{ stats.iglesianicirsto.length }}</td>
+                <td>Others</td>
+                <td>{{ stats.others.length }}</td>
+              </tr>
+
+              <tr>
+                <td>High School Graduate</td>
+                <td>{{ stats.highschool_graduate_4ps.length }}</td>
+                <td>{{ stats.highschool_graduate_non_4ps.length }}</td>
+                <td>-</td>
+                <td>{{ stats.highschool_graduate_4ps.length + stats.highschool_graduate_non_4ps.length }}</td>
+                <td colspan="2">Catholic</td>
+                <td>{{ stats.catholic.length }}</td>
+                <td></td>
+                <td></td>
+              </tr>
+
+              <tr>
+                <td>Senior High School</td>
+                <td>{{ stats.senior_highschool_4ps.length }}</td>
+                <td>{{ stats.senior_highschool_non_4ps.length }}</td>
+                <td>-</td>
+                <td>{{ stats.senior_highschool_4ps.length + stats.senior_highschool_non_4ps.length }}</td>
+                <td colspan="2">Islam</td>
+                <td>{{ stats.islam.length }}</td>
+                <td></td>
+                <td></td>
+              </tr>
+
+              <tr>
+                <td>ALS - Advance Learning System</td>
+                <td>{{ stats.als_4ps.length }}</td>
+                <td>{{ stats.als_non_4ps.length }}</td>
+                <td>-</td>
+                <td>{{ stats.als_4ps.length + stats.als_non_4ps.length }}</td>
+                <td colspan="2">Baptist</td>
+                <td>{{ stats.baptist.length }}</td>
+                <td></td>
+                <td></td>
+              </tr>
+
+              <tr>
+                <td>College Undergraduate</td>
+                <td>{{ stats.college_undergraduate_4ps.length }}</td>
+                <td>{{ stats.college_undergraduate_non_4ps.length }}</td>
+                <td>-</td>
+                <td>{{ stats.college_undergraduate_4ps.length + stats.college_undergraduate_non_4ps.length }}</td>
+                <td colspan="2">Born Again Christian</td>
+                <td>{{ stats.bornagain.length }}</td>
+                <td></td>
+                <td></td>
+              </tr>
+
+              <tr>
+                <td>College Graduate</td>
+                <td>{{ stats.college_graduate_4ps.length }}</td>
+                <td>{{ stats.college_graduate_non_4ps.length }}</td>
+                <td>-</td>
+                <td>{{ stats.college_graduate_4ps.length + stats.college_graduate_non_4ps.length }}</td>
+                <td colspan="2">Buddhism</td>
+                <td>{{ stats.buddhist.length }}</td>
+                <td></td>
+                <td></td>
+              </tr>
+
+              <tr>
+                <td>College Student</td>
+                <td>{{ stats.college_student_4ps.length }}</td>
+                <td>{{ stats.college_student_non_4ps.length }}</td>
+                <td>-</td>
+                <td>{{ stats.college_student_4ps.length + stats.college_student_non_4ps.length }}</td>
+                <td colspan="2">Church of God</td>
+                <td>{{ stats.churchofgod.length }}</td>
+                <td></td>
+                <td></td>
+              </tr>
+
+              <tr>
+                <td>Post Graduate/Masteral/Doctorate</td>
+                <td>{{ stats.post_graduate_4ps.length }}</td>
+                <td>{{ stats.post_graduate_non_4ps.length }}</td>
+                <td>-</td>
+                <td>{{ stats.post_graduate_4ps.length + stats.post_graduate_non_4ps.length }}</td>
+                <td colspan="2">Jehovahs Withness</td>
+                <td>{{ stats.jehovah.length }}</td>
+                <td></td>
+                <td></td>
+              </tr>
+
+              <tr>
+                <td>Vocational Course</td>
+                <td>{{ stats.vocational_4ps.length }}</td>
+                <td>{{ stats.vocational_non_4ps.length }}</td>
+                <td>-</td>
+                <td>{{ stats.vocational_4ps.length + stats.vocational_non_4ps.length }}</td>
+                <td colspan="2">Protestant</td>
+                <td>{{ stats.protestant.length }}</td>
+                <td></td>
+                <td></td>
+              </tr>
+
+              <tr>
+                <td>N/A</td>
+                <td>{{ stats.not_applicable_4ps.length }}</td>
+                <td>{{ stats.not_applicable_non_4ps.length }}</td>
+                <td>-</td>
+                <td>{{ stats.not_applicable_4ps.length + stats.not_applicable_non_4ps.length }}</td>
+                <td colspan="2">Seventh Day Adventist</td>
+                <td>{{ stats.seventhday.length }}</td>
+                <td></td>
+                <td></td>
+              </tr>
+
+              <tr>
+                <td class="bg-slate-200">Family Planning Methods</td>
+                <td>4Ps</td>
+                <td>Non-4Ps</td>
+                <td>Unknown</td>
+                <td>Total</td>
+                <td colspan="2">LDS-Mormons</td>
+                <td>{{ stats.mormons.length }}</td>
+                <td></td>
+                <td></td>
+              </tr>
+
+              <tr>
+                <td>COC</td>
+                <td>{{ stats.family_planning_method_coc_4ps.length }}</td>
+                <td>{{ stats.family_planning_method_coc_non_4ps.length }}</td>
+                <td>-</td>
+                <td>{{ stats.family_planning_method_coc_4ps.length + stats.family_planning_method_coc_non_4ps.length }}</td>
+                <td colspan="2">Evangelical</td>
+                <td>{{ stats.evangelical.length }}</td>
+                <td></td>
+                <td></td>
+              </tr>
+
+              <tr>
+                <td>POP</td>
+                <td>{{ stats.family_planning_method_pop_4ps.length }}</td>
+                <td>{{ stats.family_planning_method_pop_non_4ps.length }}</td>
+                <td>-</td>
+                <td>{{ stats.family_planning_method_pop_4ps.length + stats.family_planning_method_pop_non_4ps.length }}</td>
+                <td class="bg-slate-200" colspan="2">Medical History</td>
+                <td class="bg-slate-200">Male</td>
+                <td class="bg-slate-200">Female</td>
+                <td class="bg-slate-200">Total</td>
+              </tr>
+
+              <tr>
+                <td>Injectables</td>
+                <td>{{ stats.family_planning_method_injectables_4ps.length }}</td>
+                <td>{{ stats.family_planning_method_injectables_non_4ps.length }}</td>
+                <td>-</td>
+                <td>{{ stats.family_planning_method_injectables_4ps.length + stats.family_planning_method_injectables_non_4ps.length }}</td>
+                <td colspan="2">Hypertension</td>
+                <td>{{ stats.hypertension_male.length }}</td>
+                <td>{{ stats.hypertension_female.length }}</td>
+                <td>{{ stats.hypertension_male.length + stats.hypertension_female.length }}</td>
+              </tr>
+
+              <tr>
+                <td>IUD</td>
+                <td>{{ stats.family_planning_method_iud_4ps.length }}</td>
+                <td>{{ stats.family_planning_method_iud_non_4ps.length }}</td>
+                <td>-</td>
+                <td>{{ stats.family_planning_method_iud_4ps.length + stats.family_planning_method_iud_non_4ps.length }}</td>
+                <td colspan="2">Hypertension</td>
+                <td>{{ stats.diabetes_male.length }}</td>
+                <td>{{ stats.diabetes_female.length }}</td>
+                <td>{{ stats.diabetes_male.length + stats.diabetes_female.length }}</td>
+              </tr>
+
+              <tr>
+                <td>Condom</td>
+                <td>{{ stats.family_planning_method_condom_4ps.length }}</td>
+                <td>{{ stats.family_planning_method_condom_non_4ps.length }}</td>
+                <td>-</td>
+                <td>{{ stats.family_planning_method_condom_4ps.length + stats.family_planning_method_condom_non_4ps.length }}</td>
+                <td colspan="2">Tuberculosis</td>
+                <td>{{ stats.tb_male.length }}</td>
+                <td>{{ stats.tb_female.length }}</td>
+                <td>{{ stats.tb_male.length + stats.tb_female.length }}</td>
+              </tr>
+
+              <tr>
+                <td>LAM</td>
+                <td>{{ stats.family_planning_method_lam_4ps.length }}</td>
+                <td>{{ stats.family_planning_method_lam_non_4ps.length }}</td>
+                <td>-</td>
+                <td>{{ stats.family_planning_method_lam_4ps.length + stats.family_planning_method_lam_non_4ps.length }}</td>
+                <td colspan="2">Tuberculosis</td>
+                <td>{{ stats.others_male.length }}</td>
+                <td>{{ stats.others_female.length }}</td>
+                <td>{{ stats.others_male.length + stats.others_female.length }}</td>
+              </tr>
+
+              <tr>
+                <td>BTL</td>
+                <td>{{ stats.family_planning_method_btl_4ps.length }}</td>
+                <td>{{ stats.family_planning_method_btl_non_4ps.length }}</td>
+                <td>-</td>
+                <td>{{ stats.family_planning_method_btl_4ps.length + stats.family_planning_method_btl_non_4ps.length }}</td>
+                <td class="bg-slate-200" colspan="2">Age Group</td>
+                <td class="bg-slate-200">Male</td>
+                <td class="bg-slate-200">Female</td>
+                <td class="bg-slate-200">Total</td>
+              </tr>
+
+              <tr>
+                <td>Implant</td>
+                <td>{{ stats.family_planning_method_implant_4ps.length }}</td>
+                <td>{{ stats.family_planning_method_implant_non_4ps.length }}</td>
+                <td>-</td>
+                <td>{{ stats.family_planning_method_implant_4ps.length + stats.family_planning_method_implant_non_4ps.length }}</td>
+                <td colspan="2">1-28 days</td>
+                <td>{{ stats.age_1_to_28_days_male.length }}</td>
+                <td>{{ stats.age_1_to_28_days_female.length }}</td>
+                <td>{{ stats.age_1_to_28_days_male.length + stats.age_1_to_28_days_female.length }}</td>
+              </tr>
+
+              <tr>
+                <td>SDM</td>
+                <td>{{ stats.family_planning_method_sdm_4ps.length }}</td>
+                <td>{{ stats.family_planning_method_sdm_non_4ps.length }}</td>
+                <td>-</td>
+                <td>{{ stats.family_planning_method_sdm_4ps.length + stats.family_planning_method_sdm_non_4ps.length }}</td>
+                <td colspan="2">29-11mos</td>
+                <td>{{ stats.age_29_days_to_11_months_male.length }}</td>
+                <td>{{ stats.age_29_days_to_11_months_female.length }}</td>
+                <td>{{ stats.age_29_days_to_11_months_male.length + stats.age_29_days_to_11_months_female.length }}</td>
+              </tr>
+
+              <tr>
+                <td>Vasectomy</td>
+                <td>{{ stats.family_planning_method_vasectomy_4ps.length }}</td>
+                <td>{{ stats.family_planning_method_vasectomy_non_4ps.length }}</td>
+                <td>-</td>
+                <td>{{ stats.family_planning_method_vasectomy_4ps.length + stats.family_planning_method_vasectomy_non_4ps.length }}</td>
+                <td colspan="2">1-4 year old</td>
+                <td>{{ stats.age_1_to_4_years_male.length }}</td>
+                <td>{{ stats.age_1_to_4_years_female.length }}</td>
+                <td>{{ stats.age_1_to_4_years_male.length + stats.age_1_to_4_years_female.length }}</td>
+              </tr>
+
+              <tr>
+                <td>BBT</td>
+                <td>{{ stats.family_planning_method_bbt_4ps.length }}</td>
+                <td>{{ stats.family_planning_method_bbt_non_4ps.length }}</td>
+                <td>-</td>
+                <td>{{ stats.family_planning_method_bbt_4ps.length + stats.family_planning_method_bbt_non_4ps.length }}</td>
+                <td colspan="2">5-9 year old</td>
+                <td>{{ stats.age_5_to_9_years_male.length }}</td>
+                <td>{{ stats.age_5_to_9_years_female.length }}</td>
+                <td>{{ stats.age_5_to_9_years_male.length + stats.age_5_to_9_years_female.length }}</td>
+              </tr>
+
+              <tr>
+                <td>Others</td>
+                <td>{{ stats.family_planning_method_others_4ps.length }}</td>
+                <td>{{ stats.family_planning_method_others_non_4ps.length }}</td>
+                <td>-</td>
+                <td>{{ stats.family_planning_method_others_4ps.length + stats.family_planning_method_others_non_4ps.length }}</td>
+                <td colspan="2">10-14 years old</td>
+                <td>{{ stats.age_10_to_14_years_male.length }}</td>
+                <td>{{ stats.age_10_to_14_years_female.length }}</td>
+                <td>{{ stats.age_10_to_14_years_male.length + stats.age_10_to_14_years_female.length }}</td>
+              </tr>
+
+              <tr>
+                <td class="bg-slate-200" colspan="5" rowspan="2">Classification by Age/Health Risk Group</td>
+                <td colspan="2">15-19 years old</td>
+                <td>{{ stats.age_15_to_19_years_male.length }}</td>
+                <td>{{ stats.age_15_to_19_years_female.length }}</td>
+                <td>{{ stats.age_15_to_19_years_male.length + stats.age_15_to_19_years_female.length }}</td>
+              </tr>
+
+              <tr>
+                <td colspan="2">20-24 years old</td>
+                <td>{{ stats.age_20_to_24_years_male.length }}</td>
+                <td>{{ stats.age_20_to_24_years_female.length }}</td>
+                <td>{{ stats.age_20_to_24_years_male.length + stats.age_20_to_24_years_female.length }}</td>
+              </tr>
+
+              <tr>
+                <td></td>
+                <td>Male</td>
+                <td>Female</td>
+                <td colspan="2">Total</td>
+                <td colspan="2">25-29 years old</td>
+                <td>{{ stats.age_25_to_29_years_male.length }}</td>
+                <td>{{ stats.age_25_to_29_years_female.length }}</td>
+                <td>{{ stats.age_25_to_29_years_male.length + stats.age_25_to_29_years_female.length }}</td>
+              </tr>
+
+              <tr>
+                <td>N - Newborn (0-28 days)</td>
+                <td>{{ stats.newborn_male.length }}</td>
+                <td>{{ stats.newborn_female.length }}</td>
+                <td colspan="2">{{ stats.newborn_male.length + stats.newborn_female.length }}</td>
+                <td colspan="2">30-34 years old</td>
+                <td>{{ stats.age_30_to_34_years_male.length }}</td>
+                <td>{{ stats.age_30_to_34_years_female.length }}</td>
+                <td>{{ stats.age_30_to_34_years_male.length + stats.age_30_to_34_years_female.length }}</td>
+              </tr>
+
+              <tr>
+                <td>I - Infant (0-1 y/o)</td>
+                <td>{{ stats.infant_male.length }}</td>
+                <td>{{ stats.infant_female.length }}</td>
+                <td colspan="2">{{ stats.infant_male.length + stats.infant_female.length }}</td>
+                <td colspan="2">35-39 years old</td>
+                <td>{{ stats.age_35_to_39_years_male.length }}</td>
+                <td>{{ stats.age_35_to_39_years_female.length }}</td>
+                <td>{{ stats.age_35_to_39_years_male.length + stats.age_35_to_39_years_female.length }}</td>
+              </tr>
+
+              <tr>
+                <td>PSAC (1-4 y/o)</td>
+                <td>{{ stats.psac_male.length }}</td>
+                <td>{{ stats.psac_female.length }}</td>
+                <td colspan="2">{{ stats.psac_male.length + stats.psac_female.length }}</td>
+                <td colspan="2">40-44 years old</td>
+                <td>{{ stats.age_40_to_44_years_male.length }}</td>
+                <td>{{ stats.age_40_to_44_years_female.length }}</td>
+                <td>{{ stats.age_40_to_44_years_male.length + stats.age_40_to_44_years_female.length }}</td>
+              </tr>
+
+              <tr>
+                <td>SAC - Schoold Age (5-9 y/o)</td>
+                <td>{{ stats.sac_male.length }}</td>
+                <td>{{ stats.sac_female.length }}</td>
+                <td colspan="2">{{ stats.sac_male.length + stats.sac_female.length }}</td>
+                <td colspan="2">45-49 years old</td>
+                <td>{{ stats.age_45_to_49_years_male.length }}</td>
+                <td>{{ stats.age_45_to_49_years_female.length }}</td>
+                <td>{{ stats.age_45_to_49_years_male.length + stats.age_45_to_49_years_female.length }}</td>
+              </tr>
+
+              <tr>
+                <td>Ad - Adolecent (10-19 y/o)</td>
+                <td>{{ stats.adolsecent_male.length }}</td>
+                <td>{{ stats.adolsecent_female.length }}</td>
+                <td colspan="2">{{ stats.adolsecent_male.length + stats.adolsecent_female.length }}</td>
+                <td colspan="2">50-54 years old</td>
+                <td>{{ stats.age_50_to_54_years_male.length }}</td>
+                <td>{{ stats.age_50_to_54_years_female.length }}</td>
+                <td>{{ stats.age_50_to_54_years_male.length + stats.age_50_to_54_years_female.length }}</td>
+              </tr>
+
+              <tr>
+                <td>A - Adult (20-59 y/o)</td>
+                <td>{{ stats.adult_male.length }}</td>
+                <td>{{ stats.adult_female.length }}</td>
+                <td colspan="2">{{ stats.adult_male.length + stats.adult_female.length }}</td>
+                <td colspan="2">55-59 years old</td>
+                <td>{{ stats.age_55_to_59_years_male.length }}</td>
+                <td>{{ stats.age_55_to_59_years_female.length }}</td>
+                <td>{{ stats.age_55_to_59_years_male.length + stats.age_55_to_59_years_female.length }}</td>
+              </tr>
+
+              <tr>
+                <td>SC - Senior Citizen</td>
+                <td>{{ stats.senior_male.length }}</td>
+                <td>{{ stats.senior_female.length }}</td>
+                <td colspan="2">{{ stats.senior_male.length + stats.senior_female.length }}</td>
+                <td colspan="2">60-64 years old</td>
+                <td>{{ stats.age_60_to_64_years_male.length }}</td>
+                <td>{{ stats.age_60_to_64_years_female.length }}</td>
+                <td>{{ stats.age_60_to_64_years_male.length + stats.age_60_to_64_years_female.length }}</td>
+              </tr>
+
+              <tr>
+                <td colspan="5" rowspan="2"></td>
+                <td colspan="2">65-69 years old</td>
+                <td>{{ stats.age_65_to_69_years_male.length }}</td>
+                <td>{{ stats.age_65_to_69_years_female.length }}</td>
+                <td>{{ stats.age_65_to_69_years_male.length + stats.age_65_to_69_years_female.length }}</td>
+              </tr>
+
+              <tr>
+                <td colspan="2"> >70 years old</td>
+                <td>{{ stats.age_70_years_up_male.length }}</td>
+                <td>{{ stats.age_70_years_up_female.length }}</td>
+                <td>{{ stats.age_70_years_up_male.length + stats.age_70_years_up_female.length }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
