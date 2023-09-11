@@ -40,7 +40,8 @@ export class HeaderComponent implements OnInit {
     first_name: '',
     middle_name: '',
     last_name: '',
-    suffix_name: ''
+    suffix_name: '',
+    facility: {facility_name:''}
   };
 
   showMenu: boolean = false;
@@ -148,10 +149,12 @@ export class HeaderComponent implements OnInit {
     this.loadPatients();
     let val = this.http.getUserFromJSON();
 
+    // console.log(val)
     this.user.last_name = val.last_name;
     this.user.first_name = val.first_name;
     this.user.middle_name = val.middle_name === 'NA' ? '' : val.middle_name;
     this.user.suffix_name = val.suffix_name === 'NA' ? '' : val.suffix_name;
+    this.user.facility.facility_name = val.facility.facility_name;
   }
 
 }

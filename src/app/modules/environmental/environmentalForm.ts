@@ -1,7 +1,8 @@
 import { FormControl, FormGroup } from "@angular/forms";
 
-export function eclaimsForm() {
+export function environmentalForm() {
   return new FormGroup({
+    id: new FormControl<string|null>(null),
     household_folder_id: new FormControl<string|null>(null),
     number_of_families: new FormControl<number|null>(null),
     registration_date: new FormControl<string|null>(null),
@@ -18,10 +19,18 @@ export function eclaimsForm() {
     arsenic_result: new FormControl<string|null>(null),
     arsenic_date: new FormControl<string|null>(null),
     open_defecation_flag: new FormControl<boolean|null>(false),
-    toilet_facility_code: new FormControl<string|null>(null),
     toilet_shared_flag: new FormControl<boolean|null>(false),
-    sewage_code: new FormControl<string|null>(null),
-    waste_management_code: new FormControl<string|null>(null),
+    toilet_facility_code: new FormControl<string|null>(null),
+
+    sw_disposed_flag: new FormControl<boolean|null>(false),
+    sw_collected_flag: new FormControl<boolean|null>(false),
+    wm_waste_segration_flag: new FormControl<boolean|null>(false),
+    wm_backyad_composting_flag: new FormControl<boolean|null>(false),
+    wm_recycling_flag: new FormControl<boolean|null>(false),
+    wm_collected_flag: new FormControl<boolean|null>(false),
+    wm_others_flag: new FormControl<boolean|null>(false),
+    wm_others_remarks: new FormControl<string|null>(null),
+
     remarks: new FormControl<string|null>(null),
     end_sanitation_flag: new FormControl<boolean|null>(false),
   });

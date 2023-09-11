@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 
 import { EnvironmentalRoutingModule } from './environmental-routing.module';
 import { EnvironmentalComponent } from './environmental.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 
 @NgModule({
@@ -11,7 +13,10 @@ import { EnvironmentalComponent } from './environmental.component';
   ],
   imports: [
     CommonModule,
-    EnvironmentalRoutingModule
+    EnvironmentalRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
+    FontAwesomeModule
   ]
 })
 export class EnvironmentalModule { }

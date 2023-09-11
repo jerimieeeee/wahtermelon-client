@@ -36,6 +36,7 @@ export class PhysicalExamComponent implements OnInit, OnChanges {
     pelvic_remarks: null,
     rectal_remarks: null,
     skin_remarks: null,
+    remarks: null
   }
 
   show_content: boolean =false;
@@ -79,6 +80,7 @@ export class PhysicalExamComponent implements OnInit, OnChanges {
     this.physical_remarks['notes_id'] = this.consult_notes.id;
     this.physical_remarks['patient_id'] = this.consult_details.patient.id;
     let query;
+    console.log(this.physical_remarks);
     if(this.physical_remarks.id === null){
       query = this.http.post('consultation/physical-exam-remarks', this.physical_remarks);
     } else {
