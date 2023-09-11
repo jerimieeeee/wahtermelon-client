@@ -15,9 +15,9 @@
         <thead>
           <tr class="border-b border-solid border-gray-200">
             <th>Date</th>
-            <th>Complaints | History</th>
-            <th>Diagnosis</th>
-            <th>Prescription</th>
+            <th>Complaints | History | Diagnosis</th>
+            <!-- <th>Diagnosis</th> -->
+            <th>Prescription | Treatment Plan</th>
           </tr>
         </thead>
         <tbody>
@@ -29,23 +29,21 @@
               </div>
             </td>
 
-            <td class="p-3 w-4/12">
+            <td class="p-3 w-7/12">
               <div class=" grid grid-cols-1">
                 <span class="w-full mb-3">
-                  <span class="font-semibold">Compalint notes:</span> <br /> {{ visit.consult_notes.complaint }}
+                  <span class="font-semibold">Complaint notes:</span> <br /> {{ visit.consult_notes.complaint }}
                 </span>
 
                 <ul class="list-disc last:mb-3 ml-5" *ngFor="let complaint of visit.consult_notes.complaints">
                   <li>{{ complaint.lib_complaints.complaint_desc }}</li>
                 </ul>
 
-                <span class="w-full mt-2 pt-2">
+                <span class="w-full my-2 py-2">
                   <span class="font-semibold">History notes:</span> <br />{{ visit.consult_notes.history }}
                 </span>
               </div>
-            </td>
 
-            <td class="p-3 w-3/12">
               <div class="grid grid-cols-1 text-left">
                 <span class="font-semibold">Initial</span>
                 <ul class="list-disc ml-5">
@@ -72,6 +70,12 @@
                 </div>
               </div>
             </td>
+
+            <!-- <td class="p-3 w-3/12">
+
+
+
+            </td> -->
             <td class="p-3 w-3/12">
 
             </td>
