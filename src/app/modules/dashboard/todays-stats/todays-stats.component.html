@@ -76,6 +76,7 @@
     <div class="text-left pl-1 font-normal text-xs" *ngFor="let user of side_stats?.user_birthdate">
       {{ user.name }}
     </div>
+    <br />
 
     <span class="pt-3 font-semibold" *ngIf="side_stats?.patient_birthdate">Patient</span>
     <div class="text-left pl-1 font-normal text-xs" *ngFor="let pat of side_stats?.patient_birthdate">

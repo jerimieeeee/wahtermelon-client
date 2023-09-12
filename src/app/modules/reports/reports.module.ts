@@ -14,6 +14,7 @@ import { ExportAsModule } from 'ngx-export-as';
 import { PatientRegisteredComponent } from './report/patient-registered/patient-registered.component';
 import { CatalystReportComponent } from './report/catalyst-report/catalyst-report.component';
 import { Fhsis2018MorbidityComponent } from './report/fhsis2018-morbidity/fhsis2018-morbidity.component';
+import { HouseholdProfilingComponent } from './report/household-profiling/household-profiling.component';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { Fhsis2018MorbidityComponent } from './report/fhsis2018-morbidity/fhsis2
     HeaderFhsis2018Component,
     PatientRegisteredComponent,
     CatalystReportComponent,
-    Fhsis2018MorbidityComponent
+    Fhsis2018MorbidityComponent,
+    HouseholdProfilingComponent
   ],
   imports: [
     CommonModule,
