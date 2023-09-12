@@ -14,7 +14,7 @@
           <div>
             <label for="selected_year">Selected Year</label>
             <select name="selected_year" id="selected_year" class="input" (change)="loadSelectedYear()" [(ngModel)]="selected_year" [ngModelOptions]="{standalone: true}">
-              <option *ngFor="let year of years" [value]="year">{{ year }}</option>
+              <option *ngFor="let year of years" [value]="year" [class]="checkExist(year) ? 'bg-green-700 text-white' : ''">{{ year }}</option>
             </select>
           </div>
         </div>

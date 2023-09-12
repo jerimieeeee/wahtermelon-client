@@ -158,7 +158,7 @@ export class ModuleModalComponent implements OnInit {
     let new_visit = {
       patient_id: this.patient_info.id,
       user_id: user_id,
-      consult_date: this.consult_date+' '+this.consult_time+':00',
+      consult_date: this.consult_date+' '+this.consult_time,
       consult_done: 0,
       pt_group: selected_module.group,
       authorization_transaction_code: this.is_atc_valid ? (!this.is_walk_in ? (this.pATC || this.pATC !== '' ? this.pATC : 'WALKEDIN') : 'WALKEDIN') : 'WALKEDIN',

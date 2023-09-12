@@ -75,7 +75,7 @@ export class EnvironmentalComponent implements OnInit {
   onSubmit(){
     this.is_saving = true;
 
-    let effectivity_year = formatDate(this.environmentalForm.value.registration_date, 'yyyy', 'en');
+    let effectivity_year = formatDate(this.environmentalForm.value.registration_date, 'yyyy', 'en', 'Asia/Manila');
     this.environmentalForm.patchValue({effectivity_year: effectivity_year});
 
     this.http.post('households/environmental/records', this.environmentalForm.value).subscribe({
@@ -87,27 +87,19 @@ export class EnvironmentalComponent implements OnInit {
     });
   }
 
-  loadSelectedYear() {
+  environmental_list: any;
+
+  loadEnvironmental(){
     this.show_form = false;
     let params = {
-      effectivity_year: this.selected_year,
       household_folder_id: this.household_folder_id
     }
 
     this.http.get('households/environmental/records', {params}).subscribe({
       next: (data: any) => {
         console.log(data)
-        this.selected_profile = data.data[0];
-        if(this.selected_profile && Object.keys(this.selected_profile).length > 0) {
-          this.environmentalForm.patchValue({...this.selected_profile});
-          this.environmentalForm.patchValue({
-            validation_date: this.environmentalForm.value.validation_date ? this.dateHelper.dateFormat(this.environmentalForm.value.validation_date) : null,
-            arsenic_date: this.environmentalForm.value.arsenic_date ? this.dateHelper.dateFormat(this.environmentalForm.value.arsenic_date) : null
-          });
-        } else {
-          this.emptyForm();
-        }
-        this.show_form = true;
+        this.environmental_list = data.data;
+        this.loadSelectedYear();
       },
       error: err => {
         this.http.showError(err.error.message, 'Household Profile');
@@ -116,12 +108,44 @@ export class EnvironmentalComponent implements OnInit {
     })
   }
 
+  loadSelectedYear() {
+    let env_found = this.checkExist();
+
+    this.selected_profile = env_found;
+
+    if(this.selected_profile && Object.keys(this.selected_profile).length > 0) {
+      this.environmentalForm.patchValue({...this.selected_profile});
+      this.environmentalForm.patchValue({
+        validation_date: this.environmentalForm.value.validation_date ? this.dateHelper.dateFormat(this.environmentalForm.value.validation_date) : null,
+        arsenic_date: this.environmentalForm.value.arsenic_date ? this.dateHelper.dateFormat(this.environmentalForm.value.arsenic_date) : null
+      });
+    } else {
+      this.emptyForm();
+    }
+    this.show_form = true;
+  }
+
+  checkExist(year?): boolean {
+    if(year) {
+      let env = this.environmental_list.find((obj) => {
+        return Number(obj.effectivity_year) === Number(year);
+      });
+
+      return env ? true : false;
+      console.log(env)
+    } else {
+      return this.environmental_list.find((obj) => {
+        return Number(obj.effectivity_year) === Number(this.selected_year);
+      });
+    }
+  }
+
   createForm(){
     this.show_form = false;
     this.selected_year = Number(this.year);
 
     this.emptyForm();
-    this.loadSelectedYear();
+    this.loadEnvironmental();
   }
 
   emptyForm(){
