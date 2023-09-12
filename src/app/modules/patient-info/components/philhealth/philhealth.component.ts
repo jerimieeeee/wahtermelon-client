@@ -1,5 +1,5 @@
 import { formatDate } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { faPlusCircle, faTableList } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 
@@ -8,7 +8,7 @@ import { HttpService } from 'app/shared/services/http.service';
   templateUrl: './philhealth.component.html',
   styleUrls: ['./philhealth.component.scss']
 })
-export class PhilhealthComponent implements OnInit {
+export class PhilhealthComponent {
   @Output() toggleAccordion = new EventEmitter<any>();
   @Output() toggleModal = new EventEmitter<any>();
   @Output() setDetails = new EventEmitter<any>();
@@ -52,8 +52,4 @@ export class PhilhealthComponent implements OnInit {
   constructor(
     private http: HttpService
   ) { }
-
-  ngOnInit(): void {
-  }
-
 }

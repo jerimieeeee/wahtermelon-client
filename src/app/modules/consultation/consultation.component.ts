@@ -5,6 +5,7 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { GraphsComponent } from './components/graphs/graphs.component';
 import { ToastrService } from 'ngx-toastr';
 import { filter, tap } from 'rxjs/operators';
+import { faEdit } from '@fortawesome/free-regular-svg-icons';
 
 @Component({
   selector: 'app-consultation',
@@ -18,6 +19,7 @@ export class ConsultationComponent implements OnInit {
   faChevronDown = faChevronDown;
   faDoorClosed = faDoorClosed;
   faFile = faFile;
+  faEdit = faEdit;
 
   is_saving: boolean = false;
   show_item: boolean = true;
@@ -28,6 +30,7 @@ export class ConsultationComponent implements OnInit {
   show_open: boolean = false;
   enable_edit: boolean = false;
   show_ekas: boolean = false;
+  update_date: boolean = false;
 
   modules: Number;
 
@@ -64,11 +67,13 @@ export class ConsultationComponent implements OnInit {
   // modals: any = [];
 
   toggleModal(name){
+    console.log(name)
     this[name] = !this[name];
 
-    if(name==='show_open' && !this.show_open) {
+    if((name==='show_open' && !this.show_open) || (name==='update_date' && !this.update_date)) {
       this.loadConsult();
     }
+
   }
 
   openEkas() {
