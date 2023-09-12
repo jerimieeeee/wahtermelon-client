@@ -81,6 +81,7 @@ export class EnvironmentalComponent implements OnInit {
     this.http.post('households/environmental/records', this.environmentalForm.value).subscribe({
       next: () => {
         this.toastr.success('Successfully recorded!', 'Environmental');
+        this.loadEnvironmental();
         this.is_saving = false;
       },
       error: err => this.http.showError(err.error.message, 'Environmental')
