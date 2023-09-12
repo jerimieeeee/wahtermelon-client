@@ -43,6 +43,10 @@ export class ReportsComponent implements OnInit {
     { id: 'morbidity-report', desc: 'Morbidity Report', url: 'reports-2018/morbidity/report'},
   ];
 
+  household_stats = [
+    { id: 'profiling-report', desc: 'Profiling', url: 'reports-2018/household-profiling/report'},
+  ];
+
   months = [
     {
       value: 1,
@@ -126,6 +130,7 @@ export class ReportsComponent implements OnInit {
 
     this.http.get(this.reportForm.value.report_type.url, {params}).subscribe({
       next: (data: any) => {
+        console.log(data);
         this.report_data = data;
         this.is_fetching = false;
 
