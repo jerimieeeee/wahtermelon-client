@@ -1,1 +1,184 @@
-<p>eclaims works!</p>
+<div class="border border-slate-200 shadow-md rounded-xl">
+  <div class="w-full bg-blue-500 text-white rounded-t-xl p-3 font-semibold flex justify-between">
+    <span class="mt-2">ECLAIMS LIST</span>
+
+    <div class="flex text-slate-800">
+      <input type="text" [(ngModel)]="patient_search" placeholder="search..." class="input rounded-r-none"/>
+      <select class="input w-36 rounded-none" [(ngModel)]="pStatus">
+        <option [ngValue]="null">ALL</option>
+        <option [value]="status" *ngFor="let status of status_lists">{{ status }}</option>
+      </select>
+      <select class="input w-36 rounded-none" [(ngModel)]="program_desc">
+        <option [ngValue]="null">ALL</option>
+        <option [value]="program" *ngFor="let program of program_list">{{ program | uppercase }}</option>
+      </select>
+      <!-- <select class="input w-36 rounded-none" >
+        <option>-</option>
+      </select> -->
+      <button type="button" (click)="getEclaimsList()" class="px-3 bg-white text-blue-500 rounded-r-md h-10 mt-1">
+        <fa-icon [icon]="faFilter"></fa-icon>
+      </button>
+    </div>
+    <!-- <button type="button" (click)="refreshClaims()">
+      <fa-icon [icon]="faRotate" [spin]="is_refreshing"></fa-icon>
+    </button> -->
+  </div>
+
+  <div class="w-full p-5 overflow-x-auto">
+    <table class="table-fixed w-full text-sm text-left text-gray-500">
+      <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700">
+        <tr>
+          <th scope="col" class="py-3 px-3">Name</th>
+          <th scope="col" class="py-3 w-1/5">
+            1. Caserate (Program)<br />
+            2. Transmittal Number <br />
+            3. Ticket Number <br />
+            4. Claim Series Lhio
+          </th>
+          <th scope="col" class="py-3 px-3">Transmittal Date</th>
+          <th scope="col" class="py-3 px-3">Claim Status</th>
+          <th scope="col" class="py-3 px-3">Details</th>
+          <th scope="col" class="py-3 px-3">Action</th>
+        </tr>
+      </thead>
+      <tbody *ngIf="show_form">
+        <tr *ngFor="let eclaims of eclaims_list" class="bg-white border-b last:border-0">
+          <td>
+            {{ eclaims.patient.last_name }}, {{ eclaims.patient.first_name }} {{ eclaims.patient.middle_name }}
+          </td>
+          <td class="py-4 px-3 text-xs">
+            1. {{ eclaims.caserate.caserate_code }} | {{ eclaims.caserate.code }} ({{ eclaims.caserate.program_desc | uppercase }})<br />
+            2. {{ eclaims.pHospitalTransmittalNo }} <br />
+            3. {{ eclaims.pReceiptTicketNumber ?? '-' }} <br />
+            4. {{ eclaims.pClaimSeriesLhio ?? '-' }}
+          </td>
+          <td class="py-4 px-3">
+            {{ eclaims.pTransmissionDate ?? '-' }}
+          </td>
+          <td class="py-4 px-3">
+            {{ eclaims.pStatus ?? 'IN QUEUE'  }}
+          </td>
+          <td class="py-4 px-3">
+            {{ eclaims.denied_reason ?? '-'  }}
+          </td>
+          <td class="py-4 px-3 text-center grid grid-cols-1">
+            <button class="bg-gray-300 rounded-md p-0.5 mb-3 disabled:opacity-75" type="button" (click)="navigateRoute('itr', eclaims)">
+              <fa-icon [icon]="faUpload"></fa-icon>
+              Open ITR
+            </button>
+
+            <button *ngIf="eclaims.pStatus !== 'DENIED' && eclaims.pStatus !== 'WITH CHEQUE'" class="bg-blue-500 text-white rounded-md p-0.5 mb-3 disabled:opacity-75" type="button" (click)="toggleModal('upload-claims', eclaims)">
+              <fa-icon [icon]="faUpload"></fa-icon>
+              {{ eclaims.pReceiptTicketNumber ? 'Reupload Docs' : 'Upload Claim' }}
+            </button>
+
+            <!-- <button *ngIf="!eclaims.pReceiptTicketNumber" class="bg-rose-500 text-white rounded-md p-0.5 mb-3 disabled:opacity-75" type="button" (click)="reopenCf2('cf2', eclaims)">
+              <fa-icon [icon]="faPenToSquare"></fa-icon>
+              Update CF2 XML
+            </button> -->
+
+            <button class="bg-green-500 text-white rounded-md p-0.5 mb-3 disabled:opacity-75" type="button" *ngIf="eclaims.pReceiptTicketNumber && !eclaims.pClaimSeriesLhio" (click)="checkSeries(eclaims)" [disabled]="is_refreshing">
+              <fa-icon [icon]="is_refreshing ? faRotate : faReceipt" [spin]="is_refreshing"></fa-icon>
+              Get Series Lhio
+            </button>
+
+            <button class="bg-green-500 text-white rounded-md p-0.5 mb-3 disabled:opacity-75" type="button" *ngIf="eclaims.pClaimSeriesLhio && !eclaims.denied_reason" (click)="getClaimStatus(eclaims, eclaims.pStatus)" [disabled]="is_refreshing">
+              <fa-icon [icon]="is_refreshing ? faRotate : faClipboardQuestion" [spin]="is_refreshing"></fa-icon>
+              Check {{ eclaims.pStatus === 'DENIED' ? 'Reason' : 'Status' }}
+            </button>
+          </td>
+        </tr>
+        <tr *ngIf="eclaims_list.length===0">
+          <td colspan="6" class="text-center italic">
+            No record found
+          </td>
+        </tr>
+      </tbody>
+      <tbody *ngIf="!show_form">
+        <tr>
+          <td colspan="7">
+            <div class="grid grid-cols-1 my-16">
+              <div class="flex justify-center text-blue-500">
+                <fa-icon [icon]="faCircleNotch" spin="true"></fa-icon>
+              </div>
+              <div class="flex justify-center">
+                Fetching claims...
+              </div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="eclaims_list?.length >= 1">
+    <div class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
+      <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+        <div>
+          <p class="text-sm text-gray-700">
+            Showing <span class="font-medium">{{ from }}</span>
+            to <span class="font-medium">{{ to }}</span>
+            of <span class="font-medium">{{ total }}</span> results
+          </p>
+        </div>
+        <div>
+          <nav class="relative z-0 inline-flex shadow-sm -space-x-px" aria-label="Pagination">
+            <button [disabled]="current_page===1" (click)="loadHouseholds(1)" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 enabled:bg-white disabled:bg-gray-300 text-sm font-medium text-gray-500 hover:bg-gray-50">
+              <fa-icon [icon]="faAnglesLeft" class="block h-15 w-15 text-gray-500 pr-1"></fa-icon>
+            </button>
+
+              <button [disabled]="current_page===1" (click)="loadHouseholds(current_page-1)" class="relative inline-flex items-center px-4 py-2 border border-gray-300 enabled:bg-white disabled:bg-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
+                <fa-icon [icon]="faChevronLeft" class="block h-15 w-15 text-gray-500 pr-1"></fa-icon>Previous
+              </button>
+              <button [disabled]="current_page===last_page" (click)="loadHouseholds(current_page+1)" class="relative inline-flex items-center px-4 py-2 border border-gray-300 enabled:bg-white disabled:bg-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
+                Next<fa-icon [icon]="faChevronRight" class="h-5 w-5 text-gray-500"></fa-icon>
+              </button>
+
+            <button [disabled]="current_page===last_page" (click)="loadHouseholds(last_page)" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 enabled:bg-white disabled:bg-gray-300 text-sm font-medium text-gray-500 hover:bg-gray-50">
+              <fa-icon [icon]="faAnglesRight" class="h-5 w-5 text-gray-500"></fa-icon>
+            </button>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--
+<app-ekas *ngIf="modal['ekas']" (toggleModal)="toggleModal($event)"></app-ekas>
+<app-epres *ngIf="modal['epres']" (toggleModal)="toggleModal($event)"></app-epres> -->
+
+<!-- <app-pbef *ngIf="modal['pbef']"
+  (toggleModal)="toggleModal($event)"
+  [patient]="patient"
+  [patient_philhealth]="patient_philhealth"
+  [program_name]="program_name"
+  [program_creds]="program_creds"
+  [selected_case]="selected_case"
+  [caserate_list]="caserate_list"
+></app-pbef>
+
+<app-cf1 *ngIf="modal['cf1']"
+  (toggleModal)="toggleModal($event)"
+  [patient]="patient"
+  [patient_philhealth]="patient_philhealth"
+  [program_creds]="program_creds"
+></app-cf1> -->
+
+<!-- <app-cf2 *ngIf="modal['cf2']"
+  (toggleModal)="toggleModal($event)"
+  [patient]="patient"
+  [program_name]="program_name"
+  [program_id]="program_id"
+  [caserate_list]="caserate_list"
+  [selected_case]="selected_case"
+  [selected_transmittalNumber]="selected_transmittalNumber"
+></app-cf2> -->
+
+<app-upload-claims *ngIf="modal['upload-claims']"
+  (modalToggle)="toggleModal($event)"
+  [patient]="patient"
+  [program_name]="program_name"
+  [selected_pHospitalTransmittalNo]="selected_pHospitalTransmittalNo"
+  [caserate_code]="selected_caserate_code"
+  [selected_ticket_number]="selected_ticket_number"
+></app-upload-claims>
