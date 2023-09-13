@@ -2,21 +2,18 @@
   <div class="w-full bg-blue-500 text-white rounded-t-xl p-3 font-semibold flex justify-between">
     <span class="mt-2">ECLAIMS LIST</span>
 
-    <div class="flex text-slate-800">
-      <input type="text" [(ngModel)]="patient_search" placeholder="search..." (keyup.enter)="getEclaimsList()" class="input rounded-r-none"/>
-      <select class="input w-36 rounded-none" [(ngModel)]="pStatus">
+    <div class="grid grid-cols-10 text-slate-800">
+      <input type="text" [(ngModel)]="patient_search" placeholder="search..." (keyup.enter)="getEclaimsList()" class="col-span-3 input rounded-r-none"/>
+      <select class="input rounded-none col-span-3" [(ngModel)]="pStatus">
         <option [ngValue]="null">ALL</option>
         <option [value]="status" *ngFor="let status of status_lists">{{ status }}</option>
       </select>
-      <select class="input w-36 rounded-none" [(ngModel)]="program_desc">
+      <select class="input rounded-none col-span-3" [(ngModel)]="program_desc">
         <option [ngValue]="null">ALL</option>
         <option [value]="program" *ngFor="let program of program_list">{{ program | uppercase }}</option>
       </select>
-      <!-- <select class="input w-36 rounded-none" >
-        <option>-</option>
-      </select> -->
       <button type="button" (click)="getEclaimsList()" class="px-3 bg-white text-blue-500 rounded-r-md h-10 mt-1">
-        <fa-icon [icon]="faFilter"></fa-icon>
+        <fa-icon [icon]="faFilter"></fa-icon> Filter
       </button>
     </div>
     <!-- <button type="button" (click)="refreshClaims()">
