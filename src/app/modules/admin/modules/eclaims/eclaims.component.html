@@ -3,7 +3,7 @@
     <span class="mt-2">ECLAIMS LIST</span>
 
     <div class="flex text-slate-800">
-      <input type="text" [(ngModel)]="patient_search" placeholder="search..." class="input rounded-r-none"/>
+      <input type="text" [(ngModel)]="patient_search" placeholder="search..." (keyup.enter)="getEclaimsList()" class="input rounded-r-none"/>
       <select class="input w-36 rounded-none" [(ngModel)]="pStatus">
         <option [ngValue]="null">ALL</option>
         <option [value]="status" *ngFor="let status of status_lists">{{ status }}</option>
