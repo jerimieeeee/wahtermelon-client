@@ -61,7 +61,7 @@
                   </div>
 
                   <div *ngIf="!is_walk_in" class="grid grid-cols-1 w-full ml-5 mb-3">
-                    <div class="flex center-start w-full ml-5 mb-3">
+                    <div class="flex justify-center w-full mb-3">
                       <label for="pATC"  class="input-label pr-5 inline-block align-middle pt-3 w-1/4">Konsulta ATC</label><br />
                       <input type="text" name="pATC" id="pATC" class="input w-52" placeholder="Patient ATC" [(ngModel)]="pATC">
                       <input type="date" name="pATC_date" id="pATC_date" class="input w-52" placeholder="mm/dd/yyyy" max="{{ date | date:'yyyy-MM-dd HH:mm:ss'}}" [(ngModel)]="pATC_date">
