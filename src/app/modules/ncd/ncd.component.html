@@ -100,4 +100,10 @@
   </div>
 </div>
 
-<app-end-visit *ngIf="ncd_list && show_end" [consult_id]="consult_id" [patient_id]="consult_details.patient ? consult_details.patient.id : consult_details.patient_id" [consult_date]="consult_details.consult_date" [pt_group]="'ncd'"></app-end-visit>
+<app-end-visit *ngIf="ncd_list && show_end"
+  (toggleModal)="toggleModal($event)"
+  [consult_id]="consult_details_temp.id"
+  [patient_id]="consult_details_temp.patient ? consult_details_temp.patient.id : consult_details_temp.patient_id"
+  [consult_date]="consult_details_temp.consult_date"
+  [pt_group]="'ncd'"
+></app-end-visit>
