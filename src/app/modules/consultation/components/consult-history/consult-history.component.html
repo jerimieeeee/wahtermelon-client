@@ -36,7 +36,7 @@
                 </span>
 
                 <ul class="list-disc last:mb-3 ml-5" *ngFor="let complaint of visit.consult_notes.complaints">
-                  <li>{{ complaint.lib_complaints.complaint_desc }}</li>
+                  <li>{{ complaint.lib_complaints?.complaint_desc }}</li>
                 </ul>
 
                 <span class="w-full my-2 py-2">

@@ -42,7 +42,7 @@
           </button>
           <span class="mt-2 font-bold "> CONSULTATION
             <span class="text-gray-500 text-sm">
-              ({{ consult_details?.consult_date | date: 'MM/dd/yyyy hh:mm a' }} | ID:{{ consult_details?.id }} | ATC: {{ consult_details?.authorization_transaction_code }})
+              ({{ consult_details?.consult_date | date: 'MM/dd/yyyy hh:mm a' }} | ID:{{ consult_details?.id }}<span *ngIf="consult_details?.is_konsulta"> | ATC: {{ consult_details?.authorization_transaction_code }}</span>)
               <button class="text-orange-400" type="button" (click)="toggleModal('update_date')">
                 <fa-icon [icon]="faEdit"></fa-icon>
               </button>

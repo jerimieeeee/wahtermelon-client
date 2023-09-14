@@ -64,7 +64,7 @@ export class UpdateDateComponent implements OnInit{
       error: err => console.log(err)
     })
   }
-
+  is_konsulta: boolean = false;
   onSubmit(){
     this.is_saving = true;
 
@@ -75,7 +75,8 @@ export class UpdateDateComponent implements OnInit{
       consult_done: this.consult_details.consult_done,
       pt_group: this.consult_details.pt_group,
       authorization_transaction_code: this.is_atc_valid ? (!this.is_walk_in ? (this.pATC || this.pATC !== '' ? this.pATC : 'WALKEDIN') : 'WALKEDIN') : 'WALKEDIN',
-      walkedin_status: this.is_atc_valid ? false : true
+      walkedin_status: this.is_atc_valid ? false : true,
+      is_konsulta: this.is_konsulta
     };
 
     console.log(new_visit.consult_date)

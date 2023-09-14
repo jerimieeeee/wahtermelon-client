@@ -11,8 +11,8 @@
         </button>
       </span>
 
-      <div *ngIf="show_content">
-        <div class="flex mb-2  p-4" >
+      <div *ngIf="show_content && show_form">
+        <div class="flex mb-2 p-4" >
           <button type="submit" class="inline-flex p-1 items-center text-gray-50 bg-sky-400 rounded-l-md border border-gray-300">
             <fa-icon class="text-white fa-xl" [icon]="faPlusSquare" ></fa-icon>
           </button>
@@ -100,5 +100,5 @@
 <app-gbv-referral *ngIf="modals['gbv_referral']"
   (toggleModal)="toggleModal($event)"
   [gbv_complaints]="gbv_complaints"
-  [patient_id]="this.consult_details.patient.id"
+  [patient_id]="consult_details.patient.id"
 ></app-gbv-referral>

@@ -76,6 +76,7 @@ export class ModuleModalComponent implements OnInit {
   pATC_date: string;
   is_atc_valid: boolean;
   is_walk_in: boolean;
+  is_konsulta: boolean;
 
   arr_allowed = ['MD','WCPD','MSWDO'];
   isATCValid(){
@@ -162,7 +163,8 @@ export class ModuleModalComponent implements OnInit {
       consult_done: 0,
       pt_group: selected_module.group,
       authorization_transaction_code: this.is_atc_valid ? (!this.is_walk_in ? (this.pATC || this.pATC !== '' ? this.pATC : 'WALKEDIN') : 'WALKEDIN') : 'WALKEDIN',
-      walkedin_status: this.is_atc_valid ? false : true
+      walkedin_status: this.is_atc_valid ? false : true,
+      is_konsulta: this.is_konsulta
     };
 
     this.http.post('consultation/records', new_visit).subscribe({
