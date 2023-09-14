@@ -1,7 +1,7 @@
 import { formatDate } from '@angular/common';
 import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { faAnglesLeft, faAnglesRight, faChevronLeft, faChevronRight, faFilter, faSave, faSearch, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { faAnglesLeft, faAnglesRight, faChevronLeft, faChevronRight, faCircleNotch, faFilter, faSave, faSearch, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -19,6 +19,7 @@ export class KonsultaComponent implements OnInit {
   faSearch = faSearch;
   faFilter = faFilter;
   faSave = faSave;
+  faCircleNotch = faCircleNotch;
 
   current_year = formatDate(new Date, 'yyyy', 'en', 'Asia/Manila')
   years: any = [];
@@ -48,7 +49,7 @@ export class KonsultaComponent implements OnInit {
 
   return_value: any;
   patient_list: any;
-
+  search: string;
 
   loadList(page?: number){
     this.forms = [];
@@ -59,6 +60,7 @@ export class KonsultaComponent implements OnInit {
     let params = {params: { }};
     if (page) params['params']['page'] = page;
     params['params']['per_page'] = this.per_page;
+    params['params']['search'] = this.search ?? '';
 
     if(this.form_type === "1"){
       if (this.filter_tranche) params['params']['tranche'] = this.filter_tranche;

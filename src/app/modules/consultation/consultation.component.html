@@ -40,7 +40,14 @@
           <button class="font-normal text-sky-500 px-2 py-1 text-sm  mr-2" type="button" (click)="toggleAll()">
             <fa-icon [icon]="toggle_content ? faChevronUp : faChevronDown" size="lg"></fa-icon>
           </button>
-          <span class="mt-2 font-bold "> CONSULTATION <span class="text-gray-500 text-sm">({{ consult_details?.consult_date | date: 'MM/dd/yyyy hh:mm a' }} | ID:{{ consult_details?.id }})</span></span><br />
+          <span class="mt-2 font-bold "> CONSULTATION
+            <span class="text-gray-500 text-sm">
+              ({{ consult_details?.consult_date | date: 'MM/dd/yyyy hh:mm a' }} | ID:{{ consult_details?.id }} | ATC: {{ consult_details?.authorization_transaction_code }})
+              <button class="text-orange-400" type="button" (click)="toggleModal('update_date')">
+                <fa-icon [icon]="faEdit"></fa-icon>
+              </button>
+            </span>
+          </span><br />
           <span class="text-gray-500 text-sm font-semibold">Facilty: {{ consult_details?.facility?.facility_name }}</span>
         </div>
 
@@ -111,6 +118,10 @@
   [patient_id]="consult_details?.patient.id"
   [pt_group]="'cn'"
 ></app-open-consult>
+
+<app-update-date *ngIf="update_date" (toggleModal)="toggleModal('update_date')"
+  [consult_details]="consult_details"
+></app-update-date>
 
 <app-ekas *ngIf="show_ekas"
   (toggleModal)="toggleEkas()"

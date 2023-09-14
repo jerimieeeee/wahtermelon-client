@@ -229,6 +229,9 @@ export class EclaimsComponent implements OnInit {
 
     if(this.patient_philhealth) {
       this.getCreds();
+    } else {
+      this.http.showError('No PhilHealth Details', 'EClaims');
+      this.show_form = true;
     }
   }
 

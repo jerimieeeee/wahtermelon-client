@@ -4,6 +4,7 @@ import { faClipboard, faCircleInfo, faHouse, faUserDoctor, faFlask, faCheck, faS
 import { HttpService } from 'app/shared/services/http.service';
 import { formatDate } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
+import { dateHelper } from 'app/shared/services/date-helper.service';
 
 @Component({
   selector: 'app-module-modal',
@@ -116,7 +117,6 @@ export class ModuleModalComponent implements OnInit {
     let loc = module.location;
     this.is_loading = true;
 
-
     if(loc==='gbv' || loc === 'itr' || loc === 'lab') {
       this.router.navigate(['/patient/'+loc, {id: this.patient_info.id}]);
       this.closeModal();
@@ -153,12 +153,12 @@ export class ModuleModalComponent implements OnInit {
 
   onCreateNew(selected_module){
     this.is_loading = true;
-    // console.log(selected_module)
+
     let user_id = this.http.getUserID();
     let new_visit = {
       patient_id: this.patient_info.id,
       user_id: user_id,
-      consult_date: this.consult_date+' '+this.consult_time+':00',
+      consult_date: this.consult_date+' '+this.consult_time,
       consult_done: 0,
       pt_group: selected_module.group,
       authorization_transaction_code: this.is_atc_valid ? (!this.is_walk_in ? (this.pATC || this.pATC !== '' ? this.pATC : 'WALKEDIN') : 'WALKEDIN') : 'WALKEDIN',
@@ -167,7 +167,6 @@ export class ModuleModalComponent implements OnInit {
 
     this.http.post('consultation/records', new_visit).subscribe({
       next: (data: any) => {
-        // console.log(data)
         this.toastr.success('Successfully created!','New visit')
         this.router.navigate(['/patient/'+selected_module.location, {id: this.patient_info.id, consult_id: data.data.id}]);
         this.closeModal()
@@ -184,27 +183,25 @@ export class ModuleModalComponent implements OnInit {
   constructor(
     private router: Router,
     private http: HttpService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private dateHelper: dateHelper
   ) { }
 
   checkOpenConsult(consults){
-    // let user_fac = this.http.getUserFacility();
-    Object.entries(consults).forEach(([keys, values], indexes) => {
-      let vals: any= values;
-      // console.log(this.user_fac)
-      // console.log(vals)
-      if(vals.pt_group === 'cn') {
-        if(this.user_fac === vals.facility.code) {
+    Object.entries(consults).forEach(([keys, values]:any, indexes) => {
+      // let vals: any= values;
+      if(values.pt_group === 'cn') {
+        if(this.user_fac === values.facility.code) {
           this.cn.consult_active = true;
-          this.cn.id = vals.id;
+          this.cn.id = values.id;
         }
       }
 
       Object.entries(this.list_modules).forEach(([key, value], index) => {
         Object.entries(value.modules).forEach(([k, v], i) => {
-          if(vals.pt_group === k) {
+          if(values.pt_group === k) {
             this.list_modules[key].modules[k].consult_active = true;
-            this.list_modules[key].modules[k].id = vals.id;
+            this.list_modules[key].modules[k].id = values.id;
           }
         });
       });
@@ -230,7 +227,9 @@ export class ModuleModalComponent implements OnInit {
       error: err => console.log(err)
     });
 
-    let current_date =  new Date;
+    let current_date = new Date;
+    this.consult_date =  this.dateHelper.dateFormat(current_date);
+    this.consult_time = this.dateHelper.timeFormat(current_date);
   }
 
 }

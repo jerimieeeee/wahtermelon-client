@@ -25,6 +25,7 @@ import { DeleteItemComponent } from 'app/shared/shared-modals/delete-item/delete
 import { EndVisitComponent } from 'app/shared/shared-modals/end-visit/end-visit.component';
 import { GbvReferralComponent } from './components/complaint-history/modals/gbv-referral/gbv-referral.component';
 import { OpenConsultComponent } from 'app/shared/shared-modals/open-consult/open-consult.component';
+import { UpdateDateComponent } from './modals/update-date/update-date.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { OpenConsultComponent } from 'app/shared/shared-modals/open-consult/open
     DrugDeleteComponent,
     GeneralSurveyComponent,
     ManagementComponent,
-    GbvReferralComponent
+    GbvReferralComponent,
+    UpdateDateComponent
   ],
   imports: [
     CommonModule,

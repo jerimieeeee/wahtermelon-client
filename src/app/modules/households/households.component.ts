@@ -1,3 +1,4 @@
+import { formatDate } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { faPenToSquare, faSearch, faChevronLeft, faChevronRight, faAnglesLeft, faAnglesRight } from '@fortawesome/free-solid-svg-icons';
@@ -37,10 +38,11 @@ export class HouseholdsComponent implements OnInit {
     if (page) params['params']['page'] = page;
     params['params']['include'] = 'barangay';
     params['params']['per_page'] = this.per_page;
+    params['params']['effectivity_year'] = formatDate(new Date, 'yyyy', 'en', 'Asia/Manila');
 
     this.http.get('households/household-folders',params).subscribe({
       next: (data: any) => {
-        // console.log(data)
+        console.log(data)
         this.household_list = data.data;
         this.current_page = data.meta.current_page;
         this.last_page = data.meta.last_page;

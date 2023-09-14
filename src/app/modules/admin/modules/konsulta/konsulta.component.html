@@ -13,30 +13,30 @@
       </div>
 
       <div class="w-full justify-end flex">
-        <!-- <input type="text" [(ngModel)]="search_item" class="form-input border-0 text-sm p-1 m-1 border-r border-gray-400" (keyup.enter)="loadList()" placeholder="Search name"/> -->
-        <select [(ngModel)]="form_type" class="input w-44" (change)="loadList()">
+        <input type="text" [(ngModel)]="search" class="input rounded-r-none w-52" (keyup.enter)="loadList()" placeholder="Search name"/>
+        <select [(ngModel)]="form_type" class="input w-44 rounded-none">
           <option value="1">For Validation</option>
           <option value="2">Validated List</option>
         </select>
 
-        <select [(ngModel)]="filter_tranche" class="input w-44" (change)="loadList()">
+        <select [(ngModel)]="filter_tranche" class="input w-44 rounded-none">
           <option [value]="1">1st Tranche</option>
           <option [value]="2">2nd Tranche</option>
         </select>
 
-        <select *ngIf="form_type==='1'" [(ngModel)]="filter_year" class="input w-44" (change)="loadList()">
+        <select *ngIf="form_type==='1'" [(ngModel)]="filter_year" class="input w-44 rounded-none">
           <option [value]="year" *ngFor="let year of years" >{{year}}</option>
         </select>
 
-        <select *ngIf="form_type==='2'" [(ngModel)]="filter_status" class="input w-44" (change)="loadList()">
+        <select *ngIf="form_type==='2'" [(ngModel)]="filter_status" class="input w-44 rounded-none">
           <option value="V">Validated</option>
           <option value="S">Submitted/Success</option>
           <option value="F">Failed</option>
         </select>
 
-        <!-- <button [disabled]="searching" type="button" class="ml-3 text-white text-sm bg-blue-500 rounded-md h-9 w-9 mt-1 disabled:bg-gray-300" (click)="loadList()">
-          <fa-icon class="" [icon]="searching ? faSpinner : faFilter" [spin]="searching"></fa-icon>
-        </button> -->
+        <button [disabled]="searching" type="button" class="bg-blue-500 text-white h-10 px-3 mt-1 rounded-r-md" (click)="loadList()">
+          <fa-icon class="" [icon]="searching ? faCircleNotch : faFilter" [spin]="searching"></fa-icon>
+        </button>
       </div>
     </div>
 
@@ -98,6 +98,14 @@
     </div>
   </div>
 
+  <div class="grid grid-cols-1 my-20" *ngIf="searching">
+    <div class="flex justify-center text-blue-500">
+      <fa-icon [icon]="faCircleNotch" spin="true"></fa-icon>
+    </div>
+    <div class="flex justify-center">
+      Fetching list...
+    </div>
+  </div>
 </div>
 
 <app-result-form *ngIf="show_return" (showReturn)="showReturn()" (toggleModal)="toggleModal()" [return_value]="return_value"></app-result-form>
