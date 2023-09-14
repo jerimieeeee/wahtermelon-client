@@ -26,7 +26,7 @@
                     <label for="is_konsulta">Check if this visit is for Konsulta</label>
                   </div>
 
-                  <div class="flex justify-start w-full ml-5 my-3">
+                  <div *ngIf="philhealth_details && consult_details.pt_group === 'cn'" class="flex justify-start w-full ml-5 my-3">
                     <input [disabled]="is_checking_atc" id="is_walk_in" type="checkbox" class="border border-gray-400 rounded-md h-5 w-5 mr-2 disabled:bg-gray-300" [(ngModel)]="is_walk_in" />
                     <label for="is_walk_in">Check if patient is Walk-in</label>
                   </div>
