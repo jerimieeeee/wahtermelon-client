@@ -160,7 +160,7 @@
         </div>
       </div>
       <!-- *ngIf="!selected_tb_consult || selected_tb_consult.treatment_done === 0" -->
-      <div *ngIf="!selected_ab_consult?.date_outcome" class="flex justify-center mt-5" >
+      <div class="flex justify-center mt-5" >
         <button [disabled]="is_saving || abPostExposureForm.invalid" type="submit" class="btn-save mr-5 mt-4">
           <fa-icon [icon]="is_saving ? faCircleNotch : faSave" [spin]="is_saving" class="mr-2"></fa-icon>
           {{ abPostExposureForm.value.id ? (is_saving ? 'Updating' : 'Update') : (is_saving ? 'Saving' : 'Save') }}

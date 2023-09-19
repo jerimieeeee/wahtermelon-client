@@ -46,6 +46,7 @@ export class AbExposureComponent implements OnInit, OnChanges {
     this.is_saving = true;
     let query;
 
+    console.log(this.abExposureForm.value)
     if(this.abExposureForm.value.id) {
       query = this.http.update('animal-bite/patient-ab-exposure/', this.abExposureForm.value.id, this.abExposureForm.value);
     } else {
@@ -89,20 +90,20 @@ export class AbExposureComponent implements OnInit, OnChanges {
       animal_type_id: [null, Validators.required],
       animal_type_remarks: [null],
       exposure_place: [null],
-      bite_flag: [null],
+      bite_flag: [false],
       animal_ownership_id: [null, Validators.required],
-      feet_flag: [null],
-      leg_flag: [null],
-      arms_flag: [null],
-      hand_flag: [null],
-      knee_flag: [null],
-      neck_flag: [null],
-      head_flag: [null],
-      others_flag: [null],
+      feet_flag: [false],
+      leg_flag: [false],
+      arms_flag: [false],
+      hand_flag: [false],
+      knee_flag: [false],
+      neck_flag: [false],
+      head_flag: [false],
+      others_flag: [false],
       al_remarks: [null],
       exposure_type_code : [null, Validators.required],
-      wash_flag: [null],
-      pep_flag: [null],
+      wash_flag: [false],
+      pep_flag: [false],
       tandok_name: [null],
       tandok_addresss: [null],
       remarks: [null]

@@ -109,6 +109,7 @@ export class UpdateDateComponent implements OnInit{
     this.consult_time = this.dateHelper.timeFormat(this.consult_details.consult_date);
     this.is_walk_in = this.consult_details.authorization_transaction_code === 'WALKEDIN' ? true : false;
     this.pATC = this.consult_details.authorization_transaction_code === 'WALKEDIN' ? null : this.consult_details.authorization_transaction_code;
+    this.is_konsulta = this.consult_details.is_konsulta;
     console.log(this.consult_time)
   }
 }
