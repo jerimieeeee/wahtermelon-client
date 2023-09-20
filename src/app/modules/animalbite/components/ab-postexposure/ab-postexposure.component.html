@@ -58,6 +58,46 @@
             </select>
           </div>
 
+          <!-- Booster 1 -->
+          <div>
+            <label for="booster1_date">Booster 1 Date</label>
+            <input type="date" name="booster1_date" id="booster1_date" [max]="max_date" formControlName="booster1_date" class="input">
+          </div>
+
+          <div>
+            <label for="booster1_vaccine_code">Vaccine</label>
+            <select name="booster1_vaccine_code" id="booster1_vaccine_code" formControlName="booster1_vaccine_code" class="input">
+              <option *ngFor="let vaccine of vaccines" [value]="vaccine.code">{{ vaccine.desc }}</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="booster1_vaccine_route_code">Route of Delivery</label>
+            <select name="booster1_vaccine_route_code" id="booster1_vaccine_route_code" formControlName="booster1_vaccine_route_code" class="input">
+              <option *ngFor="let vaccine_route of vaccine_routes" [value]="vaccine_route.code">{{ vaccine_route.desc }}</option>
+            </select>
+          </div>
+
+          <!-- Booster 2 -->
+          <div>
+            <label for="booster2_date">Booster 2 Date</label>
+            <input type="date" name="booster2_date" id="booster2_date" [max]="max_date" formControlName="booster2_date" class="input">
+          </div>
+
+          <div>
+            <label for="booster2_vaccine_code">Vaccine</label>
+            <select name="booster2_vaccine_code" id="booster2_vaccine_code" formControlName="booster2_vaccine_code" class="input">
+              <option *ngFor="let vaccine of vaccines" [value]="vaccine.code">{{ vaccine.desc }}</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="booster2_vaccine_route_code">Route of Delivery</label>
+            <select name="booster2_vaccine_route_code" id="booster2_vaccine_route_code" formControlName="booster2_vaccine_route_code" class="input">
+              <option *ngFor="let vaccine_route of vaccine_routes" [value]="vaccine_route.code">{{ vaccine_route.desc }}</option>
+            </select>
+          </div>
+
           <!-- Day 0 -->
           <div>
             <label for="day0_date">Day 0 Date</label>
