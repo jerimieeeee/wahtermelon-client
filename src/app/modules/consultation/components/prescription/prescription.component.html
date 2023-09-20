@@ -39,7 +39,8 @@
         <tbody>
           <tr *ngFor="let prescription of prescriptions; trackBy:identify" class="bg-white border-b last:border-0 text-sm align-top">
             <td class="py-4 px-3">
-              {{ prescription.konsulta_medicine ?  prescription.konsulta_medicine.desc :prescription.added_medicine}}
+              {{ prescription.konsulta_medicine ?  prescription.konsulta_medicine.desc : prescription.added_medicine }}
+              {{ prescription.medicine ? prescription.medicine.gen_name : '' }} <br />
             </td>
             <td scope="row" class="py-4 px-3 font-medium text-gray-900">
               {{ prescription.dosage_quantity }} {{ prescription.unit_of_measurement.desc }} {{ prescription.regimen.desc }}
