@@ -73,7 +73,7 @@ export class AbPostexposureComponent implements OnInit, OnChanges{
       animal_status_code: [null, Validators.required],
       animal_status_date: [null],
       rig_type_code: [null, Validators.required],
-      rig_date: [null, Validators.required],
+      rig_date: [null],
       booster_1_flag: [false],
       booster_2_flag: [false],
       other_vacc_date: [null],
