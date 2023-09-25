@@ -35,7 +35,7 @@ export class ComplaintHistoryComponent implements OnInit, OnChanges {
   show_content: boolean = true;
   is_saving: boolean = false;
   consult_done: boolean = false;
-
+  show_form: boolean = false;
   onSubmit(){
     this.is_saving = true;
 
@@ -97,6 +97,8 @@ export class ComplaintHistoryComponent implements OnInit, OnChanges {
       (data: any) => {
         // console.log(data.data)
         this.complaints = data.data;
+        this.loadSelected();
+        this.show_form = true;
       }
     );
   }
@@ -144,7 +146,9 @@ export class ComplaintHistoryComponent implements OnInit, OnChanges {
   ngOnChanges(changes){
     this.show_content = this.toggle_content;
     if(this.consult_details) {
-      this.loadSelected();
+      if(this.complaints) {
+        this.loadSelected();
+      }
       this.consult_notes = this.consult_details.consult_notes;
       this.consult_done = this.consult_details.consult_done;
       // this.enable_edit = this.consult_details.

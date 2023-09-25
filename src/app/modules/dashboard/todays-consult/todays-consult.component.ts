@@ -30,7 +30,7 @@ export class TodaysConsultComponent implements OnInit, OnDestroy {
   physicians: [];
   selected_physician: string;
 
-  per_page: number = 5;
+  per_page: number = 10;
   current_page: number;
   last_page: number;
   from: number;

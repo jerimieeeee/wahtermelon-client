@@ -9,7 +9,7 @@ import { PatientInfoComponent } from '../patient-info/patient-info.component';
   templateUrl: './ncd.component.html',
   styleUrls: ['./ncd.component.scss']
 })
-export class NcdComponent implements OnInit, OnChanges, OnDestroy {
+export class NcdComponent implements OnInit, OnDestroy {
   module: Number;
   modules: Number;
 
@@ -157,16 +157,11 @@ export class NcdComponent implements OnInit, OnChanges, OnDestroy {
     // this.vitals = vitals;
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-
-  }
-
   ngOnInit(): void {
     this.module=1;
     this.modules=1;
 
     this.patient_info = this.http.getPatientInfo();
-    // console.log(this.patient_info)
     this.patient_id = this.route.snapshot.paramMap.get('id');
     this.consult_id = this.route.snapshot.paramMap.get('consult_id');
     this.loadConsult();

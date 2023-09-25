@@ -89,7 +89,7 @@ export class UploadClaimsComponent implements OnInit {
       next:(data:any) => {
         this.is_retrieving_xml = false;
         this.confirmUpload();
-        console.log(data);
+        // console.log(data);
         this.encryptedXml = data.xml;
       },
       error: err => console.log(err)
@@ -107,7 +107,7 @@ export class UploadClaimsComponent implements OnInit {
     //ECLAIMS SERVICES
     this.http.post('eclaims/upload-claim', params).subscribe({
       next:(data:any) => {
-        console.log(data)
+        // console.log(data)
         this.updateUploadData(data);
       },
       error: err => {
@@ -136,11 +136,8 @@ export class UploadClaimsComponent implements OnInit {
       program_desc: this.program_name
     }
 
-    console.log(params);
     this.http.post('eclaims/eclaims-upload', params).subscribe({
       next: (res: any) => {
-        console.log(res);
-
         this.ticket_number = res.data.pReceiptTicketNumber;
 
         this.toastr.success('Ticket Number: '+this.ticket_number, 'Claim Uploaded!', {
@@ -170,7 +167,6 @@ export class UploadClaimsComponent implements OnInit {
 
     this.http.get('eclaims/eclaims-doc', {params}).subscribe({
       next:(data:any) => {
-        console.log(data)
         this.uploaded_docs = data.data;
         this.show_form = true;
       },
@@ -200,7 +196,6 @@ export class UploadClaimsComponent implements OnInit {
 
       this.http.post('eclaims/eclaims-doc', formData).subscribe({
         next: (data:any) => {
-          console.log(data)
           this.loadDocs();
           this.resetForm();
           this.is_uploading = false;
@@ -224,7 +219,6 @@ export class UploadClaimsComponent implements OnInit {
   getLibraries(){
     this.http.get('libraries/eclaims-doc-type').subscribe({
       next:(data:any) => {
-        console.log(data)
         this.doc_list = data.data;
         this.loadDocs();
       },
@@ -240,9 +234,6 @@ export class UploadClaimsComponent implements OnInit {
   delete_desc: string = 'eClaims Document';
   selected_doc_id: string;
   toggleModal(name, data?) {
-    if(data) {
-      console.log(data);
-    }
     this.selected_doc_id = data ? data.id : null;
     this.delete_desc = this.delete_desc+" "+(data ? data.doc_type_code : '');
     this.modals[name] = !this.modals[name];
@@ -256,9 +247,6 @@ export class UploadClaimsComponent implements OnInit {
   required_docs: any;
   ngOnInit(): void {
     this.getLibraries();
-    console.log(this.selected_pHospitalTransmittalNo);
-    console.log(this.caserate_code);
     this.required_docs = this['arr_'+this.caserate_code];
-    console.log(this.required_docs)
   }
 }
