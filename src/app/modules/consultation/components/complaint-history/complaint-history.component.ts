@@ -97,6 +97,7 @@ export class ComplaintHistoryComponent implements OnInit, OnChanges {
       (data: any) => {
         // console.log(data.data)
         this.complaints = data.data;
+        this.loadSelected();
         this.show_form = true;
       }
     );
@@ -145,10 +146,7 @@ export class ComplaintHistoryComponent implements OnInit, OnChanges {
   ngOnChanges(changes){
     this.show_content = this.toggle_content;
     if(this.consult_details) {
-      if(!this.complaints) {
-
-      } else {
-        // console.log('changes');
+      if(this.complaints) {
         this.loadSelected();
       }
       this.consult_notes = this.consult_details.consult_notes;
