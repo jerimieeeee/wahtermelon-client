@@ -97,6 +97,7 @@ export class ComplaintHistoryComponent implements OnInit, OnChanges {
       (data: any) => {
         // console.log(data.data)
         this.complaints = data.data;
+        this.loadSelected();
         this.show_form = true;
       }
     );
@@ -112,7 +113,7 @@ export class ComplaintHistoryComponent implements OnInit, OnChanges {
     this.possible_gbv_case = false;
     this.have_open_gbv = false;
     let selected_complaints = [];
-    // console.log(this.consult_details);
+    console.log(this.consult_details);
     if(this.consult_details.consult_notes && this.consult_details.consult_notes.complaints){
       Object.entries(this.consult_details.consult_notes.complaints).forEach(([key, value], index) => {
         let val: any = value;
