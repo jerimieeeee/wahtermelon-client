@@ -113,7 +113,7 @@ export class ComplaintHistoryComponent implements OnInit, OnChanges {
     this.possible_gbv_case = false;
     this.have_open_gbv = false;
     let selected_complaints = [];
-    console.log(this.consult_details);
+    // console.log(this.consult_details);
     if(this.consult_details.consult_notes && this.consult_details.consult_notes.complaints){
       Object.entries(this.consult_details.consult_notes.complaints).forEach(([key, value], index) => {
         let val: any = value;
@@ -146,10 +146,7 @@ export class ComplaintHistoryComponent implements OnInit, OnChanges {
   ngOnChanges(changes){
     this.show_content = this.toggle_content;
     if(this.consult_details) {
-      if(!this.complaints) {
-
-      } else {
-        // console.log('changes');
+      if(this.complaints) {
         this.loadSelected();
       }
       this.consult_notes = this.consult_details.consult_notes;
