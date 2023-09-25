@@ -30,7 +30,7 @@ export class HouseholdProfilingComponent implements OnChanges{
 
   exportAsExcel: ExportAsConfig = {
     type: 'xlsx',
-    elementIdOrContent: 'catalystForm',
+    elementIdOrContent: 'profilingReport',
     options: {
 
     }
@@ -38,7 +38,7 @@ export class HouseholdProfilingComponent implements OnChanges{
 
   exportAsPdf: ExportAsConfig = {
     type: 'pdf',
-    elementIdOrContent: 'catalystForm',
+    elementIdOrContent: 'profilingReport',
     options: {
       image: { type: 'jpeg', quality: 1 },
       html2canvas:  { scale: 3},
@@ -54,13 +54,13 @@ export class HouseholdProfilingComponent implements OnChanges{
 
   exportP() {
     this.pdf_exported = true;
-    this.exportAsService.save(this.exportAsPdf, 'GBV Medical').subscribe(() => {
+    this.exportAsService.save(this.exportAsPdf, 'Household Profiling').subscribe(() => {
       // save started
     });
   }
 
   exportX() {
-    this.exportAsService.save(this.exportAsExcel, 'GBV Report').subscribe(() => {
+    this.exportAsService.save(this.exportAsExcel, 'Household Profiling').subscribe(() => {
       // save started
     });
   }
@@ -75,6 +75,6 @@ export class HouseholdProfilingComponent implements OnChanges{
 
   ngOnChanges(): void {
     this.stats = this.report_data;
-    console.log(this.stats, 'test report data')
+    console.log(this.stats);
   }
 }

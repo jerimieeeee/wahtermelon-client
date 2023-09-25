@@ -214,7 +214,7 @@ export class CaserateComponent implements OnInit {
   }
 
   loadLibraries() {
-    this.http.get('users', {params: {attendant_flag: this.program_name}}).subscribe({
+    this.http.get('users', {params: {attendant_flag: this.program_name, per_page: 'all'}}).subscribe({
       next: (data: any) => {
         this.attendant = data.data;
         this.getCaserate();

@@ -55,7 +55,7 @@ export class HeaderComponent implements OnInit {
       icon: faUser
     },
     {
-      name: 'Settings',
+      name: 'Admin',
       location: 'admin',
       icon: faGear
     },

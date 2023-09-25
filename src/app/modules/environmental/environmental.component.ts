@@ -7,6 +7,7 @@ import { environmentalForm } from './environmentalForm';
 import { formatDate } from '@angular/common';
 import { faSave } from '@fortawesome/free-regular-svg-icons';
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
+import { dateHelper } from 'app/shared/services/date-helper.service';
 
 @Component({
   selector: 'app-environmental',
@@ -19,7 +20,7 @@ export class EnvironmentalComponent implements OnInit {
 
   environmentalForm:FormGroup=environmentalForm();
 
-  household_id: string;
+  household_folder_id: string;
   year = formatDate(new Date(), 'yyyy', 'en');
   years = [];
   selected_year: number;
@@ -74,34 +75,32 @@ export class EnvironmentalComponent implements OnInit {
   onSubmit(){
     this.is_saving = true;
 
-    let effectivity_year = formatDate(this.environmentalForm.value.registration_date, 'yyyy', 'en');
+    let effectivity_year = formatDate(this.environmentalForm.value.registration_date, 'yyyy', 'en', 'Asia/Manila');
     this.environmentalForm.patchValue({effectivity_year: effectivity_year});
 
     this.http.post('households/environmental/records', this.environmentalForm.value).subscribe({
       next: () => {
         this.toastr.success('Successfully recorded!', 'Environmental');
+        this.loadEnvironmental();
         this.is_saving = false;
       },
       error: err => this.http.showError(err.error.message, 'Environmental')
     });
   }
 
-  loadSelectedYear() {
+  environmental_list: any;
+
+  loadEnvironmental(){
     this.show_form = false;
     let params = {
-      effectivity_year: this.selected_year,
-      household_id: this.household_id
+      household_folder_id: this.household_folder_id
     }
 
     this.http.get('households/environmental/records', {params}).subscribe({
       next: (data: any) => {
-        this.selected_profile = data.data[0];
-        if(this.selected_profile && Object.keys(this.selected_profile).length > 0) {
-          this.environmentalForm.patchValue({...this.selected_profile});
-        } else {
-          this.emptyForm();
-        }
-        this.show_form = true;
+        console.log(data)
+        this.environmental_list = data.data;
+        this.loadSelectedYear();
       },
       error: err => {
         this.http.showError(err.error.message, 'Household Profile');
@@ -110,18 +109,50 @@ export class EnvironmentalComponent implements OnInit {
     })
   }
 
+  loadSelectedYear() {
+    let env_found = this.checkExist();
+
+    this.selected_profile = env_found;
+
+    if(this.selected_profile && Object.keys(this.selected_profile).length > 0) {
+      this.environmentalForm.patchValue({...this.selected_profile});
+      this.environmentalForm.patchValue({
+        validation_date: this.environmentalForm.value.validation_date ? this.dateHelper.dateFormat(this.environmentalForm.value.validation_date) : null,
+        arsenic_date: this.environmentalForm.value.arsenic_date ? this.dateHelper.dateFormat(this.environmentalForm.value.arsenic_date) : null
+      });
+    } else {
+      this.emptyForm();
+    }
+    this.show_form = true;
+  }
+
+  checkExist(year?): boolean {
+    if(year) {
+      let env = this.environmental_list.find((obj) => {
+        return Number(obj.effectivity_year) === Number(year);
+      });
+
+      return env ? true : false;
+      console.log(env)
+    } else {
+      return this.environmental_list.find((obj) => {
+        return Number(obj.effectivity_year) === Number(this.selected_year);
+      });
+    }
+  }
+
   createForm(){
     this.show_form = false;
     this.selected_year = Number(this.year);
 
     this.emptyForm();
-    this.loadSelectedYear();
+    this.loadEnvironmental();
   }
 
   emptyForm(){
     this.environmentalForm = this.formBuilder.group({
       id: [null],
-      household_folder_id: [this.household_id, Validators.required],
+      household_folder_id: [this.household_folder_id, Validators.required],
       number_of_families: [null, Validators.required],
       registration_date: [null, Validators.required],
       effectivity_year: [null],
@@ -176,7 +207,8 @@ export class EnvironmentalComponent implements OnInit {
   constructor(
     private http: HttpService,
     private toastr: ToastrService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private dateHelper: dateHelper
   ) {
     for(let i = Number(this.year); i > 2017; i--){
       this.years.push(i);
@@ -184,7 +216,7 @@ export class EnvironmentalComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.household_id = this.http.getUrlParams().patient_id; //url params is the id of households, the naming convention on the function just returns it as patient id
+    this.household_folder_id = this.http.getUrlParams().patient_id; //url params is the id of households, the naming convention on the function just returns it as patient id
     this.loadLibraries();
   }
 }

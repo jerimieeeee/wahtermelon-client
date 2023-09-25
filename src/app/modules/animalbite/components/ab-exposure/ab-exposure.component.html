@@ -52,7 +52,7 @@
             </select>
           </div>
 
-          <div class="col-span-3" *ngIf="abExposureForm.value.animal_type_id === 1" >
+          <div class="col-span-3" *ngIf="abExposureForm.value.animal_type_id === 5" >
             <label for="animal_type_remarks">Please specify Type of Animal</label>
             <input type="text" name="animal_type_remarks" id="animal_type_remarks" formControlName="animal_type_remarks" class="input">
           </div>
@@ -115,7 +115,7 @@
         </div>
       </div>
       <!-- *ngIf="!selected_tb_consult || selected_tb_consult.treatment_done === 0" -->
-      <div *ngIf="!selected_ab_consult?.date_outcome" class="flex justify-center mt-5" >
+      <div class="flex justify-center mt-5" >
         <button [disabled]="is_saving || abExposureForm.invalid" type="submit" class="btn-save mr-5 mt-4">
           <fa-icon [icon]="is_saving ? faCircleNotch : faSave" [spin]="is_saving ? true : false" class="mr-2"></fa-icon>
           {{ abExposureForm.value.id ? (is_saving ? 'Updating' : 'Update') : (is_saving ? 'Saving' : 'Save') }}

@@ -47,7 +47,6 @@ export class EclaimsComponent implements OnInit {
 
     this.http.get('eclaims/eclaims-upload', {params}).subscribe({
       next:(data:any) => {
-        // console.log(data);
         this.eclaims_list = data.data;
 
         if(Object.keys(this.eclaims_list).length > 0) {
@@ -66,7 +65,6 @@ export class EclaimsComponent implements OnInit {
   }
 
   getCaserate(eclaims_id_arr?) {
-    console.log(eclaims_id_arr)
     let params = {
       program_id: this.program_id,
       program_desc: this.program_name
@@ -90,7 +88,6 @@ export class EclaimsComponent implements OnInit {
   }
 
   checkSeries(data){
-    console.log(data)
     this.is_refreshing = true;
 
     let params = {
@@ -100,14 +97,12 @@ export class EclaimsComponent implements OnInit {
 
     this.http.post('eclaims/get-claims-map', params).subscribe({
       next: (resp: any) => {
-        console.log(resp);
         data.pClaimSeriesLhio = resp.MAPPING.pClaimSeriesLhio;
         data.pStatus = 'IN PROCESS';
 
         this.updateUploadClaim(data);
       },
       error: err => {
-        console.log(err);
         this.is_refreshing = false;
         this.toastr.error(err.error.message, 'Series LHIO', {
           closeButton: true,
@@ -138,7 +133,6 @@ export class EclaimsComponent implements OnInit {
   }
 
   iterateMessage(resp, data, type) {
-    console.log(resp);
     data.pStatus = resp.CLAIM.pStatus;
     let message: string;
 
@@ -149,11 +143,9 @@ export class EclaimsComponent implements OnInit {
         break;
       }
       case 'WITH CHEQUE': {
-        console.log(resp.CLAIM.PAYMENT.PAYEE);
         message = 'As of: '+resp.pAsOf+ ' '+resp.pAsOfTime;
 
         Object.entries(resp.CLAIM.PAYMENT.PAYEE).forEach(([key, value]:any, index) => {
-          console.log(value)
           message = 'As of: '+resp.pAsOf+ ' '+resp.pAsOfTime;
           message += '<br />Voucher No: '+value.pVoucherNo;
           message += '<br />Check Amount: '+value.pCheckAmount;
@@ -208,7 +200,6 @@ export class EclaimsComponent implements OnInit {
   }
 
   toggleModal(name, eclaims?) {
-    console.log(eclaims)
     this.selected_pHospitalTransmittalNo = eclaims?.pHospitalTransmittalNo ?? null;
     this.selected_caserate_code = eclaims?.caserate.caserate_code ?? null;
     this.selected_ticket_number = eclaims?.pReceiptTicketNumber ?? null;
@@ -229,6 +220,9 @@ export class EclaimsComponent implements OnInit {
 
     if(this.patient_philhealth) {
       this.getCreds();
+    } else {
+      this.http.showError('No PhilHealth Details', 'EClaims');
+      this.show_form = true;
     }
   }
 

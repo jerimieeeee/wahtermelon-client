@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 
 import { EclaimsRoutingModule } from './eclaims-routing.module';
 import { EclaimsComponent } from './eclaims.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -11,7 +13,9 @@ import { EclaimsComponent } from './eclaims.component';
   ],
   imports: [
     CommonModule,
-    EclaimsRoutingModule
+    EclaimsRoutingModule,
+    FontAwesomeModule,
+    FormsModule
   ]
 })
 export class EclaimsModule { }

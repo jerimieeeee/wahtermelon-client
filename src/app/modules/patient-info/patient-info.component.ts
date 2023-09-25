@@ -132,7 +132,7 @@ export class PatientInfoComponent implements OnInit {
       this.http.get('patient/'+this.active_loc_id.patient_id).subscribe({
         next: (data: any) => {
           this.patient_info = data.data;
-          console.log(this.patient_info);
+          // console.log(this.patient_info);
           this.show_form = true;
           this.http.setPatientInfo(this.patient_info);
           this.loadData('all');

@@ -8,7 +8,7 @@
       <span class="rounded-t-md m-0 p-2 font-semibold text-gray-50 bg-amber-500 flex justify-between" [ngClass]="{'rounded-b' : !show_content}">
         Prescriptions
         <div>
-          <button *ngIf="with_credentials && prescriptions" type="button" class="ml-3 text-sm bg-white text-green-500 px-3 rounded-full" (click)="toggleModal()">
+          <button *ngIf="consult_details?.is_konsulta && with_credentials && prescriptions" type="button" class="ml-3 text-sm bg-white text-green-500 px-3 rounded-full" (click)="toggleModal()">
             <fa-icon [icon]="faReceipt" class="pr-1"></fa-icon>
             epress
           </button>
@@ -39,7 +39,8 @@
         <tbody>
           <tr *ngFor="let prescription of prescriptions; trackBy:identify" class="bg-white border-b last:border-0 text-sm align-top">
             <td class="py-4 px-3">
-              {{ prescription.konsulta_medicine ?  prescription.konsulta_medicine.desc :prescription.added_medicine}}
+              {{ prescription.konsulta_medicine ?  prescription.konsulta_medicine.desc : prescription.added_medicine }}
+              {{ prescription.medicine ? prescription.medicine.gen_name : '' }} <br />
             </td>
             <td scope="row" class="py-4 px-3 font-medium text-gray-900">
               {{ prescription.dosage_quantity }} {{ prescription.unit_of_measurement.desc }} {{ prescription.regimen.desc }}

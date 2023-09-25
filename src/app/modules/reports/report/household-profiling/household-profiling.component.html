@@ -1,6 +1,6 @@
 <div class="grid grid-cols-1 w-full">
   <div class="flex justify-between w-full text-blue-500 font-semibold text-lg  p-3" >
-    <span>GBV Report</span>
+    <span>Household Profiling</span>
     <button [disabled]="pdf_exported" type="button" class="text-2xl mr-5 text-green-600 disabled:text-gray-600" (click)="exportX()">
       <fa-icon [icon]="faFileExcel"></fa-icon>
     </button>
@@ -42,10 +42,10 @@
 
               <tr>
                 <td>Family</td>
+                <td>{{ stats.summary_household_family_4ps.length }}</td>
+                <td>{{ stats.summary_household_family_non_4ps.length }}</td>
                 <td>-</td>
-                <td>-</td>
-                <td>-</td>
-                <td>-</td>
+                <td>{{ stats.summary_household_family_4ps.length + stats.summary_household_family_non_4ps.length }}</td>
                 <td>Level II</td>
                 <td>{{ stats.water_source_level2_4ps.length }}</td>
                 <td>{{ stats.water_source_level2_non_4ps.length }}</td>
@@ -68,7 +68,7 @@
 
               <tr>
                 <td class="bg-slate-200" colspan="5">Sanitary Toilet Facility</td>
-                <td>Unkown</td>
+                <td>Unknown</td>
                 <td>-</td>
                 <td>-</td>
                 <td>-</td>
@@ -81,7 +81,7 @@
                 <td>{{ stats.sanitary_toilet_facility_1_non_4ps.length }}</td>
                 <td>-</td>
                 <td>{{ stats.sanitary_toilet_facility_1_4ps.length + stats.sanitary_toilet_facility_1_non_4ps.length}}</td>
-                <td class="bg-slate-200" colspan="5" class="text-center">Philhealth Category</td>
+                <td colspan="5" class="bg-slate-200 text-center">PhilHealth Category</td>
               </tr>
 
               <tr>
@@ -100,7 +100,7 @@
                 <td>{{ stats.sanitary_toilet_facility_3_non_4ps.length }}</td>
                 <td>-</td>
                 <td>{{ stats.sanitary_toilet_facility_3_4ps.length + stats.sanitary_toilet_facility_3_non_4ps.length}}</td>
-                <td colspan="2">Direct Contributors</td>
+                <td colspan="2">Indirect Contributors</td>
                 <td colspan="3">{{ stats.philhealth_indirect_contributors.length }}</td>
               </tr>
 
@@ -194,7 +194,7 @@
               </tr>
 
               <tr>
-                <td>Elementay Student</td>
+                <td>Elementary Student</td>
                 <td>{{ stats.elementary_student_4ps.length }}</td>
                 <td>{{ stats.elementary_student_non_4ps.length }}</td>
                 <td>-</td>
@@ -223,7 +223,7 @@
                 <td colspan="2">Christian</td>
                 <td>{{ stats.christian.length }}</td>
                 <td>Unknown</td>
-                <td>-</td>
+                <td>{{ stats.unknown.length }}</td>
               </tr>
 
               <tr>
@@ -400,7 +400,7 @@
                 <td>{{ stats.family_planning_method_iud_non_4ps.length }}</td>
                 <td>-</td>
                 <td>{{ stats.family_planning_method_iud_4ps.length + stats.family_planning_method_iud_non_4ps.length }}</td>
-                <td colspan="2">Hypertension</td>
+                <td colspan="2">Diabetes Melitus</td>
                 <td>{{ stats.diabetes_male.length }}</td>
                 <td>{{ stats.diabetes_female.length }}</td>
                 <td>{{ stats.diabetes_male.length + stats.diabetes_female.length }}</td>
@@ -424,7 +424,7 @@
                 <td>{{ stats.family_planning_method_lam_non_4ps.length }}</td>
                 <td>-</td>
                 <td>{{ stats.family_planning_method_lam_4ps.length + stats.family_planning_method_lam_non_4ps.length }}</td>
-                <td colspan="2">Tuberculosis</td>
+                <td colspan="2">Others</td>
                 <td>{{ stats.others_male.length }}</td>
                 <td>{{ stats.others_female.length }}</td>
                 <td>{{ stats.others_male.length + stats.others_female.length }}</td>
