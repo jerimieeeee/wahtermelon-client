@@ -12,7 +12,7 @@
     </div>
 
     <div *ngIf="visit_list?.length >= 1" class="flex">
-      <div [@halfFull]="show_details ? 'half' : 'full'" class="mr-2 flex-auto h-[900px] overflow-y-auto">
+      <div [@halfFull]="show_details ? 'half' : 'full'" class="mr-2 flex-auto h-[600px] overflow-y-auto">
         <div class="last:border-0 border-b border-slate-200 pb-2 h-" *ngFor="let visit of visit_list" >
           <div class="grid grid-cols-8 gap-2 mt-2">
             <div class="col-span-2 text-sm font-semibold h-full">
@@ -43,7 +43,7 @@
         </div>
       </div>
 
-      <div [@myInsertRemoveTrigger] *ngIf="show_details" class="my-2 w-1/2">
+      <div [@myInsertRemoveTrigger] *ngIf="show_details" class="my-2 w-1/2 h-[600px] overflow-y-auto">
         <app-visit-details *ngIf="user_allowed"  [selected_visit]="selected_visit" [latest_vitals]="latest_vitals"></app-visit-details>
         <div *ngIf="!user_allowed" >
           <span class="flex justify-between align-middle bg-blue-500 w-full p-2 font-semibold text-sm mb-1 text-white rounded-md">
@@ -57,19 +57,40 @@
           </div>
         </div>
       </div>
-
-      <!-- <div [@myInsertRemoveTrigger] *ngIf="show_details && !user_allowed" class="my-2 w-1/2">
-        <span class="flex justify-between align-middle bg-blue-500 w-full p-2 font-semibold text-sm mb-1 text-white rounded-md">
-          <span class="py-1">VISIT DETAILS</span>
-        </span>
-        <div class="flex flex-col justify-center pt-5 text-sm">
-          <span class="mx-auto italic text-center">
-            This visit record is from other facility. <br />
-            You are not allowed to view this record.
-          </span>
-        </div>
-      </div> -->
     </div>
+
+    <div *ngIf="total >= 1">
+      <div class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
+        <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+          <div>
+            <p class="text-sm text-gray-700">
+              Showing <span class="font-medium">{{ from }}</span>
+              to <span class="font-medium">{{ to }}</span>
+              of <span class="font-medium">{{ total }}</span> results
+            </p>
+          </div>
+          <div *ngIf="total >= 11">
+            <nav class="relative z-0 inline-flex shadow-sm -space-x-px" aria-label="Pagination">
+              <button [disabled]="current_page===1" (click)="loadData(1)" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 enabled:bg-white disabled:bg-gray-300 text-sm font-medium text-gray-500 hover:bg-gray-50">
+                <fa-icon [icon]="faAnglesLeft" class="block h-15 w-15 text-gray-500 pr-1"></fa-icon>
+              </button>
+
+                <button [disabled]="current_page===1" (click)="loadData(current_page-1)" class="relative inline-flex items-center px-4 py-2 border border-gray-300 enabled:bg-white disabled:bg-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
+                  <fa-icon [icon]="faChevronLeft" class="block h-15 w-15 text-gray-500 pr-1"></fa-icon>Previous
+                </button>
+                <button [disabled]="current_page===last_page" (click)="loadData(current_page+1)" class="relative inline-flex items-center px-4 py-2 border border-gray-300 enabled:bg-white disabled:bg-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
+                  Next<fa-icon [icon]="faChevronRight" class="h-5 w-5 text-gray-500"></fa-icon>
+                </button>
+
+              <button [disabled]="current_page===last_page" (click)="loadData(last_page)" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 enabled:bg-white disabled:bg-gray-300 text-sm font-medium text-gray-500 hover:bg-gray-50">
+                <fa-icon [icon]="faAnglesRight" class="h-5 w-5 text-gray-500"></fa-icon>
+              </button>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>
 

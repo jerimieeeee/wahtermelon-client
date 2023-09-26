@@ -6,7 +6,7 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { filter, tap } from "rxjs/operators";
 import { HttpService } from 'app/shared/services/http.service';
 import { formatDate } from '@angular/common';
-import { faCircle, faFolder, faStethoscope } from '@fortawesome/free-solid-svg-icons';
+import { faAnglesLeft, faAnglesRight, faChevronLeft, faChevronRight, faCircle, faFolder, faStethoscope } from '@fortawesome/free-solid-svg-icons';
 import { faEye, faFolderOpen } from '@fortawesome/free-regular-svg-icons';
 import { VitalsChartsService } from 'app/shared/services/vitals-charts.service';
 import { NameHelperService } from 'app/shared/services/name-helper.service';
@@ -23,6 +23,10 @@ export class PatientItrComponent implements OnInit {
   faFolderOpen = faFolderOpen;
   faFolder = faFolder;
   faStethoscope = faStethoscope;
+  faChevronRight = faChevronRight;
+  faChevronLeft = faChevronLeft;
+  faAnglesLeft = faAnglesLeft;
+  faAnglesRight = faAnglesRight;
 
   show_details:boolean = false;
 
@@ -32,15 +36,26 @@ export class PatientItrComponent implements OnInit {
   selected_id: number;
   patient_id: string;
 
-  loadData(){
+
+  per_page: number = 10;
+  current_page: number;
+  last_page: number;
+  from: number;
+  to: number;
+  total: number;
+
+  loadData(page? : number){
     let patient_id = this.route.snapshot.paramMap.get('id');
+
+    if(page) this.show_details = false;
 
     if(this.patient_id !== patient_id){
       let params = {
         patient_id: patient_id,
-        per_page: '10',
+        per_page: this.per_page,
         sort: '-consult_date',
-        disable_filter: 1
+        disable_filter: 1,
+        page: page ?? 1
       }
       this.getVisitList(params);
     }
@@ -51,6 +66,12 @@ export class PatientItrComponent implements OnInit {
       next: (data: any) => {
         // console.log(data)
         this.visit_list = data.data;
+
+        this.current_page = data.meta.current_page;
+        this.last_page = data.meta.last_page;
+        this.from = data.meta.from;
+        this.to = data.meta.to;
+        this.total = data.meta.total;
       },
       error: err => console.log(err),
     })
