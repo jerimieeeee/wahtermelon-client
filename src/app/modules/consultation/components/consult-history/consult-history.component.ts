@@ -24,7 +24,7 @@ export class ConsultHistoryComponent implements OnInit, OnChanges {
   consult_id: string;
   visit_list: any;
 
-  per_page: number = 15;
+  per_page: number = 5;
   current_page: number;
   last_page: number;
   from: number;

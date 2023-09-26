@@ -89,7 +89,7 @@
         </tbody>
       </table>
 
-      <div *ngIf="visit_list?.length >= 6">
+      <div *ngIf="visit_list?.length >= 1">
         <div class="bg-white px-4 py-4 flex items-center justify-between border-t border-gray-200 sm:px-6">
           <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
             <div>
@@ -99,7 +99,7 @@
                 of <span class="font-medium">{{ total - 1 }}</span> results
               </p>
             </div>
-            <div>
+            <div *ngIf="visit_list?.length >= 6">
               <nav class="relative z-0 inline-flex shadow-sm -space-x-px" aria-label="Pagination">
                 <button [disabled]="current_page===1" (click)="loadPreviousVisit(1)" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 enabled:bg-white disabled:bg-gray-300 text-sm font-medium text-gray-500 hover:bg-gray-50">
                   <fa-icon [icon]="faAnglesLeft" class="block h-15 w-15 text-gray-500 pr-1"></fa-icon>
