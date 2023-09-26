@@ -24,7 +24,7 @@ export class ConsultHistoryComponent implements OnInit, OnChanges {
   consult_id: string;
   visit_list: any;
 
-  per_page: number = 5;
+  per_page: number = 15;
   current_page: number;
   last_page: number;
   from: number;
@@ -37,13 +37,14 @@ export class ConsultHistoryComponent implements OnInit, OnChanges {
       per_page: this.per_page,
       sort: '-consult_date',
       pt_group: 'cn',
-      page: page
+      page: page,
+      not_consult_id: this.consult_id
     };
 
     this.http.get('consultation/records',{params}).subscribe({
       next: (data: any) => {
         this.visit_list = data.data;
-        console.log(data.data);
+        // console.log(data.data);
         this.current_page = data.meta.current_page;
         this.last_page = data.meta.last_page;
         this.from = data.meta.from;
