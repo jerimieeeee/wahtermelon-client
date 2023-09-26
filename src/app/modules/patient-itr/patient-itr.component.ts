@@ -47,7 +47,7 @@ export class PatientItrComponent implements OnInit {
   loadData(page? : number){
     let patient_id = this.route.snapshot.paramMap.get('id');
 
-    if(page) this.show_details = !this.show_details;
+    if(page) this.show_details = false;
 
     if(this.patient_id !== patient_id){
       let params = {
