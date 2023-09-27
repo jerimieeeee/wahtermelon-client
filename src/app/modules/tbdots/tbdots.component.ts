@@ -83,6 +83,7 @@ export class TbdotsComponent implements OnInit {
     this.http.get('consultation/records', {params}).subscribe({
       next: (data: any) => {
         this.consult_details = data.data[0];
+        console.log(this.consult_details)
         this.getPatientTbHistory();
       },
       error: err => console.log(err)
@@ -97,6 +98,7 @@ export class TbdotsComponent implements OnInit {
   user_facility: string;
   ngOnInit(): void {
     this.user_facility = this.http.getUserFacility();
+
     this.patient_id = this.route.snapshot.paramMap.get('id');
     this.consult_id = this.route.snapshot.paramMap.get('consult_id');
 
