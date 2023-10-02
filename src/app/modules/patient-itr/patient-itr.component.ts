@@ -1,11 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ChartComponent } from "ng-apexcharts";
 import { openCloseTrigger } from './declarations/animation';
-import { BmiChart, ChartOptions, WeightChart } from './declarations/chart-options';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { filter, tap } from "rxjs/operators";
 import { HttpService } from 'app/shared/services/http.service';
-import { formatDate } from '@angular/common';
 import { faAnglesLeft, faAnglesRight, faChevronLeft, faChevronRight, faCircle, faFolder, faStethoscope } from '@fortawesome/free-solid-svg-icons';
 import { faEye, faFolderOpen } from '@fortawesome/free-regular-svg-icons';
 import { VitalsChartsService } from 'app/shared/services/vitals-charts.service';

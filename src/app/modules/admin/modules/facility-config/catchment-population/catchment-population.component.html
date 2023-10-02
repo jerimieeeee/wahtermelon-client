@@ -19,6 +19,7 @@
             <th class="w-36">OPT</th>
             <th class="w-36">WRA</th>
             <th class="w-36">HOUSEHOLD</th>
+            <th class="w-36">ZOD</th>
           </tr>
         </thead>
         <tbody *ngIf="catchment_barangays[selected_year]">
@@ -39,6 +40,9 @@
             </td>
             <td>
               <input class="w-36" type="number" [(ngModel)]="catchment_barangays[selected_year].data[i]['household']" class="input" />
+            </td>
+            <td class="flex justify-center pt-3">
+              <input type="checkbox" [(ngModel)]="catchment_barangays[selected_year].data[i]['zod']" class="input-checkbox" />
             </td>
           </tr>
           <tr *ngIf="catchment_barangays[selected_year].data.length === 0">
