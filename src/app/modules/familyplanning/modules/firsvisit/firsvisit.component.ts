@@ -40,16 +40,17 @@ export class FirsvisitComponent implements OnInit {
   });
 
   onSubmit(){
+    console.log(this.visitForm.value, 'display visit details')
     this.is_saving = true;
     this.http.post('family-planning/fp-records', this.visitForm.value).subscribe({
       next: (data: any) => {
-        this.toastr.success('First Visit was ' + (this.visitForm.value ? 'updated' : 'saved') + ' successuly', 'Success')
+        this.toastr.success('First Visit was ' + (this.visitForm.value ? 'updated' : 'saved') + ' successfuly', 'Success')
         this.is_saving = false;
         this.showButton = !this.showButton;
         this.loadFP.emit();
         this.reloadData();
-        console.log(data, 'display visit details')
-        console.log(this.fp_visit_history, 'checker FV 2')
+      
+        // console.log(this.fp_visit_history, 'checker FV 2')
          },
       complete: () => {
 
@@ -69,6 +70,7 @@ export class FirsvisitComponent implements OnInit {
       no_of_living_children_desired: ['', [Validators.required, Validators.minLength(1)]],
       birth_interval_desired: ['', [Validators.required, Validators.minLength(1)]],
       average_monthly_income: ['', [Validators.required, Validators.minLength(1)]],
+      // average_monthly_income: ['', [Validators.required, Validators.minLength(1), Validators.pattern("^[0-9,;]+$")]],
     });
 
     this.loadFPDetails();
@@ -84,7 +86,7 @@ export class FirsvisitComponent implements OnInit {
       next: (data: any) => {
         this.selected_fp_consult = data.data[0];
         this.updateSelectedFp.emit(this.selected_fp_consult);
-        console.log(this.selected_fp_consult, 'check mo selected')
+        // console.log(this.selected_fp_consult, 'check mo selected')
       },
       error: err => console.log(err)
     });
@@ -94,7 +96,14 @@ export class FirsvisitComponent implements OnInit {
 
     if(this.fp_visit_history) {
       this.visitForm.patchValue({...this.fp_visit_history});
+      // this.visitForm.patchValue({id: this.fp_visit_history.id});
+      // this.visitForm.patchValue({patient_id: this.patient_id});
+      // this.visitForm.patchValue({no_of_living_children_desired: this.fp_visit_history.birth_interval_desired});
+      // this.visitForm.patchValue({no_of_living_children_actual: this.fp_visit_history.no_of_living_children_actual});
+      // this.visitForm.patchValue({birth_interval_desired: this.fp_visit_history.birth_interval_desired});
+      // this.visitForm.patchValue({average_monthly_income: parseFloat(this.fp_visit_history.average_monthly_income).toLocaleString()});
       this.show_form = true;
+      // console.log(this.visitForm.value)
     }
   }
 
@@ -107,6 +116,6 @@ export class FirsvisitComponent implements OnInit {
 
   ngOnInit(): void {
     this.validateForm();
-    console.log(this.fp_visit_history, 'checker FV')
+    // console.log(this.fp_visit_history, 'checker FV')
   }
 }
