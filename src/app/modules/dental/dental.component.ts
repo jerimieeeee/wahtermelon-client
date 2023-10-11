@@ -16,7 +16,7 @@ export class DentalComponent implements OnInit {
   constructor() { }
 
   switchPage(page){
-
+    this.pages = page;
   }
 
   switchTab(tab){

@@ -23,11 +23,11 @@
         [class]="module===1? 'tabs-main-true' : 'tabs-main-false' ">
         TOOTH HISTORY & CONDITION
     </button>
-    <button (click)="switchTab(2)" *ngIf="selected_dental_consult?.id" class="tabs-main w-28"
+    <button (click)="switchTab(2)" class="tabs-main w-28"
         [class]="module===3? 'tabs-main-true' : 'tabs-main-false' ">
         DIAGNOSIS
     </button>
-    <button (click)="switchTab(3)" *ngIf="selected_dental_consult?.id" class="tabs-main w-28"
+    <button (click)="switchTab(3)" class="tabs-main w-28"
         [class]="module===3? 'tabs-main-true' : 'tabs-main-false' ">
         TREATMENT
     </button>
@@ -103,6 +103,13 @@
   </table>
 </div>
 
+<div *ngIf="pages === 2 && module === 1">
+  <app-history></app-history>
+
+  <app-condition></app-condition>
+
+  <app-services></app-services>
+</div>
 <!-- <app-casefindings *ngIf="pages === 2 && module === 1"
   [patient_id]="patient_id"
   [selected_dental_consult]="selected_dental_consult"

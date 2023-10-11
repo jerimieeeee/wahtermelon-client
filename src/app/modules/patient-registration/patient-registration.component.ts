@@ -322,7 +322,7 @@ export class PatientRegistrationComponent implements OnInit {
   loadPatient(id){
     this.http.get('patient/'+id).subscribe({
       next: (data: any) => {
-        // console.log(data)
+        console.log(data)
         this.patientForm.patchValue({...data.data});
         this.patientForm.patchValue({
           birthdate: formatDate(data.data.birthdate,'yyyy-MM-dd', 'en', 'Asia/Manila')
@@ -338,7 +338,7 @@ export class PatientRegistrationComponent implements OnInit {
           });
         }
 
-        console.log(this.patientForm.value);
+        // console.log(this.patientForm.value);
         this.patient_to_update = data.data.id;
         this.button_function = 'Update';
         this.orig_data = data.data;
