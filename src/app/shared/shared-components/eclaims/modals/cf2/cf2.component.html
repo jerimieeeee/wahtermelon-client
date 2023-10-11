@@ -122,8 +122,8 @@
 
             <!-- PROFESSIONAL -->
             <span class="absolute top-[352mm] left-[35mm] w-[17mm] tracking-[0.4em]">{{ eclaimsForm.value.attendant_accreditation_code|slice:0:4 }}</span>
-            <span class="absolute top-[352mm] left-[55mm] w-[29.8mm] tracking-[0.5em]">{{ eclaimsForm.value.attendant_accreditation_code|slice:4:11 }}</span>
-            <span class="absolute top-[352mm] left-[87.5mm] w-[4.5mm]">{{ eclaimsForm.value.attendant_accreditation_code|slice:11:12 }}</span>
+            <span class="absolute top-[352mm] left-[55mm] w-[29.8mm] tracking-[0.5em]">{{ eclaimsForm.value.attendant_accreditation_code|slice:5:12 }}</span>
+            <span class="absolute top-[352mm] left-[87.5mm] w-[4.5mm]">{{ eclaimsForm.value.attendant_accreditation_code|slice:13:14 }}</span>
             <span class="absolute top-[358.5mm] left-[20mm] w-[83mm]">{{ eclaimsForm.value.attendant_last_name }}, {{ eclaimsForm.value.attendant_first_name }} {{ eclaimsForm.value.attendant_middle_name }} {{ eclaimsForm.value.attendant_suffix_name!=='NA' ? eclaimsForm.value.attendant_suffix_name : '' }}</span>
             <span class="absolute top-[368mm] left-[44mm] w-[8.7mm] tracking-[0.45em]">{{ eclaimsForm.value.attendant_sign_date|date:'MM' }}</span>
             <span class="absolute top-[368mm] left-[55mm] w-[8.7mm] tracking-[0.45em]">{{ eclaimsForm.value.attendant_sign_date|date:'dd' }}</span>
