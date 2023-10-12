@@ -49,7 +49,7 @@ export class MenstrualModalComponent implements OnInit, OnChanges {
       this.menstrualForm = this.formBuilder.nonNullable.group({
         patient_id: [this.patient_info.id],
         menarche: [null],
-        lmp: [null, Validators.required],
+        lmp: [null],
         period_duration: [null],
         cycle: [null],
         pads_per_day: [null],
