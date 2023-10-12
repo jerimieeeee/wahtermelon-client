@@ -22,6 +22,7 @@ import { SharedComponentsModule } from 'app/shared/shared-components/shared-comp
 import { FpchartModalComponent } from './modules/fpchart/fpchart-modal/fpchart-modal.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { CaserateComponent } from 'app/shared/shared-components/eclaims/components/caserate/caserate.component';
+import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 
 @NgModule({
   declarations: [FamilyplanningComponent, FpchartComponent, FirsvisitComponent, FppeComponent, FphxComponent, ObshxComponent, PelvicComponent, MethodsComponent, MethodsModalComponent, FpchartModalComponent,
@@ -36,7 +37,10 @@ import { CaserateComponent } from 'app/shared/shared-components/eclaims/componen
     SharedComponentsModule,
     EndVisitComponent,
     DeleteItemComponent,
-    CaserateComponent
-  ]
+    CaserateComponent,
+    NgxMaskDirective,
+    NgxMaskPipe,
+  ],
+  providers: [provideNgxMask()]
 })
 export class FamilyplanningModule { }

@@ -64,7 +64,7 @@ export class FamilyplanningComponent implements OnInit {
   selected_fp_consult: {};
   
   openFPConsult(data) {
-    console.log(data, 'test open fp consult')
+    // console.log(data, 'test open fp consult')
     this.selected_fp_consult = data;
     this.pages = 2;
   }
@@ -86,7 +86,7 @@ export class FamilyplanningComponent implements OnInit {
        this.fetching_history = false;
       },
       complete: () => {
-        console.log(this.fp_visit_history, 'display fp visit details main hsitory')
+        // console.log(this.fp_visit_history, 'display fp visit details main hsitory')
       },
       error: err => {console.log(err)
 

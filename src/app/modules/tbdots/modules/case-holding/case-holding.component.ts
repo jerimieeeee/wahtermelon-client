@@ -145,7 +145,13 @@ export class CaseHoldingComponent implements OnInit {
 
   iptDisabled = ['treatment_regimen_code', 'bacteriological_status_code', 'anatomical_site_code', 'pict_date', 'eptb_site_id', 'specific_site', 'drug_resistant_flag'];
   checkForm(){
-    if(this.caseHoldingForm.value.enroll_as_code === "IPT") {
+    this.f.eptb_site_id.disable();
+    this.f.specific_site.disable();
+    this.f.ipt_type_code.disable();
+
+    this.eptbSite();
+    this.specificSite();
+    /* if(this.caseHoldingForm.value.enroll_as_code === "IPT") {
       this.iptDisabled.forEach(element => {
           this.f[element].disable();
       });
@@ -168,7 +174,7 @@ export class CaseHoldingComponent implements OnInit {
       this.f.specific_site.disable();
       this.f.ipt_type_code.disable();
       this.f.drug_resistant_flag.disable();
-    }
+    } */
   }
 
   eptbSite(){

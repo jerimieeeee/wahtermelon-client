@@ -150,7 +150,7 @@ export class Cf2Component implements OnInit {
       pDay7ARV: formatDate(this.selected_case.abPostExposure.day7_date, 'yyyy-MM-dd', 'en', 'Asia/Manila'),
       pRIG: formatDate(this.selected_case.abPostExposure.rig_date, 'yyyy-MM-dd', 'en', 'Asia/Manila'),
       pABPOthers: formatDate(this.selected_case.abPostExposure.other_vacc_date, 'yyyy-MM-dd', 'en', 'Asia/Manila'),
-      pABPSpecify: this.selected_case.abPostExposure.remarks,
+      pABPSpecify: this.selected_case.abPostExposure.other_vacc_desc,
 
       attendant_sign_date: formatDate(this.selected_case.abPostExposure.day0_date, 'yyyy-MM-dd', 'en', 'Asia/Manila'),
       admission_date: formatDate(this.selected_case.abPostExposure.day0_date, 'yyyy-MM-dd', 'en', 'Asia/Manila'),
