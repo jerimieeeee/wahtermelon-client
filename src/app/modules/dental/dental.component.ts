@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { faCircleNotch, faDoorClosed } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-dental',
@@ -13,6 +14,8 @@ export class DentalComponent implements OnInit {
   pages: number = 1;
   module: number = 1;
 
+  faDoorClosed = faDoorClosed;
+  faCircleNotch = faCircleNotch;
   constructor() { }
 
   switchPage(page){

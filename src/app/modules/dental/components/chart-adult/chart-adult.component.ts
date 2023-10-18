@@ -63,6 +63,7 @@ export class AdultChartComponent implements OnInit {
     return false;
   }
 
+  modals: [];
   openModal(){
     this.dentalModalService.open();
   }
