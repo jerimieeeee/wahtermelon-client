@@ -182,7 +182,7 @@ export class EclaimsComponent implements OnInit {
   }
 
   getCreds(){
-    let params = { 'filter[program_code]': this.program_name  !== 'cc' ? this.program_name : 'mc' };
+    let params = { 'filter[program_code]': this.program_name  === 'cc' || this.program_name  === 'fp' ? 'mc' : this.program_name };
     this.http.get('settings/philhealth-credentials', {params}).subscribe({
       next:(data:any) => {
         if(data.data[0]) this.program_creds = data.data[0];
