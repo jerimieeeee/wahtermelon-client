@@ -11,7 +11,7 @@ export class DentalComponent implements OnInit {
   consult_details: any;
   user_facility: any;
 
-  pages: number = 1;
+  pages: number = 2;
   module: number = 1;
 
   faDoorClosed = faDoorClosed;

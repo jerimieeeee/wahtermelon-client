@@ -6,6 +6,7 @@ import { DentalModalService } from '../../services/dental-modal.service';
   styleUrls: ['./chart-adult.component.scss']
 })
 export class AdultChartComponent implements OnInit {
+  test_case: boolean = true;
   showModal: boolean = false;
   adult_tooth_conditions = [
     [
@@ -63,8 +64,10 @@ export class AdultChartComponent implements OnInit {
     return false;
   }
 
-  modals: [];
-  openModal(){
-    this.dentalModalService.open();
+  modals: any = [];
+  openModal(name: string){
+    this.modals[name] = !this.modals[name];
+    console.log(name);
+    console.log(this.modals[name]);
   }
 }
