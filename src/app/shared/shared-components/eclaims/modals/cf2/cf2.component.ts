@@ -159,8 +159,6 @@ export class Cf2Component implements OnInit {
       discharge_time: formatDate(new Date().setHours(8), 'hh:mma', 'en', 'Asia/Manila'),
     });
 
-    console.log(this.eclaimsForm.value)
-    console.log(this.selected_case.abPostExposure)
     this.getCreds();
   }
 
@@ -234,11 +232,22 @@ export class Cf2Component implements OnInit {
 
   paramsFp(){
     this.f.pICDCode.setValidators([Validators.required]);
+
+    this.eclaimsForm.patchValue({
+      pICDCode: this.eclaimsForm.value.icd10_code,
+      attendant_sign_date: formatDate(this.eclaimsForm.value.caserate_date, 'yyyy-MM-dd', 'en', 'Asia/Manila'),
+      admission_date: formatDate(this.eclaimsForm.value.caserate_date, 'yyyy-MM-dd', 'en', 'Asia/Manila'),
+      admission_time: formatDate(new Date().setHours(8), 'hh:mma', 'en', 'Asia/Manila'),
+      discharge_date: formatDate(this.eclaimsForm.value.caserate_date, 'yyyy-MM-dd', 'en', 'Asia/Manila'),
+      discharge_time: formatDate(new Date().setHours(17), 'hh:mma', 'en', 'Asia/Manila'),
+    })
+
+    this.getCreds();
   }
 
   getCreds(){
     let params = {
-      'filter[program_code]': this.program_name !== 'cc' ? this.program_name : 'mc'
+      'filter[program_code]': this.program_name === 'cc' || this.program_name === 'fp'? 'mc' : this.program_name
     }
 
     this.http.get('settings/philhealth-credentials', {params}).subscribe({
@@ -282,7 +291,7 @@ export class Cf2Component implements OnInit {
         this.paramsAb();
         break;
       }
-      case 'fb': {
+      case 'fp': {
         this.paramsFp();
         break;
       }
