@@ -101,7 +101,7 @@ export class UploadClaimsComponent implements OnInit {
 
     let params = {
       encryptedXml: this.encryptedXml,
-      program_code: this.program_name !== 'cc' ? this.program_name : 'mc'
+      program_code: this.program_name === 'cc' || this.program_name === 'fp' ? 'mc' :  this.program_name
     }
 
     //ECLAIMS SERVICES
