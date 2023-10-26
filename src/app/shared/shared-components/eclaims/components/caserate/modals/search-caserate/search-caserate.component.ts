@@ -46,7 +46,7 @@ export class SearchCaserateComponent {
   onSubmit() {
     this.caserate_result = [];
     this.is_searching = true;
-    this.searchForm.patchValue({program_code: this.program_name !== 'cc' ? this.program_name : 'mc'});
+    this.searchForm.patchValue({program_code: this.program_name === 'cc' || this.program_name === 'fp' ? 'mc' :  this.program_name});
 
     this.searchForm.patchValue({
       rvs: this.searchForm.value.rvs.toUpperCase(),

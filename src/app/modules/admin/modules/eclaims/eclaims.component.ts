@@ -102,7 +102,7 @@ export class EclaimsComponent implements OnInit {
 
     let params = {
       pReceiptTicketNumber: data.pReceiptTicketNumber,
-      program_code: data.program_desc !== 'cc' ? data.program_desc : 'mc'
+      program_code: data.program_desc === 'cc' || data.program_desc === 'fp' ? 'mc' : data.program_desc
     }
 
     this.http.post('eclaims/get-claims-map', params).subscribe({
@@ -130,7 +130,7 @@ export class EclaimsComponent implements OnInit {
 
     let params = {
       series_lhio: data.pClaimSeriesLhio,
-      program_code: data.program_desc !== 'cc' ? data.program_desc : 'mc'
+      program_code: data.program_desc === 'cc' || data.program_desc === 'fp' ? 'mc' : data.program_desc
     }
 
     this.http.post('eclaims/get-claim-status', params).subscribe({
