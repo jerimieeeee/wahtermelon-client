@@ -52,7 +52,7 @@
               <tr>
                 <th scope="col" class="py-3 px-6 text-center w-3/12">Document Type</th>
                 <th scope="col" class="py-3 px-6 text-center w-7/12">Document URL</th>
-                <!-- <th scope="col" class="py-3 px-6 text-center w-2/12">Action</th> -->
+                <th scope="col" class="py-3 px-6 text-center w-2/12">Action</th>
               </tr>
             </thead>
             <tbody *ngIf="show_form" >
@@ -64,7 +64,7 @@
                   {{ getFileName(docs.doc_url) }}
                 </td>
                 <td class="py-4 px-6 text-center w-2/12">
-                  <!-- <fa-icon (click)="toggleModal('delete-item', docs)" class="mx-0 my-0 text-rose-500 hover:cursor-pointer flex-none mr-2" [icon]="faTrash"></fa-icon> -->
+                  <fa-icon (click)="toggleModal('delete-item', docs)" class="mx-0 my-0 text-rose-500 hover:cursor-pointer flex-none mr-2" [icon]="faTrash"></fa-icon>
                 </td>
               </tr>
             </tbody>
