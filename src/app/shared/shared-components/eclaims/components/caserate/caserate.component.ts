@@ -234,17 +234,24 @@ export class CaserateComponent implements OnInit {
   prof_discount: number;
 
   computeTotal(total_name) {
+
     if(total_name === 'prof_pTotalAmount') {
+      let profWithVatExempt = this.caserateForm.value.prof_pTotalActualCharges;
+      if(this.prof_discount > 0) profWithVatExempt = this.caserateForm.value.prof_pTotalActualCharges - (this.caserateForm.value.prof_pTotalActualCharges * 12/100);
+
       this.caserateForm.patchValue({
-        prof_pDiscount: Number(this.caserateForm.value.prof_pTotalActualCharges - (this.caserateForm.value.prof_pTotalActualCharges * (this.prof_discount/100))),
-        prof_pTotalAmount: Number(this.caserateForm.value.prof_pTotalActualCharges - (this.caserateForm.value.prof_pTotalActualCharges * (this.prof_discount/100))) - Number(this.caserateForm.value.prof_pPhilhealthBenefit)
+        prof_pDiscount: Number(profWithVatExempt - (profWithVatExempt * (this.prof_discount/100))),
+        prof_pTotalAmount: Number(profWithVatExempt - (profWithVatExempt * (this.prof_discount/100))) - Number(this.caserateForm.value.prof_pPhilhealthBenefit)
       });
     }
 
     if (total_name === 'hci_pTotalAmount') {
+      let hciWithVatExempt = this.caserateForm.value.hci_pTotalActualCharges;
+      if(this.hci_discount > 0) hciWithVatExempt = this.caserateForm.value.hci_pTotalActualCharges - (this.caserateForm.value.hci_pTotalActualCharges * 12/100);
+
       this.caserateForm.patchValue({
-        hci_pDiscount: Number(this.caserateForm.value.hci_pTotalActualCharges - (this.caserateForm.value.hci_pTotalActualCharges * (this.hci_discount/100))),
-        hci_pTotalAmount: Number(this.caserateForm.value.hci_pTotalActualCharges - (this.caserateForm.value.hci_pTotalActualCharges * (this.hci_discount/100))) - Number(this.caserateForm.value.hci_pPhilhealthBenefit)
+        hci_pDiscount: Number(hciWithVatExempt - (hciWithVatExempt * (this.hci_discount/100))),
+        hci_pTotalAmount: Number(hciWithVatExempt - (hciWithVatExempt * (this.hci_discount/100))) - Number(this.caserateForm.value.hci_pPhilhealthBenefit)
       });
     }
 
@@ -253,8 +260,6 @@ export class CaserateComponent implements OnInit {
         caserate_fee: Number(this.caserateForm.value.hci_fee) + Number(this.caserateForm.value.prof_fee)
       })
     }
-
-
   }
 
   ngOnInit(): void {
