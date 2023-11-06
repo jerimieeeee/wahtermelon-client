@@ -240,8 +240,8 @@ export class CaserateComponent implements OnInit {
       if(this.prof_discount > 0) profDiscount = profWithVatExempt * (this.prof_discount/100);
 
       this.caserateForm.patchValue({
-        prof_pDiscount: Number(profWithVatExempt - profDiscount),
-        prof_pTotalAmount: Number(profWithVatExempt - profDiscount) - Number(this.caserateForm.value.prof_pPhilhealthBenefit)
+        prof_pDiscount: Number(profWithVatExempt - profDiscount).toFixed(2),
+        prof_pTotalAmount: (Number(profWithVatExempt - profDiscount) - Number(this.caserateForm.value.prof_pPhilhealthBenefit)).toFixed(2)
       });
     }
 
@@ -253,8 +253,8 @@ export class CaserateComponent implements OnInit {
       if(this.hci_discount > 0) hciDiscount = hciWithVatExempt * (this.hci_discount/100);
 
       this.caserateForm.patchValue({
-        hci_pDiscount: Number(hciWithVatExempt - hciDiscount),
-        hci_pTotalAmount: Number(hciWithVatExempt - hciDiscount) - Number(this.caserateForm.value.hci_pPhilhealthBenefit)
+        hci_pDiscount: Number(hciWithVatExempt - hciDiscount).toFixed(2),
+        hci_pTotalAmount: (Number(hciWithVatExempt - hciDiscount) - Number(this.caserateForm.value.hci_pPhilhealthBenefit)).toFixed(2)
       });
     }
 
