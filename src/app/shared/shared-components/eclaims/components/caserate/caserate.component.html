@@ -134,7 +134,12 @@
             </div>
 
             <div>
-              <label for="hci_discount">Discount  (%)</label>
+              <label for="hci_vat_exempt">VAT Excempt (%)</label>
+              <input type="number" name="hci_vat_exempt" id="hci_vat_exempt" max="100" step="1" [(ngModel)]="hci_vat_exempt" [ngModelOptions]="{standalone: true}" (change)="computeTotal('hci_pTotalAmount')" class="input" />
+            </div>
+
+            <div>
+              <label for="hci_discount">Discount (%)</label>
               <input type="number" name="hci_discount" id="hci_discount" max="100" step="1" [(ngModel)]="hci_discount" [ngModelOptions]="{standalone: true}" (change)="computeTotal('hci_pTotalAmount')" class="input" />
             </div>
 
@@ -148,7 +153,7 @@
               <input type="number" name="hci_pPhilhealthBenefit" id="hci_pPhilhealthBenefit" formControlName="hci_pPhilhealthBenefit" (change)="computeTotal('hci_pTotalAmount')" class="input" />
             </div>
 
-            <fieldset class="col-span-2" disabled>
+            <fieldset disabled>
               <label for="hci_pTotalAmount">HCI Total Amount</label>
               <input type="number" name="hci_pTotalAmount" id="hci_pTotalAmount" formControlName="hci_pTotalAmount" class="input" disabled />
             </fieldset>
@@ -157,6 +162,11 @@
             <div>
               <label for="prof_pTotalActualCharges">Professional Total Actual Charges</label>
               <input type="number" name="prof_pTotalActualCharges" id="prof_pTotalActualCharges" formControlName="prof_pTotalActualCharges" (change)="computeTotal('prof_pTotalAmount')" class="input" />
+            </div>
+
+            <div>
+              <label for="prof_vat_exempt">VAT Excempt (%)</label>
+              <input type="number" name="prof_vat_exempt" id="prof_vat_exempt" [(ngModel)]="prof_vat_exempt" [ngModelOptions]="{standalone: true}" (change)="computeTotal('prof_pTotalAmount')" class="input" />
             </div>
 
             <div>
@@ -174,7 +184,7 @@
               <input type="number" name="prof_pPhilhealthBenefit" id="prof_pPhilhealthBenefit" formControlName="prof_pPhilhealthBenefit" (change)="computeTotal('prof_pTotalAmount')" class="input" />
             </div>
 
-            <fieldset class="col-span-2" disabled>
+            <fieldset disabled>
               <label for="prof_pTotalAmount">Professional Total Amount</label>
               <input type="number" name="prof_pTotalAmount" id="prof_pTotalAmount" formControlName="prof_pTotalAmount" class="input" />
             </fieldset>
