@@ -61,16 +61,25 @@ export class PatientInfoComponent implements OnInit {
     private sanitizer: DomSanitizer
   ) { }
 
+  show_female_history: boolean = true;
+
   loadData(field){
     // console.log(field)
     if(field === 'past_medical'       || field==='all') this.pastMedical.loadData(this.patient_info.id);
     if(field === 'family_medical'     || field==='all') this.familyMedical.loadData(this.patient_info.id);
     if(field === 'vaccines'           || field==='all') this.vaccine.loadData(this.patient_info.id);
     if(field === 'philhealth'         || field==='all') this.philhealth.loadData(this.patient_info.id);
+
+    if(this.patient_info.gender === 'F') {
+      this.show_female_history = true;
+      if(field === 'menstrual_history'  || field==='all') this.menstrualHistory.loadData(this.patient_info.id);
+      if(field === 'pregnancy_history'  || field==='all') this.preghist.loadData(this.patient_info.id);
+    } else {
+      this.show_female_history = false;
+    }
+
     if(field === 'social_history'     || field==='all') this.socialHistory.loadData(this.patient_info.id);
     if(field === 'surgical_history'   || field==='all') this.surgicalHistory.loadData(this.patient_info.id);
-    if(field === 'menstrual_history'  || field==='all') this.menstrualHistory.loadData(this.patient_info.id);
-    if(field === 'pregnancy_history'  || field==='all') this.preghist.loadData(this.patient_info.id);
     if(field === 'vitals'             || field==='all') this.vitals.loadData(this.patient_info.id);
     if(field === 'appointment'        || field==='all') this.appointment.loadData(this.patient_info.id);
 
