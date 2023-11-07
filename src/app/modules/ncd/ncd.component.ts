@@ -104,6 +104,13 @@ export class NcdComponent implements OnInit, OnDestroy {
         // console.log(data)
         this.ncd_list = data.data;
         this.consult_details_temp = data.data[0];
+
+        Object.entries(data.data).forEach(([key, value]: any, index) => {
+          if(value.id === Number(this.consult_id)) {
+            this.consult_details_temp =  value;
+          }
+        });
+
         this.loadRisk();
       },
       error: err => console.log(err)
