@@ -6,12 +6,14 @@ import { KonsultaMasterlistComponent } from './konsulta-masterlist.component';
 import { FormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SetDateComponent } from './modals/set-date/set-date.component';
+import { ImportXmlComponent } from './modals/import-xml/import-xml.component';
 
 
 @NgModule({
   declarations: [
     KonsultaMasterlistComponent,
-    SetDateComponent
+    SetDateComponent,
+    ImportXmlComponent
   ],
   imports: [
     CommonModule,
