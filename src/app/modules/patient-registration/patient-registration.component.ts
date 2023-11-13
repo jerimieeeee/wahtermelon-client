@@ -338,7 +338,7 @@ export class PatientRegistrationComponent implements OnInit {
           });
         }
 
-        console.log(this.patientForm.value);
+        // console.log(this.patientForm.value);
         this.patient_to_update = data.data.id;
         this.button_function = 'Update';
         this.orig_data = data.data;

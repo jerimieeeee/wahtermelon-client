@@ -80,9 +80,9 @@
         <app-vitals (toggleAccordion)="toggleAccordion($event)" (toggleModal)="toggleModal($event)" (setVitals)="setVitals($event)" [accordions]="accordions"></app-vitals>
         <app-vaccine (toggleAccordion)="toggleAccordion($event)" [accordions]="accordions" (toggleModal)="toggleModal($event)" (setVaccineGiven)="setVaccineGiven($event)"></app-vaccine>
         <app-past-medical (toggleAccordion)="toggleAccordion($event)" [accordions]="accordions" (toggleModal)="toggleModal($event)" (setPastMedical)="setPastMedical($event)"></app-past-medical>
-        <app-menstrual-history (toggleAccordion)="toggleAccordion($event)" [accordions]="accordions" (toggleModal)="toggleModal($event)" (setMenstrual)="setMenstrual($event)"></app-menstrual-history>
+        <app-menstrual-history *ngIf="show_female_history" (toggleAccordion)="toggleAccordion($event)" [accordions]="accordions" (toggleModal)="toggleModal($event)" (setMenstrual)="setMenstrual($event)"></app-menstrual-history>
 
-        <app-preghist (toggleAccordion)="toggleAccordion($event)" [accordions]="accordions" (toggleModal)="toggleModal($event)" (setDetails)="setDetails($event)"></app-preghist>
+        <app-preghist *ngIf="show_female_history" (toggleAccordion)="toggleAccordion($event)" [accordions]="accordions" (toggleModal)="toggleModal($event)" (setDetails)="setDetails($event)"></app-preghist>
 
         <app-family-medical (toggleAccordion)="toggleAccordion($event)" [accordions]="accordions" (toggleModal)="toggleModal($event)" (setFamilyMedical)="setFamilyMedical($event)"></app-family-medical>
         <app-social-history (toggleAccordion)="toggleAccordion($event)" [accordions]="accordions" (toggleModal)="toggleModal($event)" (setDetails)="setDetails($event)"></app-social-history>
