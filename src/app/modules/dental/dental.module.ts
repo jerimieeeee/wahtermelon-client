@@ -11,6 +11,7 @@ import { HistoryComponent } from './components/history/history.component';
 import { ConditionComponent } from './components/condition/condition.component';
 import { ServicesComponent } from './components/services/services.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -27,7 +28,9 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
   imports: [
     CommonModule,
     DentalRoutingModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class DentalModule { }

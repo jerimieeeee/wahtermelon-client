@@ -43,7 +43,7 @@
     <div class="w-full flex justify-center"><fa-icon [icon]="faCircleNotch" spin="true" class="pt-10"></fa-icon></div>
     <div class="w-full flex justify-center pb-10 font-semibold">Fetching history...</div>
   </div>
-  <table class="w-full text-sm text-left" *ngIf="!fetching_history && patient_tb_history">
+  <table class="w-full text-sm text-left" *ngIf="!fetching_history && patient_dental_history">
     <thead class="text-xs text-white uppercase bg-blue-500">
       <tr>
         <th scope="col" class="py-3 px-6">Case Finding Date</th>
@@ -56,8 +56,8 @@
       </tr>
     </thead>
     <tbody>
-      <tr class="bg-white border-b" *ngFor="let tb_history of patient_tb_history">
-        <td *ngIf="!patient_tb_history" colspan="7">
+      <tr class="bg-white border-b" *ngFor="let tb_history of patient_dental_history">
+        <td *ngIf="!patient_dental_history" colspan="7">
           <div class="text-center">
             No records to show...
           </div>
@@ -87,7 +87,7 @@
         </td>
       </tr>
 
-      <tr class="bg-white border-b" *ngIf="!patient_tb_history[0]">
+      <tr class="bg-white border-b" *ngIf="!patient_dental_history[0]">
         <td  colspan="7">
           <div class="text-center py-3 flex flex-col">
             <div class="flex justify-center">No records to show...</div>

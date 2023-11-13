@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { MedicalHistory, SocialHistory } from './data/lib';
+import { faSave } from '@fortawesome/free-regular-svg-icons';
 
 @Component({
   selector: 'app-history',
@@ -9,6 +10,8 @@ import { MedicalHistory, SocialHistory } from './data/lib';
 })
 export class HistoryComponent implements OnInit {
   faSpinner = faSpinner;
+  faSave = faSave;
+  faPlus = faPlus;
 
   lib_medical_history = MedicalHistory;
   lib_social_history = SocialHistory;
@@ -22,6 +25,10 @@ export class HistoryComponent implements OnInit {
     setTimeout(() => {
       this.is_saving = false;
     }, 5000);
+  }
+
+  addHospHistory() {
+
   }
 
   ngOnInit(): void {

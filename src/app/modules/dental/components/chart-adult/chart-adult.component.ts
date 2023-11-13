@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { DentalModalService } from '../../services/dental-modal.service';
+
 @Component({
   selector: 'app-chart-adult',
   templateUrl: './chart-adult.component.html',
   styleUrls: ['./chart-adult.component.scss']
 })
+
 export class AdultChartComponent implements OnInit {
   test_case: boolean = true;
   showModal: boolean = false;
@@ -48,7 +49,7 @@ export class AdultChartComponent implements OnInit {
   ];
 
   constructor(
-    private dentalModalService: DentalModalService
+
   ) { }
 
   ngOnInit(): void {

@@ -16,6 +16,7 @@ export class DentalComponent implements OnInit {
 
   faDoorClosed = faDoorClosed;
   faCircleNotch = faCircleNotch;
+  patient_dental_history: any = [];
   constructor() { }
 
   switchPage(page){
