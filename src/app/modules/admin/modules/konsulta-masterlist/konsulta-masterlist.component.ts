@@ -65,7 +65,6 @@ export class KonsultaMasterlistComponent implements OnInit {
 
     this.http.get('konsulta/registration-lists',params).subscribe({
       next: (data: any) => {
-        console.log(data)
         this.konsulta_list = data.data;
 
         this.current_page = data.meta.current_page;
@@ -88,11 +87,8 @@ export class KonsultaMasterlistComponent implements OnInit {
 
   ngOnInit(): void {
     for (let year = 2018; year <= Number(this.current_year); year++) {
-      console.log(year)
       this.years.push(year);
     }
-
-    console.log(this.years)
 
     this.loadList();
   }
