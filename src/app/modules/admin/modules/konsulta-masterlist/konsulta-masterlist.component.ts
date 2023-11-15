@@ -24,10 +24,11 @@ export class KonsultaMasterlistComponent implements OnInit {
   faCircleNotch = faCircleNotch;
 
   tranches = [
-    {code: 0, desc: 'No Record'},
+    {code: 0, desc: 'No Submission'},
     {code: 1, desc: 'Tranche 1 Only'},
     {code: 2, desc: 'Tranche 2 Only'},
     {code: 3, desc: 'Both Tranche'},
+    {code: 4, desc: 'No Record'},
   ];
 
   current_year = formatDate(new Date(), 'YYYY', 'en', 'Asia/Manila');
