@@ -1,44 +1,50 @@
 
 <div>
-  <div class="flex justify-end mb-3">
-    <button (click)="toggleModal('set_date')" type="button" class="btn-save mr-2">
-      Get XML
-    </button>
-    <button (click)="toggleModal('import_xml')" type="button" class="btn-save">
-      Upload XML
-    </button>
+  <div class="flex justify-between mb-3">
+    <div class=" font-semibold text-blue-500 text-lg pt-2 pl-5">
+      Konsulta Masterlist
+    </div>
+    <div>
+      <button (click)="toggleModal('set_date')" type="button" class="btn-save mr-2">
+        Get XML
+      </button>
+      <button (click)="toggleModal('import_xml')" type="button" class="btn-save">
+        Upload XML
+      </button>
+    </div>
   </div>
   <div class="border border-solid border-slate-100 rounded-t-xl font-semibold justify-between">
+
+
     <div class="flex border border-solid border-slate-100 rounded-t-xl p-3 font-semibold justify-between">
-      <div class="text-blue-500 text-lg pt-2 pl-5">
-        Konsulta Masterlist
-      </div>
-
       <div class="flex">
-        <input [(ngModel)]="search_item" type="text" placeholder="search name..." (keyup.enter)="loadList()" class="border border-gray-300 rounded-l-lg text-sm w-44" />
-        <input [(ngModel)]="search_pin" type="text" placeholder="search pin..." (keyup.enter)="loadList()" class="border border-gray-300 text-sm w-44" />
+        <input [disabled]="excel_exporting" [(ngModel)]="search_item" type="text" placeholder="search name..." (keyup.enter)="loadList(null, 'konsulta_list')" class="border border-gray-300 rounded-l-lg text-sm w-44" />
+        <input [disabled]="excel_exporting" [(ngModel)]="search_pin" type="text" placeholder="search pin..." (keyup.enter)="loadList(null, 'konsulta_list')" class="border border-gray-300 text-sm w-44" />
 
-        <select name="tranche" id="tranche" placeholder="Select tranche" [(ngModel)]="tranche" class="border border-gray-300 w-40 rounded-none">
-          <option value="null">-</option>
+        <select [disabled]="excel_exporting" name="tranche" id="tranche" placeholder="Select tranche" [(ngModel)]="tranche" class="border border-gray-300 w-40 rounded-none">
+          <option [ngValue]="null">-</option>
           <option *ngFor="let tranche of tranches" [value]="tranche.code">{{ tranche.desc }}</option>
         </select>
 
-        <select name="search_year" id="search_year" [(ngModel)]="search_year" class="border border-gray-300 w-40 rounded-none">
-          <option value="null">-</option>
+        <select [disabled]="excel_exporting" name="search_year" id="search_year" [(ngModel)]="search_year" class="border border-gray-300 w-40 rounded-none">
+          <option [ngValue]="null">-</option>
           <option *ngFor="let year of years" [value]="year">{{ year }}</option>
         </select>
-        <!-- <input [(ngModel)]="search_year" type="text" placeholder="assigned year..." (keyup.enter)="loadList()" class="border border-gray-300 text-sm w-44" /> -->
-        <button type="button" (click)="loadList()" class="px-4 mr-5 bg-blue-500 text-white rounded-r-lg">
+
+        <select [disabled]="excel_exporting" name="selected_brgy" id="selected_brgy" [(ngModel)]="selected_brgy" class="border border-gray-300 w-40 rounded-none">
+          <option [ngValue]="null">-</option>
+          <option *ngFor="let brgy of brgys" [value]="brgy.code">{{ brgy.name }}</option>
+        </select>
+
+        <button [disabled]="excel_exporting" type="button" (click)="loadList(null, 'konsulta_list')" class="px-4 bg-blue-500 text-white rounded-r-lg disabled:bg-gray-300">
           <fa-icon [icon]="faSearch" class=""></fa-icon>
         </button>
       </div>
-    </div>
 
-    <div *ngIf="submit_error" class="col-span-8 bg-red-200 rounded border border-red-300 text-red-900 text-sm">
-      <div class="block p-3 pl-10" >
-        <ul class="list-disc" >
-          <li *ngFor="let error of submit_error | keyvalue">{{ error.value }}</li>
-        </ul>
+      <div class="pt-1">
+        <button [disabled]="excel_exporting" type="button" class="text-2xl" (click)="loadList(null, 'export_list', 'all')">
+          <fa-icon [icon]="excel_exporting ? faCircleNotch : faFileExcel" [spin]="excel_exporting" class="text-green-700"></fa-icon>
+        </button>
       </div>
     </div>
 
@@ -104,18 +110,18 @@
         </div>
         <div>
           <nav class="relative z-0 inline-flex shadow-sm -space-x-px" aria-label="Pagination">
-            <button [disabled]="current_page===1" (click)="loadList(1)" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 enabled:bg-white disabled:bg-gray-300 text-sm font-medium text-gray-500 hover:bg-gray-50">
+            <button [disabled]="current_page===1" (click)="loadList(1, 'konsulta_list')" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 enabled:bg-white disabled:bg-gray-300 text-sm font-medium text-gray-500 hover:bg-gray-50">
               <fa-icon [icon]="faAnglesLeft" class="block h-15 w-15 text-gray-500 pr-1"></fa-icon>
             </button>
 
-              <button [disabled]="current_page===1" (click)="loadList(current_page-1)" class="relative inline-flex items-center px-4 py-2 border border-gray-300 enabled:bg-white disabled:bg-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
+              <button [disabled]="current_page===1" (click)="loadList(current_page-1, 'konsulta_list')" class="relative inline-flex items-center px-4 py-2 border border-gray-300 enabled:bg-white disabled:bg-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
                 <fa-icon [icon]="faChevronLeft" class="block h-15 w-15 text-gray-500 pr-1"></fa-icon>Previous
               </button>
-              <button [disabled]="current_page===last_page" (click)="loadList(current_page+1)" class="relative inline-flex items-center px-4 py-2 border border-gray-300 enabled:bg-white disabled:bg-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
+              <button [disabled]="current_page===last_page" (click)="loadList(current_page+1, 'konsulta_list')" class="relative inline-flex items-center px-4 py-2 border border-gray-300 enabled:bg-white disabled:bg-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
                 Next<fa-icon [icon]="faChevronRight" class="h-5 w-5 text-gray-500"></fa-icon>
               </button>
 
-            <button [disabled]="current_page===last_page" (click)="loadList(last_page)" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 enabled:bg-white disabled:bg-gray-300 text-sm font-medium text-gray-500 hover:bg-gray-50">
+            <button [disabled]="current_page===last_page" (click)="loadList(last_page, 'konsulta_list')" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 enabled:bg-white disabled:bg-gray-300 text-sm font-medium text-gray-500 hover:bg-gray-50">
               <fa-icon [icon]="faAnglesRight" class="h-5 w-5 text-gray-500"></fa-icon>
             </button>
           </nav>
@@ -124,14 +130,58 @@
     </div>
   </div>
 
+  <table id="masterlistForm" hidden>
+    <thead>
+      <tr>
+        <th scope="col" class="w-1/12 py-3 px-6">Assign<br /> Date</th>
+        <th scope="col" class="w-3/12 py-3 px-6">Assigned <br /> Name</th>
+        <th scope="col" class="w-1/12 py-3 px-6">Birtdate | <br />Gender</th>
+        <th scope="col" class="w-1/12 py-3 px-6">Pin</th>
+        <th scope="col" class="w-1/12 py-3 px-6">Membership <br /> Type</th>
+        <th scope="col" class="w-3/12 py-3 px-6">Primary <br /> Name</th>
+        <th scope="col" class="w-3/12 py-3 px-6">Primary <br /> Pin</th>
+        <th scope="col" class="w-3/12 py-3 px-6">Birtdate | <br />Gender</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let konsulta of export_list; let odd = odd; let i = index" class="bg-white border-t" [ngClass]="{'bg-gray-50': odd}">
+        <td class="py-4 px-6">
+          {{ konsulta.assigned_date | date: 'MM/dd/yyyy':'Asia/Manila' }}
+        </td>
+        <th scope="row" class="py-4 px-6 font-medium">
+          {{ konsulta.last_name }}, {{ konsulta.first_name }} {{ konsulta.middle_name }} {{ konsulta.suffix_name }}
+        </th>
+        <td class="py-4 px-6">
+          {{ konsulta.birthdate | date: 'MM/dd/yyyy':'Asia/Manila' }} <br />
+          {{ konsulta.gender }}
+        </td>
+        <td class="py-4 px-6">
+          {{ konsulta.philhealth_id }}
+        </td>
+        <td class="py-4 px-6">
+          {{ konsulta.membership_type_id }}
+        </td>
+        <td class="py-4 px-6">
+          {{ konsulta.member_last_name }}, {{ konsulta.member_first_name }} {{ konsulta.member_middle_name }} {{ konsulta.member_suffix_name }}
+        </td>
+        <td class="py-4 px-6">
+          {{ konsulta.member_pin }}
+        </td>
+        <td class="py-4 px-6">
+          {{ konsulta.member_birthdate | date: 'MM/dd/yyyy':'Asia/Manila' }} <br />
+          {{ konsulta.member_gender }}
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>
 
 <app-set-date *ngIf="modal['set_date']"
   (toggleModal)="toggleModal($event)"
-  (loadList)="loadList($event)"
+  (loadList)="loadList($event, 'konsulta_list')"
 ></app-set-date>
 
 <app-import-xml *ngIf="modal['import_xml']"
   (toggleModal)="toggleModal($event)"
-  (loadList)="loadList($event)"
+  (loadList)="loadList($event, 'konsulta_list')"
 ></app-import-xml>
