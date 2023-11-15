@@ -7,6 +7,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SetDateComponent } from './modals/set-date/set-date.component';
 import { ImportXmlComponent } from './modals/import-xml/import-xml.component';
+import { ExportAsModule } from 'ngx-export-as';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { ImportXmlComponent } from './modals/import-xml/import-xml.component';
     KonsultaMasterlistRoutingModule,
     FormsModule,
     FontAwesomeModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ExportAsModule
   ]
 })
 export class KonsultaMasterlistModule { }
