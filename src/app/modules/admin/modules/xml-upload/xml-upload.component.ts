@@ -55,7 +55,7 @@ export class XmlUploadComponent {
 
   file_to_upload: any = null;
   xmlFile: any = null;
-  cipher_key: string = 'PHilheaLthDuMmyciPHerKeyS';
+  cipher_key: string;
 
   readXML(files: FileList){
     this.file_to_upload = files;

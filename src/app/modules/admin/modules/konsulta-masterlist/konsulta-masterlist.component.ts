@@ -1,5 +1,6 @@
+import { formatDate } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { faAnglesLeft, faAnglesRight, faCalendarDays, faChevronLeft, faChevronRight, faRotate, faSearch, faSpinner, faArrowsRotate } from '@fortawesome/free-solid-svg-icons';
+import { faAnglesLeft, faAnglesRight, faCalendarDays, faChevronLeft, faChevronRight, faRotate, faSearch, faSpinner, faArrowsRotate, faArrowUpFromBracket } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
@@ -18,6 +19,14 @@ export class KonsultaMasterlistComponent implements OnInit {
   faCalendarDays = faCalendarDays;
   faArrowsRotate = faArrowsRotate;
 
+  tranches = [
+    {code: 0, desc: 'No Record'},
+    {code: 1, desc: 'Tranche 1 Only'},
+    {code: 2, desc: 'Tranche 2 Only'},
+    {code: 3, desc: 'Both Tranche'},
+  ];
+
+  current_year = formatDate(new Date(), 'YYYY', 'en', 'Asia/Manila');
   per_page: number = 10;
   current_page: number;
   last_page: number;
@@ -28,6 +37,7 @@ export class KonsultaMasterlistComponent implements OnInit {
   search_item: string;
   search_pin: string;
   search_year: string;
+  tranche: number;
 
   submit_error: any;
 
@@ -48,6 +58,7 @@ export class KonsultaMasterlistComponent implements OnInit {
     if (this.search_item) params['params']['search'] = this.search_item;
     if (this.search_pin) params['params']['filter[philhealth_id]'] = this.search_pin;
     if (this.search_year) params['params']['filter[effectivity_year]'] = this.search_year;
+    if (this.tranche) params['params']['tranche'] = this.tranche;
 
     if (page) params['params']['page'] = page;
     params['params']['per_page'] = this.per_page;
@@ -72,7 +83,13 @@ export class KonsultaMasterlistComponent implements OnInit {
     private http: HttpService,
   ) { }
 
+  years: any = [];
+
   ngOnInit(): void {
-    this.loadList()
+    for (let year = 2018; year <= Number(this.current_year); year++) {
+      this.years.push(year);
+    }
+
+    this.loadList();
   }
 }

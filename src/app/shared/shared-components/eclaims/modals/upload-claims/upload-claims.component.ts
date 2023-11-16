@@ -101,7 +101,7 @@ export class UploadClaimsComponent implements OnInit {
 
     let params = {
       encryptedXml: this.encryptedXml,
-      program_code: this.program_name !== 'cc' ? this.program_name : 'mc'
+      program_code: this.program_name === 'cc' || this.program_name === 'fp' ? 'mc' :  this.program_name
     }
 
     //ECLAIMS SERVICES
@@ -111,7 +111,7 @@ export class UploadClaimsComponent implements OnInit {
         this.updateUploadData(data);
       },
       error: err => {
-        console.log(err);
+        // console.log(err);
         this.is_uploading_claim = false;
         this.toastr.error(err.error.message, 'Upload Claim', {
           closeButton: true,
@@ -237,6 +237,8 @@ export class UploadClaimsComponent implements OnInit {
     this.selected_doc_id = data ? data.id : null;
     this.delete_desc = this.delete_desc+" "+(data ? data.doc_type_code : '');
     this.modals[name] = !this.modals[name];
+
+    if(this.modals['delete-item'] === false) this.loadDocs();
   }
 
   constructor(
