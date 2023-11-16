@@ -3,21 +3,24 @@ import { CommonModule } from '@angular/common';
 
 import { KonsultaMasterlistRoutingModule } from './konsulta-masterlist-routing.module';
 import { KonsultaMasterlistComponent } from './konsulta-masterlist.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SetDateComponent } from './modals/set-date/set-date.component';
+import { ImportXmlComponent } from './modals/import-xml/import-xml.component';
 
 
 @NgModule({
   declarations: [
     KonsultaMasterlistComponent,
-    SetDateComponent
+    SetDateComponent,
+    ImportXmlComponent
   ],
   imports: [
     CommonModule,
     KonsultaMasterlistRoutingModule,
     FormsModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    ReactiveFormsModule
   ]
 })
 export class KonsultaMasterlistModule { }
