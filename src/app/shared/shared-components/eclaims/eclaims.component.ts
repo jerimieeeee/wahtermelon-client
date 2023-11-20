@@ -127,8 +127,9 @@ export class EclaimsComponent implements OnInit {
         this.iterateMessage(resp, data, type);
       },
       error: err => {
+        console.log(err)
         this.is_refreshing = false;
-        this.http.showError(err.error.message, 'Claims Status');
+        this.http.showError(err.error.message, 'eClaims Error');
       }
     })
   }
@@ -241,7 +242,7 @@ export class EclaimsComponent implements OnInit {
     if(this.patient_philhealth) {
       this.getCreds();
     } else {
-      this.http.showError('No PhilHealth Details', 'EClaims');
+      this.http.showError('No PhilHealth Details', 'eClaims Error');
       this.show_form = true;
     }
   }
