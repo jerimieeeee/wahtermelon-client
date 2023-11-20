@@ -1,0 +1,144 @@
+<div id="defaultModal" tabindex="-1" class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 w-full md:inset-0 h-modal md:h-full justify-center items-center flex" aria-modal="true" role="dialog" style="z-index:55">
+  <div class="relative p-4 w-full max-w-4xl h-full md:h-auto">
+    <!-- Modal content -->
+    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+      <!-- Modal header -->
+      <div class="flex justify-between items-start py-3 px-5 rounded-t border-b bg-blue-500 dark:border-gray-600">
+        <h3 class="mt-2 text-sm font-bold text-white dark:text-white">
+            CLAIM: {{ selected_pHospitalTransmittalNo }}
+        </h3>
+        <div>
+          <button type="button" [disabled]="is_uploading || !show_form || show_confirm_form" class="disabled:bg-gray-400 bg-white px-3 py-1 text-blue-500 rounded-md" (click)="getEncryptedXml()">
+            <fa-icon [icon]="faUpload" class="pr-2"></fa-icon>
+            Upload Required Docs
+          </button>
+        </div>
+      </div>
+      <!-- Modal body -->
+      <div class="overflow-y-auto h-96 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
+        <div *ngIf="!is_retrieving_xml && !show_confirm_form" class="grid grid-cols-3 gap-x-4 mx-5 my-2">
+          <div>
+            <select id="suffix_name" name="suffix_name" class="input mt-5" [(ngModel)]="doc_type">
+              <option *ngFor="let doc of doc_list" [value]="doc.code">{{ doc.desc }}</option>
+            </select>
+          </div>
+
+          <div class="flex justify-center mx-auto py-5">
+            <input (change)="readXML($event.target.files[0])" class="form-control
+              w-full
+              px-3
+              py-1.5
+              text-base
+              font-normal
+              text-gray-700
+              bg-white bg-clip-padding
+              border border-solid border-gray-300
+              rounded-lg
+              transition
+              ease-in-out
+              m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" type="file" id="formFile">
+          </div>
+
+          <div>
+            <button [disabled]="!file_to_upload || !doc_type || is_uploading || !show_form" type="button" (click)="uploadDocs(file_to_upload)" class="mt-5 disabled:bg-gray-400 py-2 px-3 mb-5 bg-blue-500 text-white rounded-lg text-sm">
+              <fa-icon [icon]="is_uploading ? faCircleNotch : faFileArrowUp" [spin]="is_uploading"></fa-icon> Upload Document
+            </button>
+          </div>
+        </div>
+
+        <div *ngIf="!is_retrieving_xml && !show_confirm_form" class="shadow-md sm:rounded-lg m-4">
+          <table class="table-fixed w-full text-sm text-left text-gray-500 dark:text-gray-400">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+              <tr>
+                <th scope="col" class="py-3 px-6 text-center w-3/12">Document Type</th>
+                <th scope="col" class="py-3 px-6 text-center w-7/12">Document URL</th>
+                <th scope="col" class="py-3 px-6 text-center w-2/12">Action</th>
+              </tr>
+            </thead>
+            <tbody *ngIf="show_form" >
+              <tr *ngFor="let docs of uploaded_docs" class="bg-white border-b">
+                <td class="py-4 px-6 text-center w-3/12">
+                  {{ docs.doc_type_code }}
+                </td>
+                <td class="py-4 px-6 w-7/12 whitespace-normal">
+                  {{ getFileName(docs.doc_url) }}
+                </td>
+                <td class="py-4 px-6 text-center w-2/12">
+                  <fa-icon (click)="toggleModal('delete-item', docs)" class="mx-0 my-0 text-rose-500 hover:cursor-pointer flex-none mr-2" [icon]="faTrash"></fa-icon>
+                </td>
+              </tr>
+            </tbody>
+
+            <tbody *ngIf="!show_form" >
+              <tr>
+                <td colspan="3">
+                  <div class="grid grid-cols-1 my-14">
+                    <div class="flex justify-center text-blue-500">
+                      <fa-icon [icon]="faCircleNotch" spin="true" ></fa-icon>
+                    </div>
+                    <div class="flex justify-center">
+                      Fetching uploaded documents...
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div *ngIf="!is_retrieving_xml && show_confirm_form" class="grid grid-cols-1 m-8 rounded-md border border-rose-500 bg-rose-100 text-rose-700 p-5">
+          <div class="flex mb-5">
+            Are you sure all required documents have been uploaded and want to proceed on uploading this claim?
+          </div>
+          <div class="flex mb-5">
+            <strong>Uploaded documents:&nbsp;</strong>
+            <span *ngFor="let docs of uploaded_docs; let last = last">
+              {{ docs.doc_type_code }}<span *ngIf="!last">,</span>
+            </span>
+          </div>
+          <div class="flex justify-end">
+            <div>
+              <button [disabled]="is_uploading_claim" type="button" class="btn-save bg-gray-400" (click)="confirmUpload()">
+                Cancel
+              </button>
+              <button [disabled]="is_uploading_claim" type="button" class="btn-save bg-rose-500 ml-5" (click)="uploadClaim()">
+                <fa-icon *ngIf="is_uploading_claim" [icon]="faCircleNotch" spin="true" class="pr-2"></fa-icon>
+                {{ is_uploading_claim ? 'Uploading' : 'Upload' }}
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="is_retrieving_xml" class="grid grid-cols-1 mt-16">
+          <div class="flex justify-center text-blue-500">
+            <fa-icon [icon]="faCircleNotch" spin="true"></fa-icon>
+          </div>
+          <div class="flex justify-center">
+            Retrieving XML...
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="flex justify-between py-4 px-5 space-x-4 rounded-b border-t border-gray-200 dark:border-gray-600">
+        <div>
+          <strong>Required documents:</strong>
+          <span *ngFor="let docs of required_docs; let last = last">
+            {{ docs }}<span *ngIf="!last">,</span>
+          </span>
+        </div>
+        <button  type="button" class="text-white bg-gray-400 hover:ring-2 focus:outline-none hover:ring-gray-300 rounded text-sm font-medium px-6 py-2.5 transition duration-150 ease-in-out transform hover:scale-110 " (click)="closeModal()">Close</button>
+        <!-- <button  type="button" class="text-white bg-blue-500 hover:ring-2 focus:outline-none hover:ring-blue-300 font-medium rounded text-sm px-6 py-2.5 text-center transition duration-150 ease-in-out transform hover:scale-110" (click)="onSubmit()" >Save</button> -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="opacity-50 fixed inset-0 z-50 bg-black"></div>
+
+<app-delete-item *ngIf="modals['delete-item']"
+  [url]="delete_url"
+  [delete_id]="selected_doc_id"
+  [delete_desc]="delete_desc"
+  (toggleModal)="toggleModal($event)"
+></app-delete-item>
