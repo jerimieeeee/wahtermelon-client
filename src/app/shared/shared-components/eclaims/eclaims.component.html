@@ -83,9 +83,14 @@
                   {{ eclaims.denied_reason ?? '-'  }}
                 </td>
                 <td class="py-4 px-3 text-center grid grid-cols-1">
-                  <button *ngIf="eclaims.pStatus !== 'DENIED' && eclaims.pStatus !== 'WITH CHEQUE'" class="bg-blue-500 text-white rounded-md p-0.5 mb-3 disabled:opacity-75" type="button" (click)="toggleModal('upload-claims', eclaims)">
+                  <button *ngIf="eclaims.pStatus === 'IN PROCESS' || eclaims.pStatus === ''" class="bg-blue-500 text-white rounded-md p-0.5 mb-3 disabled:opacity-75" type="button" (click)="toggleModal('upload-claims', eclaims)">
                     <fa-icon [icon]="faUpload"></fa-icon>
                     {{ eclaims.pReceiptTicketNumber ? 'Reupload Docs' : 'Upload Claim' }}
+                  </button>
+
+                  <button *ngIf="eclaims.pStatus === 'RETURN'" class="bg-blue-500 text-white rounded-md p-0.5 mb-3 disabled:opacity-75" type="button" (click)="toggleModal('upload-required-claims', eclaims)">
+                    <fa-icon [icon]="faUpload"></fa-icon>
+                    Upload Required Docs
                   </button>
 
                   <button *ngIf="!eclaims.pReceiptTicketNumber" class="bg-rose-500 text-white rounded-md p-0.5 mb-3 disabled:opacity-75" type="button" (click)="reopenCf2('cf2', eclaims)">
@@ -169,3 +174,13 @@
   [caserate_code]="selected_caserate_code"
   [selected_ticket_number]="selected_ticket_number"
 ></app-upload-claims>
+
+<app-upload-required-claims *ngIf="modal['upload-required-claims']"
+  (modalToggle)="toggleModal($event)"
+  [patient]="patient"
+  [program_name]="program_name"
+  [selected_pHospitalTransmittalNo]="selected_pHospitalTransmittalNo"
+  [caserate_code]="selected_caserate_code"
+  [selected_ticket_number]="selected_ticket_number"
+  [selected_series_lhio]="selected_series_lhio"
+></app-upload-required-claims>

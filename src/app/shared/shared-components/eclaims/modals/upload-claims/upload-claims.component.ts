@@ -162,7 +162,8 @@ export class UploadClaimsComponent implements OnInit {
   loadDocs(){
     this.show_form = false;
     let params = {
-      pHospitalTransmittalNo: this.selected_pHospitalTransmittalNo
+      pHospitalTransmittalNo: this.selected_pHospitalTransmittalNo,
+      required: 'N'
     };
 
     this.http.get('eclaims/eclaims-doc', {params}).subscribe({
@@ -193,6 +194,7 @@ export class UploadClaimsComponent implements OnInit {
       formData.append('pHospitalTransmittalNo', this.selected_pHospitalTransmittalNo);
       formData.append('program_desc', this.program_name);
       formData.append('patient_id', this.patient.id);
+      formData.append('required', 'N');
 
       this.http.post('eclaims/eclaims-doc', formData).subscribe({
         next: (data:any) => {
