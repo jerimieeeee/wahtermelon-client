@@ -44,7 +44,9 @@ import { UploadRequiredClaimsComponent } from './eclaims/modals/upload-required-
     KonsultaComponent,
     EclaimsComponent,
     EpresComponent,
-    EkasComponent
+    EkasComponent,
+    UploadClaimsComponent,
+    UploadRequiredClaimsComponent,
   ]
 })
 export class SharedComponentsModule { }
