@@ -48,7 +48,6 @@ export class AnimalbiteComponent implements OnInit{
       next: (data: any) => {
         this.patient_ab_history = data.data;
         if(this.patient_ab_history[0] && !this.patient_ab_history[0].ab_treatment_outcome) this.selected_ab_consult = data.data[0];
-        console.log(data.data)
         this.fetching_history = false;
         // this.pages = 2;
       },

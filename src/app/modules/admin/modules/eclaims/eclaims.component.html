@@ -64,9 +64,14 @@
               Open ITR
             </button>
 
-            <button *ngIf="eclaims.pStatus !== 'DENIED' && eclaims.pStatus !== 'WITH CHEQUE'" class="bg-blue-500 text-white rounded-md p-0.5 mb-3 disabled:opacity-75" type="button" (click)="toggleModal('upload-claims', eclaims)">
+            <button *ngIf="eclaims.pStatus === 'IN PROCESS' || eclaims.pStatus === ''" class="bg-blue-500 text-white rounded-md p-0.5 mb-3 disabled:opacity-75" type="button" (click)="toggleModal('upload-claims', eclaims)">
               <fa-icon [icon]="faUpload"></fa-icon>
               {{ eclaims.pReceiptTicketNumber ? 'Reupload Docs' : 'Upload Claim' }}
+            </button>
+
+            <button *ngIf="eclaims.pStatus === 'RETURN'" class="bg-blue-500 text-white rounded-md p-0.5 mb-3 disabled:opacity-75" type="button" (click)="toggleModal('upload-required-claims', eclaims)">
+              <fa-icon [icon]="faUpload"></fa-icon>
+              Upload Required Docs
             </button>
 
             <!-- <button *ngIf="!eclaims.pReceiptTicketNumber" class="bg-rose-500 text-white rounded-md p-0.5 mb-3 disabled:opacity-75" type="button" (click)="reopenCf2('cf2', eclaims)">
@@ -140,36 +145,6 @@
     </div>
   </div>
 </div>
-<!--
-<app-ekas *ngIf="modal['ekas']" (toggleModal)="toggleModal($event)"></app-ekas>
-<app-epres *ngIf="modal['epres']" (toggleModal)="toggleModal($event)"></app-epres> -->
-
-<!-- <app-pbef *ngIf="modal['pbef']"
-  (toggleModal)="toggleModal($event)"
-  [patient]="patient"
-  [patient_philhealth]="patient_philhealth"
-  [program_name]="program_name"
-  [program_creds]="program_creds"
-  [selected_case]="selected_case"
-  [caserate_list]="caserate_list"
-></app-pbef>
-
-<app-cf1 *ngIf="modal['cf1']"
-  (toggleModal)="toggleModal($event)"
-  [patient]="patient"
-  [patient_philhealth]="patient_philhealth"
-  [program_creds]="program_creds"
-></app-cf1> -->
-
-<!-- <app-cf2 *ngIf="modal['cf2']"
-  (toggleModal)="toggleModal($event)"
-  [patient]="patient"
-  [program_name]="program_name"
-  [program_id]="program_id"
-  [caserate_list]="caserate_list"
-  [selected_case]="selected_case"
-  [selected_transmittalNumber]="selected_transmittalNumber"
-></app-cf2> -->
 
 <app-upload-claims *ngIf="modal['upload-claims']"
   (modalToggle)="toggleModal($event)"
@@ -179,3 +154,17 @@
   [caserate_code]="selected_caserate_code"
   [selected_ticket_number]="selected_ticket_number"
 ></app-upload-claims>
+
+<app-upload-required-claims *ngIf="modal['upload-required-claims']"
+  (modalToggle)="toggleModal($event)"
+  [patient]="patient"
+  [program_name]="program_name"
+  [selected_pHospitalTransmittalNo]="selected_pHospitalTransmittalNo"
+  [caserate_code]="selected_caserate_code"
+  [selected_ticket_number]="selected_ticket_number"
+  [selected_series_lhio]="selected_series_lhio"
+></app-upload-required-claims>
+
+
+
+
