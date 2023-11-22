@@ -58,7 +58,7 @@
                 {{ eclaims.denied_reason ?? '-'  }}
               </td>
               <td class="py-4 px-3 text-center grid grid-cols-1">
-                <button *ngIf="eclaims.pStatus === 'IN PROCESS' || eclaims.pStatus === ''" class="bg-blue-500 text-white rounded-md p-0.5 mb-3 disabled:opacity-75" type="button" (click)="toggleModal('upload-claims', eclaims)">
+                <button *ngIf="eclaims.pStatus === 'IN PROCESS' || eclaims.pStatus === '' || !eclaims.pStatus" class="bg-blue-500 text-white rounded-md p-0.5 mb-3 disabled:opacity-75" type="button" (click)="toggleModal('upload-claims', eclaims)">
                   <fa-icon [icon]="faUpload"></fa-icon>
                   {{ eclaims.pReceiptTicketNumber ? 'Reupload Docs' : 'Upload Claim' }}
                 </button>
@@ -67,6 +67,7 @@
                   <fa-icon [icon]="faUpload"></fa-icon>
                   Upload Required Docs
                 </button>
+
 
                 <button *ngIf="!eclaims.pReceiptTicketNumber" class="bg-rose-500 text-white rounded-md p-0.5 mb-3 disabled:opacity-75" type="button" (click)="reopenCf2('cf2', eclaims)">
                   <fa-icon [icon]="faPenToSquare"></fa-icon>
