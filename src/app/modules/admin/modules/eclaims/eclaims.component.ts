@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { faAnglesLeft, faAnglesRight, faChevronLeft, faChevronRight, faCircleNotch, faClipboardQuestion, faFilter, faPenToSquare, faReceipt, faRotate, faUpload } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-eclaims',
@@ -75,7 +76,6 @@ export class EclaimsComponent implements OnInit {
 
     this.http.get('eclaims/eclaims-upload', { params }).subscribe({
       next:(data:any) => {
-        console.log(data);
         this.eclaims_list = data.data;
         this.show_form = true;
 
@@ -87,6 +87,48 @@ export class EclaimsComponent implements OnInit {
       },
       error: err => console.log(err)
     })
+  }
+
+  claims_count: number = 0;
+  retrieved_claims: number = 0
+  batch_refresh: boolean = false;
+  getStatuses(){
+    this.batch_refresh = true;
+    this.retrieved_claims = 0;
+    this.claims_count = Object.entries(this.eclaims_list).length;
+
+    Object.entries(this.eclaims_list).forEach(([key, value]:any, index) => {
+      if(value.pClaimSeriesLhio) {
+        this.getClaimStatus(value, value.pStatus);
+      } else {
+        this.checkSeries(value);
+      }
+    });
+  }
+
+  getClaimStatus(data, type) {
+    this.is_refreshing = true;
+
+    let params = {
+      series_lhio: data.pClaimSeriesLhio,
+      program_code: data.program_desc === 'cc' || data.program_desc === 'fp' ? 'mc' : data.program_desc
+    }
+
+    this.http.post('eclaims/get-claim-status', params).subscribe({
+      next:(resp: any) => {
+        this.iterateMessage(resp, data, type);
+        this.addRetrieved();
+      },
+      error: err => {
+        this.is_refreshing = false;
+        this.http.showError(err.error.message, 'Claims Status');
+        this.addRetrieved();
+      }
+    })
+  }
+
+  addRetrieved(){
+    this.retrieved_claims += 1;
   }
 
   navigateRoute(loc, data){
@@ -107,39 +149,21 @@ export class EclaimsComponent implements OnInit {
 
     this.http.post('eclaims/get-claims-map', params).subscribe({
       next: (resp: any) => {
-        console.log(resp);
         data.pClaimSeriesLhio = resp.MAPPING.pClaimSeriesLhio;
         data.pStatus = 'IN PROCESS';
 
+        this.showInfoToastr(resp.MAPPING.pClaimSeriesLhio, 'Series LHIO Number');
         this.updateUploadClaim(data);
+        this.addRetrieved();
       },
       error: err => {
-        console.log(err);
         this.is_refreshing = false;
         this.toastr.error(err.error.message, 'Series LHIO', {
           closeButton: true,
           positionClass: 'toast-top-center',
           disableTimeOut: true
         });
-      }
-    })
-  }
-
-  getClaimStatus(data, type) {
-    this.is_refreshing = true;
-
-    let params = {
-      series_lhio: data.pClaimSeriesLhio,
-      program_code: data.program_desc === 'cc' || data.program_desc === 'fp' ? 'mc' : data.program_desc
-    }
-
-    this.http.post('eclaims/get-claim-status', params).subscribe({
-      next:(resp: any) => {
-        this.iterateMessage(resp, data, type);
-      },
-      error: err => {
-        this.is_refreshing = false;
-        this.http.showError(err.error.message, 'Claims Status');
+        this.addRetrieved();
       }
     })
   }
@@ -187,8 +211,9 @@ export class EclaimsComponent implements OnInit {
     this.toastr.info(message, title, {
       closeButton: true,
       positionClass: 'toast-top-center',
-      disableTimeOut: true,
-      enableHtml: true
+      timeOut: 15000,
+      enableHtml: true,
+      progressBar: true
     });
   }
 
