@@ -99,7 +99,7 @@ export class EclaimsComponent implements OnInit {
 
     Object.entries(this.eclaims_list).forEach(([key, value]:any, index) => {
       if(value.pClaimSeriesLhio) {
-        this.getClaimStatus(value, value.pStatus + ' - ' + value.pHospitalTransmittalNo);
+        this.getClaimStatus(value, value.pStatus);
       } else {
         this.checkSeries(value);
       }
