@@ -127,7 +127,10 @@ export class PhilhealthModalComponent implements OnInit {
         this.is_checking_atc = false;
         this.is_atc_valid = data.return;;
       },
-      error: err => console.log(err)
+      error: err => {
+        this.is_checking_atc = false;
+        this.http.showError(err.error.message, 'ATC Checking Error');
+      }
     })
   }
 
