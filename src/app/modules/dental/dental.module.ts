@@ -12,6 +12,12 @@ import { ConditionComponent } from './components/condition/condition.component';
 import { ServicesComponent } from './components/services/services.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ComplaintHistoryComponent } from 'app/shared/shared-components/consultation/complaint-history/complaint-history.component';
+import { ConsultHistoryComponent } from 'app/shared/shared-components/consultation/consult-history/consult-history.component';
+import { FinalDxComponent } from 'app/shared/shared-components/consultation/final-dx/final-dx.component';
+import { GeneralSurveyComponent } from 'app/shared/shared-components/consultation/general-survey/general-survey.component';
+import { InitialDxComponent } from 'app/shared/shared-components/consultation/initial-dx/initial-dx.component';
+import { ManagementComponent } from 'app/shared/shared-components/consultation/management/management.component';
 
 
 @NgModule({
@@ -30,7 +36,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     DentalRoutingModule,
     FontAwesomeModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ComplaintHistoryComponent,
+    ConsultHistoryComponent,
+    FinalDxComponent,
+    GeneralSurveyComponent,
+    InitialDxComponent,
+    ManagementComponent
   ]
 })
 export class DentalModule { }

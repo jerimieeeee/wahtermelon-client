@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
@@ -14,7 +14,7 @@ import { Observable } from 'rxjs';
   templateUrl: './complaint-history.component.html',
   styleUrls: ['./complaint-history.component.scss']
 })
-export class ComplaintHistoryComponent {
+export class ComplaintHistoryComponent implements OnInit {
   @Output() loadConsult = new EventEmitter<any>();
   @Input() toggle_content;
   @Input() consult_details;
@@ -100,7 +100,7 @@ export class ComplaintHistoryComponent {
   loadLib(){
     this.http.get('libraries/complaint').subscribe(
       (data: any) => {
-        // console.log(data.data)
+        console.log(data.data)
         this.complaints = data.data;
         this.loadSelected();
         this.show_form = true;
@@ -119,7 +119,7 @@ export class ComplaintHistoryComponent {
     this.have_open_gbv = false;
     let selected_complaints = [];
     // console.log(this.consult_details);
-    if(this.consult_details.consult_notes && this.consult_details.consult_notes.complaints){
+    /* if(this.consult_details.consult_notes && this.consult_details.consult_notes.complaints){
       Object.entries(this.consult_details.consult_notes.complaints).forEach(([key, value], index) => {
         let val: any = value;
         selected_complaints.push(val.complaint_id);
@@ -134,7 +134,7 @@ export class ComplaintHistoryComponent {
         }
       });
     };
-    this.selectedComplaint = selected_complaints;
+    this.selectedComplaint = selected_complaints; */
   }
 
   getPatientGbv() {
@@ -148,7 +148,7 @@ export class ComplaintHistoryComponent {
     })
   }
 
-  ngOnChanges(changes){
+  /* ngOnChanges(changes){
     this.show_content = this.toggle_content;
     if(this.consult_details) {
       if(this.complaints) {
@@ -156,9 +156,8 @@ export class ComplaintHistoryComponent {
       }
       this.consult_notes = this.consult_details.consult_notes;
       this.consult_done = this.consult_details.consult_done;
-      // this.enable_edit = this.consult_details.
     }
-  }
+  } */
 
   toggleModal(name) {
     this.modals[name] = !this.modals[name];

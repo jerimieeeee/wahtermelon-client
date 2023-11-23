@@ -24,7 +24,7 @@
         TOOTH HISTORY & CONDITION
     </button>
     <button (click)="switchTab(2)" class="tabs-main w-28"
-        [class]="module===3? 'tabs-main-true' : 'tabs-main-false' ">
+        [class]="module===2? 'tabs-main-true' : 'tabs-main-false' ">
         DIAGNOSIS
     </button>
     <button (click)="switchTab(3)" class="tabs-main w-28"
@@ -105,10 +105,13 @@
 
 <div *ngIf="pages === 2 && module === 1">
   <app-history></app-history>
-
   <app-condition></app-condition>
-
   <app-services></app-services>
+</div>
+
+<div class="m-3" *ngIf="pages === 2 && module === 2">
+  <app-complaint-history></app-complaint-history>
+  <!-- <app-consult-history></app-consult-history> -->
 </div>
 <!-- <app-casefindings *ngIf="pages === 2 && module === 1"
   [patient_id]="patient_id"

@@ -1,1 +1,116 @@
-<p>consult-history works!</p>
+<hr class="my-4">
+<div class="grid grid-cols-10">
+  <div class="col-span-2 pt-2 font-semibold">
+    Diagnosis History
+  </div>
+  <div class="col-span-8">
+    <div class="rounded-md border border-solid border-gray-300">
+      <span class="rounded-t-md m-0 p-2 font-semibold text-gray-50 bg-green-500 flex justify-between" [ngClass]="{'rounded-b' : !show_content}">
+        Previous History
+        <button type="button" (click)="show_content = !show_content">
+          <fa-icon [icon]="show_content ? faChevronCircleUp : faChevronCircleDown" class="pr-2" size="lg"></fa-icon>
+        </button>
+      </span>
+      <table *ngIf="show_content" class="w-full table-auto">
+        <thead>
+          <tr class="border-b border-solid border-gray-200">
+            <th>Date</th>
+            <th>Details</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="text-left mt-3 align-top border-t border-slate-200 text-sm" *ngFor="let visit of visit_list ">
+            <td class="p-3 w-2/12">
+              <div class=" grid grid-cols-1">
+                <span class="font-semibold w-full">{{ visit.consult_date | date: 'MM/dd/yyyy':'Asia/Manila' }}</span>
+                <span class="text-sm w-full">{{ visit.consult_date | date: 'hh:mm:ss a' }}</span>
+              </div>
+            </td>
+
+            <td class="p-3 w-7/12">
+              <div class=" grid grid-cols-1">
+                <span class="w-full mb-3">
+                  <span class="font-semibold">Complaint notes:</span> {{ visit.consult_notes.complaint ?? '-' }}
+                </span>
+
+                <ul class="list-disc last:mb-3 ml-10" *ngFor="let complaint of visit.consult_notes.complaints">
+                  <li>{{ complaint.lib_complaints?.complaint_desc }}</li>
+                </ul>
+
+                <span class="w-full my-2 py-2">
+                  <span class="font-semibold">History notes:</span> {{ visit.consult_notes.history ?? '-' }}
+                </span>
+              </div>
+
+              <div class="grid grid-cols-1 text-left">
+                <span class="font-semibold">Initial Diagnosis:</span>
+                <ul class="list-disc ml-10">
+                  <li *ngFor="let idx of visit.consult_notes.initialdx">
+                    {{ idx.diagnosis.class_name }}
+                  </li>
+                </ul>
+
+                <div *ngIf="visit.consult_notes.idx_remarks" class="mt-2">
+                  <span class="text-sm italic">remarks:</span> {{ visit.consult_notes.idx_remarks ?? '-' }}
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 text-left mt-2 pt-2">
+                <span class="font-semibold">Final Diagnosis:</span>
+                <ul class="list-disc ml-10">
+                  <li *ngFor="let fdx of visit.consult_notes.finaldx">
+                    <span class="font-semibold text-sm">{{ fdx.lib_icd10.icd10_code }}:</span> {{ fdx.lib_icd10.icd10_desc }}
+                  </li>
+                </ul>
+
+                <div *ngIf="visit.consult_notes.fdx_remarks" class="mt-2">
+                  <span class="text-sm italic">remarks:</span> {{ visit.consult_notes.fdx_remarks ?? '-' }}
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 text-left mt-2 pt-2">
+                <span class="w-full mb-3">
+                  <span class="font-semibold">Treatment Plan:</span> {{ visit.consult_notes.plan ?? '-' }}
+                </span>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div *ngIf="total >= 1">
+        <div class="bg-white px-4 py-4 flex items-center justify-between border-t border-gray-200 sm:px-6">
+          <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+            <div>
+              <p class="text-sm text-gray-700">
+                Showing <span class="font-medium">{{ from }}</span>
+                to <span class="font-medium">{{ to }}</span>
+                of <span class="font-medium">{{ total }}</span> results
+              </p>
+            </div>
+            <div *ngIf="total >= 6">
+              <nav class="relative z-0 inline-flex shadow-sm -space-x-px" aria-label="Pagination">
+                <button [disabled]="current_page===1" (click)="loadPreviousVisit(1)" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 enabled:bg-white disabled:bg-gray-300 text-sm font-medium text-gray-500 hover:bg-gray-50">
+                  <fa-icon [icon]="faAnglesLeft" class="block h-15 w-15 text-gray-500 pr-1"></fa-icon>
+                </button>
+
+                  <button [disabled]="current_page===1" (click)="loadPreviousVisit(current_page-1)" class="relative inline-flex items-center px-4 py-2 border border-gray-300 enabled:bg-white disabled:bg-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
+                    <fa-icon [icon]="faChevronLeft" class="block h-15 w-15 text-gray-500 pr-1"></fa-icon>Previous
+                  </button>
+                  <button [disabled]="current_page===last_page" (click)="loadPreviousVisit(current_page+1)" class="relative inline-flex items-center px-4 py-2 border border-gray-300 enabled:bg-white disabled:bg-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
+                    Next<fa-icon [icon]="faChevronRight" class="h-5 w-5 text-gray-500"></fa-icon>
+                  </button>
+
+                <button [disabled]="current_page===last_page" (click)="loadPreviousVisit(last_page)" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 enabled:bg-white disabled:bg-gray-300 text-sm font-medium text-gray-500 hover:bg-gray-50">
+                  <fa-icon [icon]="faAnglesRight" class="h-5 w-5 text-gray-500"></fa-icon>
+                </button>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+</div>
