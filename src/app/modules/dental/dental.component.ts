@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { faCircleNotch, faDoorClosed } from '@fortawesome/free-solid-svg-icons';
+import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
   selector: 'app-dental',
@@ -17,7 +18,10 @@ export class DentalComponent implements OnInit {
   faDoorClosed = faDoorClosed;
   faCircleNotch = faCircleNotch;
   patient_dental_history: any = [];
-  constructor() { }
+
+  loadVisits() {
+
+  }
 
   switchPage(page){
     this.pages = page;
@@ -26,6 +30,10 @@ export class DentalComponent implements OnInit {
   switchTab(tab){
     this.module = tab;
   }
+
+  constructor(
+    private http: HttpService
+  ) { }
 
   ngOnInit(): void {
     this.module = 1;
