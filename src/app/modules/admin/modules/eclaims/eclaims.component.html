@@ -4,7 +4,7 @@
 
     <div class="grid grid-cols-10 text-slate-800">
       <input type="text" [(ngModel)]="patient_search" placeholder="search..." (keyup.enter)="getEclaimsList()" class="col-span-3 input rounded-r-none"/>
-      <select class="input rounded-none col-span-3" [(ngModel)]="pStatus">
+      <select class="input rounded-none col-span-3" [(ngModel)]="pStatus" (change)="getEclaimsList()">
         <option [ngValue]="null">ALL</option>
         <option [value]="status" *ngFor="let status of status_lists">{{ status }}</option>
       </select>
@@ -22,6 +22,12 @@
   </div>
 
   <div class="w-full p-5 overflow-x-auto">
+    <div class="flex justify-center w-full" *ngIf="pStatus === 'IN PROCESS' && eclaims_list">
+      <button [disabled]="is_refreshing || (batch_refresh && (claims_count !== retrieved_claims))" class="btn-save px-10" (click)="getStatuses()">
+        <fa-icon [icon]="faRotate" [spin]="is_refreshing || (batch_refresh && (claims_count !== retrieved_claims))"></fa-icon>
+        Check Claims ({{ eclaims_list.length }})
+      </button>
+    </div>
     <table class="table-fixed w-full text-sm text-left text-gray-500">
       <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700">
         <tr>
@@ -79,13 +85,13 @@
               Update CF2 XML
             </button> -->
 
-            <button class="bg-green-500 text-white rounded-md p-0.5 mb-3 disabled:opacity-75" type="button" *ngIf="eclaims.pReceiptTicketNumber && !eclaims.pClaimSeriesLhio" (click)="checkSeries(eclaims)" [disabled]="is_refreshing">
-              <fa-icon [icon]="is_refreshing ? faRotate : faReceipt" [spin]="is_refreshing"></fa-icon>
+            <button class="bg-green-500 text-white rounded-md p-0.5 mb-3 disabled:opacity-75" type="button" *ngIf="eclaims.pReceiptTicketNumber && !eclaims.pClaimSeriesLhio" (click)="checkSeries(eclaims)" [disabled]="is_refreshing || (batch_refresh && (claims_count !== retrieved_claims))">
+              <fa-icon [icon]="is_refreshing || (batch_refresh && (claims_count !== retrieved_claims)) ? faRotate : faReceipt" [spin]="is_refreshing || (batch_refresh && (claims_count !== retrieved_claims))"></fa-icon>
               Get Series Lhio
             </button>
 
-            <button class="bg-green-500 text-white rounded-md p-0.5 mb-3 disabled:opacity-75" type="button" *ngIf="eclaims.pClaimSeriesLhio && !eclaims.denied_reason" (click)="getClaimStatus(eclaims, eclaims.pStatus)" [disabled]="is_refreshing">
-              <fa-icon [icon]="is_refreshing ? faRotate : faClipboardQuestion" [spin]="is_refreshing"></fa-icon>
+            <button class="bg-green-500 text-white rounded-md p-0.5 mb-3 disabled:opacity-75" type="button" *ngIf="eclaims.pClaimSeriesLhio && !eclaims.denied_reason" (click)="getClaimStatus(eclaims, eclaims.pStatus)" [disabled]="is_refreshing || (batch_refresh && (claims_count !== retrieved_claims))">
+              <fa-icon [icon]="is_refreshing || (batch_refresh && (claims_count !== retrieved_claims)) ? faRotate : faClipboardQuestion" [spin]="is_refreshing || (batch_refresh && (claims_count !== retrieved_claims))"></fa-icon>
               Check {{ eclaims.pStatus === 'DENIED' ? 'Reason' : 'Status' }}
             </button>
           </td>
