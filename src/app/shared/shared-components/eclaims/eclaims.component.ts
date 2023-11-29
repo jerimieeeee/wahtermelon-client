@@ -161,9 +161,8 @@ export class EclaimsComponent implements OnInit {
       case 'RETURN' : {
         message = 'As of: '+resp.pAsOf+ ' '+resp.pAsOfTime;
         Object.entries(resp.CLAIM.RETURN.DEFECTS).forEach(([key, value]:any, index) => {
-
-          message += '<br />Deficiency: '+value.pDeficiency;
-          if(value.REQUIREMENT) message += '<br />Requirement: '+value.REQUIREMENT.pRequirement;
+          if(!value.pRequirement) message += '<br />Deficiency: '+value;
+          if(value.pRequirement) message += '<br />Requirement: '+value.pRequirement;
         });
 
         break;

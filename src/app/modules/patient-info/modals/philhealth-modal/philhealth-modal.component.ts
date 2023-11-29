@@ -160,6 +160,7 @@ export class PhilhealthModalComponent implements OnInit {
         this.toastrMessage('success', 'Philhealth', 'Philhealth PIN retrieved', 'retrieving_pin');
       },
       error: err => {
+        console.log(err)
         if(err.status === 404) {
           this.retrieving_error = err.error.data;
         }
@@ -168,6 +169,7 @@ export class PhilhealthModalComponent implements OnInit {
           positionClass: 'toast-top-center',
           disableTimeOut: true
         });
+        this.retrieving_pin = false;
         // this.toastrMessage('success', 'Philhealth', 'Philhealth PIN retrieved', 'retrieving_pin');
       }
     })

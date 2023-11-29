@@ -121,7 +121,7 @@ export class EclaimsComponent implements OnInit {
       },
       error: err => {
         this.is_refreshing = false;
-        this.http.showError(err.error.message, 'Claims Status');
+        this.http.showError(err.error.message, 'Claims Status - '+ data.pHospitalTransmittalNo);
         this.addRetrieved();
       }
     })
@@ -172,6 +172,7 @@ export class EclaimsComponent implements OnInit {
     data.pStatus = resp.CLAIM.pStatus;
     let message: string;
 
+    console.log(type, resp)
     switch(type) {
       case 'DENIED': {
         data.denied_reason = resp.CLAIM.DENIED.REASON.pReason;
@@ -191,7 +192,7 @@ export class EclaimsComponent implements OnInit {
       case 'RETURN' : {
         message = 'As of: '+resp.pAsOf+ ' '+resp.pAsOfTime;
         Object.entries(resp.CLAIM.RETURN.DEFECTS).forEach(([key, value]:any, index) => {
-
+          console.log(value)
           message += '<br />Deficiency: '+value.pDeficiency;
           if(value.REQUIREMENT) message += '<br />Requirement: '+value.REQUIREMENT.pRequirement;
         });
@@ -202,7 +203,7 @@ export class EclaimsComponent implements OnInit {
       }
     }
 
-    this.showInfoToastr(message, resp.CLAIM.pStatus);
+    this.showInfoToastr(message, resp.CLAIM.pStatus+' - '+data.pHospitalTransmittalNo);
     this.updateUploadClaim(data);
     this.is_refreshing = false;
   }
