@@ -1,12 +1,17 @@
 
 <div>
-  <div class="flex justify-end mb-3">
-    <button (click)="toggleModal('set_date')" type="button" class="btn-save mr-2">
-      Get XML
-    </button>
-    <button (click)="toggleModal('import_xml')" type="button" class="btn-save">
-      Upload XML
-    </button>
+  <div class="flex justify-between mb-3">
+    <div class="font-semibold text-blue-500 p-3">
+      Konsulta Masterlist
+    </div>
+    <div>
+      <button (click)="toggleModal('set_date')" type="button" class="btn-save mr-2">
+        Extract Masterlist
+      </button>
+      <button (click)="toggleModal('import_xml')" type="button" class="btn-save">
+        Upload XML
+      </button>
+    </div>
   </div>
   <div class="border border-solid border-slate-100 rounded-t-xl font-semibold justify-between">
     <div class="flex border border-solid border-slate-100 rounded-t-xl p-3 font-semibold justify-between">
