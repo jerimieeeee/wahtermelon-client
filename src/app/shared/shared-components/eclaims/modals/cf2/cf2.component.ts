@@ -197,7 +197,7 @@ export class Cf2Component implements OnInit {
         admitDate = new Date(visit1);
         dischargeDate = new Date(visit4);
       } else {
-        signDate = this.selected_case.post_registration.discharge_date;
+        signDate = this.selected_case.post_registration.admission_date;
         admitDate = this.selected_case.post_registration.admission_date;
         dischargeDate = this.selected_case.post_registration.discharge_date;
       }
