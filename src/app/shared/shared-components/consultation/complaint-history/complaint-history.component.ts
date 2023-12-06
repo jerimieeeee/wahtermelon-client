@@ -6,11 +6,12 @@ import { faPlusSquare, faSave } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faChevronCircleDown, faChevronCircleUp, faCircleNotch, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { Observable } from 'rxjs';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @Component({
   selector: 'app-complaint-history',
   standalone: true,
-  imports: [CommonModule, FontAwesomeModule],
+  imports: [CommonModule, FontAwesomeModule, NgSelectModule],
   templateUrl: './complaint-history.component.html',
   styleUrls: ['./complaint-history.component.scss']
 })
@@ -100,7 +101,7 @@ export class ComplaintHistoryComponent implements OnInit {
   loadLib(){
     this.http.get('libraries/complaint').subscribe(
       (data: any) => {
-        console.log(data.data)
+        // console.log(data.data)
         this.complaints = data.data;
         this.loadSelected();
         this.show_form = true;
@@ -174,5 +175,7 @@ export class ComplaintHistoryComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadLib();
+
+    this.allowed_to_edit = true;
   }
 }

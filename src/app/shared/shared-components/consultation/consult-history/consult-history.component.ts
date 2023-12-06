@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { HttpService } from 'app/shared/services/http.service';
@@ -12,7 +12,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
   templateUrl: './consult-history.component.html',
   styleUrls: ['./consult-history.component.scss']
 })
-export class ConsultHistoryComponent {
+export class ConsultHistoryComponent implements OnInit {
   @Input() toggle_content;
   @Input() allowed_to_edit;
 
@@ -40,7 +40,7 @@ export class ConsultHistoryComponent {
       patient_id: this.patient_id,
       per_page: this.per_page,
       sort: '-consult_date',
-      pt_group: 'cn',
+      pt_group: 'dn',
       page: page,
       not_consult_id: this.consult_id
     };
@@ -60,7 +60,7 @@ export class ConsultHistoryComponent {
   }
 
   ngOnChanges(changes){
-    this.show_content = this.toggle_content;
+    // this.show_content = this.toggle_content;
   }
 
   constructor(
@@ -72,6 +72,7 @@ export class ConsultHistoryComponent {
     this.patient_id = this.route.snapshot.paramMap.get('id');
     this.consult_id = this.route.snapshot.paramMap.get('consult_id');
 
+    this.show_content = true;
     this.loadPreviousVisit(1);
   }
 }
