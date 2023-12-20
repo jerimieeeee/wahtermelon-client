@@ -162,7 +162,8 @@ export class UploadClaimsComponent implements OnInit {
   loadDocs(){
     this.show_form = false;
     let params = {
-      pHospitalTransmittalNo: this.selected_pHospitalTransmittalNo
+      pHospitalTransmittalNo: this.selected_pHospitalTransmittalNo,
+      required: 'N'
     };
 
     this.http.get('eclaims/eclaims-doc', {params}).subscribe({
