@@ -146,7 +146,7 @@
 
               <div class="col-span-6  sm:col-span-2">
                 <label for="birthdate" class="input-label" [ngClass]="{'text-red-500': is_saving && f.birthdate.errors}">Birthdate</label>
-                <input type="date" name="birthdate" id="birthdate" class="input" placeholder="mm/dd/yyyy" max="{{ date | date:'yyyy-MM-dd'}}" [ngClass]="{'invalid-input': is_saving && f.birthdate.errors}" formControlName="birthdate">
+                <input type="date" name="birthdate" id="birthdate" class="input" placeholder="mm/dd/yyyy" max="{{ date | date:'yyyy-MM-dd' }}" [ngClass]="{'invalid-input': is_saving && f.birthdate.errors}" formControlName="birthdate">
 
                 <div *ngIf="is_saving && f.birthdate.errors" class="invalid-alert">
                   <div *ngIf="f.birthdate.errors?.['required']">
