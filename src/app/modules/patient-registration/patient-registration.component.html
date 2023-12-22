@@ -83,7 +83,7 @@
               </div>
 
               <div class="col-span-6 sm:col-span-2">
-                <label for="middle_name" class="input-label" [ngClass]="{'text-red-500': is_saving && f.middle_name.errors}">Middle name</label>
+                <label for="middle_name" class="input-label" [ngClass]="{'text-red-500': is_saving && f.middle_name.errors}">Middle name (optional)</label>
                 <input type="text" name="middle_name" id="middle_name" class="input capitalize" [ngClass]="{'invalid-input': is_saving && f.middle_name.errors}" formControlName="middle_name">
 
                 <div *ngIf="is_saving && f.middle_name.errors" class="invalid-alert">
