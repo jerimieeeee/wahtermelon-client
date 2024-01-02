@@ -123,8 +123,7 @@ export class EclaimsComponent implements OnInit {
 
     this.http.post('eclaims/get-claim-status', params).subscribe({
       next:(resp: any) => {
-        console.log(resp, type);
-        this.iterateMessage(resp, data, type);
+        this.iterateMessage(resp, data, resp.CLAIM.pStatus);
       },
       error: err => {
         console.log(err)
@@ -165,6 +164,15 @@ export class EclaimsComponent implements OnInit {
           if(value.pRequirement) message += '<br />Requirement: '+value.pRequirement;
         });
 
+        break;
+      }
+      case 'IN PROCESS': {
+        message = 'As of: '+resp.pAsOf+ ' '+resp.pAsOfTime+'<br />';
+        if(resp.CLAIM.TRAIL) {
+          Object.entries(resp.CLAIM.TRAIL.PROCESS).forEach(([key, value]:any, index) => {
+            message += '<br /><strong>'+value.pProcessDate +':</strong> '+value.pProcessStage;
+          });
+        }
         break;
       }
       default: {
