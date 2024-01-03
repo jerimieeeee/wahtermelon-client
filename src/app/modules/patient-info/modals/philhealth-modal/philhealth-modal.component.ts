@@ -127,7 +127,10 @@ export class PhilhealthModalComponent implements OnInit {
         this.is_checking_atc = false;
         this.is_atc_valid = data.return;;
       },
-      error: err => console.log(err)
+      error: err => {
+        this.is_checking_atc = false;
+        this.http.showError(err.error.message, 'ATC Checking Error');
+      }
     })
   }
 
@@ -157,6 +160,7 @@ export class PhilhealthModalComponent implements OnInit {
         this.toastrMessage('success', 'Philhealth', 'Philhealth PIN retrieved', 'retrieving_pin');
       },
       error: err => {
+        console.log(err)
         if(err.status === 404) {
           this.retrieving_error = err.error.data;
         }
@@ -165,6 +169,7 @@ export class PhilhealthModalComponent implements OnInit {
           positionClass: 'toast-top-center',
           disableTimeOut: true
         });
+        this.retrieving_pin = false;
         // this.toastrMessage('success', 'Philhealth', 'Philhealth PIN retrieved', 'retrieving_pin');
       }
     })
