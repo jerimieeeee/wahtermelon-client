@@ -35,17 +35,16 @@
             <tr>
               <th scope="col" class="py-3 px-6">Brand Name</th>
               <th scope="col" class="py-3 px-6">Generic Name</th>
-              <th scope="col" class="py-3 px-6">Drug Strength</th>
-              <th scope="col" class="py-3 px-6">Drug Form</th>
-              <th scope="col" class="py-3 px-6">Dosage Qty</th>
-              <th scope="col" class="py-3 px-6">Dosage Regimen</th>
-              <th scope="col" class="py-3 px-6">Duration Intake</th>
-              <th scope="col" class="py-3 px-6">Duration Frequency</th>
+              <th scope="col" class="py-3 px-6">Drug Strength </th>
+              <th scope="col" class="py-3 px-6">Regimen</th>
+              <th scope="col" class="py-3 px-6">Duration</th>
+              <th scope="col" class="py-3 px-6">Qty</th>
+              <th scope="col" class="py-3 px-6">Medicine Route</th>
               <th scope="col" class="py-3 px-6">Action</th>
               <!-- <th scope="col" class="py-3 px-6">Actions</th> -->
             </tr>
           </thead>
-          <tbody>
+          <tbody *ngIf="!is_loading">
             <tr *ngIf="drug_list?.length === 0">
               <td colspan="9" >
                 <div class="grid grid-cols-1 w-full mt-10">
@@ -59,35 +58,47 @@
                 </div>
               </td>
             </tr>
-            <tr *ngFor="let drug of drug_list; let odd = odd; let i = index" class="bg-white border-t" [ngClass]="{'bg-gray-50': odd}" [ngClass]="{'text-red-500': !drug.employer}">
-              <th scope="row" class="py-4 px-6 font-medium whitespace-nowrap">
-                {{ drug.last_name }}, {{ drug.first_name }} {{ drug.middle_name === 'NA' ? '' : drug.middle_name }} {{ drug.suffix_name === 'NA' ? '' : drug.suffix_name}}
-              </th>
+            <tr *ngFor="let drug of drug_list; let odd = odd; let i = index" class="bg-white border-t" [ngClass]="{'bg-gray-50': odd}">
               <td class="py-4 px-6">
-                {{ drug.birtdate | date: 'MM/dd/yyyy':'Asia/Manila' }}
+                {{ drug.brand_name }}
               </td>
               <td class="py-4 px-6">
-                {{ drug.gender }}
+                {{ drug.konsulta_medicine ? drug.konsulta_medicine.generic.desc : '' }}
+                {{ drug.added_medicine ?? '' }}
               </td>
               <td class="py-4 px-6">
-                {{ drug.contact_number }}
+                {{ drug.dosage_quantity }} {{ drug.unit_of_measurement.desc + ' (' + drug.unit_of_measurement.code + ')' }}
               </td>
               <td class="py-4 px-6">
-                {{ drug.email }}
+                {{ drug.regimen.desc }}
               </td>
               <td class="py-4 px-6">
-
+                {{ drug.duration_intake }} {{ drug.frequency.desc }}
               </td>
               <td class="py-4 px-6">
-
+                {{ drug.quantity }} {{ drug.preparation.desc }}
               </td>
               <td class="py-4 px-6">
-
+                {{ drug.medicine_route.desc}}
               </td>
               <td class="py-4 px-6">
-                <button type="button" (click)="showEdit()">
+                <button type="button" (click)="showEdit(drug)">
                   <fa-icon [icon]="faEdit" class="text-amber-500"></fa-icon>
                 </button>
+              </td>
+            </tr>
+          </tbody>
+          <tbody *ngIf="is_loading">
+            <tr>
+              <td colspan="8" class="text-center py-12">
+                <div class="grid grid-cols-1 w-full">
+                  <span class="flex justify-center">
+                    <fa-icon [icon]="faCircleNotch" spin="true" class="text-blue-500"></fa-icon>
+                  </span>
+                  <span class="flex justify-center">
+                    Loading list...
+                  </span>
+                </div>
               </td>
             </tr>
           </tbody>
@@ -130,5 +141,11 @@
 
 </div>
 
-<app-lib-drug-list *ngIf="show_lib_drug" (showAdd)="showAdd()"></app-lib-drug-list>
-<app-drug-form *ngIf="show_drug_form" (showEdit)="showEdit()"></app-drug-form>
+<app-lib-drug-list *ngIf="show_lib_drug"
+  (showAdd)="showAdd($event)"
+></app-lib-drug-list>
+
+<app-drug-form *ngIf="show_drug_form"
+  [selected_drug]="selected_drug"
+  (showEdit)="showEdit($event)"
+></app-drug-form>
