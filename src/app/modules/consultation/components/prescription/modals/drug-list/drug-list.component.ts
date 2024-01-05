@@ -36,6 +36,8 @@ export class DrugListComponent implements OnInit {
 
   selectDrugs(drug) {
     // console.log(drug)
+    delete drug['id'];
+    console.log(drug)
     this.openAddForm.emit(drug);
     this.toggleList.emit();
   }
@@ -51,14 +53,14 @@ export class DrugListComponent implements OnInit {
 
   loadDrugs(page?: number){
     let params = {params: { }};
-    if (this.search_item) params['params']['filter[desc]'] = this.search_item;
+    if (this.search_item) params['params']['filter[medicine.drug_name]'] = this.search_item;
     if (page) params['params']['page'] = page;
     params['params']['per_page'] = this.per_page;
 
     // console.log(params)
-    this.http.get('libraries/konsulta-medicines',params).subscribe({
+    this.http.get('medicine/list',params).subscribe({
       next: (data: any) => {
-        // console.log(data.data);
+        console.log(data.data);
         this.drug_list = data.data;
 
         this.current_page = data.meta.current_page;

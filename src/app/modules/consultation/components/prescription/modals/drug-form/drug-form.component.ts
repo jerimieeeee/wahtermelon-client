@@ -112,6 +112,33 @@ export class DrugFormComponent implements OnChanges {
 
   add_drug: boolean = false;
 
+  patchValue(){
+    this.prescriptionForm.patchValue({
+      konsulta_medicine_code: this.selected_drug.konsulta_medicine ? this.selected_drug.konsulta_medicine.code : null,
+      added_medicine: this.selected_drug.added_medicine ? this.selected_drug.added_medicine : null,
+      dosage_quantity: this.selected_drug.dosage_quantity,
+      dosage_uom: this.selected_drug.unit_of_measurement.code,
+      dose_regimen: this.selected_drug.regimen.code,
+      medicine_purpose: this.selected_drug.purpose.code,
+      duration_intake: this.selected_drug.duration_intake,
+      duration_frequency: this.selected_drug.frequency.code,
+      quantity: this.selected_drug.quantity,
+      quantity_preparation: this.selected_drug.preparation.code,
+      instruction_quantity: this.selected_drug.instruction_quantity,
+      medicine_route_code: this.selected_drug.medicine_route ? this.selected_drug.medicine_route.code : null
+    });
+
+    // console.log(this.prescriptionForm.value)
+    if(this.selected_drug.konsulta_medicine) {
+      this.prescriptionForm.controls.added_medicine.disable();
+    } else {
+      this.add_drug = true;
+      this.prescriptionForm.controls.added_medicine.enable();
+      this.prescriptionForm.controls.konsulta_medicine_code.disable();
+    }
+    this.checkPurpose();
+  }
+
   ngOnChanges(changes: SimpleChanges): void {
     let physician = this.consult_details.physician.id; //this.consult_details.physician
     this.prescriptionForm = this.formBuilder.nonNullable.group({
@@ -136,35 +163,14 @@ export class DrugFormComponent implements OnChanges {
 
     if(this.selected_drug){
       // console.log(this.selected_drug)
-      if(this.selected_drug.id) {
-        this.prescriptionForm.patchValue({
-          konsulta_medicine_code: this.selected_drug.konsulta_medicine ? this.selected_drug.konsulta_medicine.code : null,
-          added_medicine: this.selected_drug.added_medicine ? this.selected_drug.added_medicine : null,
-          dosage_quantity: this.selected_drug.dosage_quantity,
-          dosage_uom: this.selected_drug.unit_of_measurement.code,
-          dose_regimen: this.selected_drug.regimen.code,
-          medicine_purpose: this.selected_drug.purpose.code,
-          duration_intake: this.selected_drug.duration_intake,
-          duration_frequency: this.selected_drug.frequency.code,
-          quantity: this.selected_drug.quantity,
-          quantity_preparation: this.selected_drug.preparation.code,
-          instruction_quantity: this.selected_drug.instruction_quantity,
-          medicine_route_code: this.selected_drug.medicine_route ? this.selected_drug.medicine_route.code : null
-        });
-
-        // console.log(this.prescriptionForm.value)
-        if(this.selected_drug.konsulta_medicine) {
-          this.prescriptionForm.controls.added_medicine.disable();
-        } else {
-          this.add_drug = true;
-          this.prescriptionForm.controls.added_medicine.enable();
-          this.prescriptionForm.controls.konsulta_medicine_code.disable();
-        }
-        this.checkPurpose();
+      this.patchValue();
+      /* if(this.selected_drug.id) {
+        this.patchValue();
       } else {
+
         this.prescriptionForm.patchValue({ konsulta_medicine_code: this.selected_drug.code })
         this.prescriptionForm.controls.added_medicine.disable();
-      }
+      } */
     } else {
       this.add_drug = true;
       this.prescriptionForm.controls.konsulta_medicine_code.disable();

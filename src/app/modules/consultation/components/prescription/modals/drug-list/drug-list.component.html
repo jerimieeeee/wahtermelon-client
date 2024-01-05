@@ -25,8 +25,8 @@
           <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 mb-5">
             <thead class="sticky top-0 text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
               <tr>
-                <th scope="col" class="py-3 px-6">Drug description</th>
-                <th scope="col" class="py-3 px-6">Unit</th>
+                <th scope="col" class="py-3 px-6">Drug Name</th>
+                <th scope="col" class="py-3 px-6">Details</th>
                 <th scope="col" class="py-3 px-6">Package</th>
                 <!-- <th scope="col" class="py-3 px-6">Dosage Form</th>
                 <th scope="col" class="py-3 px-6">Action</th> -->
@@ -48,13 +48,16 @@
               </tr>
               <tr *ngFor="let drug of drug_list; let odd = odd; let i = index" class="bg-white border-t" [ngClass]="{'bg-gray-50': odd}"  class="hover:bg-blue-200 cursor-pointer" (click)="selectDrugs(drug)">
                 <th scope="row" class="py-4 px-6 font-medium whitespace-nowrap">
-                  {{ drug.desc }}
+                  {{ drug.brand_name }} <br />
+                  {{ drug.konsulta_medicine ? drug.konsulta_medicine.generic.desc : '' }}
                 </th>
                 <td class="py-4 px-6">
-                  {{ drug.unit_desc }}
+                  {{ drug.dosage_quantity }} {{ drug.unit_of_measurement.desc }} ({{ drug.unit_of_measurement.code }})
                 </td>
                 <td class="py-4 px-6">
-                  {{ drug.package_desc }}
+                  {{ drug.regimen.desc }} <br />
+                  {{ drug.duration_intake }} {{ drug.frequency.desc }} <br />
+                  {{ drug.quantity }} {{ drug.preparation.desc }}
                 </td>
 
                 <td class="py-4 px-6">
