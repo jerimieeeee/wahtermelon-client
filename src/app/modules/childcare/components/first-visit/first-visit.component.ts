@@ -75,9 +75,7 @@ export class FirstVisitComponent implements OnInit, OnChanges {
     private http: HttpService,
     private router: Router,
     private toastr: ToastrService
-    ) { }
-
-
+  ) { }
 
   get f(): { [key: string]: AbstractControl } {
     return this.visitForm.controls;
@@ -90,49 +88,30 @@ export class FirstVisitComponent implements OnInit, OnChanges {
     this.showAlert = !this.showAlert;
   }
 
-  // saveAdmission(){
-  //   this.form_saving = true;
-  //   this.is_saving = true;
-  //   this.is_saving2 = false;
-  //   localStorage.setItem('form-data', JSON.stringify(this.visitForm.value));
-  //   setTimeout(() => {
-  //     this.is_saving = false;
-  //     this.is_saving2 = true;
-  //   }, 5000);
-  // }
-
   onSubmit(){
     this.visitForm.patchValue({
-      admission_date: formatDate(this.visitForm.value.admission_date, 'Y-MM-dd HH:mm:ss' , 'en', 'Asia/Manila'),
-      discharge_date: formatDate(this.visitForm.value.discharge_date, 'Y-MM-dd HH:mm:ss' , 'en', 'Asia/Manila')
+      admission_date: formatDate(this.visitForm.value.admission_date, 'yyyy-MM-dd HH:mm:ss' , 'en', 'Asia/Manila'),
+      discharge_date: formatDate(this.visitForm.value.discharge_date, 'yyyy-MM-dd HH:mm:ss' , 'en', 'Asia/Manila')
     });
 
-    // this.showModal = true;
+    this.http.post('child-care/cc-records', this.visitForm.value).subscribe({
+      next: (data: any) =>  {
+        this.loadCcDetails.emit(this.patient_info);
+      },
+      error: err => {console.log(err),
+        this.is_saving = false;
+        this.showToastrErr()},
+      complete: () => {
+        this.is_saving = false;
 
-      this.http.post('child-care/cc-records', this.visitForm.value).subscribe({
-        next: (data: any) =>  {
-          console.log(data);
-          this.loadCcDetails.emit(this.patient_info);
-          // this.getccdevDetails(data)
-        },
-        error: err => {console.log(err),
-          this.is_saving = false;
-          // this.toggleAlertModal('E')},
-          this.showToastrErr()},
-        complete: () => {
-          this.is_saving = false;
-          console.log(this.visitForm.value, 'visit form')
-
-          if (this.patient_info) {
-            this.showToastrUpd()
-          } else {
-            this.showToastr()
-          }
-          // this.toggleAlertModal('S')
-          // this.showToastr()
+        if (this.patient_info) {
+          this.showToastrUpd()
+        } else {
+          this.showToastr()
         }
-      })
-    }
+      }
+    })
+  }
 
 
   validateForm(){
@@ -150,29 +129,6 @@ export class FirstVisitComponent implements OnInit, OnChanges {
     });
   }
 
-  // getData(){
-  //   if(!localStorage.getItem('form-data'))
-  //   {
-  //     localStorage.setItem('form-data', JSON.stringify([]))
-  //   }
-  //   const values = JSON.parse(localStorage.getItem("form-data"));
-  //   this.visitForm = new FormGroup({
-  //     admission_date: new FormControl(values['admission_date']),
-  //     discharge_date: new FormControl(values['discharged_date']),
-  //     birth_weight: new FormControl(values['weight']),
-  //     mothers_id: new FormControl(values['mothers_name'])
-  //   });
-  //   console.log(values)
-  // }
-
-  // onSelect(selectedPatient){
-  //   /* this.searchInput$.next(null);
-  //   // this.loadPatients(); */
-  //   if(selectedPatient) this.router.navigate(['/itr', {id: selectedPatient.id}]);
-  //   this.selectedPatient = null;
-  //   this.loadPatients();
-  // }
-
   getInitials(string) {
     return [...string.matchAll(/\b\w/g)].join('')
   }
@@ -185,26 +141,6 @@ export class FirstVisitComponent implements OnInit, OnChanges {
     if(this.patient_info && this.patient_info.status == 'CPAB' ) {
       this.cpab = 'Child Protected at Birth'
     }
-    // this.loadCcDetails.emit(this.patient_info);
-    /* let params = {
-      patient_id: this.ccdev_data.patient_id
-    }
-
-    this.http.get('child-care/cc-records',{params}).subscribe({
-      next: (data: any) => {
-        if(data.data.length > 0) {
-          this.patient_info = data.data[0];
-          console.log(this.patient_info, 'info ccdev first visit')
-          this.getccdevMama()
-          this.visitForm.patchValue({...this.patient_info});
-          this.checkCCdevDetails.emit(this.patient_info);
-          if(this.patient_info.status == 'CPAB' ) {
-            this.cpab = 'Child Protected at Birth'
-          }
-        }
-      },
-      error: err => console.log(err)
-    }); */
   }
 
   getccdevMama() {
@@ -269,16 +205,13 @@ export class FirstVisitComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log('change')
     this.patient_info = this.ccdev_data;
     this.getccdevDetails(null);
   }
 
   ngOnInit(): void {
-    console.log('on init')
     this.validateForm();
-    // this.getData();
-    console.log(this.ccdev_data)
+
     this.saved = true;
     this.getccdevDetails(null);
     this.loadPatients();
