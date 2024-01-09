@@ -58,6 +58,17 @@
             </div>
 
             <div class="relative w-full text-sm md:w-2/6 lg:w-2/6 px-3 py-2 mt-2">
+              <label class="font-semibold" for="instruction_quantity" [ngClass]="{'text-red-500': is_saving && f.instruction_quantity.errors}">Instruction Qty</label>
+              <input name="instruction_quantity" id="instruction_quantity" formControlName="instruction_quantity" [ngClass]="{'invalid-input': is_saving && f.instruction_quantity.errors}" type="number" class="input">
+
+              <div *ngIf="is_saving && f.instruction_quantity.errors" class="invalid-alert">
+                <div *ngIf="f.instruction_quantity.errors?.['required']">
+                  {{ required_message }}
+                </div>
+              </div>
+            </div>
+
+            <div class="relative w-full text-sm md:w-2/6 lg:w-2/6 px-3 py-2 mt-2">
               <label class="font-semibold" for="dose_regimen" [ngClass]="{'text-red-500': is_saving && f.dose_regimen.errors}">Dosage regimen</label>
               <select name="dose_regimen" id="dose_regimen" formControlName="dose_regimen" [ngClass]="{'invalid-input': is_saving && f.dose_regimen.errors}" class="input">
                 <option [value]="regimen.code" *ngFor="let regimen of drug_regimen">{{ regimen.desc}}</option>
@@ -80,7 +91,7 @@
               </div>
             </div>
 
-            <div class="relative w-full text-sm md:w-2/6 lg:w-4/6 px-3 py-2 mt-2">
+            <div class="relative w-full text-sm md:w-2/6 lg:w-2/6 px-3 py-2 mt-2">
               <label class="font-semibold" for="duration_frequency" [ngClass]="{'text-red-500': is_saving && f.duration_frequency.errors}">Duration frequency</label>
               <select name="duration_frequency" id="duration_frequency" formControlName="duration_frequency" [ngClass]="{'invalid-input': is_saving && f.duration_frequency.errors}" class="input">
                 <option [value]="frequency.code" *ngFor="let frequency of drug_frequency">{{ frequency.desc}}</option>

@@ -31,6 +31,7 @@ export class DrugFormComponent implements OnInit {
     medicine_route: new FormControl<string| null>(null),
     purpose_other: new FormControl<string| null>(null),
     quantity: new FormControl<string| null>(null),
+    instruction_quantity: new FormControl<number| null>(null)
   });
 
   showAlert: boolean = false;
@@ -151,7 +152,8 @@ export class DrugFormComponent implements OnInit {
       duration_frequency: [null, Validators.required],
       quantity: [null],
       quantity_preparation: [null, Validators.required],
-      medicine_route: [null, Validators.required]
+      medicine_route: [null, Validators.required],
+      instruction_quantity: [null, Validators.required],
     });
 
     this.loadSelected();
