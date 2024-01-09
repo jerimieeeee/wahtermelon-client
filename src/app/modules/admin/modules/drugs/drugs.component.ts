@@ -38,6 +38,11 @@ export class DrugsComponent implements OnInit {
       this.selected_drug = data;
     }
     this.show_drug_form = !this.show_drug_form;
+
+    if(this.show_drug_form === false) {
+      this.search_item = null;
+      this.loadDrugs();
+    }
   }
 
   selected_drug: any;
@@ -57,7 +62,7 @@ export class DrugsComponent implements OnInit {
     this.is_loading = true;
 
     let params = {params: { }};
-    if (this.search_item) params['params']['filter[medicine.drug_name]'] = this.search_item;
+    if (this.search_item) params['params']['filter[search]'] = this.search_item;
     if (page) params['params']['page'] = page;
     params['params']['per_page'] = this.per_page;
 
