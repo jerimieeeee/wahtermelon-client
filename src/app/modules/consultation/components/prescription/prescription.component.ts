@@ -183,6 +183,7 @@ export class PrescriptionComponent implements OnInit, OnChanges {
 
     this.http.get('medicine/prescriptions',{params}).subscribe({
       next: (data: any) => {
+        console.log(data.data)
         if(data.data.length > 0) {
           this.prescriptions = data.data;
         }

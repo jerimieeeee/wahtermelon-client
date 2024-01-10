@@ -34,7 +34,7 @@
           <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
               <th scope="col" class="py-3 px-6">Brand Name</th>
-              <th scope="col" class="py-3 px-6">Generic Name</th>
+              <th scope="col" class="py-3 px-6">Name</th>
               <th scope="col" class="py-3 px-6">Drug Strength </th>
               <th scope="col" class="py-3 px-6">Regimen</th>
               <th scope="col" class="py-3 px-6">Duration</th>
@@ -63,8 +63,9 @@
                 {{ drug.brand_name }}
               </td>
               <td class="py-4 px-6">
-                {{ drug.konsulta_medicine ? drug.konsulta_medicine.generic.desc : '' }}
+                <span class="font-semibold">{{ drug.konsulta_medicine ? drug.konsulta_medicine.generic.desc: '' }}</span>
                 {{ drug.added_medicine ?? '' }}
+                <span *ngIf="drug.konsulta_medicine" class="text-xs font-normal"> <br />{{ drug.konsulta_medicine.desc }}</span>
               </td>
               <td class="py-4 px-6">
                 {{ drug.dosage_quantity }} {{ drug.unit_of_measurement.desc + ' (' + drug.unit_of_measurement.code + ')' }}

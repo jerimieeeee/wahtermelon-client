@@ -35,9 +35,8 @@ export class DrugListComponent implements OnInit {
   search_item: string;
 
   selectDrugs(drug) {
-    // console.log(drug)
     delete drug['id'];
-    console.log(drug)
+    drug['new_drug'] = this.lib_drug_table;
     this.openAddForm.emit(drug);
     this.toggleList.emit();
   }
@@ -46,21 +45,31 @@ export class DrugListComponent implements OnInit {
     this.toggleList.emit();
   }
 
-  showAdd(){
-    this.openAddForm.emit();
+  lib_drug_table: boolean = false;
+  showLibDrugs(){
+    /* this.openAddForm.emit();
+    this.toggleList.emit(); */
+    // this.search_item = null;
+    this.lib_drug_table = true;
+    this.loadMedicineList(1);
+  }
+
+  addNewDrug(data){
+    this.openAddForm.emit(data);
     this.toggleList.emit();
   }
 
-  loadDrugs(page?: number){
+  loadMedicineList(page?: number){
+    let url = this.lib_drug_table ? 'libraries/konsulta-medicines' : 'medicine/list';
+    let filter = this.lib_drug_table ? 'filter[desc]' : 'filter[search]';
     let params = {params: { }};
-    if (this.search_item) params['params']['filter[search]'] = this.search_item;
+    if (this.search_item) params['params'][filter] = this.search_item;
     if (page) params['params']['page'] = page;
     params['params']['per_page'] = this.per_page;
 
-    // console.log(params)
-    this.http.get('medicine/list',params).subscribe({
+    this.http.get(url, params).subscribe({
       next: (data: any) => {
-        console.log(data.data);
+        // console.log(data.data);
         this.drug_list = data.data;
 
         this.current_page = data.meta.current_page;
@@ -78,6 +87,6 @@ export class DrugListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.loadDrugs();
+    this.loadMedicineList();
   }
 }

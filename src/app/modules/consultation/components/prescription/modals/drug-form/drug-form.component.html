@@ -11,13 +11,27 @@
 
           <!-- START PATIENT DETAILS -->
           <div class="grid grid-cols-3 gap-4 pb-5 px-10">
+            <div class="col-span-3 mt-5 mx-5 px-5 py-3 rounded-md border border-yellow-500 bg-yellow-100" *ngIf="selected_drug.new_drug">
+              <strong>Note: </strong>Saving this prescription will automatically add new item in your drug list.
+            </div>
 
-            <div class="col-span-3 mt-5 mx-5" *ngIf="!add_drug">
+            <div class="col-span-3 mt-5 mx-5" *ngIf="selected_drug.new_drug">
+              <label class="font-semibold" for="brand_name" [ngClass]="{'text-red-500': is_saving && f.brand_name.errors}">Brand Name</label>
+              <input name="brand_name" id="brand_name" formControlName="brand_name" [ngClass]="{'invalid-input': is_saving && f.brand_name.errors}" type="text" class="input">
+
+              <div *ngIf="is_saving && f.brand_name.errors" class="invalid-alert">
+                <div *ngIf="f.brand_name.errors?.['required']">
+                  {{ required_message }}
+                </div>
+              </div>
+            </div>
+
+            <div class="col-span-3 mt-5 mx-5" *ngIf="!add_drug && !f.added_medicine.value">
               <span class="font-semibold">Drug description:</span>
               {{ selected_drug.konsulta_medicine ? selected_drug.konsulta_medicine.desc : selected_drug.desc }}
             </div>
 
-            <div class="col-span-3 text-sm " *ngIf="add_drug">
+            <div class="col-span-3 text-sm " *ngIf="f.added_medicine.value">
               <label class="font-semibold" for="added_medicine" [ngClass]="{'text-red-500': is_saving && f.added_medicine.errors}">Drug name</label>
               <input name="added_medicine" id="added_medicine" formControlName="added_medicine" type="text" class="input" [ngClass]="{'invalid-input': is_saving && f.added_medicine.errors}">
 
@@ -121,7 +135,7 @@
               </div>
             </div>
 
-            <div class="col-span-1 text-sm">
+            <!-- <div class="col-span-1 text-sm">
               <label class="font-semibold" for="instruction_quantity" [ngClass]="{'text-red-500': is_saving && f.instruction_quantity.errors}">Instruction Qty.</label>
               <input name="instruction_quantity" id="instruction_quantity" formControlName="instruction_quantity" [ngClass]="{'invalid-input': is_saving && f.instruction_quantity.errors}" type="number" class="input">
 
@@ -130,7 +144,7 @@
                   {{ required_message }}
                 </div>
               </div>
-            </div>
+            </div> -->
 
             <div class="col-span-3 text-sm">
               <label class="font-semibold" for="medicine_purpose" [ngClass]="{'text-red-500': is_saving && f.medicine_purpose.errors}">Medicine purpose</label>
@@ -142,6 +156,11 @@
                   {{ required_message }}
                 </div>
               </div>
+            </div>
+
+            <div class="col-span-3 text-sm">
+              <label class="font-semibold" for="remarks" [ngClass]="{'text-red-500': is_saving && f.remarks.errors}">Remarks</label>
+              <input name="remarks" id="remarks" formControlName="remarks" [ngClass]="{'invalid-input': is_saving && f.remarks.errors}" type="text" class="input">
             </div>
 
             <div *ngIf="prescriptionForm.value.medicine_purpose === '99'" class="col-span-3 text-sm">
@@ -169,8 +188,11 @@
 
       </div>
       <div class="flex justify-end mr-10 py-3 rounded-b">
-        <button  type="button" class="btn-save px-10 bg-gray-400 mr-5" (click)="closeModal()">Close</button>
-        <button [disabled]="prescriptionForm.invalid" type="button" class="btn-save px-10 disabled:bg-gray-300" (click)="onSubmit()" >Save</button>
+        <button [disabled]="is_loading" type="button" class="btn-save px-10 bg-gray-400 mr-5" (click)="closeModal()">Close</button>
+        <button [disabled]="is_loading" type="button" class="btn-save px-10 disabled:bg-gray-300" (click)="onSubmit()" >
+          <fa-icon [icon]="is_loading ? faCircleNotch : faSave" [spin]="is_loading"></fa-icon>
+          {{ is_loading ? 'Saving' : 'Save'}}
+        </button>
       </div><!-- [disabled]="prescriptionForm.invalid" -->
     </div>
   </div>

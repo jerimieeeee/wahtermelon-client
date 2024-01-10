@@ -25,7 +25,7 @@
             <div class="relative w-full text-sm px-3 py-2 mt-2">
               <label class="font-semibold" for="medicine_name" [ngClass]="{'text-red-500': is_saving && f.medicine_name.errors}">Generic Name</label>
               <input name="medicine_name" id="medicine_name" formControlName="medicine_name" [ngClass]="{'invalid-input': is_saving && f.medicine_name.errors}" type="text" class="input">
-              <span class="text-xs pl-3 font-semibold">{{ selected_drug ? selected_drug.desc : '' }}</span>
+              <span class="text-xs pl-3 font-semibold">{{ selected_drug ? (selected_drug.desc ? selected_drug.desc : selected_drug.konsulta_medicine.desc) : '' }}</span>
 
               <div *ngIf="is_saving && f.medicine_name.errors" class="invalid-alert">
                 <div *ngIf="f.medicine_name.errors?.['required']">
@@ -57,7 +57,7 @@
               </div>
             </div>
 
-            <div class="relative w-full text-sm md:w-2/6 lg:w-2/6 px-3 py-2 mt-2">
+            <!-- <div class="relative w-full text-sm md:w-2/6 lg:w-2/6 px-3 py-2 mt-2">
               <label class="font-semibold" for="instruction_quantity" [ngClass]="{'text-red-500': is_saving && f.instruction_quantity.errors}">Instruction Qty</label>
               <input name="instruction_quantity" id="instruction_quantity" formControlName="instruction_quantity" [ngClass]="{'invalid-input': is_saving && f.instruction_quantity.errors}" type="number" class="input">
 
@@ -66,7 +66,7 @@
                   {{ required_message }}
                 </div>
               </div>
-            </div>
+            </div> -->
 
             <div class="relative w-full text-sm md:w-2/6 lg:w-2/6 px-3 py-2 mt-2">
               <label class="font-semibold" for="dose_regimen" [ngClass]="{'text-red-500': is_saving && f.dose_regimen.errors}">Dosage regimen</label>
@@ -104,6 +104,18 @@
             </div>
 
             <div class="relative w-full text-sm md:w-2/6 lg:w-2/6 px-3 py-2 mt-2">
+              <label class="font-semibold" for="medicine_route_code" [ngClass]="{'text-red-500': is_saving && f.medicine_route_code.errors}">Medicine Route</label>
+              <select name="medicine_route_code" id="medicine_route_code" formControlName="medicine_route_code" [ngClass]="{'invalid-input': is_saving && f.medicine_route_code.errors}" class="input">
+                <option [value]="route.code" *ngFor="let route of drug_route">{{ route.desc}}</option>
+              </select>
+              <div *ngIf="is_saving && f.medicine_route_code.errors" class="invalid-alert">
+                <div *ngIf="f.medicine_route_code.errors?.['required']">
+                  {{ required_message }}
+                </div>
+              </div>
+            </div>
+
+            <div class="relative w-full text-sm md:w-2/6 lg:w-2/6 px-3 py-2 mt-2">
               <label class="font-semibold" for="quantity" [ngClass]="{'text-red-500': is_saving && f.quantity.errors}">Quantity</label>
               <input name="quantity" id="quantity" formControlName="quantity" [ngClass]="{'invalid-input': is_saving && f.quantity.errors}" type="number" class="input">
 
@@ -121,18 +133,6 @@
               </select>
               <div *ngIf="is_saving && f.quantity_preparation.errors" class="invalid-alert">
                 <div *ngIf="f.quantity_preparation.errors?.['required']">
-                  {{ required_message }}
-                </div>
-              </div>
-            </div>
-
-            <div class="relative w-full text-sm md:w-2/6 lg:w-2/6 px-3 py-2 mt-2">
-              <label class="font-semibold" for="medicine_route" [ngClass]="{'text-red-500': is_saving && f.medicine_route.errors}">Medicine Route</label>
-              <select name="medicine_route" id="medicine_route" formControlName="medicine_route" [ngClass]="{'invalid-input': is_saving && f.medicine_route.errors}" class="input">
-                <option [value]="route.code" *ngFor="let route of drug_route">{{ route.desc}}</option>
-              </select>
-              <div *ngIf="is_saving && f.medicine_route.errors" class="invalid-alert">
-                <div *ngIf="f.medicine_route.errors?.['required']">
                   {{ required_message }}
                 </div>
               </div>
