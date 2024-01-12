@@ -24,14 +24,14 @@
           <option [value]="2">2nd Tranche</option>
         </select>
 
-        <select *ngIf="form_type==='1'" [(ngModel)]="filter_year" class="input w-44 rounded-none">
-          <option [value]="year" *ngFor="let year of years" >{{year}}</option>
-        </select>
-
         <select *ngIf="form_type==='2'" [(ngModel)]="filter_status" class="input w-44 rounded-none">
           <option value="V">Validated</option>
           <option value="S">Submitted/Success</option>
           <option value="F">Failed</option>
+        </select>
+
+        <select [(ngModel)]="filter_year" class="input w-44 rounded-none">
+          <option [value]="year" *ngFor="let year of years" >{{year}}</option>
         </select>
 
         <button [disabled]="searching" type="button" class="bg-blue-500 text-white h-10 px-3 mt-1 rounded-r-md" (click)="loadList()">
