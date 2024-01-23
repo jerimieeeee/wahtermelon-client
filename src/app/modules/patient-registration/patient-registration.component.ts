@@ -409,7 +409,7 @@ export class PatientRegistrationComponent implements OnInit {
       user_id: [user_id],
       last_name: ['', [Validators.required, Validators.minLength(2)]],
       first_name: ['', [Validators.required, Validators.minLength(2)]],
-      middle_name: ['', [Validators.required, Validators.minLength(1)]],
+      middle_name: [''],
       suffix_name: ['NA'],
       birthdate: ['', Validators.required],
       mothers_name: ['', [Validators.required, Validators.minLength(2)]],

@@ -123,13 +123,18 @@ export class EclaimsComponent implements OnInit {
 
     this.http.post('eclaims/get-claim-status', params).subscribe({
       next:(resp: any) => {
-        this.iterateMessage(resp, data, type);
+        this.iterateMessage(resp, data, resp.CLAIM.pStatus);
       },
       error: err => {
+        console.log(err)
         this.is_refreshing = false;
-        this.http.showError(err.error.message, 'Claims Status');
+        this.http.showError(err.error.message, 'eClaims Error');
       }
     })
+  }
+
+  getClaimsMaps(data, type) {
+
   }
 
   iterateMessage(resp, data, type) {
@@ -150,6 +155,25 @@ export class EclaimsComponent implements OnInit {
           message += '<br />Voucher No: '+value.pVoucherNo;
           message += '<br />Check Amount: '+value.pCheckAmount;
         });
+        break;
+      }
+      case 'RETURN' : {
+        message = 'As of: '+resp.pAsOf+ ' '+resp.pAsOfTime;
+        Object.entries(resp.CLAIM.RETURN.DEFECTS).forEach(([key, value]:any, index) => {
+          if(!value.pRequirement) message += '<br />Deficiency: '+value;
+          if(value.pRequirement) message += '<br />Requirement: '+value.pRequirement;
+        });
+
+        break;
+      }
+      case 'IN PROCESS': {
+        message = 'As of: '+resp.pAsOf+ ' '+resp.pAsOfTime+'<br />';
+        if(resp.CLAIM.TRAIL) {
+          Object.entries(resp.CLAIM.TRAIL.PROCESS).forEach(([key, value]:any, index) => {
+            message += '<br /><strong>'+value.pProcessDate +':</strong> '+value.pProcessStage;
+          });
+        }
+        break;
       }
       default: {
         message = 'As of: '+resp.pAsOf+ ' '+resp.pAsOfTime;
@@ -193,6 +217,7 @@ export class EclaimsComponent implements OnInit {
   }
 
   selected_transmittalNumber: string;
+  selected_series_lhio: string;
   reopenCf2(name, eclaims){
     this.caserate_list = [eclaims.caserate];
     this.selected_transmittalNumber = eclaims.pHospitalTransmittalNo;
@@ -203,10 +228,13 @@ export class EclaimsComponent implements OnInit {
     this.selected_pHospitalTransmittalNo = eclaims?.pHospitalTransmittalNo ?? null;
     this.selected_caserate_code = eclaims?.caserate.caserate_code ?? null;
     this.selected_ticket_number = eclaims?.pReceiptTicketNumber ?? null;
+    this.selected_series_lhio = eclaims?.pClaimSeriesLhio ?? null;
+
     this.modal[name] = !this.modal[name];
 
     if(name==='cf2' && !this.modal['cf2']) this.getEclaimsList();
     if(name==='upload-claims' && !this.modal['upload-claims']) this.getEclaimsList();
+    if(name==='upload-required-claims' && !this.modal['upload-required-claims']) this.getEclaimsList();
   }
 
   constructor(
@@ -221,7 +249,7 @@ export class EclaimsComponent implements OnInit {
     if(this.patient_philhealth) {
       this.getCreds();
     } else {
-      this.http.showError('No PhilHealth Details', 'EClaims');
+      this.http.showError('No PhilHealth Details', 'eClaims Error');
       this.show_form = true;
     }
   }

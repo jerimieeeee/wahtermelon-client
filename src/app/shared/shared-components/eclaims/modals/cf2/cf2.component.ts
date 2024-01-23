@@ -131,7 +131,7 @@ export class Cf2Component implements OnInit {
       pNewbornHearingScreeningTest: hearing_done,
       pNewbornScreeningTest: this.selected_case.nbs_filter ? 'Y' : 'N',
       pFilterCardNo: this.selected_case.nbs_filter,
-      pEssentialNewbornCare: hearing_done === 'Y' && bcg_vaccine ? 'Y' : 'N'
+      pEssentialNewbornCare: bcg_vaccine ? 'Y' : 'N'
     });
 
     this.getCreds();
@@ -197,7 +197,7 @@ export class Cf2Component implements OnInit {
         admitDate = new Date(visit1);
         dischargeDate = new Date(visit4);
       } else {
-        signDate = this.selected_case.post_registration.discharge_date;
+        signDate = this.selected_case.post_registration.admission_date;
         admitDate = this.selected_case.post_registration.admission_date;
         dischargeDate = this.selected_case.post_registration.discharge_date;
       }

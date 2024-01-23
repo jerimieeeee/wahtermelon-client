@@ -6,17 +6,19 @@ import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-upload-claims',
-  templateUrl: './upload-claims.component.html',
-  styleUrls: ['./upload-claims.component.scss']
+  selector: 'app-upload-required-claims',
+  templateUrl: './upload-required-claims.component.html',
+  styleUrls: ['./upload-required-claims.component.scss']
 })
-export class UploadClaimsComponent implements OnInit {
+export class UploadRequiredClaimsComponent implements OnInit {
   @Output() modalToggle = new EventEmitter<any>();
   @Input() selected_pHospitalTransmittalNo;
   @Input() program_name;
   @Input() patient;
   @Input() caserate_code;
   @Input() selected_ticket_number;
+  @Input() selected_series_lhio;
+  @Input() selected_transmission_control_no;
 
   faPenToSquare = faPenToSquare;
   faUpload = faUpload;
@@ -34,19 +36,6 @@ export class UploadClaimsComponent implements OnInit {
   is_uploading: boolean = false;
   uploading_claim: boolean = false;
   modals: any =[];
-
-  /* arr_CR4652 = ['CF2', 'CSF', 'CF3', 'SOA'];
-  arr_CR4651 = ['CF2', 'CSF', 'CF3', 'SOA'];
-  arr_CR4683 = ['CF2', 'CSF', 'CF3', 'SOA', 'OTH'];
-  arr_CR4684 = ['CF2', 'CSF', 'CF3', 'SOA', 'OTH'];
-  arr_CR4687 = ['CF2', 'CSF', 'PMRF', 'SOA', 'PBC'];
-  arr_CR4656 = ['CF2', 'CSF', 'NTP', 'SOA'];
-  arr_CR4657 = ['CF2', 'CSF', 'NTP', 'SOA'];
-  arr_CR4658 = ['CF2', 'CSF', 'SOA', 'OTH'];
-  arr_CR4685 = ['CF2', 'CSF', 'SOA'];
-  arr_CR0385 = ['CF2', 'CSF', 'SOA'];
-  arr_CR0456 = ['CF2', 'CSF', 'SOA'];
-  arr_CR4655 = ['CF2', 'CSF', 'MSR']; */
 
   arr_CR4652 = ['CF2', 'CSF', 'CF3', 'SOA w/ CTC'];
   arr_CR4651 = ['CF2', 'CSF', 'CF3', 'SOA w/ CTC'];
@@ -85,11 +74,10 @@ export class UploadClaimsComponent implements OnInit {
       program_desc: this.program_name
     };
 
-    this.http.post('eclaims/create-enc-xml', params).subscribe({
+    this.http.post('eclaims/create-required-xml', params).subscribe({
       next:(data:any) => {
         this.is_retrieving_xml = false;
         this.confirmUpload();
-        // console.log(data);
         this.encryptedXml = data.xml;
       },
       error: err => console.log(err)
@@ -101,17 +89,15 @@ export class UploadClaimsComponent implements OnInit {
 
     let params = {
       encryptedXml: this.encryptedXml,
-      program_code: this.program_name === 'cc' || this.program_name === 'fp' ? 'mc' :  this.program_name
+      program_code: this.program_name === 'cc' || this.program_name === 'fp' ? 'mc' :  this.program_name,
+      pClaimSeriesLhio: this.selected_series_lhio
     }
 
-    //ECLAIMS SERVICES
-    this.http.post('eclaims/upload-claim', params).subscribe({
+    this.http.post('eclaims/add-required-docs', params).subscribe({
       next:(data:any) => {
-        // console.log(data)
-        this.updateUploadData(data);
+        this.updateUploadData();
       },
       error: err => {
-        // console.log(err);
         this.is_uploading_claim = false;
         this.toastr.error(err.error.message, 'Upload Claim', {
           closeButton: true,
@@ -119,21 +105,15 @@ export class UploadClaimsComponent implements OnInit {
           disableTimeOut: true
         });
       }
-    })
+    });
   }
 
   show_ticket_number: boolean = false;
   ticket_number: string;
-  updateUploadData(data){
+  updateUploadData(){
     let params = {
       pHospitalTransmittalNo: this.selected_pHospitalTransmittalNo,
-      pTransmissionControlNumber: data.pTransmissionControlNumber,
-      pReceiptTicketNumber: data.pReceiptTicketNumber,
       pStatus: 'IN PROCESS',
-      pTransmissionDate: formatDate(data.pTransmissionDate, 'yyyy-MM-dd', 'en', 'Asia/Manila'),
-      pTransmissionTime: formatDate(new Date(), 'HH:mm:ss', 'en', 'Asia/Manila'),
-      isSuccess:'Y',
-      program_desc: this.program_name
     }
 
     this.http.post('eclaims/eclaims-upload', params).subscribe({
@@ -163,7 +143,7 @@ export class UploadClaimsComponent implements OnInit {
     this.show_form = false;
     let params = {
       pHospitalTransmittalNo: this.selected_pHospitalTransmittalNo,
-      required: 'N'
+      required: 'Y'
     };
 
     this.http.get('eclaims/eclaims-doc', {params}).subscribe({
@@ -194,7 +174,7 @@ export class UploadClaimsComponent implements OnInit {
       formData.append('pHospitalTransmittalNo', this.selected_pHospitalTransmittalNo);
       formData.append('program_desc', this.program_name);
       formData.append('patient_id', this.patient.id);
-      formData.append('required', 'N');
+      formData.append('required', 'Y');
 
       this.http.post('eclaims/eclaims-doc', formData).subscribe({
         next: (data:any) => {
@@ -229,7 +209,7 @@ export class UploadClaimsComponent implements OnInit {
   }
 
   closeModal(){
-    this.modalToggle.emit('upload-claims');
+    this.modalToggle.emit('upload-required-claims');
   }
 
   delete_url: string = 'eclaims/eclaims-doc/';

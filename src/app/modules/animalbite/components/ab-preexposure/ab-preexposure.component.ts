@@ -30,7 +30,6 @@ export class AbPreexposureComponent implements OnInit {
 
     this.http.get('animal-bite/patient-ab-pre-exposure', {params}).subscribe({
       next: (data: any) => {
-        console.log(data);
         this.pre_exposure_list = data.data;
         this.fetching_history = false;
       },
