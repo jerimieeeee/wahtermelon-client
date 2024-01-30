@@ -67,7 +67,7 @@ export class DrugFormComponent implements OnChanges {
   is_loading: boolean = false;
   onSubmit(){
     this.is_loading = true;
-    // console.log(this.prescriptionForm);
+    console.log(this.prescriptionForm);
 
     if(this.prescriptionForm.valid){
       if(this.selected_drug.new_drug) {
@@ -81,6 +81,7 @@ export class DrugFormComponent implements OnChanges {
           }
         });
       } else {
+        this.is_loading = false;
         this.savePrescription();
       }
     }
@@ -156,7 +157,7 @@ export class DrugFormComponent implements OnChanges {
       duration_frequency: this.selected_drug.frequency ? this.selected_drug.frequency.code : null,
       quantity: this.selected_drug.quantity,
       quantity_preparation: this.selected_drug.preparation ? this.selected_drug.preparation.code : null,
-      instruction_quantity: this.selected_drug.instruction_quantity,
+      instruction_quantity: this.selected_drug.instruction_quantity ?? 1,
       medicine_route_code: this.selected_drug.medicine_route ? this.selected_drug.medicine_route.code : null,
       remarks: this.selected_drug.remarks
     });
@@ -197,7 +198,7 @@ export class DrugFormComponent implements OnChanges {
       duration_frequency: [null,[Validators.required]], //libraries/duration-frequencies
       quantity: [null,[Validators.required]],
       quantity_preparation: [null,[Validators.required]], //libraries/preparations
-      instruction_quantity: [1,[Validators.required]],
+      instruction_quantity: [1],
       medicine_route_code: [null,[Validators.required]],
       remarks: [null]
     });
