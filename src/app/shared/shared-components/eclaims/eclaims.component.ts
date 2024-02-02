@@ -70,13 +70,13 @@ export class EclaimsComponent implements OnInit {
       program_desc: this.program_name
     };
 
-    params['eclaims_id_arr'] = eclaims_id_arr ? eclaims_id_arr.join(',') : null;
+    // params['eclaims_id_arr'] = eclaims_id_arr ? eclaims_id_arr.join(',') : null;
 
     this.http.get('eclaims/eclaims-caserate', {params}).subscribe({
       next:(data:any) => {
         this.caserate_list = data.data;
 
-        this.show_cf2 = Object.keys(this.caserate_list).length > 0 ? true:false;
+        this.show_cf2 = Object.keys(this.caserate_list).length > 0 ? true : false;
         this.show_form = true;
       },
       error: err => console.log(err)
