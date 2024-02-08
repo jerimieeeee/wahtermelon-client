@@ -1,1 +1,130 @@
-<p>daily-dsaddasdadas works!</p>
+<div class="grid grid-cols-1 w-full">
+  <div class="flex justify-between w-full text-blue-500 font-semibold text-lg p-3" >
+    <p class="text-center"></p>
+  </div>
+  <div class="font-semibold text-center">
+    DAILY SERVICE REPORT (CONSULTATION) - Wireless Access for Health
+  </div>
+  <tr class="text-sm font-medium text-gray-900 text-center align-top">
+    {{this.reportForm.value.start_date}} to {{this.reportForm.value.end_date}}
+  </tr>
+  <tr class="bg-gray-200 font-semibold">
+    <th class="text-sm text-left row-span-5 font-semibold text-gray-900 px-6 py-4 w-2/12">
+      Total Number of Consult: {{this.stats.length}}
+    </th>
+    <th class="text-sm text-center font-semibold row-span-5 text-gray-900 px-6 py-4 w-2/12">
+      MALE: {{ this.count_male }}
+    </th>
+    <th class="text-sm font-semibold row-span-5 text-gray-900 px-6 py-4 w-2/12">
+      FEMALE:{{ this.count_female }}
+    </th>
+  </tr>
+  <tbody>
+    <table class="select-none border-red-50">
+      <tr class="text-center border-b-2 border-gray-400">
+        <th class="text-sm font-semibold text-gray-900 px-1 py-2 border-r w-1/18">
+          PATIENT NAME
+        </th>
+        <th class="text-sm font-semibold text-gray-900 px-1 py-2 border-r w-1/18">
+          GENDER
+        </th>
+        <th class="text-sm font-semibold text-gray-900 px-1 py-2 border-r w-1/18">
+          BIRTHDAY
+        </th>
+        <th class="text-sm font-semibold text-gray-900 px-1 py-2 border-r w-1/18">
+          AGE
+        </th>
+        <th class="text-sm font-semibold text-gray-900 px-1 py-2 border-r w-1/18">
+          WITH CONSENT
+        </th>
+        <th class="text-sm font-semibold text-gray-900 px-1 py-2 border-r w-1/18">
+          CONSULT DATE
+        </th>
+        <th class="text-sm font-semibold text-gray-900 px-1.5 py-2 border-r w-1/18">
+          ADDRESS
+        </th>
+        <th class="text-sm font-semibold text-gray-900 px-1.5 py-2 border-r w-1/18">
+          PHILHEALTH ID
+        </th>
+        <th class="text-sm font-semibold text-gray-900 px-1.5 py-2 border-r w-1/18">
+          CCT/4PS RECIPIENT
+        </th>
+        <th class="text-sm font-semibold text-gray-900 px-1.5 py-2 border-r w-1/18">
+          VITAL SIGNS
+        </th>
+        <th class="text-sm font-semibold text-gray-900 px-1.5 py-2 border-r w-1/18">
+          COMPLAINTS
+        </th>
+        <th class="text-sm font-semibold text-gray-900 px-1.5 py-2 border-r w-1/18">
+          HISTORY
+        </th>
+        <th class="text-sm font-semibold text-gray-900 px-1.5 py-2 border-r w-1/18">
+          INITIAL DIAGNOSIS
+        </th>
+        <th class="text-sm font-semibold text-gray-900 px-1.5 py-2 border-r w-1/18">
+          FINAL DIAGNOSIS
+        </th>
+        <th class="text-sm font-semibold text-gray-900 px-1.5 py-2 border-r w-1/18">
+          TREATMENT NOTES
+        </th>
+        <th class="text-sm font-semibold text-gray-900 px-1.5 py-2 border-r w-1/18">
+          TREATMENT
+        </th>
+      </tr>
+      <tr *ngFor="let indicator of stats">
+       <span class="hidden">{{ countTotal(indicator.patient.gender === 'M' ? 'count_male' : 'count_female') }}</span>
+        <th class="border-r border-b border-l border-gray-200">
+          {{indicator.patient.last_name}}, {{indicator.patient.first_name}} {{indicator.patient.middle_name}}
+        </th>
+        <th class="border-r border-b border-gray-200">
+          {{indicator.patient.gender}}
+        </th>
+        <th class="border-r border-b border-gray-200">
+          {{indicator.patient.birthdate}}
+        </th>
+        <th class="border-r border-b border-gray-200">
+          to follow
+        </th>
+        <th class="border-r border-b border-gray-200">
+          {{indicator.patient.consent_flag ? "YES" : "NO"}}
+        </th>
+        <th class="border-r border-b border-gray-200">
+          {{indicator.consult_date}}
+        </th>
+        <th class="border-r border-b border-gray-200">
+          {{indicator.patient.household_folder.address}}, {{indicator.patient.household_folder.barangay.name}}
+        </th>
+        <th class="border-r border-b border-gray-200">
+          {{indicator.philhealth_latest?.philhealth_id ?? '-'}}
+        </th>
+        <th class="border-r border-b border-gray-200">
+          -
+        </th>
+        <th class="border-r border-b border-gray-200">
+          -
+        </th>
+        <th class="border-r border-b border-gray-200">
+          {{indicator.consult_notes.complaint ?? '-'}}
+        </th>
+        <th class="border-r border-b border-gray-200">
+          {{indicator.consult_notes.history ?? '-'}}
+        </th>
+        <th class="border-r border-b border-gray-200">
+          {{indicator.consult_notes.initialdx ?? '-'}}
+        </th>
+        <th class="border-r border-b border-gray-200">
+          {{indicator.consult_notes.finaldx ?? '-'}}
+        </th>
+        <th class="border-r border-b border-gray-200">
+          {{indicator.consult_notes.plan ?? '-'}}
+        </th>
+        <th class="border-r border-b border-gray-200">
+          {{indicator.medicine.plan ?? '-'}}
+        </th>
+      </tr>
+    </table>
+  </tbody>
+</div>
+
+
+<!--<app-name-list *ngIf="openList" (toggleModal)="toggleModal()" [name_list]="name_list"></app-name-list>-->

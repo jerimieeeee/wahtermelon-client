@@ -48,6 +48,10 @@ export class ReportsComponent implements OnInit {
     { id: 'profiling-report', desc: 'Profiling', url: 'reports-2018/household-profiling/report'},
   ];
 
+  daily_service = [
+    { id: 'daily-service', desc: 'Consultation', url: 'reports-2018/daily-service/report'},
+  ];
+
   months = [
     {
       value: 1,
