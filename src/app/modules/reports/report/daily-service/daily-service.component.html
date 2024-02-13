@@ -80,7 +80,7 @@
       <tr *ngFor="let indicator of stats">
        <span class="hidden">{{ countTotal(indicator.gender === 'M' ? 'count_male' : 'count_female') }}</span>
         <span class="hidden">{{ countTotal(indicator.is_konsulta === true ? 'count_konsulta' : '-') }}</span>
-        <span class="hidden">{{ countTotal(indicator.consent_flag === false ? 'count_consent' : '-') }}</span>
+        <span class="hidden">{{ countTotal(indicator.consent_flag === true ? 'count_consent' : '-') }}</span>
         <span class="hidden">{{ countTotal(indicator.philhealth_id != null ? 'count_philhealth' : '-') }}</span>
         <td class="border-r border-b border-l border-gray-200 text-center">
           {{indicator.patient_name}}
