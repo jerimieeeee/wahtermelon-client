@@ -87,6 +87,9 @@ export class DailyServiceComponent {
 
   count_male: number = 0;
   count_female: number = 0;
+  count_konsulta: number = 0;
+  count_consent: number = 0;
+  count_philhealth: number = 0;
   countTotal(var_name: string) {
     this[var_name] += 1;
     // console.log(this[var_name]);
@@ -104,13 +107,12 @@ export class DailyServiceComponent {
   }
 
   ngOnChanges(): void {
-    this.stats = this.report_data;
+    this.stats = this.report_data.data;
     this.reportform_data = this.reportForm;
     this.selected_barangay = this.selectedBrgy;
     this.info3 = this.userInfo;
     this.brgys_info = this.brgys;
     this.pdf_exported = false;
-
     this.convertBrgy();
     this.convertDate();
   }
