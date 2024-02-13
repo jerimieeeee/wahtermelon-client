@@ -9,7 +9,8 @@ import * as moment from 'moment';
   templateUrl: './daily-service.component.html',
   styleUrls: ['./daily-service.component.scss']
 })
-export class DailyServiceComponent {
+
+export class DailyServiceComponent implements OnChanges {
   @Input() report_data;
   @Input() reportForm;
   @Input() selectedBrgy;
@@ -107,6 +108,11 @@ export class DailyServiceComponent {
   }
 
   ngOnChanges(): void {
+    this.count_male = 0;
+    this.count_female = 0;
+    this.count_konsulta = 0;
+    this.count_consent  = 0;
+    this.count_philhealth = 0;
     this.stats = this.report_data.data;
     this.reportform_data = this.reportForm;
     this.selected_barangay = this.selectedBrgy;
