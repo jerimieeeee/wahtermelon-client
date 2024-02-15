@@ -3,11 +3,11 @@
     <span>FHSIS Report - Non-Communicable Disease</span>
     <span>
       <!-- <fa-icon *ngIf="exporting" [icon]="faCircleNotch" spin="true" class="text-blue-500 text-sm mr-3">Exporting...</fa-icon> -->
-      <button type="button" class="text-2xl mr-5 text-red-600 disabled:text-gray-600">
-        <fa-icon></fa-icon>
+      <button [disabled]="pdf_exported" type="button" class="text-2xl mr-5 text-red-600 disabled:text-gray-600" (click)="exportP()">
+        <fa-icon [icon]="faFilePdf"></fa-icon>
       </button>
-      <button  type="button" class="text-2xl">
-        <fa-icon class="text-green-700"></fa-icon>
+      <button  type="button" class="text-2xl" (click)="exportX()">
+        <fa-icon [icon]="faFileExcel" class="text-green-700"></fa-icon>
       </button>
     </span>
   </div>
@@ -15,13 +15,13 @@
     <div class="sm:-mx-6 lg:-mx-8">
       <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
         <div class="">
-          <table class="min-w-full border select-none" id="reportForm">
+          <table class="min-w-full border-black border-l border-r border-b border-t select-none" id="reportForm">
             <thead class="border-b">
-            <tr class="text-center sticky top-0 border-black">
-              <th colspan="2" class="text-sm font-medium text-gray-900 px-6 py-4 border w-1/12">
+            <tr class="text-center top-0 border-black">
+              <th class="text-sm font-medium text-gray-900 px-6 py-4 border-black border-l border-r border-t border-b w-1/12">
                 <img src="./assets/img/DOH_Logo.png" class="rounded-full w-28 h-28 mx-auto" />
               </th>
-              <th colspan="2" class="text-sm font-medium text-gray-900 px-6 py-4 border text-left align-top">
+              <th colspan="3" class="text-sm font-medium text-gray-900 px-6 py-4 border-black border-l border-r border-t border-b text-left align-top">
                 FHSIS Report for the Month: {{this.convertedMonth}} <br />
                 Name of Barangay: <br />
                 Name of BHS: <br />
@@ -29,19 +29,19 @@
                 Name of Province: <br />
                 Projected Population for the Year: <br />
               </th>
-              <th colspan="2" class="relative text-sm w-2/12 font-medium text-gray-900 px-6 py-4 border align-top text-left">
+              <th colspan="3" class="text-sm w-2/12 font-medium text-gray-900 px-6 py-4 border-black border-t border-r border-b align-top text-left">
                 Year: {{this.reportform_data.value.year}}
               </th>
-              <th colspan="2" class="text-sm font-bold text-gray-900 px-6 py-4 border text-center w-2/12">
+              <th colspan="1" class="text-sm font-bold text-gray-900 px-6 py-4 border-black border-l border-r border-b border-t text-center w-2/12">
                 <img src="./assets/img/m1.png" class="mx-auto" />
               </th>
             </tr>
-            <tr class="text-center sticky top-0 bg-gray-200 border-black border-t border-b border-r border-l">
+            <tr class="text-center top-0 bg-gray-200 border-black border-t border-b border-r border-l">
               <th scope="col" colspan="8" class="font-semibold text-gray-900 px-6 w-2/12">
                 Section F. Non-Communicable Disease Prevention and Control Services
               </th>
             </tr>
-            <tr class="text-center sticky top-0 border-black">
+            <tr class="text-center top-0 bg-gray-200 border-black">
               <th colspan="1" rowspan="2" class="font-semibold text-gray-900 border-black px-6 border-l border-r border-b w-4/12">
                 Indicators
               </th>
@@ -55,163 +55,253 @@
                 Remarks
               </th>
             </tr>
-            <tr class="text-center sticky top-0 border-black">
-              <th class="font-semibold text-gray-900 border-black px-6 border-l border-b w-1/12">
+            <tr class="text-center top-0 bg-gray-200 border-black">
+              <th class="font-semibold text-gray-900 border-black border-l border-b w-1/12">
                 Male
               </th>
-              <th class="font-semibold text-gray-900 border-black px-6 border-l border-r border-b border-t w-1/12">
+              <th class="font-semibold text-gray-900 border-black border-l border-r border-b border-t w-1/12">
                 Female
               </th>
-              <th class="font-semibold text-gray-900 border-black px-6 border-l border-b border-r w-1/12">
+              <th class="font-semibold text-gray-900 border-black border-l border-b border-r w-1/12">
                 Total
               </th>
-              <th class="font-semibold text-gray-900 border-black px-6 border-r border-b border-t w-1/12">
+              <th class="font-semibold text-gray-900 border-black border-r border-b border-t w-1/12">
                 Male
               </th>
-              <th class="font-semibold text-gray-900 border-black px-6border-r border-b w-1/12">
+              <th class="font-semibold text-gray-900 border-black border-r border-b w-1/12">
                 Female
               </th>
-              <th class="font-semibold text-gray-900 border-black px-6 border-r border-b  w-1/12">
+              <th class="font-semibold text-gray-900 border-black border-r border-b border-l w-1/12">
                 Total
               </th>
             </tr>
-            <tr class="text-center sticky top-0">
-              <th class="text-gray-900 border-black px-6 border-l border-r border-b">
+            <tr class="text-center top-0 bg-gray-200">
+              <td class="text-gray-900 text-sm border-black border-l border-r border-b">
                 (Col. 1)
-              </th>
-              <th class="text-gray-900 border-black px-6  border-r border-b ">
+              </td>
+              <td class="text-gray-900 text-sm border-black border-r border-b ">
                 (Col. 2)
-              </th>
-              <th class="text-gray-900 border-black px-6  border-r border-b ">
+              </td>
+              <td class="text-gray-900 text-sm border-black border-r border-b ">
                 (Col. 3)
-              </th>
-              <th class="text-gray-900 border-black px-6  border-r border-b ">
+              </td>
+              <td class="text-gray-900 text-sm border-black border-r border-b ">
                 (Col. 4)
-              </th>
-              <th class="text-gray-900 border-black px-6 border-r border-b ">
+              </td>
+              <td class="text-gray-900 text-sm border-black border-r border-b ">
                 (Col. 5)
-              </th>
-              <th class="text-gray-900 border-black px-6 border-r border-b ">
+              </td>
+              <td class="text-gray-900 text-sm border-black border-r border-b ">
                 (Col. 6)
-              </th>
-              <th class="text-gray-900 border-black px-6 border-r border-b">
+              </td>
+              <td class="text-gray-900 text-sm border-black border-r border-b">
                 (Col. 7)
-              </th>
-              <th class="text-gray-900 border-black px-6 border-r border-b">
+              </td>
+              <td class="text-gray-900 text-sm border-black border-r border-b">
                 (Col. 8)
-              </th>
+              </td>
             </tr>
             </thead>
             <tbody>
             <tr>
               <td class="border-black px-6 border-r border-l border-b text-sm">1. No. of Adults who risk-assessed using PHILPEN</td>
-                <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
-                <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
-                <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
-                <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
-                <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
-                <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
-                <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
+                <td class="border-black border-r border-l border-b text-blue-500 text-center" [class]=" stats?.assessed_male?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.assessed_male)">{{ stats?.assessed_male?.length ?? 0}}</td>
+                <td class="border-black border-r border-l border-b text-blue-500 text-center" [class]=" stats?.assessed_female?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.assessed_female)">{{ stats?.assessed_female?.length ?? 0}}</td>
+                <td class="border-black border-r border-l border-b text-blue-500 text-center" [class]=" stats?.assessed_male.length !==0 || stats?.assessed_female.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.assessed_male, stats?.assessed_female)">{{ stats?.assessed_male.length +  stats?.assessed_female.length }}</td>
+                <td class="border-black border-r border-l border-b text-blue-500 text-center" [class]=" stats?.assessed_male_senior?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.assessed_male_senior)">{{ stats?.assessed_male_senior?.length ?? 0}}</td>
+                <td class="border-black border-r border-l border-b text-blue-500 text-center" [class]=" stats?.assessed_female_senior?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.assessed_female_senior)">{{ stats?.assessed_female_senior?.length ?? 0}}</td>
+                <td class="border-black border-r border-l border-b text-blue-500 text-center" [class]=" stats?.assessed_male_senior.length !==0 || stats?.assessed_female_senior.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.assessed_male_senior, stats?.assessed_female_senior)">{{ stats?.assessed_male_senior.length +  stats?.assessed_female_senior.length }}</td>
+                <td class="border-black border-r border-l border-b text-blue-500 text-center"></td>
             </tr>
             <tr>
               <td class="border-black px-10 border-r border-l border-b text-sm">2. Current smokers</td>
-                <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
-                <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
-                <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
-                <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
-                <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
-                <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
-                <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
+                <td class="border-black border-r border-l border-b text-blue-500 text-center" [class]=" stats?.assessed_male_smoker?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.assessed_male_smoker)">{{ stats?.assessed_male_smoker?.length ?? 0}}</td>
+                <td class="border-black border-r border-l border-b text-blue-500 text-center" [class]=" stats?.assessed_female_smoker?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.assessed_female_smoker)">{{ stats?.assessed_female_smoker?.length ?? 0}}</td>
+                <td class="border-black border-r border-l border-b text-blue-500 text-center" [class]=" stats?.assessed_male_smoker.length !==0 || stats?.assessed_female_smoker.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.assessed_male_smoker, stats?.assessed_female_smoker)">{{ stats?.assessed_male_smoker.length +  stats?.assessed_female_smoker.length }}</td>
+                <td class="border-black border-r border-l border-b text-blue-500 text-center" [class]=" stats?.assessed_male_smoker_senior?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.assessed_male_smoker_senior)">{{ stats?.assessed_male_smoker_senior?.length ?? 0}}</td>
+                <td class="border-black border-r border-l border-b text-blue-500 text-center" [class]=" stats?.assessed_female_smoker_senior?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.assessed_female_smoker_senior)">{{ stats?.assessed_female_smoker_senior?.length ?? 0}}</td>
+                <td class="border-black border-r border-l border-b text-blue-500 text-center" [class]=" stats?.assessed_male_smoker_senior.length !==0 || stats?.assessed_female_smoker_senior.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.assessed_male_smoker_senior, stats?.assessed_female_smoker_senior)">{{ stats?.assessed_male_smoker_senior.length +  stats?.assessed_female_smoker_senior.length }}</td>
+                <td class="border-black border-r border-l border-b text-blue-500 text-center"></td>
             </tr>
             <tr>
               <td class="border-black px-10 border-r border-l border-b text-sm ">3. Alcohol binge drinkers</td>
-                <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
-                <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
-                <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
-                <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
-                <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
-                <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
-                <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
+              <td class="border-black border-r border-l border-b text-blue-500 text-center" [class]=" stats?.assessed_male_alcohol?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.assessed_male_alcohol)">{{ stats?.assessed_male_alcohol?.length ?? 0}}</td>
+              <td class="border-black border-r border-l border-b text-blue-500 text-center" [class]=" stats?.assessed_female_alcohol?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.assessed_female_alcohol)">{{ stats?.assessed_female_alcohol?.length ?? 0}}</td>
+              <td class="border-black border-r border-l border-b text-blue-500 text-center" [class]=" stats?.assessed_male_alcohol.length !==0 || stats?.assessed_female_alcohol.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.assessed_male_alcohol, stats?.assessed_female_alcohol)">{{ stats?.assessed_male_alcohol.length +  stats?.assessed_female_alcohol.length }}</td>
+              <td class="border-black border-r border-l border-b text-blue-500 text-center" [class]=" stats?.assessed_male_alcohol_senior?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.assessed_male_alcohol_senior)">{{ stats?.assessed_male_alcohol_senior?.length ?? 0}}</td>
+              <td class="border-black border-r border-l border-b text-blue-500 text-center" [class]=" stats?.assessed_female_alcohol_senior?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.assessed_female_alcohol_senior)">{{ stats?.assessed_female_alcohol_senior?.length ?? 0}}</td>
+              <td class="border-black border-r border-l border-b text-blue-500 text-center" [class]=" stats?.assessed_male_alcohol_senior.length !==0 || stats?.assessed_female_alcohol_senior.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.assessed_male_alcohol_senior, stats?.assessed_female_alcohol_senior)">{{ stats?.assessed_male_alcohol_senior.length +  stats?.assessed_female_alcohol_senior.length }}</td>
+                <td class="border-black border-r border-l border-b text-blue-500 text-center"></td>
             </tr>
             <tr>
               <td class="border-black px-10 border-r border-l border-b text-sm ">4. Overweight/Obese</td>
-                <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
-                <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
-                <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
-                <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
-                <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
-                <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
-                <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
+              <td class="border-black border-r border-l border-b text-blue-500 text-center" [class]=" stats?.assessed_male_obese?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.assessed_male_obese)">{{ stats?.assessed_male_obese?.length ?? 0}}</td>
+              <td class="border-black border-r border-l border-b text-blue-500 text-center" [class]=" stats?.assessed_female_obese?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.assessed_female_obese)">{{ stats?.assessed_female_obese?.length ?? 0}}</td>
+              <td class="border-black border-r border-l border-b text-blue-500 text-center" [class]=" stats?.assessed_male_obese.length !==0 || stats?.assessed_female_obese.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.assessed_male_obese, stats?.assessed_female_obese)">{{ stats?.assessed_male_obese.length +  stats?.assessed_female_obese.length }}</td>
+              <td class="border-black border-r border-l border-b text-blue-500 text-center" [class]=" stats?.assessed_male_obese_senior?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.assessed_male_obese_senior)">{{ stats?.assessed_male_obese_senior?.length ?? 0}}</td>
+              <td class="border-black border-r border-l border-b text-blue-500 text-center" [class]=" stats?.assessed_female_obese_senior?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.assessed_female_obese_senior)">{{ stats?.assessed_female_obese_senior?.length ?? 0}}</td>
+              <td class="border-black border-r border-l border-b text-blue-500 text-center" [class]=" stats?.assessed_male_obese_senior.length !==0 || stats?.assessed_female_obese_senior.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.assessed_male_obese_senior, stats?.assessed_female_obese_senior)">{{ stats?.assessed_male_obese_senior.length +  stats?.assessed_female_obese_senior.length }}</td>
+                <td class="border-black border-r border-l border-b text-blue-500 text-center"></td>
             </tr>
             <tr>
               <td class="px-6 border-black border-r border-l border-b text-sm">5. No. of adult women screened for Cervical Cancer using VIA/PAP Smear</td>
+                <td class="border-black border-r border-l border-b text-blue-500 text-center bg-gray-400"></td>
                 <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
                 <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
+                <td class="border-black border-r border-l border-b text-blue-500 text-center bg-gray-400"></td>
                 <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
                 <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
-                <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
-                <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
-                <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
+                <td class="border-black border-r border-l border-b text-blue-500 text-center"></td>
             </tr>
             <tr>
               <td class="px-6 border-black border-r border-l border-b  text-sm">6. No. of adult women found positive/suspect for Cervical Cancer using VIA or PAP Smear</td>
+              <td class="border-black border-r border-l border-b text-blue-500 text-center bg-gray-400"></td>
               <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
               <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
+              <td class="border-black border-r border-l border-b text-blue-500 text-center bg-gray-400"></td>
               <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
               <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
-              <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
-              <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
-              <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
+              <td class="border-black border-r border-l border-b text-blue-500 text-center"></td>
             </tr>
             <tr>
               <td class="px-6 border-black border-r border-l border-b  text-sm">7. No. of adult women screened for breast mass</td>
+              <td class="border-black border-r border-l border-b text-blue-500 text-center bg-gray-400"></td>
               <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
               <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
+              <td class="border-black border-r border-l border-b text-blue-500 text-center bg-gray-400"></td>
               <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
               <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
-              <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
-              <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
-              <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
+              <td class="border-black border-r border-l border-b text-blue-500 text-center"></td>
             </tr>
             <tr>
               <td class="px-6 border-black border-r border-l border-b  text-sm">8. No. of adult women with suspicious breast mass</td>
+              <td class="border-black border-r border-l border-b text-blue-500 text-center bg-gray-400"></td>
               <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
               <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
+              <td class="border-black border-r border-l border-b text-blue-500 text-center bg-gray-400"></td>
               <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
               <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
-              <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
-              <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
-              <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
+              <td class="border-black border-r border-l border-b text-blue-500 text-center"></td>
             </tr>
             <tr>
               <td class="px-6 border-black border-r border-l border-b  text-sm">9. No. of identified hypertensive adults</td>
-              <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
-              <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
-              <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
-              <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
-              <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
-              <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
-              <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
+              <td class="border-black border-r border-l border-b text-blue-500 text-center" [class]=" stats?.assessed_male_hypertensive?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.assessed_male_hypertensive)">{{ stats?.assessed_male_hypertensive?.length ?? 0}}</td>
+              <td class="border-black border-r border-l border-b text-blue-500 text-center" [class]=" stats?.assessed_female_hypertensive?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.assessed_female_hypertensive)">{{ stats?.assessed_female_hypertensive?.length ?? 0}}</td>
+              <td class="border-black border-r border-l border-b text-blue-500 text-center" [class]=" stats?.assessed_male_hypertensive.length !==0 || stats?.assessed_female_hypertensive.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.assessed_male_hypertensive, stats?.assessed_female_hypertensive)">{{ stats?.assessed_male_hypertensive.length +  stats?.assessed_female_hypertensive.length }}</td>
+              <td class="border-black border-r border-l border-b text-blue-500 text-center" [class]=" stats?.assessed_male_hypertensive_senior?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.assessed_male_hypertensive_senior)">{{ stats?.assessed_male_hypertensive_senior?.length ?? 0}} </td>
+              <td class="border-black border-r border-l border-b text-blue-500 text-center" [class]=" stats?.assessed_female_hypertensive_senior?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.assessed_female_hypertensive_senior)">{{ stats?.assessed_female_hypertensive_senior?.length ?? 0}}</td>
+              <td class="border-black border-r border-l border-b text-blue-500 text-center" [class]=" stats?.assessed_male_hypertensive_senior.length !==0 || stats?.assessed_female_hypertensive_senior.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.assessed_male_hypertensive_senior, stats?.assessed_female_hypertensive_senior)">{{ stats?.assessed_male_hypertensive_senior.length +  stats?.assessed_female_hypertensive_senior.length }}</td>
+              <td class="border-black border-r border-l border-b text-blue-500 text-center"></td>
             </tr>
             <tr>
-              <td class="px-10 border-black border-r border-l border-b  text-sm">A. No. of identified hypertensive adults - <span class="font-bold ">New Cases</span> </td>
+              <td class="px-10 border-black border-r border-l border-b  text-sm">a. No. of identified hypertensive adults - <span class="font-bold "> New Cases</span> </td>
               <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
               <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
               <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
               <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
               <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
               <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
-              <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
+              <td class="border-black border-r border-l border-b text-blue-500 text-center"></td>
             </tr>
             <tr>
-              <td class="px-10 border-black border-r border-l border-b  text-sm">B. No. of identified hypertensive adults - <span class="font-bold ">Old Cases</span> </td>
+              <td class="px-10 border-black border-r border-l border-b  text-sm">b. No. of identified hypertensive adults - <span class="font-bold "> Old Cases</span> </td>
               <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
               <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
               <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
               <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
               <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
               <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
+              <td class="border-black border-r border-l border-b text-blue-500 text-center"></td>
+            </tr>
+            <tr>
+              <td class="px-6 border-black border-r border-l border-b  text-sm">10. No. of identified hypertensive adults provided with <span class="font-bold "> antihypertensive medications </span> </td>
               <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
+              <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
+              <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
+              <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
+              <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
+              <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
+              <td class="border-black border-r border-l border-b text-blue-500 text-center"></td>
+            </tr>
+            <tr>
+              <td class="px-6 border-black border-r border-l border-b  text-sm">11. No. of Identified adults with Type 2 DM </td>
+              <td class="border-black border-r border-l border-b text-blue-500 text-center" [class]=" stats?.assessed_male_diabetes?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.assessed_male_diabetes)">{{ stats?.assessed_male_diabetes?.length ?? 0}}</td>
+              <td class="border-black border-r border-l border-b text-blue-500 text-center" [class]=" stats?.assessed_female_diabetes?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.assessed_female_diabetes)">{{ stats?.assessed_female_diabetes?.length ?? 0}}</td>
+              <td class="border-black border-r border-l border-b text-blue-500 text-center" [class]=" stats?.assessed_male_diabetes.length !==0 || stats?.assessed_female_diabetes.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.assessed_male_diabetes, stats?.assessed_female_diabetes)">{{ stats?.assessed_male_diabetes.length +  stats?.assessed_female_diabetes.length }}</td>
+              <td class="border-black border-r border-l border-b text-blue-500 text-center" [class]=" stats?.assessed_male_diabetes_senior?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.assessed_male_diabetes_senior)">{{ stats?.assessed_male_diabetes_senior?.length ?? 0}} </td>
+              <td class="border-black border-r border-l border-b text-blue-500 text-center" [class]=" stats?.assessed_female_diabetes_senior?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.assessed_female_diabetes_senior)">{{ stats?.assessed_female_diabetes_senior?.length ?? 0}}</td>
+              <td class="border-black border-r border-l border-b text-blue-500 text-center" [class]=" stats?.assessed_male_diabetes_senior.length !==0 || stats?.assessed_female_diabetes_senior.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.assessed_male_diabetes_senior, stats?.assessed_female_diabetes_senior)">{{ stats?.assessed_male_diabetes_senior.length +  stats?.assessed_female_diabetes_senior.length }}</td>
+              <td class="border-black border-r border-l border-b text-blue-500 text-center"></td>
+            </tr>
+            <tr>
+              <td class="px-10 border-black border-r border-l border-b  text-sm">a. No. of identified with Type 2 DM - <span class="font-bold "> New Cases</span> </td>
+              <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
+              <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
+              <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
+              <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
+              <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
+              <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
+              <td class="border-black border-r border-l border-b text-blue-500 text-center"></td>
+            </tr>
+            <tr>
+              <td class="px-10 border-black border-r border-l border-b  text-sm">b. No. of identified with Type 2 DM - <span class="font-bold "> Old Cases</span> </td>
+              <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
+              <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
+              <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
+              <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
+              <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
+              <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
+              <td class="border-black border-r border-l border-b text-blue-500 text-center"></td>
+            </tr>
+            <tr>
+              <td class="px-6 border-black border-r border-l border-b  text-sm">12. No. of Identified adults with Type 2 DM provided with <span class="font-bold "> diabetes medications</span> </td>
+              <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
+              <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
+              <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
+              <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
+              <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
+              <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
+              <td class="border-black border-r border-l border-b text-blue-500 text-center"></td>
+            </tr>
+            <tr>
+              <td class="px-6 border-black border-r border-l border-b  text-sm">13. No. of Senior citizens 60 yrs old and above screened for eye problems </td>
+              <td class="border-black border-r border-l border-b text-blue-500 text-center bg-gray-400"></td>
+              <td class="border-black border-r border-l border-b text-blue-500 text-center bg-gray-400"></td>
+              <td class="border-black border-r border-l border-b text-blue-500 text-center bg-gray-400"></td>
+              <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
+              <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
+              <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
+              <td class="border-black border-r border-l border-b text-blue-500 text-center"></td>
+            </tr>
+            <tr>
+              <td class="px-6 border-black border-r border-l border-b  text-sm">14. No. of  senior citizens diagnosed with eye disease/s </td>
+              <td class="border-black border-r border-l border-b text-blue-500 text-center bg-gray-400"></td>
+              <td class="border-black border-r border-l border-b text-blue-500 text-center bg-gray-400"></td>
+              <td class="border-black border-r border-l border-b text-blue-500 text-center bg-gray-400"></td>
+              <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
+              <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
+              <td class="border-black border-r border-l border-b text-blue-500 text-center"> 0</td>
+              <td class="border-black border-r border-l border-b text-blue-500 text-center"></td>
+            </tr>
+            <tr>
+              <td class="px-6 border-black border-r border-l border-b  text-sm">15. No. of senior citizens who received one (1) dose of PPV </td>
+              <td class="border-black border-r border-l border-b text-blue-500 text-center bg-gray-400"></td>
+              <td class="border-black border-r border-l border-b text-blue-500 text-center bg-gray-400"></td>
+              <td class="border-black border-r border-l border-b text-blue-500 text-center bg-gray-400"></td>
+              <td class="border-black border-r border-l border-b text-blue-500 text-center" [class]=" stats?.male_senior_ppv?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.male_senior_ppv)">{{ stats?.male_senior_ppv?.length ?? 0}} </td>
+              <td class="border-black border-r border-l border-b text-blue-500 text-center" [class]=" stats?.female_senior_ppv?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.female_senior_ppv)">{{ stats?.female_senior_ppv?.length ?? 0}}</td>
+              <td class="border-black border-r border-l border-b text-blue-500 text-center" [class]=" stats?.male_senior_ppv.length !==0 || stats?.female_senior_ppv.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.male_senior_ppv, stats?.female_senior_ppv)">{{ stats?.male_senior_ppv.length +  stats?.female_senior_ppv.length }}</td>
+              <td class="border-black border-r border-l border-b text-blue-500 text-center"></td>
+            </tr>
+            <tr>
+              <td class="px-6 border-black border-r border-l border-b  text-sm">16. No. of senior citizens who received one (1) dose of influenza vaccine </td>
+              <td class="border-black border-r border-l border-b text-blue-500 text-center bg-gray-400"></td>
+              <td class="border-black border-r border-l border-b text-blue-500 text-center bg-gray-400"></td>
+              <td class="border-black border-r border-l border-b text-blue-500 text-center bg-gray-400"></td>
+              <td class="border-black border-r border-l border-b text-blue-500 text-center" [class]=" stats?.male_senior_influenza?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.male_senior_influenza)">{{ stats?.male_senior_influenza?.length ?? 0}} </td>
+              <td class="border-black border-r border-l border-b text-blue-500 text-center" [class]=" stats?.female_senior_influenza?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.female_senior_influenza)">{{ stats?.female_senior_influenza?.length ?? 0}}</td>
+              <td class="border-black border-r border-l border-b text-blue-500 text-center" [class]=" stats?.male_senior_influenza.length !==0 || stats?.female_senior_influenza.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.male_senior_influenza, stats?.female_senior_influenza)">{{ stats?.male_senior_influenza.length +  stats?.female_senior_influenza.length }}</td>
+              <td class="border-black border-r border-l border-b text-blue-500 text-center"></td>
             </tr>
             </tbody>
           </table>

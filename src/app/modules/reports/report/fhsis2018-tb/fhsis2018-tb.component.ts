@@ -54,7 +54,7 @@ export class Fhsis2018TbComponent {
   }
 
   exportX() {
-    this.exportAsService.save(this.exportAsExcel, 'Childcare M1').subscribe(() => {
+    this.exportAsService.save(this.exportAsExcel, 'TB Dots M1').subscribe(() => {
       // save started
     });
   }
@@ -62,7 +62,7 @@ export class Fhsis2018TbComponent {
   pdf_exported: boolean = false;
   exportP() {
     this.pdf_exported = true;
-    this.exportAsService.save(this.exportAsPdf, 'Childcare M1').subscribe(() => {
+    this.exportAsService.save(this.exportAsPdf, 'TB Dots M1').subscribe(() => {
       // save started
     });
   }
