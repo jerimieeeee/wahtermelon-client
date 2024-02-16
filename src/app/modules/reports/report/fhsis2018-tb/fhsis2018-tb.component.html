@@ -56,25 +56,25 @@
               <td class="p-5 border text-sm">1. Number of notified TB cases, all forms - Total</td>
               <td class="p-5 border text-blue-500 text-center"   [class]=" stats?.indicator1_male?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.indicator1_male)">{{ stats?.indicator1_male?.length ?? 0}}</td>
               <td class="p-5 border text-blue-500 text-center"   [class]=" stats?.indicator1_female?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.indicator1_female)">{{ stats?.indicator1_female?.length ?? 0}}</td>
-              <td class="p-5 border text-blue-500 text-center"   [class]=" stats?.indicator1_male.length !==0 || stats?.indicator1_female.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.indicator1_male, stats?.indicator1_female)">{{ stats?.indicator1_male.length +  stats?.indicator1_female.length }}</td>
+              <td class="p-5 border text-blue-500 text-center"   [class]=" stats?.indicator1_male.length !==0 || stats?.indicator1_female.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.indicator1_male, stats?.indicator1_female)">{{ stats?.indicator1_male?.length +  stats?.indicator1_female?.length }}</td>
             </tr>
             <tr>
               <td class="p-5 border text-sm">2. No. of registered bacteriologically confirmed drug resistant TB (RR/MDR-TB Cases)</td>
               <td class="p-5 border text-blue-500 text-center"  [class]=" stats?.indicator2_male?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.indicator2_male)">{{ stats?.indicator2_male?.length ?? 0}}</td>
               <td class="p-5 border text-blue-500 text-center"  [class]=" stats?.indicator2_female?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.indicator2_female)">{{ stats?.indicator2_female?.length ?? 0}}</td>
-              <td class="p-5 border text-blue-500 text-center"  [class]=" stats?.indicator2_male.length !==0 || stats?.indicator2_female.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.indicator2_male, stats?.indicator2_female)">{{ stats?.indicator2_male.length +  stats?.indicator2_female.length }}</td>
+              <td class="p-5 border text-blue-500 text-center"  [class]=" stats?.indicator2_male?.length !==0 || stats?.indicator2_female?.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.indicator2_male, stats?.indicator2_female)">{{ stats?.indicator2_male?.length +  stats?.indicator2_female?.length }}</td>
             </tr>
             <tr>
               <td class="p-5 border text-sm">3. Number of TB, all forms that are cured and completely treated - Total</td>
               <td class="p-5 border text-blue-500 text-center"   [class]=" stats?.indicator3_male?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.indicator3_male)">{{ stats?.indicator3_male?.length ?? 0}}</td>
               <td class="p-5 border text-blue-500 text-center"   [class]=" stats?.indicator3_female?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.indicator3_female)">{{ stats?.indicator3_female?.length ?? 0}}</td>
-              <td class="p-5 border text-blue-500 text-center"   [class]=" stats?.indicator3_male.length !==0 || stats?.indicator3_female.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.indicator3_male, stats?.indicator3_female)">{{ stats?.indicator3_male.length +  stats?.indicator3_female.length }}</td>
+              <td class="p-5 border text-blue-500 text-center"   [class]=" stats?.indicator3_male?.length !==0 || stats?.indicator3_female.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.indicator3_male, stats?.indicator3_female)">{{ stats?.indicator3_male?.length +  stats?.indicator3_female?.length }}</td>
             </tr>
             <tr>
               <td class="p-5 border text-sm">4. No. of registered bacteriology confirmed drug resistant TB Cases (RR/MDR-TB) cured and completed treatment</td>
               <td class="p-5 border text-blue-500 text-center"   [class]=" stats?.indicator4_male?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.indicator4_male)">{{ stats?.indicator4_male?.length ?? 0}}</td>
               <td class="p-5 border text-blue-500 text-center"   [class]=" stats?.indicator4_female?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.indicator4_female)">{{ stats?.indicator4_female?.length ?? 0}}</td>
-              <td class="p-5 border text-blue-500 text-center"   [class]=" stats?.indicator4_male.length !==0 || stats?.indicator4_female.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.indicator4_male, stats?.indicator4_female)">{{ stats?.indicator4_male.length +  stats?.indicator4_female.length }}</td>
+              <td class="p-5 border text-blue-500 text-center"   [class]=" stats?.indicator4_male?.length !==0 || stats?.indicator4_female?.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.indicator4_male, stats?.indicator4_female)">{{ stats?.indicator4_male?.length +  stats?.indicator4_female?.length }}</td>
             </tr>
             </tbody>
           </table>
