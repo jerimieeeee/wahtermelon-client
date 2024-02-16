@@ -89,7 +89,76 @@ export class PbefComponent implements OnInit {
         this.paramsCc();
         break;
       }
+      case 'mc': {
+        this.paramsMc();
+        break;
+      }
+      default: {
+        console.log(this.selected_case)
+        // this.getPbef();
+      }
     }
+  }
+
+  paramsFp() {
+    let admission_date;
+    let discharge_date;
+
+    admission_date = formatDate(this.selected_caserate.caserate_date, 'yyyy-MM-dd', 'en', 'Asia/Manila');
+    discharge_date = formatDate(this.selected_caserate.caserate_date, 'yyyy-MM-dd', 'en', 'Asia/Manila');
+
+    this.getPbef(admission_date, discharge_date);
+  }
+
+  paramsAb() {
+    let admission_date;
+    let discharge_date;
+
+    admission_date = formatDate(this.selected_case.abPostExposure.day0_date, 'yyyy-MM-dd', 'en', 'Asia/Manila');
+    discharge_date = formatDate(this.selected_case.abPostExposure.day7_date, 'yyyy-MM-dd', 'en', 'Asia/Manila');
+
+    this.getPbef(admission_date, discharge_date);
+  }
+
+  paramsCc() {
+    let admission_date;
+    let discharge_date;
+
+    admission_date = formatDate(this.selected_case.admission_date, 'MM-dd-yyyy', 'en', 'Asia/Manila');
+    discharge_date = formatDate(this.selected_case.discharge_date, 'MM-dd-yyyy', 'en', 'Asia/Manila');
+
+    this.getPbef(admission_date, discharge_date);
+  }
+
+  paramsMc() {
+    let admission_date;
+    let discharge_date;
+
+    if(this.selected_caserate.code === 'ANC01' || this.selected_caserate.code === 'ANC02') {
+      let visit1: string = null;
+      let visit2: string = null;
+      let visit3: string = null;
+      let visit4: string = null;
+
+      Object.entries(this.selected_case.prenatal_visit).reverse().forEach(([key, value]:any, index) => {
+        if(index === 0 && !visit1) visit1 = value.prenatal_date;
+        if(index === 1 && !visit2) visit2 = value.prenatal_date;
+        if(index === 2 && !visit3) visit3 = value.prenatal_date;
+
+        if((index > 2 && !visit4) && value.trimester === 3) {
+          visit4 = value.prenatal_date;
+          return true;
+        }
+      });
+
+      admission_date = formatDate(new Date(visit1), 'MM-dd-yyyy', 'en', 'Asia/Manila');
+      discharge_date = formatDate(new Date(visit4), 'MM-dd-yyyy', 'en', 'Asia/Manila');
+    } else {
+      admission_date = formatDate(this.selected_case.post_registration.admission_date, 'MM-dd-yyyy', 'en', 'Asia/Manila');
+      discharge_date = formatDate(this.selected_case.post_registration.discharge_date, 'MM-dd-yyyy', 'en', 'Asia/Manila');
+    }
+
+    this.getPbef(admission_date, discharge_date);
   }
 
   paramsTb() {
@@ -110,10 +179,7 @@ export class PbefComponent implements OnInit {
     this.getPbef(admission_date, discharge_date);
   }
 
-  paramsCc() {
-    let admission_date: Date;
-    let discharge_date: Date;
-  }
+
 
   getPbef(admission_date, discharge_date){
     let admit_date = formatDate(admission_date, 'MM-dd-yyyy', 'en', 'Asia/Manila');
@@ -122,7 +188,7 @@ export class PbefComponent implements OnInit {
     this.show_form = false;
     // let test_date = formatDate(new Date(), 'MM-dd-yyyy', 'en', 'Asia/Manila');
     let params = {
-      program_code: this.program_name,
+      program_code: this.program_name === 'cc' || this.program_name === 'fp' ? 'mc' : this.program_name,
       member_pin: this.patient_philhealth.philhealth_id,
       member_last_name: this.patient_philhealth.membership_type_id === 'DD' ? this.patient_philhealth.member_last_name.toUpperCase() : this.patient.last_name.toUpperCase(),
       member_first_name: this.patient_philhealth.membership_type_id === 'DD' ? this.patient_philhealth.member_first_name.toUpperCase() : this.patient.first_name.toUpperCase(),
@@ -144,10 +210,11 @@ export class PbefComponent implements OnInit {
       next: (data: any) => {
         this.pbef_result = data;
         this.show_form = true;
-        console.log(this.pbef_result)
-        console.log(this.pbef_result.ASOF)
       },
-      error: err => console.log(err)
+      error: err => {
+        this.http.showError('Error fetching pbef. Please try again.', 'PBEF')
+        this.closeModal();
+      }
     })
   }
 
@@ -163,7 +230,6 @@ export class PbefComponent implements OnInit {
 
   ngOnInit(): void {
     if(this.caserate_list.length === 1) {
-      console.log(this.caserate_list)
       this.selected_caserate = this.caserate_list[0];
       this.getParams();
     }
