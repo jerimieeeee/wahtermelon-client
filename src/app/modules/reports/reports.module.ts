@@ -17,6 +17,7 @@ import { Fhsis2018MorbidityComponent } from './report/fhsis2018-morbidity/fhsis2
 import { HouseholdProfilingComponent } from './report/household-profiling/household-profiling.component';
 import { Fhsis2018TbComponent } from "./report/fhsis2018-tb/fhsis2018-tb.component";
 import { DailyServiceComponent } from './report/daily-service/daily-service.component';
+import { Fhsis2018NcdComponent } from './report/fhsis2018-ncd/fhsis2018-ncd.component';
 
 
 @NgModule({
@@ -32,6 +33,7 @@ import { DailyServiceComponent } from './report/daily-service/daily-service.comp
     HouseholdProfilingComponent,
     Fhsis2018TbComponent,
     DailyServiceComponent,
+    Fhsis2018NcdComponent,
   ],
   imports: [
     CommonModule,
