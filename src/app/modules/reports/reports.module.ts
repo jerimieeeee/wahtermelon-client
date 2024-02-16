@@ -15,6 +15,8 @@ import { PatientRegisteredComponent } from './report/patient-registered/patient-
 import { CatalystReportComponent } from './report/catalyst-report/catalyst-report.component';
 import { Fhsis2018MorbidityComponent } from './report/fhsis2018-morbidity/fhsis2018-morbidity.component';
 import { HouseholdProfilingComponent } from './report/household-profiling/household-profiling.component';
+import { Fhsis2018TbComponent } from "./report/fhsis2018-tb/fhsis2018-tb.component";
+import { DailyServiceComponent } from './report/daily-service/daily-service.component';
 
 
 @NgModule({
@@ -27,7 +29,9 @@ import { HouseholdProfilingComponent } from './report/household-profiling/househ
     PatientRegisteredComponent,
     CatalystReportComponent,
     Fhsis2018MorbidityComponent,
-    HouseholdProfilingComponent
+    HouseholdProfilingComponent,
+    Fhsis2018TbComponent,
+    DailyServiceComponent,
   ],
   imports: [
     CommonModule,
