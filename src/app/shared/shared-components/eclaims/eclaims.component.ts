@@ -70,7 +70,7 @@ export class EclaimsComponent implements OnInit {
       program_desc: this.program_name
     };
 
-    // params['eclaims_id_arr'] = eclaims_id_arr ? eclaims_id_arr.join(',') : null;
+    params['eclaims_id_arr'] = eclaims_id_arr ? eclaims_id_arr.join(',') : null;
 
     this.http.get('eclaims/eclaims-caserate', {params}).subscribe({
       next:(data:any) => {
