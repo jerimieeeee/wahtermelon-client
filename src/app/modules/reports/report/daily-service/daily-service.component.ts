@@ -113,7 +113,7 @@ export class DailyServiceComponent implements OnChanges {
     this.count_konsulta = 0;
     this.count_consent  = 0;
     this.count_philhealth = 0;
-    this.stats = this.report_data.data;
+    this.stats = this.report_data;
     this.reportform_data = this.reportForm;
     this.selected_barangay = this.selectedBrgy;
     this.info3 = this.userInfo;
