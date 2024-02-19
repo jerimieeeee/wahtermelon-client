@@ -110,13 +110,13 @@
           {{indicator.is_konsulta ? "YES" : "NO"}}
         </td>
         <td class="border-r border-b border-gray-200 text-left">
-          BP: {{indicator.bp_systolic ?? ''}} / {{indicator.vitals_latest?.bp_diastolic ?? ''}} <br />
-          Temp: {{indicator.patient_temp ?? ''}} <br />
-          W: {{indicator.patient_weight ?? ''}} <br />
-          H: {{indicator.patient_height ?? ''}} <br />
-          PR: {{indicator.patient_pulse_rate ?? ''}} <br />
-          HR: {{indicator.patient_heart_rate ?? ''}} <br />
-          RR: {{indicator.patient_respiratory_rate ?? ''}} <br />
+          BP:  <span class="font-bold">{{indicator.bp_systolic ?? ''}} / {{indicator.bp_diastolic ?? ''}} </span> <br />
+          Temp: <span class="font-bold">{{indicator.patient_temp ?? ''}} </span> <br />
+          W: <span class="font-bold">{{indicator.patient_weight ?? ''}} </span> <br />
+          H: <span class="font-bold">{{indicator.patient_height ?? ''}} </span> <br />
+          PR: <span class="font-bold">{{indicator.patient_pulse_rate ?? ''}} </span> <br />
+          HR: <span class="font-bold">{{indicator.patient_heart_rate ?? ''}} </span> <br />
+          RR: <span class="font-bold">{{indicator.patient_respiratory_rate ?? ''}} </span> <br />
         </td>
         <td class="border-r border-b border-gray-200 text-center">
           {{indicator.complaints ?? '-'}}
@@ -141,11 +141,11 @@
         <td class="border-r border-b border-gray-200 text-left">
           <div *ngFor="let item of indicator.prescription">
             <span class="font-bold">{{ item.konsulta_medicine?.desc ?? item.medicine?.gen_name ?? item.added_medicine ?? ''}} <br /> </span>
-            <span> {{ item.medicine?.form_desc }} {{ item.medicine?.stre_desc }}<br /> </span>
-            <span> {{ item.dose_regimen?.desc }} <br /> </span>
-            <span> {{ item.duration_intake }} {{ item.duration_frequency?.desc }} (s)  <br /> </span>
-            <span> {{ item.dispensing_latest?.dispense_quantity ?? '0' }}/{{ item.quantity }} {{ item.medicine?.form_desc }} <br /> </span>
-            <span> {{ item.medicine_purpose?.desc }} <br /> </span>
+            {{ item.medicine?.form_desc }} {{ item.medicine?.stre_desc }}<br />
+            {{ item.dose_regimen?.desc }} <br />
+            {{ item.duration_intake }} {{ item.duration_frequency?.desc }} (s)  <br />
+            {{ item.dispensing_latest?.dispense_quantity ?? '0' }}/{{ item.quantity }} {{ item.medicine?.form_desc }} <br />
+            {{ item.medicine_purpose?.desc }} <br />
           <br />
           </div>
         </td>
