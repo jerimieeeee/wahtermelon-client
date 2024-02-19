@@ -13,26 +13,31 @@
       </div>
 
       <div class="w-full justify-end flex">
-        <input type="text" [(ngModel)]="search" class="input rounded-r-none w-52" (keyup.enter)="loadList()" placeholder="Search name"/>
+        <input type="text" [(ngModel)]="search" class="input rounded-r-none w-44" (keyup.enter)="loadList()" placeholder="Search name"/>
         <select [(ngModel)]="form_type" class="input w-44 rounded-none">
           <option value="1">For Validation</option>
           <option value="2">Validated List</option>
         </select>
 
-        <select [(ngModel)]="filter_tranche" class="input w-44 rounded-none">
+        <select [(ngModel)]="filter_tranche" class="input w-32 rounded-none">
           <option [value]="1">1st Tranche</option>
           <option [value]="2">2nd Tranche</option>
         </select>
 
-        <select *ngIf="form_type==='1'" [(ngModel)]="filter_year" class="input w-44 rounded-none">
+        <select *ngIf="form_type==='2'" [(ngModel)]="filter_status" class="input w-28 rounded-none">
+          <option value="V">Validated</option>
+          <option value="S">Submitted</option>
+          <option value="F">Failed</option>
+        </select>
+
+        <select *ngIf="form_type==='1'" [(ngModel)]="filter_year" class="input w-28 rounded-none">
           <option [value]="year" *ngFor="let year of years" >{{year}}</option>
         </select>
 
-        <select *ngIf="form_type==='2'" [(ngModel)]="filter_status" class="input w-44 rounded-none">
-          <option value="V">Validated</option>
-          <option value="S">Submitted/Success</option>
-          <option value="F">Failed</option>
-        </select>
+        <!-- <select class="input w-28 rounded-none"> -->
+        <input *ngIf="form_type==='2'" class="input w-36" type="date" [(ngModel)]="start_date" />
+        <input *ngIf="form_type==='2'" class="input w-36" type="date" [(ngModel)]="end_date" />
+        <!-- </select> -->
 
         <button [disabled]="searching" type="button" class="bg-blue-500 text-white h-10 px-3 mt-1 rounded-r-md" (click)="loadList()">
           <fa-icon class="" [icon]="searching ? faCircleNotch : faFilter" [spin]="searching"></fa-icon>
@@ -50,8 +55,24 @@
 
     <div>
       <div class="overflow-x-auto relative shadow-md sm:rounded-lg">
-        <app-for-validation *ngIf="forms['for_validation']" (addSaving)="addSaving($event)" (showReturn)="showReturn($event)" (loadList)="loadList()" [validating]="is_saving" [konsulta_list]="konsulta_list" [filter_tranche]="filter_tranche" [filter_year]="filter_year"></app-for-validation>
-        <app-validated-list *ngIf="forms['validated_list']" [filter_status]="filter_status" (showReturn)="showReturn($event)" (showList)="showList($event)" [konsulta_list]="konsulta_list" [filter_tranche]="filter_tranche" [filter_year]="filter_year"></app-validated-list>
+        <app-for-validation *ngIf="forms['for_validation']"
+          (addSaving)="addSaving($event)"
+          (showReturn)="showReturn($event)"
+          (loadList)="loadList()"
+          [validating]="is_saving"
+          [konsulta_list]="konsulta_list"
+          [filter_tranche]="filter_tranche"
+          [filter_year]="filter_year"
+        ></app-for-validation>
+
+        <app-validated-list *ngIf="forms['validated_list']"
+          [filter_status]="filter_status"
+          (showReturn)="showReturn($event)"
+          (showList)="showList($event)"
+          [konsulta_list]="konsulta_list"
+          [filter_tranche]="filter_tranche"
+          [filter_year]="filter_year"
+        ></app-validated-list>
       </div>
     </div>
   </div>
