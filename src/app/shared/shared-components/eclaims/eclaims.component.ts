@@ -76,7 +76,7 @@ export class EclaimsComponent implements OnInit {
       next:(data:any) => {
         this.caserate_list = data.data;
 
-        this.show_cf2 = Object.keys(this.caserate_list).length > 0 ? true:false;
+        this.show_cf2 = Object.keys(this.caserate_list).length > 0 ? true : false;
         this.show_form = true;
       },
       error: err => console.log(err)
