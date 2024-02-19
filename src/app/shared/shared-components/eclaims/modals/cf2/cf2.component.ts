@@ -76,7 +76,7 @@ export class Cf2Component implements OnInit {
 
     if(this.selected_caserate.code === '89222') {
       tb.pTBType = 'M';
-      tb.attendant_sign_date = formatDate(this.selected_case.case_holding.treatment_start, 'yyyy-MM-dd', 'en', 'Asia/Manila');
+      tb.attendant_sign_date = formatDate(this.selected_case.case_holding.continuation_start, 'yyyy-MM-dd', 'en', 'Asia/Manila');
       tb.admission_date = formatDate(this.selected_case.case_holding.continuation_start, 'yyyy-MM-dd', 'en', 'Asia/Manila');
       tb.discharge_date = formatDate(this.selected_case.case_holding.treatment_end, 'yyyy-MM-dd', 'en', 'Asia/Manila');
     }
