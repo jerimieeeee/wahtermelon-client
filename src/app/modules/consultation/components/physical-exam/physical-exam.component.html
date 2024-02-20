@@ -14,6 +14,10 @@
 
       <div *ngIf="show_content">
         <div class="w-full p-5">
+          <div class="mb-2">
+            <input id="is_normal" class="input-checkbox" type="checkbox" [(ngModel)]="is_normal" (click)="toggleNormal()"/>
+            <label for="is_normal" class="pl-1 font-semibold">Essentially Normal</label>
+          </div>
           <div class="grid grid-cols-1 gap-3 mb-3 border-b border-slate-200 pb-3 last:border-b-0" *ngFor="let pe of pe_grouped | keyvalue">
             <div class="col-span-1 font-bold">
               <button type="button" (click)="toggleItems(pe.key)">
