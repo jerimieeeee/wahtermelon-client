@@ -1,0 +1,88 @@
+<div class="grid grid-cols-1 w-full">
+  <div class="flex justify-between w-full text-blue-500 font-semibold text-lg  p-3" >
+    <span>FHSIS Report - TB Dots</span>
+    <span>
+      <!-- <fa-icon *ngIf="exporting" [icon]="faCircleNotch" spin="true" class="text-blue-500 text-sm mr-3">Exporting...</fa-icon> -->
+      <button [disabled]="pdf_exported" type="button" class="text-2xl mr-5 text-red-600 disabled:text-gray-600" (click)="exportP()">
+        <fa-icon [icon]="faFilePdf"></fa-icon>
+      </button>
+      <button  type="button" class="text-2xl" (click)="exportX()">
+        <fa-icon [icon]="faFileExcel" class="text-green-700"></fa-icon>
+      </button>
+    </span>
+  </div>
+  <div class="flex flex-col pb-5">
+    <div class="sm:-mx-6 lg:-mx-8">
+      <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
+        <div class="">
+          <table class="min-w-full border select-none" id="reportForm">
+            <thead class="border-b">
+              <tr>
+                <th class="text-sm font-medium text-gray-900 px-6 py-4 border w-1/12">
+                  <img src="./assets/img/DOH_Logo.png" class="rounded-full w-28 h-28 mx-auto" />
+                </th>
+                <th class="text-sm font-medium text-gray-900 px-6 py-4 border text-left align-top">
+                    FHSIS Report for the Month: {{this.convertedMonth}} <br />
+                    Name of Barangay: <br />
+                    Name of BHS: <br />
+                    Name of Municipality/City: <br />
+                    Name of Province: <br />
+                    Projected Population for the Year: <br />
+                </th>
+                <th class="relative text-sm w-2/12 font-medium text-gray-900 px-6 py-4 border align-top text-left">
+                    Year: {{this.reportform_data.value.year}}
+                </th>
+                <th class="text-sm font-bold text-gray-900 px-6 py-4 border text-center w-2/12">
+                  <img src="./assets/img/m1.png" class="mx-auto" />
+                </th>
+              </tr>
+              <tr class="text-center sticky top-0 bg-gray-200">
+                <th scope="col" class="text-sm font-semibold text-gray-900 px-6 py-4 border-r w-2/12">
+                  TUBERCULOSIS Prevention and Control
+                </th>
+                <th class="text-sm font-semibold text-gray-900 px-6 py-4 border-r w-2/12">
+                  Male
+                </th>
+                <th class="text-sm font-semibold text-gray-900 px-6 py-4 border-r w-2/12">
+                  Female
+                </th>
+                <th class="text-sm font-semibold text-gray-900 px-6 py-4 border-r w-2/12">
+                  Total
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <td class="p-5 border text-sm">1. Number of notified TB cases, all forms - Total</td>
+              <td class="p-5 border text-blue-500 text-center"   [class]=" stats?.indicator1_male?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.indicator1_male)">{{ stats?.indicator1_male?.length ?? 0}}</td>
+              <td class="p-5 border text-blue-500 text-center"   [class]=" stats?.indicator1_female?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.indicator1_female)">{{ stats?.indicator1_female?.length ?? 0}}</td>
+              <td class="p-5 border text-blue-500 text-center"   [class]=" stats?.indicator1_male.length !==0 || stats?.indicator1_female.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.indicator1_male, stats?.indicator1_female)">{{ stats?.indicator1_male?.length +  stats?.indicator1_female?.length }}</td>
+            </tr>
+            <tr>
+              <td class="p-5 border text-sm">2. No. of registered bacteriologically confirmed drug resistant TB (RR/MDR-TB Cases)</td>
+              <td class="p-5 border text-blue-500 text-center"  [class]=" stats?.indicator2_male?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.indicator2_male)">{{ stats?.indicator2_male?.length ?? 0}}</td>
+              <td class="p-5 border text-blue-500 text-center"  [class]=" stats?.indicator2_female?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.indicator2_female)">{{ stats?.indicator2_female?.length ?? 0}}</td>
+              <td class="p-5 border text-blue-500 text-center"  [class]=" stats?.indicator2_male?.length !==0 || stats?.indicator2_female?.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.indicator2_male, stats?.indicator2_female)">{{ stats?.indicator2_male?.length +  stats?.indicator2_female?.length }}</td>
+            </tr>
+            <tr>
+              <td class="p-5 border text-sm">3. Number of TB, all forms that are cured and completely treated - Total</td>
+              <td class="p-5 border text-blue-500 text-center"   [class]=" stats?.indicator3_male?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.indicator3_male)">{{ stats?.indicator3_male?.length ?? 0}}</td>
+              <td class="p-5 border text-blue-500 text-center"   [class]=" stats?.indicator3_female?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.indicator3_female)">{{ stats?.indicator3_female?.length ?? 0}}</td>
+              <td class="p-5 border text-blue-500 text-center"   [class]=" stats?.indicator3_male?.length !==0 || stats?.indicator3_female.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.indicator3_male, stats?.indicator3_female)">{{ stats?.indicator3_male?.length +  stats?.indicator3_female?.length }}</td>
+            </tr>
+            <tr>
+              <td class="p-5 border text-sm">4. No. of registered bacteriology confirmed drug resistant TB Cases (RR/MDR-TB) cured and completed treatment</td>
+              <td class="p-5 border text-blue-500 text-center"   [class]=" stats?.indicator4_male?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.indicator4_male)">{{ stats?.indicator4_male?.length ?? 0}}</td>
+              <td class="p-5 border text-blue-500 text-center"   [class]=" stats?.indicator4_female?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.indicator4_female)">{{ stats?.indicator4_female?.length ?? 0}}</td>
+              <td class="p-5 border text-blue-500 text-center"   [class]=" stats?.indicator4_male?.length !==0 || stats?.indicator4_female?.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.indicator4_male, stats?.indicator4_female)">{{ stats?.indicator4_male?.length +  stats?.indicator4_female?.length }}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<app-name-list *ngIf="openList" (toggleModal)="toggleModal()" [name_list]="name_list"></app-name-list>
