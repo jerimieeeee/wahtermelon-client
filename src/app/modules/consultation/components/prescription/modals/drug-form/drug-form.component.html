@@ -158,11 +158,6 @@
               </div>
             </div>
 
-            <div class="col-span-3 text-sm">
-              <label class="font-semibold" for="remarks" [ngClass]="{'text-red-500': is_saving && f.remarks.errors}">Remarks</label>
-              <input name="remarks" id="remarks" formControlName="remarks" [ngClass]="{'invalid-input': is_saving && f.remarks.errors}" type="text" class="input">
-            </div>
-
             <div *ngIf="prescriptionForm.value.medicine_purpose === '99'" class="col-span-3 text-sm">
               <label class="font-semibold" for="purpose_other" [ngClass]="{'text-red-500': is_saving && f.purpose_other.errors}">Purpose remarks</label>
               <input name="purpose_other" id="purpose_other" formControlName="purpose_other" [ngClass]="{'invalid-input': is_saving && f.purpose_other.errors}" type="text" class="input">
@@ -173,6 +168,13 @@
                 </div>
               </div>
             </div>
+
+            <div class="col-span-3 text-sm">
+              <label class="font-semibold" for="remarks" [ngClass]="{'text-red-500': is_saving && f.remarks.errors}">Remarks</label>
+              <input name="remarks" id="remarks" formControlName="remarks" [ngClass]="{'invalid-input': is_saving && f.remarks.errors}" type="text" class="input">
+            </div>
+
+
 
           </div>
 
@@ -189,7 +191,7 @@
       </div>
       <div class="flex justify-end mr-10 py-3 rounded-b">
         <button [disabled]="is_loading" type="button" class="btn-save px-10 bg-gray-400 mr-5" (click)="closeModal()">Close</button>
-        <button [disabled]="is_loading" type="button" class="btn-save px-10 disabled:bg-gray-300" (click)="onSubmit()" >
+        <button [disabled]="is_loading || prescriptionForm.invalid" type="button" class="btn-save px-10 disabled:bg-gray-300" (click)="onSubmit()" >
           <fa-icon [icon]="is_loading ? faCircleNotch : faSave" [spin]="is_loading"></fa-icon>
           {{ is_loading ? 'Saving' : 'Save'}}
         </button>

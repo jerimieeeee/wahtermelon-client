@@ -28,7 +28,7 @@ export class DrugFormComponent implements OnInit {
     duration_intake: new FormControl<number| null>(null),
     duration_frequency: new FormControl<string| null>(null),
     quantity_preparation: new FormControl<string| null>(null),
-    medicine_route_code: new FormControl<string| null>(null),
+    medicine_route: new FormControl<string| null>(null),
     purpose_other: new FormControl<string| null>(null),
     quantity: new FormControl<string| null>(null),
     instruction_quantity: new FormControl<number| null>(null)
@@ -128,7 +128,7 @@ export class DrugFormComponent implements OnInit {
       konsulta_medicine_code: data.konsulta_medicine.code,
       medicine_name: data.konsulta_medicine.generic.desc,
       medicine_purpose: data.purpose.code,
-      medicine_route_code: data.medicine_route_code.code,
+      medicine_route: data.medicine_route.code,
       quantity_preparation: data.preparation.code
     })
     console.log(this.drugForm.value);
@@ -152,7 +152,7 @@ export class DrugFormComponent implements OnInit {
       duration_frequency: [null, Validators.required],
       quantity: [null],
       quantity_preparation: [null, Validators.required],
-      medicine_route_code: [null, Validators.required],
+      medicine_route: [null, Validators.required],
       instruction_quantity: [1],
     });
 
