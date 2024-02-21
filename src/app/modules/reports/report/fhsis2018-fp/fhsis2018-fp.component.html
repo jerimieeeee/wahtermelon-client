@@ -1,15 +1,15 @@
 <div class="grid grid-cols-1 w-full">
   <div class="flex justify-between w-full text-blue-500 font-semibold text-lg  p-3" >
-    <span>FHSIS Report - Non-Communicable Disease</span>
-<!--    <span>-->
-<!--      &lt;!&ndash; <fa-icon *ngIf="exporting" [icon]="faCircleNotch" spin="true" class="text-blue-500 text-sm mr-3">Exporting...</fa-icon> &ndash;&gt;-->
-<!--      <button [disabled]="pdf_exported" type="button" class="text-2xl mr-5 text-red-600 disabled:text-gray-600" (click)="exportP()">-->
-<!--        <fa-icon [icon]="faFilePdf"></fa-icon>-->
-<!--      </button>-->
-<!--      <button  type="button" class="text-2xl" (click)="exportX()">-->
-<!--        <fa-icon [icon]="faFileExcel" class="text-green-700"></fa-icon>-->
-<!--      </button>-->
-<!--    </span>-->
+    <span>FHSIS Report - Family Planning</span>
+    <span>
+      <!-- <fa-icon *ngIf="exporting" [icon]="faCircleNotch" spin="true" class="text-blue-500 text-sm mr-3">Exporting...</fa-icon> -->
+      <button [disabled]="pdf_exported" type="button" class="text-2xl mr-5 text-red-600 disabled:text-gray-600" (click)="exportP()">
+        <fa-icon [icon]="faFilePdf"></fa-icon>
+      </button>
+      <button  type="button" class="text-2xl" (click)="exportX()">
+        <fa-icon [icon]="faFileExcel" class="text-green-700"></fa-icon>
+      </button>
+    </span>
   </div>
   <div class="flex flex-col pb-5">
     <div class="sm:-mx-6 lg:-mx-8">
@@ -21,7 +21,7 @@
                 <img src="./assets/img/DOH_Logo.png" class="rounded-full w-28 h-28 mx-auto"/>
               </th>
               <th colspan="8" class="text-sm font-medium text-gray-900 px-6 py-4 border-black border-l border-r border-t border-b text-left align-top">
-                FHSIS Report for the Month:  <br />
+                FHSIS Report for the Month: {{this.convertedMonth}} <br />
                 Name of Barangay: <br />
                 Name of BHS: <br />
                 Name of Municipality/City: <br />
@@ -29,7 +29,7 @@
                 Projected Population for the Year: <br />
               </th>
               <th colspan="8" class="text-sm font-medium text-gray-900 px-6 py-4 border-black border-t border-r border-b align-top text-left">
-                Year:
+                Year: {{this.reportform_data.value.year}}
               </th>
               <th colspan="4" class="text-sm font-bold text-gray-900 px-6 py-4 border-black border-l border-r border-b border-t text-center">
                 <img src="./assets/img/m1.png" class="mx-auto" />
@@ -157,7 +157,22 @@
             </tr>
             <tbody>
             <tr>
-              <td class="px-6 border-black border-r border-l border-b  text-sm">a. BTL - Total</td>
+              <td colspan="5" class="px-6 border-black border-r border-l border-b  text-sm">a. BTL - Total</td>
+<!--              Current User (Beginning Month)-->
+              <td class="p-5 border text-blue-500 text-center border-black border-b border-r border-l border-t">0</td>
+              <td class="p-5 border text-blue-500 text-center border-black border-b border-r border-l border-t">0</td>
+              <td class="p-5 border text-blue-500 text-center border-black border-b border-r border-l border-t">0</td>
+              <td class="p-5 border text-blue-500 text-center border-black border-b border-r border-l border-t">0</td>
+<!--              New Acceptors (Previous Month)-->
+              <td class="p-5 border text-blue-500 text-center border-black border-b border-r border-l border-t">0</td>
+              <td class="p-5 border text-blue-500 text-center border-black border-b border-r border-l border-t">0</td>
+              <td class="p-5 border text-blue-500 text-center border-black border-b border-r border-l border-t">0</td>
+              <td class="p-5 border text-blue-500 text-center border-black border-b border-r border-l border-t">0</td>
+<!--              Other Acceptors (Present Month)-->
+              <td class="p-5 border text-blue-500 text-center border-black border-b border-r border-l border-t">0</td>
+              <td class="p-5 border text-blue-500 text-center border-black border-b border-r border-l border-t">0</td>
+              <td class="p-5 border text-blue-500 text-center border-black border-b border-r border-l border-t">0</td>
+              <td class="p-5 border text-blue-500 text-center border-black border-b border-r border-l border-t">0</td>
             </tr>
             <tr>
               <td class="px-6 border-black border-r border-l border-b  text-sm">b. NSV - Total</td>
@@ -213,4 +228,4 @@
 </div>
 
 
-<!--<app-name-list *ngIf="openList" (toggleModal)="toggleModal()" [name_list]="name_list"></app-name-list>-->
+<app-name-list *ngIf="openList" (toggleModal)="toggleModal()" [name_list]="name_list"></app-name-list>
