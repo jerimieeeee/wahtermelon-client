@@ -144,6 +144,7 @@
 
 <app-lib-drug-list *ngIf="show_lib_drug"
   (showAdd)="showAdd($event)"
+  [search_item]="search_item"
 ></app-lib-drug-list>
 
 <app-drug-form *ngIf="show_drug_form"

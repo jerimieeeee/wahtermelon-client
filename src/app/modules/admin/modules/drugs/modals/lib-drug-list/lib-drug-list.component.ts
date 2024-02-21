@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { faAdd, faAnglesLeft, faAnglesRight, faChevronLeft, faChevronRight, faEdit, faSearch, faCircleXmark } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 
@@ -9,6 +9,8 @@ import { HttpService } from 'app/shared/services/http.service';
 })
 export class LibDrugListComponent implements OnInit {
   @Output() showAdd = new EventEmitter<any>()
+  @Input() search_item;
+
   faAnglesLeft = faAnglesLeft;
   faChevronLeft = faChevronLeft;
   faChevronRight = faChevronRight;
@@ -31,7 +33,7 @@ export class LibDrugListComponent implements OnInit {
   to: number;
   total: number;
 
-  search_item: string;
+  // search_item: string;
 
   selectDrugs(data) {
     console.log(data)
