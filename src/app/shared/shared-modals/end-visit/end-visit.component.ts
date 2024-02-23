@@ -39,7 +39,7 @@ export class EndVisitComponent {
 
     this.http.update('consultation/records/', this.consult_id, params).subscribe({
       next: (data: any) => {
-        console.log(data);
+        // console.log(data);
         this.is_saving = false;
         this.toastr.info('Visit was ended');
         this.router.navigate(['/patient/itr', {id: this.patient_id}])

@@ -72,6 +72,23 @@
 
               <div class="grid grid-cols-1 text-left mt-2 pt-2">
                 <span class="w-full mb-3">
+                  <span class="font-semibold">Prescription:</span> <!-- {{ visit.prescriptions ? visit.prescriptions.konsulta_medicine : ''}} -->
+                  <ul class="list-disc ml-10">
+                    <li *ngFor="let prescriptions of visit.prescriptions">
+                      <span class="font-semibold text-sm">
+                        {{ prescriptions.konsulta_medicine ? prescriptions.konsulta_medicine.generic.desc : prescriptions.added_medicine }} <br />
+                        {{ prescriptions.dosage_quantity }} {{ prescriptions.dosage_uom.desc }} ({{ prescriptions.dosage_uom.code }}) <br />
+                        {{ prescriptions.dose_regimen.desc }} <br />
+                        {{ prescriptions.duration_intake }} {{ prescriptions.duration_frequency.desc }} <br />
+                        {{ prescriptions.quantity }} {{ prescriptions.quantity_preparation.desc }}{{ prescriptions.quantity > 1 ? 's' : '' }}
+                      </span>
+                    </li>
+                  </ul>
+                </span>
+              </div>
+
+              <div class="grid grid-cols-1 text-left mt-2 pt-2">
+                <span class="w-full mb-3">
                   <span class="font-semibold">Treatment Plan:</span> {{ visit.consult_notes.plan ?? '-' }}
                 </span>
               </div>
