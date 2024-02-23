@@ -23,6 +23,8 @@ export class PhysicalExamComponent implements OnInit, OnChanges {
   consult_notes: any;
   pe_grouped = [];
   physical_codes: any = [];
+  pe_item: any = [];
+
   physical_remarks = {
     id: null,
     abdomen_remarks: null,
@@ -42,10 +44,27 @@ export class PhysicalExamComponent implements OnInit, OnChanges {
   show_content: boolean =false;
   consult_done: boolean = false;
   is_saving: boolean = false;
+  is_normal: boolean = false;
 
-  pe_item: any = [];
   toggleItems(item) {
     this.pe_item[item] = !this.pe_item[item];
+  }
+
+  toggleNormal() {
+    this.is_normal = !this.is_normal;
+
+    // console.log(this.pe_grouped)
+    this.physical_codes = [];
+    this.physical_codes = {
+      'ABDOMEN12': this.is_normal,
+      'CHEST06': this.is_normal,
+      'GENITOURINARY01': this.is_normal,
+      'HEART05': this.is_normal,
+      'HEENT11': this.is_normal,
+      'NEURO06': this.is_normal,
+      'RECTAL01': this.is_normal,
+      'SKIN15': this.is_normal,
+    }
   }
 
   onSubmit(){
@@ -80,7 +99,7 @@ export class PhysicalExamComponent implements OnInit, OnChanges {
     this.physical_remarks['notes_id'] = this.consult_notes.id;
     this.physical_remarks['patient_id'] = this.consult_details.patient.id;
     let query;
-    console.log(this.physical_remarks);
+    // console.log(this.physical_remarks);
     if(this.physical_remarks.id === null){
       query = this.http.post('consultation/physical-exam-remarks', this.physical_remarks);
     } else {
@@ -124,6 +143,7 @@ export class PhysicalExamComponent implements OnInit, OnChanges {
         let val: any = value;
         this.physical_codes[val.pe_id] = true;
       });
+      // console.log(this.physical_codes)
     }
   }
 

@@ -49,8 +49,10 @@ export class EclaimsComponent implements OnInit {
 
   status_lists = [
     'IN PROCESS',
-    'DENIED',
+    'VOUCHERING',
+    'WITH VOUCHER',
     'WITH CHEQUE',
+    'DENIED',
     'RETURN'
   ];
 

@@ -1,0 +1,158 @@
+<div class="grid grid-cols-1 w-full">
+  <div class="flex justify-between w-full text-blue-500 font-semibold text-lg p-3" >
+    <p class="text-center"></p>
+  </div>
+  <div class="font-semibold text-center">
+    DAILY SERVICE REPORT (CONSULTATION) - Wireless Access for Health
+  </div>
+  <tr class="text-sm font-medium text-gray-900 text-center align-top">
+    {{this.reportForm.value.start_date}} to {{this.reportForm.value.end_date}}
+  </tr>
+  <tr class="bg-gray-200 font-semibold">
+    <th class="text-sm text-left row-span-5 font-semibold text-gray-900 px-6 py-4 w-2/12">
+      Total Number of Consult: {{this.stats?.length }}
+    </th>
+    <th class="text-sm text-center font-semibold row-span-5 text-gray-900 px-6 py-4 w-2/12">
+      MALE: {{this.count_male}}
+    </th>
+    <th class="text-sm font-semibold row-span-5 text-gray-900 px-6 py-4 w-2/12">
+      FEMALE: {{this.count_female}}
+    </th>
+    <th class="text-sm font-semibold row-span-5 text-gray-900 px-6 py-4 w-2/12">
+      FOR KONSULTA: {{this.count_konsulta}}
+    </th>
+    <th class="text-sm font-semibold row-span-5 text-gray-900 px-6 py-4 w-2/12">
+      WITH CONSENT: {{this.count_consent}}
+    </th>
+    <th class="text-sm font-semibold row-span-5 text-gray-900 px-6 py-4 w-2/12">
+      WITH PHILHEALTH: {{this.count_philhealth}}
+    </th>
+  </tr>
+  <tbody>
+    <table class="select-none border-red-50">
+      <tr class="text-center border-b-2 border-gray-400">
+        <th class="text-sm font-semibold text-gray-900 px-1 py-2 border-r w-1/18">
+          PATIENT NAME
+        </th>
+        <th class="text-sm font-semibold text-gray-900 px-1 py-2 border-r w-1/18">
+          GENDER
+        </th>
+        <th class="text-sm font-semibold text-gray-900 px-1 py-2 border-r w-1/18">
+          BIRTHDAY
+        </th>
+        <th class="text-sm font-semibold text-gray-900 px-1 py-2 border-r w-1/18">
+          WITH CONSENT
+        </th>
+        <th class="text-sm font-semibold text-gray-900 px-1 py-2 border-r w-1/18">
+          CONSULT DATE
+        </th>
+        <th class="text-sm font-semibold text-gray-900 px-1.5 py-2 border-r w-1/18">
+          ADDRESS
+        </th>
+        <th class="text-sm font-semibold text-gray-900 px-1.5 py-2 border-r w-1/18">
+          PHILHEALTH ID
+        </th>
+        <th class="text-sm font-semibold text-gray-900 px-1.5 py-2 border-r w-1/18">
+          FOR KONSULTA?
+        </th>
+        <th class="text-sm font-semibold text-gray-900 px-1.5 py-2 border-r w-1/18">
+          VITAL SIGNS
+        </th>
+        <th class="text-sm font-semibold text-gray-900 px-1.5 py-2 border-r w-1/18">
+          COMPLAINTS
+        </th>
+        <th class="text-sm font-semibold text-gray-900 px-1.5 py-2 border-r w-1/18">
+          HISTORY
+        </th>
+        <th class="text-sm font-semibold text-gray-900 px-1.5 py-2 border-r w-1/18">
+          INITIAL DIAGNOSIS
+        </th>
+        <th class="text-sm font-semibold text-gray-900 px-1.5 py-2 border-r w-1/18">
+          FINAL DIAGNOSIS
+        </th>
+        <th class="text-sm font-semibold text-gray-900 px-1.5 py-2 border-r w-1/18">
+          TREATMENT NOTES
+        </th>
+        <th class="text-sm font-semibold text-gray-900 px-1.5 py-2 border-r w-1/18">
+          TREATMENT
+        </th>
+      </tr>
+      <tr *ngFor="let indicator of stats">
+       <span class="hidden">{{ countTotal(indicator.gender === 'M' ? 'count_male' : 'count_female') }}</span>
+        <span class="hidden">{{ countTotal(indicator.is_konsulta === true ? 'count_konsulta' : '-') }}</span>
+        <span class="hidden">{{ countTotal(indicator.consent_flag === true ? 'count_consent' : '-') }}</span>
+        <span class="hidden">{{ countTotal(indicator.philhealth_id !== null ? 'count_philhealth' : '-') }}</span>
+        <td class="border-r border-b border-l border-gray-200 text-center">
+          {{indicator.patient_name}}
+        </td>
+        <td class="border-r border-b border-gray-200 text-center">
+          {{indicator.gender}}
+        </td>
+        <td class="border-r border-b border-gray-200 text-center">
+          {{indicator.birthdate}} <br />
+          <br />
+          Age: <br />
+          {{indicator.age}} <br />
+        </td>
+        <td class="border-r border-b border-gray-200 text-center">
+          {{indicator.consent_flag ? "YES" : "NO"}}
+        </td>
+        <td class="border-r border-b border-gray-200 text-center">
+          {{indicator.consult_date}}
+        </td>
+        <td class="border-r border-b border-gray-200 text-center">
+          {{indicator.address}}
+        </td>
+        <td class="border-r border-b border-gray-200 text-center">
+          {{indicator.philhealth_id ?? '-'}}
+        </td>
+        <td class="border-r border-b border-gray-200 text-center">
+          {{indicator.is_konsulta ? "YES" : "NO"}}
+        </td>
+        <td class="border-r border-b border-gray-200 text-left">
+          BP:  <span class="font-bold">{{indicator.bp_systolic ?? ''}} / {{indicator.bp_diastolic ?? ''}} </span> <br />
+          Temp: <span class="font-bold">{{indicator.patient_temp ?? ''}} </span> <br />
+          W: <span class="font-bold">{{indicator.patient_weight ?? ''}} </span> <br />
+          H: <span class="font-bold">{{indicator.patient_height ?? ''}} </span> <br />
+          PR: <span class="font-bold">{{indicator.patient_pulse_rate ?? ''}} </span> <br />
+          HR: <span class="font-bold">{{indicator.patient_heart_rate ?? ''}} </span> <br />
+          RR: <span class="font-bold">{{indicator.patient_respiratory_rate ?? ''}} </span> <br />
+        </td>
+        <td class="border-r border-b border-gray-200 text-center">
+          {{indicator.complaints ?? '-'}}
+        </td>
+        <td class="border-r border-b border-gray-200 text-center">
+          {{indicator.history ?? '-'}}
+        </td>
+        <td class="border-r border-b border-gray-200 text-center">
+          <div *ngFor="let item of indicator.initial_diagnosis">
+             {{ item.diagnosis.class_name }} <br />
+          </div>
+        </td>
+        <td class="border-r border-b border-gray-200 text-center">
+          <div *ngFor="let item of indicator.final_diagnosis">
+            <span class="font-bold">{{ item.icd10_code }} <br /> </span>
+            {{ item.lib_icd10.icd10_desc }} <br />
+          </div>
+        </td>
+        <td class="border-r border-b border-gray-200 text-center">
+          {{indicator.treatment_notes ?? '-'}}
+        </td>
+        <td class="border-r border-b border-gray-200 text-left">
+          <div *ngFor="let item of indicator.prescription">
+            <span class="font-bold">{{ item.konsulta_medicine?.desc ?? item.medicine?.gen_name ?? item.added_medicine ?? ''}} <br /> </span>
+            {{ item.medicine?.form_desc }} {{ item.medicine?.stre_desc }}<br />
+            {{ item.dose_regimen?.desc }} <br />
+            {{ item.duration_intake }} {{ item.duration_frequency?.desc }} (s)  <br />
+            {{ item.dispensing_latest?.dispense_quantity ?? '0' }}/{{ item.quantity }} {{ item.medicine?.form_desc }} <br />
+            {{ item.medicine_purpose?.desc }} <br />
+          <br />
+          </div>
+        </td>
+      </tr>
+    </table>
+  </tbody>
+</div>
+
+
+<!--<app-name-list *ngIf="openList" (toggleModal)="toggleModal()" [name_list]="name_list"></app-name-list>-->
