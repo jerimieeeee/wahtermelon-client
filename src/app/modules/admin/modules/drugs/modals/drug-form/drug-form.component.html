@@ -10,12 +10,8 @@
         <form [formGroup]="drugForm" class="w-full max-w-3xl text-left text-gray-500 dark:text-gray-400">
 
           <!-- START PATIENT DETAILS -->
-          <div class="flex item-start flex-wrap pb-5 px-5">
-            <!-- <div class="flex justify-between w-full -px-5 mt-3 rounded-tl rounded-tr">
-              <h4 class="font-bold text-blue-500 text-sm mt-2">Patient Details</h4>
-            </div> -->
-
-            <div class="relative w-full text-sm px-5 py-2 mt-2">
+          <div class="flex item-start flex-wrap pb-5 px-3">
+            <div class="relative w-full text-sm px-4 py-2 mt-2">
               <label class="font-semibold" for="brand_name" [ngClass]="{'text-red-500': is_saving && f.brand_name.errors}">Brand name</label>
               <input name="brand_name" id="brand_name" formControlName="brand_name" type="text" class="input" [ngClass]="{'invalid-input': is_saving && f.brand_name.errors}">
 
@@ -26,67 +22,79 @@
               </div>
             </div>
 
-            <div class="relative w-full text-sm px-5 py-2 mt-2">
-              <label class="font-semibold" for="generic_name" [ngClass]="{'text-red-500': is_saving && f.generic_name.errors}">Generic Name</label>
-              <input name="generic_name" id="generic_name" formControlName="generic_name" [ngClass]="{'invalid-input': is_saving && f.generic_name.errors}" type="text" class="input">
+            <div class="relative w-full text-sm px-3 py-2 mt-2">
+              <label class="font-semibold" for="medicine_name" [ngClass]="{'text-red-500': is_saving && f.medicine_name.errors}">Generic Name</label>
+              <input name="medicine_name" id="medicine_name" formControlName="medicine_name" [ngClass]="{'invalid-input': is_saving && f.medicine_name.errors}" type="text" class="input">
+              <span class="text-xs pl-3 font-semibold">{{ selected_drug ? (selected_drug.desc ? selected_drug.desc : selected_drug.konsulta_medicine.desc) : '' }}</span>
 
-              <div *ngIf="is_saving && f.generic_name.errors" class="invalid-alert">
-                <div *ngIf="f.generic_name.errors?.['required']">
+              <div *ngIf="is_saving && f.medicine_name.errors" class="invalid-alert">
+                <div *ngIf="f.medicine_name.errors?.['required']">
                   {{ required_message }}
                 </div>
               </div>
             </div>
 
-            <div class="relative w-full text-sm md:w-2/6 lg:w-2/6 px-5 py-2 mt-2">
-              <label class="font-semibold" for="dosage" [ngClass]="{'text-red-500': is_saving && f.dosage.errors}">Dosage</label>
-              <input name="dosage" id="dosage" formControlName="dosage" [ngClass]="{'invalid-input': is_saving && f.dosage.errors}" type="number" class="input">
+            <div class="relative w-full text-sm md:w-2/6 lg:w-2/6 px-3 py-2 mt-2">
+              <label class="font-semibold" for="dosage_quantity" [ngClass]="{'text-red-500': is_saving && f.dosage_quantity.errors}">Dosage</label>
+              <input name="dosage_quantity" id="dosage_quantity" formControlName="dosage_quantity" [ngClass]="{'invalid-input': is_saving && f.dosage_quantity.errors}" type="number" class="input">
 
-              <div *ngIf="is_saving && f.dosage.errors" class="invalid-alert">
-                <div *ngIf="f.dosage.errors?.['required']">
+              <div *ngIf="is_saving && f.dosage_quantity.errors" class="invalid-alert">
+                <div *ngIf="f.dosage_quantity.errors?.['required']">
                   {{ required_message }}
                 </div>
               </div>
             </div>
 
-            <div class="relative w-full text-sm md:w-2/6 lg:w-2/6 px-5 py-2 mt-2">
-              <label class="font-semibold" for="dosage_unit" [ngClass]="{'text-red-500': is_saving && f.dosage_unit.errors}">Dosage unit</label>
-              <select name="dosage_unit" id="dosage_unit" formControlName="dosage_unit" [ngClass]="{'invalid-input': is_saving && f.dosage_unit.errors}" class="input">
-                <option [value]="type.id" *ngFor="let type of membership_types">{{ type.desc}}</option>
+            <div class="relative w-full text-sm md:w-2/6 lg:w-2/6 px-3 py-2 mt-2">
+              <label class="font-semibold" for="dosage_uom" [ngClass]="{'text-red-500': is_saving && f.dosage_uom.errors}">Dosage unit</label>
+              <select name="dosage_uom" id="dosage_uom" formControlName="dosage_uom" [ngClass]="{'invalid-input': is_saving && f.dosage_uom.errors}" class="input">
+                <option [value]="uom.code" *ngFor="let uom of drug_uom">{{ uom.desc}}</option>
               </select>
-              <div *ngIf="is_saving && f.dosage_unit.errors" class="invalid-alert">
-                <div *ngIf="f.dosage_unit.errors?.['required']">
+              <div *ngIf="is_saving && f.dosage_uom.errors" class="invalid-alert">
+                <div *ngIf="f.dosage_uom.errors?.['required']">
                   {{ required_message }}
                 </div>
               </div>
             </div>
 
-            <div class="relative w-full text-sm md:w-2/6 lg:w-2/6 px-5 py-2 mt-2">
-              <label class="font-semibold" for="dosage_regimen" [ngClass]="{'text-red-500': is_saving && f.dosage_regimen.errors}">Dosage regimen</label>
-              <select name="dosage_regimen" id="dosage_regimen" formControlName="dosage_regimen" [ngClass]="{'invalid-input': is_saving && f.dosage_regimen.errors}" class="input">
-                <option [value]="type.id" *ngFor="let type of membership_types">{{ type.desc}}</option>
+            <!-- <div class="relative w-full text-sm md:w-2/6 lg:w-2/6 px-3 py-2 mt-2">
+              <label class="font-semibold" for="instruction_quantity" [ngClass]="{'text-red-500': is_saving && f.instruction_quantity.errors}">Instruction Qty</label>
+              <input name="instruction_quantity" id="instruction_quantity" formControlName="instruction_quantity" [ngClass]="{'invalid-input': is_saving && f.instruction_quantity.errors}" type="number" class="input">
+
+              <div *ngIf="is_saving && f.instruction_quantity.errors" class="invalid-alert">
+                <div *ngIf="f.instruction_quantity.errors?.['required']">
+                  {{ required_message }}
+                </div>
+              </div>
+            </div> -->
+
+            <div class="relative w-full text-sm md:w-2/6 lg:w-2/6 px-3 py-2 mt-2">
+              <label class="font-semibold" for="dose_regimen" [ngClass]="{'text-red-500': is_saving && f.dose_regimen.errors}">Dosage regimen</label>
+              <select name="dose_regimen" id="dose_regimen" formControlName="dose_regimen" [ngClass]="{'invalid-input': is_saving && f.dose_regimen.errors}" class="input">
+                <option [value]="regimen.code" *ngFor="let regimen of drug_regimen">{{ regimen.desc}}</option>
               </select>
-              <div *ngIf="is_saving && f.dosage_regimen.errors" class="invalid-alert">
-                <div *ngIf="f.dosage_regimen.errors?.['required']">
+              <div *ngIf="is_saving && f.dose_regimen.errors" class="invalid-alert">
+                <div *ngIf="f.dose_regimen.errors?.['required']">
                   {{ required_message }}
                 </div>
               </div>
             </div>
 
-            <div class="relative w-full text-sm md:w-2/6 lg:w-2/6 px-5 py-2 mt-2">
-              <label class="font-semibold" for="duration" [ngClass]="{'text-red-500': is_saving && f.duration.errors}">Duration</label>
-              <input name="duration" id="duration" formControlName="duration" [ngClass]="{'invalid-input': is_saving && f.duration.errors}" type="number" class="input">
+            <div class="relative w-full text-sm md:w-2/6 lg:w-2/6 px-3 py-2 mt-2">
+              <label class="font-semibold" for="duration_intake" [ngClass]="{'text-red-500': is_saving && f.duration_intake.errors}">Duration</label>
+              <input name="duration_intake" id="duration_intake" formControlName="duration_intake" [ngClass]="{'invalid-input': is_saving && f.duration_intake.errors}" type="number" class="input">
 
-              <div *ngIf="is_saving && f.duration.errors" class="invalid-alert">
-                <div *ngIf="f.duration.errors?.['required']">
+              <div *ngIf="is_saving && f.duration_intake.errors" class="invalid-alert">
+                <div *ngIf="f.duration_intake.errors?.['required']">
                   {{ required_message }}
                 </div>
               </div>
             </div>
 
-            <div class="relative w-full text-sm md:w-2/6 lg:w-4/6 px-5 py-2 mt-2">
+            <div class="relative w-full text-sm md:w-2/6 lg:w-2/6 px-3 py-2 mt-2">
               <label class="font-semibold" for="duration_frequency" [ngClass]="{'text-red-500': is_saving && f.duration_frequency.errors}">Duration frequency</label>
               <select name="duration_frequency" id="duration_frequency" formControlName="duration_frequency" [ngClass]="{'invalid-input': is_saving && f.duration_frequency.errors}" class="input">
-                <option [value]="type.id" *ngFor="let type of membership_types">{{ type.desc}}</option>
+                <option [value]="frequency.code" *ngFor="let frequency of drug_frequency">{{ frequency.desc}}</option>
               </select>
               <div *ngIf="is_saving && f.duration_frequency.errors" class="invalid-alert">
                 <div *ngIf="f.duration_frequency.errors?.['required']">
@@ -95,10 +103,45 @@
               </div>
             </div>
 
-            <div class="relative w-full text-sm px-5 py-2 mt-2">
+            <div class="relative w-full text-sm md:w-2/6 lg:w-2/6 px-3 py-2 mt-2">
+              <label class="font-semibold" for="medicine_route_code" [ngClass]="{'text-red-500': is_saving && f.medicine_route_code.errors}">Medicine Route</label>
+              <select name="medicine_route_code" id="medicine_route_code" formControlName="medicine_route_code" [ngClass]="{'invalid-input': is_saving && f.medicine_route_code.errors}" class="input">
+                <option [value]="route.code" *ngFor="let route of drug_route">{{ route.desc}}</option>
+              </select>
+              <div *ngIf="is_saving && f.medicine_route_code.errors" class="invalid-alert">
+                <div *ngIf="f.medicine_route_code.errors?.['required']">
+                  {{ required_message }}
+                </div>
+              </div>
+            </div>
+
+            <div class="relative w-full text-sm md:w-2/6 lg:w-2/6 px-3 py-2 mt-2">
+              <label class="font-semibold" for="quantity" [ngClass]="{'text-red-500': is_saving && f.quantity.errors}">Quantity</label>
+              <input name="quantity" id="quantity" formControlName="quantity" [ngClass]="{'invalid-input': is_saving && f.quantity.errors}" type="number" class="input">
+
+              <div *ngIf="is_saving && f.quantity.errors" class="invalid-alert">
+                <div *ngIf="f.quantity.errors?.['required']">
+                  {{ required_message }}
+                </div>
+              </div>
+            </div>
+
+            <div class="relative w-full text-sm md:w-2/6 lg:w-2/6 px-3 py-2 mt-2">
+              <label class="font-semibold" for="quantity_preparation" [ngClass]="{'text-red-500': is_saving && f.quantity_preparation.errors}">Preparation</label>
+              <select name="quantity_preparation" id="quantity_preparation" formControlName="quantity_preparation" [ngClass]="{'invalid-input': is_saving && f.quantity_preparation.errors}" class="input">
+                <option [value]="preparation.code" *ngFor="let preparation of drug_preparation">{{ preparation.desc}}</option>
+              </select>
+              <div *ngIf="is_saving && f.quantity_preparation.errors" class="invalid-alert">
+                <div *ngIf="f.quantity_preparation.errors?.['required']">
+                  {{ required_message }}
+                </div>
+              </div>
+            </div>
+
+            <div class="relative w-full text-sm px-3 py-2 mt-2">
               <label class="font-semibold" for="medicine_purpose" [ngClass]="{'text-red-500': is_saving && f.medicine_purpose.errors}">Medicine purpose</label>
               <select name="medicine_purpose" id="medicine_purpose" formControlName="medicine_purpose" [ngClass]="{'invalid-input': is_saving && f.medicine_purpose.errors}" class="input">
-                <option [value]="type.id" *ngFor="let type of membership_types">{{ type.desc}}</option>
+                <option [value]="purpose.code" *ngFor="let purpose of drug_purpose">{{ purpose.desc}}</option>
               </select>
               <div *ngIf="is_saving && f.medicine_purpose.errors" class="invalid-alert">
                 <div *ngIf="f.medicine_purpose.errors?.['required']">
@@ -125,7 +168,7 @@
         </div>
 
         <button  type="button" class="text-white bg-gray-400 hover:ring-2 focus:outline-none hover:ring-gray-300 rounded text-sm font-medium my-2 px-6 py-2.5 transition duration-150 ease-in-out" (click)="closeModal()">Close</button>
-        <button  type="button" class="text-white bg-blue-500 enabled:hover:ring-2 enabled:focus:outline-none enabled:hover:ring-blue-300 disabled:opacity-75 font-medium rounded text-sm my-2 px-6 py-2.5 text-center transition duration-150 ease-in-out" (click)="onSubmit()" >Save</button>
+        <button [disabled]="drugForm.invalid" type="button" class="text-white bg-blue-500 enabled:hover:ring-2 enabled:focus:outline-none enabled:hover:ring-blue-300 disabled:opacity-75 font-medium rounded text-sm my-2 px-6 py-2.5 text-center transition duration-150 ease-in-out" (click)="onSubmit()" >Save</button>
       </div>
     </div>
   </div>

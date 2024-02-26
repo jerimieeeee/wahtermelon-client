@@ -119,7 +119,7 @@ export class ConsultationComponent implements OnInit {
 
     this.http.get('consultation/records', {params}).subscribe({
       next: (data: any) => {
-        console.log(data)
+        // console.log(data)
         this.consult_details = data.data[0];
         this.allowed_to_edit = this.http.getUserFacility() === this.consult_details.facility.code ? true : false;
         // console.log(this.consult_details.facility.code)

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { faAnglesLeft, faAnglesRight, faChevronLeft, faChevronRight, faSearch, faEdit, faAdd } from '@fortawesome/free-solid-svg-icons';
+import { faAnglesLeft, faAnglesRight, faChevronLeft, faChevronRight, faSearch, faEdit, faAdd, faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
@@ -15,10 +15,11 @@ export class DrugsComponent implements OnInit {
   faSearch = faSearch;
   faEdit = faEdit;
   faAdd = faAdd;
+  faCircleNotch = faCircleNotch;
 
-  is_updating: boolean = false;
+  is_loading: boolean = false;
   show_lib_drug: boolean = false;
-  show_drug_form: boolean = true;
+  show_drug_form: boolean = false;
 
   submit_error: any;
   drug_list: any;
@@ -32,33 +33,55 @@ export class DrugsComponent implements OnInit {
 
   search_item: string;
 
-  showEdit() {
+  showEdit(data?) {
+    if(data) {
+      this.selected_drug = data;
+    }
     this.show_drug_form = !this.show_drug_form;
+
+    if(this.show_drug_form === false) {
+      this.search_item = null;
+      this.loadDrugs();
+    }
   }
 
-  showAdd() {
+  selected_drug: any;
+  showAdd(data?) {
+    this.selected_drug = null;
+    if(data === 'new') {
+      this.show_drug_form = true;
+    } else if(data) {
+      this.selected_drug = data;
+      this.show_drug_form = true;
+    }
     this.show_lib_drug = !this.show_lib_drug;
   }
 
+
   loadDrugs(page?: number){
+    this.is_loading = true;
+
     let params = {params: { }};
     if (this.search_item) params['params']['filter[search]'] = this.search_item;
     if (page) params['params']['page'] = page;
     params['params']['per_page'] = this.per_page;
 
-    console.log(params)
-    this.http.get('users',params).subscribe({
+    this.http.get('medicine/list',params).subscribe({
       next: (data: any) => {
-        console.log(data.data);
         this.drug_list = data.data;
-
+        console.log(this.drug_list)
         this.current_page = data.meta.current_page;
         this.last_page = data.meta.last_page;
         this.from = data.meta.from;
         this.to = data.meta.to;
         this.total = data.meta.total;
+
+        this.is_loading = false;
       },
-      error: err => console.log(err)
+      error: err => {
+        this.http.showError(err.error.message, 'Loading list...')
+        this.is_loading = false;
+      }
     })
   }
 
@@ -67,6 +90,6 @@ export class DrugsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    // this.loadDrugs();
+    this.loadDrugs();
   }
 }
