@@ -14,18 +14,22 @@
 
       <div *ngIf="show_content">
         <div class="w-full p-5">
+          <div class="mb-2">
+            <input id="is_normal" class="input-checkbox" type="checkbox" [(ngModel)]="is_normal" (click)="toggleNormal()"/>
+            <label for="is_normal" class="pl-1 font-semibold">Essentially Normal</label>
+          </div>
           <div class="grid grid-cols-1 gap-3 mb-3 border-b border-slate-200 pb-3 last:border-b-0" *ngFor="let pe of pe_grouped | keyvalue">
             <div class="col-span-1 font-bold">
               <button type="button" (click)="toggleItems(pe.key)">
                 <fa-icon [icon]="pe_item[pe.key] ? faChevronUp : faChevronDown" class="pr-2" size="md"></fa-icon>
+                <span *ngIf="pe.key !== 'heent'">{{ pe.key | titlecase}}</span>
+                <span *ngIf="pe.key === 'heent'">{{ pe.key | uppercase}}</span>
               </button>
-              <span *ngIf="pe.key !== 'heent'">{{ pe.key | titlecase}}</span>
-              <span *ngIf="pe.key === 'heent'">{{ pe.key | uppercase}}</span>
             </div>
             <div *ngIf="pe_item[pe.key] === undefined ? false : pe_item[pe.key]" class="col-span-1 grid grid-cols-2 gap-y-2">
               <div *ngFor="let val of pe.value">
-                <input [disabled]="consult_done || !allowed_to_edit" type="checkbox" [(ngModel)]="physical_codes[val.pe_id]" class="rounded-md border border-gray-400 p-2" >
-                <span class="pl-2" [ngClass]="{'text-blue-500' : val.konsulta_library_status === 1}">{{ val.pe_desc }}</span>
+                <input attr.id="{{ val.pe_id }}" [disabled]="consult_done || !allowed_to_edit" type="checkbox" [(ngModel)]="physical_codes[val.pe_id]" class="rounded-md border border-gray-400 p-2" >
+                <label attr.for="{{ val.pe_id }}" class="pl-2" [ngClass]="{'text-blue-500' : val.konsulta_library_status === 1}">{{ val.pe_desc }}</label>
               </div>
             </div>
             <div *ngIf="pe_item[pe.key] === undefined ? false : pe_item[pe.key]" class="flex col-span-1">

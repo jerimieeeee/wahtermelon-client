@@ -72,8 +72,9 @@ export class KonsultaComponent implements OnInit {
     } else {
       if (this.filter_tranche) params['params']['filter[tranche]'] = this.filter_tranche;
       if (this.filter_status) params['params']['filter[xml_status]'] = this.filter_status;
-      params['params']['start_date'] = this.start_date;
-      params['params']['end_date'] = this.end_date;
+      if(this.start_date) params['params']['start_date'] = this.start_date;
+      if(this.end_date) params['params']['end_date'] = this.end_date;
+
       // params['params']['include'] = 'patient'
       query = this.http.get('konsulta/validated-xml',params);
     }
