@@ -110,7 +110,7 @@
           {{indicator.is_konsulta ? "YES" : "NO"}}
         </td>
         <td class="border-r border-b border-gray-200 text-left">
-          BP:  <span class="font-bold">{{indicator.bp_systolic ?? ''}} / {{indicator.bp_diastolic ?? ''}} </span> <br />
+          BP:  <span [ngClass]="indicator.bp_systolic >= 140 && indicator.bp_diastolic >= 90 ? 'font-bold text-red-500' : 'font-bold' ">{{indicator.bp_systolic ?? '-'}}/{{indicator.bp_diastolic ?? '-'}} </span> <br />
           Temp: <span class="font-bold">{{indicator.patient_temp ?? ''}} </span> <br />
           W: <span class="font-bold">{{indicator.patient_weight ?? ''}} </span> <br />
           H: <span class="font-bold">{{indicator.patient_height ?? ''}} </span> <br />
@@ -119,20 +119,34 @@
           RR: <span class="font-bold">{{indicator.patient_respiratory_rate ?? ''}} </span> <br />
         </td>
         <td class="border-r border-b border-gray-200 text-center">
-          {{indicator.complaints ?? '-'}}
+          <div *ngFor="let item of indicator.complaints">
+            <span class="font-bold"> {{ item.lib_complaints.complaint_desc }} </span> <br />
+            <br />
+            Remarks: <br />
+            {{ indicator.complaint_remarks ?? '-'}} <br />
+            <br />
+          </div>
         </td>
         <td class="border-r border-b border-gray-200 text-center">
           {{indicator.history ?? '-'}}
         </td>
         <td class="border-r border-b border-gray-200 text-center">
           <div *ngFor="let item of indicator.initial_diagnosis">
-             {{ item.diagnosis.class_name }} <br />
+            <span class="font-bold">  {{ item.diagnosis.class_name }} </span> <br />
+            <br />
+            Remarks: <br />
+            {{ indicator.initial_dx_remarks ?? '-'}} <br />
+            <br />
           </div>
         </td>
         <td class="border-r border-b border-gray-200 text-center">
           <div *ngFor="let item of indicator.final_diagnosis">
             <span class="font-bold">{{ item.icd10_code }} <br /> </span>
             {{ item.lib_icd10.icd10_desc }} <br />
+            <br />
+            Remarks: <br />
+            {{ indicator.final_dx_remarks ?? '-'}} <br />
+            <br />
           </div>
         </td>
         <td class="border-r border-b border-gray-200 text-center">
