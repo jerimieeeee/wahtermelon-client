@@ -49,8 +49,10 @@ export class EclaimsComponent implements OnInit {
 
   status_lists = [
     'IN PROCESS',
-    'DENIED',
+    'VOUCHERING',
+    'WITH VOUCHER',
     'WITH CHEQUE',
+    'DENIED',
     'RETURN'
   ];
 
@@ -192,9 +194,11 @@ export class EclaimsComponent implements OnInit {
       case 'RETURN' : {
         message = 'As of: '+resp.pAsOf+ ' '+resp.pAsOfTime;
         Object.entries(resp.CLAIM.RETURN.DEFECTS).forEach(([key, value]:any, index) => {
-          console.log(value)
+          /* console.log(value)
           message += '<br />Deficiency: '+value.pDeficiency;
-          if(value.REQUIREMENT) message += '<br />Requirement: '+value.REQUIREMENT.pRequirement;
+          if(value.REQUIREMENT) message += '<br />Requirement: '+value.REQUIREMENT.pRequirement; */
+          if(!value.pRequirement) message += '<br />Deficiency: '+value;
+          if(value.pRequirement) message += '<br />Requirement: '+value.pRequirement;
         });
         break;
       }
@@ -212,9 +216,8 @@ export class EclaimsComponent implements OnInit {
     this.toastr.info(message, title, {
       closeButton: true,
       positionClass: 'toast-top-center',
-      timeOut: 15000,
-      enableHtml: true,
-      progressBar: true
+      disableTimeOut: true,
+      enableHtml: true
     });
   }
 

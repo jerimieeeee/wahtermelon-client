@@ -6,7 +6,7 @@
           There are no credential for the selected program
         </span>
       </div>
-      <div class="text-sm font-normal">
+      <div class="text-sm font-normal"> <!--  || caserate_list?.length===0 -->
         <button [disabled]="!program_creds || caserate_list?.length===0" type="button" class="w-32 px-3 py-2 rounded-md bg-blue-500 text-sm text-white ml-auto mr-1 disabled:bg-gray-400" (click)="toggleModal('pbef')">
           PBEF
         </button>
@@ -58,9 +58,9 @@
                 {{ eclaims.denied_reason ?? '-'  }}
               </td>
               <td class="py-4 px-3 text-center grid grid-cols-1">
-                <button *ngIf="eclaims.pStatus === 'IN PROCESS' || eclaims.pStatus === '' || !eclaims.pStatus" class="bg-blue-500 text-white rounded-md p-0.5 mb-3 disabled:opacity-75" type="button" (click)="toggleModal('upload-claims', eclaims)">
+                <button *ngIf="eclaims.pStatus === '' || !eclaims.pStatus" class="bg-blue-500 text-white rounded-md p-0.5 mb-3 disabled:opacity-75" type="button" (click)="toggleModal('upload-claims', eclaims)">
                   <fa-icon [icon]="faUpload"></fa-icon>
-                  {{ eclaims.pReceiptTicketNumber ? 'Reupload Docs' : 'Upload Claim' }}
+                  Upload Claim<!-- {{ eclaims.pReceiptTicketNumber ? 'Reupload Docs' : 'Upload Claim' }} -->
                 </button>
 
                 <button *ngIf="eclaims.pStatus === 'RETURN'" class="bg-blue-500 text-white rounded-md p-0.5 mb-3 disabled:opacity-75" type="button" (click)="toggleModal('upload-required-claims', eclaims)">

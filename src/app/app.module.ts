@@ -27,7 +27,7 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
     HeaderComponent,
     SidenavComponent,
     VitalsGraphComponent,
-    VitalsComponent
+    VitalsComponent,
   ],
   imports: [
     BrowserModule,

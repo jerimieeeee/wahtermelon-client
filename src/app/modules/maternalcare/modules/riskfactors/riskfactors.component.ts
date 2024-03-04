@@ -178,7 +178,7 @@ export class RiskfactorsComponent implements OnInit {
     this.risk_form.patchValue({
       id: risk.id,
       risk_id: risk.risk.id,
-      date_detected: formatDate(risk.date_detected, 'Y-MM-dd', 'en', 'Asia/Manila'),
+      date_detected: formatDate(risk.date_detected, 'yyyy-MM-dd', 'en', 'Asia/Manila'),
     });
 
     this.risk_to_edit = risk.id;

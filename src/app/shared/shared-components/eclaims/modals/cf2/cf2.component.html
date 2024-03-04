@@ -49,7 +49,7 @@
 
             <span class="absolute top-[95.3mm] left-[44mm] w-[38.5mm]">{{ patient?.last_name }}</span>
             <span class="absolute top-[95.3mm] left-[87mm] w-[41.5mm]">{{ patient?.first_name }}</span>
-            <span class="absolute top-[95.3mm] left-[1320mm] w-[29.5mm]">{{ patient?.suffix_name!=='NA' ? patient?.suffix_name : '' }}</span>
+            <span class="absolute top-[95.3mm] left-[132mm] w-[29.5mm]">{{ patient?.suffix_name!=='NA' ? patient?.suffix_name : '' }}</span>
             <span class="absolute top-[95.3mm] left-[165mm] w-[42.2mm]">{{ patient?.middle_name }}</span>
 
             <span class="absolute top-[126mm] left-[70mm] w-[8.5mm] tracking-[0.4em]">{{ eclaimsForm.value.admission_date | date:'MM' }}</span>
@@ -102,7 +102,7 @@
             <div *ngIf="program_name==='tb'">
               <span *ngIf="eclaimsForm.value.code==='89221'" class="absolute top-[270.5mm] left-[46.3mm]">&#x2714;</span> <!-- Instensive -->
               <span *ngIf="eclaimsForm.value.code==='89222'" class="absolute top-[270.5mm] left-[80mm]">&#x2714;</span> <!-- Maintenance -->
-              <span class="absolute top-[270.5mm] left-[115mm]">NEW CAT I</span>
+              <!-- <span class="absolute top-[270.5mm] left-[115mm]">NEW CAT I</span> -->
             </div>
             <!-- TB CASE -->
 

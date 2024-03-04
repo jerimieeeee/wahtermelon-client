@@ -127,7 +127,7 @@ export class KonsultaMasterlistComponent implements OnInit {
     for (let year = Number(this.current_year); year >= 2018; year--) {
       this.years.push(year);
     }
-
+    this.search_year = this.current_year;
     let userFacility = this.http.getUserFromJSON();
     this.loadBrgy(userFacility.facility.municipality.code);
   }
