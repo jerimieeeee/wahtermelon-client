@@ -42,7 +42,7 @@ export class DentalComponent implements OnInit {
         this.consult_details = data.data[0];
         this.allowed_to_edit = this.http.getUserFacility() === this.consult_details.facility.code ? true : false;
         // console.log(this.consult_details.facility.code)
-        if(this.consult_details.consult_notes.complaint || this.consult_details.consult_notes.complaints.length > 0  || this.consult_details.consult_notes.history) {
+        /* if(this.consult_details.consult_notes.complaint || this.consult_details.consult_notes.complaints.length > 0  || this.consult_details.consult_notes.history) {
           this.have_complaint = true;
 
 
@@ -50,7 +50,7 @@ export class DentalComponent implements OnInit {
             this.referred_to = this.consult_details.physician;
             this.enable_edit = true;
           }
-        }
+        } */
       },
       error: err => console.log(err)
     });

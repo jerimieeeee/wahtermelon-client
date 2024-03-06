@@ -100,7 +100,7 @@ export class RiskAssessmentComponent implements OnInit, OnChanges {
       this.f.client_type.disable();
     }
 
-    console.log(this.f)
+    // console.log(this.f)
   }
 
   getVitalsToday(vitals, consult_details){
