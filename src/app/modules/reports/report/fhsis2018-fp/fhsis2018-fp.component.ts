@@ -71,11 +71,15 @@ export class Fhsis2018FpComponent {
   ) { }
 
   openList:boolean = false;
-  toggleModal(name_list, name_list2?){
+  toggleModal(name_list, name_list2?, name_list3?){
     let list = [];
     if(name_list2) {
       list = name_list.concat(name_list2)
-    } else {
+    }
+    else if (name_list3) {
+      list = name_list.concat(name_list3)
+    }
+    else {
       list = name_list
     }
 
