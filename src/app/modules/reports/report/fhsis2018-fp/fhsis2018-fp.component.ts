@@ -1,16 +1,14 @@
-import { Component, Input, OnChanges } from '@angular/core';
+import {Component, Input} from '@angular/core';
 import { faCircleNotch, faFileExcel, faFilePdf } from '@fortawesome/free-solid-svg-icons';
-import { options } from 'app/modules/patient-registration/patient-registration.module';
-import { ExportAsConfig, ExportAsService } from 'ngx-export-as';
-import * as moment from 'moment';
+import {ExportAsConfig, ExportAsService} from "ngx-export-as";
+import * as moment from "moment/moment";
 
 @Component({
-  selector: 'app-daily-service',
-  templateUrl: './daily-service.component.html',
-  styleUrls: ['./daily-service.component.scss']
+  selector: 'app-fhsis2018-fp',
+  templateUrl: './fhsis2018-fp.component.html',
+  styleUrls: ['./fhsis2018-fp.component.scss']
 })
-
-export class DailyServiceComponent implements OnChanges {
+export class Fhsis2018FpComponent {
   @Input() report_data;
   @Input() reportForm;
   @Input() selectedBrgy;
@@ -55,7 +53,7 @@ export class DailyServiceComponent implements OnChanges {
   }
 
   exportX() {
-    this.exportAsService.save(this.exportAsExcel, 'Daily Service - Consultation').subscribe(() => {
+    this.exportAsService.save(this.exportAsExcel, 'Family Planning M1').subscribe(() => {
       // save started
     });
   }
@@ -63,7 +61,7 @@ export class DailyServiceComponent implements OnChanges {
   pdf_exported: boolean = false;
   exportP() {
     this.pdf_exported = true;
-    this.exportAsService.save(this.exportAsPdf, 'Daily Service - Consultation').subscribe(() => {
+    this.exportAsService.save(this.exportAsPdf, 'Family Planning M1').subscribe(() => {
       // save started
     });
   }
@@ -73,11 +71,15 @@ export class DailyServiceComponent implements OnChanges {
   ) { }
 
   openList:boolean = false;
-  toggleModal(name_list, name_list2?){
+  toggleModal(name_list, name_list2?, name_list3?){
     let list = [];
     if(name_list2) {
       list = name_list.concat(name_list2)
-    } else {
+    }
+    else if (name_list3) {
+      list = name_list.concat(name_list3)
+    }
+    else {
       list = name_list
     }
 
@@ -86,21 +88,8 @@ export class DailyServiceComponent implements OnChanges {
     this.openList = !this.openList;
   }
 
-  count_male: number = 0;
-  count_female: number = 0;
-  count_konsulta: number = 0;
-  count_consent: number = 0;
-  count_philhealth: number = 0;
-  countTotal(var_name: string) {
-    this[var_name] += 1;
-    // console.log(this[var_name]);
-  }
   convertDate(){
     this.convertedMonth = moment(this.reportForm.value.month, 'M').format('MMMM');
-  }
-
-  convertDate2(){
-    this.convertedMonth = moment(this.reportForm.value.patient.birthdate, 'Y').format('YYYY');
   }
 
   convertBrgy(){
@@ -108,17 +97,13 @@ export class DailyServiceComponent implements OnChanges {
   }
 
   ngOnChanges(): void {
-    this.count_male = 0;
-    this.count_female = 0;
-    this.count_konsulta = 0;
-    this.count_consent  = 0;
-    this.count_philhealth = 0;
-    this.stats = this.report_data.data;
-    this.reportform_data = this.reportForm.data;
+    this.stats = this.report_data;
+    this.reportform_data = this.reportForm;
     this.selected_barangay = this.selectedBrgy;
     this.info3 = this.userInfo;
     this.brgys_info = this.brgys;
     this.pdf_exported = false;
+
     this.convertBrgy();
     this.convertDate();
   }
