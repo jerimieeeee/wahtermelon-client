@@ -5,6 +5,15 @@
   <div class="font-semibold text-center">
     DAILY SERVICE REPORT (CONSULTATION) - Wireless Access for Health
   </div>
+  <span>
+      <!-- <fa-icon *ngIf="exporting" [icon]="faCircleNotch" spin="true" class="text-blue-500 text-sm mr-3">Exporting...</fa-icon> -->
+      <button [disabled]="pdf_exported" type="button" class="text-2xl mr-5 text-red-600 disabled:text-gray-600" (click)="exportP()">
+        <fa-icon [icon]="faFilePdf"></fa-icon>
+      </button>
+      <button  type="button" class="text-2xl" (click)="exportX()">
+        <fa-icon [icon]="faFileExcel" class="text-green-700"></fa-icon>
+      </button>
+    </span>
   <tr class="text-sm font-medium text-gray-900 text-center align-top">
     {{this.reportForm.value.start_date}} to {{this.reportForm.value.end_date}}
   </tr>
@@ -120,7 +129,7 @@
         </td>
         <td class="border-r border-b border-gray-200 text-center">
           <div *ngFor="let item of indicator.complaints">
-            <span class="font-bold"> {{ item.lib_complaints.complaint_desc }} </span> <br />
+            <span class="font-bold"> {{ item.lib_complaints.complaint_desc ?? '-' }} </span> <br />
             <br />
             Remarks: <br />
             {{ indicator.complaint_remarks ?? '-'}} <br />
@@ -132,7 +141,7 @@
         </td>
         <td class="border-r border-b border-gray-200 text-center">
           <div *ngFor="let item of indicator.initial_diagnosis">
-            <span class="font-bold">  {{ item.diagnosis.class_name }} </span> <br />
+            <span class="font-bold">  {{ item.diagnosis.class_name ?? '-' }} </span> <br />
             <br />
             Remarks: <br />
             {{ indicator.initial_dx_remarks ?? '-'}} <br />
@@ -141,8 +150,8 @@
         </td>
         <td class="border-r border-b border-gray-200 text-center">
           <div *ngFor="let item of indicator.final_diagnosis">
-            <span class="font-bold">{{ item.icd10_code }} <br /> </span>
-            {{ item.lib_icd10.icd10_desc }} <br />
+            <span class="font-bold">{{ item.icd10_code ?? '-'}} <br /> </span>
+            {{ item.lib_icd10.icd10_desc ?? '-'}} <br />
             <br />
             Remarks: <br />
             {{ indicator.final_dx_remarks ?? '-'}} <br />
