@@ -119,8 +119,8 @@ export class ComplaintHistoryComponent implements OnInit {
     this.possible_gbv_case = false;
     this.have_open_gbv = false;
     let selected_complaints = [];
-    // console.log(this.consult_details);
-    /* if(this.consult_details.consult_notes && this.consult_details.consult_notes.complaints){
+    console.log(this.consult_details);
+    if(this.consult_details.consult_notes && this.consult_details.consult_notes.complaints){
       Object.entries(this.consult_details.consult_notes.complaints).forEach(([key, value], index) => {
         let val: any = value;
         selected_complaints.push(val.complaint_id);
@@ -135,7 +135,7 @@ export class ComplaintHistoryComponent implements OnInit {
         }
       });
     };
-    this.selectedComplaint = selected_complaints; */
+    this.selectedComplaint = selected_complaints;
   }
 
   getPatientGbv() {
@@ -174,6 +174,7 @@ export class ComplaintHistoryComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    console.log(this.consult_details)
     this.loadLib();
 
     this.allowed_to_edit = true;

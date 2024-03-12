@@ -26,6 +26,7 @@ export class DentalComponent implements OnInit {
   allowed_to_edit: boolean = false
   have_complaint: boolean = false;
 
+  toggle_content: boolean = true;
   loadConsult(){
     // console.log('consult loaded')
     this.consult_id = this.route.snapshot.paramMap.get('consult_id');
