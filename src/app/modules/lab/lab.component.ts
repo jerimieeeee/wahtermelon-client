@@ -28,7 +28,8 @@ export class LabComponent implements OnInit, OnDestroy {
     let params = {
       patient_id: this.patient_details.id,
       sort: '-request_date',
-      include: 'laboratory'
+      include: 'laboratory',
+      per_page: 'all',
     }
     this.http.get('laboratory/consult-laboratories', {params}).subscribe({
       next: (data: any) => {
@@ -69,6 +70,36 @@ export class LabComponent implements OnInit, OnDestroy {
           } else {
             this.modal[form] = !this.modal[form];
           }
+        } else if(lab && lab.laboratory.code === 'BPSY') {
+          if(!this.lab_biopsy_type) {
+            this.loadBiopsyType(form);
+          } else {
+            this.modal[form] = !this.modal[form];
+          }
+        } else if (lab && lab.laboratory.code === 'USND') {
+          if(!this.lab_findings){
+            this.loadLibraries('libraries/laboratory-ultrasound-type','lab_ultrasound_type', form)
+          } else {
+            this.modal[form] = !this.modal[form];
+          }
+        } else if (lab && lab.laboratory.code === 'SYPH') {
+          if(!this.lab_findings){
+            this.loadSyphilisMethod(form)
+          } else {
+            this.modal[form] = !this.modal[form];
+          }
+        } else if (lab && lab.laboratory.code === 'HEMA') {
+          if(!this.lab_findings){
+            this.loadLibraries('libraries/blood-types', 'blood_types', form);
+          } else {
+            this.modal[form] = !this.modal[form];
+          }
+        } else if (lab && lab.laboratory.code === 'MRDT') {
+          if(!this.lab_findings){
+            this.loadLibraries('libraries/laboratory-malaria-parasite', 'lab_malaria_parasite', form);
+          } else {
+            this.modal[form] = !this.modal[form];
+          }
         } else if(lab && lab.laboratory.code === 'ECG') {
           if(!this.lab_findings){
             this.loadLibraries('libraries/laboratory-findings','lab_findings', form)
@@ -78,6 +109,18 @@ export class LabComponent implements OnInit, OnDestroy {
         } else if(lab && lab.laboratory.code === 'SPTM') {
           if(!this.lab_sputum_collection && !this.lab_result_pn) {
             this.loadSputumCollection(form);
+          } else {
+            this.modal[form] = !this.modal[form];
+          }
+        } else if(lab && lab.laboratory.code === 'SPTM') {
+          if(!this.lab_sputum_collection && !this.lab_result_pn) {
+            this.loadSputumCollection(form);
+          } else {
+            this.modal[form] = !this.modal[form];
+          }
+        } else if(lab && lab.laboratory.code === 'GXPT') {
+          if(!this.lab_gene_mtb && !this.lab_gene_rif) {
+            this.loadGeneMtb(form);
           } else {
             this.modal[form] = !this.modal[form];
           }
@@ -120,6 +163,33 @@ export class LabComponent implements OnInit, OnDestroy {
   lab_stool_blood: any;
   lab_stool_color: any;
   lab_stool_consistency: any;
+  lab_biopsy_type: any;
+  lab_ultrasound_type: any;
+  lab_syphilis_method: any;
+  blood_types: any;
+  lab_malaria_parasite: any;
+  lab_gene_mtb: any;
+  lab_gene_rif: any;
+
+  loadGeneMtb(form) {
+    this.http.get('libraries/laboratory-mtb-result').subscribe({
+      next: (data: any) => {
+        this.lab_gene_mtb = data.data;
+        this.loadLibraries('libraries/laboratory-rif-result','lab_gene_rif', form)
+      },
+      error: err => console.log(err)
+    })
+  }
+
+  loadSyphilisMethod(form) {
+    this.http.get('libraries/laboratory-syphilis-method').subscribe({
+      next: (data: any) => {
+        this.lab_syphilis_method = data.data;
+        this.loadLibraries('libraries/laboratory-result','lab_result_pn', form)
+      },
+      error: err => console.log(err)
+    })
+  }
 
   loadSputumCollection(form){
     this.http.get('libraries/laboratory-sputum-collection').subscribe({
@@ -184,6 +254,17 @@ export class LabComponent implements OnInit, OnDestroy {
       },
       error: err => console.log(err)
     });
+  }
+
+  loadBiopsyType(form) {
+    this.http.get('libraries/laboratory-biopsy-type').subscribe({
+      next: (data: any) => {
+        console.log(data)
+        this.lab_biopsy_type = data.data;
+        this.modal[form] = !this.modal[form];
+      },
+      error: err => console.log(err)
+    })
   }
 
   loadLibraries(url, var_name, form){
