@@ -34,7 +34,7 @@ export class LabComponent implements OnInit, OnDestroy {
     this.http.get('laboratory/consult-laboratories', {params}).subscribe({
       next: (data: any) => {
         this.pending_list = data.data
-        // console.log(this.pending_list)
+        console.log(this.pending_list)
         this.show_form = true;
       },
       error: err => console.log(err)
@@ -185,7 +185,7 @@ export class LabComponent implements OnInit, OnDestroy {
     this.http.get('libraries/laboratory-syphilis-method').subscribe({
       next: (data: any) => {
         this.lab_syphilis_method = data.data;
-        this.loadLibraries('libraries/laboratory-result','lab_result_pn', form)
+        this.loadLibraries('libraries/laboratory-results','lab_result_pn', form)
       },
       error: err => console.log(err)
     })

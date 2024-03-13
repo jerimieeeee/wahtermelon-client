@@ -155,7 +155,10 @@ export class LabFormComponent implements OnChanges {
               this.closeModal();
             }
           },
-          error: err => console.log(err)
+          error: err => {
+            this.http.showError(err.error.message, 'Laboratory');
+            this.is_saving = false;
+          }
         })
       } else {
         this.is_saving = false;
