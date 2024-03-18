@@ -14,6 +14,7 @@ export class HttpService {
   // baseUrl = 'http://127.0.0.1:8000/api/v1/'; //local api
 
 
+
   constructor(
     private http: HttpClient,
     private router: Router,
