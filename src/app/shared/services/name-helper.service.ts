@@ -73,6 +73,32 @@ export class NameHelperService {
         return 'laboratory/consult-laboratory-gram-stain'
       case 'MCRP':
         return 'laboratory/consult-laboratory-microscopy'
+      case 'BCHM':
+        return 'laboratory/consult-laboratory-blood-chemistry'
+      case 'BPSY':
+        return 'laboratory/consult-laboratory-biopsy'
+      case 'USND':
+        return 'laboratory/consult-laboratory-ultrasound'
+      case 'SYPH':
+        return 'laboratory/consult-laboratory-syphilis'
+      case 'HEMA':
+        return 'laboratory/consult-laboratory-hematology'
+      case 'RDT':
+        return 'laboratory/consult-laboratory-dengue'
+      case 'MRDT':
+        return 'laboratory/consult-laboratory-malaria'
+      case 'WETS':
+        return 'laboratory/consult-laboratory-wet-smear'
+      case 'SRLG':
+        return 'laboratory/consult-laboratory-serology'
+      case 'KOH':
+        return 'laboratory/consult-laboratory-potassium'
+      case 'SSMR':
+        return 'laboratory/consult-laboratory-skin-slit'
+      case 'GXPT':
+        return 'laboratory/consult-laboratory-geneXpert'
+      case 'CCS':
+        return 'laboratory/consult-laboratory-cervical-cancer'
       default:
         return '';
     }
