@@ -86,6 +86,9 @@
                 <button type="button" (click)="showEdit(drug)">
                   <fa-icon [icon]="faEdit" class="text-amber-500"></fa-icon>
                 </button>
+                <button class="ml-2" (click)="toggleModal('delete-item', drug)">
+                  <fa-icon [icon]="faTrashCan" class="text-rose-500"></fa-icon>
+                </button>
               </td>
             </tr>
           </tbody>
@@ -151,3 +154,11 @@
   [selected_drug]="selected_drug"
   (showEdit)="showEdit($event)"
 ></app-drug-form>
+
+<app-delete-item *ngIf="modal['delete-item']"
+  [delete_id]="delete_id"
+  [delete_desc]="delete_desc"
+  [url]="url"
+  (toggleModal)="toggleModal($event)"
+></app-delete-item>
+
