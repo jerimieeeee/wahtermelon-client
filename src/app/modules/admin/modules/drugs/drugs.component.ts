@@ -81,7 +81,7 @@ export class DrugsComponent implements OnInit {
     this.http.get('medicine/list',params).subscribe({
       next: (data: any) => {
         this.drug_list = data.data;
-        console.log(this.drug_list)
+        // console.log(this.drug_list)
         this.current_page = data.meta.current_page;
         this.last_page = data.meta.last_page;
         this.from = data.meta.from;
