@@ -28,7 +28,7 @@
             </div>
             <div *ngIf="pe_item[pe.key] === undefined ? false : pe_item[pe.key]" class="col-span-1 grid grid-cols-2 gap-y-2">
               <div *ngFor="let val of pe.value">
-                <input attr.id="{{ val.pe_id }}" [disabled]="consult_done || !allowed_to_edit" type="checkbox" [(ngModel)]="physical_codes[val.pe_id]" class="rounded-md border border-gray-400 p-2" >
+                <input attr.id="{{ val.pe_id }}" [disabled]="consult_done || !allowed_to_edit" type="checkbox" [(ngModel)]="physical_codes[val.pe_id]" (change)="checkIsNormal()" class="rounded-md border border-gray-400 p-2" >
                 <label attr.for="{{ val.pe_id }}" class="pl-2" [ngClass]="{'text-blue-500' : val.konsulta_library_status === 1}">{{ val.pe_desc }}</label>
               </div>
             </div>

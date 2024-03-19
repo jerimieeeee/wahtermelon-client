@@ -144,9 +144,21 @@ export class PhysicalExamComponent implements OnInit, OnChanges {
         this.physical_codes[val.pe_id] = true;
       });
       // console.log(this.physical_codes)
+
+      this.checkIsNormal();
     }
   }
 
+  checkIsNormal() {
+    if(this.physical_codes.ABDOMEN12 && this.physical_codes.CHEST06 &&
+      this.physical_codes.GENITOURINARY01 && this.physical_codes.HEART05 &&
+      this.physical_codes.HEENT11 && this.physical_codes.NEURO06 &&
+      this.physical_codes.RECTAL01 && this.physical_codes.SKIN15) {
+        this.is_normal = true;
+    } else {
+      this.is_normal = false;
+    }
+  }
   ngOnChanges(changes){
     this.show_content = this.toggle_content;
     if(this.consult_details) {
