@@ -66,7 +66,7 @@
       </select>
     </div>
 
-    <div class="text-sm col-span-4 px-5 mt-4 mb-4" *ngIf="f.location.value === 2">
+    <div class="text-sm col-span-4 px-5 mt-4 mb-4">
       <h4 class="mb-1" >Client Type: </h4>
       <select class="text-sm border-gray-200 border p-2.5 rounded-md w-full" formControlName="client_type">
         <option *ngFor="let client of clients" [value]="client.id">{{client.desc}}</option>
@@ -178,7 +178,7 @@
       </select>
     </div>
 
-    <div class="text-sm col-span-6 w-full px-5 mt-4 mb-6 relative" *ngIf="f.location.value === 2">
+    <div class="text-sm col-span-6 w-full px-5 mt-4 mb-6 relative">
       <h1 class="mb-1">Undertaking medications:</h1>
       <select class="text-sm border-gray-200 border p-2.5 rounded-md w-full" formControlName="diabetes_medications" name="diabetes_medications">
         <option  [value]="logic.id" *ngFor="let logic of logical">
@@ -187,7 +187,7 @@
       </select>
     </div>
 
-    <div class="text-sm col-span-4 w-full px-5 mt-4 mb-6 relative" *ngIf="f.location.value === 2">
+    <div class="text-sm col-span-4 w-full px-5 mt-4 mb-6 relative">
       <h1 class="mb-1">Polyphagia</h1>
       <select class="text-sm border-gray-200 border p-2.5 rounded-md w-full" formControlName="polyphagia" name="polyphagia">
         <option  [value]="logic.id" *ngFor="let logic of logical">
@@ -196,7 +196,7 @@
       </select>
     </div>
 
-    <div class="text-sm col-span-4 w-full px-5 mt-4 mb-6 relative" *ngIf="f.location.value === 2">
+    <div class="text-sm col-span-4 w-full px-5 mt-4 mb-6 relative">
       <h1 class="mb-1">Polydipsia</h1>
       <select class="text-sm border-gray-200 border p-2.5 rounded-md w-full" formControlName="polydipsia" name="polydipsia">
         <option  [value]="logic.id" *ngFor="let logic of logical">
@@ -205,7 +205,7 @@
       </select>
     </div>
 
-    <div class="text-sm col-span-4 w-full px-5 mt-4 mb-6 relative" *ngIf="f.location.value === 2">
+    <div class="text-sm col-span-4 w-full px-5 mt-4 mb-6 relative">
       <h1 class="mb-1">Polyuria</h1>
       <select class="text-sm border-gray-200 border p-2.5 rounded-md w-full" formControlName="polyuria" name="polyuria">
         <option  [value]="logic.id" *ngFor="let logic of logical">
