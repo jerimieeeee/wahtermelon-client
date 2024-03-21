@@ -120,6 +120,9 @@ export class LabFormComponent implements OnChanges {
         this.lab_form['color_code'] = this.lab_form.color_code;
         this.lab_form['consistency_code'] = this.lab_form.consistency_code;
         break;
+      case 'MRDT':
+        this.lab_form['parasite_type_code'] = this.lab_form.parasite_type_code;
+        break;
       default:
         break;
     }

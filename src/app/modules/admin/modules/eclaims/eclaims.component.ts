@@ -44,6 +44,8 @@ export class EclaimsComponent implements OnInit {
   pStatus: string = null;
   program_desc: string = null;
   patient_search: string = null;
+  code: string = null;
+  code_list: any = [];
   // pTransmissionDate: null
 
 
@@ -57,6 +59,11 @@ export class EclaimsComponent implements OnInit {
   ];
 
   program_list = ['ab', 'cc', 'tb', 'mc', 'fp'];
+  code_list_ab = ['90375'];
+  code_list_cc = ['99432', '99460'];
+  code_list_tb = ['89221', '89222'];
+  code_list_mc = ['MCP01', 'NSD01', 'ANC01', 'ANC02'];
+  code_list_fp = ['FP001', '58300'];
 
   per_page: number = 10;
   current_page: number;
@@ -65,12 +72,41 @@ export class EclaimsComponent implements OnInit {
   to: number;
   total: number;
 
+  changeCodeList(){
+    switch(this.program_desc) {
+      case 'ab': {
+        this.code_list = this.code_list_ab;
+        break;
+      }
+      case 'cc': {
+        this.code_list = this.code_list_cc;
+        break;
+      }
+      case 'tb': {
+        this.code_list = this.code_list_tb;
+        break;
+      }
+      case 'mc': {
+        this.code_list = this.code_list_mc;
+        break;
+      }
+      case 'fp': {
+        this.code_list = this.code_list_fp;
+        break;
+      }
+      default: {
+        this.code_list = null;
+      }
+    };
+  }
+
   getEclaimsList(page?) {
     this.show_form = false;
 
     let params = {
       pStatus: this.pStatus ?? '',
       program_desc: this.program_desc ?? '',
+      code: this.code ?? '',
       'filter[search]': this.patient_search ?? '',
       page: page ?? '',
       per_page: this.per_page
@@ -78,6 +114,7 @@ export class EclaimsComponent implements OnInit {
 
     this.http.get('eclaims/eclaims-upload', { params }).subscribe({
       next:(data:any) => {
+        console.log(data.data)
         this.eclaims_list = data.data;
         this.show_form = true;
 
