@@ -29,16 +29,16 @@
                 <th scope="col" class="py-3 px-6">Generic Name</th>
                 <th scope="col" class="py-3 px-6">Dosage</th>
                 <th scope="col" class="py-3 px-6">Dosage Form</th>
-                <th scope="col" class="py-3 px-6">Action</th>
+                <!-- <th scope="col" class="py-3 px-6">Action</th> -->
               </tr>
             </thead>
             <tbody class="overflow-y-auto">
-              <tr *ngIf="drug_list?.length === 0 || !drug_list">
-                <td colspan="9" >
+              <tr *ngIf="drug_list?.length === 0">
+                <td colspan="4" >
                   <div class="grid grid-cols-1 w-full mt-10">
                     <div class="text-center italic"> No records found... </div>
                     <div class="flex justify-center mt-3">
-                      <button type="button" class="btn-save" (click)="showAdd()">
+                      <button type="button" class="btn-save" (click)="closeModal('new')">
                         <fa-icon [icon]="faAdd" class="mr-1 text-white"></fa-icon>
                         Add
                       </button>
@@ -46,25 +46,26 @@
                   </div>
                 </td>
               </tr>
-              <tr *ngFor="let drug of drug_list; let odd = odd; let i = index" class="bg-white border-t" [ngClass]="{'bg-gray-50': odd}"  class="hover:bg-blue-200 cursor-pointer" (click)="selectDrugs()">
-                <th scope="row" class="py-4 px-6 font-medium whitespace-nowrap">
-                  {{ drug.last_name }}, {{ drug.first_name }} {{ drug.middle_name === 'NA' ? '' : drug.middle_name }} {{ drug.suffix_name === 'NA' ? '' : drug.suffix_name}}
-                </th>
-                <td class="py-4 px-6">
-                  {{ drug.birtdate | date: 'MM/dd/yyyy':'Asia/Manila' }}
+
+              <tr *ngFor="let drug of drug_list; let odd = odd; let i = index" class="bg-white border-t" [ngClass]="{'bg-gray-50': odd}"  class="hover:bg-blue-200 cursor-pointer" (click)="closeModal(drug)">
+                <td scope="row" class="py-4 px-4">
+                  {{ drug.desc }}
                 </td>
-                <td class="py-4 px-6">
-                  {{ drug.gender }}
+                <td class="py-4 px-4">
+                  {{ drug.generic_desc }}
                 </td>
-                <td class="py-4 px-6">
-                  {{ drug.contact_number }}
+                <td class="py-4 px-4">
+                  {{ drug.unit_desc }} {{ drug.package_desc }}
+                </td>
+                <td class="py-4 px-4">
+                  {{ drug.form_desc }}
                 </td>
 
-                <td class="py-4 px-6">
+                <!-- <td class="py-4 px-6">
                   <button type="button" (click)="showEdit()">
                     <fa-icon [icon]="faEdit" class="text-amber-500"></fa-icon>
                   </button>
-                </td>
+                </td> -->
               </tr>
             </tbody>
           </table>

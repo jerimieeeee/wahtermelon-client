@@ -40,13 +40,13 @@
           <tr *ngFor="let prescription of prescriptions; trackBy:identify" class="bg-white border-b last:border-0 text-sm align-top">
             <td class="py-4 px-3">
               {{ prescription.konsulta_medicine ?  prescription.konsulta_medicine.desc : prescription.added_medicine }}
-              {{ prescription.medicine ? prescription.medicine.gen_name : '' }} <br />
+              {{ prescription.medicine ? prescription.medicine.gen_name : '' }} <br /><br />
             </td>
             <td scope="row" class="py-4 px-3 font-medium text-gray-900">
               {{ prescription.dosage_quantity }} {{ prescription.unit_of_measurement.desc }} {{ prescription.regimen.desc }}
               {{ prescription.duration_intake }} {{ prescription.frequency.desc }} <br /><br />
 
-              Instruction Qty: {{ prescription.instruction_quantity }}
+              Remarks: {{ prescription.remarks }}
             </td>
             <td scope="row" class="py-4 px-3 font-medium text-gray-900">
               {{ prescription.prescription_date | date : 'MM/dd/yyyy':'Asia/Manila'}}

@@ -57,7 +57,6 @@ export class HttpService {
   }
 
   saveUserToLocalStorage(user) {
-    // console.log(user)
     localStorage.setItem('user', JSON.stringify(user));
   }
 
@@ -104,59 +103,13 @@ export class HttpService {
     return this.user_json.facility_code;
   }
 
-  /* toastr(type: string, message: string) {
-    return {
-      type: type,
-      message: message
-    }
-  } */
-
-  /* getURL(lab_code): string{
-    switch (lab_code) {
-      case 'CBC':
-        return 'laboratory/consult-laboratory-cbc'
-      case 'CRTN':
-        return 'laboratory/consult-laboratory-creatinine'
-      case 'CXRAY':
-        return 'laboratory/consult-laboratory-chestxray'
-      case 'ECG':
-        return 'laboratory/consult-laboratory-ecg'
-      case 'FBS':
-        return 'laboratory/consult-laboratory-fbs'
-      case 'RBS':
-        return 'laboratory/consult-laboratory-rbs'
-      case 'HBA':
-        return 'laboratory/consult-laboratory-hba1c'
-      case 'PSMR':
-        return 'laboratory/consult-laboratory-papsmear'
-      case 'PPD':
-        return 'laboratory/consult-laboratory-ppd'
-      case 'SPTM':
-        return 'laboratory/consult-laboratory-sputum'
-      case 'FCAL':
-        return 'laboratory/consult-laboratory-fecalysis'
-      case 'LPFL':
-        return 'laboratory/consult-laboratory-lipid-profile'
-      case 'URN':
-        return 'laboratory/consult-laboratory-urinalysis'
-      case 'OGTT':
-        return 'laboratory/consult-laboratory-oral-glucose'
-      case 'FOBT':
-        return 'laboratory/consult-laboratory-fecal-occult'
-      case 'GRMS':
-        return 'laboratory/consult-laboratory-gram-stain'
-      default:
-        return '';
-    }
-  } */
-
   getUrlParams() {
     let patient_id;
     let consult_id;
     let loc;
 
     let values = this.router.url.split(';');
-    if(values) {
+    if(values && values[1]) {
       let id = values[1].split('=');
 
       patient_id = id[1];
@@ -183,7 +136,6 @@ export class HttpService {
   patient_info: any;
   setPatientInfo(data){
     this.patient_info = data;
-    // console.log(this.patient_info)
   }
 
   getPatientInfo(){

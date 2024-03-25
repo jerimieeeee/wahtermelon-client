@@ -25,12 +25,13 @@ export class AdminComponent implements OnInit {
       loc: 'lab-config',
       name: 'Laboratory Config',
       icon: faFlaskVial
-    },
+    }, */
     {
       loc: 'drugs',
-      name: 'Drugs',
+      name: 'Medicine List',
       icon: faCapsules
     },
+    /* {
     {
       loc: 'eclaims',
       name: 'eClaims',
