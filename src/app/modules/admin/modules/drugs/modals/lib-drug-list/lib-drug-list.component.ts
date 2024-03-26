@@ -10,7 +10,6 @@ import { HttpService } from 'app/shared/services/http.service';
 export class LibDrugListComponent implements OnInit {
   @Output() showAdd = new EventEmitter<any>()
   @Input() search_item;
-
   faAnglesLeft = faAnglesLeft;
   faChevronLeft = faChevronLeft;
   faChevronRight = faChevronRight;

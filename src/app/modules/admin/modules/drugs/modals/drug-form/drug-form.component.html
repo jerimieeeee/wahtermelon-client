@@ -25,7 +25,7 @@
             <div class="relative w-full text-sm px-3 py-2 mt-2">
               <label class="font-semibold" for="medicine_name" [ngClass]="{'text-red-500': is_saving && f.medicine_name.errors}">Generic Name</label>
               <input name="medicine_name" id="medicine_name" formControlName="medicine_name" [ngClass]="{'invalid-input': is_saving && f.medicine_name.errors}" type="text" class="input">
-              <span class="text-xs pl-3 font-semibold">{{ selected_drug ? (selected_drug.desc ? selected_drug.desc : selected_drug.konsulta_medicine.desc) : '' }}</span>
+              <span *ngIf="selected_drug && !selected_drug.added_medicine" class="text-xs pl-3 font-semibold">{{ selected_drug ? (selected_drug.desc ? selected_drug.desc : selected_drug.konsulta_medicine.desc) : '' }}</span>
 
               <div *ngIf="is_saving && f.medicine_name.errors" class="invalid-alert">
                 <div *ngIf="f.medicine_name.errors?.['required']">

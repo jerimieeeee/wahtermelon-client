@@ -87,12 +87,12 @@ export class RiskAssessmentComponent implements OnInit, OnChanges {
       this.f.polyuria.enable();
       this.f.client_type.enable();
     } else {
-      this.riskAssessForm.patchValue({
+      /* this.riskAssessForm.patchValue({
         diabetes_medications: 'X',
         polyphagia: 'X',
         polydipsia: 'X',
         polyuria: 'X'
-      })
+      }) */
       /* this.f.diabetes_medications.disable();
       this.f.polyphagia.disable();
       this.f.polydipsia.disable();

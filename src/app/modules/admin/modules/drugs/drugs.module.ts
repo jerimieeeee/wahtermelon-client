@@ -7,6 +7,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DrugFormComponent } from './modals/drug-form/drug-form.component';
 import { LibDrugListComponent } from './modals/lib-drug-list/lib-drug-list.component';
+import { DeleteItemComponent } from 'app/shared/shared-modals/delete-item/delete-item.component';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { LibDrugListComponent } from './modals/lib-drug-list/lib-drug-list.compo
     DrugsRoutingModule,
     FontAwesomeModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    DeleteItemComponent
   ]
 })
 export class DrugsModule { }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { faTrashCan } from '@fortawesome/free-regular-svg-icons';
 import { faAnglesLeft, faAnglesRight, faChevronLeft, faChevronRight, faSearch, faEdit, faAdd, faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 
@@ -16,6 +17,7 @@ export class DrugsComponent implements OnInit {
   faEdit = faEdit;
   faAdd = faAdd;
   faCircleNotch = faCircleNotch;
+  faTrashCan = faTrashCan;
 
   is_loading: boolean = false;
   show_lib_drug: boolean = false;
@@ -57,6 +59,16 @@ export class DrugsComponent implements OnInit {
     this.show_lib_drug = !this.show_lib_drug;
   }
 
+  modal: any = [];
+  delete_id: string;
+  url: string = 'medicine/list/';
+  delete_desc: string = 'Medicine List'
+  toggleModal(name, data?){
+    if(data) this.delete_id = data.id;
+    this.modal[name] = !this.modal[name];
+
+    if(name === 'delete-item' && this.modal[name] === false) this.loadDrugs();
+  }
 
   loadDrugs(page?: number){
     this.is_loading = true;
@@ -69,7 +81,7 @@ export class DrugsComponent implements OnInit {
     this.http.get('medicine/list',params).subscribe({
       next: (data: any) => {
         this.drug_list = data.data;
-        console.log(this.drug_list)
+        // console.log(this.drug_list)
         this.current_page = data.meta.current_page;
         this.last_page = data.meta.last_page;
         this.from = data.meta.from;

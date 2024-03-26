@@ -76,7 +76,7 @@ export class CatchmentBhsComponent implements OnInit {
 
   loadData() {
     const getBhs = this.http.get('settings/bhs');
-    const getStaff = this.http.get('users', {params:{facility_code: this.facility_code}});
+    const getStaff = this.http.get('users', {params:{per_page: 'all'}});
 
     forkJoin([getBhs, getStaff]).subscribe({
       next: ([dataBhs, dataStaff]: any) => {
@@ -89,7 +89,7 @@ export class CatchmentBhsComponent implements OnInit {
   }
 
   getStaff(){
-    this.http.get('users', {params:{facility_code: this.facility_code}}).subscribe({
+    this.http.get('users', {params:{per_page: 'all'}}).subscribe({
       next: (data: any) => {
         this.rhu_staffs = data.data;
       },

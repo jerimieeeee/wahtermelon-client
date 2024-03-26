@@ -25,6 +25,14 @@ export class LabFormComponent implements OnChanges {
   @Input() lab_stool_color;
   @Input() lab_stool_consistency;
   @Input() user_facility;
+  @Input() for_history;
+  @Input() lab_biopsy_type;
+  @Input() lab_ultrasound_type;
+  @Input() lab_syphilis_method;
+  @Input() blood_types;
+  @Input() lab_malaria_parasite;
+  @Input() lab_gene_mtb;
+  @Input() lab_gene_rif;
 
   faSave = faSave;
   faSpinner = faSpinner;
@@ -37,7 +45,7 @@ export class LabFormComponent implements OnChanges {
   lab_form: any = {};
   max_date = formatDate(new Date, 'yyyy-MM-dd', 'en', 'Asia/Manila');
 
-  spl_val = ['observation_code', 'findings_code', 'data_collection_code', 'blood_code', 'color_code', 'consistency_code'];
+  spl_val = ['mtb_code', 'rif_code', 'parasite_type_code', 'observation_code', 'findings_code', 'data_collection_code', 'blood_code', 'color_code', 'consistency_code', 'type', 'method_code', 'blood_type_code'];
 
   submit_errors: any;
 
@@ -112,12 +120,15 @@ export class LabFormComponent implements OnChanges {
         this.lab_form['color_code'] = this.lab_form.color_code;
         this.lab_form['consistency_code'] = this.lab_form.consistency_code;
         break;
+      case 'MRDT':
+        this.lab_form['parasite_type_code'] = this.lab_form.parasite_type_code;
+        break;
       default:
         break;
     }
   }
 
-  form_with_findings_pn = ['FOBT', 'PPD']
+  form_with_findings_pn = ['FOBT', 'PPD', 'SYPH']
   form_with_finding_code = ['ECG'];
   onSubmit(){
     // console.log(this.lab_form)
@@ -147,7 +158,10 @@ export class LabFormComponent implements OnChanges {
               this.closeModal();
             }
           },
-          error: err => console.log(err)
+          error: err => {
+            this.http.showError(err.error.message, 'Laboratory');
+            this.is_saving = false;
+          }
         })
       } else {
         this.is_saving = false;
