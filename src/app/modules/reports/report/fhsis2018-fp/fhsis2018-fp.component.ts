@@ -149,9 +149,9 @@ export class Fhsis2018FpComponent {
     {method_id: 'IMPLANT', desc: 'g. Implant - Total'},
     {method_id: 'NFPCM', desc: 'h. NFP-CMM – Total'},
     {method_id: 'NFPBBT', desc: 'i. NFP-BBT – Total'},
-    {method_id: 'NFPSTM', desc: 'j. NFP-STM – Total'},
-    {method_id: 'NFPSDM', desc: 'k. NFP-SDM - Total'},
-    {method_id: 'NFPLAM', desc: 'l. NFP-LAM - Total'},
+    // {method_id: 'NFPSTM', desc: 'j. NFP-STM – Total'},
+    // {method_id: 'NFPSDM', desc: 'k. NFP-SDM - Total'},
+    // {method_id: 'NFPLAM', desc: 'l. NFP-LAM - Total'},
   ]
 
   countTotalSummary(indicator_name, value) {

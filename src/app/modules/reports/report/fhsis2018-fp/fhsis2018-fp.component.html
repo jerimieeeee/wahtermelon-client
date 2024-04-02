@@ -2,14 +2,14 @@
   <div class="flex justify-between w-full text-blue-500 font-semibold text-lg  p-3" >
     <span>FHSIS Report - Family Planning</span>
     <span>
-      <!-- <fa-icon *ngIf="exporting" [icon]="faCircleNotch" spin="true" class="text-blue-500 text-sm mr-3">Exporting...</fa-icon> -->
-      <button [disabled]="pdf_exported" type="button" class="text-2xl mr-5 text-red-600 disabled:text-gray-600" (click)="exportP()">
-        <fa-icon [icon]="faFilePdf"></fa-icon>
-      </button>
-      <button  type="button" class="text-2xl" (click)="exportX()">
-        <fa-icon [icon]="faFileExcel" class="text-green-700"></fa-icon>
-      </button>
-    </span>
+        <!-- <fa-icon *ngIf="exporting" [icon]="faCircleNotch" spin="true" class="text-blue-500 text-sm mr-3">Exporting...</fa-icon> -->
+        <button [disabled]="pdf_exported" type="button" class="text-2xl mr-5 text-red-600 disabled:text-gray-600" (click)="exportP()">
+          <fa-icon [icon]="faFilePdf"></fa-icon>
+        </button>
+        <button  type="button" class="text-2xl" (click)="exportX()">
+          <fa-icon [icon]="faFileExcel" class="text-green-700"></fa-icon>
+        </button>
+      </span>
   </div>
   <div class="flex flex-col pb-5">
     <div class="sm:-mx-6 lg:-mx-8">
@@ -48,7 +48,7 @@
                 (Col. 2)
               </th>
               <th colspan="8" class="font-bold text-gray-900 border-black px-6  border-r border-b border-l">
-                 Acceptors <br />
+                Acceptors <br />
               </th>
               <th colspan="4" rowspan="2" class="font-bold text-gray-900 border-black px-6  border-r border-b border-l">
                 Dropout <br />
@@ -158,74 +158,414 @@
             <tbody>
             <tr *ngFor="let method of method_list">
               <td colspan="5" class="px-6 py-2 border-black border-r border-l border-b  text-sm">{{ method.desc }}</td>
-              <!--              Current User (Beginning Month)-->
-              <td class="border-black border-r border-l border-b text-blue-500 text-center" [class]=" stats?.[method.method_id][0].current_user_beginning_month_10_to_14 !==0 ? 'cursor-pointer' : 'pointer-events-none' ">{{ countTotalSummary('cubm_10_14', stats?.[method.method_id][0].current_user_beginning_month_10_to_14) }} {{ stats?.[method.method_id][0].current_user_beginning_month_10_to_14 ?? 0 }}</td>
-              <td class="border-black border-r border-l border-b text-blue-500 text-center" [class]=" stats?.[method.method_id][0].current_user_beginning_month_15_to_19 !==0 ? 'cursor-pointer' : 'pointer-events-none' ">{{ countTotalSummary('cubm_15_19', stats?.[method.method_id][0].current_user_beginning_month_15_to_19) }} {{ stats?.[method.method_id][0].current_user_beginning_month_15_to_19 ?? 0 }}</td>
-              <td class="border-black border-r border-l border-b text-blue-500 text-center" [class]=" stats?.[method.method_id][0].current_user_beginning_month_15_to_19 !==0 ? 'cursor-pointer' : 'pointer-events-none' ">{{ countTotalSummary('cubm_20_49', stats?.[method.method_id][0].current_user_beginning_month_20_to_49) }} {{ stats?.[method.method_id][0].current_user_beginning_month_20_to_49 ?? 0 }}</td>
-              <td class="border-black border-r border-l border-b border text-blue-500 text-center" [class]=" stats?.[method.method_id][0].current_user_beginning_month_10_to_14 !==0 || stats?.[method.method_id][0].current_user_beginning_month_15_to_19 !==0 || stats?.[method.method_id][0].current_user_beginning_month_20_to_49 !==0 ? 'cursor-pointer' : 'pointer-events-none'">{{ stats?.[method.method_id][0].current_user_beginning_month_10_to_14 +  stats?.[method.method_id][0].current_user_beginning_month_15_to_19 + stats?.[method.method_id][0].current_user_beginning_month_20_to_49 }}</td>
-              <!--              New Acceptors (Previous Month)-->
-              <td class="border-black border-r border-l border-b text-blue-500 text-center" [class]=" stats?.[method.method_id][0].new_acceptor_previous_month_10_to_14 !==0 ? 'cursor-pointer' : 'pointer-events-none' ">{{ countTotalSummary('napr_10_14', stats?.[method.method_id][0].new_acceptor_previous_month_10_to_14) }} {{ stats?.[method.method_id][0].new_acceptor_previous_month_10_to_14 ?? 0 }}</td>
-              <td class="border-black border-r border-l border-b text-blue-500 text-center" [class]=" stats?.[method.method_id][0].new_acceptor_previous_month_15_to_19 !==0 ? 'cursor-pointer' : 'pointer-events-none' ">{{ countTotalSummary('napr_15_19', stats?.[method.method_id][0].new_acceptor_previous_month_15_to_19) }} {{ stats?.[method.method_id][0].new_acceptor_previous_month_15_to_19 ?? 0 }}</td>
-              <td class="border-black border-r border-l border-b text-blue-500 text-center" [class]=" stats?.[method.method_id][0].new_acceptor_previous_month_20_to_49 !==0 ? 'cursor-pointer' : 'pointer-events-none' ">{{ countTotalSummary('napr_20_49', stats?.[method.method_id][0].new_acceptor_previous_month_20_to_49) }} {{ stats?.[method.method_id][0].new_acceptor_previous_month_20_to_49 ?? 0 }}</td>
-              <td class="border-black border-r border-l border-b border text-blue-500 text-center" [class]=" stats?.[method.method_id][0].new_acceptor_previous_month_10_to_14 !==0 || stats?.[method.method_id][0].new_acceptor_previous_month_15_to_19 !==0 || stats?.[method.method_id][0].new_acceptor_previous_month_20_to_49 !==0 ? 'cursor-pointer' : 'pointer-events-none'">{{ stats?.[method.method_id][0].new_acceptor_previous_month_10_to_14 +  stats?.[method.method_id][0].new_acceptor_previous_month_15_to_19 + stats?.[method.method_id][0].new_acceptor_previous_month_20_to_49 }}</td>
-              <!--              Other Acceptors (Present Month)-->
-              <td class="border-black border-r border-l border-b text-blue-500 text-center" [class]=" stats?.[method.method_id][0].other_acceptor_present_month_10_to_14 !==0 ? 'cursor-pointer' : 'pointer-events-none' ">{{ countTotalSummary('oapr_10_14', stats?.[method.method_id][0].other_acceptor_present_month_10_to_14) }} {{ stats?.[method.method_id][0].other_acceptor_present_month_10_to_14 ?? 0 }}</td>
-              <td class="border-black border-r border-l border-b text-blue-500 text-center" [class]=" stats?.[method.method_id][0].other_acceptor_present_month_15_to_19 !==0 ? 'cursor-pointer' : 'pointer-events-none' ">{{ countTotalSummary('oapr_15_19', stats?.[method.method_id][0].other_acceptor_present_month_15_to_19) }} {{ stats?.[method.method_id][0].other_acceptor_present_month_15_to_19 ?? 0 }}</td>
-              <td class="border-black border-r border-l border-b text-blue-500 text-center" [class]=" stats?.[method.method_id][0].other_acceptor_present_month_20_to_49 !==0 ? 'cursor-pointer' : 'pointer-events-none' ">{{ countTotalSummary('oapr_20_49', stats?.[method.method_id][0].other_acceptor_present_month_20_to_49) }} {{ stats?.[method.method_id][0].other_acceptor_present_month_20_to_49 ?? 0 }}</td>
-              <td class="border-black border-r border-l border-b border text-blue-500 text-center" [class]=" stats?.[method.method_id][0].other_acceptor_present_month_20_to_49 !==0 || stats?.[method.method_id][0].other_acceptor_present_month_15_to_19 !==0 || stats?.[method.method_id][0].other_acceptor_present_month_20_to_49 !==0 ? 'cursor-pointer' : 'pointer-events-none'">{{ stats?.[method.method_id][0].other_acceptor_present_month_10_to_14 + stats?.[method.method_id][0].other_acceptor_present_month_15_to_19 + stats?.[method.method_id][0].other_acceptor_present_month_20_to_49 }}</td>
-              <!--              Dropout (Present Month)-->
-              <td class="border-black border-r border-l border-b text-blue-500 text-center" [class]=" stats?.[method.method_id][0].dropout_present_month_10_to_14 !==0 ? 'cursor-pointer' : 'pointer-events-none' ">{{ countTotalSummary('dopm_10_14', stats?.[method.method_id][0].dropout_present_month_10_to_14) }} {{ stats?.[method.method_id][0].dropout_present_month_10_to_14 ?? 0 }}</td>
-              <td class="border-black border-r border-l border-b text-blue-500 text-center" [class]=" stats?.[method.method_id][0].dropout_present_month_15_to_19 !==0 ? 'cursor-pointer' : 'pointer-events-none' ">{{ countTotalSummary('dopm_15_19', stats?.[method.method_id][0].dropout_present_month_15_to_19) }} {{ stats?.[method.method_id][0].dropout_present_month_15_to_19 ?? 0 }}</td>
-              <td class="border-black border-r border-l border-b text-blue-500 text-center" [class]=" stats?.[method.method_id][0].dropout_present_month_20_to_49 !==0 ? 'cursor-pointer' : 'pointer-events-none' ">{{ countTotalSummary('dopm_20_49', stats?.[method.method_id][0].dropout_present_month_20_to_49) }} {{ stats?.[method.method_id][0].dropout_present_month_20_to_49 ?? 0 }}</td>
-              <td class="border-black border-r border-l border-b border text-blue-500 text-center" [class]=" stats?.[method.method_id][0].dropout_present_month_10_to_14 !==0 || stats?.[method.method_id][0].dropout_present_month_15_to_19 !==0 || stats?.[method.method_id][0].dropout_present_month_20_to_49 !==0 ? 'cursor-pointer' : 'pointer-events-none'">{{ stats?.[method.method_id][0].dropout_present_month_10_to_14 +  stats?.[method.method_id][0].dropout_present_month_15_to_19 + stats?.[method.method_id][0].dropout_present_month_20_to_49 }}</td>
-              <!--              Current User (End of Month)-->
-              <td class="border-black border-r border-l border-b text-blue-500 text-center" [class]="(stats?.[method.method_id][0].current_user_beginning_month_10_to_14 +  stats?.[method.method_id][0].new_acceptor_previous_month_10_to_14 + stats?.[method.method_id][0].other_acceptor_present_month_10_to_14 - stats?.[method.method_id][0].dropout_present_month_10_to_14) !== 0 ? 'cursor-pointer' : 'pointer-events-none' ">{{ countTotalSummary('cuem_10_14', stats?.[method.method_id][0].current_user_beginning_month_10_to_14 +  stats?.[method.method_id][0].new_acceptor_previous_month_10_to_14 + stats?.[method.method_id][0].other_acceptor_present_month_10_to_14 - stats?.[method.method_id][0].dropout_present_month_10_to_14)}} {{ stats?.[method.method_id][0].current_user_beginning_month_10_to_14 +  stats?.[method.method_id][0].new_acceptor_previous_month_10_to_14 + stats?.[method.method_id][0].other_acceptor_present_month_10_to_14 - stats?.[method.method_id][0].dropout_present_month_10_to_14 ?? 0 }}</td>
-              <td class="border-black border-r border-l border-b text-blue-500 text-center" [class]="(stats?.[method.method_id][0].current_user_beginning_month_15_to_19 +  stats?.[method.method_id][0].new_acceptor_previous_month_15_to_19 + stats?.[method.method_id][0].other_acceptor_present_month_15_to_19 - stats?.[method.method_id][0].dropout_present_month_15_to_19) !== 0 ? 'cursor-pointer' : 'pointer-events-none' ">{{ countTotalSummary('cuem_15_19', stats?.[method.method_id][0].current_user_beginning_month_15_to_19 +  stats?.[method.method_id][0].new_acceptor_previous_month_15_to_19 + stats?.[method.method_id][0].other_acceptor_present_month_15_to_19 - stats?.[method.method_id][0].dropout_present_month_15_to_19)}} {{ stats?.[method.method_id][0].current_user_beginning_month_15_to_19 +  stats?.[method.method_id][0].new_acceptor_previous_month_15_to_19 + stats?.[method.method_id][0].other_acceptor_present_month_15_to_19 - stats?.[method.method_id][0].dropout_present_month_15_to_19 ?? 0 }}</td>
-              <td class="border-black border-r border-l border-b text-blue-500 text-center" [class]="(stats?.[method.method_id][0].current_user_beginning_month_10_to_14 +  stats?.[method.method_id][0].new_acceptor_previous_month_10_to_14 + stats?.[method.method_id][0].other_acceptor_present_month_10_to_14 - stats?.[method.method_id][0].dropout_present_month_20_to_49) !== 0 ? 'cursor-pointer' : 'pointer-events-none' ">{{ countTotalSummary('cuem_20_49', stats?.[method.method_id][0].current_user_beginning_month_20_to_49 +  stats?.[method.method_id][0].new_acceptor_previous_month_20_to_49 + stats?.[method.method_id][0].other_acceptor_present_month_20_to_49  - stats?.[method.method_id][0].dropout_present_month_20_to_49 )}} {{ stats?.[method.method_id][0].current_user_beginning_month_20_to_49  +  stats?.[method.method_id][0].new_acceptor_previous_month_20_to_49  + stats?.[method.method_id][0].other_acceptor_present_month_20_to_49  - stats?.[method.method_id][0].dropout_present_month_20_to_49 ?? 0 }}</td>
+<!--              Current User (Beginning Month 10 to 14)-->
               <td class="border-black border-r border-l border-b text-blue-500 text-center">
-                {{
-                (stats?.[method.method_id][0].current_user_beginning_month_10_to_14 +  stats?.[method.method_id][0].new_acceptor_previous_month_10_to_14 + stats?.[method.method_id][0].other_acceptor_present_month_10_to_14 - stats?.[method.method_id][0].dropout_present_month_10_to_14) +
-                (stats?.[method.method_id][0].current_user_beginning_month_15_to_19 +  stats?.[method.method_id][0].new_acceptor_previous_month_15_to_19 + stats?.[method.method_id][0].other_acceptor_present_month_15_to_19 - stats?.[method.method_id][0].dropout_present_month_15_to_19) +
-                (stats?.[method.method_id][0].current_user_beginning_month_20_to_49 +  stats?.[method.method_id][0].new_acceptor_previous_month_20_to_49 + stats?.[method.method_id][0].other_acceptor_present_month_20_to_49 - stats?.[method.method_id][0].dropout_present_month_20_to_49)
-                }}
-                </td>
-<!--              New Acceptors (Present Month)-->
-              <td class="border-black border-r border-l border-b text-blue-500 text-center" [class]=" stats?.[method.method_id][0].new_acceptor_present_month_10_to_14 !==0 ? 'cursor-pointer' : 'pointer-events-none' ">{{ countTotalSummary('napm_10_14', stats?.[method.method_id][0].new_acceptor_present_month_10_to_14) }} {{ stats?.[method.method_id][0].new_acceptor_present_month_10_to_14 ?? 0 }}</td>
-              <td class="border-black border-r border-l border-b text-blue-500 text-center" [class]=" stats?.[method.method_id][0].new_acceptor_present_month_15_to_19 !==0 ? 'cursor-pointer' : 'pointer-events-none' ">{{ countTotalSummary('napm_15_19', stats?.[method.method_id][0].new_acceptor_present_month_15_to_19) }} {{ stats?.[method.method_id][0].new_acceptor_present_month_15_to_19 ?? 0 }}</td>
-              <td class="border-black border-r border-l border-b text-blue-500 text-center" [class]=" stats?.[method.method_id][0].new_acceptor_present_month_20_to_49 !==0 ? 'cursor-pointer' : 'pointer-events-none' ">{{ countTotalSummary('napm_20_49', stats?.[method.method_id][0].new_acceptor_present_month_20_to_49) }} {{ stats?.[method.method_id][0].new_acceptor_present_month_20_to_49 ?? 0 }}</td>
-              <td class="border-black border-r border-l border-b border text-blue-500 text-center" [class]=" stats?.[method.method_id][0].new_acceptor_present_month_10_to_14 !==0 || stats?.[method.method_id][0].new_acceptor_present_month_15_to_19 !==0 || stats?.[method.method_id][0].new_acceptor_present_month_20_to_49 !==0 ? 'cursor-pointer' : 'pointer-events-none'">{{
-                  stats?.[method.method_id][0].new_acceptor_present_month_10_to_14 +
-                  stats?.[method.method_id][0].new_acceptor_present_month_15_to_19 +
-                  stats?.[method.method_id][0].new_acceptor_present_month_20_to_49 }}</td>
+                  <span *ngIf="method.method_id === 'IUD_total'">
+                    {{ stats?.IUD[0].current_user_beginning_month_10_to_14 +  stats?.IUDPP[0].current_user_beginning_month_10_to_14 ?? 0 }}
+                  </span>
+
+                <span *ngIf="method.method_id === 'PILLS_total'">
+                    {{ stats?.PILLS[0].current_user_beginning_month_10_to_14 +  stats?.PILLSPOP[0].current_user_beginning_month_10_to_14 ?? 0 }}
+                  </span>
+
+                <span *ngIf="method.method_id !== 'IUD_total' || method.method_id !== 'PILLS_total'">
+                  {{ countTotalSummary('cubm_10_14', stats?.[method.method_id][0].current_user_beginning_month_10_to_14) }}
+                  {{ stats?.[method.method_id][0].current_user_beginning_month_10_to_14 ?? 0 }}
+                  </span>
+              </td>
+<!--              Current User (Beginning Month 15 to 19)-->
+              <td class="border-black border-r border-l border-b text-blue-500 text-center">
+                  <span *ngIf="method.method_id === 'IUD_total'">
+                    {{ stats?.IUD[0].current_user_beginning_month_15_to_19 +  stats?.IUDPP[0].current_user_beginning_month_15_to_19 ?? 0 }}
+                  </span>
+
+                <span *ngIf="method.method_id === 'PILLS_total'">
+                    {{ stats?.PILLS[0].current_user_beginning_month_15_to_19 +  stats?.PILLSPOP[0].current_user_beginning_month_15_to_19 ?? 0 }}
+                  </span>
+
+                <span *ngIf="method.method_id !== 'IUD_total' || method.method_id !== 'PILLS_total'">
+                    {{ countTotalSummary('cubm_15_19', stats?.[method.method_id][0].current_user_beginning_month_15_to_19) }}
+                  {{ stats?.[method.method_id][0].current_user_beginning_month_15_to_19 ?? 0 }}
+                  </span>
+              </td>
+<!--              Current User (Beginning Month 20 to 49)-->
+              <td class="border-black border-r border-l border-b text-blue-500 text-center">
+                  <span *ngIf="method.method_id === 'IUD_total'">
+                    {{ stats?.IUD[0].current_user_beginning_month_20_to_49 +  stats?.IUDPP[0].current_user_beginning_month_20_to_49 ?? 0 }}
+                  </span>
+
+                <span *ngIf="method.method_id === 'PILLS_total'">
+                    {{ stats?.PILLS[0].current_user_beginning_month_20_to_49 +  stats?.PILLSPOP[0].current_user_beginning_month_20_to_49 ?? 0 }}
+                  </span>
+
+                <span *ngIf="method.method_id !== 'IUD_total' || method.method_id !== 'PILLS_total'">
+                    {{ countTotalSummary('cubm_20_49', stats?.[method.method_id][0].current_user_beginning_month_20_to_49) }}
+                  {{ stats?.[method.method_id][0].current_user_beginning_month_20_to_49 ?? 0 }}
+                  </span>
+              </td>
+<!--              Current User (Beginning Month Total)-->
+              <td class="border-black border-r border-l border-b border text-blue-500 text-center">
+                  <span *ngIf="method.method_id === 'IUD_total'">
+                    {{ stats?.IUD[0].current_user_beginning_month_10_to_49 +  stats?.IUDPP[0].current_user_beginning_month_15_to_19 + stats?.IUDPP[0].current_user_beginning_month_20_to_49  ?? 0 }}
+                  </span>
+
+                <span *ngIf="method.method_id === 'PILLS_total'">
+                    {{ stats?.PILLS[0].current_user_beginning_month_10_to_49 +  stats?.PILLSPOP[0].current_user_beginning_month_15_to_19 + stats?.IUDPP[0].current_user_beginning_month_20_to_49 ?? 0 }}
+                  </span>
+
+                <span *ngIf="method.method_id !== 'IUD_total' || method.method_id !== 'PILLS_total'">
+                    {{
+                    stats?.[method.method_id][0].current_user_beginning_month_10_to_14
+                    +
+                    stats?.[method.method_id][0].current_user_beginning_month_15_to_19
+                    +
+                    stats?.[method.method_id][0].current_user_beginning_month_20_to_49
+                  }}
+                  </span>
+              </td>
+<!--              New Acceptors (Previous Month 10 to 14)-->
+              <td class="border-black border-r border-l border-b text-blue-500 text-center">
+                  <span *ngIf="method.method_id === 'IUD_total'">
+                    {{ stats?.IUD[0].new_acceptor_previous_month_10_to_14 +  stats?.IUDPP[0].new_acceptor_previous_month_10_to_14 ?? 0 }}
+                  </span>
+
+                <span *ngIf="method.method_id === 'PILLS_total'">
+                    {{ stats?.PILLS[0].new_acceptor_previous_month_10_to_14 +  stats?.PILLSPOP[0].new_acceptor_previous_month_10_to_14 ?? 0 }}
+                  </span>
+
+                <span *ngIf="method.method_id !== 'IUD_total' || method.method_id !== 'PILLS_total'">
+                    {{ countTotalSummary('napr_10_14', stats?.[method.method_id][0].new_acceptor_previous_month_10_to_14) }}
+                  {{ stats?.[method.method_id][0].new_acceptor_previous_month_10_to_14 ?? 0 }}
+                  </span>
+              </td>
+<!--              New Acceptors (Previous Month 15 to 19)-->
+              <td class="border-black border-r border-l border-b text-blue-500 text-center">
+                  <span *ngIf="method.method_id === 'IUD_total'">
+                    {{ stats?.IUD[0].new_acceptor_previous_month_15_to_19 +  stats?.IUDPP[0].new_acceptor_previous_month_15_to_19 ?? 0 }}
+                  </span>
+
+                <span *ngIf="method.method_id === 'PILLS_total'">
+                    {{ stats?.PILLS[0].new_acceptor_previous_month_15_to_19 +  stats?.PILLSPOP[0].new_acceptor_previous_month_15_to_19 + stats?.IUDPP[0].new_acceptor_previous_month_15_to_19 ?? 0 }}
+                  </span>
+
+                <span *ngIf="method.method_id !== 'IUD_total' || method.method_id !== 'PILLS_total'">
+                    {{ countTotalSummary('napr_15_19', stats?.[method.method_id][0].new_acceptor_previous_month_15_to_19) }}
+                  {{ stats?.[method.method_id][0].new_acceptor_previous_month_15_to_19 ?? 0 }}
+                  </span>
+              </td>
+<!--              New Acceptors (Previous Month 20 to 49)-->
+              <td class="border-black border-r border-l border-b text-blue-500 text-center">
+                  <span *ngIf="method.method_id === 'IUD_total'">
+                    {{ stats?.IUD[0].new_acceptor_previous_month_20_to_49 +  stats?.IUDPP[0].new_acceptor_previous_month_20_to_49 ?? 0 }}
+                  </span>
+
+                <span *ngIf="method.method_id === 'PILLS_total'">
+                    {{ stats?.PILLS[0].new_acceptor_previous_month_20_to_49 +  stats?.PILLSPOP[0].new_acceptor_previous_month_20_to_49 + stats?.IUDPP[0].new_acceptor_previous_month_20_to_49 ?? 0 }}
+                  </span>
+
+                <span *ngIf="method.method_id !== 'IUD_total' || method.method_id !== 'PILLS_total'">
+                    {{ countTotalSummary('napr_20_49', stats?.[method.method_id][0].new_acceptor_previous_month_20_to_49) }}
+                  {{ stats?.[method.method_id][0].new_acceptor_previous_month_20_to_49 ?? 0 }}
+                  </span>
+              </td>
+<!--              New Acceptors (Previous Month Total)-->
+              <td class="border-black border-r border-l border-b border text-blue-500 text-center">
+                  <span *ngIf="method.method_id !== 'IUD_total' || method.method_id !== 'PILLS_total'">
+                    {{
+                      stats?.[method.method_id][0].new_acceptor_previous_month_10_to_14
+                      +
+                      stats?.[method.method_id][0].new_acceptor_previous_month_15_to_19
+                      +
+                      stats?.[method.method_id][0].new_acceptor_previous_month_20_to_49
+                    }}
+                  </span>
+              </td>
+<!--              Other Acceptors (Present Month 10 to 14)-->
+              <td class="border-black border-r border-l border-b text-blue-500 text-center">
+                  <span *ngIf="method.method_id === 'IUD_total'">
+                    {{ stats?.IUD[0].other_acceptor_present_month_10_to_14 +  stats?.IUDPP[0].other_acceptor_present_month_10_to_14 ?? 0 }}
+                  </span>
+
+                <span *ngIf="method.method_id === 'PILLS_total'">
+                    {{ stats?.PILLS[0].other_acceptor_present_month_10_to_14 +  stats?.PILLSPOP[0].other_acceptor_present_month_10_to_14 ?? 0 }}
+                  </span>
+
+                <span *ngIf="method.method_id !== 'IUD_total' || method.method_id !== 'PILLS_total'">
+                    {{ countTotalSummary('oapr_10_14', stats?.[method.method_id][0].other_acceptor_present_month_10_to_14) }}
+                  {{ stats?.[method.method_id][0].other_acceptor_present_month_10_to_14 ?? 0 }}
+                  </span>
+              </td>
+<!--              Other Acceptors (Present Month 15 to 19)-->
+              <td class="border-black border-r border-l border-b text-blue-500 text-center">
+                  <span *ngIf="method.method_id === 'IUD_total'">
+                    {{ stats?.IUD[0].other_acceptor_present_month_15_to_19 +  stats?.IUDPP[0].other_acceptor_present_month_15_to_19 ?? 0 }}
+                  </span>
+
+                <span *ngIf="method.method_id === 'PILLS_total'">
+                    {{ stats?.PILLS[0].other_acceptor_present_month_15_to_19 +  stats?.PILLSPOP[0].other_acceptor_present_month_15_to_19 ?? 0 }}
+                  </span>
+
+                <span *ngIf="method.method_id !== 'IUD_total' || method.method_id !== 'PILLS_total'">
+                    {{ countTotalSummary('oapr_15_19', stats?.[method.method_id][0].other_acceptor_present_month_15_to_19) }}
+                  {{ stats?.[method.method_id][0].other_acceptor_present_month_15_to_19 ?? 0 }}
+                  </span>
+              </td>
+<!--              Other Acceptors (Present Month 20 to 49)-->
+              <td class="border-black border-r border-l border-b text-blue-500 text-center">
+                  <span *ngIf="method.method_id === 'IUD_total'">
+                    {{ stats?.IUD[0].other_acceptor_present_month_20_to_49 +  stats?.IUDPP[0].other_acceptor_present_month_20_to_49 ?? 0 }}
+                  </span>
+
+                <span *ngIf="method.method_id === 'PILLS_total'">
+                    {{ stats?.PILLS[0].other_acceptor_present_month_20_to_49 +  stats?.PILLSPOP[0].other_acceptor_present_month_20_to_49 ?? 0 }}
+                  </span>
+
+                <span *ngIf="method.method_id !== 'IUD_total' || method.method_id !== 'PILLS_total'">
+                    {{ countTotalSummary('oapr_20_49', stats?.[method.method_id][0].other_acceptor_present_month_20_to_49) }}
+                  {{ stats?.[method.method_id][0].other_acceptor_present_month_20_to_49 ?? 0 }}
+                  </span>
+              </td>
+<!--              Other Acceptors (Present Month Total)-->
+              <td class="border-black border-r border-l border-b border text-blue-500 text-center">
+                  <span *ngIf="method.method_id !== 'IUD_total' || method.method_id !== 'PILLS_total'">
+                      {{
+                      stats?.[method.method_id][0].other_acceptor_present_month_10_to_14
+                      +
+                      stats?.[method.method_id][0].other_acceptor_present_month_15_to_19
+                      +
+                      stats?.[method.method_id][0].other_acceptor_present_month_20_to_49
+                    }}
+                  </span>
+              </td>
+              <!--              Dropout (Present Month 10 to 14)-->
+              <td class="border-black border-r border-l border-b text-blue-500 text-center">
+                  <span *ngIf="method.method_id === 'IUD_total'">
+                    {{ stats?.IUD[0].dropout_present_month_10_to_14 +  stats?.IUDPP[0].dropout_present_month_10_to_14 ?? 0 }}
+                  </span>
+
+                <span *ngIf="method.method_id === 'PILLS_total'">
+                    {{ stats?.PILLS[0].dropout_present_month_10_to_14 +  stats?.PILLSPOP[0].dropout_present_month_10_to_14 ?? 0 }}
+                  </span>
+
+                <span *ngIf="method.method_id !== 'IUD_total' || method.method_id !== 'PILLS_total'">
+                    {{ countTotalSummary('dopm_10_14', stats?.[method.method_id][0].dropout_present_month_10_to_14) }}
+                  {{ stats?.[method.method_id][0].dropout_present_month_10_to_14 ?? 0 }}
+                  </span>
+              </td>
+              <!--              Dropout (Present Month 15 to 19)-->
+              <td class="border-black border-r border-l border-b text-blue-500 text-center">
+                  <span *ngIf="method.method_id === 'IUD_total'">
+                    {{ stats?.IUD[0].dropout_present_month_15_to_19 +  stats?.IUDPP[0].dropout_present_month_15_to_19 ?? 0 }}
+                  </span>
+
+                <span *ngIf="method.method_id === 'PILLS_total'">
+                    {{ stats?.PILLS[0].dropout_present_month_15_to_19 +  stats?.PILLSPOP[0].dropout_present_month_15_to_19 ?? 0 }}
+                  </span>
+
+                <span *ngIf="method.method_id !== 'IUD_total' || method.method_id !== 'PILLS_total'">
+                    {{ countTotalSummary('dopm_15_19', stats?.[method.method_id][0].dropout_present_month_15_to_19) }}
+                  {{ stats?.[method.method_id][0].dropout_present_month_15_to_19 ?? 0 }}
+                  </span>
+              </td>
+              <!--              Dropout (Present Month 20 to 49)-->
+              <td class="border-black border-r border-l border-b text-blue-500 text-center">
+                  <span *ngIf="method.method_id === 'IUD_total'">
+                    {{ stats?.IUD[0].dropout_present_month_20_to_49 +  stats?.IUDPP[0].dropout_present_month_20_to_49 ?? 0 }}
+                  </span>
+
+                <span *ngIf="method.method_id === 'PILLS_total'">
+                    {{ stats?.PILLS[0].dropout_present_month_20_to_49 +  stats?.PILLSPOP[0].dropout_present_month_20_to_49 ?? 0 }}
+                  </span>
+
+                <span *ngIf="method.method_id !== 'IUD_total' || method.method_id !== 'PILLS_total'">
+                    {{ countTotalSummary('dopm_20_49', stats?.[method.method_id][0].dropout_present_month_20_to_49) }}
+                  {{ stats?.[method.method_id][0].dropout_present_month_20_to_49 ?? 0 }}
+                  </span>
+              </td>
+              <!--              Dropout (Present Month Total)-->
+              <td class="border-black border-r border-l border-b border text-blue-500 text-center">
+                  <span *ngIf="method.method_id !== 'IUD_total' || method.method_id !== 'PILLS_total'">
+                      {{
+                      stats?.[method.method_id][0].dropout_present_month_10_to_14
+                      +
+                      stats?.[method.method_id][0].dropout_present_month_15_to_19
+                      +
+                      stats?.[method.method_id][0].dropout_present_month_20_to_49
+                    }}
+                  </span>
+              </td>
+              <!--              Current User (End of Month 10 to 14)-->
+              <td class="border-black border-r border-l border-b text-blue-500 text-center">
+                  <span *ngIf="method.method_id === 'IUD_total'">
+                    ( {{ stats?.IUD[0].current_user_beginning_month_10_to_14 +  stats?.IUD[0].new_acceptor_previous_month_10_to_14 + stats?.IUD[0].other_acceptor_present_month_10_to_14 - stats?.IUD[0].dropout_present_month_10_to_14 ?? 0 }} )
+                    +
+                    ( {{ stats?.IUDPP[0].current_user_beginning_month_10_to_14 +  stats?.IUDPP[0].new_acceptor_previous_month_10_to_14 + stats?.IUDPP[0].other_acceptor_present_month_10_to_14 - stats?.IUDPP[0].dropout_present_month_10_to_14 ?? 0 }} )
+                  </span>
+
+                <span *ngIf="method.method_id === 'PILLS_total'">
+                    ( {{ stats?.PILLS[0].current_user_beginning_month_10_to_14 +  stats?.PILLS[0].new_acceptor_previous_month_10_to_14 + stats?.PILLS[0].other_acceptor_present_month_10_to_14 - stats?.PILLS[0].dropout_present_month_10_to_14 ?? 0 }} )
+                    +
+                    ( {{ stats?.PILLSPOP[0].current_user_beginning_month_10_to_14 +  stats?.PILLSPOP[0].new_acceptor_previous_month_10_to_14 + stats?.PILLSPOP[0].other_acceptor_present_month_10_to_14 - stats?.PILLSPOP[0].dropout_present_month_10_to_14 ?? 0 }} )
+                  </span>
+
+                <span *ngIf="method.method_id !== 'IUD_total' || method.method_id !== 'PILLS_total'">
+                    {{ stats?.[method.method_id][0].current_user_beginning_month_10_to_14 +  stats?.[method.method_id][0].new_acceptor_previous_month_10_to_14 + stats?.[method.method_id][0].other_acceptor_present_month_10_to_14 - stats?.[method.method_id][0].dropout_present_month_10_to_14 ?? 0 }}
+                  </span>
+              </td>
+              <!--              Current User (End of Month 15 to 19)-->
+              <td class="border-black border-r border-l border-b text-blue-500 text-center">
+                  <span *ngIf="method.method_id === 'IUD_total'">
+                    ( {{ stats?.IUD[0].current_user_beginning_month_15_to_19 +  stats?.IUD[0].new_acceptor_previous_month_15_to_19 + stats?.IUD[0].other_acceptor_present_month_15_to_19 - stats?.IUD[0].dropout_present_month_15_to_19 ?? 0 }} )
+                    +
+                    ( {{ stats?.IUDPP[0].current_user_beginning_month_15_to_19 +  stats?.IUDPP[0].new_acceptor_previous_month_15_to_19 + stats?.IUDPP[0].other_acceptor_present_month_15_to_19 - stats?.IUDPP[0].dropout_present_month_15_to_19 ?? 0 }} )
+                  </span>
+
+                <span *ngIf="method.method_id === 'PILLS_total'">
+                    ( {{ stats?.PILLS[0].current_user_beginning_month_15_to_19 +  stats?.PILLS[0].new_acceptor_previous_month_15_to_19 + stats?.PILLS[0].other_acceptor_present_month_15_to_19 - stats?.PILLS[0].dropout_present_month_15_to_19 ?? 0 }} )
+                    +
+                    ( {{ stats?.PILLSPOP[0].current_user_beginning_month_15_to_19 +  stats?.PILLSPOP[0].new_acceptor_previous_month_15_to_19 + stats?.PILLSPOP[0].other_acceptor_present_month_15_to_19 - stats?.PILLSPOP[0].dropout_present_month_15_to_19 ?? 0 }} )
+                  </span>
+
+                <span *ngIf="method.method_id !== 'IUD_total' || method.method_id !== 'PILLS_total'">
+                    {{ stats?.[method.method_id][0].current_user_beginning_month_10_to_14 +  stats?.[method.method_id][0].new_acceptor_previous_month_10_to_14 + stats?.[method.method_id][0].other_acceptor_present_month_10_to_14 - stats?.[method.method_id][0].dropout_present_month_10_to_14 ?? 0 }}
+                  </span>
+              </td>
+              <!--              Current User (End of Month 20 to 49)-->
+              <td class="border-black border-r border-l border-b text-blue-500 text-center">
+                  <span *ngIf="method.method_id === 'IUD_total'">
+                      ( {{ stats?.IUD[0].current_user_beginning_month_20_to_49 +  stats?.IUD[0].new_acceptor_previous_month_20_to_49 + stats?.IUD[0].other_acceptor_present_month_20_to_49 - stats?.IUD[0].dropout_present_month_20_to_49 ?? 0 }} )
+                      +
+                      ( {{ stats?.IUDPP[0].current_user_beginning_month_20_to_49 +  stats?.IUDPP[0].new_acceptor_previous_month_20_to_49 + stats?.IUDPP[0].other_acceptor_present_month_20_to_49 - stats?.IUDPP[0].dropout_present_month_20_to_49 ?? 0 }} )
+                    </span>
+
+                <span *ngIf="method.method_id === 'PILLS_total'">
+                      ( {{ stats?.PILLS[0].current_user_beginning_month_20_to_49 +  stats?.PILLS[0].new_acceptor_previous_month_20_to_49 + stats?.PILLS[0].other_acceptor_present_month_20_to_49 - stats?.PILLS[0].dropout_present_month_20_to_49 ?? 0 }} )
+                      +
+                      ( {{ stats?.PILLSPOP[0].current_user_beginning_month_20_to_49 +  stats?.PILLSPOP[0].new_acceptor_previous_month_20_to_49 + stats?.PILLSPOP[0].other_acceptor_present_month_20_to_49 - stats?.PILLSPOP[0].dropout_present_month_20_to_49 ?? 0 }} )
+                    </span>
+
+                <span *ngIf="method.method_id !== 'IUD_total' || method.method_id !== 'PILLS_total'">
+                      {{ stats?.[method.method_id][0].current_user_beginning_month_10_to_14 +  stats?.[method.method_id][0].new_acceptor_previous_month_10_to_14 + stats?.[method.method_id][0].other_acceptor_present_month_10_to_14 - stats?.[method.method_id][0].dropout_present_month_10_to_14 ?? 0 }}
+                    </span>
+              </td>
+              <!--              Current User (End of Month Total)-->
+              <td class="border-black border-r border-l border-b text-blue-500 text-center">
+                  <span *ngIf="method.method_id === 'IUD_total'">
+                      ( {{ stats?.IUD[0].current_user_beginning_month_20_to_49 +  stats?.IUD[0].new_acceptor_previous_month_20_to_49 + stats?.IUD[0].other_acceptor_present_month_20_to_49 - stats?.IUD[0].dropout_present_month_20_to_49 ?? 0 }} )
+                      +
+                      ( {{ stats?.IUDPP[0].current_user_beginning_month_20_to_49 +  stats?.IUDPP[0].new_acceptor_previous_month_20_to_49 + stats?.IUDPP[0].other_acceptor_present_month_20_to_49 - stats?.IUDPP[0].dropout_present_month_20_to_49 ?? 0 }} )
+                  </span>
+
+                <span *ngIf="method.method_id === 'PILLS_total'">
+                      ( {{ stats?.PILLS[0].current_user_beginning_month_20_to_49 +  stats?.PILLS[0].new_acceptor_previous_month_20_to_49 + stats?.PILLS[0].other_acceptor_present_month_20_to_49 - stats?.PILLS[0].dropout_present_month_20_to_49 ?? 0 }} )
+                      +
+                      ( {{ stats?.PILLSPOP[0].current_user_beginning_month_20_to_49 +  stats?.PILLSPOP[0].new_acceptor_previous_month_20_to_49 + stats?.PILLSPOP[0].other_acceptor_present_month_20_to_49 - stats?.PILLSPOP[0].dropout_present_month_20_to_49 ?? 0 }} )
+                  </span>
+
+                <span *ngIf="method.method_id !== 'IUD_total' || method.method_id !== 'PILLS_total'">
+                    {{
+                    (stats?.[method.method_id][0].current_user_beginning_month_10_to_14 +  stats?.[method.method_id][0].new_acceptor_previous_month_10_to_14 + stats?.[method.method_id][0].other_acceptor_present_month_10_to_14 - stats?.[method.method_id][0].dropout_present_month_10_to_14)
+                    +
+                    (stats?.[method.method_id][0].current_user_beginning_month_15_to_19 +  stats?.[method.method_id][0].new_acceptor_previous_month_15_to_19 + stats?.[method.method_id][0].other_acceptor_present_month_15_to_19 - stats?.[method.method_id][0].dropout_present_month_15_to_19)
+                    +
+                    (stats?.[method.method_id][0].current_user_beginning_month_20_to_49 +  stats?.[method.method_id][0].new_acceptor_previous_month_20_to_49 + stats?.[method.method_id][0].other_acceptor_present_month_20_to_49 - stats?.[method.method_id][0].dropout_present_month_20_to_49)
+                  }}
+                  </span>
+              </td>
+              <!--              New Acceptors (Present Month 10 to 14)-->
+              <td class="border-black border-r border-l border-b text-blue-500 text-center">
+                  <span *ngIf="method.method_id === 'IUD_total'">
+                    {{ stats?.IUD[0].new_acceptor_present_month_10_to_14 +  stats?.IUDPP[0].new_acceptor_present_month_10_to_14 ?? 0 }}
+                  </span>
+
+                <span *ngIf="method.method_id === 'PILLS_total'">
+                    {{ stats?.PILLS[0].new_acceptor_present_month_10_to_14 +  stats?.PILLSPOP[0].new_acceptor_present_month_10_to_14 ?? 0 }}
+                  </span>
+
+                <span *ngIf="method.method_id !== 'IUD_total' || method.method_id !== 'PILLS_total'">
+                    {{ countTotalSummary('napm_10_14', stats?.[method.method_id][0].new_acceptor_present_month_10_to_14) }}
+                  {{ stats?.[method.method_id][0].new_acceptor_present_month_10_to_14 ?? 0 }}
+                  </span>
+              </td>
+              <!--              New Acceptors (Present Month 15 to 19)-->
+              <td class="border-black border-r border-l border-b text-blue-500 text-center">
+                  <span *ngIf="method.method_id === 'IUD_total'">
+                    {{ stats?.IUD[0].new_acceptor_present_month_15_to_19 +  stats?.IUDPP[0].new_acceptor_present_month_15_to_19 ?? 0 }}
+                  </span>
+
+                <span *ngIf="method.method_id === 'PILLS_total'">
+                    {{ stats?.PILLS[0].new_acceptor_present_month_15_to_19 +  stats?.PILLSPOP[0].new_acceptor_present_month_15_to_19 ?? 0 }}
+                  </span>
+
+                <span *ngIf="method.method_id !== 'IUD_total' || method.method_id !== 'PILLS_total'">
+                    {{ countTotalSummary('napm_15_19', stats?.[method.method_id][0].new_acceptor_present_month_15_to_19) }}
+                  {{ stats?.[method.method_id][0].new_acceptor_present_month_15_to_19 ?? 0 }}
+                  </span>
+              </td>
+              <!--              New Acceptors (Present Month 20 to 49)-->
+              <td class="border-black border-r border-l border-b text-blue-500 text-center">
+                  <span *ngIf="method.method_id === 'IUD_total'">
+                    {{ stats?.IUD[0].new_acceptor_present_month_20_to_49 +  stats?.IUDPP[0].new_acceptor_present_month_20_to_49 ?? 0 }}
+                  </span>
+
+                <span *ngIf="method.method_id === 'PILLS_total'">
+                    {{ stats?.PILLS[0].new_acceptor_present_month_20_to_49 +  stats?.PILLSPOP[0].new_acceptor_present_month_20_to_49 ?? 0 }}
+                  </span>
+
+                <span *ngIf="method.method_id !== 'IUD_total' || method.method_id !== 'PILLS_total'">
+                    {{ countTotalSummary('napm_20_49', stats?.[method.method_id][0].new_acceptor_present_month_20_to_49) }}
+                  {{ stats?.[method.method_id][0].new_acceptor_present_month_20_to_49 ?? 0 }}
+                  </span>
+              </td>
+              <!--              New Acceptors (Present Month Total)-->
+              <td class="border-black border-r border-l border-b border text-blue-500 text-center">
+                  <span *ngIf="method.method_id === 'IUD_total'">
+                    {{ stats?.IUD[0].new_acceptor_present_month_10_to_14 +  stats?.IUDPP[0].new_acceptor_present_month_15_to_19 + stats?.IUDPP[0].new_acceptor_present_month_20_to_49  ?? 0 }}
+                  </span>
+
+                <span *ngIf="method.method_id === 'PILLS_total'">
+                    {{ stats?.PILLS[0].new_acceptor_present_month_10_to_14 +  stats?.PILLSPOP[0].new_acceptor_present_month_15_to_19 + stats?.IUDPP[0].new_acceptor_present_month_20_to_49 ?? 0 }}
+                  </span>
+
+                <span *ngIf="method.method_id !== 'IUD_total' || method.method_id !== 'PILLS_total'">
+                    {{
+                    stats?.[method.method_id][0].new_acceptor_present_month_10_to_14
+                    +
+                    stats?.[method.method_id][0].new_acceptor_present_month_15_to_19
+                    +
+                    stats?.[method.method_id][0].new_acceptor_present_month_20_to_49
+                  }}
+                  </span>
+              </td>
             </tr>
             <tr>
               <td colspan="5" class="px-6 border-black border-r border-l border-b  text-sm"> <span class="font-bold ">m. Total Current Users</span> </td>
-<!--              Current User (Beginning Month)-->
+              <!--              Current User (Beginning Month)-->
               <td class="border-black border-r border-l border-b border text-blue-500 text-center" [class]=" total_count.cubm_10_14 !== 0 ? 'cursor-pointer' : 'pointer-events-none'">{{total_count.cubm_10_14}}</td>
-              <td class="border-black border-r border-l border-b border text-blue-500 text-center" [class]=" total_count.cubm_15_19 ?? 0 ? 'cursor-pointer' : 'pointer-events-none'">{{total_count.cubm_15_19}}</td>
-              <td class="border-black border-r border-l border-b border text-blue-500 text-center" [class]=" total_count.cubm_20_49 ?? 0 ? 'cursor-pointer' : 'pointer-events-none'">{{total_count.cubm_20_49}}</td>
+              <td class="border-black border-r border-l border-b border text-blue-500 text-center" [class]=" total_count.cubm_15_19 !== 0 ? 'cursor-pointer' : 'pointer-events-none'">{{total_count.cubm_15_19}}</td>
+              <td class="border-black border-r border-l border-b border text-blue-500 text-center" [class]=" total_count.cubm_20_49 !== 0 ? 'cursor-pointer' : 'pointer-events-none'">{{total_count.cubm_20_49}}</td>
               <td class="border-black border-r border-l border-b border text-blue-500 text-center">{{ total_count.cubm_10_14+total_count.cubm_15_19+total_count.cubm_20_49 }}</td>
-<!--              New Acceptor (Previous Month)-->
-              <td class="border-black border-r border-l border-b border text-blue-500 text-center" [class]=" total_count.napr_10_14 !== 0 ? 'cursor-pointer' : 'pointer-events-none'">{{total_count.cubm_10_14}}</td>
-              <td class="border-black border-r border-l border-b border text-blue-500 text-center" [class]=" total_count.napr_15_19 ?? 0 ? 'cursor-pointer' : 'pointer-events-none'">{{total_count.cubm_15_19}}</td>
-              <td class="border-black border-r border-l border-b border text-blue-500 text-center" [class]=" total_count.napr_20_49 ?? 0 ? 'cursor-pointer' : 'pointer-events-none'">{{total_count.cubm_20_49}}</td>
+              <!--              New Acceptor (Previous Month)-->
+              <td class="border-black border-r border-l border-b border text-blue-500 text-center" [class]=" total_count.napr_10_14 !== 0 ? 'cursor-pointer' : 'pointer-events-none'">{{total_count.napr_10_14}}</td>
+              <td class="border-black border-r border-l border-b border text-blue-500 text-center" [class]=" total_count.napr_15_19 ?? 0 ? 'cursor-pointer' : 'pointer-events-none'">{{total_count.napr_15_19}}</td>
+              <td class="border-black border-r border-l border-b border text-blue-500 text-center" [class]=" total_count.napr_20_49 ?? 0 ? 'cursor-pointer' : 'pointer-events-none'">{{total_count.napr_20_49}}</td>
               <td class="border-black border-r border-l border-b border text-blue-500 text-center">{{ total_count.napr_10_14+total_count.napr_15_19+total_count.napr_20_49 }}</td>
-<!--              Other Acceptor (Present Month)-->
+              <!--              Other Acceptor (Present Month)-->
               <td class="border-black border-r border-l border-b border text-blue-500 text-center" [class]=" total_count.oapm_10_14 !== 0 ? 'cursor-pointer' : 'pointer-events-none'">{{total_count.oapm_10_14}}</td>
               <td class="border-black border-r border-l border-b border text-blue-500 text-center" [class]=" total_count.oapm_15_19 ?? 0 ? 'cursor-pointer' : 'pointer-events-none'">{{total_count.oapm_15_19}}</td>
               <td class="border-black border-r border-l border-b border text-blue-500 text-center" [class]=" total_count.oapm_20_49 ?? 0 ? 'cursor-pointer' : 'pointer-events-none'">{{total_count.oapm_20_49}}</td>
               <td class="border-black border-r border-l border-b border text-blue-500 text-center">{{ total_count.oapm_10_14+total_count.oapm_15_19+total_count.oapm_20_49 }}</td>
-<!--              Dropout (Present Month)-->
+              <!--              Dropout (Present Month)-->
               <td class="border-black border-r border-l border-b border text-blue-500 text-center" [class]=" total_count.dopm_10_14 !== 0 ? 'cursor-pointer' : 'pointer-events-none'">{{total_count.dopm_10_14}}</td>
               <td class="border-black border-r border-l border-b border text-blue-500 text-center" [class]=" total_count.dopm_15_19 ?? 0 ? 'cursor-pointer' : 'pointer-events-none'">{{total_count.dopm_15_19}}</td>
               <td class="border-black border-r border-l border-b border text-blue-500 text-center" [class]=" total_count.dopm_20_49 ?? 0 ? 'cursor-pointer' : 'pointer-events-none'">{{total_count.dopm_20_49}}</td>
               <td class="border-black border-r border-l border-b border text-blue-500 text-center">{{ total_count.dopm_10_14+total_count.dopm_15_19+total_count.dopm_20_49 }}</td>
-<!--              Current User (End of Month) DI PA OKAY TO-->
+              <!--              Current User (End of Month) DI PA OKAY TO-->
               <td class="border-black border-r border-l border-b border text-blue-500 text-center" [class]=" total_count.cuem_10_14 !== 0 ? 'cursor-pointer' : 'pointer-events-none'">{{ total_count.cuem_10_14}}</td>
               <td class="border-black border-r border-l border-b border text-blue-500 text-center" [class]=" total_count.cuem_15_19 !== 0 ? 'cursor-pointer' : 'pointer-events-none'">{{ total_count.cuem_15_19}}</td>
               <td class="border-black border-r border-l border-b border text-blue-500 text-center" [class]=" total_count.cuem_20_49 !== 0 ? 'cursor-pointer' : 'pointer-events-none'">{{ total_count.cuem_20_49}}</td>
               <td class="border-black border-r border-l border-b border text-blue-500 text-center">{{ total_count.cuem_10_14+total_count.cuem_15_19+total_count.cuem_20_49 }}</td>
-<!--              New Acceptor (Present Month)-->
+              <!--              New Acceptor (Present Month)-->
               <td class="border-black border-r border-l border-b border text-blue-500 text-center" [class]=" total_count.napm_10_14 !== 0 ? 'cursor-pointer' : 'pointer-events-none'">{{total_count.napm_10_14}}</td>
               <td class="border-black border-r border-l border-b border text-blue-500 text-center" [class]=" total_count.napm_15_19 ?? 0 ? 'cursor-pointer' : 'pointer-events-none'">{{total_count.napm_15_19}}</td>
               <td class="border-black border-r border-l border-b border text-blue-500 text-center" [class]=" total_count.napm_20_49 ?? 0 ? 'cursor-pointer' : 'pointer-events-none'">{{total_count.napm_20_49}}</td>
