@@ -54,62 +54,6 @@ export class Fhsis2018FpComponent implements OnChanges {
     }
   }
 
-  cu_beginning_month_total = {
-    current_user_beginning_month_10_to_14: 0,
-    current_user_beginning_month_15_to_19: 0,
-    current_user_beginning_month_20_to_49: 0,
-  }
-
-  countCUBeginningMonthTotal(indicator_name, value) {
-    this.cu_beginning_month_total[indicator_name] += value;
-  }
-
-  na_previous_month_total = {
-    new_acceptor_previous_month_10_to_14: 0,
-    new_acceptor_previous_month_15_to_19: 0,
-    new_acceptor_previous_month_20_to_49: 0,
-  }
-
-  countNAPreviousMonthTotal(indicator_name, value) {
-    this.na_previous_month_total[indicator_name] += value;
-  }
-
-  fp_total_users = {
-    // Current User (Beginning Month)
-    current_user_beginning_month_10_to_14: 0,
-    current_user_beginning_month_15_to_19: 0,
-    current_user_beginning_month_20_to_49: 0,
-
-    //New Acceptors (Previous Month)
-    new_acceptor_previous_month_10_to_14: 0,
-    new_acceptor_previous_month_15_to_19: 0,
-    new_acceptor_previous_month_20_to_49: 0,
-
-    //Other Acceptors (Previous Month)
-    other_acceptor_present_month_10_to_14: 0,
-    other_acceptor_present_month_15_to_19: 0,
-    other_acceptor_present_month_20_to_49: 0,
-
-    //Dropout (Present Month)
-    dropout_present_month_10_to_14: 0,
-    dropout_present_month_15_to_19: 0,
-    dropout_present_month_20_to_49: 0,
-
-    //Current User (End of Month)
-    cu_end_month_10_to_14: 0,
-    cu_end_month_15_to_19: 0,
-    cu_end_month_20_to_49: 0,
-
-    //New Acceptors (Present Month)
-    new_acceptor_present_month_10_to_14: 0,
-    new_acceptor_present_month_15_to_19: 0,
-    new_acceptor_present_month_20_to_49: 0,
-  }
-
-  countFpTotalUsers(indicator_name, value) {
-    this.fp_total_users[indicator_name] += value;
-  }
-
   total_count = {
     // Current User (Beginning Month)
     cubm_10_14: 0,
