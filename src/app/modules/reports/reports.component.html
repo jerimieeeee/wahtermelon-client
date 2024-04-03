@@ -5,20 +5,20 @@
       <label for="report_type" class="input-label" >Report</label>
       <select id="report_type" name="report_type" class="input" formControlName="report_type" (change)="changeDateOptions()">
         <option selected="true" disabled="disabled">Select report type</option>
-        <optgroup label="Daily Service Reports" class="text-gray-500" >
+        <optgroup label="Daily Service Report" class="text-gray-500" >
           <option *ngFor="let type of daily_service" [ngValue]="type">{{ type.desc }}</option>
         </optgroup>
         <optgroup label="FHSIS Report" class="text-gray-500" >
           <option *ngFor="let type of fhsis2018" [ngValue]="type">{{ type.desc }}</option>
         </optgroup>
-        <optgroup label="Usage Statistics" class="text-gray-500" >
-          <option *ngFor="let type of other_stats" [ngValue]="type">{{ type.desc }}</option>
+        <optgroup label="Household Profiling" class="text-gray-500" >
+          <option *ngFor="let type of household_stats" [ngValue]="type">{{ type.desc }}</option>
         </optgroup>
         <optgroup label="Diagnosis" class="text-gray-500" >
           <option *ngFor="let type of diagnosis_stats" [ngValue]="type">{{ type.desc }}</option>
         </optgroup>
-        <optgroup label="Environmental and Profiling" class="text-gray-500" >
-          <option *ngFor="let type of household_stats" [ngValue]="type">{{ type.desc }}</option>
+        <optgroup label="Usage Statistics" class="text-gray-500" >
+          <option *ngFor="let type of other_stats" [ngValue]="type">{{ type.desc }}</option>
         </optgroup>
 <!--        <optgroup label="GBV Report" class="text-gray-500" >-->
 <!--          <option *ngFor="let type of gbv_stats" [ngValue]="type">{{ type.desc }}</option>-->
