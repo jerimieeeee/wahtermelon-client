@@ -125,8 +125,8 @@ export class DrugFormComponent implements OnInit {
       dosage_uom: data.unit_of_measurement.code,
       dose_regimen: data.regimen.code,
       duration_frequency: data.frequency.code,
-      konsulta_medicine_code: data.konsulta_medicine.code,
-      medicine_name: data.konsulta_medicine.generic.desc,
+      konsulta_medicine_code: data.konsulta_medicine ? data.konsulta_medicine.code : null,
+      medicine_name: data.konsulta_medicine ? data.konsulta_medicine.generic.desc : (data.added_medicine ?? ''),
       medicine_purpose: data.purpose.code,
       medicine_route_code: data.medicine_route.code,
       quantity_preparation: data.preparation.code
