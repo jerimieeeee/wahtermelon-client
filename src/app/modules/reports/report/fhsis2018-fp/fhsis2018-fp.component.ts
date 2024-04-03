@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnChanges} from '@angular/core';
 import { faCircleNotch, faFileExcel, faFilePdf } from '@fortawesome/free-solid-svg-icons';
 import {ExportAsConfig, ExportAsService} from "ngx-export-as";
 import * as moment from "moment/moment";
@@ -8,7 +8,7 @@ import * as moment from "moment/moment";
   templateUrl: './fhsis2018-fp.component.html',
   styleUrls: ['./fhsis2018-fp.component.scss']
 })
-export class Fhsis2018FpComponent {
+export class Fhsis2018FpComponent implements OnChanges {
   @Input() report_data;
   @Input() reportForm;
   @Input() selectedBrgy;
@@ -35,6 +35,8 @@ export class Fhsis2018FpComponent {
 
     }
   }
+
+  sub_total_arr = ['IUD_total', 'PILLS_total']
 
   exportAsPdf: ExportAsConfig = {
     type: 'pdf',
