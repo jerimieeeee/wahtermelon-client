@@ -93,6 +93,10 @@ export class PbefComponent implements OnInit {
         this.paramsMc();
         break;
       }
+      case 'fp': {
+        this.paramsFp();
+        break;
+      }
       default: {
         console.log(this.selected_case)
         // this.getPbef();
