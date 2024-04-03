@@ -185,7 +185,7 @@
 
                 <span *ngIf="method.method_id !== 'IUD_total' || method.method_id !== 'PILLS_total'">
                     {{ countTotalSummary('cubm_15_19', stats?.[method.method_id][0].current_user_beginning_month_15_to_19) }}
-                  {{ stats?.[method.method_id][0].current_user_beginning_month_15_to_19 ?? 0 }}
+                    {{ stats?.[method.method_id][0].current_user_beginning_month_15_to_19 ?? 0 }}
                   </span>
               </td>
 <!--              Current User (Beginning Month 20 to 49)-->
@@ -200,7 +200,7 @@
 
                 <span *ngIf="method.method_id !== 'IUD_total' || method.method_id !== 'PILLS_total'">
                     {{ countTotalSummary('cubm_20_49', stats?.[method.method_id][0].current_user_beginning_month_20_to_49) }}
-                  {{ stats?.[method.method_id][0].current_user_beginning_month_20_to_49 ?? 0 }}
+                    {{ stats?.[method.method_id][0].current_user_beginning_month_20_to_49 ?? 0 }}
                   </span>
               </td>
 <!--              Current User (Beginning Month Total)-->
