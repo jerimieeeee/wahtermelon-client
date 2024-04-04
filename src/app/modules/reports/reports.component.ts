@@ -26,15 +26,15 @@ export class ReportsComponent implements OnInit {
   current_date = formatDate(new Date, 'yyyy', 'en', 'Asia/Manila');
 
   fhsis2018 = [
-    { id: 'fhsis2018-cc', desc: 'Child Care', url: 'reports-2018/child-care/m1'},
     { id: 'fhsis2018-mc', desc: 'Maternal Care', url: 'reports-2018/maternal-care/m1'},
-    { id: 'fhsis2018-tb', desc: 'TB Dots', url: 'reports-2018/tb-dots/m1'},
-    { id: 'fhsis2018-ncd', desc: 'NCD', url: 'reports-2018/ncd/m1'},
+    { id: 'fhsis2018-cc', desc: 'Child Care', url: 'reports-2018/child-care/m1'},
     { id: 'fhsis2018-fp', desc: 'Family Planning', url: 'reports-2018/family-planning/m1'},
+    { id: 'fhsis2018-ncd', desc: 'NCD', url: 'reports-2018/ncd/m1'},
+    { id: 'fhsis2018-tb', desc: 'TB Dots', url: 'reports-2018/tb-dots/m1'},
   ]
 
   other_stats = [
-    { id: 'patient-registered', desc: 'Patient Register', url: 'reports-2018/user/patient-registered'},
+    { id: 'patient-registered', desc: 'Patient Registered', url: 'reports-2018/user/patient-registered'},
     // { id: 'fhsis2018-mc', desc: 'Maternal Care', url: 'reports-2018/maternal-care/m1'},
   ]
 
