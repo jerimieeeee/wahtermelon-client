@@ -46,6 +46,7 @@ export class TodaysConsultComponent implements OnInit, OnDestroy {
     if (this.selected_physician !== 'all') params['params']['physician_id'] = this.selected_physician;
     params['params']['per_page'] = this.per_page;
     params['params']['consult_done'] = 0;
+    params['params']['todays_patient'] = 1;
 
     // console.log(params, page, this.current_page)
     this.http.get('consultation/records', params).subscribe({
