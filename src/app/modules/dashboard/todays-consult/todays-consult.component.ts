@@ -52,6 +52,7 @@ export class TodaysConsultComponent implements OnInit, OnDestroy {
     this.http.get('consultation/records', params).subscribe({
       next: (data: any) => {
         // console.log(data);
+        this.subscribeRefresh();
         this.today_consults = data.data;
         this.show_form = true;
 
@@ -72,7 +73,7 @@ export class TodaysConsultComponent implements OnInit, OnDestroy {
   subscribeRefresh(){
     this.todays_inteval = setInterval(() => {
       this.getTodaysConsult();
-    }, 30000);
+    }, 40000);
   }
 
   loadPhysicians(){
@@ -83,7 +84,6 @@ export class TodaysConsultComponent implements OnInit, OnDestroy {
         this.selected_physician = user_info.designation_code === 'MD' ? user_info.id : 'all';
 
         this.getTodaysConsult();
-        this.subscribeRefresh();
       },
       error: err => console.log(err)
     })
