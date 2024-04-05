@@ -68,10 +68,10 @@ export class TodaysConsultComponent implements OnInit, OnDestroy {
 
 
   private updateList: Subscription;
-  todays_inteval: any;
+  todays_interval: any;
 
   subscribeRefresh(){
-    this.todays_inteval = setInterval(() => {
+    this.todays_interval = setInterval(() => {
       this.getTodaysConsult();
     }, 120000);
   }
@@ -130,8 +130,10 @@ export class TodaysConsultComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    // console.log(this.todays_inteval);
-    clearInterval(this.todays_inteval)
+    // console.log(this.todays_interval);
+    if(this.todays_interval) {
+      clearInterval(this.todays_interval)
+    }
     // this.updateList.unsubscribe();
     // this.unsubscribe$.next();
     // this.unsubscribe$.complete();
