@@ -52,7 +52,6 @@ export class TodaysConsultComponent implements OnInit, OnDestroy {
     this.http.get('consultation/records', params).subscribe({
       next: (data: any) => {
         // console.log(data);
-        this.subscribeRefresh();
         this.today_consults = data.data;
         this.show_form = true;
 
@@ -61,6 +60,7 @@ export class TodaysConsultComponent implements OnInit, OnDestroy {
         this.from = data.meta.from;
         this.to = data.meta.to;
         this.total = data.meta.total;
+        // this.subscribeRefresh();
       },
       error: err => console.log(err)
     })
@@ -70,11 +70,11 @@ export class TodaysConsultComponent implements OnInit, OnDestroy {
   private updateList: Subscription;
   todays_interval: any;
 
-  subscribeRefresh(){
+  /* subscribeRefresh(){
     this.todays_interval = setInterval(() => {
       this.getTodaysConsult();
     }, 120000);
-  }
+  } */
 
   loadPhysicians(){
     this.http.get('users', {params:{per_page: 'all', designation_code: 'MD'}}).subscribe({
