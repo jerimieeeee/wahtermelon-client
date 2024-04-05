@@ -73,7 +73,7 @@ export class TodaysConsultComponent implements OnInit, OnDestroy {
   subscribeRefresh(){
     this.todays_inteval = setInterval(() => {
       this.getTodaysConsult();
-    }, 40000);
+    }, 120000);
   }
 
   loadPhysicians(){
