@@ -1,18 +1,19 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
 import { faChevronCircleDown, faBell, faSearch, faGear, faHome, faRightFromBracket, faAddressBook, faUser, faSquarePollVertical, faCalendarDay } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
-import { catchError, debounceTime, distinctUntilChanged, switchMap, tap } from 'rxjs/operators';
-import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
+import { catchError, debounceTime, distinctUntilChanged, switchMap, tap, map, filter } from 'rxjs/operators';
+import { BehaviorSubject, concat, Observable, of, Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { NgSelectComponent } from '@ng-select/ng-select';
 import { CookieService } from 'ngx-cookie-service';
-import { filter, map } from 'rxjs/operators';
+
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
+  // @ViewChild(NgSelectComponent) ngSelectComponent: NgSelectComponent;
   @ViewChild('mySelect') mySelect: NgSelectComponent;
   @Input() user_info;
 
@@ -27,20 +28,39 @@ export class HeaderComponent implements OnInit {
   faSquarePollVertical = faSquarePollVertical;
   faCalendarDay = faCalendarDay;
 
+  // patients$: Observable<any>;
   patients$ = new BehaviorSubject<any[]>([]);
   searchInput$ = new Subject<string>();
   selectedPatient: any;
   minLengthTerm = 3;
+  user_last_name: string;
+  user_first_name: string;
+  user_middle_name: string;
+
   user = {
     first_name: '',
     middle_name: '',
     last_name: '',
     suffix_name: '',
-    facility: { facility_name: '' }
+    facility: {facility_name:''}
   };
+
   showMenu: boolean = false;
-  patientLoading: boolean = false;
-  showCreate: boolean = false;
+  patientLoading:boolean = false;
+  showCreate:boolean = false;
+
+  user_menu = [
+    {
+      name: 'My Account',
+      location: 'my-account',
+      icon: faUser
+    },
+    {
+      name: 'Admin',
+      location: 'admin',
+      icon: faGear
+    },
+  ]
 
   constructor(
     private http: HttpService,
@@ -48,10 +68,154 @@ export class HeaderComponent implements OnInit {
     private cookieService: CookieService
   ) { }
 
+  current_page: number = 1;
+  current_term: string;
+
+  from: number = 0;
+  last_page: number = 0;
+  to: number = 0;
+  total: number = 0;
+
+  loadPatients(page?) {
+    const current_page = page ?? this.current_page;
+    let current_item = this.patients$.getValue();
+
+    this.searchInput$.pipe(
+      filter(res => res !== null && res.length >= this.minLengthTerm),
+      distinctUntilChanged(),
+      debounceTime(1000),
+      tap(() => this.patientLoading = true),
+      switchMap(term => {
+        this.current_term = term;
+        return this.getPatient(term, page).pipe(
+          catchError(() => of([])),
+          tap(() => this.patientLoading = false)
+        );
+      })
+    ).subscribe(newPatients => {
+      // Reload patient list base on search item
+      this.patients$.next(newPatients);
+    });
+
+    // Fetch additional patient
+    if(current_page > 1 && current_page <= this.last_page){
+      this.getPatient(this.current_term, current_page).subscribe(initialPatients => {
+        const allPatients = [...current_item, ...initialPatients];
+        this.patients$.next(allPatients);
+        this.patientLoading = false;
+      });
+    }
+
+    /* let current_item = page ? this.patients$ : [];
+    this.patients$ = concat(
+      of(current_item),
+      this.searchInput$.pipe(
+        filter(res => {
+          return res !== null && res.length >= this.minLengthTerm
+        }),
+        distinctUntilChanged(),
+        debounceTime(1000),
+        tap(() => this.patientLoading = true),
+        switchMap(term => {
+          this.current_term = term;
+          return this.getPatient(term, page).pipe(
+            catchError(() => of([])),
+            tap(() => this.patientLoading = false)
+          )
+        })
+      )
+    ); */
+  }
+
+  onScrollEnd() {
+    this.patientLoading = true
+    this.current_page++;
+    this.loadPatients( this.current_page );
+  }
+
+  getPatient(term: string = null, page?): Observable<any> {
+    let current_page = page ? 1 : page;
+    return this.http.get('patient', {params:{'filter[search]':term, page: current_page, per_page: 10}})
+    .pipe(map((resp:any) => {
+      console.log(resp)
+      this.showCreate = resp.data.length == 0 ? true : false;
+
+      this.from = resp.meta.from;
+      this.to = resp.meta.to;
+      this.last_page = resp.meta.last_page;
+      this.total = resp.meta.total;
+
+      return resp.data;
+    }))
+  }
+
+  /* onScrollEnd(){
+    this.patients$ = concat(
+      of([]), // default items
+      this.searchInput$.pipe(
+        filter(res => {
+          return res !== null && res.length >= this.minLengthTerm
+        }),
+        distinctUntilChanged(),
+        debounceTime(1000),
+        tap(() => this.patientLoading = true),
+        switchMap(term => {
+          return this.getPatient(term).pipe(
+            catchError(() => of([])),
+            tap(() => this.patientLoading = false)
+          )
+        })
+      )
+    );
+  } */
+
+  toggleMenu(){
+    this.showMenu = !this.showMenu;
+  }
+
+  onSelect(selectedPatient){
+    this.selectedPatient = null;
+    if(selectedPatient) {
+      this.mySelect.blur();
+      this.mySelect.handleClearClick();
+      this.router.navigate(['/patient/itr', {id: selectedPatient.id}]);
+    }
+  }
+
+
+
+  resetList(){
+    this.selectedPatient = null;
+    this.showCreate = false;
+    this.patientLoading = false;
+    this.loadPatients();
+  }
+
+  navigateTo(loc){
+    this.selectedPatient = null;
+    if(loc !== 'registration') {
+      this.toggleMenu();
+    } else {
+      this.mySelect.blur();
+      this.mySelect.close();
+    }
+    this.router.navigate(['/'+loc]);
+  }
+
+  getInitials(string) {
+    return [...string.matchAll(/\b\w/g)].join('')
+  }
+
+  logout(){
+    this.http.removeLocalStorageItem();
+  }
+
+
   ngOnInit(): void {
     this.loadPatients();
     let val = this.http.getUserFromJSON();
 
+    // console.log(val)
     this.user.last_name = val.last_name;
     this.user.first_name = val.first_name;
     this.user.middle_name = val.middle_name === 'NA' ? '' : val.middle_name;
@@ -59,78 +223,4 @@ export class HeaderComponent implements OnInit {
     this.user.facility.facility_name = val.facility.facility_name;
   }
 
-  loadPatients(page: number = 1) {
-    this.searchInput$.pipe(
-      filter(term => term !== null && term.length >= this.minLengthTerm),
-      debounceTime(500),
-      distinctUntilChanged(),
-      tap(() => this.patientLoading = true),
-      switchMap(term => this.getPatient(term, page)),
-      catchError(() => of([])),
-    ).subscribe(patients => {
-      if (page === 1) {
-        this.patients$.next(patients);
-      } else {
-        const currentPatients = this.patients$.getValue();
-        this.patients$.next([...currentPatients, ...patients]);
-      }
-      this.patientLoading = false;
-    });
-  }
-
-  getPatient(term: string, page: number): Observable<any[]> {
-    return this.http.get('patient', { params: { 'filter[search]': term, page: page, per_page: 10 } })
-      .pipe(
-        map((resp: any) => {
-          this.showCreate = resp.data.length === 0;
-          return resp.data;
-        })
-      );
-  }
-
-  onScrollEnd() {
-    if (!this.patientLoading) {
-      const currentPage = this.patients$.getValue().length / 10 + 1;
-      this.loadPatients(currentPage);
-    }
-  }
-
-  onSelect(selectedPatient) {
-    this.selectedPatient = null;
-    if (selectedPatient) {
-      this.mySelect.blur();
-      this.mySelect.handleClearClick();
-      this.router.navigate(['/patient/itr', { id: selectedPatient.id }]);
-    }
-  }
-
-  resetList() {
-    this.selectedPatient = null;
-    this.showCreate = false;
-    this.patientLoading = false;
-    this.loadPatients();
-  }
-
-  toggleMenu() {
-    this.showMenu = !this.showMenu;
-  }
-
-  navigateTo(loc) {
-    this.selectedPatient = null;
-    if (loc !== 'registration') {
-      this.toggleMenu();
-    } else {
-      this.mySelect.blur();
-      this.mySelect.close();
-    }
-    this.router.navigate(['/' + loc]);
-  }
-
-  getInitials(string) {
-    return [...string.matchAll(/\b\w/g)].join('');
-  }
-
-  logout() {
-    this.http.removeLocalStorageItem();
-  }
 }
