@@ -15,7 +15,8 @@
         [(ngModel)]="selectedPatient"
         (change)="onSelect(selectedPatient)"
         notFoundText="No records found"
-        [clearSearchOnAdd]>
+        [clearSearchOnAdd]
+        (scrollToEnd)="onScrollEnd()">
         <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
           <div class="grid grid-flow-col auto-cols-max">
             <div class="my-auto mr-3">
