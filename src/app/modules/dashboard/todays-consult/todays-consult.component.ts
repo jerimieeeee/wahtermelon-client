@@ -4,6 +4,7 @@ import { faQuestionCircle, faChevronDown, faFolderOpen, faHeart, faFlask, faNote
 import { HttpService } from 'app/shared/services/http.service';
 import { NameHelperService } from 'app/shared/services/name-helper.service';
 import { interval, Subject, Subscription, takeUntil } from 'rxjs';
+import { switchMap, finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-todays-consult',
@@ -28,28 +29,43 @@ export class TodaysConsultComponent implements OnInit, OnDestroy {
 
   today_consults: [];
   physicians: [];
-  selected_physician: string;
+  selected_physician: string = "all";
 
   per_page: number = 10;
-  current_page: number;
+  current_page: number = 1;
   last_page: number;
   from: number;
   to: number;
   total: number;
 
   show_form: boolean = false;
+  debounceDelay = 1500; // Adjust the delay as needed
+  isLoading: boolean = false;
+
+  // Timer reference
+  private debounceTimer: ReturnType<typeof setTimeout>;
 
   getTodaysConsult(page?: number){
     // console.log('query')
+    if (this.isLoading) return;
     let params = {params: { }};
     params['params']['page'] = !page ? this.current_page : page;
-    if (this.selected_physician !== 'all') params['params']['physician_id'] = this.selected_physician;
+    if (this.selected_physician !== 'all') {
+      params['params']['physician_id'] = this.selected_physician;
+    } else {
+      delete params['params']['physician_id'];
+    }
     params['params']['per_page'] = this.per_page;
     params['params']['consult_done'] = 0;
     params['params']['todays_patient'] = 1;
 
+    this.isLoading = true;
     // console.log(params, page, this.current_page)
-    this.http.get('consultation/records', params).subscribe({
+    this.http.get('consultation/records', params)
+      .pipe(
+        finalize(() => this.isLoading = false)
+      )
+      .subscribe({
       next: (data: any) => {
         // console.log(data);
         this.today_consults = data.data;
@@ -60,6 +76,7 @@ export class TodaysConsultComponent implements OnInit, OnDestroy {
         this.from = data.meta.from;
         this.to = data.meta.to;
         this.total = data.meta.total;
+        // this.subscribeRefresh();
       },
       error: err => console.log(err)
     })
@@ -67,26 +84,29 @@ export class TodaysConsultComponent implements OnInit, OnDestroy {
 
 
   private updateList: Subscription;
-  todays_inteval: any;
+  todays_interval: any;
 
-  subscribeRefresh(){
-    this.todays_inteval = setInterval(() => {
-      this.getTodaysConsult();
+   subscribeRefresh(){
+    this.todays_interval = setInterval(() => {
+      this.onPhysicianChange();
     }, 30000);
   }
 
-  loadPhysicians(){
-    this.http.get('users', {params:{per_page: 'all', designation_code: 'MD'}}).subscribe({
-      next: (data: any) => {
-        this.physicians = data.data;
-        let user_info = this.http.getUserFromJSON();
-        this.selected_physician = user_info.designation_code === 'MD' ? user_info.id : 'all';
-
-        this.getTodaysConsult();
-        this.subscribeRefresh();
-      },
-      error: err => console.log(err)
-    })
+  loadPhysicians(): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+      this.http.get('users', {params:{per_page: 'all', designation_code: 'MD'}}).subscribe({
+        next: (data: any) => {
+          this.physicians = data.data;
+          let user_info = this.http.getUserFromJSON();
+          this.selected_physician = user_info.designation_code === 'MD' ? user_info.id : 'all';
+          resolve(); // Resolve the promise once loading is done
+        },
+        error: err => {
+          console.log(err);
+          reject(err); // Reject the promise if there's an error
+        }
+      });
+    });
   }
 
   openItr(patient_id, ptgroup, id){
@@ -125,15 +145,38 @@ export class TodaysConsultComponent implements OnInit, OnDestroy {
     private nameHelper: NameHelperService
   ) { }
 
+  onPhysicianChange(): void {
+    // Clear the previous debounce timer if it exists
+    if (this.debounceTimer) {
+      clearTimeout(this.debounceTimer);
+    }
+
+    // Set a new debounce timer
+    this.debounceTimer = setTimeout(() => {
+      this.getTodaysConsult();
+    }, this.debounceDelay);
+  }
+
   ngOnInit(): void {
-    this.loadPhysicians();
+    this.loadPhysicians().then(() => {
+      this.onPhysicianChange();
+      this.subscribeRefresh();
+    }).catch(error => {
+      console.error('Error loading physicians:', error);
+    });
   }
 
   ngOnDestroy(): void {
-    // console.log(this.todays_inteval);
-    clearInterval(this.todays_inteval)
+    // console.log(this.todays_interval);
+    if(this.todays_interval) {
+      clearInterval(this.todays_interval)
+    }
+    if (this.debounceTimer) {
+      clearTimeout(this.debounceTimer);
+    }
+
     // this.updateList.unsubscribe();
-    // this.unsubscribe$.next();
-    // this.unsubscribe$.complete();
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 }

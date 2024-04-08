@@ -120,7 +120,7 @@ export class UserRegistrationComponent implements OnInit {
       this.facilities = null;
     }
 
-    this.http.get('libraries/'+loc+'/'+code,{params:{'include':include}}).subscribe({
+    this.http.get('libraries/'+loc+'/'+code,{params:{'include':include, per_page: 'all'}}).subscribe({
       next: (data: any) => {console.log(data.data); this[include] = data.data[include]},
       error: err => console.log(err)
     });
@@ -148,7 +148,7 @@ export class UserRegistrationComponent implements OnInit {
   show_form: boolean = false;
   loadLibraries(){
     this.libraries.forEach((obj, key, arr) => {
-      this.http.get('libraries/'+obj.location).subscribe({
+      this.http.get('libraries/'+obj.location, {params:{per_page:'all'}}).subscribe({
         next: (data: any) => {
           this[obj.var_name] = data.data;
           // console.log(arr.length, key);
