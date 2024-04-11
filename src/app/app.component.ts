@@ -68,7 +68,6 @@ export class AppComponent implements OnInit{
       return null;
     }
     const base64 = base64Url.replace('-', '+').replace('_', '/');
-    console.log(JSON.parse(window.atob(base64)));
   }
 
   verify_url: {};
