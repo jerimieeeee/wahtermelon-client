@@ -78,15 +78,12 @@ export class McrComponent implements OnInit {
   }
 
   getMCR() {
-    console.log(this.patient_mc_record);
-
     if (!this.patient_mc_record) {
       this.mcr_data = -1;
       this.getEDC(this.today, 'any');
     } else {
       if(this.patient_mc_record.pre_registration){
         this.mcr_data = this.patient_mc_record.pre_registration;
-        console.log(this.mcr_data, " mcr data from getMCR - MCR");
         this.getEDC(this.mcr_data.lmp_date, 'db');
       }else{
         this.mcr_data = -1;
@@ -131,8 +128,6 @@ export class McrComponent implements OnInit {
     this.buttons.push('save');
   }
   saveForm() {
-
-    console.log(this.mcr_form.value, " validation check");
     this.loading = true;
     let http;
     let message
@@ -144,12 +139,10 @@ export class McrComponent implements OnInit {
       http = this.http.post('maternal-care/mc-preregistrations', this.mcr_form.value)
       message = 'Succesfully saved!'
     }
-    console.log(message);
-    
+
     if (this.mcr_form.valid) {
       http.subscribe({
         next: (data: any) => {
-          console.log(data, " data from saving");
           this.patient_mc_id.emit(data.patient_mc_id)
         },
         error: err => console.log(err),
@@ -191,14 +184,9 @@ export class McrComponent implements OnInit {
   }
 
   getEDC(value: any, from: any) {
-    console.log('fetching Important dates from ' + from, ' using ' + value);
-
     this.edc_date = from == 'db' ? new Date(this.mcr_data.edc_date).toISOString().substring(0, 10) : (value ? new Date(value).toISOString().substring(0, 10) : new Date().toISOString().substring(0, 10))
-
     this.first_tri = from == 'db' ? new Date(this.mcr_data.trimester1_date).toISOString().substring(0, 10) : (value ? new Date(value).toISOString().substring(0, 10) : new Date().toISOString().substring(0, 10));
-
     this.second_tri = from == 'db' ? new Date(this.mcr_data.trimester2_date).toISOString().substring(0, 10) : (value ? new Date(value).toISOString().substring(0, 10) : new Date().toISOString().substring(0, 10));
-
     this.third_tri = from == 'db' ? new Date(this.mcr_data.trimester3_date).toISOString().substring(0, 10) : (value ? new Date(value).toISOString().substring(0, 10) : new Date().toISOString().substring(0, 10));
 
     if (from == 'input' && value != '') {
@@ -240,8 +228,7 @@ export class McrComponent implements OnInit {
         var suffix = aggregate + ' day'
       }
     }
-    // console.log(suffix, " suffix");
-    this.aog_date = suffix;
 
+    this.aog_date = suffix;
   }
 }

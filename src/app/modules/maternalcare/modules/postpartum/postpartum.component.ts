@@ -93,28 +93,20 @@ export class PostpartumComponent implements OnInit {
   }
 
   getMCR() {
-    // this.http.get('maternal-care/mc-records?type=' + type + '&patient_id=' + id).subscribe({
-    //   next: (data: any) => {
-        if (!this.patient_mc_record) {
-          console.log(" no record ");
-          this.mcr_data = -1;
-        } else {
-          this.mcr_data = this.patient_mc_record;
-          if(this.patient_mc_record.post_registration){
-            this.updating = true;
-          }
-          console.log(this.patient_mc_record, ' MCR SDATA DASOIDU');
-        }
-        this.createForm(this.mcr_data);
-      // },
-    //   error: err => console.log(err),
-    // })
+    if (!this.patient_mc_record) {
+      this.mcr_data = -1;
+    } else {
+      this.mcr_data = this.patient_mc_record;
+      if(this.patient_mc_record.post_registration){
+        this.updating = true;
+      }
+    }
+    this.createForm(this.mcr_data);
   }
 
   createForm(mc_record: any) {
     let post_registration: any;
     post_registration = mc_record.post_registration?mc_record.post_registration:'';
-  console.log(post_registration, " this is my post reg get");
 
     let user_id = this.http.getUserID();
     let facility_code = this.http.getUserFacility();
@@ -122,11 +114,8 @@ export class PostpartumComponent implements OnInit {
     let municipalities;
     let barangays;
 
-    console.log(mc_record, " mc_record createForm Post");
     if(post_registration){
     if(post_registration.barangay.code != ''){
-      console.log(post_registration.barangay.code, " you have brgy code good");
-
       this.selected_regions = post_registration.barangay.code.substring(0, post_registration.barangay.code.length - 7) + '0000000';
       provinces = post_registration.barangay.code.substring(0, post_registration.barangay.code.length - 5) + '00000';
       municipalities = post_registration.barangay.code.substring(0, post_registration.barangay.code.length - 3) + '000';
@@ -166,39 +155,34 @@ export class PostpartumComponent implements OnInit {
     postpartum_remarks:[post_registration.length != 0 ?post_registration.postpartum_remarks:''],
     });
 
-
     this.bfd = post_registration.length != 0 ?(post_registration.breastfeeding?true:false):false;
-    console.log(this.postpartum_form.value, ' p_form after create');
-
   }
+
   flip(): void {
     this.focused = !this.focused;
     this.keyUp = [];
     this.buttons = [];
     this.buttons.push('save');
   }
+
   saveForm(data) {
     this.is_saving = true;
-    // console.log(this.mcr_data, " logging mcr data before daving");
-
     this.postpartum_form.value.delivery_date = this.postpartum_form.value.delivery_date.length == 16? this.postpartum_form.value.delivery_date.replace("T", " ") + ':00':this.postpartum_form.value.delivery_date.replace("T", " ");
     this.postpartum_form.value.admission_date = this.postpartum_form.value.admission_date.length == 16? this.postpartum_form.value.admission_date.replace("T", " ") + ':00':this.postpartum_form.value.admission_date.replace("T", " ");
     this.postpartum_form.value.discharge_date = this.postpartum_form.value.discharge_date.length == 16? this.postpartum_form.value.discharge_date.replace("T", " ") + ':00':this.postpartum_form.value.discharge_date.replace("T", " ");
-  console.log(this.postpartum_form.value , "postpartum form before saving");
 
-  let filtered = {}
-      let target = this.postpartum_form.value
-      for (let key in target) {
-        if (this.postpartum_form.value.breastfeeding == false) {
-          if(key != 'breastfed_date'){
-            filtered[key] = target[String(key)];
-          }
-        }else{
-          filtered = target
+    let filtered = {}
+    let target = this.postpartum_form.value;
+
+    for (let key in target) {
+      if (this.postpartum_form.value.breastfeeding == false) {
+        if(key != 'breastfed_date'){
+          filtered[key] = target[String(key)];
         }
+      }else{
+        filtered = target
       }
-
-      console.log(filtered, " my filtered value");
+    }
 
     if (this.postpartum_form.valid) {
       let http
@@ -227,11 +211,8 @@ export class PostpartumComponent implements OnInit {
       })
     } else {
       this.is_saving = false;
-      console.log( "post partum form invalid");
-
     }
 
-    // console.log(this.postpartum_form.value, " data value");
     this.postpartum_bool.emit(this.postpartum_form.value);
   }
 
@@ -240,8 +221,6 @@ export class PostpartumComponent implements OnInit {
   }
 
   onKeyUp(data_input: string, id: string) {
-    console.log(data_input + ' this is my data input');
-
     if (this.keyUp.includes(id)) {
       if (data_input == '') {
         this.keyUp.splice(this.keyUp.indexOf(id), 1);
@@ -249,17 +228,6 @@ export class PostpartumComponent implements OnInit {
     } else {
       this.keyUp.push(id);
     }
-
-
-    // this.demog.forEach((demo, index) => {
-    //   if (demo == id){
-    //     this.http.get('libraries/'+demo+'/'+data_input,{params:{'include':this.demog[index + 1]}}).subscribe({
-    //       next: (data: any) => {console.log(data.data); this[this.demog[index + 1]] = data.data[this.demog[index + 1]]},
-    //       error: err => console.log(err)
-    //     });
-    //   }
-    //   console.log(this.demog[index + 1]);
-    // });
   }
 
   loadDemog(loc, code, include) {
@@ -269,16 +237,11 @@ export class PostpartumComponent implements OnInit {
     } else if (loc == 'provinces') {
       this.barangays = null;
     }
-    console.log(loc, ' ', code, ' ', include);
 
-    this.http.get('libraries/' + loc + '/' + code, { params: { 'include': include } }).subscribe({
+    this.http.get('libraries/' + loc + '/' + code, { params: { 'include': include, per_page: 'all' } }).subscribe({
       next: (data: any) => {
         this[include] = data.data[include];
-         if(loc == 'regions'){
-         console.log(this.regions, ' vs ', data.data);
-
-         }
-        },
+      },
       error: err => console.log(err)
     });
   }
@@ -288,8 +251,6 @@ export class PostpartumComponent implements OnInit {
     if (!this.buttons.includes(name)) {
       this.buttons.push(name);
     }
-    // console.log(this.buttons);
-
   }
   cancel() {
     this.bfd = false;
