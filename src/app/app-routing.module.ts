@@ -7,10 +7,10 @@ const routes: Routes = [
     path:'home',
     loadChildren: () => import('./modules/dashboard/dashboard.module').then( m => m.DashboardModule)
   },
-  {
+  /* {
     path:'',
     component: AppComponent
-  },
+  }, */
   {
     path: 'verify',
     component: AppComponent
@@ -24,28 +24,8 @@ const routes: Routes = [
     loadChildren: () => import('./modules/patient-registration/patient-registration.module').then(m => m.PatientRegistrationModule)
   },
   {
-    path: 'dental',
-    loadChildren: () => import('./modules/dental/dental.module').then(m => m.DentalModule)
-  },
-  {
-    path: 'lep',
-    loadChildren: () => import('./modules/leprosy/leprosy.module').then(m => m.LeprosyModule)
-  },
-  {
-    path: 'facility-config',
-    loadChildren: () => import('./modules/facility-config/facility-config.module').then(m => m.FacilityConfigModule)
-  },
-  {
     path: 'user-registration',
     loadChildren: () => import('./modules/user-registration/user-registration.module').then(m => m.UserRegistrationModule)
-  },
-  {
-    path: 'my-account',
-    loadChildren: () => import('./modules/user/my-account/my-account.module').then(m => m.MyAccountModule)
-  },
-  {
-    path: 'account-list',
-    loadChildren: () => import('./modules/user/accounts/accounts.module').then(m => m.AccountsModule)
   },
   {
     path: 'households',
@@ -78,11 +58,7 @@ const routes: Routes = [
   {
     path: 'calendar',
     loadChildren: () => import('./modules/calendar-appointment/calendar-appointment.module').then(m => m.CalendarAppointmentModule)
-  },
-  {
-    path: 'environmental',
-    loadChildren: () => import('./modules/environmental/environmental.module').then(m => m.EnvironmentalModule)
-  },
+  }
 ];
 
 @NgModule({

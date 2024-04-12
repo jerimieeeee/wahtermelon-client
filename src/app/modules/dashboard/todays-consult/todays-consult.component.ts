@@ -1,9 +1,10 @@
 import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { NavigationStart, Router } from '@angular/router';
 import { faQuestionCircle, faChevronDown, faFolderOpen, faHeart, faFlask, faNotesMedical, faExclamationCircle, faChevronRight, faChevronLeft, faAnglesLeft, faAnglesRight } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { NameHelperService } from 'app/shared/services/name-helper.service';
 import { interval, Subject, Subscription, takeUntil } from 'rxjs';
+import { switchMap, finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-todays-consult',
@@ -28,64 +29,87 @@ export class TodaysConsultComponent implements OnInit, OnDestroy {
 
   today_consults: [];
   physicians: [];
-  selected_physician: string;
+  selected_physician: string = "all";
 
   per_page: number = 10;
-  current_page: number;
+  current_page: number = 1;
   last_page: number;
   from: number;
   to: number;
   total: number;
 
   show_form: boolean = false;
+  debounceDelay = 1500; // Adjust the delay as needed
+  isLoading: boolean = false;
+
+  // Timer reference
+  private debounceTimer: ReturnType<typeof setTimeout>;
 
   getTodaysConsult(page?: number){
     // console.log('query')
+    if (this.isLoading) return;
     let params = {params: { }};
     params['params']['page'] = !page ? this.current_page : page;
-    if (this.selected_physician !== 'all') params['params']['physician_id'] = this.selected_physician;
+    if (this.selected_physician !== 'all') {
+      params['params']['physician_id'] = this.selected_physician;
+    } else {
+      delete params['params']['physician_id'];
+    }
     params['params']['per_page'] = this.per_page;
     params['params']['consult_done'] = 0;
+    params['params']['todays_patient'] = 1;
 
-    // console.log(params, page, this.current_page)
-    this.http.get('consultation/records', params).subscribe({
-      next: (data: any) => {
-        // console.log(data);
-        this.today_consults = data.data;
-        this.show_form = true;
+    this.isLoading = true;
 
-        this.current_page = data.meta.current_page;
-        this.last_page = data.meta.last_page;
-        this.from = data.meta.from;
-        this.to = data.meta.to;
-        this.total = data.meta.total;
-      },
-      error: err => console.log(err)
-    })
+    return new Promise<void>((resolve, reject) => {
+      this.http.get('consultation/records', params)
+        .pipe(
+          finalize(() => this.isLoading = false)
+        )
+        .subscribe({
+        next: (data: any) => {
+          // console.log(data);
+          this.today_consults = data.data;
+          this.show_form = true;
+
+          this.current_page = data.meta.current_page;
+          this.last_page = data.meta.last_page;
+          this.from = data.meta.from;
+          this.to = data.meta.to;
+          this.total = data.meta.total;
+
+          resolve();
+        },
+        error: err => console.log(err)
+      })
+    });
   }
 
 
   private updateList: Subscription;
-  todays_inteval: any;
+  todays_interval: any;
 
   subscribeRefresh(){
-    this.todays_inteval = setInterval(() => {
+    this.todays_interval = setInterval(() => {
       this.getTodaysConsult();
     }, 30000);
   }
 
-  loadPhysicians(){
-    this.http.get('users', {params:{per_page: 'all', designation_code: 'MD'}}).subscribe({
-      next: (data: any) => {
-        this.physicians = data.data;
-        let user_info = this.http.getUserFromJSON();
-        this.selected_physician = user_info.designation_code === 'MD' ? user_info.id : 'all';
-
-        this.getTodaysConsult();
-        this.subscribeRefresh();
-      },
-      error: err => console.log(err)
-    })
+  loadPhysicians(): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+      this.http.get('users', {params:{per_page: 'all', designation_code: 'MD'}}).subscribe({
+        next: (data: any) => {
+          this.physicians = data.data;
+          let user_info = this.http.getUserFromJSON();
+          this.selected_physician = user_info.designation_code === 'MD' ? user_info.id : 'all';
+          resolve(); // Resolve the promise once loading is done
+        },
+        error: err => {
+          console.log(err);
+          reject(err); // Reject the promise if there's an error
+        }
+      });
+    });
   }
 
   openItr(patient_id, ptgroup, id){
@@ -125,14 +149,21 @@ export class TodaysConsultComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.loadPhysicians();
+    this.loadPhysicians().then(() => {
+      this.getTodaysConsult().then(() => {
+        setTimeout(() => {
+          this.subscribeRefresh();
+        }, 30000)
+      });
+    }).catch(error => {
+      console.error('Error loading physicians:', error);
+    });
   }
 
   ngOnDestroy(): void {
-    // console.log(this.todays_inteval);
-    clearInterval(this.todays_inteval)
-    // this.updateList.unsubscribe();
-    // this.unsubscribe$.next();
-    // this.unsubscribe$.complete();
+    clearInterval(this.todays_interval)
+
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 }

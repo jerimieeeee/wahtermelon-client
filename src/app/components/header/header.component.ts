@@ -2,7 +2,7 @@ import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
 import { faChevronCircleDown, faBell, faSearch, faGear, faHome, faRightFromBracket, faAddressBook, faUser, faSquarePollVertical, faCalendarDay } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { catchError, debounceTime, distinctUntilChanged, switchMap, tap, map, filter } from 'rxjs/operators';
-import { concat, Observable, of, Subject } from 'rxjs';
+import { BehaviorSubject, concat, Observable, of, Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { NgSelectComponent } from '@ng-select/ng-select';
 import { CookieService } from 'ngx-cookie-service';
@@ -28,7 +28,8 @@ export class HeaderComponent implements OnInit {
   faSquarePollVertical = faSquarePollVertical;
   faCalendarDay = faCalendarDay;
 
-  patients$: Observable<any>;
+  // patients$: Observable<any>;
+  patients$ = new BehaviorSubject<any[]>([]);
   searchInput$ = new Subject<string>();
   selectedPatient: any;
   minLengthTerm = 3;
@@ -67,7 +68,88 @@ export class HeaderComponent implements OnInit {
     private cookieService: CookieService
   ) { }
 
-  loadPatients() {
+  current_page: number = 1;
+  current_term: string;
+
+  from: number = 0;
+  last_page: number = 0;
+  to: number = 0;
+  total: number = 0;
+
+  loadPatients(page?) {
+    const current_page = page ?? this.current_page;
+    let current_item = this.patients$.getValue();
+
+    this.searchInput$.pipe(
+      filter(res => res !== null && res.length >= this.minLengthTerm),
+      distinctUntilChanged(),
+      debounceTime(1000),
+      tap(() => this.patientLoading = true),
+      switchMap(term => {
+        this.current_term = term;
+        return this.getPatient(term, page).pipe(
+          catchError(() => of([])),
+          tap(() => this.patientLoading = false)
+        );
+      })
+    ).subscribe(newPatients => {
+      // Reload patient list base on search item
+      this.patients$.next(newPatients);
+    });
+
+    // Fetch additional patient
+    if(current_page > 1 && current_page <= this.last_page){
+      this.getPatient(this.current_term, current_page).subscribe(initialPatients => {
+        const allPatients = [...current_item, ...initialPatients];
+        this.patients$.next(allPatients);
+        this.patientLoading = false;
+      });
+    }
+
+    /* let current_item = page ? this.patients$ : [];
+    this.patients$ = concat(
+      of(current_item),
+      this.searchInput$.pipe(
+        filter(res => {
+          return res !== null && res.length >= this.minLengthTerm
+        }),
+        distinctUntilChanged(),
+        debounceTime(1000),
+        tap(() => this.patientLoading = true),
+        switchMap(term => {
+          this.current_term = term;
+          return this.getPatient(term, page).pipe(
+            catchError(() => of([])),
+            tap(() => this.patientLoading = false)
+          )
+        })
+      )
+    ); */
+  }
+
+  onScrollEnd() {
+    this.patientLoading = true
+    this.current_page++;
+    this.loadPatients( this.current_page );
+  }
+
+  getPatient(term: string = null, page?): Observable<any> {
+    let current_page = page ? 1 : page;
+    return this.http.get('patient', {params:{'filter[search]':term, page: current_page, per_page: 10}})
+    .pipe(map((resp:any) => {
+      console.log(resp)
+      this.showCreate = resp.data.length == 0 ? true : false;
+
+      this.from = resp.meta.from;
+      this.to = resp.meta.to;
+      this.last_page = resp.meta.last_page;
+      this.total = resp.meta.total;
+
+      return resp.data;
+    }))
+  }
+
+  /* onScrollEnd(){
     this.patients$ = concat(
       of([]), // default items
       this.searchInput$.pipe(
@@ -75,7 +157,7 @@ export class HeaderComponent implements OnInit {
           return res !== null && res.length >= this.minLengthTerm
         }),
         distinctUntilChanged(),
-        debounceTime(800),
+        debounceTime(1000),
         tap(() => this.patientLoading = true),
         switchMap(term => {
           return this.getPatient(term).pipe(
@@ -85,7 +167,7 @@ export class HeaderComponent implements OnInit {
         })
       )
     );
-  }
+  } */
 
   toggleMenu(){
     this.showMenu = !this.showMenu;
@@ -100,17 +182,12 @@ export class HeaderComponent implements OnInit {
     }
   }
 
-  getPatient(term: string = null): Observable<any> {
-    return this.http.get('patient', {params:{'filter[search]':term, per_page: 'all'}})
-    .pipe(map((resp:any) => {
-      this.showCreate = resp.data.length == 0 ? true : false;
-      return resp.data;
-    }))
-  }
+
 
   resetList(){
     this.selectedPatient = null;
     this.showCreate = false;
+    this.patientLoading = false;
     this.loadPatients();
   }
 
@@ -131,17 +208,6 @@ export class HeaderComponent implements OnInit {
 
   logout(){
     this.http.removeLocalStorageItem();
-    /* if(this.cookieService.get('access_token')) {
-      this.http.logout().subscribe({
-        next: () => {
-          this.http.removeLocalStorageItem();
-          window.location.reload();
-        },
-        error: err => console.log(err)
-      });
-    } else {
-      window.location.reload();
-    } */
   }
 
 

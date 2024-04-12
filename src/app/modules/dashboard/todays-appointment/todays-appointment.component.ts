@@ -3,6 +3,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { faAnglesLeft, faAnglesRight, faChevronLeft, faChevronRight, faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
+import { switchMap, finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-todays-appointment',
@@ -21,11 +22,12 @@ export class TodaysAppointmentComponent implements OnInit {
   show_form: boolean = false;
 
   per_page: number = 5;
-  current_page: number;
+  current_page: number = 1;
   last_page: number;
   from: number;
   to: number;
   total: number;
+  isLoading: boolean = false;
 
   openItr(patient_id, ptgroup, id){
     // console.log(patient_id)
@@ -39,14 +41,20 @@ export class TodaysAppointmentComponent implements OnInit {
   appointment_length: number = 0;
   loadAppointments(page?: number){
     this.show_form = false;
+    if (this.isLoading) return;
     let params = {params: { }};
     params['params']['page'] = !page ? this.current_page : page;
     params['params']['facility_code'] = this.http.getUserFacility();
     params['params']['per_page'] = this.per_page;
     params['params']['consult_done'] = 0;
 
+    this.isLoading = true;
     // console.log(params, page, this.current_page)
-    this.http.get('appointment/schedule', params).subscribe({
+    this.http.get('appointment/schedule', params)
+      .pipe(
+        finalize(() => this.isLoading = false)
+      )
+      .subscribe({
       next: (data: any) => {
 
         this.todays_appointment = data[0].data;

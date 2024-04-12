@@ -63,16 +63,6 @@ export class MaternalcareComponent implements OnInit {
     this.show_end = !this.show_end;
   }
 
-  /* switchTab(tab) {
-    this.module = 0;
-    this.module = tab;
-    if (this.module == 1) {
-      this.patient_mc_record = ''
-      this.mcr = true;
-    }
-    console.log(this.module);
-  } */
-
   postValue(post_data) {
     if (post_data) {
       this.post_value = true;
@@ -92,14 +82,11 @@ export class MaternalcareComponent implements OnInit {
 
       this.http.get('maternal-care/mc-records', { params }).subscribe({
         next: (data: any) => {
-          // console.log(data.data);
           if (data.data.length > 0) {
             this.patient_mc_list = data.data;
 
             if (!this.patient_mc_list[0].post_registration || !this.patient_mc_list[0].post_registration.end_pregnancy) {
               this.openMCR(this.patient_mc_list[0].id);
-              // console.log(!this.patient_mc_list[0].pre_registration, !this.patient_mc_list[0].post_registration.end_pregnancy);
-
             }
           }
         },
@@ -116,7 +103,6 @@ export class MaternalcareComponent implements OnInit {
       this.http.get('maternal-care/mc-records/' + id).subscribe({
         next: (data: any) => {
           this.patient_mc_record = data.data;
-          console.log(data, " patient_mc_record");
           this.mcr = true;
           if (this.patient_mc_record.pre_registration) {
             this.prenatal = true;
@@ -194,7 +180,6 @@ export class MaternalcareComponent implements OnInit {
     this.http.update('consultation/records/',this.consult_id, endbutton).subscribe({
       error: err => console.log(err),
       complete: () => {
-        console.log('end visited kang bata ka')
         this.proceedItr()
       }
     })
@@ -206,7 +191,6 @@ export class MaternalcareComponent implements OnInit {
 
   loadConsultDetails(){
     this.http.get('consultation/records',{params: {id: this.consult_id}}).subscribe((data: any) => {
-      console.log(data.data)
       this.consult_details = data.data[0];
     });
   }

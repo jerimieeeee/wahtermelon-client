@@ -264,7 +264,7 @@ export class PatientRegistrationComponent implements OnInit {
       this.barangays = null;
     }
 
-    this.http.get('libraries/'+loc+'/'+code,{params:{'include':include}}).subscribe({
+    this.http.get('libraries/'+loc+'/'+code,{params:{'include':include, per_page: 'all'}}).subscribe({
       next: (data: any) => {/* console.log(data.data); */ this[include] = data.data[include]},
       error: err => console.log(err)
     });
@@ -278,7 +278,7 @@ export class PatientRegistrationComponent implements OnInit {
     const getCivilStatus = this.http.get('libraries/civil-statuses');
     const getEducation = this.http.get('libraries/education');
     const getReligions = this.http.get('libraries/religions');
-    const getRegions = this.http.get('libraries/regions');
+    const getRegions = this.http.get('libraries/regions', {params:{per_page:'all'}});
     const getPwdTypes = this.http.get('libraries/pwd-types');
     const getDisabilityQuestion = this.http.get('libraries/washington-disability-question');
     const getDisabilityAnswer = this.http.get('libraries/washington-disability-answer');
