@@ -12,6 +12,10 @@ const routes: Routes = [
     component: AppComponent
   }, */
   {
+    path: 'my-account',
+    loadChildren: () => import('./modules/user/my-account/my-account.module').then(m => m.MyAccountModule)
+  },
+  {
     path: 'verify',
     component: AppComponent
   },
