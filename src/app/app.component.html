@@ -103,22 +103,16 @@
 
 <div [@myInsertRemoveTrigger]  *ngIf="showPrivacyStatement" id="defaultModal" tabindex="-1" class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 w-full md:inset-0 h-modal md:h-full justify-center items-center flex" aria-modal="true" role="dialog" style="z-index:60">
   <div class="relative p-4 w-full max-w-3xl h-auto md:h-auto">
-    <!-- Modal content -->
     <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-      <!-- Modal header -->
       <div class="flex justify-between items-start py-3 px-5 rounded-t border-b bg-white">
         <h3 class="mt-2 text-sm font-bold text-blue-500">
           WAHTERMELON Privacy Statement
         </h3>
       </div>
-      <!-- Modal body -->
+
       <div class="overflow-y-auto h-96 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
         <!-- PRIVACY START -->
         <div class="grid grid-cols-1 m-5">
-          <!-- <div class="col-span-1 flex justify-center font-semibold">
-            WAHTERMELON Privacy Statement
-          </div> -->
-
           <div class="col-span-1 flex flex-col text-justify">
             <h3 class="font-semibold mb-3">Introduction</h3>
             <p class="mb-5">WAHtermelon respects your individual privacy and protects any personal information that you share with us. We commit to secure the individual’s right to privacy and ensure the trustworthiness of processing of individual’s personal information.</p>
@@ -230,9 +224,7 @@
         <!-- PRIVACY END -->
       </div>
 
-      <!-- Modal footer -->
       <div class="flex justify-end py-4 px-5 space-x-4 rounded-b border-t border-gray-200 dark:border-gray-600">
-        <!-- <button  type="button" class="text-white bg-red-500 hover:ring-2 focus:outline-none hover:ring-red-300 rounded text-sm font-medium px-6 py-2.5 transition duration-150 ease-in-out transform hover:scale-110 " (click)="closeModal()">Ok</button> -->
         <button  type="button" class="text-white bg-blue-500 hover:ring-2 focus:outline-none hover:ring-blue-300 font-medium rounded text-sm px-6 py-2.5 text-center transition duration-150 ease-in-out transform hover:scale-110" (click)="showPrivacyStatement = !showPrivacyStatement" >Ok</button>
       </div>
     </div>
