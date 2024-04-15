@@ -160,45 +160,45 @@
               <td colspan="5" class="px-6 py-2 border-black border-r border-l border-b  text-sm">{{ method.desc }}</td>
 <!--              Current User (Beginning Month 10 to 14)-->
               <td class="border-black border-r border-l border-b text-blue-500 text-center">
-                <span *ngIf="method.method_id === 'IUD_total'">
+                <span *ngIf="method.method_id === 'IUD_total'" (click)="showNameList('current_user_beginning_month', method.method_id, 10, 14)">
                   {{ stats?.IUD[0].current_user_beginning_month_10_to_14 +  stats?.IUDPP[0].current_user_beginning_month_10_to_14 ?? 0 }}
                 </span>
 
-                <span *ngIf="method.method_id === 'PILLS_total'">
+                <span *ngIf="method.method_id === 'PILLS_total'" (click)="showNameList('current_user_beginning_month', method.method_id, 10, 14)">
                     {{ stats?.PILLS[0].current_user_beginning_month_10_to_14 +  stats?.PILLSPOP[0].current_user_beginning_month_10_to_14 ?? 0 }}
                   </span>
 
-                <span *ngIf="sub_total_arr.indexOf(method.method_id) < 0">
+                <span *ngIf="sub_total_arr.indexOf(method.method_id) < 0" (click)="showNameList('current_user_beginning_month', method.method_id, 10, 14)">
                   {{ countTotalSummary('cubm_10_14', stats?.[method.method_id][0].current_user_beginning_month_10_to_14) }}
                   {{ stats?.[method.method_id][0].current_user_beginning_month_10_to_14 ?? 0 }}
                 </span>
               </td>
 <!--              Current User (Beginning Month 15 to 19)-->
               <td class="border-black border-r border-l border-b text-blue-500 text-center">
-                <span *ngIf="method.method_id === 'IUD_total'">
+                <span *ngIf="method.method_id === 'IUD_total'" (click)="showNameList('current_user_beginning_month', method.method_id, 15, 19)">
                   {{ stats?.IUD[0].current_user_beginning_month_15_to_19 +  stats?.IUDPP[0].current_user_beginning_month_15_to_19 ?? 0 }}
                 </span>
 
-                <span *ngIf="method.method_id === 'PILLS_total'">
+                <span *ngIf="method.method_id === 'PILLS_total'" (click)="showNameList('current_user_beginning_month', method.method_id, 15, 19)">
                   {{ stats?.PILLS[0].current_user_beginning_month_15_to_19 +  stats?.PILLSPOP[0].current_user_beginning_month_15_to_19 ?? 0 }}
                 </span>
 
-                <span *ngIf="sub_total_arr.indexOf(method.method_id) < 0">
+                <span *ngIf="sub_total_arr.indexOf(method.method_id) < 0" (click)="showNameList('current_user_beginning_month', method.method_id, 15, 19)">
                   {{ countTotalSummary('cubm_15_19', stats?.[method.method_id][0].current_user_beginning_month_15_to_19) }}
                   {{ stats?.[method.method_id][0].current_user_beginning_month_15_to_19 ?? 0 }}
                 </span>
               </td>
 <!--              Current User (Beginning Month 20 to 49)-->
               <td class="border-black border-r border-l border-b text-blue-500 text-center">
-                <span *ngIf="method.method_id === 'IUD_total'">
+                <span *ngIf="method.method_id === 'IUD_total'" (click)="showNameList('current_user_beginning_month', method.method_id, 20, 49)">
                   {{ stats?.IUD[0].current_user_beginning_month_20_to_49 +  stats?.IUDPP[0].current_user_beginning_month_20_to_49 ?? 0 }}
                 </span>
 
-                <span *ngIf="method.method_id === 'PILLS_total'">
+                <span *ngIf="method.method_id === 'PILLS_total'" (click)="showNameList('current_user_beginning_month', method.method_id, 20, 49)">
                   {{ stats?.PILLS[0].current_user_beginning_month_20_to_49 +  stats?.PILLSPOP[0].current_user_beginning_month_20_to_49 ?? 0 }}
                 </span>
 
-                <span *ngIf="sub_total_arr.indexOf(method.method_id) < 0">
+                <span *ngIf="sub_total_arr.indexOf(method.method_id) < 0" (click)="showNameList('current_user_beginning_month', method.method_id, 20, 49)">
                   {{ countTotalSummary('cubm_20_49', stats?.[method.method_id][0].current_user_beginning_month_20_to_49) }}
                   {{ stats?.[method.method_id][0].current_user_beginning_month_20_to_49 ?? 0 }}
                 </span>
@@ -237,45 +237,45 @@
               </td>
 <!--              New Acceptors (Previous Month 10 to 14)-->
               <td class="border-black border-r border-l border-b text-blue-500 text-center">
-                <span *ngIf="method.method_id === 'IUD_total'">
+                <span *ngIf="method.method_id === 'IUD_total'" (click)="showNameList('new_acceptor_previous_month', method.method_id, 10, 14)">
                   {{ stats?.IUD[0].new_acceptor_previous_month_10_to_14 +  stats?.IUDPP[0].new_acceptor_previous_month_10_to_14 ?? 0 }}
                 </span>
 
-                <span *ngIf="method.method_id === 'PILLS_total'">
+                <span *ngIf="method.method_id === 'PILLS_total'" (click)="showNameList('new_acceptor_previous_month', method.method_id, 10, 14)">
                   {{ stats?.PILLS[0].new_acceptor_previous_month_10_to_14 +  stats?.PILLSPOP[0].new_acceptor_previous_month_10_to_14 ?? 0 }}
                 </span>
 
-                <span *ngIf="sub_total_arr.indexOf(method.method_id) < 0">
+                <span *ngIf="sub_total_arr.indexOf(method.method_id) < 0" (click)="showNameList('new_acceptor_previous_month', method.method_id, 10, 14)">
                   {{ countTotalSummary('napr_10_14', stats?.[method.method_id][0].new_acceptor_previous_month_10_to_14) }}
                   {{ stats?.[method.method_id][0].new_acceptor_previous_month_10_to_14 ?? 0 }}
                 </span>
               </td>
 <!--              New Acceptors (Previous Month 15 to 19)-->
-              <td class="border-black border-r border-l border-b text-blue-500 text-center">
+              <td class="border-black border-r border-l border-b text-blue-500 text-center" (click)="showNameList('new_acceptor_previous_month', method.method_id, 15, 19)">
                 <span *ngIf="method.method_id === 'IUD_total'">
                   {{ stats?.IUD[0].new_acceptor_previous_month_15_to_19 +  stats?.IUDPP[0].new_acceptor_previous_month_15_to_19 ?? 0 }}
                 </span>
 
-                <span *ngIf="method.method_id === 'PILLS_total'">
+                <span *ngIf="method.method_id === 'PILLS_total'" (click)="showNameList('new_acceptor_previous_month', method.method_id, 15, 19)">
                   {{ stats?.PILLS[0].new_acceptor_previous_month_15_to_19 +  stats?.PILLSPOP[0].new_acceptor_previous_month_15_to_19 + stats?.IUDPP[0].new_acceptor_previous_month_15_to_19 ?? 0 }}
                 </span>
 
-                <span *ngIf="sub_total_arr.indexOf(method.method_id) < 0">
+                <span *ngIf="sub_total_arr.indexOf(method.method_id) < 0" (click)="showNameList('new_acceptor_previous_month', method.method_id, 15, 19)">
                   {{ countTotalSummary('napr_15_19', stats?.[method.method_id][0].new_acceptor_previous_month_15_to_19) }}
                   {{ stats?.[method.method_id][0].new_acceptor_previous_month_15_to_19 ?? 0 }}
                 </span>
               </td>
 <!--              New Acceptors (Previous Month 20 to 49)-->
               <td class="border-black border-r border-l border-b text-blue-500 text-center">
-                <span *ngIf="method.method_id === 'IUD_total'">
+                <span *ngIf="method.method_id === 'IUD_total'" (click)="showNameList('new_acceptor_previous_month', method.method_id, 20, 49)">
                   {{ stats?.IUD[0].new_acceptor_previous_month_20_to_49 +  stats?.IUDPP[0].new_acceptor_previous_month_20_to_49 ?? 0 }}
                 </span>
 
-                <span *ngIf="method.method_id === 'PILLS_total'">
+                <span *ngIf="method.method_id === 'PILLS_total'" (click)="showNameList('new_acceptor_previous_month', method.method_id, 20, 49)">
                   {{ stats?.PILLS[0].new_acceptor_previous_month_20_to_49 +  stats?.PILLSPOP[0].new_acceptor_previous_month_20_to_49 + stats?.IUDPP[0].new_acceptor_previous_month_20_to_49 ?? 0 }}
                 </span>
 
-                <span *ngIf="sub_total_arr.indexOf(method.method_id) < 0">
+                <span *ngIf="sub_total_arr.indexOf(method.method_id) < 0"(click)="showNameList('new_acceptor_previous_month', method.method_id, 20, 49)">
                   {{ countTotalSummary('napr_20_49', stats?.[method.method_id][0].new_acceptor_previous_month_20_to_49) }}
                   {{ stats?.[method.method_id][0].new_acceptor_previous_month_20_to_49 ?? 0 }}
                 </span>
@@ -314,45 +314,45 @@
               </td>
 <!--              Other Acceptors (Present Month 10 to 14)-->
               <td class="border-black border-r border-l border-b text-blue-500 text-center">
-                <span *ngIf="method.method_id === 'IUD_total'">
+                <span *ngIf="method.method_id === 'IUD_total'" (click)="showNameList('other_acceptor_present_month', method.method_id, 10, 14)">
                   {{ stats?.IUD[0].other_acceptor_present_month_10_to_14 +  stats?.IUDPP[0].other_acceptor_present_month_10_to_14 ?? 0 }}
                 </span>
 
-                <span *ngIf="method.method_id === 'PILLS_total'">
+                <span *ngIf="method.method_id === 'PILLS_total'" (click)="showNameList('other_acceptor_present_month', method.method_id, 10, 14)">
                   {{ stats?.PILLS[0].other_acceptor_present_month_10_to_14 +  stats?.PILLSPOP[0].other_acceptor_present_month_10_to_14 ?? 0 }}
                 </span>
 
-                <span *ngIf="sub_total_arr.indexOf(method.method_id) < 0">
+                <span *ngIf="sub_total_arr.indexOf(method.method_id) < 0" (click)="showNameList('other_acceptor_present_month', method.method_id, 10, 14)">
                   {{ countTotalSummary('oapr_10_14', stats?.[method.method_id][0].other_acceptor_present_month_10_to_14) }}
                   {{ stats?.[method.method_id][0].other_acceptor_present_month_10_to_14 ?? 0 }}
                 </span>
               </td>
 <!--              Other Acceptors (Present Month 15 to 19)-->
               <td class="border-black border-r border-l border-b text-blue-500 text-center">
-                <span *ngIf="method.method_id === 'IUD_total'">
+                <span *ngIf="method.method_id === 'IUD_total'" (click)="showNameList('other_acceptor_present_month', method.method_id, 15, 19)">
                   {{ stats?.IUD[0].other_acceptor_present_month_15_to_19 +  stats?.IUDPP[0].other_acceptor_present_month_15_to_19 ?? 0 }}
                 </span>
 
-                <span *ngIf="method.method_id === 'PILLS_total'">
+                <span *ngIf="method.method_id === 'PILLS_total'" (click)="showNameList('other_acceptor_present_month', method.method_id, 15, 19)">
                   {{ stats?.PILLS[0].other_acceptor_present_month_15_to_19 +  stats?.PILLSPOP[0].other_acceptor_present_month_15_to_19 ?? 0 }}
                 </span>
 
-                <span *ngIf="sub_total_arr.indexOf(method.method_id) < 0">
+                <span *ngIf="sub_total_arr.indexOf(method.method_id) < 0" (click)="showNameList('other_acceptor_present_month', method.method_id, 15, 19)">
                   {{ countTotalSummary('oapr_15_19', stats?.[method.method_id][0].other_acceptor_present_month_15_to_19) }}
                   {{ stats?.[method.method_id][0].other_acceptor_present_month_15_to_19 ?? 0 }}
                 </span>
               </td>
 <!--              Other Acceptors (Present Month 20 to 49)-->
               <td class="border-black border-r border-l border-b text-blue-500 text-center">
-                <span *ngIf="method.method_id === 'IUD_total'">
+                <span *ngIf="method.method_id === 'IUD_total'" (click)="showNameList('other_acceptor_present_month', method.method_id, 20, 49)">
                   {{ stats?.IUD[0].other_acceptor_present_month_20_to_49 +  stats?.IUDPP[0].other_acceptor_present_month_20_to_49 ?? 0 }}
                 </span>
 
-                <span *ngIf="method.method_id === 'PILLS_total'">
+                <span *ngIf="method.method_id === 'PILLS_total'" (click)="showNameList('other_acceptor_present_month', method.method_id, 20, 49)">
                   {{ stats?.PILLS[0].other_acceptor_present_month_20_to_49 +  stats?.PILLSPOP[0].other_acceptor_present_month_20_to_49 ?? 0 }}
                 </span>
 
-                <span *ngIf="sub_total_arr.indexOf(method.method_id) < 0">
+                <span *ngIf="sub_total_arr.indexOf(method.method_id) < 0" (click)="showNameList('other_acceptor_present_month', method.method_id, 20, 49)">
                   {{ countTotalSummary('oapr_20_49', stats?.[method.method_id][0].other_acceptor_present_month_20_to_49) }}
                   {{ stats?.[method.method_id][0].other_acceptor_present_month_20_to_49 ?? 0 }}
                 </span>
@@ -391,45 +391,45 @@
               </td>
               <!--              Dropout (Present Month 10 to 14)-->
               <td class="border-black border-r border-l border-b text-blue-500 text-center">
-                <span *ngIf="method.method_id === 'IUD_total'">
+                <span *ngIf="method.method_id === 'IUD_total'" (click)="showNameList('dropout_present_month', method.method_id, 10, 14)">
                   {{ stats?.IUD[0].dropout_present_month_10_to_14 +  stats?.IUDPP[0].dropout_present_month_10_to_14 ?? 0 }}
                 </span>
 
-                <span *ngIf="method.method_id === 'PILLS_total'">
+                <span *ngIf="method.method_id === 'PILLS_total'" (click)="showNameList('dropout_present_month', method.method_id, 10, 14)">
                   {{ stats?.PILLS[0].dropout_present_month_10_to_14 +  stats?.PILLSPOP[0].dropout_present_month_10_to_14 ?? 0 }}
                 </span>
 
-                <span *ngIf="sub_total_arr.indexOf(method.method_id) < 0">
+                <span *ngIf="sub_total_arr.indexOf(method.method_id) < 0" (click)="showNameList('dropout_present_month', method.method_id, 10, 14)">
                   {{ countTotalSummary('dopm_10_14', stats?.[method.method_id][0].dropout_present_month_10_to_14) }}
                   {{ stats?.[method.method_id][0].dropout_present_month_10_to_14 ?? 0 }}
                 </span>
               </td>
               <!--              Dropout (Present Month 15 to 19)-->
               <td class="border-black border-r border-l border-b text-blue-500 text-center">
-                <span *ngIf="method.method_id === 'IUD_total'">
+                <span *ngIf="method.method_id === 'IUD_total'" (click)="showNameList('dropout_present_month', method.method_id, 15, 19)">
                   {{ stats?.IUD[0].dropout_present_month_15_to_19 +  stats?.IUDPP[0].dropout_present_month_15_to_19 ?? 0 }}
                 </span>
 
-                <span *ngIf="method.method_id === 'PILLS_total'">
+                <span *ngIf="method.method_id === 'PILLS_total'" (click)="showNameList('dropout_present_month', method.method_id, 15, 19)">
                   {{ stats?.PILLS[0].dropout_present_month_15_to_19 +  stats?.PILLSPOP[0].dropout_present_month_15_to_19 ?? 0 }}
                 </span>
 
-                <span *ngIf="sub_total_arr.indexOf(method.method_id) < 0">
+                <span *ngIf="sub_total_arr.indexOf(method.method_id) < 0" (click)="showNameList('dropout_present_month', method.method_id, 15, 19)">
                   {{ countTotalSummary('dopm_15_19', stats?.[method.method_id][0].dropout_present_month_15_to_19) }}
                   {{ stats?.[method.method_id][0].dropout_present_month_15_to_19 ?? 0 }}
                 </span>
               </td>
               <!--              Dropout (Present Month 20 to 49)-->
               <td class="border-black border-r border-l border-b text-blue-500 text-center">
-                <span *ngIf="method.method_id === 'IUD_total'">
+                <span *ngIf="method.method_id === 'IUD_total'" (click)="showNameList('dropout_present_month', method.method_id, 20, 49)">
                   {{ stats?.IUD[0].dropout_present_month_20_to_49 +  stats?.IUDPP[0].dropout_present_month_20_to_49 ?? 0 }}
                 </span>
 
-                <span *ngIf="method.method_id === 'PILLS_total'">
+                <span *ngIf="method.method_id === 'PILLS_total'" (click)="showNameList('dropout_present_month', method.method_id, 20, 49)">
                   {{ stats?.PILLS[0].dropout_present_month_20_to_49 +  stats?.PILLSPOP[0].dropout_present_month_20_to_49 ?? 0 }}
                 </span>
 
-                <span *ngIf="sub_total_arr.indexOf(method.method_id) < 0">
+                <span *ngIf="sub_total_arr.indexOf(method.method_id) < 0" (click)="showNameList('dropout_present_month', method.method_id, 20, 49)">
                   {{ countTotalSummary('dopm_20_49', stats?.[method.method_id][0].dropout_present_month_20_to_49) }}
                   {{ stats?.[method.method_id][0].dropout_present_month_20_to_49 ?? 0 }}
                 </span>
@@ -604,28 +604,6 @@
               </td>
               <!--              Current User (End of Month Total)-->
               <td class="border-black border-r border-l border-b text-blue-500 text-center">
-                <!-- <span *ngIf="method.method_id === 'IUD_total'">
-                    ({{
-                      stats?.IUD[0].current_user_beginning_month_20_to_49 +
-                      stats?.IUD[0].new_acceptor_previous_month_20_to_49 +
-                      stats?.IUD[0].other_acceptor_present_month_20_to_49 -
-                      stats?.IUD[0].dropout_present_month_20_to_49 ?? 0
-                    }})
-                    +
-                    ({{
-                      stats?.IUDPP[0].current_user_beginning_month_20_to_49 +
-                      stats?.IUDPP[0].new_acceptor_previous_month_20_to_49 +
-                      stats?.IUDPP[0].other_acceptor_present_month_20_to_49 -
-                      stats?.IUDPP[0].dropout_present_month_20_to_49 ?? 0
-                    }})
-                </span>
-
-                <span *ngIf="method.method_id === 'PILLS_total'">
-                  ( {{ stats?.PILLS[0].current_user_beginning_month_20_to_49 +  stats?.PILLS[0].new_acceptor_previous_month_20_to_49 + stats?.PILLS[0].other_acceptor_present_month_20_to_49 - stats?.PILLS[0].dropout_present_month_20_to_49 ?? 0 }} )
-                  +
-                  ( {{ stats?.PILLSPOP[0].current_user_beginning_month_20_to_49 +  stats?.PILLSPOP[0].new_acceptor_previous_month_20_to_49 + stats?.PILLSPOP[0].other_acceptor_present_month_20_to_49 - stats?.PILLSPOP[0].dropout_present_month_20_to_49 ?? 0 }} )
-                </span> -->
-
                 <span *ngIf="method.method_id === 'IUD_total'">
                   {{
                     ((
@@ -728,45 +706,45 @@
               </td>
               <!--              New Acceptors (Present Month 10 to 14)-->
               <td class="border-black border-r border-l border-b text-blue-500 text-center">
-                <span *ngIf="method.method_id === 'IUD_total'">
+                <span *ngIf="method.method_id === 'IUD_total'" (click)="showNameList('new_acceptor_present_month', method.method_id, 10, 14)">
                   {{ stats?.IUD[0].new_acceptor_present_month_10_to_14 +  stats?.IUDPP[0].new_acceptor_present_month_10_to_14 ?? 0 }}
                 </span>
 
-                <span *ngIf="method.method_id === 'PILLS_total'">
+                <span *ngIf="method.method_id === 'PILLS_total'" (click)="showNameList('new_acceptor_present_month', method.method_id, 10, 14)">
                   {{ stats?.PILLS[0].new_acceptor_present_month_10_to_14 +  stats?.PILLSPOP[0].new_acceptor_present_month_10_to_14 ?? 0 }}
                 </span>
 
-                <span *ngIf="sub_total_arr.indexOf(method.method_id) < 0">
+                <span *ngIf="sub_total_arr.indexOf(method.method_id) < 0" (click)="showNameList('new_acceptor_present_month', method.method_id, 10, 14)">
                   {{ countTotalSummary('napm_10_14', stats?.[method.method_id][0].new_acceptor_present_month_10_to_14) }}
                   {{ stats?.[method.method_id][0].new_acceptor_present_month_10_to_14 ?? 0 }}
                 </span>
               </td>
               <!--              New Acceptors (Present Month 15 to 19)-->
               <td class="border-black border-r border-l border-b text-blue-500 text-center">
-                <span *ngIf="method.method_id === 'IUD_total'">
+                <span *ngIf="method.method_id === 'IUD_total'" (click)="showNameList('new_acceptor_present_month', method.method_id, 15, 19)">
                   {{ stats?.IUD[0].new_acceptor_present_month_15_to_19 +  stats?.IUDPP[0].new_acceptor_present_month_15_to_19 ?? 0 }}
                 </span>
 
-                <span *ngIf="method.method_id === 'PILLS_total'">
+                <span *ngIf="method.method_id === 'PILLS_total'" (click)="showNameList('new_acceptor_present_month', method.method_id, 15, 19)">
                   {{ stats?.PILLS[0].new_acceptor_present_month_15_to_19 +  stats?.PILLSPOP[0].new_acceptor_present_month_15_to_19 ?? 0 }}
                 </span>
 
-                <span *ngIf="sub_total_arr.indexOf(method.method_id) < 0">
+                <span *ngIf="sub_total_arr.indexOf(method.method_id) < 0" (click)="showNameList('new_acceptor_present_month', method.method_id, 15, 19)">
                   {{ countTotalSummary('napm_15_19', stats?.[method.method_id][0].new_acceptor_present_month_15_to_19) }}
                   {{ stats?.[method.method_id][0].new_acceptor_present_month_15_to_19 ?? 0 }}
                 </span>
               </td>
               <!--              New Acceptors (Present Month 20 to 49)-->
               <td class="border-black border-r border-l border-b text-blue-500 text-center">
-                <span *ngIf="method.method_id === 'IUD_total'">
+                <span *ngIf="method.method_id === 'IUD_total'" (click)="showNameList('new_acceptor_present_month', method.method_id, 20, 49)">
                   {{ stats?.IUD[0].new_acceptor_present_month_20_to_49 +  stats?.IUDPP[0].new_acceptor_present_month_20_to_49 ?? 0 }}
                 </span>
 
-                <span *ngIf="method.method_id === 'PILLS_total'">
+                <span *ngIf="method.method_id === 'PILLS_total'" (click)="showNameList('new_acceptor_present_month', method.method_id, 20, 49)">
                   {{ stats?.PILLS[0].new_acceptor_present_month_20_to_49 +  stats?.PILLSPOP[0].new_acceptor_present_month_20_to_49 ?? 0 }}
                 </span>
 
-                <span *ngIf="sub_total_arr.indexOf(method.method_id) < 0">
+                <span *ngIf="sub_total_arr.indexOf(method.method_id) < 0" (click)="showNameList('new_acceptor_present_month', method.method_id, 20, 49)">
                   {{ countTotalSummary('napm_20_49', stats?.[method.method_id][0].new_acceptor_present_month_20_to_49) }}
                   {{ stats?.[method.method_id][0].new_acceptor_present_month_20_to_49 ?? 0 }}
                 </span>
@@ -834,4 +812,4 @@
 </div>
 
 
-<!--<app-name-list *ngIf="openList" (toggleModal)="toggleModal()" [name_list]="name_list"></app-name-list>-->
+<app-show-name-list *ngIf="openList" (toggleModal)="toggleModal()" [name_list_params]="name_list_params"></app-show-name-list>
