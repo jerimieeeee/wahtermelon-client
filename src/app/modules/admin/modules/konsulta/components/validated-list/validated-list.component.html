@@ -4,22 +4,18 @@
       <th scope="col" class="py-3 px-3">Transmittal Number</th>
       <th scope="col" class="py-3 px-3" *ngIf="filter_status==='S'">Konsulta Transaction Number</th>
       <th scope="col" class="py-3 px-3 text-center w-1/12">
-        <!-- Count <br /> -->
         SOAP Count
       </th>
 
       <th scope="col" class="py-3 px-3 text-center w-1/12">
-        <!-- Count <br /> -->
         Profile Count
       </th>
 
       <th scope="col" class="py-3 px-3 text-center w-1/12">
-        <!-- Count <br /> -->
         Enlistment Count
       </th>
 
       <th scope="col" class="py-3 px-3 text-center">Name</th>
-      <!-- <th scope="col" class="py-3 px-3 text-center">Download</th> -->
       <th scope="col" class="py-3 px-3 text-center">Actions</th>
     </tr>
   </thead>
@@ -46,16 +42,7 @@
         <span *ngFor="let patient of kon.patient">
           {{ patient.last_name }}, {{ patient.first_name }} {{ patient.middle_name }} {{ patient.suffix_name === 'NA' ? '' : patient.suffix_name }} <br />
         </span>
-        <!-- <div *ngIf="checkPatientList(kon.patient)" >
-          <button class="text-sm text-white bg-blue-400 py-1 w-28 rounded-md px-3 mr-2 disabled:bg-gray-300" (click)="openList(kon.patient)">
-            show list
-          </button>
-        </div> -->
       </td>
-
-      <!-- <td class="py-4 px-3 flex justify-center">
-
-      </td> -->
 
       <td class="py-4 px-3 flex justify-center">
         <div>
