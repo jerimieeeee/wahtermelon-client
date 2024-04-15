@@ -33,9 +33,9 @@ export class SetDateComponent {
 
     this.http.get('konsulta/registration-list', {params}).subscribe({
       next: (data: any) => {
-        console.log(data);
         this.loadList.emit();
         this.is_loading = false;
+        this.toastr.success('Total Assignment Count: '+ data.pAssignmentTotalCnt, 'Masterlist');
         this.closeModal()
       },
       error: err => {
