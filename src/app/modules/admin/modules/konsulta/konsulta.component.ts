@@ -1,9 +1,11 @@
 import { formatDate } from '@angular/common';
 import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { faFileExcel } from '@fortawesome/free-regular-svg-icons';
 import { faAnglesLeft, faAnglesRight, faChevronLeft, faChevronRight, faCircleNotch, faFilter, faSave, faSearch, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
+import { ExportAsConfig, ExportAsService } from 'ngx-export-as';
 
 @Component({
   selector: 'app-konsulta',
@@ -20,6 +22,7 @@ export class KonsultaComponent implements OnInit {
   faFilter = faFilter;
   faSave = faSave;
   faCircleNotch = faCircleNotch;
+  faFileExcel = faFileExcel;
 
   current_year = formatDate(new Date, 'yyyy', 'en', 'Asia/Manila')
   years: any = [];
@@ -54,7 +57,15 @@ export class KonsultaComponent implements OnInit {
   start_date: any;
   end_date: any;
 
-  loadList(page?: number){
+  exportAsExcel: ExportAsConfig = {
+    type: 'xlsx',
+    elementIdOrContent: 'submitted',
+    options: { }
+  }
+
+  excel_exporting: boolean = false;
+
+  loadList(page?: number, export_list?){
     this.forms = [];
     this.searching = true;
 
@@ -82,11 +93,19 @@ export class KonsultaComponent implements OnInit {
     query.subscribe({
       next: (data: any) => {
         this.konsulta_list = data.data;
-
+        console.log(this.konsulta_list);
         if(this.form_type === "1") {
           this.forms['for_validation'] = true;
         } else {
           this.forms['validated_list'] = true;
+
+          if(export_list) {
+            setTimeout(() => {
+              this.exportAsService.save(this.exportAsExcel, 'Submitted').subscribe(() => {
+                this.excel_exporting = false;
+              });
+            })
+          }
         }
         this.searching = false;
         this.current_page = data.meta.current_page;
@@ -167,7 +186,8 @@ export class KonsultaComponent implements OnInit {
 
   constructor(
     private http: HttpService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private exportAsService: ExportAsService
   ) { }
 
   ngOnInit(): void {

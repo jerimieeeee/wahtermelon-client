@@ -2,15 +2,7 @@
 <div class="bg-white border border-solid border-slate-100 rounded-xl shadow-md">
   <div class="border border-solid border-slate-100 rounded-t-xl font-semibold justify-between">
     <div class="flex border border-solid border-slate-100 rounded-t-xl p-3 font-semibold justify-between">
-      <div class="text-blue-500 text-lg pt-2 pl-5">
-        Konsulta
-      </div>
-      <div>
-        <!-- <button *ngIf="is_updating" class="text-white-500 bg-amber-500 active:bg-amber-300 hover:bg-amber-600 text-sm px-4 py-2 rounded hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button">
-          <fa-icon class="mr-3" [icon]="faSpinner" spin="true"></fa-icon>
-          Updating
-        </button> -->
-      </div>
+
 
       <div class="w-full justify-end flex">
         <input type="text" [(ngModel)]="search" class="input rounded-r-none w-44" (keyup.enter)="loadList()" placeholder="Search name"/>
@@ -35,12 +27,16 @@
         </select>
 
         <!-- <select class="input w-28 rounded-none"> -->
-        <input *ngIf="form_type==='2'" class="input w-36" type="date" [(ngModel)]="start_date" />
-        <input *ngIf="form_type==='2'" class="input w-36" type="date" [(ngModel)]="end_date" />
+        <input *ngIf="form_type==='2'" class="input w-36 rounded-none" type="date" [(ngModel)]="start_date" />
+        <input *ngIf="form_type==='2'" class="input w-36 rounded-none" type="date" [(ngModel)]="end_date" />
         <!-- </select> -->
 
         <button [disabled]="searching" type="button" class="bg-blue-500 text-white h-10 px-3 mt-1 rounded-r-md" (click)="loadList()">
           <fa-icon class="" [icon]="searching ? faCircleNotch : faFilter" [spin]="searching"></fa-icon>
+        </button>
+
+        <button *ngIf="form_type==='2' && filter_status==='S' && forms['validated_list']" (click)="loadList(null, true)" class="bg-green-500 text-white text-xl px-2 mt-1 rounded-md ml-2">
+          <fa-icon [icon]="faFileExcel"></fa-icon>
         </button>
       </div>
     </div>
@@ -131,3 +127,24 @@
 
 <app-result-form *ngIf="show_return" (showReturn)="showReturn()" (toggleModal)="toggleModal()" [return_value]="return_value"></app-result-form>
 <app-patient-list *ngIf="show_list" (toggleList)="toggleList()" [patient_list]="patient_list"></app-patient-list>
+
+<table id="submitted" hidden>
+  <thead>
+    <tr>
+      <th>Transmittal Number</th>
+      <th>Konsulta Transaction Number</th>
+      <th>Patient Name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let kon of konsulta_list">
+      <td>{{ kon.transmittal_number }}</td>
+      <td>{{ kon.konsulta_transaction_number }}</td>
+      <td>
+        <span *ngFor="let patient of kon.patient">
+          {{ patient.last_name }}, {{ patient.first_name }} {{ patient.middle_name }} {{ patient.suffix_name === 'NA' ? '' : patient.suffix_name }} <br />
+        </span>
+      </td>
+    </tr>
+  </tbody>
+</table>
