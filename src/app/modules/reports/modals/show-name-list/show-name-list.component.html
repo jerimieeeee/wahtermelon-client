@@ -1,0 +1,68 @@
+<div id="defaultModal" tabindex="-1" class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 w-full md:inset-0 h-modal md:h-full justify-center items-center flex" aria-modal="true" role="dialog" style="z-index:60">
+  <div class="relative p-4 w-full max-w-7xl h-full md:h-auto">
+    <!-- Modal content -->
+    <div class="relative bg-white rounded-lg shadow">
+      <!-- Modal header -->
+      <div class="flex justify-between items-start py-3 px-5 rounded-t border-b bg-blue-500">
+        <h3 class="mt-2 text-sm font-bold text-white">
+          List of patients
+        </h3>
+        <div class="flex justify-end">
+          <div class="border border-gray-400 rounded-md bg-white">
+            <input type="text" [(ngModel)]="search_patient" class="form-input border-0 text-sm p-1 m-1 border-r border-gray-400" (keyup.enter)="getList()" placeholder="Search Patient"/>
+            <button type="button" class="text-blue-500 w-9 h-9" (click)="getList()">
+              <fa-icon class="-ml-1" [icon]="faSearch"></fa-icon>
+            </button>
+          </div>
+
+          <button type="button" class="text-white w-9 h-9" (click)="closeModal()">
+            <fa-icon class="-mr-4" [icon]="faCircleXmark"></fa-icon>
+          </button>
+        </div>
+      </div>
+      <!-- Modal body -->
+      <div class="overflow-y-auto h-96 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
+        <div class="flex flex-col justify-center loading" *ngIf="is_fetching">
+          <fa-icon class="text-blue-500 mx-auto pt-36 text-xl" [icon]="faCircleNotch" spin="true"></fa-icon>
+          <span class="pt-4 mx-auto pb-36 select-none">Fetching Patient Info...</span>
+        </div>
+        <div class="overflow-x-auto relative shadow-md sm:rounded-lg m-4">
+          <table class="w-full text-sm text-left text-gray-500">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+            <tr>
+              <th scope="col" class="py-3 px-6">Name</th>
+              <th scope="col" class="py-3 px-6">Birthdate</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let list of show_nameList?.data" class="bg-white border-b">
+              <td class="py-4 px-6">
+                {{ list.name }}
+              </td>
+              <td class="py-4 px-6">
+                {{ list.birthdate | date: 'MM/dd/yyyy':'Asia/Manila' }}
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="flex justify-between py-4 px-5 space-x-4 rounded-b border-t border-gray-200 items-center">
+        <button type="button" class="text-white bg-red-500 hover:ring-2 focus:outline-none hover:ring-red-300 rounded text-sm font-medium px-6 py-2.5 transition duration-150 ease-in-out transform hover:scale-110" (click)="closeModal()">Close</button>
+        <div class="flex items-center space-x-4">
+          <button [disabled]="Number(current_page)===1" (click)="getList(1)" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 enabled:bg-white disabled:bg-gray-300 text-sm font-medium text-gray-500 hover:bg-gray-50">
+            <fa-icon [icon]="faAnglesLeft" class="block h-15 w-15 text-gray-500 pr-1"></fa-icon>
+          </button>
+          <button type="button" class="text-white bg-red-500 disabled:bg-gray-300 hover:ring-2 focus:outline-none hover:ring-red-300 rounded text-sm font-medium px-6 py-2.5 transition duration-150 ease-in-out transform hover:scale-110" [disabled]="Number(current_page)===1" (click)="getList(Number(current_page)-1)">Previous</button>
+          <button type="button" class="text-white bg-red-500 disabled:bg-gray-300 hover:ring-2 focus:outline-none hover:ring-red-300 rounded text-sm font-medium px-6 py-2.5 transition duration-150 ease-in-out transform hover:scale-110" [disabled]="Number(current_page)===Number(last_page)" (click)="getList(Number(current_page)+1)">Next</button>
+          <button [disabled]="Number(current_page)===Number(last_page)" (click)="getList(last_page)" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 enabled:bg-white disabled:bg-gray-300 text-sm font-medium text-gray-500 hover:bg-gray-50">
+            <fa-icon [icon]="faAnglesRight" class="block h-15 w-15 text-gray-500 pr-1"></fa-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="opacity-50 fixed inset-0 z-50 bg-black"></div>
