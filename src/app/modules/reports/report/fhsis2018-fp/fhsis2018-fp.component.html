@@ -204,7 +204,7 @@
                 </span>
               </td>
 <!--              Current User (Beginning Month Total)-->
-              <td class="border-black border-r border-l border-b border text-blue-500 text-center">
+              <td class="border-black border-r border-l border-b font-bold text-gray-800 text-center">
                 <span *ngIf="method.method_id === 'IUD_total'">
                   {{
                     stats?.IUD[0].current_user_beginning_month_10_to_14 +
@@ -281,7 +281,7 @@
                 </span>
               </td>
 <!--              New Acceptors (Previous Month Total)-->
-              <td class="border-black border-r border-l border-b border text-blue-500 text-center">
+              <td class="border-black border-r border-l border-b font-bold text-gray-800 text-center">
                 <span *ngIf="method.method_id === 'IUD_total'">
                   {{
                     stats?.IUD[0].new_acceptor_previous_month_10_to_14 +
@@ -358,7 +358,7 @@
                 </span>
               </td>
 <!--              Other Acceptors (Present Month Total)-->
-              <td class="border-black border-r border-l border-b border text-blue-500 text-center">
+              <td class="border-black border-r border-l border-b border font-bold text-gray-800 text-center">
                 <span *ngIf="method.method_id === 'IUD_total'">
                   {{
                     stats?.IUD[0].other_acceptor_present_month_10_to_14 +
@@ -435,7 +435,7 @@
                 </span>
               </td>
               <!--              Dropout (Present Month Total)-->
-              <td class="border-black border-r border-l border-b border text-blue-500 text-center">
+              <td class="border-black border-r border-l border-b border font-bold text-gray-800 text-center">
                 <span *ngIf="method.method_id === 'IUD_total'">
                   {{
                     stats?.IUD[0].dropout_present_month_10_to_14 +
@@ -635,7 +635,7 @@
                 </span>
               </td>
               <!--              Current User (End of Month Total)-->
-              <td class="border-black border-r border-l border-b text-blue-500 text-center">
+              <td class="border-black border-r border-l border-b font-bold text-gray-800 text-center">
                 <span *ngIf="method.method_id === 'IUD_total'">
                   {{
                     ((
@@ -782,7 +782,7 @@
                 </span>
               </td>
               <!--              New Acceptors (Present Month Total)-->
-              <td class="border-black border-r border-l border-b border text-blue-500 text-center">
+              <td class="border-black border-r border-l border-b font-bold text-gray-800 text-center">
                 <span *ngIf="method.method_id === 'IUD_total'">
                   {{ stats?.IUD[0].new_acceptor_present_month_10_to_14 +  stats?.IUDPP[0].new_acceptor_present_month_15_to_19 + stats?.IUDPP[0].new_acceptor_present_month_20_to_49  ?? 0 }}
                 </span>
@@ -805,35 +805,35 @@
             <tr>
               <td colspan="5" class="px-6 border-black border-r border-l border-b  text-sm"> <span class="font-bold ">m. Total Current Users</span> </td>
               <!--              Current User (Beginning Month)-->
-              <td class="border-black border-r border-l border-b border text-blue-500 text-center" [class]=" total_count.cubm_10_14 !== 0 ? 'cursor-pointer' : 'pointer-events-none'">{{total_count.cubm_10_14}}</td>
-              <td class="border-black border-r border-l border-b border text-blue-500 text-center" [class]=" total_count.cubm_15_19 !== 0 ? 'cursor-pointer' : 'pointer-events-none'">{{total_count.cubm_15_19}}</td>
-              <td class="border-black border-r border-l border-b border text-blue-500 text-center" [class]=" total_count.cubm_20_49 !== 0 ? 'cursor-pointer' : 'pointer-events-none'">{{total_count.cubm_20_49}}</td>
-              <td class="border-black border-r border-l border-b border text-blue-500 text-center">{{ total_count.cubm_10_14+total_count.cubm_15_19+total_count.cubm_20_49 }}</td>
+              <td class="border-black border-r border-l border-b font-bold text-gray-800 text-center" [class]=" total_count.cubm_10_14 !== 0 ? 'cursor-pointer' : 'pointer-events-none'">{{total_count.cubm_10_14}}</td>
+              <td class="border-black border-r border-l border-b font-bold text-gray-800 text-center" [class]=" total_count.cubm_15_19 !== 0 ? 'cursor-pointer' : 'pointer-events-none'">{{total_count.cubm_15_19}}</td>
+              <td class="border-black border-r border-l border-b font-bold text-gray-800 text-center" [class]=" total_count.cubm_20_49 !== 0 ? 'cursor-pointer' : 'pointer-events-none'">{{total_count.cubm_20_49}}</td>
+              <td class="border-black border-r border-l border-b font-bold text-gray-800 text-center">{{ total_count.cubm_10_14+total_count.cubm_15_19+total_count.cubm_20_49 }}</td>
               <!--              New Acceptor (Previous Month)-->
-              <td class="border-black border-r border-l border-b border text-blue-500 text-center" [class]=" total_count.napr_10_14 !== 0 ? 'cursor-pointer' : 'pointer-events-none'">{{total_count.napr_10_14}}</td>
-              <td class="border-black border-r border-l border-b border text-blue-500 text-center" [class]=" total_count.napr_15_19 ?? 0 ? 'cursor-pointer' : 'pointer-events-none'">{{total_count.napr_15_19}}</td>
-              <td class="border-black border-r border-l border-b border text-blue-500 text-center" [class]=" total_count.napr_20_49 ?? 0 ? 'cursor-pointer' : 'pointer-events-none'">{{total_count.napr_20_49}}</td>
-              <td class="border-black border-r border-l border-b border text-blue-500 text-center">{{ total_count.napr_10_14+total_count.napr_15_19+total_count.napr_20_49 }}</td>
+              <td class="border-black border-r border-l border-b font-bold text-gray-800 text-center" [class]=" total_count.napr_10_14 !== 0 ? 'cursor-pointer' : 'pointer-events-none'">{{total_count.napr_10_14}}</td>
+              <td class="border-black border-r border-l border-b font-bold text-gray-800 text-center" [class]=" total_count.napr_15_19 ?? 0 ? 'cursor-pointer' : 'pointer-events-none'">{{total_count.napr_15_19}}</td>
+              <td class="border-black border-r border-l border-b font-bold text-gray-800 text-center" [class]=" total_count.napr_20_49 ?? 0 ? 'cursor-pointer' : 'pointer-events-none'">{{total_count.napr_20_49}}</td>
+              <td class="border-black border-r border-l border-b font-bold text-gray-800 text-center">{{ total_count.napr_10_14+total_count.napr_15_19+total_count.napr_20_49 }}</td>
               <!--              Other Acceptor (Present Month)-->
-              <td class="border-black border-r border-l border-b border text-blue-500 text-center" [class]=" total_count.oapm_10_14 !== 0 ? 'cursor-pointer' : 'pointer-events-none'">{{total_count.oapm_10_14}}</td>
-              <td class="border-black border-r border-l border-b border text-blue-500 text-center" [class]=" total_count.oapm_15_19 ?? 0 ? 'cursor-pointer' : 'pointer-events-none'">{{total_count.oapm_15_19}}</td>
-              <td class="border-black border-r border-l border-b border text-blue-500 text-center" [class]=" total_count.oapm_20_49 ?? 0 ? 'cursor-pointer' : 'pointer-events-none'">{{total_count.oapm_20_49}}</td>
-              <td class="border-black border-r border-l border-b border text-blue-500 text-center">{{ total_count.oapm_10_14+total_count.oapm_15_19+total_count.oapm_20_49 }}</td>
+              <td class="border-black border-r border-l border-b font-bold text-gray-800 text-center" [class]=" total_count.oapm_10_14 !== 0 ? 'cursor-pointer' : 'pointer-events-none'">{{total_count.oapm_10_14}}</td>
+              <td class="border-black border-r border-l border-b font-bold text-gray-800 text-center" [class]=" total_count.oapm_15_19 ?? 0 ? 'cursor-pointer' : 'pointer-events-none'">{{total_count.oapm_15_19}}</td>
+              <td class="border-black border-r border-l border-b font-bold text-gray-800 text-center" [class]=" total_count.oapm_20_49 ?? 0 ? 'cursor-pointer' : 'pointer-events-none'">{{total_count.oapm_20_49}}</td>
+              <td class="border-black border-r border-l border-b font-bold text-gray-800 text-center">{{ total_count.oapm_10_14+total_count.oapm_15_19+total_count.oapm_20_49 }}</td>
               <!--              Dropout (Present Month)-->
-              <td class="border-black border-r border-l border-b border text-blue-500 text-center" [class]=" total_count.dopm_10_14 !== 0 ? 'cursor-pointer' : 'pointer-events-none'">{{total_count.dopm_10_14}}</td>
-              <td class="border-black border-r border-l border-b border text-blue-500 text-center" [class]=" total_count.dopm_15_19 ?? 0 ? 'cursor-pointer' : 'pointer-events-none'">{{total_count.dopm_15_19}}</td>
-              <td class="border-black border-r border-l border-b border text-blue-500 text-center" [class]=" total_count.dopm_20_49 ?? 0 ? 'cursor-pointer' : 'pointer-events-none'">{{total_count.dopm_20_49}}</td>
-              <td class="border-black border-r border-l border-b border text-blue-500 text-center">{{ total_count.dopm_10_14+total_count.dopm_15_19+total_count.dopm_20_49 }}</td>
+              <td class="border-black border-r border-l border-b font-bold text-gray-800 text-center" [class]=" total_count.dopm_10_14 !== 0 ? 'cursor-pointer' : 'pointer-events-none'">{{total_count.dopm_10_14}}</td>
+              <td class="border-black border-r border-l border-b font-bold text-gray-800 text-center" [class]=" total_count.dopm_15_19 ?? 0 ? 'cursor-pointer' : 'pointer-events-none'">{{total_count.dopm_15_19}}</td>
+              <td class="border-black border-r border-l border-b font-bold text-gray-800 text-center" [class]=" total_count.dopm_20_49 ?? 0 ? 'cursor-pointer' : 'pointer-events-none'">{{total_count.dopm_20_49}}</td>
+              <td class="border-black border-r border-l border-b font-bold text-gray-800 text-center">{{ total_count.dopm_10_14+total_count.dopm_15_19+total_count.dopm_20_49 }}</td>
               <!--              Current User (End of Month) DI PA OKAY TO-->
-              <td class="border-black border-r border-l border-b border text-blue-500 text-center" [class]=" total_count.cuem_10_14 !== 0 ? 'cursor-pointer' : 'pointer-events-none'">{{ total_count.cuem_10_14}}</td>
-              <td class="border-black border-r border-l border-b border text-blue-500 text-center" [class]=" total_count.cuem_15_19 !== 0 ? 'cursor-pointer' : 'pointer-events-none'">{{ total_count.cuem_15_19}}</td>
-              <td class="border-black border-r border-l border-b border text-blue-500 text-center" [class]=" total_count.cuem_20_49 !== 0 ? 'cursor-pointer' : 'pointer-events-none'">{{ total_count.cuem_20_49}}</td>
-              <td class="border-black border-r border-l border-b border text-blue-500 text-center">{{ total_count.cuem_10_14+total_count.cuem_15_19+total_count.cuem_20_49 }}</td>
+              <td class="border-black border-r border-l border-b font-bold text-gray-800 text-center" [class]=" total_count.cuem_10_14 !== 0 ? 'cursor-pointer' : 'pointer-events-none'">{{ total_count.cuem_10_14}}</td>
+              <td class="border-black border-r border-l border-b font-bold text-gray-800 text-center" [class]=" total_count.cuem_15_19 !== 0 ? 'cursor-pointer' : 'pointer-events-none'">{{ total_count.cuem_15_19}}</td>
+              <td class="border-black border-r border-l border-b font-bold text-gray-800 text-center" [class]=" total_count.cuem_20_49 !== 0 ? 'cursor-pointer' : 'pointer-events-none'">{{ total_count.cuem_20_49}}</td>
+              <td class="border-black border-r border-l border-b font-bold text-gray-800 text-center">{{ total_count.cuem_10_14+total_count.cuem_15_19+total_count.cuem_20_49 }}</td>
               <!--              New Acceptor (Present Month)-->
-              <td class="border-black border-r border-l border-b border text-blue-500 text-center" [class]=" total_count.napm_10_14 !== 0 ? 'cursor-pointer' : 'pointer-events-none'">{{total_count.napm_10_14}}</td>
-              <td class="border-black border-r border-l border-b border text-blue-500 text-center" [class]=" total_count.napm_15_19 ?? 0 ? 'cursor-pointer' : 'pointer-events-none'">{{total_count.napm_15_19}}</td>
-              <td class="border-black border-r border-l border-b border text-blue-500 text-center" [class]=" total_count.napm_20_49 ?? 0 ? 'cursor-pointer' : 'pointer-events-none'">{{total_count.napm_20_49}}</td>
-              <td class="border-black border-r border-l border-b border text-blue-500 text-center">{{ total_count.napm_10_14+total_count.napm_15_19+total_count.napm_20_49 }}</td>
+              <td class="border-black border-r border-l border-b font-bold text-gray-800 text-center" [class]=" total_count.napm_10_14 !== 0 ? 'cursor-pointer' : 'pointer-events-none'">{{total_count.napm_10_14}}</td>
+              <td class="border-black border-r border-l border-b font-bold text-gray-800 text-center" [class]=" total_count.napm_15_19 ?? 0 ? 'cursor-pointer' : 'pointer-events-none'">{{total_count.napm_15_19}}</td>
+              <td class="border-black border-r border-l border-b font-bold text-gray-800 text-center" [class]=" total_count.napm_20_49 ?? 0 ? 'cursor-pointer' : 'pointer-events-none'">{{total_count.napm_20_49}}</td>
+              <td class="border-black border-r border-l border-b font-bold text-gray-800 text-center">{{ total_count.napm_10_14+total_count.napm_15_19+total_count.napm_20_49 }}</td>
             </tr>
             </tbody>
           </table>
