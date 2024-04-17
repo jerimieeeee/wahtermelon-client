@@ -34,7 +34,7 @@ export class ValidatedListComponent {
       revalidate: 1,
       transmittal_number: [kon.transmittal_number],
       save: 1,
-      effectivity_year: transmittal_number.substr(10, 4)
+      effectivity_year: kon.effectivity_year
     }
 
     this.http.get('konsulta/validate-report', {params}).subscribe({

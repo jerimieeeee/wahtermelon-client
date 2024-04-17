@@ -93,13 +93,15 @@ export class KonsultaComponent implements OnInit {
     query.subscribe({
       next: (data: any) => {
         this.konsulta_list = data.data;
-        console.log(this.konsulta_list);
+        console.log(data);
         if(this.form_type === "1") {
           this.forms['for_validation'] = true;
         } else {
           this.forms['validated_list'] = true;
 
           if(export_list) {
+            this.excel_exporting = true;
+            console.log('test')
             setTimeout(() => {
               this.exportAsService.save(this.exportAsExcel, 'Submitted').subscribe(() => {
                 this.excel_exporting = false;
