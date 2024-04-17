@@ -323,7 +323,7 @@
                 </span>
 
                 <span *ngIf="sub_total_arr.indexOf(method.method_id) < 0" (click)="showNameList('other_acceptor_present_month', method.method_id, 10, 14)">
-                  {{ countTotalSummary('oapr_10_14', stats?.[method.method_id][0].other_acceptor_present_month_10_to_14) }}
+                  {{ countTotalSummary('oapm_10_14', stats?.[method.method_id][0].other_acceptor_present_month_10_to_14) }}
                   {{ stats?.[method.method_id][0].other_acceptor_present_month_10_to_14 ?? 0 }}
                 </span>
               </td>
@@ -338,7 +338,7 @@
                 </span>
 
                 <span *ngIf="sub_total_arr.indexOf(method.method_id) < 0" (click)="showNameList('other_acceptor_present_month', method.method_id, 15, 19)">
-                  {{ countTotalSummary('oapr_15_19', stats?.[method.method_id][0].other_acceptor_present_month_15_to_19) }}
+                  {{ countTotalSummary('oapm_15_19', stats?.[method.method_id][0].other_acceptor_present_month_15_to_19) }}
                   {{ stats?.[method.method_id][0].other_acceptor_present_month_15_to_19 ?? 0 }}
                 </span>
               </td>
@@ -353,7 +353,7 @@
                 </span>
 
                 <span *ngIf="sub_total_arr.indexOf(method.method_id) < 0" (click)="showNameList('other_acceptor_present_month', method.method_id, 20, 49)">
-                  {{ countTotalSummary('oapr_20_49', stats?.[method.method_id][0].other_acceptor_present_month_20_to_49) }}
+                  {{ countTotalSummary('oapm_20_49', stats?.[method.method_id][0].other_acceptor_present_month_20_to_49) }}
                   {{ stats?.[method.method_id][0].other_acceptor_present_month_20_to_49 ?? 0 }}
                 </span>
               </td>
@@ -505,7 +505,21 @@
                 </span>
 
                 <span *ngIf="sub_total_arr.indexOf(method.method_id) < 0">
-                  {{ stats?.[method.method_id][0].current_user_beginning_month_10_to_14 +  stats?.[method.method_id][0].new_acceptor_previous_month_10_to_14 + stats?.[method.method_id][0].other_acceptor_present_month_10_to_14 - stats?.[method.method_id][0].dropout_present_month_10_to_14 ?? 0 }}
+                  {{
+                    countTotalSummary('cuem_10_14',
+                    stats?.[method.method_id][0].current_user_beginning_month_10_to_14 +
+                    stats?.[method.method_id][0].new_acceptor_previous_month_10_to_14 +
+                    stats?.[method.method_id][0].other_acceptor_present_month_10_to_14 -
+                    stats?.[method.method_id][0].dropout_present_month_10_to_14
+                  )
+                  }}
+
+                  {{
+                    stats?.[method.method_id][0].current_user_beginning_month_10_to_14 +
+                    stats?.[method.method_id][0].new_acceptor_previous_month_10_to_14 +
+                    stats?.[method.method_id][0].other_acceptor_present_month_10_to_14 -
+                    stats?.[method.method_id][0].dropout_present_month_10_to_14 ?? 0
+                  }}
                 </span>
               </td>
               <!--              Current User (End of Month 15 to 19)-->
@@ -547,6 +561,15 @@
                 </span>
 
                 <span *ngIf="sub_total_arr.indexOf(method.method_id) < 0">
+                  {{
+                    countTotalSummary('cuem_15_19',
+                      stats?.[method.method_id][0].current_user_beginning_month_15_to_19 +
+                      stats?.[method.method_id][0].new_acceptor_previous_month_15_to_19 +
+                      stats?.[method.method_id][0].other_acceptor_present_month_15_to_19 -
+                      stats?.[method.method_id][0].dropout_present_month_15_to_19
+                    )
+                  }}
+
                   {{
                     stats?.[method.method_id][0].current_user_beginning_month_15_to_19 +
                     stats?.[method.method_id][0].new_acceptor_previous_month_15_to_19 +
@@ -594,6 +617,15 @@
                 </span>
 
                 <span *ngIf="sub_total_arr.indexOf(method.method_id) < 0">
+                  {{
+                    countTotalSummary('cuem_20_49',
+                    stats?.[method.method_id][0].current_user_beginning_month_20_to_49 +
+                    stats?.[method.method_id][0].new_acceptor_previous_month_20_to_49 +
+                    stats?.[method.method_id][0].other_acceptor_present_month_20_to_49 -
+                    stats?.[method.method_id][0].dropout_present_month_20_to_49
+                    )
+                  }}
+
                   {{
                     stats?.[method.method_id][0].current_user_beginning_month_20_to_49 +
                     stats?.[method.method_id][0].new_acceptor_previous_month_20_to_49 +
