@@ -31,7 +31,6 @@
         {{ kon.konsulta_registration[0].last_name }}, {{ kon.konsulta_registration[0].first_name }} {{ kon.konsulta_registration[0].middle_name === 'NA' ? '' : kon.konsulta_registration[0].middle_name }} {{ kon.konsulta_registration[0].suffix_name === 'NA' ? '' : kon.konsulta_registration[0].suffix_name}}
       </td>
       <td class="py-4 px-3 text-center">
-        <!-- {{ account.email }}  -->
         <button [disabled]="validating" class="text-sm text-white bg-blue-500 py-1 w-28 rounded-md px-3 mr-2 disabled:bg-gray-300" (click)="validate(kon, 0)">
           <fa-icon [icon]="validating ? faSpinner : faCircleCheck" [spin]="validating" class="mr-2"></fa-icon>
           {{ validating ? 'Loading' : 'Validate' }}

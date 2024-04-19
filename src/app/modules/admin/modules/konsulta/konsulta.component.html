@@ -6,14 +6,14 @@
 
       <div class="w-full justify-end flex">
         <input type="text" [(ngModel)]="search" class="input rounded-r-none w-44" (keyup.enter)="loadList()" placeholder="Search name"/>
-        <select [(ngModel)]="form_type" class="input w-44 rounded-none">
+        <select [(ngModel)]="form_type" class="input w-36 rounded-none">
           <option value="1">For Validation</option>
           <option value="2">Validated List</option>
         </select>
 
-        <select [(ngModel)]="filter_tranche" class="input w-32 rounded-none">
-          <option [value]="1">1st Tranche</option>
-          <option [value]="2">2nd Tranche</option>
+        <select [(ngModel)]="filter_tranche" class="input w-28 rounded-none">
+          <option [value]="1">Tranche 1</option>
+          <option [value]="2">Tranche 2</option>
         </select>
 
         <select *ngIf="form_type==='2'" [(ngModel)]="filter_status" class="input w-28 rounded-none">
@@ -22,7 +22,7 @@
           <option value="F">Failed</option>
         </select>
 
-        <select *ngIf="form_type==='1'" [(ngModel)]="filter_year" class="input w-28 rounded-none">
+        <select [(ngModel)]="filter_year" class="input w-24 rounded-none">
           <option [value]="year" *ngFor="let year of years" >{{year}}</option>
         </select>
 
@@ -35,8 +35,8 @@
           <fa-icon class="" [icon]="searching ? faCircleNotch : faFilter" [spin]="searching"></fa-icon>
         </button>
 
-        <button *ngIf="form_type==='2' && filter_status==='S' && forms['validated_list']" (click)="loadList(null, true)" class="bg-green-500 text-white text-xl px-2 mt-1 rounded-md ml-2">
-          <fa-icon [icon]="faFileExcel"></fa-icon>
+        <button *ngIf="form_type==='2' && filter_status==='S' && forms['validated_list']" (click)="createExportList()" class="bg-green-500 text-white text-xl px-2 mt-1 rounded-md ml-2">
+          <fa-icon [icon]="excel_exporting ? faCircleNotch : faFileExcel" [spin]="excel_exporting"></fa-icon>
         </button>
       </div>
     </div>
@@ -128,21 +128,45 @@
 <app-result-form *ngIf="show_return" (showReturn)="showReturn()" (toggleModal)="toggleModal()" [return_value]="return_value"></app-result-form>
 <app-patient-list *ngIf="show_list" (toggleList)="toggleList()" [patient_list]="patient_list"></app-patient-list>
 
-<table id="submitted" hidden>
+<table id="submitted" *ngIf="form_type==='2' && filter_status==='S' && forms['validated_list']" hidden>
   <thead>
     <tr>
+      <th>Patient Name</th>
+      <th>Philhealth No.</th>
+      <th>Enlistment Date</th>
+      <th *ngIf="filter_tranche===2">Consult Date</th>
       <th>Transmittal Number</th>
       <th>Konsulta Transaction Number</th>
-      <th>Patient Name</th>
+      <th>Konsulta Assign Date</th>
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let kon of konsulta_list">
+    <tr *ngFor="let kon of konsulta_list_export">
+      <td>
+        <span *ngFor="let patient of kon.patient">
+          {{ patient.last_name }}, {{ patient.first_name }} {{ patient.middle_name }} {{ patient.suffix_name === 'NA' ? '' : patient.suffix_name }} <br />
+        </span>
+      </td>
+      <td>
+        <span *ngFor="let patient of kon.patient">
+          <span *ngIf="patient.philhealth">{{ patient.philhealth[0].philhealth_id }}</span>
+        </span>
+      </td>
+      <td>
+        <span *ngFor="let patient of kon.patient">
+          <span *ngIf="patient.philhealth">{{ patient.philhealth[0].enlistment_date }}</span>
+        </span>
+      </td>
+      <td *ngIf="filter_tranche===2">
+        <span *ngFor="let patient of kon.patient">
+          <span *ngIf="patient.consult">{{ patient.consult[0].consult_date }}</span>
+        </span>
+      </td>
       <td>{{ kon.transmittal_number }}</td>
       <td>{{ kon.konsulta_transaction_number }}</td>
       <td>
         <span *ngFor="let patient of kon.patient">
-          {{ patient.last_name }}, {{ patient.first_name }} {{ patient.middle_name }} {{ patient.suffix_name === 'NA' ? '' : patient.suffix_name }} <br />
+          <span *ngIf="patient.philhealth">{{ patient.philhealth[0].konsulta_registration[0].assigned_date }}</span>
         </span>
       </td>
     </tr>
