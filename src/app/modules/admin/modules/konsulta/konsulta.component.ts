@@ -1,9 +1,11 @@
 import { formatDate } from '@angular/common';
 import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { faFileExcel } from '@fortawesome/free-regular-svg-icons';
 import { faAnglesLeft, faAnglesRight, faChevronLeft, faChevronRight, faCircleNotch, faFilter, faSave, faSearch, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
+import { ExportAsConfig, ExportAsService } from 'ngx-export-as';
 
 @Component({
   selector: 'app-konsulta',
@@ -20,6 +22,7 @@ export class KonsultaComponent implements OnInit {
   faFilter = faFilter;
   faSave = faSave;
   faCircleNotch = faCircleNotch;
+  faFileExcel = faFileExcel;
 
   current_year = formatDate(new Date, 'yyyy', 'en', 'Asia/Manila')
   years: any = [];
@@ -39,6 +42,7 @@ export class KonsultaComponent implements OnInit {
   submit_error: any;
 
   konsulta_list: any = [];
+  konsulta_list_export: any = [];
   save_list: any = [];
   save_list_length: number = 0;
 
@@ -54,7 +58,15 @@ export class KonsultaComponent implements OnInit {
   start_date: any;
   end_date: any;
 
-  loadList(page?: number){
+  exportAsExcel: ExportAsConfig = {
+    type: 'xlsx',
+    elementIdOrContent: 'submitted',
+    options: { }
+  }
+
+  excel_exporting: boolean = false;
+
+  loadList(page?: number, export_list?){
     this.forms = [];
     this.searching = true;
 
@@ -62,7 +74,7 @@ export class KonsultaComponent implements OnInit {
 
     let params = {params: { }};
     if (page) params['params']['page'] = page;
-    params['params']['per_page'] = this.per_page;
+    params['params']['per_page'] = export_list ? 'all' : this.per_page;
     params['params']['search'] = this.search ?? '';
 
     if(this.form_type === "1"){
@@ -74,6 +86,7 @@ export class KonsultaComponent implements OnInit {
       if (this.filter_status) params['params']['filter[xml_status]'] = this.filter_status;
       if(this.start_date) params['params']['start_date'] = this.start_date;
       if(this.end_date) params['params']['end_date'] = this.end_date;
+      params['params']['effectivity_year'] = this.filter_year;
 
       // params['params']['include'] = 'patient'
       query = this.http.get('konsulta/validated-xml',params);
@@ -81,12 +94,26 @@ export class KonsultaComponent implements OnInit {
 
     query.subscribe({
       next: (data: any) => {
-        this.konsulta_list = data.data;
+        if(export_list) {
+          this.konsulta_list_export = data.data;
+        } else {
+          this.konsulta_list = data.data;
+        }
 
         if(this.form_type === "1") {
           this.forms['for_validation'] = true;
         } else {
           this.forms['validated_list'] = true;
+
+          if(export_list) {
+            this.excel_exporting = true;
+            console.log('test')
+            setTimeout(() => {
+              this.exportAsService.save(this.exportAsExcel, 'Submitted').subscribe(() => {
+                this.excel_exporting = false;
+              });
+            })
+          }
         }
         this.searching = false;
         this.current_page = data.meta.current_page;
@@ -95,7 +122,37 @@ export class KonsultaComponent implements OnInit {
         this.to = data.meta.to;
         this.total = data.meta.total;
       },
-      error: err => console.log(err)
+      error: err => {
+        this.toastr.error(err.error.message, 'Konsulta List')
+      }
+    })
+  }
+
+  createExportList(){
+    this.excel_exporting = true;
+    let params = {params: { }};
+    params['params']['per_page'] ='all';
+    params['params']['search'] = this.search ?? '';
+
+    if (this.filter_tranche) params['params']['filter[tranche]'] = this.filter_tranche;
+    if (this.filter_status) params['params']['filter[xml_status]'] = this.filter_status;
+    if(this.start_date) params['params']['start_date'] = this.start_date;
+    if(this.end_date) params['params']['end_date'] = this.end_date;
+    params['params']['effectivity_year'] = this.filter_year;
+
+    this.http.get('konsulta/validated-xml',params).subscribe({
+      next: (data: any) => {
+        this.konsulta_list_export = data.data;
+
+        setTimeout(() => {
+          this.exportAsService.save(this.exportAsExcel, 'Submitted').subscribe(() => {
+            this.excel_exporting = false;
+          });
+        })
+      },
+      error: err => {
+        this.toastr.error(err.error.message, 'Konsulta List')
+      }
     })
   }
 
@@ -167,7 +224,8 @@ export class KonsultaComponent implements OnInit {
 
   constructor(
     private http: HttpService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private exportAsService: ExportAsService
   ) { }
 
   ngOnInit(): void {
