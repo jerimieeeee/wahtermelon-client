@@ -2,6 +2,7 @@ import {Component, Input, OnChanges} from '@angular/core';
 import { faCircleNotch, faFileExcel, faFilePdf } from '@fortawesome/free-solid-svg-icons';
 import {ExportAsConfig, ExportAsService} from "ngx-export-as";
 import * as moment from "moment/moment";
+import {HttpService} from "../../../../shared/services/http.service";
 
 @Component({
   selector: 'app-fhsis2018-fp',
@@ -26,7 +27,7 @@ export class Fhsis2018FpComponent implements OnChanges {
   info3 : any;
   convertedMonth : any;
   brgys_info : any;
-  name_list: any = [];
+  show_nameList: any = [];
 
   exportAsExcel: ExportAsConfig = {
     type: 'xlsx',
@@ -109,7 +110,24 @@ export class Fhsis2018FpComponent implements OnChanges {
     });
   }
 
-  pdf_exported: boolean = false;
+  name_list_params: {};
+
+  showNameList(clientCode: string, methodId: string, minAge: number, maxAge: number) {
+    this.name_list_params = {
+      client_code: clientCode,
+      method: methodId,
+      month: this.reportForm.value.month,
+      year: this.reportform_data.value.year,
+      'age[0]': minAge,
+      'age[1]': maxAge,
+      category: this.reportForm.value.report_class,
+      per_page: 10,
+    };
+    this.openList = true;
+  }
+
+
+    pdf_exported: boolean = false;
   exportP() {
     this.pdf_exported = true;
     this.exportAsService.save(this.exportAsPdf, 'Family Planning M1').subscribe(() => {
@@ -118,24 +136,15 @@ export class Fhsis2018FpComponent implements OnChanges {
   }
 
   constructor(
-    private exportAsService: ExportAsService
+    private exportAsService: ExportAsService,
+    private http: HttpService,
   ) { }
 
   openList:boolean = false;
-  toggleModal(name_list, name_list2?, name_list3?){
+  toggleModal(){
     let list = [];
-    if(name_list2) {
-      list = name_list.concat(name_list2)
-    }
-    else if (name_list3) {
-      list = name_list.concat(name_list3)
-    }
-    else {
-      list = name_list
-    }
 
-    // console.log(typeof name_list)
-    this.name_list = list;
+    this.show_nameList = list;
     this.openList = !this.openList;
   }
 
@@ -159,7 +168,6 @@ export class Fhsis2018FpComponent implements OnChanges {
     this.info3 = this.userInfo;
     this.brgys_info = this.brgys;
     this.pdf_exported = false;
-
     this.convertBrgy();
     this.convertDate();
   }
