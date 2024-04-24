@@ -92,7 +92,7 @@ export class CaserateComponent implements OnInit {
       code: [null, Validators.required],
       description: [null, Validators.required],
       discharge_dx: [null, Validators.required],
-      icd10_code: [null, Validators.required],
+      icd10_code: [null],
       hci_fee: [null, Validators.required],
       prof_fee: [null, Validators.required],
       caserate_fee: [null, Validators.required],
