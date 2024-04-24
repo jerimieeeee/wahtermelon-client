@@ -11,7 +11,7 @@ import { ResultFormComponent } from './modals/result-form/result-form.component'
 import { EkasComponent } from './modals/ekas/ekas.component';
 import { EpresComponent } from './modals/epres/epres.component';
 import { PatientListComponent } from './modals/patient-list/patient-list.component';
-
+import { ExportAsModule } from 'ngx-export-as';
 
 @NgModule({
   declarations: [
@@ -27,7 +27,8 @@ import { PatientListComponent } from './modals/patient-list/patient-list.compone
     CommonModule,
     KonsultaRoutingModule,
     FormsModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    ExportAsModule
   ]
 })
 export class KonsultaModule { }

@@ -128,7 +128,7 @@ export class MyAccountComponent implements OnInit {
 
   loadLibraries(){
     this.libraries.forEach(obj => {
-      this.http.get('libraries/'+obj.location).subscribe({
+      this.http.get('libraries/'+obj.location, {params:{per_page:'all'}}).subscribe({
         next: (data: any) => this[obj.var_name] = data.data,
         error: err => console.log(err)
       })
@@ -153,7 +153,7 @@ export class MyAccountComponent implements OnInit {
 
   loadDemog(loc, code, include){
     if(code !== '0') {
-      this.http.get('libraries/'+loc+'/'+code,{params:{'include':include}}).subscribe({
+      this.http.get('libraries/'+loc+'/'+code,{params:{'include':include, per_page: 'all'}}).subscribe({
         next: (data: any) => {
           this[include] = data.data[include];
           this.disaledSelection(loc, code);

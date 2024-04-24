@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { NavigationStart, Router } from '@angular/router';
 import { faQuestionCircle, faChevronDown, faFolderOpen, faHeart, faFlask, faNotesMedical, faExclamationCircle, faChevronRight, faChevronLeft, faAnglesLeft, faAnglesRight } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { NameHelperService } from 'app/shared/services/name-helper.service';
@@ -60,35 +60,38 @@ export class TodaysConsultComponent implements OnInit, OnDestroy {
     params['params']['todays_patient'] = 1;
 
     this.isLoading = true;
-    // console.log(params, page, this.current_page)
-    this.http.get('consultation/records', params)
-      .pipe(
-        finalize(() => this.isLoading = false)
-      )
-      .subscribe({
-      next: (data: any) => {
-        // console.log(data);
-        this.today_consults = data.data;
-        this.show_form = true;
 
-        this.current_page = data.meta.current_page;
-        this.last_page = data.meta.last_page;
-        this.from = data.meta.from;
-        this.to = data.meta.to;
-        this.total = data.meta.total;
-        // this.subscribeRefresh();
-      },
-      error: err => console.log(err)
-    })
+    return new Promise<void>((resolve, reject) => {
+      this.http.get('consultation/records', params)
+        .pipe(
+          finalize(() => this.isLoading = false)
+        )
+        .subscribe({
+        next: (data: any) => {
+          // console.log(data);
+          this.today_consults = data.data;
+          this.show_form = true;
+
+          this.current_page = data.meta.current_page;
+          this.last_page = data.meta.last_page;
+          this.from = data.meta.from;
+          this.to = data.meta.to;
+          this.total = data.meta.total;
+
+          resolve();
+        },
+        error: err => console.log(err)
+      })
+    });
   }
 
 
   private updateList: Subscription;
   todays_interval: any;
 
-   subscribeRefresh(){
+  subscribeRefresh(){
     this.todays_interval = setInterval(() => {
-      this.onPhysicianChange();
+      this.getTodaysConsult();
     }, 30000);
   }
 
@@ -145,37 +148,21 @@ export class TodaysConsultComponent implements OnInit, OnDestroy {
     private nameHelper: NameHelperService
   ) { }
 
-  onPhysicianChange(): void {
-    // Clear the previous debounce timer if it exists
-    if (this.debounceTimer) {
-      clearTimeout(this.debounceTimer);
-    }
-
-    // Set a new debounce timer
-    this.debounceTimer = setTimeout(() => {
-      this.getTodaysConsult();
-    }, this.debounceDelay);
-  }
-
   ngOnInit(): void {
     this.loadPhysicians().then(() => {
-      this.onPhysicianChange();
-      this.subscribeRefresh();
+      this.getTodaysConsult().then(() => {
+        setTimeout(() => {
+          this.subscribeRefresh();
+        }, 30000)
+      });
     }).catch(error => {
       console.error('Error loading physicians:', error);
     });
   }
 
   ngOnDestroy(): void {
-    // console.log(this.todays_interval);
-    if(this.todays_interval) {
-      clearInterval(this.todays_interval)
-    }
-    if (this.debounceTimer) {
-      clearTimeout(this.debounceTimer);
-    }
+    clearInterval(this.todays_interval)
 
-    // this.updateList.unsubscribe();
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
   }
