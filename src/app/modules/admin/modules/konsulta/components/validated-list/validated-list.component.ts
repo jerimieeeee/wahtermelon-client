@@ -24,6 +24,8 @@ export class ValidatedListComponent {
   submitting: boolean = false;
 
   validate(kon){
+    let transmittal_number = kon.transmittal_number;
+
     this.submitting = true;
     this.validating = true;
 
@@ -32,10 +34,8 @@ export class ValidatedListComponent {
       revalidate: 1,
       transmittal_number: [kon.transmittal_number],
       save: 1,
-      effectivity_year: this.filter_year
+      effectivity_year: kon.effectivity_year
     }
-
-    // if(kon.xml_status === 'F') params['revalidate'] = true;
 
     this.http.get('konsulta/validate-report', {params}).subscribe({
       next: (data: any) => {

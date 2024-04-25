@@ -134,7 +134,7 @@ export class MaternalcareComponent implements OnInit {
 
   loadLibraries() {
     this.libraries.forEach(obj => {
-      this.http.get('libraries/' + obj.location).subscribe({
+      this.http.get('libraries/' + obj.location, {params:{per_page: 'all'}}).subscribe({
         next: (data: any) => {
           this[obj.var_name] = data.data;
 
