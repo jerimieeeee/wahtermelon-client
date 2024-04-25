@@ -149,24 +149,24 @@
       </td>
       <td>
         <span *ngFor="let patient of kon.patient">
-          <span *ngIf="patient.philhealth">{{ patient.philhealth[0].philhealth_id }}</span>
+          <span *ngIf="patient.philhealth">{{ patient.philhealth[0]?.philhealth_id }}</span>
         </span>
       </td>
       <td>
         <span *ngFor="let patient of kon.patient">
-          <span *ngIf="patient.philhealth">{{ patient.philhealth[0].enlistment_date }}</span>
+          <span *ngIf="patient.philhealth && patient.philhealth[0]?.enlistment_date">{{ patient.philhealth[0]?.enlistment_date }}</span>
         </span>
       </td>
       <td *ngIf="filter_tranche===2">
         <span *ngFor="let patient of kon.patient">
-          <span *ngIf="patient.consult">{{ patient.consult[0].consult_date }}</span>
+          <span *ngIf="patient.consult">{{ patient.consult[0]?.consult_date }}</span>
         </span>
       </td>
       <td>{{ kon.transmittal_number }}</td>
       <td>{{ kon.konsulta_transaction_number }}</td>
       <td>
         <span *ngFor="let patient of kon.patient">
-          <span *ngIf="patient.philhealth">{{ patient.philhealth[0].konsulta_registration[0].assigned_date }}</span>
+          <span *ngIf="patient.philhealth && patient.philhealth[0]?.konsulta_registration">{{ patient.philhealth[0].konsulta_registration[0]?.assigned_date }}</span>
         </span>
       </td>
     </tr>
