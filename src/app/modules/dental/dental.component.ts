@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { faCircleNotch, faDoorClosed } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
-import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-dental',
@@ -10,9 +9,9 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./dental.component.scss']
 })
 export class DentalComponent implements OnInit {
-  selected_dental_consult: any;
   consult_details: any;
   user_facility: any;
+  selected_visit: any = null;
 
   pages: number = 1;
   module: number = 1;
@@ -27,12 +26,11 @@ export class DentalComponent implements OnInit {
   have_complaint: boolean = false;
 
   toggle_content: boolean = true;
-  loadConsult(){
-    // console.log('consult loaded')
-    this.consult_id = this.route.snapshot.paramMap.get('consult_id');
-    // this.consult_details = null;
+
+  loadSelectedConsult() {
+    console.log('loading selected consult')
     let params = {
-      id: this.consult_id,
+      id: this.selected_visit.id,
       pt_group: 'dn',
       disable_filter: 1
     }
@@ -40,8 +38,28 @@ export class DentalComponent implements OnInit {
     this.http.get('consultation/records', {params}).subscribe({
       next: (data: any) => {
         console.log(data)
-        this.consult_details = data.data[0];
-        this.allowed_to_edit = this.http.getUserFacility() === this.consult_details.facility.code ? true : false;
+        this.consult_details[this.item_index] = data.data[0];
+      },
+      error: err => { this.http.showError(err.error.message, 'Dental Consult') }
+    });
+  }
+
+  loadConsult(){
+    let patient_id = this.route.snapshot.paramMap.get('id');
+
+    let params = {
+      pt_group: 'dn',
+      disable_filter: 1,
+      patient_id: patient_id
+    }
+
+    this.http.get('consultation/records', {params}).subscribe({
+      next: (data: any) => {
+        console.log(data)
+        this.consult_details = data.data;
+
+
+        // this.allowed_to_edit = this.http.getUserFacility() === this.consult_details.facility.code ? true : false;
         // console.log(this.consult_details.facility.code)
         /* if(this.consult_details.consult_notes.complaint || this.consult_details.consult_notes.complaints.length > 0  || this.consult_details.consult_notes.history) {
           this.have_complaint = true;
@@ -53,34 +71,24 @@ export class DentalComponent implements OnInit {
           }
         } */
       },
-      error: err => console.log(err)
+      error: err => { this.http.showError(err.error.message, 'Dental Consult') }
     });
   }
 
-  referTo(){
-    if(this.enable_edit) {
-      this.enable_edit = false;
-    } else {
-      let params = {
-        patient_id: this.consult_details.patient.id,
-        consult_date: this.consult_details.consult_date,
-        pt_group: 'cn',
-        consult_done: false,
-        physician_id: this.referred_to.id
-      }
-
-      this.http.update('consultation/records/', this.consult_details.id, params).subscribe({
-        next: (data: any) => {
-          this.toastr.success('Patient was referred','Referral');
-          this.consult_details['physician'] = this.referred_to;
-        },
-        error: err => console.log(err)
-      })
-    }
+  modals: any = [];
+  toggleModal(name) {
+    this.modals[name] = !this.modals[name];
   }
 
-  switchPage(page){
+  item_index: number = null;
+  switchPage(page, data?, item_index?){
+    if(page === 2) {
+      console.log(item_index)
+      this.item_index = item_index;
+      this.router.navigate(['/patient/dn', {id: data.patient.id, consult_id: data.id}]);
+    }
     this.pages = page;
+    this.selected_visit = data ? data : null;
   }
 
   switchTab(tab){
@@ -89,12 +97,13 @@ export class DentalComponent implements OnInit {
 
   constructor(
     private http: HttpService,
-    private toastr: ToastrService,
-    private route: ActivatedRoute,
+    private router: Router,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
     this.module = 1;
     this.loadConsult();
+    this.user_facility = this.http.getUserFacility();
   }
 }

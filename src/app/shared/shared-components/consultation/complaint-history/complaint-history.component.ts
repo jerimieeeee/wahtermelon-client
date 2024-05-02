@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
@@ -7,15 +7,16 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faChevronCircleDown, faChevronCircleUp, faCircleNotch, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { Observable } from 'rxjs';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-complaint-history',
   standalone: true,
-  imports: [CommonModule, FontAwesomeModule, NgSelectModule],
+  imports: [CommonModule, FontAwesomeModule, NgSelectModule, FormsModule],
   templateUrl: './complaint-history.component.html',
   styleUrls: ['./complaint-history.component.scss']
 })
-export class ComplaintHistoryComponent implements OnInit {
+export class ComplaintHistoryComponent implements OnInit, OnChanges {
   @Output() loadConsult = new EventEmitter<any>();
   @Input() toggle_content;
   @Input() consult_details;
@@ -45,53 +46,37 @@ export class ComplaintHistoryComponent implements OnInit {
   onSubmit(){
     this.is_saving = true;
 
-    if(this.selectedComplaint && Object.keys(this.selectedComplaint).length > 0){
-      let complaint = {
-        notes_id: this.consult_details.consult_notes.id,
-        consult_id: this.consult_details.id,
-        patient_id: this.consult_details.patient.id,
-        complaints: this.selectedComplaint
-      }
-
-      this.http.post('consultation/complaint', complaint).subscribe({
-        next: (data: any) => {
-          this.saveNotes()
-        },
-        error: err => console.log(err)
-      })
-    } else {
-      this.saveNotes();
+    let complaint = {
+      notes_id: this.consult_details.consult_notes.id,
+      consult_id: this.consult_details.id,
+      patient_id: this.consult_details.patient.id,
+      complaints: this.selectedComplaint
     }
+
+    this.http.post('consultation/complaint', complaint).subscribe({
+      next: (data: any) => {
+        this.saveNotes()
+      },
+      error: err => { this.http.showError(err.error.message, 'Complaint History')}
+    })
   }
 
   saveNotes(){
-    if(this.consult_notes.complaint || this.consult_notes.history){
-      let notes_remarks = {
-        consult_id: this.consult_details.id,
-        patient_id: this.consult_details.patient.id,
-        complaint: this.consult_notes.complaint,
-        history: this.consult_notes.history
-      }
-
-      this.http.update('consultation/notes/', this.consult_details.consult_notes.id, notes_remarks).subscribe({
-        next: (data: any) => {
-          this.is_saving = false;
-          this.showToastr();
-          this.loadConsult.emit();
-        },
-        error: err => console.log(err)
-      })
-    } else {
-      this.is_saving = false;
-      this.showToastr();
-      this.loadConsult.emit();
+    let notes_remarks = {
+      consult_id: this.consult_details.id,
+      patient_id: this.consult_details.patient.id,
+      complaint: this.consult_notes.complaint,
+      history: this.consult_notes.history
     }
-  }
 
-  possible_gbv_case: boolean = false;
-
-  checkGbvCoplaint(){
-
+    this.http.update('consultation/notes/', this.consult_details.consult_notes.id, notes_remarks).subscribe({
+      next: () => {
+        this.is_saving = false;
+        this.showToastr();
+        this.loadConsult.emit();
+      },
+      error: err => { this.http.showError(err.error.message, 'Complaint History')}
+    })
   }
 
   showToastr(){
@@ -116,7 +101,6 @@ export class ComplaintHistoryComponent implements OnInit {
   loadSelected(){
     this.gbv_complaints = [];
     this.show_gbv_form = false;
-    this.possible_gbv_case = false;
     this.have_open_gbv = false;
     let selected_complaints = [];
     console.log(this.consult_details);
@@ -124,15 +108,6 @@ export class ComplaintHistoryComponent implements OnInit {
       Object.entries(this.consult_details.consult_notes.complaints).forEach(([key, value], index) => {
         let val: any = value;
         selected_complaints.push(val.complaint_id);
-
-        if(val.lib_complaints.gbv_library_status === 1) {
-          this.possible_gbv_case = true;
-          this.gbv_complaints.push(val.complaint_id);
-        }
-
-        if((Object.keys(this.consult_details.consult_notes.complaints).length-1 === index) && this.possible_gbv_case){
-          this.getPatientGbv();
-        }
       });
     };
     this.selectedComplaint = selected_complaints;
@@ -149,7 +124,7 @@ export class ComplaintHistoryComponent implements OnInit {
     })
   }
 
-  /* ngOnChanges(changes){
+  ngOnChanges(changes){
     this.show_content = this.toggle_content;
     if(this.consult_details) {
       if(this.complaints) {
@@ -158,7 +133,7 @@ export class ComplaintHistoryComponent implements OnInit {
       this.consult_notes = this.consult_details.consult_notes;
       this.consult_done = this.consult_details.consult_done;
     }
-  } */
+  }
 
   toggleModal(name) {
     this.modals[name] = !this.modals[name];

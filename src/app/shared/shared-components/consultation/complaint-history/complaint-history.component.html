@@ -50,12 +50,12 @@
 
         <div class="grid grid-cols-1 px-4 pb-4">
           <label for="complaint_notes" class="font-semibold pl-1">Complaint notes</label>
-          <textarea [disabled]="consult_done || !allowed_to_edit" rows="3" id="complaint_notes" placeholder="Complaint Notes" [(ngModel)]="consult_notes.complaint" class="placeholder-slate-400 w-full rounded-md border-gray-300 bg-gray-50"></textarea>
+          <textarea rows="3" id="complaint_notes" placeholder="Complaint Notes" [(ngModel)]="consult_notes.complaint" class="placeholder-slate-400 w-full rounded-md border-gray-300 bg-gray-50"></textarea>
         </div>
 
         <div class="grid grid-cols-1 px-4 pb-4">
           <label for="complaint_notes" class="font-semibold pl-1">History notes</label>
-          <textarea [disabled]="consult_done || !allowed_to_edit" rows="3" id="history_notes" placeholder="History of Current Illness" [(ngModel)]="consult_notes.history" class="placeholder-slate-400 w-full rounded-md border-gray-300 bg-gray-50"></textarea>
+          <textarea rows="3" id="history_notes" placeholder="History of Current Illness" [(ngModel)]="consult_notes.history" class="placeholder-slate-400 w-full rounded-md border-gray-300 bg-gray-50"></textarea>
         </div>
 
         <div class="flex text-right">

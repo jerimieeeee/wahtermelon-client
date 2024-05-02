@@ -15,6 +15,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 export class ConsultHistoryComponent implements OnInit {
   @Input() toggle_content;
   @Input() allowed_to_edit;
+  @Input() pt_group;
 
   show_content: boolean = false;
   faChevronCircleUp = faChevronCircleUp;
@@ -40,7 +41,7 @@ export class ConsultHistoryComponent implements OnInit {
       patient_id: this.patient_id,
       per_page: this.per_page,
       sort: '-consult_date',
-      pt_group: 'dn',
+      pt_group: this.pt_group,
       page: page,
       not_consult_id: this.consult_id
     };
@@ -57,10 +58,6 @@ export class ConsultHistoryComponent implements OnInit {
       },
       error: err => console.log(err),
     })
-  }
-
-  ngOnChanges(changes){
-    // this.show_content = this.toggle_content;
   }
 
   constructor(
