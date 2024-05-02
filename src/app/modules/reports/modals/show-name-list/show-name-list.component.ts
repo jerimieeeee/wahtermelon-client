@@ -52,7 +52,6 @@ export class ShowNameListComponent implements OnInit {
     this.http.get('reports-2018/fp-namelist/name-list', { params }).subscribe({
       next: (data: any) => {
         this.is_fetching = false;
-        // console.log('Response data:', data);
         this.show_nameList = data;
         this.current_page = data.current_page;
         this.last_page = data.last_page;
@@ -69,18 +68,7 @@ export class ShowNameListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.current_page = 1;
     this.getList();
-  }
-
-  prevPage() {
-    const currentState = this.paginate.value;
-    if (currentState.page > 1) {
-      this.paginate.next({
-        ...currentState,
-        page: currentState.page - 1
-      });
-    }
   }
 
   protected readonly faCircleXmark = faCircleXmark;
