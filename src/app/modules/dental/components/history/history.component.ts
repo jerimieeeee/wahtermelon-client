@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { faPlus, faSpinner } from '@fortawesome/free-solid-svg-icons';
-import { MedicalHistory, SocialHistory } from './data/lib';
 import { faSave } from '@fortawesome/free-regular-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { forkJoin } from 'rxjs';
+import { FormGroup } from '@angular/forms';
+import { medicalSocialForm } from './medicalSocialForm';
 
 @Component({
   selector: 'app-history',
@@ -11,6 +12,7 @@ import { forkJoin } from 'rxjs';
   styleUrls: ['./history.component.scss']
 })
 export class HistoryComponent implements OnInit {
+  @Input() selected_visit;
   faSpinner = faSpinner;
   faSave = faSave;
   faPlus = faPlus;
@@ -19,13 +21,14 @@ export class HistoryComponent implements OnInit {
   lib_social_history: any;
 
   is_saving: boolean = false;
+  show_form: boolean = false;
+  medicalSocialForm:FormGroup=medicalSocialForm();
 
   onSubmit(){
     this.is_saving = true;
 
-    setTimeout(() => {
-      this.is_saving = false;
-    }, 5000);
+
+    console.log(this.medicalSocialForm.value)
   }
 
   loadLibraries(){
@@ -37,6 +40,7 @@ export class HistoryComponent implements OnInit {
         // this.fp_method_history = dataMethodHistory.data;
         this.lib_medical_history = dataMedicalHistory.data;
         this.lib_social_history = dataSocialHistory.data;
+        this.show_form = true;
       },
       error: err => console.log(err)
     });
@@ -45,7 +49,7 @@ export class HistoryComponent implements OnInit {
   }
 
   patchData(){
-
+    this.medicalSocialForm.patchValue({})
   }
 
   addHospHistory() {

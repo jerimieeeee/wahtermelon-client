@@ -42,7 +42,8 @@ import { ManagementComponent } from 'app/shared/shared-components/consultation/m
     FinalDxComponent,
     GeneralSurveyComponent,
     InitialDxComponent,
-    ManagementComponent
+    ManagementComponent,
+    ReactiveFormsModule
   ]
 })
 export class DentalModule { }
