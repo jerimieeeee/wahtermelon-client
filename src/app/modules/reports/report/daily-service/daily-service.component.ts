@@ -72,28 +72,22 @@ export class DailyServiceComponent implements OnChanges {
     private exportAsService: ExportAsService
   ) { }
 
-  openList:boolean = false;
-  toggleModal(name_list, name_list2?){
-    let list = [];
-    if(name_list2) {
-      list = name_list.concat(name_list2)
-    } else {
-      list = name_list
-    }
-
-    // console.log(typeof name_list)
-    this.name_list = list;
-    this.openList = !this.openList;
-  }
-
   count_male: number = 0;
   count_female: number = 0;
   count_konsulta: number = 0;
   count_consent: number = 0;
   count_philhealth: number = 0;
+  countedConditions: string[] = [];
+  // countTotal(var_name: string) {
+  //   this[var_name] += 1;
+  //   // console.log(this[var_name]);
+  // }
+
   countTotal(var_name: string) {
-    this[var_name] += 1;
-    // console.log(this[var_name]);
+    if (!this.countedConditions.includes(var_name)) {
+      this[var_name] += 1;
+      this.countedConditions.push(var_name);
+    }
   }
   convertDate(){
     this.convertedMonth = moment(this.reportForm.value.month, 'M').format('MMMM');

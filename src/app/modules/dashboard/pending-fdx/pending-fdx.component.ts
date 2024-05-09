@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {
   faAnglesLeft,
   faAnglesRight,
@@ -16,15 +16,18 @@ import {finalize} from "rxjs/operators";
   styleUrls: ['./pending-fdx.component.scss']
 })
 export class PendingFdxComponent implements OnInit {
+  @Input() get_patient_data: any;
   faCircleNotch = faCircleNotch;
   faAnglesLeft = faAnglesLeft;
   faChevronLeft = faChevronLeft;
   faChevronRight = faChevronRight;
   faAnglesRight = faAnglesRight;
 
+  show_patient_data: any = [];
   pending_fdx: any;
   show_form: boolean = false;
   patient_search: string;
+  show_data: any = [];
 
   per_page: number = 5;
   current_page: number = 1;
@@ -38,6 +41,14 @@ export class PendingFdxComponent implements OnInit {
     private http: HttpService
 
   ) { }
+
+  openList:boolean = false;
+  toggleModal(){
+    let list = [];
+    this.show_data = list;
+    this.openList = !this.openList;
+    console.log(this.show_patient_data);
+  }
 
   getPatient(page?: number) {
     this.show_form = false;
@@ -64,6 +75,20 @@ export class PendingFdxComponent implements OnInit {
         },
         error: err => console.log(err)
       })
+  }
+
+  getData(consult_id: any) {
+    this.http.get('reports-2018/pending-fdx/get-consultation/'+consult_id).subscribe({
+      next: (data: any) => {
+        this.show_patient_data = data;
+        this.current_page = data.current_page;
+        this.last_page = data.last_page;
+        this.openList = true;
+
+        console.log(this.show_patient_data);
+      },
+      error: err => console.log(err)
+    });
   }
 
   ngOnInit(): void {

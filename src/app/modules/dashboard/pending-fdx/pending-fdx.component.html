@@ -28,7 +28,14 @@
       <div class="flex w-3/5">
         <div class="flex justify-center text-gray-700 md:block leading-tight align-top my-1 w-full p-1 rounded-md">
           <span class="w-full font-semibold my-0 text-base rounded-md py-2 px-3">
-            Referred to
+            Referred to:
+          </span>
+        </div>
+      </div>
+      <div class="flex w-3/5">
+        <div class="flex justify-center text-gray-700 md:block leading-tight align-top my-1 w-full p-1 rounded-md">
+          <span class="w-full font-semibold my-0 text-base rounded-md py-2 px-3">
+            Logged by:
           </span>
         </div>
       </div>
@@ -36,7 +43,7 @@
     <div class="flex justify-between border-b border-gray-100" *ngFor="let patient of pending_fdx">
       <div class="flex w-3/5">
         <div class="flex justify-center text-gray-700 md:block leading-tight align-top my-1 w-full p-1 rounded-md">
-          <span class="w-full font-medium my-0 text-sm rounded-md py-2 px-3 hover:cursor-pointer hover:bg-blue-500 hover:text-white" >
+          <span class="w-full font-medium my-0 text-sm rounded-md py-2 px-3 hover:cursor-pointer hover:bg-blue-500 hover:text-white" (click)="getData(patient.consult_id)">
             {{ patient.name }}
           </span>
         </div>
@@ -51,7 +58,14 @@
       <div class="grid grid-cols-5 text-left w-3/5">
         <div class="col-span-12 text-gray-700 p-3 rounded-md text-[.85em]">
           <span class="w-full font-medium my-0 text-sm">
-            Dr. {{ patient.doctor }}
+            {{ patient.doctor ? patient.doctor : '-' }}
+          </span>
+        </div>
+      </div>
+      <div class="grid grid-cols-5 text-left w-3/5">
+        <div class="col-span-12 text-gray-700 p-3 rounded-md text-[.85em]">
+          <span class="w-full font-medium my-0 text-sm">
+            {{ patient.encoded ? patient.encoded : '-' }}
           </span>
         </div>
       </div>
@@ -101,3 +115,5 @@
     </div>
   </div>
 </div>
+
+<app-final-dx *ngIf="openList" (toggleModal)="toggleModal()" [show_patient_data]="show_patient_data"></app-final-dx>
