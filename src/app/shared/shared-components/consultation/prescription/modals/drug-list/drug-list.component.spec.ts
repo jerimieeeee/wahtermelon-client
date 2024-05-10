@@ -1,20 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TempChartComponent } from './chart-temp.component';
+import { DrugListComponent } from './drug-list.component';
 
-describe('TempChartComponent', () => {
-  let component: TempChartComponent;
-  let fixture: ComponentFixture<TempChartComponent>;
+describe('DrugListComponent', () => {
+  let component: DrugListComponent;
+  let fixture: ComponentFixture<DrugListComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TempChartComponent ]
+      declarations: [ DrugListComponent ]
     })
     .compileComponents();
-  });
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(TempChartComponent);
+    fixture = TestBed.createComponent(DrugListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

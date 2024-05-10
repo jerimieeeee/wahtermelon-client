@@ -10,7 +10,7 @@
     </button>
   </nav>
   <div class="ml-auto">
-    <button *ngIf="selected_visit && !selected_visit?.consult_done" type="button" class="btn-end-visit ml-auto mt-5" (click)="toggleModal('end_visit')">
+    <button *ngIf="selected_visit && !selected_visit?.consult_done" (click)="toggleModal('end_visit')" type="button" class="btn-end-visit ml-auto mt-5">
       <fa-icon class="mr-1" [icon]="faDoorClosed"></fa-icon>
       End Visit
     </button>
@@ -21,15 +21,19 @@
   <div class="flex flex-row">
     <button (click)="switchTab(1)" class="tabs-main px-3"
         [class]="module===1? 'tabs-main-true' : 'tabs-main-false' ">
-        COMPLAINTS/DIAGNOSIS
+        COMPLAINTS
     </button>
     <button (click)="switchTab(2)" class="tabs-main px-3"
         [class]="module===2? 'tabs-main-true' : 'tabs-main-false' ">
-        TOOTH HISTORY & CONDITION
+        HISTORY
     </button>
     <button (click)="switchTab(3)" class="tabs-main px-3"
         [class]="module===3? 'tabs-main-true' : 'tabs-main-false' ">
-        DIAGNOSIS AND TREATMENT TREATMENT
+        TOOTH CONDITION & SERVICES
+    </button>
+    <button (click)="switchTab(4)" class="tabs-main px-3"
+        [class]="module===4? 'tabs-main-true' : 'tabs-main-false' ">
+        DIAGNOSIS & TREATMENT
     </button>
   </div>
 </nav>
@@ -96,16 +100,42 @@
   ></app-complaint-history>
   <app-consult-history [pt_group]="'dn'"></app-consult-history>
 </div>
+
 <div *ngIf="pages === 2 && module === 2">
-  <app-history [selected_visit]="selected_visit"></app-history>
-  <app-condition></app-condition>
-  <app-services></app-services>
+  <app-history [selected_visit]="selected_visit"
+    (loadSelectedConsult)="loadSelectedConsult($event)"
+  ></app-history>
+
+  <app-hospitalization-history [selected_visit]="selected_visit"
+    (loadSelectedConsult)="loadSelectedConsult($event)"
+  ></app-hospitalization-history>
+
+  <app-surgical-history [selected_visit]="selected_visit"
+    (loadSelectedConsult)="loadSelectedConsult($event)"
+  ></app-surgical-history>
 </div>
 
 <div *ngIf="pages === 2 && module === 3">
-  <app-history></app-history>
   <app-condition></app-condition>
-  <app-services></app-services>
+  <app-services [selected_visit]="selected_visit"
+    (loadSelectedConsult)="loadSelectedConsult($event)"
+  ></app-services>
+</div>
+
+<div *ngIf="pages === 2 && module === 4">
+  <app-final-dx [toggle_content]="toggle_content"
+    [consult_details]="selected_visit"
+    [have_complaint]="have_complaint"
+    [allowed_to_edit]="allowed_to_edit"
+    (loadConsult)="loadSelectedConsult($event)"
+  ></app-final-dx>
+  <app-prescription [toggle_content]="toggle_content"
+    [consult_details]="selected_visit"
+    [have_complaint]="have_complaint"
+    [allowed_to_edit]="allowed_to_edit"
+    [user_id]="user_id"
+    (loadConsult)="loadSelectedConsult($event)"
+  ></app-prescription>
 </div>
 
 <app-end-visit *ngIf="modals['end_visit']"
@@ -115,97 +145,3 @@
   [patient_id]="selected_visit?.patient.id"
   [pt_group]="'tb'"
 ></app-end-visit>
-<!-- <app-casefindings *ngIf="pages === 2 && module === 1"
-  [patient_id]="patient_id"
-  [selected_dental_consult]="selected_dental_consult"
-  [max_date]="max_date"
-  (getPatientTbHistory)="getPatientTbHistory()"
-></app-casefindings>
-
-<app-case-holding *ngIf="pages === 2 && module === 3"
-  [patient_id]="patient_id"
-  [selected_dental_consult]="selected_dental_consult"
-  [max_date]="max_date"
-  (getPatientTbHistory)="getPatientTbHistory()"
-></app-case-holding>
-
-<app-dots-chart *ngIf="pages === 2 && module === 4"
-  [patient_id]="patient_id"
-  [selected_dental_consult]="selected_dental_consult"
-  (getPatientTbHistory)="getPatientTbHistory()"
-></app-dots-chart>
-
-<app-end-visit *ngIf="modals['end_visit']"
-  (toggleModal)="toggleModal($event)"
-  [consult_id]="consult_details?.id"
-  [consult_date]="consult_details?.consult_date"
-  [patient_id]="consult_details?.patient.id"
-  [pt_group]="'tb'"
-></app-end-visit>
-
-<app-treatment-outcome *ngIf="modals['treatment_outcome']"
-  [selected_dental_consult]="selected_dental_consult"
-  [max_date]="max_date"
-  (toggleModal)="toggleModal($event)"
-  (switchPage)="switchPage($event)"
-  (getPatientTbHistory)="getPatientTbHistory()"
-></app-treatment-outcome>
-
-<app-caserate *ngIf="pages === 2 && module === 8"
-  (switchPage)="switchPage($event)"
-  [patient_id]="selected_dental_consult.patient_id"
-  [program_id]="selected_dental_consult.id"
-  [program_name]="'tb'"
-  [max_date]="max_date"
-></app-caserate>
-
-<app-eclaims *ngIf="pages === 3"
-  (switchPage)="switchPage($event)"
-  [program_id]="selected_dental_consult.id"
-  [program_name]="'tb'"
-  [max_date]="max_date"
-  [selected_case]="selected_dental_consult"
-></app-eclaims> -->
-
-<!-- <div class="flex-wrap w-full h-full shadow-md px-4 py-4 ml-5 mr-4 border-gray-100 border-t-2 rounded-lg text-gray-600">
-  <nav class="flex flex-col sm:flex-row text-sm">
-    <button (click)="switchTab(1)" class="text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 mr-6 pb-2"
-    [class]="module===1? 'text-blue-500 border-b-2 border-blue-500 font-bold' : 'hover:-translate-y-1 hover:scale-110 transition ease-in-out delay-400 duration-300' ">
-        History
-    </button>
-    <button (click)="switchTab(2)" class="text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 mr-6 pb-2"
-    [class]="module===2? 'text-blue-500 border-b-2 border-blue-500 font-bold' : 'hover:-translate-y-1 hover:scale-110 transition ease-in-out delay-400 duration-300' ">
-        Condition
-    </button>
-    <button (click)="switchTab(3)" class="text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 mr-6 pb-2"
-    [class]="module===3? 'text-blue-500 border-b-2 border-blue-500 font-bold' : 'hover:-translate-y-1 hover:scale-110 transition ease-in-out delay-400 duration-300' ">
-        Services
-    </button>
-    <button (click)="switchTab(4)" class="text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 mr-6 pb-2"
-    [class]="module===4? 'text-blue-500 border-b-2 border-blue-500 font-bold' : 'hover:-translate-y-1 hover:scale-110 transition ease-in-out delay-400 duration-300' ">
-        Initial Dx
-    </button>
-    <button (click)="switchTab(5)" class="text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 mr-6 pb-2"
-    [class]="module===5? 'text-blue-500 border-b-2 border-blue-500 font-bold' : 'hover:-translate-y-1 hover:scale-110 transition ease-in-out delay-400 duration-300' ">
-        Final Dx
-    </button>
-    <button (click)="switchTab(6)" class="text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 mr-6 pb-2"
-    [class]="module===6? 'text-blue-500 border-b-2 border-blue-500 font-bold' : 'hover:-translate-y-1 hover:scale-110 transition ease-in-out delay-400 duration-300' ">
-        Treatment
-    </button>
-  </nav>
-
-  <div class="grid grid-col-8" *ngIf="module===1">
-    <app-history></app-history>
-  </div>
-
-  <div class="grid grid-col-8" *ngIf="module===2">
-    <app-condition></app-condition>
-  </div>
-
-    <div class="grid grid-col-8" *ngIf="module===3">
-    <app-services></app-services>
-  </div>
-
-</div>
- -->

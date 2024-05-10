@@ -22,7 +22,7 @@ export class DentalComponent implements OnInit {
   enable_edit: boolean = false;
   referred_to: any;
   consult_id: any;
-  allowed_to_edit: boolean = false
+  allowed_to_edit: boolean = true
   have_complaint: boolean = false;
 
   toggle_content: boolean = true;
@@ -39,6 +39,7 @@ export class DentalComponent implements OnInit {
       next: (data: any) => {
         console.log(data)
         this.consult_details[this.item_index] = data.data[0];
+        this.selected_visit = data.data[0];
       },
       error: err => { this.http.showError(err.error.message, 'Dental Consult') }
     });
@@ -50,7 +51,8 @@ export class DentalComponent implements OnInit {
     let params = {
       pt_group: 'dn',
       disable_filter: 1,
-      patient_id: patient_id
+      patient_id: patient_id,
+      sort: '-consult_date'
     }
 
     this.http.get('consultation/records', {params}).subscribe({
@@ -100,8 +102,9 @@ export class DentalComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute
   ) { }
-
+  user_id: string;
   ngOnInit(): void {
+    this.user_id = this.http.getUserID();
     this.module = 1;
     this.loadConsult();
     this.user_facility = this.http.getUserFacility();

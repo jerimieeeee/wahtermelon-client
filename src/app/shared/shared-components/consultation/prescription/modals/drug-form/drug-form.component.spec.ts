@@ -1,20 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AdultChartComponent } from './chart-adult.component';
+import { DrugFormComponent } from './drug-form.component';
 
-describe('AdultChartComponent', () => {
-  let component: AdultChartComponent;
-  let fixture: ComponentFixture<AdultChartComponent>;
+describe('DrugFormComponent', () => {
+  let component: DrugFormComponent;
+  let fixture: ComponentFixture<DrugFormComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AdultChartComponent ]
+      declarations: [ DrugFormComponent ]
     })
     .compileComponents();
-  });
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(AdultChartComponent);
+    fixture = TestBed.createComponent(DrugFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

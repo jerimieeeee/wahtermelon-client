@@ -2,8 +2,8 @@ import { FormControl, FormGroup } from "@angular/forms";
 
 export function medicalSocialForm() {
   return new FormGroup({
-    id: new FormControl<string| null>(''),
-    patient_id: new FormControl<string| null>(''),
+    id: new FormControl<string| null>(null),
+    patient_id: new FormControl<string| null>(null),
 
     allergies_flag: new FormControl<boolean| null>(false),
     hypertension_flag: new FormControl<boolean| null>(false),

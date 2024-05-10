@@ -1,7 +1,7 @@
 <div class="pt-5">
   <div class="border border-solid border-gray-200 rounded-lg">
     <div class="bg-blue-500 w-full text-white p-3 rounded-t-lg font-semibold">
-      Tooth History
+      History
     </div>
 
     <form [formGroup]="medicalSocialForm" (ngSubmit)="onSubmit()" >
@@ -16,7 +16,7 @@
           </div>
         </div>
         <div class="block m-3">
-          <textarea rows="2" id="intial_dx" formControlName="medical_remarks" placeholder="Remarks" class="placeholder-slate-400 w-full rounded-md border-gray-300 bg-gray-50"></textarea>
+          <textarea rows="2" id="medical_remarks" formControlName="medical_remarks" placeholder="Remarks" class="placeholder-slate-400 w-full rounded-md border-gray-300 bg-gray-50"></textarea>
         </div>
       </div>
 
@@ -31,7 +31,7 @@
           </div>
         </div>
         <div class="block m-3">
-          <textarea rows="2" id="intial_dx" formControlName="social_remarks" placeholder="Remarks" class="placeholder-slate-400 w-full rounded-md border-gray-300 bg-gray-50"></textarea>
+          <textarea rows="2" id="social_remarks" formControlName="social_remarks" placeholder="Remarks" class="placeholder-slate-400 w-full rounded-md border-gray-300 bg-gray-50"></textarea>
         </div>
       </div>
 
@@ -44,34 +44,5 @@
     </form>
   </div>
 
-  <div class="mt-5 border border-solid border-gray-200 rounded-lg">
-    <div class="bg-blue-500 w-full text-white p-3 rounded-t-lg justify-between flex">
-      <span>Hospitalization History</span>
-      <span>
-        <button type="button" class="bg-white text-blue-500 px-1 rounded-md" (click)="addHospHistory()">
-          <fa-icon [icon]="faPlus"></fa-icon>
-        </button>
-      </span>
-    </div>
-    <table class="w-full text-center mb-5">
-      <thead class="border-b">
-        <tr>
-          <th class="py-2">Admisison Date</th>
-          <th>Discharge Date</th>
-          <th>Type of Hospitalization</th>
-          <th>Cause of Hospitalization</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>test</td>
-          <td>test</td>
-          <td>test</td>
-          <td>test</td>
-          <td>test</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+
 </div>

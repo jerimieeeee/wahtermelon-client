@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
+import { HttpService } from 'app/shared/services/http.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-tooth-condition',
@@ -7,50 +9,50 @@ import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
   styleUrls: ['./tooth-condition.component.scss']
 })
 export class ToothConditionComponent implements OnInit {
+  @Output() toggleModal = new EventEmitter<any>();
+  @Input() selected_tooth;
+
   date = new Date();
 
   showModal: boolean = false;
-  vitalsForm: FormGroup = new FormGroup({
+
+  toothNumber: any = [];
+
+  toothConditionForm: FormGroup = new FormGroup({
     facility_code: new FormControl<string| null>(''),
     patient_id: new FormControl<string| null>(''),
     user_id: new FormControl<string| null>(''),
-    vitals_date: new FormControl<string| null>(''),
-    patient_temp: new FormControl<number| null>(null),
-    patient_height: new FormControl<number| null>(null),
-    patient_weight: new FormControl<number| null>(null),
-    patient_head_circumference: new FormControl<number| null>(null),
-    patient_skinfold_thickness: new FormControl<number| null>(null),
-    bp_systolic: new FormControl<number| null>(null),
-    bp_diastolic: new FormControl<number| null>(null),
-    patient_heart_rate: new FormControl<number| null>(null),
-    patient_respiratory_rate: new FormControl<number>(null),
-    patient_pulse_rate: new FormControl<number| null>(null),
-    patient_waist: new FormControl<number| null>(null),
-    patient_hip: new FormControl<number| null>(null),
-    patient_limbs: new FormControl<number| null>(null),
-    patient_muac: new FormControl<number| null>(null),
-    patient_chest: new FormControl<number| null>(null),
-    patient_abdomen: new FormControl<number| null>(null),
-    patient_spo2: new FormControl<number| null>(null),
-    vitals_height_ft: new FormControl<number| null>(null),
-    vitals_height_in: new FormControl<number| null>(null),
-    vitals_waist_in: new FormControl<number| null>(null),
-    vitals_date_temp: new FormControl<string| null>(''),
-    vitals_time_temp: new FormControl<string| null>(''),
-    patient_left_vision_acuity_distance: new FormControl<number| null>(null),
-    patient_left_vision_acuity: new FormControl<number| null>(null),
-    patient_right_vision_acuity_distance: new FormControl<number| null>(null),
-    patient_right_vision_acuity: new FormControl<number| null>(null)
+    tooth_number: new FormControl<string| null>(''),
+    tooth_condition: new FormControl<number| null>(null)
   });
-  showChildVitals: boolean = false;
 
+  condition_list = [
+    {id: 'Y',  desc: 'Sound/Sealed'},
+    {id: 'D',  desc: 'Decayed'},
+    {id: 'F',  desc: 'Filled'},
+    {id: 'JC', desc: 'Jacket Crown'},
+    {id: 'M',  desc: 'Missing'},
+    {id: 'P',  desc: 'Pontic'},
+    {id: 'S',  desc: 'Supernumerary'},
+    {id: 'Un', desc: 'Unerupted'},
+    {id: 'Dx', desc: 'For Extraction'}
+  ];
 
   get f(): { [key: string]: AbstractControl } {
-    return this.vitalsForm.controls;
+    return this.toothConditionForm.controls;
   }
 
   onSubmit(){
-    alert('click')
+    console.log(this.toothNumber);
+    /* this.http.post('', this.toothConditionForm.value).subscribe({
+      next: (data: any) => {
+        console.log(data)
+
+        let message: string = 'recorded';
+        this.toastr.success('Successfully '+ message, 'Tooth Condition')
+      },
+      error: err => { this.http.showError(err.error.message, 'Tooth Condition') }
+    }) */
   }
 
   onRightClick(){
@@ -59,12 +61,15 @@ export class ToothConditionComponent implements OnInit {
   }
 
   closeModal(){
-    this.showModal = !this.showModal;
+    this.toggleModal.emit('tooth_condition');
   }
 
-  constructor() { }
+  constructor(
+    private http: HttpService,
+    private toastr: ToastrService
+  ) { }
 
   ngOnInit(): void {
-
+    console.log(this.selected_tooth)
   }
 }

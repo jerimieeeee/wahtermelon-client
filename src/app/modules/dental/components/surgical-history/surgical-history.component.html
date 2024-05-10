@@ -1,26 +1,24 @@
-<div class="mt-5 border border-solid border-gray-200 rounded-lg">
+<div class="my-5 border border-solid border-gray-200 rounded-lg">
   <div class="bg-blue-500 w-full text-white p-3 rounded-t-lg justify-between flex">
-    <span>Dental Services</span>
+    <span>Surgical History</span>
   </div>
 
   <div class="flex flex-col justify-center">
-    <form [formGroup]="dentalServiceForm" (submit)="onSubmit()">
+    <form [formGroup]="surgicalHistoryForm" (submit)="onSubmit()">
       <fieldset class="grid grid-cols-5 m-3 p-3 gap-x-3 border border-slate-300 shadow-md rounded-md bg-slate-100">
-        <legend>New service detail</legend>
+        <legend>Surgery Details</legend>
         <div class="col-span-2">
-          <label for="service_date">Service Date</label>
-          <input id="service_date" type="date" class="input" formControlName="service_date" placeholder="Service date" />
+          <label for="operation_date">Date of Operation</label>
+          <input id="operation_date" type="date" class="input" formControlName="operation_date" placeholder="admission date" />
         </div>
 
         <div class="col-span-3">
-          <label for="service_id">Service done</label>
-          <select id="service_id" type="text" class="input" formControlName="service_id" placeholder="service">
-            <option *ngFor="let item of service_list" [value]="item.id">{{ item.desc }}</option>
-          </select>
+          <label for="operation">Operation</label>
+          <input id="operation" type="text" class="input" formControlName="operation" placeholder="Operation"/>
         </div>
 
         <div class="col-span-5 flex justify-end mt-3">
-          <button [disabled]="dentalServiceForm.invalid || is_saving" type="submit" class="btn-save text-xs">
+          <button [disabled]="surgicalHistoryForm.invalid || is_saving" type="submit" class="btn-save text-xs">
             <fa-icon class="mr-2" [icon]="is_saving ? faCircleNotch : faPlus" [spin]="is_saving"></fa-icon>
             {{ is_saving ? 'Saving' : 'Add' }}
           </button>
@@ -30,18 +28,15 @@
     <table class="table-auto w-11/12 text-center m-5 mx-auto border border-slate-300 rounded-lg shadow-md">
       <thead class="border-b">
         <tr>
-          <th class="px-3">Dental Service</th>
-          <th class="px-3">Date of Service</th>
+          <th class="px-3">Operation Done</th>
+          <th class="px-3">Operation Date</th>
           <th class="px-3">Action</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let item of selected_visit?.dentalService">
-          <td>
-            {{ item.service.desc }}
-            <span *ngIf="item.remarks"><br />{{ item.remarks }}</span>
-          </td>
-          <td>{{ item.service_date | date: 'MM/dd/yyyy'}}</td>
+        <tr *ngFor="let item of selected_visit?.dentalSurgicalHistory">
+          <td>{{ item.operation }}</td>
+          <td>{{ item.operation_date | date: 'MM/dd/yyyy'}}</td>
           <td>
             <!-- <button type="button" class="text-orange-500" (click)="editHistory(item)">
               <fa-icon [icon]="faEdit"></fa-icon>

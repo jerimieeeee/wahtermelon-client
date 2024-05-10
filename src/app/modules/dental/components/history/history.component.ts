@@ -1,10 +1,11 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { faPlus, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { faSave } from '@fortawesome/free-regular-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { forkJoin } from 'rxjs';
 import { FormGroup } from '@angular/forms';
 import { medicalSocialForm } from './medicalSocialForm';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-history',
@@ -12,6 +13,7 @@ import { medicalSocialForm } from './medicalSocialForm';
   styleUrls: ['./history.component.scss']
 })
 export class HistoryComponent implements OnInit {
+  @Output() loadSelectedConsult = new EventEmitter<any>();
   @Input() selected_visit;
   faSpinner = faSpinner;
   faSave = faSave;
@@ -27,8 +29,18 @@ export class HistoryComponent implements OnInit {
   onSubmit(){
     this.is_saving = true;
 
-
-    console.log(this.medicalSocialForm.value)
+    this.http.post('dental/medical-social', this.medicalSocialForm.value).subscribe({
+      next: (data: any) => {
+        console.log(data)
+        let message: string = this.medicalSocialForm.value.id ? 'updated' : 'recorded';
+        this.toastr.success('Successfully ' + message, 'Medical & Social History');
+        this.loadSelectedConsult.emit();
+        this.is_saving = false;
+      },
+      error: err => {
+        this.http.showError(err.error.message, 'Dental Medical and Social History');
+      }
+    })
   }
 
   loadLibraries(){
@@ -49,7 +61,14 @@ export class HistoryComponent implements OnInit {
   }
 
   patchData(){
-    this.medicalSocialForm.patchValue({})
+    console.log(this.selected_visit);
+    if(this.selected_visit.dentalMedicalSocials) {
+      this.medicalSocialForm.patchValue({...this.selected_visit.dentalMedicalSocials})
+    } else {
+      this.medicalSocialForm.patchValue({
+        patient_id: this.selected_visit.patient.id
+      })
+    }
   }
 
   addHospHistory() {
@@ -57,7 +76,8 @@ export class HistoryComponent implements OnInit {
   }
 
   constructor(
-    private http: HttpService
+    private http: HttpService,
+    private toastr: ToastrService
   ) { }
 
   ngOnInit(): void {

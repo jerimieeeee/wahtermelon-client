@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PhysicalPrescriptionComponent } from './physical-prescription.component';
+import { PrescriptionComponent } from './prescription.component';
 
 describe('PhysicalPrescriptionComponent', () => {
-  let component: PhysicalPrescriptionComponent;
-  let fixture: ComponentFixture<PhysicalPrescriptionComponent>;
+  let component: PrescriptionComponent;
+  let fixture: ComponentFixture<PrescriptionComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [PhysicalPrescriptionComponent]
+      imports: [PrescriptionComponent]
     });
-    fixture = TestBed.createComponent(PhysicalPrescriptionComponent);
+    fixture = TestBed.createComponent(PrescriptionComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
