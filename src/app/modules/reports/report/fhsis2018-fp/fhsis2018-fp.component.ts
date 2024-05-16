@@ -15,6 +15,7 @@ export class Fhsis2018FpComponent implements OnChanges {
   @Input() selectedBrgy;
   @Input() brgys;
   @Input() userInfo;
+  @Input() submit_flag;
 
   faCircleNotch = faCircleNotch;
   faFileExcel = faFileExcel;
@@ -28,6 +29,7 @@ export class Fhsis2018FpComponent implements OnChanges {
   convertedMonth : any;
   brgys_info : any;
   show_nameList: any = [];
+  current_submit_flag: boolean = false;
 
   exportAsExcel: ExportAsConfig = {
     type: 'xlsx',
@@ -101,8 +103,9 @@ export class Fhsis2018FpComponent implements OnChanges {
     {method_id: 'NFPLAM',   desc: 'l. NFP-LAM - Total'},
   ]
 
-  countTotalSummary(indicator_name, value) {
-    this.total_count[indicator_name] += value;
+  countTotalSummary(indicator_name, value, last?: boolean) {
+    if(this.current_submit_flag) this.total_count[indicator_name] += value;
+    if(last) this.current_submit_flag = false
   }
   exportX() {
     this.exportAsService.save(this.exportAsExcel, 'Family Planning M1').subscribe(() => {
@@ -157,13 +160,16 @@ export class Fhsis2018FpComponent implements OnChanges {
   }
 
   ngOnChanges(): void {
-    this.stats = this.report_data;
-    this.reportform_data = this.reportForm;
-    this.selected_barangay = this.selectedBrgy;
-    this.info3 = this.userInfo;
-    this.brgys_info = this.brgys;
-    this.pdf_exported = false;
-    this.convertBrgy();
-    this.convertDate();
+    this.current_submit_flag = this.submit_flag;
+    if(this.current_submit_flag){
+      this.stats = this.report_data;
+      this.reportform_data = this.reportForm;
+      this.selected_barangay = this.selectedBrgy;
+      this.info3 = this.userInfo;
+      this.brgys_info = this.brgys;
+      this.pdf_exported = false;
+      this.convertBrgy();
+      this.convertDate();
+    }
   }
 }
