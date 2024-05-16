@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { faCircleNotch, faFileExcel, faFilePdf } from '@fortawesome/free-solid-svg-icons';
 import { options } from 'app/modules/patient-registration/patient-registration.module';
 import { ExportAsConfig, ExportAsService } from 'ngx-export-as';
@@ -10,12 +10,13 @@ import * as moment from 'moment';
   styleUrls: ['./daily-service.component.scss']
 })
 
-export class DailyServiceComponent implements OnChanges {
+export class DailyServiceComponent implements OnChanges, OnInit {
   @Input() report_data;
   @Input() reportForm;
   @Input() selectedBrgy;
   @Input() brgys;
   @Input() userInfo;
+  @Input() submit_flag;
 
   faCircleNotch = faCircleNotch;
   faFileExcel = faFileExcel;
@@ -83,11 +84,14 @@ export class DailyServiceComponent implements OnChanges {
   //   // console.log(this[var_name]);
   // }
 
-  countTotal(var_name: string) {
-    if (!this.countedConditions.includes(var_name)) {
+  current_submit_value: boolean = false;
+  countTotal(var_name: string, last?) {
+    if(this.current_submit_value === true) {
       this[var_name] += 1;
       this.countedConditions.push(var_name);
     }
+
+    if(last) this.current_submit_value = false;
   }
   convertDate(){
     this.convertedMonth = moment(this.reportForm.value.month, 'M').format('MMMM');
@@ -101,19 +105,27 @@ export class DailyServiceComponent implements OnChanges {
     this.brgy_result = this.selected_barangay?.map((code) => this.brgys.find((el) => el.code == code).name);
   }
 
+  ngOnInit(): void {
+    console.log('on init')
+  }
+
   ngOnChanges(): void {
-    this.count_male = 0;
-    this.count_female = 0;
-    this.count_konsulta = 0;
-    this.count_consent  = 0;
-    this.count_philhealth = 0;
-    this.stats = this.report_data.data;
-    this.reportform_data = this.reportForm.data;
-    this.selected_barangay = this.selectedBrgy;
-    this.info3 = this.userInfo;
-    this.brgys_info = this.brgys;
-    this.pdf_exported = false;
-    this.convertBrgy();
-    this.convertDate();
+    this.current_submit_value = this.submit_flag;
+
+    if(this.submit_flag) {
+      this.count_male = 0;
+      this.count_female = 0;
+      this.count_konsulta = 0;
+      this.count_consent  = 0;
+      this.count_philhealth = 0;
+      this.reportform_data = this.reportForm.data;
+      this.stats = this.report_data.data;
+      this.selected_barangay = this.selectedBrgy;
+      this.info3 = this.userInfo;
+      this.brgys_info = this.brgys;
+      this.pdf_exported = false;
+      this.convertBrgy();
+      this.convertDate();
+    }
   }
 }

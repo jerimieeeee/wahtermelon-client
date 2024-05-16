@@ -24,6 +24,7 @@ export class ReportsComponent implements OnInit {
   });
 
   current_date = formatDate(new Date, 'yyyy', 'en', 'Asia/Manila');
+  submit_flag: boolean = false;
 
   fhsis2018 = [
     { id: 'fhsis2018-mc', desc: 'Maternal Care', url: 'reports-2018/maternal-care/m1'},
@@ -137,9 +138,9 @@ export class ReportsComponent implements OnInit {
 
     this.http.get(this.reportForm.value.report_type.url, {params}).subscribe({
       next: (data: any) => {
-        console.log(data);
         this.report_data = data;
         this.is_fetching = false;
+        this.submit_flag = true;
 
         // console.log(this.report_data, 'report_data');
         // console.log(this.selectedBrgy, 'report_data');
@@ -149,6 +150,7 @@ export class ReportsComponent implements OnInit {
   }
 
   handleReportClass(report_class) {
+    this.submit_flag = false;
     if(report_class === "brgys" || report_class === "muncity") {
       if(!this.userLoc) this.userLoc = this.http.getUserFacility();
 
@@ -192,7 +194,7 @@ export class ReportsComponent implements OnInit {
   }
 
   changeDateOptions(): void {
-    console.log(this.reportForm.value.report_type)
+    this.submit_flag = false;
     this.report_data= '';
     if(this.fhsis_monthly_arr.find(e => e === this.reportForm.value.report_type.id)) {
       let month = formatDate(this.current_date, 'm', 'en', 'Asia/Manila');
