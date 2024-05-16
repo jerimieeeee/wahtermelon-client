@@ -77,8 +77,17 @@ export class PendingFdxComponent implements OnInit {
       })
   }
 
-  getData(consult_id: any) {
-    this.http.get('reports-2018/pending-fdx/get-consultation/'+consult_id).subscribe({
+  getData(patient_id: any, consult_id: any) {
+    console.log(patient_id);
+    let params = {
+      patient_id: patient_id,
+      consult_id: consult_id
+      };
+      this.http.get('reports-2018/pending-fdx/get-consultation', { params })
+        .pipe(
+          finalize(() => this.isLoading = false)
+        )
+        .subscribe({
       next: (data: any) => {
         this.show_patient_data = data;
         this.current_page = data.current_page;

@@ -148,11 +148,6 @@ export class Fhsis2018FpComponent implements OnChanges {
     this.openList = !this.openList;
   }
 
-  countTotal(var_name: string) {
-    this[var_name] += 1;
-    // console.log(this[var_name]);
-  }
-
   convertDate(){
     this.convertedMonth = moment(this.reportForm.value.month, 'M').format('MMMM');
   }
@@ -171,5 +166,4 @@ export class Fhsis2018FpComponent implements OnChanges {
     this.convertBrgy();
     this.convertDate();
   }
-
 }

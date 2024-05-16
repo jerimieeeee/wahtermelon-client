@@ -10,6 +10,7 @@ import {HttpService} from "../../../../../shared/services/http.service";
 export class FinalDxComponent implements OnInit {
   @Output() toggleModal = new EventEmitter<any>();
   @Input() show_patient_data: any;
+  // @Input() pending_fdx: any;
 
   closeModal() {
     this.toggleModal.emit();
@@ -17,11 +18,12 @@ export class FinalDxComponent implements OnInit {
 
   ngOnInit(): void {
     // this.getData();
+    console.log(this.show_patient_data, 'amen5u');
   }
 
   protected readonly faAnglesRight = faAnglesRight;
   protected readonly faAnglesLeft = faAnglesLeft;
   protected readonly Number = Number;
   protected readonly faCircleXmark = faCircleXmark;
-    protected readonly faSearch = faSearch;
+  protected readonly faSearch = faSearch;
 }

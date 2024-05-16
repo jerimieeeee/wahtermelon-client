@@ -5,7 +5,7 @@
       <!-- Modal header -->
       <div class="flex justify-between items-start py-3 px-5 rounded-t border-b bg-blue-500">
         <h3 class="mt-2 text-lg text-white">
-          Patient Name: {{show_patient_data?.data[0].patient_name}}
+          Patient Name: {{ show_patient_data?.data[0].patient_name }}
         </h3>
         <div class="flex justify-end">
           <div class="border border-gray-400 rounded-md bg-white">
@@ -31,7 +31,7 @@
             <tbody>
               <fieldset class="text-base text-black py-3 px-5 rounded-t border-black border-t border-b border-r border-l">
                 <legend>Patient Information:</legend>
-                <label>First name: {{show_patient_data?.data[0].patient_name}}</label>
+                <label>Name: {{ show_patient_data?.data[0].patient_name }}</label>
                 <br />
                 <label>Birthdate: {{show_patient_data?.data[0].birthdate}}</label>
                 <br />
@@ -141,7 +141,7 @@
                   <div class="shadow-md grid border w-full border-1 -outline-offset-8">
                     <div class="flex text-gray-700 md:block leading-tight align-top my-1 w-full p-1 rounded-md">
                       <fieldset class="text-base text-black py-3 px-5 rounded-t border-black border-t border-b border-r border-l">
-                        <legend>Vitals Date: {{show_patient_data?.data[0].vitals_date ?? '-'}}</legend>
+                        <legend>Vitals Record</legend>
                         <label>Blood Pressure: {{show_patient_data?.data[0].bp_systolic ?? '-'}}/{{show_patient_data?.data[0].bp_diastolic ?? '-'}}</label>
                         <br />
                         <label>BMI: {{show_patient_data?.data[0].patient_bmi ?? '-'}}</label>
@@ -169,19 +169,14 @@
                     Complaint
                   </h3>
                   <div class="shadow-md grid border w-full border-1 -outline-offset-8">
-                    <div *ngFor="let item of show_patient_data?.data.complaints" class="flex text-gray-700 md:block leading-tight align-top my-1 w-full p-1 rounded-md">
-                      <fieldset class="text-base text-black py-3 px-5 rounded-t border-black border-t border-b border-r border-l">
+                    <div class="flex text-gray-700 md:block leading-tight align-top my-1 w-full p-1 rounded-md">
+                      <fieldset *ngFor="let item of show_patient_data.data[0].complaints" class="text-base text-black py-3 px-5 rounded-t border-black border-t border-b border-r border-l">
                         <legend>Complaint Date: {{show_patient_data?.data[0].consult_date ?? '-'}}</legend>
                         <label >Chief Complaint: {{item.lib_complaints.complaint_desc}}</label>
-                        <br />
-<!--                        <label>Birthdate: {{show_patient_data?.data[0].birthdate}}</label>-->
-<!--                        <br />-->
-<!--                        <label>Age: {{show_patient_data?.data[0].age}}</label>-->
-<!--                        <br />-->
-<!--                        <label>Consult date: {{show_patient_data?.data[0].consult_date}}</label>-->
-<!--                        <br />-->
-<!--                        <label>Address: {{show_patient_data?.data[0].address}}</label>-->
                       </fieldset>
+                      <h3 class="mt-2 text-sm text-gray-500 font-bold py-3 px-5 rounded-t border-black border-t border-b border-r border-l">
+                        Complaint Remarks: {{ show_patient_data.data[0].complaint_remarks }}
+                      </h3>
                     </div>
                   </div>
                 </div>

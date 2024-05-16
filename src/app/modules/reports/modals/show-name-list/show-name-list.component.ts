@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {HttpService} from "../../../../shared/services/http.service";
 import {faAnglesLeft, faAnglesRight, faCircleNotch, faCircleXmark, faSearch} from "@fortawesome/free-solid-svg-icons";
 import {BehaviorSubject} from "rxjs";
+import {Router} from "@angular/router";
 
 interface State {
   page: number;
@@ -19,6 +20,8 @@ export class ShowNameListComponent implements OnInit {
   @Input('length') length: number;
   @Input('pageOffset') pageOffset: number;
   @Input('pageIndex') pageIndex: number;
+  @Input() reportForm: any;
+  @Input() selected_barangay: any;
 
   paginate = new BehaviorSubject<State>({
     page: 1,
@@ -38,7 +41,8 @@ export class ShowNameListComponent implements OnInit {
   is_fetching: boolean = false;
 
   constructor(
-    private http: HttpService
+    private http: HttpService,
+    private router: Router,
 
   ) { }
 
@@ -49,19 +53,32 @@ export class ShowNameListComponent implements OnInit {
     params['page'] = !page ? this.current_page : page;
     if (this.search_patient) params['search'] = this.search_patient;
 
+    if (this.name_list_params.category === 'muncity') {
+      params['category'] = 'municipality';
+      params['code'] = this.reportForm.value.municipality_code
+    } else if (this.name_list_params.category === 'brgys') {
+      params['category'] = 'barangay';
+      params['code'] = this.selected_barangay.join(',');
+    } else {
+      params['category'] = this.name_list_params.category;
+    }
+
     this.http.get('reports-2018/fp-namelist/name-list', { params }).subscribe({
       next: (data: any) => {
         this.is_fetching = false;
         this.show_nameList = data;
         this.current_page = data.current_page;
         this.last_page = data.last_page;
-        console.log(this.last_page, 'last page itu')
-        console.log(this.current_page, 'current page itu')
+
+        console.log(this.show_nameList, 'amen4u')
       },
       error: err => console.log(err)
     });
   }
 
+  navigateTo(loc, patient_id){
+    this.router.navigate(['/patient/'+loc, {id: patient_id}])
+  }
 
   closeModal() {
     this.toggleModal.emit();

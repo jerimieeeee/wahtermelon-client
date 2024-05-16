@@ -130,10 +130,11 @@ export class ReportsComponent implements OnInit {
       params['code'] = this.reportForm.value.municipality_code;
     } else if (this.reportForm.value.report_class === 'brgys') {
       params['category'] = 'barangay';
-      params['code'] = this.selectedBrgy;
+      params['code'] = this.selectedBrgy.join(',');
     } else {
       params['category'] = this.reportForm.value.report_class;
     }
+
 
     this.http.get(this.reportForm.value.report_type.url, {params}).subscribe({
       next: (data: any) => {
