@@ -1,1 +1,62 @@
-<p>tooth-services works!</p>
+<div id="defaultModal" tabindex="-1" class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 w-full md:inset-0 h-modal md:h-full justify-center items-center flex" aria-modal="true" role="dialog" style="z-index:60">
+  <div class="relative p-4 w-full max-w-xl h-auto md:h-auto">
+    <!-- Modal content -->
+    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+      <!-- Modal header -->
+      <div class="flex justify-between items-start py-3 px-5 rounded-t border-b bg-blue-500 dark:border-gray-600">
+        <h3 class="mt-2 text-sm font-bold text-white dark:text-white">
+            Tooth condition (#{{selected_tooth.tooth_number}})
+        </h3>
+      </div>
+      <!-- Modal body -->
+      <div class="overflow-y-auto h-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
+        <div class="w-full max-w-3xl text-left text-gray-500 dark:text-gray-400">
+          <div class="flex justify-center">
+            <select class="input">
+              <option>test</option>
+              <option>test</option>
+              <option>test</option>
+            </select>
+          </div>
+          <div class="grid grid-cols-1 m-10">
+            <div class="grid grid-cols-3 gap-x-3">
+              <span></span>
+              <select [(ngModel)]="toothNumber[selected_tooth.tooth_number+'A']" class="input" >
+                <option *ngFor="let item of condition_list" [value]="item.id">{{ item.desc }}</option>
+              </select>
+              <span></span>
+            </div>
+            <div class="grid grid-cols-3 gap-x-3">
+              <select [(ngModel)]="toothNumber[selected_tooth.tooth_number+'D']" class="input">
+                <option *ngFor="let item of condition_list" [value]="item.id">{{ item.desc }}</option>
+              </select>
+
+              <select [(ngModel)]="toothNumber[selected_tooth.tooth_number+'E']" class="input">
+                <option *ngFor="let item of condition_list" [value]="item.id">{{ item.desc }}</option>
+              </select>
+
+              <select [(ngModel)]="toothNumber[selected_tooth.tooth_number+'B']" class="input">
+                <option *ngFor="let item of condition_list" [value]="item.id">{{ item.desc }}</option>
+              </select>
+            </div>
+            <div class="grid grid-cols-3 gap-x-3">
+              <span></span>
+              <select [(ngModel)]="toothNumber[selected_tooth.tooth_number+'C']" class="input">
+                <option *ngFor="let item of condition_list" [value]="item.id">{{ item.desc }}</option>
+              </select>
+              <span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="flex justify-end py-4 px-5 space-x-4 rounded-b border-t border-gray-200 dark:border-gray-600">
+        <button  type="button" class="btn-save bg-gray-400" (click)="closeModal()">Cancel</button>
+        <button  type="button h-10" class="btn-save" (click)="onSubmit()">Queue for update</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="opacity-50 fixed inset-0 z-50 bg-black"></div>

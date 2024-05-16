@@ -38,7 +38,7 @@ export class SurgicalHistoryComponent implements OnInit {
 
         this.createForm();
         let message: string = this.surgicalHistoryForm.value.id ? 'updated' : 'recorded';
-        this.toastr.success('Succefully ' + message, 'Surgical History');
+        this.toastr.success('Successfully ' + message, 'Surgical History');
       },
       error: err => { this.http.showError(err.error.message, 'Surgical History'); this.is_saving = false; }
     })

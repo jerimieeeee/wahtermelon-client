@@ -13,8 +13,10 @@ export class ConditionComponent implements OnInit {
 
   modals: any = [];
   is_saving: boolean = false;
-  saveCondition() {
+  condition: string;
 
+  saveCondition() {
+    console.log(this.condition)
   }
 
   onRightClick(name){
@@ -25,18 +27,20 @@ export class ConditionComponent implements OnInit {
   selected_tooth: number;
 
   tooth_legend: any = [
-    {color: 'bg-blue-500', desc: 'Decayed'},
-    {color: 'bg-gray-200', desc: 'Filled'},
-    {color: 'bg-yellow-500', desc: 'Jacket Crown'},
-    {color: 'bg-gray-900', desc: 'Missing'},
-    {color: '', desc: 'Pontic'},
-    {color: '', desc: 'Supernumerary'},
-    {color: '', desc: 'Unerupted'}, //all
-    {color: 'bg-red-500', desc: 'For Extraction'}, //all
-    {color: 'bg-green-500', desc: 'Sound/Sealed'}//all
+    {id: 'D',   color: 'bg-blue-500',   desc: 'Decayed'},
+    {id: 'F',   color: 'bg-gray-200',   desc: 'Filled'},
+    {id: 'JC',  color: 'bg-yellow-500', desc: 'Jacket Crown'},
+    {id: 'M',   color: 'bg-gray-900',   desc: 'Missing'},
+    {id: 'P',   color: 'bg-gray-900',   desc: 'Pontic'},
+    {id: 'S',   color: 'bg-gray-900',   desc: 'Supernumerary'},
+    {id: 'Un',  color: 'bg-gray-900',   desc: 'Unerupted'}, //all
+    {id: 'Dx',  color: 'bg-red-500',    desc: 'For Extraction'}, //all
+    {id: 'Y',   color: 'bg-green-500',  desc: 'Sound/Sealed'}//all
   ];
 
-  toggleModal(name, data?) {
+  toggleModal(name, data?, event?) {
+    if(event) event.preventDefault();
+    // $event.preventDefault();
     this.selected_tooth = data;
     this.modals[name] = !this.modals[name];
   }
