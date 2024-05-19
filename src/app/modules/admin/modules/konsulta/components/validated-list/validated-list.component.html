@@ -32,12 +32,12 @@
       </td>
       <td class="py-4 px-3 align-top text-center">
         <span *ngFor="let patient of kon.patient">
-          <span *ngIf="patient.philhealth">{{ patient.philhealth[0].konsulta_registration[0].assigned_date }}</span>
+          <span *ngIf="patient.philhealth && patient.philhealth[0]?.konsulta_registration">{{ patient.philhealth[0].konsulta_registration[0]?.assigned_date }}</span>
         </span>
       </td>
       <td class="py-4 px-3 align-top text-center">
         <span *ngFor="let patient of kon.patient">
-          <span *ngIf="patient.philhealth">{{ patient.philhealth[0].enlistment_date }}</span>
+          <span *ngIf="patient.philhealth && patient.philhealth[0]?.enlistment_date">{{ patient.philhealth[0]?.enlistment_date }}</span>
         </span>
       </td>
       <td class="py-4 px-3 align-top text-left">

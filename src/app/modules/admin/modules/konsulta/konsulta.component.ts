@@ -151,7 +151,8 @@ export class KonsultaComponent implements OnInit {
         })
       },
       error: err => {
-        this.toastr.error(err.error.message, 'Konsulta List')
+        this.toastr.error(err.error.message, 'Konsulta List');
+        this.excel_exporting = false;
       }
     })
   }
