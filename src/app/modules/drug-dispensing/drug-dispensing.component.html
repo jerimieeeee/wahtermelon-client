@@ -35,7 +35,7 @@
         <tbody *ngIf="pres_length > 0">
           <tr *ngFor="let pres of prescriptions; trackBy:identify" class="bg-white border-b last:border-0">
             <td class="py-4 px-3 font-medium">
-              {{ pres.konsulta_medicine ? pres.konsulta_medicine.desc : pres.added_medicine}}
+              {{ pres.konsulta_medicine ? pres.konsulta_medicine.desc : (pres.medicine ? pres.medicine.gen_name : pres.added_medicine) }}
             </td>
             <td scope="row" class="py-4 px-3  text-gray-900">
               {{ pres.dosage_quantity }} {{ pres.unit_of_measurement.desc }} {{ pres.regimen.desc }}
@@ -89,7 +89,7 @@
       <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400" *ngIf="show_form">
         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
           <tr>
-            <th scope="col" class="text-center py-3 px-3 w-3/12 ">Medicine</th>
+            <th scope="col" class="text-center py-3 px-3 w-3/12">Medicine</th>
             <th scope="col" class="text-center py-3 px-3 w-3/12">Intake</th>
             <th scope="col" class="text-center py-3 px-3 w-1/12">Prescription Date</th>
             <th scope="col" class="text-center py-3 px-3 w-1/12">Quantity</th>
@@ -101,7 +101,7 @@
         <tbody>
           <tr *ngFor="let dis of dispensed_list; trackBy:identify" class="bg-white border-b last:border-0">
             <td class="py-4 px-3">
-              {{ dis.prescription.konsulta_medicine ? dis.prescription.konsulta_medicine.desc : dis.prescription.added_medicine }}
+              {{ dis.prescription.konsulta_medicine ? dis.prescription.konsulta_medicine.desc : (dis.prescription.medicine ? dis.prescription.medicine.gen_name : dis.prescription.added_medicine) }}
             </td>
             <td scope="row" class="py-4 px-3 text-gray-900">
               {{ dis.prescription.dosage_quantity }} {{ dis.prescription.unit_of_measurement.desc }} {{ dis.prescription.regimen.desc }}

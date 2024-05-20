@@ -76,7 +76,7 @@
                   <ul class="list-disc ml-10">
                     <li *ngFor="let prescriptions of visit.prescriptions">
                       <span class="font-semibold text-sm">
-                        {{ prescriptions.konsulta_medicine ? prescriptions.konsulta_medicine.generic.desc : prescriptions.added_medicine }} <br />
+                        {{ prescriptions.konsulta_medicine ? prescriptions.konsulta_medicine.generic.desc : (prescriptions.medicine ? prescriptions.medicine.drug_name : prescriptions.added_medicine) }} <br />
                         {{ prescriptions.dosage_quantity }} {{ prescriptions.dosage_uom.desc }} ({{ prescriptions.dosage_uom.code }}) <br />
                         {{ prescriptions.dose_regimen.desc }} <br />
                         {{ prescriptions.duration_intake }} {{ prescriptions.duration_frequency.desc }} <br />
