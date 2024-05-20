@@ -5,7 +5,7 @@
       <!-- Modal header -->
       <div class="flex justify-between items-start py-3 px-5 rounded-t border-b bg-blue-500">
         <h3 class="mt-2 text-lg text-white">
-          Patient Name: {{ show_patient_data?.data[0].first_name }} {{ show_patient_data?.data[0].middle_name }} {{ show_patient_data?.data[0].last_name }}
+          Patient Name: {{ show_patient_data?.data[0].name }}
         </h3>
         <div class="flex justify-end">
           <div class="border border-gray-400 rounded-md bg-white">
@@ -29,17 +29,17 @@
         <div class="overflow-x-auto relative shadow-md sm:rounded-lg m-4">
           <table class="w-full text-sm text-left text-gray-500">
             <tbody>
-              <fieldset class="text-base text-black py-3 px-5 rounded-t border-black border-t border-b border-r border-l">
+              <fieldset class="text-base text-black py-3 px-5 rounded-t border-black border-t border-b border-r border-l" *ngFor="let data of show_patient_data.data">
                 <legend>Patient Information:</legend>
-                <label>Name: {{ show_patient_data?.data[0].last_name }}, {{ show_patient_data?.data[0].first_name }} {{ show_patient_data?.data[0].middle_name }}</label>
+                <label>Name: {{ data.patient_name }}</label>
                 <br />
-                <label>Birthdate: {{show_patient_data?.data[0].birthdate}}</label>
+                <label>Birthdate: {{ data.birthdate }}</label>
                 <br />
-                <label>Age: </label>
+                <label>Age: {{ getAge() }} years old</label>
                 <br />
-                <label>Consult date: {{show_patient_data?.data[0].consult_date}}</label>
-                <br />
-                <label>Address: {{show_patient_data?.data[0].address}}</label>
+                <label>Consult Date: {{ this.pending_fdx }}</label>
+                  <br />
+                <label>Address: {{ data.address }}</label>
               </fieldset>
 <!--            <div class="flex w-3/5">-->
 <!--              <div class="flex justify-center text-gray-700 md:block leading-tight align-top my-1 w-full p-1 rounded-md">-->

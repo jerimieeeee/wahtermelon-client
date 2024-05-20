@@ -36,6 +36,7 @@ export class PendingFdxComponent implements OnInit {
   to: number;
   total: number;
   isLoading: boolean = false;
+  fdx_consult_date: any;
 
   constructor(
     private http: HttpService
@@ -77,9 +78,7 @@ export class PendingFdxComponent implements OnInit {
       })
   }
 
-  getData(patient_id: any, notes_id: any, consult_id: any) {
-    console.log(notes_id, 'notes_id');
-    console.log(consult_id, 'consult_id');
+  getData(patient_id: any, consult_date: any,) {
     let params = {
       patient_id: patient_id,
       };
@@ -93,6 +92,7 @@ export class PendingFdxComponent implements OnInit {
         this.current_page = data.current_page;
         this.last_page = data.last_page;
         this.openList = true;
+        this.fdx_consult_date = consult_date;
       },
       error: err => console.log(err)
     });
