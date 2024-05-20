@@ -156,7 +156,7 @@
               </th>
             </tr>
             <tbody>
-            <tr *ngFor="let method of method_list">
+            <tr *ngFor="let method of method_list; let last = last">
               <td colspan="5" class="px-6 py-2 border-black border-r border-l border-b  text-sm">{{ method.desc }}</td>
 <!--              Current User (Beginning Month 10 to 14)-->
               <td class="border-black border-r border-l border-b text-blue-500 text-center">
@@ -777,7 +777,7 @@
                 </span>
 
                 <span *ngIf="sub_total_arr.indexOf(method.method_id) < 0" (click)="showNameList('new_acceptor_present_month', method.method_id, 20, 49)">
-                  {{ countTotalSummary('napm_20_49', stats?.[method.method_id][0].new_acceptor_present_month_20_to_49) }}
+                  {{ countTotalSummary('napm_20_49', stats?.[method.method_id][0].new_acceptor_present_month_20_to_49, last) }}
                   {{ stats?.[method.method_id][0].new_acceptor_present_month_20_to_49 ?? 0 }}
                 </span>
               </td>
@@ -805,65 +805,35 @@
             <tr>
               <td colspan="5" class="px-6 border-black border-r border-l border-b  text-sm"> <span class="font-bold ">m. Total Current Users</span> </td>
               <!--              Current User (Beginning Month)-->
-              <td class="border-black border-r border-l border-b text-gray-800 text-center"></td>
-              <td class="border-black border-r border-l border-b text-gray-800 text-center"></td>
-              <td class="border-black border-r border-l border-b text-gray-800 text-center"></td>
-              <td class="border-black border-r border-l border-b text-gray-800 text-center"></td>
-
-<!--              <td class="border-black border-r border-l border-b text-gray-800 text-center">{{total_count.cubm_10_14}}</td>
-              <td class="border-black border-r border-l border-b text-gray-800 text-center">{{total_count.cubm_15_19}}</td>
-              <td class="border-black border-r border-l border-b text-gray-800 text-center">{{total_count.cubm_20_49}}</td>
-              <td class="border-black border-r border-l border-b text-gray-800 text-center">{{ total_count.cubm_10_14+total_count.cubm_15_19+total_count.cubm_20_49 }}</td>-->
+             <td class="border-black border-r border-l border-b text-gray-800 text-center">{{ total_count.cubm_10_14 }}</td>
+              <td class="border-black border-r border-l border-b text-gray-800 text-center">{{ total_count.cubm_15_19 }}</td>
+              <td class="border-black border-r border-l border-b text-gray-800 text-center">{{ total_count.cubm_20_49 }}</td>
+              <td class="border-black border-r border-l border-b text-gray-800 text-center">{{ total_count.cubm_10_14+total_count.cubm_15_19+total_count.cubm_20_49 }}</td>
               <!--              New Acceptor (Previous Month)-->
-              <td class="border-black border-r border-l border-b text-gray-800 text-center"></td>
-              <td class="border-black border-r border-l border-b text-gray-800 text-center"></td>
-              <td class="border-black border-r border-l border-b text-gray-800 text-center"></td>
-              <td class="border-black border-r border-l border-b text-gray-800 text-center"></td>
-
-<!--              <td class="border-black border-r border-l border-b text-gray-800 text-center">{{total_count.napr_10_14}}</td>
-              <td class="border-black border-r border-l border-b text-gray-800 text-center">{{total_count.napr_15_19}}</td>
-              <td class="border-black border-r border-l border-b text-gray-800 text-center">{{total_count.napr_20_49}}</td>
-              <td class="border-black border-r border-l border-b text-gray-800 text-center">{{ total_count.napr_10_14+total_count.napr_15_19+total_count.napr_20_49 }}</td>-->
+             <td class="border-black border-r border-l border-b text-gray-800 text-center">{{ total_count.napr_10_14 }}</td>
+              <td class="border-black border-r border-l border-b text-gray-800 text-center">{{ total_count.napr_15_19 }}</td>
+              <td class="border-black border-r border-l border-b text-gray-800 text-center">{{ total_count.napr_20_49 }}</td>
+              <td class="border-black border-r border-l border-b text-gray-800 text-center">{{ total_count.napr_10_14+total_count.napr_15_19+total_count.napr_20_49 }}</td>
               <!--              Other Acceptor (Present Month)-->
-              <td class="border-black border-r border-l border-b text-gray-800 text-center"></td>
-              <td class="border-black border-r border-l border-b text-gray-800 text-center"></td>
-              <td class="border-black border-r border-l border-b text-gray-800 text-center"></td>
-              <td class="border-black border-r border-l border-b text-gray-800 text-center"></td>
-
-<!--              <td class="border-black border-r border-l border-b text-gray-800 text-center">{{total_count.oapm_10_14}}</td>
-              <td class="border-black border-r border-l border-b text-gray-800 text-center">{{total_count.oapm_15_19}}</td>
-              <td class="border-black border-r border-l border-b text-gray-800 text-center">{{total_count.oapm_20_49}}</td>
-              <td class="border-black border-r border-l border-b text-gray-800 text-center">{{ total_count.oapm_10_14+total_count.oapm_15_19+total_count.oapm_20_49 }}</td>-->
+             <td class="border-black border-r border-l border-b text-gray-800 text-center">{{ total_count.oapm_10_14 }}</td>
+              <td class="border-black border-r border-l border-b text-gray-800 text-center">{{ total_count.oapm_15_19 }}</td>
+              <td class="border-black border-r border-l border-b text-gray-800 text-center">{{ total_count.oapm_20_49 }}</td>
+              <td class="border-black border-r border-l border-b text-gray-800 text-center">{{ total_count.oapm_10_14+total_count.oapm_15_19+total_count.oapm_20_49 }}</td>
               <!--              Dropout (Present Month)-->
-
-              <td class="border-black border-r border-l border-b text-gray-800 text-center"></td>
-              <td class="border-black border-r border-l border-b text-gray-800 text-center"></td>
-              <td class="border-black border-r border-l border-b text-gray-800 text-center"></td>
-              <td class="border-black border-r border-l border-b text-gray-800 text-center"></td>
-<!--              <td class="border-black border-r border-l border-b text-gray-800 text-center">{{total_count.dopm_10_14}}</td>
-              <td class="border-black border-r border-l border-b text-gray-800 text-center">{{total_count.dopm_15_19}}</td>
-              <td class="border-black border-r border-l border-b text-gray-800 text-center">{{total_count.dopm_20_49}}</td>
-              <td class="border-black border-r border-l border-b text-gray-800 text-center">{{ total_count.dopm_10_14+total_count.dopm_15_19+total_count.dopm_20_49 }}</td>-->
+             <td class="border-black border-r border-l border-b text-gray-800 text-center">{{ total_count.dopm_10_14 }}</td>
+              <td class="border-black border-r border-l border-b text-gray-800 text-center">{{ total_count.dopm_15_19 }}</td>
+              <td class="border-black border-r border-l border-b text-gray-800 text-center">{{ total_count.dopm_20_49 }}</td>
+              <td class="border-black border-r border-l border-b text-gray-800 text-center">{{ total_count.dopm_10_14+total_count.dopm_15_19+total_count.dopm_20_49 }}</td>
               <!--              Current User (End of Month)-->
-              <td class="border-black border-r border-l border-b text-gray-800 text-center"></td>
-              <td class="border-black border-r border-l border-b text-gray-800 text-center"></td>
-              <td class="border-black border-r border-l border-b text-gray-800 text-center"></td>
-              <td class="border-black border-r border-l border-b text-gray-800 text-center"></td>
-
-<!--              <td class="border-black border-r border-l border-b text-gray-800 text-center">{{ total_count.cuem_10_14}}</td>
-              <td class="border-black border-r border-l border-b text-gray-800 text-center">{{ total_count.cuem_15_19}}</td>
-              <td class="border-black border-r border-l border-b text-gray-800 text-center">{{ total_count.cuem_20_49}}</td>
-              <td class="border-black border-r border-l border-b text-gray-800 text-center">{{ total_count.cuem_10_14+total_count.cuem_15_19+total_count.cuem_20_49 }}</td>-->
+             <td class="border-black border-r border-l border-b text-gray-800 text-center">{{ total_count.cuem_10_14 }}</td>
+              <td class="border-black border-r border-l border-b text-gray-800 text-center">{{ total_count.cuem_15_19 }}</td>
+              <td class="border-black border-r border-l border-b text-gray-800 text-center">{{ total_count.cuem_20_49 }}</td>
+              <td class="border-black border-r border-l border-b text-gray-800 text-center">{{ total_count.cuem_10_14+total_count.cuem_15_19+total_count.cuem_20_49 }}</td>
               <!--              New Acceptor (Present Month)-->
-              <td class="border-black border-r border-l border-b text-gray-800 text-center"></td>
-              <td class="border-black border-r border-l border-b text-gray-800 text-center"></td>
-              <td class="border-black border-r border-l border-b text-gray-800 text-center"></td>
-              <td class="border-black border-r border-l border-b text-gray-800 text-center"></td>
-
-<!--              <td class="border-black border-r border-l border-b text-gray-800 text-center">{{total_count.napm_10_14}}</td>
-              <td class="border-black border-r border-l border-b text-gray-800 text-center">{{total_count.napm_15_19}}</td>
-              <td class="border-black border-r border-l border-b text-gray-800 text-center">{{total_count.napm_20_49}}</td>
-              <td class="border-black border-r border-l border-b text-gray-800 text-center">{{ total_count.napm_10_14+total_count.napm_15_19+total_count.napm_20_49 }}</td>-->
+             <td class="border-black border-r border-l border-b text-gray-800 text-center">{{ total_count.napm_10_14 }}</td>
+              <td class="border-black border-r border-l border-b text-gray-800 text-center">{{ total_count.napm_15_19 }}</td>
+              <td class="border-black border-r border-l border-b text-gray-800 text-center">{{ total_count.napm_20_49 }}</td>
+              <td class="border-black border-r border-l border-b text-gray-800 text-center">{{ total_count.napm_10_14+total_count.napm_15_19+total_count.napm_20_49 }}</td>
             </tr>
             </tbody>
           </table>
@@ -878,4 +848,4 @@
 </div>
 
 
-<app-show-name-list *ngIf="openList" (toggleModal)="toggleModal()" [name_list_params]="name_list_params"></app-show-name-list>
+<app-show-name-list *ngIf="openList" (toggleModal)="toggleModal()" [name_list_params]="name_list_params" [selected_barangay]="selected_barangay" [reportForm]="reportForm"></app-show-name-list>
