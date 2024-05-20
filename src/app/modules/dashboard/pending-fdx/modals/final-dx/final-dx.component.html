@@ -5,7 +5,7 @@
       <!-- Modal header -->
       <div class="flex justify-between items-start py-3 px-5 rounded-t border-b bg-blue-500">
         <h3 class="mt-2 text-lg text-white">
-          Patient Name: {{ show_patient_data?.data[0].patient_name }}
+          Patient Name: {{ show_patient_data?.data[0].first_name }} {{ show_patient_data?.data[0].middle_name }} {{ show_patient_data?.data[0].last_name }}
         </h3>
         <div class="flex justify-end">
           <div class="border border-gray-400 rounded-md bg-white">
@@ -31,11 +31,11 @@
             <tbody>
               <fieldset class="text-base text-black py-3 px-5 rounded-t border-black border-t border-b border-r border-l">
                 <legend>Patient Information:</legend>
-                <label>Name: {{ show_patient_data?.data[0].patient_name }}</label>
+                <label>Name: {{ show_patient_data?.data[0].last_name }}, {{ show_patient_data?.data[0].first_name }} {{ show_patient_data?.data[0].middle_name }}</label>
                 <br />
                 <label>Birthdate: {{show_patient_data?.data[0].birthdate}}</label>
                 <br />
-                <label>Age: {{show_patient_data?.data[0].age}}</label>
+                <label>Age: </label>
                 <br />
                 <label>Consult date: {{show_patient_data?.data[0].consult_date}}</label>
                 <br />
@@ -84,7 +84,7 @@
                     Current Diagnosis
                   </h3>
                 </div>
-                <div class="shadow-md flex border border-1 w-full -outline-offset-8">
+                <div class="flex border border-1 w-full">
                   <div class="flex text-gray-700 md:block leading-tight align-top my-1 w-full p-1 rounded-md">
                   <span class="w-full font-semibold my-0 text-sm rounded-md py-2 px-3">
                     ICD 10
@@ -105,33 +105,68 @@
                     </div>
                   </div>
                 </div>
-                <div class="shadow-md flex justify-between items-start mt-2 py-2 px-5 rounded-t border-b bg-gray-50 -outline-offset-8">
-                  <h3 class="mt-2 text-sm text-gray-500 font-bold">
+                <div class="shadow-md -outline-offset-8">
+                  <div class="border-b rounded-t bg-green-500 mt-2 py-2 px-5">
+                  <h3 class="mt-2 text-sm text-white font-bold">
                     Previous Diagnosis
                   </h3>
-                </div>
-                <div class="shadow-md flex border border-1 w-full -outline-offset-8">
-                  <div class="flex text-gray-700 md:block leading-tight align-top my-1 w-full p-1 rounded-md">
-                  <span class="w-full font-semibold my-0 text-sm rounded-md py-2 px-3">
-                    ICD 10
-                  </span>
                   </div>
-                  <div class="flex w-3/5">
+
+                <div class="border border-b w-full grid grid-cols-6">
+                  <div class="text-gray-700 md:block leading-tight align-top my-1 w-full p-1 rounded-md col-span-2">
+                    <span class="w-full font-semibold my-0 text-sm rounded-md py-2 px-3">
+                      ICD 10
+                    </span>
+                  </div>
+                  <div class="grid col-span-3">
                     <div class="flex text-gray-700 md:block leading-tight align-top my-1 w-full p-1 rounded-md">
                   <span class="w-full font-semibold my-0 text-sm rounded-md py-2 px-3">
                     ICD 10 Description/Remarks
                   </span>
                     </div>
                   </div>
-                  <div class="flex w-3/5">
+                  <div class="grid col-span-1">
                     <div class="flex text-gray-700 md:block leading-tight align-top my-1 w-full p-1 rounded-md">
-                  <span class="w-full font-semibold my-0 text-sm rounded-md py-2 px-3">
-                    Date
-                  </span>
+                      <span class="w-full font-semibold my-0 text-sm rounded-md py-2 px-3">
+                        Date
+                      </span>
+                    </div>
+                  </div>
+                  <div class="col-span-2" *ngFor="let data of data">
+                    <div *ngFor="let notes of data.consult_notes">
+                    <span *ngFor="let finaldx of notes.finaldx">
+                      <ng-container *ngIf="finaldx.lib_icd10.icd10_code !== null">
+                        {{ finaldx.lib_icd10.icd10_code }}
+                      </ng-container>
+                    </span>
+                    </div>
+                  </div>
+                  <div class="col-span-2" *ngFor="let data of data">
+                    <div *ngFor="let notes of data.consult_notes">
+                    <span *ngFor="let finaldx of notes.finaldx">
+                      <ng-container *ngIf="finaldx.lib_icd10.icd10_code !== null">
+                        {{ finaldx.lib_icd10.icd10_desc }}
+                      </ng-container>
+                    </span>
+                    </div>
+                  </div>
+                  <div *ngFor="let data of data">
+                    <div *ngFor="let notes of data.consult_notes">
+                      <ng-container *ngFor="let finaldx of notes.finaldx">
+                        <div class="col-span-2" *ngIf="finaldx.lib_icd10.icd10_code !== null && finaldx.lib_icd10.icd10_desc !== null">
+                          {{ finaldx.lib_icd10.icd10_code }} - {{ finaldx.lib_icd10.icd10_desc }}
+                          <div *ngFor="let consult of data.consult">
+                            <div *ngIf="consult.consult_date === notes.consult_date">
+                              {{ consult.consult_date }}
+                            </div>
+                          </div>
+                        </div>
+                      </ng-container>
                     </div>
                   </div>
                 </div>
               </div>
+            </div>
             </div>
               <div class="grid grid-cols-2 justify-between">
                 <div class="grid col-span-1 mt-5 py-2 px-5 rounded-t border-b bg-gray-50">

@@ -77,11 +77,11 @@ export class PendingFdxComponent implements OnInit {
       })
   }
 
-  getData(patient_id: any, consult_id: any) {
-    console.log(patient_id);
+  getData(patient_id: any, notes_id: any, consult_id: any) {
+    console.log(notes_id, 'notes_id');
+    console.log(consult_id, 'consult_id');
     let params = {
       patient_id: patient_id,
-      consult_id: consult_id
       };
       this.http.get('reports-2018/pending-fdx/get-consultation', { params })
         .pipe(
@@ -93,8 +93,6 @@ export class PendingFdxComponent implements OnInit {
         this.current_page = data.current_page;
         this.last_page = data.last_page;
         this.openList = true;
-
-        console.log(this.show_patient_data);
       },
       error: err => console.log(err)
     });
