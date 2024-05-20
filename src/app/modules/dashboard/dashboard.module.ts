@@ -10,6 +10,8 @@ import { FormsModule } from '@angular/forms';
 import { TodaysAppointmentComponent } from './todays-appointment/todays-appointment.component';
 import { TodaysReferralComponent } from './todays-referral/todays-referral.component';
 import { GbvPatientsComponent } from './gbv-patients/gbv-patients.component';
+import { PendingFdxComponent } from './pending-fdx/pending-fdx.component';
+import { FinalDxComponent } from './pending-fdx/modals/final-dx/final-dx.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,9 @@ import { GbvPatientsComponent } from './gbv-patients/gbv-patients.component';
     TodaysStatsComponent,
     TodaysAppointmentComponent,
     TodaysReferralComponent,
-    GbvPatientsComponent
+    GbvPatientsComponent,
+    PendingFdxComponent,
+    FinalDxComponent
   ],
   imports: [
     CommonModule,

@@ -1,0 +1,120 @@
+<div class="mb-10  text-gray-600 h-100 border border-slate-200 shadow-md rounded-md">
+  <div class="md:flex md:justify-between md:items-center pb-2 bg-blue-500 text-white rounded-t-md">
+    <span class="font-semibold pt-2 pl-5">Pending Final Diagnosis</span>
+  </div>
+  <div class="border border-gray-400 rounded-md bg-white">
+    <input type="text" [(ngModel)]="patient_search" class="form-input border-0 text-sm p-1 m-1 border-r border-gray-400" (keyup.enter)="getPatient()" placeholder="Search Patient"/>
+    <button type="button" class="text-blue-500 w-9 h-9 border-r border-gray-400" (click)="getPatient()">
+      <fa-icon class="-ml-1" [icon]="faSearch"></fa-icon>
+    </button>
+  </div>
+
+  <div class="p-3" *ngIf="show_form">
+    <div class="flex justify-between border-b border-gray-100 bg-gray-200">
+      <div class="flex w-3/5">
+        <div class="flex justify-center text-gray-700 md:block leading-tight align-top my-1 w-full p-1 rounded-md">
+          <span class="w-full font-semibold my-0 text-base rounded-md py-2 px-3">
+            Name:
+          </span>
+        </div>
+      </div>
+      <div class="flex w-3/5">
+        <div class="flex justify-center text-gray-700 md:block leading-tight align-top my-1 w-full p-1 rounded-md">
+          <span class="w-full font-semibold my-0 text-base rounded-md py-2 px-3">
+            Consult date:
+          </span>
+        </div>
+      </div>
+      <div class="flex w-3/5">
+        <div class="flex justify-center text-gray-700 md:block leading-tight align-top my-1 w-full p-1 rounded-md">
+          <span class="w-full font-semibold my-0 text-base rounded-md py-2 px-3">
+            Referred to:
+          </span>
+        </div>
+      </div>
+      <div class="flex w-3/5">
+        <div class="flex justify-center text-gray-700 md:block leading-tight align-top my-1 w-full p-1 rounded-md">
+          <span class="w-full font-semibold my-0 text-base rounded-md py-2 px-3">
+            Logged by:
+          </span>
+        </div>
+      </div>
+    </div>
+    <span class="hidden" *ngFor="let patient of pending_fdx"></span>
+    <div class="flex justify-between border-b border-gray-100" *ngFor="let patient of pending_fdx">
+      <div class="flex w-3/5">
+        <div class="flex justify-center text-gray-700 md:block leading-tight align-top my-1 w-full p-1 rounded-md">
+          <span class="w-full font-medium my-0 text-sm rounded-md py-2 px-3 hover:cursor-pointer hover:bg-blue-500 hover:text-white" (click)="getData(patient.patient_id, patient.notes_id, patient.consult_id)">
+            {{ patient.name }}
+          </span>
+        </div>
+      </div>
+      <div class="grid grid-cols-5 text-left w-3/5">
+        <div class="col-span-12 text-gray-700 p-3 rounded-md text-[.85em]">
+          <span class="w-full font-medium my-0 text-sm">
+            {{ patient.consult_date }}
+          </span>
+        </div>
+      </div>
+      <div class="grid grid-cols-5 text-left w-3/5">
+        <div class="col-span-12 text-gray-700 p-3 rounded-md text-[.85em]">
+          <span class="w-full font-medium my-0 text-sm">
+            {{ patient.doctor ? patient.doctor : '-' }}
+          </span>
+        </div>
+      </div>
+      <div class="grid grid-cols-5 text-left w-3/5">
+        <div class="col-span-12 text-gray-700 p-3 rounded-md text-[.85em]">
+          <span class="w-full font-medium my-0 text-sm">
+            {{ patient.encoded ? patient.encoded : '-' }}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="-pt-3" *ngIf="show_form && getPatient.length === 0">
+    <div class="text-center items-center mb-3 italic" >
+      No record to show
+    </div>
+  </div>
+
+  <div class="pt-3" *ngIf="!show_form && !getPatient">
+    <div class="text-center items-center mb-3 italic" >
+      <fa-icon [icon]="faCircleNotch" spin="true" class="text-blue-500"></fa-icon>
+    </div>
+  </div>
+  <div *ngIf="total >= 1">
+    <div class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6 rounded-b-md">
+      <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+        <div>
+          <p class="text-sm text-gray-700">
+            Showing <span class="font-medium">{{ from }}</span>
+            to <span class="font-medium">{{ to }}</span>
+            of <span class="font-medium">{{ total }}</span> results
+          </p>
+        </div>
+        <div *ngIf="total >= 6">
+          <nav class="relative z-0 inline-flex shadow-sm -space-x-px" aria-label="Pagination">
+            <button [disabled]="current_page===1" (click)="getPatient(Number(1))" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 enabled:bg-white disabled:bg-gray-300 text-sm font-medium text-gray-500 hover:bg-gray-50">
+              <fa-icon [icon]="faAnglesLeft" class="block h-15 w-15 text-gray-500 pr-1"></fa-icon>
+            </button>
+
+            <button [disabled]="current_page===1" (click)="getPatient(Number(current_page-1))" class="relative inline-flex items-center px-4 py-2 border border-gray-300 enabled:bg-white disabled:bg-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
+              <fa-icon [icon]="faChevronLeft" class="block h-15 w-15 text-gray-500 pr-1"></fa-icon>Previous
+            </button>
+            <button [disabled]="current_page===last_page" (click)="getPatient(Number(current_page+1))" class="relative inline-flex items-center px-4 py-2 border border-gray-300 enabled:bg-white disabled:bg-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
+              Next<fa-icon [icon]="faChevronRight" class="h-5 w-5 text-gray-500"></fa-icon>
+            </button>
+
+            <button [disabled]="current_page===last_page" (click)="getPatient(Number(last_page))" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 enabled:bg-white disabled:bg-gray-300 text-sm font-medium text-gray-500 hover:bg-gray-50">
+              <fa-icon [icon]="faAnglesRight" class="h-5 w-5 text-gray-500"></fa-icon>
+            </button>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-final-dx *ngIf="openList" (toggleModal)="toggleModal()" [show_patient_data]="show_patient_data"></app-final-dx>
