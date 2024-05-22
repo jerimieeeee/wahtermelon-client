@@ -116,7 +116,10 @@
 </div>
 
 <div *ngIf="pages === 2 && module === 3">
-  <app-condition></app-condition>
+  <app-condition [selected_visit]="selected_visit"
+    (loadSelectedConsult)="loadSelectedConsult($event)"
+  ></app-condition>
+
   <app-services [selected_visit]="selected_visit"
     (loadSelectedConsult)="loadSelectedConsult($event)"
   ></app-services>

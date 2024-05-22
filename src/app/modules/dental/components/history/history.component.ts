@@ -31,7 +31,6 @@ export class HistoryComponent implements OnInit {
 
     this.http.post('dental/medical-social', this.medicalSocialForm.value).subscribe({
       next: (data: any) => {
-        console.log(data)
         let message: string = this.medicalSocialForm.value.id ? 'updated' : 'recorded';
         this.toastr.success('Successfully ' + message, 'Medical & Social History');
         this.loadSelectedConsult.emit();
@@ -54,14 +53,13 @@ export class HistoryComponent implements OnInit {
         this.lib_social_history = dataSocialHistory.data;
         this.show_form = true;
       },
-      error: err => console.log(err)
+      error: err => { this.http.showError(err.error.message, 'Dental History Library'); }
     });
 
     this.patchData();
   }
 
   patchData(){
-    console.log(this.selected_visit);
     if(this.selected_visit.dentalMedicalSocials) {
       this.medicalSocialForm.patchValue({...this.selected_visit.dentalMedicalSocials})
     } else {

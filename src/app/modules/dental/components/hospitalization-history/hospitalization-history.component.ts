@@ -76,7 +76,6 @@ export class HospitalizationHistoryComponent implements OnInit{
   ) { }
 
   ngOnInit(): void {
-    console.log('test')
     this.createForm();
   }
 }

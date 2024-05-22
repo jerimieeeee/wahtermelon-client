@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { faSave } from '@fortawesome/free-regular-svg-icons';
+import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -11,53 +13,67 @@ import { ToastrService } from 'ngx-toastr';
 export class ToothServicesComponent implements OnInit {
   @Output() toggleModal = new EventEmitter<any>();
   @Input() selected_tooth;
+  @Input() selected_visit;
 
-  date = new Date();
+  faSave = faSave;
+  faCircleNotch = faCircleNotch;
 
-  showModal: boolean = false;
+  tooth_services: any = [];
+  is_saving: boolean = false;
 
-  toothNumber: any = [];
-
-  toothConditionForm: FormGroup = new FormGroup({
-    facility_code: new FormControl<string| null>(''),
+  toothServiceForm: FormGroup = new FormGroup({
+    consult_id: new FormControl<string| null>(''),
     patient_id: new FormControl<string| null>(''),
-    user_id: new FormControl<string| null>(''),
-    tooth_number: new FormControl<string| null>(''),
-    tooth_condition: new FormControl<number| null>(null)
+    tooth_number: new FormControl<string| null>(null),
+    service_code: new FormControl<number| null>(null),
+    remarks: new FormControl<string| null>(null),
   });
 
-  condition_list = [
-    {id: 'Y',  desc: 'Sound/Sealed'},
-    {id: 'D',  desc: 'Decayed'},
-    {id: 'F',  desc: 'Filled'},
-    {id: 'JC', desc: 'Jacket Crown'},
-    {id: 'M',  desc: 'Missing'},
-    {id: 'P',  desc: 'Pontic'},
-    {id: 'S',  desc: 'Supernumerary'},
-    {id: 'Un', desc: 'Unerupted'},
-    {id: 'Dx', desc: 'For Extraction'}
-  ];
-
   get f(): { [key: string]: AbstractControl } {
-    return this.toothConditionForm.controls;
+    return this.toothServiceForm.controls;
   }
 
   onSubmit(){
-    console.log(this.toothNumber);
-    /* this.http.post('', this.toothConditionForm.value).subscribe({
+    this.is_saving = true;
+    console.log(this.toothServiceForm.value);
+    this.http.post('dental/tooth-service', this.toothServiceForm.value).subscribe({
       next: (data: any) => {
         console.log(data)
 
         let message: string = 'recorded';
-        this.toastr.success('Successfully '+ message, 'Tooth Condition')
+        this.toastr.success('Successfully '+ message, 'Tooth Service');
+        this.is_saving = false;
       },
-      error: err => { this.http.showError(err.error.message, 'Tooth Condition') }
-    }) */
+      error: err => { this.http.showError(err.error.message, 'Tooth Service') }
+    })
   }
 
-  onRightClick(){
-    alert('right click');
-    return false;
+
+  patchValue() {
+
+  }
+
+  createForm() {
+    console.log(this.selected_visit);
+    this.toothServiceForm = this.formBuilder.nonNullable.group({
+      id: [''],
+      consult_id: [this.selected_visit.id, [Validators.required]],
+      patient_id: [this.selected_visit.patient.id, [Validators.required]],
+      tooth_number: [this.selected_tooth.tooth_number, [Validators.required]],
+      service_code: [null, [Validators.required]],
+      remarks: [null],
+    });
+  }
+
+  loadLibraries() {
+    this.http.get('libraries/dental-tooth-service').subscribe({
+      next: (data: any) => {
+        console.log(data);
+        this.tooth_services = data.data;
+        this.createForm();
+      },
+      error: err => { this.http.showError(err.error.message, 'Tooth Services Library') }
+    })
   }
 
   closeModal(){
@@ -66,10 +82,11 @@ export class ToothServicesComponent implements OnInit {
 
   constructor(
     private http: HttpService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private formBuilder: FormBuilder
   ) { }
 
   ngOnInit(): void {
-    console.log(this.selected_tooth)
+    this.loadLibraries();
   }
 }

@@ -34,7 +34,7 @@ export class ServicesComponent implements OnInit {
 
   onSubmit(){
     this.is_saving = true;
-    console.log(this.dentalServiceForm.value);
+
     this.http.post('dental/service', this.dentalServiceForm.value).subscribe({
       next: (data: any) => {
         this.is_saving = false;
@@ -74,7 +74,6 @@ export class ServicesComponent implements OnInit {
   loadLibraries(){
     this.http.get('libraries/dental-service').subscribe({
       next:(data: any) => {
-        console.log(data);
         this.service_list = data.data;
         this.createForm();
       },

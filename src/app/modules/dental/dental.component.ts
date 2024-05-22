@@ -24,11 +24,11 @@ export class DentalComponent implements OnInit {
   consult_id: any;
   allowed_to_edit: boolean = true
   have_complaint: boolean = false;
+  user_id: string;
 
   toggle_content: boolean = true;
 
   loadSelectedConsult() {
-    console.log('loading selected consult')
     let params = {
       id: this.selected_visit.id,
       pt_group: 'dn',
@@ -57,21 +57,7 @@ export class DentalComponent implements OnInit {
 
     this.http.get('consultation/records', {params}).subscribe({
       next: (data: any) => {
-        console.log(data)
         this.consult_details = data.data;
-
-
-        // this.allowed_to_edit = this.http.getUserFacility() === this.consult_details.facility.code ? true : false;
-        // console.log(this.consult_details.facility.code)
-        /* if(this.consult_details.consult_notes.complaint || this.consult_details.consult_notes.complaints.length > 0  || this.consult_details.consult_notes.history) {
-          this.have_complaint = true;
-
-
-          if(this.consult_details.physician) {
-            this.referred_to = this.consult_details.physician;
-            this.enable_edit = true;
-          }
-        } */
       },
       error: err => { this.http.showError(err.error.message, 'Dental Consult') }
     });
@@ -85,7 +71,6 @@ export class DentalComponent implements OnInit {
   item_index: number = null;
   switchPage(page, data?, item_index?){
     if(page === 2) {
-      console.log(item_index)
       this.item_index = item_index;
       this.router.navigate(['/patient/dn', {id: data.patient.id, consult_id: data.id}]);
     }
@@ -102,7 +87,7 @@ export class DentalComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute
   ) { }
-  user_id: string;
+
   ngOnInit(): void {
     this.user_id = this.http.getUserID();
     this.module = 1;

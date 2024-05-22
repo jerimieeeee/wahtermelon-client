@@ -11,6 +11,7 @@ import { ToastrService } from 'ngx-toastr';
 export class ToothConditionComponent implements OnInit {
   @Output() toggleModal = new EventEmitter<any>();
   @Input() selected_tooth;
+  @Input() selected_visit;
 
   date = new Date();
 

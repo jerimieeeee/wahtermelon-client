@@ -77,7 +77,6 @@ export class SurgicalHistoryComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    console.log(this.selected_visit)
     this.createForm();
   }
 }

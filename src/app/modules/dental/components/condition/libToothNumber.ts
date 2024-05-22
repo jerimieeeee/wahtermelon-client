@@ -1,4 +1,91 @@
+export const adult_tooth_arr = [
+  11, 12, 13, 14, 15, 16, 17, 18, 21, 22, 23, 24, 25, 26, 27, 28,
+  31, 32, 33, 34, 35, 36, 37, 38, 41, 42, 43, 44, 45, 46, 47, 48
+];
+
+export const temp_tooth_arr = [
+  51, 52, 53, 54, 55, 61, 62, 63, 64, 65,
+  71, 72, 73, 74, 75, 81, 82, 83, 84, 85
+];
+
+export const tooth_condition_legend = [
+  {id: 'D',   desc: 'Decayed'},
+  {id: 'F',   desc: 'Filled'},
+  {id: 'JC',  desc: 'Jacket Crown'},
+  {id: 'M',   desc: 'Missing'},
+  {id: 'P',   desc: 'Pontic'},
+  {id: 'S',   desc: 'Supernumerary'},
+  {id: 'Un',  desc: 'Unerupted'},
+  {id: 'Dx',  desc: 'For Extraction'},
+  {id: 'Y',   desc: 'Sound/Sealed'}
+];
+
 export const adult_tooth_conditions = [
+  [
+    {tooth_number: 18, condition: null },
+    {tooth_number: 17, condition: null },
+    {tooth_number: 16, condition: null },
+    {tooth_number: 15, condition: null },
+    {tooth_number: 14, condition: null },
+    {tooth_number: 13, condition: null },
+    {tooth_number: 12, condition: null },
+    {tooth_number: 11, condition: null },
+    {tooth_number: 21, condition: null },
+    {tooth_number: 22, condition: null },
+    {tooth_number: 23, condition: null },
+    {tooth_number: 24, condition: null },
+    {tooth_number: 25, condition: null },
+    {tooth_number: 26, condition: null },
+    {tooth_number: 27, condition: null },
+    {tooth_number: 28, condition: null }
+  ],
+  [
+    {tooth_number: 48, condition: null },
+    {tooth_number: 47, condition: null },
+    {tooth_number: 46, condition: null },
+    {tooth_number: 45, condition: null },
+    {tooth_number: 44, condition: null },
+    {tooth_number: 43, condition: null },
+    {tooth_number: 42, condition: null },
+    {tooth_number: 41, condition: null },
+    {tooth_number: 31, condition: null },
+    {tooth_number: 32, condition: null },
+    {tooth_number: 33, condition: null },
+    {tooth_number: 34, condition: null },
+    {tooth_number: 35, condition: null },
+    {tooth_number: 36, condition: null },
+    {tooth_number: 37, condition: null },
+    {tooth_number: 38, condition: null }
+  ]
+];
+
+export const temp_tooth_conditions = [
+  [
+    {tooth_number: 55, condition: null },
+    {tooth_number: 54, condition: null },
+    {tooth_number: 53, condition: null },
+    {tooth_number: 52, condition: null },
+    {tooth_number: 51, condition: null },
+    {tooth_number: 61, condition: null },
+    {tooth_number: 62, condition: null },
+    {tooth_number: 63, condition: null },
+    {tooth_number: 64, condition: null },
+    {tooth_number: 65, condition: null }
+  ],
+  [
+    {tooth_number: 85, condition: null },
+    {tooth_number: 84, condition: null },
+    {tooth_number: 83, condition: null },
+    {tooth_number: 82, condition: null },
+    {tooth_number: 81, condition: null },
+    {tooth_number: 71, condition: null },
+    {tooth_number: 72, condition: null },
+    {tooth_number: 73, condition: null },
+    {tooth_number: 74, condition: null },
+    {tooth_number: 75, condition: null }
+  ]
+];
+/* export const adult_tooth_conditions = [
   [
     {tooth_number: 18, condition: {'18A': null, '18B': null, '18C': null, '18D': null, '18E': null}},
     {tooth_number: 17, condition: {'17A': null, '17B': null, '17C': null, '17D': null, '17E': null}},
@@ -35,9 +122,9 @@ export const adult_tooth_conditions = [
     {tooth_number: 37, condition: {'37A': null, '37B': null, '37C': null, '37D': null, '37E': null}},
     {tooth_number: 38, condition: {'38A': null, '38B': null, '38C': null, '38D': null, '38E': null}}
   ]
-];
+]; */
 
-export const temp_tooth_conditions = [
+/* export const temp_tooth_conditions = [
   [
     {tooth_number: 55, condition: {'55A': null, '55B': null, '55C': null, '55D': null, '55E': null}},
     {tooth_number: 54, condition: {'54A': null, '54B': null, '54C': null, '54D': null, '54E': null}},
@@ -62,4 +149,4 @@ export const temp_tooth_conditions = [
     {tooth_number: 74, condition: {'74A': null, '74B': null, '74C': null, '74D': null, '74E': null}},
     {tooth_number: 75, condition: {'75A': null, '75B': null, '75C': null, '75D': null, '75E': null}}
   ]
-];
+]; */

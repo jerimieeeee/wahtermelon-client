@@ -86,7 +86,6 @@ export class ComplaintHistoryComponent implements OnInit, OnChanges {
   loadLib(){
     this.http.get('libraries/complaint').subscribe(
       (data: any) => {
-        // console.log(data.data)
         this.complaints = data.data;
         this.loadSelected();
         this.show_form = true;
@@ -103,7 +102,7 @@ export class ComplaintHistoryComponent implements OnInit, OnChanges {
     this.show_gbv_form = false;
     this.have_open_gbv = false;
     let selected_complaints = [];
-    console.log(this.consult_details);
+
     if(this.consult_details.consult_notes && this.consult_details.consult_notes.complaints){
       Object.entries(this.consult_details.consult_notes.complaints).forEach(([key, value], index) => {
         let val: any = value;
@@ -149,9 +148,7 @@ export class ComplaintHistoryComponent implements OnInit, OnChanges {
   ) { }
 
   ngOnInit(): void {
-    console.log(this.consult_details)
     this.loadLib();
-
     this.allowed_to_edit = true;
   }
 }

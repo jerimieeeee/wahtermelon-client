@@ -71,11 +71,10 @@ export class PrescriptionComponent implements OnInit, OnChanges {
 
     this.http.update('consultation/notes/', this.consult_details.consult_notes.id, notes_remarks).subscribe({
       next: (data: any) => {
-        // console.log(data);
         this.is_saving = false;
         this.showToastr();
       },
-      error: err => console.log(err)
+      error: err => { this.http.showError(err.error.message, 'Prescription'); }
     })
   }
 
@@ -88,7 +87,6 @@ export class PrescriptionComponent implements OnInit, OnChanges {
   }
 
   openAddForm(drug){
-    // console.log(drug)
     this.selected_drug = drug;
     this.toggleForm();
   }
@@ -125,7 +123,7 @@ export class PrescriptionComponent implements OnInit, OnChanges {
   ngOnChanges(changes){
     this.show_content = this.toggle_content;
     this.show_content_tx = this.toggle_content;
-    // console.log(this.show_content)
+
     if(this.consult_details.consult_done === false) this.show_actions = true;
 
     if(this.consult_details) {
@@ -155,12 +153,12 @@ export class PrescriptionComponent implements OnInit, OnChanges {
       this.http.get('libraries/'+obj.location).subscribe({
         next: (data: any) => {
           this[obj.var_name] = data.data;
-          // console.log(data.data);
+
           if(this.libraries.length -1 === index) {
             this.show_form = true
           }
         },
-        error: err => console.log(err)
+        error: err => { this.http.showError(err.error.message, obj.var_name + ' Library'); }
       })
     });
   }
@@ -192,12 +190,11 @@ export class PrescriptionComponent implements OnInit, OnChanges {
 
     this.http.get('medicine/prescriptions',{params}).subscribe({
       next: (data: any) => {
-        console.log(data.data)
         if(data.data.length > 0) {
           this.prescriptions = data.data;
         }
       },
-      error: err => console.log(err)
+      error: err => { this.http.showError(err.error.message, 'Prescription Library'); }
     })
   }
 
@@ -208,7 +205,6 @@ export class PrescriptionComponent implements OnInit, OnChanges {
   ) { }
 
   ngOnInit(): void {
-    console.log(this.consult_details)
     this.loadPrescriptions();
   }
 
