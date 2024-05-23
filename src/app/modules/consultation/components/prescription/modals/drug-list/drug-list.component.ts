@@ -61,9 +61,9 @@ export class DrugListComponent implements OnInit {
 
   loadMedicineList(page?: number){
     let url = this.lib_drug_table ? 'libraries/konsulta-medicines' : 'medicine/list';
-    let filter = this.lib_drug_table ? 'filter[desc]' : 'filter[search]';
+    // let filter = this.lib_drug_table ? 'filter[desc]' : 'filter[search]';
     let params = {params: { }};
-    if (this.search_item) params['params'][filter] = this.search_item;
+    if (this.search_item) params['params']['filter[search]'] = this.search_item;
     if (page) params['params']['page'] = page;
     params['params']['per_page'] = this.per_page;
 
