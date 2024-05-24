@@ -95,7 +95,7 @@ export class ConditionComponent implements OnInit, OnChanges {
   patchData() {
     this.consultCondition = Object.keys(this.selected_visit.consultToothCondition).length > 0;
     let toothCondition: [] = this.consultCondition ? this.selected_visit.consultToothCondition : this.selected_visit.latestToothCondition;
-    this.tooth_condition = [];
+    // this.tooth_condition = [];
     Object.entries(toothCondition).forEach(([key, value]: any, index) => {
       this.tooth_condition[value.tooth_number] = value.tooth_condition;
     });
