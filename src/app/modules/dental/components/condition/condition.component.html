@@ -4,6 +4,10 @@
       <fa-icon [icon]="show_chart[chart.title] ? faChevronCircleUp : faChevronCircleDown" class="mr-1 text-blue-500"></fa-icon>
     </button>
     {{ chart.title }} TOOTH CHART
+
+    <span *ngIf="!consultCondition" class="text-red-500 text-sm lowercase">
+      (from previous visit)
+    </span>
   </legend>
 
   <div *ngIf="show_chart[chart.title]">
@@ -46,7 +50,7 @@
     </div>
 
     <div class="flex justify-center w-full mb-3">
-      <button class="btn-save w-32 h-9 mt-1" (click)="onSubmit()">
+      <button class="btn-save w-32 h-9 mt-1" (click)="onSubmit(chart.title)">
         <fa-icon [icon]="is_saving ? faCircleNotch : faSave" [spin]="is_saving"></fa-icon>
         {{ is_saving ? 'Saving' : 'Save' }}
       </button>

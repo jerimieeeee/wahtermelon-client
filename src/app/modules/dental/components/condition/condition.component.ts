@@ -38,6 +38,7 @@ export class ConditionComponent implements OnInit, OnChanges {
   is_saving: boolean = false;
   show_form: boolean = false;
   selected_tooth: number;
+  consultCondition: boolean = false;
   show_chart: {} = {adult: true, temporary: true};
 
   tooth_chart = [
@@ -49,14 +50,17 @@ export class ConditionComponent implements OnInit, OnChanges {
     this.show_chart[chart] = !this.show_chart[chart];
   }
 
-  onSubmit() {
+  onSubmit(chart_type:string) {
     this.is_saving = true;
 
     let tooth_arr = [];
-    Object.entries(this.tooth_condition).forEach(([key, value]: any) => {
+
+    let tooth_chart = chart_type === 'adult' ? this.adult_tooth_arr : this.temp_tooth_arr;
+
+    tooth_chart.forEach((e) => {
       let condition = {
-        tooth_number: key,
-        tooth_condition: value
+        tooth_number: e,
+        tooth_condition: this.tooth_condition[e]
       }
 
       tooth_arr.push(condition)
@@ -87,8 +91,12 @@ export class ConditionComponent implements OnInit, OnChanges {
     });
   }
 
+
   patchData() {
-    Object.entries(this.selected_visit.dentalToothCondition).forEach(([key, value]: any, index) => {
+    this.consultCondition = Object.keys(this.selected_visit.consultToothCondition).length > 0;
+    let toothCondition: [] = this.consultCondition ? this.selected_visit.consultToothCondition : this.selected_visit.latestToothCondition;
+    this.tooth_condition = [];
+    Object.entries(toothCondition).forEach(([key, value]: any, index) => {
       this.tooth_condition[value.tooth_number] = value.tooth_condition;
     });
   }
