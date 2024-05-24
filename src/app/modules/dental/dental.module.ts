@@ -18,9 +18,9 @@ import { InitialDxComponent } from 'app/shared/shared-components/consultation/in
 import { ManagementComponent } from 'app/shared/shared-components/consultation/management/management.component';
 import { HospitalizationHistoryComponent } from './components/hospitalization-history/hospitalization-history.component';
 import { SurgicalHistoryComponent } from './components/surgical-history/surgical-history.component';
-import { DeleteItemComponent } from 'app/shared/shared-modals/delete-item/delete-item.component';
 import { PrescriptionComponent } from 'app/shared/shared-components/consultation/prescription/prescription.component';
 import { EndVisitComponent } from 'app/shared/shared-modals/end-visit/end-visit.component';
+import { DeleteItemComponent } from 'app/shared/shared-modals/delete-item/delete-item.component';
 
 
 @NgModule({

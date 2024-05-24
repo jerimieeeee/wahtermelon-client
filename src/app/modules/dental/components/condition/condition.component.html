@@ -30,7 +30,7 @@
           </select>
         </div>
 
-        <div class="text-xs bg-gray-100 w-full border border-gray-300 px-0.5 mt-1">
+        <div *ngIf="consultCondition" class="text-xs bg-gray-100 w-full border border-gray-300 px-0.5 mt-1">
           <div class="flex justify-center">
             <button type="button" class="text-xs bg-blue-400 text-white w-5 m-0.5 pb-0.5 rounded-full" (click)="toggleModal('tooth_services', tooth_n, $event)">
               <fa-icon [icon]="faAdd"></fa-icon>
@@ -38,11 +38,11 @@
           </div>
 
           <div *ngFor="let item of this.current_services[tooth_n.tooth_number]; let last = last">
-            <div>
-              <button>
+            <div *ngIf="item">
+              <button (click)="toggleModal('delete-service', item)">
                 <fa-icon [icon]="faTrash" class="text-red-500"></fa-icon>
               </button>
-              {{ item }}
+              {{ item.service_code }}
             </div><br *ngIf="!last" />
           </div>
         </div>
@@ -50,9 +50,9 @@
     </div>
 
     <div class="flex justify-center w-full mb-3">
-      <button class="btn-save w-32 h-9 mt-1" (click)="onSubmit(chart.title)">
+      <button [disabled]="is_saving" class="btn-save h-9 mt-1" (click)="onSubmit(chart.title)">
         <fa-icon [icon]="is_saving ? faCircleNotch : faSave" [spin]="is_saving"></fa-icon>
-        {{ is_saving ? 'Saving' : 'Save' }}
+        {{ is_saving ? 'Saving ' : 'Save ' }} Tooth Condition
       </button>
     </div>
   </div>
@@ -94,13 +94,13 @@
       </thead>
       <tbody>
         <tr *ngFor="let item of service_list">
-          <td>
+          <td *ngIf="item">
             {{ item.tooth_number }}
           </td>
-          <td>{{ item.consult.consult_date | date: 'MM/dd/yyyy' }}</td>
-          <td>{{ item.tooth_service.desc }}</td>
-          <td>
-            <button type="button" class="text-red-500" (click)="toggleModal('delete-item', item)">
+          <td *ngIf="item">{{ item.consult.consult_date | date: 'MM/dd/yyyy' }}</td>
+          <td *ngIf="item">{{ item.tooth_service.desc }}</td>
+          <td *ngIf="item">
+            <button type="button" class="text-red-500" (click)="toggleModal('delete-service', item)">
               <fa-icon [icon]="faTrash"></fa-icon>
             </button>
           </td>
@@ -110,12 +110,12 @@
   </div>
 </div>
 
-<!-- <app-delete-item *ngIf="modals['delete-item']"
+<app-delete-item *ngIf="modals['delete-service']"
   [url]="url"
   [delete_id]="delete_id"
   [delete_desc]="delete_desc"
-  (toggleModal)="toggleModal($event)"
-></app-delete-item> -->
+  (toggleModal)="toggleModal('delete-service')"
+></app-delete-item>
 
 <!-- <app-tooth-condition *ngIf="modals['tooth_condition']"
   (toggleModal)="toggleModal($event)"

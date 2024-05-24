@@ -101,8 +101,18 @@ export class ConditionComponent implements OnInit, OnChanges {
     });
   }
 
+  url: string;
+  delete_id: string;
+  delete_desc: string;
   toggleModal(name, data?, event?) {
     if(event) event.preventDefault();
+
+    if(name==='delete-service' && data) {
+      console.log(data)
+      this.url = 'dental/tooth-service/';
+      this.delete_desc = 'Tooth Service';
+      this.delete_id = data.id;
+    }
 
     this.selected_tooth = data;
     this.modals[name] = !this.modals[name];
@@ -119,9 +129,9 @@ export class ConditionComponent implements OnInit, OnChanges {
 
         if(this.selected_visit.id === value.consult_id) {
           if(this.current_services[value.tooth_number]) {
-            this.current_services[value.tooth_number].push(value.service_code);
+            this.current_services[value.tooth_number].push({service_code: value.service_code, id: value.id});
           } else {
-            this.current_services[value.tooth_number] = [value.service_code];
+            this.current_services[value.tooth_number] = [{service_code: value.service_code, id: value.id}];
           }
 
           delete this.service_list[key];
@@ -130,6 +140,7 @@ export class ConditionComponent implements OnInit, OnChanges {
       });
     }
 
+    console.log(this.current_services)
     this.patchData();
   }
 
