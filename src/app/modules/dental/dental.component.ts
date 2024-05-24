@@ -73,6 +73,8 @@ export class DentalComponent implements OnInit {
     if(page === 2) {
       this.item_index = item_index;
       this.router.navigate(['/patient/dn', {id: data.patient.id, consult_id: data.id}]);
+    } else {
+      this.module = 1;
     }
     this.pages = page;
     this.selected_visit = data ? data : null;
