@@ -91,7 +91,6 @@ export class ShowNameListComponent implements OnInit {
 
   ngOnInit(): void {
     this.getList();
-    this.location = this.loc;
   }
 
   protected readonly faCircleXmark = faCircleXmark;
