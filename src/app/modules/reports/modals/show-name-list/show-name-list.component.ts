@@ -72,7 +72,6 @@ export class ShowNameListComponent implements OnInit {
         this.show_nameList = data;
         this.current_page = data.current_page;
         this.last_page = data.last_page;
-        console.log(this.show_nameList.data, 'amen');
       },
       error: err => console.log(err)
     });
@@ -93,7 +92,6 @@ export class ShowNameListComponent implements OnInit {
   ngOnInit(): void {
     this.getList();
     this.location = this.loc;
-    console.log(this.location);
   }
 
   protected readonly faCircleXmark = faCircleXmark;

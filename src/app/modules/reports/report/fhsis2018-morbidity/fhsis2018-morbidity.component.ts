@@ -174,7 +174,6 @@ export class Fhsis2018MorbidityComponent implements OnChanges {
     });
 
     this.stats = keyValue;
-    console.log(this.report_data)
     // console.log(this.stats)
     this.show_stats = true;
   }
