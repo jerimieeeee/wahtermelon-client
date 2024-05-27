@@ -41,30 +41,6 @@
                   <br />
                 <label>Address: {{ data.address }}</label>
               </fieldset>
-<!--            <div class="flex w-3/5">-->
-<!--              <div class="flex justify-center text-gray-700 md:block leading-tight align-top my-1 w-full p-1 rounded-md">-->
-<!--                <span class="w-full my-0 text-base rounded-md py-2 px-3">-->
-<!--                    Patient Name: {{show_patient_data?.data[0].patient_name}}-->
-<!--                  <br />-->
-<!--                </span>-->
-<!--                <span class="w-full my-0 text-base rounded-md py-2 px-3">-->
-<!--                  Birthdate: {{show_patient_data?.data[0].birthdate}}-->
-<!--                  <br />-->
-<!--                </span>-->
-<!--                <span class="w-full my-0 text-base rounded-md py-2 px-3">-->
-<!--                  Age: {{show_patient_data?.data[0].age}}-->
-<!--                  <br />-->
-<!--                </span>-->
-<!--                <span class="w-full my-0 text-base rounded-md py-2 px-3">-->
-<!--                  Consult Date: {{show_patient_data?.data[0].consult_date}}-->
-<!--                  <br />-->
-<!--                </span>-->
-<!--                <span class="w-full my-0 text-base rounded-md py-2 px-3">-->
-<!--                  Address: {{show_patient_data?.data[0].address}}-->
-<!--                  <br />-->
-<!--                </span>-->
-<!--              </div>-->
-<!--            </div>-->
             <div class="flex justify-between items-start mt-2 py-2 px-5 rounded-t border-b bg-red-500">
               <h3 class="mt-2 text-lg text-white">
                 Final Diagnosis
@@ -84,90 +60,87 @@
                     Current Diagnosis
                   </h3>
                 </div>
-                <div class="flex border border-1 w-full">
-                  <div class="flex text-gray-700 md:block leading-tight align-top my-1 w-full p-1 rounded-md">
-                  <span class="w-full font-semibold my-0 text-sm rounded-md py-2 px-3">
-                    ICD 10
-                  </span>
-                  </div>
-                  <div class="flex w-3/5">
-                    <div class="flex text-gray-700 md:block leading-tight align-top my-1 w-full p-1 rounded-md">
-                  <span class="w-full font-semibold my-0 text-sm rounded-md py-2 px-3">
-                    ICD 10 Description
-                  </span>
-                    </div>
-                  </div>
-                  <div class="flex w-3/5">
-                    <div class="flex text-gray-700 md:block leading-tight align-top my-1 w-full p-1 rounded-md">
-                  <span class="w-full font-semibold my-0 text-sm rounded-md py-2 px-3">
-                    Action
-                  </span>
-                    </div>
-                  </div>
-                </div>
+                <table class="table-fixed w-full text-sm text-left text-black">
+                  <thead class="text-s text-black bg-white -webkit-sticky border-b"
+                         style="z-index: 20; position: sticky; top: 0;">
+                  <tr>
+                    <th scope="col" class="px-5 py-2" colspan="2">
+                      ICD 10
+                    </th>
+                    <th scope="col" class="text-center py-2" colspan="5">
+                      ICD 10 Description
+                    </th>
+                    <th scope="col" class="px-5 py-2 text-center" colspan="3">
+                      Action
+                    </th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr class="shadow-md -outline-offset-8 border-b rounded-t">
+<!--                    <div *ngFor="let data of data">-->
+<!--                      <div *ngFor="let consult of data.consult">-->
+<!--                        <div *ngFor="let notes of consult.consult_notes.finaldx">-->
+<!--                          <td class="px-6 py-3" colspan="2">-->
+<!--                            {{ notes.lib_icd10.icd10_code }}-->
+<!--                          </td>-->
+<!--                          <td class="px-6 py-3" colspan="5">-->
+<!--                            {{ notes.lib_icd10.icd10_desc }}-->
+<!--                          </td>-->
+<!--                          <td class="px-6 py-3" colspan="3">-->
+<!--                            {{ consult.consult_date }}-->
+<!--                          </td>-->
+<!--                        </div>-->
+<!--                      </div>-->
+<!--                    </div>-->
+                  </tr>
+                  </tbody>
+                </table>
                 <div class="shadow-md -outline-offset-8">
-                  <div class="border-b rounded-t bg-green-500 mt-2 py-2 px-5">
+                  <div class="border-b rounded-t bg-violet-500 mt-2 py-2 px-5">
                   <h3 class="mt-2 text-sm text-white font-bold">
                     Previous Diagnosis
                   </h3>
                   </div>
-
-                <div class="border border-b w-full grid grid-cols-6">
-                  <div class="text-gray-700 md:block leading-tight align-top my-1 w-full p-1 rounded-md col-span-2">
-                    <span class="w-full font-semibold my-0 text-sm rounded-md py-2 px-3">
+                <table class="table-fixed w-full text-sm text-left text-black">
+                  <thead class="text-s text-black bg-white -webkit-sticky border-b"
+                         style="z-index: 20; position: sticky; top: 0;">
+                  <tr class="w-full">
+                    <th class="px-5 py-2">
                       ICD 10
-                    </span>
-                  </div>
-                  <div class="grid col-span-3">
-                    <div class="flex text-gray-700 md:block leading-tight align-top my-1 w-full p-1 rounded-md">
-                  <span class="w-full font-semibold my-0 text-sm rounded-md py-2 px-3">
-                    ICD 10 Description/Remarks
-                  </span>
-                    </div>
-                  </div>
-                  <div class="grid col-span-1">
-                    <div class="flex text-gray-700 md:block leading-tight align-top my-1 w-full p-1 rounded-md">
-                      <span class="w-full font-semibold my-0 text-sm rounded-md py-2 px-3">
-                        Date
-                      </span>
-                    </div>
-                  </div>
-                  <div class="col-span-2" *ngFor="let data of data">
-                    <div *ngFor="let notes of data.consult_notes">
-                    <span *ngFor="let finaldx of notes.finaldx">
-                      <ng-container *ngIf="finaldx.lib_icd10.icd10_code !== null">
-                        {{ finaldx.lib_icd10.icd10_code }}
-                      </ng-container>
-                    </span>
-                    </div>
-                  </div>
-                  <div class="col-span-2" *ngFor="let data of data">
-                    <div *ngFor="let notes of data.consult_notes">
-                    <span *ngFor="let finaldx of notes.finaldx">
-                      <ng-container *ngIf="finaldx.lib_icd10.icd10_code !== null">
-                        {{ finaldx.lib_icd10.icd10_desc }}
-                      </ng-container>
-                    </span>
-                    </div>
-                  </div>
-                  <div *ngFor="let data of data">
-                    <div *ngFor="let notes of data.consult_notes">
-                      <ng-container *ngFor="let finaldx of notes.finaldx">
-                        <div class="col-span-2" *ngIf="finaldx.lib_icd10.icd10_code !== null && finaldx.lib_icd10.icd10_desc !== null">
-                          {{ finaldx.lib_icd10.icd10_code }} - {{ finaldx.lib_icd10.icd10_desc }}
+                    </th>
+                    <th scope="col" class="text-center py-2" colspan="5">
+                      ICD 10 Description
+                    </th>
+                    <th scope="col" class="px-5 py-2" colspan="3">
+                      Date
+                    </th>
+                  </tr>
+                  </thead>
+                    <tbody>
+
+                        <div *ngFor="let data of data">
                           <div *ngFor="let consult of data.consult">
-                            <div *ngIf="consult.consult_date === notes.consult_date">
-                              {{ consult.consult_date }}
-                            </div>
+
+                              <tr class="shadow-md -outline-offset-8 border-b rounded-t" *ngFor="let notes of consult.consult_notes.finaldx">
+                              <td class="px-6 py-2">
+                                {{ notes.lib_icd10.icd10_code }}
+                              </td>
+                              <td class="items-center">
+                                {{ notes.lib_icd10.icd10_desc }}
+                              </td>
+                              <td class="px-5 py-2">
+                                {{ consult.consult_date }}
+                              </td>
+                              </tr>
+
                           </div>
                         </div>
-                      </ng-container>
-                    </div>
-                  </div>
+
+                    </tbody>
+                </table>
+                </div>
                 </div>
               </div>
-            </div>
-            </div>
               <div class="grid grid-cols-2 justify-between">
                 <div class="grid col-span-1 mt-5 py-2 px-5 rounded-t border-b bg-gray-50">
                   <h3 class="mt-2 text-sm text-gray-500 font-bold">
@@ -205,7 +178,7 @@
                   </h3>
                   <div class="shadow-md grid border w-full border-1 -outline-offset-8">
                     <div class="flex text-gray-700 md:block leading-tight align-top my-1 w-full p-1 rounded-md">
-                      <fieldset *ngFor="let item of show_patient_data.data[0].complaints" class="text-base text-black py-3 px-5 rounded-t border-black border-t border-b border-r border-l">
+                      <fieldset *ngFor="let item of data[0].complaints" class="text-base text-black py-3 px-5 rounded-t border-black border-t border-b border-r border-l">
                         <legend>Complaint Date: {{show_patient_data?.data[0].consult_date ?? '-'}}</legend>
                         <label >Chief Complaint: {{item.lib_complaints.complaint_desc}}</label>
                       </fieldset>
@@ -220,19 +193,10 @@
           </table>
         </div>
       </div>
-
       <!-- Modal footer -->
       <div class="flex justify-between py-4 px-5 space-x-4 rounded-b border-t border-gray-200 items-center">
         <button type="button" class="text-white bg-red-500 hover:ring-2 focus:outline-none hover:ring-red-300 rounded text-sm font-medium px-6 py-2.5 transition duration-150 ease-in-out transform hover:scale-110" (click)="closeModal()">Close</button>
         <div class="flex items-center space-x-4">
-<!--          <button [disabled]="Number(current_page)===1" (click)="getList(1)" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 enabled:bg-white disabled:bg-gray-300 text-sm font-medium text-gray-500 hover:bg-gray-50">-->
-<!--            <fa-icon [icon]="faAnglesLeft" class="block h-15 w-15 text-gray-500 pr-1"></fa-icon>-->
-<!--          </button>-->
-<!--          <button type="button" class="text-white bg-red-500 disabled:bg-gray-300 hover:ring-2 focus:outline-none hover:ring-red-300 rounded text-sm font-medium px-6 py-2.5 transition duration-150 ease-in-out transform hover:scale-110" [disabled]="Number(current_page)===1" (click)="getList(Number(current_page)-1)">Previous</button>-->
-<!--          <button type="button" class="text-white bg-red-500 disabled:bg-gray-300 hover:ring-2 focus:outline-none hover:ring-red-300 rounded text-sm font-medium px-6 py-2.5 transition duration-150 ease-in-out transform hover:scale-110" [disabled]="Number(current_page)===Number(last_page)" (click)="getList(Number(current_page)+1)">Next</button>-->
-<!--          <button [disabled]="Number(current_page)===Number(last_page)" (click)="getList(last_page)" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 enabled:bg-white disabled:bg-gray-300 text-sm font-medium text-gray-500 hover:bg-gray-50">-->
-<!--            <fa-icon [icon]="faAnglesRight" class="block h-15 w-15 text-gray-500 pr-1"></fa-icon>-->
-<!--          </button>-->
         </div>
       </div>
     </div>

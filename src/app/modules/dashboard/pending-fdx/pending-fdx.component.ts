@@ -78,9 +78,9 @@ export class PendingFdxComponent implements OnInit {
       })
   }
 
-  getData(patient_id: any, consult_date: any,) {
+  getData(consult_id: any, consult_date: any,) {
     let params = {
-      patient_id: patient_id,
+      consult_id: consult_id,
       };
       this.http.get('reports-2018/pending-fdx/get-consultation', { params })
         .pipe(

@@ -47,7 +47,7 @@ export class FinalDxComponent implements OnInit {
   ngOnInit(): void {
     // this.getData();
     this.data = this.show_patient_data.data;
-    console.log(this.data[0].birthdate, 'amen5u');
+    console.log(this.data[0], 'amen5u');
   }
 
   protected readonly faAnglesRight = faAnglesRight;
