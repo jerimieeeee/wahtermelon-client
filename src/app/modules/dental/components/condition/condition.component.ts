@@ -1,15 +1,169 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { adult_tooth_arr, adult_tooth_conditions, temp_tooth_arr, temp_tooth_conditions, tooth_condition_legend } from './libToothNumber';
+import { HttpService } from 'app/shared/services/http.service';
+import { ToastrService } from 'ngx-toastr';
+import { faAdd, faCheck, faChevronCircleDown, faChevronCircleUp, faCircleNotch, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faSave } from '@fortawesome/free-regular-svg-icons';
 
 @Component({
   selector: 'app-condition',
   templateUrl: './condition.component.html',
   styleUrls: ['./condition.component.scss']
 })
-export class ConditionComponent implements OnInit {
+export class ConditionComponent implements OnInit, OnChanges {
+  @Output() loadSelectedConsult = new EventEmitter<any>();
+  @Input() selected_visit;
 
-  constructor() { }
+  adult_tooth_conditions = adult_tooth_conditions;
+  temp_tooth_condition = temp_tooth_conditions;
 
-  ngOnInit(): void {
+  adult_tooth_arr = adult_tooth_arr;
+  temp_tooth_arr = temp_tooth_arr;
+
+  tooth_condition_legend = tooth_condition_legend;
+  faTrash = faTrash;
+  faAdd = faAdd;
+  faCheck = faCheck;
+  faSave = faSave;
+  faCircleNotch = faCircleNotch;
+  faChevronCircleDown = faChevronCircleDown;
+  faChevronCircleUp = faChevronCircleUp;
+
+  modals: any[] =[];
+  condition: any[] =[];
+  service_list: any[] =[];
+  current_services: any[] =[];
+  tooth_condition: any[] = [];
+  tooth_service_legend: any[] =[];
+  is_saving: boolean = false;
+  show_form: boolean = false;
+  selected_tooth: number;
+  consultCondition: boolean = false;
+  show_chart: {} = {adult: true, temporary: true};
+
+  tooth_chart = [
+    {chart: adult_tooth_conditions, title: 'adult'},
+    {chart: temp_tooth_conditions, title: 'temporary'},
+  ] as {chart: {}, title: string }[];
+
+  toggleChart(chart:string) {
+    this.show_chart[chart] = !this.show_chart[chart];
   }
 
+  onSubmit(chart_type:string) {
+    this.is_saving = true;
+
+    let tooth_arr = [];
+
+    let tooth_chart = chart_type === 'adult' ? this.adult_tooth_arr : this.temp_tooth_arr;
+
+    tooth_chart.forEach((e) => {
+      let condition = {
+        tooth_number: e,
+        tooth_condition: this.tooth_condition[e]
+      }
+
+      tooth_arr.push(condition)
+    });
+
+    let params = {
+      patient_id: this.selected_visit.patient.id,
+      consult_id: this.selected_visit.id,
+      tooth_arr: tooth_arr
+    };
+
+    this.http.post('dental/tooth-condition', params).subscribe({
+      next: (data: any) => {
+        this.is_saving = false;
+        this.loadSelectedConsult.emit();
+        this.toastr.success('Successfully Recorded', 'Tooth Condition');
+      },
+      error: err => { this.http.showError(err.error.message, 'Tooth Condition'); this.is_saving = false; }
+    })
+  }
+
+  updateConditions(chart_type: string) {
+    let tooth_chart = chart_type === 'adult' ? this.adult_tooth_arr : this.temp_tooth_arr;
+
+    tooth_chart.forEach((e) => {
+      delete this.tooth_condition[e];
+      if(!this.tooth_condition[e]) this.tooth_condition[e] = this.condition[chart_type];
+    });
+  }
+
+
+  patchData() {
+    this.consultCondition = Object.keys(this.selected_visit.consultToothCondition).length > 0;
+    let toothCondition: [] = this.consultCondition ? this.selected_visit.consultToothCondition : this.selected_visit.latestToothCondition;
+    // this.tooth_condition = [];
+    Object.entries(toothCondition).forEach(([key, value]: any, index) => {
+      this.tooth_condition[value.tooth_number] = value.tooth_condition;
+    });
+  }
+
+  url: string;
+  delete_id: string;
+  delete_desc: string;
+  toggleModal(name, data?, event?) {
+    if(event) event.preventDefault();
+
+    if(name==='delete-service' && data) {
+      console.log(data)
+      this.url = 'dental/tooth-service/';
+      this.delete_desc = 'Tooth Service';
+      this.delete_id = data.id;
+    }
+
+    this.selected_tooth = data;
+    this.modals[name] = !this.modals[name];
+
+    if(!this.modals[name]) this.loadSelectedConsult.emit();
+  }
+
+  iterateServices(new_service: boolean){
+    this.service_list = this.selected_visit.dentalToothService;
+    if(new_service) this.current_services = [];
+
+    if(Object.keys(this.selected_visit.dentalToothService).length > 0){
+      Object.entries(this.selected_visit.dentalToothService).forEach(([key, value]:any, index) => {
+
+        if(this.selected_visit.id === value.consult_id) {
+          if(this.current_services[value.tooth_number]) {
+            this.current_services[value.tooth_number].push({service_code: value.service_code, id: value.id});
+          } else {
+            this.current_services[value.tooth_number] = [{service_code: value.service_code, id: value.id}];
+          }
+
+          delete this.service_list[key];
+          this.service_list.length -= 1;
+        }
+      });
+    }
+
+    console.log(this.current_services)
+    this.patchData();
+  }
+
+  loadLibraries(){
+    this.http.get('libraries/dental-tooth-service').subscribe({
+      next: (data: any) => {
+        this.tooth_service_legend = data.data;
+      },
+      error: err => { this.http.showError(err.error.message, 'Tooth Services Library') }
+    })
+  }
+
+  constructor(
+    private http: HttpService,
+    private toastr: ToastrService
+  ) { }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.iterateServices(true);
+  }
+
+  ngOnInit(): void {
+    this.loadLibraries();
+    this.iterateServices(false);
+  }
 }

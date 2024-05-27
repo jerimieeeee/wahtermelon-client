@@ -44,7 +44,7 @@ export class LibDrugListComponent implements OnInit {
 
   loadDrugs(page?: number){
     let params = {params: { }};
-    if (this.search_item) params['params']['filter[desc]'] = this.search_item;
+    if (this.search_item) params['params']['filter[search]'] = this.search_item;
     if (page) params['params']['page'] = page;
     params['params']['per_page'] = this.per_page;
 

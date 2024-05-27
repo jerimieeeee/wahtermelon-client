@@ -1,0 +1,66 @@
+<div class="mt-5 border border-solid border-gray-200 rounded-lg">
+  <div class="bg-blue-500 w-full text-white p-3 rounded-t-lg justify-between flex">
+    <span>Hospitalization History</span>
+  </div>
+
+  <div class="flex flex-col justify-center">
+    <form [formGroup]="hospitalizationHistoryForm" (submit)="onSubmit()">
+      <fieldset class="grid grid-cols-2 m-3 p-3 gap-x-3 border border-slate-300 shadow-md rounded-md bg-slate-100">
+        <legend>Hopitalization Details</legend>
+        <div>
+          <label for="admission_date">Admission Date</label>
+          <input id="admission_date" type="date" class="input" formControlName="admission_date" placeholder="admission date" />
+        </div>
+
+        <div>
+          <label for="discharge_date">Discharge Date</label>
+          <input id="discharge_date" type="date" class="input" formControlName="discharge_date" placeholder="discharge date" />
+        </div>
+
+        <div class="col-span-2">
+          <label for="cause">Cause of hospitalization</label>
+          <input id="cause" type="text" class="input" formControlName="cause" placeholder="Cause"/>
+        </div>
+
+        <div class="col-span-2 flex justify-end mt-3">
+          <button [disabled]="hospitalizationHistoryForm.invalid || is_saving" type="submit" class="btn-save text-xs">
+            <fa-icon class="mr-2" [icon]="is_saving ? faCircleNotch : faPlus" [spin]="is_saving"></fa-icon>
+            {{ is_saving ? 'Saving' : 'Add' }}
+          </button>
+        </div>
+      </fieldset>
+    </form>
+    <table class="table-auto w-11/12 text-center m-5 mx-auto border border-slate-300 rounded-lg shadow-md">
+      <thead class="border-b">
+        <tr>
+          <th class="px-3">Cause of hospitalization</th>
+          <th class="px-3">Admission date</th>
+          <th class="px-3">Discharge date</th>
+          <th class="px-3">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of selected_visit?.dentalHospitalizationHistory">
+          <td>{{ item.cause }}</td>
+          <td>{{ item.admission_date | date: 'MM/dd/yyyy'}}</td>
+          <td>{{ item.discharge_date | date: 'MM/dd/yyyy'}}</td>
+          <td>
+            <!-- <button type="button" class="text-orange-500" (click)="editHistory(item)">
+              <fa-icon [icon]="faEdit"></fa-icon>
+            </button> -->
+            <button type="button" class="text-red-500" (click)="toggleModal('delete-item', item)">
+              <fa-icon [icon]="faTrash"></fa-icon>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<app-delete-item *ngIf="modals['delete-item']"
+  [url]="url"
+  [delete_id]="delete_id"
+  [delete_desc]="delete_desc"
+  (toggleModal)="toggleModal($event)"
+></app-delete-item>

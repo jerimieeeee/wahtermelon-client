@@ -37,6 +37,13 @@ export class ModuleModalComponent implements OnInit {
           consult_active: false,
           id: null
         },
+        dn: {
+          name: 'Dental',
+          location: 'dn',
+          group: 'dn',
+          consult_active: false,
+          id: null
+        },
         tb: {
           name: 'Tuberculosis',
           location: 'tb',

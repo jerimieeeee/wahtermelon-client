@@ -134,7 +134,7 @@
             </div>
 
             <div>
-              <label for="hci_vat_exempt">VAT Excempt (%)</label>
+              <label for="hci_vat_exempt">VAT Exempt (%)</label>
               <input type="number" name="hci_vat_exempt" id="hci_vat_exempt" max="100" step="1" [(ngModel)]="hci_vat_exempt" [ngModelOptions]="{standalone: true}" (change)="computeTotal('hci_pTotalAmount')" class="input" />
             </div>
 
@@ -165,7 +165,7 @@
             </div>
 
             <div>
-              <label for="prof_vat_exempt">VAT Excempt (%)</label>
+              <label for="prof_vat_exempt">VAT Exempt (%)</label>
               <input type="number" name="prof_vat_exempt" id="prof_vat_exempt" [(ngModel)]="prof_vat_exempt" [ngModelOptions]="{standalone: true}" (change)="computeTotal('prof_pTotalAmount')" class="input" />
             </div>
 
