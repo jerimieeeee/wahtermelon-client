@@ -31,7 +31,7 @@
         </div>
 
         <div *ngIf="consultCondition" class="text-xs bg-gray-100 w-full border border-gray-300 px-0.5 mt-1">
-          <div class="flex justify-center">
+          <div *ngIf="!this.current_services[tooth_n.tooth_number]" class="flex justify-center">
             <button type="button" class="text-xs bg-blue-400 text-white w-5 m-0.5 pb-0.5 rounded-full" (click)="toggleModal('tooth_services', tooth_n, $event)">
               <fa-icon [icon]="faAdd"></fa-icon>
             </button>

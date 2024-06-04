@@ -38,19 +38,12 @@ export class ToothServicesComponent implements OnInit {
     console.log(this.toothServiceForm.value);
     this.http.post('dental/tooth-service', this.toothServiceForm.value).subscribe({
       next: (data: any) => {
-        console.log(data)
-
-        let message: string = 'recorded';
-        this.toastr.success('Successfully '+ message, 'Tooth Service');
+        this.toastr.success('Successfully recorded', 'Tooth Service');
         this.is_saving = false;
+        this.closeModal();
       },
       error: err => { this.http.showError(err.error.message, 'Tooth Service') }
     })
-  }
-
-
-  patchValue() {
-
   }
 
   createForm() {
