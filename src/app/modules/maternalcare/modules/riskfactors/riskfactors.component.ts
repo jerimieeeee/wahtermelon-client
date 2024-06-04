@@ -37,7 +37,7 @@ export class RiskfactorsComponent implements OnInit {
   public module_data: any;
 
   show: boolean;
-  @Input() risk_factors;
+  risk_factors: {};
   @Input() patient_mc_record;
   @Input() patient_id;
   searching: boolean;
@@ -47,13 +47,22 @@ export class RiskfactorsComponent implements OnInit {
   saved: boolean;
 
   ngOnInit(): void {
-    this.loadModule();
+    this.loadLibraries();
     this.searching = false;
     this.today = new Date();
     this.is_saving = false;
     this.saved = false;
   }
 
+  loadLibraries(){
+    this.http.get('libraries/mc-risk-factors', {params:{per_page: 'all'}}).subscribe({
+      next: (data: any) => {
+        this.risk_factors = data.data;
+        this.loadModule();
+      },
+      error: err => { this.http.showError(err.error.message, 'Risk Factor Library'); }
+    })
+  }
 
   loadModule() {
     if (!this.patient_mc_record) {
