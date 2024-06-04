@@ -108,7 +108,6 @@ export class ConditionComponent implements OnInit, OnChanges {
     if(event) event.preventDefault();
 
     if(name==='delete-service' && data) {
-      console.log(data)
       this.url = 'dental/tooth-service/';
       this.delete_desc = 'Tooth Service';
       this.delete_id = data.id;
@@ -140,7 +139,6 @@ export class ConditionComponent implements OnInit, OnChanges {
       });
     }
 
-    console.log(this.current_services)
     this.patchData();
   }
 
