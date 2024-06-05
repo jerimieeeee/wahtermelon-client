@@ -135,7 +135,7 @@ export class PatientInfoComponent implements OnInit {
     this.active_loc = this.active_loc_id.loc;
     this.consult_id = this.active_loc_id.consult_id ?? null;
 
-    if(this.patient_id !== this.active_loc_id.patient_id){
+    if(this.active_loc_id.patient_id && (this.patient_id !== this.active_loc_id.patient_id)){
       this.patient_id = this.active_loc_id.patient_id;
 
       this.http.get('patient/'+this.active_loc_id.patient_id).subscribe({

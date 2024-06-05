@@ -128,7 +128,7 @@
                         {{ consult_details.consult_date | date: 'yyyy-MM-dd' }}
                       </td>
                       <td class="border border-slate-700 [.8em]">
-                        {{ consult_details.user.first_name }} {{ consult_details.user.middle_name }} {{ consult_details.user.last_name }}
+                        {{ consult_details.physician.first_name }} {{ consult_details.physician.middle_name }} {{ consult_details.physician.last_name }}
                       </td>
                     </tr>
                     <tr>
@@ -138,10 +138,10 @@
                         {{ consult_details.consult_date | date: 'yyyy-MM-dd' }}
                       </td>
                       <td class="border border-slate-700 [.8em]">
-                        {{ consult_details.user.first_name }} {{ consult_details.user.middle_name }} {{ consult_details.user.last_name }}
+                        {{ consult_details.physician.first_name }} {{ consult_details.physician.middle_name }} {{ consult_details.physician.last_name }}
                       </td>
                     </tr>
-                    
+
                     <tr *ngFor="let lab of lab_list">
                       <td class="border border-slate-700 [.8em]">{{ lab.laboratory.desc }}</td>
                       <td class="border border-slate-700 text-center [.8em]">

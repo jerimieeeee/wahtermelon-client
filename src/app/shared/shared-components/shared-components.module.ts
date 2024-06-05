@@ -27,7 +27,7 @@ import { UploadRequiredClaimsComponent } from './eclaims/modals/upload-required-
     Cf1Component,
     Cf2Component,
     UploadClaimsComponent,
-    UploadRequiredClaimsComponent,
+    UploadRequiredClaimsComponent
   ],
   imports: [
     CommonModule,

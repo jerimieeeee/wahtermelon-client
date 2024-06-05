@@ -1,0 +1,71 @@
+<div class="grid grid-cols-10 mb-5">
+  <div class="col-span-2 pt-2 pr-5 font-semibold">
+    Chief Complaint and History of Current Illness
+  </div>
+  <div class="col-span-8">
+    <div class="rounded-md border border-solid border-gray-300">
+      <span class="rounded-t-md m-0 p-2 font-semibold text-gray-50 bg-cyan-500 flex justify-between" [ngClass]="{'rounded-b' : !show_content}">
+        Complaints
+        <button type="button" (click)="show_content = !show_content">
+          <fa-icon [icon]="show_content ? faChevronCircleUp : faChevronCircleDown" class="pr-2" size="lg"></fa-icon>
+        </button>
+      </span>
+
+      <div *ngIf="show_content && show_form">
+        <div class="flex mb-2 p-4" >
+          <button type="submit" class="inline-flex p-1 items-center text-gray-50 bg-sky-400 rounded-l-md border border-gray-300">
+            <fa-icon class="text-white fa-xl" [icon]="faPlusSquare" ></fa-icon>
+          </button>
+          <div class="chips-container">
+            <ng-select [disabled]="consult_done || !allowed_to_edit" class="select-chips" placeholder="search"
+              [items]="complaints"
+              [multiple]="true"
+              [closeOnSelect]="false"
+              [hideSelected]="true"
+              [clearable]="false"
+              bindLabel="complaint_desc"
+              bindValue="complaint_id"
+              placeholder="Select Complaint"
+              [(ngModel)]="selectedComplaint">
+
+              <ng-template ng-label-tmp let-item="item" let-clear="clear">
+                <span class="px-2 py-1 rounded-md text-sm">
+                  <span>
+                    <fa-icon [icon]="faXmark" class="text-xs mr-1 hover:text-slate-100 hover:cursor-pointer" (click)="clear(item)"></fa-icon>
+                  </span>
+                  <span>{{ item.complaint_desc }}</span>
+                </span>
+              </ng-template>
+              <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
+                <div class="grid grid-flow-col auto-cols-max">
+                  <div>
+                    <h5 [ngOptionHighlight]="search">{{ item.complaint_desc }}</h5>
+                  </div>
+                </div>
+              </ng-template>
+
+            </ng-select>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 px-4 pb-4">
+          <label for="complaint_notes" class="font-semibold pl-1">Complaint notes</label>
+          <textarea rows="3" id="complaint_notes" placeholder="Complaint Notes" [(ngModel)]="consult_notes.complaint" class="placeholder-slate-400 w-full rounded-md border-gray-300 bg-gray-50"></textarea>
+        </div>
+
+        <div class="grid grid-cols-1 px-4 pb-4">
+          <label for="complaint_notes" class="font-semibold pl-1">History notes</label>
+          <textarea rows="3" id="history_notes" placeholder="History of Current Illness" [(ngModel)]="consult_notes.history" class="placeholder-slate-400 w-full rounded-md border-gray-300 bg-gray-50"></textarea>
+        </div>
+
+        <div class="flex text-right">
+          <button *ngIf="!consult_done && allowed_to_edit" [disabled]="is_saving" type="button" class="btn-save ml-auto mr-5 mb-5 px-10 disabled:bg-gray-300" (click)="onSubmit()">
+            <fa-icon *ngIf="is_saving" class="mr-2" [icon]="faCircleNotch" spin="true"></fa-icon>
+            <fa-icon *ngIf="!is_saving" class="mr-2" [icon]="faSave"></fa-icon>
+            {{ is_saving ? 'Saving' : 'Save' }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
