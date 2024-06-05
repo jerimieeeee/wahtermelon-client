@@ -77,7 +77,7 @@
             <tr *ngFor="let stat of stats">
               <td class="text-left"> {{ stat.description }}</td>
               <td class="text-center">{{ stat.icd10_code }}</td>
-              <td class="text-center" *ngFor="let indicator of indicator_var" (click)="showNameList(indicator, stat.icd10_code)">
+              <td class="text-center text-blue-500" [class]=" stat[indicator.var_name] !==0 ? 'cursor-pointer' : 'pointer-events-none' " *ngFor="let indicator of indicator_var" (click)="showNameList(indicator, stat.icd10_code)">
                 {{ stat[indicator.var_name] }}
               </td>
             </tr>
