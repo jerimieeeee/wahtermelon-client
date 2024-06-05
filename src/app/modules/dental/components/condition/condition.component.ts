@@ -121,7 +121,7 @@ export class ConditionComponent implements OnInit, OnChanges {
 
   iterateServices(new_service: boolean){
     this.service_list = this.selected_visit.dentalToothService;
-    if(new_service) this.current_services = [];
+    this.current_services = [];
 
     if(Object.keys(this.selected_visit.dentalToothService).length > 0){
       Object.entries(this.selected_visit.dentalToothService).forEach(([key, value]:any, index) => {
@@ -133,8 +133,8 @@ export class ConditionComponent implements OnInit, OnChanges {
             this.current_services[value.tooth_number] = [{service_code: value.service_code, id: value.id}];
           }
 
-          delete this.service_list[key];
-          this.service_list.length -= 1;
+          /* delete this.service_list[key];
+          this.service_list.length -= 1; */
         }
       });
     }
