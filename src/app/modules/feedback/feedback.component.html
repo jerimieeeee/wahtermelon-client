@@ -1,0 +1,22 @@
+<div class="grid grid-cols-4 gap-5 mt-5 h-5/6">
+  <div class="h-full bg-blue-100 text-center">
+test
+  </div>
+
+  <div class="col-span-3 grid grid-cols-3 gap-6 h-4/5 font-semibold">
+    <div class="col-span-3 flex mb-10">
+      <input type="text" class="w-full text-center rounded-l-lg text-4xl " [(ngModel)]="consultationId" readonly>
+      <button class="bg-blue-500 rounded-r-lg h-full w-28 text-white text-2xl" >
+        OK
+      </button>
+    </div>
+
+    <button *ngFor="let item of numbers" class="border-2 border-gray-300 rounded-lg w-full h-full text-center text-4xl " (click)="concat(item)">
+      {{item}}
+    </button>
+  </div>
+
+  <div class="col-span-3 grid grid-cols-3 gap-6 h-4/5 font-semibold">
+    <app-survey-form></app-survey-form>
+  </div>
+</div>
