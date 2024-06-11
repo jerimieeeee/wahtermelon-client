@@ -131,7 +131,7 @@
 
       <div class="text-right m-5">
         <button type="submit" class="btn-save" [disabled]="saving_oralCondition">
-          <fa-icon class="mr-3" [icon]="saving_oralCondition ? faCircleNotch : faSave" [animation]="saving_oralCondition ? 'spin' : ''"></fa-icon>
+          <fa-icon class="mr-3" [icon]="saving_oralCondition ? faCircleNotch : faSave" [spin]="saving_oralCondition"></fa-icon>
           {{ saving_oralCondition ? 'Saving' : 'Save' }}
         </button>
       </div>

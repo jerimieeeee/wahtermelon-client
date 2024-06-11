@@ -1,1 +1,61 @@
-<p>survey-form works!</p>
+<div class="flex flex-col w-auto h-5/6 m-10 border border-gray-100 shadow-lg rounded-2xl" *ngIf="show_form && !survey_completed">
+  <div class="bg-blue-500 h-16 text-2xl p-4 font-semibold text-white uppercase rounded-t-2xl">
+    Client Feedback
+  </div>
+
+  <div class="flex flex-col h-full">
+    <div class="flex-grow grid grid-cols-1 mb-10 mx-10">
+      <div class="text-3xl font-semibold text-center my-auto">
+        {{ question_list[question_index].question }}
+      </div>
+
+      <div class="grid grid-cols-3" *ngIf="question_list[question_index].column_name !== 'remarks'">
+        <button *ngFor="let item of question_score" (click)="logScore(item)">
+          <fa-icon [icon]="item === 1 ? faFaceFrown : (item === 2 ? faFaceMeh : faFaceLaughBeam)" class="text-8xl px-10 py-6 rounded-2xl text-gray-100 bg-gray-300"
+            [class]="feedback_answers[question_list[question_index].column_name] &&
+              (
+                feedback_answers[question_list[question_index].column_name] === item && (
+                  item === 1 ? 'text-white bg-red-500' : (item === 2 ? 'text-white bg-yellow-500' : 'text-white bg-green-600')
+                )
+              )"
+          ></fa-icon>
+        </button>
+      </div>
+
+      <div class="grid grid-cols-3 " *ngIf="question_list[question_index].column_name === 'remarks'">
+        <textarea class="input col-span-3 text-xl" [(ngModel)]="feedback_answers.remarks"></textarea>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-3 m-10">
+      <button (click)="previousQuestion()" class="bg-gray-300 text-gray-500 rounded-md h-16 disabled:opacity-25 text-xl" [disabled]="question_index === 0">
+        <fa-icon [icon]="faArrowLeft"></fa-icon>
+        Previous
+      </button>
+
+      <div class="text-2xl text-center mt-3">
+        {{ question_index+1 }}/{{question_length}}
+      </div>
+
+      <button [disabled]="is_saving" (click)="question_index === question_length-1 ? onSubmit() : nextQuestion()" class="bg-blue-500 text-white rounded-md h-16 text-xl disabled:opacity-25" [disabled]="!feedback_answers[question_list[question_index].column_name] && question_list[question_index].column_name !== 'remarks'">
+        {{ question_index === question_length-1 ? (is_saving ? 'Saving' : 'Submit') : 'Next' }}
+        <fa-icon [icon]="question_index === question_length-1 ? (is_saving ? faCircleNotch : faSave) : faArrowRight" [spin]="is_saving"></fa-icon>
+      </button>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="show_form && survey_completed" class="flex flex-col w-full h-full justify-center items-center text-center text-3xl bg-blue-500 font-semibold text-white">
+  <span>Maraming salamat sa iyong kooperasayon. <br />
+  Redirecting in {{ countdown }} secs</span>
+</div>
+
+<div class="grid grid-cols-1 w-full my-24 text-center text-3xl" *ngIf="!show_form">
+  <div class="flex justify-center text-blue-500">
+    <fa-icon [icon]="faCircleNotch" [spin]="true"></fa-icon>
+  </div>
+
+  <div class="flex justify-center">
+    Loading questions...
+  </div>
+</div>

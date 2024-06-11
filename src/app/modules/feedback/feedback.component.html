@@ -1,22 +1,29 @@
-<div class="grid grid-cols-4 gap-5 mt-5 h-5/6">
-  <div class="h-full bg-blue-100 text-center">
-test
+<div class="grid grid-cols-1 gap-5 h-dvh" *ngIf="!show_survey">
+  <div class="flex justify-center align-middle">
+    <a routerLink="/"><img src="./assets/img/wah_icon.png" class="rounded-full w-32 h-32 mx-auto" /></a>
   </div>
 
-  <div class="col-span-3 grid grid-cols-3 gap-6 h-4/5 font-semibold">
-    <div class="col-span-3 flex mb-10">
-      <input type="text" class="w-full text-center rounded-l-lg text-4xl " [(ngModel)]="consultationId" readonly>
-      <button class="bg-blue-500 rounded-r-lg h-full w-28 text-white text-2xl" >
+  <div class="grid grid-cols-3 gap-6 h-5/6 font-semibold mx-20">
+    <div class="col-span-3 flex mb-5">
+      <input type="text" class="w-1/5 text-center rounded-l-lg text-2xl disabled:bg-gray-200" placeholder="Visit No." disabled>
+      <input type="text" class="w-full text-center text-4xl" [(ngModel)]="consultationId" readonly>
+      <button class="bg-sky-500 rounded-r-lg h-full w-28 text-white text-2xl" (click)="checkVisitFeedback()">
         OK
       </button>
     </div>
 
-    <button *ngFor="let item of numbers" class="border-2 border-gray-300 rounded-lg w-full h-full text-center text-4xl " (click)="concat(item)">
-      {{item}}
+    <div class="text-red-500 col-span-3 flex justify-center h-8">
+      <span *ngIf="show_invalid">Invalid input, or visit already has recorded feedback.</span>
+    </div>
+
+    <button *ngFor="let item of numbers" class="border-2 rounded-lg text-white w-full h-full text-center text-4xl py-5" [class]="item === 'clear' ? 'bg-rose-500' : 'bg-sky-500'" (click)="concat(item)">
+      <span *ngIf="item !== 'delete'">{{ item }}</span>
+      <fa-icon [icon]="faArrowLeft" *ngIf="item === 'delete'"></fa-icon>
     </button>
   </div>
-
-  <div class="col-span-3 grid grid-cols-3 gap-6 h-4/5 font-semibold">
-    <app-survey-form></app-survey-form>
-  </div>
 </div>
+
+<app-survey-form *ngIf="show_survey"
+  [consultationId]="consultationId"
+  (toggleSurveyForm)="toggleSurveyForm($event)"
+></app-survey-form>

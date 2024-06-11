@@ -5,6 +5,7 @@ import { FeedbackRoutingModule } from './feedback-routing.module';
 import { FeedbackComponent } from './feedback.component';
 import { FormsModule } from '@angular/forms';
 import { SurveyFormComponent } from './components/survey-form/survey-form.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { SurveyFormComponent } from './components/survey-form/survey-form.compon
   imports: [
     CommonModule,
     FeedbackRoutingModule,
-    FormsModule
+    FormsModule,
+    FontAwesomeModule
   ]
 })
 export class FeedbackModule { }
