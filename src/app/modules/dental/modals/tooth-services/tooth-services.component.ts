@@ -35,26 +35,17 @@ export class ToothServicesComponent implements OnInit {
 
   onSubmit(){
     this.is_saving = true;
-    console.log(this.toothServiceForm.value);
     this.http.post('dental/tooth-service', this.toothServiceForm.value).subscribe({
       next: (data: any) => {
-        console.log(data)
-
-        let message: string = 'recorded';
-        this.toastr.success('Successfully '+ message, 'Tooth Service');
+        this.toastr.success('Successfully recorded', 'Tooth Service');
         this.is_saving = false;
+        this.closeModal();
       },
       error: err => { this.http.showError(err.error.message, 'Tooth Service') }
     })
   }
 
-
-  patchValue() {
-
-  }
-
   createForm() {
-    console.log(this.selected_visit);
     this.toothServiceForm = this.formBuilder.nonNullable.group({
       id: [''],
       consult_id: [this.selected_visit.id, [Validators.required]],
@@ -68,7 +59,6 @@ export class ToothServicesComponent implements OnInit {
   loadLibraries() {
     this.http.get('libraries/dental-tooth-service').subscribe({
       next: (data: any) => {
-        console.log(data);
         this.tooth_services = data.data;
         this.createForm();
       },

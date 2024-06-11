@@ -37,7 +37,6 @@ export class DentalComponent implements OnInit {
 
     this.http.get('consultation/records', {params}).subscribe({
       next: (data: any) => {
-        console.log(data)
         this.consult_details[this.item_index] = data.data[0];
         this.selected_visit = data.data[0];
       },
