@@ -30,6 +30,7 @@ export class Fhsis2018FpComponent implements OnChanges {
   brgys_info : any;
   show_nameList: any = [];
   current_submit_flag: boolean = false;
+  url: any = 'reports-2018/fp-namelist/name-list';
 
   exportAsExcel: ExportAsConfig = {
     type: 'xlsx',

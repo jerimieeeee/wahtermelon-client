@@ -14,9 +14,9 @@
         <optgroup label="Household Profiling" class="text-gray-500" >
           <option *ngFor="let type of household_stats" [ngValue]="type">{{ type.desc }}</option>
         </optgroup>
-        <optgroup label="Diagnosis" class="text-gray-500" >
-          <option *ngFor="let type of diagnosis_stats" [ngValue]="type">{{ type.desc }}</option>
-        </optgroup>
+<!--        <optgroup label="Diagnosis" class="text-gray-500" >-->
+<!--          <option *ngFor="let type of diagnosis_stats" [ngValue]="type">{{ type.desc }}</option>-->
+<!--        </optgroup>-->
         <optgroup label="Usage Statistics" class="text-gray-500" >
           <option *ngFor="let type of other_stats" [ngValue]="type">{{ type.desc }}</option>
         </optgroup>
@@ -115,14 +115,8 @@
     <app-fhsis2018-mc *ngIf="reportForm.value?.report_type.id === 'fhsis2018-mc' && report_data && !is_fetching" [report_data]="report_data" [reportForm]="reportForm" [selectedBrgy]="selectedBrgy" [brgys]="brgys" [userInfo]="userInfo" ></app-fhsis2018-mc>
     <app-fhsis2018-tb *ngIf="reportForm.value?.report_type.id === 'fhsis2018-tb' && report_data && !is_fetching" [report_data]="report_data" [reportForm]="reportForm" [selectedBrgy]="selectedBrgy" [brgys]="brgys" [userInfo]="userInfo" ></app-fhsis2018-tb>
     <app-fhsis2018-ncd *ngIf="reportForm.value?.report_type.id === 'fhsis2018-ncd' && report_data && !is_fetching" [report_data]="report_data" [reportForm]="reportForm" [selectedBrgy]="selectedBrgy" [brgys]="brgys" [userInfo]="userInfo" ></app-fhsis2018-ncd>
-    <app-fhsis2018-fp *ngIf="reportForm.value?.report_type.id === 'fhsis2018-fp' && report_data && !is_fetching"
-      [report_data]="report_data"
-      [reportForm]="reportForm"
-      [selectedBrgy]="selectedBrgy"
-      [brgys]="brgys" [userInfo]="userInfo"
-      [submit_flag]="submit_flag"
-    ></app-fhsis2018-fp>
-    <app-fhsis2018-morbidity *ngIf="reportForm.value?.report_type.id === 'morbidity-report' && report_data && !is_fetching" [report_data]="report_data"></app-fhsis2018-morbidity>
+    <app-fhsis2018-fp *ngIf="reportForm.value?.report_type.id === 'fhsis2018-fp' && report_data && !is_fetching" [report_data]="report_data" [reportForm]="reportForm" [selectedBrgy]="selectedBrgy" [brgys]="brgys" [userInfo]="userInfo" [submit_flag]="submit_flag"></app-fhsis2018-fp>
+    <app-fhsis2018-morbidity *ngIf="reportForm.value?.report_type.id === 'fhsis2018-morbidity' && report_data && !is_fetching" [report_data]="report_data" [reportForm]="reportForm" [selectedBrgy]="selectedBrgy" [brgys]="brgys" [userInfo]="userInfo"></app-fhsis2018-morbidity>
 
     <app-patient-registered *ngIf="reportForm.value?.report_type.id === 'patient-registered' && report_data && !is_fetching" [report_data]="report_data"></app-patient-registered>
 <!--    <app-catalyst-report *ngIf="reportForm.value?.report_type.id === 'gbv-report' && report_data && !is_fetching" [report_data]="report_data"></app-catalyst-report>-->

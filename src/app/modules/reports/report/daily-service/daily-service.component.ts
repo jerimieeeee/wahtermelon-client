@@ -10,7 +10,7 @@ import * as moment from 'moment';
   styleUrls: ['./daily-service.component.scss']
 })
 
-export class DailyServiceComponent implements OnChanges, OnInit {
+export class DailyServiceComponent implements OnChanges {
   @Input() report_data;
   @Input() reportForm;
   @Input() selectedBrgy;
@@ -103,10 +103,6 @@ export class DailyServiceComponent implements OnChanges, OnInit {
 
   convertBrgy(){
     this.brgy_result = this.selected_barangay?.map((code) => this.brgys.find((el) => el.code == code).name);
-  }
-
-  ngOnInit(): void {
-    console.log('on init')
   }
 
   ngOnChanges(): void {
