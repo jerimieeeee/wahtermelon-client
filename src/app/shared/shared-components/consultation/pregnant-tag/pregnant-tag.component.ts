@@ -48,7 +48,6 @@ export class PregnantTagComponent implements OnChanges {
   ) { }
 
   ngOnChanges(changes){
-    console.log(this.consult_details)
     this.show_content = this.toggle_content;
     if(this.consult_details) {
       this.consult_done = this.consult_details.consult_done;
