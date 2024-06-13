@@ -56,7 +56,20 @@
     </span>
 
     <div *ngIf="consult_details && open_consult">
-      <app-complaint-history [allowed_to_edit]="allowed_to_edit" [toggle_content]="toggle_content" [consult_details]="consult_details" [have_complaint]="have_complaint" (loadConsult)="loadConsult()"></app-complaint-history>
+      <app-pregnant-tag *ngIf="consult_details.patient.gender === 'F'"
+        [consult_details]="consult_details"
+        [have_complaint]="have_complaint"
+        [allowed_to_edit]="allowed_to_edit"
+        (loadConsult)="loadConsult($event)"
+      ></app-pregnant-tag>
+
+      <app-complaint-history [allowed_to_edit]="allowed_to_edit"
+        [toggle_content]="toggle_content"
+        [consult_details]="consult_details"
+        [have_complaint]="have_complaint"
+        (loadConsult)="loadConsult()"
+      ></app-complaint-history>
+
       <app-general-survey [allowed_to_edit]="allowed_to_edit" [toggle_content]="toggle_content" [consult_details]="consult_details"></app-general-survey>
       <app-physical-exam *ngIf="have_complaint" [allowed_to_edit]="allowed_to_edit" [toggle_content]="toggle_content" [consult_details]="consult_details"></app-physical-exam>
 

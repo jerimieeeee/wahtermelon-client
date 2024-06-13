@@ -21,6 +21,7 @@ import { SurgicalHistoryComponent } from './components/surgical-history/surgical
 import { PrescriptionComponent } from 'app/shared/shared-components/consultation/prescription/prescription.component';
 import { EndVisitComponent } from 'app/shared/shared-modals/end-visit/end-visit.component';
 import { DeleteItemComponent } from 'app/shared/shared-modals/delete-item/delete-item.component';
+import { PregnantTagComponent } from 'app/shared/shared-components/consultation/pregnant-tag/pregnant-tag.component';
 
 
 @NgModule({
@@ -48,7 +49,8 @@ import { DeleteItemComponent } from 'app/shared/shared-modals/delete-item/delete
     InitialDxComponent,
     ManagementComponent,
     DeleteItemComponent,
-    EndVisitComponent
+    EndVisitComponent,
+    PregnantTagComponent
   ]
 })
 export class DentalModule { }
