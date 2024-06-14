@@ -36,6 +36,7 @@ export class ReportsComponent implements OnInit {
 
   other_stats = [
     { id: 'patient-registered', desc: 'Patient Registered', url: 'reports-2018/user/patient-registered'},
+    { id: 'feedback', desc: 'Client Feedback', url: 'reports-2018/feedback/report'},
     // { id: 'fhsis2018-mc', desc: 'Maternal Care', url: 'reports-2018/maternal-care/m1'},
   ]
 
@@ -210,6 +211,12 @@ export class ReportsComponent implements OnInit {
       this.reportForm.controls.start_date.disable();
       this.reportForm.controls.end_date.disable();
     } else if(this.reportForm.value.report_type){
+      if(this.reportForm.value.report_type.id === 'feedback') {
+        this.reportForm.controls.report_class.disable();
+      } else {
+        this.reportForm.controls.report_class.enable();
+      }
+
       this.reportForm.controls.start_date.enable();
       this.reportForm.controls.end_date.enable();
       this.reportForm.controls.month.disable();

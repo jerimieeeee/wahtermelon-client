@@ -1,6 +1,6 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { faQuestionCircle, faChevronDown, faFolderOpen, faHeart, faFlask, faNotesMedical, faExclamationCircle, faChevronRight, faChevronLeft, faAnglesLeft, faAnglesRight, faPersonPregnant, faPersonCane, faWheelchair, faBaby, faDog } from '@fortawesome/free-solid-svg-icons';
+import { faQuestionCircle, faChevronDown, faFolderOpen, faHeart, faFlask, faNotesMedical, faExclamationCircle, faChevronRight, faChevronLeft, faAnglesLeft, faAnglesRight, faPersonPregnant, faPersonCane, faWheelchair, faBaby, faDog, faLungs, faTooth } from '@fortawesome/free-solid-svg-icons';
 import { AgeService } from 'app/shared/services/age.service';
 import { HttpService } from 'app/shared/services/http.service';
 import { NameHelperService } from 'app/shared/services/name-helper.service';
@@ -32,6 +32,8 @@ export class TodaysConsultComponent implements OnInit, OnDestroy {
   faWheelchair = faWheelchair;
   faBaby = faBaby;
   faDog = faDog;
+  faLungs = faLungs;
+  faTooth = faTooth;
 
   today_consults: [];
   physicians: [];
