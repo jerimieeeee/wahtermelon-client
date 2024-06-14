@@ -1,4 +1,4 @@
-<div class="block pt-4 justify-items-start mx-5 pb-5">
+<div *ngIf="no_surgical_form.indexOf(active_loc_id?.loc) === -1" class="block pt-4 justify-items-start mx-5 pb-5">
   <div class="flex justify-between items-center">
     <span class="block text-blue-500 font-medium text-sm select-none" [ngClass]="{'opacity-70': (history?.length === 0 || !history)}">
       <fa-icon *ngIf="history?.length >= 1" (click)="toggle('surgical-history')" class="mx-0 my-0 text-gray-500 mr-2 hover:cursor-pointer" [icon]="accordions['surgical-history'] ? faChevronUp : faChevronDown"></fa-icon>

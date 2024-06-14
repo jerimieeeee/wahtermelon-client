@@ -1,10 +1,11 @@
-import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { NavigationStart, Router } from '@angular/router';
-import { faQuestionCircle, faChevronDown, faFolderOpen, faHeart, faFlask, faNotesMedical, faExclamationCircle, faChevronRight, faChevronLeft, faAnglesLeft, faAnglesRight } from '@fortawesome/free-solid-svg-icons';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { faQuestionCircle, faChevronDown, faFolderOpen, faHeart, faFlask, faNotesMedical, faExclamationCircle, faChevronRight, faChevronLeft, faAnglesLeft, faAnglesRight, faPersonPregnant, faPersonCane, faWheelchair, faBaby, faDog, faLungs, faTooth } from '@fortawesome/free-solid-svg-icons';
+import { AgeService } from 'app/shared/services/age.service';
 import { HttpService } from 'app/shared/services/http.service';
 import { NameHelperService } from 'app/shared/services/name-helper.service';
-import { interval, Subject, Subscription, takeUntil } from 'rxjs';
-import { switchMap, finalize } from 'rxjs/operators';
+import { Subject, Subscription } from 'rxjs';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-todays-consult',
@@ -26,6 +27,13 @@ export class TodaysConsultComponent implements OnInit, OnDestroy {
   faChevronLeft = faChevronLeft;
   faAnglesLeft = faAnglesLeft;
   faAnglesRight = faAnglesRight;
+  faPersonPregnant = faPersonPregnant;
+  faPersonCane = faPersonCane;
+  faWheelchair = faWheelchair;
+  faBaby = faBaby;
+  faDog = faDog;
+  faLungs = faLungs;
+  faTooth = faTooth;
 
   today_consults: [];
   physicians: [];
@@ -112,6 +120,15 @@ export class TodaysConsultComponent implements OnInit, OnDestroy {
     });
   }
 
+  getAge(data): boolean {
+    if(data.patient.birthdate){
+      let age_value = this.ageService.calcuateAge(data.patient.birthdate);
+
+      if(age_value.type === 'year') return age_value.age >= 60;
+      return false;
+    }
+  }
+
   openItr(patient_id, ptgroup, id){
     if(ptgroup === 'itr'){
       this.router.navigate(['/patient/'+ptgroup, {id: patient_id}]);
@@ -145,7 +162,8 @@ export class TodaysConsultComponent implements OnInit, OnDestroy {
   constructor(
     private http: HttpService,
     private router: Router,
-    private nameHelper: NameHelperService
+    private nameHelper: NameHelperService,
+    private ageService: AgeService
   ) { }
 
   ngOnInit(): void {
