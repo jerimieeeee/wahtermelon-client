@@ -14,17 +14,14 @@
         <optgroup label="Household Profiling" class="text-gray-500" >
           <option *ngFor="let type of household_stats" [ngValue]="type">{{ type.desc }}</option>
         </optgroup>
-<<<<<<< HEAD
 <!--        <optgroup label="Diagnosis" class="text-gray-500" >-->
 <!--          <option *ngFor="let type of diagnosis_stats" [ngValue]="type">{{ type.desc }}</option>-->
 <!--        </optgroup>-->
         <optgroup label="Usage Statistics" class="text-gray-500" >
-=======
         <optgroup label="Diagnosis" class="text-gray-500" >
           <option *ngFor="let type of diagnosis_stats" [ngValue]="type">{{ type.desc }}</option>
         </optgroup>
         <optgroup label="Others" class="text-gray-500" >
->>>>>>> origin/feedback
           <option *ngFor="let type of other_stats" [ngValue]="type">{{ type.desc }}</option>
         </optgroup>
 <!--        <optgroup label="GBV Report" class="text-gray-500" >-->
