@@ -1,4 +1,4 @@
-<form [formGroup]="casdt2Form" (ngSubmit)="onSubmit()">
+<form [formGroup]="casdt2Forms" (ngSubmit)="onSubmit()">
   <div class="grid grid-cols-12 flex item-start flex-wrap shadow-md rounded-xl mb-8 mt-8 overflow-y-auto">
       <div class="col-span-12 flex bg-blue-500 px-5 py-3 rounded-tl rounded-tr">
         <h4 class="font-bold text-white text-md mt-2 mb-2">Eye Assessment</h4>
@@ -17,14 +17,15 @@
         <h4 class="font-bold">A. Eye Complaints (Check all applicable)</h4>
       </div>
 
-        <div *ngFor="let eyes of eye" class="text-sm col-span-4 w-full px-5 mb-6">
-          <input type="checkbox" class="form-checkbox h-4 w-4 border-gray-400 text-blue-500 rounded-full"><span class="ml-1 align-middle"> {{eyes.desc}}</span>
+        <div *ngFor="let eyes of eye_complaints" class="text-sm col-span-4 w-full px-5 mb-6 select-none">
+          <input type="checkbox" attr.id="{{eyes.code}}" class="input-checkbox h-4 w-4 border-gray-400 text-blue-500" name="eye_complaint">
+          <label attr.for="{{eyes.code}}" class="ml-1 align-middle" > {{eyes.desc}}</label>
       </div>
 
       <div class="text-sm col-start-1 col-span-12 w-full  px-5 mt-2 mb-6">
           <h1 class="mb-2 font-semibold">Refer immediately to opthalmologist</h1>
           <select class="text-sm bg-white border border-gray-200 p-2.5 rounded w-full" name="family_hx_hypertension">
-          <option ng-value="vision.desc" *ngFor="let opthals of opthal">
+          <option ng-value="vision.desc" *ngFor="let opthals of eye_refer">
           {{opthals.desc}}
           </option>
           </select>
@@ -57,7 +58,7 @@
       <div class="text-sm col-start-1 col-span-3 w-full row-start-3 px-5 mt-2 mb-4">
           <h1 class="mb-2">Unaided</h1>
           <select class="text-sm bg-white border border-gray-200 p-2.5 rounded w-full" name="family_hx_hypertension">
-          <option ng-value="vision.desc" *ngFor="let vision of vision_eye" [selected]="vision.desc == 'None'">
+          <option ng-value="vision.desc" *ngFor="let vision of eye_vision_screen" [selected]="vision.desc == 'None'">
           {{vision.desc}}
           </option>
           </select>
@@ -66,7 +67,7 @@
       <div class="text-sm col-start-4 col-span-3 w-full row-start-3 px-5 mt-2 mb-4">
           <h1 class="mb-2">Pinhole</h1>
           <select class="text-sm bg-white border border-gray-200 p-2.5 rounded w-full" name="family_hx_hypertension">
-          <option ng-value="vision.desc" *ngFor="let vision of vision_eye" [selected]="vision.desc == 'None'">
+          <option ng-value="vision.desc" *ngFor="let vision of eye_vision_screen" [selected]="vision.desc == 'None'">
           {{vision.desc}}
           </option>
           </select>
@@ -75,7 +76,7 @@
       <div class="text-sm col-start-7 col-span-3 w-full row-start-3 px-5 mt-2 mb-4">
           <h1 class="mb-2">Improved</h1>
           <select class="text-sm bg-white border border-gray-200 p-2.5 rounded w-full" name="family_hx_hypertension">
-          <option ng-value="vision.desc" *ngFor="let vision of vision_eye" [selected]="vision.desc == 'None'">
+          <option ng-value="vision.desc" *ngFor="let vision of eye_vision_screen" [selected]="vision.desc == 'None'">
           {{vision.desc}}
           </option>
           </select>
@@ -84,7 +85,7 @@
       <div class="text-sm col-start-10 col-span-3 w-full row-start-3 px-5 mt-2 mb-4">
           <h1 class="mb-2">Aided</h1>
           <select class="text-sm bg-white border border-gray-200 p-2.5 rounded w-full" name="family_hx_hypertension">
-          <option ng-value="vision.desc" *ngFor="let vision of vision_eye" [selected]="vision.desc == 'None'">
+          <option ng-value="vision.desc" *ngFor="let vision of eye_vision_screen" [selected]="vision.desc == 'None'">
           {{vision.desc}}
           </option>
           </select>
@@ -93,10 +94,17 @@
       <div class="text-sm col-start-1 col-span-12 w-full row-start-4 px-5 mt-2 mb-6">
           <h1 class="mb-2">Refer to eyecare professional</h1>
           <select class="text-sm bg-white border border-gray-200 p-2.5 rounded w-full" name="family_hx_hypertension">
-          <option ng-value="refers.desc" *ngFor="let refers of refer" [selected]=" ">
+          <option ng-value="refers.desc" *ngFor="let refers of eye_refer_prof" [selected]=" ">
           {{refers.desc}}
           </option>
           </select>
+      </div>
+
+      <div class="justify-center"> <!-- [disabled]="riskAssessForm.invalid" -->
+        <button  type="submit" class="btn-save px-10 disabled:bg-gray-300" name="add-btn">
+          <fa-icon [icon]="is_saving ? faSpinner : faSave" [spin]="is_saving"></fa-icon>
+          {{ is_saving ? 'Saving' : 'Save'}}
+        </button>
       </div>
 
     </div>
