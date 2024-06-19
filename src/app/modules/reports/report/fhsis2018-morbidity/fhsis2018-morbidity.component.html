@@ -22,46 +22,45 @@
                 <img src="./assets/img/DOH_Logo.png" class="rounded-full w-28 h-28 mx-auto" />
               </th>
               <th colspan="22" class="text-left">
-                FHSIS Report for the Month:
+                FHSIS Report for the Month: {{this.convertedMonth}}
               </th>
-              <th scope="col" colspan="9" rowspan="7" class="align-top text-left text-sm font-medium text-gray-900 border-0">
-                Year:
+              <th scope="col" colspan="9" rowspan="7" class="align-top text-left text-sm text-gray-900 border-0">
+                  Year: <span class="font-medium"> {{this.reportform_data.value.year}} </span>
               </th>
               <th scope="col" colspan="7" rowspan="7" class="font-bold text-gray-900 px-6 py-4 border text-center">
                 <h1 class="text-7xl">M2</h1>
-                <!-- <span class="text-2xl">BRGY</span> -->
               </th>
             </tr>
-            <tr class="text-left border-b-0">
-              <th colspan="24" class="text-left border-b-0"> Name of Health Facility: </th>
+            <tr class="text-left border-b">
+              <th colspan="22" class="text-left border-b-0"> Name of Health Facility: </th>
             </tr>
             <tr>
-              <th colspan="24" class="text-left"> Name of Barangay: {{this.brgy_result}} </th>
+              <th colspan="22" class="text-left"> Name of Barangay: {{this.brgy_result}} </th>
             </tr>
             <tr>
-              <th colspan="24" class="text-left"> Name of Municipality/City: </th>
+              <th colspan="22" class="text-left"> Name of Municipality/City: </th>
             </tr>
             <tr>
-              <th colspan="24" class="text-left"> Name of Province </th>
+              <th colspan="22" class="text-left"> Name of Province </th>
             </tr>
             <tr>
-              <th colspan="24" class="text-left"> Projected Population of the Year </th>
+              <th colspan="22" class="text-left"> Projected Population of the Year </th>
             </tr>
             <tr>
-              <th colspan="24" class="text-center italic"> For Submission to the next administrative level </th>
+              <th colspan="22" class="text-center italic"> For Submission to the next administrative level </th>
             </tr>
             <tr>
               <th scope="col" colspan="41" class="text-xs font-semibold text-gray-900 px-6 py-4 border">
                 Section A.1 Morbidity Report
               </th>
             </tr>
-            <tr class="border border-gray-400">
+            <tr class="text-center border border-gray-400">
               <td rowspan="2" class="w-24 px-1 border border-gray-400">Disease</td>
               <td rowspan="2" class="px-1 border border-gray-400">ICD10</td>
-              <td colspan="2" class="w-16 px-1 border border-gray-400" *ngFor="let title of headers">{{ title }}</td>
-              <td rowspan="2" class="px-1 border border-gray-400">Total Both Sex</td>
+              <td colspan="2" class="w-16 text-center px-1 border border-gray-400" *ngFor="let title of headers">{{ title }}</td>
+<!--              <td rowspan="2" class="px-1 border border-gray-400">Total Both Sex</td>-->
             </tr>
-            <tr class="border border-gray-400">
+            <tr class="border text-center border-gray-400">
               <td>M</td><td>F</td> <td>M</td><td>F</td>
               <td>M</td><td>F</td> <td>M</td><td>F</td>
               <td>M</td><td>F</td> <td>M</td><td>F</td>
@@ -74,17 +73,12 @@
               <td>M</td><td>F</td>
             </tr>
           </thead>
-          <tbody class="text-xs text-right">
+          <tbody class="text-xs">
             <tr *ngFor="let stat of stats">
-              <td>{{ splitText(stat[0], 1) }}</td>
-              <td>{{ splitText(stat[0], 0) }}</td>
-              <td *ngFor="let indicator of indicator_var"
-                [ngClass]="{'text-blue-500 hover:cursor-pointer font-semibold' : stat[1][indicator][0].name}"
-                (click)="stat[1][indicator][0].name ? toggleModal(stat[1][indicator]) : false">
-                {{ stat[1][indicator][0].name ? stat[1][indicator].length : '-' }}
-              </td>
-              <td>
-                {{ (stat[1].male_age_total[0].name ? stat[1].male_age_total.length : 0) + (stat[1].female_age_total[0].name ? stat[1].female_age_total.length : 0) }}
+              <td class="text-left"> {{ stat.description }}</td>
+              <td class="text-center">{{ stat.icd10_code }}</td>
+              <td class="text-center text-blue-500" [class]=" stat[indicator.var_name] !==0 ? 'cursor-pointer' : 'pointer-events-none' " *ngFor="let indicator of indicator_var" (click)="showNameList(indicator, stat.icd10_code)">
+                {{ stat[indicator.var_name] }}
               </td>
             </tr>
           </tbody>
@@ -106,4 +100,14 @@
 </div>
 
 
-<app-name-list *ngIf="openList" (toggleModal)="toggleModal($event)" [name_list]="name_list"></app-name-list>
+<app-show-name-list
+  *ngIf="openList"
+  (toggleModal)="toggleModal()"
+  [name_list_params]="name_list_params"
+  [selected_barangay]="selected_barangay"
+  [reportForm]="reportForm"
+  [url]="url"
+  [loc]="'cn'"
+>
+</app-show-name-list>
+
