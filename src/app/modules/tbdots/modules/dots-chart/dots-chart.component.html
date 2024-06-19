@@ -20,12 +20,13 @@
               <input type="checkbox"
               [(ngModel)]="intensiveAll[i]"
               (click)="checkAll('ip', i)"
+              attr.id="{{ ip.month[1] }}"
               class="input-checkbox" />
             </td>
-            <td class="px-2">
-              {{ ip.month[1] }}
+            <td class="px-2 select-none">
+              <label attr.for="{{ ip.month[1] }}">{{ ip.month[1] }}</label>
             </td>
-            <td class="px-2">
+            <td class="px-2 select-none">
               {{ ip.year }}
             </td>
             <td *ngFor="let day of days" class="px-1">
@@ -66,12 +67,13 @@
               <input type="checkbox"
               [(ngModel)]="continuationAll[i]"
               (click)="checkAll('cp', i)"
+              attr.id="{{ cp.month[1] }}"
               class="input-checkbox" />
             </td>
-            <td class="px-2">
-              {{ cp.month[1] }}
+            <td class="px-2 select-none">
+              <label attr.for="{{ cp.month[1] }}">{{ cp.month[1] }}</label>
             </td>
-            <td class="px-2">
+            <td class="px-2 select-none">
               {{ cp.year }}
             </td>
             <td *ngFor="let day of days" class="px-1">

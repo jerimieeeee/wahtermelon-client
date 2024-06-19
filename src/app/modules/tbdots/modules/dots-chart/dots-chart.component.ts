@@ -87,6 +87,7 @@ export class DotsChartComponent implements OnInit {
 
   onSubmit(){
     console.log(this.intensiveForm);
+    console.log(this.continuationForm);
   }
 
   compareDate(start_date, end_date, month, day, year, type, i){
@@ -103,12 +104,6 @@ export class DotsChartComponent implements OnInit {
           if(!this.intensiveForm[i+'-'+year+'-'+month.toString().padStart(2, '0')+'-'+day.toString().padStart(2, '0')]) {
             this.intensiveForm[i+'-'+year+'-'+month.toString().padStart(2, '0')+'-'+day.toString().padStart(2, '0')] = false;
           }
-
-          /* if(this.ip_count[i]) {
-            this.ip_count[i] += 1;
-          } else {
-            this.ip_count[i] = 1;
-          } */
         }
       } else {
         endDate.setDate(endDate.getDate());
@@ -116,11 +111,6 @@ export class DotsChartComponent implements OnInit {
           if(!this.continuationForm[i+'-'+year+'-'+month.toString().padStart(2, '0')+'-'+day.toString().padStart(2, '0')]) {
             this.continuationForm[i+'-'+year+'-'+month.toString().padStart(2, '0')+'-'+day.toString().padStart(2, '0')] = false;
           }
-          /* if(this.cp_count[i]) {
-            this.cp_count[i] += 1;
-          } else {
-            this.cp_count[i] = 1;
-          } */
         }
       }
 
