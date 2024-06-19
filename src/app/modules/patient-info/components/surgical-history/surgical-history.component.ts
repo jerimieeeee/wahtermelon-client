@@ -1,13 +1,15 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
 import { faChevronDown, faChevronUp, faMinus, faPlusCircle, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
+import { filter, tap } from 'rxjs';
 
 @Component({
   selector: 'app-surgical-history',
   templateUrl: './surgical-history.component.html',
   styleUrls: ['./surgical-history.component.scss']
 })
-export class SurgicalHistoryComponent {
+export class SurgicalHistoryComponent implements OnInit, OnDestroy{
   @Output() toggleAccordion = new EventEmitter<any>();
   @Output() toggleModal = new EventEmitter<any>();
   @Output() setSurgicalHistory = new EventEmitter<any>();
@@ -41,7 +43,27 @@ export class SurgicalHistoryComponent {
   }
 
   constructor(
-    private http: HttpService
+    private http: HttpService,
+    private router: Router
   ) { }
+
+  no_surgical_form = ['dn'];
+  active_loc_id: any;
+  navigationEnd$ = this.router.events.pipe(
+    filter(event => event instanceof NavigationEnd),
+    tap(() => {
+      this.active_loc_id = this.http.getUrlParams()
+    })
+  );
+
+  navi_end;
+  ngOnInit(): void {
+    this.active_loc_id = this.http.getUrlParams()
+    this.navi_end = this.navigationEnd$.subscribe();
+  }
+
+  ngOnDestroy() {
+    this.navi_end.unsubscribe();
+  }
 
 }

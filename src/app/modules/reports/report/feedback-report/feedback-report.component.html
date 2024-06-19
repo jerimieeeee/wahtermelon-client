@@ -1,0 +1,46 @@
+<div class="grid grid-cols-1">
+  <div class="w-full flex justify-center text-center">
+    Client Feedback Report <br />
+    From {{ start_date | date: 'MM/dd/yyyy' }} to {{ end_date | date: 'MM/dd/yyyy' }} <br />
+    Total Consult: {{ this.report_data.total_consult }} |
+    No Feedback: {{ this.report_data.no_feedback }} |
+    Backencoded: {{ this.report_data.back_encode }}
+  </div>
+
+  <table class="w-full table-fix border border-gray-300">
+    <thead class="font-normal">
+      <tr>
+        <th rowspan="3" class="w-1/12 border border-gray-200"></th>
+        <th colspan="6" class="w-6/12 border border-gray-200">With Feedback: {{ this.report_data.with_feedback }}</th>
+      </tr>
+      <tr>
+        <th colspan="2" class="border border-gray-200">Happy</th>
+        <th colspan="2" class="border border-gray-200">Neutral</th>
+        <th colspan="2" class="border border-gray-200">Sad</th>
+      </tr>
+      <tr>
+        <th class="border border-gray-200">Number</th>
+        <th class="border border-gray-200">Percentage</th>
+        <th class="border border-gray-200">Number</th>
+        <th class="border border-gray-200">Percentage</th>
+        <th class="border border-gray-200">Number</th>
+        <th class="border border-gray-200">Percentage</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="text-right" *ngFor="let item of report_data.score">
+        <td class="text-center border border-gray-200 font-semibold">{{ item.score }}</td>
+        <td class="border border-gray-200 pr-2">{{ item.happy }}</td>
+        <td class="border border-gray-200 pr-2">{{ (item.happy/report_data.with_feedback)*100 | number:'1.2-2' }} %</td>
+        <td class="border border-gray-200 pr-2">{{ item.neutral }}</td>
+        <td class="border border-gray-200 pr-2">{{ (item.neutral/report_data.with_feedback)*100 | number:'1.2-2' }} %</td>
+        <td class="border border-gray-200 pr-2">{{ item.sad }}</td>
+        <td class="border border-gray-200 pr-2">{{ (item.sad/report_data.with_feedback) *100 | number:'1.2-2' }} %</td>
+      </tr>
+
+      <tr *ngIf="report_data.score.length === 0">
+        <td colspan="7" class="text-center italic font-semibold py-5">No query result</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

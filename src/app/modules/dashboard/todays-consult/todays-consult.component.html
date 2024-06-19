@@ -1,4 +1,4 @@
-<div class="mb-10 rounded-xl text-gray-600 h-100 border border-slate-100 shadow-md">
+<div class="mb-10 rounded-xl text-gray-600 h-100 border border-slate-100 shadow-md select-none">
     <div class="md:flex md:justify-between md:items-center pb-2 bg-orange-400 text-white rounded-t-md p-2">
       <span class="font-semibold pl-3" >Todays Consult ({{ date_today }})</span>
       <div class="flex items-center">
@@ -37,6 +37,16 @@
               <fa-icon class="mx-0 my-0 text-red-500 mr-2" [icon]="faExclamationCircle" size="lg"></fa-icon>
             </div> -->
           </div>
+        </div>
+
+        <div class="w-16 text-2xl text-gray-600 space-x-1">
+          <fa-icon *ngIf="profile.is_pregnant || profile.pt_group === 'mc'" [icon]="faPersonPregnant" class="text-rose-300"></fa-icon>
+          <fa-icon *ngIf="getAge(profile)" [icon]="faPersonCane"></fa-icon>
+          <fa-icon *ngIf="profile.patient.pwd_type_code !== 'NA'" [icon]="faWheelchair" class="text-sky-500"></fa-icon>
+          <fa-icon *ngIf="profile.pt_group === 'ab'" [icon]="faDog"></fa-icon>
+          <fa-icon *ngIf="profile.pt_group === 'cc'" [icon]="faBaby" class="text-blue-500"></fa-icon>
+          <fa-icon *ngIf="profile.pt_group === 'tb'" [icon]="faLungs" class="text-green-500"></fa-icon>
+          <fa-icon *ngIf="profile.pt_group === 'dn'" [icon]="faTooth"></fa-icon>
         </div>
 
         <div class="grid grid-cols-12 text-left w-3/5">

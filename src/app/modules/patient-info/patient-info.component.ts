@@ -79,7 +79,7 @@ export class PatientInfoComponent implements OnInit {
     }
 
     if(field === 'social_history'     || field==='all') this.socialHistory.loadData(this.patient_info.id);
-    if(field === 'surgical_history'   || field==='all') this.surgicalHistory.loadData(this.patient_info.id);
+    if((field === 'surgical_history'   || field==='all') && this.active_loc !== 'dn') this.surgicalHistory.loadData(this.patient_info.id);
     if(field === 'vitals'             || field==='all') this.vitals.loadData(this.patient_info.id);
     if(field === 'appointment'        || field==='all') this.appointment.loadData(this.patient_info.id);
 

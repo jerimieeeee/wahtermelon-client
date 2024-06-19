@@ -67,6 +67,10 @@ const routes: Routes = [
     path: 'environmental',
     loadChildren: () => import('./modules/environmental/environmental.module').then(m => m.EnvironmentalModule)
   },
+  {
+    path: 'feedback',
+    loadChildren: () => import('./modules/feedback/feedback.module').then(m => m.FeedbackModule)
+  },
 ];
 
 @NgModule({

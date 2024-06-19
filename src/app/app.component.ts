@@ -84,8 +84,7 @@ export class AppComponent implements OnInit{
     }
 
     if(this.isAuthenticated == false) {
-      // console.log(this.verify_url)
-      if(url == '/user-registration' || url == '/forgot-password'){
+      if(url == '/user-registration' || url == '/forgot-password' || url == '/feedback'){
         this.showLogin = false;
       } else if (this.verify_url[0] == '/verify') {
         this.showLogin = true;
@@ -112,11 +111,9 @@ export class AppComponent implements OnInit{
   show_activated: boolean = false;
 
   activateUser(params){
-    // console.log(params)
     this.http.get('email/verify/'+params).subscribe({
       next: (data:any) => {
         this.show_activated = true;
-        // console.log(data)
       },
       error: err => console.log(err)
     })

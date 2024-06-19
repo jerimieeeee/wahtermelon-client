@@ -74,24 +74,16 @@
           </button>
         </td>
       </tr>
-
-      <!-- <tr class="bg-white border-b" *ngIf="!patient_dental_history[0]">
-        <td  colspan="7">
-          <div class="text-center py-3 flex flex-col">
-            <div class="flex justify-center">No records to show...</div>
-            <div class="flex justify-center">
-              <button type="button" class="mt-3 bg-blue-500 px-3 py-1 rounded-md text-white hover:opacity-75" (click)="switchPage(2)">
-                create record
-              </button>
-            </div>
-          </div>
-        </td>
-      </tr> -->
     </tbody>
   </table>
 </div>
 
 <div class="m-3" *ngIf="pages === 2 && module === 1">
+  <app-pregnant-tag *ngIf="selected_visit.patient.gender === 'F'" [consult_details]="selected_visit"
+    [have_complaint]="have_complaint"
+    [allowed_to_edit]="allowed_to_edit"
+    (loadConsult)="loadSelectedConsult($event)"
+  ></app-pregnant-tag>
   <app-complaint-history [toggle_content]="toggle_content"
     [consult_details]="selected_visit"
     [have_complaint]="have_complaint"
