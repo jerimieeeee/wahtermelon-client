@@ -32,7 +32,7 @@
             <td *ngFor="let day of days" class="px-1">
               <input type="checkbox"
                 *ngIf="compareDate(treatment_start, continuation_start, ip.month[0], day, ip.year, 'ip', i)"
-                [(ngModel)]="intensiveForm[i+'-'+ip.year+'-'+ip.month[0].toString().padStart(2, '0')+'-'+day.toString().padStart(2, '0')]"
+                [(ngModel)]="intensiveForm[i][ip.year+'-'+ip.month[0].toString().padStart(2, '0')+'-'+day.toString().padStart(2, '0')]"
                 class="input-checkbox" />
             </td>
             <!-- <td class="text-center">
@@ -79,7 +79,7 @@
             <td *ngFor="let day of days" class="px-1">
               <input type="checkbox"
               *ngIf="compareDate(continuation_start, treatment_end, cp.month[0], day, cp.year, 'cp', i)"
-              [(ngModel)]="continuationForm[i+'-'+cp.year+'-'+cp.month[0].toString().padStart(2, '0')+'-'+day.toString().padStart(2, '0')]"
+              [(ngModel)]="continuationForm[i][cp.year+'-'+cp.month[0].toString().padStart(2, '0')+'-'+day.toString().padStart(2, '0')]"
               class="input-checkbox" />
             </td>
             <!-- <td class="text-center">
