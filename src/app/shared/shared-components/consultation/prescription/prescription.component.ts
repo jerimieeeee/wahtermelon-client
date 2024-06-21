@@ -9,11 +9,12 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { DrugFormComponent } from './modals/drug-form/drug-form.component';
 import { DrugListComponent } from './modals/drug-list/drug-list.component';
 import { DrugDeleteComponent } from './modals/drug-delete/drug-delete.component';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-prescription',
   standalone: true,
-  imports: [CommonModule, FontAwesomeModule, DrugFormComponent, DrugListComponent, DrugDeleteComponent],
+  imports: [CommonModule, FontAwesomeModule, DrugFormComponent, DrugListComponent, DrugDeleteComponent, FormsModule],
   templateUrl: './prescription.component.html',
   styleUrls: ['./prescription.component.scss']
 })
