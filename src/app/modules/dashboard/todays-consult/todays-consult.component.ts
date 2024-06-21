@@ -2,9 +2,10 @@ import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit } from '@a
 import { NavigationStart, Router } from '@angular/router';
 import { faQuestionCircle, faChevronDown, faFolderOpen, faHeart, faFlask, faNotesMedical, faExclamationCircle, faChevronRight, faChevronLeft, faAnglesLeft, faAnglesRight } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
+import { LaravelEchoService } from 'app/shared/services/laravel-echo.service';
 import { NameHelperService } from 'app/shared/services/name-helper.service';
 import { interval, Subject, Subscription, takeUntil } from 'rxjs';
-import { switchMap, finalize } from 'rxjs/operators';
+import { switchMap, finalize, take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-todays-consult',
@@ -41,6 +42,8 @@ export class TodaysConsultComponent implements OnInit, OnDestroy {
   show_form: boolean = false;
   debounceDelay = 1500; // Adjust the delay as needed
   isLoading: boolean = false;
+  current_user = this.http.getUserFromJSON();
+  private isListening = false;
 
   // Timer reference
   private debounceTimer: ReturnType<typeof setTimeout>;
@@ -102,6 +105,8 @@ export class TodaysConsultComponent implements OnInit, OnDestroy {
           this.physicians = data.data;
           let user_info = this.http.getUserFromJSON();
           this.selected_physician = user_info.designation_code === 'MD' ? user_info.id : 'all';
+          // console.log(user_info);
+
           resolve(); // Resolve the promise once loading is done
         },
         error: err => {
@@ -145,24 +150,49 @@ export class TodaysConsultComponent implements OnInit, OnDestroy {
   constructor(
     private http: HttpService,
     private router: Router,
-    private nameHelper: NameHelperService
+    private nameHelper: NameHelperService,
+    private laravelEchoService: LaravelEchoService
   ) { }
 
+  listenToChannel() {
+    if (this.isListening) return;
+
+    this.isListening = true;
+
+    const loadData = () => {
+        return this.loadPhysicians()
+            .then(() => this.getTodaysConsult())
+            .catch(error => {
+                console.error('Error loading physicians or consultations:', error);
+                throw error;
+            });
+    };
+
+    loadData();
+
+    this.laravelEchoService.subscribeToChannel(
+        'channel',
+        'todays-patient',
+        this.current_user.facility_code,
+        'todays.patient',
+        (data) => {
+            console.log('User updated event received:', data);
+            if (data) {
+                loadData();
+            }
+        }
+    );
+  }
+
+
   ngOnInit(): void {
-    this.loadPhysicians().then(() => {
-      this.getTodaysConsult().then(() => {
-        setTimeout(() => {
-          this.subscribeRefresh();
-        }, 30000)
-      });
-    }).catch(error => {
-      console.error('Error loading physicians:', error);
-    });
+
+    this.listenToChannel();
+
   }
 
   ngOnDestroy(): void {
     clearInterval(this.todays_interval)
-
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
   }
