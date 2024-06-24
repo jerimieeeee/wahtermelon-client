@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { faFaceFrown, faFaceMeh, faFaceSmile, faPrint, faSpinner, faCircleNotch } from '@fortawesome/free-solid-svg-icons';
+import { faFaceFrown, faFaceMeh, faFaceSmile } from '@fortawesome/free-regular-svg-icons';
+import { faPrint, faSpinner, faCircleNotch, faCheck, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { AgeService } from 'app/shared/services/age.service';
 import { dateHelper } from 'app/shared/services/date-helper.service';
 import { HttpService } from 'app/shared/services/http.service';
@@ -20,6 +21,8 @@ export class EkasComponent implements OnInit {
   faFaceMeh = faFaceMeh;
   faFaceFrown = faFaceFrown;
   faCircleNotch = faCircleNotch;
+  faCheck = faCheck;
+  faXmark = faXmark;
 
   patient_info: any;
   patient_philhealth: any;
@@ -29,28 +32,44 @@ export class EkasComponent implements OnInit {
   facility: any;
   show_form: boolean = false;
 
+  lab_arr = {
+    CBC:  { desc: 'Complete Blood Count (CBC) w/ platelet count', with_result: null },
+    LPFL: { desc: 'Lipid profile (Total Cholesterol, Triglycerides, HDL Cholesterol, LDL Cholesterol)', with_result: null },
+    FBS:  { desc: 'Fasting Blood Sugar (FBS)', with_result: null },
+    OGTT: { desc: 'Oral Glucose Tolerance Test', with_result: null },
+    HBA:  { desc: 'Glycosylated Hemoglobin (HbA1c)', with_result: null },
+    CRTN: { desc: 'Creatinine', with_result: null },
+    CXRAY:{ desc: 'Chest X-Ray', with_result: null },
+    SPTM: { desc: 'Sputum Microscopy', with_result: null },
+    ECG:  { desc: 'Electrocardiogram (ECG)', with_result: null },
+    URN:  { desc: 'Urinalysis', with_result: null },
+    PSMR: { desc: 'Pap smear', with_result: null },
+    FCAL: { desc: 'Fecalysis', with_result: null },
+    FOBT: { desc: 'Fecal Occult Blood Test', with_result: null }
+  };
+
+  lab_list_arr: any = [];
   getResults(){
-    Object.entries(this.lab_list).forEach(([key, value], index) => {
-      let val: any = value;
-      let url = this.nameService.getURL(val.laboratory.code)
+    Object.entries(this.lab_list).forEach(([key, value]:any, index) => {
+      console.log(value)
+      let url = this.nameService.getURL(value.laboratory.code)
       if(url !== '') {
-        this.http.get(url, {params: {request_id: val.id}}).subscribe({
+        this.http.get(url, {params: {request_id: value.id}}).subscribe({
           next: (data: any) => {
-            // console.log(data.data)
-            this.lab_list[key]['result'] = data.data[0];
+            if(data.data[0]) this.lab_arr[value.laboratory.code].with_result = data.data[0];
           },
           error: err => console.log(err)
         })
       }
-
     });
 
+    console.log(this.lab_list_arr);
+    console.log(this.lab_arr);
     this.getAge();
-    console.log(this.lab_list);
   }
+
   philhealth_info: any;
   patient_age: any;
-
   getAge(){
     this.http.get('patient-philhealth/philhealth', {params:{'filter[patient_id]': this.patient_info.id,  per_page: '1', sort: '-enlistment_date'}}).subscribe({
       next: (data: any) => {
@@ -63,7 +82,6 @@ export class EkasComponent implements OnInit {
 
         this.http.post('konsulta/generate-age', params).subscribe({
           next: (data: any) => {
-            console.log(data)
             this.show_form = true;
             this.patient_age = data.data;
           },
