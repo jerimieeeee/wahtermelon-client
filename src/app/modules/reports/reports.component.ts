@@ -32,10 +32,12 @@ export class ReportsComponent implements OnInit {
     { id: 'fhsis2018-fp', desc: 'Family Planning', url: 'reports-2018/family-planning/m1'},
     { id: 'fhsis2018-ncd', desc: 'NCD', url: 'reports-2018/ncd/m1'},
     { id: 'fhsis2018-tb', desc: 'TB Dots', url: 'reports-2018/tb-dots/m1'},
+    { id: 'fhsis2018-morbidity', desc: 'Morbidity', url: 'reports-2018/morbidity/report'},
   ]
 
   other_stats = [
     { id: 'patient-registered', desc: 'Patient Registered', url: 'reports-2018/user/patient-registered'},
+    { id: 'feedback', desc: 'Client Feedback', url: 'reports-2018/feedback/report'},
     // { id: 'fhsis2018-mc', desc: 'Maternal Care', url: 'reports-2018/maternal-care/m1'},
   ]
 
@@ -43,9 +45,9 @@ export class ReportsComponent implements OnInit {
     { id: 'gbv-report', desc: 'GBV Report', url: 'gbv-report/catalyst-report'},
   ]
 
-  diagnosis_stats = [
-    { id: 'morbidity-report', desc: 'Morbidity Report', url: 'reports-2018/morbidity/report'},
-  ];
+  // diagnosis_stats = [
+  //   { id: 'morbidity-report', desc: 'Morbidity Report', url: 'reports-2018/morbidity/report'},
+  // ];
 
   household_stats = [
     { id: 'profiling-report', desc: 'Profiling', url: 'reports-2018/household-profiling/report'},
@@ -106,7 +108,7 @@ export class ReportsComponent implements OnInit {
     },
   ];
 
-  fhsis_monthly_arr = ['fhsis2018-cc', 'fhsis2018-mc', 'fhsis2018-tb', 'fhsis2018-ncd', 'fhsis2018-fp', 'patient-registered']
+  fhsis_monthly_arr = ['fhsis2018-cc', 'fhsis2018-morbidity', 'fhsis2018-mc', 'fhsis2018-tb', 'fhsis2018-ncd', 'fhsis2018-fp', 'patient-registered']
   report_params: any;
   years: any = [];
   selectedBrgy: [];
@@ -210,6 +212,12 @@ export class ReportsComponent implements OnInit {
       this.reportForm.controls.start_date.disable();
       this.reportForm.controls.end_date.disable();
     } else if(this.reportForm.value.report_type){
+      if(this.reportForm.value.report_type.id === 'feedback') {
+        this.reportForm.controls.report_class.disable();
+      } else {
+        this.reportForm.controls.report_class.enable();
+      }
+
       this.reportForm.controls.start_date.enable();
       this.reportForm.controls.end_date.enable();
       this.reportForm.controls.month.disable();

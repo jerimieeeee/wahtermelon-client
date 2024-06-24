@@ -11,13 +11,15 @@ import * as angularFontawesome from '@fortawesome/angular-fontawesome';
 import { CasefindingsComponent } from './modules/casefindings/casefindings.component';
 import { CaseHoldingComponent } from './modules/case-holding/case-holding.component';
 import { DotsChartComponent } from './modules/dots-chart/dots-chart.component';
-import { PrescriptionComponent } from './modules/prescription/prescription.component';
 import { EndVisitComponent } from 'app/shared/shared-modals/end-visit/end-visit.component';
 import { DeleteItemComponent } from 'app/shared/shared-modals/delete-item/delete-item.component';
 import { TreatmentOutcomeComponent } from './modals/treatment-outcome/treatment-outcome.component';
 import { CaserateComponent } from 'app/shared/shared-components/eclaims/components/caserate/caserate.component';
 import { EclaimsComponent } from 'app/shared/shared-components/eclaims/eclaims.component';
 import { SharedComponentsModule } from 'app/shared/shared-components/shared-components.module';
+import { InitialDxComponent } from 'app/shared/shared-components/consultation/initial-dx/initial-dx.component';
+import { FinalDxComponent } from 'app/shared/shared-components/consultation/final-dx/final-dx.component';
+import { PrescriptionComponent } from 'app/shared/shared-components/consultation/prescription/prescription.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,6 @@ import { SharedComponentsModule } from 'app/shared/shared-components/shared-comp
     CasefindingsComponent,
     CaseHoldingComponent,
     DotsChartComponent,
-    PrescriptionComponent,
     TreatmentOutcomeComponent
   ],
   imports: [
@@ -37,7 +38,10 @@ import { SharedComponentsModule } from 'app/shared/shared-components/shared-comp
     EndVisitComponent,
     DeleteItemComponent,
     CaserateComponent,
-    SharedComponentsModule
+    SharedComponentsModule,
+    InitialDxComponent,
+    FinalDxComponent,
+    PrescriptionComponent
   ]
 })
 export class TbdotsModule { }

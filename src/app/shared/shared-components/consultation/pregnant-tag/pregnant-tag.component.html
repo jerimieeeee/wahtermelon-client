@@ -1,0 +1,18 @@
+<div class="grid grid-cols-10 mb-5">
+  <!-- <div class="col-span-2"></div> -->
+  <div class="col-span-10 border border-gray-300 rounded-md shadow-md">
+      <div class="flex justify-between p-4" >
+        <span class="mt-1 select-none">
+          <input type="checkbox" id='is_pregnant' class="input-checkbox" [(ngModel)]="is_pregnant">
+          <label class="pl-2 pt-1" for="is_pregnant">Is the patient pregnant during this visit?</label>
+        </span>
+        <div class="flex text-right">
+          <button *ngIf="!consult_done && allowed_to_edit" [disabled]="is_saving || this.is_pregnant === this.consult_details.is_pregnant " type="button" class="btn-save ml-auto px-5 disabled:bg-gray-300" (click)="onSubmit()">
+            <fa-icon *ngIf="is_saving" class="mr-2" [icon]="faCircleNotch" spin="true"></fa-icon>
+            <fa-icon *ngIf="!is_saving" class="mr-2" [icon]="faSave"></fa-icon>
+            {{ is_saving ? 'Saving' : 'Update' }}
+          </button>
+        </div>
+      </div>
+  </div>
+</div>

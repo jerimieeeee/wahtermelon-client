@@ -50,6 +50,10 @@ const routes: Routes = [
       {
         path: 'fp',
         loadChildren: () => import('../familyplanning/familyplanning.module').then(m => m.FamilyplanningModule)
+      },
+      {
+        path: 'dn',
+        loadChildren: () => import('../dental/dental.module').then(m => m.DentalModule)
       }
     ]
   },

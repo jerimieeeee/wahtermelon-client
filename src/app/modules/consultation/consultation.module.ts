@@ -26,6 +26,7 @@ import { EndVisitComponent } from 'app/shared/shared-modals/end-visit/end-visit.
 import { GbvReferralComponent } from './components/complaint-history/modals/gbv-referral/gbv-referral.component';
 import { OpenConsultComponent } from 'app/shared/shared-modals/open-consult/open-consult.component';
 import { UpdateDateComponent } from './modals/update-date/update-date.component';
+import { PregnantTagComponent } from 'app/shared/shared-components/consultation/pregnant-tag/pregnant-tag.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,8 @@ import { UpdateDateComponent } from './modals/update-date/update-date.component'
     ReactiveFormsModule,
     DeleteItemComponent,
     EndVisitComponent,
-    OpenConsultComponent
+    OpenConsultComponent,
+    PregnantTagComponent
   ]
 })
 export class ConsultationModule { }

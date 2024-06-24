@@ -16,7 +16,7 @@
           </div>
 
           <div>
-            <label for="consult_date">Consulation Date *</label>
+            <label for="consult_date">Consultation Date *</label>
             <input type="date" name="consult_date" id="consult_date" [max]="max_date" formControlName="consult_date" class="input">
           </div>
         </div>
@@ -75,7 +75,7 @@
           <div class="col-span-3">
             <label for="exposure_type_code">Type of Exposure *</label>
             <select name="exposure_type_code" id="exposure_type_code" formControlName="exposure_type_code" class="input">
-              <option *ngFor="let exposure_type of exposure_types" [value]="exposure_type.code">{{ exposure_type.desc }}</option>
+              <option *ngFor="let exposure_type of exposure_types" [value]="exposure_type.code">{{ exposure_type.category + ': '+ exposure_type.desc }}</option>
             </select>
           </div>
 

@@ -22,6 +22,8 @@ export class ShowNameListComponent implements OnInit {
   @Input('pageIndex') pageIndex: number;
   @Input() reportForm: any;
   @Input() selected_barangay: any;
+  @Input() url: any;
+  @Input() loc: any;
 
   paginate = new BehaviorSubject<State>({
     page: 1,
@@ -39,6 +41,7 @@ export class ShowNameListComponent implements OnInit {
   to: number;
   total: number;
   is_fetching: boolean = false;
+  location: any;
 
   constructor(
     private http: HttpService,
@@ -63,21 +66,23 @@ export class ShowNameListComponent implements OnInit {
       params['category'] = this.name_list_params.category;
     }
 
-    this.http.get('reports-2018/fp-namelist/name-list', { params }).subscribe({
+    this.http.get(this.url, { params }).subscribe({
       next: (data: any) => {
         this.is_fetching = false;
         this.show_nameList = data;
         this.current_page = data.current_page;
         this.last_page = data.last_page;
-
-        console.log(this.show_nameList, 'amen4u')
       },
       error: err => console.log(err)
     });
   }
 
-  navigateTo(loc, patient_id){
-    this.router.navigate(['/patient/'+loc, {id: patient_id}])
+  navigateTo(loc, patient_id, consult_id){
+    if (loc === 'cn') {
+      this.router.navigate(['/patient/'+loc,{id: patient_id, consult_id: consult_id}])
+    } else {
+      this.router.navigate(['/patient/'+loc,{id: patient_id}])
+    }
   }
 
   closeModal() {

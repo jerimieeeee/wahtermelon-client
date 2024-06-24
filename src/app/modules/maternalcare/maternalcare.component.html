@@ -4,17 +4,17 @@
       [class]="pages===1? 'tabs-main-true rounded-t-md' : 'tabs-main-false' ">
       HISTORY
     </button>
-    <button *ngIf="patient_id && mcr" (click)="switchPage(2)" class="tabs-main w-36"
+    <button *ngIf="show_list && patient_id && mcr" (click)="switchPage(2)" class="tabs-main w-36"
       [class]="pages===2? 'tabs-main-true rounded-t-md' : 'tabs-main-false' ">
       VISIT DETAILS
     </button>
-    <button *ngIf="patient_id && mcr" (click)="switchPage(3)" class="tabs-main w-36"
+    <button *ngIf="show_list && patient_id && mcr" (click)="switchPage(3)" class="tabs-main w-36"
       [class]="pages===3? 'tabs-main-true rounded-t-md' : 'tabs-main-false' ">
       ECLAIMS
     </button>
   </nav>
   <div class="ml-auto">
-    <button *ngIf="!consult_details?.consult_done" type="button" class="btn-end-visit ml-auto mt-5" (click)="toggleModal('end_visit')">
+    <button *ngIf="show_list && !consult_details?.consult_done" type="button" class="btn-end-visit ml-auto mt-5" (click)="toggleModal('end_visit')">
       <fa-icon class="mr-1" [icon]="faDoorClosed"></fa-icon>
       End Visit
     </button>
@@ -35,7 +35,7 @@
         [class]="module === 4? 'tabs-main-true' : 'tabs-main-false' ">
         Postpartum
     </button>
-    <button (click)="switchTab(8)" *ngIf="patient_id" class="tabs-main w-28"
+    <button (click)="switchTab(8)" *ngIf="patient_mc_record && prenatal" class="tabs-main w-28"
         [class]="module === 8? 'tabs-main-true' : 'tabs-main-false' ">
         Caserate
     </button>
@@ -75,7 +75,7 @@
   </div> -->
 
 <div class="fade-in mb-20" *ngIf="pages === 1">
-  <div class="w-12/12 px-8 pb-10 border-solid border-2 border-zinc-100 border-l-0 border-r-0 border-t-0 p-3">
+  <div *ngIf="show_list" class="w-12/12 px-8 pb-10 border-solid border-2 border-zinc-100 border-l-0 border-r-0 border-t-0 p-3">
     <div class="grid gap-4 relative animates-dropdown" style="grid-template-columns: repeat(16, minmax(0, 1fr));"
       *ngIf="!focused">
       <div
@@ -89,7 +89,7 @@
               class="grid gap-4 rounded-b-lg hover:drop-shadow-lg drop-shadow-md bg-white hover:border border-gray-300 hover:border-blue-400 p-2 m-2 border -mt-5"
               style="grid-template-columns: repeat(9, minmax(0, 1fr));">
               <div class="font-light col-span-4" *ngIf="!patient_mc_list">No records found.</div>
-              <button (click)="openNew()" *ngIf="!patient_mc_list"
+              <button (click)="switchPage(2)" *ngIf="!patient_mc_list"
                 class="col-start-[9] bg-green-400 rounded hover:bg-green-500 font-medium text-white my-1 mx-2">Add</button>
 
               <div class="text-sm pb-1 font-semibold h-max" *ngIf="patient_mc_list?(patient_mc_list.length !== 0?true:false):false"
@@ -132,6 +132,15 @@
       </div>
     </div>
   </div>
+
+  <div *ngIf="!show_list" class="grid grid-cols-1 my-20">
+    <div class="flex justify-center text-blue-500">
+      <fa-icon [icon]="faCircleNotch" animation="spin"></fa-icon>
+    </div>
+    <div class="flex justify-center">
+      Loading...
+    </div>
+  </div>
 </div>
 
 <div class="fade-in mb-20" *ngIf="pages === 2 && module === 2">
@@ -140,7 +149,8 @@
       [patient_id]="patient_id"></app-mcr>
   </div>
   <div class="w-12/12 px-8 pb-10 border-solid border-2 border-zinc-100 border-l-0 border-r-0 border-t-0 p-3">
-    <app-riskfactors *ngIf="risk_factors && patient_mc_record !== ''" [risk_factors]="risk_factors" [patient_mc_record]="patient_mc_record"
+    <app-riskfactors *ngIf="patient_mc_record !== ''"
+      [patient_mc_record]="patient_mc_record"
       [patient_id]="patient_id"></app-riskfactors>
   </div>
 </div>

@@ -20,6 +20,7 @@ import { DailyServiceComponent } from './report/daily-service/daily-service.comp
 import { Fhsis2018NcdComponent } from './report/fhsis2018-ncd/fhsis2018-ncd.component';
 import { Fhsis2018FpComponent } from './report/fhsis2018-fp/fhsis2018-fp.component';
 import {ShowNameListComponent} from "./modals/show-name-list/show-name-list.component";
+import { FeedbackReportComponent } from './report/feedback-report/feedback-report.component';
 
 
 @NgModule({
@@ -38,6 +39,7 @@ import {ShowNameListComponent} from "./modals/show-name-list/show-name-list.comp
     Fhsis2018NcdComponent,
     Fhsis2018FpComponent,
     ShowNameListComponent,
+    FeedbackReportComponent,
   ],
   imports: [
     CommonModule,

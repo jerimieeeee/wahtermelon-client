@@ -1,39 +1,55 @@
-<div *ngIf="showModal" class="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex">
-  <div class="relative w-1/2 my-6 mx-auto max-w-6xl">
-    <!--content-->
-    <div class="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
-      <!--header-->
-      <div class="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
-        <h3 class="text-xl font-semibold">
-          Update Tooth Condition
+<div id="defaultModal" tabindex="-1" class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 w-full md:inset-0 h-modal md:h-full justify-center items-center flex" aria-modal="true" role="dialog" style="z-index:60">
+  <div class="relative p-4 w-full max-w-xl h-auto md:h-auto">
+    <!-- Modal content -->
+    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+      <!-- Modal header -->
+      <div class="flex justify-between items-start py-3 px-5 rounded-t border-b bg-blue-500 dark:border-gray-600">
+        <h3 class="mt-2 text-sm font-bold text-white dark:text-white">
+            Tooth condition (#{{selected_tooth.tooth_number}})
         </h3>
-        <button class="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none" (click)="toggleModal()">
-          <span class="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
-            ×
-          </span>
-        </button>
       </div>
-      <!--body-->
-      <div class="relative p-6 flex-auto">
-        <p class="my-4 text-slate-500 text-lg leading-relaxed">
-          I always felt like I could do anything. That’s the main
-          thing people are controlled by! Thoughts- their perception
-          of themselves! They're slowed down by their perception of
-          themselves. If you're taught you can’t do anything, you
-          won’t do anything. I was taught I could do everything.
-        </p>
+      <!-- Modal body -->
+      <div class="overflow-y-auto h-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
+        <div class="w-full max-w-3xl text-left text-gray-500 dark:text-gray-400">
+          <div class="grid grid-cols-1 m-10">
+            <div class="grid grid-cols-3 gap-x-3">
+              <span></span>
+              <select [(ngModel)]="toothNumber[selected_tooth.tooth_number+'A']" class="input" >
+                <option *ngFor="let item of condition_list" [value]="item.id">{{ item.desc }}</option>
+              </select>
+              <span></span>
+            </div>
+            <div class="grid grid-cols-3 gap-x-3">
+              <select [(ngModel)]="toothNumber[selected_tooth.tooth_number+'D']" class="input">
+                <option *ngFor="let item of condition_list" [value]="item.id">{{ item.desc }}</option>
+              </select>
+
+              <select [(ngModel)]="toothNumber[selected_tooth.tooth_number+'E']" class="input">
+                <option *ngFor="let item of condition_list" [value]="item.id">{{ item.desc }}</option>
+              </select>
+
+              <select [(ngModel)]="toothNumber[selected_tooth.tooth_number+'B']" class="input">
+                <option *ngFor="let item of condition_list" [value]="item.id">{{ item.desc }}</option>
+              </select>
+            </div>
+            <div class="grid grid-cols-3 gap-x-3">
+              <span></span>
+              <select [(ngModel)]="toothNumber[selected_tooth.tooth_number+'C']" class="input">
+                <option *ngFor="let item of condition_list" [value]="item.id">{{ item.desc }}</option>
+              </select>
+              <span></span>
+            </div>
+          </div>
+        </div>
       </div>
-      <!--footer-->
-      <div class="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
-        <button class="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button" (click)="toggleModal()">
-          Close
-        </button>
-        <button class="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button" (click)="toggleModal()">
-          Save
-        </button>
+
+      <!-- Modal footer -->
+      <div class="flex justify-end py-4 px-5 space-x-4 rounded-b border-t border-gray-200 dark:border-gray-600">
+        <button  type="button" class="btn-save bg-gray-400" (click)="closeModal()">Cancel</button>
+        <button  type="button h-10" class="btn-save" (click)="onSubmit()">Queue for update</button>
       </div>
     </div>
   </div>
 </div>
 
-<div *ngIf="showModal" class="opacity-25 fixed inset-0 z-40 bg-black"></div>
+<div class="opacity-50 fixed inset-0 z-50 bg-black"></div>
