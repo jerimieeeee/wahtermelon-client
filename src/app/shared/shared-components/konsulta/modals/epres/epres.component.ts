@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnInit, Output, Input } from '@angular/core';
-import { faCircleNotch, faFaceFrown, faFaceMeh, faFaceSmile, faPrint } from '@fortawesome/free-solid-svg-icons';
+import { faFaceFrown, faFaceMeh, faFaceSmile } from '@fortawesome/free-regular-svg-icons';
+import { faCircleNotch, faPrescription, faPrint } from '@fortawesome/free-solid-svg-icons';
 import { AgeService } from 'app/shared/services/age.service';
 import { dateHelper } from 'app/shared/services/date-helper.service';
 import { HttpService } from 'app/shared/services/http.service';
@@ -19,6 +20,7 @@ export class EpresComponent implements OnInit {
   faFaceMeh = faFaceMeh;
   faFaceFrown = faFaceFrown;
   faCircleNotch = faCircleNotch;
+  faPrescription = faPrescription;
 
   show_form:boolean = false;
 
