@@ -27,9 +27,9 @@ export class DotsChartComponent implements OnInit {
 
   intensive_phase: any = [];
   continuation_phase: any = [];
-  intensiveForm: any = [];
+  intensiveForm: any[] = [];
   intensiveAll: any = [];
-  continuationForm: any = [];
+  continuationForm: any[][] = [];
   continuationAll: any = [];
 
   ip_count: any = [];
@@ -38,47 +38,38 @@ export class DotsChartComponent implements OnInit {
   is_saving: boolean = false;
 
   checkAll(type, i){
-    if(type === 'ip') {
-      Object.entries(this.intensiveForm).forEach(([key, value], index) => {
-        let key_split = key;
-        if(i.toString() === key_split.split('-')[0].toString()) {
-          this.intensiveForm[key] = !this.intensiveAll[i] ? true : false;
-        }
-      })
-    } else {console.log('test')
-      Object.entries(this.continuationForm).forEach(([key, value], index) => {
-        let key_split = key;
-        if(i.toString() === key_split.split('-')[0].toString()) {
-          this.continuationForm[key] = !this.continuationAll[i] ? true : false;
-        }
-      })
-    }
+    let usedForm = type === 'ip' ? this.intensiveForm[i] : this.continuationForm[i]
+    let formName = type === 'ip' ? 'intensiveForm' : 'continuationForm';
+    let checkName = type === 'ip' ? 'intensiveAll' : 'continuationAll';
 
-  }
-
-  modelClick(){
+    this[checkName][i] = !this[checkName][i];
+    Object.entries(usedForm).forEach(([key, value]) => {
+      console.log(i, this[checkName][i])
+      this[formName][i][key] = this[checkName][i];
+      console.log(key, this[formName][i][key])
+    });
 
   }
 
   generateChart(){
     if(this.selected_tb_consult.case_holding) {
-      console.log(this.selected_tb_consult.case_holding);
       this.treatment_start = new Date(this.selected_tb_consult.case_holding.treatment_start);
       this.continuation_start = new Date(this.selected_tb_consult.case_holding.continuation_start);
       this.treatment_end = new Date(this.selected_tb_consult.case_holding.treatment_end);
 
-      for(let date = new Date(this.selected_tb_consult.case_holding.treatment_start); date <= new Date(this.selected_tb_consult.case_holding.continuation_start); date.setMonth(date.getMonth()+1)){
+      let before_continuation = new Date(this.continuation_start).setDate(this.continuation_start.getDate() - 1);
+
+      for(let date = new Date(this.treatment_start.getFullYear(), this.treatment_start.getMonth(), 1); date <= new Date(before_continuation); date.setMonth(date.getMonth()+1)){
         this.intensive_phase.push({
-          month : [date.getMonth()+1, date.toLocaleString('default', {month: 'long'})],
+          month : [date.getMonth()+1, date.toLocaleString('default', {month: 'short'})],
           year : date.getFullYear()
         });
       }
-      // console.log(this.intensive_phase)
-
+      // console.log(this.continuation_start, this.intensive_phase)
       let cp_start = new Date(new Date(this.selected_tb_consult.case_holding.continuation_start).getFullYear()+'-'+(new Date(this.selected_tb_consult.case_holding.continuation_start).getMonth()+1)+'-01');
       for(let date = cp_start; date <= new Date(this.selected_tb_consult.case_holding.treatment_end); date.setMonth(date.getMonth()+1)){
         this.continuation_phase.push({
-          month : [date.getMonth()+1, date.toLocaleString('default', {month: 'long'})],
+          month : [date.getMonth()+1, date.toLocaleString('default', {month: 'short'})],
           year : date.getFullYear()
         });
       }
@@ -86,44 +77,60 @@ export class DotsChartComponent implements OnInit {
   }
 
   onSubmit(){
-    console.log(this.intensiveForm);
+    // this.is_saving = true;
+    let dots_arr = [];
+    Object.entries(this.intensiveForm).forEach(([key, value]) => {
+      Object.entries(value).forEach(([key, value]) => {
+        if(value) {
+          let dots_value = { dots_date: key, dots_type: 'IP' }
+          dots_arr.push(dots_value);
+        }
+      });
+    });
+
+    Object.entries(this.continuationForm).forEach(([key, value]) => {
+      Object.entries(value).forEach(([key, value]) => {
+        if(value) {
+          let dots_value = { dots_date: key, dots_type: 'CP' }
+          dots_arr.push(dots_value);
+        }
+      });
+    });
+
+    let params = {
+      patient_id: this.patient_id,
+      patient_tb_id: this.selected_tb_consult.id,
+      dots: dots_arr
+    };
+
+    this.http.post('tbdots/patient-tb-chart', params).subscribe({
+      next:(data: any) => {
+        console.log(data);
+        this.toastr.success('Successfully Recorded', 'TB Dots Chart');
+        this.is_saving = false;
+      },
+      error: err => { this.http.showError(err.error.message, 'TB Dots Chart'); }
+    })
   }
 
   compareDate(start_date, end_date, month, day, year, type, i){
+    if(type === 'ip' && !this.intensiveForm[i]) this.intensiveForm[i] = [];
+    if(type === 'cp' && !this.continuationForm[i]) this.continuationForm[i] = [];
+
     if(this.isValidDate(`${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`)){
+      let indexYear = year+'-'+month.toString().padStart(2, '0')+'-'+day.toString().padStart(2, '0');
       let date = new Date(`${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`);
       let startDate = new Date(start_date);
       let endDate = new Date(end_date);
 
+      if(type === 'ip') endDate.setDate(endDate.getDate()-1);
       let result = date >= startDate && date <= endDate;
+      let date_exist = this.saved_dots_chart[indexYear] ? true : false;
 
-      if(type === 'ip') {
-        endDate.setDate(endDate.getDate()-1);
-        if(result){
-          if(!this.intensiveForm[i+'-'+year+'-'+month.toString().padStart(2, '0')+'-'+day.toString().padStart(2, '0')]) {
-            this.intensiveForm[i+'-'+year+'-'+month.toString().padStart(2, '0')+'-'+day.toString().padStart(2, '0')] = false;
-          }
+      if(type === 'ip' && result && !this.intensiveForm[i][indexYear]) this.intensiveForm[i][indexYear] = date_exist;
+      if(type === 'cp' && result && !this.continuationForm[i][indexYear]) this.continuationForm[i][indexYear] = date_exist;
 
-          /* if(this.ip_count[i]) {
-            this.ip_count[i] += 1;
-          } else {
-            this.ip_count[i] = 1;
-          } */
-        }
-      } else {
-        endDate.setDate(endDate.getDate());
-        if(result){
-          if(!this.continuationForm[i+'-'+year+'-'+month.toString().padStart(2, '0')+'-'+day.toString().padStart(2, '0')]) {
-            this.continuationForm[i+'-'+year+'-'+month.toString().padStart(2, '0')+'-'+day.toString().padStart(2, '0')] = false;
-          }
-          /* if(this.cp_count[i]) {
-            this.cp_count[i] += 1;
-          } else {
-            this.cp_count[i] = 1;
-          } */
-        }
-      }
-
+      if(date_exist) delete this.saved_dots_chart[indexYear];
       return result
     } else {
       return false;
@@ -143,9 +150,20 @@ export class DotsChartComponent implements OnInit {
     private toastr: ToastrService
   ) { }
 
+  saved_dots_chart: any[] =[];
   ngOnInit(): void {
     this.ip_count = [];
     this.cp_count = [];
-    this.generateChart();
+
+    if(this.selected_tb_consult.dots_chart) {
+      Object.entries(this.selected_tb_consult.dots_chart).forEach(([key, value]:any) => {
+        this.saved_dots_chart[value.dots_date] = true;
+      });
+
+      console.log(this.saved_dots_chart);
+      this.generateChart();
+    } else {
+      this.generateChart();
+    }
   }
 }
