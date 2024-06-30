@@ -283,8 +283,12 @@
             <!-- FAMILY FOLDER START -->
             <div class="grid grid-cols-8 gap-x-4 gap-y-6" formGroupName="family">
               <div *ngIf="!show_demog_input" class="col-span-8 grid grid-cols-8 bg-amber-100 border border-amber-200 rounded-lg px-5 mt-4 text-gray-700">
-                <div class="col-span-4 mt-2 mb-2">Selected Family: {{ selected_family_folder }}</div>
+                <div class="col-span-4 mt-2 mb-2">
+                  <span class="font-semibold">Selected Folder </span><br />
+                  {{ selected_folder }}
+                </div>
                 <div class="col-span-4 mt-2 mb-2 grid grid-cols-1">
+                  <span class="font-semibold">Family Members</span>
                   <span *ngFor="let member of selected_members">
                     {{ member.patient.last_name }}, {{ member.patient.first_name }} {{ member.patient.middle_name === 'NA' ? '' : member.patient.middle_name }} {{ member.patient.suffix_name === 'NA' ? '' : member.patient.suffix_name }}
                   </span>

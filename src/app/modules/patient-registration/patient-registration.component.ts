@@ -130,7 +130,6 @@ export class PatientRegistrationComponent implements OnInit {
   submit_errors: any;
 
   onSubmit(){
-    // console.log(this.patientForm);
     this.patientForm.controls['family'].disable();
     this.is_saving = true;
     this.loading = true;
@@ -142,10 +141,9 @@ export class PatientRegistrationComponent implements OnInit {
       } else {
         query = this.http.post('patient', this.patientForm.value);
       }
-      // console.log(this.patientForm);
+
       query.subscribe({
         next: (data: any) => {
-          // console.log(data);
           this.new_patient_id = this.button_function === 'Update' ? this.patient_to_update : data.data.id;
           this.saveFolder(this.new_patient_id);
         },
@@ -186,13 +184,11 @@ export class PatientRegistrationComponent implements OnInit {
     }
     query.subscribe({
       next: (data: any) => {
-        // console.log(data);
         this.is_saving = false;
         this.loading = false;
         this.showModal = true;
       },
       error: err => {
-        console.log(err)
         this.loading = false;
         this.submit_errors = err.error.errors;
       }
@@ -202,7 +198,12 @@ export class PatientRegistrationComponent implements OnInit {
   show_edit: boolean = false;
 
   disable_save: boolean = true;
+  selected_folder: string;
   transaction(data){
+    if(data.data) {
+      this.selected_folder = data.data.address + ' Brgy. ' + data.data.barangay.name + ', ' + data.data.barangay.municipality.name + ', ' + data.data.barangay.province.name;
+    }
+
     this.selected_family_folder = data.data ? data.data.id : null;
     this.selected_barangay_code = data.data ? data.data.barangay.code : null;
     this.selected_address = data.data ? data.data.address : null;
@@ -265,7 +266,7 @@ export class PatientRegistrationComponent implements OnInit {
     }
 
     this.http.get('libraries/'+loc+'/'+code,{params:{'include':include, per_page: 'all'}}).subscribe({
-      next: (data: any) => {/* console.log(data.data); */ this[include] = data.data[include]},
+      next: (data: any) => { this[include] = data.data[include]},
       error: err => console.log(err)
     });
   }
@@ -322,7 +323,6 @@ export class PatientRegistrationComponent implements OnInit {
   loadPatient(id){
     this.http.get('patient/'+id).subscribe({
       next: (data: any) => {
-        console.log(data)
         this.patientForm.patchValue({...data.data});
         this.patientForm.patchValue({
           birthdate: formatDate(data.data.birthdate,'yyyy-MM-dd', 'en', 'Asia/Manila')
@@ -338,7 +338,6 @@ export class PatientRegistrationComponent implements OnInit {
           });
         }
 
-        // console.log(this.patientForm.value);
         this.patient_to_update = data.data.id;
         this.button_function = 'Update';
         this.orig_data = data.data;
