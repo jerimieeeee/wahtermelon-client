@@ -15,6 +15,8 @@ export class FinalDxComponent implements OnInit {
   @Output() toggleModal = new EventEmitter<any>();
   @Input() show_patient_data: any;
   @Input() pending_fdx: any;
+  @Input() consult_id: any;
+  @Input() consult_date: any;
 
   data: any;
   patient_age: any;
@@ -36,7 +38,7 @@ export class FinalDxComponent implements OnInit {
     }
   }
 
-  getFdx(term: string = null): Observable<any> {
+  getLibFdx(term: string = null): Observable<any> {
     return this.http.get('libraries/icd10', {params:{'filter[search]':term}})
       .pipe(map((resp:any) => {
         // console.log(resp)
@@ -47,7 +49,7 @@ export class FinalDxComponent implements OnInit {
   ngOnInit(): void {
     // this.getData();
     this.data = this.show_patient_data.data;
-    console.log(this.data[0], 'amen5u');
+    console.log(this.data, 'amen5u');
   }
 
   protected readonly faAnglesRight = faAnglesRight;

@@ -1,12 +1,10 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {faSearch, faBalanceScale, faPlus, faInfoCircle, faSpinner} from '@fortawesome/free-solid-svg-icons';
-import {questionnaireForm} from "../questionnaire/forms";
+import {faInfoCircle, faSpinner} from '@fortawesome/free-solid-svg-icons';
 import {casdtForm} from "../casdt/form";
 import {HttpService} from "../../../../shared/services/http.service";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {ToastrService} from "ngx-toastr";
 import {forkJoin} from "rxjs";
-import {oralCOnditionForm} from "../../../dental/components/condition/oralConditionForm";
 import {casdt2Form} from "./casdt2form";
 import {faSave} from "@fortawesome/free-regular-svg-icons";
 import {riskAssessForm} from "../risk-assessment/forms";
@@ -19,6 +17,7 @@ import {riskAssessForm} from "../risk-assessment/forms";
 export class Casdt2Component implements OnInit {
   @Input() patient_id;
   @Input() consult_details;
+  @Input() vaccine_details;
 
   casdt2Forms:FormGroup=casdt2Form();
 
@@ -32,8 +31,8 @@ export class Casdt2Component implements OnInit {
 
   show_form: boolean = false;
 
-  eye_complaints: any
-  eye_refer: any
+  eye_complaints: any[] = [];
+  eye_refer: any[] = [];
   eye_vision_screen: any
   eye_refer_prof: any
 
@@ -69,7 +68,7 @@ export class Casdt2Component implements OnInit {
       patient_ncd_id: [this.consult_details.patient_ncd_id, [Validators.required]],
       consult_id: [this.consult_details.consult_id, [Validators.required]],
       patient_id: [this.consult_details.patient_id, [Validators.required]],
-      eye_complaint: [null, Validators.required],
+      casdt: this.formBuilder.array([]), // Initialize as empty FormArray
       eye_refer: [null, Validators.required],
       unaided: [null, Validators.required],
       pinhole: [null, Validators.required],
@@ -79,15 +78,43 @@ export class Casdt2Component implements OnInit {
     });
   }
 
+  // Method to add eye_complaint item to the casdt FormArray
+  addEyeComplaint(value: string) {
+    const casdtArray = this.casdt2Forms.get('casdt') as FormArray;
+    casdtArray.push(this.formBuilder.group({
+      eye_complaint: [value]
+    }));
+  }
+
+  // Method to remove eye_complaint item from the casdt FormArray
+  removeEyeComplaint(index: number) {
+    const casdtArray = this.casdt2Forms.get('casdt') as FormArray;
+    casdtArray.removeAt(index);
+  }
+
+  // Example method to handle checkbox selection
+  handleCheckboxSelection(value: string, isChecked: boolean) {
+    if (isChecked) {
+      this.addEyeComplaint(value);
+    } else {
+      const index = (this.casdt2Forms.get('casdt') as FormArray).controls.findIndex(
+        control => control.value.eye_complaint === value
+      );
+      if (index !== -1) {
+        this.removeEyeComplaint(index);
+      }
+    }
+  }
+
   is_saving: boolean = false;
   onSubmit() {
-    console.log(this.consult_details)
+    console.log(this.casdt2Forms, 'eto');
+    console.log(this.casdt2Forms.value, 'hahah');
     this.is_saving = true;
 
     if(this.casdt2Form.valid){
-      this.http.post('non-communicable-disease/risk-casdt-vision', this.casdt2Forms.value).subscribe({
+      this.http.post('non-communicable-disease/risk-casdt2', this.casdt2Forms.value).subscribe({
         next: (data: any) => {
-          console.log(data);
           this.toastr.success('Recorded successfully!','Casdt2');
           this.is_saving = false;
         },
