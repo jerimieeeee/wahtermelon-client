@@ -26,7 +26,9 @@ export class TbdotsComponent implements OnInit {
 
   patient_tb_history: any = [];
   selected_tb_consult: any;
-
+  allowed_to_edit: boolean = true
+  have_complaint: boolean = false;
+  toggle_content: boolean = true;
   max_date = formatDate(new Date(), 'yyyy-MM-dd', 'en', 'Asia/Manila');
   openTbConsult(data) {
     this.selected_tb_consult = data;
@@ -83,7 +85,7 @@ export class TbdotsComponent implements OnInit {
     this.http.get('consultation/records', {params}).subscribe({
       next: (data: any) => {
         this.consult_details = data.data[0];
-        // console.log(this.consult_details)
+        console.log(this.consult_details)
         this.getPatientTbHistory();
       },
       error: err => console.log(err)
@@ -96,7 +98,9 @@ export class TbdotsComponent implements OnInit {
   ) { }
 
   user_facility: string;
+  user_id: string;
   ngOnInit(): void {
+    this.user_id = this.http.getUserID();
     this.user_facility = this.http.getUserFacility();
 
     this.patient_id = this.route.snapshot.paramMap.get('id');

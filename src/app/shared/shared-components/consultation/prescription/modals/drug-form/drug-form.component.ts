@@ -71,7 +71,7 @@ export class DrugFormComponent implements OnChanges {
   is_loading: boolean = false;
   onSubmit(){
     this.is_loading = true;
-    console.log(this.prescriptionForm);
+    // console.log(this.prescriptionForm);
 
     if(this.prescriptionForm.valid){
       if(this.selected_drug.new_drug) {
