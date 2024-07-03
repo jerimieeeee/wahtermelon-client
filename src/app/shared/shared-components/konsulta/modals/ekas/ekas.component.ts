@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { faFaceFrown, faFaceMeh, faFaceSmile } from '@fortawesome/free-regular-svg-icons';
-import { faPrint, faSpinner, faCircleNotch, faCheck, faXmark } from '@fortawesome/free-solid-svg-icons';
-import { AgeService } from 'app/shared/services/age.service';
+import { faPrint, faCircleNotch, faCheck, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { dateHelper } from 'app/shared/services/date-helper.service';
 import { HttpService } from 'app/shared/services/http.service';
 import { NameHelperService } from 'app/shared/services/name-helper.service';
@@ -51,20 +50,17 @@ export class EkasComponent implements OnInit {
   lab_list_arr: any = [];
   getResults(){
     Object.entries(this.lab_list).forEach(([key, value]:any, index) => {
-      console.log(value)
       let url = this.nameService.getURL(value.laboratory.code)
       if(url !== '') {
         this.http.get(url, {params: {request_id: value.id}}).subscribe({
           next: (data: any) => {
-            if(data.data[0]) this.lab_arr[value.laboratory.code].with_result = data.data[0];
+            if(data.data[0] && this.lab_arr[value.laboratory.code]) this.lab_arr[value.laboratory.code].with_result = data.data[0];
           },
           error: err => console.log(err)
         })
       }
     });
 
-    console.log(this.lab_list_arr);
-    console.log(this.lab_arr);
     this.getAge();
   }
 
@@ -98,7 +94,6 @@ export class EkasComponent implements OnInit {
 
   constructor(
     private http: HttpService,
-    private ageService: AgeService,
     private nameService: NameHelperService,
     private dateHelper: dateHelper
   ) { }
@@ -107,11 +102,7 @@ export class EkasComponent implements OnInit {
     this.patient_info = this.http.getPatientInfo();
     this.patient_philhealth = this.http.getPhilhealhtInfo();
     this.facility = this.http.getUserFromJSON();
-    // this.age = this.ageService.calcuateAge(this.patient_info.birthdate, this.consult_details.consult_date);
 
-    console.log(this.consult_details)
     this.getResults();
-    // console.log(this.patient_info)
-    // this.getFacility();
   }
 }
