@@ -2,10 +2,14 @@
   <thead class="text-xs text-gray-700 uppercase bg-gray-50">
     <tr>
       <th scope="col" class="py-3 px-3 w-4/12 text-center">Name</th>
+      <th scope="col" class="py-3 px-3 w-2/12 text-center">
+        Registration Date | <br />
+        Enlistment Date
+      </th>
       <th scope="col" class="py-3 px-3 w-1/12">Birthdate <br /> [Gender]</th>
       <th scope="col" class="py-3 px-3 w-1/12">Pin</th>
-      <th scope="col" class="py-3 px-3 w-3/12">Konsulta Registration</th>
-      <th scope="col" class="py-3 px-3 w-3/12 text-center">Actions</th>
+      <th scope="col" class="py-3 px-3 w-2/12">Konsulta Registration</th>
+      <th scope="col" class="py-3 px-3 w-2/12 text-center">Actions</th>
     </tr>
   </thead>
   <tbody>
@@ -20,6 +24,10 @@
           </div>
         </div>
       </th>
+      <td class="py-4 px-3 text-center" [class]="kon.enlistment_date < kon.konsulta_registration[0].assigned_date ? 'text-red-500' : ''">
+        {{ kon.konsulta_registration[0].assigned_date | date: 'MM/dd/yyyy':'Asia/Manila' }} <br />
+        {{ kon.enlistment_date | date: 'MM/dd/yyyy':'Asia/Manila' }} <br />
+      </td>
       <td class="py-4 px-3">
         {{ kon.patient.birthdate | date: 'MM/dd/yyyy':'Asia/Manila' }} <br />
         [{{ kon.patient.gender }}]
@@ -31,12 +39,12 @@
         {{ kon.konsulta_registration[0].last_name }}, {{ kon.konsulta_registration[0].first_name }} {{ kon.konsulta_registration[0].middle_name === 'NA' ? '' : kon.konsulta_registration[0].middle_name }} {{ kon.konsulta_registration[0].suffix_name === 'NA' ? '' : kon.konsulta_registration[0].suffix_name}}
       </td>
       <td class="py-4 px-3 text-center">
-        <button [disabled]="validating" class="text-sm text-white bg-blue-500 py-1 w-28 rounded-md px-3 mr-2 disabled:bg-gray-300" (click)="validate(kon, 0)">
+        <button [disabled]="validating" class="text-sm text-white bg-blue-500 py-1 w-28 rounded-md px-3 mb-2 hover:opacity-90 disabled:bg-gray-300" (click)="validate(kon, 0)">
           <fa-icon [icon]="validating ? faSpinner : faCircleCheck" [spin]="validating" class="mr-2"></fa-icon>
           {{ validating ? 'Loading' : 'Validate' }}
         </button>
 
-        <button [disabled]="validating" class="text-sm text-white bg-orange-400 py-1 w-28 rounded-md px-3 disabled:bg-gray-300" (click)="validate(kon, 1)">
+        <button [disabled]="validating" class="text-sm text-white bg-orange-400 py-1 w-28 rounded-md px-3 hover:opacity-90 disabled:bg-gray-300" (click)="validate(kon, 1)">
           <fa-icon [icon]="validating ? faSpinner : faSave" [spin]="validating" class="mr-2"></fa-icon>
           {{ validating ? 'Loading' : 'Save' }}
         </button>
