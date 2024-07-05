@@ -210,7 +210,7 @@ export class LaravelEchoService {
       forceTLS: true, // Set to true if using HTTPS
       disableStats: true,
       enabledTransports: ['ws', 'wss'],
-      authEndpoint: 'http://training-api/broadcasting/auth',
+      authEndpoint: 'https://training-api/broadcasting/auth',
       auth: {
         headers: {
           Authorization: `Bearer ${this.cookie_value}`
