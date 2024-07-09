@@ -213,6 +213,17 @@
               </div>
             </div>
 
+            <div class="col-span-8">
+              <label for="prc_number" class="input-label" [ngClass]="{'text-red-500': is_saving && f.prc_number.errors}">PRC Number</label>
+              <input type="text" name="prc_number" id="prc_number" class="input capitalize disabled:bg-gray-200 disabled:text-gray-500" [ngClass]="{'invalid-input': is_saving && f.prc_number.errors}" formControlName="prc_number">
+
+              <div *ngIf="is_saving && f.prc_number.errors" class="invalid-alert">
+                <div *ngIf="f.prc_number.errors?.['required']">
+                  {{ required_message }}
+                </div>
+              </div>
+            </div>
+
             <div class="col-span-8 grid grid-cols-2">
               <div class="col-span-4">
                 <input type="checkbox" class="input-checkbox" id="attendant_ab_flag" formControlName="attendant_ab_flag" />
