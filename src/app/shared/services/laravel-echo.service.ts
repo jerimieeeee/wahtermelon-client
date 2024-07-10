@@ -204,7 +204,7 @@ export class LaravelEchoService {
       broadcaster: 'pusher',
       key: 'app-key',
       cluster: 'mt1',
-      wsHost: 'sockets.wah.ph/node',
+      wsHost: 'sockets.wah.ph',
       wsPort: 443, // Update if different from 6001
       wssPort: 443, // Update if different from 6001
       forceTLS: true, // Set to true if using HTTPS
