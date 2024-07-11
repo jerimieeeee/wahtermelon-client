@@ -17,7 +17,6 @@ import { RequestsInterceptor } from './shared/interceptor/http/http-interceptor'
 import { ToastrModule } from 'ngx-toastr';
 import { CookieService } from 'ngx-cookie-service'
 import { provideEnvironmentNgxMask } from 'ngx-mask';
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 
@@ -37,7 +36,6 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
     HttpClientModule,
     NgSelectModule,
     FormsModule,
-    NgApexchartsModule,
     NgApexchartsModule,
     ReactiveFormsModule,
     ToastrModule.forRoot(),
