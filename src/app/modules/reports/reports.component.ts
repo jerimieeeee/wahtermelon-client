@@ -41,6 +41,12 @@ export class ReportsComponent implements OnInit {
     // { id: 'fhsis2018-mc', desc: 'Maternal Care', url: 'reports-2018/maternal-care/m1'},
   ]
 
+  ab_stats = [
+    { id: 'ab-report', desc: 'Animal Bite', url: 'reports-2018/animal-bite/patient-registered'},
+    { id: 'ab-post', desc: 'Post-Exposure Prophylaxis Cohort', url: 'reports-2018/animal-bite/post-exposure-cohort'},
+    { id: 'ab-pre', desc: 'Pre-Exposure Prophylaxis', url: 'reports-2018/animal-bite/pre-exposure'}
+  ];
+
   gbv_stats = [
     { id: 'gbv-report', desc: 'GBV Report', url: 'gbv-report/catalyst-report'},
   ]

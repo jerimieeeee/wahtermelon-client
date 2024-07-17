@@ -21,7 +21,7 @@ export class PhysicalExamComponent implements OnInit, OnChanges {
   faChevronUp = faChevronUp;
 
   consult_notes: any;
-  pe_grouped = [];
+  pe_grouped:any = {};
   physical_codes: any = [];
   pe_item: any = [];
 
@@ -122,17 +122,36 @@ export class PhysicalExamComponent implements OnInit, OnChanges {
   loadLibraries() {
     this.http.get('libraries/pe').subscribe(
       (data: any) => {
-        // console.log(data.data)
         const list = data.data;
-
         const groups = list.reduce((groups, item) => {
-          const group = (groups[item.category_id.toLowerCase()] || []);
-          group.push(item);
-          groups[item.category_id.toLowerCase()] = group;
+          let pe_enable: boolean = true;
+          if((item.category_id === 'BARTHOLINS' || item.category_id === 'SPECULUM') && this.consult_details.patient.gender === 'M') pe_enable = false;
+
+          if(pe_enable) {
+            const group = (groups[item.category_id.toLowerCase()] || []);
+            group.push(item);
+            groups[item.category_id.toLowerCase()] = group;
+          }
           return groups;
         }, {});
 
         this.pe_grouped = groups;
+
+        /* if(this.consult_details.patient.gender === 'F') {
+          const orderedGroups = {bartholins: {}, speculum: {}};
+
+          for(const key in groups) {
+            if(key !== 'bartholins' && key !== 'speculum') orderedGroups[key] = groups[key];
+          }
+
+          if('bartholins' in groups) orderedGroups.bartholins = groups['bartholins'];
+          if('speculum' in groups) orderedGroups.speculum = groups['speculum'];
+
+          this.pe_grouped = orderedGroups;
+        } else {
+          this.pe_grouped = groups;
+        } */
+
       }
     );
   }
@@ -143,7 +162,6 @@ export class PhysicalExamComponent implements OnInit, OnChanges {
         let val: any = value;
         this.physical_codes[val.pe_id] = true;
       });
-      // console.log(this.physical_codes)
 
       this.checkIsNormal();
     }
