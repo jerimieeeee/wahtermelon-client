@@ -12,6 +12,7 @@ import { TodaysReferralComponent } from './todays-referral/todays-referral.compo
 import { GbvPatientsComponent } from './gbv-patients/gbv-patients.component';
 import { PendingFdxComponent } from './pending-fdx/pending-fdx.component';
 import { FinalDxComponent } from './pending-fdx/modals/final-dx/final-dx.component';
+import {NgSelectModule} from "@ng-select/ng-select";
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { FinalDxComponent } from './pending-fdx/modals/final-dx/final-dx.compone
     CommonModule,
     DashboardRoutingModule,
     FontAwesomeModule,
-    FormsModule
+    FormsModule,
+    NgSelectModule
   ]
 })
 export class DashboardModule { }
