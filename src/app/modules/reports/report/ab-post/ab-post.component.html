@@ -1,0 +1,51 @@
+<div class="grid grid-cols-1">
+  <div class="flex justify-between w-full text-blue-500 font-semibold text-lg  p-3" >
+    <span>Post-Exposure Prophylaxis Cohort Report</span>
+    <span>
+      <button  type="button" class="text-2xl" (click)="exportX()">
+        <fa-icon [icon]="faFileExcel" class="text-green-700"></fa-icon>
+      </button>
+    </span>
+  </div>
+
+  <div class="w-full flex justify-center text-center text-sm font-semibold">
+    Province of {{ info.facility.province.name }} <br />
+    {{ info.facility.facility_name }} <br />
+    Wireless Access for Health <br />
+    National Rabies Prevention & Control Program <br />
+    Post-Exposure Prophylaxis Report <br />
+    Period Covered: {{ start_date | date: 'MM/dd/yyyy' }} to {{ end_date | date: 'MM/dd/yyyy' }} <br /><br />
+  </div>
+
+  <table class="w-full table-fix border border-gray-300 mb-5" id="reportForm">
+    <thead class="font-normal">
+      <tr>
+        <th rowspan="2" class="border border-gray-200">Category of Exposure</th>
+        <th rowspan="2" class="border border-gray-200">No. of Registered Exposure</th>
+        <th rowspan="2" class="border border-gray-200">No. of Patients who received RIG</th>
+        <th colspan="4" class="border border-gray-200">Outcome of Post-Exposure Prophylaxis</th>
+      </tr>
+      <tr>
+        <th>Complete</th>
+        <th>Incomplete</th>
+        <th>None</th>
+        <th>Died</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="text-right" *ngFor="let item of var_list">
+        <td class="text-center border border-gray-200 font-semibold">{{ item.name }}</td>
+        <td class="border border-gray-200 pr-2">{{ stats[item[item.var_name]] ?? '-' }}</td>
+        <td class="border border-gray-200 pr-2">{{ stats[item[item.var_name+'_with_rig']] ?? '-' }}</td>
+        <td class="border border-gray-200 pr-2">{{ stats[item[item.var_name+'_complete']] ?? '-' }}</td>
+        <td class="border border-gray-200 pr-2">{{ stats[item[item.var_name+'_incomplete']] ?? '-' }}</td>
+        <td class="border border-gray-200 pr-2">{{ stats[item[item.var_name+'_none']] ?? '-' }}</td>
+        <td class="border border-gray-200 pr-2">-</td>
+      </tr>
+
+      <tr *ngIf="stats.length === 0">
+        <td colspan="7" class="text-center italic font-semibold py-5">No query result</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
