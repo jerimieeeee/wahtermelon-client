@@ -87,7 +87,7 @@
         <app-family-medical (toggleAccordion)="toggleAccordion($event)" [accordions]="accordions" (toggleModal)="toggleModal($event)" (setFamilyMedical)="setFamilyMedical($event)"></app-family-medical>
         <app-social-history (toggleAccordion)="toggleAccordion($event)" [accordions]="accordions" (toggleModal)="toggleModal($event)" (setDetails)="setDetails($event)"></app-social-history>
         <app-surgical-history (toggleAccordion)="toggleAccordion($event)" [accordions]="accordions" (toggleModal)="toggleModal($event)" (setSurgicalHistory)="setSurgicalHistory($event)"></app-surgical-history>
-        <!-- <app-death-record></app-death-record> -->
+        <app-death-record (toggleAccordion)="toggleAccordion($event)" [accordions]="accordions" (toggleModal)="toggleModal($event)" (setDetails)="setDetails($event)"></app-death-record>
 
       </div>
     </div>
@@ -122,7 +122,7 @@
 
 <app-allergies-modal *ngIf="modals['allergies']" (toggleModal)="toggleModal('allergies')"></app-allergies-modal>
 <app-medication-modal *ngIf="modals['medication']" (toggleModal)="toggleModal('medication')"></app-medication-modal>
-<app-death-modal *ngIf="modals['death']" (toggleModal)="toggleModal('death')"></app-death-modal>
+<app-death-modal *ngIf="modals['death']" (toggleModal)="toggleModal('death')" [patient_info]="patient_info"></app-death-modal>
 <app-photo-modal *ngIf="modals['photo']" (toggleModal)="toggleModal('photo')" [imageData]="imageData" [patient_info]="patient_info"></app-photo-modal>
 
 <app-set-appointment *ngIf="modals['appointment-modal']" (toggleModal)="toggleModal('appointment-modal')" (loadData)="loadData($event)" [patient_info]="patient_info"></app-set-appointment>
