@@ -1,0 +1,61 @@
+<div class="grid grid-cols-1">
+  <div class="flex justify-between w-full text-blue-500 font-semibold text-lg  p-3" >
+    <span>Post-Exposure Prophylaxis Cohort Report</span>
+    <span>
+      <button  type="button" class="text-2xl" (click)="exportX()">
+        <fa-icon [icon]="faFileExcel" class="text-green-700"></fa-icon>
+      </button>
+    </span>
+  </div>
+
+  <div class="w-full flex justify-center text-center text-sm font-semibold">
+    Province of {{ info.facility.province.name }} <br />
+    {{ info.facility.facility_name }} <br />
+    Wireless Access for Health <br />
+    Report Form on Animal Bite/Human Rabies Cases <br />
+    Pre-Exposure Prophylaxis Report <br />
+    Period Covered: {{ start_date | date: 'MM/dd/yyyy' }} to {{ end_date | date: 'MM/dd/yyyy' }} <br /><br />
+  </div>
+
+  <table class="w-full table-fix border border-gray-300 mb-5" id="reportForm">
+    <thead class="font-normal">
+      <tr>
+        <th rowspan="2" class="border border-gray-200">Municipality/Barangay</th>
+        <th colspan="2" class="border border-gray-200">Sex</th>
+        <th colspan="2" class="border border-gray-200">Age</th>
+        <th colspan="3" class="border border-gray-200">Status of Immunization</th>
+      </tr>
+      <tr>
+        <th class="border border-gray-200">F</th>
+        <th class="border border-gray-200">M</th>
+        <th class="border border-gray-200">&lt; 15</th>
+        <th class="border border-gray-200">&GreaterEqual;; 15</th>
+        <th class="border border-gray-200">D0</th>
+        <th class="border border-gray-200">D0 & D7</th>
+        <th class="border border-gray-200">D0, D7, D21</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="text-right">
+        <td class="border border-gray-200">Subtotal</td>
+        <td class="border border-gray-200">{{ stats.female }}</td>
+        <td class="border border-gray-200">{{ stats.male }}</td>
+        <td class="border border-gray-200">{{ stats.less_than_15 }}</td>
+        <td class="border border-gray-200">{{ stats.greater_than_15 }}</td>
+        <td class="border border-gray-200">{{ stats.day0 }}</td>
+        <td class="border border-gray-200">{{ stats.day0_day7 }}</td>
+        <td class="border border-gray-200">{{ stats.day0_day7_day21 }}</td>
+      </tr>
+      <tr class="text-center font-semibold">
+        <td class="border border-gray-200">Total</td>
+        <td colspan="2" class="border border-gray-200">{{ stats.male_female_total }}</td>
+        <td colspan="2" class="border border-gray-200">{{ stats.less_than_and_greater_than_15 }}</td>
+        <td colspan="3" class="border border-gray-200">{{ stats.day0_day7_day21_total }}</td>
+      </tr>
+
+      <tr *ngIf="stats.length === 0">
+        <td colspan="8" class="text-center italic font-semibold py-5">No query result</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

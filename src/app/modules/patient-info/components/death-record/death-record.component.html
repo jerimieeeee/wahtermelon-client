@@ -1,1 +1,89 @@
-<p>death-record works!</p>
+<div class="block pt-4 justify-items-start">
+  <div class="flex justify-between items-center">
+    <span class="block text-blue-500 font-medium text-sm select-none" [ngClass]="{'opacity-70': !death}">
+      <!-- <fa-icon *ngIf="death" (click)="toggle('death')" class="mx-0 my-0 mr-2 hover:cursor-pointer" [icon]="accordions['death'] ? faChevronUp : faChevronDown"></fa-icon>
+      <fa-icon *ngIf="!death" class="mx-0 my-0 mr-2" [icon]="faMinus"></fa-icon> -->
+      DEATH RECORD
+    </span>
+    <fa-icon *ngIf="!death" (click)="modalToggle('death')" class="mx-0 my-0 text-blue-500 mr-2 hover:cursor-pointer" [icon]="faPlusCircle"></fa-icon>
+  </div>
+
+  <!-- <div *ngIf="!show_form" >
+    <div class="p-4 mx-auto">
+      <div class="animate-pulse grid grid-cols-2 gap-x-20 gap-y-4 justify-between">
+        <div class="h-2 bg-slate-200 rounded"></div>
+        <div class="h-2 bg-slate-200 rounded"></div>
+        <div class="h-2 bg-slate-200 rounded"></div>
+        <div class="h-2 bg-slate-200 rounded"></div>
+        <div class="h-2 bg-slate-200 rounded"></div>
+        <div class="h-2 bg-slate-200 rounded"></div>
+      </div>
+    </div>
+  </div> -->
+  <div *ngIf="death" >
+    <div [@openCloseAccordion] class="block">
+      <div class="flex pl-3 justify-between items-center align-top">
+        <span class="block font-medium text-xs">
+          Date & Time of Death
+        </span>
+        <span class="block text-xs">
+          {{ death.date_of_death | date:'MM/dd/yyyy hh:mm a' }}
+        </span>
+      </div>
+
+      <div class="flex pl-3 justify-between items-center align-top">
+        <span class="block font-medium text-xs ">
+          Type of Death
+        </span>
+        <span class="block text-xs">
+          {{ death.deathType.desc }}
+        </span>
+      </div>
+
+      <div class="flex pl-3 justify-between items-center align-top">
+        <span class="block font-medium text-xs">
+          Place of Death
+        </span>
+        <span class="block text-xs">
+          {{ death.deathPlace.desc }}
+        </span>
+      </div><br />
+
+      <div class="flex pl-3 justify-between items-center align-top">
+        <span class="block font-semibold text-xs">
+          Immediate Cause <br />
+          <span class="block text-xs font-normal ml-3">
+            {{ death.immediateCause.icd10_code }}: {{ death.immediateCause.icd10_desc }}
+          </span>
+        </span>
+      </div>
+
+      <div class="flex pl-3 justify-between items-center align-top">
+        <span class="block font-semibold text-xs">
+          Antecedent Cause <br />
+          <span class="block text-xs font-normal ml-3">
+            {{ death.antecedentCause.icd10_code }}: {{ death.antecedentCause.icd10_desc }}
+          </span>
+        </span>
+      </div>
+
+      <div class="flex pl-3 justify-between items-center align-top">
+        <span class="block font-semibold text-xs ">
+          Underlying Cause<br />
+          <span class="block text-xs font-normal ml-3">
+            {{ death.underlyingCause.icd10_code }}: {{ death.underlyingCause.icd10_desc }}
+          </span>
+        </span>
+      </div>
+
+      <div class="flex pl-3 justify-between items-center align-top">
+        <span class="block font-semibold text-xs">
+          Remarks
+          <span class="block text-xs font-normal ml-3">
+            {{ death.remarks ?? '-' }}
+          </span>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>

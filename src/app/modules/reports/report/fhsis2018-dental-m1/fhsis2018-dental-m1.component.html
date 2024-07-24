@@ -1,0 +1,118 @@
+<div class="grid grid-cols-1 w-full">
+  <div class="flex justify-between w-full text-blue-500 text-lg  p-3" >
+    <span>Dental OHC</span>
+    <span>
+        <!-- <fa-icon *ngIf="exporting" [icon]="faCircleNotch" spin="true" class="text-blue-500 text-sm mr-3">Exporting...</fa-icon> -->
+        <button [disabled]="pdf_exported" type="button" class="text-2xl mr-5 text-red-600 disabled:text-gray-600" (click)="exportP()">
+          <fa-icon [icon]="faFilePdf"></fa-icon>
+        </button>
+        <button  type="button" class="text-2xl" (click)="exportX()">
+          <fa-icon [icon]="faFileExcel" class="text-green-700"></fa-icon>
+        </button>
+      </span>
+  </div>
+  <div class="flex flex-col pb-5">
+    <div class="sm:-mx-6 lg:-mx-8">
+      <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
+        <div class="">
+          <table class="min-w-full border-black border-l border-r border-b border-t select-none" id="reportForm">
+            <thead>
+              <tr class="text-center top-0 border-black">
+                <th class="text-sm font-medium text-gray-900 border-black border-l border-r border-t border-b">
+                  <img src="./assets/img/DOH_Logo.png" class="rounded-full w-28 h-28 mx-auto"/>
+                </th>
+                <th colspan="7" class="text-sm font-medium text-gray-900 px-6 py-4 border-black border-l border-r border-t border-b text-left align-top">
+                  FHSIS Report for the Month: {{this.convertedMonth}} Year: {{this.reportform_data.value.year}}<br />
+                  Name of Barangay: <br />
+                  Name of BHS: <br />
+                  Name of Municipality/City: <br />
+                  Name of Province: <br />
+                  Projected Population for the Year: <br />
+                </th>
+                <th class="text-sm text-gray-900 px-6 py-4 border-l border-r border-b border-t text-center">
+                  <img src="./assets/img/m1.png" class="mx-auto" />
+                </th>
+              </tr>
+              <tr>
+                <th colspan="8" class="text-center">SECTION D. ORAL HEALTH CARE AND SERVICES</th>
+              </tr>
+              <tr class="px-6 py-4 text-center top-0 bg-gray-200">
+                <th rowspan="2"><span class="font-semibold">Indicators</span><br />Col. 1</th>
+                <th rowspan="2"><span class="font-semibold">Eligible <br /> Population</span><br />Col. 2</th>
+                <th colspan="4"><span class="font-semibold">Number</span></th>
+                <th rowspan="2"><span class="font-semibold">%</span><br />Col. 6</th>
+                <th rowspan="2"><span class="font-semibold">Interpretation</span><br />Col. 7</th>
+                <th rowspan="2"><span class="font-semibold">Recommendation/Actions Taken</span><br />Col. 8</th>
+              </tr>
+              <tr class="px-6 py-4 text-center top-0 bg-gray-200">
+                <th><span class="font-semibold">Male</span><br />Col. 3</th>
+                <th><span class="font-semibold">Female</span><br />Col. 4</th>
+                <th colspan="2"><span class="font-semibold">Total</span><br />Col. 5</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of var_list" class="text-right">
+                <td class="text-left">{{ item.name }}</td>
+                <td></td>
+                <td>{{ stats[item.male_var_name] ?? 0 }}</td>
+                <td>{{ stats[item.female_var_name] ?? 0 }}</td>
+                <td colspan="2">{{ stats[item.male_var_name] + stats[item.female_var_name] ?? 0 }}</td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+
+              <!-- 2nd Header -->
+              <tr class="px-6 py-4 text-center top-0 bg-gray-200">
+                <th rowspan="2"><span class="font-semibold">Indicators</span><br />Col. 1</th>
+                <th rowspan="2"><span class="font-semibold">Eligible <br /> Population</span><br />Col. 2</th>
+                <th colspan="4"><span class="font-semibold">Number</span></th>
+                <th rowspan="2"><span class="font-semibold">%</span><br />Col. 7</th>
+                <th rowspan="2"><span class="font-semibold">Interpretation</span><br />Col. 8</th>
+                <th rowspan="2"><span class="font-semibold">Recommendation/Actions Taken</span><br />Col. 9</th>
+              </tr>
+              <tr class="px-6 py-4 text-center top-0 bg-gray-200">
+                <th><span class="font-semibold">10-14 y/o</span><br />Col. 3</th>
+                <th><span class="font-semibold">15-19 y/o</span><br />Col. 4</th>
+                <th><span class="font-semibold">20-49 y/o</span><br />Col. 5</th>
+                <th><span class="font-semibold">Total</span><br />Col. 6</th>
+              </tr>
+              <tr class="text-right">
+                <td class="text-left">9. Pregnan women who received BOHC - Total</td>
+                <td></td>
+                <td>{{ stats.pregnant_women_10_14_years_bohc ?? 0 }}</td>
+                <td>{{ stats.pregnant_women_15_19_years_bohc ?? 0 }}</td>
+                <td>{{ stats.pregnant_women_20_49_years_bohc ?? 0 }}</td>
+                <td>{{ (stats.pregnant_women_10_14_years_bohc ?? 0) + (stats.pregnant_women_15_19_years_bohc ?? 0) + (stats.pregnant_women_20_49_years_bohc ?? 0) }}</td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr class="border-0">
+                <td colspan="9" class="border-0 text-right">
+                  <!-- <img src="./assets/img/wah_icon.png" class="rounded-full w-20 h-20 mx-auto"/> -->
+                  <div class="italic mt-10 pr-2">This report was generated using the WAHtermelon EMR</div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- <div>
+    <em>This report was generated using the WAHtermelon EMR</em>
+    <img src="./assets/img/wah_icon.png" class="rounded-full w-20 h-20 mx-auto"/>
+  </div> -->
+</div>
+
+<!-- <app-show-name-list
+      *ngIf="openList"
+      (toggleModal)="toggleModal()"
+      [name_list_params]="name_list_params"
+      [selected_barangay]="selected_barangay"
+      [reportForm]="reportForm"
+      [url]="url"
+      [loc]="'fp'"
+      >
+</app-show-name-list> -->

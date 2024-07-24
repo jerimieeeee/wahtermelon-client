@@ -18,6 +18,7 @@ import { VaccineComponent } from './components/vaccine/vaccine.component';
 import { VitalsComponent } from './components/vitals/vitals.component';
 import { AppointmentComponent } from './components/appointment/appointment.component';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { DeathRecordComponent } from './components/death-record/death-record.component';
 
 @Component({
   selector: 'app-patient-info',
@@ -38,6 +39,7 @@ export class PatientInfoComponent implements OnInit {
   @ViewChild(VitalsComponent) vitals: VitalsComponent;
   @ViewChild(PreghistComponent) preghist: PreghistComponent;
   @ViewChild(AppointmentComponent) appointment: AppointmentComponent;
+  @ViewChild(DeathRecordComponent) death: DeathRecordComponent;
   reloadNCDVitals: EventEmitter<any> = new EventEmitter();
   reloadLabs: EventEmitter<any> = new EventEmitter();
 
@@ -78,14 +80,16 @@ export class PatientInfoComponent implements OnInit {
       this.show_female_history = false;
     }
 
-    if(field === 'social_history'     || field==='all') this.socialHistory.loadData(this.patient_info.id);
-    if((field === 'surgical_history'   || field==='all') && this.active_loc !== 'dn') this.surgicalHistory.loadData(this.patient_info.id);
-    if(field === 'vitals'             || field==='all') this.vitals.loadData(this.patient_info.id);
-    if(field === 'appointment'        || field==='all') this.appointment.loadData(this.patient_info.id);
+    if(field === 'social_history'       || field==='all') this.socialHistory.loadData(this.patient_info.id);
+    if((field === 'surgical_history'    || field==='all') && this.active_loc !== 'dn') this.surgicalHistory.loadData(this.patient_info.id);
+    if(field === 'vitals'               || field==='all') this.vitals.loadData(this.patient_info.id);
+    if(field === 'appointment'          || field==='all') this.appointment.loadData(this.patient_info.id);
 
 
     if((field === 'laboratory'         || field==='all') && this.active_loc !== 'lab') this.laboratories.loadData(this.patient_info.id);
     if((field === 'prescription'       || field==='all') && this.active_loc !== 'dispensing') this.prescriptions.loadData(this.patient_info.id);
+
+    if(field === 'death'     || field==='all') this.death.loadData(this.patient_info.id);
   }
 
   no_graph_list = ['lab', 'dispensing'];
@@ -200,6 +204,7 @@ export class PatientInfoComponent implements OnInit {
   lab_req_list: any;
   philhealth_details: any;
   pregnancy_history: any;
+  death_record: any;
 
   setDetails(data) {
     this[data.var_name] = data.data;
@@ -322,6 +327,7 @@ export class PatientInfoComponent implements OnInit {
       // if(modal_name === 'preghist' && this.modals[modal_name] === false) this.loadData('pregnancy_history')
       if(modal_name === 'lifestyle' && this.modals['lifestyle'] === false) this.loadData('social_history');
       if (modal_name === 'lab-request' && this.modals[modal_name] === false) this.loadData('laboratory');
+      if (modal_name === 'death' && this.modals[modal_name] === false) this.loadData('death');
     }
   }
 
