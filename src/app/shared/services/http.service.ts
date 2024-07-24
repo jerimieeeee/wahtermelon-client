@@ -13,8 +13,7 @@ export class HttpService {
   // baseUrl = 'https://api.wah.ph/api/v1/'; //api
   // baseUrl = 'http://127.0.0.1:8000/api/v1/'; //local api
   baseUrl = 'http://wahtermelon.test/api/v1/'; //local api
-
-
+  // baseUrl = 'https://training-api.wah.ph/api/v1/'; //training api
 
   constructor(
     private http: HttpClient,
