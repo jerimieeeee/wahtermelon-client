@@ -33,6 +33,7 @@ export class ReportsComponent implements OnInit {
     { id: 'fhsis2018-ncd', desc: 'NCD', url: 'reports-2018/ncd/m1'},
     { id: 'fhsis2018-tb', desc: 'TB Dots', url: 'reports-2018/tb-dots/m1'},
     { id: 'fhsis2018-morbidity', desc: 'Morbidity', url: 'reports-2018/morbidity/report'},
+    { id: 'fhsis2018-dental-m1', desc: 'Dental', url: 'reports-2018/dental/m1'},
   ]
 
   other_stats = [
@@ -40,6 +41,12 @@ export class ReportsComponent implements OnInit {
     { id: 'feedback', desc: 'Client Feedback', url: 'reports-2018/feedback/report'},
     // { id: 'fhsis2018-mc', desc: 'Maternal Care', url: 'reports-2018/maternal-care/m1'},
   ]
+
+  ab_stats = [
+    // { id: 'ab-report', desc: 'Animal Bite', url: 'reports-2018/animal-bite/patient-registered'},
+    { id: 'ab-post', desc: 'Post-Exposure Prophylaxis Cohort', url: 'reports-2018/animal-bite/post-exposure-cohort'},
+    { id: 'ab-pre', desc: 'Pre-Exposure Prophylaxis', url: 'reports-2018/animal-bite/pre-exposure'}
+  ];
 
   gbv_stats = [
     { id: 'gbv-report', desc: 'GBV Report', url: 'gbv-report/catalyst-report'},
@@ -108,7 +115,7 @@ export class ReportsComponent implements OnInit {
     },
   ];
 
-  fhsis_monthly_arr = ['fhsis2018-cc', 'fhsis2018-morbidity', 'fhsis2018-mc', 'fhsis2018-tb', 'fhsis2018-ncd', 'fhsis2018-fp', 'patient-registered']
+  fhsis_monthly_arr = ['fhsis2018-cc', 'fhsis2018-morbidity', 'fhsis2018-mc', 'fhsis2018-tb', 'fhsis2018-ncd', 'fhsis2018-fp', 'fhsis2018-dental-m1', 'patient-registered']
   report_params: any;
   years: any = [];
   selectedBrgy: [];

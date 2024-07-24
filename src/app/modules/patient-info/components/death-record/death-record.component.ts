@@ -1,17 +1,38 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+import { faChevronDown, faChevronUp, faMinus, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
   selector: 'app-death-record',
   templateUrl: './death-record.component.html',
   styleUrls: ['./death-record.component.scss']
 })
-export class DeathRecordComponent implements OnInit {
+export class DeathRecordComponent {
   @Output() toggleAccordion = new EventEmitter<any>();
   @Output() toggleModal = new EventEmitter<any>();
+  @Output() setDetails = new EventEmitter<any>();
   @Input() accordions;
 
+  faChevronUp = faChevronUp;
+  faChevronDown = faChevronDown;
   faPlusCircle = faPlusCircle;
+  faMinus = faMinus;
+
+  death: any;
+
+  show_form: boolean = true;
+
+  loadData(patient_id){
+    this.http.get('mortality/record', {params:{patient_id: patient_id}}).subscribe({
+      next: (data: any) => {
+        console.log(data)
+        this.show_form = true;
+        this.death = data.data[0];
+        this.setDetails.emit({var_name: 'death_record', data: this.death});
+      },
+      error: err => console.log(err)
+    });
+  }
 
   toggle(name) {
     this.toggleAccordion.emit(name);
@@ -21,9 +42,7 @@ export class DeathRecordComponent implements OnInit {
     this.toggleModal.emit(name);
   }
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+  constructor(
+    private http: HttpService
+  ) { }
 }
