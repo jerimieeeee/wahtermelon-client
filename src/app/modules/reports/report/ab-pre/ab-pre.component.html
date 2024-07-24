@@ -36,19 +36,26 @@
       </tr>
     </thead>
     <tbody>
-      <!-- <tr class="text-right" *ngFor="let item of var_list">
-        <td class="text-center border border-gray-200 font-semibold">{{ item.name }}</td>
-        <td class="border border-gray-200 pr-2">{{ stats[item[item.var_name]] ?? '-' }}</td>
-        <td class="border border-gray-200 pr-2">{{ stats[item[item.var_name+'_with_rig']] ?? '-' }}</td>
-        <td class="border border-gray-200 pr-2">{{ stats[item[item.var_name+'_complete']] ?? '-' }}</td>
-        <td class="border border-gray-200 pr-2">{{ stats[item[item.var_name+'_incomplete']] ?? '-' }}</td>
-        <td class="border border-gray-200 pr-2">{{ stats[item[item.var_name+'_none']] ?? '-' }}</td>
-        <td class="border border-gray-200 pr-2">-</td>
+      <tr class="text-right">
+        <td class="border border-gray-200">Subtotal</td>
+        <td class="border border-gray-200">{{ stats.female }}</td>
+        <td class="border border-gray-200">{{ stats.male }}</td>
+        <td class="border border-gray-200">{{ stats.less_than_15 }}</td>
+        <td class="border border-gray-200">{{ stats.greater_than_15 }}</td>
+        <td class="border border-gray-200">{{ stats.day0 }}</td>
+        <td class="border border-gray-200">{{ stats.day0_day7 }}</td>
+        <td class="border border-gray-200">{{ stats.day0_day7_day21 }}</td>
+      </tr>
+      <tr class="text-center font-semibold">
+        <td class="border border-gray-200">Total</td>
+        <td colspan="2" class="border border-gray-200">{{ stats.male_female_total }}</td>
+        <td colspan="2" class="border border-gray-200">{{ stats.less_than_and_greater_than_15 }}</td>
+        <td colspan="3" class="border border-gray-200">{{ stats.day0_day7_day21_total }}</td>
       </tr>
 
       <tr *ngIf="stats.length === 0">
-        <td colspan="7" class="text-center italic font-semibold py-5">No query result</td>
-      </tr> -->
+        <td colspan="8" class="text-center italic font-semibold py-5">No query result</td>
+      </tr>
     </tbody>
   </table>
 </div>

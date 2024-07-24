@@ -87,7 +87,7 @@ export class Fhsis2018DentalM1Component implements OnChanges{
       this.pdf_exported = false;
       /* this.convertBrgy();
       this.convertDate(); */
-      // console.log(this.stats)
+      console.log(this.stats)
     }
   }
 }

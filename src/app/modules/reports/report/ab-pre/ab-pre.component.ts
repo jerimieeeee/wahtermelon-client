@@ -91,7 +91,7 @@ export class AbPreComponent implements OnChanges {
 
   show_stats: boolean = false;
   ngOnChanges(): void {
-    this.stats = this.report_data;
+    this.stats = this.report_data[0];
     this.reportform_data = this.reportForm;
     this.selected_barangay = this.selectedBrgy;
     this.info = this.userInfo;

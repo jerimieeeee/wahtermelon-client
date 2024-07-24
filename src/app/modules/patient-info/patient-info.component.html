@@ -50,6 +50,8 @@
             </button> -->
           </div>
 
+          <app-death-record (toggleAccordion)="toggleAccordion($event)" [accordions]="accordions" (toggleModal)="toggleModal($event)" (setDetails)="setDetails($event)"></app-death-record>
+
           <div class="mt-4 leading-tight">
             <span class="block text-blue-500 font-medium text-sm">
               ADDRESS
@@ -87,7 +89,6 @@
         <app-family-medical (toggleAccordion)="toggleAccordion($event)" [accordions]="accordions" (toggleModal)="toggleModal($event)" (setFamilyMedical)="setFamilyMedical($event)"></app-family-medical>
         <app-social-history (toggleAccordion)="toggleAccordion($event)" [accordions]="accordions" (toggleModal)="toggleModal($event)" (setDetails)="setDetails($event)"></app-social-history>
         <app-surgical-history (toggleAccordion)="toggleAccordion($event)" [accordions]="accordions" (toggleModal)="toggleModal($event)" (setSurgicalHistory)="setSurgicalHistory($event)"></app-surgical-history>
-        <app-death-record (toggleAccordion)="toggleAccordion($event)" [accordions]="accordions" (toggleModal)="toggleModal($event)" (setDetails)="setDetails($event)"></app-death-record>
 
       </div>
     </div>

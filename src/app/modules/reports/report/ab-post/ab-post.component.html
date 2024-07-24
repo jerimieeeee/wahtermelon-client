@@ -35,11 +35,11 @@
     <tbody>
       <tr class="text-right" *ngFor="let item of var_list">
         <td class="text-center border border-gray-200 font-semibold">{{ item.name }}</td>
-        <td class="border border-gray-200 pr-2">{{ stats[item[item.var_name]] ?? '-' }}</td>
-        <td class="border border-gray-200 pr-2">{{ stats[item[item.var_name+'_with_rig']] ?? '-' }}</td>
-        <td class="border border-gray-200 pr-2">{{ stats[item[item.var_name+'_complete']] ?? '-' }}</td>
-        <td class="border border-gray-200 pr-2">{{ stats[item[item.var_name+'_incomplete']] ?? '-' }}</td>
-        <td class="border border-gray-200 pr-2">{{ stats[item[item.var_name+'_none']] ?? '-' }}</td>
+        <td class="border border-gray-200 pr-2">{{ stats[item.var_name] ?? '-' }}</td>
+        <td class="border border-gray-200 pr-2">{{ stats[item.var_name+'_with_rig'] ?? '-' }}</td>
+        <td class="border border-gray-200 pr-2">{{ stats[item.var_name+'_complete'] ?? '-' }}</td>
+        <td class="border border-gray-200 pr-2">{{ stats[item.var_name+'_incomplete'] ?? '-' }}</td>
+        <td class="border border-gray-200 pr-2">{{ stats[item.var_name+'_none'] ?? '-' }}</td>
         <td class="border border-gray-200 pr-2">-</td>
       </tr>
 
