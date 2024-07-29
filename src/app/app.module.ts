@@ -19,6 +19,7 @@ import { CookieService } from 'ngx-cookie-service'
 import { provideEnvironmentNgxMask } from 'ngx-mask';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { RapidOnsiteComponent } from './shared/shared-components/monitoring/rapid-onsite/rapid-onsite.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
       provide: DateAdapter,
       useFactory: adapterFactory,
     }),
+    RapidOnsiteComponent
   ],
   providers: [
     {
