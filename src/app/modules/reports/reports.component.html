@@ -32,22 +32,55 @@
 
     <div class="w-40" *ngIf="reportForm.value.report_type && reportForm.value.report_type.id !== 'feedback'">
       <label for="report_class" class="input-label" >Location</label>
-      <select id="report_class" name="report_class" class="input" formControlName="report_class" (change)="handleReportClass(reportForm.value.report_class)">
+      <select *ngIf="!reportFlag" id="report_class" name="report_class" class="input" formControlName="report_class" (change)="handleReportClass(reportForm.value.report_class)">
         <option value="all">All</option>
-        <!-- <option >Region</option> -->
         <option value="muncity">Municipality</option>
         <option value="brgys">Barangays</option>
         <option value="fac">Facility</option>
       </select>
+
+      <select *ngIf="reportFlag === '1'" id="report_class" name="report_class" class="input" formControlName="report_class" (change)="handleReportClass(reportForm.value.report_class)">
+        <option value="all">All</option>
+        <option value="muncity">Municipality</option>
+      </select>
     </div>
 
+    <!-- START MUNCITY -->
+    <div class="w-52" *ngIf="reportFlag && reportForm.value.report_class === 'muncity' && !this.muncity">
+      <label for="brgys" class="input-label pb-1" >Municipality</label>
+      <fa-icon class="text-blue-500 my-auto mx-auto" [icon]="faCircleNotch" spin="true"></fa-icon>Fetching...
+    </div>
+
+    <div class="w-52" *ngIf="reportFlag && reportForm.value.report_class === 'muncity' && this.muncity">
+      <label for="muncity" class="input-label pb-1" >Municipality</label>
+      <ng-select id="muncity" name="muncity"
+        class="w-full"
+        [items]="muncity"
+        [multiple]="true"
+        [hideSelected]="true"
+        bindLabel="name"
+        [selectableGroup]="true"
+        [closeOnSelect]="false"
+        bindValue="code"
+        [(ngModel)]="selectedMuncity"
+        [ngModelOptions]="{standalone:true}">
+
+        <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
+          <div class="ng-value" *ngIf="items.length > 0">
+            <span class="ng-value-label">Selected {{items.length}} Municipality</span>
+          </div>
+        </ng-template>
+      </ng-select>
+    </div>
+    <!-- END MUNCITY -->
+
     <!-- START BRGY -->
-    <div class="w-52" *ngIf="reportForm.value.report_class === 'brgys' && !this.brgys">
+    <div class="w-52" *ngIf="!reportFlag && reportForm.value.report_class === 'brgys' && !this.brgys">
       <label for="brgys" class="input-label pb-1" >Barangays</label>
       <fa-icon class="text-blue-500 my-auto mx-auto" [icon]="faCircleNotch" spin="true"></fa-icon>Fetching...
     </div>
 
-    <div class="w-52" *ngIf="reportForm.value.report_class === 'brgys' && this.brgys">
+    <div class="w-52" *ngIf="!reportFlag && reportForm.value.report_class === 'brgys' && this.brgys">
       <label for="brgys" class="input-label pb-1" >Barangays</label>
       <ng-select id="brgys" name="brgys"
         class="w-full"
@@ -69,6 +102,8 @@
       </ng-select>
     </div>
     <!-- END BRGY -->
+
+
 
     <div class="w-40" *ngIf="reportForm.value.report_type && f['month'].enabled">
       <label for="start_date" class="input-label">Month</label>

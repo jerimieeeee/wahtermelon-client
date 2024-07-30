@@ -119,8 +119,10 @@ export class ReportsComponent implements OnInit {
   report_params: any;
   years: any = [];
   selectedBrgy: [];
+  selectedMuncity: [];
   brgys: any;
-  userInfo: string;
+  muncity: any;
+  userInfo: any = {};
   userLoc: string;
   report_data: any;
   is_fetching: boolean = false;
@@ -132,28 +134,23 @@ export class ReportsComponent implements OnInit {
       month: this.reportForm.value.month ?? null,
       year: this.reportForm.value.year ?? null,
       start_date: this.reportForm.value.start_date ?? null,
-      end_date: this.reportForm.value.end_date ?? null
+      end_date: this.reportForm.value.end_date ?? null,
+      category: this.reportForm.value.report_class
     }
 
     if (this.reportForm.value.report_class === 'muncity') {
-      params['category'] = 'municipality';
-      params['code'] = this.reportForm.value.municipality_code;
-    } else if (this.reportForm.value.report_class === 'brgys') {
-      params['category'] = 'barangay';
-      params['code'] = this.selectedBrgy.join(',');
-    } else {
-      params['category'] = this.reportForm.value.report_class;
+      params['code'] = this.reportFlag === '1' ? this.selectedMuncity.join(',') : this.reportForm.value.municipality_code;
     }
 
+    if (this.reportForm.value.report_class === 'brgys') {
+      params['code'] = this.selectedBrgy.join(',');
+    }
 
     this.http.get(this.reportForm.value.report_type.url, {params}).subscribe({
       next: (data: any) => {
         this.report_data = data;
         this.is_fetching = false;
         this.submit_flag = true;
-
-        // console.log(this.report_data, 'report_data');
-        // console.log(this.selectedBrgy, 'report_data');
       },
       error: err => console.log(err)
     });
@@ -161,18 +158,31 @@ export class ReportsComponent implements OnInit {
 
   handleReportClass(report_class) {
     this.submit_flag = false;
-    if(report_class === "brgys" || report_class === "muncity") {
+    if(report_class === "brgys") {
       if(!this.userLoc) this.userLoc = this.http.getUserFacility();
 
       this.http.get('libraries/facilities', {params:{'filter[code]': this.userLoc}}).subscribe({
         next: (data: any) => this.getBrgys(data.data[0].municipality.code, report_class),
         error: err => console.log(err)
       })
+    } else if(report_class === "muncity") {
+      this.getMuncities();
     } else {
       // all
       this.f['municipality_code'].setValue(null);
       this.f['barangay_code'].setValue(null);
       this.selectedBrgy = null;
+    }
+  }
+
+  getMuncities() {
+    if(!this.muncity) {
+      this.http.get('libraries/provinces/'+this.userInfo.facility.province.code, {params:{include: 'municipalities'}}).subscribe({
+        next: (data: any) => {
+          this.muncity = data.data.municipalities;
+        },
+        error: err => console.log(err)
+      })
     }
   }
 
@@ -260,11 +270,14 @@ export class ReportsComponent implements OnInit {
     return this.reportForm.controls;
   }
 
+  reportFlag: string;
   ngOnInit(): void {
     this.generateYear();
     this.userInfo = this.http.getUserFromJSON();
     this.current_date;
+    // console.log(this.userInfo)
 
+    this.reportFlag =  this.userInfo.reports_flag === 1 ? '1' : null;
     this.reportForm = this.formBuilder.nonNullable.group({
       report_type: ['', Validators.required],
       report_class: ['', Validators.required],
