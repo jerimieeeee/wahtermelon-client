@@ -1,0 +1,62 @@
+<div id="defaultModal" tabindex="-1" class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 w-full md:inset-0 h-modal md:h-full justify-center items-center flex" aria-modal="true" role="dialog" style="z-index:60">
+  <div class="relative p-4 w-full max-w-3xl h-auto md:h-auto">
+    <!-- Modal content -->
+    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+      <!-- Modal header -->
+      <div class="flex justify-between items-start py-3 px-5 rounded-t border-b bg-blue-500 dark:border-gray-600">
+        <h3 class="mt-2 text-sm font-bold text-white dark:text-white">
+            RAPID ONSITE MONITORING FORM
+        </h3>
+      </div>
+      <!-- Modal body -->
+      <div class="overflow-y-auto h-96 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100 overflow-y-auto">
+        <form [formGroup]="rapidForm" class="flex flex-col m-5">
+          <div class="font-semibold w-full">
+            Connectivity, Privacy and Security
+          </div>
+          <div class="grid grid-cols-4 gap-4 ml-3 mb-3" *ngFor="let item of connectivity_list">
+            <div class="col-span-2">
+              <input type="checkbox" class="input-checkbox" />
+              <label class="pl-2">{{ item.question }}</label>
+            </div>
+            <div class="col-span-2">
+              <input type="text" class="input" placeholder="actions taken..." />
+            </div>
+          </div>
+
+          <hr />
+          <div class="font-semibold w-full">
+            Internet Speed Test Report
+          </div>
+          <div class="grid grid-cols-2 gap-4 ml-3 mb-3">
+            <div>
+              <label>Internet Provider</label>
+              <input type="text" class="input"/>
+            </div>
+            <div>
+              <label>Download Speed</label>
+              <input type="number" class="input"/>
+            </div>
+            <div>
+              <label>Upload Speed</label>
+              <input type="number" class="input"/>
+            </div>
+            <div>
+              <label>Ping Test</label>
+              <input type="number" class="input"/>
+            </div>
+          </div>
+
+        </form>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="flex justify-end py-4 px-5 space-x-4 rounded-b border-t border-gray-200 dark:border-gray-600">
+        <button  type="button" class="btn-cancel" (click)="closeModal()">Close</button>
+        <button  [disabled]="rapidForm.pristine" type="button" class="btn-save" (click)="onSubmit()" >Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="opacity-50 fixed inset-0 z-50 bg-black"></div>

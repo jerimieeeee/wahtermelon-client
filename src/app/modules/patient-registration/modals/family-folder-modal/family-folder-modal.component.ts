@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { faCheck, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faAnglesLeft, faAnglesRight, faCheck, faChevronLeft, faChevronRight, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
@@ -14,19 +14,36 @@ export class FamilyFolderModalComponent implements OnInit {
 
   faSearch = faSearch;
   faCheck = faCheck;
+  faAnglesLeft = faAnglesLeft;
+  faChevronLeft = faChevronLeft;
+  faChevronRight = faChevronRight;
+  faAnglesRight = faAnglesRight;
 
   search_item: string;
   family_list: any;
 
-  searchFamily(){
+  per_page: number = 10;
+  current_page: number;
+  last_page: number;
+  from: number;
+  to: number;
+  total: number;
+
+  searchFamily(page?: number){
     // console.log('attempt search')
-    this.http.get('households/household-folders', {params:{'filter[search]': this.search_item, per_page: 'all', include: 'barangay'}}).subscribe({
+    this.http.get('households/household-folders', {params:{'filter[search]': this.search_item, page: !page ? this.current_page : page, per_page: this.per_page, include: 'barangay'}}).subscribe({
       next: (data: any) => {
         // console.log(data);
         this.family_list = data.data;
+
+        this.current_page = data.meta.current_page;
+        this.last_page = data.meta.last_page;
+        this.from = data.meta.from;
+        this.to = data.meta.to;
+        this.total = data.meta.total;
       },
       error: err => console.log(err)
-    })
+    });
   }
 
   selectFolder(data){

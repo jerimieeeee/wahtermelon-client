@@ -56,7 +56,7 @@
                 <td></td>
                 <td>{{ stats[item.male_var_name] ?? 0 }}</td>
                 <td>{{ stats[item.female_var_name] ?? 0 }}</td>
-                <td colspan="2">{{ stats[item.male_var_name] + stats[item.female_var_name] ?? 0 }}</td>
+                <td colspan="2">{{ +stats[item.male_var_name] + +stats[item.female_var_name] ?? 0 }}</td>
                 <td></td>
                 <td></td>
                 <td></td>
@@ -83,7 +83,7 @@
                 <td>{{ stats.pregnant_women_10_14_years_bohc ?? 0 }}</td>
                 <td>{{ stats.pregnant_women_15_19_years_bohc ?? 0 }}</td>
                 <td>{{ stats.pregnant_women_20_49_years_bohc ?? 0 }}</td>
-                <td>{{ (stats.pregnant_women_10_14_years_bohc ?? 0) + (stats.pregnant_women_15_19_years_bohc ?? 0) + (stats.pregnant_women_20_49_years_bohc ?? 0) }}</td>
+                <td>{{ +stats.pregnant_women_10_14_years_bohc + +stats.pregnant_women_15_19_years_bohc  + +stats.pregnant_women_20_49_years_bohc }}</td>
                 <td></td>
                 <td></td>
                 <td></td>
