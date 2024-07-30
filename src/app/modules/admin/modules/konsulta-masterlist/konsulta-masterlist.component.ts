@@ -42,7 +42,7 @@ export class KonsultaMasterlistComponent implements OnInit {
   search_item: string;
   search_pin: string;
   search_year: string;
-  tranche: number;
+  tranche: string;
 
   konsulta_list: any = [];
   years: any = [];
@@ -81,12 +81,13 @@ export class KonsultaMasterlistComponent implements OnInit {
   }
 
   loadList(page?: number, variable?: string, per_page?: any){
+    console.log(this.tranche)
     this.excel_exporting = true;
     let params = {params: { }};
     if (this.search_item) params['params']['search'] = this.search_item;
     if (this.search_pin) params['params']['filter[philhealth_id]'] = this.search_pin;
     if (this.search_year) params['params']['filter[effectivity_year]'] = this.search_year;
-    if (this.tranche) params['params']['tranche'] = this.tranche;
+    if (this.tranche !== 'null') params['params']['tranche'] = this.tranche;
     if (page) params['params']['page'] = page;
     if (this.selected_brgy) params['params']['barangay_code'] = this.selected_brgy;
 
