@@ -117,7 +117,7 @@
                   </div>
                   <div class="flex justify-end text-xs">
                     <div class="flex flex-col">
-                      <div>Physician: <span class="underline"> {{ prescriptions[0].prescriber.first_name }} {{ prescriptions[0].prescriber.middle_name !== 'N/A' ? prescriptions[0].prescriber.middle_name : '' }} {{ prescriptions[0].prescriber.last_name }}</span></div>
+                      <div>Physician: <span class="underline"> {{ prescriptions[0].prescriber.first_name }} {{ prescriptions[0].prescriber.middle_name !== 'N/A' ? prescriptions[0].prescriber.middle_name : '' }} {{ prescriptions[0].prescriber.last_name }} {{ prescriptions[0].prescriber.suffix_name === 'NA' ? '' : prescriptions[0].prescriber.suffix_name }}</span></div>
                       <div>PRC LIC No.: <span class="underline">{{ prescriptions[0].prescriber.prc_number }}</span></div>
                       <div>PTR No.: __________________________________</div>
                       <div>S2 No.: ___________________________________</div>
