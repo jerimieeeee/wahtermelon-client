@@ -72,12 +72,12 @@ export class PatientInfoComponent implements OnInit {
     if(field === 'vaccines'           || field==='all') this.vaccine.loadData(this.patient_info.id);
     if(field === 'philhealth'         || field==='all') this.philhealth.loadData(this.patient_info.id);
 
-    if(this.patient_info.gender === 'F') {
+    if(this.patient_info.gender === 'M') {
+      this.show_female_history = false;
+    } else {
       this.show_female_history = true;
       if(field === 'menstrual_history'  || field==='all') this.menstrualHistory.loadData(this.patient_info.id);
       if(field === 'pregnancy_history'  || field==='all') this.preghist.loadData(this.patient_info.id);
-    } else {
-      this.show_female_history = false;
     }
 
     if(field === 'social_history'       || field==='all') this.socialHistory.loadData(this.patient_info.id);
