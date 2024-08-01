@@ -300,7 +300,7 @@ export class LabPendingComponent implements OnInit {
     private http: HttpService,
   ) { }
 
-  // user_facility: string;
+
 
   getDataDiff(request_date): string {
     let endDate = new Date();
@@ -316,8 +316,9 @@ export class LabPendingComponent implements OnInit {
     return duration_day;//+' '+duration_hours+' '+duration_minutes;
   }
 
+  user_facility: string;
   ngOnInit(): void {
-    // this.user_facility = this.http.getUserFacility();
+    this.user_facility = this.http.getUserFacility();
     this.loadLabStatusLib();
     this.loadData();
   }
