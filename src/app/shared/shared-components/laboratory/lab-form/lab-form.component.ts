@@ -146,7 +146,7 @@ export class LabFormComponent implements OnChanges {
         if(this.lab_form.request_id) {
           query = this.http.update(url+'/', this.lab_form.id, this.lab_form)
         } else {
-          this.lab_form['patient_id'] = this.patient_details.patient_id;
+          this.lab_form['patient_id'] = this.patient_details.id;
           this.lab_form['request_id'] = this.selected_lab.id;
           if(this.selected_lab.consult_id) this.lab_form['consult_id'] = this.selected_lab.consult_id;
 
@@ -180,7 +180,7 @@ export class LabFormComponent implements OnChanges {
   updateLabReq(request_status_code){
     let params = {
       lab_code: this.selected_lab.laboratory.code,
-      patient_id: this.patient_details.patient_id,
+      patient_id: this.patient_details.id,
       recommendation_code: this.selected_lab.recommendation_code,
       request_date: this.selected_lab.request_date,
       request_status_code: request_status_code,
