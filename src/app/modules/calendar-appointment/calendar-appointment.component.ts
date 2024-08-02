@@ -81,7 +81,11 @@ export class CalendarAppointmentComponent implements OnInit {
     let params = {
       month: this.selected_month,
       year: this.selected_year,
-      per_page: 'all'
+      disable_filter: 1,
+      per_page: 'all',
+      facility_code: this.facility_code,
+      referral_facility_code: this.facility_code,
+      filter_type: 'calendar'
     };
 
     this.http.get('appointment/schedule', {params}).subscribe({
@@ -111,7 +115,10 @@ export class CalendarAppointmentComponent implements OnInit {
     private http: HttpService
   ) { }
 
+  facility_code: string;
   ngOnInit(): void {
+    this.facility_code = this.http.getUserFacility()
+    console.log(this.facility_code);
     this.loadSchedules();
   }
 }
