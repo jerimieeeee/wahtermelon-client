@@ -38,7 +38,8 @@
               <th scope="col" class="py-3 px-6">Gender</th>
               <th scope="col" class="py-3 px-6">Contact Number</th>
               <th scope="col" class="py-3 px-6">Email Address</th>
-              <th scope="col" class="py-3 px-6">Active Status</th>
+              <th scope="col" class="py-3 px-6 text-center">Provincial <br /> Report</th>
+              <th scope="col" class="py-3 px-6 text-center">Active <br /> Status</th>
               <!-- <th scope="col" class="py-3 px-6">Actions</th> -->
             </tr>
           </thead>
@@ -59,7 +60,13 @@
               <td class="py-4 px-6">
                 {{ account.email }}
               </td>
-              <td class="py-4 px-6">
+              <td class="py-4 px-6 text-center">
+                <div>
+                  <input  type="checkbox" class="input-checkbox" [(ngModel)]="account_list[i].reports_flag" (change)="updateActive(account_list[i], i)" [disabled]="is_updating || !account_list[i].is_active">
+                  <label class="" [ngClass]="{'peer-checked:bg-gray-600' : is_updating}"></label>
+                </div>
+              </td>
+              <td class="py-4 px-6 text-center">
                 <label class="inline-flex relative items-center cursor-pointer">
                   <input  type="checkbox" class="sr-only peer" [(ngModel)]="account_list[i].is_active" (change)="updateActive(account_list[i], i)" [disabled]="is_updating">
                   <div class="w-14 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300  rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[8px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600 disabled:opacity-7" [ngClass]="{'peer-checked:bg-gray-600' : is_updating}"></div>

@@ -31,6 +31,7 @@ export class AppComponent implements OnInit{
   auth_error: boolean = false;
   showPrivacyStatement: boolean = false;
   show_pass: boolean = false;
+  show_rapid_form: boolean = true;
 
   auth_error_message: string;
   constructor(
