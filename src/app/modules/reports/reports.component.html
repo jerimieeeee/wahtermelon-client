@@ -14,6 +14,10 @@
         <optgroup label="Household Profiling" class="text-gray-500" >
           <option *ngFor="let type of household_stats" [ngValue]="type">{{ type.desc }}</option>
         </optgroup>
+
+        <optgroup label="Animal Bite Report" class="text-gray-500" >
+          <option *ngFor="let type of ab_stats" [ngValue]="type">{{ type.desc }}</option>
+        </optgroup>
 <!--        <optgroup label="Diagnosis" class="text-gray-500" >-->
 <!--          <option *ngFor="let type of diagnosis_stats" [ngValue]="type">{{ type.desc }}</option>-->
 <!--        </optgroup>-->
@@ -28,34 +32,55 @@
 
     <div class="w-40" *ngIf="reportForm.value.report_type && reportForm.value.report_type.id !== 'feedback'">
       <label for="report_class" class="input-label" >Location</label>
-      <select id="report_class" name="report_class" class="input" formControlName="report_class" (change)="handleReportClass(reportForm.value.report_class)">
+      <select *ngIf="!reportFlag" id="report_class" name="report_class" class="input" formControlName="report_class" (change)="handleReportClass(reportForm.value.report_class)">
         <option value="all">All</option>
-        <!-- <option >Region</option> -->
         <option value="muncity">Municipality</option>
         <option value="brgys">Barangays</option>
         <option value="fac">Facility</option>
       </select>
+
+      <select *ngIf="reportFlag === '1'" id="report_class" name="report_class" class="input" formControlName="report_class" (change)="handleReportClass(reportForm.value.report_class)">
+        <option value="all">All</option>
+        <option value="muncity">Municipality</option>
+      </select>
     </div>
 
-    <!-- <div class="w-40" *ngIf="reportForm.value.report_class === 'brgys'">
-      <label for="brgys" class="input-label" >Barangays</label>
-      <select id="brgys" name="brgys" class="input" formControlName="brgys">
-        <option [value]="brgy.code" *ngFor="let brgy of brgys">
-          <div>
-            <input type="checkbox" class="">
-            <label>{{ brgy.name }}</label>
+    <!-- START MUNCITY -->
+    <div class="w-52" *ngIf="reportFlag && reportForm.value.report_class === 'muncity' && !this.muncity">
+      <label for="brgys" class="input-label pb-1" >Municipality</label>
+      <fa-icon class="text-blue-500 my-auto mx-auto" [icon]="faCircleNotch" spin="true"></fa-icon>Fetching...
+    </div>
+
+    <div class="w-52" *ngIf="reportFlag && reportForm.value.report_class === 'muncity' && this.muncity">
+      <label for="muncity" class="input-label pb-1" >Municipality</label>
+      <ng-select id="muncity" name="muncity"
+        class="w-full"
+        [items]="muncity"
+        [multiple]="true"
+        [hideSelected]="true"
+        bindLabel="name"
+        [selectableGroup]="true"
+        [closeOnSelect]="false"
+        bindValue="code"
+        [(ngModel)]="selectedMuncity"
+        [ngModelOptions]="{standalone:true}">
+
+        <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
+          <div class="ng-value" *ngIf="items.length > 0">
+            <span class="ng-value-label">Selected {{items.length}} Municipality</span>
           </div>
-        </option>
-      </select>
-    </div> -->
+        </ng-template>
+      </ng-select>
+    </div>
+    <!-- END MUNCITY -->
 
     <!-- START BRGY -->
-    <div class="w-52" *ngIf="reportForm.value.report_class === 'brgys' && !this.brgys">
+    <div class="w-52" *ngIf="!reportFlag && reportForm.value.report_class === 'brgys' && !this.brgys">
       <label for="brgys" class="input-label pb-1" >Barangays</label>
       <fa-icon class="text-blue-500 my-auto mx-auto" [icon]="faCircleNotch" spin="true"></fa-icon>Fetching...
     </div>
 
-    <div class="w-52" *ngIf="reportForm.value.report_class === 'brgys' && this.brgys">
+    <div class="w-52" *ngIf="!reportFlag && reportForm.value.report_class === 'brgys' && this.brgys">
       <label for="brgys" class="input-label pb-1" >Barangays</label>
       <ng-select id="brgys" name="brgys"
         class="w-full"
@@ -76,8 +101,9 @@
         </ng-template>
       </ng-select>
     </div>
-
     <!-- END BRGY -->
+
+
 
     <div class="w-40" *ngIf="reportForm.value.report_type && f['month'].enabled">
       <label for="start_date" class="input-label">Month</label>
@@ -139,6 +165,35 @@
       [start_date]="reportForm.value.start_date"
       [end_date]="reportForm.value.end_date"
     ></app-feedback-report>
+
+    <app-ab-post *ngIf="reportForm.value?.report_type.id === 'ab-post' && report_data && !is_fetching"
+      [report_data]="report_data"
+      [reportForm]="reportForm"
+      [selectedBrgy]="selectedBrgy"
+      [brgys]="brgys" [userInfo]="userInfo"
+      [submit_flag]="submit_flag"
+      [start_date]="reportForm.value.start_date"
+      [end_date]="reportForm.value.end_date"
+    ></app-ab-post>
+
+    <app-ab-pre *ngIf="reportForm.value?.report_type.id === 'ab-pre' && report_data && !is_fetching"
+      [report_data]="report_data"
+      [reportForm]="reportForm"
+      [selectedBrgy]="selectedBrgy"
+      [brgys]="brgys" [userInfo]="userInfo"
+      [submit_flag]="submit_flag"
+      [start_date]="reportForm.value.start_date"
+      [end_date]="reportForm.value.end_date"
+    ></app-ab-pre>
+
+    <app-fhsis2018-dental-m1 *ngIf="reportForm.value?.report_type.id === 'fhsis2018-dental-m1' && report_data && !is_fetching"
+      [report_data]="report_data"
+      [reportForm]="reportForm"
+      [selectedBrgy]="selectedBrgy"
+      [brgys]="brgys"
+      [userInfo]="userInfo"
+      [submit_flag]="submit_flag"
+    ></app-fhsis2018-dental-m1>
 
     <div class="flex flex-col justify-center" *ngIf="is_fetching">
       <fa-icon class="text-blue-500 mx-auto pt-36 text-xl" [icon]="faCircleNotch" spin="true"></fa-icon>

@@ -39,7 +39,7 @@ export class AccountListComponent implements OnInit {
     // console.log(params)
     this.http.get('users',params).subscribe({
       next: (data: any) => {
-        // console.log(data.data);
+        console.log(data.data);
         this.account_list = data.data;
 
         this.current_page = data.meta.current_page;
@@ -52,7 +52,11 @@ export class AccountListComponent implements OnInit {
     })
   }
 
-  updateActive(val, i){
+  updateReports(val, i) {
+
+  }
+
+  updateActive(val, i, flag){
     // console.log(val)
     this.is_updating = true;
     let params = val;
@@ -69,15 +73,13 @@ export class AccountListComponent implements OnInit {
 
     this.http.update('users/', user_id, params).subscribe({
       next: (data: any) => {
-        // console.log(data);
-        // this.loadAccount()
         this.is_updating = false;
         params.email = temp_email;
         params.id = user_id;
-        // console.log(this.account_list)
       },
       error: err => {
-        this.account_list[i].is_active = !params.is_active;
+        if(flag === 'status') this.account_list[i].is_active = !params.is_active;
+        if(flag === 'reports') this.account_list[i].reports_flag = !params.reports_flag;
         this.submit_error = err.error.errors;
         params.email = temp_email;
         this.is_updating = false;

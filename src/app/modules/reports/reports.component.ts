@@ -33,6 +33,7 @@ export class ReportsComponent implements OnInit {
     { id: 'fhsis2018-ncd', desc: 'NCD', url: 'reports-2018/ncd/m1'},
     { id: 'fhsis2018-tb', desc: 'TB Dots', url: 'reports-2018/tb-dots/m1'},
     { id: 'fhsis2018-morbidity', desc: 'Morbidity', url: 'reports-2018/morbidity/report'},
+    { id: 'fhsis2018-dental-m1', desc: 'Dental', url: 'reports-2018/dental/m1'},
   ]
 
   other_stats = [
@@ -40,6 +41,12 @@ export class ReportsComponent implements OnInit {
     { id: 'feedback', desc: 'Client Feedback', url: 'reports-2018/feedback/report'},
     // { id: 'fhsis2018-mc', desc: 'Maternal Care', url: 'reports-2018/maternal-care/m1'},
   ]
+
+  ab_stats = [
+    // { id: 'ab-report', desc: 'Animal Bite', url: 'reports-2018/animal-bite/patient-registered'},
+    { id: 'ab-post', desc: 'Post-Exposure Prophylaxis Cohort', url: 'reports-2018/animal-bite/post-exposure-cohort'},
+    { id: 'ab-pre', desc: 'Pre-Exposure Prophylaxis', url: 'reports-2018/animal-bite/pre-exposure'}
+  ];
 
   gbv_stats = [
     { id: 'gbv-report', desc: 'GBV Report', url: 'gbv-report/catalyst-report'},
@@ -108,12 +115,14 @@ export class ReportsComponent implements OnInit {
     },
   ];
 
-  fhsis_monthly_arr = ['fhsis2018-cc', 'fhsis2018-morbidity', 'fhsis2018-mc', 'fhsis2018-tb', 'fhsis2018-ncd', 'fhsis2018-fp', 'patient-registered']
+  fhsis_monthly_arr = ['fhsis2018-cc', 'fhsis2018-morbidity', 'fhsis2018-mc', 'fhsis2018-tb', 'fhsis2018-ncd', 'fhsis2018-fp', 'fhsis2018-dental-m1', 'patient-registered']
   report_params: any;
   years: any = [];
   selectedBrgy: [];
+  selectedMuncity: [];
   brgys: any;
-  userInfo: string;
+  muncity: any;
+  userInfo: any = {};
   userLoc: string;
   report_data: any;
   is_fetching: boolean = false;
@@ -125,28 +134,23 @@ export class ReportsComponent implements OnInit {
       month: this.reportForm.value.month ?? null,
       year: this.reportForm.value.year ?? null,
       start_date: this.reportForm.value.start_date ?? null,
-      end_date: this.reportForm.value.end_date ?? null
+      end_date: this.reportForm.value.end_date ?? null,
+      category: this.reportForm.value.report_class
     }
 
     if (this.reportForm.value.report_class === 'muncity') {
-      params['category'] = 'municipality';
-      params['code'] = this.reportForm.value.municipality_code;
-    } else if (this.reportForm.value.report_class === 'brgys') {
-      params['category'] = 'barangay';
-      params['code'] = this.selectedBrgy.join(',');
-    } else {
-      params['category'] = this.reportForm.value.report_class;
+      params['code'] = this.reportFlag === '1' ? this.selectedMuncity.join(',') : this.reportForm.value.municipality_code;
     }
 
+    if (this.reportForm.value.report_class === 'brgys') {
+      params['code'] = this.selectedBrgy.join(',');
+    }
 
     this.http.get(this.reportForm.value.report_type.url, {params}).subscribe({
       next: (data: any) => {
         this.report_data = data;
         this.is_fetching = false;
         this.submit_flag = true;
-
-        // console.log(this.report_data, 'report_data');
-        // console.log(this.selectedBrgy, 'report_data');
       },
       error: err => console.log(err)
     });
@@ -154,18 +158,31 @@ export class ReportsComponent implements OnInit {
 
   handleReportClass(report_class) {
     this.submit_flag = false;
-    if(report_class === "brgys" || report_class === "muncity") {
+    if(report_class === "brgys") {
       if(!this.userLoc) this.userLoc = this.http.getUserFacility();
 
       this.http.get('libraries/facilities', {params:{'filter[code]': this.userLoc}}).subscribe({
         next: (data: any) => this.getBrgys(data.data[0].municipality.code, report_class),
         error: err => console.log(err)
       })
+    } else if(report_class === "muncity") {
+      this.getMuncities();
     } else {
       // all
       this.f['municipality_code'].setValue(null);
       this.f['barangay_code'].setValue(null);
       this.selectedBrgy = null;
+    }
+  }
+
+  getMuncities() {
+    if(!this.muncity) {
+      this.http.get('libraries/provinces/'+this.userInfo.facility.province.code, {params:{include: 'municipalities'}}).subscribe({
+        next: (data: any) => {
+          this.muncity = data.data.municipalities;
+        },
+        error: err => console.log(err)
+      })
     }
   }
 
@@ -253,11 +270,14 @@ export class ReportsComponent implements OnInit {
     return this.reportForm.controls;
   }
 
+  reportFlag: string;
   ngOnInit(): void {
     this.generateYear();
     this.userInfo = this.http.getUserFromJSON();
     this.current_date;
+    // console.log(this.userInfo)
 
+    this.reportFlag =  this.userInfo.reports_flag === 1 ? '1' : null;
     this.reportForm = this.formBuilder.nonNullable.group({
       report_type: ['', Validators.required],
       report_class: ['', Validators.required],

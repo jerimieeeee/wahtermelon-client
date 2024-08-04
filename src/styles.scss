@@ -96,7 +96,7 @@
     @apply text-white bg-blue-500 enabled:hover:ring-2 enabled:hover:ring-blue-300 focus:outline-none font-medium rounded text-sm px-6 py-2 text-center transition duration-100 ease-in-out transform enabled:active:scale-90 disabled:bg-gray-200
   };
   .btn-cancel {
-    @apply text-white bg-rose-500 hover:ring-2 hover:ring-rose-300 focus:outline-none font-medium rounded text-sm px-6 py-2 text-center transition duration-100 ease-in-out transform active:scale-90 disabled:bg-gray-200
+    @apply text-white bg-gray-300 hover:ring-2 hover:ring-gray-200 focus:outline-none font-medium rounded text-sm px-6 py-2 text-center transition duration-100 ease-in-out transform active:scale-90 disabled:bg-gray-200
   };
   .btn-end-visit {
     @apply text-white bg-amber-500 hover:ring-2 hover:ring-amber-300 focus:outline-none font-medium rounded text-sm px-6 py-2.5 text-center transition duration-100 ease-in-out transform active:scale-90 disabled:bg-gray-200

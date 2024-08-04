@@ -21,6 +21,10 @@ import { Fhsis2018NcdComponent } from './report/fhsis2018-ncd/fhsis2018-ncd.comp
 import { Fhsis2018FpComponent } from './report/fhsis2018-fp/fhsis2018-fp.component';
 import {ShowNameListComponent} from "./modals/show-name-list/show-name-list.component";
 import { FeedbackReportComponent } from './report/feedback-report/feedback-report.component';
+import { AbReportComponent } from './report/ab-report/ab-report.component';
+import { AbPostComponent } from './report/ab-post/ab-post.component';
+import { AbPreComponent } from './report/ab-pre/ab-pre.component';
+import { Fhsis2018DentalM1Component } from './report/fhsis2018-dental-m1/fhsis2018-dental-m1.component';
 
 
 @NgModule({
@@ -40,6 +44,10 @@ import { FeedbackReportComponent } from './report/feedback-report/feedback-repor
     Fhsis2018FpComponent,
     ShowNameListComponent,
     FeedbackReportComponent,
+    AbReportComponent,
+    AbPostComponent,
+    AbPreComponent,
+    Fhsis2018DentalM1Component,
   ],
   imports: [
     CommonModule,

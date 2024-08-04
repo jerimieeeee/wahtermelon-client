@@ -56,7 +56,7 @@ export class DailyServiceComponent implements OnChanges {
   }
 
   exportX() {
-    this.exportAsService.save(this.exportAsExcel, 'Daily Service - Consultation').subscribe(() => {
+    this.exportAsService.save(this.exportAsExcel, 'Daily Service').subscribe(() => {
       // save started
     });
   }
@@ -64,7 +64,7 @@ export class DailyServiceComponent implements OnChanges {
   pdf_exported: boolean = false;
   exportP() {
     this.pdf_exported = true;
-    this.exportAsService.save(this.exportAsPdf, 'Daily Service - Consultation').subscribe(() => {
+    this.exportAsService.save(this.exportAsPdf, 'Daily Service').subscribe(() => {
       // save started
     });
   }

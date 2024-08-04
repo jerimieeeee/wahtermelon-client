@@ -17,9 +17,9 @@ import { RequestsInterceptor } from './shared/interceptor/http/http-interceptor'
 import { ToastrModule } from 'ngx-toastr';
 import { CookieService } from 'ngx-cookie-service'
 import { provideEnvironmentNgxMask } from 'ngx-mask';
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { RapidOnsiteComponent } from './shared/shared-components/monitoring/rapid-onsite/rapid-onsite.component';
 
 @NgModule({
   declarations: [
@@ -38,13 +38,13 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
     NgSelectModule,
     FormsModule,
     NgApexchartsModule,
-    NgApexchartsModule,
     ReactiveFormsModule,
     ToastrModule.forRoot(),
     CalendarModule.forRoot({
       provide: DateAdapter,
       useFactory: adapterFactory,
     }),
+    RapidOnsiteComponent
   ],
   providers: [
     {
