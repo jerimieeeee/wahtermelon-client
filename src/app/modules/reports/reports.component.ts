@@ -34,6 +34,8 @@ export class ReportsComponent implements OnInit {
     { id: 'fhsis2018-tb', desc: 'TB Dots', url: 'reports-2018/tb-dots/m1'},
     { id: 'fhsis2018-morbidity', desc: 'Morbidity', url: 'reports-2018/morbidity/report'},
     { id: 'fhsis2018-dental-m1', desc: 'Dental', url: 'reports-2018/dental/m1'},
+    // { id: 'fhsis2018-mortality', desc: 'Mortality and Natality', url: 'reports-2018/dental/m1'},
+    // { id: 'fhsis2018-environmental', desc: 'Environmental and Sanitation', url: 'reports-2018/dental/m1'},
   ]
 
   other_stats = [

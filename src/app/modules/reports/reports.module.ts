@@ -25,6 +25,7 @@ import { AbReportComponent } from './report/ab-report/ab-report.component';
 import { AbPostComponent } from './report/ab-post/ab-post.component';
 import { AbPreComponent } from './report/ab-pre/ab-pre.component';
 import { Fhsis2018DentalM1Component } from './report/fhsis2018-dental-m1/fhsis2018-dental-m1.component';
+import { Fhsis2018MortalityComponent } from './report/fhsis2018-mortality/fhsis2018-mortality.component';
 
 
 @NgModule({
@@ -48,6 +49,7 @@ import { Fhsis2018DentalM1Component } from './report/fhsis2018-dental-m1/fhsis20
     AbPostComponent,
     AbPreComponent,
     Fhsis2018DentalM1Component,
+    Fhsis2018MortalityComponent,
   ],
   imports: [
     CommonModule,
