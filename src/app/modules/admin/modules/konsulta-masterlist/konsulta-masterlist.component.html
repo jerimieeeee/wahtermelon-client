@@ -22,7 +22,7 @@
         <input [disabled]="excel_exporting" [(ngModel)]="search_pin" type="text" placeholder="search pin..." (keyup.enter)="loadList(null, 'konsulta_list')" class="border border-gray-300 text-sm w-44" />
 
         <select [disabled]="excel_exporting" name="tranche" id="tranche" placeholder="Select tranche" [(ngModel)]="tranche" class="border border-gray-300 w-40 rounded-none">
-          <option [ngValue]="null">-</option>
+          <option value="null">-</option>
           <option *ngFor="let tranche of tranches" [value]="tranche.code">{{ tranche.desc }}</option>
         </select>
 

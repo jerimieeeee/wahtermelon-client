@@ -48,8 +48,8 @@
             </div>
             <div class="col-span-2 flex flex-wrap pt-5 pl-5">
               <div class="w-1/2 mb-2" *ngFor="let lab of lab_list" [ngClass]="{'hidden': ((lab.code === 'PSMR' && patient_info.gender ==='M') || lab.lab_result === 'done')}">
-                  <input [disabled]="consult_done || !request_date" (click)="updateList(lab.code)" type="checkbox" [(ngModel)]="labs[lab.code]" class="rounded-md border border-gray-400 p-2 disabled:bg-gray-200">
-                  {{ lab.desc }}
+                  <input attr.id="{{ lab.code }}" [disabled]="consult_done || !request_date" (click)="updateList(lab.code)" type="checkbox" [(ngModel)]="labs[lab.code]" class="rounded-md border border-gray-400 p-2 disabled:bg-gray-200">
+                  <label attr.for="{{ lab.code }}" class="pl-2 pt-1" [class]="lab.konsulta_active ? 'text-blue-600' : 'text-gray-700'">{{ lab.desc }}</label>
               </div>
             </div>
           </div>
