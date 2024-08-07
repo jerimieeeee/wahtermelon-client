@@ -30,6 +30,7 @@ export class LabComponent implements OnInit, OnDestroy {
       sort: '-request_date',
       include: 'laboratory',
       per_page: 'all',
+      disable_filter: 1
     }
     this.http.get('laboratory/consult-laboratories', {params}).subscribe({
       next: (data: any) => {

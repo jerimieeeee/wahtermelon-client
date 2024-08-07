@@ -1,0 +1,202 @@
+<div id="defaultModal" tabindex="-1" class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 w-full md:inset-0 h-modal md:h-full justify-center items-center flex" aria-modal="true" role="dialog" style="z-index:60">
+  <div class="relative p-4 w-full max-w-4xl h-auto md:h-auto">
+    <!-- Modal content -->
+    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+      <!-- Modal header -->
+      <div class="flex justify-between items-start py-3 px-5 rounded-t border-b bg-blue-500 dark:border-gray-600">
+        <h3 class="mt-2 text-sm font-bold text-white dark:text-white">
+          {{ selected_lab.laboratory.desc }}
+        </h3>
+
+      </div>
+      <!-- Modal body -->
+      <div class=" h-96 overflow-y-auto">
+        <div class="flex item-start flex-wrap pb-5">
+          <div class="grid grid-cols-2 px-3 py-3 w-full mx-5 mt-5 rounded-lg" *ngIf="show_form">
+            <div *ngIf="for_history===1 || user_facility !== selected_lab.facility_code" class="rounded-md col-span-2 py-2 mb-2 border border-orange-300 bg-orange-100 text-orange-800">
+              This laboratory was recorded on <span class="italic font-semibold uppercase"> {{ selected_lab.facility.facility_name }}</span>. Edit/update is not allowed.
+            </div>
+
+            <div class="col-span-2 flex mb-3 justify-center">
+              <input type="checkbox" name="request_status_code" class="w-6 h-6 input" [disabled]="for_history===1 || user_facility !== selected_lab.facility_code" [(ngModel)]="request_status_code" [ngModelOptions]="{standalone: true}"/>
+              <label for="request_status_code" class="ml-3 mt-1">Patient has refused lab service</label>
+            </div>
+
+            <div *ngIf="!request_status_code" class="col-span-2 grid grid-cols-2 gap-5" >
+              <div class="text-sm col-span-1">
+                <label class="font-semibold" >Laboratory date</label>
+                <input name="field" [disabled]="for_history===1 || user_facility !== selected_lab.facility_code" [(ngModel)]="lab_form['laboratory_date']" type="date" [max]="max_date" placeholder="mm/dd/yyyy" class="input">
+              </div>
+
+              <div class="text-sm col-span-1">
+                <label class="font-semibold" >Laboratory status</label>
+                <select name="field" [disabled]="for_history===1 || user_facility !== selected_lab.facility_code" [(ngModel)]="lab_form['lab_status_code']" class="input">
+                  <option [value]="status.code" *ngFor="let status of lab_statuses">{{ status.desc }}</option>
+                </select>
+              </div>
+
+              <!-- <div class="text-sm col-span-2">
+                <label class="font-semibold" >Referral Facility</label>
+                <input name="field" [disabled]="for_history===1 || user_facility !== selected_lab.facility_code" [(ngModel)]="lab_form['referral_facility']" type="text" class="input">
+              </div> -->
+
+              <div *ngFor="let field of fields">
+                <div class="text-sm col-span-1" *ngIf="selected_lab.laboratory.code === 'SPTM' && field.field_name === 'findings_code'">
+                  <label class="font-semibold" >{{ field.field_desc }} {{ field.nv_uom ? '('+field.nv_uom+')' : null }}</label>
+                  <select name="field" [disabled]="for_history===1 || user_facility !== selected_lab.facility_code" [(ngModel)]="lab_form['findings_code']" class="input">
+                    <option [value]="findings.code" *ngFor="let findings of lab_findings">{{ findings.desc }}</option>
+                  </select>
+                </div>
+
+                <div class="text-sm col-span-1" *ngIf="selected_lab.laboratory.code === 'SPTM' && field.field_name === 'data_collection_code'">
+                  <label class="font-semibold" >{{ field.field_desc }} {{ field.nv_uom ? '('+field.nv_uom+')' : null }}</label>
+                  <select name="field" [disabled]="for_history===1 || user_facility !== selected_lab.facility_code" [(ngModel)]="lab_form['data_collection_code']" class="input">
+                    <option [value]="findings.code" *ngFor="let findings of lab_sputum_collection">{{ findings.desc }}</option>
+                  </select>
+                </div>
+
+                <div class="text-sm col-span-1" *ngIf="selected_lab.laboratory.code === 'CXRAY' && field.field_name === 'findings_code'">
+                  <label class="font-semibold" >{{ field.field_desc }} {{ field.nv_uom ? '('+field.nv_uom+')' : null }}</label>
+                  <select name="field" [disabled]="for_history===1 || user_facility !== selected_lab.facility_code" [(ngModel)]="lab_form['findings_code']" class="input">
+                    <option [value]="findings.code" *ngFor="let findings of lab_cxray_findings">{{ findings.desc }}</option>
+                  </select>
+                </div>
+
+                <div class="text-sm col-span-1" *ngIf="selected_lab.laboratory.code === 'CXRAY' && field.field_name === 'observation_code'">
+                  <label class="font-semibold" >{{ field.field_desc }} {{ field.nv_uom ? '('+field.nv_uom+')' : null }}</label>
+                  <select name="field" [disabled]="for_history===1 || user_facility !== selected_lab.facility_code" [(ngModel)]="lab_form['observation_code']" class="input">
+                    <option [value]="obs.code" *ngFor="let obs of lab_cxray_observation">{{ obs.desc }}</option>
+                  </select>
+                </div>
+
+                <div class="text-sm col-span-1" *ngIf="selected_lab.laboratory.code === 'ECG' && field.field_name === 'findings_code'">
+                  <label class="font-semibold" >{{ field.field_desc }} {{ field.nv_uom ? '('+field.nv_uom+')' : null }}</label>
+                  <select name="field" [disabled]="for_history===1 || user_facility !== selected_lab.facility_code" [(ngModel)]="lab_form['findings_code']" class="input">
+                    <option [value]="findings.code" *ngFor="let findings of lab_findings">{{ findings.desc }}</option>
+                  </select>
+                </div>
+
+                <div class="text-sm col-span-1" *ngIf="form_with_findings_pn.includes(selected_lab.laboratory.code) && field.field_name === 'findings_code'">
+                  <label class="font-semibold" >{{ field.field_desc }} {{ field.nv_uom ? '('+field.nv_uom+')' : null }}</label>
+                  <select name="field" [disabled]="for_history===1 || user_facility !== selected_lab.facility_code" [(ngModel)]="lab_form['findings_code']" class="input">
+                    <option [value]="findings.code" *ngFor="let findings of lab_result_pn">{{ findings.desc }}</option>
+                  </select>
+                </div>
+
+                <div class="text-sm col-span-1" *ngIf="selected_lab.laboratory.code === 'FCAL' && field.field_name === 'blood_code'">
+                  <label class="font-semibold" >{{ field.field_desc }} {{ field.nv_uom ? '('+field.nv_uom+')' : null }}</label>
+                  <select name="field" [disabled]="for_history===1 || user_facility !== selected_lab.facility_code" [(ngModel)]="lab_form['blood_code']" class="input">
+                    <option [value]="findings.code" *ngFor="let findings of lab_stool_blood">{{ findings.desc }}</option>
+                  </select>
+                </div>
+
+                <div class="text-sm col-span-1" *ngIf="selected_lab.laboratory.code === 'FCAL' && field.field_name === 'color_code'">
+                  <label class="font-semibold" >{{ field.field_desc }} {{ field.nv_uom ? '('+field.nv_uom+')' : null }}</label>
+                  <select name="field" [disabled]="for_history===1 || user_facility !== selected_lab.facility_code" [(ngModel)]="lab_form['color_code']" class="input">
+                    <option [value]="findings.code" *ngFor="let findings of lab_stool_color">{{ findings.desc }}</option>
+                  </select>
+                </div>
+
+                <div class="text-sm col-span-1" *ngIf="selected_lab.laboratory.code === 'FCAL' && field.field_name === 'consistency_code'">
+                  <label class="font-semibold" >{{ field.field_desc }} {{ field.nv_uom ? '('+field.nv_uom+')' : null }}</label>
+                  <select name="field" [disabled]="for_history===1 || user_facility !== selected_lab.facility_code" [(ngModel)]="lab_form['consistency_code']" class="input">
+                    <option [value]="findings.code" *ngFor="let findings of lab_stool_consistency">{{ findings.desc }}</option>
+                  </select>
+                </div>
+
+                <div class="text-sm col-span-1" *ngIf="selected_lab.laboratory.code === 'BPSY' && field.field_name === 'type'">
+                  <label class="font-semibold" >{{ field.field_desc }} {{ field.nv_uom ? '('+field.nv_uom+')' : null }}</label>
+                  <select name="field" [disabled]="for_history===1 || user_facility !== selected_lab.facility_code" [(ngModel)]="lab_form['type']" class="input">
+                    <option [value]="findings.code" *ngFor="let findings of lab_biopsy_type">{{ findings.desc }}</option>
+                  </select>
+                </div>
+
+                <div class="text-sm col-span-1" *ngIf="selected_lab.laboratory.code === 'USND' && field.field_name === 'type'">
+                  <label class="font-semibold" >{{ field.field_desc }} {{ field.nv_uom ? '('+field.nv_uom+')' : null }}</label>
+                  <select name="field" [disabled]="for_history===1 || user_facility !== selected_lab.facility_code" [(ngModel)]="lab_form['type']" class="input">
+                    <option [value]="findings.code" *ngFor="let findings of lab_ultrasound_type">{{ findings.desc }}</option>
+                  </select>
+                </div>
+
+                <div class="text-sm col-span-1" *ngIf="selected_lab.laboratory.code === 'SYPH' && field.field_name === 'method_code'">
+                  <label class="font-semibold" >{{ field.field_desc }} {{ field.nv_uom ? '('+field.nv_uom+')' : null }}</label>
+                  <select name="field" [disabled]="for_history===1 || user_facility !== selected_lab.facility_code" [(ngModel)]="lab_form['method_code']" class="input">
+                    <option [value]="findings.code" *ngFor="let findings of lab_syphilis_method">{{ findings.desc }}</option>
+                  </select>
+                </div>
+
+                <div class="text-sm col-span-1" *ngIf="selected_lab.laboratory.code === 'HEMA' && field.field_name === 'blood_type_code'">
+                  <label class="font-semibold" >{{ field.field_desc }} {{ field.nv_uom ? '('+field.nv_uom+')' : null }}</label>
+                  <select name="field" [disabled]="for_history===1 || user_facility !== selected_lab.facility_code" [(ngModel)]="lab_form['blood_type_code']" class="input">
+                    <option [value]="findings.code" *ngFor="let findings of blood_types">{{ findings.code }}</option>
+                  </select>
+                </div>
+
+                <div class="text-sm col-span-1" *ngIf="selected_lab.laboratory.code === 'MRDT' && field.field_name === 'parasite_type_code'">
+                  <label class="font-semibold" >{{ field.field_desc }} {{ field.nv_uom ? '('+field.nv_uom+')' : null }}</label>
+                  <select name="field" [disabled]="for_history===1 || user_facility !== selected_lab.facility_code" [(ngModel)]="lab_form['parasite_type_code']" class="input">
+                    <option [value]="findings.code" *ngFor="let findings of lab_malaria_parasite">{{ findings.desc }}</option>
+                  </select>
+                </div>
+
+                <div class="text-sm col-span-1" *ngIf="selected_lab.laboratory.code === 'GXPT' && field.field_name === 'mtb_code'">
+                  <label class="font-semibold" >{{ field.field_desc }} {{ field.nv_uom ? '('+field.nv_uom+')' : null }}</label>
+                  <select name="field" [disabled]="for_history===1 || user_facility !== selected_lab.facility_code" [(ngModel)]="lab_form['mtb_code']" class="input">
+                    <option [value]="findings.code" *ngFor="let findings of lab_gene_mtb">{{ findings.desc }}</option>
+                  </select>
+                </div>
+
+                <div class="text-sm col-span-1" *ngIf="selected_lab.laboratory.code === 'GXPT' && field.field_name === 'rif_code'">
+                  <label class="font-semibold" >{{ field.field_desc }} {{ field.nv_uom ? '('+field.nv_uom+')' : null }}</label>
+                  <select name="field" [disabled]="for_history===1 || user_facility !== selected_lab.facility_code" [(ngModel)]="lab_form['rif_code']" class="input">
+                    <option [value]="findings.code" *ngFor="let findings of lab_gene_rif">{{ findings.desc }}</option>
+                  </select>
+                </div>
+                <!-- <div class="text-sm col-span-1" *ngIf="selected_lab.laboratory.code === 'SYPH' && field.field_name === 'findings_code'">
+                  <label class="font-semibold" >{{ field.field_desc }} {{ field.nv_uom ? '('+field.nv_uom+')' : null }}</label>
+                  <select name="field" [disabled]="for_history===1 || user_facility !== selected_lab.facility_code" [(ngModel)]="lab_form['findings_code']" class="input">
+                    <option [value]="findings.code" *ngFor="let findings of lab_findings">{{ findings.desc }}</option>
+                  </select>
+                </div> -->
+
+                <div class="text-sm col-span-1" *ngIf="spl_val.indexOf(field.field_name) < 0">
+                  <label class="font-semibold" >{{ field.field_desc }} {{ field.nv_uom ? '('+field.nv_uom+')' : null }}</label>
+                  <input name="field" [disabled]="for_history===1 || user_facility !== selected_lab.facility_code" [(ngModel)]="lab_form[field.field_name]" [type]="field.nv_min !== null ? 'number' : (field.field_name === 'collection_date' || field.field_name === 'release_date' ? 'date' : 'text')" class="input">
+                  <span class="italic text-xs text-gray-500" *ngIf="field.nv_min !== null">Normal values(Min: {{ field.nv_min }} to Max: {{ field.nv_max }})</span>
+                </div>
+
+                <!--  -->
+
+                <!-- <div class="text-sm col-span-1" *ngIf="field.field_name !== 'observation_code'">
+                  <label class="font-semibold" >{{ field.field_desc }}</label>
+                  <select name="field" [(ngModel)]="lab_form['observation_code']" class="input">
+                    <option [value]="obs.code" *ngFor="let obs of lab_observation">{{ obs.desc }}</option>
+                  </select>
+                </div> -->
+              </div>
+
+              <div class="col-span-2">
+                <div class="text-sm col-span-1">
+                  <label class="font-semibold" >Remarks</label>
+                  <input name="field" [disabled]="for_history===1 || user_facility !== selected_lab.facility_code" [(ngModel)]="lab_form['remarks']" type="text" class="input">
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal footer  -->
+      <div class="flex justify-end pb-5 px-5 space-x-4 rounded-b my-5">
+        <button [disabled]="is_saving" type="button" class="btn-save bg-gray-400 px-10" (click)="cancelThisModal()">Cancel</button>
+        <button *ngIf="user_facility === selected_lab.facility_code" [disabled]="is_saving || (!request_status_code && (!lab_form['laboratory_date'] || !lab_form['lab_status_code']))" type="button" class="btn-save px-10 disabled:bg-gray-300" (click)="onSubmit()" >
+          <fa-icon [icon]="is_saving ? faSpinner : faSave" class="mr-2" [spin]="is_saving"></fa-icon>
+          {{ is_saving ? 'Saving' : 'Save' }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="opacity-50 fixed inset-0 z-50 bg-black"></div>

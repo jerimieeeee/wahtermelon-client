@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
-import { faChevronCircleDown, faBell, faSearch, faGear, faHome, faRightFromBracket, faAddressBook, faUser, faSquarePollVertical, faCalendarDay } from '@fortawesome/free-solid-svg-icons';
+import { faChevronCircleDown, faBell, faSearch, faGear, faHome, faRightFromBracket, faAddressBook, faUser, faSquarePollVertical, faCalendarDay, faFlask } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { catchError, debounceTime, distinctUntilChanged, switchMap, tap, map, filter } from 'rxjs/operators';
 import { BehaviorSubject, concat, Observable, of, Subject } from 'rxjs';
@@ -27,6 +27,7 @@ export class HeaderComponent implements OnInit {
   faUser = faUser;
   faSquarePollVertical = faSquarePollVertical;
   faCalendarDay = faCalendarDay;
+  faFlask = faFlask;
 
   // patients$: Observable<any>;
   patients$ = new BehaviorSubject<any[]>([]);
@@ -42,7 +43,8 @@ export class HeaderComponent implements OnInit {
     middle_name: '',
     last_name: '',
     suffix_name: '',
-    facility: {facility_name:''}
+    facility: {facility_name:''},
+    designation_code: ''
   };
 
   showMenu: boolean = false;
@@ -215,12 +217,21 @@ export class HeaderComponent implements OnInit {
     this.loadPatients();
     let val = this.http.getUserFromJSON();
 
-    // console.log(val)
-    this.user.last_name = val.last_name;
+    this.user = {
+      last_name:        val.last_name,
+      first_name:       val.first_name,
+      middle_name:      val.middle_name === 'NA' ? '' : val.middle_name,
+      suffix_name:      val.suffix_name === 'NA' ? '' : val.suffix_name,
+      facility:         {facility_name: val.facility.facility_name},
+      designation_code: val.designation_code
+    };
+
+    /* this.user.last_name = val.last_name;
     this.user.first_name = val.first_name;
     this.user.middle_name = val.middle_name === 'NA' ? '' : val.middle_name;
     this.user.suffix_name = val.suffix_name === 'NA' ? '' : val.suffix_name;
     this.user.facility.facility_name = val.facility.facility_name;
+    this.user.designation_code = val.designation_code; */
   }
 
 }

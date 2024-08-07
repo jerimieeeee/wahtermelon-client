@@ -1,102 +1,134 @@
-<div class="grid grid-cols-12 flex item-start flex-wrap shadow-md rounded-xl mb-8 mt-8 overflow-y-auto">
-
-    <div class="col-span-12 flex bg-blue-500 px-5 py-3 rounded-tl rounded-tr">
-      <h4 class="font-bold text-white text-md mt-2 mb-2">Eye Assessment</h4>
-      <div class="">
-        <fa-icon [icon]="faInfoCircle" class="peer text-white hover:text-white z-50 px-2"></fa-icon>
-        <div
-            class="absolute text-sm bg-gradient-to-b from-stone-500 to-gray-400 p-2 rounded border border-gray-500  text-white drop-shadow-lg opacity-90 border-check z-50 w-60 invisible peer-hover:visible">
-            <h1 class="font-bold drop-shadow-lg">IMPORTANT</h1>
-            <p class="font-light drop-shadow-lg">Once saved, the information will be displayed in the input boxes
-                and shall not be editable unless Edit button is pressed.</p>
-        </div>
+<form [formGroup]="casdt2Forms" (ngSubmit)="onSubmit()">
+  <div class="grid grid-cols-12 flex item-start flex-wrap shadow-md rounded-xl mb-8 mt-8 overflow-y-auto">
+      <div class="col-span-12 flex bg-blue-500 px-5 py-3 rounded-tl rounded-tr">
+        <h4 class="font-bold text-white text-md mt-2 mb-2">Eye Assessment</h4>
+        <div class="">
+          <fa-icon [icon]="faInfoCircle" class="peer text-white hover:text-white z-50 px-2"></fa-icon>
+          <div
+              class="absolute text-sm bg-gradient-to-b from-stone-500 to-gray-400 p-2 rounded border border-gray-500  text-white drop-shadow-lg opacity-90 border-check z-50 w-60 invisible peer-hover:visible">
+              <h1 class="font-bold drop-shadow-lg">IMPORTANT</h1>
+              <p class="font-light drop-shadow-lg">Once saved, the information will be displayed in the input boxes
+                  and shall not be editable unless Edit button is pressed.</p>
+          </div>
+      </div>
+      </div>
+      <div class="col-start-1 col-span-12 px-5 mt-4 mb-6">
+        <h4 class="font-bold">A. Eye Complaints (Check all applicable)</h4>
+      </div>
+      <div *ngFor="let eyes of eye_complaints" class="text-sm col-span-4 w-full px-5 mb-6 select-none">
+        <input type="checkbox" [id]="eyes.code" class="input-checkbox h-4 w-4 border-gray-400 text-blue-500" name="eye_complaints"
+               [formControlName]="eyes.code" (change)="handleCheckboxSelection(eyes.code, $event.target.checked)" />
+        <label [for]="eyes.code" class="ml-1 align-middle">{{ eyes.desc }}</label>
+      </div>
+<!--      <div *ngFor="let eyes of eye_complaints" class="text-sm col-span-4 w-full px-5 mb-6 select-none">-->
+<!--        <input type="checkbox" attr.id="{{eyes.code}}" class="input-checkbox h-4 w-4 border-gray-400 text-blue-500" name="eye_complaints" [value]="eyes.code"/>-->
+<!--        <label attr.for="{{eyes.code}}" class="ml-1 align-middle"> {{eyes.desc}}</label>-->
+<!--      </div>-->
+      <div class="text-sm col-start-1 col-span-12 w-full  px-5 mt-2 mb-6">
+          <h1 class="mb-2 font-semibold">Refer immediately to opthalmologist</h1>
+        <select class="text-sm bg-white border border-gray-200 p-2.5 rounded w-full" name="eye_refer" formControlName="eye_refer" appendTo="body">
+          <option ng-value="vision.desc" *ngFor="let opthals of eye_refer" [selected]=" " [value]="opthals.code">
+            {{opthals.desc}}
+          </option>
+          </select>
+      </div>
     </div>
+    <div class="col-start-1 col-span-12 row-start-1 border-b-2 border-gray-300 mt-2 mb-2"></div>
+    <div class="grid grid-cols-12 item-start flex-wrap shadow-md rounded-xl mb-8 mt-8">
+      <div class="col-span-12 row-start-1 flex bg-blue-500 px-5 py-3 rounded-tl rounded-tr">
+        <h4 class="font-bold text-white text-md mt-2 mb-2">Vision Assessment</h4>
+        <div class="">
+          <fa-icon [icon]="faInfoCircle" class="peer text-white hover:text-white z-50 px-2"></fa-icon>
+          <div
+              class="absolute text-sm bg-gradient-to-b from-stone-500 to-gray-400 p-2 rounded border border-gray-500  text-white drop-shadow-lg opacity-90 border-check z-50 w-60 invisible peer-hover:visible">
+              <h1 class="font-bold drop-shadow-lg">IMPORTANT</h1>
+              <p class="font-light drop-shadow-lg">Once saved, the information will be displayed in the input boxes
+                  and shall not be editable unless Edit button is pressed.</p>
+          </div>
+      </div>
+      </div>
+      <div class="col-start-1 col-span-12 row-start-2 px-5 mt-4 mb-4">
+        <h4 class="font-bold">B. Vision Screening</h4>
+      </div>
+      <div class="text-sm col-start-1 col-span-3 w-full row-start-3 px-5 mt-2 mb-4">
+          <h1 class="mb-2">Unaided</h1>
+          <select class="text-sm bg-white border border-gray-200 p-2.5 rounded w-full" name="unaided" formControlName="unaided">
+            <option ng-value="vision.desc" *ngFor="let vision of eye_vision_screen" [selected]="vision.desc == 'Both Eye'" [value]="vision.code">
+              {{vision.desc}}
+            </option>
+          </select>
+      </div>
+      <div class="text-sm col-start-4 col-span-3 w-full row-start-3 px-5 mt-2 mb-4">
+          <h1 class="mb-2">Pinhole</h1>
+          <select class="text-sm bg-white border border-gray-200 p-2.5 rounded w-full" name="pinhole" formControlName="pinhole">
+            <option ng-value="vision.desc" *ngFor="let vision of eye_vision_screen" [selected]="vision.desc == 'Both Eye'" [value]="vision.code">
+              {{vision.desc}}
+            </option>
+          </select>
+      </div>
+      <div class="text-sm col-start-7 col-span-3 w-full row-start-3 px-5 mt-2 mb-4">
+          <h1 class="mb-2">Improved</h1>
+          <select class="text-sm bg-white border border-gray-200 p-2.5 rounded w-full" name="improved" formControlName="improved">
+              <option ng-value="vision.desc" *ngFor="let vision of eye_vision_screen" [selected]="vision.desc == 'Both Eye'" [value]="vision.code">
+                {{vision.desc}}
+              </option>
+          </select>
+      </div>
+      <div class="text-sm col-start-10 col-span-3 w-full row-start-3 px-5 mt-2 mb-4">
+          <h1 class="mb-2">Aided</h1>
+          <select class="text-sm bg-white border border-gray-200 p-2.5 rounded w-full" name="aided" formControlName="aided">
+            <option ng-value="vision.desc" *ngFor="let vision of eye_vision_screen" [selected]="vision.desc == 'Both Eye'" [value]="vision.code">
+              {{vision.desc}}
+            </option>
+          </select>
+      </div>
+      <div class="text-sm col-start-1 col-span-12 w-full row-start-4 px-5 mt-2 mb-6">
+          <h1 class="mb-2">Refer to eyecare professional</h1>
+          <select class="text-sm bg-white border border-gray-200 p-2.5 rounded w-full" name="eye_refer_prof" formControlName="eye_refer_prof">
+            <option ng-value="refers.desc" *ngFor="let refers of eye_refer_prof" [selected]=" " [value]="refers.code">
+              {{refers.desc}}
+            </option>
+          </select>
+      </div>
+      <div class="justify-center"> <!-- [disabled]="riskAssessForm.invalid" -->
+        <button  type="submit" class="btn-save px-10 disabled:bg-gray-300" name="add-btn">
+          <fa-icon [icon]="is_saving ? faSpinner : faSave" [spin]="is_saving"></fa-icon>
+          {{ is_saving ? 'Saving' : 'Save'}}
+        </button>
+      </div>
     </div>
-
-    <div class="col-start-1 col-span-12 px-5 mt-4 mb-6">
-      <h4 class="font-bold">A. Eye Complaints (Check all applicable)</h4>
-    </div>
-
-      <div *ngFor="let eyes of eye" class="text-sm col-span-4 w-full px-5 mb-6">
-        <input type="checkbox" class="form-checkbox h-4 w-4 border-gray-400 text-blue-500 rounded-full"><span class="ml-1 align-middle"> {{eyes.desc}}</span>
-    </div>
-
-    <div class="text-sm col-start-1 col-span-12 w-full  px-5 mt-2 mb-6">
-        <h1 class="mb-2 font-semibold">Refer immediately to opthalmologist</h1>
-        <select class="text-sm bg-white border border-gray-200 p-2.5 rounded w-full" name="family_hx_hypertension">
-        <option ng-value="vision.desc" *ngFor="let opthals of opthal">
-        {{opthals.desc}}
-        </option>
-        </select>
-    </div>
-
-
-  </div>
-
   <div class="col-start-1 col-span-12 row-start-1 border-b-2 border-gray-300 mt-2 mb-2"></div>
-
-  <div class="grid grid-cols-12 flex item-start flex-wrap shadow-md rounded-xl mb-8 mt-8">
-
+  <div class="grid grid-cols-12 item-start flex-wrap shadow-md rounded-xl mb-8 mt-8">
     <div class="col-span-12 row-start-1 flex bg-blue-500 px-5 py-3 rounded-tl rounded-tr">
-      <h4 class="font-bold text-white text-md mt-2 mb-2">Vision Assessment</h4>
+      <h4 class="font-bold text-white text-md mt-2 mb-2">Vaccines</h4>
       <div class="">
         <fa-icon [icon]="faInfoCircle" class="peer text-white hover:text-white z-50 px-2"></fa-icon>
         <div
-            class="absolute text-sm bg-gradient-to-b from-stone-500 to-gray-400 p-2 rounded border border-gray-500  text-white drop-shadow-lg opacity-90 border-check z-50 w-60 invisible peer-hover:visible">
-            <h1 class="font-bold drop-shadow-lg">IMPORTANT</h1>
-            <p class="font-light drop-shadow-lg">Once saved, the information will be displayed in the input boxes
-                and shall not be editable unless Edit button is pressed.</p>
+          class="absolute text-sm bg-gradient-to-b from-stone-500 to-gray-400 p-2 rounded border border-gray-500  text-white drop-shadow-lg opacity-90 border-check z-50 w-60 invisible peer-hover:visible">
+          <h1 class="font-bold drop-shadow-lg">IMPORTANT</h1>
+          <p class="font-light drop-shadow-lg">Once saved, the information will be displayed in the input boxes
+            and shall not be editable unless Edit button is pressed.</p>
         </div>
+      </div>
     </div>
-    </div>
-
     <div class="col-start-1 col-span-12 row-start-2 px-5 mt-4 mb-4">
-      <h4 class="font-bold">B. Vision Screening</h4>
+      <h4 class="font-bold"></h4>
     </div>
-
     <div class="text-sm col-start-1 col-span-3 w-full row-start-3 px-5 mt-2 mb-4">
-        <h1 class="mb-2">Unaided</h1>
-        <select class="text-sm bg-white border border-gray-200 p-2.5 rounded w-full" name="family_hx_hypertension">
-        <option ng-value="vision.desc" *ngFor="let vision of vision_eye" [selected]="vision.desc == 'None'">
-        {{vision.desc}}
+      <h1 class="mb-2">Influenza (Flu Vaccine)</h1>
+      <select class="text-sm bg-white border border-gray-200 p-2.5 rounded w-full" name="unaided" formControlName="unaided">
+        <option ng-value="vision.desc" *ngFor="let vision of eye_vision_screen" [selected]="vision.desc == 'Both Eye'" [value]="vision.code">
+          {{vision.desc}}
         </option>
-        </select>
+      </select>
     </div>
-
     <div class="text-sm col-start-4 col-span-3 w-full row-start-3 px-5 mt-2 mb-4">
-        <h1 class="mb-2">Pinhole</h1>
-        <select class="text-sm bg-white border border-gray-200 p-2.5 rounded w-full" name="family_hx_hypertension">
-        <option ng-value="vision.desc" *ngFor="let vision of vision_eye" [selected]="vision.desc == 'None'">
-        {{vision.desc}}
+      <h1 class="mb-3">PPV </h1>
+      <select class="text-sm bg-white border border-gray-200 p-2.5 rounded w-full" name="pinhole" formControlName="pinhole">
+        <option ng-value="vision.desc" *ngFor="let vision of eye_vision_screen" [selected]="vision.desc == 'Both Eye'" [value]="vision.code">
+          {{vision.desc}}
         </option>
-        </select>
+      </select>
     </div>
-
-    <div class="text-sm col-start-7 col-span-3 w-full row-start-3 px-5 mt-2 mb-4">
-        <h1 class="mb-2">Improved</h1>
-        <select class="text-sm bg-white border border-gray-200 p-2.5 rounded w-full" name="family_hx_hypertension">
-        <option ng-value="vision.desc" *ngFor="let vision of vision_eye" [selected]="vision.desc == 'None'">
-        {{vision.desc}}
-        </option>
-        </select>
     </div>
-
-    <div class="text-sm col-start-10 col-span-3 w-full row-start-3 px-5 mt-2 mb-4">
-        <h1 class="mb-2">Aided</h1>
-        <select class="text-sm bg-white border border-gray-200 p-2.5 rounded w-full" name="family_hx_hypertension">
-        <option ng-value="vision.desc" *ngFor="let vision of vision_eye" [selected]="vision.desc == 'None'">
-        {{vision.desc}}
-        </option>
-        </select>
-    </div>
-
-    <div class="text-sm col-start-1 col-span-12 w-full row-start-4 px-5 mt-2 mb-6">
-        <h1 class="mb-2">Refer to eyecare professional</h1>
-        <select class="text-sm bg-white border border-gray-200 p-2.5 rounded w-full" name="family_hx_hypertension">
-        <option ng-value="refers.desc" *ngFor="let refers of refer" [selected]=" ">
-        {{refers.desc}}
-        </option>
-        </select>
-    </div>
-
-  </div>
+</form>

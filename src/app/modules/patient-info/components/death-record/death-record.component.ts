@@ -25,7 +25,7 @@ export class DeathRecordComponent {
   loadData(patient_id){
     this.http.get('mortality/record', {params:{patient_id: patient_id}}).subscribe({
       next: (data: any) => {
-        console.log(data)
+        // console.log(data)
         this.show_form = true;
         this.death = data.data[0];
         this.setDetails.emit({var_name: 'death_record', data: this.death});
