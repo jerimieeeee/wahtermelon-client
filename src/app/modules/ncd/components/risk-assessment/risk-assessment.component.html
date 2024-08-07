@@ -216,7 +216,7 @@
   </div>
 
   <div class="flex justify-end"> <!-- [disabled]="riskAssessForm.invalid" -->
-    <button  type="submit" class="btn-save px-10 disabled:bg-gray-300" name="add-btn">
+    <button  type="submit" class="btn-save px-10 disabled:bg-gray-300" name="add-btn" [disabled]="riskAssessForm.invalid">
       <fa-icon [icon]="is_saving ? faSpinner : faSave" [spin]="is_saving"></fa-icon>
       {{ is_saving ? 'Saving' : 'Save'}}
     </button>

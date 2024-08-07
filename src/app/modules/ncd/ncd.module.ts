@@ -13,17 +13,19 @@ import { RiskScreeningComponent } from './components/risk-screening/risk-screeni
 import { Casdt2Component } from './components/casdt2/casdt2.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EndVisitComponent } from 'app/shared/shared-modals/end-visit/end-visit.component';
+import {NgSelectModule} from "@ng-select/ng-select";
 
 
 @NgModule({
   declarations: [NcdComponent, RiskAssessmentComponent, RiskStratificationComponent, QuestionnaireComponent, PatientRecordComponent, CasdtComponent, RiskScreeningComponent, Casdt2Component],
-  imports: [
-    CommonModule,
-    FontAwesomeModule,
-    NcdRoutingModule,
-    FormsModule,
-    ReactiveFormsModule,
-    EndVisitComponent
-  ]
+    imports: [
+        CommonModule,
+        FontAwesomeModule,
+        NcdRoutingModule,
+        FormsModule,
+        ReactiveFormsModule,
+        EndVisitComponent,
+        NgSelectModule
+    ]
 })
 export class NcdModule { }

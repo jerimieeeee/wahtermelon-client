@@ -50,7 +50,7 @@ export class ServicesComponent implements OnInit {
   }
 
   createForm() {
-    this.dentalServiceForm = this.formBuilder.nonNullable.group({
+    this.dentalServiceForm = this.formBuilder.group({
       id: [''],
       consult_id: [this.selected_visit.id, [Validators.required]],
       patient_id: [this.selected_visit.patient.id, [Validators.required]],
