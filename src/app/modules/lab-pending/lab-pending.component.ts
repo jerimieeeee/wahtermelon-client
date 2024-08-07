@@ -1,41 +1,58 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { faEdit, faFlask, faFlaskVial, faXmark, faTrashCan, faPlus } from '@fortawesome/free-solid-svg-icons';
-// import { PatientInfoComponent } from 'app/components/patient-info/patient-info.component';
+import { Component, OnInit } from '@angular/core';
+import { faAnglesLeft, faAnglesRight, faChevronLeft, faChevronRight, faFlask, faFlaskVial, faPlus, faSearch, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { NameHelperService } from 'app/shared/services/name-helper.service';
 import { PatientInfoComponent } from '../patient-info/patient-info.component';
-import { eventSubscriber } from './emmitter.interface';
+import { faEdit, faTrashCan } from '@fortawesome/free-regular-svg-icons';
+
 @Component({
-  selector: 'app-lab',
-  templateUrl: './lab.component.html',
-  styleUrls: ['./lab.component.scss']
+  selector: 'app-lab-pending',
+  templateUrl: './lab-pending.component.html',
+  styleUrls: ['./lab-pending.component.scss']
 })
-export class LabComponent implements OnInit, OnDestroy {
+export class LabPendingComponent implements OnInit {
   faFlaskVial = faFlaskVial;
   faTrashCan = faTrashCan;
   faEdit = faEdit;
   faXmark = faXmark;
   faFlask = faFlask;
   faPlus = faPlus;
-
-  patient_details: any;
-  pending_list: any;
+  faSearch = faSearch;
+  faAnglesLeft = faAnglesLeft;
+  faAnglesRight = faAnglesRight;
+  faChevronLeft = faChevronLeft;
+  faChevronRight = faChevronRight;
 
   show_form: boolean = false;
+  patient_details: any;
+  pending_list: any[] = [];
 
-  loadData(){
-    // console.log('loaded labs')
-    let params = {
-      patient_id: this.patient_details.id,
-      sort: '-request_date',
-      include: 'laboratory',
-      per_page: 'all',
-      disable_filter: 1
-    }
-    this.http.get('laboratory/consult-laboratories', {params}).subscribe({
+  per_page: number = 10;
+  current_page: number;
+  last_page: number;
+  from: number;
+  to: number;
+  total: number;
+  search_item: string;
+
+  loadData(page?: number){
+    let params = {params: { }};
+    // if (this.search_item) params['params']['filter[search]'] = this.search_item;
+    if (page) params['params']['page'] = page;
+    params['params']['per_page'] = this.per_page;
+    params['params']['include'] = 'laboratory';
+    params['params']['sort'] = 'request_date';
+    params['params']['list_type'] = 'pending';
+
+    this.http.get('laboratory/consult-laboratories', params).subscribe({
       next: (data: any) => {
         this.pending_list = data.data
-        // console.log(this.pending_list)
+
+        this.current_page = data.meta.current_page;
+        this.last_page = data.meta.last_page;
+        this.from = data.meta.from;
+        this.to = data.meta.to;
+        this.total = data.meta.total;
         this.show_form = true;
       },
       error: err => console.log(err)
@@ -60,11 +77,12 @@ export class LabComponent implements OnInit, OnDestroy {
   delete_id: string;
   delete_desc: string = 'Laboratory';
   url: string = 'laboratory/consult-laboratories/'
-  toggleModal(form, lab?){
+  toggleModal(form, lab?, patient?){
     this.selected_lab = lab;
 
     if(this.selected_lab){
       if(form === 'add') {
+        this.patient_details = patient;
         if(lab && lab.laboratory.code === 'CXRAY') {
           if(!this.lab_cxray_findings || !this.lab_cxray_observation) {
             this.loadCxrayLib(form);
@@ -280,23 +298,29 @@ export class LabComponent implements OnInit, OnDestroy {
 
   constructor(
     private http: HttpService,
-    private patientInfo: PatientInfoComponent,
-    private nameHelper: NameHelperService
-  ) {
-    this.loadData = this.loadData.bind(this);
-    eventSubscriber(patientInfo.reloadLabs, this.loadData)
+  ) { }
+
+
+
+  getDataDiff(request_date): string {
+    let endDate = new Date();
+    let startDate = new Date(request_date);
+    var diff = endDate.getTime() - startDate.getTime();
+    var days = Math.floor(diff / (60 * 60 * 24 * 1000));
+    // var hours = Math.floor(diff / (60 * 60 * 1000)) - (days * 24);
+    // var minutes = Math.floor(diff / (60 * 1000)) - ((days * 24 * 60) + (hours * 60));
+
+    let duration_day = days ? days + ' days': '';;
+    // let duration_hours = hours ? hours + ' hours': '';
+    // let duration_minutes = minutes ? minutes + ' minutes': '';
+    return duration_day;//+' '+duration_hours+' '+duration_minutes;
   }
 
   user_facility: string;
-
   ngOnInit(): void {
     this.user_facility = this.http.getUserFacility();
     this.loadLabStatusLib();
-    this.patient_details = this.http.getPatientInfo();
     this.loadData();
   }
 
-  ngOnDestroy(): void {
-    eventSubscriber(this.patientInfo.reloadNCDVitals, this.loadData, true);
-  }
 }

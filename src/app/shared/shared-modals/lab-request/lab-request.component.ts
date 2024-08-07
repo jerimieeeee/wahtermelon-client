@@ -48,7 +48,7 @@ export class LabRequestComponent implements OnChanges{
         this.http.get('libraries/laboratories').subscribe({
           next: (data: any) => {
             this.lab_list = data.data;
-            // console.log(this.lab_list);
+            console.log(this.lab_list);
             Object.entries(this.lab_list).forEach(([key, value], index) => {
               let val: any = value;
               // console.log(val)

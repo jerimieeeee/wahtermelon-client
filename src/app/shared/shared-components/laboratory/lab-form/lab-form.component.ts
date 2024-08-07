@@ -1,11 +1,16 @@
-import { formatDate } from '@angular/common';
+import { CommonModule, formatDate } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { faSave, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { FormsModule } from '@angular/forms';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faSave } from '@fortawesome/free-regular-svg-icons';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { NameHelperService } from 'app/shared/services/name-helper.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
+  standalone: true,
+  imports: [CommonModule, FontAwesomeModule, FormsModule],
   selector: 'app-lab-form',
   templateUrl: './lab-form.component.html',
   styleUrls: ['./lab-form.component.scss']
@@ -206,9 +211,6 @@ export class LabFormComponent implements OnChanges {
   ) { }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(this.selected_lab);
-    console.log(this.patient_details);
-    this.loadForm()
+    this.loadForm();
   }
-
 }

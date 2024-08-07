@@ -6,6 +6,7 @@ import { QuestionnaireComponent } from './components/questionnaire/questionnaire
 import { RiskAssessmentComponent } from './components/risk-assessment/risk-assessment.component';
 import { PatientRecordComponent } from './components/patient-record/patient-record.component';
 import { CasdtComponent } from './components/casdt/casdt.component';
+import {Casdt2Component} from "./components/casdt2/casdt2.component";
 
 const routes: Routes = [{ path: '', component: NcdComponent },
 { path: 'risk-stratification', component: RiskStratificationComponent },
@@ -13,6 +14,7 @@ const routes: Routes = [{ path: '', component: NcdComponent },
 { path: 'questionnaire', component: QuestionnaireComponent },
 { path: 'patient-record', component: PatientRecordComponent },
 { path: 'casdt', component: CasdtComponent },
+{ path: 'casdt2', component: Casdt2Component },
 ];
 
 @NgModule({

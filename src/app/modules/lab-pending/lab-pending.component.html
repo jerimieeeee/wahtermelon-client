@@ -1,0 +1,121 @@
+
+<div class="my-10  flex justify-center w-full">
+
+  <div class="w-4/5 bg-white border border-solid border-slate-100 rounded-xl shadow-md">
+    <div class="border border-solid border-slate-100 rounded-t-xl font-semibold justify-between">
+      <div class="flex border border-solid border-slate-100 rounded-t-xl p-3 font-semibold justify-between">
+        <div class="text-blue-500 text-lg pt-2 pl-5">
+          Pending Laboratories
+        </div>
+        <!-- <div class="border border-gray-400 rounded-md">
+          <input type="text" [(ngModel)]="search_item" class="form-input border-0 text-sm p-1 m-1 border-r border-gray-400" (keyup.enter)="loadData()" placeholder="Search name"/>
+          <button type="button" class="text-blue-500 w-9 h-9" (click)="loadData()">
+            <fa-icon class="-ml-1" [icon]="faSearch"></fa-icon>
+          </button>
+        </div> -->
+      </div>
+
+      <div>
+        <div class="overflow-x-auto relative shadow-md sm:rounded-lg">
+          <table class="w-full text-sm text-left text-gray-500 mb-5">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+              <tr>
+                <th scope="col" class="py-3 px-6 w-4/12 text-center">Patient Name</th>
+                <th scope="col" class="py-3 px-6 w-2/12 text-center">Lab Type</th>
+                <th scope="col" class="py-3 px-6 w-2/12 text-center">Date Requested</th>
+                <th scope="col" class="py-3 px-6 w-3/12 text-center">Time Elapsed</th>
+                <th scope="col" class="py-3 px-6 w-2/12 text-center">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let pending of pending_list" class="bg-white border-t">
+                <th scope="row" class="py-4 px-6 font-medium text-gray-900 align-top">
+                  {{ pending.patient.last_name }}, {{ pending.patient.first_name }} {{ pending.patient.middle_name }} {{ pending.patient.suffix_name !== 'NA' ? pending.patient.suffix_name : '' }}
+                </th>
+                <td class="py-4 px-6">
+                  {{ pending.laboratory.desc }}
+                </td>
+                <td class="py-4 px-6 text-center">
+                  {{ pending.request_date | date: 'MM/dd/yyyy'}}
+                </td>
+                <td class="py-4 px-6 text-center">
+                  {{ getDataDiff(pending.request_date) }}
+                </td>
+                <td class="py-4 px-6 text-center text-xs">
+                  <fa-icon *ngIf="pending.lab_result && pending.request_status_code !== 'RF'" (click)="toggleModal('add', pending, pending.patient)" size="lg" class="mx-0 my-0 text-green-600 hover:cursor-pointer flex-none mr-2" [icon]="faFlask"></fa-icon>
+                  <fa-icon *ngIf="!pending.lab_result && pending.request_status_code !== 'RF'" (click)="toggleModal('add', pending, pending.patient)" size="lg" class="mx-0 my-0 text-orange-400 hover:cursor-pointer flex-none mr-2" [icon]="faFlask"></fa-icon>
+                  <fa-icon *ngIf="pending.request_status_code === 'RF'" (click)="toggleModal('add', pending, pending.patient)" size="lg" class="mx-0 my-0 text-red-500 hover:cursor-pointer flex-none mr-2" [icon]="faFlask"></fa-icon>
+                  <!-- <fa-icon *ngIf="user_facility === pending.facility_code" (click)="toggleModal('delete-item', pending, pending.patient)" size="lg" class="mx-0 my-0 text-red-500 hover:cursor-pointer flex-none mr-2" [icon]="faTrashCan"></fa-icon> -->
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="pending_list?.length >= 1">
+      <div class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
+        <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+          <div>
+            <p class="text-sm text-gray-700">
+              Showing <span class="font-medium">{{ from }}</span>
+              to <span class="font-medium">{{ to }}</span>
+              of <span class="font-medium">{{ total }}</span> results
+            </p>
+          </div>
+          <div>
+            <nav class="relative z-0 inline-flex shadow-sm -space-x-px" aria-label="Pagination">
+              <button [disabled]="current_page===1" (click)="loadData(1)" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 enabled:bg-white disabled:bg-gray-300 text-sm font-medium text-gray-500 hover:bg-gray-50">
+                <fa-icon [icon]="faAnglesLeft" class="block h-15 w-15 text-gray-500 pr-1"></fa-icon>
+              </button>
+
+                <button [disabled]="current_page===1" (click)="loadData(current_page-1)" class="relative inline-flex items-center px-4 py-2 border border-gray-300 enabled:bg-white disabled:bg-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
+                  <fa-icon [icon]="faChevronLeft" class="block h-15 w-15 text-gray-500 pr-1"></fa-icon>Previous
+                </button>
+                <button [disabled]="current_page===last_page" (click)="loadData(current_page+1)" class="relative inline-flex items-center px-4 py-2 border border-gray-300 enabled:bg-white disabled:bg-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
+                  Next<fa-icon [icon]="faChevronRight" class="h-5 w-5 text-gray-500"></fa-icon>
+                </button>
+
+              <button [disabled]="current_page===last_page" (click)="loadData(last_page)" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 enabled:bg-white disabled:bg-gray-300 text-sm font-medium text-gray-500 hover:bg-gray-50">
+                <fa-icon [icon]="faAnglesRight" class="h-5 w-5 text-gray-500"></fa-icon>
+              </button>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-delete-item *ngIf="modal['delete-item']"
+  [delete_id]="delete_id"
+  [delete_desc]="delete_desc"
+  [url]="url"
+  [user_facility]="user_facility"
+  (toggleModal)="toggleModal($event)"></app-delete-item>
+
+<app-lab-form *ngIf="modal['add']"
+  (toggleModal)="toggleModal($event)"
+  (cancelModal)="cancelModal($event)"
+  [selected_lab]="selected_lab"
+  [patient_details]="patient_details"
+  [lab_statuses]="lab_statuses"
+  [lab_cxray_observation]="lab_cxray_observation"
+  [lab_cxray_findings]="lab_cxray_findings"
+  [lab_findings]="lab_findings"
+  [lab_result_pn]="lab_result_pn"
+  [lab_sputum_collection]="lab_sputum_collection"
+  [lab_stool_blood]="lab_stool_blood"
+  [lab_stool_color]="lab_stool_color"
+  [lab_stool_consistency]="lab_stool_consistency"
+  [user_facility]="user_facility"
+  [for_history]="for_history"
+  [lab_biopsy_type]="lab_biopsy_type"
+  [lab_ultrasound_type]="lab_ultrasound_type"
+  [lab_syphilis_method]="lab_syphilis_method"
+  [blood_types]="blood_types"
+  [lab_malaria_parasite]="lab_malaria_parasite"
+  [lab_gene_rif]="lab_gene_rif"
+  [lab_gene_mtb]="lab_gene_mtb"
+></app-lab-form>
