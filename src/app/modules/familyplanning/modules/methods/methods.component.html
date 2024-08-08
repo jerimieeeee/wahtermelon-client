@@ -91,7 +91,7 @@
     </div>
 
     <div>
-      <button *ngIf="fp_visit_history.method !== null" (click)="toggleModal('methods-modal')" [disabled]="is_saving" type="submit" class="btn-cancel mr-5 mt-4">
+      <button *ngIf="fp_visit_history.method !== null" (click)="toggleModal('methods-modal')" [disabled]="is_saving" type="submit" class="btn-cancel bg-rose-500 mr-5 mt-4">
         <fa-icon [icon]="is_saving ? faSpinner : faSave" [spin]="is_saving ? true : false" class="mr-2"></fa-icon>
         Dropout
       </button>
