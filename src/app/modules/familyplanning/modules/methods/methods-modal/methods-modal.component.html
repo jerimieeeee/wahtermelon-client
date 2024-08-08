@@ -14,12 +14,12 @@
           <div class="col-span-4 px-10 pt-2.5">
             <label for="case_number" class="text-sm font-semibold">Dropout Date</label>
             <input type="date" name="droupout_date" id="droupout_date"  class="input" formControlName="dropout_date">
-    
+
             <!-- <div *ngIf="show_error && f.case_number.errors" class="invalid-alert">
               <div *ngIf="f.case_number.errors?.['required']">
                 {{ required_message }}
               </div> -->
-    
+
               <!-- <div *ngIf="f.case_number.errors?.['pattern']">
                 Only letters and numbers are allowed.
               </div> -->
@@ -44,12 +44,12 @@
           <div class="col-span-12 px-10 pt-2.5">
             <label for="case_number" class="text-sm font-semibold">Remarks</label>
             <input type="text" name="remarks" id="remarks"  class="input" formControlName="dropout_remarks">
-    
+
             <!-- <div *ngIf="show_error && f.case_number.errors" class="invalid-alert">
               <div *ngIf="f.case_number.errors?.['required']">
                 {{ required_message }}
               </div> -->
-    
+
               <!-- <div *ngIf="f.case_number.errors?.['pattern']">
                 Only letters and numbers are allowed.
               </div> -->
@@ -59,7 +59,7 @@
 
       <!-- Modal footer -->
       <div class="flex justify-end py-4 px-5 space-x-4 rounded-b border-t border-gray-200">
-        <button type="button" class="btn-save bg-red-500" (click)="closeModal()" >Close</button>
+        <button type="button" class="btn-cancel" (click)="closeModal()" >Close</button>
         <button [disabled]="dropForm.invalid || is_saving" type="submit" class="btn-save px-10 disabled:bg-gray-300" (click)="onSubmit()" >
           <fa-icon></fa-icon>
          Save

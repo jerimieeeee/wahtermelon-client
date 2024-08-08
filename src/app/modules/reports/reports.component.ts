@@ -41,7 +41,6 @@ export class ReportsComponent implements OnInit {
   other_stats = [
     { id: 'patient-registered', desc: 'Patient Registered', url: 'reports-2018/user/patient-registered'},
     { id: 'feedback', desc: 'Client Feedback', url: 'reports-2018/feedback/report'},
-    // { id: 'fhsis2018-mc', desc: 'Maternal Care', url: 'reports-2018/maternal-care/m1'},
   ]
 
   ab_stats = [
@@ -53,10 +52,6 @@ export class ReportsComponent implements OnInit {
   gbv_stats = [
     { id: 'gbv-report', desc: 'GBV Report', url: 'gbv-report/catalyst-report'},
   ]
-
-  // diagnosis_stats = [
-  //   { id: 'morbidity-report', desc: 'Morbidity Report', url: 'reports-2018/morbidity/report'},
-  // ];
 
   household_stats = [
     { id: 'profiling-report', desc: 'Profiling', url: 'reports-2018/household-profiling/report'},

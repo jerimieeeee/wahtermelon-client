@@ -5,12 +5,15 @@
       <label for="report_type" class="input-label" >Report</label>
       <select id="report_type" name="report_type" class="input" formControlName="report_type" (change)="changeDateOptions()">
         <option selected="true" disabled="disabled">Select report type</option>
+
         <optgroup label="Daily Service Report" class="text-gray-500" >
           <option *ngFor="let type of daily_service" [ngValue]="type">{{ type.desc }}</option>
         </optgroup>
+
         <optgroup label="FHSIS Report" class="text-gray-500" >
           <option *ngFor="let type of fhsis2018" [ngValue]="type">{{ type.desc }}</option>
         </optgroup>
+
         <optgroup label="Household Profiling" class="text-gray-500" >
           <option *ngFor="let type of household_stats" [ngValue]="type">{{ type.desc }}</option>
         </optgroup>
@@ -18,19 +21,10 @@
         <optgroup label="Animal Bite Report" class="text-gray-500" >
           <option *ngFor="let type of ab_stats" [ngValue]="type">{{ type.desc }}</option>
         </optgroup>
-<!--        <optgroup label="Diagnosis" class="text-gray-500" >-->
-<!--          <option *ngFor="let type of diagnosis_stats" [ngValue]="type">{{ type.desc }}</option>-->
-<!--        </optgroup>-->
-        <optgroup label="Usage Statistics" class="text-gray-500" >
-<!--        <optgroup label="Diagnosis" class="text-gray-500" >-->
-<!--          <option *ngFor="let type of diagnosis_stats" [ngValue]="type">{{ type.desc }}</option>-->
-<!--        </optgroup>-->
+
         <optgroup label="Others" class="text-gray-500" >
           <option *ngFor="let type of other_stats" [ngValue]="type">{{ type.desc }}</option>
         </optgroup>
-<!--        <optgroup label="GBV Report" class="text-gray-500" >-->
-<!--          <option *ngFor="let type of gbv_stats" [ngValue]="type">{{ type.desc }}</option>-->
-<!--        </optgroup>-->
       </select>
     </div>
 
@@ -107,8 +101,6 @@
     </div>
     <!-- END BRGY -->
 
-
-
     <div class="w-40" *ngIf="reportForm.value.report_type && f['month'].enabled">
       <label for="start_date" class="input-label">Month</label>
       <select id="month" name="month" class="input" formControlName="month">
@@ -141,16 +133,61 @@
   </form>
 
   <div class="border border-slate-300 rounded-xl px-5">
-    <app-fhsis2018-cc *ngIf="reportForm.value?.report_type.id === 'fhsis2018-cc' && report_data && !is_fetching" [report_data]="report_data" [reportForm]="reportForm" [selectedBrgy]="selectedBrgy" [brgys]="brgys" [userInfo]="userInfo" ></app-fhsis2018-cc>
-    <app-fhsis2018-mc *ngIf="reportForm.value?.report_type.id === 'fhsis2018-mc' && report_data && !is_fetching" [report_data]="report_data" [reportForm]="reportForm" [selectedBrgy]="selectedBrgy" [brgys]="brgys" [userInfo]="userInfo" ></app-fhsis2018-mc>
-    <app-fhsis2018-tb *ngIf="reportForm.value?.report_type.id === 'fhsis2018-tb' && report_data && !is_fetching" [report_data]="report_data" [reportForm]="reportForm" [selectedBrgy]="selectedBrgy" [brgys]="brgys" [userInfo]="userInfo" ></app-fhsis2018-tb>
-    <app-fhsis2018-ncd *ngIf="reportForm.value?.report_type.id === 'fhsis2018-ncd' && report_data && !is_fetching" [report_data]="report_data" [reportForm]="reportForm" [selectedBrgy]="selectedBrgy" [brgys]="brgys" [userInfo]="userInfo" ></app-fhsis2018-ncd>
-    <app-fhsis2018-fp *ngIf="reportForm.value?.report_type.id === 'fhsis2018-fp' && report_data && !is_fetching" [report_data]="report_data" [reportForm]="reportForm" [selectedBrgy]="selectedBrgy" [brgys]="brgys" [userInfo]="userInfo" [submit_flag]="submit_flag"></app-fhsis2018-fp>
-    <app-fhsis2018-morbidity *ngIf="reportForm.value?.report_type.id === 'fhsis2018-morbidity' && report_data && !is_fetching" [report_data]="report_data" [reportForm]="reportForm" [selectedBrgy]="selectedBrgy" [brgys]="brgys" [userInfo]="userInfo"></app-fhsis2018-morbidity>
+    <app-fhsis2018-cc *ngIf="reportForm.value?.report_type.id === 'fhsis2018-cc' && report_data && !is_fetching"
+      [report_data]="report_data"
+      [reportForm]="reportForm"
+      [selectedBrgy]="selectedBrgy"
+      [brgys]="brgys"
+      [userInfo]="userInfo"
+    ></app-fhsis2018-cc>
 
-    <app-patient-registered *ngIf="reportForm.value?.report_type.id === 'patient-registered' && report_data && !is_fetching" [report_data]="report_data"></app-patient-registered>
-<!--    <app-catalyst-report *ngIf="reportForm.value?.report_type.id === 'gbv-report' && report_data && !is_fetching" [report_data]="report_data"></app-catalyst-report>-->
-    <app-household-profiling *ngIf="reportForm.value?.report_type.id === 'profiling-report' && report_data && !is_fetching" [report_data]="report_data"></app-household-profiling>
+    <app-fhsis2018-mc *ngIf="reportForm.value?.report_type.id === 'fhsis2018-mc' && report_data && !is_fetching"
+      [report_data]="report_data"
+      [reportForm]="reportForm"
+      [selectedBrgy]="selectedBrgy"
+      [brgys]="brgys"
+      [userInfo]="userInfo"
+    ></app-fhsis2018-mc>
+
+    <app-fhsis2018-tb *ngIf="reportForm.value?.report_type.id === 'fhsis2018-tb' && report_data && !is_fetching"
+      [report_data]="report_data"
+      [reportForm]="reportForm"
+      [selectedBrgy]="selectedBrgy"
+      [brgys]="brgys"
+      [userInfo]="userInfo"
+    ></app-fhsis2018-tb>
+
+    <app-fhsis2018-ncd *ngIf="reportForm.value?.report_type.id === 'fhsis2018-ncd' && report_data && !is_fetching"
+      [report_data]="report_data"
+      [reportForm]="reportForm"
+      [selectedBrgy]="selectedBrgy"
+      [brgys]="brgys"
+      [userInfo]="userInfo"
+    ></app-fhsis2018-ncd>
+
+    <app-fhsis2018-fp *ngIf="reportForm.value?.report_type.id === 'fhsis2018-fp' && report_data && !is_fetching"
+      [report_data]="report_data"
+      [reportForm]="reportForm"
+      [selectedBrgy]="selectedBrgy"
+      [brgys]="brgys"
+      [userInfo]="userInfo"
+      [submit_flag]="submit_flag"
+    ></app-fhsis2018-fp>
+
+    <app-fhsis2018-morbidity *ngIf="reportForm.value?.report_type.id === 'fhsis2018-morbidity' && report_data && !is_fetching"
+      [report_data]="report_data"
+      [reportForm]="reportForm"
+      [selectedBrgy]="selectedBrgy"
+      [brgys]="brgys" [userInfo]="userInfo"
+    ></app-fhsis2018-morbidity>
+
+    <app-patient-registered *ngIf="reportForm.value?.report_type.id === 'patient-registered' && report_data && !is_fetching"
+      [report_data]="report_data"
+    ></app-patient-registered>
+
+    <app-household-profiling *ngIf="reportForm.value?.report_type.id === 'profiling-report' && report_data && !is_fetching"
+      [report_data]="report_data"
+    ></app-household-profiling>
 
     <app-daily-service *ngIf="reportForm.value?.report_type.id === 'daily-service' && report_data && !is_fetching"
       [report_data]="report_data"
@@ -205,5 +242,3 @@
     </div>
   </div>
 </div>
-
-<!-- <app-fhsis2018-cc [reportForm.value]="reportForm.value"></app-fhsis2018-cc> -->
