@@ -68,7 +68,7 @@ export class Casdt2Component implements OnInit {
       patient_ncd_id: [this.consult_details.patient_ncd_id, [Validators.required]],
       consult_id: [this.consult_details.consult_id, [Validators.required]],
       patient_id: [this.consult_details.patient_id, [Validators.required]],
-      casdt: this.formBuilder.array([]), // Initialize as empty FormArray
+      complaint: this.formBuilder.array([]), // Initialize as empty FormArray
       eye_refer: [null, Validators.required],
       unaided: [null, Validators.required],
       pinhole: [null, Validators.required],
@@ -80,7 +80,7 @@ export class Casdt2Component implements OnInit {
 
   // Method to add eye_complaint item to the casdt FormArray
   addEyeComplaint(value: string) {
-    const casdtArray = this.casdt2Forms.get('casdt') as FormArray;
+    const casdtArray = this.casdt2Forms.get('complaint') as FormArray;
     casdtArray.push(this.formBuilder.group({
       eye_complaint: [value]
     }));
@@ -88,7 +88,7 @@ export class Casdt2Component implements OnInit {
 
   // Method to remove eye_complaint item from the casdt FormArray
   removeEyeComplaint(index: number) {
-    const casdtArray = this.casdt2Forms.get('casdt') as FormArray;
+    const casdtArray = this.casdt2Forms.get('complaint') as FormArray;
     casdtArray.removeAt(index);
   }
 
@@ -97,7 +97,7 @@ export class Casdt2Component implements OnInit {
     if (isChecked) {
       this.addEyeComplaint(value);
     } else {
-      const index = (this.casdt2Forms.get('casdt') as FormArray).controls.findIndex(
+      const index = (this.casdt2Forms.get('complaint') as FormArray).controls.findIndex(
         control => control.value.eye_complaint === value
       );
       if (index !== -1) {
