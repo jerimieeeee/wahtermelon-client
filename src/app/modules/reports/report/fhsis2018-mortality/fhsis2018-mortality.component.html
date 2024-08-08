@@ -1,1 +1,173 @@
-<p>fhsis2018-mortality works!</p>
+<div class="grid grid-cols-1 w-full">
+  <div class="flex justify-between w-full text-blue-500 font-semibold text-lg  p-3" >
+    <span>FHSIS Report - TB Dots</span>
+    <span>
+      <!-- <fa-icon *ngIf="exporting" [icon]="faCircleNotch" spin="true" class="text-blue-500 text-sm mr-3">Exporting...</fa-icon> -->
+      <button [disabled]="pdf_exported" type="button" class="text-2xl mr-5 text-red-600 disabled:text-gray-600" (click)="exportP()">
+        <fa-icon [icon]="faFilePdf"></fa-icon>
+      </button>
+      <button  type="button" class="text-2xl" (click)="exportX()">
+        <fa-icon [icon]="faFileExcel" class="text-green-700"></fa-icon>
+      </button>
+    </span>
+  </div>
+  <div class="flex flex-col pb-5">
+    <div class="sm:-mx-6 lg:-mx-8">
+      <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
+        <div class="">
+          <table class="min-w-full border select-none" id="reportForm">
+            <thead class="border-b">
+              <tr>
+                <th colspan="1" class="text-sm font-medium text-gray-900 px-6 py-4 border">
+                  <img src="./assets/img/DOH_Logo.png" class="rounded-full w-28 h-28 mx-auto" />
+                </th>
+                <th colspan="7" class="text-sm font-medium text-gray-900 px-6 py-4 border text-left align-top">
+                    FHSIS Report for the Month: {{this.convertedMonth}} <br />
+                    Name of Barangay: <br />
+                    Name of BHS: <br />
+                    Name of Municipality/City: <br />
+                    Name of Province: <br />
+                    Projected Population for the Year: <br />
+                    Year: {{this.reportform_data.value.year}}
+                </th>
+                <!-- <th class="relative text-sm w-2/12 font-medium text-gray-900 px-6 py-4 border align-top text-left">
+                    Year: {{this.reportform_data.value.year}}
+                </th> -->
+                <th colspan="2"  class="text-sm font-bold text-gray-900 px-6 py-4 border text-center w-2/12">
+                  <img src="./assets/img/m1.png" class="mx-auto" />
+                </th>
+              </tr>
+              <tr class="text-center sticky top-0 bg-gray-200">
+                <th colspan="5" class="text-sm font-semibold text-gray-900 px-6 py-4 border-r">
+                  SECTION H. Mortality
+                </th>
+                <th colspan="5" class="text-sm font-semibold text-gray-900 px-6 py-4 border-r">
+                  SECTION I. Natality
+                </th>
+              </tr>
+              <tr>
+                <th>
+                  Indicators <br />
+                  <span class="text-sm font-normal">(col. 1)</span>
+                </th>
+                <th>
+                  Male <br />
+                  <span class="text-sm font-normal">(col. 2)</span>
+                </th>
+                <th>
+                  Female <br />
+                  <span class="text-sm font-normal">(col. 3)</span>
+                </th>
+                <th>
+                  Total <br />
+                  <span class="text-sm font-normal">(col. 4)</span>
+                </th>
+                <th>
+                  Remarks <br />
+                  <span class="text-sm font-normal">(col. 5)</span>
+                </th>
+                <th>
+                  Indicators <br />
+                  <span class="text-sm font-normal">(col. 1)</span>
+                </th>
+                <th>
+                  Male <br />
+                  <span class="text-sm font-normal">(col. 2)</span>
+                </th>
+                <th>
+                  Female <br />
+                  <span class="text-sm font-normal">(col. 3)</span>
+                </th>
+                <th>
+                  Total <br />
+                  <span class="text-sm font-normal">(col. 4)</span>
+                </th>
+                <th>
+                  Remarks <br />
+                  <span class="text-sm font-normal">(col. 5)</span>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1. Total Deaths</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td></td>
+                <td>1. Livebirth - Total</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>2. Maternal Deaths - Total</td>
+                <td colspan="2"></td>
+                <td>-</td>
+                <td></td>
+                <td>a. Livebirth - Total</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td></td>
+              </tr>
+
+              <tr>
+                <td>3. Under-five Deaths - Total</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td></td>
+                <td colspan="5" rowspan="6"></td>
+              </tr>
+
+              <tr>
+                <td>4. Infant Deaths - Total</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td></td>
+              </tr>
+
+              <tr>
+                <td>5. Neonatal Deaths - Total</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td></td>
+              </tr>
+
+              <tr>
+                <td>6. Fetal Deaths - Total</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td></td>
+              </tr>
+
+              <tr>
+                <td>7. Early Neonatal Deaths - Total</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td></td>
+              </tr>
+
+              <tr>
+                <td>8. Perinatal Deaths - Total</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<app-name-list *ngIf="openList" (toggleModal)="toggleModal()" [name_list]="name_list"></app-name-list>

@@ -34,14 +34,14 @@ export class ReportsComponent implements OnInit {
     { id: 'fhsis2018-tb', desc: 'TB Dots', url: 'reports-2018/tb-dots/m1'},
     { id: 'fhsis2018-morbidity', desc: 'Morbidity', url: 'reports-2018/morbidity/report'},
     { id: 'fhsis2018-dental-m1', desc: 'Dental', url: 'reports-2018/dental/m1'},
-    // { id: 'fhsis2018-mortality', desc: 'Mortality and Natality', url: 'reports-2018/dental/m1'},
+    { id: 'fhsis2018-mortality', desc: 'Mortality and Natality', url: 'reports-2018/household-environmental/m1'},
     { id: 'fhsis2018-environmental', desc: 'Environmental and Sanitation', url: 'reports-2018/household-environmental/m1'},
-  ]
+  ];
 
   other_stats = [
     { id: 'patient-registered', desc: 'Patient Registered', url: 'reports-2018/user/patient-registered'},
     { id: 'feedback', desc: 'Client Feedback', url: 'reports-2018/feedback/report'},
-  ]
+  ];
 
   ab_stats = [
     // { id: 'ab-report', desc: 'Animal Bite', url: 'reports-2018/animal-bite/patient-registered'},
@@ -112,7 +112,7 @@ export class ReportsComponent implements OnInit {
     },
   ];
 
-  fhsis_monthly_arr = ['fhsis2018-environmental', 'fhsis2018-cc', 'fhsis2018-mc', 'fhsis2018-tb', 'fhsis2018-ncd', 'fhsis2018-fp', 'fhsis2018-dental-m1', 'patient-registered']
+  fhsis_monthly_arr = ['fhsis2018-mortality', 'fhsis2018-environmental', 'fhsis2018-cc', 'fhsis2018-mc', 'fhsis2018-tb', 'fhsis2018-ncd', 'fhsis2018-fp', 'fhsis2018-dental-m1', 'patient-registered']
   report_params: any;
   years: any = [];
   selectedBrgy: [];
