@@ -35,7 +35,7 @@ export class ReportsComponent implements OnInit {
     { id: 'fhsis2018-morbidity', desc: 'Morbidity', url: 'reports-2018/morbidity/report'},
     { id: 'fhsis2018-dental-m1', desc: 'Dental', url: 'reports-2018/dental/m1'},
     // { id: 'fhsis2018-mortality', desc: 'Mortality and Natality', url: 'reports-2018/dental/m1'},
-    // { id: 'fhsis2018-environmental', desc: 'Environmental and Sanitation', url: 'reports-2018/dental/m1'},
+    { id: 'fhsis2018-environmental', desc: 'Environmental and Sanitation', url: 'reports-2018/household-environmental/m1'},
   ]
 
   other_stats = [
@@ -112,7 +112,7 @@ export class ReportsComponent implements OnInit {
     },
   ];
 
-  fhsis_monthly_arr = ['fhsis2018-cc', 'fhsis2018-mc', 'fhsis2018-tb', 'fhsis2018-ncd', 'fhsis2018-fp', 'fhsis2018-dental-m1', 'patient-registered']
+  fhsis_monthly_arr = ['fhsis2018-environmental', 'fhsis2018-cc', 'fhsis2018-mc', 'fhsis2018-tb', 'fhsis2018-ncd', 'fhsis2018-fp', 'fhsis2018-dental-m1', 'patient-registered']
   report_params: any;
   years: any = [];
   selectedBrgy: [];
@@ -145,6 +145,7 @@ export class ReportsComponent implements OnInit {
 
     this.http.get(this.reportForm.value.report_type.url, {params}).subscribe({
       next: (data: any) => {
+        console.log(data)
         this.report_data = data;
         this.is_fetching = false;
         this.submit_flag = true;

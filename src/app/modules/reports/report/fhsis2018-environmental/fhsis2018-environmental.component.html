@@ -1,0 +1,168 @@
+<div class="grid grid-cols-1 w-full">
+  <div class="flex justify-between w-full text-blue-500 font-semibold text-lg  p-3" >
+    <span>FHSIS Report - TB Dots</span>
+    <span>
+      <!-- <fa-icon *ngIf="exporting" [icon]="faCircleNotch" spin="true" class="text-blue-500 text-sm mr-3">Exporting...</fa-icon> -->
+      <button [disabled]="pdf_exported" type="button" class="text-2xl mr-5 text-red-600 disabled:text-gray-600" (click)="exportP()">
+        <fa-icon [icon]="faFilePdf"></fa-icon>
+      </button>
+      <button  type="button" class="text-2xl" (click)="exportX()">
+        <fa-icon [icon]="faFileExcel" class="text-green-700"></fa-icon>
+      </button>
+    </span>
+  </div>
+  <div class="flex flex-col pb-5">
+    <div class="sm:-mx-6 lg:-mx-8">
+      <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
+        <div class="">
+          <table class="min-w-full border select-none" id="reportForm">
+            <thead class="border-b">
+              <tr>
+                <th colspan="1" class="text-sm font-medium text-gray-900 px-6 py-4 border">
+                  <img src="./assets/img/DOH_Logo.png" class="rounded-full w-28 h-28 mx-auto" />
+                </th>
+                <th colspan="3" class="text-sm font-medium text-gray-900 px-6 py-4 border text-left align-top">
+                    FHSIS Report for the Month: {{this.convertedMonth}} <br />
+                    Name of Barangay: <br />
+                    Name of BHS: <br />
+                    Name of Municipality/City: <br />
+                    Name of Province: <br />
+                    Projected Population for the Year: <br />
+                    Year: {{this.reportform_data.value.year}}
+                </th>
+                <!-- <th class="relative text-sm w-2/12 font-medium text-gray-900 px-6 py-4 border align-top text-left">
+                    Year: {{this.reportform_data.value.year}}
+                </th> -->
+                <th colspan="2"  class="text-sm font-bold text-gray-900 px-6 py-4 border text-center w-2/12">
+                  <img src="./assets/img/m1.png" class="mx-auto" />
+                </th>
+              </tr>
+              <tr class="text-center sticky top-0 bg-gray-200">
+                <th colspan="6" class="text-sm font-semibold text-gray-900 px-6 py-4 border-r">
+                  SECTION G. ENVIRONMENTAL HEALTH AND SANITATION SERVICES
+                </th>
+              </tr>
+              <tr>
+                <th class="w-3/12">
+                  Indicators <br />
+                  <span class="text-sm font-normal">(col. 1)</span>
+                </th>
+                <th class="w-1/12">
+                  Total <br />
+                  <span class="text-sm font-normal">(col. 2)</span>
+                </th>
+                <th class="w-2/12">
+                  Remarks <br />
+                  <span class="text-sm font-normal">(col. 3)</span>
+                </th>
+                <th class="w-3/12">
+                  Indicators <br />
+                  <span class="text-sm font-normal">(col. 1)</span>
+                </th>
+                <th class="w-1/12">
+                  Total <br />
+                  <span class="text-sm font-normal">(col. 2)</span>
+                </th>
+                <th class="w-2/12">
+                  Remarks <br />
+                  <span class="text-sm font-normal">(col. 3)</span>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+
+              </tr>
+              <tr>
+                <td class="p-5 border text-sm">1. No. of HH's w/ access to basic safety water supply - Total</td>
+                <td>{{ stats.water_level_all.length}}</td>
+                <td></td>
+                <td rowspan="2">4. No. of HH's using managed sanitation services - Total</td>
+                <td rowspan="2">-</td>
+                <td rowspan="2"></td>
+
+                <!-- <td class="p-5 border text-blue-500 text-center"   [class]=" stats?.indicator1_male?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.indicator1_male)">{{ stats?.indicator1_male?.length ?? 0}}</td>
+                <td class="p-5 border text-blue-500 text-center"   [class]=" stats?.indicator1_female?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.indicator1_female)">{{ stats?.indicator1_female?.length ?? 0}}</td>
+                <td class="p-5 border text-blue-500 text-center"   [class]=" stats?.indicator1_male.length !==0 || stats?.indicator1_female.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.indicator1_male, stats?.indicator1_female)">{{ stats?.indicator1_male?.length +  stats?.indicator1_female?.length }}</td> -->
+              </tr>
+
+              <tr>
+                <td class="p-5 border text-sm">a. No of HH's with Level I - Total</td>
+                <td>{{ stats.water_level1.length}}</td>
+                <td></td>
+              </tr>
+
+              <tr>
+                <td class="p-5 border text-sm">b. No of HH's with Level II - Total</td>
+                <td>{{ stats.water_level2.length}}</td>
+                <td></td>
+                <td>5. No. of HH's with satisfaction solid waste management - Total</td>
+                <td>-</td>
+                <td></td>
+              </tr>
+
+              <tr>
+                <td class="p-5 border text-sm">c. No of HH's with Level III - Total</td>
+                <td>{{ stats.water_level3.length}}</td>
+                <td></td>
+                <td>6. No. of HH's with complete sanitation facilities - Total</td>
+                <td>-</td>
+                <td></td>
+              </tr>
+
+              <tr>
+                <td class="p-5 border text-sm">2. No of HH's using the safety manged drinking water services</td>
+                <td>{{ stats.safety_managed_water.length}}</td>
+                <td></td>
+                <td>7. Total number of Industrial Establishment</td>
+                <td>-</td>
+                <td></td>
+              </tr>
+
+              <tr>
+                <td class="p-5 border text-sm">3. No of HH's with Basic Sanitation - Total</td>
+                <td>{{ stats.basic_sanitation_toilet_all.length}}</td>
+                <td></td>
+                <td>8. No. of Industrial Establishment issued with sanitary permit</td>
+                <td>-</td>
+                <td></td>
+              </tr>
+
+              <tr>
+                <td class="p-5 border text-sm">a. No. of HH's with pour/flush toilet connected to septic tank</td>
+                <td>{{ stats.basic_sanitation_toilet_a.length}}</td>
+                <td></td>
+                <td>9. Total number of Food Establishment</td>
+                <td>-</td>
+                <td></td>
+              </tr>
+
+              <tr>
+                <td class="p-5 border text-sm">b. No. of HH's with pour/flush toilet connected to Community
+                  sewer/sewerage system or any other approved treatment system - Total
+                </td>
+                <td>{{ stats.basic_sanitation_toilet_b.length}}</td>
+                <td></td>
+                <td>10. No. of Food Establishment issued with sanitary permit</td>
+                <td>-</td>
+                <td></td>
+              </tr>
+
+              <tr>
+                <td class="p-5 border text-sm">c. No. of HH's with ventilated improved of Pot Latrine (VIP) - Total</td>
+                <td>{{ stats.basic_sanitation_toilet_c.length}}</td>
+                <td></td>
+                <td>11. No. of Barangay decalre ZOD</td>
+                <td>{{ stats.zod_barangays.length}}</td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<app-name-list *ngIf="openList" (toggleModal)="toggleModal()" [name_list]="name_list"></app-name-list>

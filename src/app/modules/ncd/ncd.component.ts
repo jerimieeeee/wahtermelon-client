@@ -171,7 +171,6 @@ export class NcdComponent implements OnInit, OnDestroy {
     this.modules=1;
 
     this.patient_info = this.http.getPatientInfo();
-    console.log(this.patient_info)
 
     this.patient_id = this.route.snapshot.paramMap.get('id');
     this.consult_id = this.route.snapshot.paramMap.get('consult_id');

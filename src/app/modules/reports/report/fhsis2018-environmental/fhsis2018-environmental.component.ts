@@ -1,15 +1,13 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import { faCircleNotch, faFileExcel, faFilePdf } from '@fortawesome/free-solid-svg-icons';
-import { options } from 'app/modules/patient-registration/patient-registration.module';
 import { ExportAsConfig, ExportAsService } from 'ngx-export-as';
-import * as moment from 'moment';
 
 @Component({
-  selector: 'app-fhsis2018-tb',
-  templateUrl: './fhsis2018-tb.component.html',
-  styleUrls: ['./fhsis2018-tb.component.scss']
+  selector: 'app-fhsis2018-environmental',
+  templateUrl: './fhsis2018-environmental.component.html',
+  styleUrls: ['./fhsis2018-environmental.component.scss']
 })
-export class Fhsis2018TbComponent implements OnChanges {
+export class Fhsis2018EnvironmentalComponent implements OnChanges{
   @Input() report_data;
   @Input() reportForm;
   @Input() selectedBrgy;
@@ -54,7 +52,7 @@ export class Fhsis2018TbComponent implements OnChanges {
   }
 
   exportX() {
-    this.exportAsService.save(this.exportAsExcel, 'TB Dots M1').subscribe(() => {
+    this.exportAsService.save(this.exportAsExcel, 'Environmental M1').subscribe(() => {
       // save started
     });
   }
@@ -62,7 +60,7 @@ export class Fhsis2018TbComponent implements OnChanges {
   pdf_exported: boolean = false;
   exportP() {
     this.pdf_exported = true;
-    this.exportAsService.save(this.exportAsPdf, 'TB Dots M1').subscribe(() => {
+    this.exportAsService.save(this.exportAsPdf, 'Environmental M1').subscribe(() => {
       // save started
     });
   }
@@ -85,9 +83,9 @@ export class Fhsis2018TbComponent implements OnChanges {
     this.openList = !this.openList;
   }
 
-  convertDate(){
+  /* convertDate(){
     this.convertedMonth = moment(this.reportForm.value.month, 'M').format('MMMM');
-  }
+  } */
 
   convertBrgy(){
     this.brgy_result = this.selected_barangay?.map((code) => this.brgys.find((el) => el.code == code).name);
@@ -102,6 +100,6 @@ export class Fhsis2018TbComponent implements OnChanges {
     this.pdf_exported = false;
 
     this.convertBrgy();
-    this.convertDate();
+    // this.convertDate();
   }
 }
