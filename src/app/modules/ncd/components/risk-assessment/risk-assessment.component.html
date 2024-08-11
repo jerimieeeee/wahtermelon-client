@@ -88,8 +88,8 @@
     <div class="text-sm col-span-4 w-full px-5 mt-4 mb-4" *ngFor="let hx of family_history">
       <h4 class="mb-1">{{ hx.desc }}:</h4>
       <select class="text-sm border-gray-200 border p-2.5 rounded-md w-full" [formControlName]="hx.id" [name]="hx.id">
-        <option  [value]="logic.id" *ngFor="let logic of logical" [selected]="logic.id === 'N'">
-        {{logic.desc}}
+        <option  [value]="logic.id" *ngFor="let logic of logical">
+          {{logic.desc}}
         </option>
       </select>
     </div>
