@@ -14,6 +14,7 @@ export class Fhsis2018MortalityComponent implements OnChanges{
   @Input() selectedBrgy;
   @Input() brgys;
   @Input() userInfo;
+  // @Input() name_list_params: any;
 
   faCircleNotch = faCircleNotch;
   faFileExcel = faFileExcel;
@@ -27,6 +28,9 @@ export class Fhsis2018MortalityComponent implements OnChanges{
   convertedMonth : any;
   brgys_info : any;
   name_list: any = [];
+  params: any = [];
+  loc: '';
+  url: any = 'reports-2018/mortality/name-list';
 
   exportAsExcel: ExportAsConfig = {
     type: 'xlsx',
@@ -52,8 +56,22 @@ export class Fhsis2018MortalityComponent implements OnChanges{
     }
   }
 
+  name_list_params: {};
+
+  showNameList(params) {
+    this.params = params;
+    this.name_list_params = {
+      month: this.reportForm.value.month ,
+      year: this.reportForm.value.year,
+      category: this.reportForm.value.report_class,
+      params: this.params,
+      per_page: 10,
+    };
+    this.openList = true;
+  };
+
   exportX() {
-    this.exportAsService.save(this.exportAsExcel, 'Environmental M1').subscribe(() => {
+    this.exportAsService.save(this.exportAsExcel, 'Mortality and Natality M1').subscribe(() => {
       // save started
     });
   }
@@ -61,7 +79,7 @@ export class Fhsis2018MortalityComponent implements OnChanges{
   pdf_exported: boolean = false;
   exportP() {
     this.pdf_exported = true;
-    this.exportAsService.save(this.exportAsPdf, 'Environmental M1').subscribe(() => {
+    this.exportAsService.save(this.exportAsPdf, 'Mortality and Natality M1').subscribe(() => {
       // save started
     });
   }
@@ -71,15 +89,9 @@ export class Fhsis2018MortalityComponent implements OnChanges{
   ) { }
 
   openList:boolean = false;
-  toggleModal(name_list, name_list2?){
+  toggleModal(){
     let list = [];
-    if(name_list2) {
-      list = name_list.concat(name_list2)
-    } else {
-      list = name_list
-    }
 
-    // console.log(typeof name_list)
     this.name_list = list;
     this.openList = !this.openList;
   }
@@ -93,14 +105,12 @@ export class Fhsis2018MortalityComponent implements OnChanges{
   }
 
   ngOnChanges(): void {
-    this.stats = this.report_data;
+    this.stats = this.report_data[0];
     this.reportform_data = this.reportForm;
     this.selected_barangay = this.selectedBrgy;
     this.info3 = this.userInfo;
     this.brgys_info = this.brgys;
     this.pdf_exported = false;
-
     this.convertBrgy();
-    // this.convertDate();
   }
 }

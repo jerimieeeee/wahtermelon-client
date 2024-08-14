@@ -12,7 +12,7 @@ export const var_list = [
     female_var_name: 'female_dental_dmft',
   },
   {
-    name: '3. Infacnts 0-11 months old who received BOHC - Total',
+    name: '3. Infants 0-11 months old who received BOHC - Total',
     var_lead: 'data',
     male_var_name: 'male_0_11_months_bohc',
     female_var_name: 'female_0_11_months_bohc',
