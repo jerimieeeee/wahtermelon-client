@@ -25,7 +25,6 @@ export class Fhsis2018MortalityComponent implements OnChanges{
   reportform_data : any;
   selected_barangay : any;
   info3 : any;
-  convertedMonth : any;
   brgys_info : any;
   name_list: any = [];
   params: any = [];
