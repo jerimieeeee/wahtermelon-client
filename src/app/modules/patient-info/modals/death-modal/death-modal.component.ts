@@ -12,6 +12,7 @@ import { catchError, concat, debounceTime, distinctUntilChanged, filter, forkJoi
 export class DeathModalComponent implements OnInit {
   @Output() toggleModal = new EventEmitter<any>();
   @Input() patient_info;
+  @Input() death_record;
 
   death_type_list: any = [];
   death_place_list: any = [];
@@ -31,6 +32,10 @@ export class DeathModalComponent implements OnInit {
   municipalities: object;
   barangays: object;
 
+  antecedent_cause: any;
+  underlying_cause: any;
+  show_form: boolean = false;
+
   deathForm: FormGroup = new FormGroup({
     id: new FormControl<string| null>(''),
     patient_id: new FormControl<string| null>(''),
@@ -42,12 +47,29 @@ export class DeathModalComponent implements OnInit {
     muncity_code: new FormControl<string| null>(''),
     barangay_code: new FormControl<string| null>(''),
     immediate_cause: new FormControl<string| null>(''),
-    antecedent_cause: new FormControl<string| null>(''),
-    underlying_cause: new FormControl<string| null>(''),
+    cause: new FormControl<string| null>(''),
     remarks: new FormControl<string| null>('')
   });
 
   onSubmit() {
+    let cause_arr: any= [];
+
+    if(this.antecedent_cause) {
+      Object.entries(this.antecedent_cause).forEach(([key, value]: any, index) => {
+        let ant_value = { icd10_code: value, cause_code: 'ANT' };
+        cause_arr.push(ant_value);
+      });
+    }
+
+    if(this.underlying_cause) {
+      Object.entries(this.underlying_cause).forEach(([key, value]: any, index) => {
+        let und_value = { icd10_code: value, cause_code: 'UND' };
+        cause_arr.push(und_value);
+      });
+    }
+
+    if(this.antecedent_cause || this.underlying_cause) this.deathForm.patchValue({ cause: cause_arr });
+
     if(this.deathForm.valid) {
       this.http.post('mortality/record', this.deathForm.value).subscribe({
         next: () => {
@@ -142,10 +164,11 @@ export class DeathModalComponent implements OnInit {
       muncity_code: [null, Validators.required],
       barangay_code: [null, Validators.required],
       immediate_cause: [null, Validators.required],
-      antecedent_cause: [null, Validators.required],
-      underlying_cause: [null, Validators.required],
+      cause: [null],
       remarks: [null],
     });
+
+    if(this.death_record) this.patchData()
   }
 
   loadDemog(loc, code, include){
@@ -186,6 +209,29 @@ export class DeathModalComponent implements OnInit {
 
   closeModal(){
     this.toggleModal.emit('death-modal');
+  }
+
+  patchData(){
+    console.log(this.death_record)
+    console.log((this.death_record.barangay.psgc_10_digit_code.substring(0,3)).padEnd(10, '0'))
+
+    this.loadIcFdx([{icd10_code: this.death_record.immediateCause.icd10_code, icd10_desc: this.death_record.immediateCause.icd10_desc }]);
+
+    this.loadDemog('regions', (this.death_record.barangay.psgc_10_digit_code.substring(0,2)).padEnd(10, '0'), 'provinces');
+    this.loadDemog('provinces', (this.death_record.barangay.psgc_10_digit_code.substring(0,5)).padEnd(10, '0'), 'municipalities');
+    this.loadDemog('municipalities', (this.death_record.barangay.psgc_10_digit_code.substring(0,7)).padEnd(10, '0'), 'barangays');
+    this.deathForm.patchValue({
+      ...this.death_record,
+      death_type: this.death_record.deathType.code,
+      death_place: this.death_record.deathPlace.code,
+      immediate_cause: this.death_record.immediateCause.icd10_code,
+      region_code: (this.death_record.barangay.psgc_10_digit_code.substring(0,2)).padEnd(10, '0'),
+      province_code: (this.death_record.barangay.psgc_10_digit_code.substring(0,5)).padEnd(10, '0'),
+      muncity_code: (this.death_record.barangay.psgc_10_digit_code.substring(0,7)).padEnd(10, '0'),
+      barangay_code: this.death_record.barangay.psgc_10_digit_code
+    });
+
+    console.log(this.deathForm.value)
   }
 
   constructor(
