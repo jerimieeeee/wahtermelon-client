@@ -24,13 +24,14 @@ export class Fhsis2018DentalM1Component implements OnChanges{
   stats : any;
   brgy_result: any;
   reportform_data : any;
+  params: any = [];
+  name_list: any = [];
   selected_barangay : any;
   info3 : any;
   convertedMonth : any;
   brgys_info : any;
-  show_nameList: any = [];
   current_submit_flag: boolean = false;
-  url: any = 'reports-2018/fp-namelist/name-list';
+  url: any = 'reports-2018/dental/name-list';
 
   exportAsExcel: ExportAsConfig = {
     type: 'xlsx',
@@ -58,6 +59,20 @@ export class Fhsis2018DentalM1Component implements OnChanges{
 
   var_list: any = var_list;
 
+  name_list_params: {};
+
+  showNameList(params) {
+    this.params = params;
+    this.name_list_params = {
+      month: this.reportForm.value.month ,
+      year: this.reportForm.value.year,
+      category: this.reportForm.value.report_class,
+      params: this.params,
+      per_page: 10,
+    };
+    this.openList = true;
+  };
+
   exportX() {
     this.exportAsService.save(this.exportAsExcel, 'Dental OHC M1').subscribe(() => {
       // save started
@@ -70,6 +85,14 @@ export class Fhsis2018DentalM1Component implements OnChanges{
     this.exportAsService.save(this.exportAsPdf, 'Dental OHC M1').subscribe(() => {
       // save started
     });
+  }
+
+  openList:boolean = false;
+  toggleModal(){
+    let list = [];
+
+    this.name_list = list;
+    this.openList = !this.openList;
   }
 
   constructor(
@@ -85,9 +108,7 @@ export class Fhsis2018DentalM1Component implements OnChanges{
       this.info3 = this.userInfo;
       this.brgys_info = this.brgys;
       this.pdf_exported = false;
-      /* this.convertBrgy();
-      this.convertDate(); */
-      console.log(this.stats)
+      console.log(this.stats, 'amen')
     }
   }
 }
