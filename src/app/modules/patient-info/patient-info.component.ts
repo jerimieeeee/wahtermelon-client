@@ -207,6 +207,7 @@ export class PatientInfoComponent implements OnInit {
   death_record: any;
 
   setDetails(data) {
+    console.log(data)
     this[data.var_name] = data.data;
   }
 
@@ -221,8 +222,6 @@ export class PatientInfoComponent implements OnInit {
   setFamilyMedical(data){
     this.family_medical = data;
   }
-
-
 
   setMenstrual(data){
     this.menstrual_history = data;
@@ -327,7 +326,7 @@ export class PatientInfoComponent implements OnInit {
       // if(modal_name === 'preghist' && this.modals[modal_name] === false) this.loadData('pregnancy_history')
       if(modal_name === 'lifestyle' && this.modals['lifestyle'] === false) this.loadData('social_history');
       if (modal_name === 'lab-request' && this.modals[modal_name] === false) this.loadData('laboratory');
-      if (modal_name === 'death' && this.modals[modal_name] === false) this.loadData('death');
+      // if (modal_name === 'death' && this.modals[modal_name] === false) this.loadData('death');
     }
   }
 

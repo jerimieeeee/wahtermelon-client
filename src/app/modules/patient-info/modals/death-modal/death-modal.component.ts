@@ -212,10 +212,29 @@ export class DeathModalComponent implements OnInit {
   }
 
   patchData(){
-    console.log(this.death_record)
-    console.log((this.death_record.barangay.psgc_10_digit_code.substring(0,3)).padEnd(10, '0'))
-
     this.loadIcFdx([{icd10_code: this.death_record.immediateCause.icd10_code, icd10_desc: this.death_record.immediateCause.icd10_desc }]);
+
+    if(this.death_record.cause && Object.keys(this.death_record.cause).length > 0){
+      let selected_acdx = [];
+      let temp_acdx = [];
+      let selected_ucdx = [];
+      let temp_ucdx = [];
+      Object.entries(this.death_record.cause).forEach(([key, value]:any, index) => {
+        if(value.cause.code === 'ANT'){
+          selected_acdx.push(value.icd10_code.toString());
+          temp_acdx.push(value.icd10);
+        } else {
+          selected_ucdx.push(value.icd10_code.toString());
+          temp_ucdx.push(value.icd10);
+        }
+      });
+
+      this.loadAcFdx(temp_acdx);
+      this.antecedent_cause = selected_acdx;
+
+      this.loadUcFdx(temp_ucdx);
+      this.underlying_cause = selected_ucdx;
+    }
 
     this.loadDemog('regions', (this.death_record.barangay.psgc_10_digit_code.substring(0,2)).padEnd(10, '0'), 'provinces');
     this.loadDemog('provinces', (this.death_record.barangay.psgc_10_digit_code.substring(0,5)).padEnd(10, '0'), 'municipalities');
@@ -230,8 +249,6 @@ export class DeathModalComponent implements OnInit {
       muncity_code: (this.death_record.barangay.psgc_10_digit_code.substring(0,7)).padEnd(10, '0'),
       barangay_code: this.death_record.barangay.psgc_10_digit_code
     });
-
-    console.log(this.deathForm.value)
   }
 
   constructor(
