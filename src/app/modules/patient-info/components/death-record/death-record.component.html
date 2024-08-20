@@ -5,7 +5,9 @@
       <fa-icon *ngIf="!death" class="mx-0 my-0 mr-2" [icon]="faMinus"></fa-icon> -->
       DEATH RECORD
     </span>
-    <fa-icon (click)="modalToggle('death')" class="mx-0 my-0 text-blue-500 mr-2 hover:cursor-pointer" [icon]="faPlusCircle"></fa-icon>
+    <fa-icon (click)="modalToggle('death')" class="mx-0 my-0 text-blue-500 mr-2 hover:cursor-pointer"
+      [icon]="death ? faEdit : faPlusCircle"
+    ></fa-icon>
   </div>
 
   <!-- <div *ngIf="!show_form" >

@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { faEdit } from '@fortawesome/free-regular-svg-icons';
 import { faChevronDown, faChevronUp, faMinus, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 
@@ -17,7 +18,7 @@ export class DeathRecordComponent {
   faChevronDown = faChevronDown;
   faPlusCircle = faPlusCircle;
   faMinus = faMinus;
-
+  faEdit = faEdit;
   death: any;
 
   show_form: boolean = true;
