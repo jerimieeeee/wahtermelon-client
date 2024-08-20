@@ -155,6 +155,7 @@ export class EclaimsComponent implements OnInit {
 
     this.http.post('eclaims/get-claim-status', params).subscribe({
       next:(resp: any) => {
+        console.log(resp)
         this.iterateMessage(resp, data, type);
         this.addRetrieved();
       },
@@ -207,35 +208,84 @@ export class EclaimsComponent implements OnInit {
     })
   }
 
+  parseReason(data) {
+    console.log(data, typeof(data))
+    if(data) {
+      let obj: any = data;
+      let message: any = '';
+
+      if(data.charAt(0) === '{') {
+        if(typeof(data) === 'string') obj = JSON.parse(data);
+      } else {
+        return data;
+      }
+
+      const parse = (obj: any) => {
+        Object.entries(obj).forEach(([key, value]: any) => {
+          if (typeof value === 'object' && value !== null) {
+            parse(value);
+          } else {
+            message += `<b>${key}</b>: ${value}<br>`;
+          }
+        });
+      };
+
+      parse(obj);
+      return message;
+    }
+    return '';
+  }
+
   iterateMessage(resp, data, type) {
     data.pStatus = resp.CLAIM.pStatus;
     let message: string;
 
     console.log(type, resp)
-    switch(type) {
+    switch(resp.CLAIM.pStatus) {
       case 'DENIED': {
-        data.denied_reason = resp.CLAIM.DENIED.REASON.pReason;
+        data.denied_reason = resp.CLAIM.DENIED.REASON;
         message = 'As of: '+resp.pAsOf+ ' '+resp.pAsOfTime+ '<br />'+resp.CLAIM.DENIED.REASON.pReason;
+        break;
+      }
+      case 'WITH VOUCHER': {
+        message = 'As of: '+resp.pAsOf+ ' '+resp.pAsOfTime;
+
+        // Object.entries(resp.CLAIM.PAYMENT).forEach(([key, value]:any, index) => {
+          // message = 'As of: '+resp.pAsOf+ ' '+resp.pAsOfTime;
+          message += '<br />Claim Amount: '+resp.CLAIM.PAYMENT.pTotalClaimAmountPaid;
+          message += '<br />Voucher No: '+resp.CLAIM.PAYMENT.PAYEE.pVoucherNo;
+          message += '<br />Voucher Date: '+resp.CLAIM.PAYMENT.PAYEE.pVoucherDate;
+          message += '<br />Check Amount: '+resp.CLAIM.PAYMENT.PAYEE.pCheckAmount;
+        // });
         break;
       }
       case 'WITH CHEQUE': {
         message = 'As of: '+resp.pAsOf+ ' '+resp.pAsOfTime;
 
-        Object.entries(resp.CLAIM.PAYMENT.PAYEE).forEach(([key, value]:any, index) => {
+        // Object.entries(resp.CLAIM.PAYMENT.PAYEE).forEach(([key, value]:any, index) => {
           message = 'As of: '+resp.pAsOf+ ' '+resp.pAsOfTime;
-          message += '<br />Voucher No: '+value.pVoucherNo;
-          message += '<br />Check Amount: '+value.pCheckAmount;
-        });
+          message += '<br />Voucher No: '+resp.CLAIM.PAYMENT.PAYEE.pVoucherNo;
+          message += '<br />Check No: '+resp.CLAIM.PAYMENT.PAYEE.pCheckNo;
+          message += '<br />Check Date: '+resp.CLAIM.PAYMENT.PAYEE.pCheckDate;
+          message += '<br />Check Amount: '+resp.CLAIM.PAYMENT.PAYEE.pCheckAmount;
+        // });
         break;
       }
       case 'RETURN' : {
         message = 'As of: '+resp.pAsOf+ ' '+resp.pAsOfTime;
+        data.return_reason = resp.CLAIM.RETURN.DEFECTS;
         Object.entries(resp.CLAIM.RETURN.DEFECTS).forEach(([key, value]:any, index) => {
-          /* console.log(value)
-          message += '<br />Deficiency: '+value.pDeficiency;
-          if(value.REQUIREMENT) message += '<br />Requirement: '+value.REQUIREMENT.pRequirement; */
           if(!value.pRequirement) message += '<br />Deficiency: '+value;
           if(value.pRequirement) message += '<br />Requirement: '+value.pRequirement;
+        });
+        break;
+      }
+      case 'IN PROCESS' : {
+        message = 'As of: '+resp.pAsOf+ ' '+resp.pAsOfTime;
+        console.log(typeof(resp.CLAIM.TRAIL.PROCESS))
+        Object.entries(resp.CLAIM.TRAIL.PROCESS).forEach(([key, value]:any, index) => {
+          message += '<br />Process Stage: '+value.pProcessStage;
+          message += '<br />Process Date: '+value.pProcessDate + '<br />';
         });
         break;
       }
