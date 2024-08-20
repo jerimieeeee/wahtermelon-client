@@ -12,7 +12,6 @@ export class DeathRecordComponent {
   @Output() toggleModal = new EventEmitter<any>();
   @Output() setDetails = new EventEmitter<any>();
   @Input() accordions;
-  @Input() death_record;
 
   faChevronUp = faChevronUp;
   faChevronDown = faChevronDown;
@@ -41,6 +40,8 @@ export class DeathRecordComponent {
   }
 
   handleCause() {
+    this.antecedent_list = [];
+    this.underlying_list = [];
     if(this.death.cause) {
       Object.entries(this.death.cause).forEach(([key, value]: any, index) => {
         if(value.cause.code === 'ANT') this.antecedent_list.push(value.icd10.icd10_code + ': ' + value.icd10.icd10_desc);
