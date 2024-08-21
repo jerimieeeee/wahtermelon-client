@@ -34,7 +34,7 @@
                   {{ household.barangay.province.name }}
                 </th>
                 <td class="py-4 px-6">
-                  <span class="block" [ngClass]="{'bg-blue-500 text-white' : member.family_role_code === 'MEMBER'}" *ngFor="let member of household.household_member">
+                  <span class="block" [ngClass]="{'bg-blue-500 text-white' : member.family_role_code !== 'MEMBER'}" *ngFor="let member of household.household_member">
                     <fa-icon *ngIf="member.family_role_code !== 'MEMBER'" [icon]="faUser"></fa-icon>
                     {{ member.patient.last_name }}, {{ member.patient.first_name }} {{ member.patient.middle_name === 'NA' ? '' : member.patient.middle_name }} {{ member.patient.suffix_name === 'NA' ? '' : member.patient.suffix_name }}
                   </span>
