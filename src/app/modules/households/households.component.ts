@@ -1,7 +1,7 @@
 import { formatDate } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { faPenToSquare, faSearch, faChevronLeft, faChevronRight, faAnglesLeft, faAnglesRight } from '@fortawesome/free-solid-svg-icons';
+import { faPenToSquare, faSearch, faChevronLeft, faChevronRight, faAnglesLeft, faAnglesRight, faUser } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
@@ -19,6 +19,7 @@ export class HouseholdsComponent implements OnInit {
   faChevronRight = faChevronRight;
   faAnglesLeft = faAnglesLeft;
   faAnglesRight = faAnglesRight;
+  faUser = faUser;
 
   per_page: number = 10;
   current_page: number;
@@ -42,7 +43,7 @@ export class HouseholdsComponent implements OnInit {
 
     this.http.get('households/household-folders',params).subscribe({
       next: (data: any) => {
-        console.log(data)
+        // console.log(data)
         this.household_list = data.data;
         this.current_page = data.meta.current_page;
         this.last_page = data.meta.last_page;

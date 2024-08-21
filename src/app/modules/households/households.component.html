@@ -28,13 +28,14 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let household of household_list; let odd = odd; let i = index" class="bg-white border-t">
+              <tr *ngFor="let household of household_list; let odd = odd; let i = index" class="border-t">
                 <th scope="row" class="py-4 px-6 font-medium text-gray-900 align-top">
                   {{ household.address }}, {{ 'Brgy. '+household.barangay.name }}, {{ household.barangay.municipality.name }}
                   {{ household.barangay.province.name }}
                 </th>
                 <td class="py-4 px-6">
-                  <span class="block" *ngFor="let member of household.household_member">
+                  <span class="block" [ngClass]="{'bg-blue-500 text-white' : member.family_role_code === 'MEMBER'}" *ngFor="let member of household.household_member">
+                    <fa-icon *ngIf="member.family_role_code !== 'MEMBER'" [icon]="faUser"></fa-icon>
                     {{ member.patient.last_name }}, {{ member.patient.first_name }} {{ member.patient.middle_name === 'NA' ? '' : member.patient.middle_name }} {{ member.patient.suffix_name === 'NA' ? '' : member.patient.suffix_name }}
                   </span>
                 </td>
