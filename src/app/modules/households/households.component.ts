@@ -28,6 +28,7 @@ export class HouseholdsComponent implements OnInit {
   to: number;
   total: number;
 
+  current_year: string = formatDate(new Date(), 'yyyy', 'en', 'Asia/Manila');
   navigateTo(loc, data){
     // console.log(data)
     this.router.navigate(['/'+loc, {id: data.id}])
@@ -43,7 +44,7 @@ export class HouseholdsComponent implements OnInit {
 
     this.http.get('households/household-folders',params).subscribe({
       next: (data: any) => {
-        // console.log(data)
+        console.log(data)
         this.household_list = data.data;
         this.current_page = data.meta.current_page;
         this.last_page = data.meta.last_page;
