@@ -79,7 +79,7 @@ export class Fhsis2018DentalM1Component implements OnChanges{
   ngOnChanges(): void {
     this.current_submit_flag = this.submit_flag;
     if(this.current_submit_flag){
-      this.stats = this.report_data[0];
+      this.stats = this.report_data;
       this.reportform_data = this.reportForm;
       this.selected_barangay = this.selectedBrgy;
       this.info3 = this.userInfo;
@@ -87,7 +87,7 @@ export class Fhsis2018DentalM1Component implements OnChanges{
       this.pdf_exported = false;
       /* this.convertBrgy();
       this.convertDate(); */
-      console.log(this.stats)
+      // console.log(this.stats)
     }
   }
 }

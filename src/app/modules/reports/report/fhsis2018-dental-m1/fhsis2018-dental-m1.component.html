@@ -54,9 +54,9 @@
               <tr *ngFor="let item of var_list" class="text-right">
                 <td class="text-left">{{ item.name }}</td>
                 <td></td>
-                <td>{{ stats[item.male_var_name] ?? 0 }}</td>
-                <td>{{ stats[item.female_var_name] ?? 0 }}</td>
-                <td colspan="2">{{ +stats[item.male_var_name] + +stats[item.female_var_name] ?? 0 }}</td>
+                <td>{{ stats[item.var_lead][item.male_var_name] ?? 0 }}</td>
+                <td>{{ stats[item.var_lead][item.female_var_name] ?? 0 }}</td>
+                <td colspan="2">{{ +stats[item.var_lead][item.male_var_name] + +stats[item.var_lead][item.female_var_name] ?? 0 }}</td>
                 <td></td>
                 <td></td>
                 <td></td>
@@ -80,10 +80,10 @@
               <tr class="text-right">
                 <td class="text-left">9. Pregnan women who received BOHC - Total</td>
                 <td></td>
-                <td>{{ stats.pregnant_women_10_14_years_bohc ?? 0 }}</td>
-                <td>{{ stats.pregnant_women_15_19_years_bohc ?? 0 }}</td>
-                <td>{{ stats.pregnant_women_20_49_years_bohc ?? 0 }}</td>
-                <td>{{ +stats.pregnant_women_10_14_years_bohc + +stats.pregnant_women_15_19_years_bohc  + +stats.pregnant_women_20_49_years_bohc }}</td>
+                <td>{{ stats.data.pregnant_women_10_14_years_bohc ?? 0 }}</td>
+                <td>{{ stats.data.pregnant_women_15_19_years_bohc ?? 0 }}</td>
+                <td>{{ stats.data.pregnant_women_20_49_years_bohc ?? 0 }}</td>
+                <td>{{ +stats.data.pregnant_women_10_14_years_bohc + +stats.data.pregnant_women_15_19_years_bohc  + +stats.data.pregnant_women_20_49_years_bohc }}</td>
                 <td></td>
                 <td></td>
                 <td></td>
