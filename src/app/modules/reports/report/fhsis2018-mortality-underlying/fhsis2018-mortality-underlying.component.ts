@@ -2,20 +2,19 @@ import { Component, Input, OnChanges } from '@angular/core';
 import { faFileExcel, faFilePdf } from '@fortawesome/free-regular-svg-icons';
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import { ExportAsConfig, ExportAsService } from 'ngx-export-as';
-import { var_list } from './dentalVarList';
 
 @Component({
-  selector: 'app-fhsis2018-dental-m1',
-  templateUrl: './fhsis2018-dental-m1.component.html',
-  styleUrls: ['./fhsis2018-dental-m1.component.scss']
+  selector: 'app-fhsis2018-mortality-underlying',
+  templateUrl: './fhsis2018-mortality-underlying.component.html',
+  styleUrls: ['./fhsis2018-mortality-underlying.component.scss']
 })
-export class Fhsis2018DentalM1Component implements OnChanges{
+export class Fhsis2018MortalityUnderlyingComponent implements OnChanges{
   @Input() report_data;
   @Input() reportForm;
   @Input() selectedBrgy;
   @Input() brgys;
   @Input() userInfo;
-  @Input() submit_flag;
+  // @Input() name_list_params: any;
 
   faCircleNotch = faCircleNotch;
   faFileExcel = faFileExcel;
@@ -24,14 +23,14 @@ export class Fhsis2018DentalM1Component implements OnChanges{
   stats : any;
   brgy_result: any;
   reportform_data : any;
-  params: any = [];
-  name_list: any = [];
   selected_barangay : any;
   info3 : any;
   convertedMonth : any;
   brgys_info : any;
-  current_submit_flag: boolean = false;
-  url: any = 'reports-2018/dental/name-list';
+  name_list: any = [];
+  params: any = [];
+  loc: '';
+  url: any = 'reports-2018/mortality/name-list';
 
   exportAsExcel: ExportAsConfig = {
     type: 'xlsx',
@@ -57,8 +56,6 @@ export class Fhsis2018DentalM1Component implements OnChanges{
     }
   }
 
-  var_list: any = var_list;
-
   name_list_params: {};
 
   showNameList(params) {
@@ -74,7 +71,7 @@ export class Fhsis2018DentalM1Component implements OnChanges{
   };
 
   exportX() {
-    this.exportAsService.save(this.exportAsExcel, 'Dental OHC M1').subscribe(() => {
+    this.exportAsService.save(this.exportAsExcel, 'Mortality and Natality M1').subscribe(() => {
       // save started
     });
   }
@@ -82,10 +79,14 @@ export class Fhsis2018DentalM1Component implements OnChanges{
   pdf_exported: boolean = false;
   exportP() {
     this.pdf_exported = true;
-    this.exportAsService.save(this.exportAsPdf, 'Dental OHC M1').subscribe(() => {
+    this.exportAsService.save(this.exportAsPdf, 'Mortality and Natality M1').subscribe(() => {
       // save started
     });
   }
+
+  constructor(
+    private exportAsService: ExportAsService
+  ) { }
 
   openList:boolean = false;
   toggleModal(){
@@ -95,23 +96,21 @@ export class Fhsis2018DentalM1Component implements OnChanges{
     this.openList = !this.openList;
   }
 
-  constructor(
-    private exportAsService: ExportAsService
-  ) { }
+  /* convertDate(){
+    this.convertedMonth = moment(this.reportForm.value.month, 'M').format('MMMM');
+  } */
+
+  convertBrgy(){
+    this.brgy_result = this.selected_barangay?.map((code) => this.brgys.find((el) => el.code == code).name);
+  }
 
   ngOnChanges(): void {
-    this.current_submit_flag = this.submit_flag;
-    if(this.current_submit_flag){
-      this.stats = this.report_data;
-      this.reportform_data = this.reportForm;
-      this.selected_barangay = this.selectedBrgy;
-      this.info3 = this.userInfo;
-      this.brgys_info = this.brgys;
-      this.pdf_exported = false;
-      console.log(this.stats, 'amen')
-      /* this.convertBrgy();
-      this.convertDate(); */
-      // console.log(this.stats)
-    }
+    this.stats = this.report_data[0];
+    this.reportform_data = this.reportForm;
+    this.selected_barangay = this.selectedBrgy;
+    this.info3 = this.userInfo;
+    this.brgys_info = this.brgys;
+    this.pdf_exported = false;
+    this.convertBrgy();
   }
 }

@@ -30,6 +30,7 @@ export class AbExposureComponent implements OnInit, OnChanges {
   animal_types: {};
   animal_ownerships: {};
   exposure_types: {};
+  categories: {};
 
   bite_locations = [
     {bite_code: 'feet_flag', bite_desc: 'Feet'},
@@ -67,12 +68,14 @@ export class AbExposureComponent implements OnInit, OnChanges {
     const getAnimalType = this.http.get('libraries/ab-animal-type');
     const getAnimalOwnership = this.http.get('libraries/ab-animal-ownership');
     const getExposureType = this.http.get('libraries/ab-exposure-type');
+    const getCategory = this.http.get('libraries/ab-category');
 
-    forkJoin([getAnimalType, getAnimalOwnership, getExposureType]).subscribe({
-      next: ([dataAnimalType, dataAnimalOwnership, dataExposureType]: any) => {
+    forkJoin([getAnimalType, getAnimalOwnership, getExposureType, getCategory]).subscribe({
+      next: ([dataAnimalType, dataAnimalOwnership, dataExposureType, dataCategory]: any) => {
         this.animal_types = dataAnimalType.data;
         this.animal_ownerships = dataAnimalOwnership.data;
         this.exposure_types = dataExposureType.data;
+        this.categories = dataCategory.data;
 
         this.createForm();
       },
@@ -92,6 +95,7 @@ export class AbExposureComponent implements OnInit, OnChanges {
       exposure_place: [null],
       bite_flag: [false],
       animal_ownership_id: [null, Validators.required],
+      animal_vaccine_date: [null],
       feet_flag: [false],
       leg_flag: [false],
       arms_flag: [false],
@@ -101,10 +105,12 @@ export class AbExposureComponent implements OnInit, OnChanges {
       head_flag: [false],
       others_flag: [false],
       al_remarks: [null],
+      category_id: [null, Validators.required],
       exposure_type_code : [null, Validators.required],
       wash_flag: [false],
       pep_flag: [false],
       tandok_name: [null],
+      tandok_date: [null],
       tandok_addresss: [null],
       remarks: [null]
     })

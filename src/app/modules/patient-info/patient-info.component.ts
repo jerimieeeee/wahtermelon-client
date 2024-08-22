@@ -207,6 +207,7 @@ export class PatientInfoComponent implements OnInit {
   death_record: any;
 
   setDetails(data) {
+    console.log(data)
     this[data.var_name] = data.data;
   }
 
@@ -221,8 +222,6 @@ export class PatientInfoComponent implements OnInit {
   setFamilyMedical(data){
     this.family_medical = data;
   }
-
-
 
   setMenstrual(data){
     this.menstrual_history = data;

@@ -35,17 +35,17 @@
     <table class="table-fixed w-full text-sm text-left text-gray-500">
       <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700">
         <tr>
-          <th scope="col" class="py-3 px-3">Name</th>
-          <th scope="col" class="py-3 w-1/5">
+          <th scope="col" class="py-3 px-3 w-2/12 text-center">Name</th>
+          <th scope="col" class="py-3  w-2/12">
             1. Caserate (Program)<br />
             2. Transmittal Number <br />
             3. Ticket Number <br />
             4. Claim Series Lhio
           </th>
-          <th scope="col" class="py-3 px-3">Transmittal Date</th>
-          <th scope="col" class="py-3 px-3">Claim Status</th>
-          <th scope="col" class="py-3 px-3">Details</th>
-          <th scope="col" class="py-3 px-3">Action</th>
+          <th scope="col" class="py-3 px-3 w-2/12 text-center">Transmittal Date</th>
+          <th scope="col" class="py-3 px-3 w-1/12 text-center">Claim Status</th>
+          <th scope="col" class="py-3 px-3 w-3/12 text-center">Details</th>
+          <th scope="col" class="py-3 px-3 w-2/12 text-center">Action</th>
         </tr>
       </thead>
       <tbody *ngIf="show_form">
@@ -66,7 +66,13 @@
             {{ eclaims.pStatus ?? 'IN QUEUE'  }}
           </td>
           <td class="py-4 px-3">
-            {{ eclaims.denied_reason ?? '-'  }}
+            <!-- {{ eclaims.denied_reason ?? '-'  }} -->
+              <!-- <span *ngFor="let item of eclaims.denied_reason">{{ item }}</span> -->
+               <!-- {{ parseReason(eclaims.denied_reason) }} <br />
+               {{ parseReason(eclaims.return_reason) }} -->
+
+               <span  [innerHTML]="parseReason(eclaims.denied_reason)"></span>
+               <span  [innerHTML]="parseReason(eclaims.return_reason)"></span>
           </td>
           <td class="py-4 px-3 text-center grid grid-cols-1">
             <button class="bg-gray-300 rounded-md p-0.5 mb-3 disabled:opacity-75" type="button" (click)="navigateRoute('itr', eclaims)">

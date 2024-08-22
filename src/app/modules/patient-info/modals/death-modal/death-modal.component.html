@@ -126,14 +126,15 @@
                   <div class="chips-container">
                     <ng-select class="select-chips" placeholder="search"
                       [items]="ac_dx$ | async"
-                      [multiple]="false"
+                      [multiple]="true"
                       [loading]="acfdxLoading"
                       typeToSearchText="search..."
                       [typeahead]="acInput$"
                       bindValue="icd10_code"
                       bindLabel="icd10_desc"
                       notFoundText="No records found"
-                      formControlName="antecedent_cause">
+                      [(ngModel)]="antecedent_cause"
+                      [ngModelOptions]="{standalone:true}">
 
                       <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
                         <div class="whitespace-normal">
@@ -150,14 +151,15 @@
                   <div class="chips-container">
                     <ng-select class="select-chips" placeholder="search"
                       [items]="uc_dx$ | async"
-                      [multiple]="false"
+                      [multiple]="true"
                       [loading]="ucfdxLoading"
                       typeToSearchText="search..."
                       [typeahead]="ucInput$"
                       bindValue="icd10_code"
                       bindLabel="icd10_desc"
                       notFoundText="No records found"
-                      formControlName="underlying_cause">
+                      [(ngModel)]="underlying_cause"
+                      [ngModelOptions]="{standalone:true}">
 
                       <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
                         <div class="whitespace-normal">
@@ -170,7 +172,7 @@
                 </div>
 
                 <div class="col-span-2 py-2">
-                  <label>Remarks</label>
+                  <label>Other Significant Conditions Contributing to Death</label>
                   <input type="text" formControlName="remarks" class="input" placeholder="Input Remarks">
                 </div>
               </div>
