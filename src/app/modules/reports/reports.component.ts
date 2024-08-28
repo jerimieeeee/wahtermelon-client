@@ -113,7 +113,7 @@ export class ReportsComponent implements OnInit {
     },
   ];
 
-  fhsis_monthly_arr = ['fhsis2018-mortality-underlying', 'fhsis2018-mortality', 'fhsis2018-environmental', 'fhsis2018-cc', 'fhsis2018-mc', 'fhsis2018-tb', 'fhsis2018-ncd', 'fhsis2018-fp', 'fhsis2018-dental-m1', 'patient-registered']
+  fhsis_monthly_arr = ['fhsis2018-fp', 'patient-registered']
   report_params: any;
   years: any = [];
   selectedBrgy: [];
@@ -159,15 +159,14 @@ export class ReportsComponent implements OnInit {
     this.submit_flag = false;
     if(report_class === "brgys") {
       if(!this.userLoc) this.userLoc = this.http.getUserFacility();
-
       this.http.get('libraries/facilities', {params:{'filter[code]': this.userLoc}}).subscribe({
         next: (data: any) => this.getBrgys(data.data[0].municipality.code, report_class),
         error: err => console.log(err)
       })
     } else if(report_class === "muncity") {
       this.getMuncities();
-    } else {
-      // all
+      this.selectedBrgy = null;
+    } else { // all
       this.f['municipality_code'].setValue(null);
       this.f['barangay_code'].setValue(null);
       this.selectedBrgy = null;
@@ -247,7 +246,6 @@ export class ReportsComponent implements OnInit {
   }
 
   testFunction(){
-
     this.reportForm = this.formBuilder.nonNullable.group({
       report_type: ['', Validators.required],
       report_class: ['', Validators.required],
@@ -274,7 +272,6 @@ export class ReportsComponent implements OnInit {
     this.generateYear();
     this.userInfo = this.http.getUserFromJSON();
     this.current_date;
-    // console.log(this.userInfo)
 
     this.reportFlag =  this.userInfo.reports_flag === 1 ? '1' : null;
     this.reportForm = this.formBuilder.nonNullable.group({
