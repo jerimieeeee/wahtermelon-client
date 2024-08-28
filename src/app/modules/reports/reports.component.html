@@ -264,7 +264,9 @@
       [report_data]="report_data"
       [reportForm]="reportForm"
       [selectedBrgy]="selectedBrgy"
-      [brgys]="brgys" [userInfo]="userInfo"
+      [brgys]="brgys"
+      [facility]="userInfo.facility"
+      [submit_flag]="submit_flag"
     ></app-fhsis2018-mortality-underlying>
 
     <div class="flex flex-col justify-center" *ngIf="is_fetching">
