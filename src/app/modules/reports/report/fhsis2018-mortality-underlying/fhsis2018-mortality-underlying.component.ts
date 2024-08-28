@@ -105,12 +105,13 @@ export class Fhsis2018MortalityUnderlyingComponent implements OnChanges{
   }
 
   ngOnChanges(): void {
+    console.log('test')
     this.stats = this.report_data[0];
     this.reportform_data = this.reportForm;
     this.selected_barangay = this.selectedBrgy;
     this.info3 = this.userInfo;
     this.brgys_info = this.brgys;
     this.pdf_exported = false;
-    this.convertBrgy();
+    // this.convertBrgy();
   }
 }
