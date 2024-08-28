@@ -22,29 +22,34 @@
                 <img src="./assets/img/DOH_Logo.png" class="rounded-full w-28 h-28 mx-auto" />
               </th>
               <th colspan="22" class="text-left">
-                FHSIS Report for the Month: {{this.convertedMonth}}
+                FHSIS Report for {{ label_value.labelType === 'M1' ? 'the Month' : '' }}: {{ label_value.labelDate }}
               </th>
               <th scope="col" colspan="9" rowspan="7" class="align-top text-left text-sm text-gray-900 border-0">
-                  Year: <span class="font-medium"> {{this.reportform_data.value.year}} </span>
+                  Year:
+                  <span class="font-medium">
+                    {{ label_value.labelYear }}
+                  </span>
               </th>
               <th scope="col" colspan="7" rowspan="7" class="font-bold text-gray-900 px-6 py-4 border text-center">
-                <h1 class="text-7xl">M2</h1>
+                <h1 class="text-7xl">
+                  {{ label_value.labelType ?? 'M1' }}
+                </h1>
               </th>
             </tr>
             <tr class="text-left border-b">
-              <th colspan="22" class="text-left border-b-0"> Name of Health Facility: {{this.info3.facility.facility_name}} </th>
+              <th colspan="22" class="text-left border-b-0"> Name of Health Facility: {{this.facility.facility_name}} </th>
             </tr>
             <tr>
-              <th colspan="22" class="text-left"> Name of Barangay: {{this.brgy_result}} </th>
+              <th colspan="22" class="text-left"> Name of Barangay: {{ brgy_result ? this.brgy_result : '-' }} </th>
             </tr>
             <tr>
-              <th colspan="22" class="text-left"> Name of Municipality/City: </th>
+              <th colspan="22" class="text-left"> Name of Municipality/City: {{ facility.municipality.name }}</th>
             </tr>
             <tr>
-              <th colspan="22" class="text-left"> Name of Province </th>
+              <th colspan="22" class="text-left"> Name of Province: {{ facility.province.name }} </th>
             </tr>
             <tr>
-              <th colspan="22" class="text-left"> Projected Population of the Year </th>
+              <th colspan="22" class="text-left"> Projected Population of the Year: {{ label_value.labelPopulation }} </th>
             </tr>
             <tr>
               <th colspan="22" class="text-center italic"> For Submission to the next administrative level </th>
@@ -77,7 +82,7 @@
             <tr *ngFor="let stat of stats">
               <td class="text-left"> {{ stat.description }}</td>
               <td class="text-center">{{ stat.icd10_code }}</td>
-              <td class="text-center text-blue-500" [class]=" stat[indicator.var_name] !==0 ? 'cursor-pointer' : 'pointer-events-none' " *ngFor="let indicator of indicator_var" (click)="showNameList(indicator, stat.icd10_code)">
+              <td class="text-center text-blue-500" [class]="stat[indicator.var_name] !== '0' ? 'cursor-pointer' : 'pointer-events-none'" *ngFor="let indicator of indicator_var" (click)="showNameList(indicator, stat.icd10_code)">
                 {{ stat[indicator.var_name] }}
               </td>
             </tr>
