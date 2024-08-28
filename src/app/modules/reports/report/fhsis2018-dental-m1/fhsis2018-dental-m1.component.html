@@ -15,22 +15,23 @@
     <div class="sm:-mx-6 lg:-mx-8">
       <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
         <div class="">
-          <table class="min-w-full border-black border-l border-r border-b border-t select-none" id="reportForm">
+          <table *ngIf="show_stats" class="min-w-full border-black border-l border-r border-b border-t select-none" id="reportForm">
             <thead>
               <tr class="text-center top-0 border-black">
                 <th class="text-sm font-medium text-gray-900 border-black border-l border-r border-t border-b">
                   <img src="./assets/img/DOH_Logo.png" class="rounded-full w-28 h-28 mx-auto"/>
                 </th>
                 <th colspan="7" class="text-sm font-medium text-gray-900 px-6 py-4 border-black border-l border-r border-t border-b text-left align-top">
-                  FHSIS Report for the Month: {{this.convertedMonth}} Year: {{this.reportform_data.value.year}}<br />
-                  Name of Barangay: <br />
-                  Name of BHS: <br />
-                  Name of Municipality/City: <br />
-                  Name of Province: <br />
-                  Projected Population for the Year: <br />
+                  FHSIS Report for<span *ngIf="label_value.labelType === 'm1'"> the Month</span>: {{ label_value.labelDate }} <br />
+                  Name of Barangay: {{ brgy_result ? this.brgy_result : '-' }} <br />
+                  Name of Facility: <span class="capitalize"> {{ facility.facility_name }} </span> <br />
+                  Name of Municipality/City: {{ facility.municipality.name }} <br />
+                  Name of Province: {{ facility.province.name }} <br />
+                  Projected Population for the Year: {{ label_value.labelPopulation }} <br />
+                  Year: {{ label_value.labelYear }}
                 </th>
-                <th class="text-sm text-gray-900 px-6 py-4 border-l border-r border-b border-t text-center">
-                  <img src="./assets/img/m1.png" class="mx-auto" />
+                <th class="text-8xl tracking-tighter text-gray-900 px-6 py-4 border-l border-r border-b border-t text-center">
+                  {{ label_value.labelType ?? 'M1' }}
                 </th>
               </tr>
               <tr>
@@ -54,8 +55,8 @@
               <tr *ngFor="let item of var_list" class="text-right">
                 <td class="text-left">{{ item.name }}</td>
                 <td></td>
-                <td>{{ stats[item.var_lead][item.male_var_name] ?? 0 }}</td>
-                <td>{{ stats[item.var_lead][item.female_var_name] ?? 0 }}</td>
+                <td (click)="showNameList(item.male_var_name, item.var_lead)" [class]="stats[item.var_lead][item.male_var_name] > 0 ? 'text-blue-500 hover:cursor-pointer' : 'pointer-events-none'">{{ stats[item.var_lead][item.male_var_name] ?? 0 }}</td>
+                <td (click)="showNameList(item.female_var_name, item.var_lead)" [class]="stats[item.var_lead][item.female_var_name] > 0 ? 'text-blue-500 hover:cursor-pointer' : 'pointer-events-none'">{{ stats[item.var_lead][item.female_var_name] ?? 0 }}</td>
                 <td colspan="2">{{ +stats[item.var_lead][item.male_var_name] + +stats[item.var_lead][item.female_var_name] ?? 0 }}</td>
                 <td></td>
                 <td></td>
@@ -78,11 +79,11 @@
                 <th><span class="font-semibold">Total</span><br />Col. 6</th>
               </tr>
               <tr class="text-right">
-                <td class="text-left">9. Pregnan women who received BOHC - Total</td>
+                <td class="text-left">9. Pregnant women who received BOHC - Total</td>
                 <td></td>
-                <td>{{ stats.data.pregnant_women_10_14_years_bohc ?? 0 }}</td>
-                <td>{{ stats.data.pregnant_women_15_19_years_bohc ?? 0 }}</td>
-                <td>{{ stats.data.pregnant_women_20_49_years_bohc ?? 0 }}</td>
+                <td (click)="showNameList('pregnant_women_10_14_years_bohc')" [class]="stats.data.pregnant_women_10_14_years_bohc > 0 ? 'text-blue-500 hover:cursor-pointer' : 'pointer-events-none'">{{ stats.data.pregnant_women_10_14_years_bohc ?? 0 }}</td>
+                <td (click)="showNameList('pregnant_women_15_19_years_bohc')" [class]="stats.data.pregnant_women_15_19_years_bohc > 0 ? 'text-blue-500 hover:cursor-pointer' : 'pointer-events-none'">{{ stats.data.pregnant_women_15_19_years_bohc ?? 0 }}</td>
+                <td (click)="showNameList('pregnant_women_20_49_years_bohc')" [class]="stats.data.pregnant_women_20_49_years_bohc > 0 ? 'text-blue-500 hover:cursor-pointer' : 'pointer-events-none'">{{ stats.data.pregnant_women_20_49_years_bohc ?? 0 }}</td>
                 <td>{{ +stats.data.pregnant_women_10_14_years_bohc + +stats.data.pregnant_women_15_19_years_bohc  + +stats.data.pregnant_women_20_49_years_bohc }}</td>
                 <td></td>
                 <td></td>
@@ -106,13 +107,12 @@
   </div> -->
 </div>
 
-<!-- <app-show-name-list
-      *ngIf="openList"
-      (toggleModal)="toggleModal()"
-      [name_list_params]="name_list_params"
-      [selected_barangay]="selected_barangay"
-      [reportForm]="reportForm"
-      [url]="url"
-      [loc]="'fp'"
-      >
-</app-show-name-list> -->
+<app-show-name-list
+  *ngIf="openList"
+  (toggleModal)="toggleModal()"
+  [name_list_params]="name_list_params"
+  [selected_barangay]="selected_barangay"
+  [reportForm]="reportForm"
+  [url]="url"
+  [loc]="'fp'"
+></app-show-name-list>
