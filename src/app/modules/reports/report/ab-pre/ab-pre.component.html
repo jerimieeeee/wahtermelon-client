@@ -1,4 +1,4 @@
-<div class="grid grid-cols-1">
+<div *ngIf="show_stats" class="grid grid-cols-1">
   <div class="flex justify-between w-full text-blue-500 font-semibold text-lg  p-3" >
     <span>Post-Exposure Prophylaxis Cohort Report</span>
     <span>
@@ -9,48 +9,48 @@
   </div>
 
   <div class="w-full flex justify-center text-center text-sm font-semibold">
-    Province of {{ info.facility.province.name }} <br />
-    {{ info.facility.facility_name }} <br />
+    Province of {{ facility.province.name }} <br />
+    {{ facility.facility_name }} <br />
     Wireless Access for Health <br />
     Report Form on Animal Bite/Human Rabies Cases <br />
     Pre-Exposure Prophylaxis Report <br />
-    Period Covered: {{ start_date | date: 'MM/dd/yyyy' }} to {{ end_date | date: 'MM/dd/yyyy' }} <br /><br />
+    Period Covered: {{ label_value.labelDate }} Year: {{ label_value.labelYear }} <br /><br />
   </div>
 
   <table class="w-full table-fix border border-gray-300 mb-5" id="reportForm">
     <thead class="font-normal">
       <tr>
-        <th rowspan="2" class="border border-gray-200">Municipality/Barangay</th>
-        <th colspan="2" class="border border-gray-200">Sex</th>
-        <th colspan="2" class="border border-gray-200">Age</th>
-        <th colspan="3" class="border border-gray-200">Status of Immunization</th>
+        <th rowspan="2">Municipality/Barangay</th>
+        <th colspan="2">Sex</th>
+        <th colspan="2">Age</th>
+        <th colspan="3">Status of Immunization</th>
       </tr>
       <tr>
-        <th class="border border-gray-200">F</th>
-        <th class="border border-gray-200">M</th>
-        <th class="border border-gray-200">&lt; 15</th>
-        <th class="border border-gray-200">&GreaterEqual;; 15</th>
-        <th class="border border-gray-200">D0</th>
-        <th class="border border-gray-200">D0 & D7</th>
-        <th class="border border-gray-200">D0, D7, D21</th>
+        <th>F</th>
+        <th>M</th>
+        <th>&lt; 15</th>
+        <th>&GreaterEqual;; 15</th>
+        <th>D0</th>
+        <th>D0 & D7</th>
+        <th>D0, D7, D21</th>
       </tr>
     </thead>
     <tbody>
-      <tr class="text-right">
-        <td class="border border-gray-200">Subtotal</td>
-        <td class="border border-gray-200">{{ stats.female }}</td>
-        <td class="border border-gray-200">{{ stats.male }}</td>
-        <td class="border border-gray-200">{{ stats.less_than_15 }}</td>
-        <td class="border border-gray-200">{{ stats.greater_than_15 }}</td>
-        <td class="border border-gray-200">{{ stats.day0 }}</td>
-        <td class="border border-gray-200">{{ stats.day0_day7 }}</td>
-        <td class="border border-gray-200">{{ stats.day0_day7_day21 }}</td>
+      <tr class="text-right" *ngFor="let item of stats; let last = last">
+        <td class="text-left">{{ item.name }}</td>
+        <td (click)="showNameList('female', item.code)" [class]="item.female > 0 ? 'text-blue-500 hover:cursor-pointer' : 'pointer-events-none'">{{ item.female }} {{ countTotal('female', item.female) }}</td>
+        <td (click)="showNameList('male', item.code)" [class]="item.male > 0 ? 'text-blue-500 hover:cursor-pointer' : 'pointer-events-none'">{{ item.male }} {{ countTotal('male', item.male) }}</td>
+        <td (click)="showNameList('less_than_15', item.code)" [class]="item.less_than_15 > 0 ? 'text-blue-500 hover:cursor-pointer' : 'pointer-events-none'">{{ item.less_than_15 }} {{ countTotal('less_than_15', item.less_than_15) }}</td>
+        <td (click)="showNameList('greater_than_15', item.code)" [class]="item.greater_than_15 > 0 ? 'text-blue-500 hover:cursor-pointer' : 'pointer-events-none'">{{ item.greater_than_15 }} {{ countTotal('greater_than_15', item.greater_than_15) }}</td>
+        <td (click)="showNameList('day0', item.code)" [class]="item.day0 > 0 ? 'text-blue-500 hover:cursor-pointer' : 'pointer-events-none'">{{ item.day0 }} {{ countTotal('day0', item.day0) }}</td>
+        <td (click)="showNameList('day0_day7', item.code)" [class]="item.day0_day7 > 0 ? 'text-blue-500 hover:cursor-pointer' : 'pointer-events-none'">{{ item.day0_day7 }} {{ countTotal('day0_day7', item.day0_day7) }}</td>
+        <td (click)="showNameList('day0_day7_day21', item.code)" [class]="item.day0_day7_day21 > 0 ? 'text-blue-500 hover:cursor-pointer' : 'pointer-events-none'">{{ item.day0_day7_day21 }} {{ countTotal('day0_day7_day21', item.day0_day7_day21, last) }}</td>
       </tr>
       <tr class="text-center font-semibold">
-        <td class="border border-gray-200">Total</td>
-        <td colspan="2" class="border border-gray-200">{{ stats.male_female_total }}</td>
-        <td colspan="2" class="border border-gray-200">{{ stats.less_than_and_greater_than_15 }}</td>
-        <td colspan="3" class="border border-gray-200">{{ stats.day0_day7_day21_total }}</td>
+        <td>Total</td>
+        <td colspan="2">{{ +total?.female + +total?.male }}</td>
+        <td colspan="2">{{ +total?.less_than_15 + +total?.greater_than_15 }}</td>
+        <td colspan="3">{{ +total?.day0 + +total?.day0_day7 + +total?.day0_day7_day21 }}</td>
       </tr>
 
       <tr *ngIf="stats.length === 0">
@@ -59,3 +59,13 @@
     </tbody>
   </table>
 </div>
+
+<app-show-name-list
+  *ngIf="openList"
+  (toggleModal)="toggleModal()"
+  [name_list_params]="name_list_params"
+  [selected_barangay]="selected_barangay"
+  [reportForm]="reportForm"
+  [url]="url"
+  [loc]="'fp'"
+></app-show-name-list>
