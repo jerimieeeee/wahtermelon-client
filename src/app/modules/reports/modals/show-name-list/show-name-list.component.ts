@@ -17,13 +17,20 @@ interface State {
 export class ShowNameListComponent implements OnInit {
   @Output() toggleModal = new EventEmitter<any>();
   @Input() name_list_params: any;
-  @Input('length') length: number;
-  @Input('pageOffset') pageOffset: number;
-  @Input('pageIndex') pageIndex: number;
+  @Input() length: number;
+  @Input() pageOffset: number;
+  @Input() pageIndex: number;
   @Input() reportForm: any;
   @Input() selected_barangay: any;
   @Input() url: any;
   @Input() loc: any;
+
+  protected readonly faCircleXmark = faCircleXmark;
+  protected readonly faSearch = faSearch;
+  protected readonly faAnglesLeft = faAnglesLeft;
+  protected readonly faAnglesRight = faAnglesRight;
+  protected readonly Number = Number;
+  protected readonly faCircleNotch = faCircleNotch;
 
   paginate = new BehaviorSubject<State>({
     page: 1,
@@ -68,6 +75,7 @@ export class ShowNameListComponent implements OnInit {
 
     this.http.get(this.url, { params }).subscribe({
       next: (data: any) => {
+        console.log(data)
         this.is_fetching = false;
         this.show_nameList = data;
         this.current_page = data.current_page;
@@ -93,10 +101,4 @@ export class ShowNameListComponent implements OnInit {
     this.getList();
   }
 
-  protected readonly faCircleXmark = faCircleXmark;
-  protected readonly faSearch = faSearch;
-  protected readonly faAnglesLeft = faAnglesLeft;
-  protected readonly faAnglesRight = faAnglesRight;
-  protected readonly Number = Number;
-  protected readonly faCircleNotch = faCircleNotch;
 }
