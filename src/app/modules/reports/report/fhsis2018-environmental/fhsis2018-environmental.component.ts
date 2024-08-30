@@ -1,5 +1,6 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import { faCircleNotch, faFileExcel, faFilePdf } from '@fortawesome/free-solid-svg-icons';
+import { dateHelper } from 'app/shared/services/date-helper.service';
 import { ExportAsConfig, ExportAsService } from 'ngx-export-as';
 
 @Component({
@@ -12,7 +13,10 @@ export class Fhsis2018EnvironmentalComponent implements OnChanges{
   @Input() reportForm;
   @Input() selectedBrgy;
   @Input() brgys;
-  @Input() userInfo;
+  @Input() facility;
+  @Input() submit_flag;
+  current_submit_flag: boolean = false;
+  show_stats: boolean = false;
 
   faCircleNotch = faCircleNotch;
   faFileExcel = faFileExcel;
@@ -22,7 +26,6 @@ export class Fhsis2018EnvironmentalComponent implements OnChanges{
   brgy_result: any;
   reportform_data : any;
   selected_barangay : any;
-  info3 : any;
   convertedMonth : any;
   brgys_info : any;
   name_list: any = [];
@@ -30,9 +33,7 @@ export class Fhsis2018EnvironmentalComponent implements OnChanges{
   exportAsExcel: ExportAsConfig = {
     type: 'xlsx',
     elementIdOrContent: 'reportForm',
-    options: {
-
-    }
+    options: { }
   }
 
   exportAsPdf: ExportAsConfig = {
@@ -65,10 +66,6 @@ export class Fhsis2018EnvironmentalComponent implements OnChanges{
     });
   }
 
-  constructor(
-    private exportAsService: ExportAsService
-  ) { }
-
   openList:boolean = false;
   toggleModal(name_list, name_list2?){
     let list = [];
@@ -91,15 +88,24 @@ export class Fhsis2018EnvironmentalComponent implements OnChanges{
     this.brgy_result = this.selected_barangay?.map((code) => this.brgys.find((el) => el.code == code).name);
   }
 
-  ngOnChanges(): void {
-    this.stats = this.report_data;
-    this.reportform_data = this.reportForm;
-    this.selected_barangay = this.selectedBrgy;
-    this.info3 = this.userInfo;
-    this.brgys_info = this.brgys;
-    this.pdf_exported = false;
+  constructor(
+    private exportAsService: ExportAsService,
+    private dateHelper: dateHelper
+  ) { }
 
-    this.convertBrgy();
-    // this.convertDate();
+  label_value: {};
+  ngOnChanges(): void {
+    this.current_submit_flag = this.submit_flag;
+    if(this.current_submit_flag){
+      this.show_stats = false;
+      this.stats = this.report_data;
+      this.brgys_info = this.brgys;
+      this.pdf_exported = false;
+      this.label_value = this.dateHelper.getLabelValue(this.reportForm, this.report_data);
+      console.log(this.label_value, this.report_data)
+      if(this.selectedBrgy) this.convertBrgy();
+
+      this.show_stats = true;
+    }
   }
 }

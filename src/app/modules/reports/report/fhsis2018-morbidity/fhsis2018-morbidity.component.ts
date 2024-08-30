@@ -1,6 +1,8 @@
+import { formatDate } from '@angular/common';
 import { Component, Input, OnChanges } from '@angular/core';
 import { faFileExcel, faFilePdf } from '@fortawesome/free-regular-svg-icons';
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
+import { dateHelper } from 'app/shared/services/date-helper.service';
 import * as moment from 'moment';
 import { ExportAsConfig, ExportAsService } from 'ngx-export-as';
 
@@ -14,7 +16,10 @@ export class Fhsis2018MorbidityComponent implements OnChanges {
   @Input() reportForm;
   @Input() selectedBrgy;
   @Input() brgys;
-  @Input() userInfo;
+  @Input() facility;
+  @Input() submit_flag;
+  current_submit_flag: boolean = false;
+  show_stats: boolean = false;
 
   faCircleNotch = faCircleNotch;
   faFileExcel = faFileExcel;
@@ -22,9 +27,6 @@ export class Fhsis2018MorbidityComponent implements OnChanges {
 
   stats : any;
   brgy_result: any;
-  reportform_data : any;
-  selected_barangay : any;
-  info3 : any;
   convertedMonth : any;
   brgys_info : any;
   name_list: any = [];
@@ -139,7 +141,8 @@ export class Fhsis2018MorbidityComponent implements OnChanges {
   }
 
   constructor(
-    private exportAsService: ExportAsService
+    private exportAsService: ExportAsService,
+    private dateHelper: dateHelper
   ) { }
 
   openList:boolean = false;
@@ -154,11 +157,12 @@ export class Fhsis2018MorbidityComponent implements OnChanges {
   }
 
   convertDate(){
-    this.convertedMonth = moment(this.reportForm.value.month, 'M').format('MMMM');
+    this.convertedMonth = formatDate(this.reportForm.value.month, 'MMMM', 'en', 'Asia/Manila')
+    // this.convertedMonth = moment(this.reportForm.value.month, 'M').format('MMMM');
   }
 
   convertBrgy(){
-    this.brgy_result = this.selected_barangay?.map((code) => this.brgys.find((el) => el.code == code).name);
+    this.brgy_result = this.selectedBrgy?.map((code) => this.brgys.find((el) => el.code == code).name);
   }
 
   splitText(value: string, value_index: number): string {
@@ -166,7 +170,6 @@ export class Fhsis2018MorbidityComponent implements OnChanges {
     return splitString[value_index];
   }
 
-  show_stats: boolean = false;
   sortResult(data){
     let keyValue: any = Object.entries(data);
     keyValue.sort((a, b) => {
@@ -178,16 +181,19 @@ export class Fhsis2018MorbidityComponent implements OnChanges {
     this.show_stats = true;
   }
 
+  label_value: {};
   ngOnChanges(): void {
-    this.show_stats = false;
-    this.stats = this.report_data;
-    this.reportform_data = this.reportForm;
-    this.selected_barangay = this.selectedBrgy;
-    this.info3 = this.userInfo;
-    this.brgys_info = this.brgys;
-    this.pdf_exported = false;
-    this.convertBrgy();
-    this.convertDate();
-    this.show_stats = true;
+    this.current_submit_flag = this.submit_flag;
+    if(this.current_submit_flag){
+      this.show_stats = false;
+      this.stats = this.report_data.data;
+      this.brgys_info = this.brgys;
+      this.pdf_exported = false;
+      this.label_value = this.dateHelper.getLabelValue(this.reportForm, this.report_data);
+      console.log(this.stats)
+      if(this.selectedBrgy) this.convertBrgy();
+
+      this.show_stats = true;
+    }
   }
 }

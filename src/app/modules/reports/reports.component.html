@@ -138,7 +138,8 @@
       [reportForm]="reportForm"
       [selectedBrgy]="selectedBrgy"
       [brgys]="brgys"
-      [userInfo]="userInfo"
+      [facility]="userInfo.facility"
+      [submit_flag]="submit_flag"
     ></app-fhsis2018-cc>
 
     <app-fhsis2018-mc *ngIf="reportForm.value?.report_type.id === 'fhsis2018-mc' && report_data && !is_fetching"
@@ -146,7 +147,8 @@
       [reportForm]="reportForm"
       [selectedBrgy]="selectedBrgy"
       [brgys]="brgys"
-      [userInfo]="userInfo"
+      [facility]="userInfo.facility"
+      [submit_flag]="submit_flag"
     ></app-fhsis2018-mc>
 
     <app-fhsis2018-tb *ngIf="reportForm.value?.report_type.id === 'fhsis2018-tb' && report_data && !is_fetching"
@@ -154,7 +156,8 @@
       [reportForm]="reportForm"
       [selectedBrgy]="selectedBrgy"
       [brgys]="brgys"
-      [userInfo]="userInfo"
+      [facility]="userInfo.facility"
+      [submit_flag]="submit_flag"
     ></app-fhsis2018-tb>
 
     <app-fhsis2018-ncd *ngIf="reportForm.value?.report_type.id === 'fhsis2018-ncd' && report_data && !is_fetching"
@@ -162,7 +165,9 @@
       [reportForm]="reportForm"
       [selectedBrgy]="selectedBrgy"
       [brgys]="brgys"
-      [userInfo]="userInfo"
+      [brgys]="brgys"
+      [facility]="userInfo.facility"
+      [submit_flag]="submit_flag"
     ></app-fhsis2018-ncd>
 
     <app-fhsis2018-fp *ngIf="reportForm.value?.report_type.id === 'fhsis2018-fp' && report_data && !is_fetching"
@@ -178,21 +183,27 @@
       [report_data]="report_data"
       [reportForm]="reportForm"
       [selectedBrgy]="selectedBrgy"
-      [brgys]="brgys" [userInfo]="userInfo"
+      [brgys]="brgys"
+      [facility]="userInfo.facility"
+      [submit_flag]="submit_flag"
     ></app-fhsis2018-morbidity>
 
     <app-fhsis2018-environmental *ngIf="reportForm.value?.report_type.id === 'fhsis2018-environmental' && report_data && !is_fetching"
       [report_data]="report_data"
       [reportForm]="reportForm"
       [selectedBrgy]="selectedBrgy"
-      [brgys]="brgys" [userInfo]="userInfo"
+      [brgys]="brgys"
+      [facility]="userInfo.facility"
+      [submit_flag]="submit_flag"
     ></app-fhsis2018-environmental>
 
     <app-fhsis2018-mortality *ngIf="reportForm.value?.report_type.id === 'fhsis2018-mortality' && report_data && !is_fetching"
       [report_data]="report_data"
       [reportForm]="reportForm"
       [selectedBrgy]="selectedBrgy"
-      [brgys]="brgys" [userInfo]="userInfo"
+      [brgys]="brgys"
+      [facility]="userInfo.facility"
+      [submit_flag]="submit_flag"
     ></app-fhsis2018-mortality>
 
     <app-patient-registered *ngIf="reportForm.value?.report_type.id === 'patient-registered' && report_data && !is_fetching"
@@ -236,9 +247,8 @@
       [reportForm]="reportForm"
       [selectedBrgy]="selectedBrgy"
       [brgys]="brgys" [userInfo]="userInfo"
+      [facility]="userInfo.facility"
       [submit_flag]="submit_flag"
-      [start_date]="reportForm.value.start_date"
-      [end_date]="reportForm.value.end_date"
     ></app-ab-pre>
 
     <app-fhsis2018-dental-m1 *ngIf="reportForm.value?.report_type.id === 'fhsis2018-dental-m1' && report_data && !is_fetching"
@@ -246,9 +256,18 @@
       [reportForm]="reportForm"
       [selectedBrgy]="selectedBrgy"
       [brgys]="brgys"
-      [userInfo]="userInfo"
+      [facility]="userInfo.facility"
       [submit_flag]="submit_flag"
     ></app-fhsis2018-dental-m1>
+
+    <app-fhsis2018-mortality-underlying *ngIf="reportForm.value?.report_type.id === 'fhsis2018-mortality-underlying' && report_data && !is_fetching"
+      [report_data]="report_data"
+      [reportForm]="reportForm"
+      [selectedBrgy]="selectedBrgy"
+      [brgys]="brgys"
+      [facility]="userInfo.facility"
+      [submit_flag]="submit_flag"
+    ></app-fhsis2018-mortality-underlying>
 
     <div class="flex flex-col justify-center" *ngIf="is_fetching">
       <fa-icon class="text-blue-500 mx-auto pt-36 text-xl" [icon]="faCircleNotch" spin="true"></fa-icon>
