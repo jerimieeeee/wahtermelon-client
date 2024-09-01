@@ -5,7 +5,9 @@
       <fa-icon *ngIf="!death" class="mx-0 my-0 mr-2" [icon]="faMinus"></fa-icon> -->
       DEATH RECORD
     </span>
-    <fa-icon *ngIf="!death" (click)="modalToggle('death')" class="mx-0 my-0 text-blue-500 mr-2 hover:cursor-pointer" [icon]="faPlusCircle"></fa-icon>
+    <fa-icon (click)="modalToggle('death')" class="mx-0 my-0 text-blue-500 mr-2 hover:cursor-pointer"
+      [icon]="death ? faEdit : faPlusCircle"
+    ></fa-icon>
   </div>
 
   <!-- <div *ngIf="!show_form" >
@@ -53,7 +55,7 @@
         <span class="block font-semibold text-xs">
           Immediate Cause <br />
           <span class="block text-xs font-normal ml-3">
-            {{ death.immediateCause.icd10_code }}: {{ death.immediateCause.icd10_desc }}
+            - {{ death.immediateCause.icd10_code }}: {{ death.immediateCause.icd10_desc }}
           </span>
         </span>
       </div>
@@ -61,8 +63,8 @@
       <div class="flex pl-3 justify-between items-center align-top">
         <span class="block font-semibold text-xs">
           Antecedent Cause <br />
-          <span class="block text-xs font-normal ml-3">
-            {{ death.antecedentCause.icd10_code }}: {{ death.antecedentCause.icd10_desc }}
+          <span class="block text-xs font-normal ml-3" *ngFor="let item of antecedent_list">
+            - {{ item }}
           </span>
         </span>
       </div>
@@ -70,8 +72,9 @@
       <div class="flex pl-3 justify-between items-center align-top">
         <span class="block font-semibold text-xs ">
           Underlying Cause<br />
-          <span class="block text-xs font-normal ml-3">
-            {{ death.underlyingCause.icd10_code }}: {{ death.underlyingCause.icd10_desc }}
+          <span class="block text-xs font-normal ml-3" *ngFor="let item of underlying_list">
+            - {{ item }}
+            <!-- {{ death.underlyingCause.icd10_code }}: {{ death.underlyingCause.icd10_desc }} -->
           </span>
         </span>
       </div>

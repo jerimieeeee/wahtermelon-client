@@ -8,6 +8,7 @@ export function casdt2Form() {
     patient_id: new FormControl<string| null>(null),
     consult_id: new FormControl<string| null>(null),
 
+    complaint: new FormControl<string| null>(null),
     eye_complaint: new FormControl<string| null>(null),
     eye_refer: new FormControl<string| null>(null),
     unaided: new FormControl<string| null>(null),

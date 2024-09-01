@@ -119,7 +119,6 @@ export class RiskScreeningComponent implements OnInit, OnChanges {
   }
 
   urineKetone(){
-    console.log(this.urineKetonesForm.value.ketone)
     if(this.urineKetonesForm.value.ketone) {
       if(this.urineKetonesForm.value.ketone !== '1') {
         this.urineKetonesForm.patchValue({presence_of_urine_ketone: true});

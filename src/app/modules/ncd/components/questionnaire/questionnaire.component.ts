@@ -30,7 +30,7 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
 
   loadLibraries() {
     this.http.get('libraries/ncd-answers-s2').subscribe({
-      next: (data: any) =>  {this.logical2 = data.data; console.log(data.data)},
+      next: (data: any) =>  {this.logical2 = data.data},
       error: err => console.log(err)
     });
   }
@@ -62,7 +62,6 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
     if(this.questionnaireForm.valid){
       this.http.post('non-communicable-disease/risk-questionnaire', this.questionnaireForm.value).subscribe({
         next: (data: any) => {
-          console.log(data);
           this.toastr.success('Recorded successfully!','Questionnaire');
           this.is_saving = false;
         },

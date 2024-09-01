@@ -14,8 +14,9 @@ export class Fhsis2018FpComponent implements OnChanges {
   @Input() reportForm;
   @Input() selectedBrgy;
   @Input() brgys;
-  @Input() userInfo;
+  @Input() facility;
   @Input() submit_flag;
+  current_submit_flag: boolean = false;
 
   faCircleNotch = faCircleNotch;
   faFileExcel = faFileExcel;
@@ -25,19 +26,15 @@ export class Fhsis2018FpComponent implements OnChanges {
   brgy_result: any;
   reportform_data : any;
   selected_barangay : any;
-  info3 : any;
   convertedMonth : any;
   brgys_info : any;
   show_nameList: any = [];
-  current_submit_flag: boolean = false;
   url: any = 'reports-2018/fp-namelist/name-list';
 
   exportAsExcel: ExportAsConfig = {
     type: 'xlsx',
     elementIdOrContent: 'reportForm',
-    options: {
-
-    }
+    options: { }
   }
 
   sub_total_arr = ['IUD_total', 'PILLS_total']
@@ -166,7 +163,6 @@ export class Fhsis2018FpComponent implements OnChanges {
       this.stats = this.report_data;
       this.reportform_data = this.reportForm;
       this.selected_barangay = this.selectedBrgy;
-      this.info3 = this.userInfo;
       this.brgys_info = this.brgys;
       this.pdf_exported = false;
       this.convertBrgy();

@@ -26,7 +26,6 @@ export class RiskStratificationComponent implements OnInit {
         this.show_form = true;
         this.info = data.data[0];
         this.risk_strat = data.risk_stratification;
-        console.log(data)
       },
       error: err => console.log(err)
     });

@@ -4,6 +4,7 @@ import { faDoorClosed } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { eventSubscriber } from '../patient-info/emmitter.interface';
 import { PatientInfoComponent } from '../patient-info/patient-info.component';
+import { AgeService } from 'app/shared/services/age.service';
 @Component({
   selector: 'app-ncd',
   templateUrl: './ncd.component.html',
@@ -26,22 +27,13 @@ export class NcdComponent implements OnInit, OnDestroy {
 
   faDoorClosed = faDoorClosed;
 
-  constructor(
-    private route: ActivatedRoute,
-    private http: HttpService,
-    private router: Router,
-    private patientInfo: PatientInfoComponent
-  ) {
-    this.loadVitals = this.loadVitals.bind(this);
-    eventSubscriber(patientInfo.reloadNCDVitals, this.loadVitals)
-  }
+
 
   ngOnDestroy(): void {
     eventSubscriber(this.patientInfo.reloadNCDVitals, this.loadVitals, true);
   }
 
   openNCD(ncd){
-    // console.log(ncd)
     this.router.navigate(['/patient/ncd', {id: ncd.patient_id ?? ncd.patient.id, consult_id: ncd.consult_id ?? ncd.id}]);
     this.consult_details = ncd;
     this.modules = 2;
@@ -57,8 +49,6 @@ export class NcdComponent implements OnInit, OnDestroy {
 
     this.http.get('non-communicable-disease/risk-assessment', {params}).subscribe({
       next: (data: any) => {
-        // console.log(params)
-        // console.log(data)
         if(data.data.length > 0) {
           data.data[0]['consult_date'] = data.data[0].assessment_date;
           this.consult_details = data.data[0];
@@ -66,7 +56,9 @@ export class NcdComponent implements OnInit, OnDestroy {
           this.consult_details = this.consult_details_temp;
         }
 
-        // console.log(this.consult_details)
+        let age = this.ageService.calcuateAge(this.patient_info.birthdate, this.consult_details.consult_date);
+        console.log(age)
+        if(age.type === 'year' && age.age >= 60) this.show_casdt2 = true;
       },
       error: err => console.log(err)
     })
@@ -101,7 +93,6 @@ export class NcdComponent implements OnInit, OnDestroy {
 
     this.http.get('consultation/records', {params}).subscribe({
       next: (data: any) => {
-        console.log(data)
         this.ncd_list = data.data;
         this.consult_details_temp = data.data[0];
 
@@ -138,10 +129,8 @@ export class NcdComponent implements OnInit, OnDestroy {
   } */
 
   loadVitals(){
-    // console.log('reload please ncd')
     this.http.get('patient-vitals/vitals', {params:{patient_id: this.patient_id, sort: '-vitals_date', per_page: 15}}).subscribe({
       next: (data: any) => {
-        // console.log(data.data)
         let vitals = data.data;
 
         if(vitals.length > 0) {
@@ -164,11 +153,25 @@ export class NcdComponent implements OnInit, OnDestroy {
     // this.vitals = vitals;
   }
 
+  constructor(
+    private route: ActivatedRoute,
+    private http: HttpService,
+    private router: Router,
+    private patientInfo: PatientInfoComponent,
+    private ageService: AgeService
+  ) {
+    this.loadVitals = this.loadVitals.bind(this);
+    eventSubscriber(patientInfo.reloadNCDVitals, this.loadVitals)
+  }
+
+  show_casdt2: boolean = false;
   ngOnInit(): void {
+    this.show_casdt2 = false;
     this.module=1;
     this.modules=1;
 
     this.patient_info = this.http.getPatientInfo();
+
     this.patient_id = this.route.snapshot.paramMap.get('id');
     this.consult_id = this.route.snapshot.paramMap.get('consult_id');
     this.loadConsult();

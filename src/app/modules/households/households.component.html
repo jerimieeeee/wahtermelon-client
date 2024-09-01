@@ -21,31 +21,43 @@
             <thead class="text-xs text-gray-700 uppercase bg-gray-50">
               <tr>
                 <th scope="col" class="py-3 px-6 w-3/12">Address</th>
-                <th scope="col" class="py-3 px-6 w-3/12">Household Member</th>
+                <th scope="col" class="py-3 px-6 w-5/12">
+                  <div class="w-full grid grid-cols-2">
+                    <div class="text-center">Household Member</div>
+                    <div class="text-center">Philhealth Info</div>
+                  </div>
+                </th>
+                <!-- <th scope="col" class="py-3 px-6 w-2/12">Philhealth Info</th> -->
                 <th scope="col" class="py-3 px-6 w-2/12">Contact Number</th>
-                <th scope="col" class="py-3 px-6 w-2/12">Philhealth Info</th>
                 <th scope="col" class="py-3 px-6 w-2/12">Action</th>
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let household of household_list; let odd = odd; let i = index" class="bg-white border-t">
+              <tr *ngFor="let household of household_list; let odd = odd; let i = index" class="border-t">
                 <th scope="row" class="py-4 px-6 font-medium text-gray-900 align-top">
                   {{ household.address }}, {{ 'Brgy. '+household.barangay.name }}, {{ household.barangay.municipality.name }}
                   {{ household.barangay.province.name }}
                 </th>
                 <td class="py-4 px-6">
-                  <span class="block" *ngFor="let member of household.household_member">
-                    {{ member.patient.last_name }}, {{ member.patient.first_name }} {{ member.patient.middle_name === 'NA' ? '' : member.patient.middle_name }} {{ member.patient.suffix_name === 'NA' ? '' : member.patient.suffix_name }}
-                  </span>
+                  <div class="w-full grid grid-cols-2" *ngFor="let member of household.household_member">
+                    <span class="block" [ngClass]="{'bg-blue-500 text-white px-1 py-0.5 rounded-md' : member.family_role_code !== 'MEMBER'}">
+                      <fa-icon *ngIf="member.family_role_code !== 'MEMBER'" [icon]="faUser"></fa-icon>
+                      {{ member.patient.last_name }}, {{ member.patient.first_name }} {{ member.patient.middle_name === 'NA' ? '' : member.patient.middle_name }} {{ member.patient.suffix_name === 'NA' ? '' : member.patient.suffix_name }}
+                    </span>
+                    <div class="text-center" [ngClass]="{'text-red-500' : (member.patient.philhealth_latest && (member.patient.philhealth_latest.effectivity_year < current_year))}">
+                      {{ member.patient.philhealth_latest ? member.patient.philhealth_latest.philhealth_id : '-' }}
+                      {{ member.patient.philhealth_latest ? '(' + (member.patient.philhealth_latest.enlistment_date | date: 'MM/dd/yyyy') + ')' : '' }}
+                    </div>
+                  </div>
                 </td>
                 <td class="py-4 px-6">
                   <span class="block" *ngFor="let member of household.household_member">
                     {{ member.patient.mobile_number ? member.patient.mobile_number : '-' }}
                   </span>
                 </td>
-                <td class="py-4 px-6 justify-center">
+                <!-- <td class="py-4 px-6 justify-center">
                   -
-                </td>
+                </td> -->
                 <td class="py-4 px-6 justify-center text-xs">
                   <button type="button" (click)="navigateTo('environmental', household)"
                      [class]="household.environmentalLatest ? 'bg-green-600 text-white px-2 py-1 rounded-md' : 'bg-orange-400 text-white px-2 py-1 rounded-md'">
