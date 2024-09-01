@@ -7,12 +7,12 @@ export const var_list = [
   },
   {
     name: '2. Clients 5 years old and above with new cases of DMFT - Total',
-    var_lead: 'data',
-    male_var_name: 'male_dental_dmft',
-    female_var_name: 'female_dental_dmft',
+    var_lead: 'dental_dmft',
+    male_var_name: 'male',
+    female_var_name: 'female',
   },
   {
-    name: '3. Infacnts 0-11 months old who received BOHC - Total',
+    name: '3. Infants 0-11 months old who received BOHC - Total',
     var_lead: 'data',
     male_var_name: 'male_0_11_months_bohc',
     female_var_name: 'female_0_11_months_bohc',

@@ -1,13 +1,11 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {faInfoCircle, faSpinner} from '@fortawesome/free-solid-svg-icons';
-import {casdtForm} from "../casdt/form";
 import {HttpService} from "../../../../shared/services/http.service";
-import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {ToastrService} from "ngx-toastr";
 import {forkJoin} from "rxjs";
 import {casdt2Form} from "./casdt2form";
 import {faSave} from "@fortawesome/free-regular-svg-icons";
-import {riskAssessForm} from "../risk-assessment/forms";
 
 @Component({
   selector: 'app-casdt2',
@@ -19,15 +17,14 @@ export class Casdt2Component implements OnInit {
   @Input() consult_details;
   @Input() vaccine_details;
 
-  casdt2Forms:FormGroup=casdt2Form();
+  casdt2Form:FormGroup=casdt2Form();
 
+  faSave = faSave;
+  faSpinner = faSpinner;
   faInfoCircle = faInfoCircle;
 
-  constructor(
-    private http: HttpService,
-    private toastr: ToastrService,
-    private formBuilder: FormBuilder,
-  ) { }
+
+
 
   show_form: boolean = false;
 
@@ -35,6 +32,57 @@ export class Casdt2Component implements OnInit {
   eye_refer: any[] = [];
   eye_vision_screen: any
   eye_refer_prof: any
+  complaints: any = [];
+
+  is_saving: boolean = false;
+  onSubmit() {
+    this.is_saving = true;
+
+    let complaint_arr: any = [];
+    Object.entries(this.complaints).forEach(([key, value]:any, index) => {
+      if(value) complaint_arr.push({ eye_complaint: key });
+    });
+
+    this.casdt2Form.patchValue({complaint: complaint_arr});
+
+    console.log(this.casdt2Form)
+    if(this.casdt2Form.valid){
+      this.http.post('non-communicable-disease/risk-casdt2', this.casdt2Form.value).subscribe({
+        next: () => {
+          this.toastr.success('Recorded successfully!','Casdt2');
+          this.is_saving = false;
+        },
+        error: err => { this.http.showError(err.error.message, 'Casdt2'); }
+      })
+    }
+  }
+
+  createForm() {
+    this.casdt2Form = this.formBuilder.nonNullable.group({
+      id: [''],
+      consult_ncd_risk_id: [this.consult_details.id, [Validators.required]],
+      patient_ncd_id: [this.consult_details.patient_ncd_id, [Validators.required]],
+      consult_id: [this.consult_details.consult_id, [Validators.required]],
+      patient_id: [this.consult_details.patient_id, [Validators.required]],
+      eye_complaint: [null],
+      complaint: [null], // Initialize as empty FormArray
+      eye_refer: [null],
+      unaided: [null, Validators.required],
+      pinhole: [null, Validators.required],
+      improved: [null, Validators.required],
+      aided: [null, Validators.required],
+      eye_refer_prof: [null, Validators.required],
+    });
+
+    if(this.consult_details.riskCasdt2) this.casdt2Form.patchValue({...this.consult_details.riskCasdt2[0]});
+    if(this.consult_details && this.consult_details.eye_complaints.length > 0) {
+      Object.entries(this.consult_details.eye_complaints).forEach(([key, value]:any, index) => {
+        this.complaints[value.eye_complaint] = true;
+      });
+    }
+
+    console.log(this.casdt2Form.value)
+  }
 
   lodFormLibraries() {
     const getEyeComplaints = this.http.get('libraries/ncd-eye-complaint');
@@ -61,74 +109,14 @@ export class Casdt2Component implements OnInit {
     })
   }
 
-  createForm() {
-    this.casdt2Forms = this.formBuilder.nonNullable.group({
-      id: [''],
-      consult_ncd_risk_id: [this.consult_details.id, [Validators.required]],
-      patient_ncd_id: [this.consult_details.patient_ncd_id, [Validators.required]],
-      consult_id: [this.consult_details.consult_id, [Validators.required]],
-      patient_id: [this.consult_details.patient_id, [Validators.required]],
-      casdt: this.formBuilder.array([]), // Initialize as empty FormArray
-      eye_refer: [null, Validators.required],
-      unaided: [null, Validators.required],
-      pinhole: [null, Validators.required],
-      improved: [null, Validators.required],
-      aided: [null, Validators.required],
-      eye_refer_prof: [null, Validators.required],
-    });
-  }
-
-  // Method to add eye_complaint item to the casdt FormArray
-  addEyeComplaint(value: string) {
-    const casdtArray = this.casdt2Forms.get('casdt') as FormArray;
-    casdtArray.push(this.formBuilder.group({
-      eye_complaint: [value]
-    }));
-  }
-
-  // Method to remove eye_complaint item from the casdt FormArray
-  removeEyeComplaint(index: number) {
-    const casdtArray = this.casdt2Forms.get('casdt') as FormArray;
-    casdtArray.removeAt(index);
-  }
-
-  // Example method to handle checkbox selection
-  handleCheckboxSelection(value: string, isChecked: boolean) {
-    if (isChecked) {
-      this.addEyeComplaint(value);
-    } else {
-      const index = (this.casdt2Forms.get('casdt') as FormArray).controls.findIndex(
-        control => control.value.eye_complaint === value
-      );
-      if (index !== -1) {
-        this.removeEyeComplaint(index);
-      }
-    }
-  }
-
-  is_saving: boolean = false;
-  onSubmit() {
-    console.log(this.casdt2Forms, 'eto');
-    console.log(this.casdt2Forms.value, 'hahah');
-    this.is_saving = true;
-
-    if(this.casdt2Form.valid){
-      this.http.post('non-communicable-disease/risk-casdt2', this.casdt2Forms.value).subscribe({
-        next: (data: any) => {
-          this.toastr.success('Recorded successfully!','Casdt2');
-          this.is_saving = false;
-        },
-        error: err => { this.http.showError(err.error.message, 'Casdt2'); }
-      })
-    }
-  }
+  constructor(
+    private http: HttpService,
+    private toastr: ToastrService,
+    private formBuilder: FormBuilder,
+  ) { }
 
   ngOnInit(): void {
+    console.log(this.consult_details)
     this.lodFormLibraries();
   }
-
-  protected readonly casdt2Form = casdtForm;
-  protected readonly faSave = faSave;
-  protected readonly faSpinner = faSpinner;
-  protected readonly riskAssessForm = riskAssessForm;
 }

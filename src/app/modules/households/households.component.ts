@@ -1,7 +1,7 @@
 import { formatDate } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { faPenToSquare, faSearch, faChevronLeft, faChevronRight, faAnglesLeft, faAnglesRight } from '@fortawesome/free-solid-svg-icons';
+import { faPenToSquare, faSearch, faChevronLeft, faChevronRight, faAnglesLeft, faAnglesRight, faUser } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
@@ -19,6 +19,7 @@ export class HouseholdsComponent implements OnInit {
   faChevronRight = faChevronRight;
   faAnglesLeft = faAnglesLeft;
   faAnglesRight = faAnglesRight;
+  faUser = faUser;
 
   per_page: number = 10;
   current_page: number;
@@ -27,6 +28,7 @@ export class HouseholdsComponent implements OnInit {
   to: number;
   total: number;
 
+  current_year: string = formatDate(new Date(), 'yyyy', 'en', 'Asia/Manila');
   navigateTo(loc, data){
     // console.log(data)
     this.router.navigate(['/'+loc, {id: data.id}])

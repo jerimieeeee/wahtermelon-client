@@ -34,15 +34,15 @@ export class ReportsComponent implements OnInit {
     { id: 'fhsis2018-tb', desc: 'TB Dots', url: 'reports-2018/tb-dots/m1'},
     { id: 'fhsis2018-morbidity', desc: 'Morbidity', url: 'reports-2018/morbidity/report'},
     { id: 'fhsis2018-dental-m1', desc: 'Dental', url: 'reports-2018/dental/m1'},
-    // { id: 'fhsis2018-mortality', desc: 'Mortality and Natality', url: 'reports-2018/dental/m1'},
-    // { id: 'fhsis2018-environmental', desc: 'Environmental and Sanitation', url: 'reports-2018/dental/m1'},
-  ]
+    { id: 'fhsis2018-mortality', desc: 'Mortality and Natality', url: 'reports-2018/mortality/m1'},
+    { id: 'fhsis2018-mortality-underlying', desc: 'Mortality Underlying', url: 'reports-2018/mortality/m1-underlying'},
+    { id: 'fhsis2018-environmental', desc: 'Environmental and Sanitation', url: 'reports-2018/household-environmental/m1'},
+  ];
 
   other_stats = [
     { id: 'patient-registered', desc: 'Patient Registered', url: 'reports-2018/user/patient-registered'},
     { id: 'feedback', desc: 'Client Feedback', url: 'reports-2018/feedback/report'},
-    // { id: 'fhsis2018-mc', desc: 'Maternal Care', url: 'reports-2018/maternal-care/m1'},
-  ]
+  ];
 
   ab_stats = [
     // { id: 'ab-report', desc: 'Animal Bite', url: 'reports-2018/animal-bite/patient-registered'},
@@ -53,10 +53,6 @@ export class ReportsComponent implements OnInit {
   gbv_stats = [
     { id: 'gbv-report', desc: 'GBV Report', url: 'gbv-report/catalyst-report'},
   ]
-
-  // diagnosis_stats = [
-  //   { id: 'morbidity-report', desc: 'Morbidity Report', url: 'reports-2018/morbidity/report'},
-  // ];
 
   household_stats = [
     { id: 'profiling-report', desc: 'Profiling', url: 'reports-2018/household-profiling/report'},
@@ -117,7 +113,7 @@ export class ReportsComponent implements OnInit {
     },
   ];
 
-  fhsis_monthly_arr = ['fhsis2018-cc', 'fhsis2018-mc', 'fhsis2018-tb', 'fhsis2018-ncd', 'fhsis2018-fp', 'fhsis2018-dental-m1', 'patient-registered']
+  fhsis_monthly_arr = ['fhsis2018-fp', 'patient-registered']
   report_params: any;
   years: any = [];
   selectedBrgy: [];
@@ -150,6 +146,7 @@ export class ReportsComponent implements OnInit {
 
     this.http.get(this.reportForm.value.report_type.url, {params}).subscribe({
       next: (data: any) => {
+        console.log(data)
         this.report_data = data;
         this.is_fetching = false;
         this.submit_flag = true;
@@ -162,15 +159,14 @@ export class ReportsComponent implements OnInit {
     this.submit_flag = false;
     if(report_class === "brgys") {
       if(!this.userLoc) this.userLoc = this.http.getUserFacility();
-
       this.http.get('libraries/facilities', {params:{'filter[code]': this.userLoc}}).subscribe({
         next: (data: any) => this.getBrgys(data.data[0].municipality.code, report_class),
         error: err => console.log(err)
       })
     } else if(report_class === "muncity") {
       this.getMuncities();
-    } else {
-      // all
+      this.selectedBrgy = null;
+    } else { // all
       this.f['municipality_code'].setValue(null);
       this.f['barangay_code'].setValue(null);
       this.selectedBrgy = null;
@@ -250,7 +246,6 @@ export class ReportsComponent implements OnInit {
   }
 
   testFunction(){
-
     this.reportForm = this.formBuilder.nonNullable.group({
       report_type: ['', Validators.required],
       report_class: ['', Validators.required],
@@ -277,7 +272,6 @@ export class ReportsComponent implements OnInit {
     this.generateYear();
     this.userInfo = this.http.getUserFromJSON();
     this.current_date;
-    // console.log(this.userInfo)
 
     this.reportFlag =  this.userInfo.reports_flag === 1 ? '1' : null;
     this.reportForm = this.formBuilder.nonNullable.group({

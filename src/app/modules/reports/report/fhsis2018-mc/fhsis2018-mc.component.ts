@@ -3,6 +3,8 @@ import { faCircleNotch, faFileExcel, faFilePdf } from '@fortawesome/free-solid-s
 import { ExportAsConfig, ExportAsService } from 'ngx-export-as';
 import * as moment from 'moment';
 import { HttpService } from 'app/shared/services/http.service';
+import { formatDate } from '@angular/common';
+import { dateHelper } from 'app/shared/services/date-helper.service';
 
 @Component({
   selector: 'app-fhsis2018-mc',
@@ -14,7 +16,10 @@ export class Fhsis2018McComponent implements OnChanges {
   @Input() reportForm;
   @Input() selectedBrgy;
   @Input() brgys;
-  @Input() userInfo;
+  @Input() facility;
+  @Input() submit_flag;
+  current_submit_flag: boolean = false;
+  show_stats: boolean = false;
 
   faCircleNotch = faCircleNotch;
   faFileExcel = faFileExcel;
@@ -22,19 +27,16 @@ export class Fhsis2018McComponent implements OnChanges {
 
   stats : any;
   brgy_result: any;
-  reportform_data : any;
   selected_barangay : any;
-  info3 : any;
   convertedMonth : any;
   brgys_info : any;
   name_list: any = [];
+  openList:boolean = false;
 
   exportAsExcel: ExportAsConfig = {
     type: 'xlsx',
     elementIdOrContent: 'reportForm',
-    options: {
-      
-    }
+    options: { }
   }
 
   exportAsPdf: ExportAsConfig = {
@@ -68,10 +70,10 @@ export class Fhsis2018McComponent implements OnChanges {
   }
 
   constructor(
-    private exportAsService: ExportAsService
+    private exportAsService: ExportAsService,
+    private dateHelper: dateHelper
   ) { }
 
-  openList:boolean = false;
   toggleModal(name_list, name_list2?, name_list3?){
     let list = [];
     if(name_list2 || name_list3) {
@@ -89,26 +91,25 @@ export class Fhsis2018McComponent implements OnChanges {
   }
 
   convertDate(){
-    this.convertedMonth = moment(this.reportForm.value.month, 'M').format('MMMM');
+    this.convertedMonth = formatDate(this.reportForm.value.month, 'MMMM', 'en', 'Asia/Manila')
   }
 
   convertBrgy(){
     this.brgy_result = this.selected_barangay?.map((code) => this.brgys.find((el) => el.code == code).name);
   }
 
+  label_value: {};
   ngOnChanges(): void {
-    this.stats = this.report_data;
-    this.reportform_data = this.reportForm;
-    this.selected_barangay = this.selectedBrgy;
-    this.info3 = this.userInfo;
-    this.brgys_info = this.brgys;
-    this.pdf_exported = false;
-    // console.log(this.reportform_data, 'test report data')
-    // console.log(this.selected_barangay, 'test selected brgy')
-    // console.log(this.info3, 'test user inFo')
-    // console.log(this.brgys_info, 'test barangay')
-    // console.log(this.brgy_result, 'test barangay convert')
-    this.convertBrgy();
-    this.convertDate();
+    this.current_submit_flag = this.submit_flag;
+    if(this.current_submit_flag){
+      this.show_stats = false;
+      this.stats = this.report_data;
+      this.brgys_info = this.brgys;
+      this.pdf_exported = false;
+      this.label_value = this.dateHelper.getLabelValue(this.reportForm, this.report_data);
+      if(this.selectedBrgy) this.convertBrgy();
+
+      this.show_stats = true;
+    }
   }
 }

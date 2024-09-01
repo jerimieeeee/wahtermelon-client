@@ -1,16 +1,14 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import { faCircleNotch, faFileExcel, faFilePdf } from '@fortawesome/free-solid-svg-icons';
-import { options } from 'app/modules/patient-registration/patient-registration.module';
-import { ExportAsConfig, ExportAsService } from 'ngx-export-as';
-import * as moment from 'moment';
 import { dateHelper } from 'app/shared/services/date-helper.service';
+import { ExportAsConfig, ExportAsService } from 'ngx-export-as';
 
 @Component({
-  selector: 'app-fhsis2018-tb',
-  templateUrl: './fhsis2018-tb.component.html',
-  styleUrls: ['./fhsis2018-tb.component.scss']
+  selector: 'app-fhsis2018-environmental',
+  templateUrl: './fhsis2018-environmental.component.html',
+  styleUrls: ['./fhsis2018-environmental.component.scss']
 })
-export class Fhsis2018TbComponent implements OnChanges {
+export class Fhsis2018EnvironmentalComponent implements OnChanges{
   @Input() report_data;
   @Input() reportForm;
   @Input() selectedBrgy;
@@ -28,6 +26,7 @@ export class Fhsis2018TbComponent implements OnChanges {
   brgy_result: any;
   reportform_data : any;
   selected_barangay : any;
+  convertedMonth : any;
   brgys_info : any;
   name_list: any = [];
 
@@ -54,7 +53,7 @@ export class Fhsis2018TbComponent implements OnChanges {
   }
 
   exportX() {
-    this.exportAsService.save(this.exportAsExcel, 'TB Dots M1').subscribe(() => {
+    this.exportAsService.save(this.exportAsExcel, 'Environmental M1').subscribe(() => {
       // save started
     });
   }
@@ -62,15 +61,10 @@ export class Fhsis2018TbComponent implements OnChanges {
   pdf_exported: boolean = false;
   exportP() {
     this.pdf_exported = true;
-    this.exportAsService.save(this.exportAsPdf, 'TB Dots M1').subscribe(() => {
+    this.exportAsService.save(this.exportAsPdf, 'Environmental M1').subscribe(() => {
       // save started
     });
   }
-
-  constructor(
-    private exportAsService: ExportAsService,
-    private dateHelper: dateHelper
-  ) { }
 
   openList:boolean = false;
   toggleModal(name_list, name_list2?){
@@ -86,9 +80,18 @@ export class Fhsis2018TbComponent implements OnChanges {
     this.openList = !this.openList;
   }
 
+  /* convertDate(){
+    this.convertedMonth = moment(this.reportForm.value.month, 'M').format('MMMM');
+  } */
+
   convertBrgy(){
     this.brgy_result = this.selected_barangay?.map((code) => this.brgys.find((el) => el.code == code).name);
   }
+
+  constructor(
+    private exportAsService: ExportAsService,
+    private dateHelper: dateHelper
+  ) { }
 
   label_value: {};
   ngOnChanges(): void {
@@ -99,7 +102,7 @@ export class Fhsis2018TbComponent implements OnChanges {
       this.brgys_info = this.brgys;
       this.pdf_exported = false;
       this.label_value = this.dateHelper.getLabelValue(this.reportForm, this.report_data);
-      // console.log(this.label_value, this.report_data)
+      console.log(this.label_value, this.report_data)
       if(this.selectedBrgy) this.convertBrgy();
 
       this.show_stats = true;

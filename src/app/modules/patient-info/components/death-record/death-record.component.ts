@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { faEdit } from '@fortawesome/free-regular-svg-icons';
 import { faChevronDown, faChevronUp, faMinus, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 
@@ -17,10 +18,13 @@ export class DeathRecordComponent {
   faChevronDown = faChevronDown;
   faPlusCircle = faPlusCircle;
   faMinus = faMinus;
-
+  faEdit = faEdit;
   death: any;
 
   show_form: boolean = true;
+
+  antecedent_list: any = [];
+  underlying_list: any = [];
 
   loadData(patient_id){
     this.http.get('mortality/record', {params:{patient_id: patient_id}}).subscribe({
@@ -28,10 +32,23 @@ export class DeathRecordComponent {
         // console.log(data)
         this.show_form = true;
         this.death = data.data[0];
+
+        this.handleCause();
         this.setDetails.emit({var_name: 'death_record', data: this.death});
       },
       error: err => console.log(err)
     });
+  }
+
+  handleCause() {
+    this.antecedent_list = [];
+    this.underlying_list = [];
+    if(this.death.cause) {
+      Object.entries(this.death.cause).forEach(([key, value]: any, index) => {
+        if(value.cause.code === 'ANT') this.antecedent_list.push(value.icd10.icd10_code + ': ' + value.icd10.icd10_desc);
+        if(value.cause.code === 'UND') this.underlying_list.push(value.icd10.icd10_code + ': ' + value.icd10.icd10_desc);
+      })
+    }
   }
 
   toggle(name) {

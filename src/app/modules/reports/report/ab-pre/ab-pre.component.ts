@@ -1,6 +1,7 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import { faFileExcel, faFilePdf } from '@fortawesome/free-regular-svg-icons';
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
+import { dateHelper } from 'app/shared/services/date-helper.service';
 import { ExportAsConfig, ExportAsService } from 'ngx-export-as';
 
 @Component({
@@ -13,9 +14,10 @@ export class AbPreComponent implements OnChanges {
   @Input() reportForm;
   @Input() selectedBrgy;
   @Input() brgys;
-  @Input() userInfo;
-  @Input() start_date;
-  @Input() end_date;
+  @Input() facility;
+  @Input() submit_flag;
+  current_submit_flag: boolean = false;
+  show_stats: boolean = false;
 
   faCircleNotch = faCircleNotch;
   faFileExcel = faFileExcel;
@@ -25,19 +27,16 @@ export class AbPreComponent implements OnChanges {
   brgy_result: any;
   reportform_data : any;
   selected_barangay : any;
-  info : any;
   convertedMonth : any;
   brgys_info : any;
   name_list: any = [];
   params: any = [];
-  url: any = 'reports-2018/animal-bite/cohort-name-list';
+  url: any = 'reports-2018/animal-bite/pre-exposure-name-list';
 
   exportAsExcel: ExportAsConfig = {
     type: 'xlsx',
     elementIdOrContent: 'reportForm',
-    options: {
-
-    }
+    options: { }
   }
 
   exportAsPdf: ExportAsConfig = {
@@ -56,11 +55,36 @@ export class AbPreComponent implements OnChanges {
     }
   }
 
-  var_list:any = [
-    {name: 'Total Category II',                   var_name: 'total_cat2'},
-    {name: 'Total Category III',                  var_name: 'total_cat3'},
-    {name: 'Total Category II and Category III',  var_name: 'total_cat2_and_cat3'}
-  ];
+  name_list_params: {};
+  showNameList(params, barangay_code) {
+    console.log(params)
+    this.params = params;
+    this.name_list_params = {
+      start_date: this.reportForm.value.start_date,
+      end_date: this.reportForm.value.end_date,
+      category: this.reportForm.value.report_class,
+      params: this.params,
+      per_page: 10,
+      barangay_code: barangay_code
+    };
+    this.openList = true;
+  };
+
+  total: {
+    male: 0,
+    female: 0,
+    less_than_15: 0,
+    greater_than_15: 0,
+    day0: 0,
+    day0_day7: 0,
+    day0_day7_day21: 0
+  };
+
+  countTotal(var_name, value, last?: boolean) {
+    console.log()
+    if(this.current_submit_flag) this.total[var_name] += value;
+    if(last) this.current_submit_flag = false
+  }
 
   exportX() {
     this.exportAsService.save(this.exportAsExcel, 'Post-Exposure').subscribe(() => {
@@ -86,20 +110,31 @@ export class AbPreComponent implements OnChanges {
   }
 
   constructor(
-    private exportAsService: ExportAsService
+    private exportAsService: ExportAsService,
+    private dateHelper: dateHelper
   ) { }
 
-  show_stats: boolean = false;
+  label_value: {};
   ngOnChanges(): void {
-    this.stats = this.report_data[0];
-    this.reportform_data = this.reportForm;
-    this.selected_barangay = this.selectedBrgy;
-    this.info = this.userInfo;
-    this.brgys_info = this.brgys;
-    this.pdf_exported = false;
-    this.show_stats = true;
+    this.current_submit_flag = this.submit_flag;
+    if(this.current_submit_flag){
+      this.total = {
+        male: 0,
+        female: 0,
+        less_than_15: 0,
+        greater_than_15: 0,
+        day0: 0,
+        day0_day7: 0,
+        day0_day7_day21: 0
+      };
+      this.selected_barangay = this.selectedBrgy;
+      this.show_stats = false;
+      this.stats = this.report_data;
+      this.brgys_info = this.brgys;
+      this.pdf_exported = false;
+      this.label_value = this.dateHelper.getLabelValue(this.reportForm, this.report_data);
 
-    console.log(this.stats)
-    console.log(this.info)
+      this.show_stats = true;
+    }
   }
 }
