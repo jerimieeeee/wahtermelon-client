@@ -75,6 +75,10 @@ const routes: Routes = [
     path: 'lab-pending',
     loadChildren: () => import('./modules/lab-pending/lab-pending.module').then(m => m.LabPendingModule)
   },
+  {
+    path: 'statistics',
+    loadChildren: () => import('./modules/statistics/statistics.module').then(m => m.StatisticsModule)
+  },
 ];
 
 @NgModule({
