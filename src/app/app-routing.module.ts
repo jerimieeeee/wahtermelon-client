@@ -79,6 +79,7 @@ const routes: Routes = [
     path: 'statistics',
     loadChildren: () => import('./modules/statistics/statistics.module').then(m => m.StatisticsModule)
   },
+  { path: 'modules/support', loadChildren: () => import('./modules/support/support.module').then(m => m.SupportModule) },
 ];
 
 @NgModule({

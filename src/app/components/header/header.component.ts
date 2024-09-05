@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
-import { faChevronCircleDown, faBell, faSearch, faGear, faHome, faRightFromBracket, faAddressBook, faUser, faSquarePollVertical, faCalendarDay, faFlask, faChartLine } from '@fortawesome/free-solid-svg-icons';
+import { faChevronCircleDown, faBell, faSearch, faGear, faHome, faRightFromBracket, faAddressBook, faUser, faSquarePollVertical, faCalendarDay, faFlask, faChartLine, faCircleQuestion } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { catchError, debounceTime, distinctUntilChanged, switchMap, tap, map, filter } from 'rxjs/operators';
 import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
@@ -30,7 +30,7 @@ export class HeaderComponent implements OnInit {
   faCalendarDay = faCalendarDay;
   faFlask = faFlask;
   faChartLine = faChartLine;
-
+  faCircleQuestion = faCircleQuestion;
   // patients$: Observable<any>;
   patients$ = new BehaviorSubject<any[]>([]);
   searchInput$ = new Subject<string>();
@@ -54,6 +54,11 @@ export class HeaderComponent implements OnInit {
   showCreate:boolean = false;
 
   user_menu = [
+    {
+      name: 'Help & Support',
+      location: 'support',
+      icon: faCircleQuestion
+    },
     {
       name: 'My Account',
       location: 'my-account',
