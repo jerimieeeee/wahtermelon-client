@@ -1,0 +1,70 @@
+<div class="rounded-xl border border-slate-100 shadow-md">
+  <div class="bg-blue-500 text-white py-2 px-5 rounded-t-xl font-semibold flex justify-between">
+    <div>
+      <button *ngIf="show_ticket_content" (click)="toggleTicketContent()" type="button">
+        <fa-icon [icon]="faArrowLeft"></fa-icon>
+      </button>
+      Technical & Admin Support
+    </div>
+    <div *ngIf="show_form && !show_ticket_content">
+      <button (click)="toggleModal('new-ticket')">
+        <fa-icon [icon]="faPlus"></fa-icon>
+      </button>
+    </div>
+  </div>
+
+  <div class="w-full flex">
+    <table *ngIf="show_form && !show_ticket_content" class="table-auto w-full m-5">
+      <thead>
+        <tr class="font-normal text-sm text-center">
+          <th class="w-3/12">Ticket Number & Status</th>
+          <th class="w-6/12">Title</th>
+          <th class="w-2/12">
+            Date Opened <br />
+            Date Closed
+          </th>
+          <th class="w-1/12">Elapsed Time</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of ticketList" class="hover:bg-blue-100 hover:cursor-pointer" (click)="toggleTicketContent(item)">
+          <td class="p-2">{{ item.status.desc }}</td>
+          <td class="p-2" >{{ item.title }}</td>
+          <td class="p-2">
+            {{ item.start_date | date: 'MM/dd/yyyy HH:mm a' }}
+            {{ item.end_date | date: 'MM/dd/yyyy HH:mm a' }}
+          </td>
+          <td class="p-2">{{ item.start_date }}</td>
+        </tr>
+
+        <tr *ngIf="ticketList.length === 0" class="border-b border-slate-100">
+          <td colspan="3" class="text-center italic py-5">No tickets found</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div *ngIf="show_form && show_ticket_content" class="w-full m-5">
+      <app-ticket-transactions
+        [facility_id]="facility_id"
+        [selected_ticket]="selected_ticket"
+      ></app-ticket-transactions>
+    </div>
+
+    <div class="w-full flex flex-col my-20" *ngIf="!show_form">
+      <div class="text-blue-500 flex justify-center">
+        <fa-icon [icon]="faCircleNotch" spin="true"></fa-icon>
+      </div>
+      <div class="flex justify-center">
+        Loading List...
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-ticketing-modal *ngIf="modals['new-ticket']"
+  (toggleModal)="toggleModal($event)"
+  [facility_id]="facility_id"
+></app-ticketing-modal>
+
+
+
