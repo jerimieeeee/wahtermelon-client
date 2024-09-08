@@ -127,7 +127,6 @@ export class HeaderComponent implements OnInit {
     let current_page = page ? 1 : page;
     return this.http.get('patient', {params:{'filter[search]':term, page: current_page, per_page: 10}})
     .pipe(map((resp:any) => {
-      console.log(resp)
       this.showCreate = resp.data.length == 0 ? true : false;
 
       this.from = resp.meta.from;
@@ -181,7 +180,6 @@ export class HeaderComponent implements OnInit {
     filter(event => event instanceof NavigationEnd),
     tap(() => {
       this.current_url = this.location.path();
-      console.log(this.current_url)
     })
   );
 
