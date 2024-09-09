@@ -1,1 +1,47 @@
-<p>health-financing works!!</p>
+<div class="flex justify-center items-center mt-10 mb-10">
+  
+  <div class="justify-center items-center">
+
+    <div class="">
+      <ngx-tableau
+      tableauVizUrl="https://public.tableau.com/views/ECLAIMSEXPERIMENTALNATIONALDASHBOARDv3/Dashboard1"
+      [filters]="{ facility_code: this.userInfo.facility_code }"
+      [options]="options"
+    ></ngx-tableau>
+    </div>
+
+    <div class="">
+      <ngx-tableau
+      tableauVizUrl="https://public.tableau.com/views/NATIONALKONSULTADASHBOARDv3/Dashboard3"
+      [filters]="{ facility_code: this.userInfo.facility_code }"
+      [options]="options"
+    ></ngx-tableau>
+    </div>
+
+    <div class="">
+      <ngx-tableau
+      tableauVizUrl="https://public.tableau.com/views/PATIENTREGISTRATIONv2/Dashboard1"
+      [filters]="{ facility_code: this.userInfo.facility_code }"
+      [options]="options"
+    ></ngx-tableau>
+    </div>
+
+    <div class="">
+      <ngx-tableau
+      tableauVizUrl="https://public.tableau.com/views/PATIENTCONSULTATIONv2/Dashboard1"
+      [filters]="{ facility_code: this.userInfo.facility_code }"
+      [options]="options"
+    ></ngx-tableau>
+    </div>
+
+    <div class="">
+      <ngx-tableau
+      tableauVizUrl="https://public.tableau.com/views/USERLOGINDASHBOARDv2/Dashboard1"
+      [filters]="{ facility_code: this.userInfo.facility_code }"
+      [options]="options"
+    ></ngx-tableau>
+    </div>
+
+  </div>
+
+</div>
