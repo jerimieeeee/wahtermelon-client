@@ -25,7 +25,15 @@
     <div [@openCloseAccordion] *ngIf="accordions['prescriptions']" class="block">
       <div class="flex pl-3 justify-between items-center mt-1 border-dashed border-b border-slate-200" *ngFor="let pres of prescriptions; trackBy:identify">
         <span class="block font-medium text-xs w-10/12">
-          {{ pres.konsulta_medicine ? pres.konsulta_medicine.desc : pres.added_medicine }}
+          {{
+            pres.konsulta_medicine
+            ? pres.konsulta_medicine.desc
+            : (
+               pres.medicine
+               ? pres.medicine.drug_name
+               : pres.added_medicine
+              )
+          }}
         </span>
         <span class="block text-xs w-2/12 align-top text-right">
           {{ pres.quantity }}
