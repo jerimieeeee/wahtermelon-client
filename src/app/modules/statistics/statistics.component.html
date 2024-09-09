@@ -1,1 +1,29 @@
-<p>statistics works!</p>
+<div class="flex grid grid-cols-1 m-5">
+
+  <form [formGroup]="dashboardForm" (ngSubmit)="onSubmit()" class="flex my-3 space-x-3">
+    <div class="w-40">
+      <label for="dashboard_type" class="input-label" >Dashboard</label>
+      <select id="dashboard_type" name="dashboard_type" class="input" formControlName="dashboard_type">
+        <option selected="true" disabled="disabled">Select report type</option>
+
+        <optgroup label="WAHTermelon Dashboard" class="text-gray-500" >
+          <option *ngFor="let type of dashboard_type; let i = index" [ngValue]="type" [selected]="dashboard_type.id === '1'">{{ type.desc }}</option>
+        </optgroup>
+
+      </select>
+    </div>
+  </form>
+
+ <div class="border border-slate-300 rounded-xl px-5">
+
+</div>
+
+<app-health-financing *ngIf="dashboardForm.value?.dashboard_type.id === '1'"
+      [dashboardForm]="dashboardForm"
+      [facility]="userInfo.facility"
+      [submit_flag]="submit_flag"
+      [dashboard_type]="dashboard_type"
+></app-health-financing>
+
+<script type="module" src="https://embedding.tableauusercontent.com/tableau.embedding.3.1.0.min.js"></script>
+    
