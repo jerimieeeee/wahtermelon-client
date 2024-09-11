@@ -129,12 +129,11 @@ export class PrescriptionComponent implements OnInit, OnChanges {
     if(this.consult_details.consult_done === false) this.show_actions = true;
 
     if(this.consult_details) {
-      this.consult_notes = this.consult_details.consult_notes;
+      if(this.consult_details.consult_notes) this.consult_notes = this.consult_details.consult_notes;
       this.consult_done = this.consult_details.consult_done;
     }
   }
 
-  //loadLibraries
   drug_uom: any;
   drug_regimen: any;
   drug_purpose: any;
@@ -147,7 +146,7 @@ export class PrescriptionComponent implements OnInit, OnChanges {
     {var_name: 'drug_purpose',      location: 'purposes'},
     {var_name: 'drug_frequency',    location: 'duration-frequencies'},
     {var_name: 'drug_preparation',  location: 'preparations'},
-    {var_name: 'drug_route', location: 'medicine-route'}
+    {var_name: 'drug_route',        location: 'medicine-route'}
   ];
 
   loadLibraries(){
