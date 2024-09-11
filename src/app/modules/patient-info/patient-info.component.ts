@@ -207,7 +207,6 @@ export class PatientInfoComponent implements OnInit {
   death_record: any;
 
   setDetails(data) {
-    console.log(data)
     this[data.var_name] = data.data;
   }
 

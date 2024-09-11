@@ -38,7 +38,7 @@
               {{ pres.konsulta_medicine ? pres.konsulta_medicine.desc : (pres.medicine ? pres.medicine.gen_name : pres.added_medicine) }}
             </td>
             <td scope="row" class="py-4 px-3  text-gray-900">
-              {{ pres.dosage_quantity }} {{ pres.unit_of_measurement.desc }} {{ pres.regimen.desc }}
+              {{ pres.dosage_quantity }} {{ pres.unit_of_measurement ? pres.unit_of_measurement.desc : '' }} {{ pres.regimen.desc }}
               {{ pres.duration_intake }} {{ pres.frequency.desc }} <br /><br />
 
               Instruction Qty: {{ pres.instruction_quantity }}
@@ -104,7 +104,7 @@
               {{ dis.prescription.konsulta_medicine ? dis.prescription.konsulta_medicine.desc : (dis.prescription.medicine ? dis.prescription.medicine.gen_name : dis.prescription.added_medicine) }}
             </td>
             <td scope="row" class="py-4 px-3 text-gray-900">
-              {{ dis.prescription.dosage_quantity }} {{ dis.prescription.unit_of_measurement.desc }} {{ dis.prescription.regimen.desc }}
+              {{ dis.prescription.dosage_quantity }} {{ dis.prescription.unit_of_measurement ? dis.prescription.unit_of_measurement.desc : '' }} {{ dis.prescription.regimen.desc }}
               {{ dis.prescription.duration_intake }} {{ dis.prescription.frequency.desc }} <br /><br />
 
               Instruction Qty: {{ dis.prescription.instruction_quantity }}

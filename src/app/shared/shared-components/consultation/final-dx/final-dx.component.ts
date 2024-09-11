@@ -125,11 +125,13 @@ export class FinalDxComponent implements OnChanges {
 
   ngOnChanges(changes){
     this.show_content = this.toggle_content;
-    if(this.consult_details) {
+    if(this.consult_details && this.consult_details.consult_notes) {
       this.final_dx = this.consult_details.consult_notes.finaldx;
       this.fdx_remarks = this.consult_details.consult_notes.fdx_remarks;
       this.consult_done = this.consult_details.consult_done;
       this.loadSelected();
+    } else {
+      this.loadFdx([]);
     }
   }
 
