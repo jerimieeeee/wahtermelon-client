@@ -90,9 +90,8 @@ export class dateHelper {
   }
 
   getPop(data, year) {
-    if(data.projected_population) {
+    if(data.projected_population[0]) {
       if(+data.projected_population[0].year === year) {
-        console.log('test')
         return data.projected_population[0].total_population ?? '-';
       }
     }
