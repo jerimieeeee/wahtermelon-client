@@ -160,7 +160,7 @@ export class Fhsis2018FpComponent implements OnChanges {
   ngOnChanges(): void {
     this.current_submit_flag = this.submit_flag;
     if(this.current_submit_flag){
-      this.stats = this.report_data;
+      this.stats = this.report_data.data;
       this.reportform_data = this.reportForm;
       this.selected_barangay = this.selectedBrgy;
       this.brgys_info = this.brgys;

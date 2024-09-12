@@ -114,7 +114,7 @@ export class EclaimsComponent implements OnInit {
 
     this.http.get('eclaims/eclaims-upload', { params }).subscribe({
       next:(data:any) => {
-        console.log(data.data)
+        // console.log(data.data)
         this.eclaims_list = data.data;
         this.show_form = true;
 
@@ -155,7 +155,7 @@ export class EclaimsComponent implements OnInit {
 
     this.http.post('eclaims/get-claim-status', params).subscribe({
       next:(resp: any) => {
-        console.log(resp)
+        // console.log(resp)
         this.iterateMessage(resp, data, type);
         this.addRetrieved();
       },
@@ -209,7 +209,6 @@ export class EclaimsComponent implements OnInit {
   }
 
   parseReason(data) {
-    console.log(data, typeof(data))
     if(data) {
       let obj: any = data;
       let message: any = '';
@@ -240,7 +239,7 @@ export class EclaimsComponent implements OnInit {
     data.pStatus = resp.CLAIM.pStatus;
     let message: string;
 
-    console.log(type, resp)
+    // console.log(type, resp)
     switch(resp.CLAIM.pStatus) {
       case 'DENIED': {
         data.denied_reason = resp.CLAIM.DENIED.REASON;
@@ -282,7 +281,7 @@ export class EclaimsComponent implements OnInit {
       }
       case 'IN PROCESS' : {
         message = 'As of: '+resp.pAsOf+ ' '+resp.pAsOfTime;
-        console.log(typeof(resp.CLAIM.TRAIL.PROCESS))
+        // console.log(typeof(resp.CLAIM.TRAIL.PROCESS))
         Object.entries(resp.CLAIM.TRAIL.PROCESS).forEach(([key, value]:any, index) => {
           message += '<br />Process Stage: '+value.pProcessStage;
           message += '<br />Process Date: '+value.pProcessDate + '<br />';
@@ -334,11 +333,12 @@ export class EclaimsComponent implements OnInit {
     this.selected_ticket_number = eclaims?.pReceiptTicketNumber ?? null;
     this.selected_series_lhio = eclaims?.pClaimSeriesLhio ?? null;
 
-    this.modal[name] = !this.modal[name];
-
     if(name==='cf2' && !this.modal['cf2']) this.getEclaimsList();
-    if(name==='upload-claims' && !this.modal['upload-claims']) this.getEclaimsList();
-    if(name==='upload-required-claims' && !this.modal['upload-required-claims']) this.getEclaimsList();
+    if(name==='upload-claims' && !this.modal['upload-claims']) this.patient = eclaims.patient; this.getEclaimsList();
+    if(name==='upload-required-claims' && !this.modal['upload-required-claims']) this.patient = eclaims.patient; this.getEclaimsList();
+
+    // console.log(this.patient)
+    this.modal[name] = !this.modal[name];
   }
 
   constructor(

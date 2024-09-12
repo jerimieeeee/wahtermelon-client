@@ -168,6 +168,7 @@ export class UploadClaimsComponent implements OnInit {
 
     this.http.get('eclaims/eclaims-doc', {params}).subscribe({
       next:(data:any) => {
+        // console.log(data)
         this.uploaded_docs = data.data;
         this.show_form = true;
       },
@@ -177,6 +178,7 @@ export class UploadClaimsComponent implements OnInit {
 
 
   uploadDocs(file_to_upload){
+    // console.log(file_to_upload, this.patient)
     this.is_uploading = true;
 
     const formData: FormData = new FormData();
