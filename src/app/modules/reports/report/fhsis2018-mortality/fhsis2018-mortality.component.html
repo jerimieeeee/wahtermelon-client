@@ -22,6 +22,13 @@
                   <img src="./assets/img/DOH_Logo.png" class="rounded-full w-28 h-28 mx-auto" />
                 </th>
                 <th colspan="7" class="text-sm font-medium text-gray-900 px-6 py-4 border text-left align-top">
+                    FHSIS Report for the Month: <br />
+                    Name of Barangay: <br />
+                    Name of BHS: <br />
+                    Name of Municipality/City: <br />
+                    Name of Province: <br />
+                    Projected Population for the Year: <br />
+                    Year: {{this.reportform_data.value.year}}
                   FHSIS Report for<span *ngIf="label_value.labelType === 'm1'"> the Month</span>: {{ label_value.labelDate}} <br />
                   Name of Barangay: {{ brgy_result ? this.brgy_result : '-'}} <br />
                   Name of Facility: <span class="capitalize"> {{ facility.facility_name}} </span> <br />
