@@ -1,11 +1,12 @@
 import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
-import { faChevronCircleDown, faBell, faSearch, faGear, faHome, faRightFromBracket, faAddressBook, faUser, faSquarePollVertical, faCalendarDay, faFlask } from '@fortawesome/free-solid-svg-icons';
+import { faChevronCircleDown, faBell, faSearch, faGear, faHome, faRightFromBracket, faAddressBook, faUser, faSquarePollVertical, faCalendarDay, faFlask, faChartLine } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { catchError, debounceTime, distinctUntilChanged, switchMap, tap, map, filter } from 'rxjs/operators';
-import { BehaviorSubject, concat, Observable, of, Subject } from 'rxjs';
-import { Router } from '@angular/router';
+import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
+import { NavigationEnd, Router } from '@angular/router';
 import { NgSelectComponent } from '@ng-select/ng-select';
 import { CookieService } from 'ngx-cookie-service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-header',
@@ -28,6 +29,7 @@ export class HeaderComponent implements OnInit {
   faSquarePollVertical = faSquarePollVertical;
   faCalendarDay = faCalendarDay;
   faFlask = faFlask;
+  faChartLine = faChartLine;
 
   // patients$: Observable<any>;
   patients$ = new BehaviorSubject<any[]>([]);
@@ -67,7 +69,8 @@ export class HeaderComponent implements OnInit {
   constructor(
     private http: HttpService,
     private router: Router,
-    private cookieService: CookieService
+    private cookieService: CookieService,
+    private location: Location,
   ) { }
 
   current_page: number = 1;
@@ -107,26 +110,6 @@ export class HeaderComponent implements OnInit {
         this.patientLoading = false;
       });
     }
-
-    /* let current_item = page ? this.patients$ : [];
-    this.patients$ = concat(
-      of(current_item),
-      this.searchInput$.pipe(
-        filter(res => {
-          return res !== null && res.length >= this.minLengthTerm
-        }),
-        distinctUntilChanged(),
-        debounceTime(1000),
-        tap(() => this.patientLoading = true),
-        switchMap(term => {
-          this.current_term = term;
-          return this.getPatient(term, page).pipe(
-            catchError(() => of([])),
-            tap(() => this.patientLoading = false)
-          )
-        })
-      )
-    ); */
   }
 
   onScrollEnd() {
@@ -151,26 +134,6 @@ export class HeaderComponent implements OnInit {
     }))
   }
 
-  /* onScrollEnd(){
-    this.patients$ = concat(
-      of([]), // default items
-      this.searchInput$.pipe(
-        filter(res => {
-          return res !== null && res.length >= this.minLengthTerm
-        }),
-        distinctUntilChanged(),
-        debounceTime(1000),
-        tap(() => this.patientLoading = true),
-        switchMap(term => {
-          return this.getPatient(term).pipe(
-            catchError(() => of([])),
-            tap(() => this.patientLoading = false)
-          )
-        })
-      )
-    );
-  } */
-
   toggleMenu(){
     this.showMenu = !this.showMenu;
   }
@@ -183,8 +146,6 @@ export class HeaderComponent implements OnInit {
       this.router.navigate(['/patient/itr', {id: selectedPatient.id}]);
     }
   }
-
-
 
   resetList(){
     this.selectedPatient = null;
@@ -211,9 +172,17 @@ export class HeaderComponent implements OnInit {
   logout(){
     this.http.removeLocalStorageItem();
   }
+  navigationEnd$ = this.router.events.pipe(
+    filter(event => event instanceof NavigationEnd),
+    tap(() => {
+      this.current_url = this.location.path();
+      console.log(this.current_url)
+    })
+  );
 
-
+  current_url: string;
   ngOnInit(): void {
+    this.navigationEnd$.subscribe();
     this.loadPatients();
     let val = this.http.getUserFromJSON();
 
@@ -225,13 +194,6 @@ export class HeaderComponent implements OnInit {
       facility:         {facility_name: val.facility.facility_name},
       designation_code: val.designation_code
     };
-
-    /* this.user.last_name = val.last_name;
-    this.user.first_name = val.first_name;
-    this.user.middle_name = val.middle_name === 'NA' ? '' : val.middle_name;
-    this.user.suffix_name = val.suffix_name === 'NA' ? '' : val.suffix_name;
-    this.user.facility.facility_name = val.facility.facility_name;
-    this.user.designation_code = val.designation_code; */
   }
 
 }
