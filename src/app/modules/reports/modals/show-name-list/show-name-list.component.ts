@@ -64,10 +64,10 @@ export class ShowNameListComponent implements OnInit {
     if (this.search_patient) params['search'] = this.search_patient;
 
     if (this.name_list_params.category === 'muncity') {
-      params['category'] = 'municipality';
+      params['category'] = 'muncity';
       params['code'] = this.reportForm.value.municipality_code
     } else if (this.name_list_params.category === 'brgys') {
-      params['category'] = 'barangay';
+      params['category'] = 'brgys';
       params['code'] = this.selected_barangay.join(',');
     } else {
       params['category'] = this.name_list_params.category;
