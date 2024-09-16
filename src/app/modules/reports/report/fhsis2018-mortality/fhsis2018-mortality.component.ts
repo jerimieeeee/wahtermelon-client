@@ -119,6 +119,7 @@ export class Fhsis2018MortalityComponent implements OnChanges{
       this.label_value = this.dateHelper.getLabelValue(this.reportForm, this.report_data);
       if(this.selectedBrgy) this.convertBrgy();
 
+      console.log(this.label_value)
       this.show_stats = true;
     }
   }
