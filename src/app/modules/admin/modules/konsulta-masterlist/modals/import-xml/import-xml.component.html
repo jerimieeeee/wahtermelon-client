@@ -36,7 +36,8 @@
       <div class="flex justify-end py-4 px-5 space-x-4 rounded-b border-t border-gray-200 dark:border-gray-600">
         <button [disabled]="is_uploading" type="button" class="btn-save bg-gray-400 px-10" (click)="closeModal()">Close</button>
         <button [disabled]="is_uploading || !file_to_upload || !cipher_key" type="button" (click)="uploadFile(file_to_upload)" class="btn-save">
-          <fa-icon [icon]="is_uploading ? faCircleNotch : faUpload" [spin]="is_uploading"></fa-icon>
+          <fa-icon [icon]="faUpload" *ngIf="!is_uploading"></fa-icon>
+          <fa-icon [icon]="faCircleNotch" *ngIf="is_uploading" [animation]="'spin'"></fa-icon>
           {{ is_uploading ? 'Uploading' : 'Upload' }} XML
         </button>
       </div>

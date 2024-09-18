@@ -144,7 +144,8 @@
       <div class="flex justify-end py-4 px-5 space-x-4 rounded-b border-t border-gray-200 dark:border-gray-600">
         <button [disabled]="is_saving" type="button" class="btn-cancel" (click)="closeModal()">Close</button>
         <button [disabled]="is_saving || preExposureForm.pristine || preExposureForm.invalid" type="button" class="btn-save" (click)="onSubmit()">
-          <fa-icon [icon]="is_saving ? faCircleNotch : faSave" [spin]="is_saving"></fa-icon>
+          <fa-icon [icon]="faSave" *ngIf="!is_saving"></fa-icon>
+          <fa-icon [icon]="faCircleNotch" *ngIf="is_saving" [animation]="'spin'"></fa-icon>
           {{ is_saving ? 'Saving' : "Save" }}
         </button>
       </div>

@@ -8,7 +8,8 @@
           Eligibility
         </h3>
         <button [disabled]="!show_form || pdf_exported || !pbef_result" class="bg-white text-orange-400 rounded-md px-2 py-1 disabled:opacity-50" (click)="exportP()">
-          <fa-icon [icon]="pdf_exported ? faCircleNotch : faFilePdf" [spin]="pdf_exported"></fa-icon>
+          <fa-icon *ngIf="!pdf_exported" [icon]="faFilePdf"></fa-icon>
+          <fa-icon *ngIf="pdf_exported" [icon]="faCircleNotch" [animation]="'spin'"></fa-icon>
         </button>
       </div>
       <!-- Modal body -->

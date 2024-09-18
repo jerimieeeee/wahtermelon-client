@@ -28,7 +28,8 @@ import { RapidOnsiteComponent } from './shared/shared-components/monitoring/rapi
         VitalsGraphComponent,
         VitalsComponent,
     ],
-    bootstrap: [AppComponent], imports: [BrowserModule,
+    bootstrap: [AppComponent],
+    imports: [BrowserModule,
         BrowserAnimationsModule,
         AppRoutingModule,
         FontAwesomeModule,
@@ -41,7 +42,8 @@ import { RapidOnsiteComponent } from './shared/shared-components/monitoring/rapi
             provide: DateAdapter,
             useFactory: adapterFactory,
         }),
-        RapidOnsiteComponent], providers: [
+        RapidOnsiteComponent],
+    providers: [
         {
             provide: HTTP_INTERCEPTORS,
             useClass: RequestsInterceptor,

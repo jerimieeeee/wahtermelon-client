@@ -24,7 +24,8 @@
 
         <div class="col-span-2 flex justify-end mt-3">
           <button [disabled]="hospitalizationHistoryForm.invalid || is_saving" type="submit" class="btn-save text-xs">
-            <fa-icon class="mr-2" [icon]="is_saving ? faCircleNotch : faPlus" [spin]="is_saving"></fa-icon>
+            <fa-icon class="mr-2" [icon]="faPlus" *ngIf="!is_saving"></fa-icon>
+            <fa-icon class="mr-2" [icon]="faCircleNotch" *ngIf="is_saving" [animation]="'spin'"></fa-icon>
             {{ is_saving ? 'Saving' : 'Add' }}
           </button>
         </div>

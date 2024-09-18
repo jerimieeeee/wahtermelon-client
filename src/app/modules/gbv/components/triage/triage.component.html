@@ -68,7 +68,8 @@
 
     <div class="flex justify-center mt-5" *ngIf="show_form">
       <button [disabled]="is_saving || !patient_gbv.gbv_date" type="button" (click)="onSubmit()" class="btn-save mr-5 mt-4">
-        <fa-icon [icon]="is_saving ? faCircleNotch : faSave" [spin]="is_saving" class="mr-2"></fa-icon>
+        <fa-icon [icon]="faSave" *ngIf="!is_saving" class="mr-2"></fa-icon>
+        <fa-icon [icon]="faCircleNotch" *ngIf="is_saving" [animation]="'spin'" class="mr-2"></fa-icon>
         {{ patient_gbv.id ? (is_saving ? 'Updating' : 'Update') : (is_saving ? 'Saving' : 'Save') }}
       </button>
     </div>

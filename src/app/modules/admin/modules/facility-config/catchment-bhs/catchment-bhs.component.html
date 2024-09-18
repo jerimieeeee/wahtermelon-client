@@ -26,7 +26,8 @@
     </div>
     <div class="text-end border-t border-slate-300 p-3 -mx-5 -mb-5">
       <button [disabled]="is_loading" type="button" class="btn-save" (click)="onSubmit()">
-        <fa-icon [icon]="is_loading ? faCircleNotch : faSave" class="pr-2" [spin]="is_loading"></fa-icon>
+        <fa-icon *ngIf="!is_loading" [icon]="faSave" class="pr-2"></fa-icon>
+        <fa-icon *ngIf="is_loading" [icon]="faCircleNotch" class="pr-2" [animation]="'spin'"></fa-icon>
         {{ is_loading ? (bhs.id ? 'Updating' : 'Saving') : (bhs.id ? 'Update' : 'Save') }}
       </button>
     </div>

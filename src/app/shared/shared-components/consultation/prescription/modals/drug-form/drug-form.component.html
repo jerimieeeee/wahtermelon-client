@@ -192,7 +192,8 @@
       <div class="flex justify-end mr-10 py-3 rounded-b">
         <button [disabled]="is_loading" type="button" class="btn-save px-10 bg-gray-400 mr-5" (click)="closeModal()">Close</button>
         <button [disabled]="is_loading || prescriptionForm.invalid" type="button" class="btn-save px-10 disabled:bg-gray-300" (click)="onSubmit()" >
-          <fa-icon [icon]="is_loading ? faCircleNotch : faSave" [spin]="is_loading"></fa-icon>
+          <fa-icon *ngIf="!is_loading" [icon]="faSave"></fa-icon>
+          <fa-icon *ngIf="is_loading" [icon]="faCircleNotch" [animation]="'spin'"></fa-icon>
           {{ is_loading ? 'Saving' : 'Save'}}
         </button>
       </div><!-- [disabled]="prescriptionForm.invalid" -->

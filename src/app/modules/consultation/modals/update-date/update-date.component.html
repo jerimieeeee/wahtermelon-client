@@ -37,13 +37,12 @@
                       <input type="text" name="pATC" id="pATC" class="input w-52" placeholder="Patient ATC" [(ngModel)]="pATC">
                       <input type="date" name="pATC_date" id="pATC_date" class="input w-52" placeholder="mm/dd/yyyy" max="{{ date | date:'yyyy-MM-dd HH:mm:ss'}}" [(ngModel)]="pATC_date">
 
-                      <!-- <button [disabled]="!pATC || !pATC_date || is_saving || is_checking_atc" type="button" class="h-9 mt-1 text-sm rounded-md text-white bg-blue-500 disabled:bg-gray-300" (click)="isATCValid()">
-                        <fa-icon [icon]="is_checking_atc ? faSpinner : faCheck" class="py-1 px-2" [spin]="is_checking_atc"></fa-icon>
-                      </button> -->
                     </div>
                     <div class="align-middle text-center">
                       <button [disabled]="!pATC || !pATC_date || is_saving || is_checking_atc" type="button" class="btn-save w-44" (click)="isATCValid()">
-                        <fa-icon [icon]="is_checking_atc ? faSpinner : faCheck" class="py-1 px-2" [spin]="is_checking_atc"></fa-icon>Check ATC
+                        <fa-icon [icon]="faCheck" class="py-1 px-2" *ngIf="!is_checking_atc"></fa-icon>
+                        <fa-icon [icon]="faSpinner" class="py-1 px-2" *ngIf="is_checking_atc" [animation]="'spin'"></fa-icon>
+                        Check ATC
                       </button>
                     </div>
                     <div *ngIf="pATC && !is_atc_valid" class="flex-1 flex text-xs text-red-500 italic text-center">

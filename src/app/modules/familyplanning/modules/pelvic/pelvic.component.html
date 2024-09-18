@@ -20,19 +20,19 @@
 
         <div class="flex justify-center mt-5">
             <button class="btn-save mr-5 mt-4" [disabled]="is_saving" (click)="onSubmit()">
-              <fa-icon [icon]="is_saving ? faSpinner : faSave" [spin]="is_saving ? true : false" class="mr-2"></fa-icon>
+              <fa-icon [icon]="faSave" *ngIf="!is_saving" class="mr-2"></fa-icon>
+              <fa-icon [icon]="faSpinner" *ngIf="is_saving" [animation]="'spin'" class="mr-2"></fa-icon>
               Save
             </button>
         </div>
 
 
     </div>
-    
+
 </div>
-  
+
   <!-- <app-delete-item *ngIf="modals['delete-item']"
     [delete_id]="delete_id"
     [delete_desc]="delete_desc"
     [url]="url"
     (toggleModal)="toggleModal($event)"></app-delete-item> -->
-  

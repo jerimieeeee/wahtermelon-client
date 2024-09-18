@@ -117,7 +117,7 @@
                       <th class="px-2 font-normal">{{mc.post_registration?(mc.post_registration.end_pregnancy?'Closed':'Open'):'Open'}}</th>
                       <th class="px-2 font-normal">
                         <button class=" px-2 py-1 bg-blue-400 text-white font-bold rounded hover:bg-blue-500" (click)="openMCR(mc.id)">
-                          <fa-icon *ngIf="loading && mc.id === view_id" class="mx-3" [icon]="faSpinner" [spin]="true"></fa-icon>
+                          <fa-icon *ngIf="loading && mc.id === view_id" class="mx-3" [icon]="faSpinner" [animation]="'spin'"></fa-icon>
                           {{loading && mc.id === view_id?'':'View'}}
                         </button>
                       </th>

@@ -292,12 +292,11 @@
 
         <div class="text-right pt-5 ">
           <button type="submit" *ngIf="!userForm.disabled" [disabled]="userForm.invalid || passwordMatchError" class="btn-save mr-6 w-48 mb-10 disabled:bg-gray-400">
-            <fa-icon *ngIf="loading" class="mr-3" [icon]="faSpinner" [spin]="true"></fa-icon>
+            <fa-icon *ngIf="loading" class="mr-3" [icon]="faSpinner" [animation]="'spin'"></fa-icon>
             {{ loading ? 'Saving' : 'Create Account' }}
           </button>
 
           <button type="submit" *ngIf="userForm.disabled" class="btn-save mr-6 w-48 mb-10 disabled:bg-gray-400" (click)="backToLogin()">
-            <!-- <fa-icon *ngIf="loading" class="mr-3" [icon]="faSpinner" [spin]="true"></fa-icon> -->
             Back to login
           </button>
         </div>

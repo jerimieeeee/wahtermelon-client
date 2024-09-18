@@ -3,7 +3,7 @@ import { faFileExcel, faFilePdf } from '@fortawesome/free-regular-svg-icons';
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import { ExportAsConfig, ExportAsService } from 'ngx-export-as';
 import { var_list } from './dentalVarList';
-import * as moment from 'moment';
+import moment from 'moment';
 import { dateHelper } from 'app/shared/services/date-helper.service';
 
 @Component({

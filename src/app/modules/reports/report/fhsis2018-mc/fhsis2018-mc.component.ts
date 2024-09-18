@@ -1,8 +1,6 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import { faCircleNotch, faFileExcel, faFilePdf } from '@fortawesome/free-solid-svg-icons';
 import { ExportAsConfig, ExportAsService } from 'ngx-export-as';
-import * as moment from 'moment';
-import { HttpService } from 'app/shared/services/http.service';
 import { formatDate } from '@angular/common';
 import { dateHelper } from 'app/shared/services/date-helper.service';
 

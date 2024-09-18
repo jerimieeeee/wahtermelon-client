@@ -116,15 +116,13 @@
                   <label for="authorization_transaction_code"  class="input-label pr-5 inline-block align-middle pt-3 w-1/4">Konsulta ATC</label><br />
                   <input type="authorization_transaction_code" name="authorization_transaction_code" id="authorization_transaction_code" class="input w-52" placeholder="Patient ATC" formControlName="authorization_transaction_code">
                   <input type="date" name="pATC_date" id="pATC_date" class="input w-52" placeholder="mm/dd/yyyy" max="{{ date | date:'yyyy-MM-dd HH:mm:ss'}}" [ngModelOptions]="{standalone: true}" [(ngModel)]="pATC_date">
-
-                  <!-- <button (click)="isATCValid()" [disabled]="!philhealthForm.value.authorization_transaction_code || !pATC_date || is_loading || is_checking_atc || !philhealthForm.value.philhealth_id" type="button" class="h-9 mt-1 text-sm rounded-md text-white bg-blue-500 disabled:bg-gray-300" (click)="isATCValid()">
-                    <fa-icon [icon]="is_checking_atc ? faSpinner : faCheck" class="py-1 px-2" [spin]="is_checking_atc"></fa-icon>
-                  </button> -->
                 </div>
 
                 <div class="align-middle text-center">
                   <button [disabled]="!philhealthForm.value.authorization_transaction_code || !pATC_date || is_loading || is_checking_atc || !philhealthForm.value.philhealth_id" type="button" class="btn-save w-44" (click)="isATCValid()">
-                    <fa-icon [icon]="is_checking_atc ? faSpinner : faCheck" class="py-1 px-2" [spin]="is_checking_atc"></fa-icon>Check ATC
+                    <fa-icon [icon]="faCheck" class="py-1 px-2" *ngIf="!is_checking_atc"></fa-icon>
+                    <fa-icon [icon]="faSpinner" class="py-1 px-2" *ngIf="is_checking_atc" [animation]="'spin'"></fa-icon>
+                    Check ATC
                   </button>
                 </div>
 

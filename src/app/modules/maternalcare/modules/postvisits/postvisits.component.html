@@ -288,7 +288,7 @@
             <div (click)="saveForm()"
                 class="cursor-pointer flex border-check hover:drop-shadow-md {{edit_bool?'bg-blue-300 hover:bg-blue-400 peer-hover:text-blue-400':'bg-green-300 hover:bg-green-400 peer-hover:text-green-400'}} py-1 rounded-full text-white px-3 peer-hover:bg-white peer-hover:text-green-400">
                 <fa-icon *ngIf="!is_saving" [icon]="faSave" size="lg" class="mr-2"></fa-icon>
-                <fa-icon *ngIf="is_saving" class="mr-2" [icon]="faSpinner" [spin]="true"></fa-icon>
+                <fa-icon *ngIf="is_saving" class="mr-2" [icon]="faSpinner" [animation]="'spin'"></fa-icon>
                 <button type="button" class="font-bold button-out border-check-red">
                     {{edit_bool?(is_saving?'Updating':'Update'):(is_saving?'Saving':'Save')}}
                 </button>

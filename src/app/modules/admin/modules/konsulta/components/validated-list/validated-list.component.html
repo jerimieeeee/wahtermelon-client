@@ -69,14 +69,16 @@
 
         <div *ngIf="kon.xml_status === 'F'">
           <button [disabled]="validating" class="text-sm text-white bg-blue-500 py-1 rounded-md px-3 mr-2 disabled:bg-gray-300" [class]="kon.xml_status === 'F' ? 'w-44' : 'w-28'" (click)="validate(kon)">
-            <fa-icon [icon]="validating ? faSpinner : faCircleCheck" [spin]="validating" class="mr-2"></fa-icon>
+            <fa-icon [icon]="faCircleCheck" *ngIf="!validating" class="mr-2"></fa-icon>
+            <fa-icon [icon]="faSpinner" *ngIf="validating" [animation]="'spin'" class="mr-2"></fa-icon>
             {{ validating ? 'loading' : 'revalidate' }}
           </button>
         </div>
 
         <div *ngIf="kon.xml_status === 'V'">
           <button [disabled]="submitting" class="text-sm text-white bg-green-500 py-1 w-28 rounded-md px-3 mr-2 disabled:bg-gray-300" (click)="submit(kon.transmittal_number)">
-            <fa-icon [icon]="submitting ? faSpinner : faCircleCheck" [spin]="submitting" class="mr-2"></fa-icon>
+            <fa-icon [icon]="faCircleCheck" *ngIf="!validating" class="mr-2"></fa-icon>
+            <fa-icon [icon]="faSpinner" *ngIf="validating" [animation]="'spin'" class="mr-2"></fa-icon>
             {{ submitting ? 'loading' : 'submit' }}
           </button>
         </div>

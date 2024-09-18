@@ -37,7 +37,8 @@
 
       <div class="text-right m-5">
         <button type="submit" class="btn-save" [disabled]="is_saving">
-          <fa-icon class="mr-3" [icon]="is_saving ? faSpinner : faSave" [spin]="is_saving"></fa-icon>
+          <fa-icon class="mr-3" [icon]="faSave" *ngIf="!is_saving"></fa-icon>
+          <fa-icon class="mr-3" [icon]="faSpinner" *ngIf="is_saving" [animation]="'spin'"></fa-icon>
           {{ is_saving ? 'Saving' : 'Save' }}
         </button>
       </div>
