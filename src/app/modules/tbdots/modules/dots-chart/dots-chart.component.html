@@ -95,7 +95,7 @@
 <div class="flex justify-center mt-5">
   <button [disabled]="is_saving" type="button" (click)="onSubmit()" class="btn-save mr-5 mt-4">
     <fa-icon *ngIf="!is_saving" [icon]="faSave" class="mr-2"></fa-icon>
-    <fa-icon *ngIf="is_saving" [icon]="faCircleNotch" [animation]="'spin'" class="mr-2"></fa-icon>
+    <fa-icon *ngIf="is_saving" [icon]="faCircleNotch" animation="spin" class="mr-2"></fa-icon>
     {{ intensiveForm ? (is_saving ? 'Updating' : 'Update') : (is_saving ? 'Saving' : 'Save') }}
   </button>
 </div>

@@ -193,7 +193,7 @@
         <button [disabled]="is_loading" type="button" class="btn-save px-10 bg-gray-400 mr-5" (click)="closeModal()">Close</button>
         <button [disabled]="is_loading || prescriptionForm.invalid" type="button" class="btn-save px-10 disabled:bg-gray-300" (click)="onSubmit()" >
           <fa-icon *ngIf="!is_loading" [icon]="faSave"></fa-icon>
-          <fa-icon *ngIf="is_loading" [icon]="faCircleNotch" [animation]="'spin'"></fa-icon>
+          <fa-icon *ngIf="is_loading" [icon]="faCircleNotch" animation="spin"></fa-icon>
           {{ is_loading ? 'Saving' : 'Save'}}
         </button>
       </div><!-- [disabled]="prescriptionForm.invalid" -->

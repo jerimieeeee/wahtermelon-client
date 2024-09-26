@@ -321,7 +321,7 @@
 
         <div class="text-right pt-5" *ngIf="userForm.enabled" >
           <button type="submit" class="btn-save mr-6 w-48 mb-10 disabled:opacity-75" [disabled]="userForm.pristine">
-            <fa-icon *ngIf="loading" class="mr-3" [icon]="faSpinner" [animation]="'spin'"></fa-icon>
+            <fa-icon *ngIf="loading" class="mr-3" [icon]="faSpinner" animation="spin"></fa-icon>
             {{ loading ? 'Updating' : 'Update' }}
           </button>
         </div>

@@ -137,7 +137,7 @@
               <p>{{this.patient_breastfed.reasoning}}</p>
               <button  type="button" class="btn-cancel" (click)="toggleBreastfeedingModal()">Close</button>
               <button  type="button" class="btn-save" (click)="onSubmit()" (click)="saveModal()">
-                <fa-icon *ngIf="is_saving" class="pl-0" [icon]="faSpinner" [animation]="'spin'"></fa-icon>
+                <fa-icon *ngIf="is_saving" class="pl-0" [icon]="faSpinner" animation="spin"></fa-icon>
                   {{ is_saving ? 'Saving' : 'Save' }}</button>
             </div>
           </div>

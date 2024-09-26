@@ -31,10 +31,10 @@ import { AnogenitalComponent } from './components/medical/modals/anogenital/anog
 import { PhysicalExaminationComponent } from './components/medical/modals/physical-examination/physical-examination.component';
 import { FileUploadComponent } from './components/medical/modals/file-upload/file-upload.component';
 import { ViewFileComponent } from './components/medical/modals/view-file/view-file.component';
-import { ExportAsModule } from 'ngx-export-as';
 import { ExportPdfComponent } from './components/medical/modals/export-pdf/export-pdf.component';
 import { LegalVisitComponent } from './components/intervention/modals/legal-visit/legal-visit.component';
 import { MedicalCertificateComponent } from './components/medical/modals/medical-certificate/medical-certificate.component';
+import { ExportAsModule } from 'ngx-export-as-17';
 
 export const options: Partial<null|IConfig> | (() => Partial<IConfig>) = null;
 
@@ -75,10 +75,10 @@ export const options: Partial<null|IConfig> | (() => Partial<IConfig>) = null;
     GbvRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    FontAwesomeModule,
     NgxMaskDirective,
     NgxMaskPipe,
-    ExportAsModule
+    ExportAsModule,
+    FontAwesomeModule
   ],
   providers: [
     provideNgxMask()

@@ -121,7 +121,7 @@
                 <div class="align-middle text-center">
                   <button [disabled]="!philhealthForm.value.authorization_transaction_code || !pATC_date || is_loading || is_checking_atc || !philhealthForm.value.philhealth_id" type="button" class="btn-save w-44" (click)="isATCValid()">
                     <fa-icon [icon]="faCheck" class="py-1 px-2" *ngIf="!is_checking_atc"></fa-icon>
-                    <fa-icon [icon]="faSpinner" class="py-1 px-2" *ngIf="is_checking_atc" [animation]="'spin'"></fa-icon>
+                    <fa-icon [icon]="faSpinner" class="py-1 px-2" *ngIf="is_checking_atc" animation="spin"></fa-icon>
                     Check ATC
                   </button>
                 </div>

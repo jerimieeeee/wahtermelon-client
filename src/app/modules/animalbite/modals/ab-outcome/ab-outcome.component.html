@@ -96,7 +96,7 @@
         <button type="button" class="btn-save bg-gray-400" (click)="closeModal()">Close</button>
         <button [disabled]="!show_form || is_saving || abForm.invalid" type="button" class="btn-save px-10 disabled:bg-gray-300" (click)="onSubmit()" >
           <fa-icon [icon]="faSave" *ngIf="!is_saving"></fa-icon>
-          <fa-icon [icon]="faCircleNotch" *ngIf="is_saving" [animation]="'spin'"></fa-icon>
+          <fa-icon [icon]="faCircleNotch" *ngIf="is_saving" animation="spin"></fa-icon>
           {{ is_saving ? 'Saving' : 'Save' }}
         </button>
       </div>

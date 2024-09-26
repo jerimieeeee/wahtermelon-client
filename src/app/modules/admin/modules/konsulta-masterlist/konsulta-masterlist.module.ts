@@ -6,8 +6,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SetDateComponent } from './modals/set-date/set-date.component';
 import { ImportXmlComponent } from './modals/import-xml/import-xml.component';
-import { ExportAsModule, ExportAsService } from 'ngx-export-as';
 import { KonsultaMasterlistComponent } from './konsulta-masterlist.component';
+import { ExportAsModule } from 'ngx-export-as-17';
 
 
 @NgModule({
@@ -21,7 +21,8 @@ import { KonsultaMasterlistComponent } from './konsulta-masterlist.component';
     KonsultaMasterlistRoutingModule,
     FormsModule,
     FontAwesomeModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ExportAsModule
   ]
 })
 export class KonsultaMasterlistModule { }

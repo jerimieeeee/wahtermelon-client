@@ -28,7 +28,7 @@
         <div class="flex justify-center mt-5">
             <button class="btn-save mr-5 mt-4" [disabled]="is_saving" (click)="onSubmit()">
               <fa-icon [icon]="faSave" *ngIf="!is_saving" class="mr-2"></fa-icon>
-              <fa-icon [icon]="faSpinner" *ngIf="is_saving" [animation]="'spin'" class="mr-2"></fa-icon>
+              <fa-icon [icon]="faSpinner" *ngIf="is_saving" animation="spin" class="mr-2"></fa-icon>
               Save
             </button>
         </div>

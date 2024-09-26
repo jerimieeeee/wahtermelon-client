@@ -145,7 +145,7 @@
         <button [disabled]="is_saving" type="button" class="btn-cancel" (click)="closeModal()">Close</button>
         <button [disabled]="is_saving || preExposureForm.pristine || preExposureForm.invalid" type="button" class="btn-save" (click)="onSubmit()">
           <fa-icon [icon]="faSave" *ngIf="!is_saving"></fa-icon>
-          <fa-icon [icon]="faCircleNotch" *ngIf="is_saving" [animation]="'spin'"></fa-icon>
+          <fa-icon [icon]="faCircleNotch" *ngIf="is_saving" animation="spin"></fa-icon>
           {{ is_saving ? 'Saving' : "Save" }}
         </button>
       </div>

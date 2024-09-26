@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import { faFileExcel, faFilePdf } from '@fortawesome/free-regular-svg-icons';
-import { ExportAsConfig, ExportAsService } from 'ngx-export-as';
+import { ExportAsConfig, ExportAsService } from 'ngx-export-as-17';
 
 @Component({
   selector: 'app-household-profiling',

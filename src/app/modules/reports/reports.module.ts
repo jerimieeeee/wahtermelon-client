@@ -10,7 +10,6 @@ import { NameListComponent } from './modals/name-list/name-list.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { HeaderFhsis2018Component } from './components/header-fhsis2018/header-fhsis2018.component';
-import { ExportAsModule } from 'ngx-export-as';
 import { PatientRegisteredComponent } from './report/patient-registered/patient-registered.component';
 import { CatalystReportComponent } from './report/catalyst-report/catalyst-report.component';
 import { Fhsis2018MorbidityComponent } from './report/fhsis2018-morbidity/fhsis2018-morbidity.component';
@@ -28,6 +27,7 @@ import { Fhsis2018DentalM1Component } from './report/fhsis2018-dental-m1/fhsis20
 import { Fhsis2018MortalityComponent } from './report/fhsis2018-mortality/fhsis2018-mortality.component';
 import { Fhsis2018EnvironmentalComponent } from './report/fhsis2018-environmental/fhsis2018-environmental.component';
 import { Fhsis2018MortalityUnderlyingComponent } from './report/fhsis2018-mortality-underlying/fhsis2018-mortality-underlying.component';
+import { ExportAsModule } from 'ngx-export-as-17';
 
 
 @NgModule({

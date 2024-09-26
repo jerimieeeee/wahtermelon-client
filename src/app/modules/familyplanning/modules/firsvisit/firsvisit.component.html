@@ -70,7 +70,7 @@
     <div class="flex justify-center py-5">
       <button class="btn-save mr-5 mt-4" [disabled]="visitForm.invalid || is_saving">
         <fa-icon [icon]="faSave" *ngIf="!is_saving" class="mr-2"></fa-icon>
-        <fa-icon [icon]="faSpinner" *ngIf="is_saving" [animation]="'spin'" class="mr-2"></fa-icon>
+        <fa-icon [icon]="faSpinner" *ngIf="is_saving" animation="spin" class="mr-2"></fa-icon>
         {{ visitForm.value.id ? (is_saving ? 'Updating' : 'Update') : (is_saving ? 'Saving' : 'Save') }}
       </button>
     </div>

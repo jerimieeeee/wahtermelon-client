@@ -675,7 +675,7 @@
       <div class="flex justify-center mt-5">
         <button [disabled]="is_saving" type="submit" class="btn-save mr-5 mt-4">
           <fa-icon [icon]="faSave" *ngIf="!is_saving" class="mr-2"></fa-icon>
-          <fa-icon [icon]="faCircleNotch" *ngIf="is_saving" [animation]="'spin'" class="mr-2"></fa-icon>
+          <fa-icon [icon]="faCircleNotch" *ngIf="is_saving" animation="spin" class="mr-2"></fa-icon>
           {{ intakeForm.value.id ? (is_saving ? 'Updating' : 'Update') : (is_saving ? 'Saving' : 'Save') }}
         </button>
       </div>

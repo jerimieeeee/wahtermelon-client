@@ -31,7 +31,7 @@
         <button type="button" class="btn-save bg-gray-400" (click)="closeModal()">Cancel</button>
         <button type="button h-10" class="btn-save" [disabled]="toothServiceForm.invalid || is_saving" (click)="onSubmit()">
           <fa-icon [icon]="faSave" *ngIf="is_saving"></fa-icon>
-          <fa-icon [icon]="faCircleNotch" *ngIf="is_saving" [animation]="'spin'"></fa-icon>
+          <fa-icon [icon]="faCircleNotch" *ngIf="is_saving" animation="spin"></fa-icon>
           {{ is_saving ? 'Saving' : 'Save' }}
         </button>
       </div>

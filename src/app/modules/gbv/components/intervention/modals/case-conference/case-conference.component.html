@@ -91,7 +91,7 @@
         <button type="button" class="btn-save bg-gray-400" (click)="closeModal()">Close</button>
         <button [disabled]="is_saving" *ngIf="show_form" type="submit" class="btn-save px-10 disabled:bg-gray-300" (click)="onSubmit()" >
           <fa-icon [icon]="faSave" class="pr-2" *ngIf="!is_saving"></fa-icon>
-          <fa-icon [icon]="faCircleNotch" class="pr-2" *ngIf="is_saving" [animation]="'spin'"></fa-icon>
+          <fa-icon [icon]="faCircleNotch" class="pr-2" *ngIf="is_saving" animation="spin"></fa-icon>
           {{ is_saving ? (patient_conference.id ? 'Updating' : 'Saving') : (patient_conference.id ? 'Update' : 'Save') }}
         </button>
       </div>

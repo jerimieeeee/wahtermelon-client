@@ -52,7 +52,7 @@
     <div class="flex justify-center w-full mb-3">
       <button [disabled]="is_saving" class="btn-save h-9 mt-1" (click)="onSubmit(chart.title)">
         <fa-icon [icon]="faSave" *ngIf="!is_saving"></fa-icon>
-        <fa-icon [icon]="faCircleNotch" *ngIf="is_saving" [animation]="'spin'"></fa-icon>
+        <fa-icon [icon]="faCircleNotch" *ngIf="is_saving" animation="spin"></fa-icon>
         {{ is_saving ? 'Saving ' : 'Save ' }} Tooth Condition
       </button>
     </div>
@@ -133,7 +133,7 @@
       <div class="text-right m-5">
         <button type="submit" class="btn-save" [disabled]="saving_oralCondition">
           <fa-icon class="mr-3" [icon]="faSave" *ngIf="!saving_oralCondition"></fa-icon>
-          <fa-icon class="mr-3" [icon]="faCircleNotch" *ngIf="saving_oralCondition" [animation]="'spin'"></fa-icon>
+          <fa-icon class="mr-3" [icon]="faCircleNotch" *ngIf="saving_oralCondition" animation="spin"></fa-icon>
           {{ saving_oralCondition ? 'Saving' : 'Save' }}
         </button>
       </div>

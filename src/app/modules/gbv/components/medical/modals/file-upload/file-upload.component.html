@@ -49,7 +49,7 @@
         <button type="button" class="btn-save bg-gray-400" (click)="closeModal()">Close</button>
         <button [disabled]="is_uploading" type="submit" class="btn-save px-10 disabled:bg-gray-300" (click)="uploadFile(file_to_upload)" >
           <fa-icon *ngIf="!is_uploading" [icon]="faFileUpload"></fa-icon>
-          <fa-icon *ngIf="is_uploading" [icon]="faCircleNotch" [animation]="'spin'"></fa-icon>
+          <fa-icon *ngIf="is_uploading" [icon]="faCircleNotch" animation="spin"></fa-icon>
           {{ is_uploading ? 'Uploading' : 'Upload' }}
         </button>
       </div>

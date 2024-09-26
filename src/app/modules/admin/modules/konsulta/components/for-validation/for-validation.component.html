@@ -41,13 +41,13 @@
       <td class="py-4 px-3 text-center">
         <button [disabled]="validating" class="text-sm text-white bg-blue-500 py-1 w-28 rounded-md px-3 mb-2 hover:opacity-90 disabled:bg-gray-300" (click)="validate(kon, 0)">
           <fa-icon [icon]="faCircleCheck" *ngIf="!validating" class="mr-2"></fa-icon>
-          <fa-icon [icon]="faSpinner" *ngIf="validating" [animation]="'spin'" class="mr-2"></fa-icon>
+          <fa-icon [icon]="faSpinner" *ngIf="validating" animation="spin" class="mr-2"></fa-icon>
           {{ validating ? 'Loading' : 'Validate' }}
         </button>
 
         <button [disabled]="validating" class="text-sm text-white bg-orange-400 py-1 w-28 rounded-md px-3 hover:opacity-90 disabled:bg-gray-300" (click)="validate(kon, 1)">
           <fa-icon [icon]="faCircleCheck" *ngIf="!validating" class="mr-2"></fa-icon>
-          <fa-icon [icon]="faSpinner" *ngIf="validating" [animation]="'spin'" class="mr-2"></fa-icon>
+          <fa-icon [icon]="faSpinner" *ngIf="validating" animation="spin" class="mr-2"></fa-icon>
           {{ validating ? 'Loading' : 'Save' }}
         </button>
       </td>
