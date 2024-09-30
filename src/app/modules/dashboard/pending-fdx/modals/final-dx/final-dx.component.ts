@@ -16,7 +16,7 @@ import {
   tap
 } from "rxjs";
 import { AgeService } from 'app/shared/services/age.service';
-import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {pendingFdxForm} from "./pending-fdx-form";
 import {ToastrService} from "ngx-toastr";
 
@@ -32,7 +32,18 @@ export class FinalDxComponent implements OnChanges {
   @Input() consult_id: any;
   @Input() consult_date: any;
 
-  icd10forms:FormGroup=pendingFdxForm();
+  methodForm: FormGroup = new FormGroup({
+      id: new FormControl<string| null>(null),
+      notes_id: new FormControl<string| null>(null),
+
+      icd10_code: new FormControl<string| null>(null)
+    });
+
+  fdxremarks: FormGroup = new FormGroup({
+
+    fdx_remarks: new FormControl<string| null>(''),
+
+  });
 
   data: any;
   patient_age: any;
@@ -41,8 +52,10 @@ export class FinalDxComponent implements OnChanges {
   selectedFdx: any;
   minLengthTerm = 3;
   fdx_remarks: string;
+  fdxremarks2: any;
   fdxLoading: boolean = false;
   final_dx: any;
+  notes_id: any;
 
   closeModal() {
     this.toggleModal.emit();
@@ -111,7 +124,7 @@ export class FinalDxComponent implements OnChanges {
     };
   }
 
-/*  lodFormLibraries() {
+  lodFormLibraries() {
     const getIcd10 = this.http.get('libraries/icd10');
 
     forkJoin([
@@ -121,22 +134,100 @@ export class FinalDxComponent implements OnChanges {
         this.icd10 = icd10.data;
         this.show_form = true;
 
-        this.createForm();
+        // this.validateForm();
       },
       error: err => { this.http.showError(err.error.message, 'Icd10 Library'); }
     })
-  }*/
+  }
 
-/*  createForm() {
-    this.icd10forms = this.formBuilder.nonNullable.group({
+
+/*  validateForm() {
+    this.methodForm = this.formBuilder.nonNullable.group({
       id: [''],
-      notes_id: [this.pending_fdx.notes_id, [Validators.required]],
-      final_diagnosis: this.formBuilder.array([]), // Initialize as empty FormArray
+      notes_id: [this.notes_id, [Validators.required]],
+      final_diagnosis: {
+        icd10_code: this.selectedFdx
+      }, // Initialize as empty FormArray
     });
   }*/
 
-/*  get finalDiagnosisArray() {
-    return this.icd10forms.get('final_diagnosis') as FormArray;
+  onSubmit(){
+    console.log(this.fdxremarks2, 'reamrks')
+    this.is_saving = true;
+    if(this.selectedFdx && Object.keys(this.selectedFdx).length > 0) {
+      let fdx = {
+        notes_id: this.notes_id,
+        final_diagnosis: this.selectedFdx
+      };
+
+      this.http.post('consultation/final-diagnosis', fdx).subscribe({
+        next: (data: any) => {
+          // console.log(data);
+          this.saveNotes();
+        },
+        error: err => console.log(err)
+      })
+    } else {
+      this.saveNotes();
+    }
+  }
+
+  saveNotes() {
+      let notes_remarks = {
+        consult_id: this.consult_id,
+        fdx_remarks: this.fdxremarks2
+      }
+
+      this.http.update('consultation/notes/', this.notes_id, notes_remarks).subscribe({
+        next: (data: any) => {/* console.log(data);  */this.showToastr();},
+        error: err => console.log(err)
+      });
+  }
+
+  showToastr(){
+    this.is_saving = false;
+    this.toastr.success('Successfully updated!','Final Diagnosis')
+  }
+
+/*  OnSubmit() {
+
+    var icd10_arr = [];
+    this.is_saving = true;
+    // console.log(this.vaccineForm)
+    Object.entries(this.selectedFdx).forEach(([key, value], index) => {
+      if(value != false){
+        let pes = {
+          icd10_code: value
+        };
+
+        icd10_arr.push(pes);
+        console.log(icd10_arr, 'ito ung array sa for loop')
+      }
+    })
+
+    var finaldx_details = {
+      id: '',
+      notes_id: this.notes_id,
+      final_diagnosis: icd10_arr,
+
+    }
+
+    this.http.post('consultatiom/final-diagnosis', finaldx_details).subscribe({
+      next: () => {
+        this.toastr.success('First Visit was ' + (finaldx_details ? 'updated' : 'saved') + ' successfully', 'Success')
+        this.is_saving = false;
+
+        console.log(finaldx_details, 'ito ung submit sa PE')
+      },
+      error: err => console.log(err),
+      complete: () => {
+        console.log('success')
+      }
+    })
+  }*/
+
+  get finalDiagnosisArray() {
+    return this.methodForm.get('final_diagnosis') as FormArray;
   }
 
   addFinalDiagnosis() {
@@ -145,40 +236,23 @@ export class FinalDxComponent implements OnChanges {
 
   removeFinalDiagnosis(index: number) {
     this.finalDiagnosisArray.removeAt(index);
-  }*/
+  }
 
   is_saving: boolean = false;
-  onSubmit() {
-
-
-/*    const formData = this.icd10forms.value;
-
-    console.log(this.icd10forms, 'eto');
-    console.log(this.icd10forms.value, 'hahah');
-    this.is_saving = true;
-
-    if(this.icd10forms.valid){
-      this.http.post('non-communicable-disease/risk-casdt2', this.icd10forms.value).subscribe({
-        next: (data: any) => {
-          this.toastr.success('Recorded successfully!','Casdt2');
-          this.is_saving = false;
-        },
-        error: err => { this.http.showError(err.error.message, 'Casdt2'); }
-      })
-    }*/
-  }
 
   ngOnInit(): void {
     // this.getData();
     this.data = this.show_patient_data.data;
-    // this.lodFormLibraries();
-    // this.loadSelected();
+    this.notes_id = this.data[0].notes_id;
+    this.loadSelected();
+    console.log(this.selectedFdx, 'load selected')
+    // this.validateForm();
     console.log(this.data, 'amen5u');
   }
 
   ngOnChanges(changes){
       this.loadSelected();
-      console.log( this.selectedFdx);
+      console.log( this.selectedFdx, "amen1u");
   }
 
   // protected readonly icd10forms = icd10forms;
