@@ -1,10 +1,8 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import { faCircleNotch, faFileExcel, faFilePdf } from '@fortawesome/free-solid-svg-icons';
-import { ExportAsConfig, ExportAsService } from 'ngx-export-as';
-import * as moment from 'moment';
-import { HttpService } from 'app/shared/services/http.service';
 import { formatDate } from '@angular/common';
 import { dateHelper } from 'app/shared/services/date-helper.service';
+import { ExportAsConfig, ExportAsService } from 'ngx-export-as-17';
 
 @Component({
   selector: 'app-fhsis2018-mc',
@@ -107,6 +105,7 @@ export class Fhsis2018McComponent implements OnChanges {
       this.brgys_info = this.brgys;
       this.pdf_exported = false;
       this.label_value = this.dateHelper.getLabelValue(this.reportForm, this.report_data);
+      console.log()
       if(this.selectedBrgy) this.convertBrgy();
 
       this.show_stats = true;

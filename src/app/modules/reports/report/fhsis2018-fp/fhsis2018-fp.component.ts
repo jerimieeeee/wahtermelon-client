@@ -1,7 +1,7 @@
 import {Component, Input, OnChanges} from '@angular/core';
 import { faCircleNotch, faFileExcel, faFilePdf } from '@fortawesome/free-solid-svg-icons';
-import {ExportAsConfig, ExportAsService} from "ngx-export-as";
-import * as moment from "moment/moment";
+import {ExportAsConfig, ExportAsService} from "ngx-export-as-17";
+import moment from 'moment';
 import {HttpService} from "../../../../shared/services/http.service";
 
 @Component({

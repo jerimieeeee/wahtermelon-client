@@ -1,10 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { faSearch,faBalanceScale,faPlus, faInfoCircle, faCircleNotch } from '@fortawesome/free-solid-svg-icons';
-import { FormBuilder, FormGroup,FormArray,FormControl,Validators,} from '@angular/forms';
-import * as moment from 'moment';
+import { faSearch, faPlus, faInfoCircle, faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import { faPenToSquare } from '@fortawesome/free-regular-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
+import moment from 'moment';
 
 @Component({
   selector: 'app-breastfeeding',

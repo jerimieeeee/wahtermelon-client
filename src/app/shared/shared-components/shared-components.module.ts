@@ -12,7 +12,7 @@ import { PbefComponent } from './eclaims/modals/pbef/pbef.component';
 import { Cf1Component } from './eclaims/modals/cf1/cf1.component';
 import { Cf2Component } from './eclaims/modals/cf2/cf2.component';
 import { NgxPrintModule } from 'ngx-print';
-import { ExportAsModule } from 'ngx-export-as';
+import { ExportAsModule } from 'ngx-export-as-17';
 import { UploadClaimsComponent } from './eclaims/modals/upload-claims/upload-claims.component';
 import { DeleteItemComponent } from '../shared-modals/delete-item/delete-item.component';
 import { UploadRequiredClaimsComponent } from './eclaims/modals/upload-required-claims/upload-required-claims.component';

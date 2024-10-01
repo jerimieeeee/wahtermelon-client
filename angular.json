@@ -116,7 +116,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "wahtermelon-client:build"
+            "buildTarget": "wahtermelon-client:build"
           }
         },
         "test": {

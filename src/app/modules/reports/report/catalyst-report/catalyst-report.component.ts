@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import { faFilePdf, faFileExcel } from '@fortawesome/free-solid-svg-icons';
-import { ExportAsConfig, ExportAsService } from 'ngx-export-as';
+import { ExportAsConfig, ExportAsService } from 'ngx-export-as-17';
 
 @Component({
   selector: 'app-catalyst-report',
@@ -22,14 +22,14 @@ export class CatalystReportComponent implements OnChanges {
 
   pdf_exported: boolean = false;
 
-  // x = 
+  // x =
   //   {
   //     'sexual_abuse': [
   //       'male_age_0_to_5',
   //       'female_age_0_to_5',
 
   //       'male_age_6_to_11',
-  //       'female_age_6_to_11',        
+  //       'female_age_6_to_11',
   //     ],
 
   //     'economic_abuse': [
@@ -37,9 +37,9 @@ export class CatalystReportComponent implements OnChanges {
   //       'female_age_0_to_5',
 
   //       'male_age_6_to_11',
-  //       'female_age_6_to_11',        
+  //       'female_age_6_to_11',
   //     ]
-  
+
   //   }
 
   getReport(){
@@ -52,7 +52,7 @@ export class CatalystReportComponent implements OnChanges {
     type: 'xlsx',
     elementIdOrContent: 'catalystForm',
     options: {
-      
+
     }
   }
 
@@ -88,7 +88,7 @@ export class CatalystReportComponent implements OnChanges {
   returnZero() {
     return 0
     }
-  
+
   constructor(
       private exportAsService: ExportAsService
   ) { }

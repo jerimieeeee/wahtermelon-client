@@ -6,7 +6,7 @@
 
     <form [formGroup]="visitForm" (submit)="onSubmit()">
     <div class="grid grid-cols-12">
-  
+
     <div class="col-span-6 px-10 pt-5">
         <label for="no_of_living_children_actual" class="text-sm font-semibold">Number of Living Children (Actual)</label>
         <input type="number" name="no_of_living_children_actual" id="no_of_living_children_actual" class="input" placeholder="Input Number of Children" formControlName="no_of_living_children_actual">
@@ -63,23 +63,23 @@
           </div> -->
     </div>
 
-    
+
 
     </div>
 
     <div class="flex justify-center py-5">
       <button class="btn-save mr-5 mt-4" [disabled]="visitForm.invalid || is_saving">
-        <fa-icon [icon]="is_saving ? faSpinner : faSave" [spin]="is_saving ? true : false" class="mr-2"></fa-icon>
+        <fa-icon [icon]="faSave" *ngIf="!is_saving" class="mr-2"></fa-icon>
+        <fa-icon [icon]="faSpinner" *ngIf="is_saving" animation="spin" class="mr-2"></fa-icon>
         {{ visitForm.value.id ? (is_saving ? 'Updating' : 'Update') : (is_saving ? 'Saving' : 'Save') }}
       </button>
     </div>
     </form>
-      
+
 </div>
-  
+
   <!-- <app-delete-item *ngIf="modals['delete-item']"
     [delete_id]="delete_id"
     [delete_desc]="delete_desc"
     [url]="url"
     (toggleModal)="toggleModal($event)"></app-delete-item> -->
-  

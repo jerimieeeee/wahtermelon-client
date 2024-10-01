@@ -54,11 +54,11 @@ export class HeaderComponent implements OnInit {
   showCreate:boolean = false;
 
   user_menu = [
-    {
+    /* {
       name: 'Help & Support',
       location: 'support',
       icon: faCircleQuestion
-    },
+    }, */
     {
       name: 'My Account',
       location: 'my-account',

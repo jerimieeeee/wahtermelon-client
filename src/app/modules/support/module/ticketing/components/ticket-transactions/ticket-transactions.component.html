@@ -52,7 +52,7 @@
     <div class="flex justify-center mt-3">
       <button type="button" [disabled]="is_saving || log_comment === ''" (click)="onSubmit()" class="w-36 disabled:bg-gray-400 disabled:opacity-50 disabled:pointer-events-none right w-1/3 py-2 text-sm font-semibold text-white transition-colors duration-300 bg-blue-500 rounded-md shadow hover:bg-blue-600 focus:outline-none focus:ring-blue-200 focus:ring-4">
         <fa-icon *ngIf="!is_saving" [icon]="faSave"></fa-icon>
-        <fa-icon *ngIf="is_saving" [icon]="faCircleNotch" [animation]="'spin'"></fa-icon>
+        <fa-icon *ngIf="is_saving" [icon]="faCircleNotch" animation="spin"></fa-icon>
         {{ is_saving ? 'Saving' : 'Save'}}
       </button>
     </div>

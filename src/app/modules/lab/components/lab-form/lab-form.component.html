@@ -191,7 +191,8 @@
       <div class="flex justify-end pb-5 px-5 space-x-4 rounded-b my-5">
         <button [disabled]="is_saving" type="button" class="btn-save bg-gray-400 px-10" (click)="cancelThisModal()">Cancel</button>
         <button *ngIf="user_facility === selected_lab.facility_code" [disabled]="is_saving || (!request_status_code && (!lab_form['laboratory_date'] || !lab_form['lab_status_code']))" type="button" class="btn-save px-10 disabled:bg-gray-300" (click)="onSubmit()" >
-          <fa-icon [icon]="is_saving ? faSpinner : faSave" class="mr-2" [spin]="is_saving"></fa-icon>
+          <fa-icon [icon]="faSave" class="mr-2" *ngIf="!is_saving"></fa-icon>
+          <fa-icon [icon]="faSpinner" class="mr-2" *ngIf="is_saving" animation="spin"></fa-icon>
           {{ is_saving ? 'Saving' : 'Save' }}
         </button>
       </div>

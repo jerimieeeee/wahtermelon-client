@@ -92,7 +92,8 @@
 
           <div class="col-span-3 flex justify-center">
             <button [disabled]="environmentalForm.invalid || is_saving" type="submit" class="btn-save" (click)="onSubmit()">
-              <fa-icon [icon]="is_saving ? faCircleNotch : faSave" [spin]="is_saving"></fa-icon>
+              <fa-icon [icon]="faSave" *ngIf="!is_saving"></fa-icon>
+              <fa-icon [icon]="faCircleNotch" *ngIf="is_saving" animation="spin"></fa-icon>
               {{ is_saving ? (environmentalForm.value.id ? 'Updating' : 'Saving') : (environmentalForm.value.id ? 'Update' : 'Save') }}
             </button>
           </div>

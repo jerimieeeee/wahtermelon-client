@@ -224,7 +224,8 @@
           <div class="my-5">
             <div class="flex justify-center">
               <button [disabled]="caserateForm.invalid || is_saving" type="submit" class="btn-save font-semibold px-10">
-                <fa-icon [icon]="is_saving ? faCircleNotch : faSave" [spin]="is_saving" class="pr-2"></fa-icon>
+                <fa-icon [icon]="faSave" *ngIf="!is_saving" class="pr-2"></fa-icon>
+                <fa-icon [icon]="faCircleNotch" *ngIf="is_saving" animation="spin" class="pr-2"></fa-icon>
                 {{ caserateForm.value.id ? (is_saving ? 'Updating' : 'Update') : (is_saving ? 'Saving' : 'Save') }}
               </button>
             </div>

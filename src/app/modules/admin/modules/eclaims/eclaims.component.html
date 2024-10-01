@@ -20,15 +20,12 @@
         <fa-icon [icon]="faFilter"></fa-icon> Filter
       </button>
     </div>
-    <!-- <button type="button" (click)="refreshClaims()">
-      <fa-icon [icon]="faRotate" [spin]="is_refreshing"></fa-icon>
-    </button> -->
   </div>
 
   <div class="w-full p-5 overflow-x-auto">
     <div class="flex justify-center w-full" *ngIf="pStatus === 'IN PROCESS' && eclaims_list">
       <button [disabled]="is_refreshing || (batch_refresh && (claims_count !== retrieved_claims))" class="btn-save px-10" (click)="getStatuses()">
-        <fa-icon [icon]="faRotate" [spin]="is_refreshing || (batch_refresh && (claims_count !== retrieved_claims))"></fa-icon>
+        <fa-icon [icon]="faRotate" *ngIf="is_refreshing || (batch_refresh && (claims_count !== retrieved_claims))" animation="spin"></fa-icon>
         Check Claims ({{ eclaims_list.length }})
       </button>
     </div>
@@ -96,12 +93,14 @@
             </button> -->
 
             <button class="bg-green-500 text-white rounded-md p-0.5 mb-3 disabled:opacity-75" type="button" *ngIf="eclaims.pReceiptTicketNumber && !eclaims.pClaimSeriesLhio" (click)="checkSeries(eclaims)" [disabled]="is_refreshing || (batch_refresh && (claims_count !== retrieved_claims))">
-              <fa-icon [icon]="is_refreshing || (batch_refresh && (claims_count !== retrieved_claims)) ? faRotate : faReceipt" [spin]="is_refreshing || (batch_refresh && (claims_count !== retrieved_claims))"></fa-icon>
+              <fa-icon [icon]="faRotate" *ngIf="is_refreshing || (batch_refresh && (claims_count !== retrieved_claims))" animation="spin"></fa-icon>
+              <fa-icon [icon]="faReceipt" *ngIf="!(is_refreshing || (batch_refresh && (claims_count !== retrieved_claims)))" ></fa-icon>
               Get Series Lhio
             </button>
 
             <button class="bg-green-500 text-white rounded-md p-0.5 mb-3 disabled:opacity-75" type="button" *ngIf="eclaims.pClaimSeriesLhio && !eclaims.denied_reason" (click)="getClaimStatus(eclaims, eclaims.pStatus)" [disabled]="is_refreshing || (batch_refresh && (claims_count !== retrieved_claims))">
-              <fa-icon [icon]="is_refreshing || (batch_refresh && (claims_count !== retrieved_claims)) ? faRotate : faClipboardQuestion" [spin]="is_refreshing || (batch_refresh && (claims_count !== retrieved_claims))"></fa-icon>
+              <fa-icon [icon]="faClipboardQuestion" *ngIf="!(is_refreshing || (batch_refresh && (claims_count !== retrieved_claims)))"></fa-icon>
+              <fa-icon [icon]="faRotate" *ngIf="is_refreshing || (batch_refresh && (claims_count !== retrieved_claims))" animation="spin"></fa-icon>
               Check {{ eclaims.pStatus === 'DENIED' ? 'Reason' : 'Status' }}
             </button>
           </td>

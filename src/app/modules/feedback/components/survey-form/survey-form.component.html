@@ -39,7 +39,8 @@
 
       <button [disabled]="is_saving" (click)="question_index === question_length-1 ? onSubmit() : nextQuestion()" class="bg-blue-500 text-white rounded-md h-16 text-xl disabled:opacity-25" [disabled]="!feedback_answers[question_list[question_index].column_name] && question_list[question_index].column_name !== 'remarks'">
         {{ question_index === question_length-1 ? (is_saving ? 'Saving' : 'Submit') : 'Next' }}
-        <fa-icon [icon]="question_index === question_length-1 ? (is_saving ? faCircleNotch : faSave) : faArrowRight" [spin]="is_saving"></fa-icon>
+        <fa-icon [icon]="question_index === question_length-1 ? (faSave) : faArrowRight" *ngIf="!is_saving"></fa-icon>
+        <fa-icon [icon]="question_index === question_length-1 ? (faCircleNotch) : faArrowRight" *ngIf="is_saving" animation="spin"></fa-icon>
       </button>
     </div>
   </div>
@@ -52,7 +53,7 @@
 
 <div class="grid grid-cols-1 w-full my-24 text-center text-3xl" *ngIf="!show_form">
   <div class="flex justify-center text-blue-500">
-    <fa-icon [icon]="faCircleNotch" [spin]="true"></fa-icon>
+    <fa-icon [icon]="faCircleNotch" animation="spin"></fa-icon>
   </div>
 
   <div class="flex justify-center">
