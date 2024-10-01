@@ -32,15 +32,15 @@
               <tbody>
                 <fieldset class="text-base text-black py-3 px-5 rounded-t border-black border-t border-b border-r border-l">
                   <legend>Patient Information:</legend>
-                  <label>Name: {{ this.data[0].patient_name }} </label>
+                  <label>Name: {{ this.data.patient.first_name }} {{ this.data.patient.middle_name }} {{ this.data.patient.last_name }} </label>
                   <br />
-                  <label>Birthdate: {{ this.data[0].birthdate }}</label>
+                  <label>Birthdate: {{ this.data.patient.birthdate }}</label>
                   <br />
                   <label>Age: {{ getAge() }} years old</label>
                   <br />
                   <label>Consult Date: {{ this.consult_date }}</label>
                     <br />
-                  <label>Address: {{ this.data[0].address }}</label>
+                  <label>Address: {{ this.data.patient.household_folder.address }}, {{ this.data.patient.household_folder.barangay.name }} </label>
                 </fieldset>
               <div class="flex justify-between items-start mt-2 py-2 px-5 rounded-t border-b bg-red-500">
                 <h3 class="mt-2 text-lg text-white">
@@ -75,25 +75,9 @@
                     <div class="flex items-center space-x-4">
                     </div>
                   </div>
-                  <div class="shadow-md flex justify-between items-start mt-2 py-2 px-5 rounded-t border-b bg-blue-400 -outline-offset-8">
-                    <h3 class="mt-2 text-sm text-white font-bold">
-                      Current Diagnosis
-                    </h3>
-                  </div>
                   <table class="table-fixed w-full text-sm text-left text-black">
                     <thead class="text-s text-black bg-white -webkit-sticky border-b"
                            style="z-index: 20; position: sticky; top: 0;">
-                    <tr>
-                      <th scope="col" class="px-5 py-2" colspan="2">
-                        ICD 10
-                      </th>
-                      <th scope="col" class="text-center py-2" colspan="5">
-                        ICD 10 Description
-                      </th>
-                      <th scope="col" class="px-5 py-2 text-center" colspan="3">
-                        Action
-                      </th>
-                    </tr>
                     </thead>
                     <tbody>
                     <tr class="shadow-md -outline-offset-8 border-b rounded-t">
@@ -116,7 +100,7 @@
                     </tbody>
                   </table>
                   <div class="shadow-md -outline-offset-8">
-                    <div class="border-b rounded-t bg-violet-500 mt-2 py-2 px-5">
+                    <div class="border-b rounded-t bg-blue-500 mt-2 py-2 px-5">
                     <h3 class="mt-2 text-sm text-white font-bold">
                       Previous Diagnosis
                     </h3>
@@ -136,19 +120,25 @@
                       </th>
                     </tr>
                     </thead>
-                      <tbody>
-                          <div *ngFor="let consult of data.finaldx">
+                    <tbody>
+                      @for(consult of previous) {
+                        @if() {
+                        }
+                      }
+                    </tbody>
+                      <!--<tbody *ngFor="let consult of previous">
+                          <div>
                               <td class="px-6 py-2">
-                                {{ consult.lib_icd10.icd10_code }}
+                                {{ consult.final_diagnosis.id }}
                               </td>
                               <td class="items-center">
-                                {{ consult.lib_icd10.icd10_desc }}
+                                {{ consult.final_diagnosis.consult_id }}
                               </td>
                               <td class="px-5 py-2">
-                                {{ consult.consult_date }}
+                                {{ consult.final_diagnosis.patient_id }}
                               </td>
                           </div>
-                      </tbody>
+                      </tbody>-->
                   </table>
                   </div>
                   </div>
@@ -160,30 +150,29 @@
                     </h3>
                     <div class="shadow-md grid border w-full border-1 -outline-offset-8">
                       <div class="flex text-gray-700 md:block leading-tight align-top my-1 w-full p-1 rounded-md">
-                        <fieldset class="text-base text-black py-3 px-5 rounded-t border-black border-t border-b border-r border-l">
-  <!--                        <legend>Vitals Record</legend>-->
-                          <label>Blood Pressure: {{ this.data[0].bp_systolic ?? '-' }}/{{ this.data[0].bp_diastolic ?? '-' }}</label>
+                        <fieldset class="text-base text-black py-3 px-5 rounded-t">
+                          <label>Blood Pressure: {{ this.data.vitals_latest?.bp_systolic ?? '-' }}/{{ this.data.vitals_latest?.bp_diastolic ?? '-' }}</label>
                           <br />
-                          <label>BMI: {{ this.data[0].bmi ?? '-' }}</label>
+                          <label>BMI: {{ this.data.vitals_latest?.patient_bmi ?? '-' }} </label>
                           <br />
-                          <label>BMI Class: {{ this.data[0].bmi_class ?? '-' }}</label>
+                          <label>BMI Class: {{ this.data.vitals_latest?.patient_bmi_class ?? '-' }} </label>
                           <br />
-                          <label>Weight: {{ this.data[0].weight ?? '-' }}</label>
+                          <label>Weight: {{ this.data.vitals_latest?.patient_weight ?? '-' }} </label>
                           <span> kg</span>
                           <br />
-                          <label>Height: {{ this.data[0].height ?? '-' }}</label>
+                          <label>Height: {{ this.data.vitals_latest?.patient_height ?? '-' }} </label>
                           <span> cm</span>
                           <br />
-                          <label>Waist: {{ this.data[0].waist ?? '-' }}</label>
+                          <label>Waist: {{ this.data.vitals_latest?.patient_waist ?? '-' }} </label>
                           <br />
-                          <label>Temp: {{ this.data[0].temp ?? '-' }}</label>
+                          <label>Temp: {{ this.data.vitals_latest?.patient_temp ?? '-' }}</label>
                           <span> ℃</span>
                           <br />
-                          <label>Heart Rate: {{ this.data[0].heart_rate ?? '-' }}</label>
+                          <label>Heart Rate: {{ this.data.vitals_latest?.patient_heart_rate ?? '-' }}</label>
                           <br />
-                          <label>Respiratory Rate: {{ this.data[0].respiratory_rate ?? '-' }}</label>
+                          <label>Respiratory Rate: {{ this.data.vitals_latest?.patient_respiratory_rate ?? '-' }}</label>
                           <br />
-                          <label>Pulse Rate: {{ this.data[0].pulse_rate ?? '-' }}</label>
+                          <label>Pulse Rate: {{ this.data.vitals_latest?.patient_pulse_rate ?? '-' }}</label>
                         </fieldset>
                       </div>
                     </div>
@@ -193,14 +182,13 @@
                       Complaint
                     </h3>
                     <div class="shadow-md grid border w-full border-1 -outline-offset-8">
-                      <div *ngFor="let item of data[0].complaints ?? '-'" class="flex text-gray-700 md:block leading-tight align-top my-1 w-full p-1 rounded-md">
-                        <fieldset class="text-base text-black py-3 px-5 rounded-t border-black border-t border-b border-r border-l">
-  <!--                        <legend> Chief Complaint: </legend>-->
-                          <label> {{ item.lib_complaints.complaint_desc ?? '-'}} </label>
-                        </fieldset>
+                      <div *ngFor="let item of this.data.consult_notes.complaints ?? '-'" class="flex text-gray-700 md:block leading-tight align-top my-1 w-full p-1 rounded-md">
+                        <h3 class="text-base text-black py-3 px-5 rounded-t">
+                            {{ item.lib_complaints.complaint_desc ?? '-'}}
+                        </h3>
                       </div>
-                      <h3 class="text-base text-black py-3 px-5 rounded-t border-black border-t border-b border-r border-l">
-                        Remarks: {{ this.data[0].complaint_remarks ?? '-' }}
+                      <h3 class="text-base text-black py-3 px-5 rounded-t">
+                        Remarks: {{ this.data.consult_notes.complaint ?? '-' }}
                       </h3>
                     </div>
                   </div>

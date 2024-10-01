@@ -28,6 +28,7 @@ export class PendingFdxComponent implements OnInit {
   show_form: boolean = false;
   patient_search: string;
   show_data: any = [];
+  show_previous_dx: any;
 
   per_page: number = 5;
   current_page: number = 1;
@@ -79,8 +80,9 @@ export class PendingFdxComponent implements OnInit {
       })
   }
 
-  getData(consult_id: any, consult_date: any,) {
+  getData(patient_id: any, consult_date: any, consult_id: any) {
     let params = {
+      patient_id: patient_id,
       consult_id: consult_id
       };
       this.http.get('reports-2018/pending-fdx/get-consultation', { params })
@@ -90,6 +92,7 @@ export class PendingFdxComponent implements OnInit {
         .subscribe({
       next: (data: any) => {
         this.show_patient_data = data;
+        this.show_previous_dx = data;
         this.current_page = data.current_page;
         this.last_page = data.last_page;
         this.openList = true;
