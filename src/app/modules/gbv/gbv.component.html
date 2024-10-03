@@ -64,7 +64,7 @@
     You are not allowed to access this module.
   </div>
   <div class="flex flex-col" *ngIf="fetching_history && arr_allowed.indexOf(pos) > -1">
-    <div class="w-full flex justify-center"><fa-icon [icon]="faCircleNotch" spin="true" class="pt-10"></fa-icon></div>
+    <div class="w-full flex justify-center"><fa-icon [icon]="faCircleNotch" animation="spin" class="pt-10"></fa-icon></div>
     <div class="w-full flex justify-center pb-10 font-semi                             bold">Fetching history...</div>
   </div>
   <table class="w-full text-sm text-left" *ngIf="!fetching_history && arr_allowed.indexOf(pos) > -1">

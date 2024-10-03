@@ -61,7 +61,7 @@
 
             <div class="w-full mx-5 flex justify-center">
               <button [disabled]="retrieving_pin" type="button" class="btn-save" (click)="getMemberPin()">
-                <fa-icon *ngIf="retrieving_pin" [icon]="faCircleNotch" spin="true"></fa-icon>
+                <fa-icon *ngIf="retrieving_pin" [icon]="faCircleNotch" animation="spin"></fa-icon>
                 Get Philhealth PIN
               </button>
             </div>
@@ -161,7 +161,7 @@
             <div *ngIf="(philhealthForm.controls.authorization_transaction_code.enabled && philhealthForm.value.philhealth_id && philhealthForm.value.philhealth_id_confirmation && philhealthForm.value.membership_type_id) && !philhealthMatchError" class="relative w-full flex text-sm px-5 mt-2">
               <div class="w-full text-sm md:w-1/2 lg:w-1/2">
                 <button class="px-5 py-2 bg-green-600 text-white rounded-md hover:bg-green-500 hover:text-gray-50" (click)="isMemberDependentRegistered()">
-                  <fa-icon *ngIf="is_checking_status" [icon]="faSpinner" spin="true"></fa-icon>
+                  <fa-icon *ngIf="is_checking_status" [icon]="faSpinner" animation="spin"></fa-icon>
                   {{ is_checking_status ? 'checking' : 'check pin registration' }}
                 </button>
               </div>

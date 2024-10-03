@@ -45,7 +45,7 @@
 
     <div class="col-span-12 flex justify-end border-t border-slate-200 pt-5"><!--    -->
       <button [disabled]="(glucoseForm.invalid || (!glucoseForm.value.rbs && !glucoseForm.value.fbs)) || is_saving['glucose']" type="submit" class=" btn-save px-10 mr-5 mb-5 disabled:bg-gray-400">
-        <fa-icon *ngIf="is_saving['glucose']" [icon]="faSpinner" class="mr-2" spin="true" ></fa-icon>
+        <fa-icon *ngIf="is_saving['glucose']" [icon]="faSpinner" class="mr-2" animation="spin" ></fa-icon>
         <fa-icon *ngIf="!is_saving['glucose']" [icon]="faSave" class="mr-2"></fa-icon>
         {{ is_saving['glucose'] ? 'Saving' : glucoseForm.value.id ? 'Update' : 'Save' }}
       </button>
@@ -85,7 +85,7 @@
 
     <div class="col-span-12 flex justify-end border-t border-slate-200 pt-5">
       <button [disabled]="bloodLipidForm.invalid || is_saving['bloodLipid']" type="submit" class=" btn-save px-10 mr-5 mb-5 disabled:bg-gray-400">
-        <fa-icon *ngIf="is_saving['bloodLipid']" [icon]="faSpinner" class="mr-2" spin="true" ></fa-icon>
+        <fa-icon *ngIf="is_saving['bloodLipid']" [icon]="faSpinner" class="mr-2" animation="spin" ></fa-icon>
         <fa-icon *ngIf="!is_saving['bloodLipid']" [icon]="faSave" class="mr-2"></fa-icon>
         {{ is_saving['bloodLipid'] ? 'Saving' : bloodLipidForm.value.id ? 'Update' : 'Save' }}
       </button>
@@ -120,7 +120,7 @@
 
     <div class="col-span-12 flex justify-end border-t border-slate-200 pt-5">
       <button [disabled]="urineKetonesForm.invalid || is_saving['urineKetones']" type="submit" class=" btn-save px-10 mr-5 mb-5 disabled:bg-gray-400">
-        <fa-icon *ngIf="is_saving['urineKetones']" [icon]="faSpinner" class="mr-2" spin="true" ></fa-icon>
+        <fa-icon *ngIf="is_saving['urineKetones']" [icon]="faSpinner" class="mr-2" animation="spin" ></fa-icon>
         <fa-icon *ngIf="!is_saving['urineKetones']" [icon]="faSave" class="mr-2"></fa-icon>
         {{ is_saving['urineKetones'] ? 'Saving' : urineKetonesForm.value.id ? 'Update' : 'Save' }}
       </button>
@@ -154,7 +154,7 @@
 
     <div class="col-span-12 flex justify-end border-t border-slate-200 pt-5">
       <button [disabled]="urineProteinForm.invalid || is_saving['urineProtein']" type="submit" class=" btn-save px-10 mr-5 mb-5 disabled:bg-gray-400">
-        <fa-icon *ngIf="is_saving['urineProtein']" [icon]="faSpinner" class="mr-2" spin="true" ></fa-icon>
+        <fa-icon *ngIf="is_saving['urineProtein']" [icon]="faSpinner" class="mr-2" animation="spin" ></fa-icon>
         <fa-icon *ngIf="!is_saving['urineProtein']" [icon]="faSave" class="mr-2"></fa-icon>
         {{ is_saving['urineProtein'] ? 'Saving' : urineProteinForm.value.id ? 'Update' : 'Save' }}
       </button>

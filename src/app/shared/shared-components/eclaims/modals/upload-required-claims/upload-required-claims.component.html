@@ -76,7 +76,7 @@
                 <td colspan="3">
                   <div class="grid grid-cols-1 my-14">
                     <div class="flex justify-center text-blue-500">
-                      <fa-icon [icon]="faCircleNotch" spin="true" ></fa-icon>
+                      <fa-icon [icon]="faCircleNotch" animation="spin" ></fa-icon>
                     </div>
                     <div class="flex justify-center">
                       Fetching uploaded documents...
@@ -104,7 +104,7 @@
                 Cancel
               </button>
               <button [disabled]="is_uploading_claim" type="button" class="btn-save bg-rose-500 ml-5" (click)="uploadClaim()">
-                <fa-icon *ngIf="is_uploading_claim" [icon]="faCircleNotch" spin="true" class="pr-2"></fa-icon>
+                <fa-icon *ngIf="is_uploading_claim" [icon]="faCircleNotch" animation="spin" class="pr-2"></fa-icon>
                 {{ is_uploading_claim ? 'Uploading' : 'Upload' }}
               </button>
             </div>
@@ -113,7 +113,7 @@
 
         <div *ngIf="is_retrieving_xml" class="grid grid-cols-1 mt-16">
           <div class="flex justify-center text-blue-500">
-            <fa-icon [icon]="faCircleNotch" spin="true"></fa-icon>
+            <fa-icon [icon]="faCircleNotch" animation="spin"></fa-icon>
           </div>
           <div class="flex justify-center">
             Retrieving XML...

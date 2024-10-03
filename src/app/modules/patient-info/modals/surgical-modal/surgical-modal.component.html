@@ -21,7 +21,7 @@
 
             <div class="col-span-1">
               <button type="button" (click)="onSubmit()" [disabled]="!surgical_form.operation || !surgical_form.operation_date" class="btn-save w-full mt-6 disabled:bg-gray-300">
-                <fa-icon *ngIf="is_saving" [icon]="faSpinner" spin="true" class="mr-2"></fa-icon>
+                <fa-icon *ngIf="is_saving" [icon]="faSpinner" animation="spin" class="mr-2"></fa-icon>
                 {{ is_saving ? 'Saving' : 'Save' }}
               </button>
             </div>

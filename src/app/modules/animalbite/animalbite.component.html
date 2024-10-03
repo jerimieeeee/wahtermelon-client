@@ -50,7 +50,7 @@
     You are not allowed to create a new treatment or view previous treatment from other facilities.
   </div>
   <div class="flex flex-col" *ngIf="fetching_history">
-    <div class="w-full flex justify-center"><fa-icon [icon]="faCircleNotch" spin="true" class="pt-10"></fa-icon></div>
+    <div class="w-full flex justify-center"><fa-icon [icon]="faCircleNotch" animation="spin" class="pt-10"></fa-icon></div>
     <div class="w-full flex justify-center pb-10 font-semibold">Fetching history...</div>
   </div>
   <div class="mb-5 rounded-lg border border-slate-200" *ngIf="!fetching_history && patient_ab_history">
