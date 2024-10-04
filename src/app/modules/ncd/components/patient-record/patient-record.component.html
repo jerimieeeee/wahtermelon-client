@@ -88,7 +88,7 @@
   <div class="col-span-12 flex justify-end mr-5 mb-5">
     <button [disabled]="is_saving" type="button" (click)="onSubmit()" class="btn-save px-10 disabled:bg-gray-300">
       <fa-icon *ngIf="!is_saving" [icon]="faSave" class="mr-3"></fa-icon>
-      <fa-icon *ngIf="is_saving" [icon]="faSpinner" class="mr-3" spin="true"></fa-icon>
+      <fa-icon *ngIf="is_saving" [icon]="faSpinner" class="mr-3" animation="spin"></fa-icon>
       Save
     </button>
   </div>

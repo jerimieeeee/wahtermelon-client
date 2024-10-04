@@ -47,7 +47,7 @@
     <!-- START MUNCITY -->
     <div class="w-52" *ngIf="reportFlag && reportForm.value.report_class === 'muncity' && !this.muncity">
       <label for="brgys" class="input-label pb-1" >Municipality</label>
-      <fa-icon class="text-blue-500 my-auto mx-auto" [icon]="faCircleNotch" spin="true"></fa-icon>Fetching...
+      <fa-icon class="text-blue-500 my-auto mx-auto" [icon]="faCircleNotch" animation="spin"></fa-icon>Fetching...
     </div>
 
     <div class="w-52" *ngIf="reportFlag && reportForm.value.report_class === 'muncity' && this.muncity">
@@ -76,7 +76,7 @@
     <!-- START BRGY -->
     <div class="w-52" *ngIf="!reportFlag && reportForm.value.report_class === 'brgys' && !this.brgys">
       <label for="brgys" class="input-label pb-1" >Barangays</label>
-      <fa-icon class="text-blue-500 my-auto mx-auto" [icon]="faCircleNotch" spin="true"></fa-icon>Fetching...
+      <fa-icon class="text-blue-500 my-auto mx-auto" [icon]="faCircleNotch" animation="spin"></fa-icon>Fetching...
     </div>
 
     <div class="w-52" *ngIf="!reportFlag && reportForm.value.report_class === 'brgys' && this.brgys">
@@ -271,7 +271,7 @@
     ></app-fhsis2018-mortality-underlying>
 
     <div class="flex flex-col justify-center" *ngIf="is_fetching">
-      <fa-icon class="text-blue-500 mx-auto pt-36 text-xl" [icon]="faCircleNotch" spin="true"></fa-icon>
+      <fa-icon class="text-blue-500 mx-auto pt-36 text-xl" [icon]="faCircleNotch" animation="spin"></fa-icon>
       <span class="pt-4 mx-auto pb-36 select-none">Fetching Report...</span>
     </div>
   </div>

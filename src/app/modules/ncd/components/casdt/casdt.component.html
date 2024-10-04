@@ -427,7 +427,7 @@
   <div class="flex justify-end w-full">
     <button [disabled]="is_saving" type="submit" class="btn-save px-10 disabled:bg-gray-300">
       <fa-icon *ngIf="!is_saving" [icon]="faSave" class="mr-3"></fa-icon>
-      <fa-icon *ngIf="is_saving" [icon]="faSpinner" class="mr-3" spin="true"></fa-icon>
+      <fa-icon *ngIf="is_saving" [icon]="faSpinner" class="mr-3" animation="spin"></fa-icon>
       {{ is_saving ? 'Saving' : 'Save'}}
     </button>
   </div>

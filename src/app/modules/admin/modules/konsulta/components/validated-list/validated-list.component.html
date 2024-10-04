@@ -50,14 +50,14 @@
         <div>
           <button [disabled]="downloading" class="text-sm text-white bg-blue-500 py-1 font-normal rounded-md px-1 mr-2 disabled:bg-gray-300" (click)="downloadXml(kon, 'enc')">
             {{ downlaoding ? '' : '.enc'}}
-            <fa-icon *ngIf="downloading" [icon]="faSpinner" spin="true"></fa-icon>
+            <fa-icon *ngIf="downloading" [icon]="faSpinner" animation="spin"></fa-icon>
           </button>
         </div>
 
         <div>
           <button [disabled]="downloading" class="text-sm text-white bg-blue-500 py-1 font-normal rounded-md px-1 mr-2 disabled:bg-gray-300" (click)="downloadXml(kon, 'raw')">
             {{ downlaoding ? '' : '.raw'}}
-            <fa-icon *ngIf="downloading" [icon]="faSpinner" spin="true"></fa-icon>
+            <fa-icon *ngIf="downloading" [icon]="faSpinner" animation="spin"></fa-icon>
           </button>
         </div>
 

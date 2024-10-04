@@ -67,7 +67,7 @@
   <div class="flex justify-end">
     <button type="submit" [disabled]="questionnaireForm.invalid || is_saving" class="btn-save px-10 disabled:bg-gray-300">
       <fa-icon *ngIf="!is_saving" [icon]="faSave" class="mr-2"></fa-icon>
-      <fa-icon *ngIf="is_saving" [icon]="faSpinner" class="mr-2" spin="true"></fa-icon>
+      <fa-icon *ngIf="is_saving" [icon]="faSpinner" class="mr-2" animation="spin"></fa-icon>
       Save
     </button>
   </div>

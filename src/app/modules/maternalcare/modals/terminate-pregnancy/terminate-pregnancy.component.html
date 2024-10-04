@@ -1,0 +1,80 @@
+<div id="defaultModal" tabindex="-1" class="select-none overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 w-full md:inset-0 h-modal md:h-full justify-center items-center flex" aria-modal="true" role="dialog" style="z-index:60">
+  <div class="relative p-4 w-full max-w-xl h-auto md:h-auto">
+    <!-- Modal content -->
+    <div class="relative bg-white rounded-lg shadow">
+      <!-- Modal header -->
+      <div class="flex justify-between items-start py-3 px-5 rounded-t border-b bg-red-500">
+        <h3 class="mt-2 text-sm font-bold text-white">
+            Terminate Pregnancy
+        </h3>
+      </div>
+      <!-- Modal body -->
+      <div class="max-h-96 p-5 overflow-y-auto ">
+        <div class="flex item-start flex-wrap">
+          <form [formGroup]="terminateForm" class="grid grid-cols-2 gap-4 w-full rounded-lg text-center">
+            <!-- <div class="mb-2 pb-2 border-b border-slate-200 font-semibold">
+              Do you really want to terminate this pregnancy record?
+            </div> -->
+            <div class="text-left text-sm">
+              <label>Termination Date</label>
+              <input type="date" class="input" formControlName="pregnancy_termination_date" />
+            </div>
+
+            <div class="text-left text-sm">
+              <label>Cause of Termination</label>
+              <select class="input" formControlName="pregnancy_termination_code">
+                <option [ngValue]="null">-</option>
+                <option *ngFor="let item of termination_causes" [value]="item.code">{{ item.desc }}</option>
+              </select>
+            </div>
+
+            <div class="col-span-2 text-left text-sm">
+              <label>Region</label>
+              <select class="input" (change)="loadDemog('regions', terminateForm.value.region_code,'provinces')" formControlName="region_code">
+                <option [ngValue]="null"><i></i></option>
+                <option *ngFor="let item of regions" [value]="item.code">{{ item.name }}</option>
+              </select>
+            </div>
+
+            <div class="col-span-2 text-left text-sm">
+              <label>Province</label>
+              <select class="input" (change)="loadDemog('provinces', terminateForm.value.province_code,'municipalities')" formControlName="province_code">
+                <option [ngValue]="null"></option>
+                <option *ngFor="let item of provinces" [value]="item.code">{{ item.name }}</option>
+              </select>
+            </div>
+
+            <div class="col-span-2 text-left text-sm">
+              <label>Municipality</label>
+              <select class="input" (change)="loadDemog('municipalities', terminateForm.value.municipality_code, 'barangays')" formControlName="municipality_code">
+                <option [ngValue]="null"></option>
+                <option *ngFor="let item of municipalities" [value]="item.code">{{ item.name }}</option>
+              </select>
+            </div>
+
+            <div class="col-span-2 text-left text-sm">
+              <label>Barangay</label>
+              <select class="input" formControlName="barangay_code">
+                <option [ngValue]="null"></option>
+                <option *ngFor="let item of barangays" [value]="item.code">{{ item.name }}</option>
+              </select>
+            </div>
+
+            <div class="col-span-2 text-left flex flex-col">
+              <label>Details of Pregnancy Termination</label>
+              <textarea rows="4" class="input" formControlName="pregnancy_termination_cause"></textarea>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Modal footer  -->
+      <div class="flex justify-end py-2 px-5 space-x-4 rounded-b border-t border-t-gray-400">
+        <button  type="button" class="text-white bg-gray-400 hover:ring-2 focus:outline-none hover:ring-gray-300 rounded text-sm font-medium my-2 px-6 py-2.5 transition duration-150 ease-in-out" (click)="closeModal()">Cancel</button>
+        <button type="button" class="text-white bg-rose-500 enabled:hover:ring-2 enabled:focus:outline-none enabled:hover:ring-rose-300 disabled:opacity-75 font-medium rounded text-sm my-2 px-6 py-2.5 text-center transition duration-150 ease-in-out" (click)="onSubmit()" >Terminate</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="opacity-50 fixed inset-0 z-50 bg-black"></div>

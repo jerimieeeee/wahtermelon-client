@@ -42,7 +42,7 @@
 
     <div *ngIf="calendar_loading" class="w-3/5 flex flex-col">
       <div class="flex justify-center text-blue-500">
-        <fa-icon [icon]="faCircleNotch" spin="true"></fa-icon>
+        <fa-icon [icon]="faCircleNotch" animation="spin"></fa-icon>
       </div>
       <div class="flex justify-center">
         Fetching schedule for {{ viewDate | date: 'MMMM y' }}

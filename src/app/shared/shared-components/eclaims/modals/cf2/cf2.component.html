@@ -9,7 +9,7 @@
         </h3>
         <div>
           <button [disabled]="!selected_caserate || que_form" class="bg-white text-orange-400 rounded-md px-2 py-1 mr-3 disabled:opacity-50" (click)="submitQue()">
-            <fa-icon *ngIf="que_form" [icon]="faCircleNotch" spin="true" class="pr-1"></fa-icon>
+            <fa-icon *ngIf="que_form" [icon]="faCircleNotch" animation="spin" class="pr-1"></fa-icon>
             {{ eclaimsForm.value.transmittalNumber ? 'Update' : 'Queue' }}
           </button>
           <button [disabled]="!selected_caserate || pdf_exported || que_form" class="bg-white text-orange-400 rounded-md px-2 py-1 disabled:opacity-50" (click)="exportP()">
@@ -192,7 +192,7 @@
 
           <div  *ngIf="!show_form" class="grid grid-cols-1 my-20">
             <div class="flex justify-center text-blue-500">
-              <fa-icon [icon]="faCircleNotch" spin="true"></fa-icon>
+              <fa-icon [icon]="faCircleNotch" animation="spin"></fa-icon>
             </div>
 
             <div class="flex justify-center">

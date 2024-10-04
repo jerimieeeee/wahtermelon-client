@@ -146,7 +146,7 @@ export class ReportsComponent implements OnInit {
 
     this.http.get(this.reportForm.value.report_type.url, {params}).subscribe({
       next: (data: any) => {
-        console.log(data)
+        // console.log(data)
         this.report_data = data;
         this.is_fetching = false;
         this.submit_flag = true;
