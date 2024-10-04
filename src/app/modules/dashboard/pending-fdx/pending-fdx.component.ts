@@ -69,11 +69,11 @@ export class PendingFdxComponent implements OnInit {
       .subscribe({
         next: (data: any) => {
           this.pending_fdx = data.data;
-          this.current_page = data.current_page;
-          this.last_page = data.last_page;
-          this.from = data.from;
-          this.to = data.to;
-          this.total = data.total;
+          this.current_page = data.meta.current_page;
+          this.last_page = data.meta.last_page;
+          this.from = data.meta.from;
+          this.to = data.meta.to;
+          this.total = data.meta.total;
           this.show_form = true;
         },
         error: err => console.log(err)

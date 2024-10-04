@@ -105,40 +105,34 @@
                       Previous Diagnosis
                     </h3>
                     </div>
-                  <table class="table-fixed w-full text-sm text-left text-black">
+                  <table class="w-full table-auto text-sm text-black">
                     <thead class="text-s text-black bg-white -webkit-sticky border-b"
                            style="z-index: 20; position: sticky; top: 0;">
                     <tr class="w-full">
-                      <th class="px-5 py-2">
-                        ICD 10
+                      <th class="px-5 py-2 w-1/2 text-center">
+                        ICD 10 Code | Description
                       </th>
-                      <th scope="col" class="text-center py-2" colspan="5">
-                        ICD 10 Description
-                      </th>
-                      <th scope="col" class="px-5 py-2" colspan="3">
+                      <th class="w-1/2 text-center">
                         Date
                       </th>
                     </tr>
                     </thead>
-                    <tbody>
-                      @for(consult of previous) {
-                        @if() {
-                        }
+                      <tbody *ngFor="let consult of previous">
+                      @if(consult.final_diagnosis.finaldx.length >= 1) {
+                          <td class="px-5 py-2" colspan="1">
+                            @for(icd10 of consult.final_diagnosis.finaldx; track icd10.icd10_code) {
+                              <span class="text-black bg-white -webkit-sticky font-bold">
+                                {{ icd10.icd10_code + ' | ' + icd10.lib_icd10.icd10_desc }} <br />
+                              </span>
+                            }
+                          </td>
+                          <td class="w-1/2">
+                            <span class="text-black bg-white -webkit-sticky font-bold">
+                                {{ this.consult.prev_date | date:'MM/dd/yyyy' }} <br />
+                            </span>
+                          </td>
                       }
-                    </tbody>
-                      <!--<tbody *ngFor="let consult of previous">
-                          <div>
-                              <td class="px-6 py-2">
-                                {{ consult.final_diagnosis.id }}
-                              </td>
-                              <td class="items-center">
-                                {{ consult.final_diagnosis.consult_id }}
-                              </td>
-                              <td class="px-5 py-2">
-                                {{ consult.final_diagnosis.patient_id }}
-                              </td>
-                          </div>
-                      </tbody>-->
+                      </tbody>
                   </table>
                   </div>
                   </div>
@@ -153,42 +147,42 @@
                         <fieldset class="text-base text-black py-3 px-5 rounded-t">
                           <label>Blood Pressure: {{ this.data.vitals_latest?.bp_systolic ?? '-' }}/{{ this.data.vitals_latest?.bp_diastolic ?? '-' }}</label>
                           <br />
-                          <label>BMI: {{ this.data.vitals_latest?.patient_bmi ?? '-' }} </label>
+                          <label>BMI: {{ this.data?.vitals_latest?.patient_bmi ?? '-' }} </label>
                           <br />
-                          <label>BMI Class: {{ this.data.vitals_latest?.patient_bmi_class ?? '-' }} </label>
+                          <label>BMI Class: {{ this.data?.vitals_latest?.patient_bmi_class ?? '-' }} </label>
                           <br />
-                          <label>Weight: {{ this.data.vitals_latest?.patient_weight ?? '-' }} </label>
+                          <label>Weight: {{ this.data?.vitals_latest?.patient_weight ?? '-' }} </label>
                           <span> kg</span>
                           <br />
-                          <label>Height: {{ this.data.vitals_latest?.patient_height ?? '-' }} </label>
+                          <label>Height: {{ this.data?.vitals_latest?.patient_height ?? '-' }} </label>
                           <span> cm</span>
                           <br />
-                          <label>Waist: {{ this.data.vitals_latest?.patient_waist ?? '-' }} </label>
+                          <label>Waist: {{ this.data?.vitals_latest?.patient_waist ?? '-' }} </label>
                           <br />
-                          <label>Temp: {{ this.data.vitals_latest?.patient_temp ?? '-' }}</label>
+                          <label>Temp: {{ this.data?.vitals_latest?.patient_temp ?? '-' }}</label>
                           <span> ℃</span>
                           <br />
-                          <label>Heart Rate: {{ this.data.vitals_latest?.patient_heart_rate ?? '-' }}</label>
+                          <label>Heart Rate: {{ this.data?.vitals_latest?.patient_heart_rate ?? '-' }}</label>
                           <br />
-                          <label>Respiratory Rate: {{ this.data.vitals_latest?.patient_respiratory_rate ?? '-' }}</label>
+                          <label>Respiratory Rate: {{ this.data?.vitals_latest?.patient_respiratory_rate ?? '-' }}</label>
                           <br />
-                          <label>Pulse Rate: {{ this.data.vitals_latest?.patient_pulse_rate ?? '-' }}</label>
+                          <label>Pulse Rate: {{ this.data?.vitals_latest?.patient_pulse_rate ?? '-' }}</label>
                         </fieldset>
                       </div>
                     </div>
                   </div>
-                  <div class="grid col-span-1 mt-5 py-2 px-5 rounded-t border-b bg-gray-50">
-                    <h3 class="mt-2 text-sm text-gray-500 font-bold">
-                      Complaint
-                    </h3>
-                    <div class="shadow-md grid border w-full border-1 -outline-offset-8">
-                      <div *ngFor="let item of this.data.consult_notes.complaints ?? '-'" class="flex text-gray-700 md:block leading-tight align-top my-1 w-full p-1 rounded-md">
-                        <h3 class="text-base text-black py-3 px-5 rounded-t">
+                  <div class="flex flex-col mt-5 py-2 px-5 rounded-t border-b bg-gray-50">
+                    <span class="mt-2 text-sm text-gray-500 font-bold">
+                      Chief Complaint
+                    </span>
+                    <div class="shadow-md flex flex-col border w-full border-1">
+                      <div *ngFor="let item of this.data?.consult_notes.complaints ?? '-'" class="pl-2 flex text-gray-700 md:block leading-tight align-top my-1 w-full p-1 rounded-md">
+<!--                        <fieldset class="text-base text-black pt-3 px-5 rounded-t">-->
                             {{ item.lib_complaints.complaint_desc ?? '-'}}
-                        </h3>
+<!--                        </fieldset>-->
                       </div>
                       <h3 class="text-base text-black py-3 px-5 rounded-t">
-                        Remarks: {{ this.data.consult_notes.complaint ?? '-' }}
+                        Remarks: {{ this.data?.consult_notes.complaint ?? '-' }}
                       </h3>
                     </div>
                   </div>
