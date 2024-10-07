@@ -172,40 +172,9 @@ export class TodaysConsultComponent implements OnInit, OnDestroy {
     private laravelEchoService: LaravelEchoService
   ) { }
 
-  listenToChannel() {
-    if (this.isListening) return;
-
-    this.isListening = true;
-
-    const loadData = () => {
-        return this.loadPhysicians()
-            .then(() => this.getTodaysConsult())
-            .catch(error => {
-                console.error('Error loading physicians or consultations:', error);
-                throw error;
-            });
-    };
-
-    loadData();
-
-    this.laravelEchoService.subscribeToChannel(
-        'channel',
-        'todays-patient',
-        this.current_user.facility_code,
-        'todays.patient',
-        (data) => {
-            console.log('User updated event received:', data);
-            if (data) {
-                loadData();
-            }
-        }
-    );
-  }
-
 
   ngOnInit(): void {
-
-    this.listenToChannel();
+  console.log(this.physicians, 'eto phys')
 
   }
 

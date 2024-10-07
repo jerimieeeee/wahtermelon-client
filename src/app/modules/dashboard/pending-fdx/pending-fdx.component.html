@@ -1,13 +1,17 @@
 <div class="mb-10  text-gray-600 h-100 border border-slate-200 shadow-md rounded-md">
   <div class="md:flex md:justify-between md:items-center pb-2 bg-blue-500 text-white rounded-t-md">
     <span class="font-semibold pt-2 pl-5">Pending Final Diagnosis</span>
-  </div>
-  <div class="border border-gray-400 rounded-md bg-white">
+    <div class="border bg-white border-gray-400 rounded-md flex items-center m-2">
+      <input type="text" [(ngModel)]="patient_search" class="form-input w-1/4 text-sm border text-gray-700 border-gray-400 flex-1" (keyup.enter)="getPatient()" placeholder="Search Patient"/>
+      <button type="button" class="text-blue-500 w-9 h-9 border-r border-gray-400" (click)="getPatient()">
+        <fa-icon class="-ml-1" [icon]="faSearch"></fa-icon>
+      </button>
 
-    <input type="text" [(ngModel)]="patient_search" class="form-input border-0 text-sm p-1 m-1 border-r border-gray-400" (keyup.enter)="getPatient()" placeholder="Search Patient"/>
-    <button type="button" class="text-blue-500 w-9 h-9 border-r border-gray-400" (click)="getPatient()">
-      <fa-icon class="-ml-1" [icon]="faSearch"></fa-icon>
-    </button>
+        <select class="input px-2 mr-3 disabled:bg-red-600 w-72 text-gray-800" (change)="getPatient()" [(ngModel)]="selected_physician">
+          <option value="all">All</option>
+          <option [value]="dr.id" class="pr-" *ngFor="let dr of physicians">{{ dr.last_name }}, {{ dr.first_name }} {{ dr.middle_name }}</option>
+        </select>
+    </div>
   </div>
 
   <div class="p-3" *ngIf="show_form">
