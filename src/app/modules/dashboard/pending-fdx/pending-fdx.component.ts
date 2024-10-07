@@ -29,6 +29,7 @@ export class PendingFdxComponent implements OnInit {
   patient_search: string;
   show_data: any = [];
   show_previous_dx: any;
+  selected_physician: string = "all";
 
   per_page: number = 5;
   current_page: number = 1;
@@ -59,6 +60,13 @@ export class PendingFdxComponent implements OnInit {
     if (this.isLoading) return;
     let params = {params: { }};
     params['page'] = !page ? this.current_page : page;
+
+    if (this.selected_physician !== 'all') {
+      params['params']['physician_id'] = this.selected_physician;
+    } else {
+      delete params['params']['physician_id'];
+    }
+
     if (this.patient_search) params['search'] = this.patient_search;
 
     this.isLoading = true;
