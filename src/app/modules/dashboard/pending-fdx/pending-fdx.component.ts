@@ -28,6 +28,9 @@ export class PendingFdxComponent implements OnInit {
   show_form: boolean = false;
   patient_search: string;
   show_data: any = [];
+  show_previous_dx: any;
+  selected_physician: string = "all";
+  physicians: [];
 
   per_page: number = 5;
   current_page: number = 1;
@@ -52,44 +55,49 @@ export class PendingFdxComponent implements OnInit {
     console.log(this.show_patient_data);
   }
 
+
   getPatient(page?: number) {
+    this.isLoading = true;
     this.show_form = false;
-    page = page ?? 1;
-    if (this.isLoading) return;
+
     let params = {params: { }};
     params['page'] = !page ? this.current_page : page;
-    if (this.patient_search) params['search'] = this.patient_search;
 
-    this.isLoading = true;
+    if (this.selected_physician !== 'all') {
+      params['params']['physician_id'] = this.selected_physician;
+    }
+
+    if (params['params']['physician_id']) {
+      delete params['params']['physician_id'];
+    }
+
+    if (this.patient_search) params['search'] = this.patient_search;
     this.http.get('reports-2018/pending-fdx/report', { params })
-      .pipe(
-        finalize(() => this.isLoading = false)
-      )
       .subscribe({
         next: (data: any) => {
           this.pending_fdx = data.data;
-          this.current_page = data.current_page;
-          this.last_page = data.last_page;
-          this.from = data.from;
-          this.to = data.to;
-          this.total = data.total;
+          this.current_page = data.meta.current_page;
+          this.last_page = data.meta.last_page;
+          this.from = data.meta.from;
+          this.to = data.meta.to;
+          this.total = data.meta.total;
+          this.isLoading = false;
           this.show_form = true;
         },
         error: err => console.log(err)
       })
   }
 
-  getData(consult_id: any, consult_date: any,) {
+  getData(patient_id: any, consult_date: any, consult_id: any) {
     let params = {
+      patient_id: patient_id,
       consult_id: consult_id
       };
       this.http.get('reports-2018/pending-fdx/get-consultation', { params })
-        .pipe(
-          finalize(() => this.isLoading = false)
-        )
         .subscribe({
       next: (data: any) => {
         this.show_patient_data = data;
+        this.show_previous_dx = data;
         this.current_page = data.current_page;
         this.last_page = data.last_page;
         this.openList = true;
@@ -100,7 +108,27 @@ export class PendingFdxComponent implements OnInit {
     });
   }
 
+  loadPhysicians(): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+      this.http.get('users', {params:{per_page: 'all', designation_code: 'MD'}}).subscribe({
+        next: (data: any) => {
+          this.physicians = data.data;
+          let user_info = this.http.getUserFromJSON();
+          this.selected_physician = user_info.designation_code === 'MD' ? user_info.id : 'all';
+          // console.log(user_info);
+
+          resolve(); // Resolve the promise once loading is done
+        },
+        error: err => {
+          console.log(err);
+          reject(err); // Reject the promise if there's an error
+        }
+      });
+    });
+  }
+
   ngOnInit(): void {
+    this.loadPhysicians();
     this.current_page = 1;
     this.getPatient();
   }

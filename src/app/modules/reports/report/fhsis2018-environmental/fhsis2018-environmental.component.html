@@ -1,6 +1,6 @@
 <div class="grid grid-cols-1 w-full">
   <div class="flex justify-between w-full text-blue-500 font-semibold text-lg  p-3" >
-    <span>FHSIS Report - TB Dots</span>
+    <span>FHSIS Report - Environmental and Sanitation</span>
     <span>
       <!-- <fa-icon *ngIf="exporting" [icon]="faCircleNotch" animation="spin" class="text-blue-500 text-sm mr-3">Exporting...</fa-icon> -->
       <button [disabled]="pdf_exported" type="button" class="text-2xl mr-5 text-red-600 disabled:text-gray-600" (click)="exportP()">
@@ -74,86 +74,82 @@
 
               </tr>
               <tr>
-                <td class="p-5 border text-sm">1. No. of HH's w/ access to basic safety water supply - Total</td>
-                <td class="text-right pr-2">{{ stats.water_level_all.length}}</td>
+                <td class="p-5 border text-sm">1. No. of HHs w/ access to basic safe water supply - Total</td>
+                <td class="pr-2 text-center">{{ stats.water_level_all.length}}</td>
                 <td></td>
-                <td rowspan="2">4. No. of HH's using managed sanitation services - Total</td>
-                <td rowspan="2">-</td>
+                <td class="p-5 border text-sm" rowspan="2">4. No. of HHs using managed sanitation services - Total</td>
+                <td class="pr-2 text-center" rowspan="2">{{ stats.safety_managed_sanitation.length}}</td>
                 <td rowspan="2"></td>
-
-                <!-- <td class="p-5 border text-blue-500 text-center"   [class]=" stats?.indicator1_male?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.indicator1_male)" class="text-right pr-2">{{ stats?.indicator1_male?.length ?? 0}}</td>
-                <td class="p-5 border text-blue-500 text-center"   [class]=" stats?.indicator1_female?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.indicator1_female)" class="text-right pr-2">{{ stats?.indicator1_female?.length ?? 0}}</td>
-                <td class="p-5 border text-blue-500 text-center"   [class]=" stats?.indicator1_male.length !==0 || stats?.indicator1_female.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.indicator1_male, stats?.indicator1_female)" class="text-right pr-2">{{ stats?.indicator1_male?.length +  stats?.indicator1_female?.length }}</td> -->
               </tr>
 
               <tr>
-                <td class="p-5 border text-sm">a. No of HH's with Level I - Total</td>
-                <td class="text-right pr-2">{{ stats.water_level1.length}}</td>
+                <td class="p-5 border text-sm pl-16">a. No of HHs with Level I - Total</td>
+                <td class="pr-2 text-center">{{ stats.water_level1.length}}</td>
                 <td></td>
               </tr>
 
               <tr>
-                <td class="p-5 border text-sm">b. No of HH's with Level II - Total</td>
-                <td class="text-right pr-2">{{ stats.water_level2.length}}</td>
+                <td class="p-5 border text-sm pl-16">b. No of HHs with Level II - Total</td>
+                <td class="pr-2 text-center">{{ stats.water_level2.length}}</td>
                 <td></td>
-                <td>5. No. of HH's with satisfaction solid waste management - Total</td>
-                <td>-</td>
-                <td></td>
-              </tr>
-
-              <tr>
-                <td class="p-5 border text-sm">c. No of HH's with Level III - Total</td>
-                <td class="text-right pr-2">{{ stats.water_level3.length}}</td>
-                <td></td>
-                <td>6. No. of HH's with complete sanitation facilities - Total</td>
-                <td>-</td>
+                <td class="p-5 border text-sm">5. No. of HHs with satisfaction solid waste management - Total</td>
+                <td class="pr-2 text-center">{{ stats.satisfaction_solid_waste_management.length}}</td>
                 <td></td>
               </tr>
 
               <tr>
-                <td class="p-5 border text-sm">2. No of HH's using the safety manged drinking water services</td>
-                <td class="text-right pr-2">{{ stats.safety_managed_water.length}}</td>
+                <td class="p-5 border text-sm pl-16">c. No of HHs with Level III - Total</td>
+                <td class="pr-2 text-center">{{ stats.water_level3.length}}</td>
                 <td></td>
-                <td>7. Total number of Industrial Establishment</td>
-                <td>-</td>
-                <td></td>
-              </tr>
-
-              <tr>
-                <td class="p-5 border text-sm">3. No of HH's with Basic Sanitation - Total</td>
-                <td class="text-right pr-2">{{ stats.basic_sanitation_toilet_all.length}}</td>
-                <td></td>
-                <td>8. No. of Industrial Establishment issued with sanitary permit</td>
-                <td>-</td>
+                <td class="p-5 border text-sm text-center">6. No. of HHs with complete sanitation facilities - Total</td>
+                <td class="text-center pr-2 ">{{ stats.complete_sanitation_facilities.length}}</td>
                 <td></td>
               </tr>
 
               <tr>
-                <td class="p-5 border text-sm">a. No. of HH's with pour/flush toilet connected to septic tank</td>
-                <td class="text-right pr-2">{{ stats.basic_sanitation_toilet_a.length}}</td>
+                <td class="p-5 border text-sm">2. No of HHs using the safety managed drinking-water services - Total</td>
+                <td class="text-center pr-2">{{ stats.safety_managed_water.length}}</td>
                 <td></td>
-                <td>9. Total number of Food Establishment</td>
-                <td>-</td>
+                <td class="p-5 border text-sm">7. Total number of Industrial Establishment</td>
+                <td class="p-5 border text-sm text-center">-</td>
                 <td></td>
               </tr>
 
               <tr>
-                <td class="p-5 border text-sm">b. No. of HH's with pour/flush toilet connected to Community
+                <td class="p-5 border text-sm">3. No of HHs with Basic Sanitation facility - Total</td>
+                <td class="text-center pr-2">{{ stats.basic_sanitation_toilet_all.length}}</td>
+                <td></td>
+                <td class="p-5 border text-sm">8. No. of Industrial Establishment issued with sanitary permit</td>
+                <td class="p-5 border text-center">-</td>
+                <td></td>
+              </tr>
+
+              <tr>
+                <td class="p-5 border text-sm pl-16">a. No. of HH with pour/flush toilet connected to septic tank - Total</td>
+                <td class="text-center pr-2">{{ stats.basic_sanitation_toilet_a.length}}</td>
+                <td></td>
+                <td class="p-5 border text-sm">9. Total number of Food Establishment</td>
+                <td class="p-5 border text-center">-</td>
+                <td></td>
+              </tr>
+
+              <tr>
+                <td class="p-5 border text-sm pl-16">b. No. of HHs with pour/flush toilet connected to community
                   sewer/sewerage system or any other approved treatment system - Total
                 </td>
-                <td class="text-right pr-2">{{ stats.basic_sanitation_toilet_b.length}}</td>
+                <td class="text-center pr-2">{{ stats.basic_sanitation_toilet_b.length}}</td>
                 <td></td>
-                <td>10. No. of Food Establishment issued with sanitary permit</td>
-                <td>-</td>
+                <td class="p-5 border text-sm">10. No. of Food Establishment issued with sanitary permit</td>
+                <td class="p-5 border text-center">-</td>
                 <td></td>
               </tr>
 
               <tr>
-                <td class="p-5 border text-sm">c. No. of HH's with ventilated improved of Pot Latrine (VIP) - Total</td>
-                <td class="text-right pr-2">{{ stats.basic_sanitation_toilet_c.length}}</td>
+                <td class="p-5 border text-sm pl-16">c. No. of HHs with ventilated improved of pit atrine (VIP) - Total</td>
+                <td class="text-center pr-2">{{ stats.basic_sanitation_toilet_c.length}}</td>
                 <td></td>
-                <td>11. No. of Barangay decalre ZOD</td>
-                <td class="text-right pr-2">{{ stats.zod_barangays.length}}</td>
+                <td class="p-5 border text-sm">11. No. of Barangays declared ZOD</td>
+                <td class="text-center pr-2">{{ stats.zod_barangays.length}}</td>
                 <td></td>
               </tr>
             </tbody>
