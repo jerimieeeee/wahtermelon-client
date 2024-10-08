@@ -23,10 +23,17 @@
   </div>
 
   <div class="w-full p-5 overflow-x-auto">
-    <div class="flex justify-center w-full" *ngIf="pStatus === 'IN PROCESS' && eclaims_list">
-      <button [disabled]="is_refreshing || (batch_refresh && (claims_count !== retrieved_claims))" class="btn-save px-10" (click)="getStatuses()">
+    <div class="flex justify-between w-full" *ngIf="(pStatus === 'IN PROCESS' || pStatus === 'WITH VOUCHER' || pStatus === 'VOUCHERING') && eclaims_list">
+      <div class="font-semibold">
+        <span>{{ retrieved_claims + '/'+ claims_count }}</span>
+        <span class="ml-3 text-green-600">Sucess: {{ success_count }}</span>
+        <span class="ml-3 text-red-500">Failed: {{ error_count }}</span>
+      </div>
+
+      <button [disabled]="is_refreshing || (batch_refresh && (claims_count !== retrieved_claims))" class="btn-save px-10 disabled:bg-gray-500" (click)="getStatuses()">
         <fa-icon [icon]="faRotate" *ngIf="is_refreshing || (batch_refresh && (claims_count !== retrieved_claims))" animation="spin"></fa-icon>
-        Check Claims ({{ eclaims_list.length }})
+        {{ is_refreshing || (batch_refresh && (claims_count !== retrieved_claims)) ? 'Checking Claims ' : 'Check Claims'}}
+        ({{ is_refreshing || (batch_refresh && (claims_count !== retrieved_claims)) ?  retrieved_claims + '/'+ eclaims_list.length : eclaims_list.length }})
       </button>
     </div>
     <table class="table-fixed w-full text-sm text-left text-gray-500">
@@ -77,12 +84,12 @@
               Open ITR
             </button>
 
-            <button *ngIf="eclaims.pStatus === 'IN PROCESS' || eclaims.pStatus === ''" class="bg-blue-500 text-white rounded-md p-0.5 mb-3 disabled:opacity-75" type="button" (click)="toggleModal('upload-claims', eclaims)">
+            <button *ngIf="eclaims.pStatus === 'IN PROCESS' || eclaims.pStatus === ''" class="bg-blue-500 text-white rounded-md p-0.5 mb-3 disabled:opacity-75" type="button" (click)="toggleModal('upload-claims', eclaims)" [disabled]="is_refreshing || (batch_refresh && (claims_count !== retrieved_claims))">
               <fa-icon [icon]="faUpload"></fa-icon>
               {{ eclaims.pReceiptTicketNumber ? 'Reupload Docs' : 'Upload Claim' }}
             </button>
 
-            <button *ngIf="eclaims.pStatus === 'RETURN'" class="bg-blue-500 text-white rounded-md p-0.5 mb-3 disabled:opacity-75" type="button" (click)="toggleModal('upload-required-claims', eclaims)">
+            <button *ngIf="eclaims.pStatus === 'RETURN'" class="bg-blue-500 text-white rounded-md p-0.5 mb-3 disabled:opacity-75" type="button" (click)="toggleModal('upload-required-claims', eclaims)" [disabled]="is_refreshing || (batch_refresh && (claims_count !== retrieved_claims))">
               <fa-icon [icon]="faUpload"></fa-icon>
               Upload Required Docs
             </button>
