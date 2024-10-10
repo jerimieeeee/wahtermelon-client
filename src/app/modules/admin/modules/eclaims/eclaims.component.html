@@ -36,7 +36,7 @@
         ({{ is_refreshing || (batch_refresh && (claims_count !== retrieved_claims)) ?  retrieved_claims + '/'+ eclaims_list.length : eclaims_list.length }})
       </button>
     </div>
-    <table class="table-fixed w-full text-sm text-left text-gray-500">
+    <table class="table-auto w-full text-sm text-left text-gray-500 ">
       <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700">
         <tr>
           <th scope="col" class="py-3 px-3 w-2/12 text-center">Name</th>
@@ -52,9 +52,11 @@
           <th scope="col" class="py-3 px-3 w-2/12 text-center">Action</th>
         </tr>
       </thead>
-      <tbody *ngIf="show_form">
-        <tr *ngFor="let eclaims of eclaims_list" class="bg-white border-b last:border-0">
-          <td>
+      <tbody class="h-4/5 overflow-y-auto" *ngIf="show_form">
+        <tr *ngFor="let eclaims of eclaims_list; let i = index" class="bg-white border-b last:border-0">
+          <td class="font-semibold">
+            <fa-icon *ngIf="item_status[i] && item_status[i].icon" [icon]="item_status[i].icon" [ngClass]="item_status[i].status === 'success' ? 'text-green-500'  : 'text-red-500'"></fa-icon>
+            <fa-icon *ngIf="batch_refresh && (!item_status[i] || (item_status[i] && !item_status[i].icon)) && (checking_index === i || checking_index === null)" [icon]="faCircleNotch"animation="spin" class="text-blue-600"></fa-icon>
             {{ eclaims.patient.last_name }}, {{ eclaims.patient.first_name }} {{ eclaims.patient.middle_name }}
           </td>
           <td class="py-4 px-3 text-xs">
@@ -70,16 +72,11 @@
             {{ eclaims.pStatus ?? 'IN QUEUE'  }}
           </td>
           <td class="py-4 px-3">
-            <!-- {{ eclaims.denied_reason ?? '-'  }} -->
-              <!-- <span *ngFor="let item of eclaims.denied_reason">{{ item }}</span> -->
-               <!-- {{ parseReason(eclaims.denied_reason) }} <br />
-               {{ parseReason(eclaims.return_reason) }} -->
-
-               <span  [innerHTML]="parseReason(eclaims.denied_reason)"></span>
-               <span  [innerHTML]="parseReason(eclaims.return_reason)"></span>
+            <span  [innerHTML]="parseReason(eclaims.denied_reason)"></span>
+            <span  [innerHTML]="parseReason(eclaims.return_reason)"></span>
           </td>
           <td class="py-4 px-3 text-center grid grid-cols-1">
-            <button class="bg-gray-300 rounded-md p-0.5 mb-3 disabled:opacity-75" type="button" (click)="navigateRoute('itr', eclaims)">
+            <button class="bg-gray-300 rounded-md p-0.5 mb-3 disabled:opacity-75" type="button" (click)="navigateRoute('itr', eclaims)" [disabled]="is_refreshing || (batch_refresh && (claims_count !== retrieved_claims))">
               <fa-icon [icon]="faUpload"></fa-icon>
               Open ITR
             </button>
@@ -94,20 +91,15 @@
               Upload Required Docs
             </button>
 
-            <!-- <button *ngIf="!eclaims.pReceiptTicketNumber" class="bg-rose-500 text-white rounded-md p-0.5 mb-3 disabled:opacity-75" type="button" (click)="reopenCf2('cf2', eclaims)">
-              <fa-icon [icon]="faPenToSquare"></fa-icon>
-              Update CF2 XML
-            </button> -->
-
             <button class="bg-green-500 text-white rounded-md p-0.5 mb-3 disabled:opacity-75" type="button" *ngIf="eclaims.pReceiptTicketNumber && !eclaims.pClaimSeriesLhio" (click)="checkSeries(eclaims)" [disabled]="is_refreshing || (batch_refresh && (claims_count !== retrieved_claims))">
               <fa-icon [icon]="faRotate" *ngIf="is_refreshing || (batch_refresh && (claims_count !== retrieved_claims))" animation="spin"></fa-icon>
               <fa-icon [icon]="faReceipt" *ngIf="!(is_refreshing || (batch_refresh && (claims_count !== retrieved_claims)))" ></fa-icon>
               Get Series Lhio
             </button>
 
-            <button class="bg-green-500 text-white rounded-md p-0.5 mb-3 disabled:opacity-75" type="button" *ngIf="eclaims.pClaimSeriesLhio && !eclaims.denied_reason" (click)="getClaimStatus(eclaims, eclaims.pStatus)" [disabled]="is_refreshing || (batch_refresh && (claims_count !== retrieved_claims))">
+            <button class="bg-green-500 text-white rounded-md p-0.5 mb-3 disabled:opacity-75" type="button" *ngIf="eclaims.pClaimSeriesLhio && !eclaims.denied_reason" (click)="getClaimStatus(eclaims, eclaims.pStatus, i)" [disabled]="is_refreshing || (batch_refresh && (claims_count !== retrieved_claims))">
               <fa-icon [icon]="faClipboardQuestion" *ngIf="!(is_refreshing || (batch_refresh && (claims_count !== retrieved_claims)))"></fa-icon>
-              <fa-icon [icon]="faRotate" *ngIf="is_refreshing || (batch_refresh && (claims_count !== retrieved_claims))" animation="spin"></fa-icon>
+              <!-- <fa-icon [icon]="faRotate" *ngIf="is_refreshing || (batch_refresh && (claims_count !== retrieved_claims))" animation="spin"></fa-icon> -->
               Check {{ eclaims.pStatus === 'DENIED' ? 'Reason' : 'Status' }}
             </button>
           </td>

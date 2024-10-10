@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { faAnglesLeft, faAnglesRight, faChevronLeft, faChevronRight, faCircleNotch, faClipboardQuestion, faFilter, faPenToSquare, faReceipt, faRotate, faUpload } from '@fortawesome/free-solid-svg-icons';
+import { faAnglesLeft, faAnglesRight, faCheckCircle, faChevronLeft, faChevronRight, faCircleNotch, faClipboardQuestion, faFilter, faPenToSquare, faReceipt, faRotate, faUpload, faXmarkCircle } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 import { forkJoin } from 'rxjs';
@@ -101,7 +101,12 @@ export class EclaimsComponent implements OnInit {
   }
 
   getEclaimsList(page?) {
+    this.item_status = [];
+    this.success_count = 0;
+    this.error_count = 0;
+    this.retrieved_claims = 0;
     this.show_form = false;
+    this.checking_index = null;
 
     let params = {
       pStatus: this.pStatus ?? '',
@@ -134,7 +139,10 @@ export class EclaimsComponent implements OnInit {
   error_count: number = 0;
 
   batch_refresh: boolean = false;
+  item_status: any[] = [];
+
   async getStatuses(){
+    this.item_status = [];
     this.batch_refresh = true;
     this.success_count = 0;
     this.error_count = 0;
@@ -143,24 +151,24 @@ export class EclaimsComponent implements OnInit {
 
     for(const [key, value] of Object.entries(this.eclaims_list)) {
       const val:any = value;
-      console.log(val)
       try {
         if(val.pClaimSeriesLhio) {
           await this.asyncGetClaimsStatus(val, val.pStatus)
         } else {
           this.checkSeries(value);
         }
+        this.item_status[key] = {icon: faCheckCircle, status: 'success'};
         this.success_count += 1;
       } catch (error) {
+        this.item_status[key] = {icon: faXmarkCircle, status: 'failed'};
         this.error_count += 1;
       }
-
     }
   }
 
   asyncGetClaimsStatus(data, type): Promise<void> {
     this.is_refreshing = true;
-
+    this.checking_index = null;
     let params = {
       series_lhio: data.pClaimSeriesLhio,
       program_code: data.program_desc === 'cc' || data.program_desc === 'fp' ? 'mc' : data.program_desc
@@ -183,12 +191,21 @@ export class EclaimsComponent implements OnInit {
     })
   }
 
-  getClaimStatus(data, type) {
+  checking_index: number | null;
+
+  getClaimStatus(data, type, i?) {
     this.claims_count = 1;
     this.success_count = 0;
     this.error_count = 0;
     this.retrieved_claims = 0;
-    this.is_refreshing = true;
+
+    if(i >= 0) {
+      this.checking_index = i;
+      if(this.item_status[i]) this.item_status[i] = {icon: null, status: null};
+    } else {
+      if(!i) this.item_status = [];
+    }
+    this.batch_refresh = true;
 
     let params = {
       series_lhio: data.pClaimSeriesLhio,
@@ -197,15 +214,18 @@ export class EclaimsComponent implements OnInit {
 
     this.http.post('eclaims/get-claim-status', params).subscribe({
       next:(resp: any) => {
+        if(i >= 0) this.item_status[i] = {icon: faCheckCircle, status: 'success'};
         this.iterateMessage(resp, data, type);
         this.addRetrieved();
+        this.batch_refresh = false;
       },
       error: err => {
-        this.is_refreshing = false;
+        if(i >= 0) this.item_status[i] = {icon: faXmarkCircle, status: 'failed'};
         this.http.showError(err.error.message, 'Claims Status - '+ data.pHospitalTransmittalNo);
         this.addRetrieved();
+        this.batch_refresh = false;
       }
-    })
+    });
   }
 
   addRetrieved(){
@@ -213,7 +233,6 @@ export class EclaimsComponent implements OnInit {
 
     if(this.claims_count === this.retrieved_claims) {
       this.batch_refresh = false;
-      this.getEclaimsList();
     }
   }
 
@@ -256,13 +275,17 @@ export class EclaimsComponent implements OnInit {
 
   parseReason(data) {
     if(data) {
-      let obj: any = data;
+      let obj: any = typeof data === 'object' ? JSON.stringify(data) : data;
       let message: any = '';
 
-      if(data.charAt(0) === '[') {
-        if(typeof(data) === 'string') obj = JSON.parse(data);
+      if(obj.charAt(0) === '[') {
+        obj = JSON.parse(obj);
       } else {
-        return data;
+        if(obj.charAt(0) === '{') {
+          obj = JSON.parse(obj);
+        } else {
+          return obj;
+        }
       }
 
       const parse = (obj: any) => {
@@ -337,25 +360,47 @@ export class EclaimsComponent implements OnInit {
       }
       case 'RETURN' : {
         message = 'As of: '+resp.pAsOf+ ' '+resp.pAsOfTime;
-        data.return_reason = resp.CLAIM.RETURN.DEFECTS;
-        Object.entries(resp.CLAIM.RETURN.DEFECTS).forEach(([key, value]:any, index) => {
-          if(!value.pRequirement) message += '<br />Deficiency: '+value;
-          if(value.pRequirement) message += '<br />Requirement: '+value.pRequirement;
-        });
+        if(resp.CLAIM.RETURN && resp.CLAIM.RETURN.DEFECTS) {
+          data.return_reason = resp.CLAIM.RETURN.DEFECTS;
+          Object.entries(resp.CLAIM.RETURN.DEFECTS).forEach(([key, value]:any, index) => {
+            console.log(key, index, value)
+            if(value.REQUIREMENT) {
+              Object.entries(value.REQUIREMENT).forEach(([k, v]:any, i) => {
+                console.log(v)
+                message += '<br />Requirement: '+ (v.pRequirement ? v.pRequirement : v);
+              });
+            }
+
+            if(typeof value === 'string') message += '<br />Deficiency: '+value;
+            if(value.pDeficiency) message += '<br />Deficiency: '+value.pDeficiency;
+            if(value.pRequirement) message += '<br />Requirement: '+value.pRequirement;
+
+          });
+        }
         break;
       }
       case 'IN PROCESS' : {
         message = 'As of: '+resp.pAsOf+ ' '+resp.pAsOfTime;
 
-        if(resp.CLAIM.TRAIL.PROCESS.length > 0) {
-          Object.entries(resp.CLAIM.TRAIL.PROCESS).forEach(([key, value]:any, index) => {
-            message += '<br />Process Stage: '+value.pProcessStage;
-            message += '<br />Process Date: '+value.pProcessDate + '<br />';
-          });
+        if(resp.CLAIM.TRAIL){
+          if(resp.CLAIM.TRAIL.PROCESS.length > 0) {
+            Object.entries(resp.CLAIM.TRAIL.PROCESS).forEach(([key, value]:any, index) => {
+              message += '<br />Process Stage: '+value.pProcessStage;
+              message += '<br />Process Date: '+value.pProcessDate + '<br />';
+            });
+          } else {
+            message += '<br />Process Stage: '+resp.CLAIM.TRAIL.PROCESS.pProcessStage;
+            message += '<br />Process Date: '+resp.CLAIM.TRAIL.PROCESS.pProcessDate + '<br />';
+          }
         } else {
-          message += '<br />Process Stage: '+resp.CLAIM.TRAIL.PROCESS.pProcessStage;
-          message += '<br />Process Date: '+resp.CLAIM.TRAIL.PROCESS.pProcessDate + '<br />';
+          if(resp.CLAIM.RETURN && resp.CLAIM.RETURN.DEFECTS) {
+            Object.entries(resp.CLAIM.RETURN.DEFECTS).forEach(([key, value]:any, index) => {
+              if(!value.pRequirement) message += '<br />Deficiency: '+value;
+              if(value.pRequirement) message += '<br />Requirement: '+value.pRequirement;
+            });
+          }
         }
+
         break;
       }
       default: {
