@@ -78,21 +78,21 @@ export class TodaysConsultComponent implements OnInit, OnDestroy {
           finalize(() => this.isLoading = false)
         )
         .subscribe({
-        next: (data: any) => {
-          // console.log(data);
-          this.today_consults = data.data;
-          this.show_form = true;
+          next: (data: any) => {
+            // console.log(data);
+            this.today_consults = data.data;
+            this.show_form = true;
 
-          this.current_page = data.meta.current_page;
-          this.last_page = data.meta.last_page;
-          this.from = data.meta.from;
-          this.to = data.meta.to;
-          this.total = data.meta.total;
+            this.current_page = data.meta.current_page;
+            this.last_page = data.meta.last_page;
+            this.from = data.meta.from;
+            this.to = data.meta.to;
+            this.total = data.meta.total;
 
-          resolve();
-        },
-        error: err => console.log(err)
-      })
+            resolve();
+          },
+          error: err => console.log(err)
+        })
     });
   }
 
@@ -172,9 +172,40 @@ export class TodaysConsultComponent implements OnInit, OnDestroy {
     private laravelEchoService: LaravelEchoService
   ) { }
 
+  listenToChannel() {
+    if (this.isListening) return;
+
+    this.isListening = true;
+
+    const loadData = () => {
+      return this.loadPhysicians()
+        .then(() => this.getTodaysConsult())
+        .catch(error => {
+          console.error('Error loading physicians or consultations:', error);
+          throw error;
+        });
+    };
+
+    loadData();
+
+    this.laravelEchoService.subscribeToChannel(
+      'channel',
+      'todays-patient',
+      this.current_user.facility_code,
+      'todays.patient',
+      (data) => {
+        console.log('User updated event received:', data);
+        if (data) {
+          loadData();
+        }
+      }
+    );
+  }
+
 
   ngOnInit(): void {
-  console.log(this.physicians, 'eto phys')
+
+    this.listenToChannel();
 
   }
 
