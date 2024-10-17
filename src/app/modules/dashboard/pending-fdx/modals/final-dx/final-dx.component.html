@@ -1,6 +1,6 @@
 <!--<form [formGroup]="icd10forms" (ngSubmit)="onSubmit()">-->
-  <div id="defaultModal" tabindex="-1" class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 md:inset-0 h-modal h-full justify-center items-center flex" aria-modal="true" role="dialog" style="z-index:60">
-    <div class="relative p-4 w-full max-w- h-12 md:h-auto">
+  <div id="defaultModal" tabindex="-1" class="overflow-x-auto fixed top-0 right-0 left-0 md:inset-0 h-modal md:h-full justify-center items-center flex mx-auto" aria-modal="true" role="dialog" style="z-index:60">
+    <div class="relative p-4 w-full">
       <!-- Modal content -->
       <div class="relative bg-white rounded-lg shadow">
         <!-- Modal header -->
@@ -22,12 +22,12 @@
           </div>
         </div>
         <!-- Modal body -->
-        <div class="overflow-y-auto md:h-96 lg:h-4/5 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
+        <div class="overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100" >
   <!--        <div class="flex flex-col justify-center loading" *ngIf="is_fetching">-->
   <!--          <fa-icon class="text-blue-500 mx-auto pt-36 text-xl" [icon]="faCircleNotch" animation="spin"></fa-icon>-->
   <!--          <span class="pt-4 mx-auto pb-36 select-none">Fetching Patient Info...</span>-->
   <!--        </div>-->
-          <div class="overflow-x-auto relative shadow-md sm:rounded-lg m-4">
+          <div class="relative shadow-md sm:rounded-lg m-4">
             <table class="w-full text-sm text-left text-gray-500">
               <tbody>
                 <fieldset class="text-base text-black py-3 px-5 rounded-t border-black border-t border-b border-r border-l">
@@ -101,9 +101,9 @@
                   </table>
                   <div class="shadow-md -outline-offset-8">
                     <div class="border-b rounded-t bg-blue-500 mt-2 py-2 px-5">
-                    <h3 class="mt-2 text-sm text-white font-bold">
-                      Previous Diagnosis
-                    </h3>
+                      <h3 class="mt-2 text-kg text-white font-bold">
+                        Previous Diagnosis
+                      </h3>
                     </div>
                   <table class="w-full table-auto text-sm text-black">
                     <thead class="text-s text-black bg-white -webkit-sticky border-b"
@@ -118,7 +118,7 @@
                     </tr>
                     </thead>
                       <tbody *ngFor="let consult of previous">
-                      @if(consult.final_diagnosis.finaldx.length >= 1) {
+                      @if(consult.final_diagnosis?.finaldx.length >= 1) {
                           <td class="px-5 py-2" colspan="1">
                             @for(icd10 of consult.final_diagnosis.finaldx; track icd10.icd10_code) {
                               <span class="text-black bg-white -webkit-sticky font-bold">
@@ -139,44 +139,117 @@
                 </div>
                 <div class="grid grid-cols-2 justify-between">
                   <div class="grid col-span-1 mt-5 py-2 px-5 rounded-t border-b bg-gray-50">
-                    <h3 class="mt-2 text-sm text-gray-500 font-bold">
+                    <h3 class="mt-2 text-lg text-gray-500 font-bold">
                       Vitals Signs
                     </h3>
                     <div class="shadow-md grid border w-full border-1 -outline-offset-8">
                       <div class="flex text-gray-700 md:block leading-tight align-top my-1 w-full p-1 rounded-md">
                         <fieldset class="text-base text-black py-3 px-5 rounded-t">
-                          <label>Blood Pressure: {{ this.data.vitals_latest?.bp_systolic ?? '-' }}/{{ this.data.vitals_latest?.bp_diastolic ?? '-' }}</label>
-                          <br />
-                          <label>BMI: {{ this.data?.vitals_latest?.patient_bmi ?? '-' }} </label>
-                          <br />
-                          <label>BMI Class: {{ this.data?.vitals_latest?.patient_bmi_class ?? '-' }} </label>
-                          <br />
-                          <label>Weight: {{ this.data?.vitals_latest?.patient_weight ?? '-' }} </label>
+                          <label>
+                           <span class="font-bold">
+                              Weight:
+                           </span>
+                            {{ this.data?.vitals_latest?.patient_weight ?? '-' }}
+                          </label>
                           <span> kg</span>
                           <br />
-                          <label>Height: {{ this.data?.vitals_latest?.patient_height ?? '-' }} </label>
+                          <label>
+                            <span class="font-bold">
+                              Height:
+                            </span>
+                            {{ this.data?.vitals_latest?.patient_height ?? '-' }}
+                          </label>
                           <span> cm</span>
                           <br />
-                          <label>Waist: {{ this.data?.vitals_latest?.patient_waist ?? '-' }} </label>
+                          <label>
+                            <span class="font-bold">
+                              BMI:
+                            </span>
+                            {{ this.data?.vitals_latest?.patient_bmi ?? '-' }}
+                            ({{ this.data?.vitals_latest?.patient_bmi_class ?? '-' }})
+                          </label>
                           <br />
-                          <label>Temp: {{ this.data?.vitals_latest?.patient_temp ?? '-' }}</label>
+                          <label>
+                            <span class="font-bold">
+                              Blood Pressure:
+                            </span>
+                            {{ this.data.vitals_latest?.bp_systolic ?? '-' }}/{{ this.data.vitals_latest?.bp_diastolic ?? '-' }}
+                          </label>
+                          <br />
+                          <label>
+                              <span class="font-bold ">
+                                Blood Oxygen (SPO2):
+                              </span>
+                            {{ data?.vitals_latest?.patient_spo2 ?? '-' }}
+                          </label>
+                          <br />
+                          <label [ngClass]="{'text-red-500': (data?.vitals_latest?.patient_temp >= 38)}">
+                              <span class="font-bold">
+                                Temperature:
+                              </span>
+                            {{ data?.vitals_latest?.patient_temp ?? '-' }}
+                          </label>
                           <span> ℃</span>
                           <br />
-                          <label>Heart Rate: {{ this.data?.vitals_latest?.patient_heart_rate ?? '-' }}</label>
+                          <label>
+                            <span class="font-bold">
+                              Heart Rate:
+                            </span>
+                            {{ this.data?.vitals_latest?.patient_heart_rate ?? '-' }}
+                          </label>
                           <br />
-                          <label>Respiratory Rate: {{ this.data?.vitals_latest?.patient_respiratory_rate ?? '-' }}</label>
+                          <label>
+                            <span class="font-bold">
+                              Respiratory Rate:
+                            </span>
+                            {{ this.data?.vitals_latest?.patient_respiratory_rate ?? '-' }}
+                          </label>
                           <br />
-                          <label>Pulse Rate: {{ this.data?.vitals_latest?.patient_pulse_rate ?? '-' }}</label>
+                          <label>
+                            <span class="font-bold">
+                              Pulse Rate:
+                            </span>
+                            {{ this.data?.vitals_latest?.patient_pulse_rate ?? '-' }}
+                          </label>
+                          <br />
+                          <label>
+                            <span class="font-bold">
+                              Visual Acuity (Right):
+                            </span>
+                            {{ this.data?.vitals_latest?.patient_right_vision_acuity ?? '-' }}
+                          </label>
+                          <br />
+                          <label>
+                            <span class="font-bold">
+                              Visual Acuity (Left):
+                            </span>
+                            {{ this.data?.vitals_latest?.patient_left_vision_acuity ?? '-' }}
+                          </label>
+                          <br />
+                          <label>
+                            <span class="font-bold">
+                              Waist:
+                            </span>
+                            {{ this.data?.vitals_latest?.patient_waist ?? '-' }}
+                          </label>
+                          <br />
+                          <label>
+                            <span class="font-bold">
+                              Hip:
+                            </span>
+                            {{ this.data?.vitals_latest?.patient_hip ?? '-' }}
+                          </label>
+                          <br />
                         </fieldset>
                       </div>
                     </div>
                   </div>
                   <div class="flex flex-col mt-5 py-2 px-5 rounded-t border-b bg-gray-50">
-                    <span class="mt-2 text-sm text-gray-500 font-bold">
+                    <span class="mt-2 text-lg text-gray-500 font-bold">
                       Chief Complaint
                     </span>
                     <div class="shadow-md flex flex-col border w-full border-1">
-                      <div *ngFor="let item of this.data?.consult_notes.complaints ?? '-'" class="pl-2 flex text-gray-700 md:block leading-tight align-top my-1 w-full p-1 rounded-md">
+                      <div *ngFor="let item of this.data?.consult_notes.complaints ?? '-'" class="pl-2 flex font-bold text-base text-gray-700 md:block leading-tight align-top my-1 w-full p-1 rounded-md">
 <!--                        <fieldset class="text-base text-black pt-3 px-5 rounded-t">-->
                             {{ item.lib_complaints.complaint_desc ?? '-'}}
 <!--                        </fieldset>-->
@@ -185,6 +258,261 @@
                         Remarks: {{ this.data?.consult_notes.complaint ?? '-' }}
                       </h3>
                     </div>
+                  </div>
+                </div>
+                <div class="flex flex-col mt-5 py-2 px-5 rounded-t border-b bg-gray-50">
+                  <div class="border-b rounded-t bg-purple-600 mt-2 py-2 px-5">
+                    <h3 class="mt-2 text-lg text-white font-bold">
+                      History of Current Illness
+                    </h3>
+                  </div>
+                  <div>
+                    <tr class="w-full">
+                      <th class="px-5 py-2 w-1/2 text-left text-black">
+                        {{ this.data?.consult_notes.history ?? '-' }}
+                      </th>
+                    </tr>
+                  </div>
+                </div>
+                <div class="grid grid-cols-2 justify-between">
+                  <div class="grid col-span-1 mt-5 py-2 px-5 rounded-t border-b bg-gray-50">
+                    <h3 class="mt-2 text-lg text-gray-500 font-bold">
+                      Physical Exam
+                    </h3>
+                    <div class="shadow-md grid border w-full border-1 -outline-offset-8">
+                      <div class="flex text-gray-700 md:block leading-tight align-top my-1 w-full p-1 rounded-md">
+                        <fieldset class="text-base text-black py-3 px-5 rounded-t">
+                          <label >
+                            <span class="font-bold">
+                              ABDOMEN:
+                            </span>
+                          </label>
+                          <br />
+                          <label>
+                            Remarks:
+                          </label>
+                          <br />
+                          <label>
+                            <span class="font-bold">
+                              BARTHOLINS:
+                            </span>
+<!--                            OUCHUUU-->
+                          </label>
+                          <br />
+                          <label>
+                            Remarks:
+                          </label>
+                          <br />
+                          <label>
+                            <span class="font-bold">
+                              BREAST:
+                            </span>
+<!--                            OUCHUUU-->
+                          </label>
+                          <br />
+                          <label>
+                            Remarks:
+                          </label>
+                          <br />
+                          <label>
+                            <span class="font-bold">
+                              CHEST:
+                            </span>
+<!--                            OUCHUUU-->
+                          </label>
+                          <br />
+                          <label>
+                            Remarks:
+                          </label>
+                          <br />
+                          <label>
+                            <span class="font-bold">
+                              CONJUNCTIVA:
+                            </span>
+<!--                            OUCHUUU-->
+                          </label>
+                          <br />
+                          <label>
+                            Remarks:
+                          </label>
+                          <br />
+                          <label>
+                            <span class="font-bold">
+                              EXTREMITIES:
+                            </span>
+<!--                            OUCHUUU-->
+                          </label>
+                          <br />
+                          <label>
+                            Remarks:
+                          </label>
+                          <br />
+                          <label>
+                            <span class="font-bold">
+                              GENITOURINARY:
+                            </span>
+<!--                            OUCHUUU-->
+                          </label>
+                          <br />
+                          <label>
+                            Remarks:
+                          </label>
+                          <br />
+                          <label>
+                            <span class="font-bold">
+                              HEART:
+                            </span>
+<!--                            OUCHUUU-->
+                          </label>
+                          <br />
+                          <label>
+                            Remarks:
+                          </label>
+                          <br />
+                          <label>
+                            <span class="font-bold">
+                              HEENT:
+                            </span>
+<!--                            OUCHUUU-->
+                          </label>
+                          <br />
+                          <label>
+                            Remarks:
+                          </label>
+                          <br />
+                          <label>
+                            <span class="font-bold">
+                              NECK:
+                            </span>
+<!--                            OUCHUUU-->
+                          </label>
+                          <br />
+                          <label>
+                            Remarks:
+                          </label>
+                          <br />
+                          <label>
+                            <span class="font-bold">
+                              NEURO:
+                            </span>
+<!--                            OUCHUUU-->
+                          </label>
+                          <br />
+                          <label>
+                            Remarks:
+                          </label>
+                          <br />
+                          <label>
+                            <span class="font-bold">
+                              Pelvic:
+                            </span>
+<!--                            OUCHUUU-->
+                          </label>
+                          <br />
+                          <label>
+                            Remarks:
+                          </label>
+                          <br />
+                          <label>
+                            <span class="font-bold">
+                              RECTAL:
+                            </span>
+<!--                            OUCHUUU-->
+                          </label>
+                          <br />
+                          <label>
+                            Remarks:
+                          </label>
+                          <br />
+                          <label>
+                            <span class="font-bold">
+                              SKIN:
+                            </span>
+<!--                            OUCHUUU-->
+                          </label>
+                          <br />
+                          <label>
+                            Remarks:
+                          </label>
+                          <br />
+                          <label>
+                            <span class="font-bold">
+                              SPECULUM:
+                            </span>
+<!--                            OUCHUUU-->
+                          </label>
+                          <br />
+                          <label>
+                            Remarks:
+                          </label>
+                          <br />
+                          <label>
+                            <span class="font-bold">
+                              THORAX:
+                            </span>
+<!--                            OUCHUUU-->
+                          </label>
+                          <br />
+                          <label>
+                            Remarks:
+                          </label>
+                          <br />
+                        </fieldset>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="flex flex-col mt-5 py-2 px-5 rounded-t border-b bg-gray-50">
+                    <span class="mt-2 text-lg text-gray-500 font-bold">
+                      Initial Diagnosis
+                    </span>
+                    <div class="shadow-md flex flex-col border w-full border-1">
+                      <div *ngFor="let item of this.data?.consult_notes.initialdx ?? '-'" class="pl-2 flex text-gray-700 md:block leading-tight align-top my-1 w-full p-1 rounded-md">
+                      <h3 class="text-base text-black py-3 px-3 rounded-t">
+                        <span class="font-bold"> Diagnosis: </span>
+                        <span> {{ item.diagnosis.class_name ?? '-'}} </span>
+                      </h3>
+                      </div>
+                      <h3 class="text-base text-black py-3 px-3 rounded-t">
+                        <span class="font-bold"> Remarks: </span> {{ this.data?.consult_notes.idx_remarks ?? '-' }}
+                      </h3>
+                    </div>
+                    <span class="mt-2 text-lg text-gray-500 font-bold">
+                      Surgical History
+                    </span>
+                    <div class="shadow-md flex flex-col border w-full border-1">
+                      <div *ngFor="let procedure of this.data?.surgical_history ?? '-'" class="pl-2 flex text-gray-700 md:block leading-tight align-top my-1 w-full p-1 rounded-md">
+                        <h3 class="text-base text-black py-3 px-3 rounded-t">
+                          <span class="font-bold"> Procedure: </span>
+                          <span> {{ procedure.operation ?? '-'}} </span>
+                          <br />
+                          <span class="font-bold"> Operation Date: </span>
+                          <span> {{ procedure.operation_date | date:'MM/dd/yyyy' ?? '-'}} </span>
+                        </h3>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="flex flex-col mt-5 py-2 px-5 rounded-t border-b bg-gray-50">
+                  <div class="border-b rounded-t bg-orange-600 mt-2 py-2 px-5">
+                    <h3 class="mt-2 text-lg text-white font-bold">
+                      Drugs Prescribed
+                    </h3>
+                  </div>
+                  <div class="text-black py-2 px-5" *ngFor="let item of data?.prescription">
+                    <span class="font-bold text-sm">{{ item.konsulta_medicine?.desc ?? item.medicine?.gen_name ?? item.added_medicine ?? ''}} </span> <br />
+                    {{ item.medicine?.form_desc ?? ' '}} {{ item.medicine?.stre_desc ?? ' '}}<br />
+                    <span class="font-bold">
+                      Dose Regimen:
+                    </span>
+                      {{ item.dose_regimen?.desc ?? ' ' }} <br />
+                    <span class="font-bold">
+                      Duration Intake:
+                    </span>
+                    {{ item.duration_intake }} {{ item.duration_frequency?.desc }} (s) <br />
+                    <span class="font-bold">
+                      Prescribed Quantity:
+                    </span>
+                    {{ item.quantity ?? ' '}} {{ item.medicine?.form_desc ?? ' ' }} <br />
                   </div>
                 </div>
               </tbody>

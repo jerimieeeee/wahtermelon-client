@@ -196,6 +196,17 @@ export class FinalDxComponent implements OnChanges {
     });
   }
 
+  pe_array: any[] = [];
+/*  iteratePE() {
+    if(this.data.physica_exam) {
+      let pe_content: any[] = [];
+
+      Object.entries(this.data.physica_exam).forEach(([key, value]: any => {
+
+      }))
+    }
+
+  }*/
   showToastr(){
     this.is_saving = false;
     this.toastr.success('Successfully updated!','Final Diagnosis')
@@ -221,6 +232,7 @@ export class FinalDxComponent implements OnChanges {
     this.notes_id = this.data.consult_notes.id;
     this.loadSelected();
     console.log(this.previous, 'previous ito');
+    console.log(this.data, 'present ito');
   }
 
   ngOnChanges(changes){
