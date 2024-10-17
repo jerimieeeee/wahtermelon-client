@@ -6,7 +6,7 @@
   <div class="flex flex-col justify-center">
     <form [formGroup]="hospitalizationHistoryForm" (submit)="onSubmit()">
       <fieldset class="grid grid-cols-2 m-3 p-3 gap-x-3 border border-slate-300 shadow-md rounded-md bg-slate-100">
-        <legend>Hopitalization Details</legend>
+        <legend>Hospitalization Details</legend>
         <div>
           <label for="admission_date">Admission Date</label>
           <input id="admission_date" type="date" class="input" formControlName="admission_date" placeholder="admission date" />
@@ -18,7 +18,7 @@
         </div>
 
         <div class="col-span-2">
-          <label for="cause">Cause of hospitalization</label>
+          <label for="cause">Cause of Hospitalization</label>
           <input id="cause" type="text" class="input" formControlName="cause" placeholder="Cause"/>
         </div>
 
@@ -34,9 +34,9 @@
     <table class="table-auto w-11/12 text-center m-5 mx-auto border border-slate-300 rounded-lg shadow-md">
       <thead class="border-b">
         <tr>
-          <th class="px-3">Cause of hospitalization</th>
-          <th class="px-3">Admission date</th>
-          <th class="px-3">Discharge date</th>
+          <th class="px-3">Cause of Hospitalization</th>
+          <th class="px-3">Admission Date</th>
+          <th class="px-3">Discharge Date</th>
           <th class="px-3">Action</th>
         </tr>
       </thead>
