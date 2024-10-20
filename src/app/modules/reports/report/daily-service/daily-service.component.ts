@@ -1,8 +1,8 @@
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { faCircleNotch, faFileExcel, faFilePdf } from '@fortawesome/free-solid-svg-icons';
 import { options } from 'app/modules/patient-registration/patient-registration.module';
-import { ExportAsConfig, ExportAsService } from 'ngx-export-as';
-import * as moment from 'moment';
+import { ExportAsConfig, ExportAsService } from 'ngx-export-as-17';
+import moment from 'moment';
 
 @Component({
   selector: 'app-daily-service',

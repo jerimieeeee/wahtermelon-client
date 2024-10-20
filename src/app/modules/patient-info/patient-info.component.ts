@@ -168,6 +168,8 @@ export class PatientInfoComponent implements OnInit {
 
   imageData: SafeUrl | null = null;
   getImage(data) {
+    console.log(data)
+    this.imageData = null;
     this.http.get('images/'+data.id, { responseType: 'blob' }).subscribe({
       next: (data: any) => {
         const reader = new FileReader();
@@ -207,7 +209,6 @@ export class PatientInfoComponent implements OnInit {
   death_record: any;
 
   setDetails(data) {
-    console.log(data)
     this[data.var_name] = data.data;
   }
 

@@ -75,12 +75,14 @@
                 </button>
 
                 <button class="bg-green-500 text-white rounded-md p-0.5 mb-3 disabled:opacity-75" type="button" *ngIf="eclaims.pReceiptTicketNumber && !eclaims.pClaimSeriesLhio" (click)="checkSeries(eclaims)" [disabled]="is_refreshing">
-                  <fa-icon [icon]="is_refreshing ? faRotate : faReceipt" [spin]="is_refreshing"></fa-icon>
+                  <fa-icon [icon]="faReceipt" *ngIf="!is_refreshing"></fa-icon>
+                  <fa-icon [icon]="faRotate" *ngIf="is_refreshing" animation="spin"></fa-icon>
                   Get Series Lhio
                 </button>
 
                 <button class="bg-green-500 text-white rounded-md p-0.5 mb-3 disabled:opacity-75" type="button" *ngIf="eclaims.pClaimSeriesLhio && !eclaims.denied_reason" (click)="getClaimStatus(eclaims, eclaims.pStatus)" [disabled]="is_refreshing">
-                  <fa-icon [icon]="is_refreshing ? faRotate : faClipboardQuestion" [spin]="is_refreshing"></fa-icon>
+                  <fa-icon [icon]="faReceipt" *ngIf="!is_refreshing"></fa-icon>
+                  <fa-icon [icon]="faRotate" *ngIf="is_refreshing" animation="spin"></fa-icon>
                   Check {{ eclaims.pStatus === 'DENIED' ? 'Reason' : 'Status' }}
                 </button>
               </td>
@@ -96,7 +98,7 @@
               <td colspan="7">
                 <div class="grid grid-cols-1 my-16">
                   <div class="flex justify-center text-blue-500">
-                    <fa-icon [icon]="faCircleNotch" spin="true"></fa-icon>
+                    <fa-icon [icon]="faCircleNotch" animation="spin"></fa-icon>
                   </div>
                   <div class="flex justify-center">
                     Fetching claims...

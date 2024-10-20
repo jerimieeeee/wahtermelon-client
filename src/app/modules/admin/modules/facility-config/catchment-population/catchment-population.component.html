@@ -53,7 +53,7 @@
 
       <div class="grid grid-cols-1 mt-20" *ngIf="!show_form">
         <div class="flex justify-center text-blue-500 text-xl">
-          <fa-icon [icon]="faCircleNotch" spin="true"></fa-icon>
+          <fa-icon [icon]="faCircleNotch" animation="spin"></fa-icon>
         </div>
         <div class="flex justify-center">
           Loading...
@@ -63,7 +63,8 @@
 
     <div class="rounded-b-xl p-3 text-end border-t border-slate-300" *ngIf="catchment_barangays[selected_year] && catchment_barangays[selected_year].data.length > 0">
       <button [disabled]="is_saving || !show_form" type="button" class="btn-save" (click)="onSubmit()">
-        <fa-icon [icon]="is_saving ? faCircleNotch : faSave" [spin]="is_saving" class="pr-2"></fa-icon>
+        <fa-icon [icon]="faSave" *ngIf="!is_saving" class="pr-2"></fa-icon>
+        <fa-icon [icon]="faCircleNotch" *ngIf="is_saving" animation="spin" class="pr-2"></fa-icon>
         {{ is_saving ? 'Updating' : 'Update' }}
       </button>
     </div>
@@ -110,7 +111,7 @@
 
       <div *ngIf="!show_pop" class="grid grid-cols-1 my-20">
         <div class="flex justify-center text-blue-500">
-          <fa-icon [icon]="faCircleNotch" spin="true"></fa-icon>
+          <fa-icon [icon]="faCircleNotch" animation="spin"></fa-icon>
         </div>
         <div class="flex justify-center">
           Loading...

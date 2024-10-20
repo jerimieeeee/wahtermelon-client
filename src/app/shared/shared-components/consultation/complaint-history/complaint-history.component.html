@@ -60,7 +60,7 @@
 
         <div class="flex text-right">
           <button *ngIf="!consult_done && allowed_to_edit" [disabled]="is_saving" type="button" class="btn-save ml-auto mr-5 mb-5 px-10 disabled:bg-gray-300" (click)="onSubmit()">
-            <fa-icon *ngIf="is_saving" class="mr-2" [icon]="faCircleNotch" spin="true"></fa-icon>
+            <fa-icon *ngIf="is_saving" class="mr-2" [icon]="faCircleNotch" animation="spin"></fa-icon>
             <fa-icon *ngIf="!is_saving" class="mr-2" [icon]="faSave"></fa-icon>
             {{ is_saving ? 'Saving' : 'Save' }}
           </button>

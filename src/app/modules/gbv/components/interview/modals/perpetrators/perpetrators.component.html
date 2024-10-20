@@ -191,7 +191,7 @@
 
         <div class="grid grid-cols-1  mt-32" *ngIf="!show_form">
           <span class="flex justify-center text-sky-500">
-            <fa-icon [icon]="faCircleNotch" spin="true" class=""></fa-icon>
+            <fa-icon [icon]="faCircleNotch" animation="spin" class=""></fa-icon>
           </span>
           <span class="flex justify-center">
             Loading...
@@ -203,7 +203,8 @@
       <div class="flex justify-end py-4 px-5 space-x-4 rounded-b border-t border-gray-200">
         <button type="button" class="btn-save bg-gray-400" (click)="closeModal()">Close</button>
         <button [disabled]="is_saving || perpetratorForm.invalid" type="submit" class="btn-save px-10 disabled:bg-gray-300" (click)="onSubmit()" >
-          <fa-icon [icon]="is_saving ? faCircleNotch : faSave" [spin]="is_saving"></fa-icon>
+          <fa-icon [icon]="faSave" *ngIf="!is_saving"></fa-icon>
+          <fa-icon [icon]="faCircleNotch" *ngIf="is_saving" animation="spin"></fa-icon>
           {{ perpetratorForm.value.id ? (is_saving ? 'Updating' : 'Update') : (is_saving ? 'Saving' : 'Save') }}
         </button>
       </div>

@@ -43,7 +43,7 @@ export class DeathRecordComponent {
   handleCause() {
     this.antecedent_list = [];
     this.underlying_list = [];
-    if(this.death.cause) {
+    if(this.death && this.death.cause) {
       Object.entries(this.death.cause).forEach(([key, value]: any, index) => {
         if(value.cause.code === 'ANT') this.antecedent_list.push(value.icd10.icd10_code + ': ' + value.icd10.icd10_desc);
         if(value.cause.code === 'UND') this.underlying_list.push(value.icd10.icd10_code + ': ' + value.icd10.icd10_desc);

@@ -9,7 +9,8 @@ import { Subject } from 'rxjs';
   providedIn: 'root'
 })
 export class HttpService {
-  baseUrl = 'https://edu-api.wah.ph/api/v1/'; //staging-api
+  baseUrl = 'https://edu-api.wah.ph/api/v1/';
+  masterFormUrl = 'http://127.0.0.1:8000/api/v1/';
 
   constructor(
     private http: HttpClient,
@@ -51,6 +52,30 @@ export class HttpService {
   logout() {
     return this.http.get(`${this.baseUrl}`+'logout')
   }
+
+  getFromMasterform(loc, data?) {
+    return this.http.get(`${this.masterFormUrl}` + loc, data ? data : '')
+  }
+
+  postToMasterform(loc, data) {
+    return this.http.post(`${this.masterFormUrl}` + loc, data)
+  }
+
+  /* getTicketList(facility_code) {
+    return this.http.get('http://127.0.0.1:8000/api/v1/logs-facility', {params: {facility_code: facility_code}});
+  }
+
+  addTicketList(params) {
+    return this.http.get('http://127.0.0.1:8000/api/v1/logs-facility', params);
+  }
+
+  getCommentList(params){
+    return this.http.get('http://127.0.0.1:8000/api/v1/logs-facility', {params});
+  }
+
+  postComment(params) {
+    return this.http.get('http://127.0.0.1:8000/api/v1/logs-facility', {params});
+  } */
 
   saveUserToLocalStorage(user) {
     localStorage.setItem('user', JSON.stringify(user));

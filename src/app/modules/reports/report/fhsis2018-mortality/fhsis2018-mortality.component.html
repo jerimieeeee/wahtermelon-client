@@ -2,7 +2,7 @@
   <div class="flex justify-between w-full text-blue-500 font-semibold text-lg  p-3" >
     <span>FHSIS Report - Mortality and Natality</span>
     <span>
-      <!-- <fa-icon *ngIf="exporting" [icon]="faCircleNotch" spin="true" class="text-blue-500 text-sm mr-3">Exporting...</fa-icon> -->
+      <!-- <fa-icon *ngIf="exporting" [icon]="faCircleNotch" animation="spin" class="text-blue-500 text-sm mr-3">Exporting...</fa-icon> -->
       <button [disabled]="pdf_exported" type="button" class="text-2xl mr-5 text-red-600 disabled:text-gray-600" (click)="exportP()">
         <fa-icon [icon]="faFilePdf"></fa-icon>
       </button>
@@ -28,7 +28,7 @@
                     Name of Municipality/City: <br />
                     Name of Province: <br />
                     Projected Population for the Year: <br />
-                    Year: {{this.reportform_data.value.year}}
+                    Year: {{ label_value.labelYear }}
                   FHSIS Report for<span *ngIf="label_value.labelType === 'm1'"> the Month</span>: {{ label_value.labelDate}} <br />
                   Name of Barangay: {{ brgy_result ? this.brgy_result : '-'}} <br />
                   Name of Facility: <span class="capitalize"> {{ facility.facility_name}} </span> <br />

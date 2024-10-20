@@ -85,7 +85,7 @@ export class TbdotsComponent implements OnInit {
     this.http.get('consultation/records', {params}).subscribe({
       next: (data: any) => {
         this.consult_details = data.data[0];
-        console.log(this.consult_details)
+        // console.log(this.consult_details)
         this.getPatientTbHistory();
       },
       error: err => console.log(err)

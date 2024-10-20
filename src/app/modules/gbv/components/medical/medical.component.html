@@ -31,7 +31,8 @@
 
         <div class="col-span-4 flex justify-center">
           <button [disabled]="is_saving" type="submit" class="btn-save mr-5 mt-4">
-            <fa-icon [icon]="is_saving ? faCircleNotch : faSave" [spin]="is_saving ? true : false" class="mr-2"></fa-icon>
+            <fa-icon [icon]="faSave" *ngIf="!is_saving" class="mr-2"></fa-icon>
+            <fa-icon [icon]="faCircleNotch" *ngIf="is_saving" animation="spin" class="mr-2"></fa-icon>
             {{ is_saving ? 'Saving' : 'Save' }}
           </button>
         </div>
@@ -294,7 +295,8 @@
           </div> -->
           <div class="col-span-12 flex justify-center">
             <button [disabled]="is_saving" type="submit" class="btn-save mr-5 mt-4">
-              <fa-icon [icon]="is_saving ? faCircleNotch : faSave" [spin]="is_saving ? true : false" class="mr-2"></fa-icon>
+              <fa-icon [icon]="faSave" *ngIf="!is_saving" class="mr-2"></fa-icon>
+              <fa-icon [icon]="faCircleNotch" *ngIf="is_saving" animation="spin" class="mr-2"></fa-icon>
               {{ is_saving ? 'Saving' : 'Save' }}
             </button>
           </div>
@@ -355,7 +357,7 @@
 
         <div class="grid grid-cols-1" *ngIf="fetchingFiles">
           <div class="flex justify-center text-sky-500">
-            <fa-icon [icon]="faCircleNotch" spin="true"></fa-icon>
+            <fa-icon [icon]="faCircleNotch" animation="spin"></fa-icon>
           </div>
           <div class="flex justify-center">
             Fetching Files...

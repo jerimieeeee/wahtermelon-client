@@ -2,9 +2,11 @@
     <form [formGroup]="mcr_form" (ngSubmit)="saveForm()">
         <div class="grid gap-4 relative animates-dropdown " style="grid-template-columns: repeat(16, minmax(0, 1fr));"
             *ngIf="!focused">
-            <div class="sticky top-14 z-50 border border-blue-400 col-span-2 relative mx-2 px-2 py-1 rounded-t-lg text-sm bg-blue-500 text-white"
-                style="grid-column: span 16 / span 16;"><button class="font-bold" type="button">Maternal Care
-                    Record</button>
+            <div class="z-50 border border-blue-400 col-span-2 relative mx-2 px-2 py-1 rounded-t-lg text-sm bg-blue-500 text-white"
+                style="grid-column: span 16 / span 16;">
+                <button class="font-bold" type="button">
+                  Maternal Care Record
+                </button>
                 <div class="absolute left-40 top-1">
                     <fa-icon [icon]="faInfoCircle" class=" peer ml-4 text-white hover:text-gray-500 z-50"></fa-icon>
                     <div
@@ -215,7 +217,7 @@
                 <div (click)="saveForm(mcr_form.value)"
                     class="cursor-pointer flex border-check hover:drop-shadow-md {{updating?'bg-blue-300 hover:bg-blue-400 peer-hover:text-blue-400':'bg-green-300 hover:bg-green-400 peer-hover:text-green-400'}} py-1 rounded-full text-white px-3 peer-hover:bg-white">
                     <fa-icon *ngIf="!loading" [icon]="faSave" size="lg" class="mr-2"></fa-icon>
-                    <fa-icon *ngIf="loading" class="mr-2" [icon]="faSpinner" [spin]="true"></fa-icon>
+                    <fa-icon *ngIf="loading" class="mr-2" [icon]="faSpinner" animation="spin"></fa-icon>
                     <button type="button" class="font-bold button-out border-check-red" [disabled]="loading">
                         {{updating?(loading?'Updating':'Update'):(loading?'Saving':'Save')}}
                     </button>

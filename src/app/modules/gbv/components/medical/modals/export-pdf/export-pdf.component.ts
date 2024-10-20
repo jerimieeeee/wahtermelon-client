@@ -2,8 +2,8 @@ import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { AgeService } from 'app/shared/services/age.service';
-import { ExportAsConfig, ExportAsService } from 'ngx-export-as';
 import { forkJoin } from 'rxjs';
+import { ExportAsConfig, ExportAsService } from 'ngx-export-as-17';
 
 @Component({
   selector: 'app-export-pdf',
@@ -13,7 +13,7 @@ import { forkJoin } from 'rxjs';
 export class ExportPdfComponent implements OnInit {
   @Output() toggleExportPDF = new EventEmitter<any>();
   @Input() selected_gbv_case;
-  
+
 
   is_saving: boolean = false;
 
@@ -140,7 +140,7 @@ export class ExportPdfComponent implements OnInit {
   //       // console.log(this.userInfo,'test impressions user')
   //       // console.log(this.patient_details,'test impressions patient')
   //       this.convertImpression()
-        
+
   //     },
   //     error: err => console.log(err)
   //   });
@@ -180,7 +180,7 @@ export class ExportPdfComponent implements OnInit {
   behavioral_exam: any =[];
 
   patchData() {
-    
+
     this.loadExams(this.selected_gbv_case.gbvIntake.symptoms_anogenital, 'anogenital_exam', 'anogenital');
     this.loadExams(this.selected_gbv_case.gbvIntake.symptoms_corporal, 'corporal_exam', 'corporal');
     this.loadExams(this.selected_gbv_case.gbvIntake.symptoms_behavioral, 'behavioral_exam', 'behavior');
@@ -191,7 +191,7 @@ export class ExportPdfComponent implements OnInit {
     this.loadAnogenital()
     this.loadCorporal()
     this.loadBeahavioral()
-    
+
   }
 
   convertImpression(){
@@ -200,7 +200,7 @@ export class ExportPdfComponent implements OnInit {
     this.last_referral = this.selected_gbv_case?.gbvReferral[Object.keys(this.selected_gbv_case?.gbvReferral).length - 1];
 
     console.log(this.conv_relation, 'relationship')
-    
+
     this.conv_facility = this.userInfo.facility.facility_name.split(' ')
    .map(w => w[0].toUpperCase() + w.substring(1).toLowerCase())
    .join(' ');
@@ -213,17 +213,17 @@ export class ExportPdfComponent implements OnInit {
   }
 
 
-  constructor(private http: HttpService,
-              private ageService: AgeService, 
-              private exportAsService: ExportAsService
+  constructor(
+    private http: HttpService,
+    private ageService: AgeService,
+    private exportAsService: ExportAsService
   ) { }
-  
+
   ngOnInit() {
-    this.loadLibs(); 
+    this.loadLibs();
     this.loadLibraries();
     this.patient_details = this.http.getPatientInfo();
     this.userInfo = this.http.getUserFromJSON();
-    console.log(this.userInfo, 'user')
     // console.log(this.selected_gbv_case,'export modal')
     // console.log(this.anogenital_list,'test hugot')
   }

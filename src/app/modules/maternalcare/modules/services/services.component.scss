@@ -1,10 +1,10 @@
 // // .border-check{border: 1px dashed rgb(255, 0, 0);}
-.modal{
+/* .modal{
     z-index: 100 !important;
 }
 .modal-main{
     z-index: 110 !important;
-}
+} */
 // .transitions{
 //     height: 5rem;
 //     transition: all 1000ms;
@@ -14,7 +14,7 @@ input, .drop_btn, li{
     padding-left: 12px;
     height: 2.25rem;
     width: 100%;
-   
+
   }
   .check-style{
     width: 0;
@@ -45,16 +45,16 @@ input, .drop_btn, li{
   input:checked ~ .dot {
     background-color: #f00e0e;
   }
-  
+
   .icon-height{
     height: 2.25rem;
   }
-  
+
   .colButton{
     // height: 50px;
     padding-bottom: -500px;
   }
-  
+
   h3{
     color: rgb(92, 92, 92);
     padding-top: .15rem;
@@ -63,7 +63,7 @@ input, .drop_btn, li{
     line-height: 1.25rem; /* 20px */
     // font-weight: 700;
   }
-  
+
   @keyframes bounce {
     0%, 100% {
     transform: translateY(-5%);
@@ -86,12 +86,12 @@ input, .drop_btn, li{
     from { width: 100% }
     to { width: 0 }
   }
-  
+
   @keyframes visible_drop {
     from { height: 0 }
     to { height: 100% }
   }
-  
+
   @keyframes spins {
   from {
     transform: rotate(0deg);
@@ -100,33 +100,33 @@ input, .drop_btn, li{
     transform: rotate(180deg);
   }
   }
-  
+
   .carets:hover{
     animation: spins 0.3s steps(100, end) forwards;
   }
-  
-  
+
+
   .typed-out{
     overflow: hidden;
     white-space: nowrap;
-    animation: 
+    animation:
     type_in 0.68s steps(100, end) forwards,
     ;
     width: 0;
   }
-  
+
   .button-out{
     overflow: hidden;
     white-space: nowrap;
-    animation: 
+    animation:
     button_in 0.68s steps(60, end) forwards
     ;
   }
-  
+
   // .animates-dropdown{
   // height: 0;
-  
-  // // animation: 
+
+  // // animation:
   // // visible_drop 0.68s steps(60, end) forwards
   // // ;
   // }

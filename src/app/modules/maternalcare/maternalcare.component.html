@@ -14,6 +14,7 @@
     </button>
   </nav>
   <div class="ml-auto">
+
     <button *ngIf="show_list && !consult_details?.consult_done" type="button" class="btn-end-visit ml-auto mt-5" (click)="toggleModal('end_visit')">
       <fa-icon class="mr-1" [icon]="faDoorClosed"></fa-icon>
       End Visit
@@ -40,44 +41,17 @@
         Caserate
     </button>
   </div>
+  <!-- <div class="flex justify-end">
+    <button (click)="toggleModal('terminate-pregnancy')" class="bg-gray-300 text-gray-500 px-2 py-1 text-xs rounded mt-1 h-8 font-semibold hover:opacity-75">
+      Terminate Pregnancy
+    </button>
+  </div> -->
 </nav>
 
-<!-- <div class="w-full relative h-screen px-2 mt-5 ml-5 rounded-3xl text-gray-600 shadow-md overflow-y-scroll scrollbar-thin scrollbar-thumb-blue-300 scrollbar-track-white {{modalStats?'z-50':'z-0'}}"> -->
-  <!-- <div class="text-sm font-medium text-center sticky top-0 text-gray-500 bg-white {{modalStats?'z-0':'z-10'}}">
-    <ul class="flex flex-wrap ">
-      <li class="mr-2">
-        <a class="select-none inline-block p-4 rounded-t-lg border-b-2 hover:text-blue-400 hover:font-semibold hover:border-blue-400"
-          [class]="module !== 1? '' : 'text-blue-400 font-semibold border-blue-400'" (click)="switchTab(1)">History</a>
-      </li>
-      <li class="mr-2" *ngIf="patient_id && mcr">
-        <a class="select-none inline-block p-4 rounded-t-lg border-b-2 hover:text-blue-400 hover:font-semibold hover:border-blue-400"
-          [class]="module !== 2? '' : 'text-blue-400 font-semibold border-blue-400'" (click)="switchTab(2)">
-          Maternal Care Record</a>
-      </li>
-      <li class="mr-2" *ngIf="patient_id && patient_mc_record && prenatal">
-        <a class="select-none inline-block p-4 rounded-t-lg border-b-2 hover:text-blue-400 hover:font-semibold hover:border-blue-400"
-          [class]="module !== 3? '' : 'text-blue-400 font-semibold border-blue-400'"
-          (click)="switchTab(3)">Prenatal</a>
-      </li>
-      <li class="mr-2" *ngIf="patient_id">
-        <a class="select-none inline-block p-4 rounded-t-lg border-b-2 hover:text-blue-400 hover:font-semibold hover:border-blue-400"
-          [class]="module !== 4? '' : 'text-blue-400 font-semibold border-blue-400'"
-          (click)="switchTab(4)">Postpartum</a>
-      </li>
-
-      <li class="absolute right-3" *ngIf="consult_details?.consult_done === false">
-        <button *ngIf="!consult_details?.consult_done" type="button" class="btn-end-visit ml-auto" (click)="toggleModal()">
-          <fa-icon class="mr-1" [icon]="faDoorClosed"></fa-icon>
-          End Visit
-        </button>
-      </li>
-    </ul>
-  </div> -->
 
 <div class="fade-in mb-20" *ngIf="pages === 1">
-  <div *ngIf="show_list" class="w-12/12 px-8 pb-10 border-solid border-2 border-zinc-100 border-l-0 border-r-0 border-t-0 p-3">
-    <div class="grid gap-4 relative animates-dropdown" style="grid-template-columns: repeat(16, minmax(0, 1fr));"
-      *ngIf="!focused">
+  <div *ngIf="show_list" class="w-12/12 px-4 pb-10 border-solid border-2 border-zinc-100 border-l-0 border-r-0 border-t-0 p-3">
+    <div class="grid gap-4 relative animates-dropdown">
       <div
         class="sticky top-14 z-50 border border-blue-400 col-span-2 mx-2 px-2 py-1 rounded-t-lg text-sm bg-blue-500 text-white"
         style="grid-column: span 16 / span 16;"><button class="font-bold" type="button">Records</button>
@@ -92,7 +66,7 @@
               <button (click)="switchPage(2)" *ngIf="!patient_mc_list"
                 class="col-start-[9] bg-green-400 rounded hover:bg-green-500 font-medium text-white my-1 mx-2">Add</button>
 
-              <div class="text-sm pb-1 font-semibold h-max" *ngIf="patient_mc_list?(patient_mc_list.length !== 0?true:false):false"
+              <div class="text-sm pb-1 font-semibold h-max overflow-x-auto" *ngIf="patient_mc_list?(patient_mc_list.length !== 0?true:false):false"
                 style="grid-column: span 9 / span 9;">
 
                 <table class="table-auto relative w-full">
@@ -117,7 +91,7 @@
                       <th class="px-2 font-normal">{{mc.post_registration?(mc.post_registration.end_pregnancy?'Closed':'Open'):'Open'}}</th>
                       <th class="px-2 font-normal">
                         <button class=" px-2 py-1 bg-blue-400 text-white font-bold rounded hover:bg-blue-500" (click)="openMCR(mc.id)">
-                          <fa-icon *ngIf="loading && mc.id === view_id" class="mx-3" [icon]="faSpinner" [spin]="true"></fa-icon>
+                          <fa-icon *ngIf="loading && mc.id === view_id" class="mx-3" [icon]="faSpinner" animation="spin"></fa-icon>
                           {{loading && mc.id === view_id?'':'View'}}
                         </button>
                       </th>
@@ -194,14 +168,17 @@
 </div>
 <!-- </div> -->
 
-<app-end-visit
-  *ngIf="show_end"
+<app-end-visit *ngIf="modals['end_visit']"
   [consult_id]="consult_id"
-  [toggleModal]="toggleModal()"
+  (toggleModal)="toggleModal('end_visit')"
   [consult_date]="consult_details?.consult_date"
   [patient_id]="consult_details?.patient.id"
   [pt_group]="'mc'"
 ></app-end-visit>
+
+<app-terminate-pregnancy *ngIf="modals['terminate-pregnancy']"
+  (toggleModal)="toggleModal('terminate-pregnancy')"
+></app-terminate-pregnancy>
 
 <app-caserate *ngIf="pages === 2 && module === 8"
   (switchPage)="switchPage($event)"

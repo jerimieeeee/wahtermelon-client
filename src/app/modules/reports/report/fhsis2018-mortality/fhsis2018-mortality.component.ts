@@ -2,7 +2,7 @@ import { Component, Input, OnChanges } from '@angular/core';
 import { faFileExcel, faFilePdf } from '@fortawesome/free-regular-svg-icons';
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import { dateHelper } from 'app/shared/services/date-helper.service';
-import { ExportAsConfig, ExportAsService } from 'ngx-export-as';
+import { ExportAsConfig, ExportAsService } from 'ngx-export-as-17';
 
 @Component({
   selector: 'app-fhsis2018-mortality',
@@ -119,6 +119,7 @@ export class Fhsis2018MortalityComponent implements OnChanges{
       this.label_value = this.dateHelper.getLabelValue(this.reportForm, this.report_data);
       if(this.selectedBrgy) this.convertBrgy();
 
+      console.log(this.label_value)
       this.show_stats = true;
     }
   }

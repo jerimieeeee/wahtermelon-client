@@ -217,7 +217,8 @@
       <!-- *ngIf="!selected_tb_consult || selected_tb_consult.treatment_done === 0" -->
       <div class="flex justify-center mt-5" >
         <button [disabled]="is_saving || abPostExposureForm.invalid" type="submit" class="btn-save mr-5 mt-4">
-          <fa-icon [icon]="is_saving ? faCircleNotch : faSave" [spin]="is_saving" class="mr-2"></fa-icon>
+          <fa-icon [icon]="faSave" *ngIf="is_saving" class="mr-2"></fa-icon>
+          <fa-icon [icon]="faCircleNotch" *ngIf="is_saving" animation="spin" class="mr-2"></fa-icon>
           {{ abPostExposureForm.value.id ? (is_saving ? 'Updating' : 'Update') : (is_saving ? 'Saving' : 'Save') }}
         </button>
       </div>
@@ -228,7 +229,7 @@
 <div *ngIf="!show_form">
   <div class="grid grid-cols-1 my-16">
     <div class="flex justify-center">
-      <fa-icon [icon]="faCircleNotch" spin="true"></fa-icon>
+      <fa-icon [icon]="faCircleNotch" animation="spin"></fa-icon>
     </div>
 
     <div class="flex justify-center">

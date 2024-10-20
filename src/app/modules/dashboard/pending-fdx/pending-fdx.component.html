@@ -1,12 +1,17 @@
 <div class="mb-10  text-gray-600 h-100 border border-slate-200 shadow-md rounded-md">
   <div class="md:flex md:justify-between md:items-center pb-2 bg-blue-500 text-white rounded-t-md">
     <span class="font-semibold pt-2 pl-5">Pending Final Diagnosis</span>
-  </div>
-  <div class="border border-gray-400 rounded-md bg-white">
-    <input type="text" [(ngModel)]="patient_search" class="form-input border-0 text-sm p-1 m-1 border-r border-gray-400" (keyup.enter)="getPatient()" placeholder="Search Patient"/>
-    <button type="button" class="text-blue-500 w-9 h-9 border-r border-gray-400" (click)="getPatient()">
-      <fa-icon class="-ml-1" [icon]="faSearch"></fa-icon>
-    </button>
+    <div class="border bg-white border-gray-400 rounded-md flex items-center m-2">
+      <input type="text" [(ngModel)]="patient_search" class="form-input w-1/4 text-sm border text-gray-700 border-gray-400 flex-1" (keyup.enter)="getPatient()" placeholder="Search Patient"/>
+      <button type="button" class="text-blue-500 w-9 h-9 border-r border-gray-400" (click)="getPatient()">
+        <fa-icon class="-ml-1" [icon]="faSearch"></fa-icon>
+      </button>
+
+        <select class="input px-2 mr-3 disabled:bg-red-600 w-72 text-gray-800" (change)="getPatient()" [(ngModel)]="selected_physician">
+          <option value="all">All</option>
+          <option [value]="dr.id" class="pr-" *ngFor="let dr of physicians">{{ dr.last_name }}, {{ dr.first_name }} {{ dr.middle_name }}</option>
+        </select>
+    </div>
   </div>
 
   <div class="p-3" *ngIf="show_form">
@@ -44,8 +49,8 @@
     <div class="flex justify-between border-b border-gray-100" *ngFor="let patient of pending_fdx">
       <div class="flex w-3/5">
         <div class="flex justify-center text-gray-700 md:block leading-tight align-top my-1 w-full p-1 rounded-md">
-          <span class="w-full font-medium my-0 text-sm rounded-md py-2 px-3 hover:cursor-pointer hover:bg-blue-500 hover:text-white" (click)="getData(patient.consult_id, patient.consult_date)">
-            {{ patient.name }}
+          <span class="w-full font-medium my-0 text-sm rounded-md py-2 px-3 hover:cursor-pointer hover:bg-blue-500 hover:text-white" (click)="getData(patient.patient_id, patient.consult_date, patient.consult_id)">
+            {{ patient.patient_name }}
           </span>
         </div>
       </div>
@@ -59,14 +64,14 @@
       <div class="grid grid-cols-5 text-left w-3/5">
         <div class="col-span-12 text-gray-700 p-3 rounded-md text-[.85em]">
           <span class="w-full font-medium my-0 text-sm">
-            {{ patient.doctor ? patient.doctor : '-' }}
+            {{ patient.physician_name ? patient.physician_name : '-' }}
           </span>
         </div>
       </div>
       <div class="grid grid-cols-5 text-left w-3/5">
         <div class="col-span-12 text-gray-700 p-3 rounded-md text-[.85em]">
           <span class="w-full font-medium my-0 text-sm">
-            {{ patient.encoded ? patient.encoded : '-' }}
+            {{ patient.enocder_name ? patient.enocder_name : '-' }}
           </span>
         </div>
       </div>
@@ -81,7 +86,7 @@
 
   <div class="pt-3" *ngIf="!show_form && !getPatient">
     <div class="text-center items-center mb-3 italic" >
-      <fa-icon [icon]="faCircleNotch" spin="true" class="text-blue-500"></fa-icon>
+      <fa-icon [icon]="faCircleNotch" animation="spin" class="text-blue-500"></fa-icon>
     </div>
   </div>
   <div *ngIf="total >= 1">

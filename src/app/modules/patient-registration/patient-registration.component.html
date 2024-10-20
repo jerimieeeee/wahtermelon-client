@@ -7,7 +7,7 @@
     <div class="shadow rounded-md p-4 m-5 w-5/6 mx-auto" *ngIf="!show_form">
       <div class="grid grid-cols-1 my-32">
         <div class="flex justify-center text-blue-500">
-          <fa-icon [icon]="faCircleNotch" spin="true"></fa-icon>
+          <fa-icon [icon]="faCircleNotch" animation="spin"></fa-icon>
         </div>
         <div class="flex justify-center">
           Loading libraries...
@@ -425,7 +425,7 @@
 
         <div *ngIf="patientForm.value.consent_flag === true" class="text-right">
           <button type="submit" class="btn-save mr-5 w-48 disabled:bg-gray-400" [disabled]="loading || patientForm.invalid || disable_save">
-            <fa-icon *ngIf="loading" class="mr-3" [icon]="faSpinner" [spin]="true"></fa-icon>
+            <fa-icon *ngIf="loading" class="mr-3" [icon]="faSpinner" animation="spin"></fa-icon>
             <fa-icon *ngIf="!loading" class="mr-3" [icon]="faSave"></fa-icon>
             {{ loading ? (button_function === 'Save' ? 'Saving' : 'Updating') : button_function }}
           </button>

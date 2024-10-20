@@ -92,7 +92,8 @@
       </div>
       <div class="col-span-12 flex justify-center mb-5">
         <button  type="submit" class="btn-save px-10" name="add-btn">
-          <fa-icon [icon]="is_saving ? faSpinner : faSave" [spin]="is_saving"></fa-icon>
+          <fa-icon [icon]="faSave" *ngIf="!is_saving"></fa-icon>
+          <fa-icon [icon]="faSpinner" *ngIf="is_saving" animation="spin"></fa-icon>
           {{ is_saving ? 'Saving' : 'Save'}}
         </button>
       </div>

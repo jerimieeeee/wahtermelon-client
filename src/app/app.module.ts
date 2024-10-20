@@ -9,7 +9,7 @@ import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { VitalsGraphComponent } from './components/vitals-graph/vitals-graph.component';
 import { VitalsComponent } from './components/vitals/vitals.component';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgApexchartsModule } from 'ng-apexcharts';
@@ -21,40 +21,36 @@ import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { RapidOnsiteComponent } from './shared/shared-components/monitoring/rapid-onsite/rapid-onsite.component';
 
-@NgModule({
-  declarations: [
-    AppComponent,
-    HeaderComponent,
-    SidenavComponent,
-    VitalsGraphComponent,
-    VitalsComponent,
-  ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    AppRoutingModule,
-    FontAwesomeModule,
-    HttpClientModule,
-    NgSelectModule,
-    FormsModule,
-    NgApexchartsModule,
-    ReactiveFormsModule,
-    ToastrModule.forRoot(),
-    CalendarModule.forRoot({
-      provide: DateAdapter,
-      useFactory: adapterFactory,
-    }),
-    RapidOnsiteComponent
-  ],
-  providers: [
-    {
-    provide: HTTP_INTERCEPTORS,
-    useClass: RequestsInterceptor,
-    multi: true
-    },
-    CookieService,
-    provideEnvironmentNgxMask()
-  ],
-  bootstrap: [AppComponent]
-})
+@NgModule({ declarations: [
+        AppComponent,
+        HeaderComponent,
+        SidenavComponent,
+        VitalsGraphComponent,
+        VitalsComponent,
+    ],
+    bootstrap: [AppComponent],
+    imports: [BrowserModule,
+        BrowserAnimationsModule,
+        AppRoutingModule,
+        FontAwesomeModule,
+        NgSelectModule,
+        FormsModule,
+        NgApexchartsModule,
+        ReactiveFormsModule,
+        ToastrModule.forRoot(),
+        CalendarModule.forRoot({
+            provide: DateAdapter,
+            useFactory: adapterFactory,
+        }),
+        RapidOnsiteComponent],
+    providers: [
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: RequestsInterceptor,
+            multi: true
+        },
+        CookieService,
+        provideEnvironmentNgxMask(),
+        provideHttpClient(withInterceptorsFromDi())
+    ] })
 export class AppModule { }

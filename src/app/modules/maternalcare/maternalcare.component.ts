@@ -59,8 +59,10 @@ export class MaternalcareComponent implements OnInit {
     this.module = tab;
   }
 
-  toggleModal(){
-    this.show_end = !this.show_end;
+  modals: any[] = [];
+
+  toggleModal(name: string){
+    this.modals[name] = !this.modals[name];
   }
 
   postValue(post_data) {

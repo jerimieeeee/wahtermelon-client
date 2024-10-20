@@ -57,9 +57,9 @@
           <fa-icon [icon]="faSquarePollVertical" size="xl"></fa-icon>
         </a>
 
-        <!-- <a class="my-1 hover:text-sky-500 md:mx-2 md:my-0" [ngClass]="current_url === '/statistics' ? 'text-sky-500 text-xl' : 'text-gray-700 text-sm'" routerLink="/statistics">
+        <a class="my-1 hover:text-sky-500 md:mx-2 md:my-0" [ngClass]="current_url === '/statistics' ? 'text-sky-500 text-xl' : 'text-gray-700 text-sm'" routerLink="/statistics">
           <fa-icon [icon]="faChartLine" size="xl"></fa-icon>
-        </a> -->
+        </a>
 
         <a *ngIf="user.designation_code === 'MEDTECH'" class="my-1 md:mx-2 md:my-0" [ngClass]="current_url === '/lab-pending' ? 'text-emerald-500 text-xl' : 'text-gray-700 text-sm'" routerLink="/lab-pending">
           <fa-icon [icon]="faFlask" size="xl"></fa-icon>

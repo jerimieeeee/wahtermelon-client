@@ -71,7 +71,7 @@ export class Casdt2Component implements OnInit {
       pinhole: [null, Validators.required],
       improved: [null, Validators.required],
       aided: [null, Validators.required],
-      eye_refer_prof: [null, Validators.required],
+      eye_refer_prof: [null],
     });
 
     if(this.consult_details.riskCasdt2) this.casdt2Form.patchValue({...this.consult_details.riskCasdt2[0]});

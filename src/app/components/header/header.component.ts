@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
-import { faChevronCircleDown, faBell, faSearch, faGear, faHome, faRightFromBracket, faAddressBook, faUser, faSquarePollVertical, faCalendarDay, faFlask, faChartLine } from '@fortawesome/free-solid-svg-icons';
+import { faChevronCircleDown, faBell, faSearch, faGear, faHome, faRightFromBracket, faAddressBook, faUser, faSquarePollVertical, faCalendarDay, faFlask, faChartLine, faCircleQuestion } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { catchError, debounceTime, distinctUntilChanged, switchMap, tap, map, filter } from 'rxjs/operators';
 import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
@@ -30,7 +30,7 @@ export class HeaderComponent implements OnInit {
   faCalendarDay = faCalendarDay;
   faFlask = faFlask;
   faChartLine = faChartLine;
-
+  faCircleQuestion = faCircleQuestion;
   // patients$: Observable<any>;
   patients$ = new BehaviorSubject<any[]>([]);
   searchInput$ = new Subject<string>();
@@ -54,6 +54,11 @@ export class HeaderComponent implements OnInit {
   showCreate:boolean = false;
 
   user_menu = [
+    /* {
+      name: 'Help & Support',
+      location: 'support',
+      icon: faCircleQuestion
+    }, */
     {
       name: 'My Account',
       location: 'my-account',
@@ -122,7 +127,6 @@ export class HeaderComponent implements OnInit {
     let current_page = page ? 1 : page;
     return this.http.get('patient', {params:{'filter[search]':term, page: current_page, per_page: 10}})
     .pipe(map((resp:any) => {
-      console.log(resp)
       this.showCreate = resp.data.length == 0 ? true : false;
 
       this.from = resp.meta.from;
@@ -176,7 +180,6 @@ export class HeaderComponent implements OnInit {
     filter(event => event instanceof NavigationEnd),
     tap(() => {
       this.current_url = this.location.path();
-      console.log(this.current_url)
     })
   );
 

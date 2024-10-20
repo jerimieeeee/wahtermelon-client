@@ -2,7 +2,7 @@
   <div class="flex justify-between w-full text-blue-500 text-lg  p-3" >
     <span>Dental OHC</span>
     <span>
-        <!-- <fa-icon *ngIf="exporting" [icon]="faCircleNotch" spin="true" class="text-blue-500 text-sm mr-3">Exporting...</fa-icon> -->
+        <!-- <fa-icon *ngIf="exporting" [icon]="faCircleNotch" animation="spin" class="text-blue-500 text-sm mr-3">Exporting...</fa-icon> -->
         <button [disabled]="pdf_exported" type="button" class="text-2xl mr-5 text-red-600 disabled:text-gray-600" (click)="exportP()">
           <fa-icon [icon]="faFilePdf"></fa-icon>
         </button>
@@ -55,14 +55,9 @@
               <tr *ngFor="let item of var_list" class="text-right">
                 <td class="text-left">{{ item.name }}</td>
                 <td></td>
-<<<<<<< HEAD
-                <td (click)="showNameList(item.male_var_name)">{{ stats[item.var_lead][item.male_var_name] ?? 0 }}</td>
-                <td (click)="showNameList(item.female_var_name)">{{ stats[item.var_lead][item.female_var_name] ?? 0 }}</td>
-=======
-                <td (click)="showNameList(item.male_var_name, item.var_lead)" [class]="stats[item.var_lead][item.male_var_name] > 0 ? 'text-blue-500 hover:cursor-pointer' : 'pointer-events-none'">{{ stats[item.var_lead][item.male_var_name] ?? 0 }}</td>
-                <td (click)="showNameList(item.female_var_name, item.var_lead)" [class]="stats[item.var_lead][item.female_var_name] > 0 ? 'text-blue-500 hover:cursor-pointer' : 'pointer-events-none'">{{ stats[item.var_lead][item.female_var_name] ?? 0 }}</td>
->>>>>>> origin/underlying-report
-                <td colspan="2">{{ +stats[item.var_lead][item.male_var_name] + +stats[item.var_lead][item.female_var_name] ?? 0 }}</td>
+                <td class="text-center" (click)="showNameList(item.male_var_name, item.var_lead)" [class]="stats[item.var_lead][item.male_var_name] > 0 ? 'text-blue-500 hover:cursor-pointer' : 'pointer-events-none'">{{ stats[item.var_lead][item.male_var_name] ?? 0 }}</td>
+                <td class="text-center" (click)="showNameList(item.female_var_name, item.var_lead)" [class]="stats[item.var_lead][item.female_var_name] > 0 ? 'text-blue-500 hover:cursor-pointer' : 'pointer-events-none'">{{ stats[item.var_lead][item.female_var_name] ?? 0 }}</td>
+                <td class="text-center" colspan="2">{{ +stats[item.var_lead][item.male_var_name] + +stats[item.var_lead][item.female_var_name] ?? 0 }}</td>
                 <td></td>
                 <td></td>
                 <td></td>
@@ -86,16 +81,10 @@
               <tr class="text-right">
                 <td class="text-left">9. Pregnant women who received BOHC - Total</td>
                 <td></td>
-<<<<<<< HEAD
-                <td class="border text-center" (click)="showNameList('pregnant_women_10_14_years_bohc')">{{ stats.pregnant_women_10_14_years_bohc ?? 0 }}</td>
-                <td class="border text-center" (click)="showNameList('pregnant_women_15_19_years_bohc')">{{ stats.pregnant_women_15_19_years_bohc ?? 0 }}</td>
-                <td class="border text-center" (click)="showNameList('pregnant_women_20_49_years_bohc')">{{ stats.pregnant_women_20_49_years_bohc ?? 0 }}</td>
-=======
-                <td (click)="showNameList('pregnant_women_10_14_years_bohc')" [class]="stats.data.pregnant_women_10_14_years_bohc > 0 ? 'text-blue-500 hover:cursor-pointer' : 'pointer-events-none'">{{ stats.data.pregnant_women_10_14_years_bohc ?? 0 }}</td>
-                <td (click)="showNameList('pregnant_women_15_19_years_bohc')" [class]="stats.data.pregnant_women_15_19_years_bohc > 0 ? 'text-blue-500 hover:cursor-pointer' : 'pointer-events-none'">{{ stats.data.pregnant_women_15_19_years_bohc ?? 0 }}</td>
-                <td (click)="showNameList('pregnant_women_20_49_years_bohc')" [class]="stats.data.pregnant_women_20_49_years_bohc > 0 ? 'text-blue-500 hover:cursor-pointer' : 'pointer-events-none'">{{ stats.data.pregnant_women_20_49_years_bohc ?? 0 }}</td>
->>>>>>> origin/underlying-report
-                <td>{{ +stats.data.pregnant_women_10_14_years_bohc + +stats.data.pregnant_women_15_19_years_bohc  + +stats.data.pregnant_women_20_49_years_bohc }}</td>
+                <td class="text-center" (click)="showNameList('pregnant_women_10_14_years_bohc')" [class]="stats.data.pregnant_women_10_14_years_bohc > 0 ? 'text-blue-500 hover:cursor-pointer' : 'pointer-events-none'">{{ stats.data.pregnant_women_10_14_years_bohc ?? 0 }}</td>
+                <td class="text-center" (click)="showNameList('pregnant_women_15_19_years_bohc')" [class]="stats.data.pregnant_women_15_19_years_bohc > 0 ? 'text-blue-500 hover:cursor-pointer' : 'pointer-events-none'">{{ stats.data.pregnant_women_15_19_years_bohc ?? 0 }}</td>
+                <td class="text-center" (click)="showNameList('pregnant_women_20_49_years_bohc')" [class]="stats.data.pregnant_women_20_49_years_bohc > 0 ? 'text-blue-500 hover:cursor-pointer' : 'pointer-events-none'">{{ stats.data.pregnant_women_20_49_years_bohc ?? 0 }}</td>
+                <td class="text-center">{{ +stats.data.pregnant_women_10_14_years_bohc + +stats.data.pregnant_women_15_19_years_bohc  + +stats.data.pregnant_women_20_49_years_bohc }}</td>
                 <td></td>
                 <td></td>
                 <td></td>
