@@ -119,7 +119,7 @@ export class EclaimsComponent implements OnInit {
 
     this.http.get('eclaims/eclaims-upload', { params }).subscribe({
       next:(data:any) => {
-        // console.log(data.data)
+        console.log(data.data)
         this.eclaims_list = data.data;
         this.show_form = true;
 
@@ -440,6 +440,32 @@ export class EclaimsComponent implements OnInit {
     this.caserate_list = [eclaims.caserate];
     this.selected_transmittalNumber = eclaims.pHospitalTransmittalNo;
     this.modal[name] = !this.modal[name];
+  }
+
+  toggleColorStatus(status:string) {
+    let style: string = '';
+    switch (status) {
+      case 'IN PROCESS':
+        style = 'text-blue-500 font-semibold'
+        break;
+      case 'RETURN':
+        style = 'text-orange-500 font-semibold'
+        break;
+      case 'DENIED':
+        style = 'text-red-500 font-semibold'
+        break;
+      case 'VOUCHERING':
+        style = 'text-green-500 font-semibold'
+        break;
+      case 'WITH VOUCHER':
+        style = 'text-green-500 font-semibold'
+      case 'WITH CHEQUE':
+        style = 'text-green-500 font-semibold'
+        break;
+      default:
+        break;
+    }
+    return style;
   }
 
   toggleModal(name, eclaims?) {
