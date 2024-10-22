@@ -52,6 +52,10 @@ export class Fhsis2018EnvironmentalComponent implements OnChanges{
     }
   }
 
+  countObject(obj: Object): number {
+    return Object.entries(obj).length;
+  }
+
   exportX() {
     this.exportAsService.save(this.exportAsExcel, 'Environmental M1').subscribe(() => {
       // save started

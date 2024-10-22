@@ -33,8 +33,8 @@
                 <!-- <th class="relative text-sm w-2/12 font-medium text-gray-900 px-6 py-4 border align-top text-left">
                     Year: {{this.reportform_data.value.year}}
                 </th> -->
-                <th colspan="2"  class="text-sm font-bold text-gray-900 px-6 py-4 border text-center w-2/12">
-                  <img src="./assets/img/m1.png" class="mx-auto" />
+                <th scope="col" colspan="3" class="text-8xl tracking-tighter font-bold text-gray-900 px-6 py-4 border text-center">
+                  {{ label_value.labelType ?? 'M1' }}
                 </th>
               </tr>
               <tr class="text-center sticky top-0 bg-gray-200">
@@ -75,40 +75,40 @@
               </tr>
               <tr>
                 <td class="p-5 border text-sm">1. No. of HHs w/ access to basic safe water supply - Total</td>
-                <td class="pr-2 text-center">{{ stats.water_level_all.length}}</td>
+                <td class="pr-2 text-center">{{ countObject(stats.water_level_all) }}</td>
                 <td></td>
                 <td class="p-5 border text-sm" rowspan="2">4. No. of HHs using managed sanitation services - Total</td>
-                <td class="pr-2 text-center" rowspan="2">{{ stats.safety_managed_sanitation.length}}</td>
+                <td class="pr-2 text-center" rowspan="2">{{ countObject(stats.safety_managed_sanitation) }}</td>
                 <td rowspan="2"></td>
               </tr>
 
               <tr>
                 <td class="p-5 border text-sm pl-16">a. No of HHs with Level I - Total</td>
-                <td class="pr-2 text-center">{{ stats.water_level1.length}}</td>
+                <td class="pr-2 text-center">{{ countObject(stats.water_level1) }}</td>
                 <td></td>
               </tr>
 
               <tr>
                 <td class="p-5 border text-sm pl-16">b. No of HHs with Level II - Total</td>
-                <td class="pr-2 text-center">{{ stats.water_level2.length}}</td>
+                <td class="pr-2 text-center">{{ countObject(stats.water_level2)}}</td>
                 <td></td>
                 <td class="p-5 border text-sm">5. No. of HHs with satisfaction solid waste management - Total</td>
-                <td class="pr-2 text-center">{{ stats.satisfaction_solid_waste_management.length}}</td>
+                <td class="pr-2 text-center">{{ countObject(stats.satisfaction_solid_waste_management)}}</td>
                 <td></td>
               </tr>
 
               <tr>
                 <td class="p-5 border text-sm pl-16">c. No of HHs with Level III - Total</td>
-                <td class="pr-2 text-center">{{ stats.water_level3.length}}</td>
+                <td class="pr-2 text-center">{{ countObject(stats.water_level3)}}</td>
                 <td></td>
                 <td class="p-5 border text-sm text-center">6. No. of HHs with complete sanitation facilities - Total</td>
-                <td class="text-center pr-2 ">{{ stats.complete_sanitation_facilities.length}}</td>
+                <td class="text-center pr-2 ">{{ countObject(stats.complete_sanitation_facilities)}}</td>
                 <td></td>
               </tr>
 
               <tr>
                 <td class="p-5 border text-sm">2. No of HHs using the safety managed drinking-water services - Total</td>
-                <td class="text-center pr-2">{{ stats.safety_managed_water.length}}</td>
+                <td class="text-center pr-2">{{ countObject(stats.safety_managed_water)}}</td>
                 <td></td>
                 <td class="p-5 border text-sm">7. Total number of Industrial Establishment</td>
                 <td class="p-5 border text-sm text-center">-</td>
@@ -117,7 +117,7 @@
 
               <tr>
                 <td class="p-5 border text-sm">3. No of HHs with Basic Sanitation facility - Total</td>
-                <td class="text-center pr-2">{{ stats.basic_sanitation_toilet_all.length}}</td>
+                <td class="text-center pr-2">{{ countObject(stats.basic_sanitation_toilet_all)}}</td>
                 <td></td>
                 <td class="p-5 border text-sm">8. No. of Industrial Establishment issued with sanitary permit</td>
                 <td class="p-5 border text-center">-</td>
@@ -126,7 +126,7 @@
 
               <tr>
                 <td class="p-5 border text-sm pl-16">a. No. of HH with pour/flush toilet connected to septic tank - Total</td>
-                <td class="text-center pr-2">{{ stats.basic_sanitation_toilet_a.length}}</td>
+                <td class="text-center pr-2">{{ countObject(stats.basic_sanitation_toilet_a)}}</td>
                 <td></td>
                 <td class="p-5 border text-sm">9. Total number of Food Establishment</td>
                 <td class="p-5 border text-center">-</td>
@@ -137,7 +137,7 @@
                 <td class="p-5 border text-sm pl-16">b. No. of HHs with pour/flush toilet connected to community
                   sewer/sewerage system or any other approved treatment system - Total
                 </td>
-                <td class="text-center pr-2">{{ stats.basic_sanitation_toilet_b.length}}</td>
+                <td class="text-center pr-2">{{ countObject(stats.basic_sanitation_toilet_b)}}</td>
                 <td></td>
                 <td class="p-5 border text-sm">10. No. of Food Establishment issued with sanitary permit</td>
                 <td class="p-5 border text-center">-</td>
@@ -146,10 +146,10 @@
 
               <tr>
                 <td class="p-5 border text-sm pl-16">c. No. of HHs with ventilated improved of pit atrine (VIP) - Total</td>
-                <td class="text-center pr-2">{{ stats.basic_sanitation_toilet_c.length}}</td>
+                <td class="text-center pr-2">{{ countObject(stats.basic_sanitation_toilet_c)}}</td>
                 <td></td>
                 <td class="p-5 border text-sm">11. No. of Barangays declared ZOD</td>
-                <td class="text-center pr-2">{{ stats.zod_barangays.length}}</td>
+                <td class="text-center pr-2">{{ countObject(stats.zod_barangays)}}</td>
                 <td></td>
               </tr>
             </tbody>

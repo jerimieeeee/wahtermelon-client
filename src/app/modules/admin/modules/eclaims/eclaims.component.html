@@ -6,7 +6,7 @@
       <input type="text" [(ngModel)]="patient_search" placeholder="search..." (keyup.enter)="getEclaimsList()" class="col-span-3 input rounded-r-none"/>
       <select class="input rounded-none col-span-3" [(ngModel)]="pStatus" (change)="getEclaimsList()">
         <option [ngValue]="null">ALL</option>
-        <option [value]="status" *ngFor="let status of status_lists">{{ status }}</option>
+        <option [value]="status" *ngFor="let status of status_lists" [ngClass]="toggleColorStatus(status)">{{ status }}</option>
       </select>
       <select class="input rounded-none" (change)="changeCodeList()" [class]="program_desc !== null ? 'col-span-2' : 'col-span-3'" [(ngModel)]="program_desc">
         <option [ngValue]="null">ALL</option>
@@ -39,20 +39,26 @@
     <table class="table-auto w-full text-sm text-left text-gray-500 ">
       <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700">
         <tr>
-          <th scope="col" class="py-3 px-3 w-2/12 text-center">Name</th>
+          <th scope="col" class="py-3 px-3 w-2/12 text-center">
+            Name <br />
+            <!-- Philhealth PIN -->
+          </th>
           <th scope="col" class="py-3  w-2/12">
             1. Caserate (Program)<br />
             2. Transmittal Number <br />
             3. Ticket Number <br />
-            4. Claim Series Lhio
+            4. Claim Series Lhio <br />
           </th>
-          <th scope="col" class="py-3 px-3 w-2/12 text-center">Transmittal Date</th>
-          <th scope="col" class="py-3 px-3 w-1/12 text-center">Claim Status</th>
+          <th scope="col" class="py-3 px-3 w-2/12 text-center">
+            1. Transmittal Date <br />
+            2. Caserate Amount
+          </th>
+          <th scope="col" class="py-3 px-3 w-2/12 text-center">Claim Status</th>
           <th scope="col" class="py-3 px-3 w-3/12 text-center">Details</th>
-          <th scope="col" class="py-3 px-3 w-2/12 text-center">Action</th>
+          <th scope="col" class="py-3 px-3 w-1/12 text-center">Action</th>
         </tr>
       </thead>
-      <tbody class="h-4/5 overflow-y-auto" *ngIf="show_form">
+      <tbody class="h-4/5 overflow-y-auto text-xs" *ngIf="show_form">
         <tr *ngFor="let eclaims of eclaims_list; let i = index" class="bg-white border-b last:border-0">
           <td class="font-semibold">
             <fa-icon *ngIf="item_status[i] && item_status[i].icon" [icon]="item_status[i].icon" [ngClass]="item_status[i].status === 'success' ? 'text-green-500'  : 'text-red-500'"></fa-icon>
@@ -63,42 +69,43 @@
             1. {{ eclaims.caserate.caserate_code }} | {{ eclaims.caserate.code }} ({{ eclaims.caserate.program_desc | uppercase }})<br />
             2. {{ eclaims.pHospitalTransmittalNo }} <br />
             3. {{ eclaims.pReceiptTicketNumber ?? '-' }} <br />
-            4. {{ eclaims.pClaimSeriesLhio ?? '-' }}
+            4. {{ eclaims.pClaimSeriesLhio ?? '-' }} <br />
           </td>
           <td class="py-4 px-3">
-            {{ eclaims.pTransmissionDate ?? '-' }}
+            1. {{ eclaims.pTransmissionDate ?? '-' }} <br />
+            2. {{ eclaims.caserate.caserate_fee | number:'1.2-2' }}
           </td>
           <td class="py-4 px-3">
-            {{ eclaims.pStatus ?? 'IN QUEUE'  }}
+            <span [ngClass]="toggleColorStatus(eclaims.pStatus)">{{ eclaims.pStatus ?? 'IN QUEUE'  }}</span>
           </td>
           <td class="py-4 px-3">
             <span  [innerHTML]="parseReason(eclaims.denied_reason)"></span>
             <span  [innerHTML]="parseReason(eclaims.return_reason)"></span>
           </td>
-          <td class="py-4 px-3 text-center grid grid-cols-1">
+          <td class="py-4 px-3 text-center grid grid-cols-1 text-xs">
             <button class="bg-gray-300 rounded-md p-0.5 mb-3 disabled:opacity-75" type="button" (click)="navigateRoute('itr', eclaims)" [disabled]="is_refreshing || (batch_refresh && (claims_count !== retrieved_claims))">
-              <fa-icon [icon]="faUpload"></fa-icon>
+              <!-- <fa-icon [icon]="faUpload"></fa-icon> -->
               Open ITR
             </button>
 
             <button *ngIf="eclaims.pStatus === 'IN PROCESS' || eclaims.pStatus === ''" class="bg-blue-500 text-white rounded-md p-0.5 mb-3 disabled:opacity-75" type="button" (click)="toggleModal('upload-claims', eclaims)" [disabled]="is_refreshing || (batch_refresh && (claims_count !== retrieved_claims))">
-              <fa-icon [icon]="faUpload"></fa-icon>
+              <!-- <fa-icon [icon]="faUpload"></fa-icon> -->
               {{ eclaims.pReceiptTicketNumber ? 'Reupload Docs' : 'Upload Claim' }}
             </button>
 
             <button *ngIf="eclaims.pStatus === 'RETURN'" class="bg-blue-500 text-white rounded-md p-0.5 mb-3 disabled:opacity-75" type="button" (click)="toggleModal('upload-required-claims', eclaims)" [disabled]="is_refreshing || (batch_refresh && (claims_count !== retrieved_claims))">
-              <fa-icon [icon]="faUpload"></fa-icon>
+              <!-- <fa-icon [icon]="faUpload"></fa-icon> -->
               Upload Required Docs
             </button>
 
             <button class="bg-green-500 text-white rounded-md p-0.5 mb-3 disabled:opacity-75" type="button" *ngIf="eclaims.pReceiptTicketNumber && !eclaims.pClaimSeriesLhio" (click)="checkSeries(eclaims)" [disabled]="is_refreshing || (batch_refresh && (claims_count !== retrieved_claims))">
-              <fa-icon [icon]="faRotate" *ngIf="is_refreshing || (batch_refresh && (claims_count !== retrieved_claims))" animation="spin"></fa-icon>
-              <fa-icon [icon]="faReceipt" *ngIf="!(is_refreshing || (batch_refresh && (claims_count !== retrieved_claims)))" ></fa-icon>
+              <!-- <fa-icon [icon]="faRotate" *ngIf="is_refreshing || (batch_refresh && (claims_count !== retrieved_claims))" animation="spin"></fa-icon> -->
+              <!-- <fa-icon [icon]="faReceipt" *ngIf="!(is_refreshing || (batch_refresh && (claims_count !== retrieved_claims)))" ></fa-icon> -->
               Get Series Lhio
             </button>
 
             <button class="bg-green-500 text-white rounded-md p-0.5 mb-3 disabled:opacity-75" type="button" *ngIf="eclaims.pClaimSeriesLhio && !eclaims.denied_reason" (click)="getClaimStatus(eclaims, eclaims.pStatus, i)" [disabled]="is_refreshing || (batch_refresh && (claims_count !== retrieved_claims))">
-              <fa-icon [icon]="faClipboardQuestion" *ngIf="!(is_refreshing || (batch_refresh && (claims_count !== retrieved_claims)))"></fa-icon>
+              <!-- <fa-icon [icon]="faClipboardQuestion"></fa-icon> -->
               <!-- <fa-icon [icon]="faRotate" *ngIf="is_refreshing || (batch_refresh && (claims_count !== retrieved_claims))" animation="spin"></fa-icon> -->
               Check {{ eclaims.pStatus === 'DENIED' ? 'Reason' : 'Status' }}
             </button>
