@@ -1,6 +1,6 @@
 <div class="grid grid-cols-11 mt-4 gap-4">
   <div class="col-span-8">
-    <app-graph *ngIf="no_graph_list.indexOf(active_loc) === -1" [patient_vitals]="patient_vitals"></app-graph>
+    <app-graph *ngIf="no_graph_list.indexOf(active_loc) === -1" [patient_vitals]="patient_vitals" [selected_consult_id]="selected_consult_id"></app-graph>
     <router-outlet *ngIf="show_form"></router-outlet>
   </div>
 
