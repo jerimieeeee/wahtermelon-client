@@ -52,7 +52,8 @@ export class PendingFdxComponent implements OnInit {
     let list = [];
     this.show_data = list;
     this.openList = !this.openList;
-    console.log(this.show_patient_data);
+    console.log(this.openList);
+    if(!this.openList) this.getPatient();
   }
 
 
@@ -76,6 +77,7 @@ export class PendingFdxComponent implements OnInit {
       .subscribe({
         next: (data: any) => {
           this.pending_fdx = data.data;
+
           this.current_page = data.meta.current_page;
           this.last_page = data.meta.last_page;
           this.from = data.meta.from;

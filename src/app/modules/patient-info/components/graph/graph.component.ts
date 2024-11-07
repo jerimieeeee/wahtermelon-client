@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
 import { BmiChart, ChartOptions, WeightChart } from './chart-option';
 
@@ -7,8 +7,9 @@ import { BmiChart, ChartOptions, WeightChart } from './chart-option';
   templateUrl: './graph.component.html',
   styleUrls: ['./graph.component.scss']
 })
-export class GraphComponent implements OnInit {
+export class GraphComponent implements OnChanges {
   @Input() patient_vitals;
+  @Input() selected_consult_id;
   public chartOptions: Partial<ChartOptions>;
   public WeightChart: Partial<WeightChart>;
   public BmiChart: Partial<BmiChart>;
@@ -231,9 +232,5 @@ export class GraphComponent implements OnInit {
 
   ngOnChanges(changes: SimpleChanges):void{
     if(this.patient_vitals) this.patientVitals(this.patient_vitals);
-  }
-
-  ngOnInit(): void {
-
   }
 }

@@ -1,9 +1,14 @@
 <div *ngIf="showChart" class="grid grid-cols-1 w-full h-auto">
-  <div class="w-full flex ml-5 font-semibold my-0 text-sky-500">
-    <button class="font-normal px-2 py-1 text-sm  mr-2" type="button" (click)="toggle_content = !toggle_content">
-      <fa-icon [icon]="toggle_content ? faChevronUp : faChevronDown" size="lg"></fa-icon>
-    </button>
-    {{ toggle_content ? 'HIDE ' : 'SHOW ' }} VITALS CHART
+  <div class="flex justify-between ml-5 font-semibold my-0 text-sky-500">
+    <div>
+      <button class="font-normal px-2 py-1 text-sm  mr-2" type="button" (click)="toggle_content = !toggle_content">
+        <fa-icon [icon]="toggle_content ? faChevronUp : faChevronDown" size="lg"></fa-icon>
+      </button>
+      {{ toggle_content ? 'HIDE ' : 'SHOW ' }} VITALS CHART
+    </div>
+    <div class="pt-1 text-blue-500">
+      {{ selected_consult_id ? 'Consult ID: '+selected_consult_id : '' }}
+    </div>
   </div>
 
   <div class="cols-span-1 flex w-full mt-3" *ngIf="show_graphs && toggle_content">
