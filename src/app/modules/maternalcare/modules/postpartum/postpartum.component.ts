@@ -116,10 +116,14 @@ export class PostpartumComponent implements OnInit {
 
     if(post_registration){
     if(post_registration.barangay.code != ''){
-      this.selected_regions = post_registration.barangay.code.substring(0, post_registration.barangay.code.length - 7) + '0000000';
+      this.selected_regions = post_registration.barangay.region.code;
+      provinces = post_registration.barangay.province.code;
+      municipalities = post_registration.barangay.municipality.code;
+      barangays = post_registration.barangay.code;
+      /* this.selected_regions = post_registration.barangay.code.substring(0, post_registration.barangay.code.length - 7) + '0000000';
       provinces = post_registration.barangay.code.substring(0, post_registration.barangay.code.length - 5) + '00000';
       municipalities = post_registration.barangay.code.substring(0, post_registration.barangay.code.length - 3) + '000';
-      barangays = post_registration.barangay.code;
+      barangays = post_registration.barangay.code; */
 
       this.loadDemog('regions', this.selected_regions, 'provinces');
       this.loadDemog('provinces', provinces, 'municipalities');
