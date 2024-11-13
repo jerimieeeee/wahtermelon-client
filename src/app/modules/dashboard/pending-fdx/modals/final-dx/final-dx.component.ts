@@ -1,31 +1,17 @@
-import {Component, EventEmitter, Input, OnInit, Output, OnChanges} from '@angular/core';
-import {faAnglesLeft, faAnglesRight, faCircleXmark, faSearch} from "@fortawesome/free-solid-svg-icons";
-import {HttpService} from "../../../../../shared/services/http.service";
-import {
-  catchError,
-  concat,
-  debounceTime,
-  distinctUntilChanged,
-  filter,
-  forkJoin,
-  map,
-  Observable,
-  of,
-  Subject,
-  switchMap,
-  tap
-} from "rxjs";
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { faAnglesLeft, faAnglesRight, faCircleXmark, faSearch } from "@fortawesome/free-solid-svg-icons";
+import { HttpService} from "../../../../../shared/services/http.service";
+import { catchError, concat, debounceTime, distinctUntilChanged, filter, forkJoin, map, Observable, of, Subject, switchMap, tap } from "rxjs";
 import { AgeService } from 'app/shared/services/age.service';
-import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {pendingFdxForm} from "./pending-fdx-form";
-import {ToastrService} from "ngx-toastr";
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import { ToastrService } from "ngx-toastr";
 
 @Component({
   selector: 'app-final-dx',
   templateUrl: './final-dx.component.html',
   styleUrls: ['./final-dx.component.scss']
 })
-export class FinalDxComponent implements OnChanges {
+export class FinalDxComponent implements OnInit {
   @Output() toggleModal = new EventEmitter<any>();
   @Input() show_patient_data: any;
   @Input() show_previous_dx: any;
@@ -33,12 +19,10 @@ export class FinalDxComponent implements OnChanges {
   @Input() consult_id: any;
   @Input() consult_date: any;
 
-  methodForm: FormGroup = new FormGroup({
-      id: new FormControl<string| null>(null),
-      notes_id: new FormControl<string| null>(null),
-
-      icd10_code: new FormControl<string| null>(null)
-    });
+  faAnglesRight = faAnglesRight;
+  faAnglesLeft = faAnglesLeft;
+  faCircleXmark = faCircleXmark;
+  faSearch = faSearch;
 
   data: any;
   patient_age: any;
@@ -61,7 +45,6 @@ export class FinalDxComponent implements OnChanges {
   constructor (
     private http: HttpService,
     private ageService: AgeService,
-    private formBuilder: FormBuilder,
     private toastr: ToastrService,
   ) { }
 
@@ -121,33 +104,6 @@ export class FinalDxComponent implements OnChanges {
     };
   }
 
-  lodFormLibraries() {
-    const getIcd10 = this.http.get('libraries/icd10');
-
-    forkJoin([
-      getIcd10,
-    ]).subscribe({
-      next: (icd10: any) => {
-        this.icd10 = icd10.data;
-        this.show_form = true;
-
-        this.validateForm();
-      },
-      error: err => { this.http.showError(err.error.message, 'Icd10 Library'); }
-    })
-  }
-
-
-  validateForm() {
-    this.methodForm = this.formBuilder.nonNullable.group({
-      id: [''],
-      notes_id: [this.notes_id, [Validators.required]],
-      final_diagnosis: {
-        icd10_code: this.selectedFdx
-      }, // Initialize as empty FormArray
-    });
-  }
-
   onSubmit(){
     console.log(this.fdxremarks2, 'reamrks')
     this.is_saving = true;
@@ -161,7 +117,6 @@ export class FinalDxComponent implements OnChanges {
         next: (data: any) => {
           // console.log(data);
           this.saveNotes();
-          this.endVisit()
         },
         error: err => console.log(err)
       })
@@ -171,15 +126,18 @@ export class FinalDxComponent implements OnChanges {
   }
 
   saveNotes() {
-      let notes_remarks = {
-        consult_id: this.consult_id,
-        fdx_remarks: this.fdxremarks2
-      }
+    let notes_remarks = {
+      consult_id: this.consult_id,
+      fdx_remarks: this.fdxremarks2
+    }
 
-      this.http.update('consultation/notes/', this.notes_id, notes_remarks).subscribe({
-        next: (data: any) => {/* console.log(data);  */this.showToastr();},
-        error: err => console.log(err)
-      });
+    this.http.update('consultation/notes/', this.notes_id, notes_remarks).subscribe({
+      next: () => {
+        this.endVisit();
+        this.showToastr();
+      },
+      error: err => console.log(err)
+    });
   }
 
   endVisit() {
@@ -192,58 +150,58 @@ export class FinalDxComponent implements OnChanges {
     }
 
     this.http.update('consultation/records/', this.consult_id, end_visit).subscribe({
-      next: (data: any) => {/* console.log(data);  */this.showToastr();},
+      next: () => this.showToastr(),
       error: err => console.log(err)
     });
   }
 
-  pe_array: any[] = [];
-/*  iteratePE() {
-    if(this.data.physica_exam) {
-      let pe_content: any[] = [];
-
-      Object.entries(this.data.physica_exam).forEach(([key, value]: any => {
-
-      }))
-    }
-
-  }*/
   showToastr(){
     this.is_saving = false;
     this.toastr.success('Successfully updated!','Final Diagnosis')
   }
 
-  get finalDiagnosisArray() {
-    return this.methodForm.get('final_diagnosis') as FormArray;
-  }
-
-  addFinalDiagnosis() {
-    this.finalDiagnosisArray.push(this.formBuilder.control('', Validators.required));
-  }
-
-  removeFinalDiagnosis(index: number) {
-    this.finalDiagnosisArray.removeAt(index);
-  }
-
   is_saving: boolean = false;
+  pe_array!: any[];
+  peCatArray: any = [
+    {category_id: 'ABDOMEN',        remarks_var: 'abdomen_remarks' },
+    {category_id: 'BARTHOLINS',     remarks_var: 'bartholins_remarks' },
+    {category_id: 'BREAST',         remarks_var: 'breast_remarks' },
+    {category_id: 'CHEST',          remarks_var: 'chest_remarks' },
+    {category_id: 'CONJUNCTIVA',    remarks_var: 'conjunctiva_remarks' },
+    {category_id: 'EXTREMITIES',    remarks_var: 'extremities_remarks' },
+    {category_id: 'GENITOURINARY',  remarks_var: 'genitourinary_remarks' },
+    {category_id: 'HEART',          remarks_var: 'heart_remarks' },
+    {category_id: 'HEENT',          remarks_var: 'heent_remarks' },
+    {category_id: 'NECK',           remarks_var: 'neck_remarks' },
+    {category_id: 'NEURO',          remarks_var: 'neuro_remarks' },
+    {category_id: 'PELVIC',         remarks_var: 'pelvic_remarks' },
+    {category_id: 'RECTAL',         remarks_var: 'rectal_remarks' },
+    {category_id: 'SKIN',           remarks_var: 'skin_remarks' },
+    {category_id: 'SPECULUM',       remarks_var: 'speculum_remarks' },
+    {category_id: 'THORAX',         remarks_var: 'thorax_remarks' },
+  ];
+
+  iteratePE() {
+    this.pe_array = [];
+    Object.entries(this.data.consult_notes.physical_exam).forEach(([key, value]: any) => {
+      if(this.pe_array[value.lib_physical_exam.category_id]) {
+        this.pe_array[value.lib_physical_exam.category_id].push(value.lib_physical_exam.pe_desc);
+      } else {
+        this.pe_array[value.lib_physical_exam.category_id] = [value.lib_physical_exam.pe_desc]
+      }
+    });
+
+    console.log(this.pe_array);
+  }
 
   ngOnInit(): void {
     this.data = this.show_patient_data.data[0];
     this.previous = this.show_patient_data.previous_diagnosis;
     this.notes_id = this.data.consult_notes.id;
-    this.loadSelected();
+    // this.loadSelected();
+    this.loadFdx([]);
+    this.iteratePE();
     console.log(this.previous, 'previous ito');
     console.log(this.data, 'present ito');
   }
-
-  ngOnChanges(changes){
-      this.loadSelected();
-  }
-
-  // protected readonly icd10forms = icd10forms;
-  protected readonly faAnglesRight = faAnglesRight;
-  protected readonly faAnglesLeft = faAnglesLeft;
-  protected readonly Number = Number;
-  protected readonly faCircleXmark = faCircleXmark;
-  protected readonly faSearch = faSearch;
 }

@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { faAnglesLeft, faAnglesRight, faChevronLeft, faChevronRight, faCircleNotch, faClipboardQuestion, faFilter, faPenToSquare, faReceipt, faRotate, faUpload } from '@fortawesome/free-solid-svg-icons';
+import { faAnglesLeft, faAnglesRight, faCheckCircle, faChevronLeft, faChevronRight, faCircleNotch, faClipboardQuestion, faFilter, faPenToSquare, faReceipt, faRotate, faUpload, faXmarkCircle } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 import { forkJoin } from 'rxjs';
@@ -101,7 +101,12 @@ export class EclaimsComponent implements OnInit {
   }
 
   getEclaimsList(page?) {
+    this.item_status = [];
+    this.success_count = 0;
+    this.error_count = 0;
+    this.retrieved_claims = 0;
     this.show_form = false;
+    this.checking_index = null;
 
     let params = {
       pStatus: this.pStatus ?? '',
@@ -114,7 +119,7 @@ export class EclaimsComponent implements OnInit {
 
     this.http.get('eclaims/eclaims-upload', { params }).subscribe({
       next:(data:any) => {
-        // console.log(data.data)
+        console.log(data.data)
         this.eclaims_list = data.data;
         this.show_form = true;
 
@@ -129,24 +134,78 @@ export class EclaimsComponent implements OnInit {
   }
 
   claims_count: number = 0;
-  retrieved_claims: number = 0
+  retrieved_claims: number = 0;
+  success_count: number = 0;
+  error_count: number = 0;
+
   batch_refresh: boolean = false;
-  getStatuses(){
+  item_status: any[] = [];
+
+  async getStatuses(){
+    this.item_status = [];
     this.batch_refresh = true;
+    this.success_count = 0;
+    this.error_count = 0;
     this.retrieved_claims = 0;
     this.claims_count = Object.entries(this.eclaims_list).length;
 
-    Object.entries(this.eclaims_list).forEach(([key, value]:any, index) => {
-      if(value.pClaimSeriesLhio) {
-        this.getClaimStatus(value, value.pStatus);
-      } else {
-        this.checkSeries(value);
+    for(const [key, value] of Object.entries(this.eclaims_list)) {
+      const val:any = value;
+      try {
+        if(val.pClaimSeriesLhio) {
+          await this.asyncGetClaimsStatus(val, val.pStatus)
+        } else {
+          this.checkSeries(value);
+        }
+        this.item_status[key] = {icon: faCheckCircle, status: 'success'};
+        this.success_count += 1;
+      } catch (error) {
+        this.item_status[key] = {icon: faXmarkCircle, status: 'failed'};
+        this.error_count += 1;
       }
-    });
+    }
   }
 
-  getClaimStatus(data, type) {
+  asyncGetClaimsStatus(data, type): Promise<void> {
     this.is_refreshing = true;
+    this.checking_index = null;
+    let params = {
+      series_lhio: data.pClaimSeriesLhio,
+      program_code: data.program_desc === 'cc' || data.program_desc === 'fp' ? 'mc' : data.program_desc
+    }
+
+    return new Promise((resolve, reject) => {
+      this.http.post('eclaims/get-claim-status', params).subscribe({
+        next:(resp: any) => {
+          this.iterateMessage(resp, data, type);
+          this.addRetrieved();
+          resolve();
+        },
+        error: err => {
+          this.is_refreshing = false;
+          this.http.showError(err.error.message, 'Claims Status - '+ data.pHospitalTransmittalNo);
+          this.addRetrieved();
+          reject(err);
+        }
+      })
+    })
+  }
+
+  checking_index: number | null;
+
+  getClaimStatus(data, type, i?) {
+    this.claims_count = 1;
+    this.success_count = 0;
+    this.error_count = 0;
+    this.retrieved_claims = 0;
+
+    if(i >= 0) {
+      this.checking_index = i;
+      if(this.item_status[i]) this.item_status[i] = {icon: null, status: null};
+    } else {
+      if(!i) this.item_status = [];
+    }
+    this.batch_refresh = true;
 
     let params = {
       series_lhio: data.pClaimSeriesLhio,
@@ -155,20 +214,26 @@ export class EclaimsComponent implements OnInit {
 
     this.http.post('eclaims/get-claim-status', params).subscribe({
       next:(resp: any) => {
-        // console.log(resp)
+        if(i >= 0) this.item_status[i] = {icon: faCheckCircle, status: 'success'};
         this.iterateMessage(resp, data, type);
         this.addRetrieved();
+        this.batch_refresh = false;
       },
       error: err => {
-        this.is_refreshing = false;
+        if(i >= 0) this.item_status[i] = {icon: faXmarkCircle, status: 'failed'};
         this.http.showError(err.error.message, 'Claims Status - '+ data.pHospitalTransmittalNo);
         this.addRetrieved();
+        this.batch_refresh = false;
       }
-    })
+    });
   }
 
   addRetrieved(){
     this.retrieved_claims += 1;
+
+    if(this.claims_count === this.retrieved_claims) {
+      this.batch_refresh = false;
+    }
   }
 
   navigateRoute(loc, data){
@@ -210,13 +275,17 @@ export class EclaimsComponent implements OnInit {
 
   parseReason(data) {
     if(data) {
-      let obj: any = data;
+      let obj: any = typeof data === 'object' ? JSON.stringify(data) : data;
       let message: any = '';
 
-      if(data.charAt(0) === '{') {
-        if(typeof(data) === 'string') obj = JSON.parse(data);
+      if(obj.charAt(0) === '[') {
+        obj = JSON.parse(obj);
       } else {
-        return data;
+        if(obj.charAt(0) === '{') {
+          obj = JSON.parse(obj);
+        } else {
+          return obj;
+        }
       }
 
       const parse = (obj: any) => {
@@ -246,46 +315,92 @@ export class EclaimsComponent implements OnInit {
         message = 'As of: '+resp.pAsOf+ ' '+resp.pAsOfTime+ '<br />'+resp.CLAIM.DENIED.REASON.pReason;
         break;
       }
+      case 'VOUCHERING': {
+        message = 'As of: '+resp.pAsOf+ ' '+resp.pAsOfTime;
+        if(resp.CLAIM.PAYMENT.PAYEE.length > 0) {
+          Object.entries(resp.CLAIM.PAYMENT.PAYEE).forEach(([key, value]:any, index) => {
+            message += '<br />Claim Amount: '+value.pClaimAmount;
+          });
+        } else {
+          message += '<br />Claim Amount: '+resp.CLAIM.PAYMENT.PAYEE.pClaimAmount;
+        }
+        break;
+      }
       case 'WITH VOUCHER': {
         message = 'As of: '+resp.pAsOf+ ' '+resp.pAsOfTime;
-
-        // Object.entries(resp.CLAIM.PAYMENT).forEach(([key, value]:any, index) => {
-          // message = 'As of: '+resp.pAsOf+ ' '+resp.pAsOfTime;
-          message += '<br />Claim Amount: '+resp.CLAIM.PAYMENT.pTotalClaimAmountPaid;
+        if(resp.CLAIM.PAYMENT.PAYEE.length > 0) {
+          Object.entries(resp.CLAIM.PAYMENT.PAYEE).forEach(([key, value]:any, index) => {
+            message += '<br />Voucher No: '+value.pVoucherNo;
+            message += '<br />Voucher Date: '+value.pVoucherDate;
+            message += '<br />Claim Amount: '+value.pClaimAmount;
+          });
+        } else {
           message += '<br />Voucher No: '+resp.CLAIM.PAYMENT.PAYEE.pVoucherNo;
           message += '<br />Voucher Date: '+resp.CLAIM.PAYMENT.PAYEE.pVoucherDate;
-          message += '<br />Check Amount: '+resp.CLAIM.PAYMENT.PAYEE.pCheckAmount;
-        // });
+          message += '<br />Claim Amount: '+resp.CLAIM.PAYMENT.PAYEE.pClaimAmount;
+        }
         break;
       }
       case 'WITH CHEQUE': {
         message = 'As of: '+resp.pAsOf+ ' '+resp.pAsOfTime;
-
-        // Object.entries(resp.CLAIM.PAYMENT.PAYEE).forEach(([key, value]:any, index) => {
-          message = 'As of: '+resp.pAsOf+ ' '+resp.pAsOfTime;
+        if(resp.CLAIM.PAYMENT.PAYEE.length > 0) {
+          Object.entries(resp.CLAIM.PAYMENT.PAYEE).forEach(([key, value]:any, index) => {
+            message += '<br />Voucher No: '+value.pVoucherNo;
+            message += '<br />Check No: '+value.pCheckNo;
+            message += '<br />Check Date: '+value.pCheckDate;
+            message += '<br />Claim Amount: '+value.pClaimAmount;
+          });
+        } else {
           message += '<br />Voucher No: '+resp.CLAIM.PAYMENT.PAYEE.pVoucherNo;
           message += '<br />Check No: '+resp.CLAIM.PAYMENT.PAYEE.pCheckNo;
           message += '<br />Check Date: '+resp.CLAIM.PAYMENT.PAYEE.pCheckDate;
-          message += '<br />Check Amount: '+resp.CLAIM.PAYMENT.PAYEE.pCheckAmount;
-        // });
+          message += '<br />Claim Amount: '+resp.CLAIM.PAYMENT.PAYEE.pClaimAmount;
+        }
         break;
       }
       case 'RETURN' : {
         message = 'As of: '+resp.pAsOf+ ' '+resp.pAsOfTime;
-        data.return_reason = resp.CLAIM.RETURN.DEFECTS;
-        Object.entries(resp.CLAIM.RETURN.DEFECTS).forEach(([key, value]:any, index) => {
-          if(!value.pRequirement) message += '<br />Deficiency: '+value;
-          if(value.pRequirement) message += '<br />Requirement: '+value.pRequirement;
-        });
+        if(resp.CLAIM.RETURN && resp.CLAIM.RETURN.DEFECTS) {
+          data.return_reason = resp.CLAIM.RETURN.DEFECTS;
+          Object.entries(resp.CLAIM.RETURN.DEFECTS).forEach(([key, value]:any, index) => {
+            console.log(key, index, value)
+            if(value.REQUIREMENT) {
+              Object.entries(value.REQUIREMENT).forEach(([k, v]:any, i) => {
+                console.log(v)
+                message += '<br />Requirement: '+ (v.pRequirement ? v.pRequirement : v);
+              });
+            }
+
+            if(typeof value === 'string') message += '<br />Deficiency: '+value;
+            if(value.pDeficiency) message += '<br />Deficiency: '+value.pDeficiency;
+            if(value.pRequirement) message += '<br />Requirement: '+value.pRequirement;
+
+          });
+        }
         break;
       }
       case 'IN PROCESS' : {
         message = 'As of: '+resp.pAsOf+ ' '+resp.pAsOfTime;
-        // console.log(typeof(resp.CLAIM.TRAIL.PROCESS))
-        Object.entries(resp.CLAIM.TRAIL.PROCESS).forEach(([key, value]:any, index) => {
-          message += '<br />Process Stage: '+value.pProcessStage;
-          message += '<br />Process Date: '+value.pProcessDate + '<br />';
-        });
+
+        if(resp.CLAIM.TRAIL){
+          if(resp.CLAIM.TRAIL.PROCESS.length > 0) {
+            Object.entries(resp.CLAIM.TRAIL.PROCESS).forEach(([key, value]:any, index) => {
+              message += '<br />Process Stage: '+value.pProcessStage;
+              message += '<br />Process Date: '+value.pProcessDate + '<br />';
+            });
+          } else {
+            message += '<br />Process Stage: '+resp.CLAIM.TRAIL.PROCESS.pProcessStage;
+            message += '<br />Process Date: '+resp.CLAIM.TRAIL.PROCESS.pProcessDate + '<br />';
+          }
+        } else {
+          if(resp.CLAIM.RETURN && resp.CLAIM.RETURN.DEFECTS) {
+            Object.entries(resp.CLAIM.RETURN.DEFECTS).forEach(([key, value]:any, index) => {
+              if(!value.pRequirement) message += '<br />Deficiency: '+value;
+              if(value.pRequirement) message += '<br />Requirement: '+value.pRequirement;
+            });
+          }
+        }
+
         break;
       }
       default: {
@@ -325,6 +440,32 @@ export class EclaimsComponent implements OnInit {
     this.caserate_list = [eclaims.caserate];
     this.selected_transmittalNumber = eclaims.pHospitalTransmittalNo;
     this.modal[name] = !this.modal[name];
+  }
+
+  toggleColorStatus(status:string) {
+    let style: string = '';
+    switch (status) {
+      case 'IN PROCESS':
+        style = 'text-blue-500 font-semibold'
+        break;
+      case 'RETURN':
+        style = 'text-orange-500 font-semibold'
+        break;
+      case 'DENIED':
+        style = 'text-red-500 font-semibold'
+        break;
+      case 'VOUCHERING':
+        style = 'text-green-500 font-semibold'
+        break;
+      case 'WITH VOUCHER':
+        style = 'text-green-500 font-semibold'
+      case 'WITH CHEQUE':
+        style = 'text-green-500 font-semibold'
+        break;
+      default:
+        break;
+    }
+    return style;
   }
 
   toggleModal(name, eclaims?) {

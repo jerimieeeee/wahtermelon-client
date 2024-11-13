@@ -1,13 +1,13 @@
 <div class="grid grid-cols-11 mt-4 gap-4">
   <div class="col-span-8">
-    <app-graph *ngIf="no_graph_list.indexOf(active_loc) === -1" [patient_vitals]="patient_vitals"></app-graph>
+    <app-graph *ngIf="no_graph_list.indexOf(active_loc) === -1" [patient_vitals]="patient_vitals" [selected_consult_id]="selected_consult_id"></app-graph>
     <router-outlet *ngIf="show_form"></router-outlet>
   </div>
 
   <div class="col-span-3">
     <div class="rounded-xl text-gray-600 border border-slate-100" >
       <div class="block m-0 relative p-0 scrollbar-thumb-white hover:scrollbar-thumb-blue-300 scrollbar-track-white">
-        <div class="flex justify-items-start sticky top-0 bg-white rounded-lg border-2 border-gray-400 shadow-md p-2">
+        <div class="flex  sticky top-0 bg-white rounded-lg border-2 border-gray-400 shadow-md p-2">
           <div class="mr-2">
             <div (click)="toggleModal('photo')" class="group cursor-pointer inline-flex overflow-hidden relative justify-center items-center w-24 h-24 bg-gray-100 rounded-full hover:bg-gray-700 hover:opacity-50">
               <span *ngIf="!imageData" class="font-medium text-gray-600 opacity-100 group-hover:opacity-50">{{ getInitials(patient_info?.first_name+' '+patient_info?.last_name) }}</span>
@@ -39,7 +39,7 @@
           </div>
         </div>
 
-        <div class="block justify-items-start mx-5 pb-5 border-b border-gray-200">
+        <div class="block mx-5 pb-5 border-b border-gray-200 ">
           <div class="mt-4 flex justify-center">
             <button type="button" class="w-48 h-10 inline-flex mr-2 justify-center px-5 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-sky-500 hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500"
               (click)="toggleModal('module')">
@@ -75,6 +75,7 @@
 
           <app-philhealth (setDetails)="setDetails($event)" (toggleAccordion)="toggleAccordion($event)" (toggleModal)="toggleModal($event)" [accordions]="accordions" ></app-philhealth>
         </div>
+
         <app-appointment (toggleAccordion)="toggleAccordion($event)" [accordions]="accordions" (toggleModal)="toggleModal($event)"></app-appointment>
         <app-prescriptions  (toggleAccordion)="toggleAccordion($event)" (navigateTo)="navigateTo($event)" [accordions]="accordions" [consult_id]="consult_id" [patient_info]="patient_info"></app-prescriptions>
         <app-laboratory (toggleAccordion)="toggleAccordion($event)" (navigateTo)="navigateTo($event)" [accordions]="accordions" (toggleModal)="toggleModal($event)" (setLabList)="setLabList($event)"></app-laboratory>
@@ -89,7 +90,6 @@
         <app-family-medical (toggleAccordion)="toggleAccordion($event)" [accordions]="accordions" (toggleModal)="toggleModal($event)" (setFamilyMedical)="setFamilyMedical($event)"></app-family-medical>
         <app-social-history (toggleAccordion)="toggleAccordion($event)" [accordions]="accordions" (toggleModal)="toggleModal($event)" (setDetails)="setDetails($event)"></app-social-history>
         <app-surgical-history (toggleAccordion)="toggleAccordion($event)" [accordions]="accordions" (toggleModal)="toggleModal($event)" (setSurgicalHistory)="setSurgicalHistory($event)"></app-surgical-history>
-
       </div>
     </div>
   </div>

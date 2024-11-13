@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit, ViewChild } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { faBuildingCircleArrowRight, faCamera, faClipboardUser, faExclamationCircle, faFlask, faHeart, faNotesMedical, faPenSquare, faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 import { AgeService } from 'app/shared/services/age.service';
 import { HttpService } from 'app/shared/services/http.service';
@@ -55,13 +55,6 @@ export class PatientInfoComponent implements OnInit {
         break;
     }
   }
-
-  constructor(
-    private router: Router,
-    private http: HttpService,
-    private ageService: AgeService,
-    private sanitizer: DomSanitizer
-  ) { }
 
   show_female_history: boolean = true;
 
@@ -168,6 +161,8 @@ export class PatientInfoComponent implements OnInit {
 
   imageData: SafeUrl | null = null;
   getImage(data) {
+    console.log(data)
+    this.imageData = null;
     this.http.get('images/'+data.id, { responseType: 'blob' }).subscribe({
       next: (data: any) => {
         const reader = new FileReader();
@@ -360,17 +355,33 @@ export class PatientInfoComponent implements OnInit {
     }
   }
 
+  selected_consult_id!: string;
   navigationEnd$ = this.router.events.pipe(
     filter(event => event instanceof NavigationEnd),
     tap(() => {
+      this.setConsultId();
       this.getPatient();
     })
   );
 
+  setConsultId(){
+    const consult_id = this.http.getUrlParams().consult_id ?? null;
+    this.selected_consult_id = consult_id;
+  }
   user_facility: string;
+
+  constructor(
+    private router: Router,
+    private http: HttpService,
+    private ageService: AgeService,
+    private sanitizer: DomSanitizer,
+    private route: ActivatedRoute
+  ) { }
+
   ngOnInit(): void {
     this.user_facility = this.http.getUserFacility();
     this.getPatient();
+    this.setConsultId();
     this.navigationEnd$.subscribe();
   }
 }
