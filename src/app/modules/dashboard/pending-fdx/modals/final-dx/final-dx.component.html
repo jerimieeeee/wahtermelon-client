@@ -32,9 +32,9 @@
               <tbody>
                 <fieldset class="text-base text-black py-3 px-5 rounded-t border-black border-t border-b border-r border-l">
                   <legend>Patient Information:</legend>
-                  <label>Name: {{ this.data.patient.first_name }} {{ this.data.patient.middle_name }} {{ this.data.patient.last_name }} </label>
+                  <label>Name: {{ this.data.patient.last_name }}, {{ this.data.patient.first_name }} {{ this.data.patient.middle_name }} </label>
                   <br />
-                  <label>Birthdate: {{ this.data.patient.birthdate }}</label>
+                  <label>Birthdate: {{ this.data.patient.birthdate | date:'MM/dd/yyyy' }}</label>
                   <br />
                   <label>Age: {{ getAge() }} years old</label>
                   <br />

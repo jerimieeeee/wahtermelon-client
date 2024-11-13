@@ -55,6 +55,7 @@ export class FinalDxComponent implements OnChanges {
 
   closeModal() {
     this.toggleModal.emit();
+
   }
 
   constructor (
