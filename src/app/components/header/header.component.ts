@@ -195,7 +195,7 @@ export class HeaderComponent implements OnInit {
       middle_name:      val.middle_name === 'NA' ? '' : val.middle_name,
       suffix_name:      val.suffix_name === 'NA' ? '' : val.suffix_name,
       facility:         {facility_name: val.facility.facility_name},
-      designation_code: val.designation_code
+      designation_code: val.designation ? val.designation.code : val.designation_code
     };
   }
 
