@@ -28,6 +28,7 @@ import { Fhsis2018MortalityComponent } from './report/fhsis2018-mortality/fhsis2
 import { Fhsis2018EnvironmentalComponent } from './report/fhsis2018-environmental/fhsis2018-environmental.component';
 import { Fhsis2018MortalityUnderlyingComponent } from './report/fhsis2018-mortality-underlying/fhsis2018-mortality-underlying.component';
 import { ExportAsModule } from 'ngx-export-as-17';
+import {DentalOhsConsolidatedComponent} from "./report/dental-ohs-consolidated/dental-ohs-consolidated.component";
 
 
 @NgModule({
@@ -53,7 +54,7 @@ import { ExportAsModule } from 'ngx-export-as-17';
     Fhsis2018DentalM1Component,
     Fhsis2018MortalityComponent,
     Fhsis2018EnvironmentalComponent,
-    Fhsis2018MortalityUnderlyingComponent,
+    Fhsis2018MortalityUnderlyingComponent
   ],
   imports: [
     CommonModule,
@@ -62,7 +63,8 @@ import { ExportAsModule } from 'ngx-export-as-17';
     FormsModule,
     NgSelectModule,
     FontAwesomeModule,
-    ExportAsModule
+    ExportAsModule,
+    DentalOhsConsolidatedComponent
   ]
 })
 export class ReportsModule { }

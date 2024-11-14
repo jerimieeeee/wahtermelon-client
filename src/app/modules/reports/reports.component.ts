@@ -62,6 +62,10 @@ export class ReportsComponent implements OnInit {
     { id: 'daily-service', desc: 'Consultation', url: 'reports-2018/daily-service/report'},
   ];
 
+  dental_consolidated = [
+    { id: 'dental-ohs-consolidated', desc: 'Dental Consolidated OHS', url: 'reports-2018/dental/dental-consolidated'},
+  ];
+
   months = [
     {
       value: 1,
@@ -126,6 +130,7 @@ export class ReportsComponent implements OnInit {
   is_fetching: boolean = false;
 
   onSubmit(){
+    console.log(this.reportForm.value, this.reportFlag)
     this.is_fetching = true;
 
     let params = {
@@ -271,19 +276,20 @@ export class ReportsComponent implements OnInit {
   ngOnInit(): void {
     this.generateYear();
     this.userInfo = this.http.getUserFromJSON();
+    console.log(this.userInfo, 'eto')
     this.current_date;
-
     this.reportFlag =  this.userInfo.reports_flag === 1 ? '1' : null;
     this.reportForm = this.formBuilder.nonNullable.group({
       report_type: ['', Validators.required],
       report_class: ['', Validators.required],
       barangay_code: [''],
-      municipality_code: [''],
+      municipality_code: [this.userInfo.facility.municipality.psgc_10_digit_code],
       start_date: ['', Validators.required],
       end_date: ['', Validators.required],
       month: [null, Validators.required],
       year: [null, Validators.required]
     });
+    console.log(this.reportForm.value, 'eto')
 
     this.changeDateOptions();
   }

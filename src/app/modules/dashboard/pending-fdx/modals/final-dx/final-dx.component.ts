@@ -39,6 +39,7 @@ export class FinalDxComponent implements OnInit {
 
   closeModal() {
     this.toggleModal.emit();
+
   }
 
   constructor (
