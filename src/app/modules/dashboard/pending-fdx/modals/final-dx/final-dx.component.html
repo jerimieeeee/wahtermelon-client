@@ -261,7 +261,7 @@
                       <div *ngFor="let item of peCatArray">
                         <span class="font-semibold mr-2">{{ item.category_id }}:</span>
                         <span *ngFor="let pe of pe_array[item.category_id]; let last = last">{{ pe }}{{ !last ? ', ' : '' }}</span> <br />
-                        <span>Remarks: {{ data.consult_notes.physical_exam_remarks[item.remarks_var] }}</span><br />
+                        <span>Remarks: {{ data.consult_notes?.physical_exam_remarks?.[item.remarks_var] }}</span><br />
                       </div>
                     </fieldset>
                   </div>
