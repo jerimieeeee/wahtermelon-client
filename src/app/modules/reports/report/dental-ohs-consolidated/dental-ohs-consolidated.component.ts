@@ -1,0 +1,136 @@
+import {Component, Input, OnChanges} from '@angular/core';
+import {FaIconComponent} from "@fortawesome/angular-fontawesome";
+import {NgForOf, NgIf} from "@angular/common";
+
+@Component({
+  selector: 'app-dental-ohs-consolidated',
+  standalone: true,
+    imports: [
+        FaIconComponent,
+        NgForOf,
+        NgIf
+    ],
+  templateUrl: './dental-ohs-consolidated.component.html',
+  styleUrl: './dental-ohs-consolidated.component.scss'
+})
+export class DentalOhsConsolidatedComponent implements OnChanges {
+  @Input() report_data;
+  @Input() reportForm;
+  @Input() selectedBrgy;
+  @Input() brgys;
+  @Input() facility;
+  @Input() submit_flag;
+  current_submit_flag: boolean = false;
+  show_stats: boolean = false;
+
+  stats : any;
+  temporary: any;
+  adult: any;
+  service: any;
+  tooth: any;
+
+  infantHeader: any = ['male_infant', 'female_infant']
+
+  pregnantHeader: any = ['pregnant_women']
+
+  underFive: any = [
+                    'male_1_year_old', 'female_1_year_old',
+                    'male_2_year_old', 'female_2_year_old',
+                    'male_3_year_old', 'female_3_year_old',
+                    'male_4_year_old', 'female_4_year_old',
+                    'male_total_underfive', 'female_total_underfive',
+                  ]
+
+  schoolAge: any = [
+                  'male_5_year_old', 'female_5_year_old',
+                  'male_6_year_old', 'female_6_year_old',
+                  'male_7_year_old', 'female_7_year_old',
+                  'male_8_year_old', 'female_8_year_old',
+                  'male_9_year_old', 'female_9_year_old',
+                  'male_total_school_age', 'female_total_school_age',
+                  ]
+
+  adolescents: any = ['male_adolescent', 'female_adolescent']
+
+  adults: any = ['male_adult', 'female_adult']
+
+  senior: any = ['male_senior', 'female_senior']
+
+  all_age: any = ['male_all_age', 'female_all_age']
+
+  grand_total: any = ['grand_total']
+
+
+  medHistory: any = [
+    {title:"1. Total No. with Allergies", varTrail: '_with_allergies'},
+    {title:"2. Total No. with Hypertension/ CVA", varTrail: '_with_hypertension'},
+    {title:"3. Total No. with Diabetes Mellitus", varTrail: '_with_diabetes'},
+    {title:"4. Total No. with Blood Disorders", varTrail: '_with_blood_disorder'},
+    {title:"5. Total No. with Cardiovascular/Heart", varTrail: '_with_heart_disease'},
+    {title:"6. Total No. with Thyroid Disorders", varTrail: '_with_thyroid'},
+    {title:"7. Total No. with Hepatitis", varTrail: '_with_hepatitis'},
+    {title:"8. Total No. with Malignancy", varTrail: '_with_malignancy'}
+  ];
+
+  hospitalization= [
+    {title:"10. Total No. with Blood Transfusion", varTrail: '_with_blood_transfusion'},
+    {title:"11. Total No. with Tattoo", varTrail: '_with_tattoo'},
+  ]
+
+  dietary= [
+    {title:"1. Total No. of Sugar Sweetened Beverages/Food Drinker/Eater", varTrail: '_with_sugar_sweetened'},
+    {title:"2. Total No. of Alcohol Drinker", varTrail: '_with_alcohol'},
+    {title:"3. Total No. of Tobacco User", varTrail: '_with_tobacco'},
+    {title:"4. Total No. of Betel Nut Chewer", varTrail: '_with_nut'},
+  ]
+
+  oralHealth= [
+    {title:"1. Total No. with Dental Caries", varTrail: '_with_dental_carries'},
+    {title:"2. Total No. with Gingivitis", varTrail: '_with_gingivitis'},
+    {title:"3. Total No. with Periodontal Disease", varTrail: '_with_periodontal'},
+    {title:"4. Total No. with Oral Debris", varTrail: '_with_debris'},
+    {title:"5. Total No. with Calculus", varTrail: '_with_calculus'},
+    {title:"6. Total No. with Dento Facial Anomalies (cleft lip/palate, Malocclusion, etc)", varTrail: '_with_dento_facial'},
+  ]
+
+  df= [
+    {title:"a. Total decayed (d)", varTrail: 'decayed_tooth_'},
+    {title:"b. Total filled (f)", varTrail: 'filled_tooth_'},
+  ]
+
+  dmf= [
+    {title:"a. Total Decayed (D)", varTrail: 'decayed_tooth_'},
+    {title:"b. Total Missing (M)", varTrail: 'missing_tooth_'},
+    {title:"c. Total Filled (F)", varTrail: 'filled_tooth_'},
+  ]
+
+  dentalServices= [
+    {title:"1. No. Given OP / Scaling", varTrail: '_with_op_scaling'},
+    {title:"2. No. Given Permanent Fillings", varTrail: '_with_permanent_filling'},
+    {title:"3. No. Given Temporary Fillings", varTrail: '_with_temporary_filling'},
+    {title:"4. No. Given Extraction", varTrail: '_with_extraction'},
+    {title:"5. No. Given Gum Treatment", varTrail: '_with_gum_treatment'},
+    {title:"6. No. Given Sealant", varTrail: '_with_sealant'},
+    {title:"7. No. Completed Flouride Therapy", varTrail: '_with_flouride'},
+    {title:"8. No. Given Post-Operative Treatment", varTrail: '_with_post_operative'},
+    {title:"9. No. of Patient with Oral Abscess Drained", varTrail: '_with_abscess'},
+    {title:"10. No. Given Other Services", varTrail: '_with_other_services'},
+    {title:"11. No. Referred", varTrail: '_with_referred'},
+    {title:"12. No. Given Counseling / Education on Tobacco, Oral Health, Diet, Etc.", varTrail: '_with_counseling'},
+    {title:"13. No. of Under Six Children Completed", varTrail: '_with_completed'},
+  ]
+
+  ofc= [
+    {title:"1. OFC Upon Oral Examination", varTrail: '_with_orally_fit'},
+    {title:"2. OFC Upon Complete Oral Rehabilitation", varTrail: '_with_oral_rehab'},
+  ]
+
+  ngOnChanges(): void {
+    this.stats = this.report_data.data;
+    this.temporary = this.report_data.temporary_tooth_condition;
+    this.adult = this.report_data.adult_tooth_condition;
+    this.service = this.report_data.dental_services;
+    this.tooth = this.report_data.tooth_service;
+  }
+
+}

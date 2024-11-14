@@ -39,6 +39,7 @@ export class FinalDxComponent implements OnInit {
 
   closeModal() {
     this.toggleModal.emit();
+
   }
 
   constructor (
@@ -182,13 +183,15 @@ export class FinalDxComponent implements OnInit {
 
   iteratePE() {
     this.pe_array = [];
-    Object.entries(this.data.consult_notes.physical_exam).forEach(([key, value]: any) => {
-      if(this.pe_array[value.lib_physical_exam.category_id]) {
-        this.pe_array[value.lib_physical_exam.category_id].push(value.lib_physical_exam.pe_desc);
-      } else {
-        this.pe_array[value.lib_physical_exam.category_id] = [value.lib_physical_exam.pe_desc]
-      }
-    });
+    if (this.data.consult_notes.physical_exam) {
+      Object.entries(this.data.consult_notes.physical_exam).forEach(([key, value]: any) => {
+        if(this.pe_array[value.lib_physical_exam.category_id]) {
+          this.pe_array[value.lib_physical_exam.category_id].push(value.lib_physical_exam.pe_desc);
+        } else {
+          this.pe_array[value.lib_physical_exam.category_id] = [value.lib_physical_exam.pe_desc]
+        }
+      });
+    }
 
     console.log(this.pe_array);
   }

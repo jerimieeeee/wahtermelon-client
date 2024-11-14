@@ -61,7 +61,7 @@
           <fa-icon [icon]="faChartLine" size="xl"></fa-icon>
         </a>
 
-        <a *ngIf="user.designation_code === 'MEDTECH'" class="my-1 md:mx-2 md:my-0" [ngClass]="current_url === '/lab-pending' ? 'text-emerald-500 text-xl' : 'text-gray-700 text-sm'" routerLink="/lab-pending">
+        <a *ngIf="user.designation_code === 'MEDTECH' || user.designation_code === 'RADTECH'" class="my-1 md:mx-2 md:my-0" [ngClass]="current_url === '/lab-pending' ? 'text-emerald-500 text-xl' : 'text-gray-700 text-sm'" routerLink="/lab-pending">
           <fa-icon [icon]="faFlask" size="xl"></fa-icon>
         </a>
 
