@@ -98,7 +98,7 @@ export class MaternalcareComponent implements OnInit {
     this.view_id = id;
 
     if (id) {
-      this.http.get('maternal-care/mc-records/' + id).subscribe({
+      this.http.get('maternal-care/mc-records/' + id, {params: {location: 'show'}}).subscribe({
         next: (data: any) => {
           this.patient_mc_record = data.data;
           this.mcr = true;
