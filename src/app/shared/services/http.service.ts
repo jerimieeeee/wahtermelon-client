@@ -9,7 +9,7 @@ import { Subject } from 'rxjs';
   providedIn: 'root'
 })
 export class HttpService {
-  baseUrl = 'https://edu-api.wah.ph/api/v1/';
+  baseUrl = 'https://training-api.wah.ph/api/v1/';
   masterFormUrl = 'http://127.0.0.1:8000/api/v1/';
 
 
