@@ -170,13 +170,10 @@ export class Fhsis2018MorbidityComponent implements OnChanges {
   }
 
   sortResult(data){
-    let keyValue: any = Object.entries(data);
-    keyValue.sort((a, b) => {
-      return (a[1].male_age_total+a[1].female_age_total) - (b[1].male_age_total+b[1].female_age_total)
+    data.sort((a, b) => {
+      return b.male_female_total - a.male_female_total;
     });
 
-    this.stats = keyValue;
-    // console.log(this.stats)
     this.show_stats = true;
   }
 
@@ -189,9 +186,9 @@ export class Fhsis2018MorbidityComponent implements OnChanges {
       this.brgys_info = this.brgys;
       this.pdf_exported = false;
       this.label_value = this.dateHelper.getLabelValue(this.reportForm, this.report_data);
-      console.log(this.stats)
+      // console.log(this.stats)
       if(this.selectedBrgy) this.convertBrgy();
-
+      this.sortResult(this.stats)
       this.show_stats = true;
     }
   }
