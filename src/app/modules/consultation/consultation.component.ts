@@ -163,7 +163,7 @@ export class ConsultationComponent implements OnInit {
   }
 
   loadUsers(){
-    this.http.get('users', {params:{per_page: 'all', designation_code: 'MD'}}).subscribe({
+    this.http.get('users', {params:{per_page: 'all', doctors_list: 1}}).subscribe({
       next: (data: any) => {
         // console.log(data.data)
         this.physicians = data.data

@@ -109,11 +109,11 @@ export class TodaysConsultComponent implements OnInit, OnDestroy {
 
   loadPhysicians(): Promise<void> {
     return new Promise<void>((resolve, reject) => {
-      this.http.get('users', {params:{per_page: 'all', designation_code: 'MD'}}).subscribe({
+      this.http.get('users', {params:{per_page: 'all', doctors_list: 1}}).subscribe({
         next: (data: any) => {
           this.physicians = data.data;
           let user_info = this.http.getUserFromJSON();
-          this.selected_physician = user_info.designation_code === 'MD' ? user_info.id : 'all';
+          this.selected_physician = user_info.designation_code === 'MD' || user_info.designation_code === 'DENTIST' ? user_info.id : 'all';
           // console.log(user_info);
 
           resolve(); // Resolve the promise once loading is done
