@@ -108,9 +108,9 @@
                 <td class="px-3">
                   {{ item.title }}
                 </td>
-                <td class="text-center" [class]=" item.varTrail === 'male_infant_with_tattoo' || item.varTrail === 'female_infant_with_tattoo' ? 'bg-gray-400' : 'bg-white' " *ngFor="let var_name of pregnantHeader">{{ stats[var_name+item.varTrail] }}</td>
-                <td class="text-center" [class]=" item.varTrail === '_with_tattoo' ? 'bg-gray-400' : 'bg-white' " *ngFor="let var_name of infantHeader">{{ stats[var_name+item.varTrail] }}</td>
-                <td class="text-center" [class]=" item.varTrail === '_with_tattoo' ? 'bg-gray-400' : 'bg-white' " *ngFor="let var_name of underFive">{{ stats[var_name+item.varTrail] }}</td>
+                <td class="text-center" *ngFor="let var_name of pregnantHeader">{{ stats[var_name+item.varTrail] }}</td>
+                <td class="text-center" *ngFor="let var_name of infantHeader">{{ stats[var_name+item.varTrail] }}</td>
+                <td class="text-center" *ngFor="let var_name of underFive">{{ stats[var_name+item.varTrail] }}</td>
                 <td class="text-center" *ngFor="let var_name of schoolAge">{{ stats[var_name+item.varTrail] }}</td>
                 <td class="text-center" *ngFor="let var_name of adolescents">{{ stats[var_name+item.varTrail] }}</td>
                 <td class="text-center" *ngFor="let var_name of adults">{{ stats[var_name+item.varTrail] }}</td>
@@ -127,9 +127,9 @@
               <td class="px-3">
                 {{ hospitals.title }}
               </td>
-              <td class="text-center" *ngFor="let var_name of pregnantHeader">{{ stats[var_name+hospitals.varTrail] }}</td>
-              <td class="text-center" *ngFor="let var_name of infantHeader">{{ stats[var_name+hospitals.varTrail] }}</td>
-              <td class="text-center" *ngFor="let var_name of underFive">{{ stats[var_name+hospitals.varTrail] }}</td>
+              <td class="text-center"  *ngFor="let var_name of pregnantHeader">{{ stats[var_name+hospitals.varTrail] }}</td>
+              <td class="text-center" [class]=" hospitals.varTrail === '_with_tattoo' ? 'bg-gray-400' : 'bg-white' " *ngFor="let var_name of infantHeader">{{ stats[var_name+hospitals.varTrail] }}</td>
+              <td class="text-center" [class]=" hospitals.varTrail === '_with_tattoo' ? 'bg-gray-400' : 'bg-white' " *ngFor="let var_name of underFive">{{ stats[var_name+hospitals.varTrail] }}</td>
               <td class="text-center" *ngFor="let var_name of schoolAge">{{ stats[var_name+hospitals.varTrail] }}</td>
               <td class="text-center" *ngFor="let var_name of adolescents">{{ stats[var_name+hospitals.varTrail] }}</td>
               <td class="text-center" *ngFor="let var_name of adults">{{ stats[var_name+hospitals.varTrail] }}</td>
@@ -142,8 +142,9 @@
               <td class="px-3">
                 {{ diet.title }}
               </td>
-              <td colspan="12" class="bg-gray-400"></td>
               <td class="text-center" *ngFor="let var_name of pregnantHeader">{{ stats[var_name+diet.varTrail] }}</td>
+              <td class="text-center" [class]=" diet.varTrail === '_with_alcohol' || diet.varTrail === '_with_tobacco' || diet.varTrail === '_with_nut' ? 'bg-gray-400' : 'bg-white' " *ngFor="let var_name of infantHeader">{{ stats[var_name+diet.varTrail] }}</td>
+              <td class="text-center" [class]=" diet.varTrail === '_with_alcohol' || diet.varTrail === '_with_tobacco' || diet.varTrail === '_with_nut' ? 'bg-gray-400' : 'bg-white' " *ngFor="let var_name of underFive">{{ stats[var_name+diet.varTrail] }}</td>
               <td class="text-center" *ngFor="let var_name of schoolAge">{{ stats[var_name+diet.varTrail] }}</td>
               <td class="text-center" *ngFor="let var_name of adolescents">{{ stats[var_name+diet.varTrail] }}</td>
               <td class="text-center" *ngFor="let var_name of adults">{{ stats[var_name+diet.varTrail] }}</td>
