@@ -1,6 +1,6 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { faQuestionCircle, faChevronDown, faFolderOpen, faHeart, faFlask, faNotesMedical, faExclamationCircle, faChevronRight, faChevronLeft, faAnglesLeft, faAnglesRight, faPersonPregnant, faPersonCane, faWheelchair, faBaby, faDog, faLungs, faTooth } from '@fortawesome/free-solid-svg-icons';
+import { faQuestionCircle, faChevronDown, faFolderOpen, faHeart, faFlask, faNotesMedical, faExclamationCircle, faChevronRight, faChevronLeft, faAnglesLeft, faAnglesRight, faPersonPregnant, faPersonCane, faWheelchair, faBaby, faDog, faLungs, faTooth, faHeartPulse } from '@fortawesome/free-solid-svg-icons';
 import { AgeService } from 'app/shared/services/age.service';
 import { HttpService } from 'app/shared/services/http.service';
 import { LaravelEchoService } from 'app/shared/services/laravel-echo.service';
@@ -35,6 +35,7 @@ export class TodaysConsultComponent implements OnInit, OnDestroy {
   faDog = faDog;
   faLungs = faLungs;
   faTooth = faTooth;
+  faHeathPulse = faHeartPulse;
 
   today_consults: [];
   physicians: [];
