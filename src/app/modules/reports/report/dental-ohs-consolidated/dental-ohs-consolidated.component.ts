@@ -5,15 +5,16 @@ import { faFileExcel, faFilePdf } from '@fortawesome/free-regular-svg-icons';
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import { dateHelper } from 'app/shared/services/date-helper.service';
 import { ExportAsConfig, ExportAsService } from 'ngx-export-as-17';
+import {ReportsModule} from "../../reports.module";
 
 @Component({
   selector: 'app-dental-ohs-consolidated',
   standalone: true,
-    imports: [
-        FaIconComponent,
-        NgForOf,
-        NgIf
-    ],
+  imports: [
+    FaIconComponent,
+    NgForOf,
+    NgIf,
+  ],
   templateUrl: './dental-ohs-consolidated.component.html',
   styleUrl: './dental-ohs-consolidated.component.scss'
 })

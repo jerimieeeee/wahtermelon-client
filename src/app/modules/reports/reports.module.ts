@@ -28,46 +28,45 @@ import { Fhsis2018MortalityComponent } from './report/fhsis2018-mortality/fhsis2
 import { Fhsis2018EnvironmentalComponent } from './report/fhsis2018-environmental/fhsis2018-environmental.component';
 import { Fhsis2018MortalityUnderlyingComponent } from './report/fhsis2018-mortality-underlying/fhsis2018-mortality-underlying.component';
 import { ExportAsModule } from 'ngx-export-as-17';
-import { DentalOhsConsolidatedComponent } from "./report/dental-ohs-consolidated/dental-ohs-consolidated.component";
-
+import {DentalOhsConsolidatedComponent} from "./report/dental-ohs-consolidated/dental-ohs-consolidated.component";
 
 @NgModule({
-    declarations: [
-        ReportsComponent,
-        Fhsis2018McComponent,
-        Fhsis2018CcComponent,
-        NameListComponent,
-        HeaderFhsis2018Component,
-        PatientRegisteredComponent,
-        CatalystReportComponent,
-        Fhsis2018MorbidityComponent,
-        HouseholdProfilingComponent,
-        Fhsis2018TbComponent,
-        DailyServiceComponent,
-        Fhsis2018NcdComponent,
-        Fhsis2018FpComponent,
-        ShowNameListComponent,
-        FeedbackReportComponent,
-        AbReportComponent,
-        AbPostComponent,
-        AbPreComponent,
-        Fhsis2018DentalM1Component,
-        Fhsis2018MortalityComponent,
-        Fhsis2018EnvironmentalComponent,
-        Fhsis2018MortalityUnderlyingComponent
-    ],
-    exports: [
-        ShowNameListComponent
-    ],
-    imports: [
-        CommonModule,
-        ReportsRoutingModule,
-        ReactiveFormsModule,
-        FormsModule,
-        NgSelectModule,
-        FontAwesomeModule,
-        ExportAsModule,
-        DentalOhsConsolidatedComponent
-    ]
+  declarations: [
+    ReportsComponent,
+    Fhsis2018McComponent,
+    Fhsis2018CcComponent,
+    NameListComponent,
+    HeaderFhsis2018Component,
+    PatientRegisteredComponent,
+    CatalystReportComponent,
+    Fhsis2018MorbidityComponent,
+    HouseholdProfilingComponent,
+    Fhsis2018TbComponent,
+    DailyServiceComponent,
+    Fhsis2018NcdComponent,
+    Fhsis2018FpComponent,
+    ShowNameListComponent,
+    FeedbackReportComponent,
+    AbReportComponent,
+    AbPostComponent,
+    AbPreComponent,
+    Fhsis2018DentalM1Component,
+    Fhsis2018MortalityComponent,
+    Fhsis2018EnvironmentalComponent,
+    Fhsis2018MortalityUnderlyingComponent
+  ],
+  exports: [
+    ShowNameListComponent
+  ],
+  imports: [
+    CommonModule,
+    ReportsRoutingModule,
+    ReactiveFormsModule,
+    FormsModule,
+    NgSelectModule,
+    FontAwesomeModule,
+    ExportAsModule,
+    DentalOhsConsolidatedComponent,
+  ]
 })
 export class ReportsModule { }
