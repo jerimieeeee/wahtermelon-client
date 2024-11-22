@@ -57,6 +57,13 @@ export class ModuleModalComponent implements OnInit {
           group: 'ncd',
           consult_active: false,
           id: null
+        },
+        at: {
+          name: 'Adolescent',
+          location: 'at',
+          group: 'at',
+          consult_active: false,
+          id: null
         }
       }
     }
