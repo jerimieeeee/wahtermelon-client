@@ -143,9 +143,9 @@ export class ReportsComponent implements OnInit {
       category: this.reportForm.value.report_class
     }
 
-    if (this.reportForm.value.report_class === 'fac') {
+    /* if (this.reportForm.value.report_class === 'fac') {
       params['code'] = this.reportFlag === '1' ? this.selectedFacilities.join(',') : this.reportForm.value.municipality_code;
-    }
+    } */
 
     if (this.reportForm.value.report_class === 'muncity') {
       params['code'] = this.reportFlag === '1' ? this.selectedMuncity.join(',') : this.reportForm.value.municipality_code;
@@ -176,9 +176,9 @@ export class ReportsComponent implements OnInit {
       })
     } else if (report_class === "muncity") {
       this.getMuncities();
-    } else if (report_class === "fac") {
+    } /* else if (report_class === "fac") {
       this.getFacilities();
-    } else { // all
+    } */ else { // all
       this.f['municipality_code'].setValue(null);
       this.f['barangay_code'].setValue(null);
       this.selectedBrgy = null;
