@@ -54,6 +54,10 @@ const routes: Routes = [
       {
         path: 'dn',
         loadChildren: () => import('../dental/dental.module').then(m => m.DentalModule)
+      },
+      {
+        path: 'at',
+        loadChildren: () => import('../adolescent/adolescent.module').then(m => m.AdolescentModule)
       }
     ]
   },
