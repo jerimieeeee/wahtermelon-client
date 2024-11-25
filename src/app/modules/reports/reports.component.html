@@ -75,6 +75,35 @@
     </div>
     <!-- END MUNCITY -->
 
+    <!-- START PROVINCIAL REPORT FACILITY -->
+    <div class="w-52" *ngIf="reportFlag && reportForm.value.report_class === 'fac' && !this.facilities">
+      <label for="brgys" class="input-label pb-1" >Facilities</label>
+      <fa-icon class="text-blue-500 my-auto mx-auto" [icon]="faCircleNotch" animation="spin"></fa-icon>Fetching...
+    </div>
+
+    <div class="w-52" *ngIf="reportFlag && reportForm.value.report_class === 'fac' && this.facilities">
+      <label for="facilities" class="input-label pb-1" >Facilities</label>
+      <ng-select id="facilities" name="facilities"
+        class="w-full"
+        [items]="facilities"
+        [multiple]="true"
+        [hideSelected]="true"
+        bindLabel="facility_name"
+        [selectableGroup]="true"
+        [closeOnSelect]="false"
+        bindValue="code"
+        [(ngModel)]="selectedFacilities"
+        [ngModelOptions]="{standalone:true}">
+
+        <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
+          <div class="ng-value" *ngIf="items.length > 0">
+            <span class="ng-value-label">Selected {{items.length}} Facilities</span>
+          </div>
+        </ng-template>
+      </ng-select>
+    </div>
+    <!-- END PROVINCIAL REPORT FACILITY -->
+
     <!-- START BRGY -->
     <div class="w-52" *ngIf="!reportFlag && reportForm.value.report_class === 'brgys' && !this.brgys">
       <label for="brgys" class="input-label pb-1" >Barangays</label>

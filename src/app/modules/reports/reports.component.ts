@@ -120,10 +120,12 @@ export class ReportsComponent implements OnInit {
   fhsis_monthly_arr = ['fhsis2018-fp', 'patient-registered']
   report_params: any;
   years: any = [];
-  selectedBrgy: [];
-  selectedMuncity: [];
-  brgys: any;
-  muncity: any;
+  selectedBrgy!: [];
+  selectedMuncity!: [];
+  selectedFacilities!: [];
+  brgys!: any;
+  muncity!: any;
+  facilities!: any;
   userInfo: any = {};
   userLoc: string;
   report_data: any;
@@ -139,6 +141,10 @@ export class ReportsComponent implements OnInit {
       start_date: this.reportForm.value.start_date ?? null,
       end_date: this.reportForm.value.end_date ?? null,
       category: this.reportForm.value.report_class
+    }
+
+    if (this.reportForm.value.report_class === 'fac') {
+      params['code'] = this.reportFlag === '1' ? this.selectedFacilities.join(',') : this.reportForm.value.municipality_code;
     }
 
     if (this.reportForm.value.report_class === 'muncity') {
@@ -168,9 +174,10 @@ export class ReportsComponent implements OnInit {
         next: (data: any) => this.getBrgys(data.data[0].municipality.code, report_class),
         error: err => console.log(err)
       })
-    } else if(report_class === "muncity") {
+    } else if (report_class === "muncity") {
       this.getMuncities();
-      this.selectedBrgy = null;
+    } else if (report_class === "fac") {
+      this.getFacilities();
     } else { // all
       this.f['municipality_code'].setValue(null);
       this.f['barangay_code'].setValue(null);
@@ -178,10 +185,27 @@ export class ReportsComponent implements OnInit {
     }
   }
 
+  getFacilities(){
+    const userProvinceCode = this.http.getUserFromJSON().facility.province_code;
+    if(!this.facilities) {
+      let params = { 'filter[province_code]': userProvinceCode, per_page: 'all', facility_list: 1 }
+      this.http.get('libraries/facilities', { params }).subscribe({
+        next: (data:any) => {
+          this.facilities = data.data;
+          this.selectedMuncity = null;
+          this.selectedBrgy = null;
+        },
+        error: err => console.log(err)
+      })
+    }
+  }
+
   getMuncities() {
     if(!this.muncity) {
       this.http.get('libraries/provinces/'+this.userInfo.facility.province.code, {params:{include: 'municipalities'}}).subscribe({
         next: (data: any) => {
+          this.selectedBrgy = null;
+          this.selectedFacilities = null;
           this.muncity = data.data.municipalities;
         },
         error: err => console.log(err)
@@ -276,7 +300,6 @@ export class ReportsComponent implements OnInit {
   ngOnInit(): void {
     this.generateYear();
     this.userInfo = this.http.getUserFromJSON();
-    console.log(this.userInfo, 'eto')
     this.current_date;
     this.reportFlag =  this.userInfo.reports_flag === 1 ? '1' : null;
     this.reportForm = this.formBuilder.nonNullable.group({
