@@ -20,6 +20,7 @@ export class AdolescentComponent implements OnInit {
 
   pages: number = 1;
   module: number = 1;
+  module_compre: number = 1;
   show_end: boolean = false;
   fetching_history: boolean = true;
   show_form: boolean = true;
@@ -32,6 +33,10 @@ export class AdolescentComponent implements OnInit {
 
   switchTab(tab) {
     this.module = tab;
+  }
+
+  switchTabCompre(tab_compre) {
+    this.module_compre = tab_compre;
   }
 
   loadASRH() {
