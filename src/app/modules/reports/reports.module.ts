@@ -53,7 +53,8 @@ import {DentalOhsConsolidatedComponent} from "./report/dental-ohs-consolidated/d
     Fhsis2018DentalM1Component,
     Fhsis2018MortalityComponent,
     Fhsis2018EnvironmentalComponent,
-    Fhsis2018MortalityUnderlyingComponent
+    Fhsis2018MortalityUnderlyingComponent,
+    DentalOhsConsolidatedComponent
   ],
   exports: [
     ShowNameListComponent
@@ -66,7 +67,6 @@ import {DentalOhsConsolidatedComponent} from "./report/dental-ohs-consolidated/d
     NgSelectModule,
     FontAwesomeModule,
     ExportAsModule,
-    DentalOhsConsolidatedComponent,
   ]
 })
 export class ReportsModule { }

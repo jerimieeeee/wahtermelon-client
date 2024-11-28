@@ -6,15 +6,10 @@ import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import { dateHelper } from 'app/shared/services/date-helper.service';
 import { ExportAsConfig, ExportAsService } from 'ngx-export-as-17';
 import {ReportsModule} from "../../reports.module";
+import {ShowNameListComponent} from "../../modals/show-name-list/show-name-list.component";
 
 @Component({
   selector: 'app-dental-ohs-consolidated',
-  standalone: true,
-  imports: [
-    FaIconComponent,
-    NgForOf,
-    NgIf,
-  ],
   templateUrl: './dental-ohs-consolidated.component.html',
   styleUrl: './dental-ohs-consolidated.component.scss'
 })
@@ -49,6 +44,7 @@ export class DentalOhsConsolidatedComponent implements OnChanges {
       params: params,
       gender: gender,
       age: age,
+      category: this.reportForm.value.report_class,
       per_page: 10,
     };
     this.openList = true;
@@ -63,7 +59,9 @@ export class DentalOhsConsolidatedComponent implements OnChanges {
   }
 
   pregnantVar: any = [
-    {title: 'pregnant_women'},
+    {title: 'pregnant_women_10_14_year_old', age: '10-14'},
+    {title: 'pregnant_women_15_19_year_old', age: '15-19'},
+    {title: 'pregnant_women_20_49_year_old', age: '20-49'},
   ];
 
   infantVar: any = [
