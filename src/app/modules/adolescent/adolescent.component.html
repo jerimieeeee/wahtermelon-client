@@ -24,7 +24,7 @@
   <div class="flex flex-row">
     <button (click)="switchTab(1)" class="tabs-main w-40"
         [class]="module===1? 'tabs-main-true w-40' : 'tabs-main-false w-40' ">
-        RAPID HEEADSSS
+        RAPID HEEADSSSS
     </button>
     <button (click)="switchTab(2)" class="tabs-main w-44"
         [class]="module===2? 'tabs-main-true w-44' : 'tabs-main-false w-44' ">
@@ -32,7 +32,7 @@
     </button>
     <button (click)="switchTab(3)" class="tabs-main w-44"
         [class]="module===3? 'tabs-main-true w-44' : 'tabs-main-false w-44' ">
-        COMPREHENSIVE HEEADSSS
+        COMPREHENSIVE HEEADSSSS
     </button>
   </div>
 </nav>
@@ -135,3 +135,49 @@
   [patient_id]="patient_id"
   (loadASRH)="loadASRH()"
 ></app-rapid-heeadsss>
+
+<app-home *ngIf="pages === 2 && module === 3 && module_compre === 1"
+  [patient_id]="patient_id"
+  (loadASRH)="loadASRH()"
+></app-home>
+
+<app-education *ngIf="pages === 2 && module === 3 && module_compre === 2"
+  [patient_id]="patient_id"
+  (loadASRH)="loadASRH()"
+></app-education>
+
+<app-eating *ngIf="pages === 2 && module === 3 && module_compre === 3"
+  [patient_id]="patient_id"
+  (loadASRH)="loadASRH()"
+></app-eating>
+
+<app-activities *ngIf="pages === 2 && module === 3 && module_compre === 4"
+  [patient_id]="patient_id"
+  (loadASRH)="loadASRH()"
+></app-activities>
+
+<app-drugs *ngIf="pages === 2 && module === 3 && module_compre === 5"
+  [patient_id]="patient_id"
+  (loadASRH)="loadASRH()"
+></app-drugs>
+
+<app-sexuality *ngIf="pages === 2 && module === 3 && module_compre === 6"
+  [patient_id]="patient_id"
+  (loadASRH)="loadASRH()"
+></app-sexuality>
+
+<app-suicide-depression *ngIf="pages === 2 && module === 3 && module_compre === 7"
+  [patient_id]="patient_id"
+  (loadASRH)="loadASRH()"
+></app-suicide-depression>
+
+<app-safety *ngIf="pages === 2 && module === 3 && module_compre === 8"
+  [patient_id]="patient_id"
+  (loadASRH)="loadASRH()"
+></app-safety>
+
+<app-spirituality *ngIf="pages === 2 && module === 3 && module_compre === 9"
+  [patient_id]="patient_id"
+  (loadASRH)="loadASRH()"
+></app-spirituality>
+
