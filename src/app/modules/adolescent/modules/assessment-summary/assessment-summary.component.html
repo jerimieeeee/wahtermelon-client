@@ -1,0 +1,20 @@
+<div class="grid grid-cols-10 my-5 pt-5 border-t border-slate-200 ">
+  <div class="col-span-2 pt-2 pr-5 font-semibold">
+    General Survey
+  </div>
+  <div class="col-span-8">
+    <div class="rounded-md border border-solid border-gray-300">
+      <span class="rounded-t-md m-0 p-2 font-semibold text-gray-50 bg-blue-500 flex justify-between" [ngClass]="{'rounded-b' : !show_content}">
+        General Survey
+        <button type="button" (click)="show_content = !show_content">
+          <fa-icon [icon]="show_content ? faChevronCircleUp : faChevronCircleDown" class="pr-2" size="lg"></fa-icon>
+        </button>
+      </span>
+
+
+
+
+    </div>
+  </div>
+</div>
+

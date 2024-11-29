@@ -43,9 +43,9 @@
         [class]="module_compre===1? 'tabs-main-true w-24' : 'tabs-main-false w-24' ">
         HOME
     </button>
-    <button (click)="switchTabCompre(2)" class="tabs-main w-24"
-        [class]="module_compre===2? 'tabs-main-true w-24' : 'tabs-main-false w-24' ">
-        EDUCATION
+    <button (click)="switchTabCompre(2)" class="tabs-main w-44"
+        [class]="module_compre===2? 'tabs-main-true w-44' : 'tabs-main-false w-44' ">
+        EDUCATION & EMPLOYMENT
     </button>
     <button (click)="switchTabCompre(3)" class="tabs-main w-24"
         [class]="module_compre===3? 'tabs-main-true w-24' : 'tabs-main-false w-24' ">
@@ -135,6 +135,11 @@
   [patient_id]="patient_id"
   (loadASRH)="loadASRH()"
 ></app-rapid-heeadsss>
+
+<app-assessment-summary *ngIf="pages === 2 && module === 2"
+  [patient_id]="patient_id"
+  (loadASRH)="loadASRH()"
+></app-assessment-summary>
 
 <app-home *ngIf="pages === 2 && module === 3 && module_compre === 1"
   [patient_id]="patient_id"
