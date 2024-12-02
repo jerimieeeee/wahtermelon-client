@@ -35,7 +35,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let list of show_nameList?.data" class="w-full font-medium my-0 text-sm rounded-md py-2 px-3 hover:cursor-pointer hover:bg-blue-500 hover:text-white">
+            <tr *ngFor="let list of show_nameList" class="w-full font-medium my-0 text-sm rounded-md py-2 px-3 hover:cursor-pointer hover:bg-blue-500 hover:text-white">
               <td class="py-4 px-6" (click)="navigateTo(loc, list.patient_id, list.consult_id)">
                 {{ list.name }}
               </td>

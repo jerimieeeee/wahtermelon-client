@@ -77,7 +77,8 @@ export class ShowNameListComponent implements OnInit {
       next: (data: any) => {
         console.log(data)
         this.is_fetching = false;
-        this.show_nameList = data;
+        this.show_nameList = data.data;
+        console.log(this.show_nameList)
         this.current_page = data.current_page;
         this.last_page = data.last_page;
       },
