@@ -9,6 +9,7 @@ import { dateHelper } from 'app/shared/services/date-helper.service';
 export class HeaderFhsis2018Component implements OnChanges {
   @Input() brgys!: any;
   @Input() selectedBrgy!: any;
+  @Input() selectedCode!: any;
   @Input() facility!: any;
   @Input() reportForm!: any;
   @Input() report_data!: any;

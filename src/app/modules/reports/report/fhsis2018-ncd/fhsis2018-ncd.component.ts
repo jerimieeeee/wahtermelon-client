@@ -14,6 +14,7 @@ export class Fhsis2018NcdComponent implements OnChanges {
   @Input() report_data;
   @Input() reportForm;
   @Input() selectedBrgy;
+  @Input() selectedCode!: any;
   @Input() brgys;
   @Input() facility;
   @Input() submit_flag;

@@ -62,9 +62,9 @@ export class ReportsComponent implements OnInit {
     { id: 'daily-service', desc: 'Consultation', url: 'reports-2018/daily-service/report'},
   ];
 
-  /* dental_consolidated = [
+  dental_consolidated = [
     { id: 'dental-ohs-consolidated', desc: 'Dental Consolidated OHS', url: 'reports-2018/dental/dental-consolidated'},
-  ]; */
+  ];
 
   months = [
     {
@@ -131,6 +131,7 @@ export class ReportsComponent implements OnInit {
   report_data: any;
   is_fetching: boolean = false;
 
+  selectedCode!: any;
   onSubmit(){
     console.log(this.reportForm.value, this.reportFlag)
     this.is_fetching = true;
@@ -154,6 +155,8 @@ export class ReportsComponent implements OnInit {
     if (this.reportForm.value.report_class === 'brgys') {
       params['code'] = this.selectedBrgy.join(',');
     }
+
+    this.selectedCode = params['code'];
 
     this.http.get(this.reportForm.value.report_type.url, {params}).subscribe({
       next: (data: any) => {

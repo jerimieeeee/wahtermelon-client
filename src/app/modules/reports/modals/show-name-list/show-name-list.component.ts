@@ -21,7 +21,8 @@ export class ShowNameListComponent implements OnInit {
   @Input() pageOffset: number;
   @Input() pageIndex: number;
   @Input() reportForm: any;
-  @Input() selected_barangay: any;
+  @Input() selectedBrgy: any;
+  @Input() selectedCode: any;
   @Input() url: any;
   @Input() loc: any;
 
@@ -65,14 +66,17 @@ export class ShowNameListComponent implements OnInit {
 
     if (this.name_list_params.category === 'muncity') {
       params['category'] = 'muncity';
-      params['code'] = this.reportForm.value.municipality_code
     } else if (this.name_list_params.category === 'brgys') {
       params['category'] = 'brgys';
-      params['code'] = this.selected_barangay.join(',');
+    } else if (this.name_list_params.category === 'fac') {
+      params['category'] = 'fac';
     } else {
       params['category'] = this.name_list_params.category;
     }
 
+    if(this.name_list_params.category !== 'all') {
+      params['code'] = this.selectedCode;
+    }
     this.http.get(this.url, { params }).subscribe({
       next: (data: any) => {
         console.log(data)
@@ -99,6 +103,7 @@ export class ShowNameListComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log(this.selectedCode)
     this.getList();
   }
 
