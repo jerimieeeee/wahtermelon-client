@@ -287,7 +287,7 @@
                   class="text-center" *ngFor="let var_name of seniorVar">
                   {{ stats[var_name.title+oral.varTrail] }}
               </td>
-              <td (click)="showNameList('all_age', oral.params, null, null)"
+              <td (click)="showNameList('all_age', oral.params, var_name.gender, null)"
                   class="text-center" *ngFor="let var_name of allAgeVar">
                   {{ stats[var_name.title+oral.varTrail] }}
               </td>
