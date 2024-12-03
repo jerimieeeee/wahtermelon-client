@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DentalOhsConsolidatedComponent } from './dental-ohs-consolidated.component';
+import { DentalOhsConsolidatedComponent } from './dental-ohs-consolidated.component.ts.bak';
 
 describe('DentalOhsConsolidatedComponent', () => {
   let component: DentalOhsConsolidatedComponent;

@@ -13,6 +13,7 @@ export class Fhsis2018McComponent implements OnChanges {
   @Input() report_data;
   @Input() reportForm;
   @Input() selectedBrgy;
+  @Input() selectedCode!: any;
   @Input() brgys;
   @Input() facility;
   @Input() submit_flag;
@@ -93,20 +94,20 @@ export class Fhsis2018McComponent implements OnChanges {
   }
 
   convertBrgy(){
-    this.brgy_result = this.selected_barangay?.map((code) => this.brgys.find((el) => el.code == code).name);
+    this.brgy_result = this.selectedBrgy?.map((code) => this.brgys.find((el) => el.code == code).name);
   }
 
-  label_value: {};
+  // label_value: {};
   ngOnChanges(): void {
     this.current_submit_flag = this.submit_flag;
     if(this.current_submit_flag){
       this.show_stats = false;
       this.stats = this.report_data;
-      this.brgys_info = this.brgys;
+      // this.brgys_info = this.brgys;
       this.pdf_exported = false;
-      this.label_value = this.dateHelper.getLabelValue(this.reportForm, this.report_data);
-      console.log()
-      if(this.selectedBrgy) this.convertBrgy();
+      // this.label_value = this.dateHelper.getLabelValue(this.reportForm, this.report_data);
+      // console.log()
+      // if(this.selectedBrgy) this.convertBrgy();
 
       this.show_stats = true;
     }

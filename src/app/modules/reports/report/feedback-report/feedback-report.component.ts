@@ -11,6 +11,7 @@ export class FeedbackReportComponent implements OnChanges {
   @Input() report_data;
   @Input() reportForm;
   @Input() selectedBrgy;
+  @Input() selectedCode!: any;
   @Input() brgys;
   @Input() userInfo;
   @Input() start_date;

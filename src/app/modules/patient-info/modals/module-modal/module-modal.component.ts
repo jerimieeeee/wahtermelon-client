@@ -57,7 +57,7 @@ export class ModuleModalComponent implements OnInit {
           group: 'ncd',
           consult_active: false,
           id: null
-        }
+        },
       }
     }
   };
@@ -69,6 +69,7 @@ export class ModuleModalComponent implements OnInit {
   cc = { name: 'Child Care', location: 'cc', group: 'cc', consult_active: false, id: null };
   gbv = { name: 'GBV', location: 'gbv', group: 'gbv', consult_active: false, id: null };
   fp = { name: 'Family Planning', location: 'fp', group: 'fp', consult_active: false, id: null };
+  // at = { name: 'Adolescent', location: 'at', group: 'at', consult_active: false, id: null };
   show_new: boolean = false;
   is_loading: boolean = false;
   show_form: boolean = false;
@@ -115,6 +116,10 @@ export class ModuleModalComponent implements OnInit {
     if(this.patient_age.type === 'year' && this.patient_age.age >= 9) {
       this.list_modules.General.modules['fp'] = this.fp;
     }
+
+    // if(this.patient_age.type === 'year' && this.patient_age.age >= 10 && this.patient_age.age <=19) {
+    //   this.list_modules.Others.modules['at'] = this.at;
+    // }
 
     /* if(this.arr_allowed.indexOf(this.pos) > -1) {
       this.list_modules.Others.modules['gbv'] = this.gbv;

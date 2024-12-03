@@ -68,7 +68,7 @@ export class ConsultHistoryComponent implements OnInit, OnChanges {
     this.patient_id = this.route.snapshot.paramMap.get('id');
     this.consult_id = this.route.snapshot.paramMap.get('consult_id');
 
-    // this.loadPreviousVisit(1);
+    this.loadPreviousVisit(1);
   }
 
 }

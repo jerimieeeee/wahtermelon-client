@@ -1,6 +1,6 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { faQuestionCircle, faChevronDown, faFolderOpen, faHeart, faFlask, faNotesMedical, faExclamationCircle, faChevronRight, faChevronLeft, faAnglesLeft, faAnglesRight, faPersonPregnant, faPersonCane, faWheelchair, faBaby, faDog, faLungs, faTooth } from '@fortawesome/free-solid-svg-icons';
+import { faQuestionCircle, faChevronDown, faFolderOpen, faHeart, faFlask, faNotesMedical, faExclamationCircle, faChevronRight, faChevronLeft, faAnglesLeft, faAnglesRight, faPersonPregnant, faPersonCane, faWheelchair, faBaby, faDog, faLungs, faTooth, faHeartPulse } from '@fortawesome/free-solid-svg-icons';
 import { AgeService } from 'app/shared/services/age.service';
 import { HttpService } from 'app/shared/services/http.service';
 import { LaravelEchoService } from 'app/shared/services/laravel-echo.service';
@@ -35,6 +35,7 @@ export class TodaysConsultComponent implements OnInit, OnDestroy {
   faDog = faDog;
   faLungs = faLungs;
   faTooth = faTooth;
+  faHeathPulse = faHeartPulse;
 
   today_consults: [];
   physicians: [];
@@ -108,11 +109,11 @@ export class TodaysConsultComponent implements OnInit, OnDestroy {
 
   loadPhysicians(): Promise<void> {
     return new Promise<void>((resolve, reject) => {
-      this.http.get('users', {params:{per_page: 'all', designation_code: 'MD'}}).subscribe({
+      this.http.get('users', {params:{per_page: 'all', doctors_list: 1}}).subscribe({
         next: (data: any) => {
           this.physicians = data.data;
           let user_info = this.http.getUserFromJSON();
-          this.selected_physician = user_info.designation_code === 'MD' ? user_info.id : 'all';
+          this.selected_physician = user_info.designation_code === 'MD' || user_info.designation_code === 'DENTIST' ? user_info.id : 'all';
           // console.log(user_info);
 
           resolve(); // Resolve the promise once loading is done

@@ -30,7 +30,6 @@ import { Fhsis2018MortalityUnderlyingComponent } from './report/fhsis2018-mortal
 import { ExportAsModule } from 'ngx-export-as-17';
 import {DentalOhsConsolidatedComponent} from "./report/dental-ohs-consolidated/dental-ohs-consolidated.component";
 
-
 @NgModule({
   declarations: [
     ReportsComponent,
@@ -54,7 +53,11 @@ import {DentalOhsConsolidatedComponent} from "./report/dental-ohs-consolidated/d
     Fhsis2018DentalM1Component,
     Fhsis2018MortalityComponent,
     Fhsis2018EnvironmentalComponent,
-    Fhsis2018MortalityUnderlyingComponent
+    Fhsis2018MortalityUnderlyingComponent,
+    DentalOhsConsolidatedComponent
+  ],
+  exports: [
+    ShowNameListComponent
   ],
   imports: [
     CommonModule,
@@ -64,7 +67,6 @@ import {DentalOhsConsolidatedComponent} from "./report/dental-ohs-consolidated/d
     NgSelectModule,
     FontAwesomeModule,
     ExportAsModule,
-    DentalOhsConsolidatedComponent
   ]
 })
 export class ReportsModule { }
