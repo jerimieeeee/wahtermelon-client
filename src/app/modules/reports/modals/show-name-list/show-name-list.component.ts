@@ -25,6 +25,7 @@ export class ShowNameListComponent implements OnInit {
   @Input() selectedCode: any;
   @Input() url: any;
   @Input() loc: any;
+  @Input() params: any;
 
   protected readonly faCircleXmark = faCircleXmark;
   protected readonly faSearch = faSearch;

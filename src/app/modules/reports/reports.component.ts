@@ -62,7 +62,7 @@ export class ReportsComponent implements OnInit {
     { id: 'daily-service', desc: 'Consultation', url: 'reports-2018/daily-service/report'},
   ];
 
-  dental_consolidated = [
+   dental_consolidated = [
     { id: 'dental-ohs-consolidated', desc: 'Dental Consolidated OHS', url: 'reports-2018/dental/dental-consolidated'},
   ];
 

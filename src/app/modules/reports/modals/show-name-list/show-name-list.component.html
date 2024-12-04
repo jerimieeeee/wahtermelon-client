@@ -32,6 +32,8 @@
             <tr>
               <th scope="col" class="py-3 px-6">Name</th>
               <th scope="col" class="py-3 px-6">Birthdate</th>
+              <th *ngIf="name_list_params.params === 'examined' " scope="col" class="py-3 px-6">Visit Count</th>
+              <th *ngIf="name_list_params.params === 'temp_decayed' || name_list_params.params === 'temp_filled' || name_list_params.params === 'decayed' || name_list_params.params === 'missing' || name_list_params.params === 'filled' || name_list_params.params === 'permanent_filling' || name_list_params.params === 'temporary_filling' || name_list_params.params === 'extraction' " scope="col" class="py-3 px-6">Tooth Count</th>
             </tr>
             </thead>
             <tbody>
@@ -41,6 +43,12 @@
               </td>
               <td class="py-4 px-6">
                 {{ list.birthdate | date: 'MM/dd/yyyy':'Asia/Manila' }}
+              </td>
+              <td *ngIf="name_list_params.params === 'temp_decayed' || name_list_params.params === 'temp_filled' || name_list_params.params === 'decayed' || name_list_params.params === 'missing' || name_list_params.params === 'filled' || name_list_params.params === 'permanent_filling' || name_list_params.params === 'temporary_filling' || name_list_params.params === 'extraction' " class="py-4 px-6">
+                {{ list.tooth_count }}
+              </td>
+              <td *ngIf="name_list_params.params === 'examined' " class="py-4 px-6">
+                {{ list.count }}
               </td>
             </tr>
             </tbody>
