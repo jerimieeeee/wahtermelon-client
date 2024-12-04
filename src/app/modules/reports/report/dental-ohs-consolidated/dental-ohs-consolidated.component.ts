@@ -29,6 +29,7 @@ export class DentalOhsConsolidatedComponent implements OnChanges {
   adult: any;
   service: any;
   tooth: any;
+  attended_examined: any;
   name_list: any = [];
   params: any = [];
   loc: '';
@@ -59,9 +60,9 @@ export class DentalOhsConsolidatedComponent implements OnChanges {
   }
 
   pregnantVar: any = [
-    {title: 'pregnant_women_10_14_year_old', age: '10-14'},
-    {title: 'pregnant_women_15_19_year_old', age: '15-19'},
-    {title: 'pregnant_women_20_49_year_old', age: '20-49'},
+    {title: 'pregnant_women_10_14_year_old', age: '10'},
+    {title: 'pregnant_women_15_19_year_old', age: '15'},
+    {title: 'pregnant_women_20_49_year_old', age: '20'},
   ];
 
   infantVar: any = [
@@ -102,8 +103,8 @@ export class DentalOhsConsolidatedComponent implements OnChanges {
     {title: 'male_9_year_old', gender: 'M', age: '9'},
     {title: 'female_9_year_old', gender: 'F', age: '9'},
 
-    {title: 'male_9_year_old', gender: 'M', age: 'total'},
-    {title: 'female_9_year_old', gender: 'F', age: 'total'},
+    {title: 'male_total_school_age', gender: 'M', age: 'total'},
+    {title: 'female_total_school_age', gender: 'F', age: 'total'},
   ];
 
   adolescentVar: any = [
@@ -128,6 +129,10 @@ export class DentalOhsConsolidatedComponent implements OnChanges {
 
   grand_total: any = ['grand_total']
 
+  attendedExamined: any = [
+    {title:"NO. OF PERSON ATTENDED", varTrail: '_attended', params: 'attended'},
+    {title:"NO. OF PERSON EXAMINED", varTrail: '_examined', params: 'examined'},
+  ];
 
   medHistory: any = [
     {title:"1. Total No. with Allergies", varTrail: '_with_allergies', params: 'allergies'},
@@ -199,6 +204,7 @@ export class DentalOhsConsolidatedComponent implements OnChanges {
     this.adult = this.report_data.adult_tooth_condition;
     this.service = this.report_data.dental_services;
     this.tooth = this.report_data.tooth_service;
+    this.attended_examined = this.report_data.attended_examined;
   }
 
 }

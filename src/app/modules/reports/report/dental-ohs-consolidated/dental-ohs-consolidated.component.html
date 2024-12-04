@@ -64,28 +64,78 @@
               <td>M</td> <td>F</td>
               <td>M</td> <td>F</td>
             </tr>
-            <tr>
-              <td class="text-right">NO. OF PERSON ATTENDED</td>
-              <td></td>
-              <td></td>
-              <td></td> <td></td>
-              <td></td> <td></td>
-              <td></td> <td></td>
-              <td></td> <td></td>
-              <td></td> <td></td>
-              <td></td> <td></td>
-              <td></td> <td></td>
-              <td></td> <td></td>
-              <td></td> <td></td>
-              <td></td> <td></td>
-              <td></td> <td></td>
-              <td></td> <td></td>
-              <td></td> <td></td>
-              <td></td> <td></td>
-              <td></td> <td></td>
-              <td></td> <td></td>
-              <td></td> <td></td>
+            <tr class="px-10 border-black border-b" *ngFor="let attendExam of attendedExamined">
+              <td class="px-3 text-right">
+                {{ attendExam.title }}
+              </td>
+              <td *ngFor="let var_name of pregnantVar"
+                  (click)="showNameList('pregnant', attendExam.params, 'F', var_name.age)"
+                  class="text-center">
+                {{ attended_examined[var_name.title+attendExam.varTrail] }}
+              </td>
+              <td *ngFor="let var_name of infantVar"
+                  (click)="showNameList('infant', attendExam.params, var_name.gender, null)"
+                  class="text-center">
+                {{ attended_examined[var_name.title+attendExam.varTrail] }}
+              </td>
+              <td *ngFor="let var_name of underFiveVar"
+                  (click)="showNameList('underfive', attendExam.params, var_name.gender, var_name.age)"
+                  class="text-center">
+                {{ attended_examined[var_name.title+attendExam.varTrail] }}
+              </td>
+              <td *ngFor="let var_name of schoolAgeVar"
+                  (click)="showNameList('school_age', attendExam.params, var_name.gender, var_name.age)"
+                  class="text-center">
+                {{ attended_examined[var_name.title+attendExam.varTrail] }}
+              </td>
+              <td *ngFor="let var_name of adolescentVar"
+                  (click)="showNameList('adolescent', attendExam.params, var_name.gender, null)"
+                  class="text-center">
+                {{ attended_examined[var_name.title+attendExam.varTrail] }}
+              </td>
+              <td *ngFor="let var_name of adultVar"
+                  (click)="showNameList('adult', attendExam.params, var_name.gender, null)"
+                  class="text-center">
+                {{ attended_examined[var_name.title+attendExam.varTrail] }}
+              </td>
+              <td *ngFor="let var_name of seniorVar"
+                  (click)="showNameList('senior', attendExam.params, var_name.gender, null)"
+                  class="text-center">
+                {{ attended_examined[var_name.title+attendExam.varTrail] }}
+              </td>
+              <td *ngFor="let var_name of allAgeVar"
+                  (click)="showNameList('all_age', attendExam.params, var_name.gender, null)"
+                  class="text-center">
+                {{ attended_examined[var_name.title+attendExam.varTrail] }}
+              </td>
+              <td *ngFor="let var_name of grand_total"
+                  (click)="showNameList('grand_total', attendExam.params, 'M,F', null)"
+                  class="text-center">
+                {{ attended_examined[var_name+attendExam.varTrail] }}
+              </td>
             </tr>
+<!--              <tr>
+                <td class="text-right">NO. OF PERSON ATTENDED</td>
+                <td></td>
+                <td></td>
+                <td></td> <td></td>
+                <td></td> <td></td>
+                <td></td> <td></td>
+                <td></td> <td></td>
+                <td></td> <td></td>
+                <td></td> <td></td>
+                <td></td> <td></td>
+                <td></td> <td></td>
+                <td></td> <td></td>
+                <td></td> <td></td>
+                <td></td> <td></td>
+                <td></td> <td></td>
+                <td></td> <td></td>
+                <td></td> <td></td>
+                <td></td> <td></td>
+                <td></td> <td></td>
+                <td></td> <td></td>
+              </tr>
             <tr>
               <td class="text-right">NO. OF PERSON EXAMINED</td>
               <td></td>
@@ -107,7 +157,7 @@
               <td></td> <td></td>
               <td></td> <td></td>
               <td></td> <td></td>
-            </tr>
+            </tr>-->
             </thead>
             <tbody class="text-xs">
               <th colspan="37" class="px-1 font-bold bg-gray-300 text-left">A. MEDICAL HISTORY STATUS</th>
@@ -116,7 +166,7 @@
                   {{ item.title }}
                 </td>
                 <td *ngFor="let var_name of pregnantVar"
-                    (click)="showNameList('pregnant', item.params, 'F', null)"
+                    (click)="showNameList('pregnant', item.params, 'F', var_name.age)"
                     class="text-center">
                   {{ stats[var_name.title+item.varTrail] }}
                 </td>
@@ -170,7 +220,7 @@
               <td class="px-3">
                 {{ hospitals.title }}
               </td>
-              <td (click)="showNameList('pregnant', hospitals.params, 'F', null)"
+              <td (click)="showNameList('pregnant', hospitals.params, 'F', var_name.age)"
                   class="text-center"
                   *ngFor="let var_name of pregnantVar">
                   {{ stats[var_name.title+hospitals.varTrail] }}
@@ -215,7 +265,7 @@
               <td class="px-3">
                 {{ diet.title }}
               </td>
-              <td (click)="showNameList('pregnant', diet.params, 'F', null)"
+              <td (click)="showNameList('pregnant', diet.params, 'F', var_name.age)"
                   class="text-center" *ngFor="let var_name of pregnantVar">
                   {{ stats[var_name.title+diet.varTrail] }}
               </td>
@@ -259,7 +309,7 @@
               <td class="px-3">
                 {{ oral.title }}
               </td>
-              <td (click)="showNameList('pregnant', oral.params, 'F', null)"
+              <td (click)="showNameList('pregnant', oral.params, 'F', var_name.age)"
                   class="text-center" *ngFor="let var_name of pregnantVar">
                   {{ stats[var_name.title+oral.varTrail] }}
               </td>
@@ -333,7 +383,7 @@
                 <td class="px-6">
                   {{ adulting.title }}
                 </td>
-                <td (click)="showNameList('grand_total', adulting.params, 'F', null)"
+                <td (click)="showNameList('grand_total', adulting.params, 'F', var_name.age)"
                     class="text-center" *ngFor="let var_name of pregnantVar">
                     {{ adult[adulting.varTrail+var_name.title] }}
                 </td>
@@ -368,7 +418,7 @@
                 <td class="px-6">
                   {{ services.title }}
                 </td>
-                <td (click)="showNameList('pregnant', services.params, var_name.gender, null)"
+                <td (click)="showNameList('pregnant', services.params, var_name.gender, var_name.age)"
                     class="text-center" [class]=" services.varTrail === '_with_sealant' || services.varTrail === '_with_flouride' || services.varTrail === '_with_completed' ? 'bg-gray-400' : 'bg-white' "
                     *ngFor="let var_name of pregnantVar">
                     {{ services.varTrail === '_with_permanent_filling' || services.varTrail === '_with_temporary_filling' || services.varTrail === '_with_extraction'  ? tooth[var_name.title+services.varTrail] : service[var_name.title+services.varTrail] }}
