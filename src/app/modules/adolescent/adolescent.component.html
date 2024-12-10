@@ -79,26 +79,26 @@
 </nav>
 
 <div class="my-5 w-full border border-gray-200 shadow-md rounded-xl" *ngIf="pages === 1">
-  <div class="flex flex-col" *ngIf="fetching_history">
+  <div class="flex flex-col" *ngIf="!fetching_history">
     <div class="w-full flex justify-center"><fa-icon animation="spin" class="pt-10"></fa-icon></div>
     <div class="w-full flex justify-center pb-10 font-semibold">Fetching history...</div>
   </div>
-  <table class="w-full text-sm text-left" *ngIf="!fetching_history">
+  <table class="w-full text-sm text-left" *ngIf="fetching_history">
     <thead class="text-xs text-white uppercase bg-blue-500">
       <tr>
         <th scope="col" class="py-3 px-6">Visit Date</th>
-        <th scope="col" class="py-3 px-6">Current Method</th>
-        <th scope="col" class="py-3 px-6">Client Type</th>
+        <th scope="col" class="py-3 px-6">Assessment Summary</th>
+        <th scope="col" class="py-3 px-6">Status</th>
         <th scope="col" class="py-3 px-6">Action</th>
       </tr>
     </thead>
     <tbody>
       <tr class="bg-white border-b" >
-        <td colspan="7">
+        <!-- <td colspan="7">
           <div class="text-center">
             No records to show...
           </div>
-        </td>
+        </td> -->
         <!-- <td class="py-4 px-6">
           {{ fp_history.created_at | date: 'MM/dd/yyyy'}}
         </td>
@@ -108,11 +108,11 @@
         <td class="py-4 px-6">
           {{ fp_history?.method?.client?.desc ? fp_history?.method?.client?.desc : '-' }}
         </td> -->
-        <td class="py-4 px-6">
+        <!-- <td class="py-4 px-6">
           <button type="button" class="rounded-md bg-blue-500 text-white py-1 px-2">
            Open
           </button>
-        </td>
+        </td> -->
       </tr>
 
       <tr class="bg-white border-b">
