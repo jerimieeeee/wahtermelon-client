@@ -93,7 +93,7 @@ export class HeaderComponent implements OnInit {
     this.searchInput$.pipe(
       filter(res => res !== null && res.length >= this.minLengthTerm),
       distinctUntilChanged(),
-      debounceTime(1000),
+      debounceTime(3000),
       tap(() => this.patientLoading = true),
       switchMap(term => {
         this.current_term = term;
