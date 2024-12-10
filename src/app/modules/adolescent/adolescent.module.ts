@@ -14,6 +14,7 @@ import { SexualityComponent } from './modules/comprehensive-heeadsss/sexuality/s
 import { SuicideDepressionComponent } from './modules/comprehensive-heeadsss/suicide-depression/suicide-depression.component';
 import { SafetyComponent } from './modules/comprehensive-heeadsss/safety/safety.component';
 import { SpiritualityComponent } from './modules/comprehensive-heeadsss/spirituality/spirituality.component';
+import { AssessmentSummaryComponent } from './modules/assessment-summary/assessment-summary.component';
 
 
 
@@ -22,6 +23,7 @@ import { SpiritualityComponent } from './modules/comprehensive-heeadsss/spiritua
   declarations: [
     AdolescentComponent,
     RapidHeeadsssComponent,
+    AssessmentSummaryComponent,
     HomeComponent,
     EatingComponent,
     EducationComponent,
