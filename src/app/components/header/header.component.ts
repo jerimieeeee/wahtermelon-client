@@ -122,11 +122,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
   onScrollEnd() {
     this.patientLoading = true
     this.current_page++;
-    this.loadPatients( this.current_page );
+    this.loadPatients(this.current_page);
   }
 
   getPatient(term: string = null, page?): Observable<any> {
-    let current_page = page ? 1 : page;
+    let current_page = page ? page : 1;
     return this.http.get('patient', {params:{'filter[search]':term, page: current_page, per_page: 10}})
     .pipe(map((resp:any) => {
       this.showCreate = resp.data.length == 0 ? true : false;
