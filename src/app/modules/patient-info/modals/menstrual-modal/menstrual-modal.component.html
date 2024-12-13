@@ -66,7 +66,7 @@
                 </select>
               </div>
 
-              <div *ngIf="menstrualForm.value.menopause === true" class="relative text-sm w-1/2 px-5 py-2 mt-2">
+              <div *ngIf="menstrualForm?.value?.menopause === true" class="relative text-sm w-1/2 px-5 py-2 mt-2">
                 <label for="menopause_age">Menopause age</label>
                 <input name="menopause_age" id="menopause_age" formControlName="menopause_age" type="number" class="input disabled:bg-gray-300">
               </div>
