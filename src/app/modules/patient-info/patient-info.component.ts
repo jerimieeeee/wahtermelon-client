@@ -69,8 +69,8 @@ export class PatientInfoComponent implements OnInit {
       this.show_female_history = false;
     } else {
       this.show_female_history = true;
-      if(this.show_female_history = true && (field === 'menstrual_history'  || field==='all')) this.menstrualHistory.loadData(this.patient_info.id);
-      if(this.show_female_history = true && (field === 'pregnancy_history'  || field==='all')) this.preghist.loadData(this.patient_info.id);
+      if(this.show_female_history === true && (field === 'menstrual_history'  || field==='all')) this.menstrualHistory.loadData(this.patient_info.id);
+      if(this.show_female_history === true && (field === 'pregnancy_history'  || field==='all')) this.preghist.loadData(this.patient_info.id);
     }
 
     if(field === 'social_history'       || field==='all') this.socialHistory.loadData(this.patient_info.id);
