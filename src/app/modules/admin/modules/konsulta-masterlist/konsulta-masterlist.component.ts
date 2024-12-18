@@ -98,11 +98,11 @@ export class KonsultaMasterlistComponent implements OnInit {
         this[variable] = data.data;
 
         if(this[variable] && variable === 'export_list') {
-          /* setTimeout(() => {
+          setTimeout(() => {
             this.exportAsService.save(this.exportAsExcel, 'Masterlist').subscribe(() => {
               this.excel_exporting = false;
             });
-          }) */
+          })
         } else {
           this.current_page = data.meta.current_page;
           this.last_page = data.meta.last_page;
