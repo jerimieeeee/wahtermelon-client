@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { faAnglesLeft, faAnglesRight, faChevronLeft, faChevronRight, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
+import { VitalsChartsService } from 'app/shared/services/vitals-charts.service';
 
 @Component({
   selector: 'app-vitals-list-modal',
@@ -22,13 +23,28 @@ export class VitalsListModalComponent implements OnInit {
   vitals_list: any;
 
   constructor(
-    private http: HttpService
+    private http: HttpService,
+    private vitalsCharts: VitalsChartsService
   ) { }
 
   editVitals(vitals){
     // console.log(vitals)
     this.vitalsEdit.emit(vitals);
     this.closeModal();
+  }
+
+  bp_color: string = 'text-gray-800';
+
+  getBPColor(vitals) {
+    return this.vitalsCharts.getChartColor(vitals);
+  }
+
+  getOxygenColor(vitals) {
+    return this.vitalsCharts.getBloodOxygenColor(vitals);
+  }
+
+  getTempColor(vitals) {
+    return this.vitalsCharts.getTempColor(vitals);
   }
 
   onSubmit(){

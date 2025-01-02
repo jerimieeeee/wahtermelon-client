@@ -78,7 +78,7 @@
         </span>
       </div>
 
-      <div class="flex pl-3 justify-between items-center">
+      <div class="flex pl-3 justify-between items-center" [ngClass]="latest_vitals.bp_color">
         <span class="block font-medium text-xs">
           Blood Pressure
         </span>
@@ -87,7 +87,7 @@
         </span>
       </div>
 
-      <div class="flex pl-3 justify-between items-center" [ngClass]="{'text-red-500': latest_vitals?.patient_spo2 ? (latest_vitals?.patient_spo2 < 95) : false }">
+      <div class="flex pl-3 justify-between items-center" [ngClass]="latest_vitals?.oxygen_color">
         <span class="block font-medium text-xs">
           Blood Oxygen (SpO2)
         </span>
@@ -96,7 +96,7 @@
         </span>
       </div>
 
-      <div class="flex pl-3 justify-between items-center" [ngClass]="{'text-red-500': (latest_vitals?.patient_temp >= 37.6)}">
+      <div class="flex pl-3 justify-between items-center" [ngClass]="latest_vitals?.temp_color">
         <span class="block font-medium text-xs">
           Temperature
         </span>

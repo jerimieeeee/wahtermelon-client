@@ -22,6 +22,8 @@ export class VitalsComponent implements OnInit {
 
   latest_vitals: any;
   show_vitals: boolean = false;
+  vitals_color: string;
+
   loadData(patient_id){
     // console.log(patient_id)
     this.http.get('patient-vitals/vitals', {params:{patient_id: patient_id, sort: '-vitals_date', per_page: 15}}).subscribe({
@@ -34,7 +36,7 @@ export class VitalsComponent implements OnInit {
           let orig_diastolic = data.data[0].bp_diastolic;
 
           this.latest_vitals = this.vitalsCharts.getLatestToday(vitals);
-
+          console.log(this.latest_vitals)
           vitals[0]['bp_systolic'] = orig_systolic;
           vitals[0]['bp_diastolic'] = orig_diastolic;
           this.show_vitals = true;

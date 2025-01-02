@@ -6,6 +6,7 @@ import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 import { vitalsForm } from './forms';
 import { dateHelper } from 'app/shared/services/date-helper.service';
+import { VitalsChartsService } from 'app/shared/services/vitals-charts.service';
 
 @Component({
   selector: 'app-vitals-modal',
@@ -30,7 +31,8 @@ export class VitalsModalComponent implements OnInit {
     private formBuilder: FormBuilder,
     private http: HttpService,
     private toastr: ToastrService,
-    private dateHelper: dateHelper
+    private dateHelper: dateHelper,
+    private vitalsCharts: VitalsChartsService
   ) { }
 
   onSubmit(){
@@ -93,6 +95,22 @@ export class VitalsModalComponent implements OnInit {
     }
   }
 
+  getBPColor(){
+    this.bp_color = this.vitalsCharts.getChartColor(this.vitalsForm.value);
+  }
+
+  getOxygenColor(){
+    this.oxygen_color = this.vitalsCharts.getBloodOxygenColor(this.vitalsForm.value);
+  }
+
+  getTempColor(){
+    this.temp_color = this.vitalsCharts.getTempColor(this.vitalsForm.value);
+  }
+
+  bp_color: string = 'text-gray-800';
+  oxygen_color: string = 'text-gray-800';
+  temp_color: string = 'text-gray-800';
+
   ngOnInit(): void {
     let date = new Date();
     let user_id = this.http.getUserID();
@@ -136,6 +154,7 @@ export class VitalsModalComponent implements OnInit {
       this.vitalsForm.patchValue({vitals_date_temp: this.dateHelper.dateFormat(this.vitalsForm.value.vitals_date)});
       this.vitalsForm.patchValue({vitals_time_temp: this.dateHelper.timeFormat(this.vitalsForm.value.vitals_date)});
 
+      if(this.vitalsForm.value.bp_systolic) this.getBPColor();
       this.cmChange();
     }
 
