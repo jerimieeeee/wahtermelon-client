@@ -67,7 +67,6 @@ export class VitalsListModalComponent implements OnInit {
 
     this.http.get('patient-vitals/vitals', params).subscribe({
       next: (data: any) => {
-        console.log(data.data);
         this.vitals_list = data.data
 
         this.current_page = data.meta.current_page;

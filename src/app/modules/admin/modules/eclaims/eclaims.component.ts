@@ -119,7 +119,7 @@ export class EclaimsComponent implements OnInit {
 
     this.http.get('eclaims/eclaims-upload', { params }).subscribe({
       next:(data:any) => {
-        console.log(data.data)
+        // console.log(data.data)
         this.eclaims_list = data.data;
         this.show_form = true;
 
@@ -363,10 +363,10 @@ export class EclaimsComponent implements OnInit {
         if(resp.CLAIM.RETURN && resp.CLAIM.RETURN.DEFECTS) {
           data.return_reason = resp.CLAIM.RETURN.DEFECTS;
           Object.entries(resp.CLAIM.RETURN.DEFECTS).forEach(([key, value]:any, index) => {
-            console.log(key, index, value)
+            // console.log(key, index, value)
             if(value.REQUIREMENT) {
               Object.entries(value.REQUIREMENT).forEach(([k, v]:any, i) => {
-                console.log(v)
+                // console.log(v)
                 message += '<br />Requirement: '+ (v.pRequirement ? v.pRequirement : v);
               });
             }
