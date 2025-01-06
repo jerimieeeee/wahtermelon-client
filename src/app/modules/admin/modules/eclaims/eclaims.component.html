@@ -1,23 +1,28 @@
 <div class="border border-slate-200 shadow-md rounded-xl">
-  <div class="w-full bg-blue-500 text-white rounded-t-xl p-3 font-semibold flex justify-between">
-    <span class="mt-2">ECLAIMS LIST</span>
+  <div class="w-full bg-blue-500 text-white rounded-t-xl p-3 font-semibold flex justify-between text-sm">
+    <div class="mt-2">ECLAIMS LIST</div>
 
-    <div class="grid text-slate-800" [class]="program_desc !== null ? 'grid-cols-11' : 'grid-cols-10'">
-      <input type="text" [(ngModel)]="patient_search" placeholder="search..." (keyup.enter)="getEclaimsList()" class="col-span-3 input rounded-r-none"/>
-      <select class="input rounded-none col-span-3" [(ngModel)]="pStatus" (change)="getEclaimsList()">
+    <div class="text-slate-800 flex justify-end">
+      <input type="text" [(ngModel)]="patient_search" placeholder="search..." (keyup.enter)="getEclaimsList()" class="col-span-3 input rounded-r-none w-52"/>
+      <select class="input rounded-none w-36" [(ngModel)]="pStatus" (change)="getEclaimsList()">
         <option [ngValue]="null">ALL</option>
         <option [value]="status" *ngFor="let status of status_lists" [ngClass]="toggleColorStatus(status)">{{ status }}</option>
       </select>
-      <select class="input rounded-none" (change)="changeCodeList()" [class]="program_desc !== null ? 'col-span-2' : 'col-span-3'" [(ngModel)]="program_desc">
+      <select class="input rounded-none w-36" (change)="changeCodeList()" [(ngModel)]="program_desc">
         <option [ngValue]="null">ALL</option>
         <option [value]="program" *ngFor="let program of program_list">{{ program | uppercase }}</option>
       </select>
-      <select *ngIf="program_desc !== null" class="input rounded-none col-span-2" [(ngModel)]="code">
+      <select *ngIf="program_desc !== null" class="input rounded-none w-36" [(ngModel)]="code">
         <option [ngValue]="null">ALL</option>
         <option [value]="list" *ngFor="let list of code_list">{{ list | uppercase }}</option>
       </select>
-      <button type="button" (click)="getEclaimsList()" class="px-3 bg-white text-blue-500 rounded-r-md h-10 mt-1">
+      <button type="button" (click)="getEclaimsList()" class="px-3 bg-white text-blue-500 rounded-r-md h-10 mt-1 w-24">
         <fa-icon [icon]="faFilter"></fa-icon> Filter
+      </button>
+
+      <button (click)="printFile()" class="pl-4 pr-2 bg-green-500 text-white align-middle rounded-md ml-2 mt-1 hover:opacity-90">
+        Print
+        <fa-icon [icon]="faFileExcel" class="text-xl mt-1"></fa-icon>
       </button>
     </div>
   </div>

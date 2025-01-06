@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { faFileExcel } from '@fortawesome/free-regular-svg-icons';
 import { faAnglesLeft, faAnglesRight, faCheckCircle, faChevronLeft, faChevronRight, faCircleNotch, faClipboardQuestion, faFilter, faPenToSquare, faReceipt, faRotate, faUpload, faXmarkCircle } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
@@ -22,6 +23,7 @@ export class EclaimsComponent implements OnInit {
   faChevronRight = faChevronRight;
   faAnglesLeft = faAnglesLeft;
   faAnglesRight = faAnglesRight;
+  faFileExcel = faFileExcel;
 
   pending_list: any = [];
   modal: any = [];
@@ -71,6 +73,10 @@ export class EclaimsComponent implements OnInit {
   from: number;
   to: number;
   total: number;
+
+  printFile() {
+
+  }
 
   changeCodeList(){
     switch(this.program_desc) {
