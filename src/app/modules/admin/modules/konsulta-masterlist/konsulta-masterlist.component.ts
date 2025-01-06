@@ -6,9 +6,10 @@ import { HttpService } from 'app/shared/services/http.service';
 import { ExportAsConfig, ExportAsService } from 'ngx-export-as-17';
 
 @Component({
-  selector: 'app-konsulta-masterlist',
-  templateUrl: './konsulta-masterlist.component.html',
-  styleUrls: ['./konsulta-masterlist.component.scss']
+    selector: 'app-konsulta-masterlist',
+    templateUrl: './konsulta-masterlist.component.html',
+    styleUrls: ['./konsulta-masterlist.component.scss'],
+    standalone: false
 })
 export class KonsultaMasterlistComponent implements OnInit {
   faSpinner = faSpinner;

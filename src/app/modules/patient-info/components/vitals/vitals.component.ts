@@ -5,9 +5,10 @@ import { HttpService } from 'app/shared/services/http.service';
 import { VitalsChartsService } from 'app/shared/services/vitals-charts.service';
 
 @Component({
-  selector: 'app-vitals',
-  templateUrl: './vitals.component.html',
-  styleUrls: ['./vitals.component.scss']
+    selector: 'app-vitals',
+    templateUrl: './vitals.component.html',
+    styleUrls: ['./vitals.component.scss'],
+    standalone: false
 })
 export class VitalsComponent implements OnInit {
   @Output() toggleAccordion = new EventEmitter<any>();

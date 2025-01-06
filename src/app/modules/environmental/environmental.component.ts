@@ -10,9 +10,10 @@ import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import { dateHelper } from 'app/shared/services/date-helper.service';
 
 @Component({
-  selector: 'app-environmental',
-  templateUrl: './environmental.component.html',
-  styleUrls: ['./environmental.component.scss']
+    selector: 'app-environmental',
+    templateUrl: './environmental.component.html',
+    styleUrls: ['./environmental.component.scss'],
+    standalone: false
 })
 export class EnvironmentalComponent implements OnInit {
   faSave = faSave;

@@ -2,9 +2,10 @@ import { Component, Input, OnInit } from '@angular/core';
 import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
-  selector: 'app-ncd',
-  templateUrl: './ncd.component.html',
-  styleUrls: ['./ncd.component.scss']
+    selector: 'app-ncd',
+    templateUrl: './ncd.component.html',
+    styleUrls: ['./ncd.component.scss'],
+    standalone: false
 })
 export class NcdComponent implements OnInit {
   @Input() selected_visit

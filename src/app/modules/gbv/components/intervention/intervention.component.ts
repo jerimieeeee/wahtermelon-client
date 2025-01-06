@@ -5,9 +5,10 @@ import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-intervention',
-  templateUrl: './intervention.component.html',
-  styleUrls: ['./intervention.component.scss']
+    selector: 'app-intervention',
+    templateUrl: './intervention.component.html',
+    styleUrls: ['./intervention.component.scss'],
+    standalone: false
 })
 export class InterventionComponent implements OnChanges {
   @Output() updateSelectedGbv = new EventEmitter<any>();

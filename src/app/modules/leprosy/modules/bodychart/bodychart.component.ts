@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-bodychart',
-  templateUrl: './bodychart.component.html',
-  styleUrls: ['./bodychart.component.scss']
+    selector: 'app-bodychart',
+    templateUrl: './bodychart.component.html',
+    styleUrls: ['./bodychart.component.scss'],
+    standalone: false
 })
 export class BodychartComponent implements OnInit {
   focused: boolean;

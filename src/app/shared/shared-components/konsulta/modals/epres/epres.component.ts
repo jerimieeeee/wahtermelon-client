@@ -6,9 +6,10 @@ import { dateHelper } from 'app/shared/services/date-helper.service';
 import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
-  selector: 'app-epres',
-  templateUrl: './epres.component.html',
-  styleUrls: ['./epres.component.scss']
+    selector: 'app-epres',
+    templateUrl: './epres.component.html',
+    styleUrls: ['./epres.component.scss'],
+    standalone: false
 })
 export class EpresComponent implements OnInit {
   @Output() toggleModal = new EventEmitter<any>();

@@ -3,9 +3,10 @@ import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-history-modal',
-  templateUrl: './history-modal.component.html',
-  styleUrls: ['./history-modal.component.scss']
+    selector: 'app-history-modal',
+    templateUrl: './history-modal.component.html',
+    styleUrls: ['./history-modal.component.scss'],
+    standalone: false
 })
 export class HistoryModalComponent implements OnInit, OnChanges {
   @Output() toggleModal = new EventEmitter<any>();

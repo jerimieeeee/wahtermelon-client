@@ -2,9 +2,10 @@ import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-visit-details',
-  templateUrl: './visit-details.component.html',
-  styleUrls: ['./visit-details.component.scss']
+    selector: 'app-visit-details',
+    templateUrl: './visit-details.component.html',
+    styleUrls: ['./visit-details.component.scss'],
+    standalone: false
 })
 export class VisitDetailsComponent implements OnChanges {
   @Input() latest_vitals;

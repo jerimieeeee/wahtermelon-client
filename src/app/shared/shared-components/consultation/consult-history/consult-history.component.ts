@@ -6,11 +6,10 @@ import { faAnglesLeft, faAnglesRight, faChevronCircleDown, faChevronCircleUp, fa
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @Component({
-  selector: 'app-consult-history',
-  standalone: true,
-  imports: [CommonModule, FontAwesomeModule],
-  templateUrl: './consult-history.component.html',
-  styleUrls: ['./consult-history.component.scss']
+    selector: 'app-consult-history',
+    imports: [CommonModule, FontAwesomeModule],
+    templateUrl: './consult-history.component.html',
+    styleUrls: ['./consult-history.component.scss']
 })
 export class ConsultHistoryComponent implements OnInit {
   @Input() toggle_content;

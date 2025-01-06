@@ -3,9 +3,10 @@ import { faArrowLeft, faCircleNotch, faPlus } from '@fortawesome/free-solid-svg-
 import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
-  selector: 'app-ticketing',
-  templateUrl: './ticketing.component.html',
-  styleUrls: ['./ticketing.component.scss']
+    selector: 'app-ticketing',
+    templateUrl: './ticketing.component.html',
+    styleUrls: ['./ticketing.component.scss'],
+    standalone: false
 })
 export class TicketingComponent implements OnInit {
   faPlus = faPlus;

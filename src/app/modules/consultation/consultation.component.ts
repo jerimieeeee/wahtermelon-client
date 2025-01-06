@@ -8,9 +8,10 @@ import { filter, tap } from 'rxjs/operators';
 import { faEdit } from '@fortawesome/free-regular-svg-icons';
 
 @Component({
-  selector: 'app-consultation',
-  templateUrl: './consultation.component.html',
-  styleUrls: ['./consultation.component.scss']
+    selector: 'app-consultation',
+    templateUrl: './consultation.component.html',
+    styleUrls: ['./consultation.component.scss'],
+    standalone: false
 })
 export class ConsultationComponent implements OnInit {
   @ViewChild(GraphsComponent) graph: GraphsComponent;

@@ -5,9 +5,10 @@ import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-inteview-notes',
-  templateUrl: './inteview-notes.component.html',
-  styleUrls: ['./inteview-notes.component.scss']
+    selector: 'app-inteview-notes',
+    templateUrl: './inteview-notes.component.html',
+    styleUrls: ['./inteview-notes.component.scss'],
+    standalone: false
 })
 export class InteviewNotesComponent implements OnInit{
   @Output() toggleModal = new EventEmitter<any>();

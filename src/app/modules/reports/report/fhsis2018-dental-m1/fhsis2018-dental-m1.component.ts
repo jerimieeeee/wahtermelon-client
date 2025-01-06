@@ -7,9 +7,10 @@ import moment from 'moment';
 import { dateHelper } from 'app/shared/services/date-helper.service';
 
 @Component({
-  selector: 'app-fhsis2018-dental-m1',
-  templateUrl: './fhsis2018-dental-m1.component.html',
-  styleUrls: ['./fhsis2018-dental-m1.component.scss']
+    selector: 'app-fhsis2018-dental-m1',
+    templateUrl: './fhsis2018-dental-m1.component.html',
+    styleUrls: ['./fhsis2018-dental-m1.component.scss'],
+    standalone: false
 })
 export class Fhsis2018DentalM1Component implements OnChanges{
   @Input() report_data;

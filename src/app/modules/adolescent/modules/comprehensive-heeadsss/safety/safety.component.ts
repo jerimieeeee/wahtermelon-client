@@ -5,9 +5,10 @@ import { HttpService } from 'app/shared/services/http.service';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-safety',
-  templateUrl: './safety.component.html',
-  styleUrl: './safety.component.scss'
+    selector: 'app-safety',
+    templateUrl: './safety.component.html',
+    styleUrl: './safety.component.scss',
+    standalone: false
 })
 export class SafetyComponent implements OnInit {
   faCalendarDay = faCalendarDay;

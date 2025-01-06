@@ -4,9 +4,10 @@ import { faCircleNotch, faDoorClosed } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
-  selector: 'app-gbv',
-  templateUrl: './gbv.component.html',
-  styleUrls: ['./gbv.component.scss']
+    selector: 'app-gbv',
+    templateUrl: './gbv.component.html',
+    styleUrls: ['./gbv.component.scss'],
+    standalone: false
 })
 export class GbvComponent implements OnInit {
   faCircleNotch = faCircleNotch;

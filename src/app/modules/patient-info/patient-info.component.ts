@@ -21,9 +21,10 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { DeathRecordComponent } from './components/death-record/death-record.component';
 
 @Component({
-  selector: 'app-patient-info',
-  templateUrl: './patient-info.component.html',
-  styleUrls: ['./patient-info.component.scss']
+    selector: 'app-patient-info',
+    templateUrl: './patient-info.component.html',
+    styleUrls: ['./patient-info.component.scss'],
+    standalone: false
 })
 export class PatientInfoComponent implements OnInit {
   @ViewChild(PastMedicalComponent) pastMedical: PastMedicalComponent;

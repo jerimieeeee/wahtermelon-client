@@ -6,9 +6,10 @@ import { faArrowLeft, faSpinner, faPenToSquare } from '@fortawesome/free-solid-s
 import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
-  selector: 'app-my-account',
-  templateUrl: './my-account.component.html',
-  styleUrls: ['./my-account.component.scss']
+    selector: 'app-my-account',
+    templateUrl: './my-account.component.html',
+    styleUrls: ['./my-account.component.scss'],
+    standalone: false
 })
 export class MyAccountComponent implements OnInit {
   suffix_names: any;

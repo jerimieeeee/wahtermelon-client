@@ -8,9 +8,10 @@ import { ExportAsConfig, ExportAsService } from 'ngx-export-as-17';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-konsulta',
-  templateUrl: './konsulta.component.html',
-  styleUrls: ['./konsulta.component.scss']
+    selector: 'app-konsulta',
+    templateUrl: './konsulta.component.html',
+    styleUrls: ['./konsulta.component.scss'],
+    standalone: false
 })
 export class KonsultaComponent implements OnInit {
   faSpinner = faSpinner;

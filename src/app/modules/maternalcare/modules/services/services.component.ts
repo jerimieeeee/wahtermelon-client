@@ -5,9 +5,10 @@ import { faCircleCheck, faCircleNotch, faClose, faInfoCircle, faPencil, faPencil
 import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
-  selector: 'app-services',
-  templateUrl: './services.component.html',
-  styleUrls: ['./services.component.scss']
+    selector: 'app-services',
+    templateUrl: './services.component.html',
+    styleUrls: ['./services.component.scss'],
+    standalone: false
 })
 export class ServicesComponent implements OnInit {
   focused: boolean;

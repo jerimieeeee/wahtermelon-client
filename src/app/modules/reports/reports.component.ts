@@ -5,9 +5,10 @@ import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
-  selector: 'app-reports',
-  templateUrl: './reports.component.html',
-  styleUrls: ['./reports.component.scss']
+    selector: 'app-reports',
+    templateUrl: './reports.component.html',
+    styleUrls: ['./reports.component.scss'],
+    standalone: false
 })
 export class ReportsComponent implements OnInit {
   faCircleNotch = faCircleNotch;

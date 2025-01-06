@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { faAngleDown, faCalendarDay, faCaretRight, faClose, faInfoCircle, faPencil, faSave, faTimes, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
-  selector: 'app-caseinfo',
-  templateUrl: './caseinfo.component.html',
-  styleUrls: ['./caseinfo.component.scss']
+    selector: 'app-caseinfo',
+    templateUrl: './caseinfo.component.html',
+    styleUrls: ['./caseinfo.component.scss'],
+    standalone: false
 })
 export class CaseinfoComponent implements OnInit {
   

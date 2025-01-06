@@ -5,9 +5,10 @@ import { faPenToSquare, faSearch, faChevronLeft, faChevronRight, faAnglesLeft, f
 import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
-  selector: 'app-households',
-  templateUrl: './households.component.html',
-  styleUrls: ['./households.component.scss']
+    selector: 'app-households',
+    templateUrl: './households.component.html',
+    styleUrls: ['./households.component.scss'],
+    standalone: false
 })
 export class HouseholdsComponent implements OnInit {
   household_list: any;

@@ -6,9 +6,10 @@ import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
-  selector: 'app-fphx',
-  templateUrl: './fphx.component.html',
-  styleUrls: ['./fphx.component.scss']
+    selector: 'app-fphx',
+    templateUrl: './fphx.component.html',
+    styleUrls: ['./fphx.component.scss'],
+    standalone: false
 })
 export class FphxComponent implements OnInit {
   @Output() loadFP = new EventEmitter<any>();

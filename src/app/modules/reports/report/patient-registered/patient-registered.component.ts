@@ -3,9 +3,10 @@ import { faCircleNotch, faFileExcel, faFilePdf } from '@fortawesome/free-solid-s
 import { ExportAsConfig, ExportAsService } from 'ngx-export-as-17';
 
 @Component({
-  selector: 'app-patient-registered',
-  templateUrl: './patient-registered.component.html',
-  styleUrls: ['./patient-registered.component.scss']
+    selector: 'app-patient-registered',
+    templateUrl: './patient-registered.component.html',
+    styleUrls: ['./patient-registered.component.scss'],
+    standalone: false
 })
 export class PatientRegisteredComponent implements OnChanges {
   @Input() report_data;

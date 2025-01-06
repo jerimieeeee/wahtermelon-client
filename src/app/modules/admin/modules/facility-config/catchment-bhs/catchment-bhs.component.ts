@@ -6,9 +6,10 @@ import { ToastrService } from 'ngx-toastr';
 import { forkJoin } from 'rxjs';
 
 @Component({
-  selector: 'app-catchment-bhs',
-  templateUrl: './catchment-bhs.component.html',
-  styleUrls: ['./catchment-bhs.component.scss']
+    selector: 'app-catchment-bhs',
+    templateUrl: './catchment-bhs.component.html',
+    styleUrls: ['./catchment-bhs.component.scss'],
+    standalone: false
 })
 export class CatchmentBhsComponent implements OnInit {
   @Input() catchment_barangays;

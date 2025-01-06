@@ -9,9 +9,10 @@ import { oralCOnditionForm } from './oralConditionForm';
 import { forkJoin } from 'rxjs';
 
 @Component({
-  selector: 'app-condition',
-  templateUrl: './condition.component.html',
-  styleUrls: ['./condition.component.scss']
+    selector: 'app-condition',
+    templateUrl: './condition.component.html',
+    styleUrls: ['./condition.component.scss'],
+    standalone: false
 })
 export class ConditionComponent implements OnInit, OnChanges {
   @Output() loadSelectedConsult = new EventEmitter<any>();

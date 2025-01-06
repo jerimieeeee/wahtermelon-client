@@ -13,11 +13,10 @@ import { FormsModule } from '@angular/forms';
 import { DeleteItemComponent } from 'app/shared/shared-modals/delete-item/delete-item.component';
 
 @Component({
-  selector: 'app-prescription',
-  standalone: true,
-  imports: [CommonModule, FontAwesomeModule, DrugFormComponent, DrugListComponent, DrugDeleteComponent, FormsModule, DeleteItemComponent],
-  templateUrl: './prescription.component.html',
-  styleUrls: ['./prescription.component.scss']
+    selector: 'app-prescription',
+    imports: [CommonModule, FontAwesomeModule, DrugFormComponent, DrugListComponent, DrugDeleteComponent, FormsModule, DeleteItemComponent],
+    templateUrl: './prescription.component.html',
+    styleUrls: ['./prescription.component.scss']
 })
 export class PrescriptionComponent implements OnInit, OnChanges {
   @Input() toggle_content;

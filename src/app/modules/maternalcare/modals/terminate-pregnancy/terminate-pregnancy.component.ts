@@ -4,9 +4,10 @@ import { HttpService } from 'app/shared/services/http.service';
 import { forkJoin } from 'rxjs';
 
 @Component({
-  selector: 'app-terminate-pregnancy',
-  templateUrl: './terminate-pregnancy.component.html',
-  styleUrl: './terminate-pregnancy.component.scss'
+    selector: 'app-terminate-pregnancy',
+    templateUrl: './terminate-pregnancy.component.html',
+    styleUrl: './terminate-pregnancy.component.scss',
+    standalone: false
 })
 export class TerminatePregnancyComponent implements OnInit {
   @Output() toggleModal = new EventEmitter<any>();

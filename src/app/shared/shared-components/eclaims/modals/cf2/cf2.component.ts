@@ -9,9 +9,10 @@ import { eclaimsForm } from '../../eclaimsForm';
 import { formatDate } from '@angular/common';
 
 @Component({
-  selector: 'app-cf2',
-  templateUrl: './cf2.component.html',
-  styleUrls: ['./cf2.component.scss']
+    selector: 'app-cf2',
+    templateUrl: './cf2.component.html',
+    styleUrls: ['./cf2.component.scss'],
+    standalone: false
 })
 export class Cf2Component implements OnInit {
   @Output() toggleModal = new EventEmitter<any>();

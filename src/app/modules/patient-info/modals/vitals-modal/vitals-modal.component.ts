@@ -9,9 +9,10 @@ import { dateHelper } from 'app/shared/services/date-helper.service';
 import { VitalsChartsService } from 'app/shared/services/vitals-charts.service';
 
 @Component({
-  selector: 'app-vitals-modal',
-  templateUrl: './vitals-modal.component.html',
-  styleUrls: ['./vitals-modal.component.scss']
+    selector: 'app-vitals-modal',
+    templateUrl: './vitals-modal.component.html',
+    styleUrls: ['./vitals-modal.component.scss'],
+    standalone: false
 })
 export class VitalsModalComponent implements OnInit {
   @Output() toggleModal = new EventEmitter<any>();

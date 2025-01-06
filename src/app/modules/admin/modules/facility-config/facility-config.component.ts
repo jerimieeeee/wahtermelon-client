@@ -5,9 +5,10 @@ import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-facility-config',
-  templateUrl: './facility-config.component.html',
-  styleUrls: ['./facility-config.component.scss']
+    selector: 'app-facility-config',
+    templateUrl: './facility-config.component.html',
+    styleUrls: ['./facility-config.component.scss'],
+    standalone: false
 })
 export class FacilityConfigComponent implements OnInit {
   current_year = formatDate(new Date(), 'yyyy', 'en', 'Asia/Manila');

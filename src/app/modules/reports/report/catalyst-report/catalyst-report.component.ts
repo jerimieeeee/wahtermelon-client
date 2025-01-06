@@ -3,9 +3,10 @@ import { faFilePdf, faFileExcel } from '@fortawesome/free-solid-svg-icons';
 import { ExportAsConfig, ExportAsService } from 'ngx-export-as-17';
 
 @Component({
-  selector: 'app-catalyst-report',
-  templateUrl: './catalyst-report.component.html',
-  styleUrls: ['./catalyst-report.component.scss']
+    selector: 'app-catalyst-report',
+    templateUrl: './catalyst-report.component.html',
+    styleUrls: ['./catalyst-report.component.scss'],
+    standalone: false
 })
 export class CatalystReportComponent implements OnChanges {
   @Input() report_data;

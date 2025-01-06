@@ -9,9 +9,10 @@ import { CookieService } from 'ngx-cookie-service';
 import { Location } from '@angular/common';
 
 @Component({
-  selector: 'app-header',
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+    selector: 'app-header',
+    templateUrl: './header.component.html',
+    styleUrls: ['./header.component.scss'],
+    standalone: false
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   // @ViewChild(NgSelectComponent) ngSelectComponent: NgSelectComponent;

@@ -4,9 +4,10 @@ import { HttpService } from 'app/shared/services/http.service';
 import { VitalsChartsService } from 'app/shared/services/vitals-charts.service';
 
 @Component({
-  selector: 'app-vitals-list-modal',
-  templateUrl: './vitals-list-modal.component.html',
-  styleUrls: ['./vitals-list-modal.component.scss']
+    selector: 'app-vitals-list-modal',
+    templateUrl: './vitals-list-modal.component.html',
+    styleUrls: ['./vitals-list-modal.component.scss'],
+    standalone: false
 })
 export class VitalsListModalComponent implements OnInit {
   @Output() toggleModal = new EventEmitter<any>();

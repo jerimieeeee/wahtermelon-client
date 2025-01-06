@@ -4,9 +4,10 @@ import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
-  selector: 'app-feedback',
-  templateUrl: './feedback.component.html',
-  styleUrls: ['./feedback.component.scss']
+    selector: 'app-feedback',
+    templateUrl: './feedback.component.html',
+    styleUrls: ['./feedback.component.scss'],
+    standalone: false
 })
 export class FeedbackComponent{
   faArrowLeft = faArrowLeft;

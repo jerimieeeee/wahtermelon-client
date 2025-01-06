@@ -13,11 +13,10 @@ import { ab_caserate, cc_caserate, fp_caserate, mc_caserate, ml_caserate, tb_cas
 import { caserateForm } from './caserateForm';
 
 @Component({
-  selector: 'app-caserate',
-  standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, angularFontawesome.FontAwesomeModule, SearchCaserateComponent, NgSelectModule, FormsModule],
-  templateUrl: './caserate.component.html',
-  styleUrls: ['./caserate.component.scss']
+    selector: 'app-caserate',
+    imports: [CommonModule, ReactiveFormsModule, angularFontawesome.FontAwesomeModule, SearchCaserateComponent, NgSelectModule, FormsModule],
+    templateUrl: './caserate.component.html',
+    styleUrls: ['./caserate.component.scss']
 })
 export class CaserateComponent implements OnInit {
   @Input() program_id;

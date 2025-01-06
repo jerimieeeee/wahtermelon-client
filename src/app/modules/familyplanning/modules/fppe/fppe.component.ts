@@ -7,9 +7,10 @@ import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
-  selector: 'app-fppe',
-  templateUrl: './fppe.component.html',
-  styleUrls: ['./fppe.component.scss']
+    selector: 'app-fppe',
+    templateUrl: './fppe.component.html',
+    styleUrls: ['./fppe.component.scss'],
+    standalone: false
 })
 
 export class FppeComponent implements OnInit {

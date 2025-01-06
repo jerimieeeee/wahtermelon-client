@@ -6,9 +6,10 @@ import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-firsvisit',
-  templateUrl: './firsvisit.component.html',
-  styleUrls: ['./firsvisit.component.scss']
+    selector: 'app-firsvisit',
+    templateUrl: './firsvisit.component.html',
+    styleUrls: ['./firsvisit.component.scss'],
+    standalone: false
 })
 export class FirsvisitComponent implements OnInit {
   @Output() loadFP = new EventEmitter<any>();

@@ -6,9 +6,10 @@ import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-referral',
-  templateUrl: './referral.component.html',
-  styleUrls: ['./referral.component.scss']
+    selector: 'app-referral',
+    templateUrl: './referral.component.html',
+    styleUrls: ['./referral.component.scss'],
+    standalone: false
 })
 export class ReferralComponent implements OnInit {
   @Output() updateSelectedGbv = new EventEmitter<any>();

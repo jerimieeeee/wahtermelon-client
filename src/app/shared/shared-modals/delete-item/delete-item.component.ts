@@ -6,12 +6,11 @@ import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  standalone: true,
-  selector: 'app-delete-item',
-  templateUrl: './delete-item.component.html',
-  styleUrls: ['./delete-item.component.scss'],
-  imports: [FontAwesomeModule, FormsModule],
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'app-delete-item',
+    templateUrl: './delete-item.component.html',
+    styleUrls: ['./delete-item.component.scss'],
+    imports: [FontAwesomeModule, FormsModule],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DeleteItemComponent implements OnChanges, AfterViewInit{
   @ViewChild('confirmCode', {static: false}) inputElement: ElementRef;

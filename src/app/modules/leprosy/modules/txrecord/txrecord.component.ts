@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-txrecord',
-  templateUrl: './txrecord.component.html',
-  styleUrls: ['./txrecord.component.scss']
+    selector: 'app-txrecord',
+    templateUrl: './txrecord.component.html',
+    styleUrls: ['./txrecord.component.scss'],
+    standalone: false
 })
 export class TxrecordComponent implements OnInit {
 

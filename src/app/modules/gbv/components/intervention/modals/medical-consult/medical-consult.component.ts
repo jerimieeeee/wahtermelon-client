@@ -6,9 +6,10 @@ import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-medical-consult',
-  templateUrl: './medical-consult.component.html',
-  styleUrls: ['./medical-consult.component.scss']
+    selector: 'app-medical-consult',
+    templateUrl: './medical-consult.component.html',
+    styleUrls: ['./medical-consult.component.scss'],
+    standalone: false
 })
 export class MedicalConsultComponent implements OnInit {
   @Output() toggleModal = new EventEmitter<any>();

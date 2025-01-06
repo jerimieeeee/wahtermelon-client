@@ -6,9 +6,10 @@ import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-home-visit',
-  templateUrl: './home-visit.component.html',
-  styleUrls: ['./home-visit.component.scss']
+    selector: 'app-home-visit',
+    templateUrl: './home-visit.component.html',
+    styleUrls: ['./home-visit.component.scss'],
+    standalone: false
 })
 export class HomeVisitComponent implements OnInit, OnChanges {
   @Output() toggleModal = new EventEmitter<any>();

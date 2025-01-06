@@ -3,9 +3,10 @@ import { FormGroup,FormControl } from '@angular/forms';
 import { faCalendarDay, faClose, faInfoCircle, faPencil, faSave, faTimes, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
-  selector: 'app-obshx',
-  templateUrl: './obshx.component.html',
-  styleUrls: ['./obshx.component.scss']
+    selector: 'app-obshx',
+    templateUrl: './obshx.component.html',
+    styleUrls: ['./obshx.component.scss'],
+    standalone: false
 })
 export class ObshxComponent implements OnInit {
   focused: boolean;

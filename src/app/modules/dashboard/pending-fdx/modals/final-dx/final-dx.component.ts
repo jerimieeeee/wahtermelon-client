@@ -7,9 +7,10 @@ import { FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angu
 import { ToastrService } from "ngx-toastr";
 
 @Component({
-  selector: 'app-final-dx',
-  templateUrl: './final-dx.component.html',
-  styleUrls: ['./final-dx.component.scss']
+    selector: 'app-final-dx',
+    templateUrl: './final-dx.component.html',
+    styleUrls: ['./final-dx.component.scss'],
+    standalone: false
 })
 export class FinalDxComponent implements OnInit {
   @Output() toggleModal = new EventEmitter<any>();

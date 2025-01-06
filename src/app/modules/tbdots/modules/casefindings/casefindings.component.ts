@@ -6,9 +6,10 @@ import { ToastrService } from 'ngx-toastr';
 import { forkJoin } from 'rxjs';
 
 @Component({
-  selector: 'app-casefindings',
-  templateUrl: './casefindings.component.html',
-  styleUrls: ['./casefindings.component.scss']
+    selector: 'app-casefindings',
+    templateUrl: './casefindings.component.html',
+    styleUrls: ['./casefindings.component.scss'],
+    standalone: false
 })
 export class CasefindingsComponent implements OnInit {
   @Output() getPatientTbHistory = new EventEmitter<any>();

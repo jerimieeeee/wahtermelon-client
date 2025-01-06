@@ -4,9 +4,10 @@ import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-general-survey',
-  templateUrl: './general-survey.component.html',
-  styleUrls: ['./general-survey.component.scss']
+    selector: 'app-general-survey',
+    templateUrl: './general-survey.component.html',
+    styleUrls: ['./general-survey.component.scss'],
+    standalone: false
 })
 export class GeneralSurveyComponent implements OnInit {
   @Output() loadConsult = new EventEmitter<any>();

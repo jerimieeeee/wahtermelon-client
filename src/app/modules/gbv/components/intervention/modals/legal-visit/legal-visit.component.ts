@@ -7,9 +7,10 @@ import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-legal-visit',
-  templateUrl: './legal-visit.component.html',
-  styleUrls: ['./legal-visit.component.scss']
+    selector: 'app-legal-visit',
+    templateUrl: './legal-visit.component.html',
+    styleUrls: ['./legal-visit.component.scss'],
+    standalone: false
 })
 export class LegalVisitComponent implements OnInit {
   @Output() toggleModal = new EventEmitter<any>();

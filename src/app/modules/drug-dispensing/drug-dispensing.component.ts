@@ -7,9 +7,10 @@ import { ToastrService } from 'ngx-toastr';
 import { forkJoin } from 'rxjs';
 
 @Component({
-  selector: 'app-drug-dispensing',
-  templateUrl: './drug-dispensing.component.html',
-  styleUrls: ['./drug-dispensing.component.scss']
+    selector: 'app-drug-dispensing',
+    templateUrl: './drug-dispensing.component.html',
+    styleUrls: ['./drug-dispensing.component.scss'],
+    standalone: false
 })
 export class DrugDispensingComponent implements OnInit {
   faDoorClosed = faDoorClosed;

@@ -7,9 +7,10 @@ import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-treatment-outcome',
-  templateUrl: './treatment-outcome.component.html',
-  styleUrls: ['./treatment-outcome.component.scss']
+    selector: 'app-treatment-outcome',
+    templateUrl: './treatment-outcome.component.html',
+    styleUrls: ['./treatment-outcome.component.scss'],
+    standalone: false
 })
 export class TreatmentOutcomeComponent implements OnInit {
   @Output() getPatientTbHistory = new EventEmitter<any>();

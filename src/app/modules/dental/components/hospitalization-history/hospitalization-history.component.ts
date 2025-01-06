@@ -6,9 +6,10 @@ import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-hospitalization-history',
-  templateUrl: './hospitalization-history.component.html',
-  styleUrls: ['./hospitalization-history.component.scss']
+    selector: 'app-hospitalization-history',
+    templateUrl: './hospitalization-history.component.html',
+    styleUrls: ['./hospitalization-history.component.scss'],
+    standalone: false
 })
 export class HospitalizationHistoryComponent implements OnInit{
   @Output() loadSelectedConsult = new EventEmitter<any>();

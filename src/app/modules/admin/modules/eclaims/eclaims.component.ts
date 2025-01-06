@@ -7,9 +7,10 @@ import { ToastrService } from 'ngx-toastr';
 import { forkJoin } from 'rxjs';
 
 @Component({
-  selector: 'app-eclaims',
-  templateUrl: './eclaims.component.html',
-  styleUrls: ['./eclaims.component.scss']
+    selector: 'app-eclaims',
+    templateUrl: './eclaims.component.html',
+    styleUrls: ['./eclaims.component.scss'],
+    standalone: false
 })
 export class EclaimsComponent implements OnInit {
   faRotate = faRotate;

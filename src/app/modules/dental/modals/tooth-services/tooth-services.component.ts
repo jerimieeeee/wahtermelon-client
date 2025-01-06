@@ -6,9 +6,10 @@ import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-tooth-services',
-  templateUrl: './tooth-services.component.html',
-  styleUrls: ['./tooth-services.component.scss']
+    selector: 'app-tooth-services',
+    templateUrl: './tooth-services.component.html',
+    styleUrls: ['./tooth-services.component.scss'],
+    standalone: false
 })
 export class ToothServicesComponent implements OnInit {
   @Output() toggleModal = new EventEmitter<any>();

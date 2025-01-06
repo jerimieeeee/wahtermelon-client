@@ -6,9 +6,10 @@ import { HttpService } from 'app/shared/services/http.service';
 
 
 @Component({
-  selector: 'app-childcare',
-  templateUrl: './childcare.component.html',
-  styleUrls: ['./childcare.component.scss']
+    selector: 'app-childcare',
+    templateUrl: './childcare.component.html',
+    styleUrls: ['./childcare.component.scss'],
+    standalone: false
 })
 export class ChildcareComponent implements OnInit {
 

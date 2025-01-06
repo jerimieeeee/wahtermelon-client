@@ -5,9 +5,10 @@ import { ToastrService } from 'ngx-toastr';
 import { Vaccines } from './data/vaccine';
 
 @Component({
-  selector: 'app-vaccine-modal',
-  templateUrl: './vaccine-modal.component.html',
-  styleUrls: ['./vaccine-modal.component.scss']
+    selector: 'app-vaccine-modal',
+    templateUrl: './vaccine-modal.component.html',
+    styleUrls: ['./vaccine-modal.component.scss'],
+    standalone: false
 })
 export class VaccineModalComponent implements OnInit {
   @Output() toggleModal = new EventEmitter<any>();

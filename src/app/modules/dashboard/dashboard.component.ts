@@ -3,9 +3,10 @@ import { Component, OnInit } from '@angular/core';
 import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss']
+    selector: 'app-dashboard',
+    templateUrl: './dashboard.component.html',
+    styleUrls: ['./dashboard.component.scss'],
+    standalone: false
 })
 export class DashboardComponent implements OnInit {
   date_today = formatDate(new Date(), 'MM/dd/yyyy', 'en', 'Asia/Manila');

@@ -7,9 +7,10 @@ import { ExportAsConfig, ExportAsService } from 'ngx-export-as-17';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-cf1',
-  templateUrl: './cf1.component.html',
-  styleUrls: ['./cf1.component.scss']
+    selector: 'app-cf1',
+    templateUrl: './cf1.component.html',
+    styleUrls: ['./cf1.component.scss'],
+    standalone: false
 })
 export class Cf1Component implements OnInit {
   @Output() toggleModal = new EventEmitter<any>();

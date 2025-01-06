@@ -3,9 +3,10 @@ import { faAnglesLeft, faAnglesRight, faCheck, faChevronLeft, faChevronRight, fa
 import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
-  selector: 'app-family-folder-modal',
-  templateUrl: './family-folder-modal.component.html',
-  styleUrls: ['./family-folder-modal.component.scss']
+    selector: 'app-family-folder-modal',
+    templateUrl: './family-folder-modal.component.html',
+    styleUrls: ['./family-folder-modal.component.scss'],
+    standalone: false
 })
 export class FamilyFolderModalComponent implements OnInit {
   @Output() toggleModal = new EventEmitter<any>();

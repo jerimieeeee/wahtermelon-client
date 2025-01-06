@@ -7,9 +7,10 @@ import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
-  selector: 'app-fpchart-modal',
-  templateUrl: './fpchart-modal.component.html',
-  styleUrls: ['./fpchart-modal.component.scss']
+    selector: 'app-fpchart-modal',
+    templateUrl: './fpchart-modal.component.html',
+    styleUrls: ['./fpchart-modal.component.scss'],
+    standalone: false
 })
 export class FpchartModalComponent implements OnInit {
   @Output() toggleModal = new EventEmitter<any>();

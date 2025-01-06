@@ -5,9 +5,10 @@ import moment from 'moment';
 import {HttpService} from "../../../../shared/services/http.service";
 
 @Component({
-  selector: 'app-fhsis2018-fp',
-  templateUrl: './fhsis2018-fp.component.html',
-  styleUrls: ['./fhsis2018-fp.component.scss']
+    selector: 'app-fhsis2018-fp',
+    templateUrl: './fhsis2018-fp.component.html',
+    styleUrls: ['./fhsis2018-fp.component.scss'],
+    standalone: false
 })
 export class Fhsis2018FpComponent implements OnChanges {
   @Input() report_data;

@@ -6,9 +6,10 @@ import { forkJoin } from 'rxjs';
 import { ExportAsConfig, ExportAsService } from 'ngx-export-as-17';
 
 @Component({
-  selector: 'app-export-pdf',
-  templateUrl: './export-pdf.component.html',
-  styleUrls: ['./export-pdf.component.scss']
+    selector: 'app-export-pdf',
+    templateUrl: './export-pdf.component.html',
+    styleUrls: ['./export-pdf.component.scss'],
+    standalone: false
 })
 export class ExportPdfComponent implements OnInit {
   @Output() toggleExportPDF = new EventEmitter<any>();

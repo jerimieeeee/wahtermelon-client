@@ -7,9 +7,10 @@ import { HttpService } from 'app/shared/services/http.service';
 import { CookieService } from 'ngx-cookie-service';
 
 @Component({
-  selector: 'app-todays-stats',
-  templateUrl: './todays-stats.component.html',
-  styleUrls: ['./todays-stats.component.scss']
+    selector: 'app-todays-stats',
+    templateUrl: './todays-stats.component.html',
+    styleUrls: ['./todays-stats.component.scss'],
+    standalone: false
 })
 export class TodaysStatsComponent implements OnInit {
   @Input() date_today;

@@ -7,9 +7,10 @@ import { ToastrService } from 'ngx-toastr';
 import { forkJoin } from 'rxjs';
 
 @Component({
-  selector: 'app-triage',
-  templateUrl: './triage.component.html',
-  styleUrls: ['./triage.component.scss']
+    selector: 'app-triage',
+    templateUrl: './triage.component.html',
+    styleUrls: ['./triage.component.scss'],
+    standalone: false
 })
 export class TriageComponent implements OnInit, OnChanges{
   @Output() getGbvHistory = new EventEmitter<any>();

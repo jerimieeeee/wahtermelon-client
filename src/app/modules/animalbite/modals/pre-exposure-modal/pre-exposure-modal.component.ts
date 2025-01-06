@@ -9,9 +9,10 @@ import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import { faSave } from '@fortawesome/free-regular-svg-icons';
 
 @Component({
-  selector: 'app-pre-exposure-modal',
-  templateUrl: './pre-exposure-modal.component.html',
-  styleUrls: ['./pre-exposure-modal.component.scss']
+    selector: 'app-pre-exposure-modal',
+    templateUrl: './pre-exposure-modal.component.html',
+    styleUrls: ['./pre-exposure-modal.component.scss'],
+    standalone: false
 })
 export class PreExposureModalComponent implements OnInit {
   @Output() toggleModal = new EventEmitter<any>();

@@ -3,9 +3,10 @@ import { Router } from '@angular/router';
 import { faBook, faBookOpen, faEnvelope, faEnvelopeOpen } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
-  selector: 'app-support',
-  templateUrl: './support.component.html',
-  styleUrls: ['./support.component.scss']
+    selector: 'app-support',
+    templateUrl: './support.component.html',
+    styleUrls: ['./support.component.scss'],
+    standalone: false
 })
 export class SupportComponent implements OnInit {
   faBook = faBook;

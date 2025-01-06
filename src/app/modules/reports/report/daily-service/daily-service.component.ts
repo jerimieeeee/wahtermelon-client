@@ -5,9 +5,10 @@ import { ExportAsConfig, ExportAsService } from 'ngx-export-as-17';
 import moment from 'moment';
 
 @Component({
-  selector: 'app-daily-service',
-  templateUrl: './daily-service.component.html',
-  styleUrls: ['./daily-service.component.scss']
+    selector: 'app-daily-service',
+    templateUrl: './daily-service.component.html',
+    styleUrls: ['./daily-service.component.scss'],
+    standalone: false
 })
 
 export class DailyServiceComponent implements OnChanges {

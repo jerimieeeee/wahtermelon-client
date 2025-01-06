@@ -7,9 +7,10 @@ import { ToastrService } from 'ngx-toastr';
 import { ExportAsConfig, ExportAsService } from 'ngx-export-as-17';
 
 @Component({
-  selector: 'app-pbef',
-  templateUrl: './pbef.component.html',
-  styleUrls: ['./pbef.component.scss']
+    selector: 'app-pbef',
+    templateUrl: './pbef.component.html',
+    styleUrls: ['./pbef.component.scss'],
+    standalone: false
 })
 export class PbefComponent implements OnInit {
   @Output() toggleModal = new EventEmitter<any>();

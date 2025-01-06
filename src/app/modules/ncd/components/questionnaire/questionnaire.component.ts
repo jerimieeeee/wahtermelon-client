@@ -8,9 +8,10 @@ import { questionnaire } from '../../data-lib/libraries';
 import { questionnaireForm } from './forms';
 
 @Component({
-  selector: 'app-questionnaire',
-  templateUrl: './questionnaire.component.html',
-  styleUrls: ['./questionnaire.component.scss']
+    selector: 'app-questionnaire',
+    templateUrl: './questionnaire.component.html',
+    styleUrls: ['./questionnaire.component.scss'],
+    standalone: false
 })
 export class QuestionnaireComponent implements OnInit, OnChanges {
   @Input() patient_id;

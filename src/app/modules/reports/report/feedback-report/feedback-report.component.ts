@@ -3,9 +3,10 @@ import { faCircleNotch, faFileExcel, faFilePdf } from '@fortawesome/free-solid-s
 import { ExportAsConfig, ExportAsService } from 'ngx-export-as-17';
 
 @Component({
-  selector: 'app-feedback-report',
-  templateUrl: './feedback-report.component.html',
-  styleUrls: ['./feedback-report.component.scss']
+    selector: 'app-feedback-report',
+    templateUrl: './feedback-report.component.html',
+    styleUrls: ['./feedback-report.component.scss'],
+    standalone: false
 })
 export class FeedbackReportComponent implements OnChanges {
   @Input() report_data;

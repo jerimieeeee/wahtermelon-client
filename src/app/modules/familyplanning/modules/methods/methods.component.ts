@@ -7,9 +7,10 @@ import { ToastrService } from 'ngx-toastr';
 import { forkJoin } from 'rxjs';
 
 @Component({
-  selector: 'app-methods',
-  templateUrl: './methods.component.html',
-  styleUrls: ['./methods.component.scss']
+    selector: 'app-methods',
+    templateUrl: './methods.component.html',
+    styleUrls: ['./methods.component.scss'],
+    standalone: false
 })
 export class MethodsComponent implements OnInit {
   @Output() loadFP = new EventEmitter<any>();

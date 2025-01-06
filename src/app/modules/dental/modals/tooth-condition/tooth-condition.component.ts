@@ -4,9 +4,10 @@ import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-tooth-condition',
-  templateUrl: './tooth-condition.component.html',
-  styleUrls: ['./tooth-condition.component.scss']
+    selector: 'app-tooth-condition',
+    templateUrl: './tooth-condition.component.html',
+    styleUrls: ['./tooth-condition.component.scss'],
+    standalone: false
 })
 export class ToothConditionComponent implements OnInit {
   @Output() toggleModal = new EventEmitter<any>();

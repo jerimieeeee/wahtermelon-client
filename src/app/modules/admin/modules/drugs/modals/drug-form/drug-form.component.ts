@@ -5,9 +5,10 @@ import { ToastrService } from 'ngx-toastr';
 import { forkJoin } from 'rxjs';
 
 @Component({
-  selector: 'app-drug-form',
-  templateUrl: './drug-form.component.html',
-  styleUrls: ['./drug-form.component.scss']
+    selector: 'app-drug-form',
+    templateUrl: './drug-form.component.html',
+    styleUrls: ['./drug-form.component.scss'],
+    standalone: false
 })
 export class DrugFormComponent implements OnInit {
   @Output() showEdit = new EventEmitter<any>();

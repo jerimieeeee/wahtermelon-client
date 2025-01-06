@@ -6,9 +6,10 @@ import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-session',
-  templateUrl: './session.component.html',
-  styleUrls: ['./session.component.scss']
+    selector: 'app-session',
+    templateUrl: './session.component.html',
+    styleUrls: ['./session.component.scss'],
+    standalone: false
 })
 export class SessionComponent {
   @Output() toggleModal = new EventEmitter<any>();

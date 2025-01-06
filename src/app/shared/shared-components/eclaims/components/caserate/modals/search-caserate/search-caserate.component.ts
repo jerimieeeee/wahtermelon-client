@@ -8,11 +8,10 @@ import { faSave } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @Component({
-  selector: 'app-search-caserate',
-  standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FontAwesomeModule],
-  templateUrl: './search-caserate.component.html',
-  styleUrls: ['./search-caserate.component.scss']
+    selector: 'app-search-caserate',
+    imports: [CommonModule, ReactiveFormsModule, FontAwesomeModule],
+    templateUrl: './search-caserate.component.html',
+    styleUrls: ['./search-caserate.component.scss']
 })
 export class SearchCaserateComponent {
   @Output() toggleModal = new EventEmitter<any>();

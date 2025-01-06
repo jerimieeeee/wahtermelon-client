@@ -6,9 +6,10 @@ import { HttpService } from 'app/shared/services/http.service';
 import { interval, take } from 'rxjs';
 
 @Component({
-  selector: 'app-survey-form',
-  templateUrl: './survey-form.component.html',
-  styleUrls: ['./survey-form.component.scss']
+    selector: 'app-survey-form',
+    templateUrl: './survey-form.component.html',
+    styleUrls: ['./survey-form.component.scss'],
+    standalone: false
 })
 export class SurveyFormComponent implements OnInit {
   @Output() toggleSurveyForm = new EventEmitter<any>();

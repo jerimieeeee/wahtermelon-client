@@ -4,9 +4,10 @@ import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import { ExportAsConfig, ExportAsService } from 'ngx-export-as-17';
 
 @Component({
-  selector: 'app-ab-post',
-  templateUrl: './ab-post.component.html',
-  styleUrls: ['./ab-post.component.scss']
+    selector: 'app-ab-post',
+    templateUrl: './ab-post.component.html',
+    styleUrls: ['./ab-post.component.scss'],
+    standalone: false
 })
 export class AbPostComponent implements OnChanges {
   @Input() report_data;

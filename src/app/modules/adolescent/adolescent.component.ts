@@ -4,9 +4,10 @@ import { faCalendar, faTimes, faDoorClosed, faCircleNotch } from '@fortawesome/f
 import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
-  selector: 'app-adolescent',
-  templateUrl: './adolescent.component.html',
-  styleUrl: './adolescent.component.scss'
+    selector: 'app-adolescent',
+    templateUrl: './adolescent.component.html',
+    styleUrl: './adolescent.component.scss',
+    standalone: false
 })
 export class AdolescentComponent implements OnInit {
 

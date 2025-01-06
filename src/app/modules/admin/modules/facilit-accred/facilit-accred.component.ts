@@ -3,9 +3,10 @@ import { faAnglesLeft, faAnglesRight, faChevronLeft, faChevronRight, faPenToSqua
 import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
-  selector: 'app-facilit-accred',
-  templateUrl: './facilit-accred.component.html',
-  styleUrls: ['./facilit-accred.component.scss']
+    selector: 'app-facilit-accred',
+    templateUrl: './facilit-accred.component.html',
+    styleUrls: ['./facilit-accred.component.scss'],
+    standalone: false
 })
 export class FacilitAccredComponent implements OnInit {
   faSpinner = faSpinner;

@@ -5,9 +5,10 @@ import { VizCreateOptions, ToolbarPosition} from 'ngx-tableau'
 
 
 @Component({
-  selector: 'app-health-financing',
-  templateUrl: './health-financing.component.html',
-  styleUrls: ['./health-financing.component.scss']
+    selector: 'app-health-financing',
+    templateUrl: './health-financing.component.html',
+    styleUrls: ['./health-financing.component.scss'],
+    standalone: false
 })
 export class HealthFinancingComponent {
 

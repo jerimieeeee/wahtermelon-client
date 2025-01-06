@@ -9,9 +9,10 @@ import {ReportsModule} from "../../reports.module";
 import {ShowNameListComponent} from "../../modals/show-name-list/show-name-list.component";
 
 @Component({
-  selector: 'app-dental-ohs-consolidated',
-  templateUrl: './dental-ohs-consolidated.component.html',
-  styleUrl: './dental-ohs-consolidated.component.scss'
+    selector: 'app-dental-ohs-consolidated',
+    templateUrl: './dental-ohs-consolidated.component.html',
+    styleUrl: './dental-ohs-consolidated.component.scss',
+    standalone: false
 })
 export class DentalOhsConsolidatedComponent implements OnChanges {
   @Input() report_data;

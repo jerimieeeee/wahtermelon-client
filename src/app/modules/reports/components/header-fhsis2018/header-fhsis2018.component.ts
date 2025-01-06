@@ -2,9 +2,10 @@ import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/cor
 import { dateHelper } from 'app/shared/services/date-helper.service';
 
 @Component({
-  selector: 'app-header-fhsis2018',
-  templateUrl: './header-fhsis2018.component.html',
-  styleUrls: ['./header-fhsis2018.component.scss']
+    selector: 'app-header-fhsis2018',
+    templateUrl: './header-fhsis2018.component.html',
+    styleUrls: ['./header-fhsis2018.component.scss'],
+    standalone: false
 })
 export class HeaderFhsis2018Component implements OnChanges {
   @Input() brgys!: any;
