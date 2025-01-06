@@ -20,8 +20,8 @@
 
       <div class="mt-1 w-full border-t border-gray-200 py-5" *ngIf="adolescentForm.value.consent_flag === true">
 
-        <div class="grid grid-cols-12 mt-2 align-middle" *ngFor="let question of rapid">
-          <label for="answer" class="text-sm col-span-11 col-start-1">{{question.name}}</label>
+        <div class="grid grid-cols-12 mt-2 align-middle" *ngFor="let rapid of rapid_questions">
+          <label for="answer" class="text-sm col-span-11 col-start-1">{{rapid.sequence}}.{{rapid.question}}</label>
           <select class="input align-middle text-sm col-span-1 col-start-12" id="" name="">
             <option disabled selected value> </option>
             <option value="N">Hindi</option>

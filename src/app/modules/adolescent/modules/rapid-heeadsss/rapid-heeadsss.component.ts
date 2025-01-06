@@ -32,6 +32,8 @@ export class RapidHeeadsssComponent implements OnInit {
 
   hx_codes: any = [];
 
+  rapid_questions: any = [];
+
   adolescentForm: FormGroup = new FormGroup({
 
     consent_flag: new FormControl<boolean>(false)
@@ -53,6 +55,22 @@ export class RapidHeeadsssComponent implements OnInit {
     { name: '12. Gusto mo bang mag pa counsel o komunsulta para matulungan ka?', id:'12' },
   ];
 
+  loadRapidLib(){
+    // let params = {
+    //   patient_id: this.patient_id,
+    //   per_page: 'all'
+    // };
+
+    this.http.get('libraries/rapid-questionnaire').subscribe({
+      next: (data: any) => {
+        this.rapid_questions = data.data;
+        console.log(this.rapid_questions)
+
+      },
+      error: err => console.log(err)
+    });
+  }
+
   constructor(
     private http: HttpService,
     private formBuilder: FormBuilder,
@@ -60,11 +78,13 @@ export class RapidHeeadsssComponent implements OnInit {
   ) { }
 
 ngOnInit(): void {
+
+    this.loadRapidLib();
     this.adolescentForm = this.formBuilder.group({
 
       consent_flag: [false]
 
     })
-
+    console.log(this.rapid_questions, 'rapid questions')
   }
 }
