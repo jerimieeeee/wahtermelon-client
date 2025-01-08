@@ -165,7 +165,7 @@ export class EclaimsComponent implements OnInit {
     }
 
     this.allEclaimsArray = [];
-
+    let current_number = 0;
     const fetchPage = (page: number) => {
       params['page'] = page;
 
@@ -176,8 +176,9 @@ export class EclaimsComponent implements OnInit {
 
           const filteredData = data.data.map((item: any, index: number) => {
             const programDates = this.getDates(item);
+            current_number += 1;
             return {
-              'No.': index+1,
+              'No.': current_number,
               'Series No': item.pClaimSeriesLhio,
               'Name': item.patient.first_name+' '+item.patient.middle_name+' '+item.patient.last_name,
               'Admission Date': programDates.admission_date,
