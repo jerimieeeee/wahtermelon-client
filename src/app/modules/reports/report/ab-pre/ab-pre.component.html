@@ -28,7 +28,7 @@
         <th rowspan="2" colspan="2">PREP</th>
         <th rowspan="2">Tandok</th>
         <th rowspan="2" colspan="2">Human Rabies</th>
-        <th rowspan="2" colspan="3">PEP</th>
+        <th rowspan="2" colspan="4">PEP</th>
         <th rowspan="2" colspan="4">Biting Animals</th>
         <th rowspan="2" colspan="4">PEP Coverage</th>
 <!--        <th colspan="2">Age</th>-->
@@ -62,6 +62,7 @@
         <td></td>
         <td>No.</td>
         <td>PR</td>
+        <td>D0, D3, D7</td>
         <td>TCV</td>
         <td>HRIG</td>
         <td>ERIG</td>
@@ -96,6 +97,7 @@
           <td>{{ data.tandok }}</td>
           <td></td>
           <td></td>
+          <td>{{ data.pep_completed }}</td>
           <td>{{ data.tcv }}</td>
           <td>{{ data.HRIG }}</td>
           <td>{{ data.ERIG }}</td>
@@ -109,7 +111,7 @@
           <td></td>
         </ng-container>
       </tr>
-      <td class="font-bold text-center bg-gray-400" colspan="29">OTHERS</td>
+      <td class="font-bold text-center bg-gray-400" colspan="30">OTHERS</td>
       <tr *ngFor="let item_others of stats_others|keyvalue">
         <td class="text-left font-bold">{{ item_others.key }}</td>
         <ng-container class="text-center" *ngFor="let data of item_others.value">
@@ -130,6 +132,7 @@
           <td>{{ data.tandok }}</td>
           <td></td>
           <td></td>
+          <td>{{ data.pep_completed }}</td>
           <td>{{ data.tcv }}</td>
           <td>{{ data.HRIG }}</td>
           <td>{{ data.ERIG }}</td>

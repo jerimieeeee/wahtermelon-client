@@ -42,6 +42,7 @@ export class AbPreComponent implements OnChanges {
     prep_total: 0,
     prep_completed: 0,
     tandok: 0,
+    pep_completed: 0,
     tcv: 0,
     HRIG: 0,
     ERIG: 0,
@@ -52,6 +53,8 @@ export class AbPreComponent implements OnChanges {
   };
 
   stats_others : any[];
+  previous : any[];
+  previous_others : any[];
   brgy_result: any;
   reportform_data : any;
   selected_barangay : any;
@@ -113,6 +116,7 @@ export class AbPreComponent implements OnChanges {
       prep_total: 0,
       prep_completed: 0,
       tandok: 0,
+      pep_completed: 0,
       tcv: 0,
       HRIG: 0,
       ERIG: 0,
@@ -129,7 +133,7 @@ export class AbPreComponent implements OnChanges {
     const keysToSum = [
       'population', 'male', 'female', 'male_female_total', 'less_than_15', 'greater_than_15',
       'category1', 'category2', 'category3', 'total_cat2_and_cat3', 'total_cat1_cat2_cat3',
-      'prep_total', 'prep_completed', 'tandok', 'tcv', 'HRIG', 'ERIG', 'dog', 'cat',
+      'prep_total', 'prep_completed', 'tandok', 'pep_completed', 'tcv', 'HRIG', 'ERIG', 'dog', 'cat',
       'others', 'total_biting_animal'
     ];
 
@@ -187,11 +191,14 @@ export class AbPreComponent implements OnChanges {
     this.selected_barangay = this.selectedBrgy;
     this.show_stats = false;
     this.stats = this.report_data.data;
-    this.stats_others = this.report_data.other_muncity;
+    this.stats_others = this.report_data.data1_others;
+    this.previous = this.report_data.data2;
+    this.previous_others = this.report_data.data2_others;
     this.sumTotal('stats');
     this.sumTotal('stats_others');
-    console.log(this.stats);
-    console.log(this.stats_others);
+    // this.sumTotalPrevious('previous');
+    // this.sumTotalPrevious('previous_others');
+    console.log(this.stats, 'stats');
     this.brgys_info = this.brgys;
     this.pdf_exported = false;
     this.label_value = this.dateHelper.getLabelValue(this.reportForm, this.report_data);
