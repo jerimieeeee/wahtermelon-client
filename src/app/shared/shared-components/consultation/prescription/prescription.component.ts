@@ -14,7 +14,7 @@ import { DeleteItemComponent } from 'app/shared/shared-modals/delete-item/delete
 
 @Component({
     selector: 'app-prescription',
-    imports: [CommonModule, FontAwesomeModule, DrugFormComponent, DrugListComponent, DrugDeleteComponent, FormsModule, DeleteItemComponent],
+    imports: [CommonModule, FontAwesomeModule, DrugFormComponent, DrugListComponent, FormsModule, DeleteItemComponent],
     templateUrl: './prescription.component.html',
     styleUrls: ['./prescription.component.scss']
 })

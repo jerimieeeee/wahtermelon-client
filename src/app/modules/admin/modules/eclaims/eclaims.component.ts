@@ -5,6 +5,9 @@ import { faAnglesLeft, faAnglesRight, faCheckCircle, faChevronLeft, faChevronRig
 import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 import { forkJoin } from 'rxjs';
+import * as XLSX from 'xlsx';
+import { saveAs } from 'file-saver';
+import { formatDate } from '@angular/common';
 
 @Component({
     selector: 'app-eclaims',
@@ -76,7 +79,46 @@ export class EclaimsComponent implements OnInit {
   total: number;
 
   printFile() {
+    this.getAllData();
+    /* let sample: any = [{name: 'John', age: 30, city: 'New York'}, {name: 'Doe', age: 25, city: 'Chicago'}];
 
+    this.exportToExcel(sample); */
+  }
+
+  exportToExcel(data: {any}[]) {
+    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
+
+    const columnWidths = Object.keys(data[0] || {}).map((key) => {
+      const maxLength = Math.max(
+        key.length,
+        ...data.map((row) => (row[key] ? row[key].toString().length : 0))
+      );
+      return { wch: maxLength + 2 };
+    });
+    worksheet['!cols'] = columnWidths;
+
+    const workbook: XLSX.WorkBook = {
+      Sheets: { 'data': worksheet },
+      SheetNames: ['data'],
+    };
+
+    const excelBuffer: any = XLSX.write(workbook, {
+      bookType: 'xlsx',
+      type: 'array',
+    });
+
+    this.saveAsExcelFile(excelBuffer, 'eclaims list');
+    /* const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
+    const workbook: XLSX.WorkBook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
+    const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+
+    this.saveAsExcelFile(excelBuffer, 'eclaims list'); */
+  }
+
+  saveAsExcelFile(buffer: any, fileName: string): void {
+    const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+    const data: Blob = new Blob([buffer], { type: EXCEL_TYPE });
+    saveAs(data, `${fileName}.xlsx`);
   }
 
   changeCodeList(){
@@ -107,6 +149,119 @@ export class EclaimsComponent implements OnInit {
     };
   }
 
+  allEclaimsArray!: any[];
+  printing: boolean = false;
+  total_print_page: number = 0;
+  current_print_page: number = 1;
+  getAllData() {
+    this.printing = true;
+    let params = {
+      pStatus: this.pStatus ?? '',
+      program_desc: this.program_desc ?? '',
+      code: this.code ?? '',
+      'filter[search]': this.patient_search ?? '',
+      per_page: 50,
+      for_print: '1'
+    }
+
+    this.allEclaimsArray = [];
+
+    const fetchPage = (page: number) => {
+      params['page'] = page;
+
+      this.http.get('eclaims/eclaims-upload', { params }).subscribe({
+        next: (data: any) => {
+          this.total_print_page = data.meta.last_page;
+          this.current_print_page = page;
+
+          const filteredData = data.data.map((item: any, index: number) => {
+            const programDates = this.getDates(item);
+            return {
+              'No.': index+1,
+              'Series No': item.pClaimSeriesLhio,
+              'Name': item.patient.first_name+' '+item.patient.middle_name+' '+item.patient.last_name,
+              'Admission Date': programDates.admission_date,
+              'Discharge Date': programDates.discharge_date,
+              'Received Date': item.pTransmissionDate,
+              'Caserate Amount': item.caserate.caserate_fee,
+              'Status': item.pStatus,
+            }
+          });
+
+          this.allEclaimsArray.push(...filteredData);
+
+          if( page < data.meta.last_page ) {
+            fetchPage( page + 1 );
+          } else {
+            this.exportToExcel(this.allEclaimsArray);
+            this.printing = false;
+          }
+        }
+      });
+    };
+
+    fetchPage(1);
+  }
+
+  getDates(data) {
+    let admission_date = data.caserate?.caserate_date || '';
+    let discharge_date = data.caserate?.caserate_date || '';
+
+    switch (data.program_desc) {
+      case 'ab':
+        admission_date = data.caserate.patient_ab.ab_post_exposure.day0_date;
+        discharge_date = data.caserate.patient_ab.ab_post_exposure.day7_date;
+        break;
+      case 'cc':
+        admission_date = formatDate(data.caserate.patient_cc.admission_date, 'yyyy-MM-dd', 'en');
+        discharge_date = formatDate(data.caserate.patient_cc.discharge_date, 'yyyy-MM-dd', 'en');
+        break;
+      case 'mc':
+        if(data.caserate.code === 'ANC01' || data.caserate.code === 'ANC02') {
+          let visit1: string = null;
+          let visit2: string = null;
+          let visit3: string = null;
+          let visit4: string = null;
+
+          Object.entries(data.caserate.patient_mc.prenatal).reverse().forEach(([key, value]:any, index) => {
+            if(index === 0 && !visit1) visit1 = value.prenatal_date;
+            if(index === 1 && !visit2) visit2 = value.prenatal_date;
+            if(index === 2 && !visit3) visit3 = value.prenatal_date;
+
+            if((index > 2 && !visit4) && value.trimester === 3) {
+              visit4 = value.prenatal_date;
+              return true;
+            }
+          });
+
+          admission_date = visit1;
+          discharge_date = visit4;
+        } else {
+          admission_date = formatDate(data.caserate.patient_mc.post_register.admission_date, 'yyyy-MM-dd', 'en');
+          discharge_date = formatDate(data.caserate.patient_mc.post_register.discharge_date, 'yyyy-MM-dd', 'en');
+        }
+        break;
+      case 'tb':
+        if(data.caserate.code === '89221') {
+          let cont_date = new Date(data.caserate.patient_tb.tb_case_holding.continuation_start);
+          cont_date.setDate(cont_date.getDate()-1);
+
+          admission_date = formatDate(data.caserate.patient_tb.tb_case_holding.treatment_start, 'yyyy-MM-dd', 'en');
+          discharge_date = formatDate(cont_date, 'yyyy-MM-dd', 'en');
+        } else {
+          admission_date = formatDate(data.caserate.patient_tb.tb_case_holding.continuation_start, 'yyyy-MM-dd', 'en');
+          discharge_date = formatDate(data.caserate.patient_tb.tb_case_holding.treatment_end, 'yyyy-MM-dd', 'en');
+        }
+        break;
+      default:
+        admission_date = data.caserate.caserate_date;
+        discharge_date = data.caserate.caserate_date;
+        break;
+    }
+
+    return { admission_date, discharge_date};
+  }
+
   getEclaimsList(page?) {
     this.item_status = [];
     this.success_count = 0;
@@ -120,7 +275,7 @@ export class EclaimsComponent implements OnInit {
       program_desc: this.program_desc ?? '',
       code: this.code ?? '',
       'filter[search]': this.patient_search ?? '',
-      page: page ?? '',
+      page: page ? page : (this.current_page ? this.current_page : 1),
       per_page: this.per_page
     }
 

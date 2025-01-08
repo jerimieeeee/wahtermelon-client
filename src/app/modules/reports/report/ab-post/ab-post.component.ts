@@ -1,7 +1,7 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import { faFileExcel, faFilePdf } from '@fortawesome/free-regular-svg-icons';
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
-import { ExportAsConfig, ExportAsService } from 'ngx-export-as-17';
+import { ExportAsConfig, ExportAsService } from 'ngx-export-as';
 
 @Component({
     selector: 'app-ab-post',

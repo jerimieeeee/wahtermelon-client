@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { faFileExcel } from '@fortawesome/free-regular-svg-icons';
 import { faAnglesLeft, faAnglesRight, faCalendarDays, faChevronLeft, faChevronRight, faRotate, faSearch, faSpinner, faArrowsRotate, faArrowUpFromBracket, faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
-import { ExportAsConfig, ExportAsService } from 'ngx-export-as-17';
+import { ExportAsConfig, ExportAsService } from 'ngx-export-as';
 
 @Component({
     selector: 'app-konsulta-masterlist',

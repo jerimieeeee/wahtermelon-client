@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { faFileExcel } from '@fortawesome/free-regular-svg-icons';
 import { faAnglesLeft, faAnglesRight, faChevronLeft, faChevronRight, faCircleNotch, faFilter, faSave, faSearch, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
-import { ExportAsConfig, ExportAsService } from 'ngx-export-as-17';
+import { ExportAsConfig, ExportAsService } from 'ngx-export-as';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({

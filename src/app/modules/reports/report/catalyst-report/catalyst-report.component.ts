@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import { faFilePdf, faFileExcel } from '@fortawesome/free-solid-svg-icons';
-import { ExportAsConfig, ExportAsService } from 'ngx-export-as-17';
+import { ExportAsConfig, ExportAsService } from 'ngx-export-as';
 
 @Component({
     selector: 'app-catalyst-report',

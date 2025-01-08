@@ -2,7 +2,7 @@ import { Component, Input, OnChanges } from '@angular/core';
 import { faCircleNotch, faFileExcel, faFilePdf } from '@fortawesome/free-solid-svg-icons';
 import { formatDate } from '@angular/common';
 import { dateHelper } from 'app/shared/services/date-helper.service';
-import { ExportAsConfig, ExportAsService } from 'ngx-export-as-17';
+import { ExportAsConfig, ExportAsService } from 'ngx-export-as';
 
 @Component({
     selector: 'app-fhsis2018-mc',
