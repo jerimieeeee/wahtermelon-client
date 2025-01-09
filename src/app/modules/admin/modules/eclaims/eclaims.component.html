@@ -6,6 +6,7 @@
       <input type="text" [(ngModel)]="patient_search" placeholder="search..." (keyup.enter)="getEclaimsList()" class="col-span-3 input rounded-r-none w-52"/>
       <select class="input rounded-none w-36" [(ngModel)]="pStatus" (change)="getEclaimsList()">
         <option [ngValue]="null">ALL</option>
+        <option value="TRANSMITTED">TRANSMITTED</option>
         <option [value]="status" *ngFor="let status of status_lists" [ngClass]="toggleColorStatus(status)">{{ status }}</option>
       </select>
       <select class="input rounded-none w-36" (change)="changeCodeList()" [(ngModel)]="program_desc">
