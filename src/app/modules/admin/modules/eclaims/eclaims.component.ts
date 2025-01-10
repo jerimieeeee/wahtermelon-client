@@ -45,7 +45,8 @@ export class EclaimsComponent implements OnInit {
   is_refreshing: boolean = false;
   show_form:boolean = false;
   show_cf2: boolean = false;
-
+  start_date: string | null = null;
+  end_date: string | null = null;
 
   pStatus: string = null;
   program_desc: string = null;
@@ -161,8 +162,11 @@ export class EclaimsComponent implements OnInit {
       code: this.code ?? '',
       'filter[search]': this.patient_search ?? '',
       per_page: 50,
-      for_print: '1'
+      for_print: '1',
     }
+
+    if(this.start_date) params['start_date'] = this.start_date;
+    if(this.end_date) params['end_date'] = this.end_date;
 
     this.allEclaimsArray = [];
     let current_number = 0;
@@ -277,8 +281,11 @@ export class EclaimsComponent implements OnInit {
       code: this.code ?? '',
       'filter[search]': this.patient_search ?? '',
       page: page ? page : (this.current_page ? this.current_page : 1),
-      per_page: this.per_page
+      per_page: this.per_page,
     }
+
+    if(this.start_date) params['start_date'] = this.start_date;
+    if(this.end_date) params['end_date'] = this.end_date;
 
     this.http.get('eclaims/eclaims-upload', { params }).subscribe({
       next:(data:any) => {

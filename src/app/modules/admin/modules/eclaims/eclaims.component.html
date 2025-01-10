@@ -2,18 +2,20 @@
   <div class="w-full bg-blue-500 text-white rounded-t-xl p-3 font-semibold flex justify-between text-sm">
     <div class="mt-2">ECLAIMS LIST</div>
 
-    <div class="text-slate-800 flex justify-end">
+    <div class="text-slate-800 flex justify-end text-xs">
       <input type="text" [(ngModel)]="patient_search" placeholder="search..." (keyup.enter)="getEclaimsList()" class="col-span-3 input rounded-r-none w-52"/>
-      <select class="input rounded-none w-36" [(ngModel)]="pStatus" (change)="getEclaimsList()">
+      <select class="input rounded-none w-32 text-xs" [(ngModel)]="pStatus" (change)="getEclaimsList()">
         <option [ngValue]="null">ALL</option>
         <option value="TRANSMITTED">TRANSMITTED</option>
         <option [value]="status" *ngFor="let status of status_lists" [ngClass]="toggleColorStatus(status)">{{ status }}</option>
       </select>
-      <select class="input rounded-none w-36" (change)="changeCodeList()" [(ngModel)]="program_desc">
+      <select class="input rounded-none w-20 text-xs" (change)="changeCodeList()" [(ngModel)]="program_desc">
         <option [ngValue]="null">ALL</option>
         <option [value]="program" *ngFor="let program of program_list">{{ program | uppercase }}</option>
       </select>
-      <select *ngIf="program_desc !== null" class="input rounded-none w-36" [(ngModel)]="code">
+      <input type="date" class="input rounded-none w-32 text-xs" [(ngModel)]="start_date" />
+      <input type="date" class="input rounded-none w-32 text-xs" [(ngModel)]="end_date" />
+      <select *ngIf="program_desc !== null" class="input rounded-none w-24" [(ngModel)]="code">
         <option [ngValue]="null">ALL</option>
         <option [value]="list" *ngFor="let list of code_list">{{ list | uppercase }}</option>
       </select>
@@ -21,16 +23,19 @@
         <fa-icon [icon]="faFilter"></fa-icon> Filter
       </button>
 
-      <button (click)="printFile()" class="pl-4 pr-2 bg-green-500 text-white align-middle rounded-md ml-2 mt-1 hover:opacity-90">
-        <fa-icon [icon]="printing ? faCircleNotch : faFileExcel" [animation]="printing ? 'spin' : ''" class="text-xl mt-1"></fa-icon>
-          {{ printing ? 'Printing' : 'Print' }}
-      </button>
+
     </div>
   </div>
 
   <div class="w-full p-5 overflow-x-auto">
-    <div class="flex justify-center font-semibold text-green-500" *ngIf="printing || total_print_page">
-      Printing {{ total_print_page > 0 ? current_print_page +' of '+ total_print_page + ' pages': '' }}
+    <div class="flex justify-end">
+      <div class="flex justify-center font-semibold text-green-500" *ngIf="printing || total_print_page">
+        Printing {{ total_print_page > 0 ? current_print_page +' of '+ total_print_page + ' pages': '' }}
+      </div>
+      <button (click)="printFile()" class="pl-4 pr-2 bg-green-500 text-white align-middle rounded-md ml-2 mt-1 hover:opacity-90">
+        <fa-icon [icon]="printing ? faCircleNotch : faFileExcel" [animation]="printing ? 'spin' : ''" class="text-xl mt-1"></fa-icon>
+          {{ printing ? 'Printing' : 'Print' }}
+      </button>
     </div>
     <div class="flex justify-between w-full" *ngIf="(pStatus === 'IN PROCESS' || pStatus === 'WITH VOUCHER' || pStatus === 'VOUCHERING') && eclaims_list">
       <div class="font-semibold">
