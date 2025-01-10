@@ -4,7 +4,6 @@ import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import { dateHelper } from 'app/shared/services/date-helper.service';
 import { ExportAsConfig, ExportAsService } from 'ngx-export-as-17';
 import {HttpService} from "../../../../shared/services/http.service";
-import { ExportAsConfig, ExportAsService } from 'ngx-export-as';
 
 @Component({
     selector: 'app-ab-pre',
