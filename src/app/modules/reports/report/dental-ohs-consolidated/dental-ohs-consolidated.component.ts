@@ -4,14 +4,15 @@ import {NgForOf, NgIf} from "@angular/common";
 import { faFileExcel, faFilePdf } from '@fortawesome/free-regular-svg-icons';
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import { dateHelper } from 'app/shared/services/date-helper.service';
-import { ExportAsConfig, ExportAsService } from 'ngx-export-as-17';
+import { ExportAsConfig, ExportAsService } from 'ngx-export-as';
 import {ReportsModule} from "../../reports.module";
 import {ShowNameListComponent} from "../../modals/show-name-list/show-name-list.component";
 
 @Component({
-  selector: 'app-dental-ohs-consolidated',
-  templateUrl: './dental-ohs-consolidated.component.html',
-  styleUrl: './dental-ohs-consolidated.component.scss'
+    selector: 'app-dental-ohs-consolidated',
+    templateUrl: './dental-ohs-consolidated.component.html',
+    styleUrl: './dental-ohs-consolidated.component.scss',
+    standalone: false
 })
 export class DentalOhsConsolidatedComponent implements OnChanges {
   @Input() report_data;

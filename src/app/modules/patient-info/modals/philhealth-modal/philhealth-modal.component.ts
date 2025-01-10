@@ -11,9 +11,10 @@ import { catchError, debounceTime, distinctUntilChanged, switchMap, tap, map, fi
 import { concat, Observable, of, Subject } from 'rxjs';
 
 @Component({
-  selector: 'app-philhealth-modal',
-  templateUrl: './philhealth-modal.component.html',
-  styleUrls: ['./philhealth-modal.component.scss']
+    selector: 'app-philhealth-modal',
+    templateUrl: './philhealth-modal.component.html',
+    styleUrls: ['./philhealth-modal.component.scss'],
+    standalone: false
 })
 export class PhilhealthModalComponent implements OnInit {
   @ViewChild('mySelect') mySelect: NgSelectComponent;

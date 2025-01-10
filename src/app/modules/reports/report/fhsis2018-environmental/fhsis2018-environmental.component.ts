@@ -1,12 +1,13 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import { faCircleNotch, faFileExcel, faFilePdf } from '@fortawesome/free-solid-svg-icons';
 import { dateHelper } from 'app/shared/services/date-helper.service';
-import { ExportAsConfig, ExportAsService } from 'ngx-export-as-17';
+import { ExportAsConfig, ExportAsService } from 'ngx-export-as';
 
 @Component({
-  selector: 'app-fhsis2018-environmental',
-  templateUrl: './fhsis2018-environmental.component.html',
-  styleUrls: ['./fhsis2018-environmental.component.scss']
+    selector: 'app-fhsis2018-environmental',
+    templateUrl: './fhsis2018-environmental.component.html',
+    styleUrls: ['./fhsis2018-environmental.component.scss'],
+    standalone: false
 })
 export class Fhsis2018EnvironmentalComponent implements OnChanges{
   @Input() report_data;

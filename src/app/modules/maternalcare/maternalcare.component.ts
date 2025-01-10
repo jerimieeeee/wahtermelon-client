@@ -5,9 +5,10 @@ import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-maternalcare',
-  templateUrl: './maternalcare.component.html',
-  styleUrls: ['./maternalcare.component.scss']
+    selector: 'app-maternalcare',
+    templateUrl: './maternalcare.component.html',
+    styleUrls: ['./maternalcare.component.scss'],
+    standalone: false
 })
 export class MaternalcareComponent implements OnInit {
   faDoorClosed = faDoorClosed;

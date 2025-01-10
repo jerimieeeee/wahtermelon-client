@@ -3,12 +3,13 @@ import { Component, OnInit } from '@angular/core';
 import { faFileExcel } from '@fortawesome/free-regular-svg-icons';
 import { faAnglesLeft, faAnglesRight, faCalendarDays, faChevronLeft, faChevronRight, faRotate, faSearch, faSpinner, faArrowsRotate, faArrowUpFromBracket, faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
-import { ExportAsConfig, ExportAsService } from 'ngx-export-as-17';
+import { ExportAsConfig, ExportAsService } from 'ngx-export-as';
 
 @Component({
-  selector: 'app-konsulta-masterlist',
-  templateUrl: './konsulta-masterlist.component.html',
-  styleUrls: ['./konsulta-masterlist.component.scss']
+    selector: 'app-konsulta-masterlist',
+    templateUrl: './konsulta-masterlist.component.html',
+    styleUrls: ['./konsulta-masterlist.component.scss'],
+    standalone: false
 })
 export class KonsultaMasterlistComponent implements OnInit {
   faSpinner = faSpinner;
@@ -98,11 +99,11 @@ export class KonsultaMasterlistComponent implements OnInit {
         this[variable] = data.data;
 
         if(this[variable] && variable === 'export_list') {
-          /* setTimeout(() => {
+          setTimeout(() => {
             this.exportAsService.save(this.exportAsExcel, 'Masterlist').subscribe(() => {
               this.excel_exporting = false;
             });
-          }) */
+          })
         } else {
           this.current_page = data.meta.current_page;
           this.last_page = data.meta.last_page;

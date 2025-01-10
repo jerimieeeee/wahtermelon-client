@@ -27,7 +27,7 @@ import { Fhsis2018DentalM1Component } from './report/fhsis2018-dental-m1/fhsis20
 import { Fhsis2018MortalityComponent } from './report/fhsis2018-mortality/fhsis2018-mortality.component';
 import { Fhsis2018EnvironmentalComponent } from './report/fhsis2018-environmental/fhsis2018-environmental.component';
 import { Fhsis2018MortalityUnderlyingComponent } from './report/fhsis2018-mortality-underlying/fhsis2018-mortality-underlying.component';
-import { ExportAsModule } from 'ngx-export-as-17';
+import { ExportAsModule } from 'ngx-export-as';
 import {DentalOhsConsolidatedComponent} from "./report/dental-ohs-consolidated/dental-ohs-consolidated.component";
 
 @NgModule({

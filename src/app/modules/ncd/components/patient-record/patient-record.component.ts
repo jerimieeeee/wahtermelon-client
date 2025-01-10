@@ -6,9 +6,10 @@ import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-patient-record',
-  templateUrl: './patient-record.component.html',
-  styleUrls: ['./patient-record.component.scss']
+    selector: 'app-patient-record',
+    templateUrl: './patient-record.component.html',
+    styleUrls: ['./patient-record.component.scss'],
+    standalone: false
 })
 export class PatientRecordComponent implements OnInit, OnChanges {
   @Input() patient_id;

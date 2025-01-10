@@ -3,12 +3,13 @@ import { Component, Input, OnChanges } from '@angular/core';
 import { faFileExcel, faFilePdf } from '@fortawesome/free-regular-svg-icons';
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import { dateHelper } from 'app/shared/services/date-helper.service';
-import { ExportAsConfig, ExportAsService } from 'ngx-export-as-17';
+import { ExportAsConfig, ExportAsService } from 'ngx-export-as';
 
 @Component({
-  selector: 'app-fhsis2018-morbidity',
-  templateUrl: './fhsis2018-morbidity.component.html',
-  styleUrls: ['./fhsis2018-morbidity.component.scss']
+    selector: 'app-fhsis2018-morbidity',
+    templateUrl: './fhsis2018-morbidity.component.html',
+    styleUrls: ['./fhsis2018-morbidity.component.scss'],
+    standalone: false
 })
 export class Fhsis2018MorbidityComponent implements OnChanges {
   @Input() report_data;

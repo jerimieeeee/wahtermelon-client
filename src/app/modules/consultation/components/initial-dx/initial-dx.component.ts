@@ -5,9 +5,10 @@ import { ToastrService } from 'ngx-toastr';
 import { catchError, concat, debounceTime, distinctUntilChanged, filter, map, Observable, of, Subject, switchMap, tap } from 'rxjs';
 
 @Component({
-  selector: 'app-initial-dx',
-  templateUrl: './initial-dx.component.html',
-  styleUrls: ['./initial-dx.component.scss']
+    selector: 'app-initial-dx',
+    templateUrl: './initial-dx.component.html',
+    styleUrls: ['./initial-dx.component.scss'],
+    standalone: false
 })
 export class InitialDxComponent implements OnChanges {
   @Input() toggle_content;

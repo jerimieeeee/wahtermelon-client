@@ -5,9 +5,10 @@ import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
-  selector: 'app-reports',
-  templateUrl: './reports.component.html',
-  styleUrls: ['./reports.component.scss']
+    selector: 'app-reports',
+    templateUrl: './reports.component.html',
+    styleUrls: ['./reports.component.scss'],
+    standalone: false
 })
 export class ReportsComponent implements OnInit {
   faCircleNotch = faCircleNotch;
@@ -309,7 +310,7 @@ export class ReportsComponent implements OnInit {
       report_type: ['', Validators.required],
       report_class: ['', Validators.required],
       barangay_code: [''],
-      municipality_code: [this.userInfo.facility.municipality.psgc_10_digit_code],
+      municipality_code: [this.userInfo.facility.municipality_code],
       start_date: ['', Validators.required],
       end_date: ['', Validators.required],
       month: [null, Validators.required],

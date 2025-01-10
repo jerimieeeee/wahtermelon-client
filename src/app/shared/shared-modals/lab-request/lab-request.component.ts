@@ -7,11 +7,10 @@ import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  standalone: true,
-  selector: 'app-lab-request',
-  templateUrl: './lab-request.component.html',
-  styleUrls: ['./lab-request.component.scss'],
-  imports: [FontAwesomeModule, FormsModule, ReactiveFormsModule, CommonModule]
+    selector: 'app-lab-request',
+    templateUrl: './lab-request.component.html',
+    styleUrls: ['./lab-request.component.scss'],
+    imports: [FontAwesomeModule, FormsModule, ReactiveFormsModule, CommonModule]
 })
 export class LabRequestComponent implements OnChanges{
   @Input() patient_info;

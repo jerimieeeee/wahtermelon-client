@@ -12,9 +12,10 @@ import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
-  selector: 'app-first-visit',
-  templateUrl: './first-visit.component.html',
-  styleUrls: ['./first-visit.component.scss']
+    selector: 'app-first-visit',
+    templateUrl: './first-visit.component.html',
+    styleUrls: ['./first-visit.component.scss'],
+    standalone: false
 })
 
 

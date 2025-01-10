@@ -6,9 +6,10 @@ import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-referral-modal',
-  templateUrl: './referral-modal.component.html',
-  styleUrls: ['./referral-modal.component.scss']
+    selector: 'app-referral-modal',
+    templateUrl: './referral-modal.component.html',
+    styleUrls: ['./referral-modal.component.scss'],
+    standalone: false
 })
 export class ReferralModalComponent implements OnInit {
   @Output() toggleModal = new EventEmitter<any>();

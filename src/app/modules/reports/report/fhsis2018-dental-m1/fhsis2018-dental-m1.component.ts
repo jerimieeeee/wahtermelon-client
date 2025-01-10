@@ -1,15 +1,16 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import { faFileExcel, faFilePdf } from '@fortawesome/free-regular-svg-icons';
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
-import { ExportAsConfig, ExportAsService } from 'ngx-export-as-17';
+import { ExportAsConfig, ExportAsService } from 'ngx-export-as';
 import { var_list } from './dentalVarList';
 import moment from 'moment';
 import { dateHelper } from 'app/shared/services/date-helper.service';
 
 @Component({
-  selector: 'app-fhsis2018-dental-m1',
-  templateUrl: './fhsis2018-dental-m1.component.html',
-  styleUrls: ['./fhsis2018-dental-m1.component.scss']
+    selector: 'app-fhsis2018-dental-m1',
+    templateUrl: './fhsis2018-dental-m1.component.html',
+    styleUrls: ['./fhsis2018-dental-m1.component.scss'],
+    standalone: false
 })
 export class Fhsis2018DentalM1Component implements OnChanges{
   @Input() report_data;

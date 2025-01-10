@@ -4,12 +4,13 @@ import { FormGroup, FormControl, AbstractControl, Validators, FormBuilder } from
 import { faSave, faCircleNotch, faSearch, faMagnifyingGlass, faFilePdf } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
-import { ExportAsConfig, ExportAsService } from 'ngx-export-as-17';
+import { ExportAsConfig, ExportAsService } from 'ngx-export-as';
 
 @Component({
-  selector: 'app-pbef',
-  templateUrl: './pbef.component.html',
-  styleUrls: ['./pbef.component.scss']
+    selector: 'app-pbef',
+    templateUrl: './pbef.component.html',
+    styleUrls: ['./pbef.component.scss'],
+    standalone: false
 })
 export class PbefComponent implements OnInit {
   @Output() toggleModal = new EventEmitter<any>();

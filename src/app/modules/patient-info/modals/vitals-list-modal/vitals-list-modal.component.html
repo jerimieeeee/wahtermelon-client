@@ -31,7 +31,7 @@
                 <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap align-top">
                   {{ vitals.vitals_date  }} <!-- | date: 'MM/dd/yyyy h:mm:ss a' -->
                 </th>
-                <td class="py-4 px-6 align-top">
+                <td class="py-4 px-6 align-top" [ngClass]="getBPColor(vitals)">
                   {{ vitals.bp_systolic }}{{ vitals.bp_systolic ? '/' : '-' }}{{ vitals.bp_diastolic }}
                 </td>
                 <td class="py-4 px-6 align-top">
@@ -43,13 +43,13 @@
                   Left: {{ vitals.patient_left_vision_acuity_distance ? vitals.patient_left_vision_acuity_distance : '-' }}|{{ vitals.patient_left_vision_acuity ? vitals.patient_left_vision_acuity : '-' }}
                 </td>
                 <td class="py-4 px-6 align-top">
-                  {{ vitals.patient_temp ?? '-' }}
+                  <span [ngClass]="getTempColor(vitals)">{{ vitals.patient_temp ?? '-' }}</span>
                 </td>
                 <td class="py-4 px-6 align-top">
-                  SpO2: {{ vitals.patient_spo2 | number: '1.0-0' ?? '-' }} <br />
-                 Heart Rate: {{ vitals.patient_heart_rate | number: '1.0-0' ?? '-' }} <br />
-                 Pulse Rate: {{ vitals.patient_pulse_rate | number: '1.0-0' ?? '-' }} <br />
-                 Resp Rate: {{ vitals.patient_respiratory_rate | number: '1.0-0' ?? '-' }}
+                  <span [ngClass]="getOxygenColor(vitals)">SpO2: {{ vitals.patient_spo2 | number: '1.0-0' ?? '-' }} </span><br />
+                  Heart Rate: {{ vitals.patient_heart_rate | number: '1.0-0' ?? '-' }} <br />
+                  Pulse Rate: {{ vitals.patient_pulse_rate | number: '1.0-0' ?? '-' }} <br />
+                  Resp Rate: {{ vitals.patient_respiratory_rate | number: '1.0-0' ?? '-' }}
                 </td>
                 <td class="py-4 px-6 align-top">
                   Head: {{ vitals.patient_head_circumference ?? '-' }} <br />

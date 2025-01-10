@@ -4,9 +4,10 @@ import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-surgical-modal',
-  templateUrl: './surgical-modal.component.html',
-  styleUrls: ['./surgical-modal.component.scss']
+    selector: 'app-surgical-modal',
+    templateUrl: './surgical-modal.component.html',
+    styleUrls: ['./surgical-modal.component.scss'],
+    standalone: false
 })
 export class SurgicalModalComponent implements OnInit {
   @Output() toggleModal = new EventEmitter<any>();

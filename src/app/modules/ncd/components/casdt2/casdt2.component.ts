@@ -8,9 +8,10 @@ import {casdt2Form} from "./casdt2form";
 import {faSave} from "@fortawesome/free-regular-svg-icons";
 
 @Component({
-  selector: 'app-casdt2',
-  templateUrl: './casdt2.component.html',
-  styleUrls: ['./casdt2.component.scss']
+    selector: 'app-casdt2',
+    templateUrl: './casdt2.component.html',
+    styleUrls: ['./casdt2.component.scss'],
+    standalone: false
 })
 export class Casdt2Component implements OnInit {
   @Input() patient_id;

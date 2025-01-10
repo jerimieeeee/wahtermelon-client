@@ -3,9 +3,10 @@ import { faAdd, faAnglesLeft, faAnglesRight, faChevronLeft, faChevronRight, faEd
 import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
-  selector: 'app-lib-drug-list',
-  templateUrl: './lib-drug-list.component.html',
-  styleUrls: ['./lib-drug-list.component.scss']
+    selector: 'app-lib-drug-list',
+    templateUrl: './lib-drug-list.component.html',
+    styleUrls: ['./lib-drug-list.component.scss'],
+    standalone: false
 })
 export class LibDrugListComponent implements OnInit {
   @Output() showAdd = new EventEmitter<any>()

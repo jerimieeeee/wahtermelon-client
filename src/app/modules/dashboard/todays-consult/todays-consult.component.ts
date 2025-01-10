@@ -9,9 +9,10 @@ import { interval, Subject, Subscription, takeUntil } from 'rxjs';
 import { switchMap, finalize, take } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-todays-consult',
-  templateUrl: './todays-consult.component.html',
-  styleUrls: ['./todays-consult.component.scss']
+    selector: 'app-todays-consult',
+    templateUrl: './todays-consult.component.html',
+    styleUrls: ['./todays-consult.component.scss'],
+    standalone: false
 })
 export class TodaysConsultComponent implements OnInit, OnDestroy {
   @Input() date_today;

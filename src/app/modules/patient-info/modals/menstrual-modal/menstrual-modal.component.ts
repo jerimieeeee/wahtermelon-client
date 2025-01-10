@@ -5,9 +5,10 @@ import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-menstrual-modal',
-  templateUrl: './menstrual-modal.component.html',
-  styleUrls: ['./menstrual-modal.component.scss']
+    selector: 'app-menstrual-modal',
+    templateUrl: './menstrual-modal.component.html',
+    styleUrls: ['./menstrual-modal.component.scss'],
+    standalone: false
 })
 export class MenstrualModalComponent implements OnInit, OnChanges {
   @Output() loadData = new EventEmitter<any>();
@@ -59,7 +60,7 @@ export class MenstrualModalComponent implements OnInit, OnChanges {
         menopause_age: [null],
       });
 
-      if(this.menstrual_history){
+      if(this.menstrual_history.length > 0){
         this.patchValue()
       }
     }

@@ -4,9 +4,10 @@ import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-import-xml',
-  templateUrl: './import-xml.component.html',
-  styleUrls: ['./import-xml.component.scss']
+    selector: 'app-import-xml',
+    templateUrl: './import-xml.component.html',
+    styleUrls: ['./import-xml.component.scss'],
+    standalone: false
 })
 export class ImportXmlComponent {
   @Output() toggleModal = new EventEmitter<any>();

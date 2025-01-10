@@ -7,9 +7,10 @@ import { ToastrService } from 'ngx-toastr';
 import { dateHelper } from 'app/shared/services/date-helper.service';
 
 @Component({
-  selector: 'app-module-modal',
-  templateUrl: './module-modal.component.html',
-  styleUrls: ['./module-modal.component.scss']
+    selector: 'app-module-modal',
+    templateUrl: './module-modal.component.html',
+    styleUrls: ['./module-modal.component.scss'],
+    standalone: false
 })
 export class ModuleModalComponent implements OnInit {
   @Output() toggleModal = new EventEmitter<any>();

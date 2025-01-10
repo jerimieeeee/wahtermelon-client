@@ -5,9 +5,10 @@ import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-dots-chart',
-  templateUrl: './dots-chart.component.html',
-  styleUrls: ['./dots-chart.component.scss']
+    selector: 'app-dots-chart',
+    templateUrl: './dots-chart.component.html',
+    styleUrls: ['./dots-chart.component.scss'],
+    standalone: false
 })
 
 export class DotsChartComponent implements OnInit {

@@ -11,10 +11,11 @@ import { AuthService } from './shared/services/auth/auth.service';
 import { CookieService } from 'ngx-cookie-service';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
-  animations: [openCloseTrigger]
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.scss'],
+    animations: [openCloseTrigger],
+    standalone: false
 })
 export class AppComponent implements OnInit{
   title = 'wahtermelon-client';

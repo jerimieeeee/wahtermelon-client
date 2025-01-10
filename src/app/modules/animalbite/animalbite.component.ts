@@ -5,9 +5,10 @@ import { faCircleNotch, faDoorClosed, faPersonWalking } from '@fortawesome/free-
 import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
-  selector: 'app-animalbite',
-  templateUrl: './animalbite.component.html',
-  styleUrls: ['./animalbite.component.scss']
+    selector: 'app-animalbite',
+    templateUrl: './animalbite.component.html',
+    styleUrls: ['./animalbite.component.scss'],
+    standalone: false
 })
 export class AnimalbiteComponent implements OnInit{
   patient_id: any;

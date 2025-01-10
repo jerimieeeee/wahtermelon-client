@@ -8,9 +8,10 @@ import { faSave } from '@fortawesome/free-regular-svg-icons';
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
-  selector: 'app-perpetrators',
-  templateUrl: './perpetrators.component.html',
-  styleUrls: ['./perpetrators.component.scss']
+    selector: 'app-perpetrators',
+    templateUrl: './perpetrators.component.html',
+    styleUrls: ['./perpetrators.component.scss'],
+    standalone: false
 })
 export class PerpetratorsComponent implements OnInit{
   @Output() toggleModal = new EventEmitter<any>();

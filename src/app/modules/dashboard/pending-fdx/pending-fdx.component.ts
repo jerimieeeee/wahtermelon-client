@@ -11,9 +11,10 @@ import { HttpService } from 'app/shared/services/http.service';
 import {finalize} from "rxjs/operators";
 
 @Component({
-  selector: 'app-pending-fdx',
-  templateUrl: './pending-fdx.component.html',
-  styleUrls: ['./pending-fdx.component.scss']
+    selector: 'app-pending-fdx',
+    templateUrl: './pending-fdx.component.html',
+    styleUrls: ['./pending-fdx.component.scss'],
+    standalone: false
 })
 export class PendingFdxComponent implements OnInit {
   @Input() get_patient_data: any;

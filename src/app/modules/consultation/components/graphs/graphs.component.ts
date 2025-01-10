@@ -4,20 +4,21 @@ import { trigger, transition, style, animate } from '@angular/animations';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-graphs',
-  templateUrl: './graphs.component.html',
-  styleUrls: ['./graphs.component.scss'],
-  animations: [
-    trigger('openCloseAccordion', [
-      transition(':enter', [
-        style({height: 0, opacity: 0}),
-        animate('200ms', style({ height: '100%', opacity: '100%'})),
-      ]),
-      transition(':leave', [
-        animate('200ms', style({ height: 0, opacity: 0 }))
-      ])
-    ]),
-  ]
+    selector: 'app-graphs',
+    templateUrl: './graphs.component.html',
+    styleUrls: ['./graphs.component.scss'],
+    animations: [
+        trigger('openCloseAccordion', [
+            transition(':enter', [
+                style({ height: 0, opacity: 0 }),
+                animate('200ms', style({ height: '100%', opacity: '100%' })),
+            ]),
+            transition(':leave', [
+                animate('200ms', style({ height: 0, opacity: 0 }))
+            ])
+        ]),
+    ],
+    standalone: false
 })
 export class GraphsComponent implements OnInit, OnChanges {
   @Input() vitals;

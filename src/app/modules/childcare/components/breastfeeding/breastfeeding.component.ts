@@ -6,9 +6,10 @@ import { ToastrService } from 'ngx-toastr';
 import moment from 'moment';
 
 @Component({
-  selector: 'app-breastfeeding',
-  templateUrl: './breastfeeding.component.html',
-  styleUrls: ['./breastfeeding.component.scss']
+    selector: 'app-breastfeeding',
+    templateUrl: './breastfeeding.component.html',
+    styleUrls: ['./breastfeeding.component.scss'],
+    standalone: false
 })
 export class BreastfeedingComponent implements OnInit {
 

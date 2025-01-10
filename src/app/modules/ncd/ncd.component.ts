@@ -6,9 +6,10 @@ import { eventSubscriber } from '../patient-info/emmitter.interface';
 import { PatientInfoComponent } from '../patient-info/patient-info.component';
 import { AgeService } from 'app/shared/services/age.service';
 @Component({
-  selector: 'app-ncd',
-  templateUrl: './ncd.component.html',
-  styleUrls: ['./ncd.component.scss']
+    selector: 'app-ncd',
+    templateUrl: './ncd.component.html',
+    styleUrls: ['./ncd.component.scss'],
+    standalone: false
 })
 export class NcdComponent implements OnInit, OnDestroy {
   module: Number;

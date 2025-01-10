@@ -1,14 +1,15 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import { faCircleNotch, faFileExcel, faFilePdf } from '@fortawesome/free-solid-svg-icons';
 import { options } from 'app/modules/patient-registration/patient-registration.module';
-import { ExportAsConfig, ExportAsService } from 'ngx-export-as-17';
+import { ExportAsConfig, ExportAsService } from 'ngx-export-as';
 import moment from 'moment';
 import { dateHelper } from 'app/shared/services/date-helper.service';
 
 @Component({
-  selector: 'app-fhsis2018-ncd',
-  templateUrl: './fhsis2018-ncd.component.html',
-  styleUrls: ['./fhsis2018-ncd.component.scss']
+    selector: 'app-fhsis2018-ncd',
+    templateUrl: './fhsis2018-ncd.component.html',
+    styleUrls: ['./fhsis2018-ncd.component.scss'],
+    standalone: false
 })
 export class Fhsis2018NcdComponent implements OnChanges {
   @Input() report_data;

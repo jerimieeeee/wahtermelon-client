@@ -7,9 +7,10 @@ import { ToastrService } from 'ngx-toastr';
 import { forkJoin } from 'rxjs';
 
 @Component({
-  selector: 'app-case-outcome',
-  templateUrl: './case-outcome.component.html',
-  styleUrls: ['./case-outcome.component.scss']
+    selector: 'app-case-outcome',
+    templateUrl: './case-outcome.component.html',
+    styleUrls: ['./case-outcome.component.scss'],
+    standalone: false
 })
 export class CaseOutcomeComponent implements OnInit {
   @Output() toggleModal = new EventEmitter<any>();

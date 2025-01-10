@@ -6,9 +6,10 @@ import { PatientInfoComponent } from '../patient-info/patient-info.component';
 import { faEdit, faTrashCan } from '@fortawesome/free-regular-svg-icons';
 
 @Component({
-  selector: 'app-lab-pending',
-  templateUrl: './lab-pending.component.html',
-  styleUrls: ['./lab-pending.component.scss']
+    selector: 'app-lab-pending',
+    templateUrl: './lab-pending.component.html',
+    styleUrls: ['./lab-pending.component.scss'],
+    standalone: false
 })
 export class LabPendingComponent implements OnInit {
   faFlaskVial = faFlaskVial;

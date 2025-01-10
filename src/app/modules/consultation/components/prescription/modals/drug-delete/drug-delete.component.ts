@@ -4,9 +4,10 @@ import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-drug-delete',
-  templateUrl: './drug-delete.component.html',
-  styleUrls: ['./drug-delete.component.scss']
+    selector: 'app-drug-delete',
+    templateUrl: './drug-delete.component.html',
+    styleUrls: ['./drug-delete.component.scss'],
+    standalone: false
 })
 export class DrugDeleteComponent implements OnInit {
   @Output() toggleForm = new EventEmitter<any>();

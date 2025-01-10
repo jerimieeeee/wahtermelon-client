@@ -5,9 +5,10 @@ import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-set-date',
-  templateUrl: './set-date.component.html',
-  styleUrls: ['./set-date.component.scss']
+    selector: 'app-set-date',
+    templateUrl: './set-date.component.html',
+    styleUrls: ['./set-date.component.scss'],
+    standalone: false
 })
 export class SetDateComponent {
   @Output() toggleModal = new EventEmitter<any>();

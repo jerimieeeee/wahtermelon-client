@@ -7,9 +7,10 @@ import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
-  selector: 'app-mcr',
-  templateUrl: './mcr.component.html',
-  styleUrls: ['./mcr.component.scss']
+    selector: 'app-mcr',
+    templateUrl: './mcr.component.html',
+    styleUrls: ['./mcr.component.scss'],
+    standalone: false
 })
 export class McrComponent implements OnInit {
   date = new Date();

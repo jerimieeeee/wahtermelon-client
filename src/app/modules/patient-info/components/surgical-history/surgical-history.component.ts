@@ -5,9 +5,10 @@ import { HttpService } from 'app/shared/services/http.service';
 import { filter, tap } from 'rxjs';
 
 @Component({
-  selector: 'app-surgical-history',
-  templateUrl: './surgical-history.component.html',
-  styleUrls: ['./surgical-history.component.scss']
+    selector: 'app-surgical-history',
+    templateUrl: './surgical-history.component.html',
+    styleUrls: ['./surgical-history.component.scss'],
+    standalone: false
 })
 export class SurgicalHistoryComponent implements OnInit, OnDestroy{
   @Output() toggleAccordion = new EventEmitter<any>();

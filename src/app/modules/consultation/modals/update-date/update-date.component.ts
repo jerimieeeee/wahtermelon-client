@@ -8,9 +8,10 @@ import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-update-date',
-  templateUrl: './update-date.component.html',
-  styleUrls: ['./update-date.component.scss']
+    selector: 'app-update-date',
+    templateUrl: './update-date.component.html',
+    styleUrls: ['./update-date.component.scss'],
+    standalone: false
 })
 export class UpdateDateComponent implements OnInit{
   @Output() toggleModal = new EventEmitter<any>();

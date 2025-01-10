@@ -6,9 +6,10 @@ import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-case-holding',
-  templateUrl: './case-holding.component.html',
-  styleUrls: ['./case-holding.component.scss']
+    selector: 'app-case-holding',
+    templateUrl: './case-holding.component.html',
+    styleUrls: ['./case-holding.component.scss'],
+    standalone: false
 })
 export class CaseHoldingComponent implements OnInit {
   @Output() getPatientTbHistory = new EventEmitter<any>();

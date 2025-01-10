@@ -6,9 +6,10 @@ import { HttpService } from 'app/shared/services/http.service';
 import { NameHelperService } from 'app/shared/services/name-helper.service';
 
 @Component({
-  selector: 'app-ekas',
-  templateUrl: './ekas.component.html',
-  styleUrls: ['./ekas.component.scss']
+    selector: 'app-ekas',
+    templateUrl: './ekas.component.html',
+    styleUrls: ['./ekas.component.scss'],
+    standalone: false
 })
 export class EkasComponent implements OnInit {
   @Output() toggleModal = new EventEmitter<any>();

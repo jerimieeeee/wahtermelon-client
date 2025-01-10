@@ -7,7 +7,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SetDateComponent } from './modals/set-date/set-date.component';
 import { ImportXmlComponent } from './modals/import-xml/import-xml.component';
 import { KonsultaMasterlistComponent } from './konsulta-masterlist.component';
-import { ExportAsModule } from 'ngx-export-as-17';
+import { ExportAsModule } from 'ngx-export-as';
 
 
 @NgModule({

@@ -4,9 +4,10 @@ import { faAnglesLeft, faAnglesRight, faChevronLeft, faChevronRight, faSearch, f
 import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
-  selector: 'app-account-list',
-  templateUrl: './account-list.component.html',
-  styleUrls: ['./account-list.component.scss']
+    selector: 'app-account-list',
+    templateUrl: './account-list.component.html',
+    styleUrls: ['./account-list.component.scss'],
+    standalone: false
 })
 export class AccountListComponent implements OnInit {
   faSpinner = faSpinner;

@@ -8,11 +8,10 @@ import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-drug-form',
-  standalone: true,
-  imports: [CommonModule, FontAwesomeModule, FormsModule, ReactiveFormsModule],
-  templateUrl: './drug-form.component.html',
-  styleUrls: ['./drug-form.component.scss']
+    selector: 'app-drug-form',
+    imports: [CommonModule, FontAwesomeModule, FormsModule, ReactiveFormsModule],
+    templateUrl: './drug-form.component.html',
+    styleUrls: ['./drug-form.component.scss']
 })
 export class DrugFormComponent implements OnChanges {
   @Output() toggleForm = new EventEmitter<any>();

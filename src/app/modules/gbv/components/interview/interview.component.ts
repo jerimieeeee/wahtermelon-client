@@ -9,9 +9,10 @@ import { interviewForm } from './interviewForm';
 import { formatDate } from '@angular/common';
 
 @Component({
-  selector: 'app-interview',
-  templateUrl: './interview.component.html',
-  styleUrls: ['./interview.component.scss']
+    selector: 'app-interview',
+    templateUrl: './interview.component.html',
+    styleUrls: ['./interview.component.scss'],
+    standalone: false
 })
 export class InterviewComponent implements OnInit{
   @Output() updateSelectedGbv = new EventEmitter<any>();

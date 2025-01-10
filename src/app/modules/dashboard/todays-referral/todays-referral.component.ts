@@ -4,9 +4,10 @@ import { faAnglesLeft, faAnglesRight, faChevronLeft, faChevronRight, faCircleNot
 import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
-  selector: 'app-todays-referral',
-  templateUrl: './todays-referral.component.html',
-  styleUrls: ['./todays-referral.component.scss']
+    selector: 'app-todays-referral',
+    templateUrl: './todays-referral.component.html',
+    styleUrls: ['./todays-referral.component.scss'],
+    standalone: false
 })
 export class TodaysReferralComponent implements OnInit {
   @Input() date_today;

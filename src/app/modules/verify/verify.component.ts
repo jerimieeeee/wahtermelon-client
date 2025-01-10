@@ -3,9 +3,10 @@ import { Router } from '@angular/router';
 import { faEnvelope } from '@fortawesome/free-regular-svg-icons';
 
 @Component({
-  selector: 'app-verify',
-  templateUrl: './verify.component.html',
-  styleUrls: ['./verify.component.scss']
+    selector: 'app-verify',
+    templateUrl: './verify.component.html',
+    styleUrls: ['./verify.component.scss'],
+    standalone: false
 })
 export class VerifyComponent implements OnInit {
   faEnvelope = faEnvelope;

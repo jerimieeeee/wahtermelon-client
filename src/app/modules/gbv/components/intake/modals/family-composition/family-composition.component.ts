@@ -7,9 +7,10 @@ import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-family-composition',
-  templateUrl: './family-composition.component.html',
-  styleUrls: ['./family-composition.component.scss']
+    selector: 'app-family-composition',
+    templateUrl: './family-composition.component.html',
+    styleUrls: ['./family-composition.component.scss'],
+    standalone: false
 })
 export class FamilyCompositionComponent implements OnInit {
   @Output() toggleModal = new EventEmitter<any>();

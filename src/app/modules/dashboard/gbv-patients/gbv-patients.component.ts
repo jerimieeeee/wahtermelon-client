@@ -4,9 +4,10 @@ import { faAnglesLeft, faAnglesRight, faChevronLeft, faChevronRight, faCircleNot
 import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
-  selector: 'app-gbv-patients',
-  templateUrl: './gbv-patients.component.html',
-  styleUrls: ['./gbv-patients.component.scss']
+    selector: 'app-gbv-patients',
+    templateUrl: './gbv-patients.component.html',
+    styleUrls: ['./gbv-patients.component.scss'],
+    standalone: false
 })
 export class GbvPatientsComponent implements OnInit{
   @Input() date_today;

@@ -6,9 +6,10 @@ import { NameHelperService } from 'app/shared/services/name-helper.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-lab-form',
-  templateUrl: './lab-form.component.html',
-  styleUrls: ['./lab-form.component.scss']
+    selector: 'app-lab-form',
+    templateUrl: './lab-form.component.html',
+    styleUrls: ['./lab-form.component.scss'],
+    standalone: false
 })
 export class LabFormComponent implements OnChanges {
   @Output() toggleModal = new EventEmitter<any>();

@@ -7,11 +7,10 @@ import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
-  standalone: true,
-  imports: [CommonModule, FontAwesomeModule, ReactiveFormsModule, FormsModule],
-  selector: 'app-ticket-transactions',
-  templateUrl: './ticket-transactions.component.html',
-  styleUrls: ['./ticket-transactions.component.scss']
+    imports: [CommonModule, FontAwesomeModule, ReactiveFormsModule, FormsModule],
+    selector: 'app-ticket-transactions',
+    templateUrl: './ticket-transactions.component.html',
+    styleUrls: ['./ticket-transactions.component.scss']
 })
 export class TicketTransactionsComponent implements OnInit {
   @Input() selected_ticket;

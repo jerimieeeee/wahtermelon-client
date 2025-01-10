@@ -6,9 +6,10 @@ import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-upload-claims',
-  templateUrl: './upload-claims.component.html',
-  styleUrls: ['./upload-claims.component.scss']
+    selector: 'app-upload-claims',
+    templateUrl: './upload-claims.component.html',
+    styleUrls: ['./upload-claims.component.scss'],
+    standalone: false
 })
 export class UploadClaimsComponent implements OnInit {
   @Output() modalToggle = new EventEmitter<any>();

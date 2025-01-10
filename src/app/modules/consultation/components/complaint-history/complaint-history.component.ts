@@ -5,9 +5,10 @@ import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 
 @Component({
-  selector: 'app-complaint-history',
-  templateUrl: './complaint-history.component.html',
-  styleUrls: ['./complaint-history.component.scss']
+    selector: 'app-complaint-history',
+    templateUrl: './complaint-history.component.html',
+    styleUrls: ['./complaint-history.component.scss'],
+    standalone: false
 })
 export class ComplaintHistoryComponent implements OnInit, OnChanges {
   @Output() loadConsult = new EventEmitter<any>();

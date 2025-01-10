@@ -3,9 +3,10 @@ import { faChevronDown, faChevronUp, faMinus, faPlusCircle } from '@fortawesome/
 import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
-  selector: 'app-past-medical',
-  templateUrl: './past-medical.component.html',
-  styleUrls: ['./past-medical.component.scss']
+    selector: 'app-past-medical',
+    templateUrl: './past-medical.component.html',
+    styleUrls: ['./past-medical.component.scss'],
+    standalone: false
 })
 export class PastMedicalComponent {
   @Output() toggleAccordion = new EventEmitter<any>();

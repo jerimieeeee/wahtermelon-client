@@ -5,9 +5,10 @@ import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-set-appointment',
-  templateUrl: './set-appointment.component.html',
-  styleUrls: ['./set-appointment.component.scss']
+    selector: 'app-set-appointment',
+    templateUrl: './set-appointment.component.html',
+    styleUrls: ['./set-appointment.component.scss'],
+    standalone: false
 })
 export class SetAppointmentComponent implements OnInit, OnChanges {
   @Output() loadData = new EventEmitter<any>();

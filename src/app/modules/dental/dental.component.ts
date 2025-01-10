@@ -4,9 +4,10 @@ import { faCircleNotch, faDoorClosed } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
-  selector: 'app-dental',
-  templateUrl: './dental.component.html',
-  styleUrls: ['./dental.component.scss']
+    selector: 'app-dental',
+    templateUrl: './dental.component.html',
+    styleUrls: ['./dental.component.scss'],
+    standalone: false
 })
 export class DentalComponent implements OnInit {
   consult_details: any;

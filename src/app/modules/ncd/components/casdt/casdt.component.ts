@@ -6,9 +6,10 @@ import { circumcision } from '../../data-lib/libraries';
 import { casdtForm } from './form';
 
 @Component({
-  selector: 'app-casdt',
-  templateUrl: './casdt.component.html',
-  styleUrls: ['./casdt.component.scss']
+    selector: 'app-casdt',
+    templateUrl: './casdt.component.html',
+    styleUrls: ['./casdt.component.scss'],
+    standalone: false
 })
 export class CasdtComponent implements OnInit {
   faSpinner = faSpinner;

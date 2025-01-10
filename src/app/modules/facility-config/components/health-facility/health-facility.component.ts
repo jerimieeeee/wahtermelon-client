@@ -4,9 +4,10 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
-  selector: 'app-health-facility',
-  templateUrl: './health-facility.component.html',
-  styleUrls: ['./health-facility.component.scss']
+    selector: 'app-health-facility',
+    templateUrl: './health-facility.component.html',
+    styleUrls: ['./health-facility.component.scss'],
+    standalone: false
 })
 export class HealthFacilityComponent implements OnInit {
   

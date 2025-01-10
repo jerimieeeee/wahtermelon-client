@@ -6,9 +6,10 @@ import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-fpchart',
-  templateUrl: './fpchart.component.html',
-  styleUrls: ['./fpchart.component.scss']
+    selector: 'app-fpchart',
+    templateUrl: './fpchart.component.html',
+    styleUrls: ['./fpchart.component.scss'],
+    standalone: false
 })
 export class FpchartComponent implements OnInit {
 

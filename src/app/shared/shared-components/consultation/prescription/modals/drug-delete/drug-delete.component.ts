@@ -7,11 +7,10 @@ import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-drug-delete',
-  standalone: true,
-  imports: [CommonModule, FontAwesomeModule, FormsModule],
-  templateUrl: './drug-delete.component.html',
-  styleUrls: ['./drug-delete.component.scss']
+    selector: 'app-drug-delete',
+    imports: [CommonModule, FontAwesomeModule, FormsModule],
+    templateUrl: './drug-delete.component.html',
+    styleUrls: ['./drug-delete.component.scss']
 })
 export class DrugDeleteComponent {
   @Output() toggleForm = new EventEmitter<any>();

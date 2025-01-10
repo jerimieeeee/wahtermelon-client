@@ -5,9 +5,10 @@ import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-methods-modal',
-  templateUrl: './methods-modal.component.html',
-  styleUrls: ['./methods-modal.component.scss']
+    selector: 'app-methods-modal',
+    templateUrl: './methods-modal.component.html',
+    styleUrls: ['./methods-modal.component.scss'],
+    standalone: false
 })
 export class MethodsModalComponent implements OnInit {
   @Output() toggleModal = new EventEmitter<any>();

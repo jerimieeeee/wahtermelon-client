@@ -6,9 +6,10 @@ import { ToastrService } from 'ngx-toastr';
 import { catchError, concat, debounceTime, distinctUntilChanged, filter, map, Observable, of, Subject, switchMap, tap } from 'rxjs';
 
 @Component({
-  selector: 'app-final-dx',
-  templateUrl: './final-dx.component.html',
-  styleUrls: ['./final-dx.component.scss']
+    selector: 'app-final-dx',
+    templateUrl: './final-dx.component.html',
+    styleUrls: ['./final-dx.component.scss'],
+    standalone: false
 })
 export class FinalDxComponent implements OnChanges {
   @Input() toggle_content;

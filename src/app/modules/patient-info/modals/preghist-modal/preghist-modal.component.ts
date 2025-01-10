@@ -5,9 +5,10 @@ import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-preghist-modal',
-  templateUrl: './preghist-modal.component.html',
-  styleUrls: ['./preghist-modal.component.scss']
+    selector: 'app-preghist-modal',
+    templateUrl: './preghist-modal.component.html',
+    styleUrls: ['./preghist-modal.component.scss'],
+    standalone: false
 })
 export class PreghistModalComponent implements OnInit {
   @Output() loadData = new EventEmitter<any>();

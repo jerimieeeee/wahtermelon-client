@@ -10,11 +10,10 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-complaint-history',
-  standalone: true,
-  imports: [CommonModule, FontAwesomeModule, NgSelectModule, FormsModule],
-  templateUrl: './complaint-history.component.html',
-  styleUrls: ['./complaint-history.component.scss']
+    selector: 'app-complaint-history',
+    imports: [CommonModule, FontAwesomeModule, NgSelectModule, FormsModule],
+    templateUrl: './complaint-history.component.html',
+    styleUrls: ['./complaint-history.component.scss']
 })
 export class ComplaintHistoryComponent implements OnInit, OnChanges {
   @Output() loadConsult = new EventEmitter<any>();

@@ -1,9 +1,10 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 @Component({
-  selector: 'app-allergies-modal',
-  templateUrl: './allergies-modal.component.html',
-  styleUrls: ['./allergies-modal.component.scss']
+    selector: 'app-allergies-modal',
+    templateUrl: './allergies-modal.component.html',
+    styleUrls: ['./allergies-modal.component.scss'],
+    standalone: false
 })
 export class AllergiesModalComponent implements OnInit {
   @Output() toggleModal = new EventEmitter<any>();

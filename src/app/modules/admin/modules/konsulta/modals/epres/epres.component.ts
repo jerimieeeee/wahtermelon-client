@@ -2,9 +2,10 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { faFaceFrown, faFaceMeh, faFaceSmile, faPrint } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
-  selector: 'app-epres',
-  templateUrl: './epres.component.html',
-  styleUrls: ['./epres.component.scss']
+    selector: 'app-epres',
+    templateUrl: './epres.component.html',
+    styleUrls: ['./epres.component.scss'],
+    standalone: false
 })
 export class EpresComponent implements OnInit {
   @Output() toggleModal = new EventEmitter<any>();

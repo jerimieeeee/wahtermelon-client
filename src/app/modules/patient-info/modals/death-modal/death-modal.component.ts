@@ -5,9 +5,10 @@ import { ToastrService } from 'ngx-toastr';
 import { catchError, concat, debounceTime, distinctUntilChanged, filter, forkJoin, map, Observable, of, Subject, switchMap, tap } from 'rxjs';
 
 @Component({
-  selector: 'app-death-modal',
-  templateUrl: './death-modal.component.html',
-  styleUrls: ['./death-modal.component.scss']
+    selector: 'app-death-modal',
+    templateUrl: './death-modal.component.html',
+    styleUrls: ['./death-modal.component.scss'],
+    standalone: false
 })
 export class DeathModalComponent implements OnInit {
   @Output() toggleModal = new EventEmitter<any>();

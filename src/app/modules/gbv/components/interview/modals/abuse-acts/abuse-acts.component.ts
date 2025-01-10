@@ -5,9 +5,10 @@ import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-abuse-acts',
-  templateUrl: './abuse-acts.component.html',
-  styleUrls: ['./abuse-acts.component.scss']
+    selector: 'app-abuse-acts',
+    templateUrl: './abuse-acts.component.html',
+    styleUrls: ['./abuse-acts.component.scss'],
+    standalone: false
 })
 export class AbuseActsComponent implements OnInit {
   @Output() toggleModal = new EventEmitter<any>();

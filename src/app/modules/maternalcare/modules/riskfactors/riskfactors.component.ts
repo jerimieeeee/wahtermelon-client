@@ -7,9 +7,10 @@ import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
-  selector: 'app-riskfactors',
-  templateUrl: './riskfactors.component.html',
-  styleUrls: ['./riskfactors.component.scss']
+    selector: 'app-riskfactors',
+    templateUrl: './riskfactors.component.html',
+    styleUrls: ['./riskfactors.component.scss'],
+    standalone: false
 })
 export class RiskfactorsComponent implements OnInit {
   faCalendarDay = faCalendarDay;

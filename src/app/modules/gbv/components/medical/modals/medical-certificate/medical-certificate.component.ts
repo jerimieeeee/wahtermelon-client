@@ -3,9 +3,10 @@ import { HttpService } from 'app/shared/services/http.service';
 import { AgeService } from 'app/shared/services/age.service';
 
 @Component({
-  selector: 'app-medical-certificate',
-  templateUrl: './medical-certificate.component.html',
-  styleUrls: ['./medical-certificate.component.scss']
+    selector: 'app-medical-certificate',
+    templateUrl: './medical-certificate.component.html',
+    styleUrls: ['./medical-certificate.component.scss'],
+    standalone: false
 })
 export class MedicalCertificateComponent implements OnInit {
   @Output() toggleMedCert = new EventEmitter<any>();

@@ -6,9 +6,10 @@ import { HttpService } from 'app/shared/services/http.service';
 import { filter, tap } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-laboratory',
-  templateUrl: './laboratory.component.html',
-  styleUrls: ['./laboratory.component.scss']
+    selector: 'app-laboratory',
+    templateUrl: './laboratory.component.html',
+    styleUrls: ['./laboratory.component.scss'],
+    standalone: false
 })
 export class LaboratoryComponent implements OnInit, OnDestroy {
   @Output() toggleAccordion = new EventEmitter<any>();

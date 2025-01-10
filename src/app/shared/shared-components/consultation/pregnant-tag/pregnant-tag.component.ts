@@ -8,11 +8,10 @@ import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  standalone: true,
-  imports: [CommonModule, FormsModule, FontAwesomeModule],
-  selector: 'app-pregnant-tag',
-  templateUrl: './pregnant-tag.component.html',
-  styleUrls: ['./pregnant-tag.component.scss']
+    imports: [CommonModule, FormsModule, FontAwesomeModule],
+    selector: 'app-pregnant-tag',
+    templateUrl: './pregnant-tag.component.html',
+    styleUrls: ['./pregnant-tag.component.scss']
 })
 export class PregnantTagComponent implements OnChanges {
   @Output() loadConsult = new EventEmitter<any>();
