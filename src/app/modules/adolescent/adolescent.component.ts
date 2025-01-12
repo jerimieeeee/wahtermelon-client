@@ -25,6 +25,8 @@ export class AdolescentComponent implements OnInit {
   fetching_history: boolean = true;
   show_form: boolean = true;
 
+  compre_questions: any = [];
+
   switchPage(page) {
     if(page === 1) this.loadASRH;
     this.pages = page;
@@ -44,6 +46,22 @@ export class AdolescentComponent implements OnInit {
        this.fetching_history = false;
   }
 
+  loadCompreLib(){
+    // let params = {
+    //   patient_id: this.patient_id,
+    //   per_page: 'all'
+    // };
+
+    this.http.get('libraries/comprehensive').subscribe({
+      next: (data: any) => {
+        this.compre_questions = data.data;
+        console.log(this.compre_questions)
+
+      },
+      error: err => console.log(err)
+    });
+  }
+
   constructor(
     private http: HttpService,
     private route: ActivatedRoute)
@@ -51,6 +69,7 @@ export class AdolescentComponent implements OnInit {
 
 
   ngOnInit(): void {
-   console.log('working')
+    this.loadCompreLib();
+    console.log('working')
   }
 }

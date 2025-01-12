@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { faCalendarDay, faPlus, faSave, faTimes, faPencil, faCircleCheck, faCaretRight, faInfoCircle, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { HttpService } from 'app/shared/services/http.service';
@@ -10,6 +10,8 @@ import { Router } from '@angular/router';
   styleUrl: './home.component.scss'
 })
 export class HomeComponent implements OnInit {
+  @Input() compre_questions : any;
+
   faCalendarDay = faCalendarDay;
   faPlus = faPlus;
   faSave = faSave;
@@ -23,6 +25,8 @@ export class HomeComponent implements OnInit {
   is_saving: boolean = false;
 
   show_form = false;
+
+  comprehensive_q: any = [];
 
   adolescentForm: FormGroup = new FormGroup({
 
@@ -54,8 +58,7 @@ ngOnInit(): void {
       consent_flag: [false]
 
     })
-
+    this.comprehensive_q = this.compre_questions
+    console.log(this.comprehensive_q, 'from main')
   }
-}{
-
 }

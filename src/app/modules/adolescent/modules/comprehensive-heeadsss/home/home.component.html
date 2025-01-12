@@ -4,25 +4,34 @@
    Comprehensive HEEADSSS Assessment
   </div>
 
-  <form [formGroup]="adolescentForm" class="mx-5 mb-5">
+  <form [formGroup]="adolescentForm" class="mx-5 mb-6">
 
-      <div class="mt-1 grid grid-cols-16 gap-x-4 w-full">
-
-        <div class="col-span-12 col-start-1 grid gap-x-4">
-          <div class="text-md text-blue-500 rounded-t-md py-2 font-semibold">
-              Home
+      <div class="mt-1 w-full" *ngFor="let home of compre_questions">
+        <div class=""  *ngIf="home.code === 'H01'">
+          <div class="text-md text-blue-500 rounded-t-md font-semibold py-4">
+           {{home.desc}}
           </div>
+
             <div class="text-sm mb-5">
-              <p>The interview can start with a discussion of the adolescent’s home and the environment where they live.</p>
+              <p>{{home.instruction}}</p>
             </div>
+
+              <div class="mt-1 w-full border-t border-gray-200 mb-5"></div>
+              <div class="columns-2">
+                <div class="h-full" *ngFor="let question of home.questions" >
+                  <div class="py-1">
+                    <!-- <input type="checkbox" class="input-checkbox" id="consent_flag" formControlName="consent_flag" />  -->
+                    <label class="text-sm"> {{question.question}}</label>
+                  </div>
+                </div>
+                <div class="h-92">
+                  <div class="py-3.5">
+                    <textarea rows="13" id="fdx_remarks" placeholder="Remarks" class="text-sm placeholder-slate-400 w-full rounded-md border-gray-300"></textarea>
+                  </div>
+                </div>
+              </div>
         </div>
-      </div>
 
-    <div class="mt-1 w-full border-t border-gray-200 py-5">
-
-      <div class="grid grid-cols-12 mt-2 align-middle" *ngFor="let question of compre_home">
-          <label for="answer" class="text-sm col-span-6 col-start-1">{{question.name}}</label>
-          <input class="input align-middle text-sm col-span-6 col-start-7" id="" name="">
       </div>
 
 
@@ -33,7 +42,6 @@
             Save
           </button>
       </div>
-    </div>
 
   </form>
 

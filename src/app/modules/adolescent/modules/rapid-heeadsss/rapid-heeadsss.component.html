@@ -1,4 +1,3 @@
-
 <div class="m-5 border border-slate-200 rounded-lg" *ngIf="!show_form">
   <div class="bg-blue-500 text-sm text-white rounded-t-md py-2 pl-5 font-semibold">
    Rapid HEEADSSSS Assessment
@@ -10,42 +9,29 @@
 
           <div class="col-span-12 col-start-1 grid gap-x-4 mb-5">
               <div class="mt-5">
-                <input type="checkbox" class="input-checkbox" id="consent_flag" formControlName="consent_flag" />
                 <label for="consent_flag" class="text-sm" >
-                  The patient has read, fully understood, and signed the patient consent form.
+                  Date of Assessment
                 </label>
+                <input name="assessment_date" id="assessment_id" type="date" placeholder="Enter assessment date" class=" mt-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <label for="consent_flag" class="text-sm" >
+                  Client Type
+                </label>
+                <input name="assessment_date" id="assessment_id" type="date" placeholder="Enter assessment date" class=" mt-5 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
               </div>
           </div>
       </div>
 
-      <div class="mt-1 w-full border-t border-gray-200 py-5" *ngIf="adolescentForm.value.consent_flag === true">
-
+      <!-- <div class="mt-1 w-full border-t border-gray-200 py-5" *ngIf="adolescentForm.get('consent_flag').value === true"> -->
+      <div class="mt-1 w-full border-t border-gray-200 py-5">
         <div class="grid grid-cols-12 mt-2 align-middle" *ngFor="let rapid of rapid_questions">
-          <label for="answer" class="text-sm col-span-11 col-start-1">{{rapid.sequence}}.{{rapid.question}}</label>
+          <label for="answer" class="text-sm col-span-11 col-start-1">{{rapid.sequence}}. {{rapid.question}}</label>
           <select class="input align-middle text-sm col-span-1 col-start-12" id="" name="">
             <option disabled selected value> </option>
-            <option value="N">Hindi</option>
-            <option value="Y">Oo</option>
+            <option value="3">Hindi Sumagot</option>
+            <option value="2">Hindi</option>
+            <option value="1">Oo</option>
           </select>
         </div>
-
-
-
-
-
-
-
-        <div class="flex justify-center mt-5">
-          <button class="btn-save mr-5 mt-4" [disabled]="is_saving">
-            <fa-icon [icon]="faSave" *ngIf="!is_saving" class="mr-2"></fa-icon>
-            <fa-icon [icon]="faSpinner" *ngIf="is_saving" animation="spin" class="mr-2"></fa-icon>
-            Save
-          </button>
-        </div>
       </div>
-
   </form>
-
-
 </div>
-
