@@ -199,10 +199,10 @@ export class AbPreComponent implements OnChanges {
     this.sumTotal('stats_others');
     // this.sumTotalPrevious('previous');
     // this.sumTotalPrevious('previous_others');
-    console.log(this.stats, 'stats');
+    console.log(this.report_data, 'stats');
     this.brgys_info = this.brgys;
     this.pdf_exported = false;
-    this.label_value = this.dateHelper.getLabelValue(this.reportForm, this.report_data);
+    // this.label_value = this.dateHelper.getLabelValue(this.reportForm, this.report_data);
     this.show_stats = true;
   }
 }

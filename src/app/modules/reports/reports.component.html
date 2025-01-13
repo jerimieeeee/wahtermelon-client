@@ -21,7 +21,7 @@
         <optgroup label="Animal Bite Report" class="text-gray-500" >
           <option *ngFor="let type of ab_stats" [ngValue]="type">{{ type.desc }}</option>
         </optgroup>
-         <optgroup label="Others" class="text-gray-500" >
+         <!-- <optgroup label="Others" class="text-gray-500" > -->
         <optgroup label="Others" class="text-gray-500" >
           <option *ngFor="let type of other_stats" [ngValue]="type">{{ type.desc }}</option>
           <option *ngFor="let type of dental_consolidated" [ngValue]="type">{{ type.desc }}</option>
@@ -137,6 +137,13 @@
       <label for="start_date" class="input-label">Month</label>
       <select id="month" name="month" class="input" formControlName="month">
         <option [value]="month.value" *ngFor="let month of months"> {{ month.name }}</option>
+      </select>
+    </div>
+
+    <div class="w-40" *ngIf="reportForm.value.report_type && f['quarter'].enabled">
+      <label for="start_date" class="input-label">Quarter</label>
+      <select id="quarter" name="quarter" class="input" formControlName="quarter">
+        <option [value]="quarter.value" *ngFor="let quarter of quarters"> {{ quarter.desc }}</option>
       </select>
     </div>
 
