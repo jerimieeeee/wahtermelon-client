@@ -2,7 +2,7 @@ import { Component, Input, OnChanges } from '@angular/core';
 import { faFileExcel, faFilePdf } from '@fortawesome/free-regular-svg-icons';
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import { dateHelper } from 'app/shared/services/date-helper.service';
-import { ExportAsConfig, ExportAsService } from 'ngx-export-as-17';
+import { ExportAsConfig, ExportAsService } from 'ngx-export-as';
 import {HttpService} from "../../../../shared/services/http.service";
 
 @Component({
@@ -96,7 +96,7 @@ export class AbPreComponent implements OnChanges {
       category: this.reportForm.value.report_class,
       params: this.params,
       per_page: 10,
-      barangay_code: barangay_code
+      code: barangay_code
     };
     this.openList = true;
   };
