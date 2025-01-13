@@ -154,6 +154,8 @@
 <app-rapid-heeadsss *ngIf="pages === 2 && module === 1"
   [patient_id]="patient_id"
   (loadASRH)="loadASRH()"
+  [client_types]="client_types"
+  [asrh_visit_history]="asrh_visit_history"
 ></app-rapid-heeadsss>
 
 <app-assessment-summary *ngIf="pages === 2 && module === 2"

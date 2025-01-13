@@ -26,6 +26,9 @@ export class AdolescentComponent implements OnInit {
   show_form: boolean = true;
 
   compre_questions: any = [];
+  client_types: any = [];
+  asrh_visit_history: any = [];
+  patient_id: any;
 
   switchPage(page) {
     if(page === 1) this.loadASRH;
@@ -39,11 +42,6 @@ export class AdolescentComponent implements OnInit {
 
   switchTabCompre(tab_compre) {
     this.module_compre = tab_compre;
-  }
-
-  loadASRH() {
-
-       this.fetching_history = false;
   }
 
   loadCompreLib(){
@@ -62,6 +60,43 @@ export class AdolescentComponent implements OnInit {
     });
   }
 
+  loadClient(){
+    // let params = {
+    //   patient_id: this.patient_id,
+    //   per_page: 'all'
+    // };
+
+    this.http.get('libraries/asrh-client-type').subscribe({
+      next: (data: any) => {
+        this.client_types = data.data;
+        console.log(this.client_types)
+
+      },
+      error: err => console.log(err)
+    });
+  }
+
+  loadASRH() {
+    let params = {
+      patient_id: this.patient_id,
+      // per_page: 'all'
+    };
+
+    this.http.get('asrh/rapid', {params}).subscribe({
+      next: (data: any) => {
+
+       this.asrh_visit_history = data.data
+       console.log(this.asrh_visit_history)
+      },
+      complete: () => {
+     
+      },
+      error: err => {console.log(err)
+
+      },
+    })
+  }
+
   constructor(
     private http: HttpService,
     private route: ActivatedRoute)
@@ -69,7 +104,10 @@ export class AdolescentComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.patient_id = this.route.snapshot.paramMap.get('id');
     this.loadCompreLib();
+    this.loadClient();
+    this.loadASRH();
     console.log('working')
   }
 }
