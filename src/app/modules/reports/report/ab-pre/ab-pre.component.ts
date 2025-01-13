@@ -2,7 +2,8 @@ import { Component, Input, OnChanges } from '@angular/core';
 import { faFileExcel, faFilePdf } from '@fortawesome/free-regular-svg-icons';
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import { dateHelper } from 'app/shared/services/date-helper.service';
-import { ExportAsConfig, ExportAsService } from 'ngx-export-as';
+import { ExportAsConfig, ExportAsService } from 'ngx-export-as-17';
+import {HttpService} from "../../../../shared/services/http.service";
 
 @Component({
     selector: 'app-ab-pre',
@@ -25,7 +26,36 @@ export class AbPreComponent implements OnChanges {
   faFileExcel = faFileExcel;
   faFilePdf = faFilePdf;
 
-  stats : any;
+  userInfo: any = {};
+  stats : any[];
+  sum_total: {
+    population: number,
+    male: number,
+    female: 0,
+    male_female_total: 0,
+    less_than_15: 0,
+    greater_than_15: 0,
+    category1: 0,
+    category2: 0,
+    category3: 0,
+    total_cat2_and_cat3: 0,
+    total_cat1_cat2_cat3: 0,
+    prep_total: 0,
+    prep_completed: 0,
+    tandok: 0,
+    pep_completed: 0,
+    tcv: 0,
+    HRIG: 0,
+    ERIG: 0,
+    dog: 0,
+    cat: 0,
+    others: 0,
+    total_biting_animal: 0
+  };
+
+  stats_others : any[];
+  previous : any[];
+  previous_others : any[];
   brgy_result: any;
   reportform_data : any;
   selected_barangay : any;
@@ -59,7 +89,6 @@ export class AbPreComponent implements OnChanges {
 
   name_list_params: {};
   showNameList(params, barangay_code) {
-    console.log(params)
     this.params = params;
     this.name_list_params = {
       start_date: this.reportForm.value.start_date,
@@ -72,20 +101,57 @@ export class AbPreComponent implements OnChanges {
     this.openList = true;
   };
 
-  total: {
-    male: 0,
-    female: 0,
-    less_than_15: 0,
-    greater_than_15: 0,
-    day0: 0,
-    day0_day7: 0,
-    day0_day7_day21: 0
-  };
+  initializeSumTotal() {
+    this.sum_total = {
+      population: 0,
+      male: 0,
+      female: 0,
+      male_female_total: 0,
+      less_than_15: 0,
+      greater_than_15: 0,
+      category1: 0,
+      category2: 0,
+      category3: 0,
+      total_cat2_and_cat3: 0,
+      total_cat1_cat2_cat3: 0,
+      prep_total: 0,
+      prep_completed: 0,
+      tandok: 0,
+      pep_completed: 0,
+      tcv: 0,
+      HRIG: 0,
+      ERIG: 0,
+      dog: 0,
+      cat: 0,
+      others: 0,
+      total_biting_animal: 0
+    };
+  }
 
-  countTotal(var_name, value, last?: boolean) {
-    console.log()
-    if(this.current_submit_flag) this.total[var_name] += value;
-    if(last) this.current_submit_flag = false
+  sumTotal($variable: 'stats' | 'stats_others') {
+    this.initializeSumTotal();
+    // Define the keys you want to sum
+    const keysToSum = [
+      'population', 'male', 'female', 'male_female_total', 'less_than_15', 'greater_than_15',
+      'category1', 'category2', 'category3', 'total_cat2_and_cat3', 'total_cat1_cat2_cat3',
+      'prep_total', 'prep_completed', 'tandok', 'pep_completed', 'tcv', 'HRIG', 'ERIG', 'dog', 'cat',
+      'others', 'total_biting_animal'
+    ];
+
+    // Use dynamic object reference based on $variable
+    const selectedStats = this[$variable];
+
+    // Loop through the selected stats and accumulate totals
+    Object.entries(selectedStats).forEach(([key, value]: [string, any]) => {
+      Object.entries(value).forEach(([k, v]: [string, any]) => {
+        keysToSum.forEach((keyToSum) => {
+          this.sum_total[keyToSum] = this.sum_total[keyToSum] + +v[keyToSum];
+        });
+      });
+      // Update the selected stats with the accumulated sum
+      selectedStats[key] = [this.sum_total];
+      this.initializeSumTotal();
+    });
   }
 
   exportX() {
@@ -113,30 +179,30 @@ export class AbPreComponent implements OnChanges {
 
   constructor(
     private exportAsService: ExportAsService,
-    private dateHelper: dateHelper
+    private dateHelper: dateHelper,
+    private http: HttpService
   ) { }
 
   label_value: {};
+  reportFlag: string;
   ngOnChanges(): void {
     this.current_submit_flag = this.submit_flag;
-    if(this.current_submit_flag){
-      this.total = {
-        male: 0,
-        female: 0,
-        less_than_15: 0,
-        greater_than_15: 0,
-        day0: 0,
-        day0_day7: 0,
-        day0_day7_day21: 0
-      };
-      this.selected_barangay = this.selectedBrgy;
-      this.show_stats = false;
-      this.stats = this.report_data;
-      this.brgys_info = this.brgys;
-      this.pdf_exported = false;
-      this.label_value = this.dateHelper.getLabelValue(this.reportForm, this.report_data);
-
-      this.show_stats = true;
-    }
+    this.userInfo = this.http.getUserFromJSON();
+    this.reportFlag = this.userInfo.reports_flag === 1 ? '1' : null;
+    this.selected_barangay = this.selectedBrgy;
+    this.show_stats = false;
+    this.stats = this.report_data.data;
+    this.stats_others = this.report_data.data1_others;
+    this.previous = this.report_data.data2;
+    this.previous_others = this.report_data.data2_others;
+    this.sumTotal('stats');
+    this.sumTotal('stats_others');
+    // this.sumTotalPrevious('previous');
+    // this.sumTotalPrevious('previous_others');
+    console.log(this.stats, 'stats');
+    this.brgys_info = this.brgys;
+    this.pdf_exported = false;
+    this.label_value = this.dateHelper.getLabelValue(this.reportForm, this.report_data);
+    this.show_stats = true;
   }
 }
