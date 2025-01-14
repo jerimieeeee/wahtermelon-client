@@ -18,42 +18,64 @@
               <label for="client_type" class="text-sm font-semibold">Client Type</label>
               <select name="client_type" id="client_type" class="input" formControlName="client_type">
                 <!-- <option [ngValue]="0" selected> </option> -->
-                <option *ngFor="let type of type_client" [value]="type.name">{{ type.name }}</option>
+                <option *ngFor="let type of type_client" [value]="type.name">{{ type.name | titlecase }}</option>
               </select>
             </div>
-      
+
           </div>
-      
+
           <div class="col-span-6 px-5 pt-5">
             <div>
               <label for="client_type" class="text-sm font-semibold">Referred From</label>
-              <select name="client_type" id="client_type" class="input" formControlName="lib_asrh_client_type_code">
+              <select name="client_type" id="client_type" class="input"  formControlName="lib_asrh_client_type_code">
                 <!-- <option [ngValue]="0" selected> </option> -->
                 <option *ngFor="let client of client_types" [value]="client.code">{{ client.desc }}</option>
               </select>
             </div>
-      
+
           </div>
 
           <div class="col-span-6 px-5 pt-5">
-            <label for="case_number" class="text-sm font-semibold">Please Specify if Others</label>
-            <input type="input" name="case_number" id="case_number" class="input" formControlName="other_client_type">
+            <label for="other_client_type" class="text-sm font-semibold">Please Specify if Others</label>
+            <input type="input" name="other_client_type" id="other_client_type" class="input" formControlName="other_client_type">
+          </div>
+
+          <div class="col-span-6 px-5 pt-5">
+            <div>
+              <label for="refer_to" class="text-sm font-semibold">Referred To</label>
+              <select name="refer_to_user_id" id="refer_to_user_id" class="input" formControlName="refer_to_user_id">
+                <!-- <option [ngValue]="0" selected> </option> -->
+                <option *ngFor="let dr of physicians" [value]="dr.id">{{ dr.last_name }}, {{ dr.first_name }} {{ dr.middle_name }}</option>
+              </select>
+            </div>
+
+          </div>
+
+          <div class="col-span-6 px-5 pt-5">
+            <div>
+              <label for="status" class="text-sm font-semibold">Status</label>
+              <select name="status" id="status.id" class="input" formControlName="status">
+                <!-- <option [ngValue]="0" selected> </option> -->
+                <option *ngFor="let status of statuses" [value]="status.name">{{ status.name | titlecase }}</option>
+              </select>
+            </div>
+
           </div>
 
           <!-- <div class="col-span-6 px-5 pt-5">
             <label for="status" class="text-sm font-semibold">Status</label>
             <input type="input" name="status" id="status" class="input">
           </div> -->
-      
+
         </div>
 
-         
-              
-          
+
+
+
       </form>
 
-      <div class="flex justify-center mt-5 mb-5">
-        <button class="btn-save mr-5 mt-4" [disabled]="is_saving" (click)="createRapid()">
+      <div class="flex justify-center mt-5 mb-10">
+        <button class="btn-save mt-4" [disabled]="is_saving" (click)="createRapid()">
           <fa-icon [icon]="faSave" *ngIf="!is_saving" class="mr-2"></fa-icon>
           <fa-icon [icon]="faSpinner" *ngIf="is_saving" animation="spin" class="mr-2"></fa-icon>
           Save
@@ -64,20 +86,21 @@
       <form>
       <div class="mt-1 w-full border-t border-gray-200 py-5 px-5">
         <div class="grid grid-cols-12 mt-2 align-middle" *ngFor="let rapid of rapid_questions">
-          <label for="answer" class="text-sm col-span-11 col-start-1">{{rapid.sequence}}. {{rapid.question}}</label>
+          <label attr.for="{{ rapid.id }}" class="text-sm col-span-9 col-start-1 mt-3">{{rapid.sequence}}. {{rapid.question}}</label>
           <!-- <select class="input align-middle text-sm col-span-1 col-start-12"  [(ngModel)]="rapidForm.rapid_status[rapid.id]"
           id="{{ 'rapid_status.'+rapid.id }}"
           name="{{ 'rapid.'+rapid.id }}"> -->
-          <select class="input align-middle text-sm col-span-1 col-start-12" id="{{rapid.id}}" [(ngModel)]="rapid_ans[rapid.id]">
-            <option disabled selected value> </option>
+          {{rapid_ans[rapid.id]}} {{rapid.id}}
+          <select class="input align-middle text-sm col-span-2 col-start-11" attr.id="{{ rapid.id }}" [(ngModel)]="rapid_ans[rapid.id]" name="{{ rapid.id }}">
+            <!-- <option disabled selected value> </option> -->
             <option value="x">Hindi Sumagot</option>
             <option value="2">Hindi</option>
             <option value="1">Oo</option>
           </select>
         </div>
 
-        <div class="flex justify-center mt-5">
-          <button class="btn-save mr-5 mt-4" [disabled]="is_saving" (click)="onSubmit()">
+        <div class="flex justify-center mt-5 mb-5">
+          <button class="btn-save mt-4" [disabled]="is_saving" (click)="onSubmit()">
             <fa-icon [icon]="faSave" *ngIf="!is_saving" class="mr-2"></fa-icon>
             <fa-icon [icon]="faSpinner" *ngIf="is_saving" animation="spin" class="mr-2"></fa-icon>
             Save

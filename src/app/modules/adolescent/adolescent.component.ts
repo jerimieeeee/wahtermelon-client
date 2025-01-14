@@ -86,10 +86,10 @@ export class AdolescentComponent implements OnInit {
       next: (data: any) => {
 
        this.asrh_visit_history = data.data
-       console.log(this.asrh_visit_history)
+       console.log(this.asrh_visit_history, 'hugot ng asrh history')
       },
       complete: () => {
-     
+
       },
       error: err => {console.log(err)
 
