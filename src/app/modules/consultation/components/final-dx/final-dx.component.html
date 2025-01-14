@@ -29,6 +29,12 @@
               bindLabel="icd10_desc"
               notFoundText="No records found">
 
+              <ng-template ng-label-tmp let-item="item" let-clear="clear">
+                <div class="whitespace-normal">
+                  <h5 class="text-gray-700"><strong>{{ item.icd10_code }}:</strong> {{ item.icd10_desc }}</h5>
+                </div>
+              </ng-template>
+
               <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
                 <div class="whitespace-normal">
                   <h5 class="text-gray-700" [ngOptionHighlight]="search"><strong>{{ item.icd10_code }}:</strong> {{ item.icd10_desc }}</h5>
