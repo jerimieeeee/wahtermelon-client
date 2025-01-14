@@ -100,7 +100,7 @@ export class KonsultaMasterlistComponent implements OnInit {
     if (this.selected_brgy) params['params']['barangay_code'] = this.selected_brgy;
     if(this.start_date) params['params']['start_date'] = this.start_date;
     if(this.end_date) params['params']['end_date'] = this.end_date;
-    params['per_page'] = 100;
+    params['per_page'] = 300;
 
     this.allListArray = [];
 
