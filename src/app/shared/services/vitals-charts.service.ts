@@ -69,9 +69,19 @@ export class VitalsChartsService {
 
   getChartColor(details): string {
     if(details.bp_systolic) {
-      if(details.bp_systolic >= 90 && details.bp_systolic <= 120) return 'text-green-500 font-semibold';
-      if(details.bp_systolic >= 121 && details.bp_systolic <= 139) return 'text-yellow-500 font-semibold';
-      if(details.bp_systolic >= 140) return 'text-red-500 font-semibold';
+      if((details.bp_systolic >= 140) || (details.bp_diastolic >= 90)) {
+        return 'text-red-500 font-semibold'
+      };
+
+      if((details.bp_systolic >= 121 && details.bp_systolic <= 139) ||
+        (details.bp_diastolic >= 81 && details.bp_diastolic <= 89)) {
+        return 'text-yellow-500 font-semibold'
+      };
+
+      if((details.bp_systolic >= 90 && details.bp_systolic <= 120) ||
+        (details.bp_diastolic >= 60 && details.bp_diastolic <= 80)) {
+          return 'text-green-500 font-semibold';
+      }
     } else {
       return 'text-gray-800';
     }
@@ -81,7 +91,7 @@ export class VitalsChartsService {
     if(details.patient_spo2) {
       if(details.patient_spo2 >= 95 && details.patient_spo2 <= 100) return 'text-green-500 font-semibold';
       if(details.patient_spo2 >= 90 && details.patient_spo2 <= 94) return 'text-yellow-500 font-semibold';
-      if(details.bp_systolic < 90) return 'text-red-500 font-semibold';
+      if(details.patient_spo2 < 90) return 'text-red-500 font-semibold';
     } else {
       return 'text-gray-800';
     }
