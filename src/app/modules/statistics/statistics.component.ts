@@ -12,14 +12,15 @@ export class StatisticsComponent {
   userInfo : any;
 
   dashboardForm: FormGroup = new FormGroup({
-    
+
     dashboard_type: new FormControl<string| null>('')
 
   });
 
   dashboard_type = [
-    {id: '1', desc:'Facility Statistics'}
-  ]; 
+    {id: '1', desc:'Facility Statistics'},
+    // {id: '2', desc:'System Usage Statistics'}
+  ];
 
   onSubmit(){
     console.log('submit ng dashboard type')
@@ -32,7 +33,7 @@ export class StatisticsComponent {
 
  // eslint-disable-next-line @angular-eslint/use-lifecycle-interface
  ngOnInit(): void {
-   
+
     this.userInfo = this.http.getUserFromJSON();
     console.log(this.userInfo)
  }

@@ -1,1 +1,41 @@
-<p>education works!</p>
+
+<div class="m-5 border border-slate-200 rounded-lg" *ngIf="!show_form">
+  <div class="bg-blue-500 text-sm text-white rounded-t-md py-2 pl-5 font-semibold">
+   Comprehensive HEEADSSS Assessment
+  </div>
+
+  <form [formGroup]="adolescentForm" class="mx-5 mb-5">
+
+      <div class="mt-1 grid grid-cols-16 gap-x-4 w-full">
+
+        <div class="col-span-12 col-start-1 grid gap-x-4">
+          <div class="text-md text-blue-500 rounded-t-md py-2 font-semibold">
+              Education & Employment
+          </div>
+            <div class="text-sm mb-5">
+              <p>Prompt the young person to tell you about school/work. Poor school performance can signal developmental, mental or psychosocial problems.</p>
+            </div>
+        </div>
+      </div>
+
+    <div class="mt-1 w-full border-t border-gray-200 py-5">
+
+      <div class="grid grid-cols-12 mt-2 align-middle" *ngFor="let question of compre_education">
+          <label for="answer" class="text-sm col-span-6 col-start-1">{{question.name}}</label>
+          <input class="input align-middle text-sm col-span-6 col-start-7" id="" name="">
+      </div>
+
+
+      <div class="flex justify-center mt-5">
+          <button class="btn-save mr-5 mt-4" [disabled]="is_saving">
+            <fa-icon [icon]="faSave" *ngIf="!is_saving" class="mr-2"></fa-icon>
+            <fa-icon [icon]="faSpinner" *ngIf="is_saving" animation="spin" class="mr-2"></fa-icon>
+            Save
+          </button>
+      </div>
+    </div>
+
+  </form>
+
+</div>
+

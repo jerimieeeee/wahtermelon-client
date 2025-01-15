@@ -59,7 +59,7 @@ export class MenstrualModalComponent implements OnInit, OnChanges {
         menopause_age: [null],
       });
 
-      if(this.menstrual_history){
+      if(this.menstrual_history.length > 0){
         this.patchValue()
       }
     }

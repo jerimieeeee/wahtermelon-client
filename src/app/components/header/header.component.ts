@@ -1,7 +1,7 @@
-import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { faChevronCircleDown, faBell, faSearch, faGear, faHome, faRightFromBracket, faAddressBook, faUser, faSquarePollVertical, faCalendarDay, faFlask, faChartLine, faCircleQuestion } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
-import { catchError, debounceTime, distinctUntilChanged, switchMap, tap, map, filter } from 'rxjs/operators';
+import { catchError, debounceTime, distinctUntilChanged, switchMap, tap, map, filter, takeUntil } from 'rxjs/operators';
 import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
 import { NavigationEnd, Router } from '@angular/router';
 import { NgSelectComponent } from '@ng-select/ng-select';
@@ -13,11 +13,12 @@ import { Location } from '@angular/common';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
   // @ViewChild(NgSelectComponent) ngSelectComponent: NgSelectComponent;
   @ViewChild('mySelect') mySelect: NgSelectComponent;
   @Input() user_info;
 
+  private destroy$ = new Subject<void>();
   faChevronCircleDown = faChevronCircleDown;
   faBell = faBell;
   faSearch = faSearch;
@@ -92,16 +93,17 @@ export class HeaderComponent implements OnInit {
 
     this.searchInput$.pipe(
       filter(res => res !== null && res.length >= this.minLengthTerm),
-      distinctUntilChanged(),
-      debounceTime(1000),
-      tap(() => this.patientLoading = true),
+      distinctUntilChanged((prev, curr) => prev.trim() === curr.trim()),
+      debounceTime(3000),
+      tap(() => {this.patientLoading = true; }),
       switchMap(term => {
         this.current_term = term;
         return this.getPatient(term, page).pipe(
           catchError(() => of([])),
-          tap(() => this.patientLoading = false)
+          tap(() => {this.patientLoading = false;})
         );
-      })
+      }),
+      takeUntil(this.destroy$)
     ).subscribe(newPatients => {
       // Reload patient list base on search item
       this.patients$.next(newPatients);
@@ -120,11 +122,11 @@ export class HeaderComponent implements OnInit {
   onScrollEnd() {
     this.patientLoading = true
     this.current_page++;
-    this.loadPatients( this.current_page );
+    this.loadPatients(this.current_page);
   }
 
   getPatient(term: string = null, page?): Observable<any> {
-    let current_page = page ? 1 : page;
+    let current_page = page ? page : 1;
     return this.http.get('patient', {params:{'filter[search]':term, page: current_page, per_page: 10}})
     .pipe(map((resp:any) => {
       this.showCreate = resp.data.length == 0 ? true : false;
@@ -155,6 +157,7 @@ export class HeaderComponent implements OnInit {
     this.selectedPatient = null;
     this.showCreate = false;
     this.patientLoading = false;
+    this.searchInput$ = new Subject<string>();
     this.loadPatients();
   }
 
@@ -197,6 +200,11 @@ export class HeaderComponent implements OnInit {
       facility:         {facility_name: val.facility.facility_name},
       designation_code: val.designation ? val.designation.code : val.designation_code
     };
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
 }

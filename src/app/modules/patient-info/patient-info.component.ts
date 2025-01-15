@@ -69,8 +69,8 @@ export class PatientInfoComponent implements OnInit {
       this.show_female_history = false;
     } else {
       this.show_female_history = true;
-      if(field === 'menstrual_history'  || field==='all') this.menstrualHistory.loadData(this.patient_info.id);
-      if(field === 'pregnancy_history'  || field==='all') this.preghist.loadData(this.patient_info.id);
+      if(this.show_female_history === true && (field === 'menstrual_history'  || field==='all')) this.menstrualHistory.loadData(this.patient_info.id);
+      if(this.show_female_history === true && (field === 'pregnancy_history'  || field==='all')) this.preghist.loadData(this.patient_info.id);
     }
 
     if(field === 'social_history'       || field==='all') this.socialHistory.loadData(this.patient_info.id);
@@ -127,12 +127,13 @@ export class PatientInfoComponent implements OnInit {
   active_loc_id: any;
 
   getPatient(){
-    // console.log('get patient')
     this.active_loc_id = this.http.getUrlParams();
     this.active_loc = this.active_loc_id.loc;
     this.consult_id = this.active_loc_id.consult_id ?? null;
 
+    // console.log('get patient', this.patient_id ?? null, this.active_loc_id.patient_id)
     if(this.active_loc_id.patient_id && (this.patient_id !== this.active_loc_id.patient_id)){
+      // console.log('getting patient')
       this.patient_id = this.active_loc_id.patient_id;
 
       this.http.get('patient/'+this.active_loc_id.patient_id).subscribe({
@@ -147,7 +148,7 @@ export class PatientInfoComponent implements OnInit {
           this.accordions['lab_request'] = true;
           this.accordions['prescriptions'] = true;
           this.accordions['appointment'] = true;
-          if(this.patient_info.image_url) this.getImage(data.data)
+          this.getImage(data.data)
         },
         error: err => {
           // feature: add prompt that patient is not found. for now redirect to home
@@ -161,19 +162,21 @@ export class PatientInfoComponent implements OnInit {
 
   imageData: SafeUrl | null = null;
   getImage(data) {
-    console.log(data)
     this.imageData = null;
-    this.http.get('images/'+data.id, { responseType: 'blob' }).subscribe({
-      next: (data: any) => {
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          const base64data = reader.result as string;
-          this.imageData = this.sanitizer.bypassSecurityTrustUrl(base64data);
-        };
-        reader.readAsDataURL(data);
-      },
-      error: err => console.log(err)
-    });
+
+    if(data.image_url){
+      this.http.get('images/'+data.id, { responseType: 'blob' }).subscribe({
+        next: (data: any) => {
+          const reader = new FileReader();
+          reader.onloadend = () => {
+            const base64data = reader.result as string;
+            this.imageData = this.sanitizer.bypassSecurityTrustUrl(base64data);
+          };
+          reader.readAsDataURL(data);
+        },
+        error: err => console.log(err)
+      });
+    }
   }
 
   reloadData(){
