@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { faCalendarDay, faPlus, faSave, faTimes, faPencil, faCircleCheck, faCaretRight, faInfoCircle, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { HttpService } from 'app/shared/services/http.service';
@@ -10,50 +10,125 @@ import { Router } from '@angular/router';
   styleUrl: './activities.component.scss'
 })
 export class ActivitiesComponent implements OnInit {
-  faCalendarDay = faCalendarDay;
-  faPlus = faPlus;
-  faSave = faSave;
-  faTimes = faTimes;
-  faPencil = faPencil;
-  faCircleCheck = faCircleCheck;
-  faCaretRight = faCaretRight;
-  faInfoCircle = faInfoCircle;
-  faSpinner = faSpinner;
+     @Input() compre_questions : any;
+     @Input() patient_id: any;
+     @Input() asrh_visit_history: any;
+     @Output() loadASRH = new EventEmitter<any>();
 
-  is_saving: boolean = false;
+    faCalendarDay = faCalendarDay;
+    faPlus = faPlus;
+    faSave = faSave;
+    faTimes = faTimes;
+    faPencil = faPencil;
+    faCircleCheck = faCircleCheck;
+    faCaretRight = faCaretRight;
+    faInfoCircle = faInfoCircle;
+    faSpinner = faSpinner;
 
-  show_form = false;
+    is_saving: boolean = false;
 
-  adolescentForm: FormGroup = new FormGroup({
+    show_form = false;
 
-    consent_flag: new FormControl<boolean>(false)
+    asrh_compre_history: any = [];
 
-  });
+    asrh_main_history: any = [];
 
-  compre_home = [
-    { name: 'Who lives with you? Where do you live?', id:'1' },
-    { name: 'Ask about people not in the home (for example one of the parents)', id:'2' },
-    { name: 'Any recent life events (death, illness, separation,others).', id:'3' },
-    { name: 'Has someone left recently? Is there anyone new at home?', id:'4' },
-    { name: 'What are relationships like at home?', id:'5' },
-    { name: 'Can you talk to anyone at home about stress? (Who?)', id:'6' },
-    { name: 'Have you ever run away? (Why?)', id:'7' },
-    { name: 'Is there any physical violence at home?', id:'8' },
-    { name: 'Have you taken part of or been victim of violence at home?', id:'9' }
-  ];
+   activitiesForm: FormGroup = new FormGroup({
+      id: new FormControl<string| null>(''),
+      patient_id: new FormControl<string| null>(''),
+      consult_asrh_rapid_id: new FormControl<string| null>(''),
+      assessment_date: new FormControl<string| null>(''),
 
-  constructor(
-    private http: HttpService,
-    private formBuilder: FormBuilder,
-    private router: Router
-  ) { }
+      activities_notes: new FormControl<string| null>(''),
 
-ngOnInit(): void {
-    this.adolescentForm = this.formBuilder.group({
 
-      consent_flag: [false]
+    });
 
-    })
+    onSubmit(){
+      console.log(this.activitiesForm.value, 'display visit details')
+      this.is_saving = true;
+      this.http.post('asrh/comprehensive', this.activitiesForm.value).subscribe({
+        next: (data: any) => {
+          // this.toastr.success('First Visit was ' + (this.visitForm.value ? 'updated' : 'saved') + ' successfuly', 'Success')
+          // this.is_saving = false;
+          // this.showButton = !this.showButton;
+          // this.loadFP.emit();
+          // this.reloadData();
 
+          console.log(this.activitiesForm, 'checker education')
+           },
+        complete: () => {
+
+        },
+        error: err => {console.log(err)
+
+        },
+      })
+    }
+
+    validateForm(){
+
+      this.activitiesForm = this.formBuilder.group({
+        id: [''],
+        patient_id: [this.patient_id],
+        consult_asrh_rapid_id: [this.asrh_visit_history[0].id, [Validators.required, Validators.minLength(1)]],
+        assessment_date: [this.asrh_visit_history[0].assessment_date, [Validators.required, Validators.minLength(1)]],
+
+        activities_notes: ['', [Validators.required, Validators.minLength(1)]],
+
+        // average_monthly_income: ['', [Validators.required, Validators.minLength(1), Validators.pattern("^[0-9,;]+$")]],
+      });
+
+      // this.loadFPDetails();
+      // this.show_form = true;
+    }
+
+    patchCompre(){
+
+     if(this.asrh_compre_history) {
+       this.activitiesForm.patchValue({
+       activities_notes: this.asrh_compre_history.activities_notes,
+       });
+       // this.show_form = true;
+       console.log(this.asrh_compre_history,'load compre home working')
+       // this.loadSelected();
+     }
+   }
+
+   LoadCompre() {
+    this.loadASRH.emit();
+     let params = {
+       patient_id: this.patient_id,
+       // per_page: 'all'
+     };
+
+     this.http.get('asrh/comprehensive', {params}).subscribe({
+       next: (data: any) => {
+
+        this.asrh_compre_history = data.data[0]
+        console.log(this.asrh_compre_history, 'hugot ng compre history')
+
+        this.patchCompre();
+       },
+       complete: () => {
+
+       },
+       error: err => {console.log(err)
+
+       },
+     })
+   }
+
+
+    constructor(
+      private http: HttpService,
+      private formBuilder: FormBuilder,
+      private router: Router
+    ) { }
+
+  ngOnInit(): void {
+     this.LoadCompre();
+     this.validateForm();
+     this.loadASRH.emit();
+    }
   }
-}

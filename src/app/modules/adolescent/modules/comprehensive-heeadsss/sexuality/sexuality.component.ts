@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { faCalendarDay, faPlus, faSave, faTimes, faPencil, faCircleCheck, faCaretRight, faInfoCircle, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { HttpService } from 'app/shared/services/http.service';
@@ -10,59 +10,125 @@ import { Router } from '@angular/router';
   styleUrl: './sexuality.component.scss'
 })
 export class SexualityComponent implements OnInit {
-  faCalendarDay = faCalendarDay;
-  faPlus = faPlus;
-  faSave = faSave;
-  faTimes = faTimes;
-  faPencil = faPencil;
-  faCircleCheck = faCircleCheck;
-  faCaretRight = faCaretRight;
-  faInfoCircle = faInfoCircle;
-  faSpinner = faSpinner;
+       @Input() compre_questions : any;
+       @Input() patient_id: any;
+       @Input() asrh_visit_history: any;
+       @Output() loadASRH = new EventEmitter<any>();
 
-  is_saving: boolean = false;
+      faCalendarDay = faCalendarDay;
+      faPlus = faPlus;
+      faSave = faSave;
+      faTimes = faTimes;
+      faPencil = faPencil;
+      faCircleCheck = faCircleCheck;
+      faCaretRight = faCaretRight;
+      faInfoCircle = faInfoCircle;
+      faSpinner = faSpinner;
 
-  show_form = false;
+      is_saving: boolean = false;
 
-  adolescentForm: FormGroup = new FormGroup({
+      show_form = false;
 
-    consent_flag: new FormControl<boolean>(false)
+      asrh_compre_history: any = [];
 
-  });
+      asrh_main_history: any = [];
 
-  compre_sexuality = [
-    { name: 'For adolescents, inquire if they have questions about pubertal changes (breast, periods, nocturnal emission, erections, masturbation). Ask where they get information about sexuality and provide accurate information or point to online resources.', id:'1' },
-    { name: 'Gender identity: How do you identify? male, female, questioning? Girls? Both? Not yet sure?', id:'2' },
-    { name: 'Sexual orientation (attraction) Are you interested in boys? Girls? Both? Not yet sure?', id:'3' },
-    { name: 'Are you attracted to anyone now? Have you ever been in a romantic relationship?', id:'4' },
-    { name: 'Have any of your relationships ever been sexual relationships (such as involving kissing, touching, oral, vaginal, anal sex)?', id:'5' },
-    { name: 'If the adolescent is not sexually active, ask views on abstinence, consent, and safer sex. Provide information and point to online resources.', id:'6' },
-    { name: 'If sexually active: Ask about the number, age,  and sex of sexual partners.', id:'7' },
-    { name: 'Were sexual activities consensual?', id:'8' },
-    { name: 'What are you using for birth control? Do you use condoms every time you have intercourse? What gets in the way?', id:'9' },
-    { name: '(Girls) Have you ever been pregnant or worried that you may be pregnant? ', id:'8' },
-    { name: '(Boys) Have you ever gotten someone pregnant or worried that might have happened?', id:'8' },
-    { name: 'Have you ever had asexually transmitted infection or worried that you had an infection?', id:'8' },
-    { name: 'What are you using for birth control? Do you use condoms every time you have intercourse? What gets in the way?', id:'8' },
-    { name: 'Have any of your relationships been violent?', id:'8' },
-    { name: 'Have you ever been forced or pressured into doing something sexual?', id:'8' },
-    { name: 'Have you ever been touched sexually in a way that you didn’t want?', id:'8' },
-  ];
+     sexualityForm: FormGroup = new FormGroup({
+        id: new FormControl<string| null>(''),
+        patient_id: new FormControl<string| null>(''),
+        consult_asrh_rapid_id: new FormControl<string| null>(''),
+        assessment_date: new FormControl<string| null>(''),
 
-  constructor(
-    private http: HttpService,
-    private formBuilder: FormBuilder,
-    private router: Router
-  ) { }
+        sexuality_notes: new FormControl<string| null>(''),
 
-ngOnInit(): void {
-    this.adolescentForm = this.formBuilder.group({
 
-      consent_flag: [false]
+      });
 
-    })
+      onSubmit(){
+        console.log(this.sexualityForm.value, 'display visit details')
+        this.is_saving = true;
+        this.http.post('asrh/comprehensive', this.sexualityForm.value).subscribe({
+          next: (data: any) => {
+            // this.toastr.success('First Visit was ' + (this.visitForm.value ? 'updated' : 'saved') + ' successfuly', 'Success')
+            // this.is_saving = false;
+            // this.showButton = !this.showButton;
+            // this.loadFP.emit();
+            // this.reloadData();
 
-  }
-}{
+            console.log(this.sexualityForm, 'checker education')
+             },
+          complete: () => {
 
-}
+          },
+          error: err => {console.log(err)
+
+          },
+        })
+      }
+
+      validateForm(){
+
+        this.sexualityForm = this.formBuilder.group({
+          id: [''],
+          patient_id: [this.patient_id],
+          consult_asrh_rapid_id: [this.asrh_visit_history[0].id, [Validators.required, Validators.minLength(1)]],
+          assessment_date: [this.asrh_visit_history[0].assessment_date, [Validators.required, Validators.minLength(1)]],
+
+          sexuality_notes: ['', [Validators.required, Validators.minLength(1)]],
+
+          // average_monthly_income: ['', [Validators.required, Validators.minLength(1), Validators.pattern("^[0-9,;]+$")]],
+        });
+
+        // this.loadFPDetails();
+        // this.show_form = true;
+      }
+
+      patchCompre(){
+
+       if(this.asrh_compre_history) {
+         this.sexualityForm.patchValue({
+         sexuality_notes: this.asrh_compre_history.sexuality_notes,
+         });
+         // this.show_form = true;
+         console.log(this.asrh_compre_history,'load compre home working')
+         // this.loadSelected();
+       }
+     }
+
+     LoadCompre() {
+      this.loadASRH.emit();
+       let params = {
+         patient_id: this.patient_id,
+         // per_page: 'all'
+       };
+
+       this.http.get('asrh/comprehensive', {params}).subscribe({
+         next: (data: any) => {
+
+          this.asrh_compre_history = data.data[0]
+          console.log(this.asrh_compre_history, 'hugot ng compre history')
+
+          this.patchCompre();
+         },
+         complete: () => {
+
+         },
+         error: err => {console.log(err)
+
+         },
+       })
+     }
+
+
+      constructor(
+        private http: HttpService,
+        private formBuilder: FormBuilder,
+        private router: Router
+      ) { }
+
+    ngOnInit(): void {
+       this.LoadCompre();
+       this.validateForm();
+       this.loadASRH.emit();
+      }
+    }

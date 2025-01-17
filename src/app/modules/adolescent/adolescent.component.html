@@ -14,7 +14,7 @@
     </button>
   </nav>
   <div class="ml-auto">
-    <button type="button" class="btn-end-visit ml-auto mt-5">
+    <button type="button" class="btn-end-visit ml-auto mt-5" (click)="toggleModal('end_visit')">
       End Visit
     </button>
   </div>
@@ -87,14 +87,14 @@
   </div>
 </nav>
 
-<div class="col-span-12 col-start-1 grid gap-x-4 mb-5">
+<!-- <div class="col-span-12 col-start-1 grid gap-x-4 mb-5">
   <div class="mt-5 px-8">
     <input type="checkbox" class="input-checkbox" id="consent_flag" formControlName="consent_flag" />
     <label for="consent_flag" class="text-sm" >
       The patient has read, fully understood, and signed the patient consent form.
     </label>
   </div>
-</div>
+</div> -->
 
 </div>
 
@@ -161,59 +161,77 @@
 <app-assessment-summary *ngIf="pages === 2 && module === 2"
   [patient_id]="patient_id"
   (loadASRH)="loadASRH()"
+  [asrh_visit_history]="asrh_visit_history"
 ></app-assessment-summary>
 
 <app-home *ngIf="pages === 2 && module === 3 && module_compre === 1"
   [patient_id]="patient_id"
   (loadASRH)="loadASRH()"
   [compre_questions]="compre_questions"
+  [asrh_visit_history]="asrh_visit_history"
 ></app-home>
 
 <app-education *ngIf="pages === 2 && module === 3 && module_compre === 2"
   [patient_id]="patient_id"
   (loadASRH)="loadASRH()"
   [compre_questions]="compre_questions"
+  [asrh_visit_history]="asrh_visit_history"
 ></app-education>
 
 <app-eating *ngIf="pages === 2 && module === 3 && module_compre === 3"
   [patient_id]="patient_id"
   (loadASRH)="loadASRH()"
   [compre_questions]="compre_questions"
+  [asrh_visit_history]="asrh_visit_history"
 ></app-eating>
 
 <app-activities *ngIf="pages === 2 && module === 3 && module_compre === 4"
   [patient_id]="patient_id"
   (loadASRH)="loadASRH()"
   [compre_questions]="compre_questions"
+  [asrh_visit_history]="asrh_visit_history"
 ></app-activities>
 
 <app-drugs *ngIf="pages === 2 && module === 3 && module_compre === 5"
   [patient_id]="patient_id"
   (loadASRH)="loadASRH()"
   [compre_questions]="compre_questions"
+  [asrh_visit_history]="asrh_visit_history"
 ></app-drugs>
 
 <app-sexuality *ngIf="pages === 2 && module === 3 && module_compre === 6"
   [patient_id]="patient_id"
   (loadASRH)="loadASRH()"
   [compre_questions]="compre_questions"
+  [asrh_visit_history]="asrh_visit_history"
 ></app-sexuality>
 
 <app-suicide-depression *ngIf="pages === 2 && module === 3 && module_compre === 7"
   [patient_id]="patient_id"
   (loadASRH)="loadASRH()"
   [compre_questions]="compre_questions"
+  [asrh_visit_history]="asrh_visit_history"
 ></app-suicide-depression>
 
 <app-safety *ngIf="pages === 2 && module === 3 && module_compre === 8"
   [patient_id]="patient_id"
   (loadASRH)="loadASRH()"
   [compre_questions]="compre_questions"
+  [asrh_visit_history]="asrh_visit_history"
 ></app-safety>
 
 <app-spirituality *ngIf="pages === 2 && module === 3 && module_compre === 9"
   [patient_id]="patient_id"
   (loadASRH)="loadASRH()"
   [compre_questions]="compre_questions"
+  [asrh_visit_history]="asrh_visit_history"
 ></app-spirituality>
+
+<app-end-visit *ngIf="modals['end_visit']"
+  (toggleModal)="toggleModal($event)"
+  [consult_id]="consult_id"
+  [consult_date]="consult_details[0]?.consult_date"
+  [patient_id]="consult_details[0]?.patient.id"
+  [pt_group]="consult_details[0]?.pt_group"
+></app-end-visit>
 

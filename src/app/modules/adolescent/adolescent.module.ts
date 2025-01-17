@@ -15,6 +15,7 @@ import { SuicideDepressionComponent } from './modules/comprehensive-heeadsss/sui
 import { SafetyComponent } from './modules/comprehensive-heeadsss/safety/safety.component';
 import { SpiritualityComponent } from './modules/comprehensive-heeadsss/spirituality/spirituality.component';
 import { AssessmentSummaryComponent } from './modules/assessment-summary/assessment-summary.component';
+import { EndVisitComponent } from 'app/shared/shared-modals/end-visit/end-visit.component';
 
 
 
@@ -33,9 +34,10 @@ import { AssessmentSummaryComponent } from './modules/assessment-summary/assessm
     SuicideDepressionComponent,
     SafetyComponent,
     SpiritualityComponent
+
   ],
   imports: [
-    CommonModule, AdolescentRoutingModule,FontAwesomeModule, FormsModule, ReactiveFormsModule
+    CommonModule, AdolescentRoutingModule,FontAwesomeModule, FormsModule, ReactiveFormsModule, EndVisitComponent
   ]
 })
 export class AdolescentModule { }

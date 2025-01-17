@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { faCalendarDay, faPlus, faSave, faTimes, faPencil, faCircleCheck, faCaretRight, faInfoCircle, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { HttpService } from 'app/shared/services/http.service';
@@ -10,48 +10,121 @@ import { Router } from '@angular/router';
   styleUrl: './safety.component.scss'
 })
 export class SafetyComponent implements OnInit {
-  faCalendarDay = faCalendarDay;
-  faPlus = faPlus;
-  faSave = faSave;
-  faTimes = faTimes;
-  faPencil = faPencil;
-  faCircleCheck = faCircleCheck;
-  faCaretRight = faCaretRight;
-  faInfoCircle = faInfoCircle;
-  faSpinner = faSpinner;
+    @Input() compre_questions : any;
+    @Input() patient_id: any;
+    @Input() asrh_visit_history: any;
 
-  is_saving: boolean = false;
+   faCalendarDay = faCalendarDay;
+   faPlus = faPlus;
+   faSave = faSave;
+   faTimes = faTimes;
+   faPencil = faPencil;
+   faCircleCheck = faCircleCheck;
+   faCaretRight = faCaretRight;
+   faInfoCircle = faInfoCircle;
+   faSpinner = faSpinner;
 
-  show_form = false;
+   is_saving: boolean = false;
 
-  adolescentForm: FormGroup = new FormGroup({
+   show_form = false;
 
-    consent_flag: new FormControl<boolean>(false)
+   asrh_compre_history: any = [];
 
-  });
+  safetyForm: FormGroup = new FormGroup({
+     id: new FormControl<string| null>(''),
+     patient_id: new FormControl<string| null>(''),
+     consult_asrh_rapid_id: new FormControl<string| null>(''),
+     assessment_date: new FormControl<string| null>(''),
+     consent_flag: new FormControl<string| null>(''),
+     safety_notes: new FormControl<string| null>(''),
 
-  compre_safety = [
-    { name: 'Have you ever been seriously injured? (How?)', id:'1' },
-    { name: 'Do you always wear a seatbelt in the car/ a helmet while on a motorcycle?', id:'2' },
-    { name: 'Do you use safety equipment for sports and/or other physical activities (for example, helmets for biking or skateboarding)?', id:'3' },
-    { name: 'Is there a lot of violence in your neighborhood?', id:'4' },
-    { name: 'Have you gotten into physical fights? Have you ever carried a weapon?', id:'5' },
-  ];
 
-  constructor(
-    private http: HttpService,
-    private formBuilder: FormBuilder,
-    private router: Router
-  ) { }
+   });
 
-ngOnInit(): void {
-    this.adolescentForm = this.formBuilder.group({
+   onSubmit(){
+     console.log(this.safetyForm.value, 'display visit details')
+     this.is_saving = true;
+     this.http.post('asrh/comprehensive', this.safetyForm.value).subscribe({
+       next: (data: any) => {
+         // this.toastr.success('First Visit was ' + (this.visitForm.value ? 'updated' : 'saved') + ' successfuly', 'Success')
+         // this.is_saving = false;
+         // this.showButton = !this.showButton;
+         // this.loadFP.emit();
+         // this.reloadData();
 
-      consent_flag: [false]
+         console.log(this.safetyForm, 'checker education')
+          },
+       complete: () => {
 
-    })
+       },
+       error: err => {console.log(err)
 
+       },
+     })
+   }
+
+   validateForm(){
+
+     this.safetyForm = this.formBuilder.group({
+       id: [''],
+       patient_id: [this.patient_id],
+       consult_asrh_rapid_id: [this.asrh_visit_history[0].id, [Validators.required, Validators.minLength(1)]],
+       assessment_date: [this.asrh_visit_history[0].assessment_date, [Validators.required, Validators.minLength(1)]],
+
+       safety_notes: ['', [Validators.required, Validators.minLength(1)]],
+
+       // average_monthly_income: ['', [Validators.required, Validators.minLength(1), Validators.pattern("^[0-9,;]+$")]],
+     });
+
+     // this.loadFPDetails();
+     // this.show_form = true;
+   }
+
+   patchCompre(){
+
+    if(this.asrh_compre_history) {
+      this.safetyForm.patchValue({
+      safety_notes: this.asrh_compre_history.safety_notes,
+      });
+      // this.show_form = true;
+      console.log(this.asrh_compre_history,'load compre home working')
+      // this.loadSelected();
+    }
   }
-}{
 
-}
+  LoadCompre() {
+    let params = {
+      patient_id: this.patient_id,
+      // per_page: 'all'
+    };
+
+    this.http.get('asrh/comprehensive', {params}).subscribe({
+      next: (data: any) => {
+
+       this.asrh_compre_history = data.data[0]
+       console.log(this.asrh_compre_history, 'hugot ng compre history')
+       this.patchCompre();
+      },
+      complete: () => {
+
+      },
+      error: err => {console.log(err)
+
+      },
+    })
+  }
+
+
+   constructor(
+     private http: HttpService,
+     private formBuilder: FormBuilder,
+     private router: Router
+   ) { }
+
+ ngOnInit(): void {
+    this.LoadCompre();
+    this.validateForm();
+
+   }
+ }
+

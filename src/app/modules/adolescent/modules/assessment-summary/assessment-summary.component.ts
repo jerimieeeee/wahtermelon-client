@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output, OnChanges } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
 import { faChevronCircleDown, faChevronCircleUp, faSave, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
@@ -9,7 +10,7 @@ import { ToastrService } from 'ngx-toastr';
   styleUrl: './assessment-summary.component.scss'
 })
 export class AssessmentSummaryComponent implements OnInit {
-
+  @Input() patient_id: any;
 
   faSave = faSave;
   faChevronCircleUp = faChevronCircleUp;
@@ -19,6 +20,9 @@ export class AssessmentSummaryComponent implements OnInit {
   show_content: boolean = true;
   is_saving: boolean = false;
   toggle_content: boolean = true;
+
+  asrh_visit_history: any = [];
+  rapid_history: any = [];
 
   g2 = [
     { name: 'Have you been involvedin fights? Involved in gangs? When was your last fight?', id:'1' },
@@ -36,8 +40,83 @@ export class AssessmentSummaryComponent implements OnInit {
     { name: 'Do you have any history of multiple or serious injuries?', id:'13' },
     { name: 'Are you involved or engaged in alcohol/ drugs/ substance use?', id:'14' },
   ];
+  loadASRH() {
+    let params = {
+      patient_id: this.patient_id,
+      // per_page: 'all'
+    };
+
+    this.http.get('asrh/rapid', {params}).subscribe({
+      next: (data: any) => {
+
+       this.asrh_visit_history = data.data[0]
+       console.log(this.asrh_visit_history, 'hugot ng asrh history sa assessment')
+      },
+      complete: () => {
+
+      },
+      error: err => {console.log(err)
+
+      },
+    })
+  }
+
+  reloadData(){
+    let params = {
+      patient_id: this.patient_id
+    }
+
+    this.http.get('asrh/rapid', {params}).subscribe({
+      next: (data: any) => {
+        this.rapid_history = data.data[0];
+
+        console.log(this.rapid_history, 'check mo selected rapid')
+      },
+      error: err => console.log(err)
+    });
+  }
+
+  parseReason(data) {
+    // console.log(data, 'parseReason')
+    if(data) {
+      let obj: any = typeof data === 'object' ? JSON.stringify(data) : data;
+      let message: any = '';
+
+      if(obj.charAt(0) === '[') {
+        obj = JSON.parse(obj);
+      } else {
+        if(obj.charAt(0) === '{') {
+          obj = JSON.parse(obj);
+        } else {
+          return obj;
+        }
+      }
+
+      const parse = (obj: any) => {
+        Object.entries(obj).forEach(([key, value]: any) => {
+          if (typeof value === 'object' && value !== null) {
+            parse(value);
+          } else {
+            message += `${value}<br>`;
+          }
+        });
+      };
+
+      parse(obj);
+      return message;
+    }
+    return '';
+
+  }
+
+  constructor(
+      private http: HttpService,
+      private formBuilder: FormBuilder,
+      // private router: Router
+    ) { }
 
   ngOnInit(): void {
+    this.reloadData();
     console.log()
   }
 

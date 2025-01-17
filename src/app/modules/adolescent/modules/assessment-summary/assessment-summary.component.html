@@ -4,133 +4,39 @@
    Assessment Summary
   </div>
 
-  <div class="mx-5 mb-5">
 
-      <div class="mt-1 grid grid-cols-16 gap-x-4 w-full">
-
-          <div class="col-span-12 col-start-1 grid gap-x-4 mb-5">
-              <div class="mt-5">
-
-                <p for="consent_flag" class="text-sm" >
-                  1. Ikaw ba ay nakaranas ng pananakit o panananakot sa inyong bahay, paaralan o trabaho?
-                </p>
-              </div>
-          </div>
+  <!-- <div class="mt-1 w-full" *ngFor="let home of rapid_history.answers">
+    <div *ngIf="home.answer === '1'">
+      <div class="text-sm py-4">
+       {{home.question.question}}
       </div>
-
-      <div class="mt-1 w-full border-t border-gray-200 py-5">
-
-        <div class="col-span-8 mt-5">
-          <div class="rounded-md border border-solid border-gray-300">
-            <span class="rounded-t-md m-0 p-2 font-semibold text-sm text-gray-50 bg-blue-500 flex justify-between" [ngClass]="{'rounded-b' : !show_content}">
-              G2 - Violence
-              <button type="button" (click)="show_content = !show_content">
-                <fa-icon [icon]="show_content ? faChevronCircleUp : faChevronCircleDown" class="pr-2" size="lg"></fa-icon>
-              </button>
-            </span>
-
-            <div class="col-span-12 col-start-1 grid gap-x-4 mb-5" *ngIf="show_content">
-              <div class="mt-5 pl-10" *ngFor="let question of g2">
-                <p for="answer" class="text-sm col-span-11 col-start-1">{{question.name}}</p>
-
-              </div>
-          </div>
-
-
-
-          </div>
+      <div *ngFor="let algo of home.question.algorithm" class="text-sm py-4">
+        {{algo.code}}-{{algo.desc}}
+        <div>
+          <span [innerHTML]="parseReason(algo.ask_instruction)"></span>
         </div>
-
-        <div class="col-span-8 mt-10">
-          <div class="rounded-md border border-solid border-gray-300">
-            <span class="rounded-t-md m-0 p-2 font-semibold text-sm text-gray-50 bg-blue-500 flex justify-between" [ngClass]="{'rounded-b' : !show_content}">
-              G3 - Physical Abuse
-              <button type="button" (click)="show_content = !show_content">
-                <fa-icon [icon]="show_content ? faChevronCircleUp : faChevronCircleDown" class="pr-2" size="lg"></fa-icon>
-              </button>
-            </span>
-
-            <div class="col-span-12 col-start-1 grid gap-x-4 mb-5" *ngIf="!show_content">
-              <div class="mt-5 pl-10" *ngFor="let question of g2">
-                <p for="answer" class="text-sm col-span-11 col-start-1">{{question.name}}</p>
-
-              </div>
-          </div>
-
-
-
-          </div>
-        </div>
-
-        <div class="col-span-8 mt-10">
-          <div class="rounded-md border border-solid border-gray-300">
-            <span class="rounded-t-md m-0 p-2 font-semibold text-sm text-gray-50 bg-blue-500 flex justify-between" [ngClass]="{'rounded-b' : !show_content}">
-              G4 - Sexual Abuse
-              <button type="button" (click)="show_content = !show_content">
-                <fa-icon [icon]="show_content ? faChevronCircleUp : faChevronCircleDown" class="pr-2" size="lg"></fa-icon>
-              </button>
-            </span>
-
-            <div class="col-span-12 col-start-1 grid gap-x-4 mb-5" *ngIf="!show_content">
-              <div class="mt-5 pl-10" *ngFor="let question of g2">
-                <p for="answer" class="text-sm col-span-11 col-start-1">{{question.name}}</p>
-
-              </div>
-          </div>
-
-
-
-          </div>
-        </div>
-
-        <div class="col-span-8 mt-10">
-          <div class="rounded-md border border-solid border-gray-300">
-            <span class="rounded-t-md m-0 p-2 font-semibold text-sm text-gray-50 bg-blue-500 flex justify-between" [ngClass]="{'rounded-b' : !show_content}">
-              G5 - Cyber Bullying
-              <button type="button" (click)="show_content = !show_content">
-                <fa-icon [icon]="show_content ? faChevronCircleUp : faChevronCircleDown" class="pr-2" size="lg"></fa-icon>
-              </button>
-            </span>
-
-            <div class="col-span-12 col-start-1 grid gap-x-4 mb-5" *ngIf="!show_content">
-              <div class="mt-5 pl-10" *ngFor="let question of g2">
-                <p for="answer" class="text-sm col-span-11 col-start-1">{{question.name}}</p>
-
-              </div>
-          </div>
-
-
-
-          </div>
-        </div>
-
-        <div class="col-span-8 mt-10">
-          <div class="rounded-md border border-solid border-gray-300">
-            <span class="rounded-t-md m-0 p-2 font-semibold text-sm text-gray-50 bg-blue-500 flex justify-between" [ngClass]="{'rounded-b' : !show_content}">
-              G5 - Online Abuse and Exploitation
-              <button type="button" (click)="show_content = !show_content">
-                <fa-icon [icon]="show_content ? faChevronCircleUp : faChevronCircleDown" class="pr-2" size="lg"></fa-icon>
-              </button>
-            </span>
-
-            <div class="col-span-12 col-start-1 grid gap-x-4 mb-5" *ngIf="!show_content">
-              <div class="mt-5 pl-10" *ngFor="let question of g2">
-                <p for="answer" class="text-sm col-span-11 col-start-1">{{question.name}}</p>
-
-              </div>
-          </div>
-
-
-
-          </div>
-        </div>
-
-
-
 
       </div>
-
     </div>
+  </div> -->
+  <div class="mt-1 w-full" *ngFor="let home of rapid_history.answers; let i = index">
+    <div *ngIf="home.answer === '1'">
+      <div class="text-sm py-4">
+        {{home.question.question}}
+        <button (click)="home.collapsed = !home.collapsed" class="bg-blue-500 text-white px-2 py-1 rounded">
+          {{home.collapsed ? 'Show' : 'Hide'}} Details {{i}}
+        </button>
+      </div>
+      <div *ngIf="i === 0 ? !home.collapsed : home.collapsed">
+        <div *ngFor="let algo of home.question.algorithm" class="text-sm py-4">
+          {{algo.code}}-{{algo.desc}}
+          <div>
+            <span [innerHTML]="parseReason(algo.ask_instruction)"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
 
 </div>
