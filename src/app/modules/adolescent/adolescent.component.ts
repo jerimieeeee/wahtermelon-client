@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { faCalendar, faTimes, faDoorClosed, faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 
@@ -27,14 +27,13 @@ export class AdolescentComponent implements OnInit {
 
   compre_questions: any = [];
   client_types: any = [];
-  asrh_visit_history: any = [];
+  selected_asrh_consult: any;
+  patient_asrh_history: any = [];
   patient_id: any;
   consult_id: any;
   modals: any = [];
 
   consult_details: any;
-
-  selected_asrh_consult: {};
 
   switchPage(page) {
     if(page === 1) this.loadASRH;
@@ -51,7 +50,15 @@ export class AdolescentComponent implements OnInit {
   }
 
   updateSelectedASRH(data) {
+    console.log(data, 'update on main' );
+    this.selected_asrh_consult = data.data[0];
+  }
+  
+  openASRHConsult(data, id) {
+    // this.router.navigate(['/patient/at', {id: this.patient_id ?? this.patient_id, consult_id: this.consult_id ?? this.consult_id}]);
     this.selected_asrh_consult = data;
+    this.pages = 2;
+    console.log()
   }
 
   toggleModal(name){
@@ -60,11 +67,6 @@ export class AdolescentComponent implements OnInit {
   }
 
   loadCompreLib(){
-    // let params = {
-    //   patient_id: this.patient_id,
-    //   per_page: 'all'
-    // };
-
     this.http.get('libraries/comprehensive').subscribe({
       next: (data: any) => {
         this.compre_questions = data.data;
@@ -76,47 +78,40 @@ export class AdolescentComponent implements OnInit {
   }
 
   loadClient(){
-    // let params = {
-    //   patient_id: this.patient_id,
-    //   per_page: 'all'
-    // };
-
     this.http.get('libraries/asrh-client-type').subscribe({
       next: (data: any) => {
         this.client_types = data.data;
-        console.log(this.client_types)
-
+        // console.log(this.client_types)
       },
       error: err => console.log(err)
     });
   }
 
-  loadASRH() {
+ loadASRH(){
+    this.selected_asrh_consult = null;
+    this.fetching_history = true;
     let params = {
-      patient_id: this.patient_id,
-      // per_page: 'all'
+      patient_id: this.patient_id
     };
 
     this.http.get('asrh/rapid', {params}).subscribe({
       next: (data: any) => {
-
-       this.asrh_visit_history = data.data
-       console.log(this.asrh_visit_history, 'hugot ng asrh history')
+        this.patient_asrh_history = data.data;
+        if(this.patient_asrh_history[0] && !this.patient_asrh_history[0].notes) this.selected_asrh_consult = data.data[0];
+        this.fetching_history = true;
+        console.log(this.selected_asrh_consult)
+        // this.pages = 2;
       },
-      complete: () => {
-
-      },
-      error: err => {console.log(err)
-
-      },
-    })
+      error: err => console.log(err)
+    });
   }
 
   loadConsultDetails(){
     this.http.get('consultation/records',{params: {patient_id: this.patient_id, id: this.consult_id}}).subscribe({
       next: (data: any) => {
-        this.consult_details = data.data;
+        this.consult_details = data.data[0];
         console.log(this.consult_details, 'consult details')
+        this.loadASRH();
         this.show_form = true;
       },
       error: err => console.log(err)
@@ -125,6 +120,7 @@ export class AdolescentComponent implements OnInit {
 
   constructor(
     private http: HttpService,
+    private router: Router,
     private route: ActivatedRoute)
   { }
 
@@ -134,7 +130,6 @@ export class AdolescentComponent implements OnInit {
     this.consult_id = this.route.snapshot.paramMap.get('consult_id');
     this.loadCompreLib();
     this.loadClient();
-    this.loadASRH();
     this.loadConsultDetails();
     console.log('working')
   }

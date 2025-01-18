@@ -11,7 +11,8 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class AssessmentSummaryComponent implements OnInit {
   @Input() patient_id: any;
-
+  @Output() loadASRH = new EventEmitter<any>();
+  @Output() updateSelectedAb = new EventEmitter<any>();
   faSave = faSave;
   faChevronCircleUp = faChevronCircleUp;
   faChevronCircleDown = faChevronCircleDown;
@@ -40,26 +41,26 @@ export class AssessmentSummaryComponent implements OnInit {
     { name: 'Do you have any history of multiple or serious injuries?', id:'13' },
     { name: 'Are you involved or engaged in alcohol/ drugs/ substance use?', id:'14' },
   ];
-  loadASRH() {
-    let params = {
-      patient_id: this.patient_id,
-      // per_page: 'all'
-    };
+  // loadASRH() {
+  //   let params = {
+  //     patient_id: this.patient_id,
+  //     // per_page: 'all'
+  //   };
 
-    this.http.get('asrh/rapid', {params}).subscribe({
-      next: (data: any) => {
+  //   this.http.get('asrh/rapid', {params}).subscribe({
+  //     next: (data: any) => {
 
-       this.asrh_visit_history = data.data[0]
-       console.log(this.asrh_visit_history, 'hugot ng asrh history sa assessment')
-      },
-      complete: () => {
+  //      this.asrh_visit_history = data.data[0]
+  //      console.log(this.asrh_visit_history, 'hugot ng asrh history sa assessment')
+  //     },
+  //     complete: () => {
 
-      },
-      error: err => {console.log(err)
+  //     },
+  //     error: err => {console.log(err)
 
-      },
-    })
-  }
+  //     },
+  //   })
+  // }
 
   reloadData(){
     let params = {
@@ -116,6 +117,7 @@ export class AssessmentSummaryComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
+    this.loadASRH.emit();
     this.reloadData();
     console.log()
   }

@@ -1,8 +1,9 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { faCalendarDay, faPlus, faSave, faTimes, faPencil, faCircleCheck, faCaretRight, faInfoCircle, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { HttpService } from 'app/shared/services/http.service';
 import { Router } from '@angular/router';
+import { emit } from 'process';
 
 @Component({
   selector: 'app-rapid-heeadsss',
@@ -10,15 +11,13 @@ import { Router } from '@angular/router';
   styleUrl: './rapid-heeadsss.component.scss'
 })
 export class RapidHeeadsssComponent implements OnInit, OnChanges {
-@Input() compre_questions: any;
-@Input() client_types: any;
 @Input() patient_id: any;
-@Input() asrh_visit_history: any;
-@Input() loadASRH = new EventEmitter<any>();
-
+@Input() client_types: any;
+@Input() selected_asrh_consult;
+@Output() loadASRH = new EventEmitter<any>();
 @Output() updateSelectedASRH = new EventEmitter<any>();
 
-@Input() selected_asrh_consult;
+
 
   faCalendarDay = faCalendarDay;
   faPlus = faPlus;
@@ -47,6 +46,18 @@ export class RapidHeeadsssComponent implements OnInit, OnChanges {
 
   };
 
+  type_client = [
+    { name: 'walk-in', id:'1' },
+    { name: 'referred', id:'2' },
+
+  ];
+
+  statuses = [
+    { name: 'done', id:'1' },
+    { name: 'refused', id:'2' },
+
+  ];
+
   visitForm: FormGroup = new FormGroup({
     patient_id: new FormControl<string| null>(''),
     assessment_date: new FormControl<string| null>(''),
@@ -59,10 +70,9 @@ export class RapidHeeadsssComponent implements OnInit, OnChanges {
 
   createRapid(){
     this.http.post('asrh/rapid', this.visitForm.value).subscribe({
-      next: () => {
-        // this.toastr.success('Successfully recorded!','Vaccine record')
-        // this.loadData.emit('vaccines');
-        // this.closeModal();
+      next: (data : any) => {
+        this.updateSelectedASRH.emit(data);
+        this.loadASRH.emit();
         console.log(this.visitForm)
       },
       error: err => console.log(err),
@@ -86,10 +96,10 @@ export class RapidHeeadsssComponent implements OnInit, OnChanges {
       }
     })
 
-    if(rapid_arr.length > 0){
+    if(rapid_arr.length > 1){
       let user_id = this.http.getUserID();
       var rapid_form ={
-        consult_asrh_rapid_id: this.asrh_visit_history[0].id,
+        consult_asrh_rapid_id: this.selected_asrh_consult.id,
         patient_id: this.patient_id,
         user_id: user_id,
         answers: rapid_arr
@@ -98,16 +108,9 @@ export class RapidHeeadsssComponent implements OnInit, OnChanges {
       console.log(rapid_form)
 
       this.http.post('asrh/rapid-answer', rapid_form).subscribe({
-        next: () => {
-          // this.toastr.success('Successfully recorded!','Vaccine record')
-          // this.loadData.emit('vaccines');
-          // this.closeModal();
-          // this.loadSelected();
-             this.createRapid();
-             this.loadASRH.emit();
-            //  this.anotherFunc();
-            this.reloadData();
-
+        next: (data: any) => {
+             this.updateSelectedASRH.emit(data);
+            this.loadASRH.emit();
              console.log(this.visitForm, 'checker rapid')
 
         },
@@ -120,40 +123,6 @@ export class RapidHeeadsssComponent implements OnInit, OnChanges {
     }
   }
 
-  type_client = [
-    { name: 'walk-in', id:'1' },
-    { name: 'referred', id:'2' },
-
-  ];
-
-  statuses = [
-    { name: 'done', id:'1' },
-    { name: 'refused', id:'2' },
-
-  ];
-
-  anotherFunc(){
-
-    console.log(this.asrh_visit_history[0], 'check another func')
-    this.loadRapidDetails();
-  }
-
-  loadRapidLib(){
-    // let params = {
-    //   patient_id: this.patient_id,
-    //   per_page: 'all'
-    // };
-
-    this.http.get('libraries/rapid-questionnaire').subscribe({
-      next: (data: any) => {
-        this.rapid_questions = data.data;
-        console.log(this.rapid_questions)
-        // this.loadSelected();
-      },
-      error: err => console.log(err)
-    });
-  }
-
   reloadData(){
     let params = {
       patient_id: this.patient_id
@@ -161,29 +130,30 @@ export class RapidHeeadsssComponent implements OnInit, OnChanges {
 
     this.http.get('asrh/rapid', {params}).subscribe({
       next: (data: any) => {
-        this.selected_asrh_consult = data.data[0];
+        this.selected_asrh_consult = data.data;
         this.updateSelectedASRH.emit(this.selected_asrh_consult);
-        this.loadRapidDetails();
-        console.log(this.selected_asrh_consult, 'check mo selected')
+      
+        console.log(this.selected_asrh_consult, 'reload data asrh rapid')
       },
       error: err => console.log(err)
     });
   }
 
-  loadRapidDetails(){
+  patchData(){
 
-    if(this.asrh_visit_history.length >=1) {
+    if(this.selected_asrh_consult) {
       this.visitForm.patchValue({
-      assessment_date: this.asrh_visit_history[0].assessment_date,
-      lib_asrh_client_type_code:this.asrh_visit_history[0].lib_asrh_client_type_code,
-      client_type: this.asrh_visit_history[0].client_type,
-      other_client_type: this.asrh_visit_history[0].other_client_type,
-      refer_to_user_id: this.asrh_visit_history[0].refer_to_user_id,
-      status: this.asrh_visit_history[0].status,
+      assessment_date: this.selected_asrh_consult?.assessment_date,
+      lib_asrh_client_type_code:this.selected_asrh_consult?.lib_asrh_client_type_code,
+      client_type: this.selected_asrh_consult?.client_type,
+      other_client_type: this.selected_asrh_consult?.other_client_type,
+      refer_to_user_id: this.selected_asrh_consult?.refer_to_user_id,
+      status: this.selected_asrh_consult?.status,
       });
-      // this.show_form = true;
-      // console.log(this.asrh_visit_history[0].answers,'load rapid working')
+     
+      // console.log(this.selected_asrh_consult[1].answers,'load rapid working')
       this.loadSelected();
+      this.show_form = true;
     }
   }
 
@@ -200,19 +170,32 @@ export class RapidHeeadsssComponent implements OnInit, OnChanges {
 
     });
 
-    this.loadRapidDetails();
-    // this.show_form = true;
+    this.patchData();
+    this.show_form = true;
   }
 
   loadSelected() {
-    if(this.asrh_visit_history) {
-    this.asrh_visit_history[0].answers.forEach((item) => {
+    if(this.selected_asrh_consult) {
+    this.selected_asrh_consult?.answers.forEach((item) => {
       this.rapid_ans[item.question.id] = item.answer // Default to an empty string if no answer
     });
 
   }
-    console.log(this.rapid_ans, 'get rapid 12')
+    console.log(this.rapid_ans, 'get existing rapid 12')
 
+  }
+
+  loadRapidLib(){
+    this.http.get('libraries/rapid-questionnaire').subscribe({
+      next: (data: any) => {
+        this.rapid_questions = data.data;
+       this.show_form = true;
+        this.loadUsers();
+        this.validateForm();
+        // this.loadASRH.emit();
+      },
+      error: err => console.log(err)
+    });
   }
 
   loadUsers(){
@@ -234,6 +217,7 @@ export class RapidHeeadsssComponent implements OnInit, OnChanges {
   ) { }
 
   ngOnChanges(): void{
+  
     if (this.visitForm.get('client_type')?.value === 'walk-in') {
       this.visitForm.get('lib_asrh_client_type_code')?.disable();
       this.visitForm.get('other_client_type')?.disable(); // Disable field2 if field1 has the value 'disable'
@@ -259,18 +243,14 @@ export class RapidHeeadsssComponent implements OnInit, OnChanges {
             this.visitForm.get('other_client_type').enable();
         }
     });
+   
     console.log('test changes')
   }
 
 ngOnInit(): void {
-    console.log(this.patient_id)
-
+    console.log(this.selected_asrh_consult, 'selected asrh in rapid')
     this.validateForm();
     this.loadRapidLib();
-
     this.ngOnChanges();
-    this.loadUsers();
-
-    // console.log(this.asrh_visit_history[0].answers)
   }
 }

@@ -1,4 +1,4 @@
-<div class="m-5 border border-slate-200 rounded-lg" *ngIf="!show_form">
+<div class="m-5 border border-slate-200 rounded-lg" *ngIf="show_form">
   <div class="bg-blue-500 text-sm text-white rounded-t-md py-2 pl-5 font-semibold">
    Rapid HEEADSSSS Assessment
   </div>
@@ -45,7 +45,7 @@
               <label for="refer_to" class="text-sm font-semibold">Referred To</label>
               <select name="refer_to_user_id" id="refer_to_user_id" class="input" formControlName="refer_to_user_id">
                 <!-- <option [ngValue]="0" selected> </option> -->
-                <option *ngFor="let dr of physicians" [value]="dr.id">{{ dr.last_name }}, {{ dr.first_name }} {{ dr.middle_name }}</option>
+                <option *ngFor="let dr of physicians" [value]="dr.id">{{ dr?.last_name }}, {{ dr?.first_name }} {{ dr?.middle_name }}</option>
               </select>
             </div>
 
@@ -74,7 +74,7 @@
 
       </form>
 
-      <div class="flex justify-center mt-5 mb-10" *ngIf="!asrh_visit_history[0].id">
+      <div class="flex justify-center mt-5 mb-10">
         <button class="btn-save mt-4" [disabled]="is_saving" (click)="createRapid()">
           <fa-icon [icon]="faSave" *ngIf="!is_saving" class="mr-2"></fa-icon>
           <fa-icon [icon]="faSpinner" *ngIf="is_saving" animation="spin" class="mr-2"></fa-icon>
@@ -83,8 +83,8 @@
      </div>
 
       <!-- <div class="mt-1 w-full border-t border-gray-200 py-5" *ngIf="adolescentForm.get('consent_flag').value === true"> -->
-      <form>
-      <div class="mt-1 w-full border-t border-gray-200 py-5 px-5" *ngIf="asrh_visit_history.id">
+      <form >
+      <div class="mt-1 w-full border-t border-gray-200 py-5 px-5">
         <div class="grid grid-cols-12 mt-2 align-middle" *ngFor="let rapid of rapid_questions">
           <label attr.for="{{ rapid.id }}" class="text-sm col-span-9 col-start-1 mt-3">{{rapid.sequence}}. {{rapid.question}}</label>
           <!-- <select class="input align-middle text-sm col-span-1 col-start-12"  [(ngModel)]="rapidForm.rapid_status[rapid.id]"
@@ -99,14 +99,15 @@
           </select>
         </div>
 
-        <div class="flex justify-center mt-5 mb-5" *ngIf="asrh_visit_history[0].id">
-          <button class="btn-save mt-4" [disabled]="is_saving" (click)="onSubmit()">
-            <fa-icon [icon]="faSave" *ngIf="!is_saving" class="mr-2"></fa-icon>
-            <fa-icon [icon]="faSpinner" *ngIf="is_saving" animation="spin" class="mr-2"></fa-icon>
-            Save
-          </button>
-       </div>
+       
       </div>
+      <div class="flex justify-center mt-5 mb-5">
+        <button class="btn-save mt-4" [disabled]="is_saving" (click)="onSubmit()">
+          <fa-icon [icon]="faSave" *ngIf="!is_saving" class="mr-2"></fa-icon>
+          <fa-icon [icon]="faSpinner" *ngIf="is_saving" animation="spin" class="mr-2"></fa-icon>
+          Save
+        </button>
+     </div>
      </form>
     </div>
 </div>

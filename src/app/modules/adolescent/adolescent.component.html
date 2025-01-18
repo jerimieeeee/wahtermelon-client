@@ -1,4 +1,4 @@
-<div class="flex" *ngIf="show_form">
+<div class="flex">
   <nav class="mt-4 flex flex-row border-b border-slate-300 text-xs">
     <button (click)="switchPage(1)" class="tabs-main w-36"
       [class]="pages===1? 'tabs-main-true rounded-t-md' : 'tabs-main-false' ">
@@ -106,36 +106,36 @@
   <table class="w-full text-sm text-left" *ngIf="fetching_history">
     <thead class="text-xs text-white uppercase bg-blue-500">
       <tr>
-        <th scope="col" class="py-3 px-6">Visit Date</th>
+        <th scope="col" class="py-3 px-6">Assessment Date</th>
         <th scope="col" class="py-3 px-6">Assessment Summary</th>
         <th scope="col" class="py-3 px-6">Status</th>
         <th scope="col" class="py-3 px-6">Action</th>
       </tr>
     </thead>
     <tbody>
-      <tr class="bg-white border-b" >
-        <!-- <td colspan="7">
+      <tr class="bg-white border-b" *ngFor="let asrh_history of patient_asrh_history">
+        <td *ngIf="!patient_asrh_history" colspan="7">
           <div class="text-center">
             No records to show...
           </div>
-        </td> -->
-        <!-- <td class="py-4 px-6">
-          {{ fp_history.created_at | date: 'MM/dd/yyyy'}}
         </td>
         <td class="py-4 px-6">
-          {{ fp_history?.method?.method?.desc ? fp_history?.method?.method?.desc : '-' }}
+          {{ asrh_history.assessment_date | date: 'MM/dd/yyyy'}}
         </td>
         <td class="py-4 px-6">
-          {{ fp_history?.method?.client?.desc ? fp_history?.method?.client?.desc : '-' }}
-        </td> -->
-        <!-- <td class="py-4 px-6">
-          <button type="button" class="rounded-md bg-blue-500 text-white py-1 px-2">
+         {{ asrh_history.id }}
+        </td>
+        <td class="py-4 px-6">
+         -
+        </td>
+        <td class="py-4 px-6">
+          <button type="button" class="rounded-md bg-blue-500 text-white py-1 px-2" (click)="openASRHConsult(asrh_history)">
            Open
           </button>
-        </td> -->
+        </td>
       </tr>
 
-      <tr class="bg-white border-b">
+      <tr class="bg-white border-b" *ngIf="patient_asrh_history.length === 0">
         <td  colspan="7">
           <div class="text-center py-3 flex flex-col">
             <div class="flex justify-center">No records to show...</div>
@@ -156,12 +156,16 @@
   (loadASRH)="loadASRH()"
   [client_types]="client_types"
   [asrh_visit_history]="asrh_visit_history"
+  [selected_asrh_consult]="selected_asrh_consult"
+  (updateSelectedASRH)="updateSelectedASRH($event)"
 ></app-rapid-heeadsss>
 
 <app-assessment-summary *ngIf="pages === 2 && module === 2"
   [patient_id]="patient_id"
   (loadASRH)="loadASRH()"
   [asrh_visit_history]="asrh_visit_history"
+  [selected_asrh_consult]="selected_asrh_consult"
+  (updateSelectedASRH)="updateSelectedASRH($event)"
 ></app-assessment-summary>
 
 <app-home *ngIf="pages === 2 && module === 3 && module_compre === 1"
@@ -230,8 +234,8 @@
 <app-end-visit *ngIf="modals['end_visit']"
   (toggleModal)="toggleModal($event)"
   [consult_id]="consult_id"
-  [consult_date]="consult_details[0]?.consult_date"
-  [patient_id]="consult_details[0]?.patient.id"
-  [pt_group]="consult_details[0]?.pt_group"
+  [consult_date]="consult_details?.consult_date"
+  [patient_id]="consult_details?.patient.id"
+  [pt_group]="consult_details?.pt_group"
 ></app-end-visit>
 
