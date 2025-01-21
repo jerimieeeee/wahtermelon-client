@@ -4,8 +4,7 @@ import { dateHelper } from 'app/shared/services/date-helper.service';
 @Component({
     selector: 'app-header-fhsis2018',
     templateUrl: './header-fhsis2018.component.html',
-    styleUrls: ['./header-fhsis2018.component.scss'],
-    standalone: false
+    styleUrls: ['./header-fhsis2018.component.scss']
 })
 export class HeaderFhsis2018Component implements OnChanges {
   @Input() brgys!: any;
