@@ -51,11 +51,11 @@ export class AdolescentComponent implements OnInit {
     this.module_compre = tab_compre;
   }
 
-  updateSelectedASRH(id) {
+  updateSelectedASRH() {
     // let params = {
     //   id: this.selected_asrh_consult.id
     // };
-    console.log(this.selected_asrh_consult, 'selected_asrh')
+    console.log('selected id')
     this.http.get('asrh/rapid/'+ this.selected_asrh_consult.id).subscribe({
       next: (data: any) => {
         // this.patient_asrh_history = data.data;
@@ -68,9 +68,18 @@ export class AdolescentComponent implements OnInit {
     });
   }
 
-  updateSelectedASRH2(data){
-    console.log(data), 'updateSelectedASRH2';
-    this.selected_asrh_consult = data.data[0];
+  updateSelectedASRH2(id){
+    console.log('selected id')
+    this.http.get('asrh/rapid/'+ id).subscribe({
+      next: (data: any) => {
+        // this.patient_asrh_history = data.data;
+        this.selected_asrh_consult = data.data;
+        this.fetching_history = true;
+        console.log(this.selected_asrh_consult, 'selected_asrh_consult main');
+        // this.pages = 2;
+      },
+      error: err => console.log(err)
+    });
   }
 
   openASRHConsult(data) {

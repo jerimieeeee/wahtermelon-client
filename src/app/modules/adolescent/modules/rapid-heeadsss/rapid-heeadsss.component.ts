@@ -72,15 +72,14 @@ export class RapidHeeadsssComponent implements OnInit, OnChanges {
     this.http.post('asrh/rapid', this.visitForm.value).subscribe({
       next: (data : any) => {
 
-        // if(this.selected_asrh_consult === null){
-        //   this.updateSelectedASRH2.emit(data);
-        //   this.loadASRH2.emit();
-        //   console.log(this.patient_asrh_history, 'patient asrh history')
-        // }
-        // else{
-          this.updateSelectedASRH.emit(data.data.id);
+        if(this.selected_asrh_consult === null){
+          this.updateSelectedASRH2.emit(data.data.id);
+          
+        }
+        else{
+          this.updateSelectedASRH.emit(data);
           console.log(data, 'rapid details')
-        // }
+        }
 
         // console.log(this.selected_asrh_consult, 'checker current selected')
       },
@@ -118,8 +117,8 @@ export class RapidHeeadsssComponent implements OnInit, OnChanges {
 
       this.http.post('asrh/rapid-answer', rapid_form).subscribe({
         next: (data : any) => {
-          console.log(data, 'display visit details')
-          if(this.selected_asrh_consult !== null)
+          console.log(data, 'display save rapid answers')
+          // if(this.selected_asrh_consult !== null)
              this.updateSelectedASRH.emit(data);
             //  this.loadASRH.emit();
             //  console.log(this.selected_asrh_consult, 'checker current selected')
