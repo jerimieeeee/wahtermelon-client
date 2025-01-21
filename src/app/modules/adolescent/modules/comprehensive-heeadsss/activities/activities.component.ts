@@ -14,6 +14,7 @@ export class ActivitiesComponent implements OnInit {
      @Input() patient_id: any;
      @Input() asrh_visit_history: any;
      @Output() loadASRH = new EventEmitter<any>();
+     @Input() selected_asrh_consult: any;
 
     faCalendarDay = faCalendarDay;
     faPlus = faPlus;
@@ -71,8 +72,8 @@ export class ActivitiesComponent implements OnInit {
       this.activitiesForm = this.formBuilder.group({
         id: [''],
         patient_id: [this.patient_id],
-        consult_asrh_rapid_id: [this.asrh_visit_history[0].id, [Validators.required, Validators.minLength(1)]],
-        assessment_date: [this.asrh_visit_history[0].assessment_date, [Validators.required, Validators.minLength(1)]],
+        consult_asrh_rapid_id: [this.selected_asrh_consult.id, [Validators.required, Validators.minLength(1)]],
+        assessment_date: [this.selected_asrh_consult?.comprehensive?.assessment_date, [Validators.required, Validators.minLength(1)]],
 
         activities_notes: ['', [Validators.required, Validators.minLength(1)]],
 
@@ -85,13 +86,13 @@ export class ActivitiesComponent implements OnInit {
 
     patchCompre(){
 
-     if(this.asrh_compre_history) {
+     if(this.selected_asrh_consult) {
        this.activitiesForm.patchValue({
-       activities_notes: this.asrh_compre_history.activities_notes,
+       activities_notes: this.selected_asrh_consult?.comprehensive?.activities_notes,
        });
        // this.show_form = true;
-       console.log(this.asrh_compre_history,'load compre home working')
-       // this.loadSelected();
+      //  console.log(this.asrh_compre_history,'load compre home working')
+       this.patchCompre();
      }
    }
 
@@ -127,8 +128,8 @@ export class ActivitiesComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
-     this.LoadCompre();
+    //  this.LoadCompre();
      this.validateForm();
-     this.loadASRH.emit();
+    //  this.loadASRH.emit();
     }
   }

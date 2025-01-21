@@ -13,7 +13,6 @@ export class HomeComponent implements OnInit {
   @Input() compre_questions : any;
   @Input() patient_id: any;
   @Input() selected_asrh_consult: any;
-  @Output() loadASRH = new EventEmitter<any>();
   @Output() updateSelectedASRH = new EventEmitter<any>();
 
   faCalendarDay = faCalendarDay;
@@ -61,7 +60,7 @@ export class HomeComponent implements OnInit {
         this.is_saving = false;
         // this.showButton = !this.showButton;
         this.updateSelectedASRH.emit(data);
-        this.loadASRH.emit();
+        // this.loadASRH.emit();
         // this.reloadData();
           // this.patchCompre();
         console.log(this.homeForm, 'checker home')
@@ -80,7 +79,7 @@ export class HomeComponent implements OnInit {
     this.homeForm = this.formBuilder.group({
       id: [''],
       patient_id: [this.patient_id],
-      consult_asrh_rapid_id: [this.selected_asrh_consult.id, [Validators.required, Validators.minLength(1)]],
+      consult_asrh_rapid_id: [this.selected_asrh_consult?.id, [Validators.required, Validators.minLength(1)]],
       assessment_date: ['', [Validators.required, Validators.minLength(1)]],
       consent_flag: ['', [Validators.required, Validators.minLength(1)]],
       home_notes: ['', [Validators.required, Validators.minLength(1)]],
@@ -89,6 +88,7 @@ export class HomeComponent implements OnInit {
       status: ['', [Validators.required, Validators.minLength(1)]],
       // average_monthly_income: ['', [Validators.required, Validators.minLength(1), Validators.pattern("^[0-9,;]+$")]],
     });
+    this.patchCompre();
     // this.loadFPDetails();
     // this.show_form = true;
   }
@@ -140,9 +140,9 @@ export class HomeComponent implements OnInit {
   ) { }
 
 ngOnInit(): void {
-  this.LoadCompre();
+  // this.LoadCompre();
   this.validateForm();
-    this.comprehensive_q = this.compre_questions
-
+  this.comprehensive_q = this.compre_questions
+  // console.log(this.selected_asrh_consult, 'selected asrh consult')
   }
 }

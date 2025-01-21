@@ -13,6 +13,7 @@ export class SafetyComponent implements OnInit {
     @Input() compre_questions : any;
     @Input() patient_id: any;
     @Input() asrh_visit_history: any;
+    @Input() selected_asrh_consult: any;
 
    faCalendarDay = faCalendarDay;
    faPlus = faPlus;
@@ -68,26 +69,26 @@ export class SafetyComponent implements OnInit {
      this.safetyForm = this.formBuilder.group({
        id: [''],
        patient_id: [this.patient_id],
-       consult_asrh_rapid_id: [this.asrh_visit_history[0].id, [Validators.required, Validators.minLength(1)]],
-       assessment_date: [this.asrh_visit_history[0].assessment_date, [Validators.required, Validators.minLength(1)]],
+       consult_asrh_rapid_id: [this.selected_asrh_consult?.id, [Validators.required, Validators.minLength(1)]],
+       assessment_date: [this.selected_asrh_consult?.comprehensive?.assessment_date, [Validators.required, Validators.minLength(1)]],
 
        safety_notes: ['', [Validators.required, Validators.minLength(1)]],
 
        // average_monthly_income: ['', [Validators.required, Validators.minLength(1), Validators.pattern("^[0-9,;]+$")]],
      });
 
-     // this.loadFPDetails();
+     this.patchCompre();
      // this.show_form = true;
    }
 
    patchCompre(){
 
-    if(this.asrh_compre_history) {
+    if(this.selected_asrh_consult) {
       this.safetyForm.patchValue({
-      safety_notes: this.asrh_compre_history.safety_notes,
+      safety_notes: this.selected_asrh_consult?.comprehensive?.safety_notes,
       });
       // this.show_form = true;
-      console.log(this.asrh_compre_history,'load compre home working')
+      // console.log(this.asrh_compre_history,'load compre home working')
       // this.loadSelected();
     }
   }
@@ -122,7 +123,7 @@ export class SafetyComponent implements OnInit {
    ) { }
 
  ngOnInit(): void {
-    this.LoadCompre();
+    // this.LoadCompre();
     this.validateForm();
 
    }

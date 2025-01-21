@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, OnChanges, SimpleChanges} from '@angular/core';
 import { faCalendarDay, faPlus, faSave, faTimes, faPencil, faCircleCheck, faCaretRight, faInfoCircle, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { HttpService } from 'app/shared/services/http.service';
@@ -8,12 +8,14 @@ import { HttpService } from 'app/shared/services/http.service';
   templateUrl: './rapid-heeadsss.component.html',
   styleUrl: './rapid-heeadsss.component.scss'
 })
-export class RapidHeeadsssComponent implements OnInit{
+export class RapidHeeadsssComponent implements OnInit, OnChanges {
 @Input() patient_id: any;
 @Input() client_types: any;
-@Input() selected_asrh_consult: any;
-@Output() loadASRH = new EventEmitter<any>();
+@Input() selected_asrh_consult;
+@Input() patient_asrh_history: any;
+@Output() loadASRH2 = new EventEmitter<any>();
 @Output() updateSelectedASRH = new EventEmitter<any>();
+@Output() updateSelectedASRH2 = new EventEmitter<any>();
 
 
 
@@ -69,9 +71,18 @@ export class RapidHeeadsssComponent implements OnInit{
   createRapid(){
     this.http.post('asrh/rapid', this.visitForm.value).subscribe({
       next: (data : any) => {
-        this.updateSelectedASRH.emit(data);
-        this.loadASRH.emit();
-        console.log(this.visitForm)
+
+        // if(this.selected_asrh_consult === null){
+        //   this.updateSelectedASRH2.emit(data);
+        //   this.loadASRH2.emit();
+        //   console.log(this.patient_asrh_history, 'patient asrh history')
+        // }
+        // else{
+          this.updateSelectedASRH.emit(data.data.id);
+          console.log(data, 'rapid details')
+        // }
+
+        // console.log(this.selected_asrh_consult, 'checker current selected')
       },
       error: err => console.log(err),
       complete: () => console.log('success')
@@ -81,7 +92,7 @@ export class RapidHeeadsssComponent implements OnInit{
   onSubmit(){
     var rapid_arr = [];
 
-    console.log(this.rapid_ans, 'test')
+    console.log(this.selected_asrh_consult, 'test')
     Object.entries(this.rapid_ans).forEach(([key, value]) => {
       if(value != '-'){
         let ans = {
@@ -90,7 +101,7 @@ export class RapidHeeadsssComponent implements OnInit{
         };
 
         rapid_arr.push(ans);
-        console.log(rapid_arr)
+        // console.log(rapid_arr)
       }
     })
 
@@ -106,18 +117,19 @@ export class RapidHeeadsssComponent implements OnInit{
       console.log(rapid_form)
 
       this.http.post('asrh/rapid-answer', rapid_form).subscribe({
-        next: (data: any) => {
+        next: (data : any) => {
+          console.log(data, 'display visit details')
+          if(this.selected_asrh_consult !== null)
              this.updateSelectedASRH.emit(data);
-            this.loadASRH.emit();
-             console.log(rapid_form, 'checker rapid')
+            //  this.loadASRH.emit();
+            //  console.log(this.selected_asrh_consult, 'checker current selected')
 
         },
         error: err => console.log(err),
+
         complete: () =>
           console.log('success'),
       })
-    }else{
-
     }
   }
 
@@ -130,8 +142,8 @@ export class RapidHeeadsssComponent implements OnInit{
       next: (data: any) => {
         this.selected_asrh_consult = data.data;
         this.updateSelectedASRH.emit(this.selected_asrh_consult);
-      
-        console.log(this.selected_asrh_consult, 'reload data asrh rapid')
+
+        // console.log(this.selected_asrh_consult, 'reload data asrh rapid')
       },
       error: err => console.log(err)
     });
@@ -148,8 +160,8 @@ export class RapidHeeadsssComponent implements OnInit{
         refer_to_user_id: this.selected_asrh_consult?.refer_to_user_id,
         status: this.selected_asrh_consult?.status,
       });
-     
-      // console.log(this.selected_asrh_consult[1].answers,'load rapid working')
+      console.log(this.selected_asrh_consult, 'patch data working selected asrh')
+      console.log('patch data working')
       this.loadSelected();
       this.show_form = true;
     }
@@ -166,11 +178,11 @@ export class RapidHeeadsssComponent implements OnInit{
       refer_to_user_id: ['', [Validators.required]],
       status: ['', [Validators.required]],
 
-      
+
 
     });
 
-   
+
 
    this.disableForm();
    this.disableForm2();
@@ -187,7 +199,7 @@ export class RapidHeeadsssComponent implements OnInit{
       } else {
         libAsrhClientTypeCodeControl?.enable();
       }
-      
+
     });
   }
 
@@ -200,7 +212,7 @@ export class RapidHeeadsssComponent implements OnInit{
       } else {
         otherClientControl?.enable();
       }
-      
+
     });
 
   }
@@ -211,7 +223,7 @@ export class RapidHeeadsssComponent implements OnInit{
         this.rapid_ans[item.question.id] = item.answer // Default to an empty string if no answer
       });
     }
-    console.log(this.rapid_ans, 'get existing rapid 12')
+    // console.log(this.rapid_ans, 'get existing rapid 12')
   }
 
   loadRapidLib(){
@@ -220,7 +232,7 @@ export class RapidHeeadsssComponent implements OnInit{
         this.rapid_questions = data.data;
        this.show_form = true;
         this.loadUsers();
-        this.validateForm();
+        // this.validateForm();
         // this.loadASRH.emit();
       },
       error: err => console.log(err)
@@ -228,7 +240,7 @@ export class RapidHeeadsssComponent implements OnInit{
   }
 
   loadUsers(){
-    this.http.get('users', {params:{per_page: 'all', doctors_list: 1}}).subscribe({
+    this.http.get('users', {params:{per_page: 'all', aja_flag: 1}}).subscribe({
       next: (data: any) => {
         // console.log(data.data)
         this.physicians = data.data
@@ -237,7 +249,7 @@ export class RapidHeeadsssComponent implements OnInit{
       error: err => console.log(err)
     })
   }
-  
+
   allQuestionsAnswered(): boolean {
     return this.rapid_questions.every((question: any) => this.rapid_ans[question.id] && this.rapid_ans[question.id] !== '-');
   }
@@ -248,11 +260,14 @@ export class RapidHeeadsssComponent implements OnInit{
     // private router: Router
   ) { }
 
+ngOnChanges(change: SimpleChanges): void{
+    this.patchData();
+  }
 
 ngOnInit(): void {
     console.log(this.selected_asrh_consult, 'selected asrh in rapid')
     this.validateForm();
     this.loadRapidLib();
-   
+
   }
 }

@@ -30,7 +30,7 @@
         [class]="module===2? 'tabs-main-true w-44' : 'tabs-main-false w-44' ">
         ASSESSMENT SUMMARY
     </button>
-    <button (click)="switchTab(3)" class="tabs-main w-44"
+    <button (click)="switchTab(3)" class="tabs-main w-44" *ngIf="selected_asrh_consult?.refer_to_user_id === user_info.id && user_info.aja_flag === true"
         [class]="module===3? 'tabs-main-true w-44' : 'tabs-main-false w-44' ">
         COMPREHENSIVE HEEADSSSS
     </button>
@@ -153,11 +153,13 @@
 
 <app-rapid-heeadsss *ngIf="pages === 2 && module === 1"
   [patient_id]="patient_id"
-  (loadASRH)="loadASRH()"
   [client_types]="client_types"
   [asrh_visit_history]="asrh_visit_history"
+  [patient_asrh_history]="patient_asrh_history"
   [selected_asrh_consult]="selected_asrh_consult"
   (updateSelectedASRH)="updateSelectedASRH($event)"
+  (loadASRH)="loadASRH()"
+  (loadASRH2)="loadASRH2()"
 ></app-rapid-heeadsss>
 
 <app-assessment-summary *ngIf="pages === 2 && module === 2"
@@ -229,6 +231,7 @@
   [asrh_visit_history]="asrh_visit_history"
   [selected_asrh_consult]="selected_asrh_consult"
   (updateSelectedASRH)="updateSelectedASRH($event)"
+  (updateSelectedASRH2)="updateSelectedASRH2($event)"
 ></app-suicide-depression>
 
 <app-safety *ngIf="pages === 2 && module === 3 && module_compre === 8"

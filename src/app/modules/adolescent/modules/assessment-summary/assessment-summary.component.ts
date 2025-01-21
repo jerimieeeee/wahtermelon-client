@@ -13,7 +13,7 @@ export class AssessmentSummaryComponent implements OnInit {
   @Input() patient_id: any;
   @Input() selected_asrh_consult: any;
   @Output() loadASRH = new EventEmitter<any>();
-  @Output() updateSelectedAb = new EventEmitter<any>();
+  @Output() updateSelectedASRH = new EventEmitter<any>();
   faSave = faSave;
   faChevronCircleUp = faChevronCircleUp;
   faChevronCircleDown = faChevronCircleDown;
@@ -87,7 +87,7 @@ export class AssessmentSummaryComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
-    this.loadASRH.emit();
+    // this.loadASRH.emit();
 
   this.selectVisit();
     console.log(this.selected_asrh_consult, 'check mo selected rapid')

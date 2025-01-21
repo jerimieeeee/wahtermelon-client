@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { faCalendar, faTimes, faDoorClosed, faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-adolescent',
@@ -31,12 +32,13 @@ export class AdolescentComponent implements OnInit {
   patient_asrh_history: any = [];
   patient_id: any;
   consult_id: any;
+  user_info: any;
   modals: any = [];
 
   consult_details: any;
 
   switchPage(page) {
-    if(page === 1) this.loadASRH;
+    if(page === 1) this.loadASRH();
     this.pages = page;
     console.log(this.pages, 'Test')
   }
@@ -49,14 +51,32 @@ export class AdolescentComponent implements OnInit {
     this.module_compre = tab_compre;
   }
 
-  updateSelectedASRH(data) {
-    console.log(data, 'update on main' );
+  updateSelectedASRH(id) {
+    // let params = {
+    //   id: this.selected_asrh_consult.id
+    // };
+    console.log(this.selected_asrh_consult, 'selected_asrh')
+    this.http.get('asrh/rapid/'+ this.selected_asrh_consult.id).subscribe({
+      next: (data: any) => {
+        // this.patient_asrh_history = data.data;
+        this.selected_asrh_consult = data.data;
+        this.fetching_history = true;
+        console.log(this.selected_asrh_consult, 'selected_asrh_consult main');
+        // this.pages = 2;
+      },
+      error: err => console.log(err)
+    });
+  }
+
+  updateSelectedASRH2(data){
+    console.log(data), 'updateSelectedASRH2';
     this.selected_asrh_consult = data.data[0];
   }
-  
-  openASRHConsult(data, id) {
+
+  openASRHConsult(data) {
     // this.router.navigate(['/patient/at', {id: this.patient_id ?? this.patient_id, consult_id: this.consult_id ?? this.consult_id}]);
     this.selected_asrh_consult = data;
+    console.log(this.selected_asrh_consult, 'selected_asrh_consult');
     this.pages = 2;
     console.log()
   }
@@ -66,7 +86,21 @@ export class AdolescentComponent implements OnInit {
     console.log('toggle modal')
   }
 
-  loadCompreLib(){
+  loadLibraries() {
+    const getCompre = this.http.get('libraries/comprehensive');
+    const getClient = this.http.get('libraries/asrh-client-type');
+
+    forkJoin([getCompre, getClient]).subscribe({
+      next: ([dataCompre, dataClient]: any) => {
+        this.compre_questions = dataCompre.data;
+        this.client_types = dataClient.data;
+        console.log(this.compre_questions, this.client_types, 'libraries')
+      },
+      error: err => console.log(err)
+    });
+  }
+
+ /*  loadCompreLib(){
     this.http.get('libraries/comprehensive').subscribe({
       next: (data: any) => {
         this.compre_questions = data.data;
@@ -75,17 +109,16 @@ export class AdolescentComponent implements OnInit {
       },
       error: err => console.log(err)
     });
-  }
+  } */
 
-  loadClient(){
+  /* loadClient(){
     this.http.get('libraries/asrh-client-type').subscribe({
       next: (data: any) => {
         this.client_types = data.data;
-        // console.log(this.client_types)
       },
       error: err => console.log(err)
     });
-  }
+  } */
 
  loadASRH(){
     this.selected_asrh_consult = null;
@@ -97,9 +130,26 @@ export class AdolescentComponent implements OnInit {
     this.http.get('asrh/rapid', {params}).subscribe({
       next: (data: any) => {
         this.patient_asrh_history = data.data;
-        if(this.patient_asrh_history[0] && !this.patient_asrh_history[0].notes) this.selected_asrh_consult = data.data[0];
+        if(this.patient_asrh_history[0] && !this.patient_asrh_history[0]?.comprehensive?.status === null) this.selected_asrh_consult = data.data[0];
         this.fetching_history = true;
-        console.log(this.selected_asrh_consult)
+        console.log(this.selected_asrh_consult, 'selected_asrh_consult');
+        // this.pages = 2;
+      },
+      error: err => console.log(err)
+    });
+  }
+
+  loadASRH2(){
+    this.fetching_history = true;
+    let params = {
+      patient_id: this.patient_id
+    };
+
+    this.http.get('asrh/rapid', {params}).subscribe({
+      next: (data: any) => {
+        this.patient_asrh_history = data.data[0];
+        this.fetching_history = true;
+        console.log(this.patient_asrh_history, 'selected_asrh_consult sa main');
         // this.pages = 2;
       },
       error: err => console.log(err)
@@ -112,6 +162,7 @@ export class AdolescentComponent implements OnInit {
         this.consult_details = data.data[0];
         console.log(this.consult_details, 'consult details')
         this.loadASRH();
+        this.loadLibraries();
         this.show_form = true;
       },
       error: err => console.log(err)
@@ -128,9 +179,9 @@ export class AdolescentComponent implements OnInit {
   ngOnInit(): void {
     this.patient_id = this.route.snapshot.paramMap.get('id');
     this.consult_id = this.route.snapshot.paramMap.get('consult_id');
-    this.loadCompreLib();
-    this.loadClient();
+    this.user_info = this.http.getUserFromJSON();
+
     this.loadConsultDetails();
-    console.log('working')
+    console.log(this.user_info, 'user_info')
   }
 }
