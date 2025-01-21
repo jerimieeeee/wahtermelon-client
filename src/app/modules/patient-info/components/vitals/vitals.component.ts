@@ -37,7 +37,7 @@ export class VitalsComponent implements OnInit {
           let orig_diastolic = data.data[0].bp_diastolic;
 
           this.latest_vitals = this.vitalsCharts.getLatestToday(vitals);
-          console.log(this.latest_vitals)
+          // console.log(this.latest_vitals)
           vitals[0]['bp_systolic'] = orig_systolic;
           vitals[0]['bp_diastolic'] = orig_diastolic;
           this.show_vitals = true;
