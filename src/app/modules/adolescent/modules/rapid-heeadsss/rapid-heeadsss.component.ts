@@ -1,19 +1,17 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange, SimpleChanges } from '@angular/core';
 import { faCalendarDay, faPlus, faSave, faTimes, faPencil, faCircleCheck, faCaretRight, faInfoCircle, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { HttpService } from 'app/shared/services/http.service';
-import { Router } from '@angular/router';
-import { emit } from 'process';
 
 @Component({
   selector: 'app-rapid-heeadsss',
   templateUrl: './rapid-heeadsss.component.html',
   styleUrl: './rapid-heeadsss.component.scss'
 })
-export class RapidHeeadsssComponent implements OnInit, OnChanges {
+export class RapidHeeadsssComponent implements OnInit{
 @Input() patient_id: any;
 @Input() client_types: any;
-@Input() selected_asrh_consult;
+@Input() selected_asrh_consult: any;
 @Output() loadASRH = new EventEmitter<any>();
 @Output() updateSelectedASRH = new EventEmitter<any>();
 
@@ -111,7 +109,7 @@ export class RapidHeeadsssComponent implements OnInit, OnChanges {
         next: (data: any) => {
              this.updateSelectedASRH.emit(data);
             this.loadASRH.emit();
-             console.log(this.visitForm, 'checker rapid')
+             console.log(rapid_form, 'checker rapid')
 
         },
         error: err => console.log(err),
@@ -143,12 +141,12 @@ export class RapidHeeadsssComponent implements OnInit, OnChanges {
 
     if(this.selected_asrh_consult) {
       this.visitForm.patchValue({
-      assessment_date: this.selected_asrh_consult?.assessment_date,
-      lib_asrh_client_type_code:this.selected_asrh_consult?.lib_asrh_client_type_code,
-      client_type: this.selected_asrh_consult?.client_type,
-      other_client_type: this.selected_asrh_consult?.other_client_type,
-      refer_to_user_id: this.selected_asrh_consult?.refer_to_user_id,
-      status: this.selected_asrh_consult?.status,
+        assessment_date: this.selected_asrh_consult?.assessment_date,
+        lib_asrh_client_type_code: this.selected_asrh_consult?.lib_asrh_client_type_code,
+        client_type: this.selected_asrh_consult?.client_type,
+        other_client_type: this.selected_asrh_consult?.other_client_type,
+        refer_to_user_id: this.selected_asrh_consult?.refer_to_user_id,
+        status: this.selected_asrh_consult?.status,
       });
      
       // console.log(this.selected_asrh_consult[1].answers,'load rapid working')
@@ -162,27 +160,58 @@ export class RapidHeeadsssComponent implements OnInit, OnChanges {
       id: [''],
       patient_id: [this.patient_id, [Validators.required, Validators.minLength(1)]],
       assessment_date: ['', [Validators.required, Validators.minLength(1)]],
-      lib_asrh_client_type_code: ['', [Validators.required, Validators.minLength(1)]],
+      lib_asrh_client_type_code: [{ value: '', disabled: true }, [Validators.required, Validators.minLength(1)]],
       client_type: ['', [Validators.required, Validators.minLength(1)]],
-      other_client_type: ['', [Validators.required]],
-      refer_to_user_id: [, [Validators.required]],
+      other_client_type: [{ value: '', disabled: true }, [Validators.required]],
+      refer_to_user_id: ['', [Validators.required]],
       status: ['', [Validators.required]],
+
+      
 
     });
 
+   
+
+   this.disableForm();
+   this.disableForm2();
     this.patchData();
     this.show_form = true;
   }
 
-  loadSelected() {
-    if(this.selected_asrh_consult) {
-    this.selected_asrh_consult?.answers.forEach((item) => {
-      this.rapid_ans[item.question.id] = item.answer // Default to an empty string if no answer
+  disableForm(){
+    this.visitForm.get('client_type')?.valueChanges.subscribe((value) => {
+      const libAsrhClientTypeCodeControl = this.visitForm.get('lib_asrh_client_type_code');
+      if (value === 'walk-in' || value === '') {
+        libAsrhClientTypeCodeControl?.reset();
+        libAsrhClientTypeCodeControl?.disable();
+      } else {
+        libAsrhClientTypeCodeControl?.enable();
+      }
+      
+    });
+  }
+
+  disableForm2(){
+    this.visitForm.get('lib_asrh_client_type_code')?.valueChanges.subscribe((value) => {
+      const otherClientControl = this.visitForm.get('other_client_type');
+      if (value != 99) {
+        otherClientControl?.reset();
+        otherClientControl?.disable();
+      } else {
+        otherClientControl?.enable();
+      }
+      
     });
 
   }
-    console.log(this.rapid_ans, 'get existing rapid 12')
 
+  loadSelected() {
+    if(this.selected_asrh_consult) {
+      this.selected_asrh_consult?.answers.forEach((item: any) => {
+        this.rapid_ans[item.question.id] = item.answer // Default to an empty string if no answer
+      });
+    }
+    console.log(this.rapid_ans, 'get existing rapid 12')
   }
 
   loadRapidLib(){
@@ -208,7 +237,10 @@ export class RapidHeeadsssComponent implements OnInit, OnChanges {
       error: err => console.log(err)
     })
   }
-
+  
+  allQuestionsAnswered(): boolean {
+    return this.rapid_questions.every((question: any) => this.rapid_ans[question.id] && this.rapid_ans[question.id] !== '-');
+  }
 
   constructor(
     private http: HttpService,
@@ -216,41 +248,11 @@ export class RapidHeeadsssComponent implements OnInit, OnChanges {
     // private router: Router
   ) { }
 
-  ngOnChanges(): void{
-  
-    if (this.visitForm.get('client_type')?.value === 'walk-in') {
-      this.visitForm.get('lib_asrh_client_type_code')?.disable();
-      this.visitForm.get('other_client_type')?.disable(); // Disable field2 if field1 has the value 'disable'
-    }
-    this.visitForm.get('client_type').valueChanges
-    .subscribe(selectedClient => {
-        if (selectedClient != 'referred') {
-            this.visitForm.get('lib_asrh_client_type_code').reset();
-            this.visitForm.get('lib_asrh_client_type_code').disable();
-        }
-        else {
-            this.visitForm.get('lib_asrh_client_type_code').enable();
-        }
-    });
-
-    this.visitForm.get('lib_asrh_client_type_code').valueChanges
-    .subscribe(selectedType => {
-        if (selectedType != 99) {
-            this.visitForm.get('other_client_type').reset();
-            this.visitForm.get('other_client_type').disable();
-        }
-        else {
-            this.visitForm.get('other_client_type').enable();
-        }
-    });
-   
-    console.log('test changes')
-  }
 
 ngOnInit(): void {
     console.log(this.selected_asrh_consult, 'selected asrh in rapid')
     this.validateForm();
     this.loadRapidLib();
-    this.ngOnChanges();
+   
   }
 }

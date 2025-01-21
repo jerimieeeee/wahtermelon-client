@@ -1,4 +1,4 @@
-<div class="m-5 border border-slate-200 rounded-lg" *ngIf="show_form">
+<div class="m-5 border border-slate-200 rounded-lg">
   <div class="bg-blue-500 text-sm text-white rounded-t-md py-2 pl-5 font-semibold">
    Rapid HEEADSSSS Assessment
   </div>
@@ -83,31 +83,26 @@
      </div>
 
       <!-- <div class="mt-1 w-full border-t border-gray-200 py-5" *ngIf="adolescentForm.get('consent_flag').value === true"> -->
-      <form >
-      <div class="mt-1 w-full border-t border-gray-200 py-5 px-5">
-        <div class="grid grid-cols-12 mt-2 align-middle" *ngFor="let rapid of rapid_questions">
-          <label attr.for="{{ rapid.id }}" class="text-sm col-span-9 col-start-1 mt-3">{{rapid.sequence}}. {{rapid.question}}</label>
-          <!-- <select class="input align-middle text-sm col-span-1 col-start-12"  [(ngModel)]="rapidForm.rapid_status[rapid.id]"
-          id="{{ 'rapid_status.'+rapid.id }}"
-          name="{{ 'rapid.'+rapid.id }}"> -->
-          {{rapid_ans[rapid.id]}} {{rapid.id}}
-          <select class="input align-middle text-sm col-span-2 col-start-11" attr.id="{{ rapid.id }}" [(ngModel)]="rapid_ans[rapid.id]" name="{{ rapid.id }}">
-            <!-- <option disabled selected value> </option> -->
-            <option value="x">Hindi Sumagot</option>
-            <option value="2">Hindi</option>
-            <option value="1">Oo</option>
-          </select>
+      <form>
+        <div class="mt-1 w-full border-t border-gray-200 py-5 px-5">
+          <div class="grid grid-cols-12 mt-2 align-middle" *ngFor="let rapid of rapid_questions">
+            <label attr.for="{{ rapid.id }}" class="text-sm col-span-9 col-start-1 mt-3">{{rapid.sequence}}. {{rapid.question}}</label>
+            {{rapid_ans[rapid.id]}} {{rapid.id}}
+            <select class="input align-middle text-sm col-span-2 col-start-11" attr.id="{{ rapid.id }}" [(ngModel)]="rapid_ans[rapid.id]" name="{{ rapid.id }}">
+              <option value="x">Hindi Sumagot</option>
+              <option value="2">Hindi</option>
+              <option value="1">Oo</option>
+            </select>
+          </div>
         </div>
-
-       
-      </div>
-      <div class="flex justify-center mt-5 mb-5">
-        <button class="btn-save mt-4" [disabled]="is_saving" (click)="onSubmit()">
-          <fa-icon [icon]="faSave" *ngIf="!is_saving" class="mr-2"></fa-icon>
-          <fa-icon [icon]="faSpinner" *ngIf="is_saving" animation="spin" class="mr-2"></fa-icon>
-          Save
-        </button>
-     </div>
-     </form>
+        <div class="flex justify-center mt-5 mb-5">
+          <button class="btn-save mt-4" [disabled]="is_saving || !allQuestionsAnswered()" (click)="onSubmit()">
+            <fa-icon [icon]="faSave" *ngIf="!is_saving" class="mr-2"></fa-icon>
+            <fa-icon [icon]="faSpinner" *ngIf="is_saving" animation="spin" class="mr-2"></fa-icon>
+            Save
+          </button>
+        </div>
+      </form>
     </div>
 </div>
+rapid_arr.length > 1

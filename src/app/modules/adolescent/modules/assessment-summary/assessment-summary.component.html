@@ -3,23 +3,9 @@
   <div class="bg-blue-500 text-sm text-white rounded-t-md py-2 pl-5 font-semibold">
    Assessment Summary
   </div>
-
-
-  <!-- <div class="mt-1 w-full" *ngFor="let home of rapid_history.answers">
-    <div *ngIf="home.answer === '1'">
-      <div class="text-sm py-4">
-       {{home.question.question}}
-      </div>
-      <div *ngFor="let algo of home.question.algorithm" class="text-sm py-4">
-        {{algo.code}}-{{algo.desc}}
-        <div>
-          <span [innerHTML]="parseReason(algo.ask_instruction)"></span>
-        </div>
-
-      </div>
-    </div>
-  </div> -->
-  <div class="mt-1 w-full" *ngFor="let home of rapid_history.answers; let i = index">
+ 
+  <div class="mt-1 w-full" *ngFor="let home of selected_asrh_consult?.answers; let i = index">
+   
     <div *ngIf="home.answer === '1'">
       <div class="text-sm py-4">
         {{home.question.question}}
