@@ -29,6 +29,7 @@ import { Fhsis2018MortalityUnderlyingComponent } from './report/fhsis2018-mortal
 import { ExportAsModule } from 'ngx-export-as';
 import {DentalOhsConsolidatedComponent} from "./report/dental-ohs-consolidated/dental-ohs-consolidated.component";
 import { ConsolidatedComponent } from './report/consolidated/consolidated.component';
+import { HeaderFhsis2018Component } from './components/header-fhsis2018/header-fhsis2018.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,7 @@ import { ConsolidatedComponent } from './report/consolidated/consolidated.compon
     Fhsis2018MortalityComponent,
     Fhsis2018EnvironmentalComponent,
     Fhsis2018MortalityUnderlyingComponent,
-    DentalOhsConsolidatedComponent
+    DentalOhsConsolidatedComponent,
   ],
   exports: [
     ShowNameListComponent
@@ -66,7 +67,8 @@ import { ConsolidatedComponent } from './report/consolidated/consolidated.compon
     NgSelectModule,
     FontAwesomeModule,
     ExportAsModule,
-    ConsolidatedComponent
+    ConsolidatedComponent,
+    HeaderFhsis2018Component
   ]
 })
 export class ReportsModule { }

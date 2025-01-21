@@ -25,9 +25,6 @@ export class ReportsComponent implements OnInit {
     quarter: new FormControl<string| null>('')
   });
 
-  current_date = formatDate(new Date, 'yyyy', 'en', 'Asia/Manila');
-  submit_flag: boolean = false;
-
   fhsis2018 = [
     // { id: 'fhsis2018-consolidated', desc: 'FHSIS Consolidated', url: ''},
     { id: 'fhsis2018-mc', desc: 'Maternal Care', url: 'reports-2018/maternal-care/m1'},
@@ -128,9 +125,11 @@ export class ReportsComponent implements OnInit {
   ];
 
   fhsis_monthly_arr = ['fhsis2018-consolidated', 'fhsis2018-fp', 'patient-registered'];
+  current_date = formatDate(new Date, 'yyyy', 'en', 'Asia/Manila');
+  submit_flag: boolean = false;
   quarterly_arr = ['ab-pre'];
   report_params: any;
-  years: any = [];
+  years: number[] = [];
   selectedBrgy!: [];
   selectedMuncity!: [];
   selectedFacilities!: [];
@@ -141,8 +140,9 @@ export class ReportsComponent implements OnInit {
   userLoc: string;
   report_data: any;
   is_fetching: boolean = false;
+  reportFlag: string;
+  selectedCode!: string;
 
-  selectedCode!: any;
   onSubmit(){
     console.log(this.reportForm.value, this.reportFlag)
     this.is_fetching = true;
@@ -193,7 +193,7 @@ export class ReportsComponent implements OnInit {
       this.getMuncities();
     } else if (report_class === "fac") {
       this.getFacilities();
-    } else { // all
+    } else {
       this.f['municipality_code'].setValue(null);
       this.f['barangay_code'].setValue(null);
       this.selectedBrgy = null;
@@ -248,10 +248,12 @@ export class ReportsComponent implements OnInit {
   }
 
   generateYear(){
-    let current_year =  formatDate(this.current_date, 'yyyy', 'en', 'Asia/Manila');
-    let date = parseInt(current_year);
-    for(let year = date; year > date-5; year--) {
-      this.years.push(year);
+    if(this.years.length === 0) {
+      let current_year =  formatDate(this.current_date, 'yyyy', 'en', 'Asia/Manila');
+      let date = parseInt(current_year);
+      for(let year = date; year > date-5; year--) {
+        this.years.push(year);
+      }
     }
   }
 
@@ -275,13 +277,13 @@ export class ReportsComponent implements OnInit {
         month: month,
         year: year
       });
+      this.generateYear();
     }
 
     if(this.quarterly_arr.find(e => e === this.reportForm.value.report_type.id)) {
-      console.log('quarterly')
       this.reportForm.controls.quarter.enable();
       this.reportForm.controls.year.enable();
-      console.log(this.reportForm)
+      this.generateYear();
     }
 
     if((!this.fhsis_monthly_arr.find(e => e === this.reportForm.value.report_type.id) &&
@@ -296,17 +298,6 @@ export class ReportsComponent implements OnInit {
       this.reportForm.controls.start_date.enable();
       this.reportForm.controls.end_date.enable();
     }
-
-    //
-    /* if(!this.fhsis_monthly_arr.find(e => e === this.reportForm.value.report_type.id) &&
-        !this.quarterly_arr.find(e => e === this.reportForm.value.report_type.id) &&
-        !this.reportForm.value.report_type) {
-          console.log('no report type')
-      this.reportForm.controls.start_date.disable();
-      this.reportForm.controls.end_date.disable();
-      this.reportForm.controls.month.disable();
-      this.reportForm.controls.year.disable();
-    } */
   }
 
   constructor(
@@ -318,11 +309,9 @@ export class ReportsComponent implements OnInit {
     return this.reportForm.controls;
   }
 
-  reportFlag: string;
   ngOnInit(): void {
-    this.generateYear();
     this.userInfo = this.http.getUserFromJSON();
-    this.current_date;
+    // this.current_date;
     this.reportFlag =  this.userInfo.reports_flag === 1 ? '1' : null;
     this.reportForm = this.formBuilder.nonNullable.group({
       report_type: ['', Validators.required],
@@ -335,7 +324,6 @@ export class ReportsComponent implements OnInit {
       month: [null, Validators.required],
       year: [null, Validators.required]
     });
-    // console.log(this.userInfo, 'eto')
 
     this.changeDateOptions();
   }
