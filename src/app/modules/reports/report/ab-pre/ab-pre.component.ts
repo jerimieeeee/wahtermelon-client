@@ -36,6 +36,7 @@ export class AbPreComponent implements OnChanges {
     male_female_total: 0,
     less_than_15: 0,
     greater_than_15: 0,
+    less_than_and_greater_than_15: 0,
     category1: 0,
     category2: 0,
     category3: 0,
@@ -112,6 +113,7 @@ export class AbPreComponent implements OnChanges {
       male_female_total: 0,
       less_than_15: 0,
       greater_than_15: 0,
+      less_than_and_greater_than_15: 0,
       category1: 0,
       category2: 0,
       category3: 0,
@@ -135,7 +137,7 @@ export class AbPreComponent implements OnChanges {
     this.initializeSumTotal();
     // Define the keys you want to sum
     const keysToSum = [
-      'population', 'male', 'female', 'male_female_total', 'less_than_15', 'greater_than_15',
+      'population', 'male', 'female', 'male_female_total', 'less_than_15', 'greater_than_15', 'less_than_and_greater_than_15',
       'category1', 'category2', 'category3', 'total_cat2_and_cat3', 'total_cat1_cat2_cat3',
       'prep_total', 'prep_completed', 'tandok', 'pep_completed', 'tcv', 'HRIG', 'ERIG', 'dog', 'cat',
       'others', 'total_biting_animal'

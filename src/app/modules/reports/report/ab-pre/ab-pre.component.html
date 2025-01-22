@@ -1,4 +1,4 @@
-<div *ngIf="show_stats" class="grid grid-cols-1">
+<div *ngIf="show_stats" class="grid grid-cols-1 w-full">
   <div class="flex justify-between w-full text-blue-500 font-semibold text-lg  p-3" >
 <!--    <span>Post-Exposure Prophylaxis Cohort Report</span>-->
     <span>
@@ -17,8 +17,10 @@
     <!-- Period Covered (Quarter/Year) {{ label_value.labelDate }} Year: {{ label_value.labelYear }} <br /><br /> -->
   </div>
 
-  <table class="w-full table-fix border border-gray-300 mb-5" id="reportForm">
-    <thead class="font-normal text-center">
+<!--  <table class="w-full table-fix border border-gray-300 mb-5" id="reportForm">-->
+    <table class="ab-quarterly-report min-w-full border border-gray-400 select-none" id="reportForm">
+<!--    <thead class="font-normal text-center">-->
+    <thead class="text-sm px-1.5">
       <tr>
         <th rowspan="3">
           {{ this.reportFlag === '1' ? 'MUN/CITY' : 'BARANGAY' }}
@@ -37,7 +39,7 @@
         <th colspan="3">Age</th>
         <th colspan="5">Category</th>
       </tr>
-      <tr class="text-center font-semibold">
+      <tr class="text-center text-sm font-bold px-1.5">
         <td>Male</td>
         <td>Female</td>
         <td>Total</td>
@@ -69,8 +71,8 @@
     </thead>
     <tbody>
       <tr *ngFor="let item of stats|keyvalue">
-        <td class="text-left font-bold">{{ item.key }}</td>
-        <ng-container class="text-center" *ngFor="let data of item.value">
+        <td class="text-sm px-1.5 font-bold">{{ item.key }}</td>
+        <ng-container class="text-center text-sm" *ngFor="let data of item.value">
           <td>{{ data.population }}</td>
           <td (click)="showNameList('male', 'catchment', data.code)">{{ data.male }}</td>
           <td (click)="showNameList('female', 'catchment', data.code)">{{ data.female }}</td>
