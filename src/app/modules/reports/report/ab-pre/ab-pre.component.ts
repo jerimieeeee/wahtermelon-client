@@ -29,6 +29,7 @@ export class AbPreComponent implements OnChanges {
   userInfo: any = {};
   stats : any[];
   sum_total: {
+    code: string,
     population: number,
     male: number,
     female: 0,
@@ -62,7 +63,7 @@ export class AbPreComponent implements OnChanges {
   convertedMonth : any;
   brgys_info : any;
   name_list: any = [];
-  params: any = [];
+  indicator: any = [];
   url: any = 'reports-2018/animal-bite/pre-exposure-name-list';
 
   exportAsExcel: ExportAsConfig = {
@@ -88,21 +89,23 @@ export class AbPreComponent implements OnChanges {
   }
 
   name_list_params: {};
-  showNameList(params, barangay_code) {
-    this.params = params;
+  showNameList(indicator: string, type: string, code: string) {
     this.name_list_params = {
-      start_date: this.reportForm.value.start_date,
-      end_date: this.reportForm.value.end_date,
+      year: this.reportForm.value.year,
+      quarter: this.reportForm.value.quarter,
       category: this.reportForm.value.report_class,
-      params: this.params,
+      code: code,
+      indicator: indicator,
+      type: type,
       per_page: 10,
-      code: barangay_code
     };
     this.openList = true;
+    console.log(this.name_list_params);
   };
 
   initializeSumTotal() {
     this.sum_total = {
+      code: null,
       population: 0,
       male: 0,
       female: 0,
@@ -149,9 +152,12 @@ export class AbPreComponent implements OnChanges {
         });
       });
       // Update the selected stats with the accumulated sum
+      this.sum_total.code = value[0].barangay_code
       selectedStats[key] = [this.sum_total];
+
       this.initializeSumTotal();
     });
+    console.log(this[$variable])
   }
 
   exportX() {
@@ -199,7 +205,7 @@ export class AbPreComponent implements OnChanges {
     this.sumTotal('stats_others');
     // this.sumTotalPrevious('previous');
     // this.sumTotalPrevious('previous_others');
-    console.log(this.report_data, 'stats');
+    console.log(this.previous, 'previous');
     this.brgys_info = this.brgys;
     this.pdf_exported = false;
     // this.label_value = this.dateHelper.getLabelValue(this.reportForm, this.report_data);

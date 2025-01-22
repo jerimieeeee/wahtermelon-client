@@ -72,65 +72,69 @@
         <td class="text-left font-bold">{{ item.key }}</td>
         <ng-container class="text-center" *ngFor="let data of item.value">
           <td>{{ data.population }}</td>
-          <td>{{ data.male }}</td>
-          <td>{{ data.female }}</td>
-          <td>{{ data.male_female_total }}</td>
-          <td>{{ data.less_than_15 }}</td>
-          <td>{{ data.greater_than_15 }}</td>
-          <td>{{ data.less_than_and_greater_than_15 }}</td>
-          <td>{{ data.category1 }}</td>
-          <td>{{ data.category2 }}</td>
-          <td>{{ data.category3 }}</td>
-          <td>{{ data.total_cat2_and_cat3 }}</td>
-          <td>{{ data.total_cat1_cat2_cat3 }}</td>
-          <td>{{ data.prep_total }}</td>
-          <td>{{ data.prep_completed }}</td>
-          <td>{{ data.tandok }}</td>
+          <td (click)="showNameList('male', 'catchment', data.code)">{{ data.male }}</td>
+          <td (click)="showNameList('female', 'catchment', data.code)">{{ data.female }}</td>
+          <td (click)="showNameList('male_female_total', 'catchment', data.code)">{{ data.male_female_total }}</td>
+          <td (click)="showNameList('less_than_15', 'catchment', data.code)">{{ data.less_than_15 }}</td>
+          <td (click)="showNameList('greater_than_15', 'catchment', data.code)">{{ data.greater_than_15 }}</td>
+          <td (click)="showNameList('less_than_and_greater_than_15', 'catchment', data.code)">{{ data.less_than_and_greater_than_15 }}</td>
+          <td (click)="showNameList('category1', 'catchment', data.code)">{{ data.category1 }}</td>
+          <td (click)="showNameList('category2', 'catchment', data.code)">{{ data.category2 }}</td>
+          <td (click)="showNameList('category3', 'catchment', data.code)">{{ data.category3 }}</td>
+          <td (click)="showNameList('total_cat2_and_cat3', 'catchment', data.code)">{{ data.total_cat2_and_cat3 }}</td>
+          <td (click)="showNameList('total_cat1_cat2_cat3', 'catchment', data.code)">{{ data.total_cat1_cat2_cat3 }}</td>
+          <td (click)="showNameList('prep_total', 'catchment', data.code)">{{ data.prep_total }}</td>
+          <td (click)="showNameList('prep_completed', 'catchment', data.code)">{{ data.prep_completed }}</td>
+          <td (click)="showNameList('tandok', 'catchment', data.code)">{{ data.tandok }}</td>
           <td></td>
           <td></td>
-          <td>{{ data.pep_completed }}</td>
-          <td>{{ data.tcv }}</td>
-          <td>{{ data.HRIG }}</td>
-          <td>{{ data.ERIG }}</td>
-          <td>{{ data.dog }}</td>
-          <td>{{ data.cat }}</td>
-          <td>{{ data.others }}</td>
-          <td>{{ data.total_biting_animal }}</td>
+          <td (click)="showNameList('pep_completed', 'catchment', data.code)">{{ data.pep_completed }}</td>
+          <td (click)="showNameList('tcv', 'catchment', data.code)">{{ data.tcv }}</td>
+          <td (click)="showNameList('HRIG', 'catchment', data.code)">{{ data.HRIG }}</td>
+          <td (click)="showNameList('ERIG', 'catchment', data.code)">{{ data.ERIG }}</td>
+          <td (click)="showNameList('dog', 'catchment', data.code)">{{ data.dog }}</td>
+          <td (click)="showNameList('cat', 'catchment', data.code)">{{ data.cat }}</td>
+          <td (click)="showNameList('others', 'catchment', data.code)">{{ data.others }}</td>
+          <td (click)="showNameList('total_biting_animal', 'catchment', data.code)">{{ data.total_biting_animal }}</td>
+        </ng-container>
+        <ng-container>
           <td></td>
           <td></td>
           <td></td>
           <td></td>
         </ng-container>
       </tr>
-      <td class="font-bold text-center bg-gray-400" colspan="30">OTHERS</td>
+      <td class="font-bold text-center bg-gray-400" colspan="30">OTHERS (MUNICIPALITIES)</td>
       <tr *ngFor="let item_others of stats_others|keyvalue">
         <td class="text-left font-bold">{{ item_others.key }}</td>
         <ng-container class="text-center" *ngFor="let data of item_others.value">
           <td>{{ data.population }}</td>
-          <td>{{ data.male }}</td>
-          <td>{{ data.female }}</td>
-          <td>{{ data.male_female_total }}</td>
-          <td>{{ data.less_than_15 }}</td>
-          <td>{{ data.greater_than_15 }}</td>
-          <td>{{ data.less_than_and_greater_than_15 }}</td>
-          <td>{{ data.category1 }}</td>
-          <td>{{ data.category2 }}</td>
-          <td>{{ data.category3 }}</td>
-          <td>{{ data.total_cat2_and_cat3 }}</td>
-          <td>{{ data.total_cat1_cat2_cat3 }}</td>
-          <td>{{ data.prep_total }}</td>
-          <td>{{ data.prep_completed }}</td>
-          <td>{{ data.tandok }}</td>
+          <td (click)="showNameList('male', 'non-catchment', data.code)">{{ data.male }}</td>
+          <td (click)="showNameList('female', 'non-catchment', data.code)">{{ data.female }}</td>
+          <td (click)="showNameList('male_female_total', 'non-catchment', data.code)">{{ data.male_female_total }}</td>
+          <td (click)="showNameList('less_than_15', 'non-catchment', data.code)">{{ data.less_than_15 }}</td>
+          <td (click)="showNameList('greater_than_15', 'non-catchment', data.code)">{{ data.greater_than_15 }}</td>
+          <td (click)="showNameList('less_than_and_greater_than_15', 'non-catchment', data.code)">{{ data.less_than_and_greater_than_15 }}</td>
+          <td (click)="showNameList('category1', 'non-catchment', data.code)">{{ data.category1 }}</td>
+          <td (click)="showNameList('category2', 'non-catchment', data.code)">{{ data.category2 }}</td>
+          <td (click)="showNameList('category3', 'non-catchment', data.code)">{{ data.category3 }}</td>
+          <td (click)="showNameList('total_cat2_and_cat3', 'non-catchment', data.code)">{{ data.total_cat2_and_cat3 }}</td>
+          <td (click)="showNameList('total_cat1_cat2_cat3', 'non-catchment', data.code)">{{ data.total_cat1_cat2_cat3 }}</td>
+          <td (click)="showNameList('prep_total', 'non-catchment', data.code)">{{ data.prep_total }}</td>
+          <td (click)="showNameList('prep_completed', 'non-catchment', data.code)">{{ data.prep_completed }}</td>
+          <td (click)="showNameList('tandok', 'non-catchment', data.code)">{{ data.tandok }}</td>
           <td></td>
           <td></td>
-          <td>{{ data.pep_completed }}</td>
-          <td>{{ data.tcv }}</td>
-          <td>{{ data.HRIG }}</td>
-          <td>{{ data.ERIG }}</td>
-          <td>{{ data.dog }}</td>
-          <td>{{ data.cat }}</td>
-          <td>{{ data.others }}</td>
-          <td>{{ data.total_biting_animal }}</td>
+          <td (click)="showNameList('pep_completed', 'non-catchment', data.code)">{{ data.pep_completed }}</td>
+          <td (click)="showNameList('tcv', 'non-catchment', data.code)">{{ data.tcv }}</td>
+          <td (click)="showNameList('HRIG', 'non-catchment', data.code)">{{ data.HRIG }}</td>
+          <td (click)="showNameList('ERIG', 'non-catchment', data.code)">{{ data.ERIG }}</td>
+          <td (click)="showNameList('dog', 'non-catchment', data.code)">{{ data.dog }}</td>
+          <td (click)="showNameList('cat', 'non-catchment', data.code)">{{ data.cat }}</td>
+          <td (click)="showNameList('others', 'non-catchment', data.code)">{{ data.others }}</td>
+          <td (click)="showNameList('total_biting_animal', 'non-catchment', data.code)">{{ data.total_biting_animal }}</td>
+        </ng-container>
+        <ng-container>
           <td></td>
           <td></td>
           <td></td>
@@ -148,5 +152,5 @@
   [selectedCode]="selectedCode"
   [reportForm]="reportForm"
   [url]="url"
-  [loc]="'fp'"
+  [loc]="'ab'"
 ></app-show-name-list>
