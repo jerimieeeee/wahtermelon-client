@@ -101,7 +101,7 @@
                 <label class="font-semibold" for="bp_systolic">Blood Pressure</label>
                 <div class="flex">
                   <input name="bp_systolic" id="bp_systolic" (change)="getBPColor()" formControlName="bp_systolic" type="number" placeholder="Systolic" class="md:w-1/2 lg:w-1/2 mt-2 border border-gray-300 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 ">
-                  <input name="bp_diastolic" id="bp_diastolic" formControlName="bp_diastolic" type="number" placeholder="Diastolic" class="md:w-1/2 lg:w-1/2 mt-2 border border-gray-300 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 ">
+                  <input name="bp_diastolic" id="bp_diastolic" (change)="getBPColor()" formControlName="bp_diastolic" type="number" placeholder="Diastolic" class="md:w-1/2 lg:w-1/2 mt-2 border border-gray-300 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 ">
                 </div>
               </div>
 
