@@ -1,8 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { faCalendarDay, faPlus, faSave, faTimes, faPencil, faCircleCheck, faCaretRight, faInfoCircle, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { HttpService } from 'app/shared/services/http.service';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-education',
@@ -14,6 +15,7 @@ export class EducationComponent implements OnInit {
   @Input() patient_id: any;
   @Input() asrh_visit_history: any;
   @Input() selected_asrh_consult: any;
+  @Output() updateSelectedASRH = new EventEmitter<any>();
 
   faCalendarDay = faCalendarDay;
   faPlus = faPlus;
@@ -47,8 +49,9 @@ export class EducationComponent implements OnInit {
     this.is_saving = true;
     this.http.post('asrh/comprehensive', this.educationForm.value).subscribe({
       next: (data: any) => {
-        // this.toastr.success('First Visit was ' + (this.visitForm.value ? 'updated' : 'saved') + ' successfuly', 'Success')
-        // this.is_saving = false;
+        this.toastr.success('Education was ' + (this.selected_asrh_consult.comprehensive.education_notes !== null ? 'updated' : 'saved') + ' successfuly', 'Success')
+        this.is_saving = false;
+        this.updateSelectedASRH.emit(data);
         // this.showButton = !this.showButton;
         // this.loadFP.emit();
         // this.reloadData();
@@ -69,7 +72,7 @@ export class EducationComponent implements OnInit {
     this.educationForm = this.formBuilder.group({
       id: [''],
       patient_id: [this.patient_id],
-      consult_asrh_rapid_id: [this.selected_asrh_consult.id, [Validators.required, Validators.minLength(1)]],
+      consult_asrh_rapid_id: [this.selected_asrh_consult?.id, [Validators.required, Validators.minLength(1)]],
       assessment_date: [this.selected_asrh_consult?.comprehensive?.assessment_date, [Validators.required, Validators.minLength(1)]],
       education_notes: ['', [Validators.required, Validators.minLength(1)]],
 
@@ -118,7 +121,8 @@ export class EducationComponent implements OnInit {
   constructor(
     private http: HttpService,
     private formBuilder: FormBuilder,
-    private router: Router
+    private router: Router,
+    private toastr: ToastrService,
   ) { }
 
 ngOnInit(): void {

@@ -1,8 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { faCalendarDay, faPlus, faSave, faTimes, faPencil, faCircleCheck, faCaretRight, faInfoCircle, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { HttpService } from 'app/shared/services/http.service';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-spirituality',
@@ -14,6 +15,7 @@ export class SpiritualityComponent implements OnInit {
      @Input() patient_id: any;
      @Input() asrh_visit_history: any;
      @Input() selected_asrh_consult: any;
+     @Output() updateSelectedASRH = new EventEmitter<any>();
 
     faCalendarDay = faCalendarDay;
     faPlus = faPlus;
@@ -47,8 +49,9 @@ export class SpiritualityComponent implements OnInit {
       this.is_saving = true;
       this.http.post('asrh/comprehensive', this.spiritualityForm.value).subscribe({
         next: (data: any) => {
-          // this.toastr.success('First Visit was ' + (this.visitForm.value ? 'updated' : 'saved') + ' successfuly', 'Success')
-          // this.is_saving = false;
+          this.toastr.success('Spirituality was ' + (this.selected_asrh_consult.comprehensive.spirituality_notes !== null ? 'updated' : 'saved') + ' successfuly', 'Success')
+          this.is_saving = false;
+          this.updateSelectedASRH.emit(data);
           // this.showButton = !this.showButton;
           // this.loadFP.emit();
           // this.reloadData();
@@ -119,6 +122,7 @@ export class SpiritualityComponent implements OnInit {
     constructor(
       private http: HttpService,
       private formBuilder: FormBuilder,
+      private toastr: ToastrService,
       private router: Router
     ) { }
 

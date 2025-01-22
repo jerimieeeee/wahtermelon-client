@@ -1,8 +1,9 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { faCalendarDay, faPlus, faSave, faTimes, faPencil, faCircleCheck, faCaretRight, faInfoCircle, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { HttpService } from 'app/shared/services/http.service';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-home',
@@ -48,6 +49,7 @@ export class HomeComponent implements OnInit {
   statuses = [
     { name: 'done', id:'1' },
     { name: 'refused', id:'2' },
+    // { name: 'refused', id:'3' },
 
   ];
 
@@ -56,7 +58,7 @@ export class HomeComponent implements OnInit {
     this.is_saving = true;
     this.http.post('asrh/comprehensive', this.homeForm.value).subscribe({
       next: (data: any) => {
-        // this.toastr.success('First Visit was ' + (this.visitForm.value ? 'updated' : 'saved') + ' successfuly', 'Success')
+        this.toastr.success('Home was ' + (this.selected_asrh_consult?.comprehensive?.home_notes !== null ? 'updated' : 'saved') + ' successfuly', 'Success')
         this.is_saving = false;
         // this.showButton = !this.showButton;
         this.updateSelectedASRH.emit(data);
@@ -89,6 +91,7 @@ export class HomeComponent implements OnInit {
       // average_monthly_income: ['', [Validators.required, Validators.minLength(1), Validators.pattern("^[0-9,;]+$")]],
     });
     this.patchCompre();
+    // this.disableForm();
     // this.loadFPDetails();
     // this.show_form = true;
   }
@@ -133,11 +136,49 @@ export class HomeComponent implements OnInit {
     }
   }
 
+  disableForm() {
+    const home = this.selected_asrh_consult?.comprehensive?.home_notes;
+    const spirituality = this.selected_asrh_consult?.comprehensive?.spirituality_notes;
+
+    const comprestatusControl = this.homeForm.get('status');
+    console.log(home, spirituality, 'home and spirituality')
+
+    if (home === null || spirituality === null) {
+      comprestatusControl?.reset();
+      comprestatusControl?.disable();
+      // referControl?.reset();
+      // referControl?.disable();
+    } else {
+      comprestatusControl?.enable();
+      // referControl?.enable();
+    }
+  }
+
+  disableForm2() {
+
+    const comprestatusControl = this.homeForm.get('status');
+
+    if (this.selected_asrh_consult?.comprehensive === null) {
+      comprestatusControl?.reset();
+      comprestatusControl?.disable();
+      // referControl?.reset();
+      // referControl?.disable();
+    } else {
+      comprestatusControl?.enable();
+      // referControl?.enable();
+    }
+  }
+
   constructor(
     private http: HttpService,
     private formBuilder: FormBuilder,
+    private toastr: ToastrService,
     private router: Router
   ) { }
+
+// ngOnChanges(change: SimpleChanges): void{
+//     this.disableForm();
+//   }
 
 ngOnInit(): void {
   // this.LoadCompre();

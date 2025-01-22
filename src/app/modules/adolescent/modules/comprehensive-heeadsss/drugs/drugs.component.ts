@@ -1,8 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { faCalendarDay, faPlus, faSave, faTimes, faPencil, faCircleCheck, faCaretRight, faInfoCircle, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { HttpService } from 'app/shared/services/http.service';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-drugs',
@@ -14,6 +15,7 @@ export class DrugsComponent implements OnInit {
    @Input() patient_id: any;
    @Input() asrh_visit_history: any;
    @Input() selected_asrh_consult: any;
+   @Output() updateSelectedASRH = new EventEmitter<any>();
 
   faCalendarDay = faCalendarDay;
   faPlus = faPlus;
@@ -47,8 +49,9 @@ export class DrugsComponent implements OnInit {
     this.is_saving = true;
     this.http.post('asrh/comprehensive', this.drugsForm.value).subscribe({
       next: (data: any) => {
-        // this.toastr.success('First Visit was ' + (this.visitForm.value ? 'updated' : 'saved') + ' successfuly', 'Success')
-        // this.is_saving = false;
+        this.toastr.success('Drugs was ' + (this.selected_asrh_consult.comprehensive.drugs_notes !== null ? 'updated' : 'saved') + ' successfuly', 'Success')
+        this.is_saving = false;
+        this.updateSelectedASRH.emit(data);
         // this.showButton = !this.showButton;
         // this.loadFP.emit();
         // this.reloadData();
@@ -69,14 +72,14 @@ export class DrugsComponent implements OnInit {
     this.drugsForm = this.formBuilder.group({
       id: [''],
       patient_id: [this.patient_id],
-      consult_asrh_rapid_id: [this.selected_asrh_consult.id, [Validators.required, Validators.minLength(1)]],
+      consult_asrh_rapid_id: [this.selected_asrh_consult?.id, [Validators.required, Validators.minLength(1)]],
       assessment_date: [this.selected_asrh_consult?.comprehensive?.assessment_date, [Validators.required, Validators.minLength(1)]],
 
       drugs_notes: ['', [Validators.required, Validators.minLength(1)]],
 
       // average_monthly_income: ['', [Validators.required, Validators.minLength(1), Validators.pattern("^[0-9,;]+$")]],
     });
-
+       this.patchCompre();
     // this.loadFPDetails();
     // this.show_form = true;
   }
@@ -119,6 +122,7 @@ export class DrugsComponent implements OnInit {
   constructor(
     private http: HttpService,
     private formBuilder: FormBuilder,
+    private toastr: ToastrService,
     private router: Router
   ) { }
 

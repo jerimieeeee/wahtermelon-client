@@ -3,6 +3,7 @@ import { faCalendarDay, faPlus, faSave, faTimes, faPencil, faCircleCheck, faCare
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { HttpService } from 'app/shared/services/http.service';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-activities',
@@ -15,6 +16,7 @@ export class ActivitiesComponent implements OnInit {
      @Input() asrh_visit_history: any;
      @Output() loadASRH = new EventEmitter<any>();
      @Input() selected_asrh_consult: any;
+     @Output() updateSelectedASRH = new EventEmitter<any>();
 
     faCalendarDay = faCalendarDay;
     faPlus = faPlus;
@@ -50,8 +52,9 @@ export class ActivitiesComponent implements OnInit {
       this.is_saving = true;
       this.http.post('asrh/comprehensive', this.activitiesForm.value).subscribe({
         next: (data: any) => {
-          // this.toastr.success('First Visit was ' + (this.visitForm.value ? 'updated' : 'saved') + ' successfuly', 'Success')
-          // this.is_saving = false;
+          this.toastr.success('Activities was ' + (this.selected_asrh_consult.comprehensive.activities_notes !== null ? 'updated' : 'saved') + ' successfuly', 'Success')
+          this.is_saving = false;
+          this.updateSelectedASRH.emit(data);
           // this.showButton = !this.showButton;
           // this.loadFP.emit();
           // this.reloadData();
@@ -72,14 +75,14 @@ export class ActivitiesComponent implements OnInit {
       this.activitiesForm = this.formBuilder.group({
         id: [''],
         patient_id: [this.patient_id],
-        consult_asrh_rapid_id: [this.selected_asrh_consult.id, [Validators.required, Validators.minLength(1)]],
+        consult_asrh_rapid_id: [this.selected_asrh_consult?.id, [Validators.required, Validators.minLength(1)]],
         assessment_date: [this.selected_asrh_consult?.comprehensive?.assessment_date, [Validators.required, Validators.minLength(1)]],
 
         activities_notes: ['', [Validators.required, Validators.minLength(1)]],
 
         // average_monthly_income: ['', [Validators.required, Validators.minLength(1), Validators.pattern("^[0-9,;]+$")]],
       });
-
+        this.patchCompre();
       // this.loadFPDetails();
       // this.show_form = true;
     }
@@ -92,7 +95,7 @@ export class ActivitiesComponent implements OnInit {
        });
        // this.show_form = true;
       //  console.log(this.asrh_compre_history,'load compre home working')
-       this.patchCompre();
+      //  this.patchCompre();
      }
    }
 
@@ -124,6 +127,7 @@ export class ActivitiesComponent implements OnInit {
     constructor(
       private http: HttpService,
       private formBuilder: FormBuilder,
+      private toastr: ToastrService,
       private router: Router
     ) { }
 

@@ -26,7 +26,7 @@
         [class]="module===1? 'tabs-main-true w-40' : 'tabs-main-false w-40' ">
         RAPID HEEADSSSS
     </button>
-    <button (click)="switchTab(2)" class="tabs-main w-44"
+    <button (click)="switchTab(2)" class="tabs-main w-44" *ngIf="selected_asrh_consult?.answers.length === 12"
         [class]="module===2? 'tabs-main-true w-44' : 'tabs-main-false w-44' ">
         ASSESSMENT SUMMARY
     </button>
@@ -52,35 +52,35 @@
         [class]="module_compre===1? 'tabs-main-true w-24' : 'tabs-main-false w-24' ">
         HOME
     </button>
-    <button (click)="switchTabCompre(2)" class="tabs-main w-44"
+    <button (click)="switchTabCompre(2)" class="tabs-main w-44" *ngIf="selected_asrh_consult?.comprehensive !== null"
         [class]="module_compre===2? 'tabs-main-true w-44' : 'tabs-main-false w-44' ">
         EDUCATION & EMPLOYMENT
     </button>
-    <button (click)="switchTabCompre(3)" class="tabs-main w-24"
+    <button (click)="switchTabCompre(3)" class="tabs-main w-24" *ngIf="selected_asrh_consult?.comprehensive !== null"
         [class]="module_compre===3? 'tabs-main-true w-24' : 'tabs-main-false w-24' ">
         EATING
     </button>
-    <button (click)="switchTabCompre(4)" class="tabs-main w-24"
+    <button (click)="switchTabCompre(4)" class="tabs-main w-24" *ngIf="selected_asrh_consult?.comprehensive !== null"
         [class]="module_compre===4? 'tabs-main-true w-24' : 'tabs-main-false w-24' ">
         ACTIVITIES
     </button>
-    <button (click)="switchTabCompre(5)" class="tabs-main w-24"
+    <button (click)="switchTabCompre(5)" class="tabs-main w-24" *ngIf="selected_asrh_consult?.comprehensive !== null"
         [class]="module_compre===5? 'tabs-main-true w-24' : 'tabs-main-false w-24' ">
         DRUGS
     </button>
-    <button (click)="switchTabCompre(6)" class="tabs-main w-24"
+    <button (click)="switchTabCompre(6)" class="tabs-main w-24" *ngIf="selected_asrh_consult?.comprehensive !== null"
         [class]="module_compre===6? 'tabs-main-true w-24' : 'tabs-main-false w-24' ">
         SEXUALITY
     </button>
-    <button (click)="switchTabCompre(7)" class="tabs-main w-32"
+    <button (click)="switchTabCompre(7)" class="tabs-main w-32" *ngIf="selected_asrh_consult?.comprehensive !== null"
         [class]="module_compre===7? 'tabs-main-true w-36' : 'tabs-main-false w-36' ">
         SUICIDE & DEPRESSION
     </button>
-    <button (click)="switchTabCompre(8)" class="tabs-main w-24"
+    <button (click)="switchTabCompre(8)" class="tabs-main w-24" *ngIf="selected_asrh_consult?.comprehensive !== null"
         [class]="module_compre===8? 'tabs-main-true w-24' : 'tabs-main-false w-24' ">
         SAFETY
     </button>
-    <button (click)="switchTabCompre(9)" class="tabs-main w-24"
+    <button (click)="switchTabCompre(9)" class="tabs-main w-24" *ngIf="selected_asrh_consult?.comprehensive !== null"
         [class]="module_compre===9? 'tabs-main-true w-24' : 'tabs-main-false w-24' ">
         SPIRITUALITY
     </button>

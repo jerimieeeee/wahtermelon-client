@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output, OnChanges, SimpleChange
 import { faCalendarDay, faPlus, faSave, faTimes, faPencil, faCircleCheck, faCaretRight, faInfoCircle, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { HttpService } from 'app/shared/services/http.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-rapid-heeadsss',
@@ -71,10 +72,10 @@ export class RapidHeeadsssComponent implements OnInit, OnChanges {
   createRapid(){
     this.http.post('asrh/rapid', this.visitForm.value).subscribe({
       next: (data : any) => {
-
+        this.toastr.success('Rapid Assessment Details was ' + (this.selected_asrh_consult !== null ? 'updated' : 'saved') + ' successfuly', 'Success')
         if(this.selected_asrh_consult === null){
           this.updateSelectedASRH2.emit(data.data.id);
-          
+
         }
         else{
           this.updateSelectedASRH.emit(data);
@@ -117,6 +118,7 @@ export class RapidHeeadsssComponent implements OnInit, OnChanges {
 
       this.http.post('asrh/rapid-answer', rapid_form).subscribe({
         next: (data : any) => {
+          this.toastr.success('Rapid Assessment Answers was ' + (this.selected_asrh_consult?.answers?.length !== 0 ? 'updated' : 'saved') + ' successfuly', 'Success')
           console.log(data, 'display save rapid answers')
           // if(this.selected_asrh_consult !== null)
              this.updateSelectedASRH.emit(data);
@@ -185,6 +187,7 @@ export class RapidHeeadsssComponent implements OnInit, OnChanges {
 
    this.disableForm();
    this.disableForm2();
+   this.disableForm3();
     this.patchData();
     this.show_form = true;
   }
@@ -202,7 +205,7 @@ export class RapidHeeadsssComponent implements OnInit, OnChanges {
     });
   }
 
-  disableForm2(){
+  disableForm2() {
     this.visitForm.get('lib_asrh_client_type_code')?.valueChanges.subscribe((value) => {
       const otherClientControl = this.visitForm.get('other_client_type');
       if (value != 99) {
@@ -211,10 +214,28 @@ export class RapidHeeadsssComponent implements OnInit, OnChanges {
       } else {
         otherClientControl?.enable();
       }
-
     });
-
   }
+
+  disableForm3() {
+    const length = this.selected_asrh_consult?.answers?.length || 0;
+    const statusControl = this.visitForm.get('status');
+    const referControl = this.visitForm.get('refer_to_user_id');
+    if (length === 0 || null) {
+      statusControl?.reset();
+      statusControl?.disable();
+      referControl?.reset();
+      referControl?.disable();
+    } else {
+      statusControl?.enable();
+      referControl?.enable();
+    }
+  }
+
+  getSelectedAsrhAnswersLength(): number {
+    return this.selected_asrh_consult?.answers?.length || 0;
+  }
+
 
   loadSelected() {
     if(this.selected_asrh_consult) {
@@ -256,11 +277,13 @@ export class RapidHeeadsssComponent implements OnInit, OnChanges {
   constructor(
     private http: HttpService,
     private formBuilder: FormBuilder,
+    private toastr: ToastrService,
     // private router: Router
   ) { }
 
 ngOnChanges(change: SimpleChanges): void{
     this.patchData();
+    this.disableForm3();
   }
 
 ngOnInit(): void {
