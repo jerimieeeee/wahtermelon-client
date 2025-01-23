@@ -44,6 +44,7 @@ export class HomeComponent implements OnInit {
     risky_behavior: new FormControl<boolean>(false),
     seriously_injured: new FormControl<boolean>(false),
     status: new FormControl<string| null>(''),
+    referred_to: new FormControl<string| null>(''),
   });
 
   statuses = [
@@ -88,10 +89,11 @@ export class HomeComponent implements OnInit {
       risky_behavior: [[false], [Validators.required, Validators.minLength(1)]],
       seriously_injured: [[false], [Validators.required, Validators.minLength(1)]],
       status: ['', [Validators.required, Validators.minLength(1)]],
+      referred_to: ['', [Validators.required, Validators.minLength(1)]],
       // average_monthly_income: ['', [Validators.required, Validators.minLength(1), Validators.pattern("^[0-9,;]+$")]],
     });
     this.patchCompre();
-    // this.disableForm();
+    this.disableForm();
     // this.loadFPDetails();
     // this.show_form = true;
   }
@@ -136,22 +138,17 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  disableForm() {
-    const home = this.selected_asrh_consult?.comprehensive?.home_notes;
-    const spirituality = this.selected_asrh_consult?.comprehensive?.spirituality_notes;
+  disableForm(){
+    this.homeForm.get('status')?.valueChanges.subscribe((value) => {
+      const referredControl = this.homeForm.get('referred_to');
+      if (value === '') {
+        referredControl?.reset();
+        referredControl?.disable();
+      } else {
+        referredControl?.enable();
+      }
 
-    const comprestatusControl = this.homeForm.get('status');
-    console.log(home, spirituality, 'home and spirituality')
-
-    if (home === null || spirituality === null) {
-      comprestatusControl?.reset();
-      comprestatusControl?.disable();
-      // referControl?.reset();
-      // referControl?.disable();
-    } else {
-      comprestatusControl?.enable();
-      // referControl?.enable();
-    }
+    });
   }
 
   disableForm2() {

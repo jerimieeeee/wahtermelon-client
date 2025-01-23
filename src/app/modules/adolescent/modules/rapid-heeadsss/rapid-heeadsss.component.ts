@@ -32,6 +32,7 @@ export class RapidHeeadsssComponent implements OnInit, OnChanges {
 
 
   is_saving: boolean = false;
+  is_saving2: boolean = false;
 
   show_form = false;
 
@@ -70,8 +71,10 @@ export class RapidHeeadsssComponent implements OnInit, OnChanges {
   });
 
   createRapid(){
+    this.is_saving = true;
     this.http.post('asrh/rapid', this.visitForm.value).subscribe({
       next: (data : any) => {
+        this.is_saving = false;
         this.toastr.success('Rapid Assessment Details was ' + (this.selected_asrh_consult !== null ? 'updated' : 'saved') + ' successfuly', 'Success')
         if(this.selected_asrh_consult === null){
           this.updateSelectedASRH2.emit(data.data.id);
@@ -115,9 +118,10 @@ export class RapidHeeadsssComponent implements OnInit, OnChanges {
       }
 
       console.log(rapid_form)
-
+      this.is_saving2 = true;
       this.http.post('asrh/rapid-answer', rapid_form).subscribe({
         next: (data : any) => {
+          this.is_saving2 = false;
           this.toastr.success('Rapid Assessment Answers was ' + (this.selected_asrh_consult?.answers?.length !== 0 ? 'updated' : 'saved') + ' successfuly', 'Success')
           console.log(data, 'display save rapid answers')
           // if(this.selected_asrh_consult !== null)
@@ -271,8 +275,18 @@ export class RapidHeeadsssComponent implements OnInit, OnChanges {
   }
 
   allQuestionsAnswered(): boolean {
-    return this.rapid_questions.every((question: any) => this.rapid_ans[question.id] && this.rapid_ans[question.id] !== '-');
+    if(this.selected_asrh_consult === null || this.selected_asrh_consult?.answers?.length === 0)
+      return this.rapid_questions.every((question: any) => this.rapid_ans[question.id] && this.rapid_ans[question.id] !== '');
+    if(this.selected_asrh_consult?.answers?.length !== 0)  
+      return this.selected_asrh_consult?.answers?.some((item: any) => (this.rapid_ans[item.question.id] || '') !== (item.answer || '')) ?? false;
+    
+    
   }
+
+  // hasChanges(): boolean {
+  
+   
+  // }
 
   constructor(
     private http: HttpService,

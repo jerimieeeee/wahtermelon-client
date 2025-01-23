@@ -120,13 +120,13 @@
           </div>
         </td>
         <td class="py-4 px-6">
-          {{ asrh_history.assessment_date | date: 'MM/dd/yyyy'}}
-        </td>
-        <td class="py-4 px-6">
-         {{ asrh_history.id }}
+          {{ asrh_history?.assessment_date | date: 'MM/dd/yyyy'}}
         </td>
         <td class="py-4 px-6">
          -
+        </td>
+        <td class="py-4 px-6">
+         {{ asrh_history?.comprehensive?.status !== null ? (asrh_history?.comprehensive?.status | titlecase) : '-' }}
         </td>
         <td class="py-4 px-6">
           <button type="button" class="rounded-md bg-blue-500 text-white py-1 px-2" (click)="openASRHConsult(asrh_history)">
