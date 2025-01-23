@@ -6,7 +6,7 @@
     </button>
     <button (click)="switchPage(2)" class="tabs-main w-36"
       [class]="pages===2? 'tabs-main-true rounded-t-md' : 'tabs-main-false' ">
-      ADOLESCENT HEALTH
+      {{ !selected_asrh_consult ? 'NEW VISIT' : 'DETAILS' }}
     </button>
     <button (click)="switchPage(3)" class="tabs-main w-36"
       [class]="pages===3? 'tabs-main-true rounded-t-md' : 'tabs-main-false' ">
@@ -14,7 +14,7 @@
     </button>
   </nav>
   <div class="ml-auto">
-    <button type="button" class="btn-end-visit ml-auto mt-5" (click)="toggleModal('end_visit')">
+    <button type="button" class="btn-end-visit ml-auto mt-5"  *ngIf="!consult_details?.consult_done && (consult_details?.facility.code === user_facility)" (click)="toggleModal('end_visit')">
       End Visit
     </button>
   </div>

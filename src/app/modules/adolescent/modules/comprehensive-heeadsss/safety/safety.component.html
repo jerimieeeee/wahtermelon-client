@@ -12,8 +12,16 @@
          {{home.desc}}
         </div>
 
-          <div class="text-sm mb-5">
+          <div class="text-sm mb-4 flex justify-between">
             <p>{{home.instruction}}</p>
+            
+          </div>
+
+          <div class="mb-5">
+            <input type="checkbox" class="input-checkbox" id="seriously_injured" formControlName="seriously_injured" />
+            <label for="seriously_injured" class="ml-1 text-sm" >
+              Serious Injury
+            </label>
           </div>
 
             <div class="mt-1 w-full border-t border-gray-200 mb-5"></div>
@@ -36,7 +44,7 @@
 
 
     <div class="flex justify-center mt-5">
-        <button class="btn-save mr-5 mt-4" [disabled]="is_saving || safetyForm.invalid || !safetyForm.dirty" (click)="onSubmit(); safetyForm.markAsPristine();" >
+        <button class="btn-save mr-5 mt-4" [disabled]="is_saving || !safetyForm.dirty" (click)="onSubmit(); safetyForm.markAsPristine();" >
           <fa-icon [icon]="faSave" *ngIf="!is_saving" class="mr-2"></fa-icon>
           <fa-icon [icon]="faSpinner" *ngIf="is_saving" animation="spin" class="mr-2"></fa-icon>
           {{ selected_asrh_consult?.comprehensive?.safety_notes ? (is_saving ? 'Updating' : 'Update') : (is_saving ? 'Saving' : 'Save') }}

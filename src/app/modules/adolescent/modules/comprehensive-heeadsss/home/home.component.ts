@@ -41,10 +41,7 @@ export class HomeComponent implements OnInit {
     assessment_date: new FormControl<string| null>(''),
     consent_flag: new FormControl<boolean>(false),
     home_notes: new FormControl<string| null>(''),
-    risky_behavior: new FormControl<boolean>(false),
-    seriously_injured: new FormControl<boolean>(false),
     status: new FormControl<string| null>(''),
-    referred_to: new FormControl<string| null>(''),
   });
 
   statuses = [
@@ -86,14 +83,11 @@ export class HomeComponent implements OnInit {
       assessment_date: ['', [Validators.required, Validators.minLength(1)]],
       consent_flag: ['', [Validators.required, Validators.minLength(1)]],
       home_notes: ['', [Validators.required, Validators.minLength(1)]],
-      risky_behavior: [[false], [Validators.required, Validators.minLength(1)]],
-      seriously_injured: [[false], [Validators.required, Validators.minLength(1)]],
       status: ['', [Validators.required, Validators.minLength(1)]],
-      referred_to: ['', [Validators.required, Validators.minLength(1)]],
       // average_monthly_income: ['', [Validators.required, Validators.minLength(1), Validators.pattern("^[0-9,;]+$")]],
     });
     this.patchCompre();
-    this.disableForm();
+    // this.disableForm();
     // this.loadFPDetails();
     // this.show_form = true;
   }
@@ -127,10 +121,8 @@ export class HomeComponent implements OnInit {
       assessment_date: this.selected_asrh_consult?.comprehensive?.assessment_date,
       status: this.selected_asrh_consult?.comprehensive?.status,
       consent_flag: this.selected_asrh_consult?.comprehensive?.consent_flag,
-      home_notes:this.selected_asrh_consult?.comprehensive?.home_notes,
-      risky_behavior: this.selected_asrh_consult?.comprehensive?.risky_behavior,
-      seriously_injured: this.selected_asrh_consult?.comprehensive?.seriously_injured,
-
+      home_notes:this.selected_asrh_consult?.comprehensive?.home_notes
+     
       });
       // this.show_form = true;
       console.log(this.selected_asrh_consult,'load compre home working')
@@ -138,17 +130,22 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  disableForm(){
-    this.homeForm.get('status')?.valueChanges.subscribe((value) => {
-      const referredControl = this.homeForm.get('referred_to');
-      if (value === '') {
-        referredControl?.reset();
-        referredControl?.disable();
-      } else {
-        referredControl?.enable();
-      }
+  disableForm() {
+    const home = this.selected_asrh_consult?.comprehensive?.home_notes;
+    const spirituality = this.selected_asrh_consult?.comprehensive?.spirituality_notes;
 
-    });
+    const comprestatusControl = this.homeForm.get('status');
+    console.log(home, spirituality, 'home and spirituality')
+
+    if (home === null || spirituality === null) {
+      comprestatusControl?.reset();
+      comprestatusControl?.disable();
+      // referControl?.reset();
+      // referControl?.disable();
+    } else {
+      comprestatusControl?.enable();
+      // referControl?.enable();
+    }
   }
 
   disableForm2() {

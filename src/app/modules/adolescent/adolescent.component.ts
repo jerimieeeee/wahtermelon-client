@@ -33,6 +33,7 @@ export class AdolescentComponent implements OnInit {
   patient_id: any;
   consult_id: any;
   user_info: any;
+  user_facility: any;
   modals: any = [];
 
   consult_details: any;
@@ -191,6 +192,7 @@ export class AdolescentComponent implements OnInit {
     this.patient_id = this.route.snapshot.paramMap.get('id');
     this.consult_id = this.route.snapshot.paramMap.get('consult_id');
     this.user_info = this.http.getUserFromJSON();
+    this.user_facility = this.http.getUserFacility();
 
     this.loadConsultDetails();
     console.log(this.user_info, 'user_info')

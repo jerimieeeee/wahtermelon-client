@@ -12,8 +12,16 @@
          {{home.desc}}
         </div>
 
-          <div class="text-sm mb-5">
+          <div class="text-sm mb-4 flex justify-between">
             <p>{{home.instruction}}</p>
+            
+          </div>
+
+          <div class="mb-5">
+            <input type="checkbox" class="input-checkbox" id="seriously_injured" formControlName="risky_behavior" />
+            <label for="seriously_injured" class="ml-1 text-sm" >
+              Risky Behaviour
+            </label>
           </div>
 
             <div class="mt-1 w-full border-t border-gray-200 mb-5"></div>
@@ -29,6 +37,12 @@
                   <textarea rows="13" id="sexuality.id" placeholder="Remarks" class="text-sm placeholder-slate-400 w-full rounded-md border-gray-300" formControlName="sexuality_notes"></textarea>
                 </div>
               </div>
+              <!-- <div class="">
+                <input type="checkbox" class="input-checkbox" id="seriously_injured" formControlName="risky_behavior" />
+                <label for="seriously_injured" class="ml-2 text-sm" >
+                  Risky Behaviour
+                </label>
+              </div> -->
             </div>
       </div>
 
@@ -36,7 +50,7 @@
 
 
     <div class="flex justify-center mt-5">
-        <button class="btn-save mr-5 mt-4" [disabled]="is_saving || sexualityForm.invalid || !sexualityForm.dirty" (click)="onSubmit(); sexualityForm.markAsPristine();" >
+        <button class="btn-save mr-5 mt-4" [disabled]="is_saving || !sexualityForm.dirty" (click)="onSubmit(); sexualityForm.markAsPristine();" >
           <fa-icon [icon]="faSave" *ngIf="!is_saving" class="mr-2"></fa-icon>
           <fa-icon [icon]="faSpinner" *ngIf="is_saving" animation="spin" class="mr-2"></fa-icon>
           {{ selected_asrh_consult?.comprehensive?.sexuality_notes ? (is_saving ? 'Updating' : 'Update') : (is_saving ? 'Saving' : 'Save') }}

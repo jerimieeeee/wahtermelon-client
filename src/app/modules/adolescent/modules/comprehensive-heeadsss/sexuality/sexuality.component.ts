@@ -41,7 +41,7 @@ export class SexualityComponent implements OnInit {
         patient_id: new FormControl<string| null>(''),
         consult_asrh_rapid_id: new FormControl<string| null>(''),
         assessment_date: new FormControl<string| null>(''),
-
+        risky_behavior: new FormControl<boolean>(false),
         sexuality_notes: new FormControl<string| null>(''),
 
 
@@ -77,7 +77,7 @@ export class SexualityComponent implements OnInit {
           patient_id: [this.patient_id],
           consult_asrh_rapid_id: [this.selected_asrh_consult?.id, [Validators.required, Validators.minLength(1)]],
           assessment_date: [this.selected_asrh_consult?.comprehensive?.assessment_date, [Validators.required, Validators.minLength(1)]],
-
+          risky_behavior: [[false], [Validators.required, Validators.minLength(1)]],
           sexuality_notes: ['', [Validators.required, Validators.minLength(1)]],
 
           // average_monthly_income: ['', [Validators.required, Validators.minLength(1), Validators.pattern("^[0-9,;]+$")]],
@@ -92,6 +92,7 @@ export class SexualityComponent implements OnInit {
        if(this.selected_asrh_consult) {
          this.sexualityForm.patchValue({
          sexuality_notes: this.selected_asrh_consult?.comprehensive?.sexuality_notes,
+         risky_behavior: this.selected_asrh_consult?.comprehensive?.risky_behavior,
          });
          // this.show_form = true;
         //  console.log(this.asrh_compre_history,'load compre home working')
