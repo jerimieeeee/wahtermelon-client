@@ -4,26 +4,32 @@
    Assessment Summary
   </div>
 
-  <div class="mt-1 w-full" *ngFor="let home of selected_asrh_consult?.answers; let i = index">
+  <div class="mt-1 w-full" *ngFor="let home of selected_asrh_consult?.answers; let i = index" >
 
     <div *ngIf="home.answer === '1'">
       <div class="text-sm py-4 px-5">
         {{home.question.question}}
         <button (click)="home.collapsed = !home.collapsed" class="bg-blue-500 text-white px-2 py-1 rounded">
-          {{home.collapsed ? 'Show' : 'Hide'}} Details {{i}}
+          {{home.collapsed ? 'Show' : 'Hide'}} Algorithm
         </button>
       </div>
       <div *ngIf="i === 0 ? !home.collapsed : home.collapsed">
-        <div *ngFor="let algo of home.question.algorithm" class="text-sm py-4 px-5">
-          {{algo.code}}-{{algo.desc}}
-          <div>
+        
+        <div *ngFor="let algo of home.question.algorithm" class="text-sm py-4 px-5 rounded-t-md pl-5">
+          <div class="bg-blue-500 text-sm text-white rounded-t-md py-2 pl-5 font-semibold flex justify-between">
+            {{algo.code}}-{{algo.desc}}
+            <button (click)="algo.collapsed = !algo.collapsed" class="text-white py-1 rounded ml-2">
+              <fa-icon [icon]="algo.collapsed ? faChevronDown : faChevronUp" class="pr-2" size="md"></fa-icon>
+             
+            </button>
+          </div>
+          <div *ngIf="!algo.collapsed" class="border-gray-300 border px-5 py-5">
             <span [innerHTML]="parseReason(algo.ask_instruction)"></span>
           </div>
         </div>
       </div>
     </div>
   </div>
-
 
 </div>
 

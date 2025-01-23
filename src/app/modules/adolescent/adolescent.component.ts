@@ -23,7 +23,7 @@ export class AdolescentComponent implements OnInit {
   module: number = 1;
   module_compre: number = 1;
   show_end: boolean = false;
-  fetching_history: boolean = true;
+  fetching_history: boolean = false;
   show_form: boolean = true;
 
   compre_questions: any = [];
@@ -166,6 +166,7 @@ export class AdolescentComponent implements OnInit {
   }
 
   loadConsultDetails(){
+   
     this.http.get('consultation/records',{params: {patient_id: this.patient_id, id: this.consult_id}}).subscribe({
       next: (data: any) => {
         this.consult_details = data.data[0];
@@ -173,6 +174,7 @@ export class AdolescentComponent implements OnInit {
         this.loadASRH();
         this.loadLibraries();
         this.show_form = true;
+        this.fetching_history = true;
       },
       error: err => console.log(err)
     });

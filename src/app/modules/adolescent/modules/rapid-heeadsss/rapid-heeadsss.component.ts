@@ -192,8 +192,8 @@ export class RapidHeeadsssComponent implements OnInit, OnChanges {
    this.disableForm();
    this.disableForm2();
    this.disableForm3();
-    this.patchData();
-    this.show_form = true;
+   this.patchData();
+   this.show_form = true;
   }
 
   disableForm(){

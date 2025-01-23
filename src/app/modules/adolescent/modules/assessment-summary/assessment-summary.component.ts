@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output, OnChanges } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { faChevronCircleDown, faChevronCircleUp, faSave, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { faChevronCircleDown, faChevronCircleUp, faSave, faSpinner, faChevronUp, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -18,6 +18,8 @@ export class AssessmentSummaryComponent implements OnInit {
   faChevronCircleUp = faChevronCircleUp;
   faChevronCircleDown = faChevronCircleDown;
   faSpinner = faSpinner;
+  faChevronUp = faChevronUp
+  faChevronDown = faChevronDown
 
   show_content: boolean = true;
   is_saving: boolean = false;
