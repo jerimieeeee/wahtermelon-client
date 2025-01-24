@@ -8,12 +8,13 @@ import { forkJoin } from 'rxjs';
 import { formatDate } from '@angular/common';
 import { medicalForm } from './medicalForm';
 import { intakeForm } from '../intake/intakeForm';
-import { ExportAsConfig, ExportAsService } from 'ngx-export-as-17';
+import { ExportAsConfig, ExportAsService } from 'ngx-export-as';
 
 @Component({
-  selector: 'app-medical',
-  templateUrl: './medical.component.html',
-  styleUrls: ['./medical.component.scss']
+    selector: 'app-medical',
+    templateUrl: './medical.component.html',
+    styleUrls: ['./medical.component.scss'],
+    standalone: false
 })
 export class MedicalComponent implements OnInit {
   @Output() updateSelectedGbv = new EventEmitter<any>();

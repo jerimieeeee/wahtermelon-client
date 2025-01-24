@@ -5,9 +5,10 @@ import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-validated-list',
-  templateUrl: './validated-list.component.html',
-  styleUrls: ['./validated-list.component.scss']
+    selector: 'app-validated-list',
+    templateUrl: './validated-list.component.html',
+    styleUrls: ['./validated-list.component.scss'],
+    standalone: false
 })
 export class ValidatedListComponent {
   @Output() showReturn = new EventEmitter<any>();

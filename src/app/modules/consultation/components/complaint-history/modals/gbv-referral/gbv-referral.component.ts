@@ -6,9 +6,10 @@ import { ToastrService } from 'ngx-toastr';
 import { forkJoin } from 'rxjs';
 
 @Component({
-  selector: 'app-gbv-referral',
-  templateUrl: './gbv-referral.component.html',
-  styleUrls: ['./gbv-referral.component.scss']
+    selector: 'app-gbv-referral',
+    templateUrl: './gbv-referral.component.html',
+    styleUrls: ['./gbv-referral.component.scss'],
+    standalone: false
 })
 export class GbvReferralComponent implements OnInit{
   @Output() getPatientTbHistory = new EventEmitter<any>();

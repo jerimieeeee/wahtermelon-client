@@ -4,9 +4,10 @@ import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-assessment-summary',
-  templateUrl: './assessment-summary.component.html',
-  styleUrl: './assessment-summary.component.scss'
+    selector: 'app-assessment-summary',
+    templateUrl: './assessment-summary.component.html',
+    styleUrl: './assessment-summary.component.scss',
+    standalone: false
 })
 export class AssessmentSummaryComponent implements OnInit {
 

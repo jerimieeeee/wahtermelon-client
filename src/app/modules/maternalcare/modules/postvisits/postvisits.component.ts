@@ -4,9 +4,10 @@ import { faAngleDown, faCalendarDay, faCaretRight, faCircleCheck, faCircleNotch,
 import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
-  selector: 'app-postvisits',
-  templateUrl: './postvisits.component.html',
-  styleUrls: ['./postvisits.component.scss']
+    selector: 'app-postvisits',
+    templateUrl: './postvisits.component.html',
+    styleUrls: ['./postvisits.component.scss'],
+    standalone: false
 })
 export class PostvisitsComponent implements OnInit {
   faCalendarDay = faCalendarDay;

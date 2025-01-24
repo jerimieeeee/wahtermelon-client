@@ -5,9 +5,10 @@ import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-ab-preexposure',
-  templateUrl: './ab-preexposure.component.html',
-  styleUrls: ['./ab-preexposure.component.scss']
+    selector: 'app-ab-preexposure',
+    templateUrl: './ab-preexposure.component.html',
+    styleUrls: ['./ab-preexposure.component.scss'],
+    standalone: false
 })
 export class AbPreexposureComponent implements OnInit {
   @Input() patient_id;

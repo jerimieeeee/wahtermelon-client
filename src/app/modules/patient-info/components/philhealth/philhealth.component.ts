@@ -4,9 +4,10 @@ import { faPlusCircle, faTableList } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
-  selector: 'app-philhealth',
-  templateUrl: './philhealth.component.html',
-  styleUrls: ['./philhealth.component.scss']
+    selector: 'app-philhealth',
+    templateUrl: './philhealth.component.html',
+    styleUrls: ['./philhealth.component.scss'],
+    standalone: false
 })
 export class PhilhealthComponent {
   @Output() toggleAccordion = new EventEmitter<any>();

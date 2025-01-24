@@ -3,9 +3,10 @@ import { faPrint } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
-  selector: 'app-konsulta',
-  templateUrl: './konsulta.component.html',
-  styleUrls: ['./konsulta.component.scss']
+    selector: 'app-konsulta',
+    templateUrl: './konsulta.component.html',
+    styleUrls: ['./konsulta.component.scss'],
+    standalone: false
 })
 export class KonsultaComponent implements OnInit {
   @Input() consult_details;

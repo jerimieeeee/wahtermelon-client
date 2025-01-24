@@ -5,9 +5,10 @@ import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-prenatal',
-  templateUrl: './prenatal.component.html',
-  styleUrls: ['./prenatal.component.scss']
+    selector: 'app-prenatal',
+    templateUrl: './prenatal.component.html',
+    styleUrls: ['./prenatal.component.scss'],
+    standalone: false
 })
 export class PrenatalComponent implements OnInit {
   focused: boolean;

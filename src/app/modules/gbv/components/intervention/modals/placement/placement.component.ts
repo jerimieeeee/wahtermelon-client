@@ -7,9 +7,10 @@ import { ToastrService } from 'ngx-toastr';
 import { forkJoin } from 'rxjs';
 
 @Component({
-  selector: 'app-placement',
-  templateUrl: './placement.component.html',
-  styleUrls: ['./placement.component.scss']
+    selector: 'app-placement',
+    templateUrl: './placement.component.html',
+    styleUrls: ['./placement.component.scss'],
+    standalone: false
 })
 export class PlacementComponent implements OnInit, OnChanges{
   @Output() toggleModal = new EventEmitter<any>();

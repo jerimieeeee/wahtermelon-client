@@ -5,9 +5,10 @@ import { HttpService } from 'app/shared/services/http.service';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-drugs',
-  templateUrl: './drugs.component.html',
-  styleUrl: './drugs.component.scss'
+    selector: 'app-drugs',
+    templateUrl: './drugs.component.html',
+    styleUrl: './drugs.component.scss',
+    standalone: false
 })
 export class DrugsComponent implements OnInit {
   faCalendarDay = faCalendarDay;

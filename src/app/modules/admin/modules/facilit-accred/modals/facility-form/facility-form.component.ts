@@ -4,9 +4,10 @@ import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-facility-form',
-  templateUrl: './facility-form.component.html',
-  styleUrls: ['./facility-form.component.scss']
+    selector: 'app-facility-form',
+    templateUrl: './facility-form.component.html',
+    styleUrls: ['./facility-form.component.scss'],
+    standalone: false
 })
 export class FacilityFormComponent implements OnInit, OnChanges {
   @Output() toggleModal = new EventEmitter<any>();

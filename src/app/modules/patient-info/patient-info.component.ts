@@ -21,9 +21,10 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { DeathRecordComponent } from './components/death-record/death-record.component';
 
 @Component({
-  selector: 'app-patient-info',
-  templateUrl: './patient-info.component.html',
-  styleUrls: ['./patient-info.component.scss']
+    selector: 'app-patient-info',
+    templateUrl: './patient-info.component.html',
+    styleUrls: ['./patient-info.component.scss'],
+    standalone: false
 })
 export class PatientInfoComponent implements OnInit {
   @ViewChild(PastMedicalComponent) pastMedical: PastMedicalComponent;
@@ -126,13 +127,13 @@ export class PatientInfoComponent implements OnInit {
   active_loc: string;
   active_loc_id: any;
 
-  getPatient(){
+  getPatient(updateImage?: boolean){
     this.active_loc_id = this.http.getUrlParams();
     this.active_loc = this.active_loc_id.loc;
     this.consult_id = this.active_loc_id.consult_id ?? null;
 
     // console.log('get patient', this.patient_id ?? null, this.active_loc_id.patient_id)
-    if(this.active_loc_id.patient_id && (this.patient_id !== this.active_loc_id.patient_id)){
+    if(updateImage || (this.active_loc_id.patient_id && (this.patient_id !== this.active_loc_id.patient_id))){
       // console.log('getting patient')
       this.patient_id = this.active_loc_id.patient_id;
 
@@ -142,7 +143,7 @@ export class PatientInfoComponent implements OnInit {
           // console.log(this.patient_info);
           this.show_form = true;
           this.http.setPatientInfo(this.patient_info);
-          this.loadData('all');
+          if(!updateImage) this.loadData('all');
 
           this.accordions['vitals'] = true;
           this.accordions['lab_request'] = true;
@@ -162,11 +163,13 @@ export class PatientInfoComponent implements OnInit {
 
   imageData: SafeUrl | null = null;
   getImage(data) {
+    // console.log(data)
     this.imageData = null;
 
     if(data.image_url){
       this.http.get('images/'+data.id, { responseType: 'blob' }).subscribe({
         next: (data: any) => {
+          // console.log(data)
           const reader = new FileReader();
           reader.onloadend = () => {
             const base64data = reader.result as string;
@@ -319,7 +322,7 @@ export class PatientInfoComponent implements OnInit {
         }
       }
 
-      if(modal_name ==='photo' && !this.modals['photo']) this.getImage(this.patient_info);
+      if(modal_name ==='photo' && !this.modals['photo']) this.getPatient(true);
       // if(modal_name === 'preghist' && this.modals[modal_name] === false) this.loadData('pregnancy_history')
       if(modal_name === 'lifestyle' && this.modals['lifestyle'] === false) this.loadData('social_history');
       if (modal_name === 'lab-request' && this.modals[modal_name] === false) this.loadData('laboratory');

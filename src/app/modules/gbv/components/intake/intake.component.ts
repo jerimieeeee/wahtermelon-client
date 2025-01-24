@@ -7,9 +7,10 @@ import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 import { intakeForm } from './intakeForm';
 @Component({
-  selector: 'app-intake',
-  templateUrl: './intake.component.html',
-  styleUrls: ['./intake.component.scss']
+    selector: 'app-intake',
+    templateUrl: './intake.component.html',
+    styleUrls: ['./intake.component.scss'],
+    standalone: false
 })
 export class IntakeComponent implements OnInit{
   @Output() updateSelectedGbv = new EventEmitter<any>();

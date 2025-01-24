@@ -6,9 +6,10 @@ import { WebcamImage } from 'ngx-webcam';
 import { Observable, Subject } from 'rxjs';
 
 @Component({
-  selector: 'app-photo-modal',
-  templateUrl: './photo-modal.component.html',
-  styleUrls: ['./photo-modal.component.scss']
+    selector: 'app-photo-modal',
+    templateUrl: './photo-modal.component.html',
+    styleUrls: ['./photo-modal.component.scss'],
+    standalone: false
 })
 export class PhotoModalComponent implements OnDestroy, OnInit {
   @Output() toggleModal = new EventEmitter<any>();
@@ -80,7 +81,7 @@ export class PhotoModalComponent implements OnDestroy, OnInit {
   }
 
   closeModal(){
-    this.toggleModal.emit('vaccine-moodal');
+    this.toggleModal.emit('photo');
   }
 
   constructor(

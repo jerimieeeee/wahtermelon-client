@@ -4,9 +4,10 @@ import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-physical-exam',
-  templateUrl: './physical-exam.component.html',
-  styleUrls: ['./physical-exam.component.scss']
+    selector: 'app-physical-exam',
+    templateUrl: './physical-exam.component.html',
+    styleUrls: ['./physical-exam.component.scss'],
+    standalone: false
 })
 export class PhysicalExamComponent implements OnInit, OnChanges {
   @Input() toggle_content;

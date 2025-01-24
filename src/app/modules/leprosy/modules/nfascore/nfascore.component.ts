@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-nfascore',
-  templateUrl: './nfascore.component.html',
-  styleUrls: ['./nfascore.component.scss']
+    selector: 'app-nfascore',
+    templateUrl: './nfascore.component.html',
+    styleUrls: ['./nfascore.component.scss'],
+    standalone: false
 })
 export class NfascoreComponent implements OnInit {
 

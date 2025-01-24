@@ -4,9 +4,10 @@ import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-anogenital',
-  templateUrl: './anogenital.component.html',
-  styleUrls: ['./anogenital.component.scss']
+    selector: 'app-anogenital',
+    templateUrl: './anogenital.component.html',
+    styleUrls: ['./anogenital.component.scss'],
+    standalone: false
 })
 export class AnogenitalComponent implements OnInit {
   @Output() toggleModal = new EventEmitter<any>();

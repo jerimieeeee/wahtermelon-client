@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { faPersonWalking } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
-  selector: 'app-leprosy',
-  templateUrl: './leprosy.component.html',
-  styleUrls: ['./leprosy.component.scss']
+    selector: 'app-leprosy',
+    templateUrl: './leprosy.component.html',
+    styleUrls: ['./leprosy.component.scss'],
+    standalone: false
 })
 export class LeprosyComponent implements OnInit {
 

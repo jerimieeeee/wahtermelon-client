@@ -4,9 +4,10 @@ import { faAnglesLeft, faAnglesRight, faChevronCircleDown, faChevronCircleUp, fa
 import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
-  selector: 'app-consult-history',
-  templateUrl: './consult-history.component.html',
-  styleUrls: ['./consult-history.component.scss']
+    selector: 'app-consult-history',
+    templateUrl: './consult-history.component.html',
+    styleUrls: ['./consult-history.component.scss'],
+    standalone: false
 })
 export class ConsultHistoryComponent implements OnInit, OnChanges {
   @Input() toggle_content;

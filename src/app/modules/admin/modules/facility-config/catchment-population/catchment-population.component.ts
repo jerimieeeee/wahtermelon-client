@@ -5,9 +5,10 @@ import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-catchment-population',
-  templateUrl: './catchment-population.component.html',
-  styleUrls: ['./catchment-population.component.scss']
+    selector: 'app-catchment-population',
+    templateUrl: './catchment-population.component.html',
+    styleUrls: ['./catchment-population.component.scss'],
+    standalone: false
 })
 export class CatchmentPopulationComponent implements OnInit, OnChanges {
   @Output() getCatchmentBarangay = new EventEmitter<any>();

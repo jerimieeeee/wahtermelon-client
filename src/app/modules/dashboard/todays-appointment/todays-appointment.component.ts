@@ -6,9 +6,10 @@ import { HttpService } from 'app/shared/services/http.service';
 import { switchMap, finalize } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-todays-appointment',
-  templateUrl: './todays-appointment.component.html',
-  styleUrls: ['./todays-appointment.component.scss']
+    selector: 'app-todays-appointment',
+    templateUrl: './todays-appointment.component.html',
+    styleUrls: ['./todays-appointment.component.scss'],
+    standalone: false
 })
 export class TodaysAppointmentComponent implements OnInit {
   @Input() date_today;

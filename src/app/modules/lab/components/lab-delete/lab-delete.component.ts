@@ -3,9 +3,10 @@ import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-lab-delete',
-  templateUrl: './lab-delete.component.html',
-  styleUrls: ['./lab-delete.component.scss']
+    selector: 'app-lab-delete',
+    templateUrl: './lab-delete.component.html',
+    styleUrls: ['./lab-delete.component.scss'],
+    standalone: false
 })
 export class LabDeleteComponent {
   @Output() toggleModal = new EventEmitter<any>();

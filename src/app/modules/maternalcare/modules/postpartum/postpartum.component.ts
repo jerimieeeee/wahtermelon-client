@@ -5,9 +5,10 @@ import { HttpService } from 'app/shared/services/http.service';
 
 
 @Component({
-  selector: 'app-postpartum',
-  templateUrl: './postpartum.component.html',
-  styleUrls: ['./postpartum.component.scss']
+    selector: 'app-postpartum',
+    templateUrl: './postpartum.component.html',
+    styleUrls: ['./postpartum.component.scss'],
+    standalone: false
 })
 export class PostpartumComponent implements OnInit {
   focused: boolean;

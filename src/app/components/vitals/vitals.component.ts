@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-vitals',
-  templateUrl: './vitals.component.html',
-  styleUrls: ['./vitals.component.scss']
+    selector: 'app-vitals',
+    templateUrl: './vitals.component.html',
+    styleUrls: ['./vitals.component.scss'],
+    standalone: false
 })
 export class VitalsComponent implements OnInit {
 

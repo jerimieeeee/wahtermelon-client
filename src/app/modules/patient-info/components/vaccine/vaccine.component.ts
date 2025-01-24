@@ -3,9 +3,10 @@ import { faChevronDown, faChevronUp, faPenToSquare, faPlusCircle, faMinus } from
 import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
-  selector: 'app-vaccine',
-  templateUrl: './vaccine.component.html',
-  styleUrls: ['./vaccine.component.scss']
+    selector: 'app-vaccine',
+    templateUrl: './vaccine.component.html',
+    styleUrls: ['./vaccine.component.scss'],
+    standalone: false
 })
 export class VaccineComponent implements OnInit {
   @Output() toggleAccordion = new EventEmitter<any>();

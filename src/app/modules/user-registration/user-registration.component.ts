@@ -8,10 +8,11 @@ import { ToastrService } from 'ngx-toastr';
 import { openCloseTrigger } from '../patient-registration/declarations/animation';
 
 @Component({
-  selector: 'app-user-registration',
-  templateUrl: './user-registration.component.html',
-  styleUrls: ['./user-registration.component.scss'],
-  animations: [openCloseTrigger]
+    selector: 'app-user-registration',
+    templateUrl: './user-registration.component.html',
+    styleUrls: ['./user-registration.component.scss'],
+    animations: [openCloseTrigger],
+    standalone: false
 })
 
 export class UserRegistrationComponent implements OnInit {

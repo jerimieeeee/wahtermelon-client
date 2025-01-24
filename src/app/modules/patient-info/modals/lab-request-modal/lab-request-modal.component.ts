@@ -4,9 +4,10 @@ import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-lab-request-modal',
-  templateUrl: './lab-request-modal.component.html',
-  styleUrls: ['./lab-request-modal.component.scss']
+    selector: 'app-lab-request-modal',
+    templateUrl: './lab-request-modal.component.html',
+    styleUrls: ['./lab-request-modal.component.scss'],
+    standalone: false
 })
 export class LabRequestModalComponent implements OnInit {
   @Input() patient_info;

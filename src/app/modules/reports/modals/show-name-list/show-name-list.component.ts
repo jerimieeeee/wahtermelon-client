@@ -10,9 +10,10 @@ interface State {
 }
 
 @Component({
-  selector: 'app-show-name-list',
-  templateUrl: './show-name-list.component.html',
-  styleUrls: ['./show-name-list.component.scss']
+    selector: 'app-show-name-list',
+    templateUrl: './show-name-list.component.html',
+    styleUrls: ['./show-name-list.component.scss'],
+    standalone: false
 })
 export class ShowNameListComponent implements OnInit {
   @Output() toggleModal = new EventEmitter<any>();

@@ -1,11 +1,12 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import { faCircleNotch, faFileExcel, faFilePdf } from '@fortawesome/free-solid-svg-icons';
-import { ExportAsConfig, ExportAsService } from 'ngx-export-as-17';
+import { ExportAsConfig, ExportAsService } from 'ngx-export-as';
 
 @Component({
-  selector: 'app-patient-registered',
-  templateUrl: './patient-registered.component.html',
-  styleUrls: ['./patient-registered.component.scss']
+    selector: 'app-patient-registered',
+    templateUrl: './patient-registered.component.html',
+    styleUrls: ['./patient-registered.component.scss'],
+    standalone: false
 })
 export class PatientRegisteredComponent implements OnChanges {
   @Input() report_data;

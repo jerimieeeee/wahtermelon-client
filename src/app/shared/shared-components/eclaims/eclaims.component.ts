@@ -4,9 +4,10 @@ import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-eclaims',
-  templateUrl: './eclaims.component.html',
-  styleUrls: ['./eclaims.component.scss']
+    selector: 'app-eclaims',
+    templateUrl: './eclaims.component.html',
+    styleUrls: ['./eclaims.component.scss'],
+    standalone: false
 })
 export class EclaimsComponent implements OnInit {
   @Input() program_id;

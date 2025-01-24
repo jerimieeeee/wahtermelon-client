@@ -3,9 +3,10 @@ import { faChevronDown, faChevronUp, faMinus, faPlusCircle } from '@fortawesome/
 import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
-  selector: 'app-social-history',
-  templateUrl: './social-history.component.html',
-  styleUrls: ['./social-history.component.scss']
+    selector: 'app-social-history',
+    templateUrl: './social-history.component.html',
+    styleUrls: ['./social-history.component.scss'],
+    standalone: false
 })
 export class SocialHistoryComponent implements OnInit {
   @Output() toggleAccordion = new EventEmitter<any>();

@@ -3,9 +3,10 @@ import { faChevronDown, faChevronUp, faMinus, faPlusCircle } from '@fortawesome/
 import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
-  selector: 'app-menstrual-history',
-  templateUrl: './menstrual-history.component.html',
-  styleUrls: ['./menstrual-history.component.scss']
+    selector: 'app-menstrual-history',
+    templateUrl: './menstrual-history.component.html',
+    styleUrls: ['./menstrual-history.component.scss'],
+    standalone: false
 })
 export class MenstrualHistoryComponent {
   @Output() toggleAccordion = new EventEmitter<any>();

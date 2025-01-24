@@ -9,10 +9,11 @@ import { VitalsChartsService } from 'app/shared/services/vitals-charts.service';
 import { NameHelperService } from 'app/shared/services/name-helper.service';
 
 @Component({
-  selector: 'app-patient-itr',
-  templateUrl: './patient-itr.component.html',
-  styleUrls: ['./patient-itr.component.scss'],
-  animations: [openCloseTrigger]
+    selector: 'app-patient-itr',
+    templateUrl: './patient-itr.component.html',
+    styleUrls: ['./patient-itr.component.scss'],
+    animations: [openCloseTrigger],
+    standalone: false
 })
 export class PatientItrComponent implements OnInit {
   faCircle = faCircle;

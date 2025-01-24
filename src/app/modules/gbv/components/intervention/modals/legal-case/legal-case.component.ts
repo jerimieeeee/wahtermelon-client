@@ -7,9 +7,10 @@ import { ToastrService } from 'ngx-toastr';
 import { forkJoin } from 'rxjs';
 
 @Component({
-  selector: 'app-legal-case',
-  templateUrl: './legal-case.component.html',
-  styleUrls: ['./legal-case.component.scss']
+    selector: 'app-legal-case',
+    templateUrl: './legal-case.component.html',
+    styleUrls: ['./legal-case.component.scss'],
+    standalone: false
 })
 export class LegalCaseComponent implements OnInit, OnChanges {
   @Output() toggleModal = new EventEmitter<any>();

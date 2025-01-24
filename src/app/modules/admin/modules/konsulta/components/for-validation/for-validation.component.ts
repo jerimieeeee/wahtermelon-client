@@ -5,9 +5,10 @@ import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-for-validation',
-  templateUrl: './for-validation.component.html',
-  styleUrls: ['./for-validation.component.scss']
+    selector: 'app-for-validation',
+    templateUrl: './for-validation.component.html',
+    styleUrls: ['./for-validation.component.scss'],
+    standalone: false
 })
 export class ForValidationComponent {
   @Output() showReturn = new EventEmitter<any>();

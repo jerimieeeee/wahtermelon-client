@@ -2,9 +2,10 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { faFaceFrown, faFaceMeh, faFaceSmile, faPrint } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
-  selector: 'app-ekas',
-  templateUrl: './ekas.component.html',
-  styleUrls: ['./ekas.component.scss']
+    selector: 'app-ekas',
+    templateUrl: './ekas.component.html',
+    styleUrls: ['./ekas.component.scss'],
+    standalone: false
 })
 export class EkasComponent implements OnInit {
   @Output() toggleModal = new EventEmitter<any>();

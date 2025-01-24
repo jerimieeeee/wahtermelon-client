@@ -4,9 +4,10 @@ import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-lifestyle-modal',
-  templateUrl: './lifestyle-modal.component.html',
-  styleUrls: ['./lifestyle-modal.component.scss']
+    selector: 'app-lifestyle-modal',
+    templateUrl: './lifestyle-modal.component.html',
+    styleUrls: ['./lifestyle-modal.component.scss'],
+    standalone: false
 })
 export class LifestyleModalComponent implements OnInit, OnChanges {
   @Output() loadData = new EventEmitter<any>();

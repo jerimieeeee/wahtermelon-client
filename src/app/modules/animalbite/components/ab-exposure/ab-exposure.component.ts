@@ -9,9 +9,10 @@ import { faSave } from '@fortawesome/free-regular-svg-icons';
 import { formatDate } from '@angular/common';
 
 @Component({
-  selector: 'app-ab-exposure',
-  templateUrl: './ab-exposure.component.html',
-  styleUrls: ['./ab-exposure.component.scss']
+    selector: 'app-ab-exposure',
+    templateUrl: './ab-exposure.component.html',
+    styleUrls: ['./ab-exposure.component.scss'],
+    standalone: false
 })
 export class AbExposureComponent implements OnInit, OnChanges {
   @Output() updateSelectedAb = new EventEmitter<any>();

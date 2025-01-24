@@ -3,9 +3,10 @@ import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
-  selector: 'app-cc',
-  templateUrl: './cc.component.html',
-  styleUrls: ['./cc.component.scss']
+    selector: 'app-cc',
+    templateUrl: './cc.component.html',
+    styleUrls: ['./cc.component.scss'],
+    standalone: false
 })
 export class CcComponent implements OnInit {
   @Input() selected_visit;

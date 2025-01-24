@@ -6,9 +6,10 @@ import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
-  selector: 'app-catchment-barangay',
-  templateUrl: './catchment-barangay.component.html',
-  styleUrls: ['./catchment-barangay.component.scss']
+    selector: 'app-catchment-barangay',
+    templateUrl: './catchment-barangay.component.html',
+    styleUrls: ['./catchment-barangay.component.scss'],
+    standalone: false
 })
 export class CatchmentBarangayComponent implements OnInit {
   faSave = faSave;

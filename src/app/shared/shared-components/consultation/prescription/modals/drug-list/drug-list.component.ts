@@ -6,11 +6,10 @@ import { faAdd, faAnglesLeft, faAnglesRight, faChevronLeft, faChevronRight, faCi
 import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
-  selector: 'app-drug-list',
-  standalone: true,
-  imports: [CommonModule, FontAwesomeModule, FormsModule],
-  templateUrl: './drug-list.component.html',
-  styleUrls: ['./drug-list.component.scss']
+    selector: 'app-drug-list',
+    imports: [CommonModule, FontAwesomeModule, FormsModule],
+    templateUrl: './drug-list.component.html',
+    styleUrls: ['./drug-list.component.scss']
 })
 export class DrugListComponent implements OnInit {
   @Output() openAddForm = new EventEmitter<any>()

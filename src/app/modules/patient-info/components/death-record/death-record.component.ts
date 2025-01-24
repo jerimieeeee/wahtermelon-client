@@ -4,9 +4,10 @@ import { faChevronDown, faChevronUp, faMinus, faPlusCircle } from '@fortawesome/
 import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
-  selector: 'app-death-record',
-  templateUrl: './death-record.component.html',
-  styleUrls: ['./death-record.component.scss']
+    selector: 'app-death-record',
+    templateUrl: './death-record.component.html',
+    styleUrls: ['./death-record.component.scss'],
+    standalone: false
 })
 export class DeathRecordComponent {
   @Output() toggleAccordion = new EventEmitter<any>();

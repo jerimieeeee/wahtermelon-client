@@ -3,15 +3,16 @@ import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/fo
 import { faFilePdf } from '@fortawesome/free-regular-svg-icons';
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
-import { ExportAsConfig, ExportAsService } from 'ngx-export-as-17';
+import { ExportAsConfig, ExportAsService } from 'ngx-export-as';
 import { ToastrService } from 'ngx-toastr';
 import { eclaimsForm } from '../../eclaimsForm';
 import { formatDate } from '@angular/common';
 
 @Component({
-  selector: 'app-cf2',
-  templateUrl: './cf2.component.html',
-  styleUrls: ['./cf2.component.scss']
+    selector: 'app-cf2',
+    templateUrl: './cf2.component.html',
+    styleUrls: ['./cf2.component.scss'],
+    standalone: false
 })
 export class Cf2Component implements OnInit {
   @Output() toggleModal = new EventEmitter<any>();

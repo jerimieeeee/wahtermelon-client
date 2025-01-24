@@ -1,9 +1,10 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 
 @Component({
-  selector: 'app-consultation',
-  templateUrl: './consultation.component.html',
-  styleUrls: ['./consultation.component.scss']
+    selector: 'app-consultation',
+    templateUrl: './consultation.component.html',
+    styleUrls: ['./consultation.component.scss'],
+    standalone: false
 })
 export class ConsultationComponent implements OnChanges {
   @Input() selected_visit;

@@ -2,9 +2,10 @@ import { Component, Input, OnInit } from '@angular/core';
 import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
-  selector: 'app-mc',
-  templateUrl: './mc.component.html',
-  styleUrls: ['./mc.component.scss']
+    selector: 'app-mc',
+    templateUrl: './mc.component.html',
+    styleUrls: ['./mc.component.scss'],
+    standalone: false
 })
 export class McComponent implements OnInit {
   @Input() selected_visit

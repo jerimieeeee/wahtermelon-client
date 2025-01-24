@@ -7,12 +7,11 @@ import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  standalone: true,
-  selector: 'app-end-visit',
-  templateUrl: './end-visit.component.html',
-  styleUrls: ['./end-visit.component.scss'],
-  imports: [FontAwesomeModule, FormsModule, CommonModule],
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'app-end-visit',
+    templateUrl: './end-visit.component.html',
+    styleUrls: ['./end-visit.component.scss'],
+    imports: [FontAwesomeModule, FormsModule, CommonModule],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EndVisitComponent {
   @Output() toggleModal = new EventEmitter<any>();

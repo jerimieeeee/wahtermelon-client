@@ -5,9 +5,10 @@ import { HttpService } from 'app/shared/services/http.service';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-spirituality',
-  templateUrl: './spirituality.component.html',
-  styleUrl: './spirituality.component.scss'
+    selector: 'app-spirituality',
+    templateUrl: './spirituality.component.html',
+    styleUrl: './spirituality.component.scss',
+    standalone: false
 })
 export class SpiritualityComponent implements OnInit {
   faCalendarDay = faCalendarDay;

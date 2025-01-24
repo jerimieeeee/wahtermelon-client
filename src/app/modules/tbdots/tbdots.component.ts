@@ -5,9 +5,10 @@ import { faCircleNotch, faDoorClosed, faPersonWalking, faSpinner } from '@fortaw
 import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
-  selector: 'app-tbdots',
-  templateUrl: './tbdots.component.html',
-  styleUrls: ['./tbdots.component.scss']
+    selector: 'app-tbdots',
+    templateUrl: './tbdots.component.html',
+    styleUrls: ['./tbdots.component.scss'],
+    standalone: false
 })
 export class TbdotsComponent implements OnInit {
   patient_id: any;

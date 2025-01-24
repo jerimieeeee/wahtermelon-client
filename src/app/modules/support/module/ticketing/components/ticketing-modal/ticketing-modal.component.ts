@@ -8,11 +8,10 @@ import { HttpService } from 'app/shared/services/http.service';
 import { forkJoin } from 'rxjs';
 
 @Component({
-  standalone: true,
-  imports: [CommonModule, FontAwesomeModule, ReactiveFormsModule],
-  selector: 'app-ticketing-modal',
-  templateUrl: './ticketing-modal.component.html',
-  styleUrls: ['./ticketing-modal.component.scss']
+    imports: [CommonModule, FontAwesomeModule, ReactiveFormsModule],
+    selector: 'app-ticketing-modal',
+    templateUrl: './ticketing-modal.component.html',
+    styleUrls: ['./ticketing-modal.component.scss']
 })
 export class TicketingModalComponent implements OnInit {
   @Output() toggleModal = new EventEmitter<any>();

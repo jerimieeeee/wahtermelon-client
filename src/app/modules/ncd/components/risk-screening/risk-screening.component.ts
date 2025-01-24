@@ -7,9 +7,10 @@ import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 import { bloodLipidForm, glucoseForm, urineKetonesForm, urineProteinForm } from './forms';
 @Component({
-  selector: 'app-risk-screening',
-  templateUrl: './risk-screening.component.html',
-  styleUrls: ['./risk-screening.component.scss']
+    selector: 'app-risk-screening',
+    templateUrl: './risk-screening.component.html',
+    styleUrls: ['./risk-screening.component.scss'],
+    standalone: false
 })
 export class RiskScreeningComponent implements OnInit, OnChanges {
   @Input() patient_id;

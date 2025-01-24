@@ -1,6 +1,6 @@
 <div *ngIf="show_stats" class="grid grid-cols-1">
   <div class="flex justify-between w-full text-blue-500 font-semibold text-lg  p-3" >
-    <span>Post-Exposure Prophylaxis Cohort Report</span>
+<!--    <span>Post-Exposure Prophylaxis Cohort Report</span>-->
     <span>
       <button  type="button" class="text-2xl" (click)="exportX()">
         <fa-icon [icon]="faFileExcel" class="text-green-700"></fa-icon>
@@ -9,53 +9,133 @@
   </div>
 
   <div class="w-full flex justify-center text-center text-sm font-semibold">
-    Province of {{ facility.province.name }} <br />
-    {{ facility.facility_name }} <br />
+    REPUBLIC OF THE PHILIPPINES <br />
+    DEPARTMENT OF HEALTH <br />
+<!--    {{ facility.facility_name }} <br />-->
     Wireless Access for Health <br />
-    Report Form on Animal Bite/Human Rabies Cases <br />
-    Pre-Exposure Prophylaxis Report <br />
-    Period Covered: {{ label_value.labelDate }} Year: {{ label_value.labelYear }} <br /><br />
+    Rabies and Bite Victim Report Form <br />
+    <!-- Period Covered (Quarter/Year) {{ label_value.labelDate }} Year: {{ label_value.labelYear }} <br /><br /> -->
   </div>
 
   <table class="w-full table-fix border border-gray-300 mb-5" id="reportForm">
-    <thead class="font-normal">
+    <thead class="font-normal text-center">
       <tr>
-        <th rowspan="2">Municipality/Barangay</th>
-        <th colspan="2">Sex</th>
-        <th colspan="2">Age</th>
-        <th colspan="3">Status of Immunization</th>
+        <th rowspan="3">
+          {{ this.reportFlag === '1' ? 'MUN/CITY' : 'BARANGAY' }}
+        </th>
+        <th rowspan="3">Total Population</th>
+        <th colspan="11">Animal Bite Victims</th>
+        <th rowspan="2" colspan="2">PREP</th>
+        <th rowspan="3">Tandok</th>
+        <th rowspan="2" colspan="2">Human Rabies</th>
+        <th rowspan="2" colspan="4">PEP</th>
+        <th rowspan="2" colspan="4">Biting Animals</th>
+        <th rowspan="2" colspan="4">PEP Coverage</th>
       </tr>
       <tr>
-        <th>F</th>
-        <th>M</th>
-        <th>&lt; 15</th>
-        <th>&GreaterEqual;; 15</th>
-        <th>D0</th>
-        <th>D0 & D7</th>
-        <th>D0, D7, D21</th>
+        <th colspan="3">Sex</th>
+        <th colspan="3">Age</th>
+        <th colspan="5">Category</th>
+      </tr>
+      <tr class="text-center font-semibold">
+        <td>Male</td>
+        <td>Female</td>
+        <td>Total</td>
+        <td><15</td>
+        <td>>15</td>
+        <td>Total</td>
+        <td>Cat I</td>
+        <td>Cat II</td>
+        <td>Cat III</td>
+        <td>Total(CII+CIII)</td>
+        <td>Total</td>
+        <td>Total</td>
+        <td>D0, D7, D21</td>
+        <td>No.</td>
+        <td>PR</td>
+        <td>D0, D3, D7</td>
+        <td>TCV</td>
+        <td>HRIG</td>
+        <td>ERIG</td>
+        <td>Dog</td>
+        <td>Cat</td>
+        <td>Others</td>
+        <td>Total</td>
+        <td>Total # of registered Cat 2 and Cat 3 of the previous quarter</td>
+        <td>Completed (previous)</td>
+        <td>%TCV</td>
+        <td>%RIG</td>
       </tr>
     </thead>
     <tbody>
-      <tr class="text-right" *ngFor="let item of stats; let last = last">
-        <td class="text-left">{{ item.name }}</td>
-        <td (click)="showNameList('female', item.code)" [class]="item.female > 0 ? 'text-blue-500 hover:cursor-pointer' : 'pointer-events-none'">{{ item.female }} {{ countTotal('female', item.female) }}</td>
-        <td (click)="showNameList('male', item.code)" [class]="item.male > 0 ? 'text-blue-500 hover:cursor-pointer' : 'pointer-events-none'">{{ item.male }} {{ countTotal('male', item.male) }}</td>
-        <td (click)="showNameList('less_than_15', item.code)" [class]="item.less_than_15 > 0 ? 'text-blue-500 hover:cursor-pointer' : 'pointer-events-none'">{{ item.less_than_15 }} {{ countTotal('less_than_15', item.less_than_15) }}</td>
-        <td (click)="showNameList('greater_than_15', item.code)" [class]="item.greater_than_15 > 0 ? 'text-blue-500 hover:cursor-pointer' : 'pointer-events-none'">{{ item.greater_than_15 }} {{ countTotal('greater_than_15', item.greater_than_15) }}</td>
-        <td (click)="showNameList('day0', item.code)" [class]="item.day0 > 0 ? 'text-blue-500 hover:cursor-pointer' : 'pointer-events-none'">{{ item.day0 }} {{ countTotal('day0', item.day0) }}</td>
-        <td (click)="showNameList('day0_day7', item.code)" [class]="item.day0_day7 > 0 ? 'text-blue-500 hover:cursor-pointer' : 'pointer-events-none'">{{ item.day0_day7 }} {{ countTotal('day0_day7', item.day0_day7) }}</td>
-        <td (click)="showNameList('day0_day7_day21', item.code)" [class]="item.day0_day7_day21 > 0 ? 'text-blue-500 hover:cursor-pointer' : 'pointer-events-none'">{{ item.day0_day7_day21 }} {{ countTotal('day0_day7_day21', item.day0_day7_day21, last) }}</td>
+      <tr *ngFor="let item of stats|keyvalue">
+        <td class="text-left font-bold">{{ item.key }}</td>
+        <ng-container class="text-center" *ngFor="let data of item.value">
+          <td>{{ data.population }}</td>
+          <td>{{ data.male }}</td>
+          <td>{{ data.female }}</td>
+          <td>{{ data.male_female_total }}</td>
+          <td>{{ data.less_than_15 }}</td>
+          <td>{{ data.greater_than_15 }}</td>
+          <td>{{ data.less_than_and_greater_than_15 }}</td>
+          <td>{{ data.category1 }}</td>
+          <td>{{ data.category2 }}</td>
+          <td>{{ data.category3 }}</td>
+          <td>{{ data.total_cat2_and_cat3 }}</td>
+          <td>{{ data.total_cat1_cat2_cat3 }}</td>
+          <td>{{ data.prep_total }}</td>
+          <td>{{ data.prep_completed }}</td>
+          <td>{{ data.tandok }}</td>
+          <td></td>
+          <td></td>
+          <td>{{ data.pep_completed }}</td>
+          <td>{{ data.tcv }}</td>
+          <td>{{ data.HRIG }}</td>
+          <td>{{ data.ERIG }}</td>
+          <td>{{ data.dog }}</td>
+          <td>{{ data.cat }}</td>
+          <td>{{ data.others }}</td>
+          <td>{{ data.total_biting_animal }}</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </ng-container>
       </tr>
-      <tr class="text-center font-semibold">
-        <td>Total</td>
-        <td colspan="2">{{ +total?.female + +total?.male }}</td>
-        <td colspan="2">{{ +total?.less_than_15 + +total?.greater_than_15 }}</td>
-        <td colspan="3">{{ +total?.day0 + +total?.day0_day7 + +total?.day0_day7_day21 }}</td>
-      </tr>
-
-      <tr *ngIf="stats.length === 0">
-        <td colspan="8" class="text-center italic font-semibold py-5">No query result</td>
-      </tr>
+      <td class="font-bold text-center bg-gray-400" colspan="30">OTHERS</td>
+      <tr *ngFor="let item_others of stats_others|keyvalue">
+        <td class="text-left font-bold">{{ item_others.key }}</td>
+        <ng-container class="text-center" *ngFor="let data of item_others.value">
+          <td>{{ data.population }}</td>
+          <td>{{ data.male }}</td>
+          <td>{{ data.female }}</td>
+          <td>{{ data.male_female_total }}</td>
+          <td>{{ data.less_than_15 }}</td>
+          <td>{{ data.greater_than_15 }}</td>
+          <td>{{ data.less_than_and_greater_than_15 }}</td>
+          <td>{{ data.category1 }}</td>
+          <td>{{ data.category2 }}</td>
+          <td>{{ data.category3 }}</td>
+          <td>{{ data.total_cat2_and_cat3 }}</td>
+          <td>{{ data.total_cat1_cat2_cat3 }}</td>
+          <td>{{ data.prep_total }}</td>
+          <td>{{ data.prep_completed }}</td>
+          <td>{{ data.tandok }}</td>
+          <td></td>
+          <td></td>
+          <td>{{ data.pep_completed }}</td>
+          <td>{{ data.tcv }}</td>
+          <td>{{ data.HRIG }}</td>
+          <td>{{ data.ERIG }}</td>
+          <td>{{ data.dog }}</td>
+          <td>{{ data.cat }}</td>
+          <td>{{ data.others }}</td>
+          <td>{{ data.total_biting_animal }}</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </ng-container>
     </tbody>
   </table>
 </div>

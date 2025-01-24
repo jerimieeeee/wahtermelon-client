@@ -4,9 +4,10 @@ import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-management',
-  templateUrl: './management.component.html',
-  styleUrls: ['./management.component.scss']
+    selector: 'app-management',
+    templateUrl: './management.component.html',
+    styleUrls: ['./management.component.scss'],
+    standalone: false
 })
 export class ManagementComponent implements OnInit, OnChanges {
   @Input() toggle_content;

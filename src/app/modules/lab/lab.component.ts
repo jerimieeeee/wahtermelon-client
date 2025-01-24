@@ -6,9 +6,10 @@ import { NameHelperService } from 'app/shared/services/name-helper.service';
 import { PatientInfoComponent } from '../patient-info/patient-info.component';
 import { eventSubscriber } from './emmitter.interface';
 @Component({
-  selector: 'app-lab',
-  templateUrl: './lab.component.html',
-  styleUrls: ['./lab.component.scss']
+    selector: 'app-lab',
+    templateUrl: './lab.component.html',
+    styleUrls: ['./lab.component.scss'],
+    standalone: false
 })
 export class LabComponent implements OnInit, OnDestroy {
   faFlaskVial = faFlaskVial;

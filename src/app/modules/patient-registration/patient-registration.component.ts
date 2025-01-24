@@ -9,10 +9,11 @@ import { forkJoin } from 'rxjs';
 import { formatDate } from '@angular/common';
 
 @Component({
-  selector: 'app-patient-registration',
-  templateUrl: './patient-registration.component.html',
-  styleUrls: ['./patient-registration.component.scss'],
-  animations: [openCloseTrigger]
+    selector: 'app-patient-registration',
+    templateUrl: './patient-registration.component.html',
+    styleUrls: ['./patient-registration.component.scss'],
+    animations: [openCloseTrigger],
+    standalone: false
 })
 export class PatientRegistrationComponent implements OnInit {
   faSpinner = faSpinner;

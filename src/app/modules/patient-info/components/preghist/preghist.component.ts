@@ -3,9 +3,10 @@ import { faChevronDown, faChevronUp, faMinus, faPlusCircle } from '@fortawesome/
 import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
-  selector: 'app-preghist',
-  templateUrl: './preghist.component.html',
-  styleUrls: ['./preghist.component.scss']
+    selector: 'app-preghist',
+    templateUrl: './preghist.component.html',
+    styleUrls: ['./preghist.component.scss'],
+    standalone: false
 })
 export class PreghistComponent {
   @Output() toggleAccordion = new EventEmitter<any>();

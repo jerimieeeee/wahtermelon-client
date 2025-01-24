@@ -1,13 +1,14 @@
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { faCircleNotch, faFileExcel, faFilePdf } from '@fortawesome/free-solid-svg-icons';
 import { options } from 'app/modules/patient-registration/patient-registration.module';
-import { ExportAsConfig, ExportAsService } from 'ngx-export-as-17';
+import { ExportAsConfig, ExportAsService } from 'ngx-export-as';
 import moment from 'moment';
 
 @Component({
-  selector: 'app-daily-service',
-  templateUrl: './daily-service.component.html',
-  styleUrls: ['./daily-service.component.scss']
+    selector: 'app-daily-service',
+    templateUrl: './daily-service.component.html',
+    styleUrls: ['./daily-service.component.scss'],
+    standalone: false
 })
 
 export class DailyServiceComponent implements OnChanges {

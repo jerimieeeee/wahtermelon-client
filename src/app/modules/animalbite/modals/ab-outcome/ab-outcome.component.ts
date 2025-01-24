@@ -9,9 +9,10 @@ import { abForm } from './abForm';
 import { forkJoin } from 'rxjs';
 
 @Component({
-  selector: 'app-ab-outcome',
-  templateUrl: './ab-outcome.component.html',
-  styleUrls: ['./ab-outcome.component.scss']
+    selector: 'app-ab-outcome',
+    templateUrl: './ab-outcome.component.html',
+    styleUrls: ['./ab-outcome.component.scss'],
+    standalone: false
 })
 export class AbOutcomeComponent implements OnInit{
   @Output() getPatientTbHistory = new EventEmitter<any>();

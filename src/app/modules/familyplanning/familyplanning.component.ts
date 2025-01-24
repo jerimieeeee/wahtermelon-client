@@ -4,9 +4,10 @@ import { ActivatedRoute } from '@angular/router';
 import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
-  selector: 'app-familyplanning',
-  templateUrl: './familyplanning.component.html',
-  styleUrls: ['./familyplanning.component.scss']
+    selector: 'app-familyplanning',
+    templateUrl: './familyplanning.component.html',
+    styleUrls: ['./familyplanning.component.scss'],
+    standalone: false
 })
 export class FamilyplanningComponent implements OnInit {
   faCalendar = faCalendar;

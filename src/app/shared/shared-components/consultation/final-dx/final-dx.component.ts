@@ -10,11 +10,10 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-final-dx',
-  standalone: true,
-  imports: [CommonModule, FontAwesomeModule, NgSelectModule, FormsModule, ReactiveFormsModule],
-  templateUrl: './final-dx.component.html',
-  styleUrls: ['./final-dx.component.scss']
+    selector: 'app-final-dx',
+    imports: [CommonModule, FontAwesomeModule, NgSelectModule, FormsModule, ReactiveFormsModule],
+    templateUrl: './final-dx.component.html',
+    styleUrls: ['./final-dx.component.scss']
 })
 export class FinalDxComponent implements OnChanges {
   @Output() loadConsult = new EventEmitter<any>();

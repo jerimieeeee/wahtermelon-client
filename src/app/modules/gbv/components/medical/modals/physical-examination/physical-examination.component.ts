@@ -2,9 +2,10 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
-  selector: 'app-physical-examination',
-  templateUrl: './physical-examination.component.html',
-  styleUrls: ['./physical-examination.component.scss']
+    selector: 'app-physical-examination',
+    templateUrl: './physical-examination.component.html',
+    styleUrls: ['./physical-examination.component.scss'],
+    standalone: false
 })
 export class PhysicalExaminationComponent implements OnInit {
   @Output() toggleModal = new EventEmitter<any>();

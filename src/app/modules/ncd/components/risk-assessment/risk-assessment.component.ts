@@ -9,9 +9,10 @@ import { family_history } from '../../data-lib/libraries';
 import { riskAssessForm } from './forms';
 
 @Component({
-  selector: 'app-risk-assessment',
-  templateUrl: './risk-assessment.component.html',
-  styleUrls: ['./risk-assessment.component.scss']
+    selector: 'app-risk-assessment',
+    templateUrl: './risk-assessment.component.html',
+    styleUrls: ['./risk-assessment.component.scss'],
+    standalone: false
 })
 export class RiskAssessmentComponent implements OnInit, OnChanges {
   @Output() loadRisk = new EventEmitter<any>();

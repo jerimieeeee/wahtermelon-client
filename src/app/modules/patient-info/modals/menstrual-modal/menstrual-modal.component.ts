@@ -5,9 +5,10 @@ import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-menstrual-modal',
-  templateUrl: './menstrual-modal.component.html',
-  styleUrls: ['./menstrual-modal.component.scss']
+    selector: 'app-menstrual-modal',
+    templateUrl: './menstrual-modal.component.html',
+    styleUrls: ['./menstrual-modal.component.scss'],
+    standalone: false
 })
 export class MenstrualModalComponent implements OnInit, OnChanges {
   @Output() loadData = new EventEmitter<any>();

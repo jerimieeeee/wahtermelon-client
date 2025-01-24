@@ -3,9 +3,10 @@ import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
-  selector: 'app-view-file',
-  templateUrl: './view-file.component.html',
-  styleUrls: ['./view-file.component.scss']
+    selector: 'app-view-file',
+    templateUrl: './view-file.component.html',
+    styleUrls: ['./view-file.component.scss'],
+    standalone: false
 })
 export class ViewFileComponent implements OnInit {
   @Output() toggleModal = new EventEmitter<any>();

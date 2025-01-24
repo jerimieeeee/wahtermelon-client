@@ -5,9 +5,10 @@ import { faArrowLeft, faEye, faEyeSlash, faSpinner } from '@fortawesome/free-sol
 import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
-  selector: 'app-reset-password',
-  templateUrl: './reset-password.component.html',
-  styleUrls: ['./reset-password.component.scss']
+    selector: 'app-reset-password',
+    templateUrl: './reset-password.component.html',
+    styleUrls: ['./reset-password.component.scss'],
+    standalone: false
 })
 export class ResetPasswordComponent implements OnInit {
   faEyeSlash = faEyeSlash;

@@ -9,9 +9,10 @@ import { formatDate } from '@angular/common';
 import { forkJoin } from 'rxjs';
 
 @Component({
-  selector: 'app-ab-postexposure',
-  templateUrl: './ab-postexposure.component.html',
-  styleUrls: ['./ab-postexposure.component.scss']
+    selector: 'app-ab-postexposure',
+    templateUrl: './ab-postexposure.component.html',
+    styleUrls: ['./ab-postexposure.component.scss'],
+    standalone: false
 })
 export class AbPostexposureComponent implements OnInit, OnChanges{
   @Output() updateSelectedAb = new EventEmitter<any>();

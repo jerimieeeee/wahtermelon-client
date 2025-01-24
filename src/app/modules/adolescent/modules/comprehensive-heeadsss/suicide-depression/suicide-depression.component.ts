@@ -5,9 +5,10 @@ import { HttpService } from 'app/shared/services/http.service';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-suicide-depression',
-  templateUrl: './suicide-depression.component.html',
-  styleUrl: './suicide-depression.component.scss'
+    selector: 'app-suicide-depression',
+    templateUrl: './suicide-depression.component.html',
+    styleUrl: './suicide-depression.component.scss',
+    standalone: false
 })
 export class SuicideDepressionComponent implements OnInit {
   faCalendarDay = faCalendarDay;

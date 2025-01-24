@@ -4,9 +4,10 @@ import { faAnglesLeft, faAnglesRight, faChevronLeft, faChevronRight, faSearch, f
 import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
-  selector: 'app-drugs',
-  templateUrl: './drugs.component.html',
-  styleUrls: ['./drugs.component.scss']
+    selector: 'app-drugs',
+    templateUrl: './drugs.component.html',
+    styleUrls: ['./drugs.component.scss'],
+    standalone: false
 })
 export class DrugsComponent implements OnInit {
   faAnglesLeft = faAnglesLeft;

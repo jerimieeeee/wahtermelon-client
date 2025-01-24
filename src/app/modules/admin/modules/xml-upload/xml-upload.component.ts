@@ -4,9 +4,10 @@ import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-xml-upload',
-  templateUrl: './xml-upload.component.html',
-  styleUrls: ['./xml-upload.component.scss']
+    selector: 'app-xml-upload',
+    templateUrl: './xml-upload.component.html',
+    styleUrls: ['./xml-upload.component.scss'],
+    standalone: false
 })
 export class XmlUploadComponent {
   faCircleNotch = faCircleNotch;

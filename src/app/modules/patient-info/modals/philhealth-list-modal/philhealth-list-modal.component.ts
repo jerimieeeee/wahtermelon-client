@@ -3,9 +3,10 @@ import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
-  selector: 'app-philhealth-list-modal',
-  templateUrl: './philhealth-list-modal.component.html',
-  styleUrls: ['./philhealth-list-modal.component.scss']
+    selector: 'app-philhealth-list-modal',
+    templateUrl: './philhealth-list-modal.component.html',
+    styleUrls: ['./philhealth-list-modal.component.scss'],
+    standalone: false
 })
 export class PhilhealthListModalComponent implements OnInit {
   @Output() toggleModal = new EventEmitter<any>();

@@ -5,9 +5,10 @@ import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-prescription',
-  templateUrl: './prescription.component.html',
-  styleUrls: ['./prescription.component.scss']
+    selector: 'app-prescription',
+    templateUrl: './prescription.component.html',
+    styleUrls: ['./prescription.component.scss'],
+    standalone: false
 })
 export class PrescriptionComponent implements OnInit, OnChanges {
   @Input() toggle_content;

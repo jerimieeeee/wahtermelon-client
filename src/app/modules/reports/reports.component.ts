@@ -5,9 +5,10 @@ import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
-  selector: 'app-reports',
-  templateUrl: './reports.component.html',
-  styleUrls: ['./reports.component.scss']
+    selector: 'app-reports',
+    templateUrl: './reports.component.html',
+    styleUrls: ['./reports.component.scss'],
+    standalone: false
 })
 export class ReportsComponent implements OnInit {
   faCircleNotch = faCircleNotch;
@@ -20,7 +21,8 @@ export class ReportsComponent implements OnInit {
     barangay_code: new FormControl<[]| null>([]),
     municipality_code: new FormControl<string| null>(''),
     month: new FormControl<string| null>(''),
-    year: new FormControl<string| null>('')
+    year: new FormControl<string| null>(''),
+    quarter: new FormControl<string| null>('')
   });
 
   current_date = formatDate(new Date, 'yyyy', 'en', 'Asia/Manila');
@@ -46,8 +48,8 @@ export class ReportsComponent implements OnInit {
 
   ab_stats = [
     // { id: 'ab-report', desc: 'Animal Bite', url: 'reports-2018/animal-bite/patient-registered'},
-    { id: 'ab-post', desc: 'Post-Exposure Prophylaxis Cohort', url: 'reports-2018/animal-bite/post-exposure-cohort'},
-    { id: 'ab-pre', desc: 'Pre-Exposure Prophylaxis', url: 'reports-2018/animal-bite/pre-exposure'}
+    // { id: 'ab-post', desc: 'Post-Exposure Prophylaxis Cohort', url: 'reports-2018/animal-bite/post-exposure-cohort'},
+    { id: 'ab-pre', desc: 'Rabies and Bite Victim Report Form', url: 'reports-2018/animal-bite/pre-exposure'}
   ];
 
   gbv_stats = [
@@ -117,7 +119,15 @@ export class ReportsComponent implements OnInit {
     },
   ];
 
-  fhsis_monthly_arr = ['fhsis2018-fp', 'patient-registered']
+  quarters = [
+    { desc: '1st Quarter', value: 1 },
+    { desc: '2nd Quarter', value: 2 },
+    { desc: '3rd Quarter', value: 3 },
+    { desc: '4th Quarter', value: 4 }
+  ];
+
+  fhsis_monthly_arr = ['fhsis2018-fp', 'patient-registered'];
+  quarterly_arr = ['ab-pre'];
   report_params: any;
   years: any = [];
   selectedBrgy!: [];
@@ -139,6 +149,7 @@ export class ReportsComponent implements OnInit {
     let params = {
       month: this.reportForm.value.month ?? null,
       year: this.reportForm.value.year ?? null,
+      quarter: this.reportForm.value.quarter ?? null,
       start_date: this.reportForm.value.start_date ?? null,
       end_date: this.reportForm.value.end_date ?? null,
       category: this.reportForm.value.report_class
@@ -246,6 +257,13 @@ export class ReportsComponent implements OnInit {
   changeDateOptions(): void {
     this.submit_flag = false;
     this.report_data= '';
+
+    this.reportForm.controls.start_date.disable();
+    this.reportForm.controls.end_date.disable();
+    this.reportForm.controls.month.disable();
+    this.reportForm.controls.year.disable();
+    this.reportForm.controls.quarter.disable();
+
     if(this.fhsis_monthly_arr.find(e => e === this.reportForm.value.report_type.id)) {
       let month = formatDate(this.current_date, 'm', 'en', 'Asia/Manila');
       let year = formatDate(this.current_date, 'yyyy', 'en', 'Asia/Manila');
@@ -256,9 +274,18 @@ export class ReportsComponent implements OnInit {
         month: month,
         year: year
       });
-      this.reportForm.controls.start_date.disable();
-      this.reportForm.controls.end_date.disable();
-    } else if(this.reportForm.value.report_type){
+    }
+
+    if(this.quarterly_arr.find(e => e === this.reportForm.value.report_type.id)) {
+      console.log('quarterly')
+      this.reportForm.controls.quarter.enable();
+      this.reportForm.controls.year.enable();
+      console.log(this.reportForm)
+    }
+
+    if((!this.fhsis_monthly_arr.find(e => e === this.reportForm.value.report_type.id) &&
+        !this.quarterly_arr.find(e => e === this.reportForm.value.report_type.id)) &&
+        this.reportForm.value.report_type){
       if(this.reportForm.value.report_type.id === 'feedback') {
         this.reportForm.controls.report_class.disable();
       } else {
@@ -267,27 +294,18 @@ export class ReportsComponent implements OnInit {
 
       this.reportForm.controls.start_date.enable();
       this.reportForm.controls.end_date.enable();
-      this.reportForm.controls.month.disable();
-      this.reportForm.controls.year.disable();
-    } else {
+    }
+
+    //
+    /* if(!this.fhsis_monthly_arr.find(e => e === this.reportForm.value.report_type.id) &&
+        !this.quarterly_arr.find(e => e === this.reportForm.value.report_type.id) &&
+        !this.reportForm.value.report_type) {
+          console.log('no report type')
       this.reportForm.controls.start_date.disable();
       this.reportForm.controls.end_date.disable();
       this.reportForm.controls.month.disable();
       this.reportForm.controls.year.disable();
-    }
-  }
-
-  testFunction(){
-    this.reportForm = this.formBuilder.nonNullable.group({
-      report_type: ['', Validators.required],
-      report_class: ['', Validators.required],
-      barangay_code: [''],
-      municipality_code: [''],
-      start_date: ['', Validators.required],
-      end_date: ['', Validators.required],
-      month: [null, Validators.required],
-      year: [null, Validators.required]
-    });
+    } */
   }
 
   constructor(
@@ -310,12 +328,13 @@ export class ReportsComponent implements OnInit {
       report_class: ['', Validators.required],
       barangay_code: [''],
       municipality_code: [this.userInfo.facility.municipality_code],
+      quarter: [null, Validators.required],
       start_date: ['', Validators.required],
       end_date: ['', Validators.required],
       month: [null, Validators.required],
       year: [null, Validators.required]
     });
-    console.log(this.userInfo, 'eto')
+    // console.log(this.userInfo, 'eto')
 
     this.changeDateOptions();
   }

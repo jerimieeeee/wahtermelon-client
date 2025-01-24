@@ -5,11 +5,10 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-open-consult',
-  standalone: true,
-  imports: [CommonModule],
-  templateUrl: './open-consult.component.html',
-  styleUrls: ['./open-consult.component.scss']
+    selector: 'app-open-consult',
+    imports: [CommonModule],
+    templateUrl: './open-consult.component.html',
+    styleUrls: ['./open-consult.component.scss']
 })
 export class OpenConsultComponent {
   @Output() toggleModal = new EventEmitter<any>();

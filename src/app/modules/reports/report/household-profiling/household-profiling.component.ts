@@ -1,11 +1,12 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import { faFileExcel, faFilePdf } from '@fortawesome/free-regular-svg-icons';
-import { ExportAsConfig, ExportAsService } from 'ngx-export-as-17';
+import { ExportAsConfig, ExportAsService } from 'ngx-export-as';
 
 @Component({
-  selector: 'app-household-profiling',
-  templateUrl: './household-profiling.component.html',
-  styleUrls: ['./household-profiling.component.scss']
+    selector: 'app-household-profiling',
+    templateUrl: './household-profiling.component.html',
+    styleUrls: ['./household-profiling.component.scss'],
+    standalone: false
 })
 export class HouseholdProfilingComponent implements OnChanges{
   @Input() report_data;

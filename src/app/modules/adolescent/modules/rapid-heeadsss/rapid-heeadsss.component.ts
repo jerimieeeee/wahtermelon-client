@@ -5,9 +5,10 @@ import { HttpService } from 'app/shared/services/http.service';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-rapid-heeadsss',
-  templateUrl: './rapid-heeadsss.component.html',
-  styleUrl: './rapid-heeadsss.component.scss'
+    selector: 'app-rapid-heeadsss',
+    templateUrl: './rapid-heeadsss.component.html',
+    styleUrl: './rapid-heeadsss.component.scss',
+    standalone: false
 })
 export class RapidHeeadsssComponent implements OnInit {
 

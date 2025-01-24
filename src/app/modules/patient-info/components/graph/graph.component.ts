@@ -3,9 +3,10 @@ import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
 import { BmiChart, ChartOptions, WeightChart } from './chart-option';
 
 @Component({
-  selector: 'app-graph',
-  templateUrl: './graph.component.html',
-  styleUrls: ['./graph.component.scss']
+    selector: 'app-graph',
+    templateUrl: './graph.component.html',
+    styleUrls: ['./graph.component.scss'],
+    standalone: false
 })
 export class GraphComponent implements OnChanges {
   @Input() patient_vitals;

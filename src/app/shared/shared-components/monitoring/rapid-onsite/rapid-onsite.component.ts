@@ -5,11 +5,10 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { rapidForm } from './rapidForm';
 
 @Component({
-  standalone: true,
-  imports: [CommonModule, FontAwesomeModule, ReactiveFormsModule],
-  selector: 'app-rapid-onsite',
-  templateUrl: './rapid-onsite.component.html',
-  styleUrls: ['./rapid-onsite.component.scss']
+    imports: [CommonModule, FontAwesomeModule, ReactiveFormsModule],
+    selector: 'app-rapid-onsite',
+    templateUrl: './rapid-onsite.component.html',
+    styleUrls: ['./rapid-onsite.component.scss']
 })
 export class RapidOnsiteComponent implements OnInit{
 

@@ -4,9 +4,10 @@ import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-risk-stratification',
-  templateUrl: './risk-stratification.component.html',
-  styleUrls: ['./risk-stratification.component.scss']
+    selector: 'app-risk-stratification',
+    templateUrl: './risk-stratification.component.html',
+    styleUrls: ['./risk-stratification.component.scss'],
+    standalone: false
 })
 export class RiskStratificationComponent implements OnInit {
   @Input() patient_id;

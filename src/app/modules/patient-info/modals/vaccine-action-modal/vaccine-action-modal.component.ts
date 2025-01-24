@@ -6,20 +6,21 @@ import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-vaccine-action-modal',
-  templateUrl: './vaccine-action-modal.component.html',
-  styleUrls: ['./vaccine-action-modal.component.scss'],
-  animations: [
-    trigger('openCloseTrigger', [
-      transition(':enter', [
-        style({width: 0, opacity: 0}),
-        animate('200ms', style({ opacity: '100%'})),
-      ]),
-      transition(':leave', [
-        animate('100ms', style({ opacity: 0 }))
-      ])
-    ]),
-  ]
+    selector: 'app-vaccine-action-modal',
+    templateUrl: './vaccine-action-modal.component.html',
+    styleUrls: ['./vaccine-action-modal.component.scss'],
+    animations: [
+        trigger('openCloseTrigger', [
+            transition(':enter', [
+                style({ width: 0, opacity: 0 }),
+                animate('200ms', style({ opacity: '100%' })),
+            ]),
+            transition(':leave', [
+                animate('100ms', style({ opacity: 0 }))
+            ])
+        ]),
+    ],
+    standalone: false
 })
 export class VaccineActionModalComponent implements OnInit {
   @Output() toggleModal = new EventEmitter<any>();
