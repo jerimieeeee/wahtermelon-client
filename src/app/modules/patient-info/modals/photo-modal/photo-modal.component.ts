@@ -81,7 +81,7 @@ export class PhotoModalComponent implements OnDestroy, OnInit {
   }
 
   closeModal(){
-    this.toggleModal.emit('vaccine-moodal');
+    this.toggleModal.emit('photo');
   }
 
   constructor(
