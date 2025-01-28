@@ -151,7 +151,9 @@ export class AbPreComponent implements OnChanges {
         });
       });
       // Update the selected stats with the accumulated sum
-      this.sum_total.code = value[0].barangay_code
+      if ($variable === 'stats_others' || $variable === 'stats') {
+        this.sum_total.code = ($variable === 'stats' && !this.reportFlag) ? value[0].barangay_code : value[0].municipality_code;
+      }
       selectedStats[key] = [this.sum_total];
 
       this.initializeSumTotal();
