@@ -45,7 +45,7 @@ export class KonsultaMasterlistComponent implements OnInit {
   search_item: string;
   search_pin: string;
   search_year: string;
-  tranche: string;
+  tranche: string | null;
 
   konsulta_list: any = [];
   years: any = [];
@@ -98,14 +98,15 @@ export class KonsultaMasterlistComponent implements OnInit {
     if (this.search_pin) params['params']['filter[philhealth_id]'] = this.search_pin;
     if (this.tranche !== 'null') params['params']['tranche'] = this.tranche;
     if (this.selected_brgy) params['params']['barangay_code'] = this.selected_brgy;
-    if(this.start_date) params['params']['start_date'] = this.start_date;
-    if(this.end_date) params['params']['end_date'] = this.end_date;
-    params['per_page'] = 300;
+    if (this.start_date) params['params']['start_date'] = this.start_date;
+    if (this.end_date) params['params']['end_date'] = this.end_date;
+
+    params['params']['per_page'] = 500;
 
     this.allListArray = [];
 
     const fetchPage = (page: number) => {
-      params['page'] = page;
+      params['params']['page'] = page;
 
       this.http.get('konsulta/registration-lists', params).subscribe({
         next: (data: any) => {
