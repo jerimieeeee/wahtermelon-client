@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output, OnChanges } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { faChevronCircleDown, faChevronCircleUp, faSave, faSpinner, faChevronUp, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
@@ -30,6 +30,8 @@ export class AssessmentSummaryComponent implements OnInit {
 
   selected: any;
 
+  physicians: any;
+
   // reloadData(){
   //   let params = {
   //     patient_id: this.patient_id
@@ -45,8 +47,41 @@ export class AssessmentSummaryComponent implements OnInit {
   //   });
   // }
 
+  visitForm: FormGroup = new FormGroup({
+      patient_id: new FormControl<string| null>(''),
+      // assessment_date: new FormControl<string| null>(''),
+      // client_type: new FormControl<string| null>(''),
+      // lib_asrh_client_type_code: new FormControl<string| null>(''),
+      // other_client_type: new FormControl<string| null>(''),
+      // refused_flag: new FormControl<boolean>(false),
+      refer_to_user_id: new FormControl<string| null>(''),
+      // status: new FormControl<string| null>(''),
+      done_flag: new FormControl<boolean>(false),
+      remarkss: new FormControl<string| null>('')
+    });
+
+    createRapid(){
+      this.is_saving = true;
+
+        this.http.update('asrh/rapid/', this.selected_asrh_consult.id, this.visitForm.value).subscribe({
+          next: (data : any) => {
+            this.is_saving = false;
+            this.toastr.success('Rapid Assessment Details was Updated Successfuly')
+
+              this.updateSelectedASRH.emit(data);
+              console.log(data, 'rapid details')
+
+            // console.log(this.selected_asrh_consult, 'checker current selected')
+          },
+          error: err => console.log(err),
+          complete: () => console.log('success')
+        })
+
+    }
+
   selectVisit(){
     this.selected = this.selected_asrh_consult;
+    this.validateForm();
   }
 
   parseReason(selected_asrh_consult) {
@@ -82,15 +117,76 @@ export class AssessmentSummaryComponent implements OnInit {
 
   }
 
+  loadUsers(){
+    this.http.get('users', {params:{per_page: 'all', aja_flag: 1}}).subscribe({
+      next: (data: any) => {
+        // console.log(data.data)
+        this.physicians = data.data
+        console.log(this.physicians, 'users')
+
+      },
+      error: err => console.log(err)
+    })
+  }
+
+  patchData(){
+
+    if(this.selected_asrh_consult) {
+      this.visitForm.patchValue({
+        // assessment_date: this.selected_asrh_consult?.assessment_date,
+        // lib_asrh_client_type_code: this.selected_asrh_consult?.lib_asrh_client_type_code,
+        // client_type: this.selected_asrh_consult?.client_type,
+        // other_client_type: this.selected_asrh_consult?.other_client_type,
+        // refused_flag: this.selected_asrh_consult?.refused_flag
+        refer_to_user_id: this.selected_asrh_consult?.refer_to_user_id,
+        // status: this.selected_asrh_consult?.status,
+        done_flag: this.selected_asrh_consult?.refused_flag,
+        remarks: this.selected_asrh_consult?.remarks
+      });
+      console.log(this.selected_asrh_consult, 'patch data working selected asrh')
+      console.log('patch data working')
+      // this.loadSelected();
+      // this.show_form = true;
+    }
+  }
+
+  validateForm(){
+      this.visitForm = this.formBuilder.group({
+        // id: [''],
+        patient_id: [this.patient_id, [Validators.required, Validators.minLength(1)]],
+        // assessment_date: ['', [Validators.required, Validators.minLength(1)]],
+        // lib_asrh_client_type_code: [{ value: '', disabled: true }, [Validators.required, Validators.minLength(1)]],
+        // client_type: ['', [Validators.required, Validators.minLength(1)]],
+        // other_client_type: [{ value: '', disabled: true }, [Validators.required]],
+        // refused_flag: ['', [Validators.required, Validators.minLength(1)]],
+        refer_to_user_id: ['', [Validators.required]],
+        // status: ['', [Validators.required]],
+        done_flag: ['', [Validators.required, Validators.minLength(1)]],
+        remarks: ['', [Validators.required]],
+
+
+
+      });
+
+
+
+    //  this.disableForm();
+    //  this.disableForm2();
+    //  this.disableForm3();
+     this.patchData();
+    //  this.show_form = true;
+    }
+
   constructor(
       private http: HttpService,
       private formBuilder: FormBuilder,
+      private toastr: ToastrService,
       // private router: Router
     ) { }
 
   ngOnInit(): void {
     // this.loadASRH.emit();
-
+  this.loadUsers();
   this.selectVisit();
     console.log(this.selected_asrh_consult, 'check mo selected rapid')
   }

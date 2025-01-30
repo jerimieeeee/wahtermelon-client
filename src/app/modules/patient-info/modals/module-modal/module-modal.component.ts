@@ -117,7 +117,7 @@ export class ModuleModalComponent implements OnInit {
       this.list_modules.General.modules['fp'] = this.fp;
     }
 
-    if(this.patient_age.type === 'year' && this.patient_age.age >= 10 && this.patient_age.age <=19) {
+    if(this.patient_age.type === 'year' && this.patient_age.age >= 10 && this.patient_age.age <26) {
       this.list_modules.Others.modules['at'] = this.at;
     }
 

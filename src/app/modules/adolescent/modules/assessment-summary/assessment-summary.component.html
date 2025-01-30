@@ -4,23 +4,51 @@
    Assessment Summary
   </div>
 
+  <form [formGroup]="visitForm">
+
+  <div class="grid grid-cols-12 justify-between">
+
+  <div class="col-span-6 px-5 pt-5">
+    <div>
+      <label for="refer_to" class="text-sm font-semibold">Referred To</label>
+      <select name="refer_to_user_id" id="refer_to_user_id" class="input" formControlName="refer_to_user_id">
+        <!-- <option [ngValue]="0" selected> </option> -->
+        <option *ngFor="let dr of physicians" [value]="dr.id">{{ dr?.last_name }}, {{ dr?.first_name }} {{ dr?.middle_name }}</option>
+      </select>
+    </div>
+
+  </div>
+
+  <div class="col-span-6 px-5 pt-8">
+    <div class="mt-5 px-5">
+      <input type="checkbox" class="input-checkbox" id="done_flag" formControlName="done_flag" />
+      <label for="done_flag" class="text-sm" >
+        Done with RAPID HEEADSSS.
+      </label>
+    </div>
+  </div>
+
+  </div>
+
+  <div class="mt-10 w-full border-t border-gray-200 py-5">
+
   <div class="mt-1 w-full" *ngFor="let home of selected_asrh_consult?.answers; let i = index" >
 
     <div *ngIf="home.answer === '1'">
-      <div class="text-sm py-4 px-5">
+      <div class="text-sm py-4 px-5 flex justify-between">
         {{home.question.question}}
         <button (click)="home.collapsed = !home.collapsed" class="bg-blue-500 text-white px-2 py-1 rounded">
-          {{home.collapsed ? 'Show' : 'Hide'}} Algorithm
+          {{home.collapsed ? 'Hide' : 'Show'}} Algorithm
         </button>
       </div>
       <div *ngIf="i === 0 ? !home.collapsed : home.collapsed">
-        
+
         <div *ngFor="let algo of home.question.algorithm" class="text-sm py-4 px-5 rounded-t-md pl-5">
           <div class="bg-blue-500 text-sm text-white rounded-t-md py-2 pl-5 font-semibold flex justify-between">
             {{algo.code}}-{{algo.desc}}
             <button (click)="algo.collapsed = !algo.collapsed" class="text-white py-1 rounded ml-2">
               <fa-icon [icon]="algo.collapsed ? faChevronDown : faChevronUp" class="pr-2" size="md"></fa-icon>
-             
+
             </button>
           </div>
           <div *ngIf="!algo.collapsed" class="border-gray-300 border px-5 py-5">
@@ -30,6 +58,26 @@
       </div>
     </div>
   </div>
+
+  <div class="mt-10 w-full border-t border-gray-200 py-5">
+
+  <div class="h-92">
+    <div class="py-3.5 px-5">
+      <textarea rows="13" id="remarks" placeholder="Remarks" class="text-sm placeholder-slate-400 w-full rounded-md border-gray-300" formControlName="remarks"></textarea>
+    </div>
+  </div>
+
+
+  <div class="flex justify-center mt-10">
+    <button class="btn-save" (click)="createRapid(); visitForm.markAsPristine();">
+      <!-- <button class="btn-save"> -->
+      <fa-icon [icon]="faSave" *ngIf="!is_saving" class="mr-2"></fa-icon>
+      <fa-icon [icon]="faSpinner" *ngIf="is_saving" animation="spin" class="mr-2"></fa-icon>
+      {{ selected_asrh_consult?.id ? (is_saving ? 'Updating' : 'Update') : (is_saving ? 'Saving' : 'Save') }}
+    </button>
+  </div>
+
+
 
 </div>
 

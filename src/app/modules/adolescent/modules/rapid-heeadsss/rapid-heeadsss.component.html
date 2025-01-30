@@ -40,11 +40,11 @@
             <input type="input" name="other_client_type" id="other_client_type" class="input" formControlName="other_client_type">
           </div>
 
-          <div class="col-span-6 px-5 pt-5">
+          <!-- <div class="col-span-6 px-5 pt-5">
             <div>
               <label for="refer_to" class="text-sm font-semibold">Referred To</label>
               <select name="refer_to_user_id" id="refer_to_user_id" class="input" formControlName="refer_to_user_id">
-                <!-- <option [ngValue]="0" selected> </option> -->
+
                 <option *ngFor="let dr of physicians" [value]="dr.id">{{ dr?.last_name }}, {{ dr?.first_name }} {{ dr?.middle_name }}</option>
               </select>
             </div>
@@ -55,11 +55,20 @@
             <div>
               <label for="status" class="text-sm font-semibold">Status</label>
               <select name="status" id="status.id" class="input" formControlName="status">
-                <!-- <option [ngValue]="0" selected> </option> -->
+
                 <option *ngFor="let status of statuses" [value]="status.name">{{ status.name | titlecase }}</option>
               </select>
             </div>
 
+          </div> -->
+
+          <div class="col-span-12 col-start-1 grid gap-x-4">
+            <div class="mt-5 px-5">
+              <input type="checkbox" class="input-checkbox" id="refused_flag" formControlName="refused_flag" />
+              <label for="refused_flag" class="text-sm" >
+                The patient refused to answer.
+              </label>
+            </div>
           </div>
 
           <!-- <div class="col-span-6 px-5 pt-5">
@@ -74,8 +83,8 @@
 
       </form>
 
-      <div class="flex justify-center mt-5 mb-10">
-        <button class="btn-save mt-4" [disabled]="is_saving || visitForm.invalid || !visitForm.dirty" (click)="createRapid(); visitForm.markAsPristine();">
+      <div class="flex justify-center mb-10">
+        <button class="btn-save" [disabled]="is_saving || visitForm.invalid || !visitForm.dirty" (click)="createRapid(); visitForm.markAsPristine();">
           <fa-icon [icon]="faSave" *ngIf="!is_saving" class="mr-2"></fa-icon>
           <fa-icon [icon]="faSpinner" *ngIf="is_saving" animation="spin" class="mr-2"></fa-icon>
           {{ selected_asrh_consult?.id ? (is_saving ? 'Updating' : 'Update') : (is_saving ? 'Saving' : 'Save') }}
@@ -105,7 +114,7 @@
             </select>
           </div>
         </div>
-        <div class="flex justify-center mt-5 mb-5"> 
+        <div class="flex justify-center mt-5 mb-5">
           <button class="btn-save mt-4" [disabled]="is_saving2 || !allQuestionsAnswered()" (click)="onSubmit()">
             <fa-icon [icon]="faSave" *ngIf="!is_saving2" class="mr-2"></fa-icon>
             <fa-icon [icon]="faSpinner" *ngIf="is_saving2" animation="spin" class="mr-2"></fa-icon>

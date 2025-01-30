@@ -66,30 +66,41 @@ export class RapidHeeadsssComponent implements OnInit, OnChanges {
     client_type: new FormControl<string| null>(''),
     lib_asrh_client_type_code: new FormControl<string| null>(''),
     other_client_type: new FormControl<string| null>(''),
-    refer_to_user_id: new FormControl<string| null>(''),
-    status: new FormControl<string| null>(''),
+    refused_flag: new FormControl<boolean>(false),
+    // refer_to_user_id: new FormControl<string| null>(''),
+    // status: new FormControl<string| null>(''),
   });
 
   createRapid(){
     this.is_saving = true;
-    this.http.post('asrh/rapid', this.visitForm.value).subscribe({
-      next: (data : any) => {
-        this.is_saving = false;
-        this.toastr.success('Rapid Assessment Details was ' + (this.selected_asrh_consult !== null ? 'updated' : 'saved') + ' successfuly', 'Success')
-        if(this.selected_asrh_consult === null){
-          this.updateSelectedASRH2.emit(data.data.id);
+    if(this.selected_asrh_consult === null){
+      this.http.post('asrh/rapid', this.visitForm.value).subscribe({
+        next: (data : any) => {
+          this.is_saving = false;
+          this.toastr.success('Rapid Assessment Details was saved Successfuly')
 
-        }
-        else{
-          this.updateSelectedASRH.emit(data);
-          console.log(data, 'rapid details')
-        }
+            this.updateSelectedASRH2.emit(data.data.id);
+          // console.log(this.selected_asrh_consult, 'checker current selected')
+        },
+        error: err => console.log(err),
+        complete: () => console.log('success')
+      })
+    } else {
+      this.http.update('asrh/rapid/', this.selected_asrh_consult.id, this.visitForm.value).subscribe({
+        next: (data : any) => {
+          this.is_saving = false;
+          this.toastr.success('Rapid Assessment Details was Updated Successfuly')
 
-        // console.log(this.selected_asrh_consult, 'checker current selected')
-      },
-      error: err => console.log(err),
-      complete: () => console.log('success')
-    })
+            this.updateSelectedASRH.emit(data);
+            console.log(data, 'rapid details')
+
+          // console.log(this.selected_asrh_consult, 'checker current selected')
+        },
+        error: err => console.log(err),
+        complete: () => console.log('success')
+      })
+    }
+
   }
 
   onSubmit(){
@@ -162,8 +173,9 @@ export class RapidHeeadsssComponent implements OnInit, OnChanges {
         lib_asrh_client_type_code: this.selected_asrh_consult?.lib_asrh_client_type_code,
         client_type: this.selected_asrh_consult?.client_type,
         other_client_type: this.selected_asrh_consult?.other_client_type,
-        refer_to_user_id: this.selected_asrh_consult?.refer_to_user_id,
-        status: this.selected_asrh_consult?.status,
+        refused_flag: this.selected_asrh_consult?.refused_flag
+        // refer_to_user_id: this.selected_asrh_consult?.refer_to_user_id,
+        // status: this.selected_asrh_consult?.status,
       });
       console.log(this.selected_asrh_consult, 'patch data working selected asrh')
       console.log('patch data working')
@@ -180,8 +192,9 @@ export class RapidHeeadsssComponent implements OnInit, OnChanges {
       lib_asrh_client_type_code: [{ value: '', disabled: true }, [Validators.required, Validators.minLength(1)]],
       client_type: ['', [Validators.required, Validators.minLength(1)]],
       other_client_type: [{ value: '', disabled: true }, [Validators.required]],
-      refer_to_user_id: ['', [Validators.required]],
-      status: ['', [Validators.required]],
+      refused_flag: ['', [Validators.required, Validators.minLength(1)]],
+      // refer_to_user_id: ['', [Validators.required]],
+      // status: ['', [Validators.required]],
 
 
 
@@ -277,15 +290,15 @@ export class RapidHeeadsssComponent implements OnInit, OnChanges {
   allQuestionsAnswered(): boolean {
     if(this.selected_asrh_consult === null || this.selected_asrh_consult?.answers?.length === 0)
       return this.rapid_questions.every((question: any) => this.rapid_ans[question.id] && this.rapid_ans[question.id] !== '');
-    if(this.selected_asrh_consult?.answers?.length !== 0)  
+    if(this.selected_asrh_consult?.answers?.length !== 0)
       return this.selected_asrh_consult?.answers?.some((item: any) => (this.rapid_ans[item.question.id] || '') !== (item.answer || '')) ?? false;
-    
-    
+
+
   }
 
   // hasChanges(): boolean {
-  
-   
+
+
   // }
 
   constructor(

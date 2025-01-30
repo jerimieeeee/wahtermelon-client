@@ -26,6 +26,10 @@
               {{ patient_info?.birthdate | date: 'MM/dd/yyyy':'Asia/Manila' }} [{{ getAge() }}][{{patient_info?.gender}}]
             </span>
 
+            <span class="block text-xs" *ngIf="this.patient_age?.type === 'year' && this.patient_age?.age >= 10 && this.patient_age?.age < 26">
+             (Adolescent)
+            </span>
+
             <div class="flex mb-0 justify-between">
               <div>
                 <fa-icon (click)="navigateTo('itr')" class="cursor-pointer mx-0 my-0 text-blue-500 mr-2" [icon]="faClipboardUser" size="lg"></fa-icon>
