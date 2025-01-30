@@ -30,6 +30,7 @@ import { ExportAsModule } from 'ngx-export-as';
 import {DentalOhsConsolidatedComponent} from "./report/dental-ohs-consolidated/dental-ohs-consolidated.component";
 import { ConsolidatedComponent } from './report/consolidated/consolidated.component';
 import { HeaderFhsis2018Component } from './components/header-fhsis2018/header-fhsis2018.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -68,7 +69,8 @@ import { HeaderFhsis2018Component } from './components/header-fhsis2018/header-f
     FontAwesomeModule,
     ExportAsModule,
     ConsolidatedComponent,
-    HeaderFhsis2018Component
+    HeaderFhsis2018Component,
+    FooterComponent
   ]
 })
 export class ReportsModule { }

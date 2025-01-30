@@ -1,10 +1,12 @@
+import { CommonModule } from '@angular/common';
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { dateHelper } from 'app/shared/services/date-helper.service';
 
 @Component({
     selector: 'app-header-fhsis2018',
     templateUrl: './header-fhsis2018.component.html',
-    styleUrls: ['./header-fhsis2018.component.scss']
+    styleUrls: ['./header-fhsis2018.component.scss'],
+    imports: [CommonModule]
 })
 export class HeaderFhsis2018Component implements OnChanges {
   @Input() brgys!: any;
@@ -14,6 +16,7 @@ export class HeaderFhsis2018Component implements OnChanges {
   @Input() reportForm!: any;
   @Input() report_data!: any;
   @Input() submit_flag;
+  @Input() paper_width;
 
   brgy_result: any;
   selected_barangay : any;
@@ -35,10 +38,7 @@ export class HeaderFhsis2018Component implements OnChanges {
   ) { }
 
   ngOnChanges(changes: SimpleChanges): void {
+    console.log(this.paper_width)
     this.getLabelValue();
   }
-
-  /* ngOnInit(): void {
-    this.getLabelValue();
-  } */
 }

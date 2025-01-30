@@ -1,8 +1,10 @@
 import { formatDate } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { faFileExcel, faFilePdf } from '@fortawesome/free-regular-svg-icons';
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
+import { ExportAsConfig, ExportAsService } from 'ngx-export-as';
 
 @Component({
     selector: 'app-reports',
@@ -12,7 +14,10 @@ import { HttpService } from 'app/shared/services/http.service';
 })
 export class ReportsComponent implements OnInit {
   faCircleNotch = faCircleNotch;
+  faFilePdf = faFilePdf;
+  faFileExcel = faFileExcel;
 
+  paper_width: string = '320.2mm';
   reportForm: FormGroup = new FormGroup({
     start_date: new FormControl<string| null>(''),
     end_date: new FormControl<string| null>(''),
@@ -26,17 +31,21 @@ export class ReportsComponent implements OnInit {
   });
 
   fhsis2018 = [
-    // { id: 'fhsis2018-consolidated', desc: 'FHSIS Consolidated', url: ''},
-    { id: 'fhsis2018-mc', desc: 'Maternal Care', url: 'reports-2018/maternal-care/m1'},
-    { id: 'fhsis2018-cc', desc: 'Child Care', url: 'reports-2018/child-care/m1'},
-    { id: 'fhsis2018-fp', desc: 'Family Planning', url: 'reports-2018/family-planning/m1'},
-    { id: 'fhsis2018-ncd', desc: 'NCD', url: 'reports-2018/ncd/m1'},
-    { id: 'fhsis2018-tb', desc: 'TB Dots', url: 'reports-2018/tb-dots/m1'},
-    { id: 'fhsis2018-morbidity', desc: 'Morbidity', url: 'reports-2018/morbidity/report'},
-    { id: 'fhsis2018-dental-m1', desc: 'Dental', url: 'reports-2018/dental/m1'},
-    { id: 'fhsis2018-mortality', desc: 'Mortality and Natality', url: 'reports-2018/mortality/m1'},
-    { id: 'fhsis2018-mortality-underlying', desc: 'Mortality Underlying', url: 'reports-2018/mortality/m1-underlying'},
-    { id: 'fhsis2018-environmental', desc: 'Environmental and Sanitation', url: 'reports-2018/household-environmental/m1'},
+    // { id: 'fhsis2018-consolidated',         section: null,desc: 'FHSIS Consolidated', url: ''},
+    { id: 'fhsis2018-fp',                   section: 'A', desc: 'Family Planning', url: 'reports-2018/family-planning/m1'},
+    { id: 'fhsis2018-mc',                   section: 'B', desc: 'Maternal Care', url: 'reports-2018/maternal-care/m1'},
+    { id: 'fhsis2018-cc',                   section: 'C', desc: 'Child Care', url: 'reports-2018/child-care/m1'},
+    { id: 'fhsis2018-dental-m1',            section: 'D', desc: 'Dental', url: 'reports-2018/dental/m1'},
+    // { id: 'fhsis2018-infectious',            section: 'E', desc: 'Infectious Disease Preventionand Control Services', url: 'reports-2018/dental/m1'},
+    { id: 'fhsis2018-tb',                   section: 'E', desc: 'TB Dots', url: 'reports-2018/tb-dots/m1'},
+    { id: 'fhsis2018-ncd',                  section: 'F', desc: 'NCD', url: 'reports-2018/ncd/m1'},
+    { id: 'fhsis2018-environmental',        section: 'G', desc: 'Environmental and Sanitation', url: 'reports-2018/household-environmental/m1'},
+    { id: 'fhsis2018-mortality',            section: 'H', desc: 'Mortality and Natality', url: 'reports-2018/mortality/m1'}, // Section I. Natality
+  ];
+
+  fhsis2018_m2 = [
+    { id: 'fhsis2018-morbidity',            section: 'A.1', desc: 'Morbidity', url: 'reports-2018/morbidity/report'},
+    { id: 'fhsis2018-mortality-underlying', section: '', desc: 'Mortality Underlying', url: 'reports-2018/mortality/m1-underlying'},
   ];
 
   other_stats = [
@@ -143,18 +152,72 @@ export class ReportsComponent implements OnInit {
   reportFlag: string;
   selectedCode!: string;
 
+  exportAsExcel: ExportAsConfig = {
+    type: 'xlsx',
+    elementIdOrContent: 'reportForm',
+    options: {
+      sheet: {
+        '!cols': [{ wch: 15 }], // Adjust column width to avoid auto-formatting
+        '!type': 'string' // Forces all cells to be text
+      }
+    }
+  }
+
+  exportAsPdf: ExportAsConfig = {
+    type: 'pdf',
+    elementIdOrContent: 'reportForm',
+    options: {
+      image: { type: 'jpeg', quality: 1 },
+      margin:  [5, 5, 5, 5],
+      jsPDF: {
+        orientation: 'landscape',
+        format: [215.9, 330.2],
+        precision: 2,
+        pagebreak: { mode: ['avoid-all', 'css'] }
+      },
+      html2canvas: {
+        scale: 3, // Improves rendering quality
+        useCORS: true, // Ensures external styles/images load properly
+        allowTaint: true,
+        scrollX: false,
+        scrollY: false
+      }
+    }
+  }
+
+  exportX(report_name: string) {
+    /* document.querySelectorAll('#reportForm th').forEach((td) => {
+      if ((td as HTMLElement).innerText.match(/^\d{2}-\d{2}$/)) { // Matches values like "10-14"
+        (td as HTMLElement).innerText = "'" + (td as HTMLElement).innerText; // Add apostrophe to force text format
+      }
+    }); */
+
+    this.exportAsService.save(this.exportAsExcel, report_name).subscribe(() => {
+      // save started
+    });
+  }
+
+  pdf_exported: boolean = false;
+  exportP(report_name: string) {
+    console.log('exporting pdf')
+    this.pdf_exported = true;
+    this.exportAsService.save(this.exportAsPdf, report_name).subscribe(() => {
+      // save started
+    });
+  }
+
   onSubmit(){
-    console.log(this.reportForm.value, this.reportFlag)
+    // console.log(this.reportForm.value, this.reportFlag)
     this.is_fetching = true;
 
-    let params = {
-      month: this.reportForm.value.month ?? null,
-      year: this.reportForm.value.year ?? null,
-      quarter: this.reportForm.value.quarter ?? null,
-      start_date: this.reportForm.value.start_date ?? null,
-      end_date: this.reportForm.value.end_date ?? null,
-      category: this.reportForm.value.report_class
-    }
+    let params = {};
+
+    if (this.reportForm.value.month) params['month'] = this.reportForm.value.month;
+    if (this.reportForm.value.year) params['year'] = this.reportForm.value.year;
+    if (this.reportForm.value.quarter) params['quarter'] = this.reportForm.value.quarter;
+    if (this.reportForm.value.start_date) params['start_date'] = this.reportForm.value.start_date;
+    if (this.reportForm.value.end_date) params['end_date'] = this.reportForm.value.end_date;
+    params['category'] = this.reportForm.value.report_class;
 
     if (this.reportForm.value.report_class === 'fac') {
       params['code'] = this.reportFlag === '1' ? this.selectedFacilities.join(',') : this.userInfo.facility_code;
@@ -302,7 +365,8 @@ export class ReportsComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private http: HttpService
+    private http: HttpService,
+    private exportAsService: ExportAsService,
   ) { }
 
   get f(): { [key: string]: AbstractControl } {

@@ -1,30 +1,25 @@
+<div class="flex text-center top-0 border-black border-b-0 w-[320.2mm]" ><!-- [ngClass]="'w-['+paper_width+']'" -->
+  <div class=" w-2/12 text-sm font-medium text-gray-900 px-6 py-4 border-black border-l border-t">
+    <img src="./assets/img/DOH_Logo.png" class="rounded-full w-28 h-28 mx-auto" />
+  </div>
 
-<!-- <table class="w-full border-collapse border border-black border-b-0"> -->
-  <!-- <div class="flex w-screen"> -->
-    <div class="sticky left-0 flex min-w-full text-center top-0 border-black border-b-0 ">
-      <div class=" w-2/12 text-sm font-medium text-gray-900 px-6 py-4 border-black border-l border-r border-t">
-        <img src="./assets/img/DOH_Logo.png" class="rounded-full w-28 h-28 mx-auto" />
-      </div>
-
-      <div class="w-8/12 text-sm font-medium text-gray-900 px-6 py-4 border-black border-l border-r border-t  text-left align-top">
-        <div class="flex justify-between items-start">
-          <span>
-            FHSIS Report for<span *ngIf="label_value?.labelType === 'm1'"> the Month</span>: {{ label_value?.labelDate }}
-          </span>
-          <span>
-            Year: {{ label_value?.labelYear }}
-          </span>
-        </div>
-        Name of Barangay: {{ brgy_result ? this.brgy_result : '-' }} <br />
-        Name of Facility: <span class="capitalize"> {{ facility.facility_name }} </span> <br />
-        Name of Municipality/City: {{ facility.municipality.name }} <br />
-        Name of Province: {{ facility.province.name }} <br />
-        Projected Population for the Year: {{ label_value?.labelPopulation }} <br />
-      </div>
-
-      <div class="w-2/12 text-8xl tracking-tighter font-bold text-gray-900 px-6 py-4 border-black border-l border-r  border-t text-center">
-        {{ label_value?.labelType ?? 'M1' }}
-      </div>
+  <div class="w-8/12 text-sm font-medium text-gray-900 px-6 py-4 border-black border-l border-r border-t  text-left align-top">
+    <div class="flex justify-between items-start">
+      <span>
+        FHSIS Report for<span *ngIf="label_value?.labelType === 'm1'"> the Month</span>: {{ label_value?.labelDate }}
+      </span>
+      <span>
+        Year: {{ label_value?.labelYear }}
+      </span>
     </div>
-  <!-- </div> -->
-<!-- </table> -->
+    Name of Barangay: {{ brgy_result ? this.brgy_result : '-' }} <br />
+    Name of Facility: <span class="capitalize"> {{ facility.facility_name }} </span> <br />
+    Name of Municipality/City: {{ facility.municipality.name }} <br />
+    Name of Province: {{ facility.province.name }} <br />
+    Projected Population for the Year: {{ label_value?.labelPopulation }} <br />
+  </div>
+
+  <div class="w-2/12 text-8xl tracking-tighter font-bold text-gray-900 px-6 py-4 border-black  border-r  border-t text-center">
+    {{ label_value?.labelType ?? 'M1' }}
+  </div>
+</div>
