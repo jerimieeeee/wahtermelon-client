@@ -208,9 +208,6 @@ export class ReportsComponent implements OnInit {
 
   pdf_exported: boolean = false;
   exportP(report_name: string) {
-    console.log(this.reportForm.value)
-
-
     this.pdf_exported = true;
     this.exportAsService.save(this.exportAsPdf, report_name+'_'+this.getTrailName()).subscribe(() => {
       // save started

@@ -29,7 +29,7 @@ export class HeaderFhsis2018Component implements OnChanges {
   getLabelValue(){
     console.log(this.reportForm, this.report_data)
     this.label_value = this.dateHelper.getLabelValue(this.reportForm, this.report_data);
-    console.log(this.label_value)
+    // console.log(this.label_value)
     if(this.selectedBrgy) this.convertBrgy();
   }
 
@@ -38,7 +38,7 @@ export class HeaderFhsis2018Component implements OnChanges {
   ) { }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(this.paper_width)
+    // console.log(this.paper_width)
     this.getLabelValue();
   }
 }
