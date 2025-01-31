@@ -4,6 +4,14 @@
 @tailwind components;
 @tailwind utilities;
 
+.top-class {
+  border-bottom: 0;
+}
+
+.bottom-class {
+  border-top: 0;
+}
+
 .page-break {
   page-break-before: always; /* Ensures new page before this row */
 }
