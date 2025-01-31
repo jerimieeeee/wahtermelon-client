@@ -192,16 +192,27 @@ export class ReportsComponent implements OnInit {
       }
     }); */
 
-    this.exportAsService.save(this.exportAsExcel, report_name).subscribe(() => {
+    this.exportAsService.save(this.exportAsExcel, report_name+'_'+this.getTrailName()).subscribe(() => {
       // save started
     });
   }
 
+  getTrailName(): string {
+    let trailName: string = '';
+    if(this.reportForm.value.start_date) trailName = this.reportForm.value.start_date+'_to_'+this.reportForm.value.end_date;
+    if(this.reportForm.value.month) trailName = this.reportForm.value.month+"_"+this.reportForm.value.year;
+    if(this.reportForm.value.quarter) trailName = this.reportForm.value.quarter+"_"+this.reportForm.value.year;
+
+    return trailName
+  }
+
   pdf_exported: boolean = false;
   exportP(report_name: string) {
-    console.log('exporting pdf')
+    console.log(this.reportForm.value)
+
+
     this.pdf_exported = true;
-    this.exportAsService.save(this.exportAsPdf, report_name).subscribe(() => {
+    this.exportAsService.save(this.exportAsPdf, report_name+'_'+this.getTrailName()).subscribe(() => {
       // save started
     });
   }
