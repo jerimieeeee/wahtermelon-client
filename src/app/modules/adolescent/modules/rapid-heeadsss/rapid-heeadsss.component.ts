@@ -307,8 +307,8 @@ export class RapidHeeadsssComponent implements OnInit, OnChanges {
   openModal() {
     // Listen for changes to the checkbox
 
-      console.log('toggle modal')
-      this.toggleServiceModal();
+        this.toggleServiceModal();
+
   }
 
   closeModal() {
@@ -316,11 +316,12 @@ export class RapidHeeadsssComponent implements OnInit, OnChanges {
     this.visitForm.get('refused_flag')?.setValue(false);  // Optionally uncheck the checkbox
   }
 
-  showServiceModal = true;
-  toggleServiceModal(){
+  showServiceModal = false;
+  toggleServiceModal() {
     this.showServiceModal = !this.showServiceModal;
     this.visitForm.get('refused_flag')?.setValue(false);
   }
+
 
   acceptModal(){
     this.showServiceModal = !this.showServiceModal;

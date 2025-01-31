@@ -7,7 +7,8 @@ import { forkJoin } from 'rxjs';
 @Component({
   selector: 'app-referral-modal',
   templateUrl: './referral-modal.component.html',
-  styleUrl: './referral-modal.component.scss'
+  styleUrl: './referral-modal.component.scss',
+  standalone: false
 })
 export class ReferralModalComponent implements OnInit {
 @Output() toggleModal = new EventEmitter<any>();
