@@ -275,3 +275,7 @@
   [client_types]="client_types"
 ></app-referral-modal>
 
+<app-confirm-modal *ngIf="modals['confirm-modal']"
+  (toggleModal)="toggleModal($event)"
+></app-confirm-modal>
+

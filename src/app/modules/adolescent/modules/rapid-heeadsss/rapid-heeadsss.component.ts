@@ -35,6 +35,7 @@ export class RapidHeeadsssComponent implements OnInit, OnChanges {
   is_saving2: boolean = false;
 
   show_form = false;
+  showModal = false;
 
   physicians: any;
 
@@ -47,6 +48,8 @@ export class RapidHeeadsssComponent implements OnInit, OnChanges {
     rapid_status: [],
 
   };
+
+  modals: any = [];
 
   type_client = [
     { name: 'walk-in', id:'1' },
@@ -296,6 +299,33 @@ export class RapidHeeadsssComponent implements OnInit, OnChanges {
 
   }
 
+  toggleModal(name){
+    this.modals[name] = !this.modals[name];
+    console.log('toggle modal')
+  }
+
+  openModal() {
+    // Listen for changes to the checkbox
+
+      console.log('toggle modal')
+      this.toggleServiceModal();
+  }
+
+  closeModal() {
+    this.showModal = false;  // Close the modal when the close button is clicked
+    this.visitForm.get('refused_flag')?.setValue(false);  // Optionally uncheck the checkbox
+  }
+
+  showServiceModal = true;
+  toggleServiceModal(){
+    this.showServiceModal = !this.showServiceModal;
+    this.visitForm.get('refused_flag')?.setValue(false);
+  }
+
+  acceptModal(){
+    this.showServiceModal = !this.showServiceModal;
+    this.visitForm.get('refused_flag')?.setValue(true);
+  }
 
   // hasChanges(): boolean {
 
@@ -312,6 +342,7 @@ export class RapidHeeadsssComponent implements OnInit, OnChanges {
 ngOnChanges(change: SimpleChanges): void{
     this.patchData();
     this.disableForm3();
+    this.openModal();
   }
 
 ngOnInit(): void {

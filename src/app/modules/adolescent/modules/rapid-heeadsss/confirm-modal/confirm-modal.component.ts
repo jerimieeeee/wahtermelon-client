@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-confirm-modal',
@@ -8,5 +8,5 @@ import { Component } from '@angular/core';
   styleUrl: './confirm-modal.component.scss'
 })
 export class ConfirmModalComponent {
-
+@Output() toggleModal = new EventEmitter<any>();
 }
