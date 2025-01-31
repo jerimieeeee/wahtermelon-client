@@ -87,8 +87,9 @@ export class KonsultaMasterlistComponent implements OnInit {
   allListArray!: any[];
   total_print_page: number = 0;
   current_print_page: number = 1;
-  start_date: string | null = null;
-  end_date: string | null = null;
+  // current_year: new Date().getFullYear();
+  start_date: string | null;
+  end_date: string | null;
 
   getAllList() {
     this.printing = true;
@@ -222,6 +223,8 @@ export class KonsultaMasterlistComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.start_date = `${this.current_year}-01-01`;
+    this.end_date = `${this.current_year}-12-31`;
     for (let year = Number(this.current_year); year >= 2018; year--) {
       this.years.push(year);
     }

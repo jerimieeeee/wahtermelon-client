@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { Fhsis2018CcComponent } from './fhsis2018-cc.component';
+import { Fhsis2018CcComponent } from './fhsis2018-cc.component.ts.bak.bak';
 
 describe('Fhsis2018CcComponent', () => {
   let component: Fhsis2018CcComponent;

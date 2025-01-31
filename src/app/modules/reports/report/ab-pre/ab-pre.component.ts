@@ -29,12 +29,14 @@ export class AbPreComponent implements OnChanges {
   userInfo: any = {};
   stats : any[];
   sum_total: {
+    code: string,
     population: number,
     male: number,
     female: 0,
     male_female_total: 0,
     less_than_15: 0,
     greater_than_15: 0,
+    less_than_and_greater_than_15: 0,
     category1: 0,
     category2: 0,
     category3: 0,
@@ -62,7 +64,6 @@ export class AbPreComponent implements OnChanges {
   convertedMonth : any;
   brgys_info : any;
   name_list: any = [];
-  params: any = [];
   url: any = 'reports-2018/animal-bite/pre-exposure-name-list';
 
   exportAsExcel: ExportAsConfig = {
@@ -88,27 +89,29 @@ export class AbPreComponent implements OnChanges {
   }
 
   name_list_params: {};
-  showNameList(params, barangay_code) {
-    this.params = params;
+  showNameList(indicator: string, type: string, code: string) {
     this.name_list_params = {
-      start_date: this.reportForm.value.start_date,
-      end_date: this.reportForm.value.end_date,
+      year: this.reportForm.value.year,
+      quarter: this.reportForm.value.quarter,
       category: this.reportForm.value.report_class,
-      params: this.params,
+      code: code,
+      indicator: indicator,
+      type: type,
       per_page: 10,
-      code: barangay_code
     };
     this.openList = true;
   };
 
   initializeSumTotal() {
     this.sum_total = {
+      code: null,
       population: 0,
       male: 0,
       female: 0,
       male_female_total: 0,
       less_than_15: 0,
       greater_than_15: 0,
+      less_than_and_greater_than_15: 0,
       category1: 0,
       category2: 0,
       category3: 0,
@@ -127,12 +130,11 @@ export class AbPreComponent implements OnChanges {
       total_biting_animal: 0
     };
   }
-
   sumTotal($variable: 'stats' | 'stats_others') {
     this.initializeSumTotal();
     // Define the keys you want to sum
     const keysToSum = [
-      'population', 'male', 'female', 'male_female_total', 'less_than_15', 'greater_than_15',
+      'population', 'male', 'female', 'male_female_total', 'less_than_15', 'greater_than_15', 'less_than_and_greater_than_15',
       'category1', 'category2', 'category3', 'total_cat2_and_cat3', 'total_cat1_cat2_cat3',
       'prep_total', 'prep_completed', 'tandok', 'pep_completed', 'tcv', 'HRIG', 'ERIG', 'dog', 'cat',
       'others', 'total_biting_animal'
@@ -149,9 +151,54 @@ export class AbPreComponent implements OnChanges {
         });
       });
       // Update the selected stats with the accumulated sum
+      if ($variable === 'stats_others' || $variable === 'stats') {
+        this.sum_total.code = ($variable === 'stats' && !this.reportFlag) ? value[0].barangay_code : value[0].municipality_code;
+      }
       selectedStats[key] = [this.sum_total];
+
       this.initializeSumTotal();
     });
+  }
+
+  sum_total_previous: {
+    code: string,
+    total_cat2_and_cat3_previous_quarter: 0,
+    pep_completed_previous: 0
+  };
+
+  initializeSumTotalPrevious() {
+    this.sum_total_previous = {
+      code: null,
+      total_cat2_and_cat3_previous_quarter: 0,
+      pep_completed_previous: 0
+    };
+  }
+
+  sumTotalPrevious($variable: 'previous' | 'previous_others') {
+    this.initializeSumTotalPrevious();
+    // Define the keys you want to sum
+    const keysToSum = [
+      'total_cat2_and_cat3_previous_quarter',
+      'pep_completed_previous'
+    ];
+
+    // Use dynamic object reference based on $variable
+    const selectedStats = this[$variable];
+
+    // Loop through the selected stats and accumulate totals
+    Object.entries(selectedStats).forEach(([key, value]: [string, any]) => {
+      Object.entries(value).forEach(([k, v]: [string, any]) => {
+        keysToSum.forEach((keyToSum) => {
+          this.sum_total_previous[keyToSum] = this.sum_total_previous[keyToSum] + +v[keyToSum];
+        });
+      });
+      // Update the selected stats with the accumulated sum
+      this.sum_total_previous.code = value[0].barangay_code
+      selectedStats[key] = [this.sum_total_previous];
+
+      this.initializeSumTotalPrevious();
+    });
+    console.log(this[$variable])
   }
 
   exportX() {
@@ -197,12 +244,10 @@ export class AbPreComponent implements OnChanges {
     this.previous_others = this.report_data.data2_others;
     this.sumTotal('stats');
     this.sumTotal('stats_others');
-    // this.sumTotalPrevious('previous');
-    // this.sumTotalPrevious('previous_others');
-    console.log(this.report_data, 'stats');
+    this.sumTotalPrevious('previous');
+    this.sumTotalPrevious('previous_others');
     this.brgys_info = this.brgys;
     this.pdf_exported = false;
-    // this.label_value = this.dateHelper.getLabelValue(this.reportForm, this.report_data);
     this.show_stats = true;
   }
 }
