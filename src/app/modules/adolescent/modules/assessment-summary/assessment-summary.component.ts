@@ -32,32 +32,18 @@ export class AssessmentSummaryComponent implements OnInit {
 
   physicians: any;
 
-  // reloadData(){
-  //   let params = {
-  //     patient_id: this.patient_id
-  //   }
-
-  //   this.http.get('asrh/rapid', {params}).subscribe({
-  //     next: (data: any) => {
-  //       this.rapid_history = data.data[0];
-
-  //       console.log(this.rapid_history, 'check mo selected rapid')
-  //     },
-  //     error: err => console.log(err)
-  //   });
-  // }
-
   visitForm: FormGroup = new FormGroup({
       patient_id: new FormControl<string| null>(''),
-      // assessment_date: new FormControl<string| null>(''),
-      // client_type: new FormControl<string| null>(''),
-      // lib_asrh_client_type_code: new FormControl<string| null>(''),
-      // other_client_type: new FormControl<string| null>(''),
-      // refused_flag: new FormControl<boolean>(false),
+      assessment_date: new FormControl<string| null>(''),
+      client_type: new FormControl<string| null>(''),
+      lib_asrh_client_type_code: new FormControl<string| null>(''),
+      other_client_type: new FormControl<string| null>(''),
+      refused_flag: new FormControl<boolean>(false),
       refer_to_user_id: new FormControl<string| null>(''),
       // status: new FormControl<string| null>(''),
       done_flag: new FormControl<boolean>(false),
-      remarkss: new FormControl<string| null>('')
+      done_date: new FormControl<string| null>(''),
+      algorithm_remarks: new FormControl<string| null>('')
     });
 
     createRapid(){
@@ -137,11 +123,13 @@ export class AssessmentSummaryComponent implements OnInit {
         // lib_asrh_client_type_code: this.selected_asrh_consult?.lib_asrh_client_type_code,
         // client_type: this.selected_asrh_consult?.client_type,
         // other_client_type: this.selected_asrh_consult?.other_client_type,
-        // refused_flag: this.selected_asrh_consult?.refused_flag
+        refused_flag: this.selected_asrh_consult?.refused_flag,
         refer_to_user_id: this.selected_asrh_consult?.refer_to_user_id,
         // status: this.selected_asrh_consult?.status,
         done_flag: this.selected_asrh_consult?.refused_flag,
-        remarks: this.selected_asrh_consult?.remarks
+        done_date: this.selected_asrh_consult?.done_date,
+        referral_date: this.selected_asrh_consult?.referral_date,
+        algorithm_remarks: this.selected_asrh_consult?.algorithm_remarks
       });
       console.log(this.selected_asrh_consult, 'patch data working selected asrh')
       console.log('patch data working')
@@ -151,31 +139,75 @@ export class AssessmentSummaryComponent implements OnInit {
   }
 
   validateForm(){
-      this.visitForm = this.formBuilder.group({
-        // id: [''],
+      const formControls = {
         patient_id: [this.patient_id, [Validators.required, Validators.minLength(1)]],
-        // assessment_date: ['', [Validators.required, Validators.minLength(1)]],
-        // lib_asrh_client_type_code: [{ value: '', disabled: true }, [Validators.required, Validators.minLength(1)]],
-        // client_type: ['', [Validators.required, Validators.minLength(1)]],
-        // other_client_type: [{ value: '', disabled: true }, [Validators.required]],
-        // refused_flag: ['', [Validators.required, Validators.minLength(1)]],
-        refer_to_user_id: ['', [Validators.required]],
-        // status: ['', [Validators.required]],
-        done_flag: ['', [Validators.required, Validators.minLength(1)]],
-        remarks: ['', [Validators.required]],
+        assessment_date: [this.selected_asrh_consult?.assessment_date, [Validators.required, Validators.minLength(1)]],
+        lib_asrh_client_type_code: [this.selected_asrh_consult?.lib_asrh_client_type_code || '', [Validators.required, Validators.minLength(1)]],
+        client_type: [this.selected_asrh_consult?.client_type, [Validators.required, Validators.minLength(1)]],
+        other_client_type: [this.selected_asrh_consult?.other_client_type || '', [Validators.required]],
+        refer_to_user_id: [this.selected_asrh_consult?.refer_to_user_id, [Validators.required]],
+        done_flag: [this.selected_asrh_consult.done_flag, [Validators.required, Validators.minLength(1)]],
+        done_date: [this.selected_asrh_consult?.done_date, [Validators.required, Validators.minLength(1)]],
+        referral_date: [this.selected_asrh_consult?.referral_date, [Validators.required, Validators.minLength(1)]],
+        algorithm_remarks: [this.selected_asrh_consult.algorithm_remarks, [Validators.required]],
+      };
+
+      if (this.selected_asrh_consult.lib_asrh_client_type_code === null) {
+        formControls.lib_asrh_client_type_code = [{ value: '', disabled: true }, [Validators.required, Validators.minLength(1)]];
+      }
+
+      if (this.selected_asrh_consult.other_client_type === null) {
+        formControls.other_client_type = [{ value: '', disabled: true }, [Validators.required]];
+      }
+
+      this.visitForm = this.formBuilder.group(formControls);
 
 
 
-      });
 
-
-
-    //  this.disableForm();
-    //  this.disableForm2();
+     this.disableForm();
+     this.disableForm2();
     //  this.disableForm3();
      this.patchData();
     //  this.show_form = true;
     }
+
+    checkAnswers(answers): boolean {
+      let showAlgo: boolean = false;
+      Object.entries(answers).forEach(([key, value]: any, index) => {
+        console.log(value.answer)
+        if(value.answer === '1') {
+          showAlgo = true;
+        }
+      });
+
+      return showAlgo;
+    }
+    disableForm(){
+      this.visitForm.get('client_type')?.valueChanges.subscribe((value) => {
+        const libAsrhClientTypeCodeControl = this.visitForm.get('lib_asrh_client_type_code');
+        if (value === 'walk-in' || value === '') {
+          libAsrhClientTypeCodeControl?.reset();
+          libAsrhClientTypeCodeControl?.disable();
+        } else {
+          libAsrhClientTypeCodeControl?.enable();
+        }
+
+      });
+    }
+
+    disableForm2() {
+      this.visitForm.get('lib_asrh_client_type_code')?.valueChanges.subscribe((value) => {
+        const otherClientControl = this.visitForm.get('other_client_type');
+        if (value != 99) {
+          otherClientControl?.reset();
+          otherClientControl?.disable();
+        } else {
+          otherClientControl?.enable();
+        }
+      });
+    }
+
 
   constructor(
       private http: HttpService,

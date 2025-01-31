@@ -6,8 +6,8 @@
 <form [formGroup]="homeForm" class="mt-1 grid grid-cols-16 gap-x-4 w-full mb-10">
   <div class="grid grid-cols-12">
 
-    <div class="col-span-12 col-start-1 grid gap-x-4">
-      <div class="mt-5 px-5">
+    <div class="col-span-6 grid gap-x-4 mt-2">
+      <div class="mt-10 px-5">
         <input type="checkbox" class="input-checkbox" id="consent_flag" formControlName="consent_flag" />
         <label for="consent_flag" class="text-sm" >
           The patient has read, fully understood, and signed the patient consent form.
@@ -18,17 +18,6 @@
     <div class="col-span-6 px-5 pt-5">
         <label for="assessment_date" class="text-sm font-semibold">Assessment Date</label>
         <input type="date" name="assessment_date" id="assessment_date" class="input" formControlName="assessment_date">
-    </div>
-
-    <div class="col-span-6 px-5 pt-5">
-      <div>
-        <label for="status" class="text-sm font-semibold">Status</label>
-        <select name="status" id="status.id" class="input" formControlName="status">
-          <!-- <option [ngValue]="0" selected> </option> -->
-          <option *ngFor="let status of statuses" [value]="status.name">{{ status.name | titlecase }}</option>
-        </select>
-      </div>
-
     </div>
 
   </div>
@@ -75,7 +64,7 @@
 
 
       <div class="flex justify-center mt-5">
-          <button class="btn-save mr-5 mt-4" [disabled]="is_saving" (click)="onSubmit()">
+          <button class="btn-save mt-4" [disabled]="is_saving || homeForm.invalid || !homeForm.dirty" (click)="onSubmit(); homeForm.markAsPristine();">
             <fa-icon [icon]="faSave" *ngIf="!is_saving" class="mr-2"></fa-icon>
             <fa-icon [icon]="faSpinner" *ngIf="is_saving" animation="spin" class="mr-2"></fa-icon>
             {{ selected_asrh_consult?.comprehensive?.home_notes ? (is_saving ? 'Updating' : 'Update') : (is_saving ? 'Saving' : 'Save') }}

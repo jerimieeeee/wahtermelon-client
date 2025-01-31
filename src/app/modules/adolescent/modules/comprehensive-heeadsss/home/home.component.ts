@@ -41,7 +41,7 @@ export class HomeComponent implements OnInit {
     assessment_date: new FormControl<string| null>(''),
     consent_flag: new FormControl<boolean>(false),
     home_notes: new FormControl<string| null>(''),
-    status: new FormControl<string| null>(''),
+    // status: new FormControl<string| null>(''),
   });
 
   statuses = [
@@ -83,7 +83,7 @@ export class HomeComponent implements OnInit {
       assessment_date: ['', [Validators.required, Validators.minLength(1)]],
       consent_flag: ['', [Validators.required, Validators.minLength(1)]],
       home_notes: ['', [Validators.required, Validators.minLength(1)]],
-      status: ['', [Validators.required, Validators.minLength(1)]],
+      // status: ['', [Validators.required, Validators.minLength(1)]],
       // average_monthly_income: ['', [Validators.required, Validators.minLength(1), Validators.pattern("^[0-9,;]+$")]],
     });
     this.patchCompre();
@@ -119,10 +119,10 @@ export class HomeComponent implements OnInit {
     if(this.selected_asrh_consult) {
       this.homeForm.patchValue({
       assessment_date: this.selected_asrh_consult?.comprehensive?.assessment_date,
-      status: this.selected_asrh_consult?.comprehensive?.status,
+      // status: this.selected_asrh_consult?.comprehensive?.status,
       consent_flag: this.selected_asrh_consult?.comprehensive?.consent_flag,
       home_notes:this.selected_asrh_consult?.comprehensive?.home_notes
-     
+
       });
       // this.show_form = true;
       console.log(this.selected_asrh_consult,'load compre home working')

@@ -36,7 +36,7 @@
     </button>
   </div>
   <div class="flex flex-row">
-    <button type="button"  class="bg-blue-500 px-3 py-2  rounded text-white hover:opacity-75">
+    <button type="button" (click)="toggleModal('referral')" *ngIf="selected_asrh_consult" class="bg-blue-500 px-3 py-2  rounded text-white hover:opacity-75">
       Referral
     </button>
   </div>
@@ -111,8 +111,9 @@
   <table class="w-full text-sm text-left" *ngIf="fetching_history">
     <thead class="text-xs text-white uppercase bg-blue-500">
       <tr>
-        <th scope="col" class="py-3 px-6">Assessment Date</th>
-        <th scope="col" class="py-3 px-6">Assessment Summary</th>
+        <th scope="col" class="py-3 px-6">RAPID Assessment Date</th>
+        <th scope="col" class="py-3 px-6">Status</th>
+        <th scope="col" class="py-3 px-6">COMPREHENSIVE Assessment Date</th>
         <th scope="col" class="py-3 px-6">Status</th>
         <th scope="col" class="py-3 px-6">Action</th>
       </tr>
@@ -128,11 +129,14 @@
           {{ asrh_history?.assessment_date | date: 'MM/dd/yyyy'}}
         </td>
         <td class="py-4 px-6">
-         -
+          {{ asrh_history?.done_flag === 1 ? 'Done' : 'Ongoing' }}
         </td>
         <td class="py-4 px-6">
-         {{ asrh_history?.comprehensive?.status !== null ? (asrh_history?.comprehensive?.status | titlecase) : '-' }}
+          {{ asrh_history?.comprehensive?.assessment_date | date: 'MM/dd/yyyy'}}
         </td>
+        <td class="py-4 px-6">
+          {{ asrh_history?.comprehensive?.done_flag === true ? 'Done' : 'Ongoing' }}
+         </td>
         <td class="py-4 px-6">
           <button type="button" class="rounded-md bg-blue-500 text-white py-1 px-2" (click)="openASRHConsult(asrh_history)">
            Open
@@ -265,4 +269,9 @@
   [patient_id]="consult_details?.patient.id"
   [pt_group]="consult_details?.pt_group"
 ></app-end-visit>
+
+<app-referral-modal *ngIf="modals['referral']"
+  (toggleModal)="toggleModal($event)"
+  [client_types]="client_types"
+></app-referral-modal>
 

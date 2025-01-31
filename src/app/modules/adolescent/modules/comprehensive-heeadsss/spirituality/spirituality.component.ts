@@ -40,8 +40,8 @@ export class SpiritualityComponent implements OnInit {
       assessment_date: new FormControl<string| null>(''),
       consent_flag: new FormControl<string| null>(''),
       spirituality_notes: new FormControl<string| null>(''),
-
-
+      done_status: new FormControl<boolean>(false),
+      done_date: new FormControl<string| null>(''),
     });
 
     onSubmit(){
@@ -74,8 +74,9 @@ export class SpiritualityComponent implements OnInit {
         patient_id: [this.patient_id],
         consult_asrh_rapid_id: [this.selected_asrh_consult?.id, [Validators.required, Validators.minLength(1)]],
         assessment_date: [this.selected_asrh_consult?.comprehensive?.assessment_date, [Validators.required, Validators.minLength(1)]],
-
         spirituality_notes: ['', [Validators.required, Validators.minLength(1)]],
+        done_flag: [this.selected_asrh_consult?.comprehensive?.done_flag, [Validators.required, Validators.minLength(1)]],
+        done_date: [this.selected_asrh_consult?.comprehensive?.done_date, [Validators.required, Validators.minLength(1)]],
 
         // average_monthly_income: ['', [Validators.required, Validators.minLength(1), Validators.pattern("^[0-9,;]+$")]],
       });
@@ -89,6 +90,8 @@ export class SpiritualityComponent implements OnInit {
      if(this.selected_asrh_consult) {
        this.spiritualityForm.patchValue({
        spirituality_notes: this.selected_asrh_consult?.comprehensive?.spirituality_notes,
+       done_date: this.selected_asrh_consult?.comprehensive?.done_date,
+       done_flag: this.selected_asrh_consult?.comprehensive?.done_flag,
        });
        // this.show_form = true;
       //  console.log(this.asrh_compre_history,'load compre home working')

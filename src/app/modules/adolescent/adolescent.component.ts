@@ -167,7 +167,7 @@ export class AdolescentComponent implements OnInit {
   }
 
   loadConsultDetails(){
-   
+
     this.http.get('consultation/records',{params: {patient_id: this.patient_id, id: this.consult_id}}).subscribe({
       next: (data: any) => {
         this.consult_details = data.data[0];

@@ -4,13 +4,15 @@
    Assessment Summary
   </div>
 
+
+
   <form [formGroup]="visitForm">
 
   <div class="grid grid-cols-12 justify-between">
 
   <div class="col-span-6 px-5 pt-5">
     <div>
-      <label for="refer_to" class="text-sm font-semibold">Referred To</label>
+      <label for="refer_to" class="text-sm font-semibold">Refer To</label>
       <select name="refer_to_user_id" id="refer_to_user_id" class="input" formControlName="refer_to_user_id">
         <!-- <option [ngValue]="0" selected> </option> -->
         <option *ngFor="let dr of physicians" [value]="dr.id">{{ dr?.last_name }}, {{ dr?.first_name }} {{ dr?.middle_name }}</option>
@@ -28,9 +30,27 @@
     </div>
   </div>
 
+  <div class="col-span-6 px-5 pt-5" *ngIf="visitForm.get('refer_to_user_id').value">
+    <label for="done_date" class="text-sm font-semibold">Referral Date</label>
+    <input type="date" name="done_date" id="done_date" class="input" formControlName="referral_date">
   </div>
 
+  <div class="col-span-6 px-5 pt-5" *ngIf="visitForm.get('done_flag').value">
+    <label for="done_date" class="text-sm font-semibold">Done Date</label>
+    <input type="date" name="done_date" id="done_date" class="input" formControlName="done_date">
+  </div>
+
+  </div>
+
+
+
   <div class="mt-10 w-full border-t border-gray-200 py-5">
+
+    <div *ngIf="!checkAnswers(selected_asrh_consult.answers)">
+      <div class="text-sm flex justify-center mt-5">
+        No Algorithm to Display.
+      </div>
+    </div>
 
   <div class="mt-1 w-full" *ngFor="let home of selected_asrh_consult?.answers; let i = index" >
 
@@ -41,7 +61,7 @@
           {{home.collapsed ? 'Hide' : 'Show'}} Algorithm
         </button>
       </div>
-      <div *ngIf="i === 0 ? !home.collapsed : home.collapsed">
+      <div *ngIf="home.collapsed">
 
         <div *ngFor="let algo of home.question.algorithm" class="text-sm py-4 px-5 rounded-t-md pl-5">
           <div class="bg-blue-500 text-sm text-white rounded-t-md py-2 pl-5 font-semibold flex justify-between">
@@ -57,23 +77,24 @@
         </div>
       </div>
     </div>
+
   </div>
 
   <div class="mt-10 w-full border-t border-gray-200 py-5">
 
   <div class="h-92">
-    <div class="py-3.5 px-5">
-      <textarea rows="13" id="remarks" placeholder="Remarks" class="text-sm placeholder-slate-400 w-full rounded-md border-gray-300" formControlName="remarks"></textarea>
+    <div class="py-5 px-5">
+      <textarea rows="13" id="remarks" placeholder="Remarks" class="text-sm placeholder-slate-400 w-full rounded-md border-gray-300" formControlName="algorithm_remarks"></textarea>
     </div>
   </div>
 
 
   <div class="flex justify-center mt-10">
-    <button class="btn-save" (click)="createRapid(); visitForm.markAsPristine();">
+    <button class="btn-save" [disabled]="is_saving || visitForm.invalid || !visitForm.dirty" (click)="createRapid(); visitForm.markAsPristine();">
       <!-- <button class="btn-save"> -->
       <fa-icon [icon]="faSave" *ngIf="!is_saving" class="mr-2"></fa-icon>
       <fa-icon [icon]="faSpinner" *ngIf="is_saving" animation="spin" class="mr-2"></fa-icon>
-      {{ selected_asrh_consult?.id ? (is_saving ? 'Updating' : 'Update') : (is_saving ? 'Saving' : 'Save') }}
+      {{ selected_asrh_consult?.refer_to_user_id ? (is_saving ? 'Updating' : 'Update') : (is_saving ? 'Saving' : 'Save') }}
     </button>
   </div>
 
