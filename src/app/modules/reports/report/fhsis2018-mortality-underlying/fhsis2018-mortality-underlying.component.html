@@ -1,109 +1,53 @@
-<div class="grid grid-cols-1 w-full">
-  <div class="flex justify-between w-full text-blue-500 font-semibold text-lg  p-3" >
-    <span>FHSIS Report - Mortality Underlying</span>
-    <span>
-      <!-- <fa-icon *ngIf="exporting" [icon]="faCircleNotch" animation="spin" class="text-blue-500 text-sm mr-3">Exporting...</fa-icon> -->
-      <button [disabled]="pdf_exported" type="button" class="text-2xl mr-5 text-red-600 disabled:text-gray-600" (click)="exportP()">
-        <fa-icon [icon]="faFilePdf"></fa-icon>
-      </button>
-      <button  type="button" class="text-2xl" (click)="exportX()">
-        <fa-icon [icon]="faFileExcel" class="text-green-700"></fa-icon>
-      </button>
-    </span>
-  </div>
-  <div class="flex flex-col pb-5">
-    <div class="sm:-mx-6 lg:-mx-8">
-      <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
+<table *ngIf="show_stats" class="morbidity min-w-full border border-gray-400 select-none"  [ngClass]="'w-['+paper_width+']'">
+  <thead class="text-xs">
+    <tr>
+      <th scope="col" colspan="41" class="text-xs font-semibold text-gray-900 px-6 py-4 border">
+        Section H. Mortality Report
+      </th>
+    </tr>
+    <tr class="text-center border border-gray-400">
+      <td class="top-class w-24 px-1 border border-gray-400">Disease</td>
+      <td class="top-class px-1 border border-gray-400">ICD10</td>
+      <td colspan="2" class="py-3 w-16 text-center px-1 border border-gray-400" *ngFor="let title of headers">{{ title }}</td>
+    </tr>
+    <tr class="border text-center border-gray-400">
+      <td class="py-2 bottom-class"></td>
+      <td class="bottom-class"></td>
+      <td class="py-2">M</td><td>F</td> <td>M</td><td>F</td>
+      <td>M</td><td>F</td> <td>M</td><td>F</td>
+      <td>M</td><td>F</td> <td>M</td><td>F</td>
+      <td>M</td><td>F</td> <td>M</td><td>F</td>
+      <td>M</td><td>F</td> <td>M</td><td>F</td>
+      <td>M</td><td>F</td> <td>M</td><td>F</td>
+      <td>M</td><td>F</td> <td>M</td><td>F</td>
+      <td>M</td><td>F</td> <td>M</td><td>F</td>
+      <td>M</td><td>F</td> <td>M</td><td>F</td>
+      <td>M</td><td>F</td>
+    </tr>
+  </thead>
+  <tbody class="text-xs">
+    <tr *ngFor="let stat of stats">
+      <td class="text-left"> {{ stat.description }}</td>
+      <td class="text-center">{{ stat.icd10_code }}</td>
+      <td class="py-3 text-center" [class]="stat[indicator.var_name] !== '0' ? 'cursor-pointer text-blue-500' : 'pointer-events-none'" *ngFor="let indicator of indicator_var" (click)="showNameList(indicator.var_name, stat.icd10_code)">
+        {{ stat[indicator.var_name] }}
+      </td>
+      <td class="py-3 text-center">{{ +stat.male_age_total + +stat.female_age_total }}</td>
+    </tr>
+  </tbody>
+</table>
 
-        <table *ngIf="show_stats" class="morbidity min-w-full border border-gray-400 select-none" id="reportForm">
-          <thead class="text-xs">
-            <tr>
-              <th scope="col" colspan="3" rowspan="7" class="text-sm font-medium text-gray-900 px-6 py-4 border">
-                <img src="./assets/img/DOH_Logo.png" class="rounded-full w-28 h-28 mx-auto" />
-              </th>
-              <th colspan="22" class="text-left">
-                FHSIS Report for {{ label_value.labelType === 'M1' ? 'the Month' : '' }}: {{ label_value.labelDate }}
-              </th>
-              <th scope="col" colspan="9" rowspan="7" class="align-top text-left text-sm text-gray-900 border-0">
-                  Year:
-                  <span class="font-medium">
-                    {{ label_value.labelYear }}
-                  </span>
-              </th>
-              <th scope="col" colspan="7" rowspan="7" class="font-bold text-gray-900 px-6 py-4 border text-center">
-                <h1 class="text-7xl">
-                  {{ label_value.labelType ?? 'M1' }}
-                </h1>
-              </th>
-            </tr>
-            <tr class="text-left border-b">
-              <th colspan="22" class="text-left border-b-0"> Name of Health Facility: {{this.facility.facility_name}} </th>
-            </tr>
-            <tr>
-              <th colspan="22" class="text-left"> Name of Barangay: {{ brgy_result ? this.brgy_result : '-' }} </th>
-            </tr>
-            <tr>
-              <th colspan="22" class="text-left"> Name of Municipality/City: {{ facility.municipality.name }}</th>
-            </tr>
-            <tr>
-              <th colspan="22" class="text-left"> Name of Province: {{ facility.province.name }} </th>
-            </tr>
-            <tr>
-              <th colspan="22" class="text-left"> Projected Population of the Year: {{ label_value.labelPopulation }} </th>
-            </tr>
-            <tr>
-              <th colspan="22" class="text-center italic"> For Submission to the next administrative level </th>
-            </tr>
-            <tr>
-              <th scope="col" colspan="41" class="text-xs font-semibold text-gray-900 px-6 py-4 border">
-                Section H. Mortality Report
-              </th>
-            </tr>
-            <tr class="text-center border border-gray-400">
-              <td rowspan="2" class="w-24 px-1 border border-gray-400">Disease</td>
-              <td rowspan="2" class="px-1 border border-gray-400">ICD10</td>
-              <td colspan="2" class="w-16 text-center px-1 border border-gray-400" *ngFor="let title of headers">{{ title }}</td>
-<!--              <td rowspan="2" class="px-1 border border-gray-400">Total Both Sex</td>-->
-            </tr>
-            <tr class="border text-center border-gray-400">
-              <td>M</td><td>F</td> <td>M</td><td>F</td>
-              <td>M</td><td>F</td> <td>M</td><td>F</td>
-              <td>M</td><td>F</td> <td>M</td><td>F</td>
-              <td>M</td><td>F</td> <td>M</td><td>F</td>
-              <td>M</td><td>F</td> <td>M</td><td>F</td>
-              <td>M</td><td>F</td> <td>M</td><td>F</td>
-              <td>M</td><td>F</td> <td>M</td><td>F</td>
-              <td>M</td><td>F</td> <td>M</td><td>F</td>
-              <td>M</td><td>F</td> <td>M</td><td>F</td>
-              <td>M</td><td>F</td>
-            </tr>
-          </thead>
-          <tbody class="text-xs">
-            <tr *ngFor="let stat of stats">
-              <td class="text-left"> {{ stat.description }}</td>
-              <td class="text-center">{{ stat.icd10_code }}</td>
-              <td class="text-center" [class]="stat[indicator.var_name] !== '0' ? 'cursor-pointer text-blue-500' : 'pointer-events-none'" *ngFor="let indicator of indicator_var" (click)="showNameList(indicator.var_name, stat.icd10_code)">
-                {{ stat[indicator.var_name] }}
-              </td>
-              <td class="text-center">{{ +stat.male_age_total + +stat.female_age_total }}</td>
-            </tr>
-          </tbody>
-        </table>
-
-        <div *ngIf="!show_stats">
-          <div class="grid grid-cols-1">
-            <div class="flex justify-center text-blue-500">
-              <fa-icon [icon]="faCircleNotch" animation="spin"></fa-icon>
-            </div>
-            <div class="flex justify-center">
-              Sorting report...
-            </div>
-          </div>
-        </div>
-      </div>
+<div *ngIf="!show_stats">
+  <div class="grid grid-cols-1">
+    <div class="flex justify-center text-blue-500">
+      <fa-icon [icon]="faCircleNotch" animation="spin"></fa-icon>
+    </div>
+    <div class="flex justify-center">
+      Sorting report...
     </div>
   </div>
 </div>
+
 
 
 <app-show-name-list
