@@ -163,12 +163,14 @@ export class AbPreComponent implements OnChanges {
   sum_total_previous: {
     code: string,
     total_cat2_and_cat3_previous_quarter: 0,
+    pep_completed_previous: 0
   };
 
   initializeSumTotalPrevious() {
     this.sum_total_previous = {
       code: null,
       total_cat2_and_cat3_previous_quarter: 0,
+      pep_completed_previous: 0
     };
   }
 
@@ -176,7 +178,8 @@ export class AbPreComponent implements OnChanges {
     this.initializeSumTotalPrevious();
     // Define the keys you want to sum
     const keysToSum = [
-      'total_cat2_and_cat3_previous_quarter'
+      'total_cat2_and_cat3_previous_quarter',
+      'pep_completed_previous'
     ];
 
     // Use dynamic object reference based on $variable
