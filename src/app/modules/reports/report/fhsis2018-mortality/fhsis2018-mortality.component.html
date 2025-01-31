@@ -9,7 +9,7 @@
       </th>
     </tr>
     <tr>
-      <th>
+      <th class="pb-3">
         Indicators <br />
         <span class="text-sm font-normal">(col. 1)</span>
       </th>
@@ -53,7 +53,7 @@
   </thead>
   <tbody>
     <tr>
-      <td>1. Total Deaths</td>
+      <td class="pt-2 pb-4 pl-3">1. Total Deaths</td>
       <td class="border text-center" (click)="showNameList('male_total_deaths')" [class]="stats.male_total_deaths > 0 ? 'text-blue-500 hover:cursor-pointer' : 'pointer-events-none'"> {{ stats.male_total_deaths ?? 0}} </td>
       <td class="border text-center" (click)="showNameList('female_total_deaths')" [class]="stats.female_total_deaths > 0 ? 'text-blue-500 hover:cursor-pointer' : 'pointer-events-none'"> {{ stats.female_total_deaths ?? 0}} </td>
       <td class="border text-center" (click)="showNameList('male_female_total_deaths')" [class]="stats.male_female_total_deaths > 0 ? 'text-blue-500 hover:cursor-pointer' : 'pointer-events-none'"> {{ stats.male_female_total_deaths ?? 0}} </td>
@@ -65,7 +65,7 @@
       <td></td>
     </tr>
     <tr>
-      <td>2. Maternal Deaths - Total</td>
+      <td class="pt-2 pb-4 pl-3">2. Maternal Deaths - Total</td>
       <td class="text-center" colspan="1" (click)="showNameList('male_maternal_deaths')" [class]="stats.male_maternal_deaths > 0 ? 'text-blue-500 hover:cursor-pointer' : 'pointer-events-none'"> {{ stats.male_maternal_deaths ?? 0}} </td>
       <td class="text-center" (click)="showNameList('female_maternal_deaths')" [class]="stats.female_maternal_deaths > 0 ? 'text-blue-500 hover:cursor-pointer' : 'pointer-events-none'"> {{ stats.female_maternal_deaths ?? 0}} </td>
       <td class="text-center" (click)="showNameList('male_female_maternal_deaths')" [class]="stats.male_female_maternal_deaths > 0 ? 'text-blue-500 hover:cursor-pointer' : 'pointer-events-none'"> {{ stats.male_female_maternal_deaths ?? 0}} </td>
@@ -77,7 +77,7 @@
       <td></td>
     </tr>
     <tr>
-      <td>3. Under-five Deaths - Total</td>
+      <td class="pt-2 pb-4 pl-3">3. Under-five Deaths - Total</td>
       <td class="border text-center" (click)="showNameList('male_under_five_deaths')" [class]="stats.male_under_five_deaths > 0 ? 'text-blue-500 hover:cursor-pointer' : 'pointer-events-none'"> {{ stats.male_under_five_deaths ?? 0}} </td>
       <td class="border text-center" (click)="showNameList('female_under_five_deaths')" [class]="stats.female_under_five_deaths > 0 ? 'text-blue-500 hover:cursor-pointer' : 'pointer-events-none'"> {{ stats.female_under_five_deaths ?? 0}} </td>
       <td class="border text-center" (click)="showNameList('male_female_under_five_deaths')" [class]="stats.male_female_under_five_deaths > 0 ? 'text-blue-500 hover:cursor-pointer' : 'pointer-events-none'"> {{ stats.male_female_under_five_deaths ?? 0}} </td>
@@ -85,35 +85,35 @@
       <td colspan="5" rowspan="6"></td>
     </tr>
     <tr>
-      <td>4. Infant Deaths - Total</td>
+      <td class="pt-2 pb-4 pl-3">4. Infant Deaths - Total</td>
       <td class="border text-center" (click)="showNameList('male_infant_deaths')" [class]="stats.male_infant_deaths > 0 ? 'text-blue-500 hover:cursor-pointer' : 'pointer-events-none'"> {{ stats.male_infant_deaths ?? 0}} </td>
       <td class="border text-center" (click)="showNameList('female_infant_deaths')" [class]="stats.female_infant_deaths > 0 ? 'text-blue-500 hover:cursor-pointer' : 'pointer-events-none'"> {{ stats.female_infant_deaths ?? 0}} </td>
       <td class="border text-center" (click)="showNameList('male_female_infant_deaths')" [class]="stats.male_female_infant_deaths > 0 ? 'text-blue-500 hover:cursor-pointer' : 'pointer-events-none'"> {{ stats.male_female_infant_deaths ?? 0}} </td>
       <td></td>
     </tr>
     <tr>
-      <td>5. Neonatal Deaths - Total</td>
+      <td class="pt-2 pb-4 pl-3">5. Neonatal Deaths - Total</td>
       <td class="border text-center" (click)="showNameList('male_neonatal_deaths')" [class]="stats.male_neonatal_deaths > 0 ? 'text-blue-500 hover:cursor-pointer' : 'pointer-events-none'"> {{ stats.male_neonatal_deaths ?? 0}} </td>
       <td class="border text-center" (click)="showNameList('female_neonatal_deaths')" [class]="stats.female_neonatal_deaths > 0 ? 'text-blue-500 hover:cursor-pointer' : 'pointer-events-none'"> {{ stats.female_neonatal_deaths ?? 0}} </td>
       <td class="border text-center" (click)="showNameList('male_female_neonatal_deaths')" [class]="stats.male_female_neonatal_deaths > 0 ? 'text-blue-500 hover:cursor-pointer' : 'pointer-events-none'"> {{ stats.male_female_neonatal_deaths ?? 0}} </td>
       <td></td>
     </tr>
     <tr>
-      <td>6. Fetal Deaths - Total</td>
+      <td class="pt-2 pb-4 pl-3">6. Fetal Deaths - Total</td>
       <td class="border text-center" (click)="showNameList('male_fetal_deaths')" [class]="stats.male_fetal_deaths > 0 ? 'text-blue-500 hover:cursor-pointer' : 'pointer-events-none'"> {{ stats.male_fetal_deaths ?? 0}} </td>
       <td class="border text-center" (click)="showNameList('female_fetal_deaths')" [class]="stats.female_fetal_deaths > 0 ? 'text-blue-500 hover:cursor-pointer' : 'pointer-events-none'"> {{ stats.female_fetal_deaths ?? 0}} </td>
       <td class="border text-center" (click)="showNameList('male_female_fetal_deaths')" [class]="stats.male_female_fetal_deaths > 0 ? 'text-blue-500 hover:cursor-pointer' : 'pointer-events-none'"> {{ stats.male_female_fetal_deaths ?? 0}} </td>
       <td></td>
     </tr>
     <tr>
-      <td>7. Early Neonatal Deaths - Total</td>
+      <td class="pt-2 pb-4 pl-3">7. Early Neonatal Deaths - Total</td>
       <td class="border text-center" (click)="showNameList('male_early_neonatal_deaths')" [class]="stats.male_early_neonatal_deaths > 0 ? 'text-blue-500 hover:cursor-pointer' : 'pointer-events-none'"> {{ stats.male_early_neonatal_deaths ?? 0}} </td>
       <td class="border text-center" (click)="showNameList('female_early_neonatal_deaths')" [class]="stats.female_early_neonatal_deaths > 0 ? 'text-blue-500 hover:cursor-pointer' : 'pointer-events-none'"> {{ stats.female_early_neonatal_deaths ?? 0}} </td>
       <td class="border text-center" (click)="showNameList('male_female_early_neonatal_deaths')" [class]="stats.male_female_early_neonatal_deaths > 0 ? 'text-blue-500 hover:cursor-pointer' : 'pointer-events-none'"> {{ stats.male_female_early_neonatal_deaths ?? 0}} </td>
       <td></td>
     </tr>
     <tr>
-      <td>8. Perinatal Deaths - Total</td>
+      <td class="pt-2 pb-4 pl-3">8. Perinatal Deaths - Total</td>
       <td class="border text-center" (click)="showNameList('male_perinatal_deaths')" [class]="stats.male_perinatal_deaths > 0 ? 'text-blue-500 hover:cursor-pointer' : 'pointer-events-none'"> {{ stats.male_perinatal_deaths ?? 0}} </td>
       <td class="border text-center" (click)="showNameList('female_perinatal_deaths')" [class]="stats.female_perinatal_deaths > 0 ? 'text-blue-500 hover:cursor-pointer' : 'pointer-events-none'"> {{ stats.female_perinatal_deaths ?? 0}} </td>
       <td class="border text-center" (click)="showNameList('male_female_perinatal_deaths')" [class]="stats.male_female_perinatal_deaths > 0 ?'text-blue-500 hover:cursor-pointer' : 'pointer-events-none'"> {{ stats.male_female_perinatal_deaths ?? 0}} </td>

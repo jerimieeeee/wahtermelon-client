@@ -4,6 +4,10 @@
 @tailwind components;
 @tailwind utilities;
 
+.page-break {
+  page-break-before: always; /* Ensures new page before this row */
+}
+
 .ng-select.search {
   border:0px;
   height: 40px;

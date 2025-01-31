@@ -4,22 +4,27 @@
       <th colspan="9" class="text-center bg-gray-200">SECTION D. ORAL HEALTH CARE AND SERVICES</th>
     </tr>
     <tr class="py-4 text-center top-0 bg-gray-200">
-      <th rowspan="2"><span class="font-semibold">Indicators</span><br />Col. 1</th>
-      <th rowspan="2"><span class="font-semibold">Eligible <br /> Population</span><br />Col. 2</th>
+      <th class="top-class"><span class="font-semibold">Indicators</span><!-- <br />Col. 1 --></th>
+      <th class="top-class"><span class="font-semibold">Eligible <br /> Population</span><!-- <br />Col. 2 --></th>
       <th colspan="4"><span class="font-semibold">Number</span></th>
-      <th rowspan="2"><span class="font-semibold">%</span><br />Col. 6</th>
-      <th rowspan="2"><span class="font-semibold">Interpretation</span><br />Col. 7</th>
-      <th rowspan="2"><span class="font-semibold">Recommendation/Actions Taken</span><br />Col. 8</th>
+      <th class="top-class"><span class="font-semibold">%</span><!-- <br />Col. 6 --></th>
+      <th class="top-class"><span class="font-semibold">Interpretation</span><!-- <br />Col. 7 --></th>
+      <th class="top-class"><span class="font-semibold">Recommendation/Actions Taken</span><!-- <br />Col. 8 --></th>
     </tr>
     <tr class="py-4 text-center top-0 bg-gray-200">
-      <th><span class="font-semibold">Male</span><br />Col. 3</th>
-      <th><span class="font-semibold">Female</span><br />Col. 4</th>
+      <th class="bottom-class">Col. 1</th>
+      <th class="bottom-class">Col. 2</th>
+      <th class="py-1"><span class="font-semibold">Male</span><br />Col. 3</th>
+      <th class="py-1"><span class="font-semibold">Female</span><br />Col. 4</th>
       <th colspan="2"><span class="font-semibold">Total</span><br />Col. 5</th>
+      <th class="bottom-class">Col. 6</th>
+      <th class="bottom-class">Col. 7</th>
+      <th class="bottom-class">Col. 8</th>
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let item of var_list" class="text-right">
-      <td class="text-left">{{ item.name }}</td>
+    <tr *ngFor="let item of var_list; let last = last" class="text-right">
+      <td class="py-2 pl-3 text-left">{{ item.name }}</td>
       <td></td>
       <td class="text-center" (click)="showNameList(item.male_var_name, item.var_lead)" [class]="stats[item.var_lead][item.male_var_name] > 0 ? 'text-blue-500 hover:cursor-pointer' : 'pointer-events-none'">{{ stats[item.var_lead][item.male_var_name] ?? 0 }}</td>
       <td class="text-center" (click)="showNameList(item.female_var_name, item.var_lead)" [class]="stats[item.var_lead][item.female_var_name] > 0 ? 'text-blue-500 hover:cursor-pointer' : 'pointer-events-none'">{{ stats[item.var_lead][item.female_var_name] ?? 0 }}</td>
@@ -30,22 +35,27 @@
     </tr>
 
     <!-- 2nd Header -->
-    <tr class="py-4 text-center top-0 bg-gray-200">
-      <th rowspan="2"><span class="font-semibold">Indicators</span><br />Col. 1</th>
-      <th rowspan="2"><span class="font-semibold">Eligible <br /> Population</span><br />Col. 2</th>
+    <tr class="py-4 text-center top-0 bg-gray-200 page-break" >
+      <th class="top-class"><span class="font-semibold">Indicators</span><!-- <br />Col. 1 --></th>
+      <th class="top-class"><span class="font-semibold">Eligible <br /> Population</span><!-- <br />Col. 2 --></th>
       <th colspan="4"><span class="font-semibold">Number</span></th>
-      <th rowspan="2"><span class="font-semibold">%</span><br />Col. 7</th>
-      <th rowspan="2"><span class="font-semibold">Interpretation</span><br />Col. 8</th>
-      <th rowspan="2"><span class="font-semibold">Recommendation/Actions Taken</span><br />Col. 9</th>
+      <th class="top-class"><span class="font-semibold">%</span><!-- <br />Col. 7 --></th>
+      <th class="top-class"><span class="font-semibold">Interpretation</span><!-- <br />Col. 8 --></th>
+      <th class="top-class"><span class="font-semibold">Recommendation/Actions Taken</span><!-- <br />Col. 9 --></th>
     </tr>
     <tr class="py-4 text-center top-0 bg-gray-200">
-      <th><span class="font-semibold">10-14 y/o</span><br />Col. 3</th>
+      <th class="bottom-class">Col. 1</th>
+      <th class="bottom-class">Col. 2</th>
+      <th><span class="py-1 font-semibold">10-14 y/o</span><br />Col. 3</th>
       <th><span class="font-semibold">15-19 y/o</span><br />Col. 4</th>
       <th><span class="font-semibold">20-49 y/o</span><br />Col. 5</th>
       <th><span class="font-semibold">Total</span><br />Col. 6</th>
+      <th class="bottom-class">Col. 7</th>
+      <th class="bottom-class">Col. 8</th>
+      <th class="bottom-class">Col. 9</th>
     </tr>
     <tr class="text-right">
-      <td class="text-left">9. Pregnant women who received BOHC - Total</td>
+      <td class="text-left py-1">9. Pregnant women who received BOHC - Total</td>
       <td></td>
       <td class="text-center" (click)="showNameList('pregnant_women_10_14_years_bohc')" [class]="stats.data.pregnant_women_10_14_years_bohc > 0 ? 'text-blue-500 hover:cursor-pointer' : 'pointer-events-none'">{{ stats.data.pregnant_women_10_14_years_bohc ?? 0 }}</td>
       <td class="text-center" (click)="showNameList('pregnant_women_15_19_years_bohc')" [class]="stats.data.pregnant_women_15_19_years_bohc > 0 ? 'text-blue-500 hover:cursor-pointer' : 'pointer-events-none'">{{ stats.data.pregnant_women_15_19_years_bohc ?? 0 }}</td>

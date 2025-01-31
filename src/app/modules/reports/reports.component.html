@@ -251,6 +251,7 @@
     ></app-fhsis2018-dental-m1>
 
     <app-fhsis2018-tb *ngIf="reportForm.value?.report_type.id === 'fhsis2018-tb' && report_data && !is_fetching"
+      [paper_width]="paper_width"
       [report_data]="report_data"
       [reportForm]="reportForm"
       [selectedBrgy]="selectedBrgy"

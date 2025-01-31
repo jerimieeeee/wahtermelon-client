@@ -207,6 +207,7 @@ export class ReportsComponent implements OnInit {
   }
 
   onSubmit(){
+    this.pdf_exported = false;
     // console.log(this.reportForm.value, this.reportFlag)
     this.is_fetching = true;
 
