@@ -343,7 +343,7 @@ export class RapidHeeadsssComponent implements OnInit, OnChanges {
 ngOnChanges(change: SimpleChanges): void{
     this.patchData();
     this.disableForm3();
-    this.openModal();
+    // this.openModal();
   }
 
 ngOnInit(): void {
