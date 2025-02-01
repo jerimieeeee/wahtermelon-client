@@ -45,7 +45,7 @@ export class KonsultaMasterlistComponent implements OnInit {
   search_item: string;
   search_pin: string;
   search_year: string;
-  tranche: string;
+  tranche: string | null;
 
   konsulta_list: any = [];
   years: any = [];
@@ -87,8 +87,9 @@ export class KonsultaMasterlistComponent implements OnInit {
   allListArray!: any[];
   total_print_page: number = 0;
   current_print_page: number = 1;
-  start_date: string | null = null;
-  end_date: string | null = null;
+  // current_year: new Date().getFullYear();
+  start_date: string | null;
+  end_date: string | null;
 
   getAllList() {
     this.printing = true;
@@ -98,14 +99,15 @@ export class KonsultaMasterlistComponent implements OnInit {
     if (this.search_pin) params['params']['filter[philhealth_id]'] = this.search_pin;
     if (this.tranche !== 'null') params['params']['tranche'] = this.tranche;
     if (this.selected_brgy) params['params']['barangay_code'] = this.selected_brgy;
-    if(this.start_date) params['params']['start_date'] = this.start_date;
-    if(this.end_date) params['params']['end_date'] = this.end_date;
-    params['per_page'] = 300;
+    if (this.start_date) params['params']['start_date'] = this.start_date;
+    if (this.end_date) params['params']['end_date'] = this.end_date;
+
+    params['params']['per_page'] = 500;
 
     this.allListArray = [];
 
     const fetchPage = (page: number) => {
-      params['page'] = page;
+      params['params']['page'] = page;
 
       this.http.get('konsulta/registration-lists', params).subscribe({
         next: (data: any) => {
@@ -221,6 +223,8 @@ export class KonsultaMasterlistComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.start_date = `${this.current_year}-01-01`;
+    this.end_date = `${this.current_year}-12-31`;
     for (let year = Number(this.current_year); year >= 2018; year--) {
       this.years.push(year);
     }

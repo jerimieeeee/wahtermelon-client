@@ -81,10 +81,9 @@ export class ShowNameListComponent implements OnInit {
     }
     this.http.get(this.url, { params }).subscribe({
       next: (data: any) => {
-        console.log(data)
         this.is_fetching = false;
         this.show_nameList = data.data;
-        console.log(this.show_nameList)
+        console.log(this.show_nameList, 'amens2u')
         this.current_page = data.current_page;
         this.last_page = data.last_page;
       },
