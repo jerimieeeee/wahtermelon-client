@@ -195,7 +195,7 @@ export class RapidHeeadsssComponent implements OnInit, OnChanges {
       lib_asrh_client_type_code: [{ value: '', disabled: true }, [Validators.required, Validators.minLength(1)]],
       client_type: ['', [Validators.required, Validators.minLength(1)]],
       other_client_type: [{ value: '', disabled: true }, [Validators.required]],
-      refused_flag: [''],
+      refused_flag: [false],
       // refer_to_user_id: ['', [Validators.required]],
       // status: ['', [Validators.required]],
 

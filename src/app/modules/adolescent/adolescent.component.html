@@ -139,7 +139,7 @@
          </td>
         <td class="py-4 px-6">
           <button type="button" class="rounded-md bg-blue-500 text-white py-1 px-2" (click)="openASRHConsult(asrh_history)">
-           Open
+            {{ asrh_history?.refused_flag === 1 ? 'View' : 'Open' }}
           </button>
         </td>
       </tr>
