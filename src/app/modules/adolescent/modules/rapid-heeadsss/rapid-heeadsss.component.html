@@ -133,7 +133,7 @@
       <!-- Modal header -->
       <div class="flex justify-between items-start py-3 px-5 rounded-t border-b bg-blue-500">
         <h3 class="text-sm font-bold text-white">
-            Referral
+            Confirmation
         </h3>
       </div>
       <!-- Modal body -->
@@ -146,10 +146,10 @@
 
       <!-- Modal footer -->
       <div class="flex justify-end py-4 px-5 space-x-4 rounded-b border-t border-gray-200">
-        <button type="button" class="btn-save bg-gray-400" (click)="toggleServiceModal()">Close</button>
+        <button type="button" class="btn-save bg-gray-400" (click)="toggleServiceModal()">No</button>
         <button  type="submit" class="btn-save px-10 disabled:bg-gray-300" (click)="acceptModal()">
           <fa-icon></fa-icon>
-          {{ is_saving ? 'Saving' : 'Save' }}
+          {{ is_saving ? 'Saving' : 'Yes' }}
         </button>
       </div>
     </div>
