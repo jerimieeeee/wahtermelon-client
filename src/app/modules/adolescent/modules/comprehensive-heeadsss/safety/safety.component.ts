@@ -89,6 +89,7 @@ export class SafetyComponent implements OnInit {
     if(this.selected_asrh_consult) {
       this.safetyForm.patchValue({
       safety_notes: this.selected_asrh_consult?.comprehensive?.safety_notes,
+      seriously_injured: this.selected_asrh_consult?.comprehensive?.seriously_injured
       });
       // this.show_form = true;
       // console.log(this.asrh_compre_history,'load compre home working')

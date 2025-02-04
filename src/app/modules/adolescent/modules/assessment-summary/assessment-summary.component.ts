@@ -126,7 +126,7 @@ export class AssessmentSummaryComponent implements OnInit {
         refused_flag: this.selected_asrh_consult?.refused_flag,
         refer_to_user_id: this.selected_asrh_consult?.refer_to_user_id,
         // status: this.selected_asrh_consult?.status,
-        done_flag: this.selected_asrh_consult?.refused_flag,
+        done_flag: this.selected_asrh_consult?.done_flag,
         done_date: this.selected_asrh_consult?.done_date,
         referral_date: this.selected_asrh_consult?.referral_date,
         algorithm_remarks: this.selected_asrh_consult?.algorithm_remarks
