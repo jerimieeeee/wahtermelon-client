@@ -40,7 +40,7 @@ export class SuicideDepressionComponent implements OnInit {
        assessment_date: new FormControl<string| null>(''),
        consent_flag: new FormControl<string| null>(''),
        suicide_notes: new FormControl<string| null>(''),
-
+       refused_flag: new FormControl<boolean>(false),
 
      });
 
@@ -74,8 +74,8 @@ export class SuicideDepressionComponent implements OnInit {
          patient_id: [this.patient_id],
          consult_asrh_rapid_id: [this.selected_asrh_consult?.id, [Validators.required, Validators.minLength(1)]],
          assessment_date: [this.selected_asrh_consult?.comprehensive?.assessment_date, [Validators.required, Validators.minLength(1)]],
-
          suicide_notes: ['', [Validators.required, Validators.minLength(1)]],
+         refused_flag: [false],
 
          // average_monthly_income: ['', [Validators.required, Validators.minLength(1), Validators.pattern("^[0-9,;]+$")]],
        });
@@ -89,6 +89,7 @@ export class SuicideDepressionComponent implements OnInit {
       if(this.selected_asrh_consult) {
         this.suicideForm.patchValue({
         suicide_notes: this.selected_asrh_consult?.comprehensive?.suicide_notes,
+        refused_flag: this.selected_asrh_consult?.comprehensive?.refused_flag
         });
         // this.show_form = true;
         // console.log(this.asrh_compre_history,'load compre home working')
@@ -117,6 +118,33 @@ export class SuicideDepressionComponent implements OnInit {
         },
       })
     }
+
+    openModal() {
+      // Listen for changes to the checkbox
+
+          this.toggleServiceModal();
+
+    }
+
+    showModal = false;
+
+    closeModal() {
+      this.showModal = false;  // Close the modal when the close button is clicked
+      this.suicideForm.get('refused_flag')?.setValue(false);  // Optionally uncheck the checkbox
+    }
+
+    showServiceModal = false;
+    toggleServiceModal() {
+      this.showServiceModal = !this.showServiceModal;
+      this.suicideForm.get('refused_flag')?.setValue(false);
+    }
+
+
+    acceptModal(){
+      this.showServiceModal = !this.showServiceModal;
+      this.suicideForm.get('refused_flag')?.setValue(true);
+    }
+
 
 
      constructor(

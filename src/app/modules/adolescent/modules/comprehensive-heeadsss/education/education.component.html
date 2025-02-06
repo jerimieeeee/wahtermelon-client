@@ -1,8 +1,17 @@
 
-<div class="m-5 border border-slate-200 rounded-lg" *ngIf="!show_form">
+<div class="m-5 border border-slate-200 rounded-lg" *ngIf="!show_form" [ngClass]="this.selected_asrh_consult?.refused_flag === 1 || this.selected_asrh_consult?.comprehensive?.refused_flag === true ? 'pointer-events-none select-none' : ''">
   <div class="bg-blue-500 text-sm text-white rounded-t-md py-2 pl-5 font-semibold">
    Comprehensive HEEADSSS Assessment
   </div>
+
+  <form [formGroup]="educationForm">
+    <div class="mt-5 px-5 flex justify-end">
+      <input type="checkbox" class="input-checkbox" id="refused_flag" formControlName="refused_flag" (change)="openModal()"/>
+      <label for="refused_flag" class="text-sm" >
+        The patient widrew consent.
+      </label>
+    </div>
+  </form>
 
   <form [formGroup]="educationForm" class="mx-5 mb-6">
 
@@ -36,7 +45,7 @@
 
 
     <div class="flex justify-center mt-5">
-        <button class="btn-save mt-4" [disabled]="is_saving || educationForm.invalid || !educationForm.dirty" (click)="onSubmit(); educationForm.markAsPristine();" >
+        <button class="btn-save mt-4" [disabled]="is_saving || !educationForm.dirty" (click)="onSubmit(); educationForm.markAsPristine();" >
           <fa-icon [icon]="faSave" *ngIf="!is_saving" class="mr-2"></fa-icon>
           <fa-icon [icon]="faSpinner" *ngIf="is_saving" animation="spin" class="mr-2"></fa-icon>
           {{ selected_asrh_consult?.comprehensive?.education_notes ? (is_saving ? 'Updating' : 'Update') : (is_saving ? 'Saving' : 'Save') }}
@@ -46,4 +55,37 @@
 </form>
 
 </div>
+
+<div *ngIf="showServiceModal" id="defaultModal" tabindex="-1" class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 w-full md:inset-0 h-modal md:h-full justify-center items-center flex" aria-modal="true" role="dialog" style="z-index:60">
+  <div class="relative p-4 w-full max-w-2xl h-auto md:h-auto">
+    <!-- Modal content -->
+    <div class="relative bg-white rounded-lg shadow">
+      <!-- Modal header -->
+      <div class="flex justify-between items-start py-3 px-5 rounded-t border-b bg-blue-500">
+        <h3 class="text-sm font-bold text-white">
+            Confirmation
+        </h3>
+      </div>
+      <!-- Modal body -->
+      <div class="overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
+        <form class="text-left m-5">
+          <p>Are you sure the patient refused to conduct the Rapid HEEADSSS Assessment?</p>
+        </form>
+
+      </div>
+
+      <!-- Modal footer -->
+      <div class="flex justify-end py-4 px-5 space-x-4 rounded-b border-t border-gray-200">
+        <button type="button" class="btn-save bg-gray-400" (click)="toggleServiceModal()">No</button>
+        <button  type="submit" class="btn-save px-10 disabled:bg-gray-300" (click)="acceptModal()">
+          <fa-icon></fa-icon>
+          {{ is_saving ? 'Saving' : 'Yes' }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div *ngIf="showServiceModal" class="opacity-50 fixed inset-0 z-50 bg-black"></div>
 

@@ -30,7 +30,7 @@
         [class]="module===2? 'tabs-main-true w-44' : 'tabs-main-false w-44' ">
         ASSESSMENT SUMMARY
     </button>
-    <button (click)="switchTab(3)" class="tabs-main w-44" *ngIf="selected_asrh_consult?.refer_to_user_id === user_info.id && user_info.aja_flag === true"
+    <button (click)="switchTab(3); switchTabCompre(1)" class="tabs-main w-44" *ngIf="selected_asrh_consult?.refer_to_user_id === user_info.id && user_info.aja_flag === true"
         [class]="module===3? 'tabs-main-true w-44' : 'tabs-main-false w-44' ">
         COMPREHENSIVE HEEADSSSS
     </button>
@@ -130,17 +130,18 @@
           {{ asrh_history?.assessment_date | date: 'MM/dd/yyyy'}}
         </td>
         <td class="py-4 px-6">
-          {{ asrh_history?.done_flag === 1 ? 'Done' : 'Ongoing' }}
+          {{ asrh_history?.done_flag === 1 ? 'Done' : (asrh_history?.refused_flag === 1 || asrh_history?.comprehensive?.refused_flag === true  ? 'Refused' : 'Ongoing') }}
         </td>
         <td class="py-4 px-6">
             {{ asrh_history?.comprehensive?.assessment_date ? (asrh_history?.comprehensive?.assessment_date | date: 'MM/dd/yyyy') : '-' }}
         </td>
         <td class="py-4 px-6">
-            {{ asrh_history?.comprehensive?.done_flag === true ? 'Done' : (asrh_history?.comprehensive?.done_flag === false ? 'Ongoing' : '-') }}
+          {{ asrh_history?.comprehensive?.done_flag === true ? 'Done' : (asrh_history?.refused_flag === 1 || asrh_history?.comprehensive?.refused_flag === true ? 'Refused' : (asrh_history?.comprehensive === null ? '-' : 'Ongoing'))}}
+
          </td>
         <td class="py-4 px-6">
             <button type="button" class="rounded-md bg-blue-500 text-white py-1 px-2" (click)="switchTab(1); openASRHConsult(asrh_history)" >
-            {{ asrh_history?.refused_flag === 1 ? 'View' : 'Open' }}
+            {{ asrh_history?.refused_flag === 1 || asrh_history?.comprehensive?.refused_flag === true ? 'View' : 'Open' }}
           </button>
         </td>
       </tr>

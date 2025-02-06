@@ -41,6 +41,7 @@ export class HomeComponent implements OnInit {
     assessment_date: new FormControl<string| null>(''),
     consent_flag: new FormControl<boolean>(false),
     home_notes: new FormControl<string| null>(''),
+    refused_flag: new FormControl<boolean>(false),
     // status: new FormControl<string| null>(''),
   });
 
@@ -83,6 +84,7 @@ export class HomeComponent implements OnInit {
       assessment_date: ['', [Validators.required, Validators.minLength(1)]],
       consent_flag: ['', [Validators.required, Validators.minLength(1)]],
       home_notes: ['', [Validators.required, Validators.minLength(1)]],
+      refused_flag: [false],
       // status: ['', [Validators.required, Validators.minLength(1)]],
       // average_monthly_income: ['', [Validators.required, Validators.minLength(1), Validators.pattern("^[0-9,;]+$")]],
     });
@@ -121,7 +123,8 @@ export class HomeComponent implements OnInit {
       assessment_date: this.selected_asrh_consult?.comprehensive?.assessment_date,
       // status: this.selected_asrh_consult?.comprehensive?.status,
       consent_flag: this.selected_asrh_consult?.comprehensive?.consent_flag,
-      home_notes:this.selected_asrh_consult?.comprehensive?.home_notes
+      home_notes:this.selected_asrh_consult?.comprehensive?.home_notes,
+      refused_flag: this.selected_asrh_consult?.comprehensive?.refused_flag
 
       });
       // this.show_form = true;
@@ -161,6 +164,32 @@ export class HomeComponent implements OnInit {
       comprestatusControl?.enable();
       // referControl?.enable();
     }
+  }
+
+  openModal() {
+    // Listen for changes to the checkbox
+
+        this.toggleServiceModal();
+
+  }
+
+  showModal = false;
+
+  closeModal() {
+    this.showModal = false;  // Close the modal when the close button is clicked
+    this.homeForm.get('refused_flag')?.setValue(false);  // Optionally uncheck the checkbox
+  }
+
+  showServiceModal = false;
+  toggleServiceModal() {
+    this.showServiceModal = !this.showServiceModal;
+    this.homeForm.get('refused_flag')?.setValue(false);
+  }
+
+
+  acceptModal(){
+    this.showServiceModal = !this.showServiceModal;
+    this.homeForm.get('refused_flag')?.setValue(true);
   }
 
   constructor(

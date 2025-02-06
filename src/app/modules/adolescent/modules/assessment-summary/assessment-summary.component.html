@@ -1,6 +1,6 @@
 
 <div class="m-5 border border-slate-200 rounded-lg">
-  <div class="bg-blue-500 text-sm text-white rounded-t-md py-2 pl-5 font-semibold">
+  <div class="bg-blue-500 text-sm text-white rounded-t-md py-2 pl-5 font-semibold select-none">
    Assessment Summary
   </div>
 
@@ -8,7 +8,7 @@
 
   <form [formGroup]="visitForm">
 
-  <div class="grid grid-cols-12 justify-between">
+  <div class="grid grid-cols-12 justify-between" [ngClass]="this.selected_asrh_consult?.refused_flag === 1 || this.selected_asrh_consult?.comprehensive?.refused_flag === true ? 'pointer-events-none select-none' : ''">
 
   <div class="col-span-6 px-5 pt-5">
     <div>
@@ -21,7 +21,7 @@
 
   </div>
 
-  <div class="col-span-6 px-5 pt-8">
+  <div class="col-span-6 pt-8">
     <div class="mt-5 px-5">
       <input type="checkbox" class="input-checkbox" id="done_flag" formControlName="done_flag" />
       <label for="done_flag" class="text-sm" >
@@ -44,7 +44,7 @@
 
 
 
-  <div class="mt-10 w-full border-t border-gray-200 py-5">
+  <div class="mt-10 w-full border-t border-gray-200 py-5" [ngClass]="this.selected_asrh_consult?.refused_flag === 1 || this.selected_asrh_consult?.comprehensive?.refused_flag === true ? 'pointer-events-none select-none' : ''">
 
     <div *ngIf="!checkAnswers(selected_asrh_consult.answers)">
       <div class="text-sm flex justify-center mt-5">

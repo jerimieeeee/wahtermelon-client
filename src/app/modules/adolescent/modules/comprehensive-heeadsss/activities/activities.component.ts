@@ -41,8 +41,8 @@ export class ActivitiesComponent implements OnInit {
       patient_id: new FormControl<string| null>(''),
       consult_asrh_rapid_id: new FormControl<string| null>(''),
       assessment_date: new FormControl<string| null>(''),
-
       activities_notes: new FormControl<string| null>(''),
+      refused_flag: new FormControl<boolean>(false),
 
 
     });
@@ -77,8 +77,8 @@ export class ActivitiesComponent implements OnInit {
         patient_id: [this.patient_id],
         consult_asrh_rapid_id: [this.selected_asrh_consult?.id, [Validators.required, Validators.minLength(1)]],
         assessment_date: [this.selected_asrh_consult?.comprehensive?.assessment_date, [Validators.required, Validators.minLength(1)]],
-
         activities_notes: ['', [Validators.required, Validators.minLength(1)]],
+        refused_flag: [false],
 
         // average_monthly_income: ['', [Validators.required, Validators.minLength(1), Validators.pattern("^[0-9,;]+$")]],
       });
@@ -92,6 +92,7 @@ export class ActivitiesComponent implements OnInit {
      if(this.selected_asrh_consult) {
        this.activitiesForm.patchValue({
        activities_notes: this.selected_asrh_consult?.comprehensive?.activities_notes,
+       refused_flag: this.selected_asrh_consult?.comprehensive?.refused_flag
        });
        // this.show_form = true;
       //  console.log(this.asrh_compre_history,'load compre home working')
@@ -122,6 +123,32 @@ export class ActivitiesComponent implements OnInit {
        },
      })
    }
+
+   openModal() {
+    // Listen for changes to the checkbox
+
+        this.toggleServiceModal();
+
+  }
+
+  showModal = false;
+
+  closeModal() {
+    this.showModal = false;  // Close the modal when the close button is clicked
+    this.activitiesForm.get('refused_flag')?.setValue(false);  // Optionally uncheck the checkbox
+  }
+
+  showServiceModal = false;
+  toggleServiceModal() {
+    this.showServiceModal = !this.showServiceModal;
+    this.activitiesForm.get('refused_flag')?.setValue(false);
+  }
+
+
+  acceptModal(){
+    this.showServiceModal = !this.showServiceModal;
+    this.activitiesForm.get('refused_flag')?.setValue(true);
+  }
 
 
     constructor(
