@@ -6,8 +6,7 @@ import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
     selector: 'app-reports',
-    // templateUrl: './reports.component.html',
-    template: "<div class='flex justify-center mt-20'>Temporarily Disabled</div>",
+    templateUrl: './reports.component.html',
     styleUrls: ['./reports.component.scss'],
     standalone: false
 })
