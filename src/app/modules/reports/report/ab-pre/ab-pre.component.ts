@@ -52,7 +52,9 @@ export class AbPreComponent implements OnChanges {
     dog: 0,
     cat: 0,
     others: 0,
-    total_biting_animal: 0
+    total_biting_animal: 0,
+    total_cat2_and_cat3_previous_quarter: 0,
+    pep_completed_previous: 0
   };
 
   stats_others : any[];
@@ -127,18 +129,28 @@ export class AbPreComponent implements OnChanges {
       dog: 0,
       cat: 0,
       others: 0,
-      total_biting_animal: 0
+      total_biting_animal: 0,
+      total_cat2_and_cat3_previous_quarter: 0,
+      pep_completed_previous: 0
     };
   }
-  sumTotal($variable: 'stats' | 'stats_others') {
+  sumTotal($variable: 'stats' | 'stats_others' | 'previous' | 'previous_others') {
     this.initializeSumTotal();
     // Define the keys you want to sum
-    const keysToSum = [
-      'population', 'male', 'female', 'male_female_total', 'less_than_15', 'greater_than_15', 'less_than_and_greater_than_15',
-      'category1', 'category2', 'category3', 'total_cat2_and_cat3', 'total_cat1_cat2_cat3',
-      'prep_total', 'prep_completed', 'tandok', 'pep_completed', 'tcv', 'HRIG', 'ERIG', 'dog', 'cat',
-      'others', 'total_biting_animal'
-    ];
+
+    let keysToSum: string[];
+    if( $variable === 'stats' || $variable === 'stats_others') {
+      keysToSum = [
+        'population', 'male', 'female', 'male_female_total', 'less_than_15', 'greater_than_15', 'less_than_and_greater_than_15',
+        'category1', 'category2', 'category3', 'total_cat2_and_cat3', 'total_cat1_cat2_cat3',
+        'prep_total', 'prep_completed', 'tandok', 'pep_completed', 'tcv', 'HRIG', 'ERIG', 'dog', 'cat',
+        'others', 'total_biting_animal', 'total_cat2_and_cat3_previous_quarter', 'pep_completed_previous'
+      ];
+    } else {
+      keysToSum = [
+        'total_cat2_and_cat3_previous_quarter', 'pep_completed_previous'
+      ];
+    }
 
     // Use dynamic object reference based on $variable
     const selectedStats = this[$variable];
@@ -147,14 +159,29 @@ export class AbPreComponent implements OnChanges {
     Object.entries(selectedStats).forEach(([key, value]: [string, any]) => {
       Object.entries(value).forEach(([k, v]: [string, any]) => {
         keysToSum.forEach((keyToSum) => {
-          this.sum_total[keyToSum] = this.sum_total[keyToSum] + +v[keyToSum];
+          const count_v = v[keyToSum] ? +v[keyToSum] : 0;
+          this.sum_total[keyToSum] = this.sum_total[keyToSum] + count_v;
         });
       });
       // Update the selected stats with the accumulated sum
-      if ($variable === 'stats_others' || $variable === 'stats') {
+      // if ($variable === 'stats_others' || $variable === 'stats') {
         this.sum_total.code = ($variable === 'stats' && !this.reportFlag) ? value[0].barangay_code : value[0].municipality_code;
+      // }
+
+      if( $variable === 'stats' || $variable === 'stats_others') {
+        selectedStats[key] = [this.sum_total];
+      } else {
+        if($variable === 'previous') {
+          if(!this.stats[key]) this.stats[key] = [this.sum_total];
+          this.stats[key][0]['total_cat2_and_cat3_previous_quarter'] = this.sum_total.total_cat2_and_cat3_previous_quarter;
+          this.stats[key][0]['pep_completed_previous'] = this.sum_total.pep_completed_previous;
+        }
+        if($variable === 'previous_others') {
+          if(!this.stats_others[key]) this.stats_others[key] = [this.sum_total];
+          this.stats_others[key][0]['total_cat2_and_cat3_previous_quarter'] = this.sum_total.total_cat2_and_cat3_previous_quarter;
+          this.stats_others[key][0]['pep_completed_previous'] = this.sum_total.pep_completed_previous;
+        }
       }
-      selectedStats[key] = [this.sum_total];
 
       this.initializeSumTotal();
     });
@@ -198,7 +225,7 @@ export class AbPreComponent implements OnChanges {
 
       this.initializeSumTotalPrevious();
     });
-    console.log(this[$variable])
+    // console.log(this[$variable])
   }
 
   exportX() {
@@ -230,6 +257,14 @@ export class AbPreComponent implements OnChanges {
     private http: HttpService
   ) { }
 
+  processSumTotals() {
+    const variables: ('stats' | 'stats_others' | 'previous' | 'previous_others')[] = ['stats', 'stats_others', 'previous', 'previous_others'];
+
+    variables.forEach((variable) => {
+      this.sumTotal(variable);
+    });
+  }
+
   label_value: {};
   reportFlag: string;
   ngOnChanges(): void {
@@ -238,14 +273,17 @@ export class AbPreComponent implements OnChanges {
     this.reportFlag = this.userInfo.reports_flag === 1 ? '1' : null;
     this.selected_barangay = this.selectedBrgy;
     this.show_stats = false;
+
     this.stats = this.report_data.data;
     this.stats_others = this.report_data.data1_others;
+
     this.previous = this.report_data.data2;
     this.previous_others = this.report_data.data2_others;
-    this.sumTotal('stats');
+    this.processSumTotals();
+    /* this.sumTotal('stats');
     this.sumTotal('stats_others');
     this.sumTotalPrevious('previous');
-    this.sumTotalPrevious('previous_others');
+    this.sumTotalPrevious('previous_others'); */
     this.brgys_info = this.brgys;
     this.pdf_exported = false;
     this.show_stats = true;
