@@ -8,7 +8,8 @@ import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-consent',
   templateUrl: './consent.component.html',
-  styleUrl: './consent.component.scss'
+  styleUrl: './consent.component.scss',
+  standalone: false
 })
 export class ConsentComponent implements OnInit {
   @Input() selected_asrh_consult: any;
@@ -115,26 +116,26 @@ export class ConsentComponent implements OnInit {
       this.modals[name] = !this.modals[name];
       console.log('toggle modal')
     }
-  
+
     openModal() {
       // Listen for changes to the checkbox
-  
+
           this.toggleServiceModal();
-  
+
     }
-  
+
     closeModal() {
       this.showModal = false;  // Close the modal when the close button is clicked
       this.consentForm.get('refused_flag')?.setValue(false);  // Optionally uncheck the checkbox
     }
-  
+
     showServiceModal = false;
     toggleServiceModal() {
       this.showServiceModal = !this.showServiceModal;
       this.consentForm.get('refused_flag')?.setValue(false);
     }
-  
-  
+
+
     acceptModal(){
       this.showServiceModal = !this.showServiceModal;
       this.consentForm.get('refused_flag')?.setValue(true);
