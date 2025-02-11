@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { faCalendar, faTimes, faDoorClosed, faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { forkJoin } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-adolescent',
@@ -24,7 +26,7 @@ export class AdolescentComponent implements OnInit {
   module_compre: number = 1;
   show_end: boolean = false;
   fetching_history: boolean = false;
-  show_form: boolean = true;
+  show_form: boolean = false;
 
   compre_questions: any = [];
   client_types: any = [];
@@ -37,6 +39,75 @@ export class AdolescentComponent implements OnInit {
   modals: any = [];
 
   consult_details: any;
+
+  is_saving: boolean = false;
+
+  consentForm: FormGroup = new FormGroup({
+      id: new FormControl<string| null>(''),
+      patient_id: new FormControl<string| null>(''),
+      consult_asrh_rapid_id: new FormControl<string| null>(''),
+      assessment_date: new FormControl<string| null>(''),
+      consent_flag: new FormControl<boolean>(false),
+      refused_flag: new FormControl<boolean>(false),
+      // status: new FormControl<string| null>(''),
+    });
+
+    onSubmit(){
+      console.log(this.consentForm.value, 'display visit details')
+      this.is_saving = true;
+      this.http.post('asrh/comprehensive', this.consentForm.value).subscribe({
+        next: (data: any) => {
+          this.toastr.success('Comprehensive Details was saved successfuly')
+          this.is_saving = false;
+          // this.showButton = !this.showButton;
+          this.updateSelectedASRH
+          // this.loadASRH.emit();
+          // this.reloadData();
+            // this.patchCompre();
+          console.log(this.consentForm, 'checker home')
+           },
+        complete: () => {
+          console.log('success')
+        },
+        error: err => {console.log(err)
+
+        },
+      })
+    }
+
+  validateForm(){
+
+      this.consentForm = this.formBuilder.group({
+        id: [''],
+        patient_id: [this.patient_id],
+        consult_asrh_rapid_id: [this.selected_asrh_consult?.id, [Validators.required, Validators.minLength(1)]],
+        assessment_date: ['', [Validators.required, Validators.minLength(1)]],
+        consent_flag: ['', [Validators.required, Validators.minLength(1)]],
+        refused_flag: [false],
+        // status: ['', [Validators.required, Validators.minLength(1)]],
+        // average_monthly_income: ['', [Validators.required, Validators.minLength(1), Validators.pattern("^[0-9,;]+$")]],
+      });
+      this.patchCompre();
+      // this.disableForm();
+      // this.loadFPDetails();
+      // this.show_form = true;
+    }
+
+    patchCompre(){
+
+      if(this.selected_asrh_consult) {
+        this.consentForm.patchValue({
+        assessment_date: this.selected_asrh_consult?.comprehensive?.assessment_date,
+        // status: this.selected_asrh_consult?.comprehensive?.status,
+        consent_flag: this.selected_asrh_consult?.comprehensive?.consent_flag,
+        refused_flag: this.selected_asrh_consult?.comprehensive?.refused_flag
+
+        });
+        // this.show_form = true;
+        console.log(this.selected_asrh_consult,'load compre home working')
+        // this.loadSelected();
+      }
+    }
 
   switchPage(page) {
     if(page === 1) this.loadASRH();
@@ -184,7 +255,9 @@ export class AdolescentComponent implements OnInit {
   constructor(
     private http: HttpService,
     private router: Router,
-    private route: ActivatedRoute)
+    private toastr: ToastrService,
+    private route: ActivatedRoute,
+    private formBuilder: FormBuilder)
   { }
 
 
@@ -195,6 +268,7 @@ export class AdolescentComponent implements OnInit {
     this.user_facility = this.http.getUserFacility();
 
     this.loadConsultDetails();
+    this.validateForm();
     console.log(this.user_info, 'user_info')
   }
 }

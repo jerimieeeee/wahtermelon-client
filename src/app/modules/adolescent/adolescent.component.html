@@ -42,15 +42,54 @@
   </div>
 </nav>
 
-<!-- <div *ngIf="pages===2 && module===3" class="col-span-12 col-start-1 grid gap-x-4 mb-5">
-  <div class="mt-5">
-    <input type="checkbox" class="input-checkbox" id="consent_flag" formControlName="consent_flag" />
-    <label for="consent_flag" class="text-sm" >
-      The patient has read, fully understood, and signed the patient consent form.
-    </label>
+<div *ngIf="pages===2 && module===3" class="col-span-12 col-start-1 grid gap-x-4 mb-5 m-5 border border-slate-200 rounded-lg" [ngClass]="this.selected_asrh_consult?.refused_flag === 1 || this.selected_asrh_consult?.comprehensive?.refused_flag === true ? 'pointer-events-none select-none' : ''">
+    <div class="bg-blue-500 text-sm text-white rounded-t-md py-2 pl-5 font-semibold">
+     Comprehensive HEEADSSS Assessment
+    </div>
+
+
+
+  <form [formGroup]="consentForm" class="grid grid-cols-16 gap-x-4 w-full mb-5">
+    <div class="grid grid-cols-12">
+
+      <div class="col-span-6 grid gap-x-4 mt-2">
+        <div class="mt-10 px-5">
+          <input type="checkbox" class="input-checkbox" id="consent_flag" formControlName="consent_flag" />
+          <label for="consent_flag" class="text-sm" >
+            The patient has read, fully understood, and signed the patient consent form.
+          </label>
+        </div>
+      </div>
+
+      <div class="col-span-6 px-5 pt-5">
+          <label for="assessment_date" class="text-sm font-semibold">Assessment Date</label>
+          <input type="date" name="assessment_date" id="assessment_date" class="input" formControlName="assessment_date">
+      </div>
+
+
+      <div class="col-span-6 grid gap-x-4 mt-2">
+        <div class="px-5">
+          <input type="checkbox" class="input-checkbox" id="consent_flag" formControlName="consent_flag" />
+          <label for="consent_flag" class="text-sm" >
+            {{ !consentForm.value.consent_flag === true ? 'Patient Refused' : 'Patient Widrew' }}
+          </label>
+        </div>
+      </div>
+
+    </div>
+  </form>
+
+  <div class="flex justify-center mb-5">
+    <button class="btn-save" (click)="onSubmit()">
+      <fa-icon [icon]="faSave" *ngIf="!is_saving" class="mr-2"></fa-icon>
+      <fa-icon [icon]="faSpinner" *ngIf="is_saving" animation="spin" class="mr-2"></fa-icon>
+      Save
+    </button>
   </div>
-</div> -->
-<div *ngIf="pages===2 && module===3">
+</div>
+
+
+<div *ngIf="pages===2 && module===3 && this.selected_asrh_consult?.consent_flag === true">
 <nav  class="mt-2 flex justify-between border-b border-slate-300 text-xs">
   <div class="flex flex-row ml-1">
     <button (click)="switchTabCompre(1)" class="tabs-main w-24"
@@ -162,7 +201,7 @@
   </table>
 </div>
 
-<app-rapid-heeadsss *ngIf="pages === 2 && module === 1"
+<app-rapid-heeadsss *ngIf="pages === 2 && module === 1 "
   [patient_id]="patient_id"
   [client_types]="client_types"
   [asrh_visit_history]="asrh_visit_history"
@@ -182,7 +221,7 @@
   (updateSelectedASRH)="updateSelectedASRH($event)"
 ></app-assessment-summary>
 
-<app-home *ngIf="pages === 2 && module === 3 && module_compre === 1"
+<app-home *ngIf="pages === 2 && module === 3 && module_compre === 1 && this.selected_asrh_consult?.consent_flag === true"
   [patient_id]="patient_id"
   (loadASRH)="loadASRH()"
   [compre_questions]="compre_questions"
