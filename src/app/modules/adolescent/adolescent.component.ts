@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { faCalendar, faTimes, faDoorClosed, faCircleNotch } from '@fortawesome/free-solid-svg-icons';
@@ -11,7 +11,7 @@ import { ToastrService } from 'ngx-toastr';
   templateUrl: './adolescent.component.html',
   styleUrl: './adolescent.component.scss'
 })
-export class AdolescentComponent implements OnInit {
+export class AdolescentComponent implements OnInit, OnChanges {
 
   faCalendar = faCalendar;
   faTimes = faTimes;
@@ -134,24 +134,38 @@ export class AdolescentComponent implements OnInit {
     });
   } */
 
- loadASRH(){
-    this.selected_asrh_consult = null;
-    this.fetching_history = true;
-    let params = {
-      patient_id: this.patient_id
-    };
+    loadASRH() {
+      this.selected_asrh_consult = null;
+      this.fetching_history = true;
+      let params = {
+        patient_id: this.patient_id
+      };
 
-    this.http.get('asrh/rapid', {params}).subscribe({
-      next: (data: any) => {
-        this.patient_asrh_history = data.data;
-        if(this.patient_asrh_history[0] && !this.patient_asrh_history[0]?.comprehensive?.status === null) this.selected_asrh_consult = data.data[0];
-        this.fetching_history = true;
-        console.log(this.selected_asrh_consult, 'selected_asrh_consult');
-        // this.pages = 2;
-      },
-      error: err => console.log(err)
-    });
+      this.http.get('asrh/rapid', {params}).subscribe({
+        next: (data: any) => {
+          this.patient_asrh_history = data.data;
+          this.patient_asrh_history.sort((a, b) => {
+            const dateA = new Date(a.assessment_date);
+            const dateB = new Date(b.assessment_date);
+
+            // Sorting in descending order (latest date first)
+            return dateB > dateA ? 1 : dateB < dateA ? -1 : 0;
+          });
+          // Loop through the data to find the first entry with an ongoing status
+          const ongoingConsult = this.patient_asrh_history.find(item => (item?.done_flag === 0 || item?.comprehensive?.done_flag === false ) || ( item?.refused_flag === 0 || item?.comprehensive?.refused_flag === false) ) ;
+
+          if (ongoingConsult) {
+            this.selected_asrh_consult = ongoingConsult;
+          }
+
+          this.fetching_history = true; // Set to false after data is fetched
+          console.log(this.selected_asrh_consult, 'selected_asrh_consult');
+          // this.pages = 2; // This is commented out but you might want to handle it later
+        },
+        error: err => console.log(err)
+      });
   }
+
 
   loadASRH2(){
     this.fetching_history = true;
@@ -185,6 +199,8 @@ export class AdolescentComponent implements OnInit {
     });
   }
 
+
+
   constructor(
     private http: HttpService,
     private router: Router,
@@ -202,5 +218,15 @@ export class AdolescentComponent implements OnInit {
 
     this.loadConsultDetails();
     console.log(this.user_info, 'user_info')
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log('ngOnChanges triggered in Parent!');
+    // Handle any changes in parent data here
+  }
+
+  onChildOpened() {
+    console.log('Child component was opened!');
+    // Trigger changes in the parent component
   }
 }

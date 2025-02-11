@@ -38,11 +38,11 @@ export class SpiritualityComponent implements OnInit {
       patient_id: new FormControl<string| null>(''),
       consult_asrh_rapid_id: new FormControl<string| null>(''),
       assessment_date: new FormControl<string| null>(''),
-      consent_flag: new FormControl<string| null>(''),
+      // consent_flag: new FormControl<string| null>(''),
       spirituality_notes: new FormControl<string| null>(''),
       done_status: new FormControl<boolean>(false),
       done_date: new FormControl<string| null>(''),
-      refused_flag: new FormControl<boolean>(false),
+      // refused_flag: new FormControl<boolean>(false),
     });
 
     onSubmit(){
@@ -78,7 +78,7 @@ export class SpiritualityComponent implements OnInit {
         spirituality_notes: ['', [Validators.required, Validators.minLength(1)]],
         done_flag: [this.selected_asrh_consult?.comprehensive?.done_flag, [Validators.required, Validators.minLength(1)]],
         done_date: [this.selected_asrh_consult?.comprehensive?.done_date, [Validators.required, Validators.minLength(1)]],
-        refused_flag: [false],
+        // refused_flag: [false],
         // average_monthly_income: ['', [Validators.required, Validators.minLength(1), Validators.pattern("^[0-9,;]+$")]],
       });
       this.patchCompre();
@@ -93,7 +93,7 @@ export class SpiritualityComponent implements OnInit {
        spirituality_notes: this.selected_asrh_consult?.comprehensive?.spirituality_notes,
        done_date: this.selected_asrh_consult?.comprehensive?.done_date,
        done_flag: this.selected_asrh_consult?.comprehensive?.done_flag,
-       refused_flag: this.selected_asrh_consult?.comprehensive?.refused_flag
+      //  refused_flag: this.selected_asrh_consult?.comprehensive?.refused_flag
        });
        // this.show_form = true;
       //  console.log(this.asrh_compre_history,'load compre home working')

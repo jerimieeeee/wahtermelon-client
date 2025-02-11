@@ -1,17 +1,17 @@
 
-<div class="m-5 border border-slate-200 rounded-lg" *ngIf="!show_form" [ngClass]="this.selected_asrh_consult?.refused_flag === 1 || this.selected_asrh_consult?.comprehensive?.refused_flag === true ? 'pointer-events-none select-none' : ''">
+<div class="m-5 border border-slate-200 rounded-lg" *ngIf="!show_form" [ngClass]="(this.selected_asrh_consult?.done_flag === 1 && this.selected_asrh_consult?.comprehensive?.done_flag === true) || (this.selected_asrh_consult?.refused_flag === 1 || this.selected_asrh_consult?.comprehensive?.refused_flag === true) ? 'pointer-events-none select-none' : ''">
   <div class="bg-blue-500 text-sm text-white rounded-t-md py-2 pl-5 font-semibold">
    Comprehensive HEEADSSS Assessment
   </div>
 
-  <form [formGroup]="educationForm">
+  <!-- <form [formGroup]="educationForm">
     <div class="mt-5 px-5 flex justify-end">
       <input type="checkbox" class="input-checkbox" id="refused_flag" formControlName="refused_flag" (change)="openModal()"/>
       <label for="refused_flag" class="text-sm" >
         The patient widrew consent.
       </label>
     </div>
-  </form>
+  </form> -->
 
   <form [formGroup]="educationForm" class="mx-5 mb-6">
 

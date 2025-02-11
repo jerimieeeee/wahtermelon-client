@@ -43,7 +43,7 @@ export class SexualityComponent implements OnInit {
         assessment_date: new FormControl<string| null>(''),
         risky_behavior: new FormControl<boolean>(false),
         sexuality_notes: new FormControl<string| null>(''),
-        refused_flag: new FormControl<boolean>(false),
+        // refused_flag: new FormControl<boolean>(false),
 
       });
 
@@ -79,7 +79,7 @@ export class SexualityComponent implements OnInit {
           assessment_date: [this.selected_asrh_consult?.comprehensive?.assessment_date, [Validators.required, Validators.minLength(1)]],
           risky_behavior: [[false], [Validators.required, Validators.minLength(1)]],
           sexuality_notes: ['', [Validators.required, Validators.minLength(1)]],
-          refused_flag: [false],
+          // refused_flag: [false],
           // average_monthly_income: ['', [Validators.required, Validators.minLength(1), Validators.pattern("^[0-9,;]+$")]],
         });
         this.patchCompre();
@@ -93,7 +93,7 @@ export class SexualityComponent implements OnInit {
          this.sexualityForm.patchValue({
          sexuality_notes: this.selected_asrh_consult?.comprehensive?.sexuality_notes,
          risky_behavior: this.selected_asrh_consult?.comprehensive?.risky_behavior,
-         refused_flag: this.selected_asrh_consult?.comprehensive?.refused_flag
+        //  refused_flag: this.selected_asrh_consult?.comprehensive?.refused_flag
          });
          // this.show_form = true;
         //  console.log(this.asrh_compre_history,'load compre home working')

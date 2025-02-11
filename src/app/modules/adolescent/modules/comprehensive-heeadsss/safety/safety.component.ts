@@ -38,10 +38,10 @@ export class SafetyComponent implements OnInit {
      patient_id: new FormControl<string| null>(''),
      consult_asrh_rapid_id: new FormControl<string| null>(''),
      assessment_date: new FormControl<string| null>(''),
-     consent_flag: new FormControl<string| null>(''),
+    //  consent_flag: new FormControl<string| null>(''),
      safety_notes: new FormControl<string| null>(''),
      seriously_injured: new FormControl<string| null>(''),
-     refused_flag: new FormControl<boolean>(false),
+    //  refused_flag: new FormControl<boolean>(false),
    });
 
    onSubmit(){
@@ -76,7 +76,7 @@ export class SafetyComponent implements OnInit {
        assessment_date: [this.selected_asrh_consult?.comprehensive?.assessment_date, [Validators.required, Validators.minLength(1)]],
        safety_notes: ['', [Validators.required, Validators.minLength(1)]],
        seriously_injured: ['', [Validators.required, Validators.minLength(1)]],
-       refused_flag: [false],
+      //  refused_flag: [false],
        // average_monthly_income: ['', [Validators.required, Validators.minLength(1), Validators.pattern("^[0-9,;]+$")]],
      });
 
@@ -90,7 +90,7 @@ export class SafetyComponent implements OnInit {
       this.safetyForm.patchValue({
       safety_notes: this.selected_asrh_consult?.comprehensive?.safety_notes,
       seriously_injured: this.selected_asrh_consult?.comprehensive?.seriously_injured,
-      refused_flag: this.selected_asrh_consult?.comprehensive?.refused_flag
+      // refused_flag: this.selected_asrh_consult?.comprehensive?.refused_flag
       });
       // this.show_form = true;
       // console.log(this.asrh_compre_history,'load compre home working')

@@ -3,7 +3,7 @@
    Rapid HEEADSSSS Assessment Details
   </div>
 
-  <div class="mx-5 mb" [ngClass]="this.selected_asrh_consult?.refused_flag === 1 || this.selected_asrh_consult?.comprehensive?.refused_flag === true ? 'pointer-events-none select-none' : ''">
+  <div class="mx-5 mb" [ngClass]="(this.selected_asrh_consult?.done_flag === 1 && this.selected_asrh_consult?.comprehensive?.done_flag === true) || (this.selected_asrh_consult?.refused_flag === 1 || this.selected_asrh_consult?.comprehensive?.refused_flag === true) ? 'pointer-events-none select-none' : ''">
 
       <form [formGroup]="visitForm" (submit)="createRapid()"  class="mt-1 grid grid-cols-16 gap-x-4 w-full mb-10">
         <div class="grid grid-cols-12">
@@ -94,7 +94,7 @@
   </div>
 </div>
 
-<div class="m-5 border border-slate-200 rounded-lg" [ngClass]="this.selected_asrh_consult?.refused_flag === 1 || this.selected_asrh_consult?.comprehensive?.refused_flag === true ? 'pointer-events-none select-none' : ''">
+<div class="m-5 border border-slate-200 rounded-lg" [ngClass]="(this.selected_asrh_consult?.done_flag === 1 && this.selected_asrh_consult?.comprehensive?.done_flag === true) || (this.selected_asrh_consult?.refused_flag === 1 || this.selected_asrh_consult?.comprehensive?.refused_flag === true) ? 'pointer-events-none select-none' : ''">
   <div class="bg-blue-500 text-sm text-white rounded-t-md py-2 pl-5 font-semibold">
    Rapid HEEADSSSS Assessment Answers
   </div>

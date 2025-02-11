@@ -38,9 +38,9 @@ export class EatingComponent implements OnInit {
      patient_id: new FormControl<string| null>(''),
      consult_asrh_rapid_id: new FormControl<string| null>(''),
      assessment_date: new FormControl<string| null>(''),
-     consent_flag: new FormControl<string| null>(''),
+    //  consent_flag: new FormControl<string| null>(''),
      eating_notes: new FormControl<string| null>(''),
-     refused_flag: new FormControl<boolean>(false),
+    //  refused_flag: new FormControl<boolean>(false),
 
    });
 
@@ -75,7 +75,7 @@ export class EatingComponent implements OnInit {
        consult_asrh_rapid_id: [this.selected_asrh_consult.id, [Validators.required, Validators.minLength(1)]],
        assessment_date: [this.selected_asrh_consult?.comprehensive?.assessment_date, [Validators.required, Validators.minLength(1)]],
        eating_notes: ['', [Validators.required, Validators.minLength(1)]],
-       refused_flag: [false],
+      //  refused_flag: [false],
        // average_monthly_income: ['', [Validators.required, Validators.minLength(1), Validators.pattern("^[0-9,;]+$")]],
      });
 
@@ -88,7 +88,7 @@ export class EatingComponent implements OnInit {
     if(this.selected_asrh_consult) {
       this.eatingForm.patchValue({
       eating_notes: this.selected_asrh_consult?.comprehensive?.eating_notes,
-      refused_flag: this.selected_asrh_consult?.comprehensive?.refused_flag
+      // refused_flag: this.selected_asrh_consult?.comprehensive?.refused_flag
       });
       // this.show_form = true;
       console.log(this.selected_asrh_consult.comprehensive,'load compre home working')

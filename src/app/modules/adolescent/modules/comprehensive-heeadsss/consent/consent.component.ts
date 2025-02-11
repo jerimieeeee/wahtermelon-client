@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { faCalendar, faTimes, faDoorClosed, faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { Router, ActivatedRoute } from '@angular/router';
 import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -12,6 +13,7 @@ import { ToastrService } from 'ngx-toastr';
 export class ConsentComponent implements OnInit {
   @Input() selected_asrh_consult: any;
   @Output() updateSelectedASRH = new EventEmitter<any>();
+  @Output() opened = new EventEmitter<void>();
 
   faCalendar = faCalendar;
   faTimes = faTimes;
@@ -109,6 +111,40 @@ export class ConsentComponent implements OnInit {
       }
     }
 
+    toggleModal(name){
+      this.modals[name] = !this.modals[name];
+      console.log('toggle modal')
+    }
+  
+    openModal() {
+      // Listen for changes to the checkbox
+  
+          this.toggleServiceModal();
+  
+    }
+  
+    closeModal() {
+      this.showModal = false;  // Close the modal when the close button is clicked
+      this.consentForm.get('refused_flag')?.setValue(false);  // Optionally uncheck the checkbox
+    }
+  
+    showServiceModal = false;
+    toggleServiceModal() {
+      this.showServiceModal = !this.showServiceModal;
+      this.consentForm.get('refused_flag')?.setValue(false);
+    }
+  
+  
+    acceptModal(){
+      this.showServiceModal = !this.showServiceModal;
+      this.consentForm.get('refused_flag')?.setValue(true);
+    }
+
+    openChild() {
+      // Emit an event when the child is opened
+      this.opened.emit();
+    }
+
  constructor(
     private http: HttpService,
     private router: Router,
@@ -123,7 +159,7 @@ export class ConsentComponent implements OnInit {
     this.consult_id = this.route.snapshot.paramMap.get('consult_id');
     this.user_info = this.http.getUserFromJSON();
     this.user_facility = this.http.getUserFacility();
-
+    this.openChild();
     this.validateForm();
     console.log(this.user_info, 'user_info')
   }

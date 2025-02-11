@@ -18,6 +18,7 @@ import { AssessmentSummaryComponent } from './modules/assessment-summary/assessm
 import { EndVisitComponent } from 'app/shared/shared-modals/end-visit/end-visit.component';
 import { ReferralComponent } from './modules/comprehensive-heeadsss/referral/referral.component';
 import { ReferralModalComponent } from './modules/comprehensive-heeadsss/referral/modals/referral-modal/referral-modal.component';
+import { ConsentComponent } from './modules/comprehensive-heeadsss/consent/consent.component';
 
 
 
@@ -37,7 +38,8 @@ import { ReferralModalComponent } from './modules/comprehensive-heeadsss/referra
     SafetyComponent,
     SpiritualityComponent,
     ReferralComponent,
-    ReferralModalComponent
+    ReferralModalComponent,
+    ConsentComponent
   ],
   imports: [
     CommonModule, AdolescentRoutingModule,FontAwesomeModule, FormsModule, ReactiveFormsModule, EndVisitComponent

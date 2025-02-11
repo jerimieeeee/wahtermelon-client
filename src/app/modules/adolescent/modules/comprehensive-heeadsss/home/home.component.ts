@@ -39,9 +39,9 @@ export class HomeComponent implements OnInit {
     patient_id: new FormControl<string| null>(''),
     consult_asrh_rapid_id: new FormControl<string| null>(''),
     assessment_date: new FormControl<string| null>(''),
-    consent_flag: new FormControl<boolean>(false),
+    // consent_flag: new FormControl<boolean>(false),
     home_notes: new FormControl<string| null>(''),
-    refused_flag: new FormControl<boolean>(false),
+    // refused_flag: new FormControl<boolean>(false),
     // status: new FormControl<string| null>(''),
   });
 
@@ -81,10 +81,10 @@ export class HomeComponent implements OnInit {
       id: [''],
       patient_id: [this.patient_id],
       consult_asrh_rapid_id: [this.selected_asrh_consult?.id, [Validators.required, Validators.minLength(1)]],
-      assessment_date: ['', [Validators.required, Validators.minLength(1)]],
-      consent_flag: ['', [Validators.required, Validators.minLength(1)]],
+      assessment_date: [this.selected_asrh_consult?.comprehensive?.assessment_date, [Validators.required, Validators.minLength(1)]],
+      // consent_flag: ['', [Validators.required, Validators.minLength(1)]],
       home_notes: ['', [Validators.required, Validators.minLength(1)]],
-      refused_flag: [false],
+      // refused_flag: [false],
       // status: ['', [Validators.required, Validators.minLength(1)]],
       // average_monthly_income: ['', [Validators.required, Validators.minLength(1), Validators.pattern("^[0-9,;]+$")]],
     });
@@ -120,11 +120,11 @@ export class HomeComponent implements OnInit {
 
     if(this.selected_asrh_consult) {
       this.homeForm.patchValue({
-      assessment_date: this.selected_asrh_consult?.comprehensive?.assessment_date,
+      // assessment_date: this.selected_asrh_consult?.comprehensive?.assessment_date,
       // status: this.selected_asrh_consult?.comprehensive?.status,
       consent_flag: this.selected_asrh_consult?.comprehensive?.consent_flag,
       home_notes:this.selected_asrh_consult?.comprehensive?.home_notes,
-      refused_flag: this.selected_asrh_consult?.comprehensive?.refused_flag
+      // refused_flag: this.selected_asrh_consult?.comprehensive?.refused_flag
 
       });
       // this.show_form = true;
