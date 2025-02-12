@@ -152,11 +152,20 @@ export class AdolescentComponent implements OnInit, OnChanges {
             return dateB > dateA ? 1 : dateB < dateA ? -1 : 0;
           });
           // Loop through the data to find the first entry with an ongoing status
-          const ongoingConsult = this.patient_asrh_history.find(item => (item?.done_flag === 0 || item?.comprehensive?.done_flag === false ) || ( item?.refused_flag === 0 || item?.comprehensive?.refused_flag === false) ) ;
+          const ongoingConsult = this.patient_asrh_history.find(item => {
+            const isNotDone = !item?.done_flag || !item?.comprehensive?.done_flag;
+            const isNotRefused = !item?.refused_flag && !item?.comprehensive?.refused_flag;
+            return isNotDone && isNotRefused;
+        });
 
           if (ongoingConsult) {
             this.selected_asrh_consult = ongoingConsult;
+          } else {  
+            // If there is no ongoing consult, select the latest consult
+            this.selected_asrh_consult = null;
           }
+
+         
 
           this.fetching_history = true; // Set to false after data is fetched
           console.log(this.selected_asrh_consult, 'selected_asrh_consult');
