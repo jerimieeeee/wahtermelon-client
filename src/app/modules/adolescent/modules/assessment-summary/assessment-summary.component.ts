@@ -120,27 +120,25 @@ export class AssessmentSummaryComponent implements OnInit {
     })
   }
 
-  patchData(){
-
-    if(this.selected_asrh_consult) {
+  patchData() {
+    if (this.selected_asrh_consult) {
       this.visitForm.patchValue({
-        // assessment_date: this.selected_asrh_consult?.assessment_date,
-        // lib_asrh_client_type_code: this.selected_asrh_consult?.lib_asrh_client_type_code,
-        // client_type: this.selected_asrh_consult?.client_type,
-        // other_client_type: this.selected_asrh_consult?.other_client_type,
+        patient_id: this.patient_id,
+        assessment_date: this.selected_asrh_consult?.assessment_date,
+        client_type: this.selected_asrh_consult?.client_type,
+        lib_asrh_client_type_code: this.selected_asrh_consult?.lib_asrh_client_type_code,
+        other_client_type: this.selected_asrh_consult?.other_client_type,
         refused_flag: this.selected_asrh_consult?.refused_flag,
         refer_to_user_id: this.selected_asrh_consult?.refer_to_user_id,
-        // status: this.selected_asrh_consult?.status,
         done_flag: this.selected_asrh_consult?.done_flag,
-        done_date: this.selected_asrh_consult?.done_date,
-        referral_date: this.selected_asrh_consult?.referral_date,
+        done_date: this.selected_asrh_consult?.done_date || this.max_date,
+        referral_date: this.selected_asrh_consult?.referral_date || this.max_date,
         algorithm_remarks: this.selected_asrh_consult?.algorithm_remarks
       });
-      console.log(this.selected_asrh_consult, 'patch data working selected asrh')
-      console.log('patch data working')
-      // this.loadSelected();
-      // this.show_form = true;
+      console.log(this.selected_asrh_consult, 'patch data working selected asrh');
+      console.log('patch data working');
     }
+    
   }
 
   validateForm(){

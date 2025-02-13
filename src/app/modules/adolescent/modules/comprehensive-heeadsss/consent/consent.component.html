@@ -8,6 +8,11 @@
 <form [formGroup]="consentForm" class="grid grid-cols-16 gap-x-4 w-full mb-5">
   <div class="grid grid-cols-12">
 
+    <div class="col-span-6 px-5 pt-5">
+      <label for="assessment_date" class="text-sm font-semibold">Assessment Date</label>
+      <input type="date" name="assessment_date" id="assessment_date" class="input" formControlName="assessment_date" [max]="max_date">
+    </div>
+
     <div class="col-span-6 grid gap-x-4 mt-2">
       <div class="mt-10 px-5">
         <input type="checkbox" class="input-checkbox" id="consent_flag" formControlName="consent_flag" />
@@ -17,13 +22,7 @@
       </div>
     </div>
 
-    <div class="col-span-6 px-5 pt-5">
-        <label for="assessment_date" class="text-sm font-semibold">Assessment Date</label>
-        <input type="date" name="assessment_date" id="assessment_date" class="input" formControlName="assessment_date" [max]="max_date" [value]="date_today">
-    </div>
-
-
-    <div class="col-span-6 grid gap-x-4 mt-2">
+    <div class="col-span-6 grid gap-x-4 mt-5">
       <div class="px-5">
         <input type="checkbox" class="input-checkbox" id="refused_flag" formControlName="refused_flag" (change)="openModal()"/>
         <label for="refused_flag" class="text-sm" >
@@ -36,7 +35,7 @@
 </form>
 
 <div class="flex justify-center mb-5">
-  <button class="btn-save" [disabled]="is_saving || !consentForm.dirty" (click)="onSubmit(); consentForm.markAsPristine();">
+  <button class="btn-save" [disabled]="is_saving || !consentForm.dirty || consentForm.invalid" (click)="onSubmit(); consentForm.markAsPristine();">
     <fa-icon [icon]="faSave" *ngIf="!is_saving" class="mr-2"></fa-icon>
     <fa-icon [icon]="faSpinner" *ngIf="is_saving" animation="spin" class="mr-2"></fa-icon>
     {{ selected_asrh_consult?.comprehensive?.assessment_date ? (is_saving ? 'Updating' : 'Update') : (is_saving ? 'Saving' : 'Save') }}

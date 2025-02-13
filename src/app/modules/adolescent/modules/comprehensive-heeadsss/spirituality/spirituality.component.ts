@@ -1,4 +1,5 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { formatDate } from '@angular/common';
 import { faCalendarDay, faPlus, faSave, faTimes, faPencil, faCircleCheck, faCaretRight, faInfoCircle, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { HttpService } from 'app/shared/services/http.service';
@@ -32,6 +33,8 @@ export class SpiritualityComponent implements OnInit {
     show_form = false;
 
     asrh_compre_history: any = [];
+
+     max_date: string = formatDate(new Date(), 'yyyy-MM-dd', 'en', 'Asia/Manila');
 
    spiritualityForm: FormGroup = new FormGroup({
       id: new FormControl<string| null>(''),
@@ -116,7 +119,7 @@ export class SpiritualityComponent implements OnInit {
      if(this.selected_asrh_consult) {
        this.spiritualityForm.patchValue({
        spirituality_notes: this.selected_asrh_consult?.comprehensive?.spirituality_notes,
-       done_date: this.selected_asrh_consult?.comprehensive?.done_date,
+       done_date: this.selected_asrh_consult?.comprehensive?.done_date || this.max_date,
        done_flag: this.selected_asrh_consult?.comprehensive?.done_flag,
       //  refused_flag: this.selected_asrh_consult?.comprehensive?.refused_flag
        });

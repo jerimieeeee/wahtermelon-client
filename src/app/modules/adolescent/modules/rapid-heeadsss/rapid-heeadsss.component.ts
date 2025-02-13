@@ -76,42 +76,42 @@ export class RapidHeeadsssComponent implements OnInit, OnChanges {
     refused_flag: new FormControl<boolean>(false),
     done_flag: new FormControl<boolean>(false),
     done_date: new FormControl<string| null>(''),
-    algorithm_remarks: new FormControl<string| null>('')
+    // algorithm_remarks: new FormControl<string| null>('')
     // refer_to_user_id: new FormControl<string| null>(''),
     // status: new FormControl<string| null>(''),
   });
 
-  createRapid(){
-    this.is_saving = true;
-    if(this.selected_asrh_consult === null){
-      this.http.post('asrh/rapid', this.visitForm.value).subscribe({
-        next: (data : any) => {
-          this.is_saving = false;
-          this.toastr.success('Rapid Assessment Details was saved successfully');
-          this.updateSelectedASRH2.emit(data.data.id);
-        },
-        error: err => {
-          this.is_saving = false;
-          console.log(err);
-        },
-        complete: () => console.log('success')
-      });
-    } else {
-      this.http.update('asrh/rapid/', this.selected_asrh_consult.id, this.visitForm.value).subscribe({
-        next: (data : any) => {
-          this.is_saving = false;
-          this.toastr.success('Rapid Assessment Details was updated successfully');
-          this.updateSelectedASRH.emit(data);
-          console.log(data, 'rapid details');
-        },
-        error: err => {
-          this.is_saving = false;
-          console.log(err);
-        },
-        complete: () => console.log('success')
-      });
-    }
-  }
+  // createRapid(){
+  //   this.is_saving = true;
+  //   if(this.selected_asrh_consult === null){
+  //     this.http.post('asrh/rapid', this.visitForm.value).subscribe({
+  //       next: (data : any) => {
+  //         this.is_saving = false;
+  //         this.toastr.success('Rapid Assessment Details was saved successfully');
+  //         this.updateSelectedASRH2.emit(data.data.id);
+  //       },
+  //       error: err => {
+  //         this.is_saving = false;
+  //         console.log(err);
+  //       },
+  //       complete: () => console.log('success')
+  //     });
+  //   } else {
+  //     this.http.update('asrh/rapid/', this.selected_asrh_consult.id, this.visitForm.value).subscribe({
+  //       next: (data : any) => {
+  //         this.is_saving = false;
+  //         this.toastr.success('Rapid Assessment Details was updated successfully');
+  //         this.updateSelectedASRH.emit(data);
+  //         console.log(data, 'rapid details');
+  //       },
+  //       error: err => {
+  //         this.is_saving = false;
+  //         console.log(err);
+  //       },
+  //       complete: () => console.log('success')
+  //     });
+  //   }
+  // }
 
   onSubmit(){
     var rapid_arr = [];
@@ -185,9 +185,9 @@ export class RapidHeeadsssComponent implements OnInit, OnChanges {
         other_client_type: this.selected_asrh_consult?.other_client_type,
         refused_flag: this.selected_asrh_consult?.refused_flag,
         done_flag: this.selected_asrh_consult?.done_flag,
-        done_date: this.selected_asrh_consult?.done_date || this.max_date,
-        referral_date: this.selected_asrh_consult?.referral_date,
-        algorithm_remarks: this.selected_asrh_consult?.algorithm_remarks
+        done_date: this.selected_asrh_consult?.done_date,
+        // referral_date: this.selected_asrh_consult?.referral_date,
+        // algorithm_remarks: this.selected_asrh_consult?.algorithm_remarks
         // refer_to_user_id: this.selected_asrh_consult?.refer_to_user_id,
         // status: this.selected_asrh_consult?.status,
       });
@@ -212,10 +212,10 @@ export class RapidHeeadsssComponent implements OnInit, OnChanges {
       client_type: ['', [Validators.required, Validators.minLength(1)]],
       other_client_type: [{ value: '', disabled: true }, [Validators.required]],
       refused_flag: [false],
-      done_flag: ['', [Validators.required, Validators.minLength(1)]],
-      done_date: ['', [Validators.required, Validators.minLength(1)]],
-      referral_date: ['', [Validators.required, Validators.minLength(1)]],
-      algorithm_remarks: ['', [Validators.required]],
+      done_flag: [false],
+      done_date: ['']
+      // referral_date: ['', [Validators.required, Validators.minLength(1)]],
+      // algorithm_remarks: ['', [Validators.required]],
       // refer_to_user_id: ['', [Validators.required]],
       // status: ['', [Validators.required]],
     });
@@ -234,6 +234,42 @@ export class RapidHeeadsssComponent implements OnInit, OnChanges {
       return { futureDate: true };
     }
     return null;
+  }
+
+  createRapid() {
+    this.is_saving = true;
+    const formValue = { ...this.visitForm.value };
+    if (!formValue.done_flag) {
+      delete formValue.done_date;
+    }
+    if (this.selected_asrh_consult === null) {
+      this.http.post('asrh/rapid', formValue).subscribe({
+        next: (data: any) => {
+          this.is_saving = false;
+          this.toastr.success('Rapid Assessment Details was saved successfully');
+          this.updateSelectedASRH2.emit(data.data.id);
+        },
+        error: err => {
+          this.is_saving = false;
+          console.log(err);
+        },
+        complete: () => console.log('success')
+      });
+    } else {
+      this.http.update('asrh/rapid/', this.selected_asrh_consult.id, formValue).subscribe({
+        next: (data: any) => {
+          this.is_saving = false;
+          this.toastr.success('Rapid Assessment Details was updated successfully');
+          this.updateSelectedASRH.emit(data);
+          console.log(data, 'rapid details');
+        },
+        error: err => {
+          this.is_saving = false;
+          console.log(err);
+        },
+        complete: () => console.log('success')
+      });
+    }
   }
 
   disableForm(){

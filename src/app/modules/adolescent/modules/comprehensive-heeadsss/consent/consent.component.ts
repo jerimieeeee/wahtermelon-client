@@ -90,7 +90,7 @@ export class ConsentComponent implements OnInit {
         patient_id: [this.patient_id],
         consult_asrh_rapid_id: [this.selected_asrh_consult?.id, [Validators.required, Validators.minLength(1)]],
         assessment_date: ['', [Validators.required, Validators.minLength(1)]],
-        consent_flag: ['', [Validators.required, Validators.minLength(1)]],
+        consent_flag: [false],
         refused_flag: [false],
         done_flag: [false],
         // status: ['', [Validators.required, Validators.minLength(1)]],
@@ -106,7 +106,7 @@ export class ConsentComponent implements OnInit {
 
       if(this.selected_asrh_consult) {
         this.consentForm.patchValue({
-        assessment_date: this.selected_asrh_consult?.comprehensive?.assessment_date,
+        assessment_date: this.selected_asrh_consult?.comprehensive?.assessment_date || this.max_date,
         // status: this.selected_asrh_consult?.comprehensive?.status,
         consent_flag: this.selected_asrh_consult?.comprehensive?.consent_flag,
         refused_flag: this.selected_asrh_consult?.comprehensive?.refused_flag
