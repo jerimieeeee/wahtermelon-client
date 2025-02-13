@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output, OnChanges } from '@angular/core';
+import { formatDate } from '@angular/common';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { faChevronCircleDown, faChevronCircleUp, faSave, faSpinner, faChevronUp, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
@@ -31,6 +32,10 @@ export class AssessmentSummaryComponent implements OnInit {
   selected: any;
 
   physicians: any;
+
+  max_date: string = formatDate(new Date(), 'yyyy-MM-dd', 'en', 'Asia/Manila');
+  
+  date_today = formatDate(new Date(), 'MM/dd/yyyy', 'en', 'Asia/Manila');
 
   visitForm: FormGroup = new FormGroup({
       patient_id: new FormControl<string| null>(''),

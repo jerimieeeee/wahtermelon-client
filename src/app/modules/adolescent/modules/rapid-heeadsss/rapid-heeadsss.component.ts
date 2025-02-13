@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output, OnChanges, SimpleChanges} from '@angular/core';
+import { formatDate } from '@angular/common';
 import { faCalendarDay, faPlus, faSave, faTimes, faPencil, faCircleCheck, faCaretRight, faInfoCircle, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { HttpService } from 'app/shared/services/http.service';
@@ -63,6 +64,9 @@ export class RapidHeeadsssComponent implements OnInit, OnChanges {
 
   ];
 
+  max_date: string = formatDate(new Date(), 'yyyy-MM-dd', 'en', 'Asia/Manila');
+  today_date: string; // or Date, depending on how you handle the input
+
   visitForm: FormGroup = new FormGroup({
     patient_id: new FormControl<string| null>(''),
     assessment_date: new FormControl<string| null>(''),
@@ -70,6 +74,9 @@ export class RapidHeeadsssComponent implements OnInit, OnChanges {
     lib_asrh_client_type_code: new FormControl<string| null>(''),
     other_client_type: new FormControl<string| null>(''),
     refused_flag: new FormControl<boolean>(false),
+    done_flag: new FormControl<boolean>(false),
+    done_date: new FormControl<string| null>(''),
+    algorithm_remarks: new FormControl<string| null>('')
     // refer_to_user_id: new FormControl<string| null>(''),
     // status: new FormControl<string| null>(''),
   });
@@ -80,30 +87,30 @@ export class RapidHeeadsssComponent implements OnInit, OnChanges {
       this.http.post('asrh/rapid', this.visitForm.value).subscribe({
         next: (data : any) => {
           this.is_saving = false;
-          this.toastr.success('Rapid Assessment Details was saved Successfuly')
-
-            this.updateSelectedASRH2.emit(data.data.id);
-          // console.log(this.selected_asrh_consult, 'checker current selected')
+          this.toastr.success('Rapid Assessment Details was saved successfully');
+          this.updateSelectedASRH2.emit(data.data.id);
         },
-        error: err => console.log(err),
+        error: err => {
+          this.is_saving = false;
+          console.log(err);
+        },
         complete: () => console.log('success')
-      })
+      });
     } else {
       this.http.update('asrh/rapid/', this.selected_asrh_consult.id, this.visitForm.value).subscribe({
         next: (data : any) => {
           this.is_saving = false;
-          this.toastr.success('Rapid Assessment Details was Updated Successfuly')
-
-            this.updateSelectedASRH.emit(data);
-            console.log(data, 'rapid details')
-
-          // console.log(this.selected_asrh_consult, 'checker current selected')
+          this.toastr.success('Rapid Assessment Details was updated successfully');
+          this.updateSelectedASRH.emit(data);
+          console.log(data, 'rapid details');
         },
-        error: err => console.log(err),
+        error: err => {
+          this.is_saving = false;
+          console.log(err);
+        },
         complete: () => console.log('success')
-      })
+      });
     }
-
   }
 
   onSubmit(){
@@ -176,7 +183,11 @@ export class RapidHeeadsssComponent implements OnInit, OnChanges {
         lib_asrh_client_type_code: this.selected_asrh_consult?.lib_asrh_client_type_code,
         client_type: this.selected_asrh_consult?.client_type,
         other_client_type: this.selected_asrh_consult?.other_client_type,
-        refused_flag: this.selected_asrh_consult?.refused_flag
+        refused_flag: this.selected_asrh_consult?.refused_flag,
+        done_flag: this.selected_asrh_consult?.done_flag,
+        done_date: this.selected_asrh_consult?.done_date || this.max_date,
+        referral_date: this.selected_asrh_consult?.referral_date,
+        algorithm_remarks: this.selected_asrh_consult?.algorithm_remarks
         // refer_to_user_id: this.selected_asrh_consult?.refer_to_user_id,
         // status: this.selected_asrh_consult?.status,
       });
@@ -185,31 +196,44 @@ export class RapidHeeadsssComponent implements OnInit, OnChanges {
       this.loadSelected();
       this.show_form = true;
     }
+    else {
+      this.visitForm.patchValue({
+        assessment_date: this.max_date,
+      });
+    }
   }
 
-  validateForm(){
+  validateForm() {
     this.visitForm = this.formBuilder.group({
       id: [''],
       patient_id: [this.patient_id, [Validators.required, Validators.minLength(1)]],
-      assessment_date: ['', [Validators.required, Validators.minLength(1)]],
+      assessment_date: ['', [Validators.required, Validators.minLength(1), this.noFutureDateValidator]],
       lib_asrh_client_type_code: [{ value: '', disabled: true }, [Validators.required, Validators.minLength(1)]],
       client_type: ['', [Validators.required, Validators.minLength(1)]],
       other_client_type: [{ value: '', disabled: true }, [Validators.required]],
       refused_flag: [false],
+      done_flag: ['', [Validators.required, Validators.minLength(1)]],
+      done_date: ['', [Validators.required, Validators.minLength(1)]],
+      referral_date: ['', [Validators.required, Validators.minLength(1)]],
+      algorithm_remarks: ['', [Validators.required]],
       // refer_to_user_id: ['', [Validators.required]],
       // status: ['', [Validators.required]],
-
-
-
     });
 
+    this.disableForm();
+    this.disableForm2();
+    this.disableForm3();
+    this.patchData();
+    this.show_form = true;
+  }
 
-
-   this.disableForm();
-   this.disableForm2();
-   this.disableForm3();
-   this.patchData();
-   this.show_form = true;
+  noFutureDateValidator(control: FormControl) {
+    const inputDate = new Date(control.value);
+    const today = new Date();
+    if (inputDate > today) {
+      return { futureDate: true };
+    }
+    return null;
   }
 
   disableForm(){
@@ -328,10 +352,10 @@ export class RapidHeeadsssComponent implements OnInit, OnChanges {
     this.visitForm.get('refused_flag')?.setValue(true);
   }
 
-  // hasChanges(): boolean {
-
-
-  // }
+  dateToday() {
+    const today = new Date();
+    this.today_date = today.toISOString().split('T')[0]; // Formats date as YYYY-MM-DD
+  }
 
   constructor(
     private http: HttpService,

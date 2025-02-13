@@ -41,6 +41,7 @@ export class SpiritualityComponent implements OnInit {
       // consent_flag: new FormControl<string| null>(''),
       spirituality_notes: new FormControl<string| null>(''),
       done_status: new FormControl<boolean>(false),
+      done_flag: new FormControl<boolean>(false),
       done_date: new FormControl<string| null>(''),
       // refused_flag: new FormControl<boolean>(false),
     });
@@ -68,8 +69,8 @@ export class SpiritualityComponent implements OnInit {
       })
     }
 
-    validateForm(){
-
+    validateForm() {
+      // Create the form group
       this.spiritualityForm = this.formBuilder.group({
         id: [''],
         patient_id: [this.patient_id],
@@ -77,14 +78,38 @@ export class SpiritualityComponent implements OnInit {
         assessment_date: [this.selected_asrh_consult?.comprehensive?.assessment_date, [Validators.required, Validators.minLength(1)]],
         spirituality_notes: ['', [Validators.required, Validators.minLength(1)]],
         done_flag: [this.selected_asrh_consult?.comprehensive?.done_flag, [Validators.required, Validators.minLength(1)]],
-        done_date: [this.selected_asrh_consult?.comprehensive?.done_date, [Validators.required, Validators.minLength(1)]],
-        // refused_flag: [false],
-        // average_monthly_income: ['', [Validators.required, Validators.minLength(1), Validators.pattern("^[0-9,;]+$")]],
       });
+
+      // Add done_date control only if done_flag is 1
+      if (this.selected_asrh_consult?.comprehensive?.done_flag === true) {
+        this.spiritualityForm.addControl(
+          'done_date',
+          new FormControl<string | null>(this.selected_asrh_consult?.comprehensive?.done_date, [
+            Validators.required,
+            Validators.minLength(1),
+          ])
+        );
+      } else {
+        this.spiritualityForm.addControl('done_date', new FormControl(null)); // Or set it as null if done_flag is not 1
+      }
+
+      // Ensure that done_date is enabled or disabled based on done_flag
+      const doneDateControl = this.spiritualityForm.get('done_date');
+      const doneFlagControl = this.spiritualityForm.get('done_flag');
+      if (doneDateControl && doneFlagControl) {
+        doneFlagControl.valueChanges.subscribe((doneFlagValue) => {
+          if (doneFlagValue === true) {
+        doneDateControl.enable();
+          } else {
+        doneDateControl.disable();
+          }
+        });
+      }
+
+      // Optionally, patch values to populate the form fields
       this.patchCompre();
-      // this.loadFPDetails();
-      // this.show_form = true;
     }
+
 
     patchCompre(){
 

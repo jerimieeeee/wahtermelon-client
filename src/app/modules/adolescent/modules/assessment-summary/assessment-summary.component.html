@@ -1,5 +1,5 @@
 
-<div class="m-5 border border-slate-200 rounded-lg">
+<div class="m-5 border border-slate-200 rounded-lg select-none">
   <div class="bg-blue-500 text-sm text-white rounded-t-md py-2 pl-5 font-semibold select-none">
    Assessment Summary
   </div>
@@ -32,19 +32,19 @@
 
   <div class="col-span-6 px-5 pt-5" *ngIf="visitForm.get('refer_to_user_id').value">
     <label for="done_date" class="text-sm font-semibold">Referral Date</label>
-    <input type="date" name="done_date" id="done_date" class="input" formControlName="referral_date">
+    <input type="date" name="done_date" id="done_date" class="input" formControlName="referral_date" [max]="max_date" [value]="date_today">
   </div>
 
   <div class="col-span-6 px-5 pt-5" *ngIf="visitForm.get('done_flag').value">
     <label for="done_date" class="text-sm font-semibold">Done Date</label>
-    <input type="date" name="done_date" id="done_date" class="input" formControlName="done_date">
+    <input type="date" name="done_date" id="done_date" class="input" formControlName="done_date" [max]="max_date" [value]="date_today">
   </div>
 
   </div>
 
 
 
-  <div class="mt-10 w-full border-t border-gray-200 py-5" [ngClass]="this.selected_asrh_consult?.refused_flag === 1 || this.selected_asrh_consult?.comprehensive?.refused_flag === true ? 'pointer-events-none select-none' : ''">
+  <div class="mt-10 w-full border-t border-gray-200 py-5" [ngClass]="(this.selected_asrh_consult?.done_flag === 1 && this.selected_asrh_consult?.comprehensive?.done_flag === true) || (this.selected_asrh_consult?.refused_flag === 1 || this.selected_asrh_consult?.comprehensive?.refused_flag === true) ? 'pointer-events-none select-none' : ''">
 
     <div *ngIf="!checkAnswers(selected_asrh_consult.answers)">
       <div class="text-sm flex justify-center mt-5">

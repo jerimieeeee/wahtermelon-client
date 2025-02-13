@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { formatDate } from '@angular/common';
 import { faCalendar, faTimes, faDoorClosed, faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -45,6 +46,10 @@ export class ConsentComponent implements OnInit {
 
   is_saving: boolean = false;
 
+  max_date: string = formatDate(new Date(), 'yyyy-MM-dd', 'en', 'Asia/Manila');
+  
+  date_today = formatDate(new Date(), 'MM/dd/yyyy', 'en', 'Asia/Manila');
+
   consentForm: FormGroup = new FormGroup({
       id: new FormControl<string| null>(''),
       patient_id: new FormControl<string| null>(''),
@@ -87,6 +92,7 @@ export class ConsentComponent implements OnInit {
         assessment_date: ['', [Validators.required, Validators.minLength(1)]],
         consent_flag: ['', [Validators.required, Validators.minLength(1)]],
         refused_flag: [false],
+        done_flag: [false],
         // status: ['', [Validators.required, Validators.minLength(1)]],
         // average_monthly_income: ['', [Validators.required, Validators.minLength(1), Validators.pattern("^[0-9,;]+$")]],
       });
@@ -160,7 +166,7 @@ export class ConsentComponent implements OnInit {
     this.consult_id = this.route.snapshot.paramMap.get('consult_id');
     this.user_info = this.http.getUserFromJSON();
     this.user_facility = this.http.getUserFacility();
-    this.openChild();
+    // this.openChild();
     this.validateForm();
     console.log(this.user_info, 'user_info')
   }

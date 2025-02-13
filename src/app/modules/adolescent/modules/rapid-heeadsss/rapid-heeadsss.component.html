@@ -8,10 +8,10 @@
       <form [formGroup]="visitForm" (submit)="createRapid()"  class="mt-1 grid grid-cols-16 gap-x-4 w-full mb-10">
         <div class="grid grid-cols-12">
 
-          <div class="col-span-6 px-5 pt-5">
+            <div class="col-span-6 px-5 pt-5">
               <label for="assessment_date" class="text-sm font-semibold">Assessment Date</label>
-              <input type="date" name="assessment_date" id="assessment_date" class="input" formControlName="assessment_date">
-          </div>
+                <input type="date" name="assessment_date" id="assessment_date" class="input" formControlName="assessment_date" [max]="max_date">
+            </div>
 
           <div class="col-span-6 px-5 pt-5">
             <div>
@@ -62,14 +62,14 @@
 
           </div> -->
 
-          <div class="col-span-12 col-start-1 grid gap-x-4">
+            <div class="col-span-12 col-start-1 grid gap-x-4 " *ngIf="selected_asrh_consult?.done_flag !== 1">
             <div class="mt-5 px-5">
-              <input type="checkbox" class="input-checkbox" id="refused_flag" formControlName="refused_flag" (change)="openModal()"/>
-              <label for="refused_flag" class="text-sm" >
-                The patient widrew consent.
+                <input type="checkbox" class="input-checkbox" id="refused_flag" formControlName="refused_flag" (change)="openModal()" />
+              <label for="refused_flag" class="text-sm">
+              The patient withdrew consent.
               </label>
             </div>
-          </div>
+            </div>
 
           <!-- <div class="col-span-6 px-5 pt-5">
             <label for="status" class="text-sm font-semibold">Status</label>

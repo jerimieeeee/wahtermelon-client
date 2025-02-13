@@ -19,13 +19,13 @@
 
     <div class="col-span-6 px-5 pt-5">
         <label for="assessment_date" class="text-sm font-semibold">Assessment Date</label>
-        <input type="date" name="assessment_date" id="assessment_date" class="input" formControlName="assessment_date">
+        <input type="date" name="assessment_date" id="assessment_date" class="input" formControlName="assessment_date" [max]="max_date" [value]="date_today">
     </div>
 
 
     <div class="col-span-6 grid gap-x-4 mt-2">
       <div class="px-5">
-        <input type="checkbox" class="input-checkbox" id="refused_flag" formControlName="refused_flag" />
+        <input type="checkbox" class="input-checkbox" id="refused_flag" formControlName="refused_flag" (change)="openModal()"/>
         <label for="refused_flag" class="text-sm" >
           {{ !consentForm.value.consent_flag === true ? 'The Patient Refused to Conduct the Assessment' : 'The Patient Widrew Consent' }}
         </label>
@@ -57,7 +57,7 @@
       <!-- Modal body -->
       <div class="overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
         <form class="text-left m-5">
-          <p>Are you sure the patient refused to conduct the Rapid HEEADSSS Assessment?</p>
+          <p>Are you sure the patient refused to conduct the Comprehensive HEEADSSS Assessment?</p>
         </form>
 
       </div>
