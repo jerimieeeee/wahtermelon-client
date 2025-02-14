@@ -123,7 +123,7 @@ export class KonsultaMasterlistComponent implements OnInit {
               'PhilHealth PIN': item.philhealth_id,
               'Membership Type': item.membership_type_id === 'MM' ? 'Member' : 'Dependent',
               'Primary Name': item.member_last_name + ', ' + item.member_first_name + ' ' + item.member_middle_name,
-              'Primary PhilHealth PIN': item.member_philhealth_id,
+              'Primary PhilHealth PIN': item.philhealth_id,
               'Primary Birthdate': item.member_birthdate,
               'Primary Gender': item.member_gender
             }
