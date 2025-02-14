@@ -40,7 +40,7 @@ export class EducationComponent implements OnInit {
     assessment_date: new FormControl<string| null>(''),
     // consent_flag: new FormControl<string| null>(''),
     education_notes: new FormControl<string| null>(''),
-    // refused_flag: new FormControl<boolean>(false),
+    done_flag: new FormControl<boolean>(false),
 
   });
 
@@ -75,6 +75,7 @@ export class EducationComponent implements OnInit {
       consult_asrh_rapid_id: [this.selected_asrh_consult?.id, [Validators.required, Validators.minLength(1)]],
       assessment_date: [this.selected_asrh_consult?.comprehensive?.assessment_date, [Validators.required, Validators.minLength(1)]],
       education_notes: ['', [Validators.required, Validators.minLength(1)]],
+      done_flag: [false],
       // refused_flag: [false],
       // average_monthly_income: ['', [Validators.required, Validators.minLength(1), Validators.pattern("^[0-9,;]+$")]],
     });
