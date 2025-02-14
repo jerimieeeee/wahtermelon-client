@@ -41,7 +41,7 @@ export class SafetyComponent implements OnInit {
     //  consent_flag: new FormControl<string| null>(''),
      safety_notes: new FormControl<string| null>(''),
      seriously_injured: new FormControl<string| null>(''),
-    //  refused_flag: new FormControl<boolean>(false),
+     done_flag: new FormControl<boolean>(false),
    });
 
    onSubmit(){
@@ -76,6 +76,7 @@ export class SafetyComponent implements OnInit {
        assessment_date: [this.selected_asrh_consult?.comprehensive?.assessment_date, [Validators.required, Validators.minLength(1)]],
        safety_notes: ['', [Validators.required, Validators.minLength(1)]],
        seriously_injured: ['', [Validators.required, Validators.minLength(1)]],
+       done_flag: [false],
       //  refused_flag: [false],
        // average_monthly_income: ['', [Validators.required, Validators.minLength(1), Validators.pattern("^[0-9,;]+$")]],
      });
