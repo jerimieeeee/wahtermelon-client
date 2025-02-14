@@ -11,15 +11,14 @@
   <div class="grid grid-cols-12 justify-between" [ngClass]="(this.selected_asrh_consult?.done_flag === 1 && this.selected_asrh_consult?.comprehensive?.done_flag === true) || (this.selected_asrh_consult?.refused_flag === 1 || this.selected_asrh_consult?.comprehensive?.refused_flag === true) ? 'pointer-events-none select-none' : ''">
 
   <div class="col-span-6 px-5 pt-5">
-    <div>
+    <div [ngClass]="physicians?.length === 0 ? 'pointer-events-none select-none' : ''">
       <label for="refer_to" class="text-sm font-semibold">Refer To</label>
-      <select name="refer_to_user_id" id="refer_to_user_id" class="input" formControlName="refer_to_user_id">
-        <!-- <option [ngValue]="0" selected> </option> -->
-        <option *ngFor="let dr of physicians" [value]="dr.id">{{ dr?.last_name }}, {{ dr?.first_name }} {{ dr?.middle_name }}</option>
+      <select name="refer_to_user_id" id="refer_to_user_id" class="input" formControlName="refer_to_user_id" [disabled]="physicians?.length === 0">
+      <option value="" disabled selected *ngIf="physicians?.length === 0">No AJA Trained</option>
+      <option *ngFor="let dr of physicians" [value]="dr.id">{{ dr?.last_name }}, {{ dr?.first_name }} {{ dr?.middle_name }}</option>
       </select>
     </div>
-
-  </div>
+    </div>
 
   <div class="col-span-6 pt-8">
     <div class="mt-5 px-5">
