@@ -5,7 +5,7 @@
 
   <div class="mx-5 mb" [ngClass]="(this.selected_asrh_consult?.done_flag === 1 && this.selected_asrh_consult?.comprehensive?.done_flag === true) || (this.selected_asrh_consult?.refused_flag === 1 || this.selected_asrh_consult?.comprehensive?.refused_flag === true) ? 'pointer-events-none select-none' : ''">
 
-      <form [formGroup]="visitForm" (submit)="createRapid()"  class="mt-1 grid grid-cols-16 gap-x-4 w-full mb-10">
+      <form [formGroup]="visitForm" (submit)="createRapid()" (keydown.enter)="$event.preventDefault()"  class="mt-1 grid grid-cols-16 gap-x-4 w-full mb-10">
         <div class="grid grid-cols-12">
 
             <div class="col-span-6 px-5 pt-5">
@@ -13,7 +13,7 @@
               <input type="date" name="assessment_date" id="assessment_date" class="input"
                    formControlName="assessment_date"
                    [max]="max_date">
-                  <p *ngIf="!selected_asrh_consult?.id && isDuplicateDate()" class="text-sm mt-2 text-red-500">This date already exists!</p>
+                  <p *ngIf="isDuplicateDate()" class="text-sm mt-2 text-red-500">This date already exists!</p>
             </div>
 
           <div class="col-span-6 px-5 pt-5">
@@ -87,7 +87,7 @@
       </form>
 
       <div class="flex justify-center mb-10">
-        <button class="btn-save" [disabled]="is_saving || visitForm.invalid || !visitForm.dirty ||  isDuplicateDate()" (click)=" createRapid(); visitForm.markAsPristine();">
+        <button class="btn-save"  [disabled]="is_saving || visitForm.invalid || !visitForm.dirty ||  isDuplicateDate()" (click)=" createRapid(); visitForm.markAsPristine();">
           <fa-icon [icon]="faSave" *ngIf="!is_saving" class="mr-2"></fa-icon>
           <fa-icon [icon]="faSpinner" *ngIf="is_saving" animation="spin" class="mr-2"></fa-icon>
           {{ selected_asrh_consult?.id ? (is_saving ? 'Updating' : 'Update') : (is_saving ? 'Saving' : 'Save') }}

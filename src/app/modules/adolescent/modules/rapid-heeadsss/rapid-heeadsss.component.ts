@@ -411,9 +411,15 @@ export class RapidHeeadsssComponent implements OnInit, OnChanges {
     const newAssessmentDate = this.visitForm.get('assessment_date')?.value;
     const newAssessmentStatus = this.visitForm.get('done_flag')?.value;
     return this.patient_asrh_history.some(
-      (record) => record.assessment_date === newAssessmentDate && record.done_flag !== newAssessmentStatus
-
+      (record: { assessment_date: string; done_flag: boolean }) =>
+        record.assessment_date === newAssessmentDate &&
+        (record.done_flag !== newAssessmentStatus || record.done_flag === newAssessmentStatus) &&
+        record.assessment_date !== this.selected_asrh_consult?.assessment_date
     );
+  }
+
+  disableEnterKey(event: KeyboardEvent) {
+    event.preventDefault();
   }
 
   constructor(
