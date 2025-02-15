@@ -10,7 +10,10 @@
 
             <div class="col-span-6 px-5 pt-5">
               <label for="assessment_date" class="text-sm font-semibold">Assessment Date</label>
-                <input type="date" name="assessment_date" id="assessment_date" class="input" formControlName="assessment_date" [max]="max_date">
+              <input type="date" name="assessment_date" id="assessment_date" class="input"
+                   formControlName="assessment_date"
+                   [max]="max_date"
+                   [value]="visitForm.get('assessment_date')?.value || ''">
             </div>
 
           <div class="col-span-6 px-5 pt-5">
