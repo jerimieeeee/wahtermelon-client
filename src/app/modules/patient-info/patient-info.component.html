@@ -86,6 +86,13 @@
 
         <app-vitals (toggleAccordion)="toggleAccordion($event)" (toggleModal)="toggleModal($event)" (setVitals)="setVitals($event)" [accordions]="accordions"></app-vitals>
         <app-vaccine (toggleAccordion)="toggleAccordion($event)" [accordions]="accordions" (toggleModal)="toggleModal($event)" (setVaccineGiven)="setVaccineGiven($event)"></app-vaccine>
+
+        <app-services (toggleAccordion)="toggleAccordion($event)"
+          [accordions]="accordions"
+          (toggleModal)="toggleModal($event)"
+          (setVaccineGiven)="setVaccineGiven($event)"
+        ></app-services>
+
         <app-past-medical (toggleAccordion)="toggleAccordion($event)" [accordions]="accordions" (toggleModal)="toggleModal($event)" (setPastMedical)="setPastMedical($event)"></app-past-medical>
         <app-menstrual-history *ngIf="show_female_history" (toggleAccordion)="toggleAccordion($event)" [accordions]="accordions" (toggleModal)="toggleModal($event)" (setMenstrual)="setMenstrual($event)"></app-menstrual-history>
 
@@ -121,6 +128,8 @@
 
 <app-vaccine-modal *ngIf="modals['vaccine']" (toggleModal)="toggleModal('vaccine')" (loadData)="loadData($event)" [patient_info]="patient_info" [vaccines_given]="vaccines_given"></app-vaccine-modal>
 <app-vaccine-action-modal *ngIf="modals['vaccine-action']" (toggleModal)="toggleModal($event)" [vaccine_to_edit]="vaccine_to_edit"></app-vaccine-action-modal>
+
+<app-services-modal *ngIf="modals['services']" (toggleModal)="toggleModal('services')" (loadData)="loadData($event)" [patient_info]="patient_info"></app-services-modal>
 
 <app-surgical-modal *ngIf="modals['surgical-history']" (toggleModal)="toggleModal($event)" [patient_info]="patient_info"></app-surgical-modal>
 <app-surgical-action-modal *ngIf="modals['surgical-action']" (toggleModal)="toggleModal($event)" [surgery_to_delete]="surgery_to_delete"></app-surgical-action-modal>

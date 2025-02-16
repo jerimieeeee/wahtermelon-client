@@ -1,1 +1,84 @@
-<p>services-modal works!</p>
+<div id="defaultModal" tabindex="-1" class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 w-full md:inset-0 h-modal md:h-full justify-center items-center flex" aria-modal="true" role="dialog" style="z-index:60">
+  <div class="relative p-4 w-full max-w-3xl h-auto md:h-auto">
+    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+      <div class="flex justify-between items-start py-3 px-5 rounded-t border-b bg-blue-500 dark:border-gray-600">
+        <h3 class="mt-2 text-sm font-bold text-white dark:text-white">
+            Services History
+        </h3>
+      </div>
+
+      <div class="overflow-y-auto h-96 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
+          <div class="grid grid-cols-4 gap-4 w-full text-left py-2 px-10">
+            <div class="col-span-1">
+              <label for="lib_service_id" class="text-sm">Service</label>
+              <select name="lib_service_id" [(ngModel)]="service.lib_service_id"  class="input">
+                <option *ngFor="let item of services_list" [value]="item.id">{{ item.desc }}</option>
+              </select>
+            </div>
+
+            <div class="col-span-1">
+              <label for="service_date" class="text-sm">Service Date</label>
+              <input name="service_date" [(ngModel)]="service.service_date" type="date" class="input" />
+            </div>
+
+            <div class="col-span-1">
+              <label for="quantity" class="text-sm">Qty</label>
+              <input name="quantity" [(ngModel)]="service.quantity" type="number" class="input" />
+            </div>
+
+            <div class="col-span-1">
+              <button type="button" (click)="onSubmit()" [disabled]="!service.lib_service_id || !service.service_date" class="btn-save w-full mt-6 disabled:bg-gray-300">
+                <fa-icon *ngIf="is_saving" [icon]="faSpinner" animation="spin" class="mr-2"></fa-icon>
+                {{ is_saving ? 'Saving' : (service.id ? 'Update' : 'Save') }}
+              </button>
+            </div>
+          </div>
+          <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+              <tr>
+                <th scope="col" class="py-3 px-6">Service Rendered</th>
+                <th scope="col" class="py-3 px-6">Service Date</th>
+                <th scope="col" class="py-3 px-6">Qty</th>
+                <th scope="col" class="py-3 px-6">Action</th>
+              </tr>
+            </thead>
+            <tbody >
+              <tr *ngFor="let item of service_list" class="bg-white border-b">
+                <td class="py-4 px-6">
+                  <!-- {{ item.id }} -->IRON SUPPLEMENT
+                </td>
+                <th class="py-4 px-6">
+                  {{ item.service_date | date: 'MM/dd/yyyy':'Asia/Manila' }}
+                </th>
+                <th class="py-4 px-6">
+                  {{ item.quantity }}
+                </th>
+                <th class="py-4 px-6">
+                  <button (click)="editSurgical(item)">
+                    <fa-icon [icon]="faPenToSquare" class="text-orange-500"></fa-icon>
+                  </button>
+                </th>
+              </tr>
+              <tr *ngIf="loading_list">
+                <td class="text-center text-xl" colspan="4">
+                  <div>
+                    Loading list...
+                  </div>
+                  <div>
+                    <fa-icon [icon]="faCircleNotch" animation="spin"></fa-icon>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+      </div>
+
+      <div class="flex justify-end py-4 px-5 space-x-4 rounded-b border-t border-gray-200 dark:border-gray-600">
+        <button  type="button" class="btn-save bg-gray-400 px-10" (click)="closeModal()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="opacity-50 fixed inset-0 z-50 bg-black"></div>

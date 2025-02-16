@@ -3,7 +3,7 @@
     <span class="block text-blue-500 font-medium text-sm select-none" [ngClass]="{'opacity-70': (services?.length === 0 || !services)}">
       <fa-icon *ngIf="services?.length >= 1" (click)="toggle('services')" class="mx-0 my-0 mr-2 hover:cursor-pointer" [icon]="accordions['services'] ? faChevronUp : faChevronDown"></fa-icon>
       <fa-icon *ngIf="services?.length === 0 || !services" class="mx-0 my-0 mr-2" [icon]="faMinus"></fa-icon>
-      Services <span *ngIf="services?.length >= 1">({{ services.length }})</span>
+      SERVICES <!-- <span *ngIf="services?.length >= 1">({{ services.length }})</span> -->
     </span>
     <fa-icon (click)="modalToggle('services')" class="mx-0 my-0 text-blue-500 mr-2 hover:cursor-pointer" [icon]="faPlusCircle"></fa-icon>
   </div>
@@ -22,12 +22,12 @@
   </div>
   <div *ngIf="services" >
     <div [@openCloseAccordion] *ngIf="accordions['services']" class="block">
-      <div class="flex pl-3 justify-between items-center mt-1" *ngFor="let hx of services; trackBy:identify">
+      <div class="flex pl-3 justify-between items-center mt-1" *ngFor="let item of services; trackBy:identify">
         <span class="block font-medium text-xs w-10/12">
-          {{ hx.libmedicalservices.services_desc }}
+          {{ item.lib_service.desc }} ({{ item.service_date | date: 'MM/dd/yyyy' }})
         </span>
         <span class="block text-xs w-2/12 align-top text-right">
-          {{ hx.remarks }}
+          {{ item.quantity }}
         </span>
       </div>
 
