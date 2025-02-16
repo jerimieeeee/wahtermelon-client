@@ -4,6 +4,7 @@ import { faCalendarDay, faPlus, faSave, faTimes, faPencil, faCircleCheck, faCare
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
+import { el } from 'date-fns/locale';
 
 @Component({
   selector: 'app-rapid-heeadsss',
@@ -237,6 +238,18 @@ export class RapidHeeadsssComponent implements OnInit, OnChanges {
   }
 
   createRapid() {
+    const newAssessmentDate = this.visitForm.get('assessment_date')?.value;
+
+    // Check if assessment_date already exists
+    const dateExists = this.patient_asrh_history.some(
+      (record) => record.assessment_date === newAssessmentDate
+    );
+  
+    if (dateExists && this.patient_asrh_history.done_flag === 1) {
+      alert('Assessment date already exists! Choose a different date.');
+    } else {
+
+
     this.is_saving = true;
     const formValue = { ...this.visitForm.value };
     if (!formValue.done_flag) {
@@ -270,6 +283,7 @@ export class RapidHeeadsssComponent implements OnInit, OnChanges {
         complete: () => console.log('success')
       });
     }
+  }
   }
 
   disableForm(){
@@ -393,6 +407,21 @@ export class RapidHeeadsssComponent implements OnInit, OnChanges {
     this.today_date = today.toISOString().split('T')[0]; // Formats date as YYYY-MM-DD
   }
 
+  isDuplicateDate(): boolean {
+    const newAssessmentDate = this.visitForm.get('assessment_date')?.value;
+    const newAssessmentStatus = this.visitForm.get('done_flag')?.value;
+    return this.patient_asrh_history.some(
+      (record: { assessment_date: string; done_flag: boolean }) =>
+        record.assessment_date === newAssessmentDate &&
+        (record.done_flag !== newAssessmentStatus || record.done_flag === newAssessmentStatus) &&
+        record.assessment_date !== this.selected_asrh_consult?.assessment_date
+    );
+  }
+
+  disableEnterKey(event: KeyboardEvent) {
+    event.preventDefault();
+  }
+
   constructor(
     private http: HttpService,
     private formBuilder: FormBuilder,
@@ -407,7 +436,7 @@ ngOnChanges(change: SimpleChanges): void{
   }
 
 ngOnInit(): void {
-    console.log(this.selected_asrh_consult, 'selected asrh in rapid')
+    console.log(this.patient_asrh_history, 'patient asrh history main')
     this.validateForm();
     this.loadRapidLib();
 

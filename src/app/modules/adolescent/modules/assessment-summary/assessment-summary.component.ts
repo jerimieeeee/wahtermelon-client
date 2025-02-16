@@ -34,7 +34,7 @@ export class AssessmentSummaryComponent implements OnInit {
   physicians: any;
 
   max_date: string = formatDate(new Date(), 'yyyy-MM-dd', 'en', 'Asia/Manila');
-  
+
   date_today = formatDate(new Date(), 'MM/dd/yyyy', 'en', 'Asia/Manila');
 
   visitForm: FormGroup = new FormGroup({
@@ -45,7 +45,7 @@ export class AssessmentSummaryComponent implements OnInit {
       other_client_type: new FormControl<string| null>(''),
       refused_flag: new FormControl<boolean>(false),
       refer_to_user_id: new FormControl<string| null>(''),
-      // status: new FormControl<string| null>(''),
+      referral_date: new FormControl<string| null>(''),
       done_flag: new FormControl<boolean>(false),
       done_date: new FormControl<string| null>(''),
       algorithm_remarks: new FormControl<string| null>('')
@@ -138,7 +138,7 @@ export class AssessmentSummaryComponent implements OnInit {
       console.log(this.selected_asrh_consult, 'patch data working selected asrh');
       console.log('patch data working');
     }
-    
+
   }
 
   validateForm(){
@@ -148,18 +148,18 @@ export class AssessmentSummaryComponent implements OnInit {
         lib_asrh_client_type_code: [this.selected_asrh_consult?.lib_asrh_client_type_code || '', [Validators.required, Validators.minLength(1)]],
         client_type: [this.selected_asrh_consult?.client_type, [Validators.required, Validators.minLength(1)]],
         other_client_type: [this.selected_asrh_consult?.other_client_type || '', [Validators.required]],
-        refer_to_user_id: [this.selected_asrh_consult?.refer_to_user_id, [Validators.required]],
+        refer_to_user_id: [this.selected_asrh_consult?.refer_to_user_id || ''],
         done_flag: [this.selected_asrh_consult.done_flag, [Validators.required, Validators.minLength(1)]],
         done_date: [this.selected_asrh_consult?.done_date, [Validators.required, Validators.minLength(1)]],
-        referral_date: [this.selected_asrh_consult?.referral_date, [Validators.required, Validators.minLength(1)]],
+        referral_date: [this.selected_asrh_consult?.referral_date || ''],
         algorithm_remarks: [this.selected_asrh_consult.algorithm_remarks, [Validators.required]],
       };
 
-      if (this.selected_asrh_consult.lib_asrh_client_type_code === null) {
+      if (this.selected_asrh_consult?.lib_asrh_client_type_code === null) {
         formControls.lib_asrh_client_type_code = [{ value: '', disabled: true }, [Validators.required, Validators.minLength(1)]];
       }
 
-      if (this.selected_asrh_consult.other_client_type === null) {
+      if (this.selected_asrh_consult?.other_client_type === null) {
         formControls.other_client_type = [{ value: '', disabled: true }, [Validators.required]];
       }
 
