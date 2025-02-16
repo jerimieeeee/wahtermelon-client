@@ -45,7 +45,7 @@
       </div>
     </div>
 
-    <div class="w-full flex justify-end">
+    <div *ngIf="form_type==='2' && filter_status==='S' && forms['validated_list']" class="w-full flex justify-end">
       <div class="flex justify-center mr-5" *ngIf="printing || total_print_page">
         Printing {{ total_print_page > 0 ? current_print_page +' of '+ total_print_page + ' pages': '' }}
       </div>

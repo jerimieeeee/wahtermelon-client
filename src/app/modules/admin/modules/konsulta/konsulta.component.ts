@@ -157,7 +157,7 @@ export class KonsultaComponent implements OnInit {
     if (this.search) params['params']['search'] = this.search;
 
     params['params']['effectivity_year'] = this.filter_year;
-    params['params']['per_page'] = 40;
+    params['params']['per_page'] = 100;
     params['params']['reconcillation'] = 1;
 
     this.allListArray = [];
@@ -175,13 +175,13 @@ export class KonsultaComponent implements OnInit {
             current_number += 1;
             return {
               'Item No.': current_number,
-              'Patient Case No': item.patient[0].laravel_through_key,
-              'Patient\'s PIN': item.patient[0].philhealth[0].philhealth_id,
-              'Registration Date': formatDate(item.patient[0].philhealth[0].enlistment_date, 'MM/dd/yyyy', 'en'),
-              'Health and Assessment (FPE) Date': formatDate(item.patient[0].consult[0].consult_date, 'MM/dd/yyyy', 'en'),
-              'EKAS Date': formatDate(item.patient[0].consult[0].consult_date, 'MM/dd/yyyy', 'en'),
-              'With Lab': '',
-              'Epress Date': ''
+              'Patient Case No': item.case_number,
+              'Patient\'s PIN': item.philhealth_id,
+              'Registration Date': item.registration_date ? formatDate(item.registration_date, 'MM/dd/yyyy', 'en') : '',
+              'Health and Assessment (FPE) Date': item.fpe_date ? formatDate(item.fpe_date, 'MM/dd/yyyy', 'en') : '',
+              'EKAS Date': item.ekas_date ? formatDate(item.ekas_date, 'MM/dd/yyyy', 'en') : '',
+              'With Lab': item.with_laboratory,
+              'Epress Date': item.epress_date ? formatDate(item.epress_date, 'MM/dd/yyyy', 'en') : ''
             }
           });
 
