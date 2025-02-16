@@ -154,13 +154,14 @@ export class KonsultaComponent implements OnInit {
     if (this.filter_status) params['params']['filter[xml_status]'] = this.filter_status;
     if (this.start_date) params['params']['start_date'] = this.start_date;
     if (this.end_date) params['params']['end_date'] = this.end_date;
+    if (this.search) params['params']['search'] = this.search;
 
     params['params']['effectivity_year'] = this.filter_year;
-    params['params']['search'] = this.search ?? '';
-    params['params']['per_page'] = 100;
+    params['params']['per_page'] = 40;
     params['params']['reconcillation'] = 1;
 
     this.allListArray = [];
+    let current_number = 0;
 
     const fetchPage = (page: number) => {
       params['params']['page'] = page;
@@ -171,17 +172,16 @@ export class KonsultaComponent implements OnInit {
           this.current_print_page = page;
           console.log(data)
           const filteredData = data.data.map((item: any, index: number) => {
+            current_number += 1;
             return {
-              'Assigned Date': item.assigned_date,
-              'Name': item.first_name + ' ' + item.middle_name + ' ' + item.last_name,
-              'Birthdate': item.birthdate,
-              'Gender': item.gender,
-              'PhilHealth PIN': item.philhealth_id,
-              'Membership Type': item.membership_type_id === 'MM' ? 'Member' : 'Dependent',
-              'Primary Name': item.member_last_name + ', ' + item.member_first_name + ' ' + item.member_middle_name,
-              'Primary PhilHealth PIN': item.philhealth_id,
-              'Primary Birthdate': item.member_birthdate,
-              'Primary Gender': item.member_gender
+              'Item No.': current_number,
+              'Patient Case No': item.patient[0].laravel_through_key,
+              'Patient\'s PIN': item.patient[0].philhealth[0].philhealth_id,
+              'Registration Date': formatDate(item.patient[0].philhealth[0].enlistment_date, 'MM/dd/yyyy', 'en'),
+              'Health and Assessment (FPE) Date': formatDate(item.patient[0].consult[0].consult_date, 'MM/dd/yyyy', 'en'),
+              'EKAS Date': formatDate(item.patient[0].consult[0].consult_date, 'MM/dd/yyyy', 'en'),
+              'With Lab': '',
+              'Epress Date': ''
             }
           });
 
