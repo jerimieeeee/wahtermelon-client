@@ -19,6 +19,8 @@ export class Fhsis2018MorbidityComponent implements OnChanges {
   @Input() brgys;
   @Input() facility;
   @Input() submit_flag;
+  @Input() paper_width;
+
   current_submit_flag: boolean = false;
   show_stats: boolean = false;
 

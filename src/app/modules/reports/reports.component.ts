@@ -45,7 +45,7 @@ export class ReportsComponent implements OnInit {
 
   fhsis2018_m2 = [
     { id: 'fhsis2018-morbidity',            section: 'A.1', desc: 'Morbidity', url: 'reports-2018/morbidity/report'},
-    { id: 'fhsis2018-mortality-underlying', section: '', desc: 'Mortality Underlying', url: 'reports-2018/mortality/m1-underlying'},
+    { id: 'fhsis2018-mortality-underlying', section: 'B', desc: 'Mortality Underlying', url: 'reports-2018/mortality/m1-underlying'},
   ];
 
   other_stats = [
