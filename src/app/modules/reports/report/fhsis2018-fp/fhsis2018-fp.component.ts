@@ -18,6 +18,8 @@ export class Fhsis2018FpComponent implements OnChanges {
   @Input() brgys;
   @Input() facility;
   @Input() submit_flag;
+  @Input() paper_width;
+
   current_submit_flag: boolean = false;
 
   faCircleNotch = faCircleNotch;

@@ -10,8 +10,12 @@
           <option *ngFor="let type of daily_service" [ngValue]="type">{{ type.desc }}</option>
         </optgroup>
 
-        <optgroup label="FHSIS Report" class="text-gray-500" >
-          <option *ngFor="let type of fhsis2018" [ngValue]="type">{{ type.desc }}</option>
+        <optgroup label="FHSIS Report M1" class="text-gray-500" >
+          <option *ngFor="let type of fhsis2018" [ngValue]="type">{{type.section}}. {{ type.desc }}</option>
+        </optgroup>
+
+        <optgroup label="FHSIS Report M2" class="text-gray-500" >
+          <option *ngFor="let type of fhsis2018_m2" [ngValue]="type">{{type.section}}. {{ type.desc }}</option>
         </optgroup>
 
         <optgroup label="Household Profiling" class="text-gray-500" >
@@ -171,8 +175,26 @@
     </div>
   </form>
 
-  <div class="border border-slate-300 rounded-xl px-5">
-    <app-fhsis2018-cc *ngIf="reportForm.value?.report_type.id === 'fhsis2018-cc' && report_data && !is_fetching"
+  <div class="w-auto" *ngIf="reportForm.value?.report_type?.id?.includes('fhsis2018') && report_data && !is_fetching" >
+    <div class="font-semibold flex justify-between text-blue-500 py-3">
+      <span >
+        FHSIS Report - {{ reportForm.value.report_type.desc }}
+      </span>
+
+      <span>
+        <button [disabled]="pdf_exported" type="button" class="text-2xl mr-5 text-red-600 disabled:text-gray-600" (click)="exportP(reportForm.value.report_type.desc)">
+          <fa-icon [icon]="faFilePdf"></fa-icon>
+        </button>
+        <button  type="button" class="text-2xl" (click)="exportX(reportForm.value.report_type.desc)">
+          <fa-icon [icon]="faFileExcel" class="text-green-700"></fa-icon>
+        </button>
+      </span>
+    </div>
+  </div>
+
+  <div class="w-svh flex flex-col items-center p-3 overflow-auto" id="reportForm">
+    <app-header-fhsis2018 *ngIf="reportForm.value?.report_type?.id?.includes('fhsis2018') && report_data && !is_fetching"
+      [paper_width]="paper_width"
       [report_data]="report_data"
       [reportForm]="reportForm"
       [selectedBrgy]="selectedBrgy"
@@ -180,9 +202,21 @@
       [brgys]="brgys"
       [facility]="userInfo.facility"
       [submit_flag]="submit_flag"
-    ></app-fhsis2018-cc>
+    ></app-header-fhsis2018>
+
+    <app-fhsis2018-fp *ngIf="reportForm.value?.report_type.id === 'fhsis2018-fp' && report_data && !is_fetching"
+      [paper_width]="paper_width"
+      [report_data]="report_data"
+      [reportForm]="reportForm"
+      [selectedBrgy]="selectedBrgy"
+      [selectedCode]="selectedCode"
+      [brgys]="brgys"
+      [facility]="userInfo.facility"
+      [submit_flag]="submit_flag"
+    ></app-fhsis2018-fp>
 
     <app-fhsis2018-mc *ngIf="reportForm.value?.report_type.id === 'fhsis2018-mc' && report_data && !is_fetching"
+      [paper_width]="paper_width"
       [report_data]="report_data"
       [reportForm]="reportForm"
       [selectedBrgy]="selectedBrgy"
@@ -192,7 +226,30 @@
       [submit_flag]="submit_flag"
     ></app-fhsis2018-mc>
 
+    <app-fhsis2018-cc *ngIf="reportForm.value?.report_type.id === 'fhsis2018-cc' && report_data && !is_fetching"
+      [paper_width]="paper_width"
+      [report_data]="report_data"
+      [reportForm]="reportForm"
+      [selectedBrgy]="selectedBrgy"
+      [selectedCode]="selectedCode"
+      [brgys]="brgys"
+      [facility]="userInfo.facility"
+      [submit_flag]="submit_flag"
+    ></app-fhsis2018-cc>
+
+    <app-fhsis2018-dental-m1 *ngIf="reportForm.value?.report_type.id === 'fhsis2018-dental-m1' && report_data && !is_fetching"
+      [paper_width]="paper_width"
+      [report_data]="report_data"
+      [reportForm]="reportForm"
+      [selectedBrgy]="selectedBrgy"
+      [selectedCode]="selectedCode"
+      [brgys]="brgys"
+      [facility]="userInfo.facility"
+      [submit_flag]="submit_flag"
+    ></app-fhsis2018-dental-m1>
+
     <app-fhsis2018-tb *ngIf="reportForm.value?.report_type.id === 'fhsis2018-tb' && report_data && !is_fetching"
+      [paper_width]="paper_width"
       [report_data]="report_data"
       [reportForm]="reportForm"
       [selectedBrgy]="selectedBrgy"
@@ -203,6 +260,7 @@
     ></app-fhsis2018-tb>
 
     <app-fhsis2018-ncd *ngIf="reportForm.value?.report_type.id === 'fhsis2018-ncd' && report_data && !is_fetching"
+      [paper_width]="paper_width"
       [report_data]="report_data"
       [reportForm]="reportForm"
       [selectedBrgy]="selectedBrgy"
@@ -212,7 +270,8 @@
       [submit_flag]="submit_flag"
     ></app-fhsis2018-ncd>
 
-    <app-fhsis2018-fp *ngIf="reportForm.value?.report_type.id === 'fhsis2018-fp' && report_data && !is_fetching"
+    <app-fhsis2018-environmental *ngIf="reportForm.value?.report_type.id === 'fhsis2018-environmental' && report_data && !is_fetching"
+      [paper_width]="paper_width"
       [report_data]="report_data"
       [reportForm]="reportForm"
       [selectedBrgy]="selectedBrgy"
@@ -220,7 +279,18 @@
       [brgys]="brgys"
       [facility]="userInfo.facility"
       [submit_flag]="submit_flag"
-    ></app-fhsis2018-fp>
+    ></app-fhsis2018-environmental>
+
+    <app-fhsis2018-mortality *ngIf="reportForm.value?.report_type.id === 'fhsis2018-mortality' && report_data && !is_fetching"
+      [paper_width]="paper_width"
+      [report_data]="report_data"
+      [reportForm]="reportForm"
+      [selectedBrgy]="selectedBrgy"
+      [selectedCode]="selectedCode"
+      [brgys]="brgys"
+      [facility]="userInfo.facility"
+      [submit_flag]="submit_flag"
+    ></app-fhsis2018-mortality>
 
     <app-fhsis2018-morbidity *ngIf="reportForm.value?.report_type.id === 'fhsis2018-morbidity' && report_data && !is_fetching"
       [report_data]="report_data"
@@ -232,7 +302,8 @@
       [submit_flag]="submit_flag"
     ></app-fhsis2018-morbidity>
 
-    <app-fhsis2018-environmental *ngIf="reportForm.value?.report_type.id === 'fhsis2018-environmental' && report_data && !is_fetching"
+    <app-fhsis2018-mortality-underlying *ngIf="reportForm.value?.report_type.id === 'fhsis2018-mortality-underlying' && report_data && !is_fetching"
+      [paper_width]="paper_width"
       [report_data]="report_data"
       [reportForm]="reportForm"
       [selectedBrgy]="selectedBrgy"
@@ -240,17 +311,7 @@
       [brgys]="brgys"
       [facility]="userInfo.facility"
       [submit_flag]="submit_flag"
-    ></app-fhsis2018-environmental>
-
-    <app-fhsis2018-mortality *ngIf="reportForm.value?.report_type.id === 'fhsis2018-mortality' && report_data && !is_fetching"
-      [report_data]="report_data"
-      [reportForm]="reportForm"
-      [selectedBrgy]="selectedBrgy"
-      [selectedCode]="selectedCode"
-      [brgys]="brgys"
-      [facility]="userInfo.facility"
-      [submit_flag]="submit_flag"
-    ></app-fhsis2018-mortality>
+    ></app-fhsis2018-mortality-underlying>
 
     <app-patient-registered *ngIf="reportForm.value?.report_type.id === 'patient-registered' && report_data && !is_fetching"
       [report_data]="report_data"
@@ -301,25 +362,6 @@
       [submit_flag]="submit_flag"
     ></app-ab-pre>
 
-    <app-fhsis2018-dental-m1 *ngIf="reportForm.value?.report_type.id === 'fhsis2018-dental-m1' && report_data && !is_fetching"
-      [report_data]="report_data"
-      [reportForm]="reportForm"
-      [selectedBrgy]="selectedBrgy"
-      [selectedCode]="selectedCode"
-      [brgys]="brgys"
-      [facility]="userInfo.facility"
-      [submit_flag]="submit_flag"
-    ></app-fhsis2018-dental-m1>
-
-    <app-fhsis2018-mortality-underlying *ngIf="reportForm.value?.report_type.id === 'fhsis2018-mortality-underlying' && report_data && !is_fetching"
-      [report_data]="report_data"
-      [reportForm]="reportForm"
-      [selectedBrgy]="selectedBrgy"
-      [selectedCode]="selectedCode"
-      [brgys]="brgys"
-      [facility]="userInfo.facility"
-      [submit_flag]="submit_flag"
-    ></app-fhsis2018-mortality-underlying>
 
     <app-dental-ohs-consolidated *ngIf="reportForm.value?.report_type.id === 'dental-ohs-consolidated' && report_data && !is_fetching"
        [report_data]="report_data"
@@ -330,6 +372,10 @@
        [facility]="userInfo.facility"
        [submit_flag]="submit_flag"
     ></app-dental-ohs-consolidated>
+
+    <app-footer *ngIf="reportForm.value?.report_type?.id?.includes('fhsis2018') && report_data && !is_fetching"
+      [paper_width]="paper_width"
+    ></app-footer>
 
     <div class="flex flex-col justify-center" *ngIf="is_fetching">
       <fa-icon class="text-blue-500 mx-auto pt-36 text-xl" [icon]="faCircleNotch" animation="spin"></fa-icon>
