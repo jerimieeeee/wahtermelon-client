@@ -37,7 +37,7 @@
 <div class="flex justify-center mb-5">
   <button class="btn-save" [disabled]="is_saving || !consentForm.dirty || consentForm.invalid" (click)="onSubmit(); consentForm.markAsPristine();">
     <fa-icon [icon]="faSave" *ngIf="!is_saving" class="mr-2"></fa-icon>
-    <fa-icon [icon]="faSpinner" *ngIf="is_saving" animation="spin" class="mr-2"></fa-icon>
+    <fa-icon [icon]="faCircleNotch" *ngIf="is_saving" animation="spin" class="mr-2"></fa-icon>
     {{ selected_asrh_consult?.comprehensive?.assessment_date ? (is_saving ? 'Updating' : 'Update') : (is_saving ? 'Saving' : 'Save') }}
   </button>
 </div>
@@ -65,7 +65,7 @@
       <div class="flex justify-end py-4 px-5 space-x-4 rounded-b border-t border-gray-200">
         <button type="button" class="btn-save bg-gray-400" (click)="toggleServiceModal()">No</button>
         <button  type="submit" class="btn-save px-10 disabled:bg-gray-300" (click)="acceptModal()">
-          <fa-icon></fa-icon>
+          <!-- <fa-icon></fa-icon> -->
           {{ is_saving ? 'Saving' : 'Yes' }}
         </button>
       </div>

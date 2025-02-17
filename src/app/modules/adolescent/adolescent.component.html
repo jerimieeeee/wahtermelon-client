@@ -30,7 +30,7 @@
         [class]="module===2? 'tabs-main-true w-44' : 'tabs-main-false w-44' ">
         ASSESSMENT SUMMARY
     </button>
-    <button (click)="switchTabCompre(1); switchTab(3)" class="tabs-main w-44" *ngIf="selected_asrh_consult?.refer_to_user_id === user_info.id && user_info.aja_flag === true"
+    <button (click)="switchTab(3)" class="tabs-main w-44" *ngIf="selected_asrh_consult?.refer_to_user_id === user_info.id && user_info.aja_flag === true"
         [class]="module===3? 'tabs-main-true w-44' : 'tabs-main-false w-44' ">
         COMPREHENSIVE HEEADSSSS
     </button>
@@ -108,7 +108,7 @@
 
 <div class="my-5 w-full border border-gray-200 shadow-md rounded-xl" *ngIf="pages === 1">
   <div class="flex flex-col justify-end" *ngIf="!fetching_history">
-    <div class="w-full flex justify-center"><fa-icon animation="spin" class="pt-10"></fa-icon></div>
+    <div class="w-full flex justify-center"><!-- <fa-icon animation="spin" class="pt-10"></fa-icon> --></div>
     <div class="w-full flex justify-center pb-10 font-semibold">Fetching history...</div>
   </div>
   <table class="w-full text-sm text-left" *ngIf="fetching_history">

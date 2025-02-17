@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { formatDate } from '@angular/common';
-import { faCalendar, faTimes, faDoorClosed, faCircleNotch } from '@fortawesome/free-solid-svg-icons';
+import { faCalendar, faTimes, faDoorClosed, faCircleNotch, faSave } from '@fortawesome/free-solid-svg-icons';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpService } from 'app/shared/services/http.service';
@@ -21,6 +21,7 @@ export class ConsentComponent implements OnInit {
   faTimes = faTimes;
   faDoorClosed = faDoorClosed;
   faCircleNotch = faCircleNotch;
+  faSave = faSave;
 
   showModal: boolean = false;
   hideButton: boolean = true;
@@ -47,7 +48,7 @@ export class ConsentComponent implements OnInit {
   is_saving: boolean = false;
 
   max_date: string = formatDate(new Date(), 'yyyy-MM-dd', 'en', 'Asia/Manila');
-  
+
   date_today = formatDate(new Date(), 'MM/dd/yyyy', 'en', 'Asia/Manila');
 
   consentForm: FormGroup = new FormGroup({

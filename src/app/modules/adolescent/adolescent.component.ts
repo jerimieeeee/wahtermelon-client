@@ -23,7 +23,7 @@ export class AdolescentComponent implements OnInit, OnChanges {
 
   pages: number = 1;
   module: number = 1;
-  module_compre: number = 1;
+  module_compre: number | null = null;
   show_end: boolean = false;
   fetching_history: boolean = false;
   show_form: boolean = false;
@@ -45,11 +45,11 @@ export class AdolescentComponent implements OnInit, OnChanges {
   switchPage(page) {
     if(page === 1) this.loadASRH();
     this.pages = page;
-    console.log(this.pages, 'Test')
   }
 
   switchTab(tab) {
     this.module = tab;
+    if(tab === 3) this.switchTabCompre(1);
   }
 
   switchTabCompre(tab_compre) {
@@ -160,12 +160,12 @@ export class AdolescentComponent implements OnInit, OnChanges {
 
           if (ongoingConsult) {
             this.selected_asrh_consult = ongoingConsult;
-          } else {  
+          } else {
             // If there is no ongoing consult, select the latest consult
             this.selected_asrh_consult = null;
           }
 
-         
+
 
           this.fetching_history = true; // Set to false after data is fetched
           console.log(this.selected_asrh_consult, 'selected_asrh_consult');

@@ -22,7 +22,7 @@ export class ServicesComponent {
   services: [];
 
   loadData(patient_id){
-    this.http.get('patient-services/service', {params:{patient_id: patient_id, per_page: 1}}).subscribe({
+    this.http.get('patient-services/service', {params:{patient_id: patient_id}}).subscribe({
       next: (data: any) => {
         console.log(data)
         this.setDetails.emit(data);
