@@ -1,0 +1,12 @@
+td[rowspan], th[rowspan] {
+  display: table-cell;
+  vertical-align: middle; /* Ensures correct alignment */
+}
+
+.top-class {
+  border-bottom: 0;
+}
+
+.bottom-class {
+  border-top: 0;
+}

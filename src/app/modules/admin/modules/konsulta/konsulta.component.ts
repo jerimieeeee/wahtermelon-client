@@ -6,6 +6,8 @@ import { faAnglesLeft, faAnglesRight, faChevronLeft, faChevronRight, faCircleNot
 import { HttpService } from 'app/shared/services/http.service';
 import { ExportAsConfig, ExportAsService } from 'ngx-export-as';
 import { ToastrService } from 'ngx-toastr';
+import * as XLSX from 'xlsx';
+import { saveAs } from 'file-saver';
 
 @Component({
     selector: 'app-konsulta',
@@ -127,6 +129,107 @@ export class KonsultaComponent implements OnInit {
         this.toastr.error(err.error.message, 'Konsulta List')
       }
     })
+  }
+
+  printing: boolean = false;
+  allListArray!: any[];
+  total_print_page: number = 0;
+  current_print_page: number = 1;
+  getAllList() {
+    this.printing = true;
+    /* let params = {params: { }};
+
+    if (this.search_item) params['params']['search'] = this.search_item;
+    if (this.search_pin) params['params']['filter[philhealth_id]'] = this.search_pin;
+    if (this.tranche !== 'null') params['params']['tranche'] = this.tranche;
+    if (this.selected_brgy) params['params']['barangay_code'] = this.selected_brgy;
+    if (this.start_date) params['params']['start_date'] = this.start_date;
+    if (this.end_date) params['params']['end_date'] = this.end_date; */
+
+    let params = {params: { }};
+    // if (page) params['params']['page'] = page;
+    // params['params']['per_page'] = export_list ? 'all' : this.per_page;
+
+    if (this.filter_tranche) params['params']['filter[tranche]'] = this.filter_tranche;
+    if (this.filter_status) params['params']['filter[xml_status]'] = this.filter_status;
+    if (this.start_date) params['params']['start_date'] = this.start_date;
+    if (this.end_date) params['params']['end_date'] = this.end_date;
+    if (this.search) params['params']['search'] = this.search;
+
+    params['params']['effectivity_year'] = this.filter_year;
+    params['params']['per_page'] = 100;
+    params['params']['reconcillation'] = 1;
+
+    this.allListArray = [];
+    let current_number = 0;
+
+    const fetchPage = (page: number) => {
+      params['params']['page'] = page;
+
+      this.http.get('konsulta/validated-xml', params).subscribe({
+        next: (data: any) => {
+          this.total_print_page = data.meta.last_page;
+          this.current_print_page = page;
+          console.log(data)
+          const filteredData = data.data.map((item: any, index: number) => {
+            current_number += 1;
+            return {
+              'Item No.': current_number,
+              'Patient Case No': item.case_number,
+              'Patient\'s PIN': item.philhealth_id,
+              'Registration Date': item.registration_date ? formatDate(item.registration_date, 'MM/dd/yyyy', 'en') : '',
+              'Health and Assessment (FPE) Date': item.fpe_date ? formatDate(item.fpe_date, 'MM/dd/yyyy', 'en') : '',
+              'EKAS Date': item.ekas_date ? formatDate(item.ekas_date, 'MM/dd/yyyy', 'en') : '',
+              'With Lab': item.with_laboratory,
+              'Epress Date': item.epress_date ? formatDate(item.epress_date, 'MM/dd/yyyy', 'en') : ''
+            }
+          });
+
+          this.allListArray.push(...filteredData);
+          if( page < data.meta.last_page ) {
+            fetchPage( page + 1 );
+          } else {
+            this.exportToExcel(this.allListArray);
+            this.printing = false;
+          }
+        },
+        error: err => console.log(err)
+      });
+    };
+
+    fetchPage(1);
+  }
+
+
+  exportToExcel(data: {any}[]) {
+    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
+
+    const columnWidths = Object.keys(data[0] || {}).map((key) => {
+      const maxLength = Math.max(
+        key.length,
+        ...data.map((row) => (row[key] ? row[key].toString().length : 0))
+      );
+      return { wch: maxLength + 2 };
+    });
+    worksheet['!cols'] = columnWidths;
+
+    const workbook: XLSX.WorkBook = {
+      Sheets: { 'data': worksheet },
+      SheetNames: ['data'],
+    };
+
+    const excelBuffer: any = XLSX.write(workbook, {
+      bookType: 'xlsx',
+      type: 'array',
+    });
+
+    this.saveAsExcelFile(excelBuffer, 'Konsulta Summary Report');
+  }
+
+  saveAsExcelFile(buffer: any, fileName: string): void {
+    const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+    const data: Blob = new Blob([buffer], { type: EXCEL_TYPE });
+    saveAs(data, `${fileName}.xlsx`);
   }
 
   createExportList(){

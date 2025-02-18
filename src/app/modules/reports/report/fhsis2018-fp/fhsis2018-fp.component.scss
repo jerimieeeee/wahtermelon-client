@@ -2,3 +2,18 @@
   display: flex;
   align-items: center; /* Align items vertically */
 }
+
+th {
+  padding-top: 3px;
+  padding-bottom: 3px;
+}
+
+.page-break {
+  page-break-before: always; /* Ensures new page before this row */
+}
+
+th[rowspan], td[rowspan] {
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+}

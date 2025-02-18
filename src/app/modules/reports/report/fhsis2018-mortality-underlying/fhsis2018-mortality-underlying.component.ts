@@ -18,6 +18,8 @@ export class Fhsis2018MortalityUnderlyingComponent implements OnChanges{
   @Input() brgys;
   @Input() facility;
   @Input() submit_flag;
+  @Input() paper_width;
+
   current_submit_flag: boolean = false;
   show_stats: boolean = false;
   // @Input() name_list_params: any;
@@ -114,6 +116,7 @@ export class Fhsis2018MortalityUnderlyingComponent implements OnChanges{
   };
 
   exportX() {
+    console.log('exporting in excel')
     this.exportAsService.save(this.exportAsExcel, 'Mortality and Natality M1').subscribe(() => {
       // save started
     });
@@ -121,6 +124,7 @@ export class Fhsis2018MortalityUnderlyingComponent implements OnChanges{
 
   pdf_exported: boolean = false;
   exportP() {
+    console.log('exporting in pdf')
     this.pdf_exported = true;
     this.exportAsService.save(this.exportAsPdf, 'Mortality and Natality M1').subscribe(() => {
       // save started
