@@ -1,5 +1,5 @@
 <div *ngIf="show_form" class="grid grid-cols-12 item-start flex-wrap shadow-md rounded-xl mb-4 mt-8">
-  <div class="col-span-12 flex px-5 py-3 rounded-tl rounded-tr" [ngStyle]="{'background-color': risk_strat?.color }">
+  <div *ngIf="risk_strat" class="col-span-12 flex px-5 py-3 rounded-tl rounded-tr" [ngStyle]="{'background-color': risk_strat?.color }">
     <h4 class="font-bold text-white text-md mt-2 mb-2">Risk Stratification Details</h4>
     <!-- <div class="">
       <fa-icon [icon]="faInfoCircle" class="peer text-white hover:text-white z-50 px-2"></fa-icon>
@@ -12,6 +12,9 @@
     </div> -->
   </div>
 
+  <div *ngIf="!risk_strat" class="col-span-12 flex px-5 py-3 rounded-tl bg-gray-600 rounded-tr">
+    <h4 class="font-bold text-md mt-2 mb-2 text-white">No Risk Stratification Details</h4>
+  </div>
 
   <table class="text-sm col-span-6 col-start-1 table-auto border-r-2 border-gray-200">
     <tbody>

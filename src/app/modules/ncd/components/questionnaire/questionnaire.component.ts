@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnInit, OnChanges, SimpleChanges, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { faSave } from '@fortawesome/free-regular-svg-icons';
 import { faInfoCircle, faSpinner } from '@fortawesome/free-solid-svg-icons';
@@ -14,6 +14,7 @@ import { questionnaireForm } from './forms';
     standalone: false
 })
 export class QuestionnaireComponent implements OnInit, OnChanges {
+  @Output() loadNCD = new EventEmitter<any>();
   @Input() patient_id;
   @Input() consult_details;
 
@@ -65,6 +66,7 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
         next: (data: any) => {
           this.toastr.success('Recorded successfully!','Questionnaire');
           this.is_saving = false;
+          this.loadNCD.emit(this.consult_details.consult_id);
         },
         error: err => console.log(err)
       })

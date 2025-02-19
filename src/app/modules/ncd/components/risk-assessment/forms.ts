@@ -35,5 +35,8 @@ export const riskAssessForm: FormGroup = new FormGroup({
   systolic_1st: new FormControl<string| null>(null),
   diastolic_1st: new FormControl<string| null>(null),
   systolic_2nd: new FormControl<string| null>(null),
-  diastolic_2nd: new FormControl<string| null>(null)
+  diastolic_2nd: new FormControl<string| null>(null),
+
+  hypertensive_old_case: new FormControl<boolean>(false),
+  diabetes_old_case: new FormControl<boolean>(false)
 });

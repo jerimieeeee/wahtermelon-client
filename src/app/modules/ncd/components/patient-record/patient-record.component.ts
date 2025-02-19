@@ -1,5 +1,5 @@
 import { formatDate } from '@angular/common';
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { faSave } from '@fortawesome/free-regular-svg-icons';
 import { faSearch,faBalanceScale,faPlus,faInfoCircle, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
@@ -12,6 +12,7 @@ import { ToastrService } from 'ngx-toastr';
     standalone: false
 })
 export class PatientRecordComponent implements OnInit, OnChanges {
+  @Output() loadNCD = new EventEmitter<any>();
   @Input() patient_id;
   @Input() consult_details;
 
@@ -144,8 +145,8 @@ export class PatientRecordComponent implements OnInit, OnChanges {
 
     this.http.post('non-communicable-disease/patient-record',this.ncd_record).subscribe({
       next: (data: any) => {
-        console.log(data);
-        this.toastr.success('Successfully recorded!','NCD Record')
+        this.toastr.success('Successfully recorded!','NCD Record');
+        this.loadNCD.emit(this.consult_details.consult_id);
       },
       error: err => console.log(err)
     })

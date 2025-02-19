@@ -1,0 +1,110 @@
+<div id="defaultModal" tabindex="-1" class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 w-full md:inset-0 h-modal md:h-full justify-center items-center flex" aria-hidden="true" role="dialog" style="z-index:60">
+  <div class="relative p-4 max-w-4xl h-full md:h-auto">
+    <!-- Modal content -->
+    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+      <!-- Modal header -->
+      <div class="flex justify-between items-start py-3 px-5 rounded-t border-b bg-blue-500 dark:border-gray-600">
+        <h3 class="mt-2 text-sm font-bold text-white dark:text-white">
+            e-Prescription
+        </h3>
+        <button type="button" printSectionId="philhealth_form" ngxPrint [useExistingCss]="true" class="bg-white text-blue-500 hover:bg-gray-100 hover:text-blue-400 px-2 py-1 rounded-md">
+          <fa-icon [icon]="faPrint"></fa-icon>
+        </button>
+      </div>
+      <!-- Modal body -->
+      <div class="overflow-y-auto scrollbar-thin h-96 scrollbar-thumb-gray-400 scrollbar-track-gray-100" *ngIf="show_form">
+        <div class="w-[210mm] h-[297mm] flex justify-center align-middle bg-white">
+          <div class="w-[195mm] h-[272mm] mt-[12.5mm] flex flex-col" id="philhealth_form">
+            <div class="flex flex-col text-center p-1 text-sm my-3 border-b-2 border-gray-800">
+              <div>
+                REPUBLIC OF THE PHILIPPINES <br />
+                Province of {{ facility_info.province.name }} <br />
+                <span class="uppercase">MUNICIPALITY OF {{ facility_info.municipality.name }}</span>
+              </div>
+              <div class="font-semibold ml-5 text-xl">
+                <span class="uppercase">{{ facility_info.facility_name }}</span>
+              </div>
+            </div>
+
+            <table class="table-auto p-1 w-full mb-5 text-sm">
+              <tbody>
+                <tr>
+                  <td colspan="2" class="">
+                    <span class="font-semibold">NAME:</span>
+                    {{ patient_info?.first_name }} {{ patient_info?.middle_name }} {{ patient_info?.suffix_name === 'NA' ? '' : patient_info?.suffix_name }} {{ patient_info?.last_name }}
+                  </td>
+                  <td class="">
+                    <span class="font-semibold">Age:</span>
+                    {{ patient_age }}
+                  </td>
+                  <td class="">
+                    <span class="font-semibold">Gender:</span>
+                    {{ patient_info?.gender }}
+                  </td>
+                </tr>
+
+                <tr>
+                  <td colspan="2" class="">
+                    <span class="font-semibold">Address:</span>
+                    {{ patient_info?.household_folder.barangay.name }}, {{ patient_info?.household_folder.barangay.municipality.name }}
+                  </td>
+                  <td colspan="2" class="">
+                    <span class="font-semibold">Date:</span>
+                    {{ consult_details?.consult_date | date: 'MMM dd, yyyy' }}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div class="h-auto flex flex-col w-full">
+              <div class="flex-none grid grid-cols-3">
+                <div class="ml-4 mt-2 text-4xl"><fa-icon [icon]="faPrescription"></fa-icon></div>
+                <div></div>
+              </div>
+
+              <div class="grow text-sm grid grid-cols-1 h-96 mt-10 ml-10">
+                <div>
+                  <span *ngFor="let pres of prescriptions" class="flex text-sm">
+                    <div class="flex flex-col">
+                      <span class="text-base font-semibold" *ngIf="pres.medicine">{{ pres.medicine.drug_name }}</span>
+                      <span class="text-base font-semibold" *ngIf="pres.konsulta_medicine">{{ pres.konsulta_medicine.desc }}</span>
+                      <span class="text-base font-semibold" *ngIf="!pres.konsulta_medicine && !pres.medicine">{{ pres.added_medicine }} {{ pres.dosage_quantity }} {{ pres.unit_of_measurement.code }}</span>
+
+                      <span>{{ pres.regimen.desc }} - {{ pres.duration_intake }} {{ pres.frequency.desc + (pres.duration_intake > 1 ? 's' : '')}}</span>
+                      <span>{{ pres.quantity }} {{ pres.preparation.desc + (pres.quantity > 1 ? 's' : '') }}</span> <br />
+                    </div>
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div id="footer" class="mt-auto grid grid-cols-2 text-xs">
+              <div class="relative text-xs">
+                <div class="absolute inset-x-0 bottom-0">
+                  Follow-up check on: ___________________
+                </div>
+              </div>
+              <div class="flex justify-end text-xs">
+                <div class="flex flex-col">
+                  <div>Physician: <span class="underline"> {{ prescriptions[0].prescriber.first_name }} {{ prescriptions[0].prescriber.middle_name !== 'N/A' ? prescriptions[0].prescriber.middle_name : '' }} {{ prescriptions[0].prescriber.last_name }} {{ prescriptions[0].prescriber.suffix_name === 'NA' ? '' : prescriptions[0].prescriber.suffix_name }}</span></div>
+                  <div>PRC LIC No.: <span class="underline">{{ prescriptions[0].prescriber.prc_number }}</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="h-96 flex justify-center align-middle w-full" *ngIf="!show_form">
+        <fa-icon [icon]="faCircleNotch" animation="spin" size="2xl" class="mt-20 text-blue-500"></fa-icon>
+      </div>
+      <!-- Modal footer -->
+      <div class="flex justify-end py-4 px-5 space-x-4 rounded-b border-t border-gray-200 dark:border-gray-600">
+        <button  type="button" class="text-white bg-orange-500 hover:ring-2 focus:outline-none hover:ring-orange-300 rounded text-sm font-medium px-6 py-2.5 transition duration-150 ease-in-out transform hover:scale-110 " (click)="closeModal()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="opacity-50 fixed inset-0 z-50 bg-black"></div>
