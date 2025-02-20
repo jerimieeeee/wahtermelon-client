@@ -30,7 +30,7 @@ export class KonsultaComponent implements OnInit {
   current_year = formatDate(new Date, 'yyyy', 'en', 'Asia/Manila')
   years: any = [];
 
-  per_page: number = 10;
+  per_page: number = 40;
   current_page: number;
   last_page: number;
   from: number;
@@ -78,7 +78,7 @@ export class KonsultaComponent implements OnInit {
     let params = {params: { }};
     if (page) params['params']['page'] = page;
     params['params']['per_page'] = export_list ? 'all' : this.per_page;
-    params['params']['search'] = this.search ?? '';
+    if (this.search) params['params']['search'] = this.search;
 
     if(this.form_type === "1"){
       if (this.filter_tranche) params['params']['tranche'] = this.filter_tranche;
@@ -87,8 +87,8 @@ export class KonsultaComponent implements OnInit {
     } else {
       if (this.filter_tranche) params['params']['filter[tranche]'] = this.filter_tranche;
       if (this.filter_status) params['params']['filter[xml_status]'] = this.filter_status;
-      if(this.start_date) params['params']['start_date'] = this.start_date;
-      if(this.end_date) params['params']['end_date'] = this.end_date;
+      if (this.start_date) params['params']['start_date'] = this.start_date;
+      if (this.end_date) params['params']['end_date'] = this.end_date;
       params['params']['effectivity_year'] = this.filter_year;
 
       // params['params']['include'] = 'patient'
@@ -126,6 +126,7 @@ export class KonsultaComponent implements OnInit {
         this.total = data.meta.total;
       },
       error: err => {
+        this.searching = false;
         this.toastr.error(err.error.message, 'Konsulta List')
       }
     })
@@ -176,6 +177,10 @@ export class KonsultaComponent implements OnInit {
             return {
               'Item No.': current_number,
               'Patient Case No': item.case_number,
+              'Last Name': item.patient[0].last_name,
+              'First Name': item.patient[0].first_name,
+              'Middle Name': item.patient[0].middle_name,
+              'Suffix': item.patient[0].suffix_name === 'NA' ? '' : item.patient[0].suffix_name,
               'Patient\'s PIN': item.philhealth_id,
               'Registration Date': item.registration_date ? formatDate(item.registration_date, 'MM/dd/yyyy', 'en') : '',
               'Health and Assessment (FPE) Date': item.fpe_date ? formatDate(item.fpe_date, 'MM/dd/yyyy', 'en') : '',
