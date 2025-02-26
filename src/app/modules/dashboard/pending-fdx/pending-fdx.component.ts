@@ -63,18 +63,19 @@ export class PendingFdxComponent implements OnInit {
     this.show_form = false;
 
     let params = {params: { }};
-    params['page'] = !page ? this.current_page : page;
+    params['params']['page'] = !page ? this.current_page : page;
 
     if (this.selected_physician !== 'all') {
       params['params']['physician_id'] = this.selected_physician;
     }
 
-    if (params['params']['physician_id']) {
+    /* if (params['params']['physician_id']) {
       delete params['params']['physician_id'];
-    }
+    } */
 
+    console.log(params)
     if (this.patient_search) params['search'] = this.patient_search;
-    this.http.get('reports-2018/pending-fdx/report', { params })
+    this.http.get('reports-2018/pending-fdx/report', params)
       .subscribe({
         next: (data: any) => {
           this.pending_fdx = data.data;
