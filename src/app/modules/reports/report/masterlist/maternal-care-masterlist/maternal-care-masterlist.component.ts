@@ -22,6 +22,12 @@ export class MaternalCareMasterlistComponent implements OnChanges {
   current_submit_flag: boolean = false;
   show_stats: boolean = false;
 
+  current_page: number = 1;
+  last_page: number;
+  from: number;
+  to: number;
+  total: number;
+
   faCircleNotch = faCircleNotch;
   faFileExcel = faFileExcel;
   faFilePdf = faFilePdf;

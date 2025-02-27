@@ -1,6 +1,13 @@
 import {Component, Input, OnChanges} from '@angular/core';
 import {ExportAsConfig, ExportAsService} from "ngx-export-as";
-import { faCircleNotch, faFileExcel, faFilePdf } from '@fortawesome/free-solid-svg-icons';
+import {
+  faAnglesLeft, faAnglesRight,
+  faChevronLeft,
+  faChevronRight,
+  faCircleNotch,
+  faFileExcel,
+  faFilePdf
+} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-blood-type-masterlist',
@@ -81,4 +88,10 @@ export class BloodTypeMasterlistComponent implements OnChanges {
     this.stats = this.report_data.data;
     this.pdf_exported = false;
   }
+
+  protected readonly faAnglesLeft = faAnglesLeft;
+  protected readonly faChevronRight = faChevronRight;
+  protected readonly faChevronLeft = faChevronLeft;
+  protected readonly faAnglesRight = faAnglesRight;
+  protected readonly Number = Number;
 }

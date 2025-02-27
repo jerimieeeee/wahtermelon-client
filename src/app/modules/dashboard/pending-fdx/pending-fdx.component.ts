@@ -72,15 +72,8 @@ export class PendingFdxComponent implements OnInit {
 
     params['params']['is_konsulta'] = this.is_konsulta
 
-
-      // params['params']['is_konsulta'] = 1 ? params['params']['is_konsulta'] = 0 : params['params']['is_konsulta'] = ''
-
-    /* if (params['params']['physician_id']) {
-      delete params['params']['physician_id'];
-    } */
-
     console.log(params)
-    if (this.patient_search) params['search'] = this.patient_search;
+    if (this.patient_search) params['params']['search'] = this.patient_search;
     this.http.get('reports-2018/pending-fdx/report', params)
       .subscribe({
         next: (data: any) => {
