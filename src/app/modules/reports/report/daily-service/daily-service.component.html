@@ -33,11 +33,13 @@
           <th colspan="3" class="text-sm font-semibold row-span-5 text-gray-900 px-6 py-4 w-2/12">
             FOR KONSULTA: {{this.count_konsulta}}
           </th>
-          <th colspan="3" class="text-sm font-semibold row-span-5 text-gray-900 px-6 py-4 w-2/12">
+          <th colspan="3" class="text-sm font-semibold row-span-5 text-gray-900 px-6 py-4 w-1/12">
             WITH CONSENT: {{this.count_consent}}
           </th>
-          <th colspan="2" class="text-sm font-semibold row-span-5 text-gray-900 px-6 py-4 w-2/12">
+          <th colspan="2" class="text-sm font-semibold row-span-5 text-gray-900 px-6 py-4 w-1/12">
             WITH PHILHEALTH: {{this.count_philhealth}}
+          </th>
+          <th colspan="2" class="text-sm font-semibold row-span-5 text-gray-900 px-6 py-4 w-2/12">
           </th>
         </tr>
         <tr class="text-center border-b-2 border-gray-400">
@@ -85,6 +87,12 @@
           </th>
           <th class="text-sm font-semibold text-gray-900 px-1.5 py-2 border-r w-1/18">
             TREATMENT
+          </th>
+          <th class="text-sm font-semibold text-gray-900 px-1.5 py-2 border-r w-2/18">
+            ATTENDED BY:
+          </th>
+          <th class="text-sm font-semibold text-gray-900 px-1.5 py-2 border-r w-1/18">
+            LOGGED BY:
           </th>
         </tr>
       </thead>
@@ -172,6 +180,17 @@
               {{ item.medicine_purpose?.desc }} <br />
             <br />
             </div>
+          </td>
+          <td class="border-r border-b border-gray-200 text-center">
+            <span class="font-bold">
+              Dr.
+            </span>
+            {{indicator.physician}}
+            <br />
+          </td>
+          <td class="border-r border-b border-gray-200 text-center">
+            <span class="font-bold">{{ indicator.designation ?? '-'}} <br /> </span>
+             {{indicator.user_name}} <br />
           </td>
 
           <span class="hidden">{{ countTotal(indicator.gender === 'M' ? 'count_male' : 'count_female') }}</span>
