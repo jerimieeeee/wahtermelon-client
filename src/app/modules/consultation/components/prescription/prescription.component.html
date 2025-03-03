@@ -26,7 +26,7 @@
       </span>
 
       <div class="flex justify-end mt-3 mr-3">
-        <button *ngIf="consult_details?.is_konsulta && with_credentials && prescriptions" type="button" class="ml-3 bg-emerald-600 text-white rounded-md px-2 py-1 hover:opacity-80" (click)="toggleModal('eprescription')">
+        <button *ngIf="prescriptions" type="button" class="ml-3 bg-emerald-600 text-white rounded-md px-2 py-1 hover:opacity-80" (click)="toggleModal('eprescription')">
           Print
           <fa-icon [icon]="faPrescription" class="pr-1"></fa-icon>
         </button>
@@ -64,7 +64,7 @@
               {{ prescription.preparation.desc }}
             </td>
             <td class="text-sm text-center mb-5  align-middle">
-              <button class="mr-3" (click)="openAddForm(prescription)">
+              <button *ngIf="prescription.dispensing" class="mr-3" (click)="openAddForm(prescription)">
                 <fa-icon [icon]="faEdit" class="text-amber-500"></fa-icon>
               </button>
               <button (click)="toggleModal('delete-item', prescription)">
