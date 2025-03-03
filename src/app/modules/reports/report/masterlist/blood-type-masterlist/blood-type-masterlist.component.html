@@ -1,0 +1,72 @@
+<div class="grid grid-cols-1 w-full" *ngIf="reportForm.value.report_type.id == 'masterlist'">
+  <div class="flex justify-between w-full text-blue-500 font-semibold text-lg  p-3" >
+    <span>Blood Type Masterlist</span>
+    <!--    <span>
+          &lt;!&ndash; <fa-icon *ngIf="exporting" [icon]="faCircleNotch" animation="spin" class="text-blue-500 text-sm mr-3">Exporting...</fa-icon> &ndash;&gt;
+          <button [disabled]="pdf_exported" type="button" class="text-2xl mr-5 text-red-600 disabled:text-gray-600" (click)="exportP()">
+            <fa-icon [icon]="faFilePdf"></fa-icon>
+          </button>
+          <button  type="button" class="text-2xl" (click)="exportX()">
+            <fa-icon [icon]="faFileExcel" class="text-green-700"></fa-icon>
+          </button>
+        </span>-->
+  </div>
+  <div class="flex flex-col pb-5">
+    <div class="sm:-mx-6 lg:-mx-8">
+      <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
+        <div class="">
+          <table class="min-w-full border select-none" id="reportForm">
+            <thead class="border-b">
+            <tr>
+              <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 border">
+                Name
+              </th>
+              <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 border">
+                Gender
+              </th>
+              <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 border">
+                Address
+              </th>
+              <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 border">
+                Birthdate
+              </th>
+              <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 border">
+                Blood Type
+              </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="border text-sm text-center" *ngFor="let data of stats">
+              <td class="py-2 border">{{ data.name }}</td>
+              <td class="py-2 border">{{ data.gender }}</td>
+              <td class="py-2 border">{{ data.address }}</td>
+              <td class="py-2 border">{{ data.birthdate | date: 'MM/dd/yyyy' }}</td>
+              <td class="py-2 border">{{ data.blood_type_code }}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!--    <div *ngIf="total >= 6">
+        <nav class="relative z-0 inline-flex shadow-sm -space-x-px" aria-label="Pagination">
+            <button [disabled]="current_page===1" (click)="getPatient(Number(1))" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 enabled:bg-white disabled:bg-gray-300 text-sm font-medium text-gray-500 hover:bg-gray-50">
+                <fa-icon [icon]="faAnglesLeft" class="block h-15 w-15 text-gray-500 pr-1"></fa-icon>
+            </button>
+
+            <button [disabled]="current_page===1" (click)="getPatient(Number(current_page-1))" class="relative inline-flex items-center px-4 py-2 border border-gray-300 enabled:bg-white disabled:bg-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
+                <fa-icon [icon]="faChevronLeft" class="block h-15 w-15 text-gray-500 pr-1"></fa-icon>Previous
+            </button>
+            <button [disabled]="current_page===last_page" (click)="getPatient(Number(current_page+1))" class="relative inline-flex items-center px-4 py-2 border border-gray-300 enabled:bg-white disabled:bg-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
+                Next<fa-icon [icon]="faChevronRight" class="h-5 w-5 text-gray-500"></fa-icon>
+            </button>
+
+            <button [disabled]="current_page===last_page" (click)="getPatient(Number(last_page))" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 enabled:bg-white disabled:bg-gray-300 text-sm font-medium text-gray-500 hover:bg-gray-50">
+                <fa-icon [icon]="faAnglesRight" class="h-5 w-5 text-gray-500"></fa-icon>
+            </button>
+        </nav>
+    </div>-->
+
+</div>

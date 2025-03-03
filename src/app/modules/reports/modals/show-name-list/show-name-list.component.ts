@@ -92,6 +92,7 @@ export class ShowNameListComponent implements OnInit {
   }
 
   navigateTo(loc, patient_id, consult_id){
+    console.log(patient_id, 'patient')
     if (loc === 'cn') {
       this.router.navigate(['/patient/'+loc,{id: patient_id, consult_id: consult_id}])
     } else {
