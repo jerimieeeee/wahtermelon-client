@@ -10,7 +10,7 @@ import { VizCreateOptions, ToolbarPosition} from 'ngx-tableau'
     styleUrls: ['./health-financing.component.scss'],
     standalone: false
 })
-export class HealthFinancingComponent {
+export class HealthFinancingComponent implements OnInit{
 
   userInfo: any;
   options: any;
@@ -80,7 +80,6 @@ tabloid5(){
     private http: HttpService
   ) { }
 
-  // eslint-disable-next-line @angular-eslint/use-lifecycle-interface
   ngOnInit(): void {
     this.tabloid();
     this.tabloid2();

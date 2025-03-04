@@ -1,0 +1,94 @@
+import {Component, Input, OnChanges} from '@angular/core';
+import {ExportAsConfig, ExportAsService} from "ngx-export-as";
+import { faCircleNotch, faFileExcel, faFilePdf } from '@fortawesome/free-solid-svg-icons';
+
+@Component({
+  selector: 'app-maternal-care-masterlist',
+  templateUrl: './maternal-care-masterlist.component.html',
+  styleUrl: './maternal-care-masterlist.component.scss',
+  standalone: false
+})
+export class MaternalCareMasterlistComponent implements OnChanges {
+  @Input() report_data;
+  @Input() reportForm;
+  @Input() selectedBrgy;
+  @Input() selectedCode!: any;
+  @Input() brgys;
+  @Input() facility;
+  @Input() submit_flag;
+  @Input() start_date;
+  @Input() end_date;
+
+  current_submit_flag: boolean = false;
+  show_stats: boolean = false;
+
+  current_page: number = 1;
+  last_page: number;
+  from: number;
+  to: number;
+  total: number;
+
+  faCircleNotch = faCircleNotch;
+  faFileExcel = faFileExcel;
+  faFilePdf = faFilePdf;
+
+  stats : any;
+  name_list: any = [];
+
+  exportAsExcel: ExportAsConfig = {
+    type: 'xlsx',
+    elementIdOrContent: 'reportForm'
+  }
+
+  exportAsPdf: ExportAsConfig = {
+    type: 'pdf',
+    elementIdOrContent: 'reportForm',
+    options: {
+      image: { type: 'jpeg', quality: 1 },
+      jsPDF: {
+        orientation: 'landscape',
+        format: 'a4',
+        precision: 16
+      }
+    }
+  }
+
+  exportX() {
+    this.exportAsService.save(this.exportAsExcel, 'test').subscribe(() => {
+      // save started
+    });
+  }
+
+  pdf_exported: boolean = false;
+  exportP() {
+    this.pdf_exported = true;
+    this.exportAsService.save(this.exportAsPdf, 'test').subscribe(() => {
+      // save started
+    });
+  }
+
+  constructor(
+    private exportAsService: ExportAsService
+  ) { }
+
+  openList:boolean = false;
+  toggleModal(name_list, name_list2?){
+    let list = [];
+    if(name_list2) {
+      list = name_list.concat(name_list2)
+    } else {
+      list = name_list
+    }
+
+    // console.log(typeof name_list)
+    this.name_list = list;
+    this.openList = !this.openList;
+  }
+
+  ngOnChanges(): void {
+    this.stats = this.report_data.data;
+    this.pdf_exported = false;
+    console.log(this.report_data);
+  }
+
+}

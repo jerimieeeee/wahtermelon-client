@@ -31,6 +31,7 @@ export class PendingFdxComponent implements OnInit {
   show_data: any = [];
   show_previous_dx: any;
   selected_physician: string = "all";
+  is_konsulta: string = "all";
   physicians: [];
 
   per_page: number = 5;
@@ -63,18 +64,17 @@ export class PendingFdxComponent implements OnInit {
     this.show_form = false;
 
     let params = {params: { }};
-    params['page'] = !page ? this.current_page : page;
+    params['params']['page'] = !page ? this.current_page : page;
 
     if (this.selected_physician !== 'all') {
       params['params']['physician_id'] = this.selected_physician;
     }
 
-    if (params['params']['physician_id']) {
-      delete params['params']['physician_id'];
-    }
+    params['params']['is_konsulta'] = this.is_konsulta
 
-    if (this.patient_search) params['search'] = this.patient_search;
-    this.http.get('reports-2018/pending-fdx/report', { params })
+    console.log(params)
+    if (this.patient_search) params['params']['search'] = this.patient_search;
+    this.http.get('reports-2018/pending-fdx/report', params)
       .subscribe({
         next: (data: any) => {
           this.pending_fdx = data.data;

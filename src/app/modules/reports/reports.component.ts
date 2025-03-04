@@ -51,6 +51,7 @@ export class ReportsComponent implements OnInit {
   other_stats = [
     { id: 'patient-registered', desc: 'Patient Registered', url: 'reports-2018/user/patient-registered'},
     { id: 'feedback', desc: 'Client Feedback', url: 'reports-2018/feedback/report'},
+    { id: 'masterlist', desc: 'Masterlist', url: 'reports-2018/masterlist/list'},
   ];
 
   ab_stats = [
@@ -151,6 +152,7 @@ export class ReportsComponent implements OnInit {
   is_fetching: boolean = false;
   reportFlag: string;
   selectedCode!: string;
+  stats : any;
 
   exportAsExcel: ExportAsConfig = {
     type: 'xlsx',
@@ -191,7 +193,8 @@ export class ReportsComponent implements OnInit {
         (td as HTMLElement).innerText = "'" + (td as HTMLElement).innerText; // Add apostrophe to force text format
       }
     }); */
-
+    report_name = report_name.substring(0, 4)
+    console.log(report_name+'_'+this.getTrailName());
     this.exportAsService.save(this.exportAsExcel, report_name+'_'+this.getTrailName()).subscribe(() => {
       // save started
     });
@@ -199,7 +202,7 @@ export class ReportsComponent implements OnInit {
 
   getTrailName(): string {
     let trailName: string = '';
-    if(this.reportForm.value.start_date) trailName = this.reportForm.value.start_date+'_to_'+this.reportForm.value.end_date;
+    if(this.reportForm.value.start_date) trailName = this.reportForm.value.start_date+'_'+this.reportForm.value.end_date;
     if(this.reportForm.value.month) trailName = this.reportForm.value.month+"_"+this.reportForm.value.year;
     if(this.reportForm.value.quarter) trailName = this.reportForm.value.quarter+"_"+this.reportForm.value.year;
 
@@ -216,6 +219,8 @@ export class ReportsComponent implements OnInit {
 
   onSubmit(){
     this.pdf_exported = false;
+    // this.stats = this.report_data.data;
+    // console.log(this.report_data, 'amen')
     // console.log(this.reportForm.value, this.reportFlag)
     this.is_fetching = true;
 
@@ -226,6 +231,7 @@ export class ReportsComponent implements OnInit {
     if (this.reportForm.value.quarter) params['quarter'] = this.reportForm.value.quarter;
     if (this.reportForm.value.start_date) params['start_date'] = this.reportForm.value.start_date;
     if (this.reportForm.value.end_date) params['end_date'] = this.reportForm.value.end_date;
+    if (this.reportForm.value.program) params['program'] = this.reportForm.value.program;
     params['category'] = this.reportForm.value.report_class;
 
     if (this.reportForm.value.report_class === 'fac') {
@@ -358,6 +364,14 @@ export class ReportsComponent implements OnInit {
       this.generateYear();
     }
 
+    if(this.reportForm.value.program === 'bt') {
+      this.reportForm.controls.start_date.disable();
+      this.reportForm.controls.end_date.disable();
+    }
+    else {
+      this.reportForm.controls.report_class.enable();
+    }
+
     if((!this.fhsis_monthly_arr.find(e => e === this.reportForm.value.report_type.id) &&
         !this.quarterly_arr.find(e => e === this.reportForm.value.report_type.id)) &&
         this.reportForm.value.report_type){
@@ -395,7 +409,8 @@ export class ReportsComponent implements OnInit {
       start_date: ['', Validators.required],
       end_date: ['', Validators.required],
       month: [null, Validators.required],
-      year: [null, Validators.required]
+      year: [null, Validators.required],
+      program: [''],
     });
 
     this.changeDateOptions();

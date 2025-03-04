@@ -54,7 +54,17 @@
 </div>
 
 <form [formGroup]="riskAssessForm" (ngSubmit)="onSubmit()" *ngIf="show_form">
-  <div class="grid grid-cols-12  item-start flex-wrap shadow-md rounded-xl mb-8 mt-8">
+  <div class="grid grid-cols-2 mx-10">
+    <div class="text-right mr-5">
+      <input formControlName="hypertensive_old_case" type="checkbox" class="input-checkbox">
+      <label class="pl-2">Hypertensive Old Case</label>
+    </div>
+    <div>
+      <input formControlName="diabetes_old_case" type="checkbox" class="input-checkbox">
+      <label class="pl-2">Diabetes Old Case</label>
+    </div>
+  </div>
+  <div class="grid grid-cols-12 item-start flex-wrap shadow-md rounded-xl mb-8 mt-8">
     <div class="col-span-12 flex bg-blue-500 px-5 py-2 rounded-tl rounded-tr">
       <h4 class="font-bold text-white text-md mt-2 mb-1">NCD High Risk Assessment</h4>
     </div>

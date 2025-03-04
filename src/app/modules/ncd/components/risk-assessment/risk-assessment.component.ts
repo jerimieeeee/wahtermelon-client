@@ -16,6 +16,7 @@ import { riskAssessForm } from './forms';
 })
 export class RiskAssessmentComponent implements OnInit, OnChanges {
   @Output() loadRisk = new EventEmitter<any>();
+  @Output() loadNCD = new EventEmitter<any>();
   @Input() patient_info;
   @Input() consult_details;
   @Input() vitals;
@@ -60,7 +61,8 @@ export class RiskAssessmentComponent implements OnInit, OnChanges {
           // console.log(data)
           this.is_saving = false;
           this.toastr.success('Recorded successfully!','Risk Assessment');
-          this.loadRisk.emit();
+          this.loadNCD.emit(data.data.consult_id);
+          // this.loadRisk.emit();
         },
         error: err => console.log(err)
       })
@@ -297,7 +299,9 @@ export class RiskAssessmentComponent implements OnInit, OnChanges {
       systolic_1st: [null, Validators.required],
       diastolic_1st: [null, Validators.required],
       systolic_2nd: [null, Validators.required],
-      diastolic_2nd: [null, Validators.required]
+      diastolic_2nd: [null, Validators.required],
+      hypertensive_old_case: [false],
+      diabetes_old_case: [false]
     });
 
     this.checkDiabetes()

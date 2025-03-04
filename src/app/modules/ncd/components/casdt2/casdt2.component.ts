@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {faInfoCircle, faSpinner} from '@fortawesome/free-solid-svg-icons';
 import {HttpService} from "../../../../shared/services/http.service";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
@@ -14,6 +14,7 @@ import {faSave} from "@fortawesome/free-regular-svg-icons";
     standalone: false
 })
 export class Casdt2Component implements OnInit {
+  @Output() loadNCD = new EventEmitter<any>();
   @Input() patient_id;
   @Input() consult_details;
   @Input() vaccine_details;

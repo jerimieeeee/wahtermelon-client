@@ -1,5 +1,5 @@
 import { formatDate } from '@angular/common';
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { faSave } from '@fortawesome/free-regular-svg-icons';
 import { faInfoCircle, faSpinner } from '@fortawesome/free-solid-svg-icons';
@@ -13,6 +13,7 @@ import { bloodLipidForm, glucoseForm, urineKetonesForm, urineProteinForm } from 
     standalone: false
 })
 export class RiskScreeningComponent implements OnInit, OnChanges {
+  @Output() loadNCD = new EventEmitter<any>();
   @Input() patient_id;
   @Input() consult_details;
 
@@ -146,7 +147,8 @@ export class RiskScreeningComponent implements OnInit, OnChanges {
       this.http.post(url, this[group+'Form'].value).subscribe({
         next: (data: any) => {
           this.is_saving[group] = false;
-          this.toastr.success('Recorded successfully!','Risk screening')
+          this.toastr.success('Recorded successfully!','Risk screening');
+          this.loadNCD.emit(this.consult_details.consult_id);
         },
         error: err => console.log(err)
       })

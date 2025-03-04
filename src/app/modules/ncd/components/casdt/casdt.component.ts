@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { faInfoCircle,faTimes,faSave,faChevronCircleDown,faChevronCircleUp, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { answer_screening, answer_yn } from '../../data-lib/answers';
@@ -12,6 +12,7 @@ import { casdtForm } from './form';
     standalone: false
 })
 export class CasdtComponent implements OnInit {
+  @Output() loadNCD = new EventEmitter<any>();
   faSpinner = faSpinner;
   faInfoCircle = faInfoCircle;
   faTimes = faTimes;
@@ -69,7 +70,7 @@ export class CasdtComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    console.log(this.casdtForm);
+    // console.log(this.casdtForm);
     this.loadLibraries;
   }
 

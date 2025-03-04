@@ -28,8 +28,6 @@ export class NcdComponent implements OnInit, OnDestroy {
 
   faDoorClosed = faDoorClosed;
 
-
-
   ngOnDestroy(): void {
     eventSubscriber(this.patientInfo.reloadNCDVitals, this.loadVitals, true);
   }
@@ -40,49 +38,11 @@ export class NcdComponent implements OnInit, OnDestroy {
     this.modules = 2;
   }
 
-
   toggleModal() {
     this.show_end = !this.show_end;
   }
 
-  loadNCD(consult_id, type?) {
-    let params = { consult_id: consult_id };
-
-    this.http.get('non-communicable-disease/risk-assessment', {params}).subscribe({
-      next: (data: any) => {
-        if(data.data.length > 0) {
-          data.data[0]['consult_date'] = data.data[0].assessment_date;
-          this.consult_details = data.data[0];
-        }else {
-          this.consult_details = this.consult_details_temp;
-        }
-
-        let age = this.ageService.calcuateAge(this.patient_info.birthdate, this.consult_details.consult_date);
-        console.log(age)
-        if(age.type === 'year' && age.age >= 60) this.show_casdt2 = true;
-      },
-      error: err => console.log(err)
-    })
-  }
-
   risk_list: any;
-
-  loadRisk(){
-    //load risk list
-    let params = {
-      patient_id: this.patient_id,
-      sort: '-assessment_date'
-    }
-    this.http.get('non-communicable-disease/risk-assessment', {params}).subscribe({
-      next: (data: any) => {
-        this.risk_list = data.data;
-        if(this.risk_list) {
-          this.fillConsult();
-        }
-      },
-      error: err => console.log(err)
-    })
-  }
 
   loadConsult() {
     //load ncd visits
@@ -109,22 +69,52 @@ export class NcdComponent implements OnInit, OnDestroy {
     })
   }
 
+  loadRisk(){
+    //load risk list
+    let params = {
+      patient_id: this.patient_id,
+      sort: '-assessment_date'
+    }
+    this.http.get('non-communicable-disease/risk-assessment', {params}).subscribe({
+      next: (data: any) => {
+        this.risk_list = data.data;
+        if(this.risk_list) {
+          this.fillConsult();
+        }
+      },
+      error: err => console.log(err)
+    })
+  }
+
   fillConsult(){
     Object.entries(this.ncd_list).forEach(([key, value], index) => {
       let values: any = value;
       let result = this.risk_list.find(item => item.consult_id === values.id)
-
       if(result) {
         this.ncd_list[index] = result;
         this.ncd_list[index]['consult_done'] = values.consult_done;
       }
-
-      if(Object.keys(this.ncd_list).length-1 === index) {
-        this.loadNCD(this.consult_id);
-      }
     });
   }
 
+  loadNCD(consult_id, type?) {
+    let params = { consult_id: consult_id };
+
+    this.http.get('non-communicable-disease/risk-assessment', {params}).subscribe({
+      next: (data: any) => {
+        if(data.data.length > 0) {
+          data.data[0]['consult_date'] = data.data[0].assessment_date;
+          this.consult_details = data.data[0];
+        }else {
+          this.consult_details = this.consult_details_temp;
+        }
+
+        let age = this.ageService.calcuateAge(this.patient_info.birthdate, this.consult_details.consult_date);
+        if(age.type === 'year' && age.age >= 60) this.show_casdt2 = true;
+      },
+      error: err => console.log(err)
+    })
+  }
   /* patientInfo(info) {
     this.patient_info = info;
   } */
@@ -175,8 +165,8 @@ export class NcdComponent implements OnInit, OnDestroy {
 
     this.patient_id = this.route.snapshot.paramMap.get('id');
     this.consult_id = this.route.snapshot.paramMap.get('consult_id');
-    this.loadConsult();
     this.loadVitals();
+    this.loadConsult();
   }
 
   switchTab(tab){

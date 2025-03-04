@@ -31,6 +31,9 @@ import {DentalOhsConsolidatedComponent} from "./report/dental-ohs-consolidated/d
 import { ConsolidatedComponent } from './report/consolidated/consolidated.component';
 import { HeaderFhsis2018Component } from './components/header-fhsis2018/header-fhsis2018.component';
 import { FooterComponent } from './components/footer/footer.component';
+import {MaternalCareMasterlistComponent} from "./report/masterlist/maternal-care-masterlist/maternal-care-masterlist.component";
+import {FamilyPlanningMasterlistComponent} from "./report/masterlist/family-planning-masterlist/family-planning-masterlist.component";
+import {BloodTypeMasterlistComponent} from "./report/masterlist/blood-type-masterlist/blood-type-masterlist.component";
 
 @NgModule({
   declarations: [
@@ -56,6 +59,9 @@ import { FooterComponent } from './components/footer/footer.component';
     Fhsis2018EnvironmentalComponent,
     Fhsis2018MortalityUnderlyingComponent,
     DentalOhsConsolidatedComponent,
+    MaternalCareMasterlistComponent,
+    FamilyPlanningMasterlistComponent,
+    BloodTypeMasterlistComponent
   ],
   exports: [
     ShowNameListComponent

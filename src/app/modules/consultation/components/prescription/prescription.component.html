@@ -8,25 +8,31 @@
       <span class="rounded-t-md m-0 p-2 font-semibold text-gray-50 bg-amber-500 flex justify-between" [ngClass]="{'rounded-b' : !show_content}">
         Prescriptions
         <div>
-          <button *ngIf="consult_details?.is_konsulta && with_credentials && prescriptions" type="button" class="ml-3 text-sm bg-white text-green-500 px-3 rounded-full" (click)="toggleModal()">
-            <fa-icon [icon]="faReceipt" class="pr-1"></fa-icon>
-            epress
+          <button *ngIf="consult_details?.is_konsulta && with_credentials && prescriptions" type="button" class="mr-3 text-sm bg-white text-green-500 px-3 rounded-full" (click)="toggleModal()">
+            <!-- <fa-icon [icon]="faReceipt" class="pr-1"></fa-icon> -->
+            konsulta epress
           </button>
 
-          <button *ngIf="prescriptions" type="button" class="text-sm bg-white text-amber-500 px-3 rounded-full" (click)="navigateTo('dispensing')">
+          <button *ngIf="prescriptions" type="button" class="mr-3 text-sm bg-white text-amber-500 px-3 rounded-full" (click)="navigateTo('dispensing')">
             <fa-icon [icon]="faPrescriptionBottleMedical" class="pr-1"></fa-icon>
             dispensing
           </button>
 
-          <button *ngIf="show_actions" type="button" class="ml-3 text-sm bg-white text-blue-500 px-3 rounded-full" (click)="toggleList()">
+          <button *ngIf="show_actions" type="button" class="text-sm bg-white text-blue-500 px-3 rounded-full" (click)="toggleList()">
             <fa-icon [icon]="faAdd" class="pr-1"></fa-icon>
             add drugs
           </button>
         </div>
       </span>
+
+      <div class="flex justify-end mt-3 mr-3">
+        <button *ngIf="prescriptions" type="button" class="ml-3 bg-emerald-600 text-white rounded-md px-2 py-1 hover:opacity-80" (click)="toggleModal('eprescription')">
+          Print
+          <fa-icon [icon]="faPrescription" class="pr-1"></fa-icon>
+        </button>
+      </div>
       <table *ngIf="show_content" class="w-full table-auto p-5">
         <thead>
-
           <tr class="align-top">
             <th scope="col" class="text-center py-3 px-3 w-3/12 ">Medicine</th>
             <th scope="col" class="text-center py-3 px-3 w-3/12">Intake</th>
@@ -58,7 +64,7 @@
               {{ prescription.preparation.desc }}
             </td>
             <td class="text-sm text-center mb-5  align-middle">
-              <button class="mr-3" (click)="openAddForm(prescription)">
+              <button *ngIf="prescription.dispensing" class="mr-3" (click)="openAddForm(prescription)">
                 <fa-icon [icon]="faEdit" class="text-amber-500"></fa-icon>
               </button>
               <button (click)="toggleModal('delete-item', prescription)">
@@ -116,10 +122,16 @@
 
 <!-- <app-prescription *ngIf="show_epress"></app-prescription> -->
 <app-epres *ngIf="show_epress"
-(toggleModal)="toggleModal()"
-[prescriptions]="prescriptions"
-[consult_details]="consult_details"
+  (toggleModal)="toggleModal()"
+  [prescriptions]="prescriptions"
+  [consult_details]="consult_details"
 ></app-epres>
+
+<app-eprescription *ngIf="modal['eprescription']"
+  (toggleModal)="toggleModal($event)"
+  [prescriptions]="prescriptions"
+  [consult_details]="consult_details"
+></app-eprescription>
 
 <app-delete-item *ngIf="modal['delete-item']"
   [delete_id]="delete_id"

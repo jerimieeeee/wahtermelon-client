@@ -32,8 +32,8 @@ export class VaccineComponent implements OnInit {
     this.http.get('patient-vaccines/vaccines-records', {params:{'patient_id': patient_id, 'sort': '-vaccine_date' }}).subscribe({
       next: (data: any) => {
         this.vaccine_list = data.data;
-        // console.log(this.vaccine_list)
-        this.immunization_status = data.status;
+        // console.log(this.vaccine_list[0].immunization_status.immunization_status)
+        this.immunization_status = this.vaccine_list[0] ? this.vaccine_list[0].immunization_status : '';
 
         this.checkVaccineStatus(this.vaccine_list);
       },

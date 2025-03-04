@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, OnChanges, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
-import { faAdd, faChevronCircleDown, faChevronCircleUp, faEdit, faSave, faSpinner, faTrash, faPrescriptionBottleMedical, faReceipt, faTrashCan } from '@fortawesome/free-solid-svg-icons';
+import { faAdd, faChevronCircleDown, faChevronCircleUp, faEdit, faSave, faSpinner, faTrash, faPrescriptionBottleMedical, faReceipt, faTrashCan, faPrescription } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -35,7 +35,7 @@ export class PrescriptionComponent implements OnInit, OnChanges {
   faPrescriptionBottleMedical = faPrescriptionBottleMedical;
   faReceipt = faReceipt;
   faTrashCan = faTrashCan;
-
+  faPrescription = faPrescription;
   selected_drug: any;
   prescriptions: any;
 
@@ -162,7 +162,7 @@ export class PrescriptionComponent implements OnInit, OnChanges {
     if(name) {
       if(data) this.delete_id = data.id;
       this.modal[name] = !this.modal[name];
-      this.loadPrescriptions();
+      // this.loadPrescriptions();
     } else {
       this.show_epress = !this.show_epress;
     }
@@ -188,6 +188,7 @@ export class PrescriptionComponent implements OnInit, OnChanges {
         if(data.data.length > 0) {
           this.prescriptions = data.data;
         }
+        // this.toggleModal('eprescription');
       },
       error: err => console.log(err)
     })

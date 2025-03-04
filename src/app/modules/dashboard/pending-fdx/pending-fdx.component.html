@@ -1,94 +1,107 @@
 <div class="mb-10  text-gray-600 h-100 border border-slate-200 shadow-md rounded-md">
   <div class="md:flex md:justify-between md:items-center pb-2 bg-blue-500 text-white rounded-t-md">
     <span class="font-semibold pt-2 pl-5">Pending Final Diagnosis</span>
-    <div class="border bg-white border-gray-400 rounded-md flex items-center m-2">
-      <input type="text" [(ngModel)]="patient_search" class="form-input w-1/4 text-sm border text-gray-700 border-gray-400 flex-1" (keyup.enter)="getPatient()" placeholder="Search Patient"/>
-      <button type="button" class="text-blue-500 w-9 h-9 border-r border-gray-400" (click)="getPatient()">
-        <fa-icon class="-ml-1" [icon]="faSearch"></fa-icon>
-      </button>
+    <div class="rounded-md flex items-center m-2">
+      <div class="w-full bg-white rounded-md flex justify-between mr-3">
+        <input type="text" [(ngModel)]="patient_search" class="input text-sm text-gray-700 border-0 pt-0" (keyup.enter)="getPatient()" placeholder="Search Patient"/>
+        <button type="button" class="text-blue-500 border-gray-400 pr-2" (click)="getPatient()">
+          <fa-icon class="-ml-1" [icon]="faSearch"></fa-icon>
+        </button>
+      </div>
 
-        <select class="input px-2 mr-3 disabled:bg-red-600 w-72 text-gray-800" (change)="getPatient()" [(ngModel)]="selected_physician">
-          <option value="all">All</option>
-          <option [value]="dr.id" class="pr-" *ngFor="let dr of physicians">{{ dr.last_name }}, {{ dr.first_name }} {{ dr.middle_name }}</option>
-        </select>
+      <select class="input px-2 pt-0.5 mr-3 disabled:bg-gray-200 w-40 text-gray-800" (change)="getPatient()" [(ngModel)]="is_konsulta">
+        <option value="">All</option>
+        <option value="1">Yes</option>
+        <option value="0">No</option>
+      </select>
+
+      <select class="input px-2 pt-0.5 mr-3 disabled:bg-red-600 w-72 text-gray-800" (change)="getPatient()" [(ngModel)]="selected_physician">
+        <option value="all">All</option>
+        <option [value]="dr.id" class="pr-" *ngFor="let dr of physicians">{{ dr.last_name }}, {{ dr.first_name }} {{ dr.middle_name }}</option>
+      </select>
+
     </div>
   </div>
 
   <div class="p-3" *ngIf="show_form">
     <div class="flex justify-between border-b border-gray-100 bg-gray-200">
-      <div class="flex w-3/5">
+      <div class="flex w-4/12">
         <div class="flex justify-center text-gray-700 md:block leading-tight align-top my-1 w-full p-1 rounded-md">
-          <span class="w-full font-semibold my-0 text-base rounded-md py-2 px-3">
-            Name:
+          <span class="w-full font-semibold my-0 rounded-md py-2 px-3 text-center text-xs">
+            Name
           </span>
         </div>
       </div>
-      <div class="flex w-3/5">
+      <div class="flex w-1/12">
         <div class="flex justify-center text-gray-700 md:block leading-tight align-top my-1 w-full p-1 rounded-md">
-          <span class="w-full font-semibold my-0 text-base rounded-md py-2 px-3">
-            Consult date:
+          <span class="w-full font-semibold my-0 rounded-md py-2 px-3 text-center text-xs">
+            Consult date
           </span>
         </div>
       </div>
-      <div class="flex w-3/5">
+      <div class="flex w-1/12">
         <div class="flex justify-center text-gray-700 md:block leading-tight align-top my-1 w-full p-1 rounded-md">
-          <span class="w-full font-semibold my-0 text-base rounded-md py-2 px-3">
-            For Konsulta:
+          <span class="w-full font-semibold my-0 rounded-md py-2 px-3 text-center text-xs">
+            For Konsulta
           </span>
         </div>
       </div>
-      <div class="flex w-3/5">
+      <div class="flex w-3/12">
         <div class="flex justify-center text-gray-700 md:block leading-tight align-top my-1 w-full p-1 rounded-md">
-          <span class="w-full font-semibold my-0 text-base rounded-md py-2 px-3">
-            Referred to:
+          <span class="w-full font-semibold my-0 rounded-md py-2 px-3 text-center text-xs">
+            Referred to
           </span>
         </div>
       </div>
-      <div class="flex w-3/5">
+      <div class="flex w-3/12">
         <div class="flex justify-center text-gray-700 md:block leading-tight align-top my-1 w-full p-1 rounded-md">
-          <span class="w-full font-semibold my-0 text-base rounded-md py-2 px-3">
-            Logged by:
+          <span class="w-full font-semibold my-0 rounded-md py-2 px-3 text-center text-xs">
+            Logged by
           </span>
         </div>
       </div>
     </div>
 <!--    <span class="hidden" *ngFor="let patient of pending_fdx"></span>-->
     <div class="flex justify-between border-b border-gray-100" *ngFor="let patient of pending_fdx">
-      <div class="flex w-3/5">
+      <div class="flex w-4/12">
         <div class="flex justify-center text-gray-700 md:block leading-tight align-top my-1 w-full p-1 rounded-md">
           <span class="w-full font-medium my-0 text-sm rounded-md py-2 px-3 hover:cursor-pointer hover:bg-blue-500 hover:text-white" (click)="getData(patient.patient_id, patient.consult_date, patient.consult_id)">
             {{ patient.patient_name }}
           </span>
         </div>
       </div>
-      <div class="grid grid-cols-5 text-left w-3/5">
+      <div class="grid grid-cols-5 text-left w-1/12">
         <div class="col-span-12 text-gray-700 p-3 rounded-md text-[.85em]">
           <span class="w-full font-medium my-0 text-sm">
             {{ patient.consult_date }}
           </span>
         </div>
       </div>
-      <div class="grid grid-cols-5 text-left w-3/5">
+      <div class="grid grid-cols-5 text-left w-1/12">
         <div class="col-span-12 text-gray-700 p-3 rounded-md text-[.85em]">
-          <span class="w-full font-medium my-0 text-sm">
+          <span class="w-full font-medium my-0 text-sm text-center">
             {{ patient.is_konsulta }}
           </span>
         </div>
       </div>
-      <div class="grid grid-cols-5 text-left w-3/5">
+      <div class="grid grid-cols-5 text-left w-3/12">
         <div class="col-span-12 text-gray-700 p-3 rounded-md text-[.85em]">
           <span class="w-full font-medium my-0 text-sm">
             {{ patient.physician_name ? patient.physician_name : '-' }}
           </span>
         </div>
       </div>
-      <div class="grid grid-cols-5 text-left w-3/5">
+      <div class="grid grid-cols-5 text-left w-3/12">
         <div class="col-span-12 text-gray-700 p-3 rounded-md text-[.85em]">
           <span class="w-full font-medium my-0 text-sm">
             {{ patient.enocder_name ? patient.enocder_name : '-' }}
           </span>
         </div>
       </div>
+    </div>
+
+    <div  class="w-full flex justify-center my-5" *ngIf="pending_fdx.length === 0">
+      <span class="italic">No records found...</span>
     </div>
   </div>
 

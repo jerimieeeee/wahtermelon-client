@@ -39,7 +39,7 @@
               </button>
             </span>
           </span><br />
-          <span class="text-gray-500 text-sm font-semibold">Facilty: {{ consult_details?.facility?.facility_name }}</span>
+          <span class="text-gray-500 text-sm font-semibold">Facility: {{ consult_details?.facility?.facility_name }}</span>
         </div>
 
         <div class="w-1/3 flex justify-end" *ngIf="(consult_details && open_consult && have_complaint) && (!consult_details?.consult_done && allowed_to_edit)">

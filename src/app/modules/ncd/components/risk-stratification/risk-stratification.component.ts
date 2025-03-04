@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { faSearch,faBalanceScale,faPlus,faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
@@ -9,14 +9,14 @@ import { ToastrService } from 'ngx-toastr';
     styleUrls: ['./risk-stratification.component.scss'],
     standalone: false
 })
-export class RiskStratificationComponent implements OnInit {
+export class RiskStratificationComponent implements OnChanges {
   @Input() patient_id;
   @Input() consult_details;
   faInfoCircle = faInfoCircle;
 
   risk_strat: any;
   info: any;
-  show_form: boolean = false;
+  show_form: boolean = true;
   loadRiskStrat(){
     let params ={
       patient_id: this.patient_id
@@ -37,8 +37,7 @@ export class RiskStratificationComponent implements OnInit {
     private toastr: ToastrService
   ) { }
 
-  ngOnInit(): void {
-    this.loadRiskStrat();
+  ngOnChanges(changes: SimpleChanges): void {
+    this.risk_strat = this.consult_details.risk_stratification;
   }
-
 }
