@@ -126,10 +126,10 @@
     </tr>
     <tr>
       <td class="pt-2 pb-4 px-6  text-sm">6. No. of adult women found positive/suspect for Cervical Cancer using VIA or PAP Smear</td>
+      <td class="text-blue-500 text-center bg-gray-400"></td>
       <td class="text-blue-500 text-center"></td>
       <td class="text-blue-500 text-center"></td>
-      <td class="text-blue-500 text-center"></td>
-      <td class="text-blue-500 text-center"></td>
+      <td class="text-blue-500 text-center bg-gray-400"></td>
       <td class="text-blue-500 text-center"></td>
       <td class="text-blue-500 text-center"></td>
       <td class="text-blue-500 text-center"></td>
@@ -166,22 +166,22 @@
     </tr>
     <tr>
       <td class="pt-2 pb-4 px-10 text-sm">a. No. of identified hypertensive adults - <span class="font-bold "> New Cases</span> </td>
-      <td class="text-blue-500 text-center"></td>
-      <td class="text-blue-500 text-center"></td>
-      <td class="text-blue-500 text-center"></td>
-      <td class="text-blue-500 text-center"></td>
-      <td class="text-blue-500 text-center"></td>
-      <td class="text-blue-500 text-center"></td>
+      <td class="text-blue-500 text-center" [class]=" stats?.assessed_male_hypertensive_new_case?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.assessed_male_hypertensive_new_case)">{{ stats?.assessed_male_hypertensive_new_case?.length ?? 0}}</td>
+      <td class="text-blue-500 text-center" [class]=" stats?.assessed_female_hypertensive_new_case?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.assessed_female_hypertensive_new_case)">{{ stats?.assessed_female_hypertensive_new_case?.length ?? 0}}</td>
+      <td class="text-blue-500 text-center" [class]=" stats?.assessed_male_hypertensive_new_case?.length !==0 || stats?.assessed_female_hypertensive_new_case?.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.assessed_male_hypertensive_new_case, stats?.assessed_female_hypertensive_new_case)">{{ stats?.assessed_male_hypertensive_new_case?.length +  stats?.assessed_female_hypertensive_new_case?.length }}</td>
+      <td class="text-blue-500 text-center" [class]=" stats?.assessed_male_hypertensive_senior_new_case?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.assessed_male_hypertensive_senior_new_case)">{{ stats?.assessed_male_hypertensive_senior_new_case?.length ?? 0}}</td>
+      <td class="text-blue-500 text-center" [class]=" stats?.assessed_female_hypertensive_senior_new_case?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.assessed_female_hypertensive_senior_new_case)">{{ stats?.assessed_female_hypertensive_senior_new_case?.length ?? 0}}</td>
+      <td class="text-blue-500 text-center" [class]=" stats?.assessed_male_hypertensive_senior_new_case?.length !==0 || stats?.assessed_female_hypertensive_senior_new_case?.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.assessed_male_hypertensive_senior_new_case, stats?.assessed_female_hypertensive_senior_new_case)">{{ stats?.assessed_male_hypertensive_senior_new_case?.length +  stats?.assessed_female_hypertensive_senior_new_case?.length }}</td>
       <td class="text-blue-500 text-center"></td>
     </tr>
     <tr class="">
       <td class="pt-2 pb-4 px-10 text-sm">b. No. of identified hypertensive adults - <span class="font-bold "> Old Cases</span> </td>
-      <td class="text-blue-500 text-center"></td>
-      <td class="text-blue-500 text-center"></td>
-      <td class="text-blue-500 text-center"></td>
-      <td class="text-blue-500 text-center"></td>
-      <td class="text-blue-500 text-center"></td>
-      <td class="text-blue-500 text-center"></td>
+      <td class="text-blue-500 text-center" [class]=" stats?.assessed_male_hypertensive_old_case?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.assessed_male_hypertensive_old_case)">{{ stats?.assessed_male_hypertensive_old_case?.length ?? 0}}</td>
+      <td class="text-blue-500 text-center" [class]=" stats?.assessed_female_hypertensive_old_case?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.assessed_female_hypertensive_old_case)">{{ stats?.assessed_female_hypertensive_old_case?.length ?? 0}}</td>
+      <td class="text-blue-500 text-center" [class]=" stats?.assessed_male_hypertensive_old_case?.length !==0 || stats?.assessed_female_hypertensive_old_case?.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.assessed_male_hypertensive_old_case, stats?.assessed_female_hypertensive_old_case)">{{ stats?.assessed_male_hypertensive_old_case?.length +  stats?.assessed_female_hypertensive_old_case?.length }}</td>
+      <td class="text-blue-500 text-center" [class]=" stats?.assessed_male_hypertensive_senior_old_case?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.assessed_male_hypertensive_senior_old_case)">{{ stats?.assessed_male_hypertensive_senior_old_case?.length ?? 0}}</td>
+      <td class="text-blue-500 text-center" [class]=" stats?.assessed_female_hypertensive_senior_old_case?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.assessed_female_hypertensive_senior_old_case)">{{ stats?.assessed_female_hypertensive_senior_old_case?.length ?? 0}}</td>
+      <td class="text-blue-500 text-center" [class]=" stats?.assessed_male_hypertensive_senior_old_case?.length !==0 || stats?.assessed_female_hypertensive_senior_old_case?.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.assessed_male_hypertensive_senior_old_case, stats?.assessed_female_hypertensive_senior_old_case)">{{ stats?.assessed_male_hypertensive_senior_old_case?.length +  stats?.assessed_female_hypertensive_senior_old_case?.length }}</td>
       <td class="text-blue-500 text-center"></td>
     </tr>
     <tr>
@@ -206,22 +206,22 @@
     </tr>
     <tr>
       <td class="pt-2 pb-4 px-10 text-sm">a. No. of identified with Type 2 DM - <span class="font-bold "> New Cases</span> </td>
-      <td class="text-blue-500 text-center"> 0</td>
-      <td class="text-blue-500 text-center"> 0</td>
-      <td class="text-blue-500 text-center"> 0</td>
-      <td class="text-blue-500 text-center"> 0</td>
-      <td class="text-blue-500 text-center"> 0</td>
-      <td class="text-blue-500 text-center"> 0</td>
+      <td class="text-blue-500 text-center" [class]=" stats?.assessed_male_diabetes_new_case?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.assessed_male_diabetes_new_case)">{{ stats?.assessed_male_diabetes_new_case?.length ?? 0}}</td>
+      <td class="text-blue-500 text-center" [class]=" stats?.assessed_female_diabetes_new_case?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.assessed_female_diabetes_new_case)">{{ stats?.assessed_female_diabetes_new_case?.length ?? 0}}</td>
+      <td class="text-blue-500 text-center" [class]=" stats?.assessed_male_diabetes_new_case?.length !==0 || stats?.assessed_female_diabetes_new_case?.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.assessed_male_diabetes_new_case, stats?.assessed_female_diabetes_new_case)">{{ stats?.assessed_male_diabetes_new_case?.length +  stats?.assessed_female_diabetes_new_case?.length }}</td>
+      <td class="text-blue-500 text-center" [class]=" stats?.assessed_male_diabetes_senior_new_case?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.assessed_male_diabetes_senior_new_case)">{{ stats?.assessed_male_diabetes_senior_new_case?.length ?? 0}}</td>
+      <td class="text-blue-500 text-center" [class]=" stats?.assessed_female_diabetes_senior_new_case?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.assessed_female_diabetes_senior_new_case)">{{ stats?.assessed_female_diabetes_senior_new_case?.length ?? 0}}</td>
+      <td class="text-blue-500 text-center" [class]=" stats?.assessed_male_diabetes_senior_new_case?.length !==0 || stats?.assessed_female_diabetes_senior_new_case?.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.assessed_male_diabetes_senior_new_case, stats?.assessed_female_diabetes_senior_new_case)">{{ stats?.assessed_male_diabetes_senior_new_case?.length +  stats?.assessed_female_diabetes_senior_new_case?.length }}</td>
       <td class="text-blue-500 text-center"></td>
     </tr>
     <tr>
       <td class="pt-2 pb-4 px-10 text-sm">b. No. of identified with Type 2 DM - <span class="font-bold "> Old Cases</span> </td>
-      <td class="text-blue-500 text-center"> 0</td>
-      <td class="text-blue-500 text-center"> 0</td>
-      <td class="text-blue-500 text-center"> 0</td>
-      <td class="text-blue-500 text-center"> 0</td>
-      <td class="text-blue-500 text-center"> 0</td>
-      <td class="text-blue-500 text-center"> 0</td>
+      <td class="text-blue-500 text-center" [class]=" stats?.assessed_male_diabetes_old_case?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.assessed_male_diabetes_old_case)">{{ stats?.assessed_male_diabetes_old_case?.length ?? 0}}</td>
+      <td class="text-blue-500 text-center" [class]=" stats?.assessed_female_diabetes_old_case?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.assessed_female_diabetes_old_case)">{{ stats?.assessed_female_diabetes_old_case?.length ?? 0}}</td>
+      <td class="text-blue-500 text-center" [class]=" stats?.assessed_male_diabetes_old_case?.length !==0 || stats?.assessed_female_diabetes_old_case?.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.assessed_male_diabetes_old_case, stats?.assessed_female_diabetes_old_case)">{{ stats?.assessed_male_diabetes_old_case?.length +  stats?.assessed_female_diabetes_old_case?.length }}</td>
+      <td class="text-blue-500 text-center" [class]=" stats?.assessed_male_diabetes_senior_old_case?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.assessed_male_diabetes_senior_old_case)">{{ stats?.assessed_male_diabetes_senior_old_case?.length ?? 0}}</td>
+      <td class="text-blue-500 text-center" [class]=" stats?.assessed_female_diabetes_senior_old_case?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.assessed_female_diabetes_senior_old_case)">{{ stats?.assessed_female_diabetes_senior_old_case?.length ?? 0}}</td>
+      <td class="text-blue-500 text-center" [class]=" stats?.assessed_male_diabetes_senior_old_case?.length !==0 || stats?.assessed_female_diabetes_senior_old_case?.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.assessed_male_diabetes_senior_new_case, stats?.assessed_female_diabetes_senior_old_case)">{{ stats?.assessed_male_diabetes_senior_new_case?.length +  stats?.assessed_female_diabetes_senior_old_case?.length }}</td>
       <td class="text-blue-500 text-center"></td>
     </tr>
     <tr>
@@ -249,8 +249,8 @@
       <td class="text-blue-500 text-center bg-gray-400"></td>
       <td class="text-blue-500 text-center bg-gray-400"></td>
       <td class="text-blue-500 text-center bg-gray-400"></td>
-      <td class="text-blue-500 text-center" [class]=" stats?.male_senior_eye_refer_prof?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.male_senior_eye_refer_prof)"></td>
-      <td class="text-blue-500 text-center" [class]=" stats?.female_senior_eye_refer_prof?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.female_senior_eye_refer_prof)"></td>
+      <td class="text-blue-500 text-center" [class]=" stats?.male_senior_eye_refer_prof?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.male_senior_eye_refer_prof)">{{ stats?.male_senior_eye_refer_prof?.length }}</td>
+      <td class="text-blue-500 text-center" [class]=" stats?.female_senior_eye_refer_prof?.length !==0 ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.female_senior_eye_refer_prof)">{{ stats?.female_senior_eye_refer_prof?.length }}</td>
       <td class="text-blue-500 text-center" [class]=" stats?.male_senior_eye_refer_prof?.length !==0 || stats?.female_senior_eye_refer_prof?.length !==0  ? 'cursor-pointer' : 'pointer-events-none' " (click)="toggleModal(stats?.male_senior_eye_refer_prof, stats?.female_senior_eye_refer_prof)"> {{ stats?.male_senior_eye_refer_prof?.length +  stats?.female_senior_eye_refer_prof?.length }} </td>
       <td class="text-blue-500 text-center"></td>
     </tr>
