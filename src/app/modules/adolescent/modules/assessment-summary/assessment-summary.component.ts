@@ -48,7 +48,8 @@ export class AssessmentSummaryComponent implements OnInit {
       referral_date: new FormControl<string| null>(''),
       done_flag: new FormControl<boolean>(false),
       done_date: new FormControl<string| null>(''),
-      algorithm_remarks: new FormControl<string| null>('')
+      algorithm_remarks: new FormControl<string| null>(''),
+      lib_asrh_living_arrangement_type_id: new FormControl<string| null>('')
     });
 
     createRapid(){
@@ -133,7 +134,8 @@ export class AssessmentSummaryComponent implements OnInit {
         done_flag: this.selected_asrh_consult?.done_flag,
         done_date: this.selected_asrh_consult?.done_date || this.max_date,
         referral_date: this.selected_asrh_consult?.referral_date || this.max_date,
-        algorithm_remarks: this.selected_asrh_consult?.algorithm_remarks
+        algorithm_remarks: this.selected_asrh_consult?.algorithm_remarks,
+        lib_asrh_living_arrangement_type_id: this.selected_asrh_consult?.lib_asrh_living_arrangement_type_id,
       });
       console.log(this.selected_asrh_consult, 'patch data working selected asrh');
       console.log('patch data working');
@@ -151,8 +153,10 @@ export class AssessmentSummaryComponent implements OnInit {
         refer_to_user_id: [this.selected_asrh_consult?.refer_to_user_id || ''],
         done_flag: [this.selected_asrh_consult.done_flag, [Validators.required, Validators.minLength(1)]],
         done_date: [this.selected_asrh_consult?.done_date, [Validators.required, Validators.minLength(1)]],
+        refused_flag: [this.selected_asrh_consult?.refused_flag, [Validators.required, Validators.minLength(1)]],
         referral_date: [this.selected_asrh_consult?.referral_date || ''],
-        algorithm_remarks: [this.selected_asrh_consult.algorithm_remarks, [Validators.required]],
+        algorithm_remarks: [this.selected_asrh_consult?.algorithm_remarks, [Validators.required, Validators.minLength(50)]],
+        lib_asrh_living_arrangement_type_id: [this.selected_asrh_consult?.lib_asrh_living_arrangement_type_id, [Validators.required, Validators.minLength(1)]],
       };
 
       if (this.selected_asrh_consult?.lib_asrh_client_type_code === null) {

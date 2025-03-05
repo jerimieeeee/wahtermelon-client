@@ -1,5 +1,5 @@
 
-<div class="m-5 border border-slate-200 rounded-lg" *ngIf="!show_form" [ngClass]="(this.selected_asrh_consult?.done_flag === 1 && this.selected_asrh_consult?.comprehensive?.done_flag === true) || (this.selected_asrh_consult?.refused_flag === 1 || this.selected_asrh_consult?.comprehensive?.refused_flag === true) ? 'pointer-events-none select-none' : ''">
+<div class="m-5 border border-slate-200 rounded-lg" *ngIf="!show_form" [ngClass]="(this.selected_asrh_consult?.done_flag === true && this.selected_asrh_consult?.comprehensive?.done_flag === true) || (this.selected_asrh_consult?.refused_flag === true || this.selected_asrh_consult?.comprehensive?.refused_flag === true) ? 'pointer-events-none select-none' : ''">
   <div class="bg-blue-500 text-sm text-white rounded-t-md py-2 pl-5 font-semibold">
    Comprehensive HEEADSSS Assessment
   </div>
@@ -60,7 +60,7 @@
 
 
     <div class="flex justify-center mt-5">
-        <button class="btn-save mt-4" [disabled]="is_saving || !spiritualityForm.dirty" (click)="onSubmit(); spiritualityForm.markAsPristine();" >
+        <button class="btn-save mt-4" [disabled]="is_saving || spiritualityForm.invalid || !spiritualityForm.dirty" (click)="onSubmit(); spiritualityForm.markAsPristine();" >
           <fa-icon [icon]="faSave" *ngIf="!is_saving" class="mr-2"></fa-icon>
           <fa-icon [icon]="faSpinner" *ngIf="is_saving" animation="spin" class="mr-2"></fa-icon>
           {{ selected_asrh_consult?.comprehensive?.spirituality_notes ? (is_saving ? 'Updating' : 'Update') : (is_saving ? 'Saving' : 'Save') }}
@@ -76,26 +76,30 @@
     <!-- Modal content -->
     <div class="relative bg-white rounded-lg shadow">
       <!-- Modal header -->
-      <div class="flex justify-between items-start py-3 px-5 rounded-t border-b bg-blue-500">
+      <div class="flex justify-between items-start py-3 px-5 rounded-t border-b bg-orange-500">
         <h3 class="text-sm font-bold text-white">
-            Confirmation
+            The following fields are required for you to complete the comprehensive HEEADSSS assessment:
         </h3>
       </div>
       <!-- Modal body -->
       <div class="overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
-        <form class="text-left m-5">
-          <p>Are you sure the patient refused to conduct the Rapid HEEADSSS Assessment?</p>
-        </form>
+
+          <div class="p-4">
+            <div *ngFor="let error of errors" class="text-sm">
+              {{ error }}
+            </div>
+          </div>
+
 
       </div>
 
       <!-- Modal footer -->
       <div class="flex justify-end py-4 px-5 space-x-4 rounded-b border-t border-gray-200">
-        <button type="button" class="btn-save bg-gray-400" (click)="toggleServiceModal()">No</button>
-        <button  type="submit" class="btn-save px-10 disabled:bg-gray-300" (click)="acceptModal()">
+        <button type="button" class="btn-save bg-gray-400" (click)="toggleServiceModal()">Ok</button>
+        <!-- <button  type="submit" class="btn-save px-10 disabled:bg-gray-300" (click)="acceptModal()">
           <fa-icon></fa-icon>
           {{ is_saving ? 'Saving' : 'Yes' }}
-        </button>
+        </button> -->
       </div>
     </div>
   </div>

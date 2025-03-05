@@ -43,33 +43,68 @@ export class SpiritualityComponent implements OnInit {
       assessment_date: new FormControl<string| null>(''),
       // consent_flag: new FormControl<string| null>(''),
       spirituality_notes: new FormControl<string| null>(''),
+      home_notes: new FormControl<string| null>(''),
+      eating_notes: new FormControl<string| null>(''),
+      education_notes: new FormControl<string| null>(''),
+      activities_notes: new FormControl<string| null>(''),
+      drugs_notes: new FormControl<string| null>(''),
+      safety_notes: new FormControl<string| null>(''),
+      sexuality_notes: new FormControl<string| null>(''),
+      suicide_notes: new FormControl<string| null>(''),
       done_status: new FormControl<boolean>(false),
       done_flag: new FormControl<boolean>(false),
       done_date: new FormControl<string| null>(''),
+      consent_flag: new FormControl<boolean>(false),
+        refused_flag: new FormControl<boolean>(false),
       // refused_flag: new FormControl<boolean>(false),
     });
 
-    onSubmit(){
-      console.log(this.spiritualityForm.value, 'display visit details')
+    errors: string[] = []; // Store error messages to pass to the modal
+
+    onSubmit() {
+      console.log(this.spiritualityForm.value, 'display visit details');
       this.is_saving = true;
       this.http.post('asrh/comprehensive', this.spiritualityForm.value).subscribe({
         next: (data: any) => {
-          this.toastr.success('Spirituality was ' + (this.selected_asrh_consult.comprehensive.spirituality_notes !== null ? 'updated' : 'saved') + ' successfuly', 'Success')
+          const message = this.selected_asrh_consult?.comprehensive?.spirituality_notes
+            ? 'updated'
+            : 'saved';
+          this.toastr.success(`Spirituality was ${message} successfully`, 'Success');
           this.is_saving = false;
           this.updateSelectedASRH.emit(data);
-          // this.showButton = !this.showButton;
-          // this.loadFP.emit();
-          // this.reloadData();
-
-          console.log(this.spiritualityForm, 'checker education')
-           },
-        complete: () => {
-
         },
-        error: err => {console.log(err)
+        error: (error: any) => {
+          console.error(error);
+          this.is_saving = false;
+          this.errors = [];
 
-        },
-      })
+          if (error.error && error.error.errors) {
+            Object.entries(error.error.errors).forEach(([field, messages]) => {
+              if (Array.isArray(messages)) {
+                messages.forEach(message => {
+                  // Format the field by capitalizing the first letter and replacing underscores with spaces
+                  const formattedField = `${field.charAt(0).toUpperCase() + field.slice(1).replace(/_/g, ' ')}`;
+                  // Get only the first word from the formatted field
+                  const firstWord = formattedField.split(' ')[0];
+
+                  // Check if the first word is already in the errors array
+                  if (!this.errors.includes(firstWord)) {
+                    this.errors.push(firstWord);
+                  }
+                });
+              }
+            });
+          } else {
+            this.errors.push('An unknown error occurred.');
+          }
+
+          if (this.errors.length > 0) {
+            this.showServiceModal = true;
+          }
+
+          this.toastr.error('Please fill up the required notes', 'Error');
+        }
+      });
     }
 
     validateForm() {
@@ -79,8 +114,18 @@ export class SpiritualityComponent implements OnInit {
         patient_id: [this.patient_id],
         consult_asrh_rapid_id: [this.selected_asrh_consult?.id, [Validators.required, Validators.minLength(1)]],
         assessment_date: [this.selected_asrh_consult?.comprehensive?.assessment_date, [Validators.required, Validators.minLength(1)]],
-        spirituality_notes: ['', [Validators.required, Validators.minLength(1)]],
-        done_flag: [this.selected_asrh_consult?.comprehensive?.done_flag, [Validators.required, Validators.minLength(1)]],
+        spirituality_notes: ['', [Validators.required, Validators.minLength(50)]],
+        home_notes: [''],
+        eating_notes: [''],
+        activities_notes: [''],
+        drugs_notes: [''],
+        education_notes: [''],
+        safety_notes: [''],
+        sexuality_notes: [''],
+        suicide_notes: [''],
+        done_flag: [this.selected_asrh_consult?.comprehensive?.done_flag],
+        consent_flag: ['', [Validators.required, Validators.minLength(1)]],
+        refused_flag: [false],
       });
 
       // Add done_date control only if done_flag is 1
@@ -99,12 +144,36 @@ export class SpiritualityComponent implements OnInit {
       // Ensure that done_date is enabled or disabled based on done_flag
       const doneDateControl = this.spiritualityForm.get('done_date');
       const doneFlagControl = this.spiritualityForm.get('done_flag');
+      const homeControl = this.spiritualityForm.get('home_notes');
+      const eatingControl = this.spiritualityForm.get('eating_notes');
+      const educationControl = this.spiritualityForm.get('education_notes');
+      const activitiesControl = this.spiritualityForm.get('activities_notes');
+      const drugsControl = this.spiritualityForm.get('drugs_notes');
+      const safetyControl = this.spiritualityForm.get('safety_notes');
+      const sexualityControl = this.spiritualityForm.get('sexuality_notes');
+      const suicideControl = this.spiritualityForm.get('suicide_notes');
       if (doneDateControl && doneFlagControl) {
         doneFlagControl.valueChanges.subscribe((doneFlagValue) => {
           if (doneFlagValue === true) {
         doneDateControl.enable();
+        homeControl.enable();
+        eatingControl.enable();
+        educationControl.enable();
+        activitiesControl.enable();
+        drugsControl.enable();
+        safetyControl.enable();
+        sexualityControl.enable();
+        suicideControl.enable();
           } else {
         doneDateControl.disable();
+        homeControl.disable();
+        eatingControl.disable();
+        educationControl.disable();
+        activitiesControl.disable();
+        drugsControl.disable();
+        safetyControl.disable();
+        sexualityControl.disable();
+        suicideControl.disable();
           }
         });
       }
@@ -118,9 +187,20 @@ export class SpiritualityComponent implements OnInit {
 
      if(this.selected_asrh_consult) {
        this.spiritualityForm.patchValue({
-       spirituality_notes: this.selected_asrh_consult?.comprehensive?.spirituality_notes,
-       done_date: this.selected_asrh_consult?.comprehensive?.done_date || this.max_date,
-       done_flag: this.selected_asrh_consult?.comprehensive?.done_flag,
+        spirituality_notes: this.selected_asrh_consult?.comprehensive.spirituality_notes,
+        home_notes: this.selected_asrh_consult?.comprehensive?.home_notes,
+        eating_notes: this.selected_asrh_consult?.comprehensive?.eating_notes,
+        education_notes: this.selected_asrh_consult?.comprehensive?.education_notes,
+        activities_notes: this.selected_asrh_consult?.comprehensive?.activities_notes,
+        drugs_notes: this.selected_asrh_consult?.comprehensive?.drugs_notes,
+        safety_notes: this.selected_asrh_consult?.comprehensive?.safety_notes,
+        sexuality_notes: this.selected_asrh_consult?.comprehensive?.sexuality_notes,
+        suicide_notes: this.selected_asrh_consult?.comprehensive?.suicide_notes,
+        done_date: this.selected_asrh_consult?.comprehensive?.done_date || this.max_date,
+        done_flag: this.selected_asrh_consult?.comprehensive?.done_flag,
+        refused_flag: this.selected_asrh_consult?.comprehensive?.refused_flag,
+         consent_flag: this.selected_asrh_consult?.comprehensive?.consent_flag,
+
       //  refused_flag: this.selected_asrh_consult?.comprehensive?.refused_flag
        });
        // this.show_form = true;

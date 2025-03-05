@@ -41,6 +41,8 @@ export class DrugsComponent implements OnInit {
     // consent_flag: new FormControl<string| null>(''),
     drugs_notes: new FormControl<string| null>(''),
     done_flag: new FormControl<boolean>(false),
+    consent_flag: new FormControl<string| null>('false'),
+      refused_flag: new FormControl<string| null>('false'),
 
   });
 
@@ -74,8 +76,10 @@ export class DrugsComponent implements OnInit {
       patient_id: [this.patient_id],
       consult_asrh_rapid_id: [this.selected_asrh_consult?.id, [Validators.required, Validators.minLength(1)]],
       assessment_date: [this.selected_asrh_consult?.comprehensive?.assessment_date, [Validators.required, Validators.minLength(1)]],
-      drugs_notes: ['', [Validators.required, Validators.minLength(1)]],
+      drugs_notes: ['', [Validators.required, Validators.minLength(50)]],
       done_flag: [false],
+      consent_flag: ['', [Validators.required, Validators.minLength(1)]],
+      refused_flag: [false],
       // refused_flag: [false],
 
       // average_monthly_income: ['', [Validators.required, Validators.minLength(1), Validators.pattern("^[0-9,;]+$")]],
@@ -90,6 +94,8 @@ export class DrugsComponent implements OnInit {
    if(this.selected_asrh_consult) {
      this.drugsForm.patchValue({
      drugs_notes: this.selected_asrh_consult?.comprehensive?.drugs_notes,
+     refused_flag: this.selected_asrh_consult?.comprehensive?.refused_flag,
+     consent_flag: this.selected_asrh_consult?.comprehensive?.consent_flag,
     //  refused_flag: this.selected_asrh_consult?.comprehensive?.refused_flag
      });
      // this.show_form = true;

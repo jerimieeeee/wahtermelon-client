@@ -1,5 +1,5 @@
 
-<div class="m-5 border border-slate-200 rounded-lg" *ngIf="!show_form" [ngClass]="(this.selected_asrh_consult?.done_flag === 1 && this.selected_asrh_consult?.comprehensive?.done_flag === true) || (this.selected_asrh_consult?.refused_flag === 1 || this.selected_asrh_consult?.comprehensive?.refused_flag === true) ? 'pointer-events-none select-none' : ''">
+<div class="m-5 border border-slate-200 rounded-lg" *ngIf="!show_form" [ngClass]="(this.selected_asrh_consult?.done_flag === true && this.selected_asrh_consult?.comprehensive?.done_flag === true) || (this.selected_asrh_consult?.refused_flag === true || this.selected_asrh_consult?.comprehensive?.refused_flag === true) ? 'pointer-events-none select-none' : ''">
   <div class="bg-blue-500 text-sm text-white rounded-t-md py-2 pl-5 font-semibold">
    Comprehensive HEEADSSS Assessment
   </div>
@@ -16,13 +16,20 @@
   <form [formGroup]="suicideForm" class="mx-5 mb-6">
 
     <div class="mt-1 w-full" *ngFor="let home of compre_questions">
-      <div class=""  *ngIf="home.code === 'S01'">
+      <div class=""  *ngIf="home.code === 'S02'">
         <div class="text-md text-blue-500 rounded-t-md font-semibold py-4">
          {{home.desc}}
         </div>
 
           <div class="text-sm mb-5">
             <p>{{home.instruction}}</p>
+          </div>
+
+          <div class="mb-5">
+            <input type="checkbox" class="input-checkbox" id="seriously_injured" formControlName="self_harm" />
+            <label for="self_harm" class="ml-1 text-sm" >
+              History of Self Harm
+            </label>
           </div>
 
             <div class="mt-1 w-full border-t border-gray-200 mb-5"></div>
@@ -45,7 +52,7 @@
 
 
     <div class="flex justify-center mt-5">
-        <button class="btn-save mr-5 mt-4" [disabled]="is_saving || !suicideForm.dirty" (click)="onSubmit(); suicideForm.markAsPristine();" >
+        <button class="btn-save mr-5 mt-4" [disabled]="is_saving || suicideForm.invalid || !suicideForm.dirty" (click)="onSubmit(); suicideForm.markAsPristine();" >
           <fa-icon [icon]="faSave" *ngIf="!is_saving" class="mr-2"></fa-icon>
           <fa-icon [icon]="faSpinner" *ngIf="is_saving" animation="spin" class="mr-2"></fa-icon>
           {{ selected_asrh_consult?.comprehensive?.suicide_notes ? (is_saving ? 'Updating' : 'Update') : (is_saving ? 'Saving' : 'Save') }}

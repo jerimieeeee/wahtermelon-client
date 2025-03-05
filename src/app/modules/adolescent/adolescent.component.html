@@ -132,7 +132,7 @@
           {{ asrh_history?.assessment_date | date: 'MM/dd/yyyy'}}
         </td>
         <td class="py-4 px-6">
-          {{ asrh_history?.done_flag === 1 ? 'Done' : (asrh_history?.refused_flag === 1  ? 'Refused' : 'Ongoing') }}
+          {{ asrh_history?.done_flag === true ? 'Done' : (asrh_history?.refused_flag === true  ? 'Refused' : 'Ongoing') }}
         </td>
         <td class="py-4 px-6">
             {{ asrh_history?.comprehensive?.assessment_date ? (asrh_history?.comprehensive?.assessment_date | date: 'MM/dd/yyyy') : '-' }}
@@ -143,7 +143,7 @@
          </td>
         <td class="py-4 px-6">
             <button type="button" class="rounded-md bg-blue-500 text-white py-1 px-2" (click)="switchTab(1); openASRHConsult(asrh_history)" >
-            {{(asrh_history?.done_flag === 1 && asrh_history?.comprehensive?.done_flag === true) || (asrh_history?.refused_flag === 1 || asrh_history?.comprehensive?.refused_flag === true) ? 'View' : 'Open' }}
+            {{(asrh_history?.done_flag === true && asrh_history?.comprehensive?.done_flag === true) || (asrh_history?.refused_flag === true || asrh_history?.comprehensive?.refused_flag === true) ? 'View' : 'Open' }}
           </button>
         </td>
       </tr>

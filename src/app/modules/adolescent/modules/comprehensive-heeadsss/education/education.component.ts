@@ -38,10 +38,10 @@ export class EducationComponent implements OnInit {
     patient_id: new FormControl<string| null>(''),
     consult_asrh_rapid_id: new FormControl<string| null>(''),
     assessment_date: new FormControl<string| null>(''),
-    // consent_flag: new FormControl<string| null>(''),
+    refused_flag: new FormControl<string| null>('false'),
     education_notes: new FormControl<string| null>(''),
     done_flag: new FormControl<boolean>(false),
-
+    consent_flag: new FormControl<boolean>(false),
   });
 
   onSubmit(){
@@ -74,9 +74,10 @@ export class EducationComponent implements OnInit {
       patient_id: [this.patient_id],
       consult_asrh_rapid_id: [this.selected_asrh_consult?.id, [Validators.required, Validators.minLength(1)]],
       assessment_date: [this.selected_asrh_consult?.comprehensive?.assessment_date, [Validators.required, Validators.minLength(1)]],
-      education_notes: ['', [Validators.required, Validators.minLength(1)]],
+      education_notes: ['', [Validators.required, Validators.minLength(50)]],
+      consent_flag: ['', [Validators.required, Validators.minLength(1)]],
       done_flag: [false],
-      // refused_flag: [false],
+      refused_flag: [false],
       // average_monthly_income: ['', [Validators.required, Validators.minLength(1), Validators.pattern("^[0-9,;]+$")]],
     });
        this.patchCompre();
@@ -89,7 +90,8 @@ export class EducationComponent implements OnInit {
     if(this.selected_asrh_consult) {
       this.educationForm.patchValue({
       education_notes: this.selected_asrh_consult?.comprehensive?.education_notes,
-      // refused_flag: this.selected_asrh_consult?.comprehensive?.refused_flag
+      refused_flag: this.selected_asrh_consult?.comprehensive?.refused_flag,
+      consent_flag: this.selected_asrh_consult?.comprehensive?.consent_flag,
       });
       // this.show_form = true;
       console.log(this.selected_asrh_consult.comprehensive,'load compre home working')

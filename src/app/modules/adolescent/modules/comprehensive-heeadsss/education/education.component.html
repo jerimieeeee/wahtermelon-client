@@ -1,5 +1,5 @@
 
-<div class="m-5 border border-slate-200 rounded-lg" *ngIf="!show_form" [ngClass]="(this.selected_asrh_consult?.done_flag === 1 && this.selected_asrh_consult?.comprehensive?.done_flag === true) || (this.selected_asrh_consult?.refused_flag === 1 || this.selected_asrh_consult?.comprehensive?.refused_flag === true) ? 'pointer-events-none select-none' : ''">
+<div class="m-5 border border-slate-200 rounded-lg" *ngIf="!show_form" [ngClass]="(this.selected_asrh_consult?.done_flag === true && this.selected_asrh_consult?.comprehensive?.done_flag === true) || (this.selected_asrh_consult?.refused_flag === true || this.selected_asrh_consult?.comprehensive?.refused_flag === true) ? 'pointer-events-none select-none' : ''">
   <div class="bg-blue-500 text-sm text-white rounded-t-md py-2 pl-5 font-semibold">
    Comprehensive HEEADSSS Assessment
   </div>
@@ -45,7 +45,7 @@
 
 
     <div class="flex justify-center mt-5">
-        <button class="btn-save mt-4" [disabled]="is_saving || !educationForm.dirty" (click)="onSubmit(); educationForm.markAsPristine();" >
+        <button class="btn-save mt-4" [disabled]="is_saving || educationForm.invalid || !educationForm.dirty" (click)="onSubmit(); educationForm.markAsPristine();" >
           <fa-icon [icon]="faSave" *ngIf="!is_saving" class="mr-2"></fa-icon>
           <fa-icon [icon]="faSpinner" *ngIf="is_saving" animation="spin" class="mr-2"></fa-icon>
           {{ selected_asrh_consult?.comprehensive?.education_notes ? (is_saving ? 'Updating' : 'Update') : (is_saving ? 'Saving' : 'Save') }}

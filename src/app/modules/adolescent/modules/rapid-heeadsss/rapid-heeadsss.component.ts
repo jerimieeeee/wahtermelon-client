@@ -5,6 +5,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 import { el } from 'date-fns/locale';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-rapid-heeadsss',
@@ -43,6 +44,9 @@ export class RapidHeeadsssComponent implements OnInit, OnChanges {
 
   rapid_questions: any = [];
 
+  refusal_reasons: any = [];
+ living_conditions: any = [];
+
   rapid_ans: { [key: number]: string } = {};
 
   rapidForm: any = {
@@ -53,11 +57,30 @@ export class RapidHeeadsssComponent implements OnInit, OnChanges {
 
   modals: any = [];
 
+  refusal_options: any;
+
   type_client = [
     { name: 'walk-in', id:'1' },
     { name: 'referred', id:'2' },
 
   ];
+
+  // living_conditions = [
+  //   { name: 'living in with partner', id:'1' },
+  //   { name: 'living with family', id:'2' },
+  //   { name: 'living with extended family', id:'3' },
+  //   { name: 'living alone', id:'4' },
+  //   { name: 'in a shelter', id:'5' },
+
+  // ];
+
+  // refusal_reasons = [
+  //   { name: 'trust issues', id:'1' },
+  //   { name: 'fear of judgement', id:'2' },
+  //   { name: 'under estimation of the tools importance', id:'4' },
+  //   { name: 'others, specify', id:'5' }
+
+  // ];
 
   statuses = [
     { name: 'done', id:'1' },
@@ -74,9 +97,12 @@ export class RapidHeeadsssComponent implements OnInit, OnChanges {
     client_type: new FormControl<string| null>(''),
     lib_asrh_client_type_code: new FormControl<string| null>(''),
     other_client_type: new FormControl<string| null>(''),
+    lib_asrh_living_arrangement_type_id: new FormControl<string| null>(''),
     refused_flag: new FormControl<boolean>(false),
     done_flag: new FormControl<boolean>(false),
     done_date: new FormControl<string| null>(''),
+    lib_asrh_refusal_reason_id: new FormControl<string| null>(''),
+    refusal_reason_other: new FormControl<string| null>(''),
     // algorithm_remarks: new FormControl<string| null>('')
     // refer_to_user_id: new FormControl<string| null>(''),
     // status: new FormControl<string| null>(''),
@@ -184,9 +210,12 @@ export class RapidHeeadsssComponent implements OnInit, OnChanges {
         lib_asrh_client_type_code: this.selected_asrh_consult?.lib_asrh_client_type_code,
         client_type: this.selected_asrh_consult?.client_type,
         other_client_type: this.selected_asrh_consult?.other_client_type,
+        lib_asrh_living_arrangement_type_id: this.selected_asrh_consult?.lib_asrh_living_arrangement_type_id,
         refused_flag: this.selected_asrh_consult?.refused_flag,
         done_flag: this.selected_asrh_consult?.done_flag,
         done_date: this.selected_asrh_consult?.done_date,
+        lib_asrh_refusal_reason_id: this.selected_asrh_consult?.lib_asrh_refusal_reason_id,
+        refusal_reason_other: this.selected_asrh_consult?. refusal_reason_other,
         // referral_date: this.selected_asrh_consult?.referral_date,
         // algorithm_remarks: this.selected_asrh_consult?.algorithm_remarks
         // refer_to_user_id: this.selected_asrh_consult?.refer_to_user_id,
@@ -213,17 +242,50 @@ export class RapidHeeadsssComponent implements OnInit, OnChanges {
       client_type: ['', [Validators.required, Validators.minLength(1)]],
       other_client_type: [{ value: '', disabled: true }, [Validators.required]],
       refused_flag: [false],
+      lib_asrh_living_arrangement_type_id: ['', [Validators.required, Validators.minLength(1)]],
       done_flag: [false],
-      done_date: ['']
+      done_date: [''],
+      lib_asrh_refusal_reason_id: [{value: '', disabled: true}, [Validators.required, Validators.minLength(1)]],
+      refusal_reason_other: [{value: '', disabled: true}, [Validators.required, Validators.minLength(1)]],
       // referral_date: ['', [Validators.required, Validators.minLength(1)]],
       // algorithm_remarks: ['', [Validators.required]],
       // refer_to_user_id: ['', [Validators.required]],
       // status: ['', [Validators.required]],
+
+
     });
+
+    // if (this.selected_asrh_consult?.refused_flag === true) {
+    //   this.visitForm.addControl(
+    //     'done_date',
+    //     new FormControl<string | null>(this.selected_asrh_consult?.refusal_reason, [
+    //       Validators.required,
+    //       Validators.minLength(1),
+    //     ])
+    //   );
+    // } else {
+    //   this.visitForm.addControl('refusal_reason', new FormControl(null)); // Or set it as null if done_flag is not 1
+    // }
+
+    // if (this.selected_asrh_consult?.refusal_reason === 'others') {
+    //   this.visitForm.addControl(
+    //     'other_refusal',
+    //     new FormControl<string | null>(this.selected_asrh_consult?.other_refusal, [
+    //       Validators.required,
+    //       Validators.minLength(1),
+    //     ])
+    //   );
+    // } else {
+    //   this.visitForm.addControl('other_refusal', new FormControl(null)); // Or set it as null if done_flag is not 1
+    // }
+
 
     this.disableForm();
     this.disableForm2();
     this.disableForm3();
+    this.disableForm4();
+    this.disableForm5();
+    this.patchData();
     this.patchData();
     this.show_form = true;
   }
@@ -244,7 +306,7 @@ export class RapidHeeadsssComponent implements OnInit, OnChanges {
     const dateExists = this.patient_asrh_history.some(
       (record) => record.assessment_date === newAssessmentDate
     );
-  
+
     if (dateExists && this.patient_asrh_history.done_flag === 1) {
       alert('Assessment date already exists! Choose a different date.');
     } else {
@@ -326,6 +388,32 @@ export class RapidHeeadsssComponent implements OnInit, OnChanges {
     }
   }
 
+  disableForm4(){
+    this.visitForm.get('refused_flag')?.valueChanges.subscribe((value) => {
+      const libAsrhClientTypeCodeControl = this.visitForm.get('lib_asrh_refusal_reason_id');
+      if (value !== true || value === '') {
+        libAsrhClientTypeCodeControl?.reset();
+        libAsrhClientTypeCodeControl?.disable();
+      } else {
+        libAsrhClientTypeCodeControl?.enable();
+      }
+
+    });
+  }
+
+  disableForm5(){
+    this.visitForm.get('lib_asrh_refusal_reason_id')?.valueChanges.subscribe((value) => {
+      const OtherReasonControl = this.visitForm.get('refusal_reason_other');
+      if (value != 99 || value === '') {
+        OtherReasonControl?.reset();
+        OtherReasonControl?.disable();
+      } else {
+        OtherReasonControl?.enable();
+      }
+
+    });
+  }
+
   getSelectedAsrhAnswersLength(): number {
     return this.selected_asrh_consult?.answers?.length || 0;
   }
@@ -344,8 +432,10 @@ export class RapidHeeadsssComponent implements OnInit, OnChanges {
     this.http.get('libraries/rapid-questionnaire').subscribe({
       next: (data: any) => {
         this.rapid_questions = data.data;
-       this.show_form = true;
+
+       this.loadLibraries();
         this.loadUsers();
+        this.show_form = true;
         // this.validateForm();
         // this.loadASRH.emit();
       },
@@ -422,6 +512,22 @@ export class RapidHeeadsssComponent implements OnInit, OnChanges {
     event.preventDefault();
   }
 
+  loadLibraries() {
+      const getRefusal = this.http.get('libraries/refusal-reason');
+      const getLiving = this.http.get('libraries/living-arrangement');
+
+      forkJoin([getRefusal, getLiving]).subscribe({
+        next: ([dataRefusal, dataLiving]: any) => {
+          this.refusal_reasons = dataRefusal.data;
+          this.living_conditions = dataLiving.data;
+          this.show_form = true;
+          console.log(this.living_conditions, this.client_types, 'libraries')
+          console.log(this.refusal_reasons, this.client_types, 'libraries')
+        },
+        error: err => console.log(err)
+      });
+    }
+
   constructor(
     private http: HttpService,
     private formBuilder: FormBuilder,
@@ -432,6 +538,7 @@ export class RapidHeeadsssComponent implements OnInit, OnChanges {
 ngOnChanges(change: SimpleChanges): void{
     this.patchData();
     this.disableForm3();
+    this.disableForm5();
     // this.openModal();
   }
 
@@ -439,6 +546,7 @@ ngOnInit(): void {
     console.log(this.patient_asrh_history, 'patient asrh history main')
     this.validateForm();
     this.loadRapidLib();
-
+    // this.loadLibraries();
+    // this.refusal_options = this.refusal_reasons;
   }
 }

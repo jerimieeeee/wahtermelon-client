@@ -43,6 +43,17 @@
             <input type="input" name="other_client_type" id="other_client_type" class="input" formControlName="other_client_type">
           </div>
 
+          <div class="col-span-6 px-5 pt-5">
+            <div>
+              <label for="lib_asrh_living_arrangement_type_id" class="text-sm font-semibold">Living Condition</label>
+              <select name="lib_asrh_living_arrangement_type_id" id="lib_asrh_living_arrangement_type_id" class="input"  formControlName="lib_asrh_living_arrangement_type_id">
+                <!-- <option [ngValue]="0" selected> </option> -->
+                <option *ngFor="let lv of living_conditions" [value]="lv.id">{{ lv.desc | titlecase  }}</option>
+              </select>
+            </div>
+
+          </div>
+
           <!-- <div class="col-span-6 px-5 pt-5">
             <div>
               <label for="refer_to" class="text-sm font-semibold">Referred To</label>
@@ -63,16 +74,35 @@
               </select>
             </div>
 
-          </div> -->
+            </div> -->
 
             <div class="col-span-12 col-start-1 grid gap-x-4 " *ngIf="selected_asrh_consult?.done_flag !== 1">
             <div class="mt-5 px-5">
-                <input type="checkbox" class="input-checkbox" id="refused_flag" formControlName="refused_flag" (change)="openModal()" />
+              <input type="checkbox" class="input-checkbox" id="refused_flag" formControlName="refused_flag"
+              (change)="openModal(); !$event.target.checked && visitForm.patchValue({refusal_reason: '', other_refusal: ''})" />
               <label for="refused_flag" class="text-sm">
-                The Patient Withdrew Consent.
+              The patient/guardian Withdrew Consent.
               </label>
             </div>
             </div>
+
+            <div class="col-span-6 px-5 pt-5" *ngIf="visitForm.value.refused_flag === true">
+            <div>
+              <label for="lib_asrh_refusal_reason_id" class="text-sm font-semibold">Reason for Refusal</label>
+              <select name="lib_asrh_refusal_reason_id" id="lib_asrh_refusal_reason_id" class="input" formControlName="lib_asrh_refusal_reason_id">
+              <!-- <option [ngValue]="0" selected> </option> -->
+              <option *ngFor="let type of refusal_reasons" [value]="type.id">{{ type.desc | titlecase }}</option>
+              </select>
+            </div>
+
+            </div>
+
+          <div class="col-span-6 px-5 pt-5" *ngIf="visitForm.value.refused_flag === true">
+          <div>
+            <label for="refusal_reason_other" class="text-sm font-semibold">Please Specify if Others</label>
+            <input type="input" name="refusal_reason_other" id="refusal_reason_other" class="input" formControlName="refusal_reason_other">
+          </div>
+          </div>
 
           <!-- <div class="col-span-6 px-5 pt-5">
             <label for="status" class="text-sm font-semibold">Status</label>
@@ -80,10 +110,6 @@
           </div> -->
 
         </div>
-
-
-
-
       </form>
 
       <div class="flex justify-center mb-10">

@@ -40,7 +40,10 @@ export class SuicideDepressionComponent implements OnInit {
        assessment_date: new FormControl<string| null>(''),
       //  consent_flag: new FormControl<string| null>(''),
        suicide_notes: new FormControl<string| null>(''),
+       self_harm: new FormControl<string| null>(''),
        done_flag: new FormControl<boolean>(false),
+       consent_flag: new FormControl<string| null>('false'),
+        refused_flag: new FormControl<string| null>('false'),
 
      });
 
@@ -74,8 +77,11 @@ export class SuicideDepressionComponent implements OnInit {
          patient_id: [this.patient_id],
          consult_asrh_rapid_id: [this.selected_asrh_consult?.id, [Validators.required, Validators.minLength(1)]],
          assessment_date: [this.selected_asrh_consult?.comprehensive?.assessment_date, [Validators.required, Validators.minLength(1)]],
-         suicide_notes: ['', [Validators.required, Validators.minLength(1)]],
+         suicide_notes: ['', [Validators.required, Validators.minLength(50)]],
+         self_harm: [[false], [Validators.required, Validators.minLength(1)]],
          done_flag: [false],
+         consent_flag: ['', [Validators.required, Validators.minLength(1)]],
+          refused_flag: [false],
         //  refused_flag: [false],
 
          // average_monthly_income: ['', [Validators.required, Validators.minLength(1), Validators.pattern("^[0-9,;]+$")]],
@@ -90,6 +96,9 @@ export class SuicideDepressionComponent implements OnInit {
       if(this.selected_asrh_consult) {
         this.suicideForm.patchValue({
         suicide_notes: this.selected_asrh_consult?.comprehensive?.suicide_notes,
+        self_harm: this.selected_asrh_consult?.comprehensive?.self_harm,
+        refused_flag: this.selected_asrh_consult?.comprehensive?.refused_flag,
+         consent_flag: this.selected_asrh_consult?.comprehensive?.consent_flag,
         // refused_flag: this.selected_asrh_consult?.comprehensive?.refused_flag
         });
         // this.show_form = true;

@@ -44,7 +44,8 @@ export class SexualityComponent implements OnInit {
         risky_behavior: new FormControl<boolean>(false),
         sexuality_notes: new FormControl<string| null>(''),
         done_flag: new FormControl<boolean>(false),
-
+        consent_flag: new FormControl<string| null>('false'),
+        refused_flag: new FormControl<string| null>('false'),
       });
 
       onSubmit(){
@@ -78,8 +79,10 @@ export class SexualityComponent implements OnInit {
           consult_asrh_rapid_id: [this.selected_asrh_consult?.id, [Validators.required, Validators.minLength(1)]],
           assessment_date: [this.selected_asrh_consult?.comprehensive?.assessment_date, [Validators.required, Validators.minLength(1)]],
           risky_behavior: [[false], [Validators.required, Validators.minLength(1)]],
-          sexuality_notes: ['', [Validators.required, Validators.minLength(1)]],
+          sexuality_notes: ['', [Validators.required, Validators.minLength(50)]],
           done_flag: [false],
+          consent_flag: ['', [Validators.required, Validators.minLength(1)]],
+          refused_flag: [false],
           // refused_flag: [false],
           // average_monthly_income: ['', [Validators.required, Validators.minLength(1), Validators.pattern("^[0-9,;]+$")]],
         });
@@ -94,6 +97,8 @@ export class SexualityComponent implements OnInit {
          this.sexualityForm.patchValue({
          sexuality_notes: this.selected_asrh_consult?.comprehensive?.sexuality_notes,
          risky_behavior: this.selected_asrh_consult?.comprehensive?.risky_behavior,
+         refused_flag: this.selected_asrh_consult?.comprehensive?.refused_flag,
+         consent_flag: this.selected_asrh_consult?.comprehensive?.consent_flag,
         //  refused_flag: this.selected_asrh_consult?.comprehensive?.refused_flag
          });
          // this.show_form = true;

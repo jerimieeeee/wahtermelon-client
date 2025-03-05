@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { formatDate } from '@angular/common';
 import { faCalendar, faTimes, faDoorClosed, faCircleNotch, faSave } from '@fortawesome/free-solid-svg-icons';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
@@ -12,7 +12,7 @@ import { ToastrService } from 'ngx-toastr';
   styleUrl: './consent.component.scss',
   standalone: false
 })
-export class ConsentComponent implements OnInit {
+export class ConsentComponent implements OnInit, OnChanges {
   @Input() selected_asrh_consult: any;
   @Output() updateSelectedASRH = new EventEmitter<any>();
   @Output() opened = new EventEmitter<void>();
@@ -42,7 +42,7 @@ export class ConsentComponent implements OnInit {
   user_info: any;
   user_facility: any;
   modals: any = [];
-
+  consent_type: any = [];
   consult_details: any;
 
   is_saving: boolean = false;
@@ -51,6 +51,20 @@ export class ConsentComponent implements OnInit {
 
   date_today = formatDate(new Date(), 'MM/dd/yyyy', 'en', 'Asia/Manila');
 
+  guardians = [
+    { name: 'Parent', id:'1' },
+    { name: 'Legal Guardian', id:'2' },
+    { name: 'Others', id:'3' },
+
+  ];
+
+  refusal_reasons = [
+    { name: 'refuse', id:'1' },
+    { name: 'refused', id:'2' },
+    { name: 'refused talaga', id:'3' },
+
+  ];
+
   consentForm: FormGroup = new FormGroup({
       id: new FormControl<string| null>(''),
       patient_id: new FormControl<string| null>(''),
@@ -58,6 +72,9 @@ export class ConsentComponent implements OnInit {
       assessment_date: new FormControl<string| null>(''),
       consent_flag: new FormControl<boolean>(false),
       refused_flag: new FormControl<boolean>(false),
+      homeNotes: new FormControl<string| null>(''),
+      lib_asrh_consent_type_id: new FormControl<string| null>(''),
+      consent_type_other: new FormControl<string| null>(''),
       // status: new FormControl<string| null>(''),
     });
 
@@ -91,13 +108,24 @@ export class ConsentComponent implements OnInit {
         patient_id: [this.patient_id],
         consult_asrh_rapid_id: [this.selected_asrh_consult?.id, [Validators.required, Validators.minLength(1)]],
         assessment_date: ['', [Validators.required, Validators.minLength(1)]],
+        lib_asrh_consent_type_id: ['', [Validators.required, Validators.minLength(1)]],
+        consent_type_other: [{value: '', disabled: true}, [Validators.required, Validators.minLength(1)]],
         consent_flag: [false],
         refused_flag: [false],
         done_flag: [false],
-        // status: ['', [Validators.required, Validators.minLength(1)]],
-        // average_monthly_income: ['', [Validators.required, Validators.minLength(1), Validators.pattern("^[0-9,;]+$")]],
       });
+
+      // Modify onSubmit to ensure default values
+
+
+      this.consentForm.get('refused_flag')?.valueChanges.subscribe(value => {
+        if (!value) this.consentForm.get('refused_flag')?.setValue(false, {emitEvent: false});
+      });
+
+
+      this.disableForm();
       this.patchCompre();
+
       // this.disableForm();
       // this.loadFPDetails();
       // this.show_form = true;
@@ -110,8 +138,9 @@ export class ConsentComponent implements OnInit {
         assessment_date: this.selected_asrh_consult?.comprehensive?.assessment_date || this.max_date,
         // status: this.selected_asrh_consult?.comprehensive?.status,
         consent_flag: this.selected_asrh_consult?.comprehensive?.consent_flag,
-        refused_flag: this.selected_asrh_consult?.comprehensive?.refused_flag
-
+        refused_flag: this.selected_asrh_consult?.comprehensive?.refused_flag,
+        lib_asrh_consent_type_id: this.selected_asrh_consult?.comprehensive?.lib_asrh_consent_type_id,
+        consent_type_other: this.selected_asrh_consult?.comprehensive?.consent_type_other
         });
         // this.show_form = true;
         console.log(this.selected_asrh_consult,'load compre home working')
@@ -153,6 +182,29 @@ export class ConsentComponent implements OnInit {
       this.opened.emit();
     }
 
+    disableForm(){
+      this.consentForm.get('lib_asrh_consent_type_id')?.valueChanges.subscribe((value) => {
+        const libAsrhClientTypeCodeControl = this.consentForm.get('consent_type_other');
+        if (value != 99 || value === '') {
+          libAsrhClientTypeCodeControl?.reset();
+          libAsrhClientTypeCodeControl?.disable();
+        } else {
+          libAsrhClientTypeCodeControl?.enable();
+        }
+
+      });
+    }
+
+    loadConsentLib(){
+      this.http.get('libraries/consent-type').subscribe({
+        next: (data: any) => {
+          this.consent_type = data.data;
+          console.log(this.consent_type, 'consent_type')
+        },
+        error: err => console.log(err)
+      });
+    }
+
  constructor(
     private http: HttpService,
     private router: Router,
@@ -161,6 +213,12 @@ export class ConsentComponent implements OnInit {
     private formBuilder: FormBuilder)
   { }
 
+  ngOnChanges(change: SimpleChanges): void{
+      this.patchCompre();
+      // this.disableForm3();
+      // this.openModal();
+    }
+
 
   ngOnInit(): void {
     this.patient_id = this.route.snapshot.paramMap.get('id');
@@ -168,8 +226,9 @@ export class ConsentComponent implements OnInit {
     this.user_info = this.http.getUserFromJSON();
     this.user_facility = this.http.getUserFacility();
     // this.openChild();
+    this.loadConsentLib();
     this.validateForm();
-    console.log(this.user_info, 'user_info')
+    console.log(this.consentForm, 'user_info')
   }
 }
 

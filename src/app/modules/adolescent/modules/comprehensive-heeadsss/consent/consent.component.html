@@ -1,11 +1,11 @@
-<div class="col-span-12 col-start-1 grid gap-x-4 mb-5 m-5 border border-slate-200 rounded-lg" [ngClass]="(this.selected_asrh_consult?.done_flag === 1 && this.selected_asrh_consult?.comprehensive?.done_flag === true) || (this.selected_asrh_consult?.refused_flag === 1 || this.selected_asrh_consult?.comprehensive?.refused_flag === true) ? 'pointer-events-none select-none' : ''">
+<div class="col-span-12 col-start-1 grid gap-x-4 mb-5 m-5 border border-slate-200 rounded-lg" [ngClass]="(this.selected_asrh_consult?.done_flag === true && this.selected_asrh_consult?.comprehensive?.done_flag === true) || (this.selected_asrh_consult?.refused_flag === true || this.selected_asrh_consult?.comprehensive?.refused_flag === true) ? 'pointer-events-none select-none' : ''">
   <div class="bg-blue-500 text-sm text-white rounded-t-md py-2 pl-5 font-semibold">
    Comprehensive HEEADSSS Assessment
   </div>
 
 
 
-<form [formGroup]="consentForm" class="grid grid-cols-16 gap-x-4 w-full mb-5">
+<form [formGroup]="consentForm" class="grid grid-cols-16 gap-x-4 w-full mb-10">
   <div class="grid grid-cols-12">
 
     <div class="col-span-6 px-5 pt-5">
@@ -13,28 +13,57 @@
       <input type="date" name="assessment_date" id="assessment_date" class="input" formControlName="assessment_date" [max]="max_date">
     </div>
 
-    <div class="col-span-6 grid gap-x-4 mt-2">
-      <div class="mt-10 px-5">
-        <input type="checkbox" class="input-checkbox" id="consent_flag" formControlName="consent_flag" />
-        <label for="consent_flag" class="text-sm" >
-          The patient has read, fully understood, and signed the patient consent form.
-        </label>
-      </div>
-    </div>
-
-    <div class="col-span-6 grid gap-x-4 mt-5">
+    <div class="col-span-6 grid gap-x-4 mt-12">
       <div class="px-5">
         <input type="checkbox" class="input-checkbox" id="refused_flag" formControlName="refused_flag" (change)="openModal()"/>
         <label for="refused_flag" class="text-sm" >
-          {{ !consentForm.value.consent_flag === true ? 'The Patient Refused to Conduct the Assessment' : 'The Patient Withdrew Consent' }}
+          {{ !consentForm.value.consent_flag === true ? '
+          The patient/guardian Refused to Conduct the Assessment.' : 'The patient/guardian Withdrew Consent' }}
         </label>
       </div>
+
+      <div class="px-5 mt-10" *ngIf="consentForm.value.refused_flag === true">
+        <label for="other_client_type" class="text-sm font-semibold">{{ !consentForm.value.consent_flag === true ? '
+          Refusal Reason' : 'Withdrawal Reason' }}</label>
+        <input type="input" name="other_client_type" id="other_client_type" class="input">
+      </div>
+
+
     </div>
+
+
+
+
+
+    <div class="col-span-6 grid gap-x-4 mt-10">
+      <div class="px-5">
+        <input type="checkbox" class="input-checkbox" id="consent_flag" formControlName="consent_flag" />
+        <label for="consent_flag" class="text-sm" >
+          The patient/guardian has read, fully understood, and signed the patient consent form.
+        </label>
+      </div>
+
+      <div class="px-5 mt-10" *ngIf="consentForm.value.consent_flag === true">
+        <label for="lib_asrh_consent_type_id" class="text-sm font-semibold">Guardian Type</label>
+        <select name="lib_asrh_consent_type_id" id="lib_asrh_consent_type_id" class="input" formControlName="lib_asrh_consent_type_id">
+          <!-- <option [ngValue]="0" selected> </option> -->
+          <option *ngFor="let type of consent_type" [value]="type.id">{{ type.desc | titlecase }}</option>
+        </select>
+      </div>
+
+      <div class="px-5 mt-10" *ngIf="consentForm.value.consent_flag === true">
+        <label for="consent_type_other" class="text-sm font-semibold">Please Specify if Others</label>
+        <input type="input" name="consent_type_other" id="consent_type_other" class="input" formControlName="consent_type_other">
+      </div>
+
+    </div>
+
+
 
   </div>
 </form>
 
-<div class="flex justify-center mb-5">
+<div class="flex justify-center mb-10">
   <button class="btn-save" [disabled]="is_saving || !consentForm.dirty || consentForm.invalid" (click)="onSubmit(); consentForm.markAsPristine();">
     <fa-icon [icon]="faSave" *ngIf="!is_saving" class="mr-2"></fa-icon>
     <fa-icon [icon]="faCircleNotch" *ngIf="is_saving" animation="spin" class="mr-2"></fa-icon>
