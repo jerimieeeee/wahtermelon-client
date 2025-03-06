@@ -23,7 +23,7 @@
             </span>
 
             <span class="block text-xs">
-              {{ patient_info?.birthdate | date: 'MM/dd/yyyy':'Asia/Manila' }} [{{ getAge() }}][{{patient_info?.gender}}]
+              {{ patient_info?.birthdate | date: 'MM/dd/yyyy':'Asia/Manila' }} [{{ getAge() }}][{{patient_info?.gender}}]{{ patient_info?.gender_identity ? '[' + patient_info.gender_identity.desc + ']' : '' }}
             </span>
 
             <span class="block text-xs" *ngIf="this.patient_age?.type === 'year' && this.patient_age?.age >= 10 && this.patient_age?.age < 26">

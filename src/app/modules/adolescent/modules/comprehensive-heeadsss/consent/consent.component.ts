@@ -44,7 +44,7 @@ export class ConsentComponent implements OnInit, OnChanges {
   modals: any = [];
   consent_type: any = [];
   consult_details: any;
-
+  refusal_reasons: any = [];
   is_saving: boolean = false;
 
   max_date: string = formatDate(new Date(), 'yyyy-MM-dd', 'en', 'Asia/Manila');
@@ -58,12 +58,12 @@ export class ConsentComponent implements OnInit, OnChanges {
 
   ];
 
-  refusal_reasons = [
-    { name: 'refuse', id:'1' },
-    { name: 'refused', id:'2' },
-    { name: 'refused talaga', id:'3' },
+  // refusal_reasons = [
+  //   { name: 'refuse', id:'1' },
+  //   { name: 'refused', id:'2' },
+  //   { name: 'refused talaga', id:'3' },
 
-  ];
+  // ];
 
   consentForm: FormGroup = new FormGroup({
       id: new FormControl<string| null>(''),
@@ -74,7 +74,8 @@ export class ConsentComponent implements OnInit, OnChanges {
       refused_flag: new FormControl<boolean>(false),
       homeNotes: new FormControl<string| null>(''),
       lib_asrh_consent_type_id: new FormControl<string| null>(''),
-      consent_type_other: new FormControl<string| null>(''),
+      lib_asrh_refusal_reason_id: new FormControl<string| null>(''),
+      refusal_reason_other: new FormControl<string| null>(''),
       // status: new FormControl<string| null>(''),
     });
 
@@ -113,6 +114,8 @@ export class ConsentComponent implements OnInit, OnChanges {
         consent_flag: [false],
         refused_flag: [false],
         done_flag: [false],
+        lib_asrh_refusal_reason_id: [{value: '', disabled: true}, [Validators.required, Validators.minLength(1)]],
+        refusal_reason_other: [{value: '', disabled: true}, [Validators.required, Validators.minLength(1)]],
       });
 
       // Modify onSubmit to ensure default values
@@ -124,6 +127,8 @@ export class ConsentComponent implements OnInit, OnChanges {
 
 
       this.disableForm();
+      this.disableForm4();
+      this.disableForm5();
       this.patchCompre();
 
       // this.disableForm();
@@ -140,7 +145,9 @@ export class ConsentComponent implements OnInit, OnChanges {
         consent_flag: this.selected_asrh_consult?.comprehensive?.consent_flag,
         refused_flag: this.selected_asrh_consult?.comprehensive?.refused_flag,
         lib_asrh_consent_type_id: this.selected_asrh_consult?.comprehensive?.lib_asrh_consent_type_id,
-        consent_type_other: this.selected_asrh_consult?.comprehensive?.consent_type_other
+        consent_type_other: this.selected_asrh_consult?.comprehensive?.consent_type_other,
+        lib_asrh_refusal_reason_id: this.selected_asrh_consult?.comprehensive?.lib_asrh_refusal_reason_id,
+        refusal_reason_other: this.selected_asrh_consult?.comprehensive?.refusal_reason_other
         });
         // this.show_form = true;
         console.log(this.selected_asrh_consult,'load compre home working')
@@ -205,6 +212,43 @@ export class ConsentComponent implements OnInit, OnChanges {
       });
     }
 
+    loadReasonLib(){
+      this.http.get('libraries/refusal-reason').subscribe({
+        next: (data: any) => {
+          this.refusal_reasons = data.data;
+          console.log(this.consent_type, 'consent_type')
+        },
+        error: err => console.log(err)
+      });
+    }
+
+    disableForm4(){
+      this.consentForm.get('refused_flag')?.valueChanges.subscribe((value) => {
+        const libAsrhClientTypeCodeControl = this.consentForm.get('lib_asrh_refusal_reason_id');
+        if (value !== true || value === '') {
+          libAsrhClientTypeCodeControl?.reset();
+          libAsrhClientTypeCodeControl?.disable();
+        } else {
+          libAsrhClientTypeCodeControl?.enable();
+        }
+
+      });
+    }
+
+    disableForm5(){
+      this.consentForm.get('lib_asrh_refusal_reason_id')?.valueChanges.subscribe((value) => {
+        const OtherReasonControl = this.consentForm.get('refusal_reason_other');
+        if (value != 99 || value === '') {
+          OtherReasonControl?.reset();
+          OtherReasonControl?.disable();
+        } else {
+          OtherReasonControl?.enable();
+        }
+
+      });
+    }
+
+
  constructor(
     private http: HttpService,
     private router: Router,
@@ -215,7 +259,8 @@ export class ConsentComponent implements OnInit, OnChanges {
 
   ngOnChanges(change: SimpleChanges): void{
       this.patchCompre();
-      // this.disableForm3();
+      this.disableForm4();
+      this.disableForm5();
       // this.openModal();
     }
 
@@ -227,6 +272,7 @@ export class ConsentComponent implements OnInit, OnChanges {
     this.user_facility = this.http.getUserFacility();
     // this.openChild();
     this.loadConsentLib();
+    this.loadReasonLib();
     this.validateForm();
     console.log(this.consentForm, 'user_info')
   }

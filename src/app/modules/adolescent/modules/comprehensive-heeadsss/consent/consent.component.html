@@ -22,10 +22,23 @@
         </label>
       </div>
 
-      <div class="px-5 mt-10" *ngIf="consentForm.value.refused_flag === true">
-        <label for="other_client_type" class="text-sm font-semibold">{{ !consentForm.value.consent_flag === true ? '
-          Refusal Reason' : 'Withdrawal Reason' }}</label>
-        <input type="input" name="other_client_type" id="other_client_type" class="input">
+      <div class="col-span-6 px-5 pt-5" *ngIf="consentForm.value.refused_flag === true">
+        <div>
+          <label for="lib_asrh_refusal_reason_id" class="text-sm font-semibold">{{ !consentForm.value.consent_flag === true ? '
+            Refusal Reason' : 'Withdrawal Reason' }}</label>
+          <select name="lib_asrh_refusal_reason_id" id="lib_asrh_refusal_reason_id" class="input" formControlName="lib_asrh_refusal_reason_id">
+          <!-- <option [ngValue]="0" selected> </option> -->
+          <option *ngFor="let type of refusal_reasons" [value]="type.id">{{ type.desc | titlecase }}</option>
+          </select>
+        </div>
+
+        </div>
+
+      <div class="col-span-6 px-5 pt-5" *ngIf="consentForm.value.refused_flag === true">
+      <div>
+        <label for="refusal_reason_other" class="text-sm font-semibold">Please Specify if Others</label>
+        <input type="input" name="refusal_reason_other" id="refusal_reason_other" class="input" formControlName="refusal_reason_other">
+      </div>
       </div>
 
 

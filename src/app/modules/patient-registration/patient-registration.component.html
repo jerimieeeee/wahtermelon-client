@@ -119,14 +119,9 @@
               </div>
 
               <div class="col-span-6 sm:col-span-2">
-                <label for="gender_identity" class="input-label" [ngClass]="{'text-red-500': is_saving && f.gender.errors}">Gender Identity</label>
-                <select id="gender_identity" name="gender_identity" class="input" [ngClass]="{'invalid-input': is_saving && f.gender_identity.errors}" formControlName="gender_identity">
-                  <option value="M">Male</option>
-                  <option value="F">Female</option>
-                  <option value="L">Lesbian</option>
-                  <option value="G">Gay</option>
-                  <option value="B">Bisexual</option>
-                  <option value="T">Transgender</option>
+                <label for="lib_gender_identity_code" class="input-label" [ngClass]="{'text-red-500': is_saving && f.lib_gender_identity_code.errors}">Gender Identity</label>
+                <select id="lib_gender_identity_code"   name=" lib_gender_identity_code" class="input" [ngClass]="{'invalid-input': is_saving && f.lib_gender_identity_code.errors}" formControlName="lib_gender_identity_code">
+                  <option *ngFor="let gender of gender_identity" [value]="gender.code">{{ gender.desc | titlecase  }}</option>
                 </select>
 
                 <div *ngIf="is_saving && f.gender_identity.errors" class="invalid-alert">
