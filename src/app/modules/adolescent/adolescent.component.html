@@ -138,7 +138,10 @@
             {{ asrh_history?.comprehensive?.assessment_date ? (asrh_history?.comprehensive?.assessment_date | date: 'MM/dd/yyyy') : '-' }}
         </td>
         <td class="py-4 px-6">
-          {{ asrh_history?.comprehensive?.done_flag === true ? 'Done' : (asrh_history?.comprehensive?.refused_flag === true ? 'Refused' : (asrh_history?.comprehensive === null ? '-' : 'Ongoing'))}}
+          {{ asrh_history?.comprehensive?.done_flag === true ? 'Done' :
+  (asrh_history?.comprehensive?.refused_flag === true && asrh_history?.comprehensive?.consent_flag === true ? 'Withdrawn' :
+    (asrh_history?.comprehensive?.refused_flag === true ? 'Refused' :
+      (asrh_history?.comprehensive === null ? '-' : 'Ongoing'))) }}
 
          </td>
         <td class="py-4 px-6">
