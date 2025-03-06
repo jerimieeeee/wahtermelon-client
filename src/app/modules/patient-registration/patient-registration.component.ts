@@ -343,6 +343,12 @@ export class PatientRegistrationComponent implements OnInit {
           });
         }
 
+        if(data.data.gender_identity) {
+          this.patientForm.patchValue({
+            lib_gender_identity_code: data.data.gender_identity.code
+          });
+        }
+
         this.patient_to_update = data.data.id;
         this.button_function = 'Update';
         this.orig_data = data.data;

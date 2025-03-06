@@ -102,39 +102,58 @@ export class ConsentComponent implements OnInit, OnChanges {
       })
     }
 
-  validateForm(){
 
+    validateForm() {
       this.consentForm = this.formBuilder.group({
         id: [''],
         patient_id: [this.patient_id],
         consult_asrh_rapid_id: [this.selected_asrh_consult?.id, [Validators.required, Validators.minLength(1)]],
         assessment_date: ['', [Validators.required, Validators.minLength(1)]],
         lib_asrh_consent_type_id: ['', [Validators.required, Validators.minLength(1)]],
-        consent_type_other: [{value: '', disabled: true}, [Validators.required, Validators.minLength(1)]],
+        consent_type_other: [{ value: '', disabled: true }, [Validators.required, Validators.minLength(1)]],
         consent_flag: [false],
         refused_flag: [false],
         done_flag: [false],
-        lib_asrh_refusal_reason_id: [{value: '', disabled: true}, [Validators.required, Validators.minLength(1)]],
-        refusal_reason_other: [{value: '', disabled: true}, [Validators.required, Validators.minLength(1)]],
+        lib_asrh_refusal_reason_id: [{ value: '', disabled: true }, [Validators.required, Validators.minLength(1)]],
+        refusal_reason_other: [{ value: '', disabled: true }, [Validators.required, Validators.minLength(1)]],
       });
 
-      // Modify onSubmit to ensure default values
+      // Listen for changes to 'refused_flag'
+      this.consentForm.get('refused_flag')?.valueChanges.subscribe(value => {
+        if (value) {
+          // If refused_flag is true, remove the required validators for refusal_reason fields
+          this.consentForm.get('lib_asrh_consent_type_id')?.clearValidators();
+          this.consentForm.get('consent_type_other')?.clearValidators();
+          this.consentForm.get('lib_asrh_consent_type_id')?.disable(); // Disable the control
+          this.consentForm.get('consent_type_other')?.disable(); // Disable the control
+        } else {
+          // If refused_flag is false, add the required validators back
+          this.consentForm.get('lib_asrh_consent_type_id')?.setValidators([Validators.required, Validators.minLength(1)]);
+          this.consentForm.get('consent_type_other')?.setValidators([Validators.required, Validators.minLength(1)]);
+          this.consentForm.get('lib_asrh_consent_type_id')?.enable(); // Enable the control
+          this.consentForm.get('consent_type_other')?.enable(); // Enable the control
+        }
 
+        // Re-run validation after modifying validators or enabling/disabling fields
+        this.consentForm.get('lib_asrh_consent_type_id')?.updateValueAndValidity();
+        this.consentForm.get('consent_type_other')?.updateValueAndValidity();
+      });
 
       this.consentForm.get('refused_flag')?.valueChanges.subscribe(value => {
         if (!value) this.consentForm.get('refused_flag')?.setValue(false, {emitEvent: false});
       });
 
+      this.consentForm.get('consent_flag')?.valueChanges.subscribe(value => {
+        if (!value) this.consentForm.get('consent_flag')?.setValue(false, {emitEvent: false});
+      });
 
+      // Initialize disabled form controls
       this.disableForm();
       this.disableForm4();
       this.disableForm5();
       this.patchCompre();
-
-      // this.disableForm();
-      // this.loadFPDetails();
-      // this.show_form = true;
     }
+
 
     patchCompre(){
 
