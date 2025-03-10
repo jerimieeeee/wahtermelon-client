@@ -434,54 +434,54 @@
       <td (click)="showNameList('M,F', 'deworming_10_to_19')" class="border text-blue-500 text-center" [class]=" deworm.male_female_deworming_10_to_19 !==0 ? 'cursor-pointer' : 'pointer-events-none' ">{{ deworm.male_female_deworming_10_to_19 ?? 0 }}</td>
       <td class="border"></td>
       <td class="border">41. Sick Children 12-59 mos. old received Vitamin A</td>
-      <td (click)="showNameList('M', 'sick_children_with_vit_a')" class="border text-blue-500 text-center" [class]=" sick_with_meds.male_sick_children_with_vit_a !==0 ? 'cursor-pointer' : 'pointer-events-none' ">{{ deworm.male_sick_children_with_vit_a ?? 0 }}</td>
-      <td (click)="showNameList('F', 'sick_children_with_vit_a')" class="border text-blue-500 text-center" [class]=" sick_with_meds.female_sick_children_with_vit_a !==0 ? 'cursor-pointer' : 'pointer-events-none' ">{{ deworm.female_sick_children_with_vit_a ?? 0 }}</td>
-      <td (click)="showNameList('M,F', 'sick_children_with_vit_a')" class="border text-blue-500 text-center" [class]=" sick_with_meds.male_female_sick_children_with_vit_a !==0 ? 'cursor-pointer' : 'pointer-events-none' ">{{ deworm.male_female_sick_children_with_vit_a ?? 0 }}</td>
+      <td (click)="showNameList('M', 'sick_children_with_vit_a')" class="border text-blue-500 text-center" [class]=" sick_with_meds.male_sick_children_with_vit_a !==0 ? 'cursor-pointer' : 'pointer-events-none' ">{{ sick.male_sick_children_with_vit_a ?? 0 }}</td>
+      <td (click)="showNameList('F', 'sick_children_with_vit_a')" class="border text-blue-500 text-center" [class]=" sick_with_meds.female_sick_children_with_vit_a !==0 ? 'cursor-pointer' : 'pointer-events-none' ">{{ sick.female_sick_children_with_vit_a ?? 0 }}</td>
+      <td (click)="showNameList('M,F', 'sick_children_with_vit_a')" class="border text-blue-500 text-center" [class]=" sick_with_meds.male_female_sick_children_with_vit_a !==0 ? 'cursor-pointer' : 'pointer-events-none' ">{{ sick.male_female_sick_children_with_vit_a ?? 0 }}</td>
       <td class="border"></td>
     </tr>
 
     <tr class="text-xs">
       <td colspan="5" class="pt-2 pb-3 pl-3 bg-gray-200"></td>
       <td class="pt-2 pb-3 border">42. Diarrhea cases 0-59 months old seen</td>
-      <td (click)="showNameList('M', 'diarrhea')" class="border text-blue-500 text-center" [class]=" sick.male_diarrhea !==0 ? 'cursor-pointer' : 'pointer-events-none' ">{{ deworm.male_diarrhea ?? 0 }}</td>
-      <td (click)="showNameList('F', 'diarrhea')" class="border text-blue-500 text-center" [class]=" sick.female_diarrhea !==0 ? 'cursor-pointer' : 'pointer-events-none' ">{{ deworm.female_diarrhea ?? 0 }}</td>
-      <td (click)="showNameList('M,F', 'diarrhea')" class="border text-blue-500 text-center" [class]=" sick.male_female_diarrhea !==0 ? 'cursor-pointer' : 'pointer-events-none' ">{{ deworm.male_female_diarrhea ?? 0 }}</td>
+      <td (click)="showNameList('M', 'diarrhea')" class="border text-blue-500 text-center" [class]=" sick.male_diarrhea !==0 ? 'cursor-pointer' : 'pointer-events-none' ">{{ sick.male_diarrhea ?? 0 }}</td>
+      <td (click)="showNameList('F', 'diarrhea')" class="border text-blue-500 text-center" [class]=" sick.female_diarrhea !==0 ? 'cursor-pointer' : 'pointer-events-none' ">{{ sick.female_diarrhea ?? 0 }}</td>
+      <td (click)="showNameList('M,F', 'diarrhea')" class="border text-blue-500 text-center" [class]=" sick.male_female_diarrhea !==0 ? 'cursor-pointer' : 'pointer-events-none' ">{{ sick.male_female_diarrhea ?? 0 }}</td>
       <td class="border"></td>
     </tr>
 
     <tr class="text-xs">
       <td colspan="5" class="pt-2 pb-3 pl-3 bg-gray-200"></td>
       <td class="pt-2 pb-3 border">43. Diarrhea cases 0-59 months old received ORS</td>
-      <td (click)="showNameList('M', 'diarrhea_with_ors')" class="border text-blue-500 text-center" [class]=" sick_with_meds.male_diarrhea_with_ors !==0 ? 'cursor-pointer' : 'pointer-events-none' ">{{ deworm.male_diarrhea_with_ors ?? 0 }}</td>
-      <td (click)="showNameList('F', 'diarrhea_with_ors')" class="border text-blue-500 text-center" [class]=" sick_with_meds.female_diarrhea_with_ors !==0 ? 'cursor-pointer' : 'pointer-events-none' ">{{ deworm.female_diarrhea_with_ors ?? 0 }}</td>
-      <td (click)="showNameList('M,F', 'diarrhea_with_ors')" class="border text-blue-500 text-center" [class]=" sick_with_meds.male_female_diarrhea_with_ors !==0 ? 'cursor-pointer' : 'pointer-events-none' ">{{ deworm.male_female_diarrhea_with_ors ?? 0 }}</td>
+      <td (click)="showNameList('M', 'diarrhea_with_ors')" class="border text-blue-500 text-center" [class]=" sick_with_meds.male_diarrhea_with_ors !==0 ? 'cursor-pointer' : 'pointer-events-none' ">{{ sick_with_meds.male_diarrhea_with_ors ?? 0 }}</td>
+      <td (click)="showNameList('F', 'diarrhea_with_ors')" class="border text-blue-500 text-center" [class]=" sick_with_meds.female_diarrhea_with_ors !==0 ? 'cursor-pointer' : 'pointer-events-none' ">{{ sick_with_meds.female_diarrhea_with_ors ?? 0 }}</td>
+      <td (click)="showNameList('M,F', 'diarrhea_with_ors')" class="border text-blue-500 text-center" [class]=" sick_with_meds.male_female_diarrhea_with_ors !==0 ? 'cursor-pointer' : 'pointer-events-none' ">{{ sick_with_meds.male_female_diarrhea_with_ors ?? 0 }}</td>
       <td class="border"></td>
     </tr>
 
     <tr class=" text-xs">
       <td colspan="5" class="pt-2 pb-3 pl-3 bg-gray-200"></td>
       <td class="pt-2 pb-3 border">44. Diarrhea cases 0-59 mos. received ORS w/ zinc</td>
-      <td (click)="showNameList('M', 'diarrhea_with_ors_zinc')" class="border text-blue-500 text-center" [class]=" sick_with_meds.male_diarrhea_with_ors_zinc !==0 ? 'cursor-pointer' : 'pointer-events-none' ">{{ deworm.male_diarrhea_with_ors_zinc ?? 0 }}</td>
-      <td (click)="showNameList('F', 'diarrhea_with_ors_zinc')" class="border text-blue-500 text-center" [class]=" sick_with_meds.female_diarrhea_with_ors_zinc !==0 ? 'cursor-pointer' : 'pointer-events-none' ">{{ deworm.female_diarrhea_with_ors_zinc ?? 0 }}</td>
-      <td (click)="showNameList('M,F', 'diarrhea_with_ors_zinc')" class="border text-blue-500 text-center" [class]=" sick_with_meds.male_female_diarrhea_with_ors_zinc !==0 ? 'cursor-pointer' : 'pointer-events-none' ">{{ deworm.male_female_diarrhea_with_ors_zinc ?? 0 }}</td>
+      <td (click)="showNameList('M', 'diarrhea_with_ors_zinc')" class="border text-blue-500 text-center" [class]=" sick_with_meds.male_diarrhea_with_ors_zinc !==0 ? 'cursor-pointer' : 'pointer-events-none' ">{{ sick_with_meds.male_diarrhea_with_ors_zinc ?? 0 }}</td>
+      <td (click)="showNameList('F', 'diarrhea_with_ors_zinc')" class="border text-blue-500 text-center" [class]=" sick_with_meds.female_diarrhea_with_ors_zinc !==0 ? 'cursor-pointer' : 'pointer-events-none' ">{{ sick_with_meds.female_diarrhea_with_ors_zinc ?? 0 }}</td>
+      <td (click)="showNameList('M,F', 'diarrhea_with_ors_zinc')" class="border text-blue-500 text-center" [class]=" sick_with_meds.male_female_diarrhea_with_ors_zinc !==0 ? 'cursor-pointer' : 'pointer-events-none' ">{{ sick_with_meds.male_female_diarrhea_with_ors_zinc ?? 0 }}</td>
       <td class="border"></td>
     </tr>
 
     <tr class="text-xs">
       <td colspan="5" class="pt-2 pb-3 pl-3 bg-gray-200"></td>
       <td class="pt-2 pb-3 border">45. Pneumonia cases 0-59 mos. old seen</td>
-      <td (click)="showNameList('M', 'pneumonia')" class="border text-blue-500 text-center" [class]=" sick.male_pneumonia !==0 ? 'cursor-pointer' : 'pointer-events-none' ">{{ deworm.male_pneumonia ?? 0 }}</td>
-      <td (click)="showNameList('F', 'pneumonia')" class="border text-blue-500 text-center" [class]=" sick.female_pneumonia !==0 ? 'cursor-pointer' : 'pointer-events-none' ">{{ deworm.female_pneumonia ?? 0 }}</td>
-      <td (click)="showNameList('M,F', 'pneumonia')" class="border text-blue-500 text-center" [class]=" sick.male_female_pneumonia !==0 ? 'cursor-pointer' : 'pointer-events-none' ">{{ deworm.male_female_pneumonia ?? 0 }}</td>
+      <td (click)="showNameList('M', 'pneumonia')" class="border text-blue-500 text-center" [class]=" sick.male_pneumonia !==0 ? 'cursor-pointer' : 'pointer-events-none' ">{{ sick.male_pneumonia ?? 0 }}</td>
+      <td (click)="showNameList('F', 'pneumonia')" class="border text-blue-500 text-center" [class]=" sick.female_pneumonia !==0 ? 'cursor-pointer' : 'pointer-events-none' ">{{ sick.female_pneumonia ?? 0 }}</td>
+      <td (click)="showNameList('M,F', 'pneumonia')" class="border text-blue-500 text-center" [class]=" sick.male_female_pneumonia !==0 ? 'cursor-pointer' : 'pointer-events-none' ">{{ sick.male_female_pneumonia ?? 0 }}</td>
       <td class="border"></td>
     </tr>
 
     <tr class="text-xs">
       <td colspan="5" class="pt-2 pb-3 pl-3 bg-gray-200"></td>
       <td class="pt-2 pb-3 border">46. Pneumonia cases 0-59 mos. old completed treatment</td>
-      <td (click)="showNameList('M', 'pneumonia_with_treatment')" class="border text-blue-500 text-center" [class]=" sick_with_meds.male_pneumonia_with_treatment !==0 ? 'cursor-pointer' : 'pointer-events-none' ">{{ deworm.male_pneumonia_with_treatment ?? 0 }}</td>
-      <td (click)="showNameList('F', 'pneumonia_with_treatment')" class="border text-blue-500 text-center" [class]=" sick_with_meds.female_pneumonia_with_treatment !==0 ? 'cursor-pointer' : 'pointer-events-none' ">{{ deworm.female_pneumonia_with_treatment ?? 0 }}</td>
-      <td (click)="showNameList('M,F', 'pneumonia_with_treatment')" class="border text-blue-500 text-center" [class]=" sick_with_meds.male_female_pneumonia_with_treatment !==0 ? 'cursor-pointer' : 'pointer-events-none' ">{{ deworm.male_female_pneumonia_with_treatment ?? 0 }}</td>
+      <td (click)="showNameList('M', 'pneumonia_with_treatment')" class="border text-blue-500 text-center" [class]=" sick_with_meds.male_pneumonia_with_treatment !==0 ? 'cursor-pointer' : 'pointer-events-none' ">{{ sick_with_meds.male_pneumonia_with_treatment ?? 0 }}</td>
+      <td (click)="showNameList('F', 'pneumonia_with_treatment')" class="border text-blue-500 text-center" [class]=" sick_with_meds.female_pneumonia_with_treatment !==0 ? 'cursor-pointer' : 'pointer-events-none' ">{{ sick_with_meds.female_pneumonia_with_treatment ?? 0 }}</td>
+      <td (click)="showNameList('M,F', 'pneumonia_with_treatment')" class="border text-blue-500 text-center" [class]=" sick_with_meds.male_female_pneumonia_with_treatment !==0 ? 'cursor-pointer' : 'pointer-events-none' ">{{ sick_with_meds.male_female_pneumonia_with_treatment ?? 0 }}</td>
       <td class="border"></td>
     </tr>
   </tbody>
