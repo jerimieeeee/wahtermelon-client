@@ -193,7 +193,8 @@ export class ReportsComponent implements OnInit {
         (td as HTMLElement).innerText = "'" + (td as HTMLElement).innerText; // Add apostrophe to force text format
       }
     }); */
-
+    report_name = report_name.substring(0, 4)
+    console.log(report_name+'_'+this.getTrailName());
     this.exportAsService.save(this.exportAsExcel, report_name+'_'+this.getTrailName()).subscribe(() => {
       // save started
     });
@@ -201,7 +202,7 @@ export class ReportsComponent implements OnInit {
 
   getTrailName(): string {
     let trailName: string = '';
-    if(this.reportForm.value.start_date) trailName = this.reportForm.value.start_date+'_to_'+this.reportForm.value.end_date;
+    if(this.reportForm.value.start_date) trailName = this.reportForm.value.start_date+'_'+this.reportForm.value.end_date;
     if(this.reportForm.value.month) trailName = this.reportForm.value.month+"_"+this.reportForm.value.year;
     if(this.reportForm.value.quarter) trailName = this.reportForm.value.quarter+"_"+this.reportForm.value.year;
 
