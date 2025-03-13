@@ -34,6 +34,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import {MaternalCareMasterlistComponent} from "./report/masterlist/maternal-care-masterlist/maternal-care-masterlist.component";
 import {FamilyPlanningMasterlistComponent} from "./report/masterlist/family-planning-masterlist/family-planning-masterlist.component";
 import {BloodTypeMasterlistComponent} from "./report/masterlist/blood-type-masterlist/blood-type-masterlist.component";
+import {SeniorMasterlistComponent} from "./report/masterlist/senior-masterlist/senior-masterlist.component";
 
 @NgModule({
   declarations: [
@@ -61,7 +62,8 @@ import {BloodTypeMasterlistComponent} from "./report/masterlist/blood-type-maste
     DentalOhsConsolidatedComponent,
     MaternalCareMasterlistComponent,
     FamilyPlanningMasterlistComponent,
-    BloodTypeMasterlistComponent
+    BloodTypeMasterlistComponent,
+    SeniorMasterlistComponent
   ],
   exports: [
     ShowNameListComponent
