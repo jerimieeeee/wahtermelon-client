@@ -72,7 +72,6 @@ export class FamilyPlanningMasterlistComponent implements OnChanges {
   ngOnChanges(): void {
     this.stats = this.report_data.data;
     this.pdf_exported = false;
-    console.log(this.reportForm.value, "etoo")
   }
 
 }
