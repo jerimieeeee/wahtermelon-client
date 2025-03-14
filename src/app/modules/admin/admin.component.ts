@@ -72,12 +72,12 @@ export class AdminComponent implements OnInit {
       loc: 'eclaims',
       name: 'eClaims List',
       icon: faFileMedical
-    },
+    }/* ,
     {
       loc: 'eclaims-rth',
       name: 'eClaims RTH',
       icon: faCircleInfo
-    }
+    } */
   ]
 
   selected_route: string;
