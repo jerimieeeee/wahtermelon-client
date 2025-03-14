@@ -50,9 +50,13 @@ const routes: Routes = [
       {
         path: 'xml-upload',
         loadChildren: () => import('./modules/xml-upload/xml-upload.module').then(m => m.XmlUploadModule)
+      },
+      {
+        path: 'eclaims-rth',
+        loadChildren: () => import('./modules/eclaims-rth/eclaims-rth.module').then(m => m.EclaimsRthModule)
       }
     ]
-  }
+  },
 
 
 ];
