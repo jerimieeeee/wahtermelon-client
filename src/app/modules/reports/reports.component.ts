@@ -153,6 +153,7 @@ export class ReportsComponent implements OnInit {
   reportFlag: string;
   selectedCode!: string;
   stats : any;
+  meta_info: any;
 
   exportAsExcel: ExportAsConfig = {
     type: 'xlsx',
@@ -217,21 +218,21 @@ export class ReportsComponent implements OnInit {
     });
   }
 
-  onSubmit(){
+  onSubmit(page?: number) {
     this.pdf_exported = false;
+    this.is_fetching = true;
     // this.stats = this.report_data.data;
     // console.log(this.report_data, 'amen')
     // console.log(this.reportForm.value, this.reportFlag)
-    this.is_fetching = true;
 
     let params = {};
-
     if (this.reportForm.value.month) params['month'] = this.reportForm.value.month;
     if (this.reportForm.value.year) params['year'] = this.reportForm.value.year;
     if (this.reportForm.value.quarter) params['quarter'] = this.reportForm.value.quarter;
     if (this.reportForm.value.start_date) params['start_date'] = this.reportForm.value.start_date;
     if (this.reportForm.value.end_date) params['end_date'] = this.reportForm.value.end_date;
     if (this.reportForm.value.program) params['program'] = this.reportForm.value.program;
+    if (page) params['page'] = page;
     params['category'] = this.reportForm.value.report_class;
 
     if (this.reportForm.value.report_class === 'fac') {
@@ -250,8 +251,10 @@ export class ReportsComponent implements OnInit {
 
     this.http.get(this.reportForm.value.report_type.url, {params}).subscribe({
       next: (data: any) => {
-        // console.log(data)
+        console.log(data)
         this.report_data = data;
+
+        if(this.reportForm.value.report_type.id === 'masterlist') this.meta_info = data.meta;
         this.is_fetching = false;
         this.submit_flag = true;
       },
@@ -364,13 +367,14 @@ export class ReportsComponent implements OnInit {
       this.generateYear();
     }
 
+    /* console.log(this.reportForm.value.program)
     if(this.reportForm.value.program === 'bt') {
       this.reportForm.controls.start_date.disable();
       this.reportForm.controls.end_date.disable();
     }
     else {
       this.reportForm.controls.report_class.enable();
-    }
+    } */
 
     if((!this.fhsis_monthly_arr.find(e => e === this.reportForm.value.report_type.id) &&
         !this.quarterly_arr.find(e => e === this.reportForm.value.report_type.id)) &&
@@ -381,8 +385,10 @@ export class ReportsComponent implements OnInit {
         this.reportForm.controls.report_class.enable();
       }
 
-      this.reportForm.controls.start_date.enable();
-      this.reportForm.controls.end_date.enable();
+      if(this.reportForm.value.program !== 'bt') {
+        this.reportForm.controls.start_date.enable();
+        this.reportForm.controls.end_date.enable();
+      }
     }
   }
 
