@@ -7,12 +7,12 @@
         <div class="text-blue-500 text-lg pt-2 pl-5">
           Pending Laboratories
         </div>
-        <!-- <div class="border border-gray-400 rounded-md">
+        <div class="border border-gray-400 rounded-md">
           <input type="text" [(ngModel)]="search_item" class="form-input border-0 text-sm p-1 m-1 border-r border-gray-400" (keyup.enter)="loadData()" placeholder="Search name"/>
           <button type="button" class="text-blue-500 w-9 h-9" (click)="loadData()">
             <fa-icon class="-ml-1" [icon]="faSearch"></fa-icon>
           </button>
-        </div> -->
+        </div>
       </div>
 
       <div>
@@ -27,7 +27,7 @@
                 <th scope="col" class="py-3 px-6 w-2/12 text-center">Action</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody *ngIf="!is_loading">
               <tr *ngFor="let pending of pending_list" class="bg-white border-t">
                 <th scope="row" class="py-4 px-6 font-medium text-gray-900 align-top">
                   {{ pending.patient.last_name }}, {{ pending.patient.first_name }} {{ pending.patient.middle_name }} {{ pending.patient.suffix_name !== 'NA' ? pending.patient.suffix_name : '' }}
@@ -49,6 +49,14 @@
                 </td>
               </tr>
             </tbody>
+
+            <tbody *ngIf="is_loading">
+              <tr>
+                <td class="py-4 px-6 text-center" colspan="5">
+                  <fa-icon class="text-blue-500" [icon]="faCircleNotch" animation="spin" size="lg"></fa-icon><br />
+                  Loading data...
+                </td>
+              </tr>
           </table>
         </div>
       </div>
