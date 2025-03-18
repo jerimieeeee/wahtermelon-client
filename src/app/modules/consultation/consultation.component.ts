@@ -79,6 +79,7 @@ export class ConsultationComponent implements OnInit {
 
   openEkas() {
     let params = {
+      consult_id: this.consult_details.id,
       patient_id: this.patient_id,
       sort: '-request_date',
       include: 'laboratory'

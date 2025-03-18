@@ -17,7 +17,7 @@ import { Fhsis2018TbComponent } from "./report/fhsis2018-tb/fhsis2018-tb.compone
 import { DailyServiceComponent } from './report/daily-service/daily-service.component';
 import { Fhsis2018NcdComponent } from './report/fhsis2018-ncd/fhsis2018-ncd.component';
 import { Fhsis2018FpComponent } from './report/fhsis2018-fp/fhsis2018-fp.component';
-import {ShowNameListComponent} from "./modals/show-name-list/show-name-list.component";
+import { ShowNameListComponent} from "./modals/show-name-list/show-name-list.component";
 import { FeedbackReportComponent } from './report/feedback-report/feedback-report.component';
 import { AbReportComponent } from './report/ab-report/ab-report.component';
 import { AbPostComponent } from './report/ab-post/ab-post.component';
@@ -27,14 +27,15 @@ import { Fhsis2018MortalityComponent } from './report/fhsis2018-mortality/fhsis2
 import { Fhsis2018EnvironmentalComponent } from './report/fhsis2018-environmental/fhsis2018-environmental.component';
 import { Fhsis2018MortalityUnderlyingComponent } from './report/fhsis2018-mortality-underlying/fhsis2018-mortality-underlying.component';
 import { ExportAsModule } from 'ngx-export-as';
-import {DentalOhsConsolidatedComponent} from "./report/dental-ohs-consolidated/dental-ohs-consolidated.component";
+import { DentalOhsConsolidatedComponent} from "./report/dental-ohs-consolidated/dental-ohs-consolidated.component";
 import { ConsolidatedComponent } from './report/consolidated/consolidated.component';
 import { HeaderFhsis2018Component } from './components/header-fhsis2018/header-fhsis2018.component';
 import { FooterComponent } from './components/footer/footer.component';
-import {MaternalCareMasterlistComponent} from "./report/masterlist/maternal-care-masterlist/maternal-care-masterlist.component";
-import {FamilyPlanningMasterlistComponent} from "./report/masterlist/family-planning-masterlist/family-planning-masterlist.component";
-import {BloodTypeMasterlistComponent} from "./report/masterlist/blood-type-masterlist/blood-type-masterlist.component";
-import {SeniorMasterlistComponent} from "./report/masterlist/senior-masterlist/senior-masterlist.component";
+import { MaternalCareMasterlistComponent } from "./report/masterlist/maternal-care-masterlist/maternal-care-masterlist.component";
+import { FamilyPlanningMasterlistComponent } from "./report/masterlist/family-planning-masterlist/family-planning-masterlist.component";
+import { BloodTypeMasterlistComponent } from "./report/masterlist/blood-type-masterlist/blood-type-masterlist.component";
+import { SeniorMasterlistComponent } from "./report/masterlist/senior-masterlist/senior-masterlist.component";
+import { PaginationComponent } from 'app/shared/shared-components/pagination/pagination.component';
 
 @NgModule({
   declarations: [
@@ -78,7 +79,8 @@ import {SeniorMasterlistComponent} from "./report/masterlist/senior-masterlist/s
     ExportAsModule,
     ConsolidatedComponent,
     HeaderFhsis2018Component,
-    FooterComponent
+    FooterComponent,
+    PaginationComponent
   ]
 })
 export class ReportsModule { }
