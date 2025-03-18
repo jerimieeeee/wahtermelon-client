@@ -93,8 +93,8 @@
           <td (click)="showNameList('cat', 'catchment', data.code)">{{ data.cat | number }}</td>
           <td (click)="showNameList('others', 'catchment', data.code)">{{ data.others | number }}</td>
           <td (click)="showNameList('total_biting_animal', 'catchment', data.code)">{{ data.total_biting_animal | number }}</td>
-          <td (click)="showNameList('total_cat2_and_cat3_previous_quarter', 'non-catchment', data.code)">{{ data.total_cat2_and_cat3_previous_quarter | number }}</td>
-          <td (click)="showNameList('pep_completed_previous', 'non-catchment', data.code)">{{ data.pep_completed_previous | number }}</td>
+          <td (click)="showNameList('total_cat2_and_cat3_previous_quarter', 'catchment', data.code)">{{ data.total_cat2_and_cat3_previous_quarter | number }}</td>
+          <td (click)="showNameList('pep_completed_previous', 'catchment', data.code)">{{ data.pep_completed_previous | number }}</td>
           <td></td>
           <td></td>
         </ng-container>
