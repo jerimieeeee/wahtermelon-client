@@ -99,7 +99,7 @@ export class DentalOhsConsolidatedComponent implements OnChanges {
     {title: 'grand_total', gender: 'M,F', age: null, namelist_var: 'grand_total'},
   ];
 
-  pregnantVar: any = [
+/*  pregnantVar: any = [
     {title: 'pregnant_women_10_14_year_old', age: '10'},
     {title: 'pregnant_women_15_19_year_old', age: '15'},
     {title: 'pregnant_women_20_49_year_old', age: '20'},
@@ -167,17 +167,17 @@ export class DentalOhsConsolidatedComponent implements OnChanges {
     {title: 'female_all_age', gender: 'F'},
   ];
 
-  grand_total: any = ['grand_total']
+  grand_total: any = ['grand_total']*/
 
   headerList: any  = [
-    { title: 'A. MEDICAL HISTORY STATUS', id: 'medHistory', level: 1},
-    { title: 'Hospitalization', id: 'hospitalization', level: 2},
-    { title: 'B. DIETARY / SOCIAL HISTORY STATUS', id: 'dietary', level: 1},
-    { title: 'C. ORAL HEALTH STATUS', id: 'oralHealth', level: 1},
-    { title: '7. Total (d/f)', id: 'df', level: 2},
-    { title: '8. Total (D/M/F)', id: 'dmf', level: 2},
-    { title: 'D. SERVICES RENDERED', id: 'dentalServices', level: 1},
-    { title: 'E. NO OF ORALLY FIT CHILDREN (OFC)', id: 'ofc', level: 1},
+    { title: 'A. MEDICAL HISTORY STATUS', id: 'medHistory', level: 1, para: 'stats'},
+    { title: 'Hospitalization', id: 'hospitalization', level: 2, para: 'stats'},
+    { title: 'B. DIETARY / SOCIAL HISTORY STATUS', id: 'dietary', level: 1, para: 'stats'},
+    { title: 'C. ORAL HEALTH STATUS', id: 'oralHealth', level: 1, para: 'stats'},
+    { title: '7. Total (d/f)', id: 'df', level: 2, para: 'temporary'},
+    { title: '8. Total (D/M/F)', id: 'dmf', level: 2, para: 'adult'},
+    { title: 'D. SERVICES RENDERED', id: 'dentalServices', level: 1, para: 'service'},
+    { title: 'E. NO OF ORALLY FIT CHILDREN (OFC)', id: 'ofc', level: 1, para: 'stats'},
   ];
 
   attendedExamined: any = [
