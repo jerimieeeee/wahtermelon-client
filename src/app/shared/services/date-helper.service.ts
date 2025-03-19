@@ -37,6 +37,19 @@ export class dateHelper {
     const startYear = startDate.getFullYear();
     const endYear = endDate.getFullYear();
 
+    if(!data.value.start_date || !data.value.end_date) {
+      if (data.value.month && data.value.year) {
+        const monthIndex = data.value.month - 1;
+        const year = data.value.year;
+
+        const firstDay = new Date(year, monthIndex, 1);
+        const lastDay = new Date(year, monthIndex + 1, 0);
+
+        data.value.start_date = firstDay;
+        data.value.end_date = lastDay;
+      }
+    }
+
     let labelValue = {
       labelType: null,
       labelDate: formatDate(data.value.start_date, 'MMM dd, yyyy', 'en', 'Asia/Manila')  + ' to ' + formatDate(data.value.end_date, 'MMM dd, yyyy', 'en', 'Asia/Manila'),
