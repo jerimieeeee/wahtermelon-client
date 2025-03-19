@@ -19,6 +19,7 @@ import { VitalsComponent } from './components/vitals/vitals.component';
 import { AppointmentComponent } from './components/appointment/appointment.component';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { DeathRecordComponent } from './components/death-record/death-record.component';
+import { ServicesComponent } from './components/services/services.component';
 
 @Component({
     selector: 'app-patient-info',
@@ -41,6 +42,7 @@ export class PatientInfoComponent implements OnInit {
   @ViewChild(PreghistComponent) preghist: PreghistComponent;
   @ViewChild(AppointmentComponent) appointment: AppointmentComponent;
   @ViewChild(DeathRecordComponent) death: DeathRecordComponent;
+  @ViewChild(ServicesComponent) services: ServicesComponent;
   reloadNCDVitals: EventEmitter<any> = new EventEmitter();
   reloadLabs: EventEmitter<any> = new EventEmitter();
 
@@ -65,7 +67,7 @@ export class PatientInfoComponent implements OnInit {
     if(field === 'family_medical'     || field==='all') this.familyMedical.loadData(this.patient_info.id);
     if(field === 'vaccines'           || field==='all') this.vaccine.loadData(this.patient_info.id);
     if(field === 'philhealth'         || field==='all') this.philhealth.loadData(this.patient_info.id);
-
+    if(field === 'services'           || field==='all') this.services.loadData(this.patient_info.id);
     if(this.patient_info.gender === 'M') {
       this.show_female_history = false;
     } else {
@@ -327,6 +329,7 @@ export class PatientInfoComponent implements OnInit {
       if(modal_name === 'lifestyle' && this.modals['lifestyle'] === false) this.loadData('social_history');
       if (modal_name === 'lab-request' && this.modals[modal_name] === false) this.loadData('laboratory');
       if (modal_name === 'death' && this.modals[modal_name] === false) this.loadData('death');
+      if (modal_name === 'services' && this.modals[modal_name] === false) this.loadData('services');
     }
   }
 

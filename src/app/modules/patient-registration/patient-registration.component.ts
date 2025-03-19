@@ -36,6 +36,7 @@ export class PatientRegistrationComponent implements OnInit {
     birthdate: new FormControl<string| null>(''),
     mothers_name: new FormControl<string| null>(''),
     gender: new FormControl<string| null>(''),
+    lib_gender_identity_code: new FormControl<string| null>(''),
     mobile_number: new FormControl<string| null>(''),
     pwd_type_code: new FormControl<string| null>(''),
     indegenous_flag: new FormControl<boolean>(false),
@@ -105,6 +106,7 @@ export class PatientRegistrationComponent implements OnInit {
   selected_cct_id: string;
   selected_facility: string;
   selected_members: any;
+  gender_identity: any = [];
   show_demog_input: boolean = true;
 
   constructor(
@@ -285,15 +287,16 @@ export class PatientRegistrationComponent implements OnInit {
     const getDisabilityQuestion = this.http.get('libraries/washington-disability-question');
     const getDisabilityAnswer = this.http.get('libraries/washington-disability-answer');
     const getResidenceClass = this.http.get('libraries/residence-classifications');
+    const getGenderIdentity = this.http.get('libraries/gender-identity');
 
     forkJoin([getBloodType, getsuffixName, getOccupation,
               getCivilStatus, getEducation, getReligions,
               getRegions, getPwdTypes, getDisabilityQuestion,
-              getDisabilityAnswer, getResidenceClass]).subscribe({
+              getDisabilityAnswer, getResidenceClass, getGenderIdentity]).subscribe({
       next: ([dataBloodType, datasuffixName, dataOccupation,
               dataCivilStatus, dataEducation, dataReligions,
               dataRegions, dataPwdTypes, dataDisabilityQuestion,
-              dataDisabilityAnswer, dataResidenceClass]: any) => {
+              dataDisabilityAnswer, dataResidenceClass, dataGenderIdentity]: any) => {
 
           this.blood_types = dataBloodType.data;
           this.suffix_names = datasuffixName.data;
@@ -306,8 +309,10 @@ export class PatientRegistrationComponent implements OnInit {
           this.washington_questions = dataDisabilityQuestion.data;
           this.washington_answers = dataDisabilityAnswer.data;
           this.residence_classifications = dataResidenceClass.data;
+          this.gender_identity = dataGenderIdentity.data;
 
           this.show_form = true;
+          console.log(this.gender_identity)
           if(this.router.url.split(';')[0] === '/edit-patient') {
             this.show_edit = true;
             this.loadPatient(this.router.url.split('=')[1]);
@@ -336,6 +341,12 @@ export class PatientRegistrationComponent implements OnInit {
             difficulty_self_care: data.data.patientWashington.difficulty_self_care,
             difficulty_speaking: data.data.patientWashington.difficulty_speaking,
             difficulty_walking: data.data.patientWashington.difficulty_walking,
+          });
+        }
+
+        if(data.data.gender_identity) {
+          this.patientForm.patchValue({
+            lib_gender_identity_code: data.data.gender_identity.code
           });
         }
 
@@ -414,6 +425,7 @@ export class PatientRegistrationComponent implements OnInit {
       birthdate: ['', Validators.required],
       mothers_name: ['', [Validators.required, Validators.minLength(2)]],
       gender: ['', Validators.required],
+      lib_gender_identity_code: [''],
       mobile_number: ['', Validators.required],
       pwd_type_code: ['NA', Validators.required],
       indegenous_flag: [false],
@@ -444,6 +456,7 @@ export class PatientRegistrationComponent implements OnInit {
 
     this.date = new Date().toISOString().slice(0,10);
     this.loadLibraries();
+    console.log(this.gender_identity, 'checker home')
 
 
   }

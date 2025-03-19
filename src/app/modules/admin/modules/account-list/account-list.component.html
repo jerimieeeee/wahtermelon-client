@@ -38,6 +38,7 @@
               <th scope="col" class="py-3 px-6">Gender</th>
               <th scope="col" class="py-3 px-6">Contact Number</th>
               <th scope="col" class="py-3 px-6">Email Address</th>
+              <th scope="col" class="py-3 px-6 text-center">AJA Trained</th>
               <th scope="col" class="py-3 px-6 text-center">Provincial <br /> Report</th>
               <th scope="col" class="py-3 px-6 text-center">Active <br /> Status</th>
               <!-- <th scope="col" class="py-3 px-6">Actions</th> -->
@@ -49,7 +50,7 @@
                 {{ account.last_name }}, {{ account.first_name }} {{ account.middle_name === 'NA' ? '' : account.middle_name }} {{ account.suffix_name === 'NA' ? '' : account.suffix_name}}
               </th>
               <td class="py-4 px-6">
-                {{ account.birtdate | date: 'MM/dd/yyyy':'Asia/Manila' }}
+                {{ account.birthdate | date: 'MM/dd/yyyy':'Asia/Manila' }}
               </td>
               <td class="py-4 px-6">
                 {{ account.gender }}
@@ -59,6 +60,12 @@
               </td>
               <td class="py-4 px-6">
                 {{ account.email }}
+              </td>
+              <td class="py-4 px-6 text-center">
+                <div>
+                  <input  type="checkbox" class="input-checkbox" [(ngModel)]="account_list[i].aja_flag" (change)="updateActive(account_list[i], i)" [disabled]="is_updating || !account_list[i].is_active">
+                  <label class="" [ngClass]="{'peer-checked:bg-gray-600' : is_updating}"></label>
+                </div>
               </td>
               <td class="py-4 px-6 text-center">
                 <div>
