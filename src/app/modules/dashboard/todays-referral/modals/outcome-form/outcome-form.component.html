@@ -1,0 +1,79 @@
+<div id="defaultModal" tabindex="-1" class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 w-full md:inset-0 h-modal md:h-full justify-center items-center flex" aria-modal="true" role="dialog" style="z-index:60">
+  <div class="relative p-4 w-full max-w-3xl h-auto md:h-auto">
+    <!-- Modal content -->
+    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+      <!-- Modal header -->
+      <div class="flex justify-between items-start py-3 px-5 rounded-t border-b bg-blue-500 dark:border-gray-600">
+        <h3 class="mt-2 text-sm font-bold text-white dark:text-white">
+            Referral
+        </h3>
+    </div>
+      <!-- Modal body -->
+      <div class="overflow-y-auto h-96 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
+        <div class="flex flex-col justify-center pt-32" *ngIf="!with_outcome && !show_form">
+          <div class="flex justify-center">
+            Do you want to accept this referral?
+          </div>
+          <div class="flex flex-row justify-center mt-5">
+            <div class="mr-3">
+              <button (click)="loadLibraries()" class="btn-save bg-red-500">Deny</button>
+            </div>
+            <div>
+              <button (click)="toggleForm()" class="btn-save">Accept</button>
+            </div>
+          </div>
+        </div>
+
+        <form *ngIf="with_outcome" [formGroup]="referralForm" (submit)="onSubmit()" class="w-full max-w-3xl text-left text-gray-500 dark:text-gray-400">
+          <div class="p-5">
+            <div class="grid grid-cols-9 gap-x-4 gap-y-2">
+              <div class="col-span-9 grid grid-cols-9 gap-x-4 gap-y-2">
+                <div class="col-span-3"></div>
+
+                <div class="col-span-3">
+                  <label for="outcome_date">
+                    {{ show_form ? 'Refusal' : 'Accept' }} Date
+                  </label>
+                  <input type="date" name="outcome_date" id="outcome_date" [min]="max_date" formControlName="outcome_date" class="input">
+                </div>
+
+                <div class="col-span-3"></div>
+              </div>
+
+              <div *ngIf="show_form" class="col-span-9">
+                <label for="referral_refusal_id">Refusal Reason</label>
+                <select id="referral_refusal_id" name="referral_refusal_id" formControlName="referral_refusal_id" class="input disabled:bg-gray-300">
+                  <option value="0" selected>- Choose Reason -</option>
+                  <option *ngFor="let item of refusal_list" [value]="item.id" >{{ item.desc }}</option>
+                </select>
+              </div>
+
+              <div *ngIf="show_form" class="col-span-9">
+                <label for="refusal_others">Refusal Remarks</label>
+                <input type="text" name="refusal_others" id="refusal_others" formControlName="refusal_others" class="input">
+              </div>
+
+            </div>
+          </div>
+        </form>
+
+        <div class="flex justify-center items-center">
+          <div *ngIf="show_form === false" class="flex justify-center items-center space-x-2 py-20">
+            <fa-icon class="text-blue-500" [icon]="faCircleNotch" animation="spin"></fa-icon>
+            <span class="text-blue-500">Loading libraries...</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="flex justify-end py-4 px-5 space-x-4 rounded-b border-t border-gray-200 dark:border-gray-600">
+        <button type="button" class="btn-save bg-gray-400" (click)="closeModal()">Close</button>
+        <button *ngIf="with_outcome" [disabled]="is_saving || referralForm.invalid" type="submit" class="btn-save px-10 disabled:bg-gray-300" (click)="onSubmit()" >
+          {{ is_saving ? 'Saving' : 'Save' }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="opacity-50 fixed inset-0 z-50 bg-black"></div>
