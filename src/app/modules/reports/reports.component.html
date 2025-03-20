@@ -430,11 +430,11 @@
        [submit_flag]="submit_flag"
     ></app-senior-masterlist>
 
-    <div class="flex flex-col justify-start">
+<!--    <div class="flex flex-col justify-start">
       <app-pagination (pageChange)="onSubmit($event)"
         [meta_info]="meta_info"
       ></app-pagination>
-    </div>
+    </div>-->
 
     <app-footer *ngIf="reportForm.value?.report_type?.id?.includes('fhsis2018') && report_data && !is_fetching"
       [paper_width]="paper_width"
