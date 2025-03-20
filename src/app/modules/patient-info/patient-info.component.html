@@ -49,9 +49,10 @@
               (click)="toggleModal('module')">
               Navigate Programs
             </button>
-            <button (click)="toggleModal('referral-modal')" class="pl-3 pr-2 rounded-md h-10 bg-orange-500 text-white">
+            <app-referral></app-referral>
+            <!-- <button (click)="toggleModal('referral-modal')" class="pl-3 pr-2 rounded-md h-10 bg-orange-500 text-white">
               <fa-icon [icon]="faBuildingCircleArrowRight"></fa-icon>
-            </button>
+            </button> -->
           </div>
 
           <app-death-record (toggleAccordion)="toggleAccordion($event)" [accordions]="accordions" (toggleModal)="toggleModal($event)" (setDetails)="setDetails($event)"></app-death-record>
@@ -141,8 +142,8 @@
 <app-photo-modal *ngIf="modals['photo']" (toggleModal)="toggleModal('photo')" [imageData]="imageData" [patient_info]="patient_info"></app-photo-modal>
 
 <app-set-appointment *ngIf="modals['appointment-modal']" (toggleModal)="toggleModal('appointment-modal')" (loadData)="loadData($event)" [patient_info]="patient_info"></app-set-appointment>
-<app-referral-modal *ngIf="modals['referral-modal']"
+<!-- <app-referral-modal *ngIf="modals['referral-modal']"
   [patient_info]="patient_info"
   (toggleModal)="toggleModal('referral-modal')"
   (loadData)="loadData($event)"
-></app-referral-modal>
+></app-referral-modal> -->

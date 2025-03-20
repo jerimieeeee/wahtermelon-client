@@ -49,6 +49,7 @@ import { ReferralModalComponent } from './modals/referral-modal/referral-modal.c
 import { NgSelectModule } from '@ng-select/ng-select';
 import { ServicesComponent } from './components/services/services.component';
 import { ServicesModalComponent } from './modals/services-modal/services-modal.component';
+import { ReferralComponent } from 'app/shared/shared-components/referral/referral.component';
 
 @NgModule({
   declarations: [
@@ -105,7 +106,8 @@ import { ServicesModalComponent } from './modals/services-modal/services-modal.c
     NgxMaskDirective,
     NgxMaskPipe,
     LabRequestComponent,
-    NgSelectModule
+    NgSelectModule,
+    ReferralComponent
   ],
   providers: [provideNgxMask()]
 })
