@@ -56,6 +56,7 @@
         <option  value="mc">Maternal Care</option>
         <option value="fp">Family Planning</option>
         <option value="bt">Blood Type</option>
+        <option value="sn">Senior Citizen</option>
       </select>
 
       <select *ngIf="reportFlag === '1'" id="report_class" name="report_class" class="input" formControlName="report_class" (change)="handleReportClass(reportForm.value.report_class)">
@@ -419,6 +420,21 @@
        [submit_flag]="submit_flag"
     ></app-blood-type-masterlist>
 
+    <app-senior-masterlist *ngIf="reportForm.value?.program === 'sn' && report_data && !is_fetching"
+       [report_data]="report_data"
+       [reportForm]="reportForm"
+       [selectedBrgy]="selectedBrgy"
+       [selectedCode]="selectedCode"
+       [brgys]="brgys"
+       [facility]="userInfo.facility"
+       [submit_flag]="submit_flag"
+    ></app-senior-masterlist>
+
+<!--    <div class="flex flex-col justify-start">
+      <app-pagination (pageChange)="onSubmit($event)"
+        [meta_info]="meta_info"
+      ></app-pagination>
+    </div>-->
 
     <app-footer *ngIf="reportForm.value?.report_type?.id?.includes('fhsis2018') && report_data && !is_fetching"
       [paper_width]="paper_width"

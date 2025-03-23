@@ -164,9 +164,13 @@ export class AbPreComponent implements OnChanges {
         });
       });
       // Update the selected stats with the accumulated sum
-      // if ($variable === 'stats_others' || $variable === 'stats') {
+      if ($variable === 'stats') {
         this.sum_total.code = ($variable === 'stats' && !this.reportFlag) ? value[0].barangay_code : value[0].municipality_code;
-      // }
+      }
+
+      if ($variable === 'stats_others') {
+        this.sum_total.code = ($variable === 'stats_others' && !this.reportFlag) ? value[0].municipality_code : value[0].barangay_code;
+      }
 
       if( $variable === 'stats' || $variable === 'stats_others') {
         selectedStats[key] = [this.sum_total];

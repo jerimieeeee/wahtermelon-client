@@ -1,16 +1,21 @@
-import {Component, Input, OnChanges} from '@angular/core';
-import {NgForOf} from "@angular/common";
+import {Component, Input} from '@angular/core';
 import {ExportAsConfig, ExportAsService} from "ngx-export-as";
-import { faCircleNotch, faFileExcel, faFilePdf } from '@fortawesome/free-solid-svg-icons';
+import {
+  faAnglesLeft, faAnglesRight,
+  faChevronLeft,
+  faChevronRight,
+  faCircleNotch,
+  faFileExcel,
+  faFilePdf
+} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
-  selector: 'app-family-planning-masterlist',
-  templateUrl: './family-planning-masterlist.component.html',
-  styleUrl: './family-planning-masterlist.component.scss',
-  standalone: false,
+  selector: 'app-senior-masterlist',
+  templateUrl: './senior-masterlist.component.html',
+  styleUrl: './senior-masterlist.component.scss',
+  standalone: false
 })
-
-export class FamilyPlanningMasterlistComponent implements OnChanges {
+export class SeniorMasterlistComponent {
   @Input() report_data;
   @Input() reportForm;
   @Input() selectedBrgy;
@@ -18,8 +23,6 @@ export class FamilyPlanningMasterlistComponent implements OnChanges {
   @Input() brgys;
   @Input() facility;
   @Input() submit_flag;
-  @Input() start_date;
-  @Input() end_date;
 
   current_submit_flag: boolean = false;
   show_stats: boolean = false;
@@ -68,10 +71,27 @@ export class FamilyPlanningMasterlistComponent implements OnChanges {
   ) { }
 
   openList:boolean = false;
+  toggleModal(name_list, name_list2?){
+    let list = [];
+    if(name_list2) {
+      list = name_list.concat(name_list2)
+    } else {
+      list = name_list
+    }
+
+    // console.log(typeof name_list)
+    this.name_list = list;
+    this.openList = !this.openList;
+  }
 
   ngOnChanges(): void {
     this.stats = this.report_data.data;
     this.pdf_exported = false;
   }
 
+  protected readonly faAnglesLeft = faAnglesLeft;
+  protected readonly faChevronRight = faChevronRight;
+  protected readonly faChevronLeft = faChevronLeft;
+  protected readonly faAnglesRight = faAnglesRight;
+  protected readonly Number = Number;
 }

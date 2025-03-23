@@ -1,15 +1,15 @@
 <div class="grid grid-cols-1 w-full">
   <div class="flex justify-between w-full text-blue-500 font-semibold text-lg p-3" >
     <span class="text-center"> CONSOLIDATED ORAL HEALTH STATUS, SERVICES AND MEDICAL HISTORY MONTHLY REPORT </span>
-<!--    <span>
-      &lt;!&ndash; <fa-icon *ngIf="exporting" [icon]="faCircleNotch" animation="spin" class="text-blue-500 text-sm mr-3">Exporting...</fa-icon> &ndash;&gt;
-      <button [disabled]="pdf_exported" type="button" class="text-2xl mr-5 text-red-600 disabled:text-gray-600" (click)="exportP()">
-        <fa-icon [icon]="faFilePdf"></fa-icon>
-      </button>
-      <button  type="button" class="text-2xl" (click)="exportX()">
-        <fa-icon [icon]="faFileExcel" class="text-green-700"></fa-icon>
-      </button>
-    </span>-->
+ <span>
+<!--      &lt;!&ndash; <fa-icon *ngIf="exporting" [icon]="faCircleNotch" animation="spin" class="text-blue-500 text-sm mr-3">Exporting...</fa-icon> &ndash;&gt;-->
+<!--      <button [disabled]="pdf_exported" type="button" class="text-2xl mr-5 text-red-600 disabled:text-gray-600" (click)="exportP()">-->
+<!--        <fa-icon [icon]="faFilePdf"></fa-icon>-->
+<!--      </button>-->
+<!--      <button  type="button" class="text-2xl" (click)="exportX()">-->
+<!--        <fa-icon [icon]="faFileExcel" class="text-green-700"></fa-icon>-->
+<!--      </button>-->
+    </span>
   </div>
     <div class="flex flex-col pb-5">
       <div class="sm:-mx-6 lg:-mx-8">
@@ -87,13 +87,13 @@
                 <tr *ngFor="let indicator of this[header.id]">
                   <td class="pl-6 w-28">{{ indicator.title }}</td>
                   <td *ngFor="let var_name of indicatorVar"
-                      (click)="attended_examined[var_name.title+indicator.varTrail] > 0 && showNameList(var_name.namelist_var, indicator.params, var_name.gender, var_name.age)"
+                      (click)="this[header.para][var_name.title+indicator.varTrail] > 0 && showNameList(var_name.namelist_var, indicator.params, var_name.gender, var_name.age)"
                       class="text-center w-6 "
                       [ngClass]="{
-                        'cursor-pointer text-blue-500 font-semibold': attended_examined[var_name.title+indicator.varTrail] > 0,
+                        'cursor-pointer text-blue-500 font-semibold': this[header.para][var_name.title+indicator.varTrail] > 0,
                         'bg-gray-400': isBlank(var_name.title, indicator.varTrail)
                       }">
-                     {{ isBlank(var_name.title, indicator.varTrail) ? '' : attended_examined[var_name.title+indicator.varTrail] ?? 0 }}
+                    {{ isBlank(var_name.title, indicator.varTrail) ? '' : this[header.para][var_name.title+indicator.varTrail] ?? 0 }}
                   </td>
                 </tr>
               </ng-container>

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { faAnglesLeft, faAnglesRight, faChevronLeft, faChevronRight, faFlask, faFlaskVial, faPlus, faSearch, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faAnglesLeft, faAnglesRight, faChevronLeft, faChevronRight, faCircleNotch, faFlask, faFlaskVial, faPlus, faSearch, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { NameHelperService } from 'app/shared/services/name-helper.service';
 import { PatientInfoComponent } from '../patient-info/patient-info.component';
@@ -23,13 +23,14 @@ export class LabPendingComponent implements OnInit {
   faAnglesRight = faAnglesRight;
   faChevronLeft = faChevronLeft;
   faChevronRight = faChevronRight;
+  faCircleNotch = faCircleNotch;
 
-  show_form: boolean = false;
+  is_loading: boolean = false;
   patient_details: any;
   pending_list: any[] = [];
 
   per_page: number = 10;
-  current_page: number;
+  current_page: number = 1;
   last_page: number;
   from: number;
   to: number;
@@ -37,9 +38,11 @@ export class LabPendingComponent implements OnInit {
   search_item: string;
 
   loadData(page?: number){
+    this.is_loading = true;
     let params = {params: { }};
-    // if (this.search_item) params['params']['filter[search]'] = this.search_item;
-    if (page) params['params']['page'] = page;
+    if (this.search_item) params['params']['search'] = this.search_item;
+    if (page) params['params']['page'] = page ? page : this.current_page;
+
     params['params']['per_page'] = this.per_page;
     params['params']['include'] = 'laboratory';
     params['params']['sort'] = 'request_date';
@@ -54,14 +57,14 @@ export class LabPendingComponent implements OnInit {
         this.from = data.meta.from;
         this.to = data.meta.to;
         this.total = data.meta.total;
-        this.show_form = true;
+        this.is_loading = false;
       },
       error: err => console.log(err)
     })
   }
 
   reloadLabs(data){
-    this.show_form = false;
+    this.is_loading = false;
     this.pending_list = data;
     this.loadData();
   }
