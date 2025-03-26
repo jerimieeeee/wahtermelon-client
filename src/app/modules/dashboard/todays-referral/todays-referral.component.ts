@@ -26,6 +26,14 @@ export class TodaysReferralComponent implements OnInit {
   from: number;
   to: number;
   total: number;
+  modals: any = [];
+
+  selected_appointment: any;
+  toggleModal(name: string, data?: any){
+    if(data) this.selected_appointment = data;
+    // console.log(data)
+    this.modals[name] = !this.modals[name];
+  }
 
   openItr(patient_id, ptgroup, id){
     // console.log(patient_id)
@@ -49,7 +57,7 @@ export class TodaysReferralComponent implements OnInit {
     // console.log(params)
     this.http.get('appointment/schedule', params).subscribe({
       next: (data: any) => {
-        console.log(data)
+        // console.log(data)
         this.todays_appointment = data[0].data;
         // this.appointment_length = Object.keys(this.todays_appointment).length;
         // console.log(Object.keys(this.todays_appointment))

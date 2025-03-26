@@ -29,10 +29,16 @@
             <span *ngIf="!val.referral_facility_name">
               {{ val.appointment_desc }}
             </span>
-            <span  class="text-orange-500 font-medium italic" *ngIf="val.referral_facility_name">
+            <span *ngIf="val.referral_facility_name">
               <strong>Referred from:</strong> {{ val.facility_name }} <br />
               <strong>Referred to:</strong> {{ val.referral_facility_name }} <br />
-              Referral reason: {{ val.referral_reason }}
+              <!-- Referral reason: {{ val.referral_reason }} -->
+              <strong>Referral Reason:</strong> {{ val.reason.desc }} {{ val.referral_reason ? '('+val.referral_reason+')' : '' }}<br />
+              <strong>Referral Category:</strong> {{ val.category.desc }} <br />
+
+              @if (val.uncoordinated) {
+                <strong>Uncoordinated Referral:</strong> {{ val.uncoordinated.desc }} {{ val.uncoordinated.id === 99 ? '('+val.uncoordinated_others+')' : ''}}
+              }
             </span>
           </span>
         </span>
