@@ -52,17 +52,11 @@
 
     <div class="w-40" *ngIf="reportForm.value.report_type && reportForm.value.report_type.id == 'masterlist'">
       <label for="report_class" class="input-label" >Program</label>
-      <select *ngIf="!reportFlag" id="report_class" name="report_class" class="input" formControlName="program" (change)="handleReportClass(reportForm.value.report_class); changeDateOptions()">
+      <select id="report_class" name="report_class" class="input" formControlName="program" (change)="handleReportClass(reportForm.value.report_class); changeDateOptions()">
         <option  value="mc">Maternal Care</option>
         <option value="fp">Family Planning</option>
         <option value="bt">Blood Type</option>
         <option value="sn">Senior Citizen</option>
-      </select>
-
-      <select *ngIf="reportFlag === '1'" id="report_class" name="report_class" class="input" formControlName="report_class" (change)="handleReportClass(reportForm.value.report_class)">
-        <option value="all">All</option>
-        <option value="muncity">Municipality</option>
-        <option value="fac">Facility</option>
       </select>
     </div>
 
