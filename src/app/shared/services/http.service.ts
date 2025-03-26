@@ -12,7 +12,6 @@ export class HttpService {
   baseUrl = 'https://training-api.wah.ph/api/v1/';
   masterFormUrl = 'http://127.0.0.1:8000/api/v1/';
 
-
   constructor(
     private http: HttpClient,
     private router: Router,
