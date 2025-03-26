@@ -162,6 +162,7 @@ export class Fhsis2018FpComponent implements OnChanges {
   }
 
   ngOnChanges(): void {
+    console.log(this.report_data)
     this.current_submit_flag = this.submit_flag;
     if(this.current_submit_flag){
       this.stats = this.report_data.data;

@@ -15,6 +15,10 @@ import { SuicideDepressionComponent } from './modules/comprehensive-heeadsss/sui
 import { SafetyComponent } from './modules/comprehensive-heeadsss/safety/safety.component';
 import { SpiritualityComponent } from './modules/comprehensive-heeadsss/spirituality/spirituality.component';
 import { AssessmentSummaryComponent } from './modules/assessment-summary/assessment-summary.component';
+import { EndVisitComponent } from 'app/shared/shared-modals/end-visit/end-visit.component';
+import { ReferralComponent } from './modules/comprehensive-heeadsss/referral/referral.component';
+import { ReferralModalComponent } from './modules/comprehensive-heeadsss/referral/modals/referral-modal/referral-modal.component';
+import { ConsentComponent } from './modules/comprehensive-heeadsss/consent/consent.component';
 
 
 
@@ -32,10 +36,13 @@ import { AssessmentSummaryComponent } from './modules/assessment-summary/assessm
     SexualityComponent,
     SuicideDepressionComponent,
     SafetyComponent,
-    SpiritualityComponent
+    SpiritualityComponent,
+    ReferralComponent,
+    ReferralModalComponent,
+    ConsentComponent
   ],
   imports: [
-    CommonModule, AdolescentRoutingModule,FontAwesomeModule, FormsModule, ReactiveFormsModule
+    CommonModule, AdolescentRoutingModule,FontAwesomeModule, FormsModule, ReactiveFormsModule, EndVisitComponent
   ]
 })
 export class AdolescentModule { }

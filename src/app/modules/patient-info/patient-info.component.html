@@ -23,7 +23,11 @@
             </span>
 
             <span class="block text-xs">
-              {{ patient_info?.birthdate | date: 'MM/dd/yyyy':'Asia/Manila' }} [{{ getAge() }}][{{patient_info?.gender}}]
+              {{ patient_info?.birthdate | date: 'MM/dd/yyyy':'Asia/Manila' }} [{{ getAge() }}][{{patient_info?.gender}}]{{ patient_info?.gender_identity ? '[' + patient_info.gender_identity.desc + ']' : '' }}
+            </span>
+
+            <span class="block text-xs" *ngIf="this.patient_age?.type === 'year' && this.patient_age?.age >= 10 && this.patient_age?.age < 26">
+             (Adolescent)
             </span>
 
             <div class="flex mb-0 justify-between">
@@ -45,9 +49,7 @@
               (click)="toggleModal('module')">
               Navigate Programs
             </button>
-            <!-- <button (click)="toggleModal('referral-modal')" class="pl-3 pr-2 rounded-md h-10 bg-orange-500 text-white">
-              <fa-icon [icon]="faBuildingCircleArrowRight"></fa-icon>
-            </button> -->
+            <!-- <app-referral></app-referral> -->
           </div>
 
           <app-death-record (toggleAccordion)="toggleAccordion($event)" [accordions]="accordions" (toggleModal)="toggleModal($event)" (setDetails)="setDetails($event)"></app-death-record>
@@ -82,6 +84,13 @@
 
         <app-vitals (toggleAccordion)="toggleAccordion($event)" (toggleModal)="toggleModal($event)" (setVitals)="setVitals($event)" [accordions]="accordions"></app-vitals>
         <app-vaccine (toggleAccordion)="toggleAccordion($event)" [accordions]="accordions" (toggleModal)="toggleModal($event)" (setVaccineGiven)="setVaccineGiven($event)"></app-vaccine>
+
+        <app-services (toggleAccordion)="toggleAccordion($event)"
+          [accordions]="accordions"
+          (toggleModal)="toggleModal($event)"
+          (setVaccineGiven)="setVaccineGiven($event)"
+        ></app-services>
+
         <app-past-medical (toggleAccordion)="toggleAccordion($event)" [accordions]="accordions" (toggleModal)="toggleModal($event)" (setPastMedical)="setPastMedical($event)"></app-past-medical>
 
         <app-menstrual-history [class]="show_female_history ? 'visible' : 'hidden'" (toggleAccordion)="toggleAccordion($event)" [accordions]="accordions" (toggleModal)="toggleModal($event)" (setMenstrual)="setMenstrual($event)"></app-menstrual-history>
@@ -119,6 +128,8 @@
 <app-vaccine-modal *ngIf="modals['vaccine']" (toggleModal)="toggleModal('vaccine')" (loadData)="loadData($event)" [patient_info]="patient_info" [vaccines_given]="vaccines_given"></app-vaccine-modal>
 <app-vaccine-action-modal *ngIf="modals['vaccine-action']" (toggleModal)="toggleModal($event)" [vaccine_to_edit]="vaccine_to_edit"></app-vaccine-action-modal>
 
+<app-services-modal *ngIf="modals['services']" (toggleModal)="toggleModal('services')" (loadData)="loadData($event)" [patient_info]="patient_info"></app-services-modal>
+
 <app-surgical-modal *ngIf="modals['surgical-history']" (toggleModal)="toggleModal($event)" [patient_info]="patient_info"></app-surgical-modal>
 <app-surgical-action-modal *ngIf="modals['surgical-action']" (toggleModal)="toggleModal($event)" [surgery_to_delete]="surgery_to_delete"></app-surgical-action-modal>
 
@@ -128,8 +139,8 @@
 <app-photo-modal *ngIf="modals['photo']" (toggleModal)="toggleModal('photo')" [imageData]="imageData" [patient_info]="patient_info"></app-photo-modal>
 
 <app-set-appointment *ngIf="modals['appointment-modal']" (toggleModal)="toggleModal('appointment-modal')" (loadData)="loadData($event)" [patient_info]="patient_info"></app-set-appointment>
-<app-referral-modal *ngIf="modals['referral-modal']"
+<!-- <app-referral-modal *ngIf="modals['referral-modal']"
   [patient_info]="patient_info"
   (toggleModal)="toggleModal('referral-modal')"
   (loadData)="loadData($event)"
-></app-referral-modal>
+></app-referral-modal> -->

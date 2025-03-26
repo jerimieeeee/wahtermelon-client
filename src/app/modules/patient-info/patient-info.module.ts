@@ -47,6 +47,9 @@ import { LabRequestComponent } from 'app/shared/shared-modals/lab-request/lab-re
 import { AppointmentComponent } from './components/appointment/appointment.component';import { SetAppointmentComponent } from './components/appointment/modals/set-appointment/set-appointment.component';
 import { ReferralModalComponent } from './modals/referral-modal/referral-modal.component';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { ServicesComponent } from './components/services/services.component';
+import { ServicesModalComponent } from './modals/services-modal/services-modal.component';
+import { ReferralComponent } from 'app/shared/shared-components/referral/referral.component';
 
 @NgModule({
   declarations: [
@@ -87,7 +90,9 @@ import { NgSelectModule } from '@ng-select/ng-select';
     PreghistModalComponent,
     AppointmentComponent,
     SetAppointmentComponent,
-    ReferralModalComponent
+    ReferralModalComponent,
+    ServicesComponent,
+    ServicesModalComponent
   ],
   imports: [
     CommonModule,
@@ -101,7 +106,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
     NgxMaskDirective,
     NgxMaskPipe,
     LabRequestComponent,
-    NgSelectModule
+    NgSelectModule,
+    ReferralComponent
   ],
   providers: [provideNgxMask()]
 })
