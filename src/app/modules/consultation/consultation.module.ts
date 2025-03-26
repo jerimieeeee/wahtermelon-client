@@ -28,6 +28,7 @@ import { OpenConsultComponent } from 'app/shared/shared-modals/open-consult/open
 import { UpdateDateComponent } from './modals/update-date/update-date.component';
 import { PregnantTagComponent } from 'app/shared/shared-components/consultation/pregnant-tag/pregnant-tag.component';
 import { EprescriptionComponent } from 'app/shared/shared-components/eprescription/eprescription.component';
+import { ReferralComponent } from 'app/shared/shared-components/referral/referral.component';
 
 @NgModule({
   declarations: [
@@ -61,7 +62,8 @@ import { EprescriptionComponent } from 'app/shared/shared-components/eprescripti
     EndVisitComponent,
     OpenConsultComponent,
     PregnantTagComponent,
-    EprescriptionComponent
+    EprescriptionComponent,
+    ReferralComponent
   ]
 })
 export class ConsultationModule { }

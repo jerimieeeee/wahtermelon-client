@@ -1,136 +1,104 @@
 
-<div class="m-5 border border-slate-200 rounded-lg">
-  <div class="bg-blue-500 text-sm text-white rounded-t-md py-2 pl-5 font-semibold">
+<div class="m-5 border border-slate-200 rounded-lg select-none">
+  <div class="bg-blue-500 text-sm text-white rounded-t-md py-2 pl-5 font-semibold select-none">
    Assessment Summary
   </div>
 
-  <div class="mx-5 mb-5">
-
-      <div class="mt-1 grid grid-cols-16 gap-x-4 w-full">
-
-          <div class="col-span-12 col-start-1 grid gap-x-4 mb-5">
-              <div class="mt-5">
-
-                <p for="consent_flag" class="text-sm" >
-                  1. Ikaw ba ay nakaranas ng pananakit o panananakot sa inyong bahay, paaralan o trabaho?
-                </p>
-              </div>
-          </div>
-      </div>
-
-      <div class="mt-1 w-full border-t border-gray-200 py-5">
-
-        <div class="col-span-8 mt-5">
-          <div class="rounded-md border border-solid border-gray-300">
-            <span class="rounded-t-md m-0 p-2 font-semibold text-sm text-gray-50 bg-blue-500 flex justify-between" [ngClass]="{'rounded-b' : !show_content}">
-              G2 - Violence
-              <button type="button" (click)="show_content = !show_content">
-                <fa-icon [icon]="show_content ? faChevronCircleUp : faChevronCircleDown" class="pr-2" size="lg"></fa-icon>
-              </button>
-            </span>
-
-            <div class="col-span-12 col-start-1 grid gap-x-4 mb-5" *ngIf="show_content">
-              <div class="mt-5 pl-10" *ngFor="let question of g2">
-                <p for="answer" class="text-sm col-span-11 col-start-1">{{question.name}}</p>
-
-              </div>
-          </div>
 
 
+  <form [formGroup]="visitForm">
 
-          </div>
-        </div>
+  <div class="grid grid-cols-12 justify-between" [ngClass]="(this.selected_asrh_consult?.done_flag === true && this.selected_asrh_consult?.comprehensive?.done_flag === true) || (this.selected_asrh_consult?.refused_flag === true || this.selected_asrh_consult?.comprehensive?.refused_flag === true) ? 'pointer-events-none select-none' : ''">
 
-        <div class="col-span-8 mt-10">
-          <div class="rounded-md border border-solid border-gray-300">
-            <span class="rounded-t-md m-0 p-2 font-semibold text-sm text-gray-50 bg-blue-500 flex justify-between" [ngClass]="{'rounded-b' : !show_content}">
-              G3 - Physical Abuse
-              <button type="button" (click)="show_content = !show_content">
-                <fa-icon [icon]="show_content ? faChevronCircleUp : faChevronCircleDown" class="pr-2" size="lg"></fa-icon>
-              </button>
-            </span>
-
-            <div class="col-span-12 col-start-1 grid gap-x-4 mb-5" *ngIf="!show_content">
-              <div class="mt-5 pl-10" *ngFor="let question of g2">
-                <p for="answer" class="text-sm col-span-11 col-start-1">{{question.name}}</p>
-
-              </div>
-          </div>
-
-
-
-          </div>
-        </div>
-
-        <div class="col-span-8 mt-10">
-          <div class="rounded-md border border-solid border-gray-300">
-            <span class="rounded-t-md m-0 p-2 font-semibold text-sm text-gray-50 bg-blue-500 flex justify-between" [ngClass]="{'rounded-b' : !show_content}">
-              G4 - Sexual Abuse
-              <button type="button" (click)="show_content = !show_content">
-                <fa-icon [icon]="show_content ? faChevronCircleUp : faChevronCircleDown" class="pr-2" size="lg"></fa-icon>
-              </button>
-            </span>
-
-            <div class="col-span-12 col-start-1 grid gap-x-4 mb-5" *ngIf="!show_content">
-              <div class="mt-5 pl-10" *ngFor="let question of g2">
-                <p for="answer" class="text-sm col-span-11 col-start-1">{{question.name}}</p>
-
-              </div>
-          </div>
-
-
-
-          </div>
-        </div>
-
-        <div class="col-span-8 mt-10">
-          <div class="rounded-md border border-solid border-gray-300">
-            <span class="rounded-t-md m-0 p-2 font-semibold text-sm text-gray-50 bg-blue-500 flex justify-between" [ngClass]="{'rounded-b' : !show_content}">
-              G5 - Cyber Bullying
-              <button type="button" (click)="show_content = !show_content">
-                <fa-icon [icon]="show_content ? faChevronCircleUp : faChevronCircleDown" class="pr-2" size="lg"></fa-icon>
-              </button>
-            </span>
-
-            <div class="col-span-12 col-start-1 grid gap-x-4 mb-5" *ngIf="!show_content">
-              <div class="mt-5 pl-10" *ngFor="let question of g2">
-                <p for="answer" class="text-sm col-span-11 col-start-1">{{question.name}}</p>
-
-              </div>
-          </div>
-
-
-
-          </div>
-        </div>
-
-        <div class="col-span-8 mt-10">
-          <div class="rounded-md border border-solid border-gray-300">
-            <span class="rounded-t-md m-0 p-2 font-semibold text-sm text-gray-50 bg-blue-500 flex justify-between" [ngClass]="{'rounded-b' : !show_content}">
-              G5 - Online Abuse and Exploitation
-              <button type="button" (click)="show_content = !show_content">
-                <fa-icon [icon]="show_content ? faChevronCircleUp : faChevronCircleDown" class="pr-2" size="lg"></fa-icon>
-              </button>
-            </span>
-
-            <div class="col-span-12 col-start-1 grid gap-x-4 mb-5" *ngIf="!show_content">
-              <div class="mt-5 pl-10" *ngFor="let question of g2">
-                <p for="answer" class="text-sm col-span-11 col-start-1">{{question.name}}</p>
-
-              </div>
-          </div>
-
-
-
-          </div>
-        </div>
-
-
-
-
-      </div>
-
+  <div class="col-span-6 px-5 pt-5">
+    <div [ngClass]="physicians?.length === 0 ? 'pointer-events-none select-none' : ''">
+      <label for="refer_to" class="text-sm font-semibold">Refer To</label>
+      <select name="refer_to_user_id" id="refer_to_user_id" class="input" formControlName="refer_to_user_id" [disabled]="physicians?.length === 0">
+      <option value="" disabled selected *ngIf="physicians?.length === 0">No AJA Trained</option>
+      <option *ngFor="let dr of physicians" [value]="dr.id">{{ dr?.last_name }}, {{ dr?.first_name }} {{ dr?.middle_name }}</option>
+      </select>
     </div>
+    </div>
+
+  <div class="col-span-6 pt-8">
+    <div class="mt-5 px-5">
+      <input type="checkbox" class="input-checkbox" id="done_flag" formControlName="done_flag" />
+      <label for="done_flag" class="text-sm" >
+        Done with RAPID HEEADSSS.
+      </label>
+    </div>
+  </div>
+
+  <div class="col-span-6 px-5 pt-5" *ngIf="visitForm.get('refer_to_user_id').value">
+    <label for="done_date" class="text-sm font-semibold">Referral Date</label>
+    <input type="date" name="done_date" id="done_date" class="input" formControlName="referral_date" [max]="max_date" [value]="date_today">
+  </div>
+
+  <div class="col-span-6 px-5 pt-5" *ngIf="visitForm.get('done_flag').value">
+    <label for="done_date" class="text-sm font-semibold">Done Date</label>
+    <input type="date" name="done_date" id="done_date" class="input" formControlName="done_date" [max]="max_date" [value]="date_today">
+  </div>
+
+  </div>
+
+
+
+  <div class="mt-10 w-full border-t border-gray-200 py-5" [ngClass]="(this.selected_asrh_consult?.done_flag === 1 && this.selected_asrh_consult?.comprehensive?.done_flag === true) || (this.selected_asrh_consult?.refused_flag === 1 || this.selected_asrh_consult?.comprehensive?.refused_flag === true) ? 'pointer-events-none select-none' : ''">
+
+    <div *ngIf="!checkAnswers(selected_asrh_consult.answers)">
+      <div class="text-sm flex justify-center mt-5">
+        No Algorithm to Display.
+      </div>
+    </div>
+
+    <div class="mt-1 w-full" *ngFor="let home of selected_asrh_consult?.answers; let i = index">
+      <div *ngIf="home.answer === '1'">
+        <div class="text-sm py-4 px-5 flex justify-between">
+          {{home.question.question}}
+
+          <!-- Show the button only if there are algorithms for this question -->
+          <button *ngIf="home.question.algorithm?.length > 0"
+                  (click)="home.collapsed = !home.collapsed"
+                  class="bg-blue-500 text-white px-2 py-1 rounded">
+            {{home.collapsed ? 'Hide' : 'Show'}} Algorithm
+          </button>
+        </div>
+
+        <div *ngIf="home.collapsed">
+          <div *ngFor="let algo of home.question.algorithm" class="text-sm py-4 px-5 rounded-t-md pl-5">
+            <div class="bg-blue-500 text-sm text-white rounded-t-md py-2 pl-5 font-semibold flex justify-between">
+              {{algo.code}} - {{algo.desc}}
+              <button (click)="algo.collapsed = !algo.collapsed" class="text-white py-1 rounded ml-2">
+                <fa-icon [icon]="algo.collapsed ? faChevronDown : faChevronUp" class="pr-2" size="md"></fa-icon>
+              </button>
+            </div>
+            <div *ngIf="!algo.collapsed" class="border-gray-300 border px-5 py-5">
+              <span [innerHTML]="parseReason(algo.ask_instruction)"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  <div class="mt-10 w-full border-t border-gray-200 py-5">
+
+  <div class="h-92">
+    <div class="py-5 px-5">
+      <textarea rows="13" id="remarks" placeholder="Remarks" class="text-sm placeholder-slate-400 w-full rounded-md border-gray-300" formControlName="algorithm_remarks"></textarea>
+    </div>
+  </div>
+
+
+  <div class="flex justify-center mt-10">
+    <button class="btn-save" [disabled]="is_saving || visitForm.invalid || !visitForm.dirty" (click)="createRapid(); visitForm.markAsPristine();">
+      <!-- <button class="btn-save"> -->
+      <fa-icon [icon]="faSave" *ngIf="!is_saving" class="mr-2"></fa-icon>
+      <fa-icon [icon]="faSpinner" *ngIf="is_saving" animation="spin" class="mr-2"></fa-icon>
+      {{ selected_asrh_consult?.refer_to_user_id ? (is_saving ? 'Updating' : 'Update') : (is_saving ? 'Saving' : 'Save') }}
+    </button>
+  </div>
+
 
 
 </div>

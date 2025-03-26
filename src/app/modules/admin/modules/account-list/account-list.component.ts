@@ -80,6 +80,7 @@ export class AccountListComponent implements OnInit {
       },
       error: err => {
         if(flag === 'status') this.account_list[i].is_active = !params.is_active;
+        if(flag === 'aja') this.account_list[i].aja_flag = !params.aja_flag;
         if(flag === 'reports') this.account_list[i].reports_flag = !params.reports_flag;
         this.submit_error = err.error.errors;
         params.email = temp_email;
@@ -94,5 +95,6 @@ export class AccountListComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadAccount();
+    console.log(this.account_list, 'wowo')
   }
 }
