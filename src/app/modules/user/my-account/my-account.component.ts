@@ -2,7 +2,7 @@ import { formatDate } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { faArrowLeft, faSpinner, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faSpinner, faPenToSquare, faSearch, faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 
 @Component({
@@ -23,6 +23,8 @@ export class MyAccountComponent implements OnInit {
   faSpinner = faSpinner;
   faArrowLeft = faArrowLeft;
   faPenToSquare = faPenToSquare;
+  faSearch = faSearch;
+  faCircleNotch = faCircleNotch;
 
   required_message: string = "Required field";
   date;
@@ -76,6 +78,33 @@ export class MyAccountComponent implements OnInit {
       this.userForm.disable();
       this.userForm.patchValue({...this.orig_value});
     }
+  }
+
+  searching_pan: boolean = false;
+  doctor_pan: any;
+  searchPAN() {
+    this.searching_pan = true;
+
+    let params = {
+      lastname: this.userForm.value.last_name,
+      firstname: this.userForm.value.first_name,
+      middlename: this.userForm.value.middle_name ,
+      suffix: this.userForm.value.suffix_name === 'NA' ? '' :  this.userForm.value.suffix_name,
+      birthdate: formatDate(this.userForm.value.birthdate, 'MM-dd-yyyy', 'en', 'Asia/Manila'),
+    };
+
+    this.http.post('eclaims/get-doctor-pan', params).subscribe({
+      next: (data: any) => {
+        this.doctor_pan = data;
+        this.userForm.patchValue({ accreditation_number: this.doctor_pan.pan ?? null });
+
+        this.searching_pan = false;
+      },
+      error: err => {
+        console.log(err.error.message);
+        this.searching_pan = false;
+      }
+    })
   }
 
   onSubmit(){
