@@ -179,16 +179,17 @@ export class CaserateComponent implements OnInit {
   }
 
   loadContent(content) {
+    console.log(content)
     this.caserateForm.patchValue({
       id: null,
       caserate_date: null,
       admit_dx: '',
-      caserate_code: content.data.pCaseRateCode,
-      code: content.data.pItemCode,
-      description: content.data.pCaseRateDescription,
-      hci_fee: content.amount.pPrimaryHCIFee,
-      prof_fee: content.amount.pPrimaryProfFee,
-      caserate_fee: content.amount.pPrimaryCaseRate,
+      caserate_code: content.data.pcaseRateCode,
+      code: content.data.pitemCode,
+      description: content.data.pcaseRateDescription,
+      hci_fee: content.amount.pprimaryHCIFee,
+      prof_fee: content.amount.pprimaryProfFee,
+      caserate_fee: content.amount.pprimaryCaseRate,
       caserate_attendant: '',
     })
   }
