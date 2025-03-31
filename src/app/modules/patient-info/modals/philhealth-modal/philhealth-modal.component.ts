@@ -186,10 +186,9 @@ export class PhilhealthModalComponent implements OnInit {
 
     this.http.post('eclaims/get-member-pin', params).subscribe({
       next: (data:any) => {
-        console.log(data)
         this.philhealthForm.patchValue({
-          philhealth_id: data.data,
-          philhealth_id_confirmation: data.data
+          philhealth_id: data.pin,
+          philhealth_id_confirmation: data.pin
         });
         this.toastrMessage('success', 'Philhealth', 'Philhealth PIN retrieved', 'retrieving_pin');
       },
