@@ -2,7 +2,7 @@ import { formatDate, ViewportScroller } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { faCheck, faCircleInfo, faCircleNotch, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faCircleInfo, faCircleNotch, faSearch, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 import { philhealthForm } from './philhealthForm';
@@ -26,6 +26,7 @@ export class PhilhealthModalComponent implements OnInit {
   faSpinner = faSpinner;
   faCircleInfo = faCircleInfo;
   faCircleNotch = faCircleNotch;
+  faSearch = faSearch;
 
   error_message = "exceeded maximum value";
   error_message_min = "does not meet minimum length";
@@ -113,6 +114,38 @@ export class PhilhealthModalComponent implements OnInit {
     console.log(data)
   }
   // END EMPLOYER
+
+  employer_list: any;
+  employer_selected: boolean = false;
+  searching_employer: boolean = false;
+  searchEmployer() {
+    this.searching_employer = true;
+    this.employer_selected = false;
+    let params = {
+      philhealthno: this.philhealthForm.value.employer_pin,
+      employername: this.philhealthForm.value.employer_name,
+    };
+
+    this.http.post('eclaims/search-employer', params).subscribe({
+      next: (data: any) => {
+        this.employer_list = data;
+        this.searching_employer = false;
+      },
+      error: err => console.log(err)
+    })
+  }
+
+  selectEmployer(data) {
+    if(data) {
+      this.employer_selected = true;
+      this.philhealthForm.patchValue({
+        employer_pin: data.philhealthno,
+        employer_name: data.name,
+        employer_address: data.address
+      });
+      this.employer_list = null;
+    }
+  }
 
   isATCValid(){
     this.is_checking_atc = true;

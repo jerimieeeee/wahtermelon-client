@@ -212,18 +212,7 @@
               </ng-select>
             </div> -->
 
-            <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
-              <label for="employer_pin" class="font-semibold" [ngClass]="{'text-red-500': is_saving && f.employer_pin.errors}">Employer PEN</label>
-              <input name="employer_pin" id="employer_pin" formControlName="employer_pin" type="text" [ngClass]="{'invalid-input': is_saving && f.employer_pin.errors}" class="input">
-
-              <div *ngIf="is_saving && f.employer_pin.errors" class="invalid-alert">
-                <div *ngIf="f.employer_pin.errors?.['required']">
-                  {{ required_message }}
-                </div>
-              </div>
-            </div>
-
-            <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
+            <div class="w-6/12 relative text-sm pl-5 pr-3 py-2 mt-2">
               <label for="employer_name" class="font-semibold" [ngClass]="{'text-red-500': is_saving && f.employer_name.errors}">Employer name</label>
               <input name="employer_name" id="employer_name" formControlName="employer_name" type="text" [ngClass]="{'invalid-input': is_saving && f.employer_name.errors}" class="input">
 
@@ -234,7 +223,58 @@
               </div>
             </div>
 
-            <div class="relative w-full text-sm px-5 py-2 mt-2">
+            <div class="w-5/12 relative text-sm pr-3 py-1.5 mt-2">
+              <label for="employer_pin" class="font-semibold" [ngClass]="{'text-red-500': is_saving && f.employer_pin.errors}">Employer PEN</label>
+              <input name="employer_pin" id="employer_pin" formControlName="employer_pin" type="text" [ngClass]="{'invalid-input': is_saving && f.employer_pin.errors}" class="input">
+
+              <div *ngIf="is_saving && f.employer_pin.errors" class="invalid-alert">
+                <div *ngIf="f.employer_pin.errors?.['required']">
+                  {{ required_message }}
+                </div>
+              </div>
+            </div>
+
+            <div class="w-1/12 relative text-base pr-5 mt-9">
+              <button [disabled]="searching_employer" class="bg-blue-500 text-white rounded-lg py-2 px-3" (click)="searchEmployer()">
+                <fa-icon *ngIf="!searching_employer" [icon]="faSearch"></fa-icon>
+                <fa-icon *ngIf="searching_employer" [icon]="faCircleNotch" animation="spin"></fa-icon>
+              </button>
+            </div>
+
+            <div class="w-full mx-5 select-none border border-gray-200" *ngIf="employer_list?.employers && employer_selected === false">
+              <table *ngIf="!searching_employer" class="table table-auto w-full">
+                <thead>
+                  <tr>
+                    <th class="w-6/12 text-center">Employer Name<br />Address</th>
+                    <th class="w-5/12 text-center">Employer PIN</th>
+                    <th class="w-1/12 text-center"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="hover:bg-blue-100" *ngFor="let item of employer_list.employers">
+                    <td class="p-1">
+                      <span class="font-semibold">{{ item.name}}</span> <br /> <span class="italic text-xs">{{ item.address }}</span>
+                    </td>
+                    <td class="text-center p-1">
+                      {{ item.philhealthno }}
+                    </td>
+                    <td class="text-center p-1">
+                      <button class="text-sm text-white bg-blue-500 hover:bg-blue-600 rounded-lg py-2 px-3" (click)="selectEmployer(item)">
+                        <fa-icon [icon]="faCheck"></fa-icon>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="flex justify-center w-full py-5" *ngIf="searching_employer">
+                <fa-icon class="text-blue-500" [icon]="faCircleNotch" animation="spin"></fa-icon>
+              </div>
+            </div>
+            <div class="w-full mx-5 py-2 text-center italic font-semibold border border-gray-200" *ngIf="employer_list?.message">
+              {{ employer_list?.message }}
+            </div>
+
+            <div class="relative w-full text-sm px-5 py-2">
               <label for="employer_address" class="font-semibold" [ngClass]="{'text-red-500': is_saving && f.employer_address.errors}">Employer address</label>
               <input name="employer_address" id="employer_address" formControlName="employer_address" type="text" [ngClass]="{'invalid-input': is_saving && f.employer_address.errors}" class="input">
 
