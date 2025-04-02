@@ -140,9 +140,9 @@
       <td (click)="vaccines.male_female_penta3 > 0 && showNameList('male_female', 'PENTA', 3)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.male_female_penta3 > 0}">{{ vaccines.male_female_penta3 ?? 0 }}</td>
       <td class="border"></td>
       <td class="border">18. FIC</td>
-      <td (click)="fic_cic.male_penta3 > 0 && showNameList('M', 'fic')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': fic_cic.male_fic > 0}">{{ fic_cic.male_fic ?? 0 }}</td>
-      <td (click)="fic_cic.male_penta3 > 0 && showNameList('F', 'fic')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': fic_cic.female_fic > 0}">{{ fic_cic.female_fic ?? 0 }}</td>
-      <td (click)="fic_cic.male_penta3 > 0 && showNameList('M,F', 'fic')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': fic_cic.male_female_fic > 0}">{{ fic_cic.male_female_fic ?? 0 }}</td>
+      <td (click)="fic_cic.male_fic > 0 && showNameList('M', 'fic')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': fic_cic.male_fic > 0}">{{ fic_cic.male_fic ?? 0 }}</td>
+      <td (click)="fic_cic.female_fic > 0 && showNameList('F', 'fic')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': fic_cic.female_fic > 0}">{{ fic_cic.female_fic ?? 0 }}</td>
+      <td (click)="fic_cic.male_female_fic > 0 && showNameList('M,F', 'fic')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': fic_cic.male_female_fic > 0}">{{ fic_cic.male_female_fic ?? 0 }}</td>
       <td class="border"></td>
     </tr>
 
