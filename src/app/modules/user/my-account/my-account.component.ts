@@ -247,6 +247,7 @@ export class MyAccountComponent implements OnInit {
       attendant_ml_flag: [null],
       attendant_fp_flag: [null],
       attendant_cv_flag: [null],
+      aja_flag: [null],
     });
     this.userForm.disable();
 

@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { faCalendarDay, faPlus, faSave, faTimes, faPencil, faCircleCheck, faCaretRight, faInfoCircle, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { HttpService } from 'app/shared/services/http.service';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
     selector: 'app-suicide-depression',
@@ -11,50 +12,162 @@ import { Router } from '@angular/router';
     standalone: false
 })
 export class SuicideDepressionComponent implements OnInit {
-  faCalendarDay = faCalendarDay;
-  faPlus = faPlus;
-  faSave = faSave;
-  faTimes = faTimes;
-  faPencil = faPencil;
-  faCircleCheck = faCircleCheck;
-  faCaretRight = faCaretRight;
-  faInfoCircle = faInfoCircle;
-  faSpinner = faSpinner;
+      @Input() compre_questions : any;
+      @Input() patient_id: any;
+      @Input() asrh_visit_history: any;
+      @Input() selected_asrh_consult: any;
+      @Output() updateSelectedASRH = new EventEmitter<any>();
 
-  is_saving: boolean = false;
+     faCalendarDay = faCalendarDay;
+     faPlus = faPlus;
+     faSave = faSave;
+     faTimes = faTimes;
+     faPencil = faPencil;
+     faCircleCheck = faCircleCheck;
+     faCaretRight = faCaretRight;
+     faInfoCircle = faInfoCircle;
+     faSpinner = faSpinner;
 
-  show_form = false;
+     is_saving: boolean = false;
 
-  adolescentForm: FormGroup = new FormGroup({
+     show_form = false;
 
-    consent_flag: new FormControl<boolean>(false)
+     asrh_compre_history: any = [];
 
-  });
+    suicideForm: FormGroup = new FormGroup({
+       id: new FormControl<string| null>(''),
+       patient_id: new FormControl<string| null>(''),
+       consult_asrh_rapid_id: new FormControl<string| null>(''),
+       assessment_date: new FormControl<string| null>(''),
+      //  consent_flag: new FormControl<string| null>(''),
+       suicide_notes: new FormControl<string| null>(''),
+       self_harm: new FormControl<string| null>(''),
+       done_flag: new FormControl<boolean>(false),
+       consent_flag: new FormControl<string| null>('false'),
+        refused_flag: new FormControl<string| null>('false'),
 
-  compre_suicide = [
-    { name: 'Do you feel “stressed” or anxious more than usual? How do you try to cope?', id:'1' },
-    { name: 'Do you feel sad or down more than usual?', id:'2' },
-    { name: 'Does it seem that you’ve lost interest in things that you used to really enjoy?', id:'3' },
-    { name: 'Are you having trouble getting to sleep? How’ your appetite?', id:'4' },
-    { name: 'Have you thought a lot about hurting yourself or someone else?', id:'5' },
-    { name: 'Have you ever had to hurt yourself (by cutting yourself, for example) to calm down or feel better?', id:'6' },
-    { name: 'Have you ever tried to killyourself?', id:'7' },
-  ];
+     });
 
-  constructor(
-    private http: HttpService,
-    private formBuilder: FormBuilder,
-    private router: Router
-  ) { }
+     onSubmit(){
+       console.log(this.suicideForm.value, 'display visit details')
+       this.is_saving = true;
+       this.http.post('asrh/comprehensive', this.suicideForm.value).subscribe({
+         next: (data: any) => {
+           this.toastr.success('Suicide & Depression was ' + (this.selected_asrh_consult.comprehensive.suicide_notes !== null ? 'updated' : 'saved') + ' successfuly', 'Success')
+           this.is_saving = false;
+           this.updateSelectedASRH.emit(data)
+           // this.showButton = !this.showButton;
+           // this.loadFP.emit();
+           // this.reloadData();
 
-ngOnInit(): void {
-    this.adolescentForm = this.formBuilder.group({
+           console.log(this.suicideForm, 'checker education')
+            },
+         complete: () => {
 
-      consent_flag: [false]
+         },
+         error: err => {console.log(err)
 
-    })
+         },
+       })
+     }
 
-  }
-}{
+     validateForm(){
 
-}
+       this.suicideForm = this.formBuilder.group({
+         id: [''],
+         patient_id: [this.patient_id],
+         consult_asrh_rapid_id: [this.selected_asrh_consult?.id, [Validators.required, Validators.minLength(1)]],
+         assessment_date: [this.selected_asrh_consult?.comprehensive?.assessment_date, [Validators.required, Validators.minLength(1)]],
+         suicide_notes: ['', [Validators.required, Validators.minLength(50)]],
+         self_harm: [[false], [Validators.required, Validators.minLength(1)]],
+         done_flag: [false],
+         consent_flag: ['', [Validators.required, Validators.minLength(1)]],
+          refused_flag: [false],
+        //  refused_flag: [false],
+
+         // average_monthly_income: ['', [Validators.required, Validators.minLength(1), Validators.pattern("^[0-9,;]+$")]],
+       });
+       this.patchCompre();
+       // this.loadFPDetails();
+       // this.show_form = true;
+     }
+
+     patchCompre(){
+
+      if(this.selected_asrh_consult) {
+        this.suicideForm.patchValue({
+        suicide_notes: this.selected_asrh_consult?.comprehensive?.suicide_notes,
+        self_harm: this.selected_asrh_consult?.comprehensive?.self_harm,
+        refused_flag: this.selected_asrh_consult?.comprehensive?.refused_flag,
+         consent_flag: this.selected_asrh_consult?.comprehensive?.consent_flag,
+        // refused_flag: this.selected_asrh_consult?.comprehensive?.refused_flag
+        });
+        // this.show_form = true;
+        // console.log(this.asrh_compre_history,'load compre home working')
+        // this.loadSelected();
+      }
+    }
+
+    LoadCompre() {
+      let params = {
+        patient_id: this.patient_id,
+        // per_page: 'all'
+      };
+
+      this.http.get('asrh/comprehensive', {params}).subscribe({
+        next: (data: any) => {
+
+         this.asrh_compre_history = data.data[0]
+         console.log(this.asrh_compre_history, 'hugot ng compre history')
+         this.patchCompre();
+        },
+        complete: () => {
+
+        },
+        error: err => {console.log(err)
+
+        },
+      })
+    }
+
+    openModal() {
+      // Listen for changes to the checkbox
+
+          this.toggleServiceModal();
+
+    }
+
+    showModal = false;
+
+    closeModal() {
+      this.showModal = false;  // Close the modal when the close button is clicked
+      this.suicideForm.get('refused_flag')?.setValue(false);  // Optionally uncheck the checkbox
+    }
+
+    showServiceModal = false;
+    toggleServiceModal() {
+      this.showServiceModal = !this.showServiceModal;
+      this.suicideForm.get('refused_flag')?.setValue(false);
+    }
+
+
+    acceptModal(){
+      this.showServiceModal = !this.showServiceModal;
+      this.suicideForm.get('refused_flag')?.setValue(true);
+    }
+
+
+
+     constructor(
+       private http: HttpService,
+       private formBuilder: FormBuilder,
+       private toastr: ToastrService,
+       private router: Router
+     ) { }
+
+   ngOnInit(): void {
+      // this.LoadCompre();
+      this.validateForm();
+
+     }
+   }

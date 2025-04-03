@@ -5,6 +5,7 @@ import { faFileExcel, faFilePdf } from '@fortawesome/free-regular-svg-icons';
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { ExportAsConfig, ExportAsService } from 'ngx-export-as';
+import { forkJoin, map, Observable } from 'rxjs';
 
 @Component({
     selector: 'app-reports',
@@ -31,7 +32,6 @@ export class ReportsComponent implements OnInit {
   });
 
   fhsis2018 = [
-    // { id: 'fhsis2018-consolidated',         section: null,desc: 'FHSIS Consolidated', url: ''},
     { id: 'fhsis2018-fp',                   section: 'A', desc: 'Family Planning', url: 'reports-2018/family-planning/m1'},
     { id: 'fhsis2018-mc',                   section: 'B', desc: 'Maternal Care', url: 'reports-2018/maternal-care/m1'},
     { id: 'fhsis2018-cc',                   section: 'C', desc: 'Child Care', url: 'reports-2018/child-care/m1'},
@@ -153,6 +153,7 @@ export class ReportsComponent implements OnInit {
   reportFlag: string;
   selectedCode!: string;
   stats : any;
+  meta_info: any;
 
   exportAsExcel: ExportAsConfig = {
     type: 'xlsx',
@@ -178,8 +179,8 @@ export class ReportsComponent implements OnInit {
         pagebreak: { mode: ['avoid-all', 'css'] }
       },
       html2canvas: {
-        scale: 3, // Improves rendering quality
-        useCORS: true, // Ensures external styles/images load properly
+        scale: 3,
+        useCORS: true,
         allowTaint: true,
         scrollX: false,
         scrollY: false
@@ -188,11 +189,6 @@ export class ReportsComponent implements OnInit {
   }
 
   exportX(report_name: string) {
-    /* document.querySelectorAll('#reportForm th').forEach((td) => {
-      if ((td as HTMLElement).innerText.match(/^\d{2}-\d{2}$/)) { // Matches values like "10-14"
-        (td as HTMLElement).innerText = "'" + (td as HTMLElement).innerText; // Add apostrophe to force text format
-      }
-    }); */
     report_name = report_name.substring(0, 4)
     console.log(report_name+'_'+this.getTrailName());
     this.exportAsService.save(this.exportAsExcel, report_name+'_'+this.getTrailName()).subscribe(() => {
@@ -217,45 +213,94 @@ export class ReportsComponent implements OnInit {
     });
   }
 
-  onSubmit(){
+  fhsis2018_data: any = [];
+  onSubmit(page?: number) {
     this.pdf_exported = false;
-    // this.stats = this.report_data.data;
-    // console.log(this.report_data, 'amen')
-    // console.log(this.reportForm.value, this.reportFlag)
     this.is_fetching = true;
 
-    let params = {};
+    if(this.reportForm.value.report_type.id === 'fhsis2018-consolidated') {
+      this.fhsis2018_data = {}; // Initialize storage
 
-    if (this.reportForm.value.month) params['month'] = this.reportForm.value.month;
-    if (this.reportForm.value.year) params['year'] = this.reportForm.value.year;
-    if (this.reportForm.value.quarter) params['quarter'] = this.reportForm.value.quarter;
-    if (this.reportForm.value.start_date) params['start_date'] = this.reportForm.value.start_date;
-    if (this.reportForm.value.end_date) params['end_date'] = this.reportForm.value.end_date;
-    if (this.reportForm.value.program) params['program'] = this.reportForm.value.program;
-    params['category'] = this.reportForm.value.report_class;
+      const fetchObservables = this.fhsis2018.map(report => {
+          let params: any = {};
+          if(report.id === 'fhsis2018-fp') {
+            if (this.reportForm.value.month) params['month'] = this.reportForm.value.month;
+            if (this.reportForm.value.year) params['year'] = this.reportForm.value.year;
+          } else {
+            const monthIndex = this.reportForm.value.month - 1;
+            const year = this.reportForm.value.year;
 
-    if (this.reportForm.value.report_class === 'fac') {
-      params['code'] = this.reportFlag === '1' ? this.selectedFacilities.join(',') : this.userInfo.facility_code;
-    }
+            const firstDay = new Date(year, monthIndex, 1);
+            const lastDay = new Date(year, monthIndex + 1, 0);
 
-    if (this.reportForm.value.report_class === 'muncity') {
-      params['code'] = this.reportFlag === '1' ? this.selectedMuncity.join(',') : this.reportForm.value.municipality_code;
-    }
+            params['start_date'] = formatDate(firstDay, 'yyyy-MM-dd', 'en', 'Asia/Manila');
+            params['end_date'] = formatDate(lastDay, 'yyyy-MM-dd', 'en', 'Asia/Manila');
+          }
+          if (this.reportForm.value.quarter) params['quarter'] = this.reportForm.value.quarter;
+          if (this.reportForm.value.program) params['program'] = this.reportForm.value.program;
+          if (page) params['page'] = page;
+          params['category'] = this.reportForm.value.report_class;
 
-    if (this.reportForm.value.report_class === 'brgys') {
-      params['code'] = this.selectedBrgy.join(',');
-    }
+          if (this.reportForm.value.report_class === 'fac') params['code'] = this.reportFlag === '1' ? this.selectedFacilities.join(',') : this.userInfo.facility_code;
+          if (this.reportForm.value.report_class === 'muncity') params['code'] = this.reportFlag === '1' ? this.selectedMuncity.join(',') : this.reportForm.value.municipality_code;
+          if (this.reportForm.value.report_class === 'brgys') params['code'] = this.selectedBrgy.join(',');
 
-    this.selectedCode = params['code'];
+          return this.getReport(params, report.url).pipe(
+              map(data => ({ id: report.id, data }))
+          );
+      });
 
-    this.http.get(this.reportForm.value.report_type.url, {params}).subscribe({
-      next: (data: any) => {
-        // console.log(data)
+      forkJoin(fetchObservables).subscribe({
+          next: (results) => {
+              results.forEach(result => {
+                  this.fhsis2018_data[result.id] = result.data;
+              });
+              this.is_fetching = false;
+          },
+          error: (err) => {
+              console.error(err);
+              this.is_fetching = false;
+          }
+      });
+    } else {
+      let params = {};
+      if (this.reportForm.value.month) params['month'] = this.reportForm.value.month;
+      if (this.reportForm.value.year) params['year'] = this.reportForm.value.year;
+      if (this.reportForm.value.quarter) params['quarter'] = this.reportForm.value.quarter;
+      if (this.reportForm.value.start_date) params['start_date'] = this.reportForm.value.start_date;
+      if (this.reportForm.value.end_date) params['end_date'] = this.reportForm.value.end_date;
+      if (this.reportForm.value.program) params['program'] = this.reportForm.value.program;
+      if (page) params['page'] = page;
+      params['category'] = this.reportForm.value.report_class;
+
+      if (this.reportForm.value.report_class === 'fac') params['code'] = this.reportFlag === '1' ? this.selectedFacilities.join(',') : this.userInfo.facility_code;
+      if (this.reportForm.value.report_class === 'muncity') params['code'] = this.reportFlag === '1' ? this.selectedMuncity.join(',') : this.reportForm.value.municipality_code;
+      if (this.reportForm.value.report_class === 'brgys') params['code'] = this.selectedBrgy.join(',');
+
+      this.getReport(params, this.reportForm.value.report_type.url, page).subscribe(data => {
         this.report_data = data;
         this.is_fetching = false;
-        this.submit_flag = true;
-      },
-      error: err => console.log(err)
+      });
+    }
+  }
+
+  getReport(params: any, url: string, page?: number): Observable<any> {
+    this.selectedCode = params['code'];
+
+    return new Observable((observer) => {
+      this.http.get(url, {params}).subscribe({
+        next: (data: any) => {
+          if (this.reportForm.value.report_type.id === 'masterlist') this.meta_info = data.meta;
+          this.submit_flag = true;
+          this.report_data = data;
+          observer.next(data);
+          observer.complete();
+        },
+        error: (err) => {
+          console.log(err);
+          observer.error(err);
+        }
+      });
     });
   }
 
@@ -364,13 +409,14 @@ export class ReportsComponent implements OnInit {
       this.generateYear();
     }
 
+    /* console.log(this.reportForm.value.program)
     if(this.reportForm.value.program === 'bt') {
       this.reportForm.controls.start_date.disable();
       this.reportForm.controls.end_date.disable();
     }
     else {
       this.reportForm.controls.report_class.enable();
-    }
+    } */
 
     if((!this.fhsis_monthly_arr.find(e => e === this.reportForm.value.report_type.id) &&
         !this.quarterly_arr.find(e => e === this.reportForm.value.report_type.id)) &&
@@ -381,8 +427,10 @@ export class ReportsComponent implements OnInit {
         this.reportForm.controls.report_class.enable();
       }
 
-      this.reportForm.controls.start_date.enable();
-      this.reportForm.controls.end_date.enable();
+      if(this.reportForm.value.program !== 'bt') {
+        this.reportForm.controls.start_date.enable();
+        this.reportForm.controls.end_date.enable();
+      }
     }
   }
 

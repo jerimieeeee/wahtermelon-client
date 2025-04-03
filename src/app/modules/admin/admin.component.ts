@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { faHospital } from '@fortawesome/free-regular-svg-icons';
-import { faCapsules, faCommentSms, faFileMedical, faFlaskVial, faHouseMedical, faSquarePollHorizontal, faStethoscope, faTableList, faUsers } from '@fortawesome/free-solid-svg-icons';
+import { faCapsules, faCircleInfo, faCommentSms, faFileArrowUp, faFileMedical, faFlaskVial, faHouseMedical, faSquarePollHorizontal, faStethoscope, faTableList, faUsers } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
     selector: 'app-admin',
@@ -66,13 +66,18 @@ export class AdminComponent implements OnInit {
     {
       loc: 'xml-upload',
       name: 'XML Import',
-      icon: faTableList
+      icon: faFileArrowUp
     },
     {
       loc: 'eclaims',
       name: 'eClaims List',
       icon: faFileMedical
-    }
+    }/* ,
+    {
+      loc: 'eclaims-rth',
+      name: 'eClaims RTH',
+      icon: faCircleInfo
+    } */
   ]
 
   selected_route: string;

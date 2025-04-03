@@ -31,7 +31,7 @@ export class PendingFdxComponent implements OnInit {
   show_data: any = [];
   show_previous_dx: any;
   selected_physician: string = "all";
-  is_konsulta: string = "all";
+  is_konsulta: string = "";  // Default value set to "All" (empty string)
   physicians: [];
 
   per_page: number = 5;

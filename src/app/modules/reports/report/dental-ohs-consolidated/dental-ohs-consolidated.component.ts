@@ -99,85 +99,15 @@ export class DentalOhsConsolidatedComponent implements OnChanges {
     {title: 'grand_total', gender: 'M,F', age: null, namelist_var: 'grand_total'},
   ];
 
-  pregnantVar: any = [
-    {title: 'pregnant_women_10_14_year_old', age: '10'},
-    {title: 'pregnant_women_15_19_year_old', age: '15'},
-    {title: 'pregnant_women_20_49_year_old', age: '20'},
-  ];
-
-  infantVar: any = [
-    {title: 'male_infant', gender: 'M'},
-    {title: 'female_infant', gender: 'F'},
-  ];
-
-  underFiveVar: any = [
-    {title: 'male_1_year_old', gender: 'M', age: '1'},
-    {title: 'female_1_year_old', gender: 'F', age: '1'},
-
-    {title: 'male_2_year_old', gender: 'M', age: '2'},
-    {title: 'female_2_year_old', gender: 'F', age: '2'},
-
-    {title: 'male_3_year_old', gender: 'M', age: '3'},
-    {title: 'female_3_year_old', gender: 'F', age: '3'},
-
-    {title: 'male_4_year_old', gender: 'M', age: '4'},
-    {title: 'female_4_year_old', gender: 'F', age: '4'},
-
-    {title: 'male_total_underfive', gender: 'M', age: 'total'},
-    {title: 'female_total_underfive', gender: 'F', age: 'total'},
-  ];
-
-  schoolAgeVar: any = [
-    {title: 'male_5_year_old', gender: 'M', age: '5'},
-    {title: 'female_5_year_old', gender: 'F', age: '5'},
-
-    {title: 'male_6_year_old', gender: 'M', age: '6'},
-    {title: 'female_6_year_old', gender: 'F', age: '6'},
-
-    {title: 'male_7_year_old', gender: 'M', age: '7'},
-    {title: 'female_7_year_old', gender: 'F', age: '7'},
-
-    {title: 'male_8_year_old', gender: 'M', age: '8'},
-    {title: 'female_8_year_old',  gender: 'F', age: '8'},
-
-    {title: 'male_9_year_old', gender: 'M', age: '9'},
-    {title: 'female_9_year_old', gender: 'F', age: '9'},
-
-    {title: 'male_total_school_age', gender: 'M', age: 'total'},
-    {title: 'female_total_school_age', gender: 'F', age: 'total'},
-  ];
-
-  adolescentVar: any = [
-    {title: 'male_adolescent', gender: 'M'},
-    {title: 'female_adolescent', gender: 'F'},
-  ];
-
-  adultVar: any = [
-    {title: 'male_adult', gender: 'M'},
-    {title: 'female_adult', gender: 'F'},
-  ];
-
-  seniorVar: any = [
-    {title: 'male_senior', gender: 'M'},
-    {title: 'female_senior', gender: 'F'},
-  ];
-
-  allAgeVar: any = [
-    {title: 'male_all_age', gender: 'M'},
-    {title: 'female_all_age', gender: 'F'},
-  ];
-
-  grand_total: any = ['grand_total']
-
   headerList: any  = [
-    { title: 'A. MEDICAL HISTORY STATUS', id: 'medHistory', level: 1},
-    { title: 'Hospitalization', id: 'hospitalization', level: 2},
-    { title: 'B. DIETARY / SOCIAL HISTORY STATUS', id: 'dietary', level: 1},
-    { title: 'C. ORAL HEALTH STATUS', id: 'oralHealth', level: 1},
-    { title: '7. Total (d/f)', id: 'df', level: 2},
-    { title: '8. Total (D/M/F)', id: 'dmf', level: 2},
-    { title: 'D. SERVICES RENDERED', id: 'dentalServices', level: 1},
-    { title: 'E. NO OF ORALLY FIT CHILDREN (OFC)', id: 'ofc', level: 1},
+    { title: 'A. MEDICAL HISTORY STATUS', id: 'medHistory', level: 1, para: 'stats'},
+    { title: 'Hospitalization', id: 'hospitalization', level: 2, para: 'stats'},
+    { title: 'B. DIETARY / SOCIAL HISTORY STATUS', id: 'dietary', level: 1, para: 'stats'},
+    { title: 'C. ORAL HEALTH STATUS', id: 'oralHealth', level: 1, para: 'stats'},
+    { title: '7. Total (d/f)', id: 'df', level: 2, para: 'temporary'},
+    { title: '8. Total (D/M/F)', id: 'dmf', level: 2, para: 'adult'},
+    { title: 'D. SERVICES RENDERED', id: 'dentalServices', level: 1, para: 'service'},
+    { title: 'E. NO OF ORALLY FIT CHILDREN (OFC)', id: 'ofc', level: 1, para: 'stats'},
   ];
 
   attendedExamined: any = [
@@ -267,8 +197,8 @@ export class DentalOhsConsolidatedComponent implements OnChanges {
     'pregnant_women_10_14_year_old_temp_decayed_tooth', 'pregnant_women_15_19_year_old_temp_decayed_tooth', 'pregnant_women_20_49_year_old_temp_decayed_tooth',
     'pregnant_women_10_14_year_old_temp_filled_tooth', 'pregnant_women_15_19_year_old_temp_filled_tooth', 'pregnant_women_20_49_year_old_temp_filled_tooth',
 
-    'male_adult_decayed_tooth', 'female_adult_decayed_tooth', 'male_senior_decayed_tooth', 'female_senior_decayed_tooth',
-    'male_adult_filled_tooth', 'female_adult_filled_tooth', 'male_senior_filled_tooth', 'female_senior_filled_tooth',
+    'male_adult_temp_decayed_tooth', 'female_adult_temp_decayed_tooth', 'male_senior_temp_decayed_tooth', 'female_senior_temp_decayed_tooth',
+    'male_adult_temp_filled_tooth', 'female_adult_temp_filled_tooth', 'male_senior_temp_filled_tooth', 'female_senior_temp_filled_tooth',
 
     'male_infant_decayed_tooth', 'female_infant_decayed_tooth', 'male_1_year_old_decayed_tooth', 'female_1_year_old_decayed_tooth',
     'male_2_year_old_decayed_tooth', 'female_2_year_old_decayed_tooth', 'male_3_year_old_decayed_tooth', 'female_3_year_old_decayed_tooth',
@@ -327,7 +257,7 @@ export class DentalOhsConsolidatedComponent implements OnChanges {
     let age_trail = `${age_group}${trail}`;
     const exists = this.blank_arr.find(e => e === age_trail);
 
-    return exists;
+    return !!exists;
   }
 
   ngOnChanges(): void {

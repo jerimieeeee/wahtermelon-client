@@ -42,10 +42,10 @@
 
               <tr>
                 <td>Family</td>
-                <td>{{ stats.summary_household_family_4ps.length }}</td>
-                <td>{{ stats.summary_household_family_non_4ps.length }}</td>
+                <td>{{ stats.summary_household_family_4ps.length ?? 0 }}</td>
+                <td>{{ stats.summary_household_family_non_4ps.length ?? 0 }}</td>
                 <td>-</td>
-                <td>{{ stats.summary_household_family_4ps.length + stats.summary_household_family_non_4ps.length }}</td>
+                <td>{{ (stats.summary_household_family_4ps.length ?? 0) + (stats.summary_household_family_non_4ps.length ?? 0) }}</td>
                 <td>Level II</td>
                 <td>{{ stats.water_source_level2_4ps.length }}</td>
                 <td>{{ stats.water_source_level2_non_4ps.length }}</td>
@@ -55,10 +55,10 @@
 
               <tr>
                 <td>Toilet Facility</td>
-                <td>4Ps</td>
-                <td>Non-4Ps</td>
-                <td>Unknown</td>
-                <td>Total</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
                 <td>Level III</td>
                 <td>{{ stats.water_source_level3_4ps.length }}</td>
                 <td>{{ stats.water_source_level3_non_4ps.length }}</td>

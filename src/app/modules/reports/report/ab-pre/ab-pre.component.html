@@ -14,6 +14,19 @@
     Rabies and Bite Victim Report Form <br />
   </div>
 
+  <th class="text-base font-medium text-gray-900 text-center align-top">
+    {{
+       this.reportForm.value.quarter === '1' ? '1st Quarter' :
+       this.reportForm.value.quarter === '2' ? '2nd Quarter' :
+       this.reportForm.value.quarter === '3' ? '3rd Quarter' :
+       this.reportForm.value.quarter === '4' ? '4th Quarter' :
+       ''
+    }}
+
+    ({{ this.reportForm.value.year }})
+
+  </th>
+
   <table class="ab-quarterly-report w-[330.2mm] border border-gray-400 select-none" id="reportForm">
     <thead class="text-xs px-1.5">
       <tr>
@@ -69,67 +82,69 @@
         <td class="pt-2 pb-4 text-sm text-left font-bold">{{ item.key }}</td>
         <ng-container class="text-center text-sm" *ngFor="let data of item.value">
           <td>{{ data.population | number }}</td>
-          <td (click)="showNameList('male', 'catchment', data.code)">{{ data.male | number }}</td>
-          <td (click)="showNameList('female', 'catchment', data.code)">{{ data.female | number }}</td>
-          <td (click)="showNameList('male_female_total', 'catchment', data.code)">{{ data.male_female_total | number }}</td>
-          <td (click)="showNameList('less_than_15', 'catchment', data.code)">{{ data.less_than_15 | number }}</td>
-          <td (click)="showNameList('greater_than_15', 'catchment', data.code)">{{ data.greater_than_15 | number }}</td>
-          <td (click)="showNameList('less_than_and_greater_than_15', 'catchment', data.code)">{{ data.less_than_and_greater_than_15 | number }}</td>
-          <td (click)="showNameList('category1', 'catchment', data.code)">{{ data.category1 | number }}</td>
-          <td (click)="showNameList('category2', 'catchment', data.code)">{{ data.category2 | number }}</td>
-          <td (click)="showNameList('category3', 'catchment', data.code)">{{ data.category3 | number }}</td>
-          <td (click)="showNameList('total_cat2_and_cat3', 'catchment', data.code)">{{ data.total_cat2_and_cat3 | number }}</td>
-          <td (click)="showNameList('total_cat1_cat2_cat3', 'catchment', data.code)">{{ data.total_cat1_cat2_cat3 | number }}</td>
-          <td (click)="showNameList('prep_total', 'catchment', data.code)">{{ data.prep_total | number }}</td>
-          <td (click)="showNameList('prep_completed', 'catchment', data.code)">{{ data.prep_completed | number }}</td>
-          <td (click)="showNameList('tandok', 'catchment', data.code)">{{ data.tandok | number }}</td>
+          <td (click)="data.male > 0 && showNameList('male', 'catchment', data.code)" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': data.male > 0}">{{ data.male | number }}</td>
+          <td (click)="data.female > 0 && showNameList('female', 'catchment', data.code)" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': data.female > 0}">{{ data.female | number }}</td>
+          <td (click)="data.male_female_total > 0 && showNameList('male_female_total', 'catchment', data.code)" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': data.male_female_total > 0}">{{ data.male_female_total | number }}</td>
+          <td (click)="data.less_than_15 > 0 && showNameList('less_than_15', 'catchment', data.code)" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': data.less_than_15 > 0}">{{ data.less_than_15 | number }}</td>
+          <td (click)="data.greater_than_15 > 0 && showNameList('greater_than_15', 'catchment', data.code)" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': data.greater_than_15 > 0}">{{ data.greater_than_15 | number }}</td>
+          <td (click)="data.less_than_and_greater_than_15 > 0 && showNameList('less_than_and_greater_than_15', 'catchment', data.code)" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': data.less_than_and_greater_than_15 > 0}">{{ data.less_than_and_greater_than_15 | number }}</td>
+          <td (click)="data.category1 > 0 && showNameList('category1', 'catchment', data.code)" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': data.category1 > 0}">{{ data.category1 | number }}</td>
+          <td (click)="data.category2 > 0 && showNameList('category2', 'catchment', data.code)" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': data.category2 > 0}">{{ data.category2 | number }}</td>
+          <td (click)="data.category3 > 0 && showNameList('category3', 'catchment', data.code)" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': data.category3 > 0}">{{ data.category3 | number }}</td>
+          <td (click)="data.total_cat2_and_cat3 > 0 && showNameList('total_cat2_and_cat3', 'catchment', data.code)" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': data.total_cat2_and_cat3 > 0}">{{ data.total_cat2_and_cat3 | number }}</td>
+          <td (click)="data.total_cat1_cat2_cat3 > 0 && showNameList('total_cat1_cat2_cat3', 'catchment', data.code)" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': data.total_cat1_cat2_cat3 > 0}">{{ data.total_cat1_cat2_cat3 | number }}</td>
+          <td (click)="data.prep_total > 0 && showNameList('prep_total', 'catchment', data.code)" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': data.prep_total > 0}">{{ data.prep_total | number }}</td>
+          <td (click)="data.prep_completed > 0 && showNameList('prep_completed', 'catchment', data.code)" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': data.prep_completed > 0}">{{ data.prep_completed | number }}</td>
+          <td (click)="data.tandok > 0 && showNameList('tandok', 'catchment', data.code)" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': data.tandok > 0}">{{ data.tandok | number }}</td>
           <td></td>
           <td></td>
-          <td (click)="showNameList('pep_completed', 'catchment', data.code)">{{ data.pep_completed | number }}</td>
-          <td (click)="showNameList('tcv', 'catchment', data.code)">{{ data.tcv | number }}</td>
-          <td (click)="showNameList('HRIG', 'catchment', data.code)">{{ data.HRIG | number }}</td>
-          <td (click)="showNameList('ERIG', 'catchment', data.code)">{{ data.ERIG }}</td>
-          <td (click)="showNameList('dog', 'catchment', data.code)">{{ data.dog | number }}</td>
-          <td (click)="showNameList('cat', 'catchment', data.code)">{{ data.cat | number }}</td>
-          <td (click)="showNameList('others', 'catchment', data.code)">{{ data.others | number }}</td>
-          <td (click)="showNameList('total_biting_animal', 'catchment', data.code)">{{ data.total_biting_animal | number }}</td>
-          <td (click)="showNameList('total_cat2_and_cat3_previous_quarter', 'non-catchment', data.code)">{{ data.total_cat2_and_cat3_previous_quarter | number }}</td>
-          <td (click)="showNameList('pep_completed_previous', 'non-catchment', data.code)">{{ data.pep_completed_previous | number }}</td>
+          <td (click)="data.pep_completed > 0 && showNameList('pep_completed', 'catchment', data.code)" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': data.pep_completed > 0}">{{ data.pep_completed | number }}</td>
+          <td (click)="data.tcv > 0 && showNameList('tcv', 'catchment', data.code)" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': data.tcv > 0}">{{ data.tcv | number }}</td>
+          <td (click)="data.HRIG > 0 && showNameList('HRIG', 'catchment', data.code)" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': data.HRIG > 0}">{{ data.HRIG | number }}</td>
+          <td (click)="data.ERIG > 0 && showNameList('ERIG', 'catchment', data.code)" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': data.ERIG > 0}">{{ data.ERIG }}</td>
+          <td (click)="data.dog > 0 && showNameList('dog', 'catchment', data.code)" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': data.dog > 0}">{{ data.dog | number }}</td>
+          <td (click)="data.cat > 0 && showNameList('cat', 'catchment', data.code)" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': data.cat > 0}">{{ data.cat | number }}</td>
+          <td (click)="data.others > 0 && showNameList('others', 'catchment', data.code)" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': data.others > 0}">{{ data.others | number }}</td>
+          <td (click)="data.total_biting_animal > 0 && showNameList('total_biting_animal', 'catchment', data.code)" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': data.total_biting_animal > 0}">{{ data.total_biting_animal | number }}</td>
+          <td (click)="data.total_cat2_and_cat3_previous_quarter > 0 && showNameList('total_cat2_and_cat3_previous_quarter', 'catchment', data.code)" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': data.total_cat2_and_cat3_previous_quarter > 0}">{{ data.total_cat2_and_cat3_previous_quarter | number }}</td>
+          <td (click)="data.pep_completed_previous > 0 && showNameList('pep_completed_previous', 'catchment', data.code)" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': data.pep_completed_previous > 0}">{{ data.pep_completed_previous | number }}</td>
           <td></td>
           <td></td>
         </ng-container>
       </tr>
-      <td class="pt-2 pb-4 font-bold text-center bg-gray-400" colspan="30">OTHERS (MUNICIPALITIES)</td>
+      <td class="pt-2 pb-4 font-bold text-center bg-gray-400" colspan="30">
+        OTHERS {{ reportFlag == '1' ? '(PROVINCES)' : '(MUNICIPALITIES)' }}
+      </td>
       <tr class="text-xs text-center" *ngFor="let item_others of stats_others|keyvalue">
         <td class="pt-2 pb-4 font-bold text-sm text-left">{{ item_others.key }}</td>
         <ng-container class="text-center" *ngFor="let data of item_others.value">
           <td>{{ data.population | number }}</td>
-          <td (click)="showNameList('male', 'non-catchment', data.code)">{{ data.male | number }}</td>
-          <td (click)="showNameList('female', 'non-catchment', data.code)">{{ data.female | number }}</td>
-          <td (click)="showNameList('male_female_total', 'non-catchment', data.code)">{{ data.male_female_total | number }}</td>
-          <td (click)="showNameList('less_than_15', 'non-catchment', data.code)">{{ data.less_than_15 | number }}</td>
-          <td (click)="showNameList('greater_than_15', 'non-catchment', data.code)">{{ data.greater_than_15 | number }}</td>
-          <td (click)="showNameList('less_than_and_greater_than_15', 'non-catchment', data.code)">{{ data.less_than_and_greater_than_15 | number }}</td>
-          <td (click)="showNameList('category1', 'non-catchment', data.code)">{{ data.category1 | number }}</td>
-          <td (click)="showNameList('category2', 'non-catchment', data.code)">{{ data.category2 | number }}</td>
-          <td (click)="showNameList('category3', 'non-catchment', data.code)">{{ data.category3 | number }}</td>
-          <td (click)="showNameList('total_cat2_and_cat3', 'non-catchment', data.code)">{{ data.total_cat2_and_cat3 | number }}</td>
-          <td (click)="showNameList('total_cat1_cat2_cat3', 'non-catchment', data.code)">{{ data.total_cat1_cat2_cat3 | number }}</td>
-          <td (click)="showNameList('prep_total', 'non-catchment', data.code)">{{ data.prep_total | number }}</td>
-          <td (click)="showNameList('prep_completed', 'non-catchment', data.code)">{{ data.prep_completed | number }}</td>
-          <td (click)="showNameList('tandok', 'non-catchment', data.code)">{{ data.tandok | number }}</td>
+          <td (click)="data.male > 0 && showNameList('male', 'non-catchment', data.code)" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': data.male > 0}">{{ data.male | number }}</td>
+          <td (click)="data.female > 0 && showNameList('female', 'non-catchment', data.code)" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': data.female > 0}">{{ data.female | number }}</td>
+          <td (click)="data.male_female_total > 0 && showNameList('male_female_total', 'non-catchment', data.code)" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': data.male_female_total > 0}">{{ data.male_female_total | number }}</td>
+          <td (click)="data.less_than_15 > 0 && showNameList('less_than_15', 'non-catchment', data.code)" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': data.less_than_15 > 0}">{{ data.less_than_15 | number }}</td>
+          <td (click)="data.greater_than_15 > 0 && showNameList('greater_than_15', 'non-catchment', data.code)" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': data.greater_than_15 > 0}">{{ data.greater_than_15 | number }}</td>
+          <td (click)="data.less_than_and_greater_than_15 > 0 && showNameList('less_than_and_greater_than_15', 'non-catchment', data.code)" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': data.less_than_and_greater_than_15 > 0}">{{ data.less_than_and_greater_than_15 | number }}</td>
+          <td (click)="data.category1 > 0 && showNameList('category1', 'non-catchment', data.code)" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': data.category1 > 0}">{{ data.category1 | number }}</td>
+          <td (click)="data.category2 > 0 && showNameList('category2', 'non-catchment', data.code)" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': data.category2 > 0}">{{ data.category2 | number }}</td>
+          <td (click)="data.category3 > 0 && showNameList('category3', 'non-catchment', data.code)" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': data.category3 > 0}">{{ data.category3 | number }}</td>
+          <td (click)="data.total_cat2_and_cat3 > 0 && showNameList('total_cat2_and_cat3', 'non-catchment', data.code)" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': data.total_cat2_and_cat3 > 0}">{{ data.total_cat2_and_cat3 | number }}</td>
+          <td (click)="data.total_cat1_cat2_cat3 > 0 && showNameList('total_cat1_cat2_cat3', 'non-catchment', data.code)" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': data.total_cat1_cat2_cat3 > 0}">{{ data.total_cat1_cat2_cat3 | number }}</td>
+          <td (click)="data.prep_total > 0 && showNameList('prep_total', 'non-catchment', data.code)" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': data.prep_total > 0}">{{ data.prep_total | number }}</td>
+          <td (click)="data.prep_completed > 0 && showNameList('prep_completed', 'non-catchment', data.code)" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': data.prep_completed > 0}">{{ data.prep_completed | number }}</td>
+          <td (click)="data.tandok > 0 && showNameList('tandok', 'non-catchment', data.code)" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': data.tandok > 0}">{{ data.tandok | number }}</td>
           <td></td>
           <td></td>
-          <td (click)="showNameList('pep_completed', 'non-catchment', data.code)">{{ data.pep_completed | number }}</td>
-          <td (click)="showNameList('tcv', 'non-catchment', data.code)">{{ data.tcv | number }}</td>
-          <td (click)="showNameList('HRIG', 'non-catchment', data.code)">{{ data.HRIG | number }}</td>
-          <td (click)="showNameList('ERIG', 'non-catchment', data.code)">{{ data.ERIG | number }}</td>
-          <td (click)="showNameList('dog', 'non-catchment', data.code)">{{ data.dog | number }}</td>
-          <td (click)="showNameList('cat', 'non-catchment', data.code)">{{ data.cat | number }}</td>
-          <td (click)="showNameList('others', 'non-catchment', data.code)">{{ data.others | number }}</td>
-          <td (click)="showNameList('total_biting_animal', 'non-catchment', data.code)">{{ data.total_biting_animal | number }}</td>
-          <td (click)="showNameList('total_cat2_and_cat3_previous_quarter', 'non-catchment', data.code)">{{ data.total_cat2_and_cat3_previous_quarter | number }}</td>
-          <td (click)="showNameList('pep_completed_previous', 'non-catchment', data.code)">{{ data.pep_completed_previous | number }}</td>
+          <td (click)="data.pep_completed > 0 && showNameList('pep_completed', 'non-catchment', data.code)" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': data.pep_completed > 0}">{{ data.pep_completed | number }}</td>
+          <td (click)="data.tcv > 0 && showNameList('tcv', 'non-catchment', data.code)" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': data.tcv > 0}">{{ data.tcv | number }}</td>
+          <td (click)="data.HRIG > 0 && showNameList('HRIG', 'non-catchment', data.code)" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': data.HRIG > 0}">{{ data.HRIG | number }}</td>
+          <td (click)="data.ERIG > 0 && showNameList('ERIG', 'non-catchment', data.code)" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': data.ERIG > 0}">{{ data.ERIG | number }}</td>
+          <td (click)="data.dog > 0 && showNameList('dog', 'non-catchment', data.code)" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': data.dog > 0}">{{ data.dog | number }}</td>
+          <td (click)="data.cat > 0 && showNameList('cat', 'non-catchment', data.code)" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': data.cat > 0}">{{ data.cat | number }}</td>
+          <td (click)="data.others > 0 && showNameList('others', 'non-catchment', data.code)" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': data.others > 0}">{{ data.others | number }}</td>
+          <td (click)="data.total_biting_animal > 0 && showNameList('total_biting_animal', 'non-catchment', data.code)" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': data.total_biting_animal > 0}">{{ data.total_biting_animal | number }}</td>
+          <td (click)="data.total_cat2_and_cat3_previous_quarter > 0 && showNameList('total_cat2_and_cat3_previous_quarter', 'non-catchment', data.code)" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': data.total_cat2_and_cat3_previous_quarter > 0}">{{ data.total_cat2_and_cat3_previous_quarter | number }}</td>
+          <td (click)="data.pep_completed_previous > 0 && showNameList('pep_completed_previous', 'non-catchment', data.code)" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': data.pep_completed_previous > 0}">{{ data.pep_completed_previous | number }}</td>
           <td></td>
           <td></td>
         </ng-container>

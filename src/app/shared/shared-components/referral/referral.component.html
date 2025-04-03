@@ -1,0 +1,7 @@
+<button class="text-white pr-2 pl-3 py-2 rounded-md bg-orange-500" (click)="toggleModal('referral-modal')">
+  <fa-icon [icon]="faBuildingCircleArrowRight"></fa-icon>
+</button>
+
+<app-referral-form *ngIf="modals['referral-modal']"
+  (toggleModal)="toggleModal($event)"
+></app-referral-form>
