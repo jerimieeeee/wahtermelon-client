@@ -51,7 +51,7 @@ export class EprescriptionComponent implements OnChanges {
     this.getAge();
     console.log(this.facility_info)
     console.log(this.patient_info)
-    console.log(this.prescriptions);
+    console.log(this.prescriptions, 'prescription ituu');
     console.log(this.consult_details);
   }
 }
