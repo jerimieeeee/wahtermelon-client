@@ -59,9 +59,9 @@
 
               <div class="grid grid-cols-1 text-left mt-2 pt-2">
                 <span class="font-semibold text-blue-500">Final Diagnosis:</span>
-                <ul class="list-disc ml-10">
+                <ul class="list-disc ml-10 text-blue-500">
                   <li *ngFor="let fdx of visit.consult_notes.finaldx">
-                    <span class="font-semibold text-sm text-blue-500">{{ fdx.lib_icd10.icd10_code }}:</span> {{ fdx.lib_icd10.icd10_desc }}
+                    <span class="font-semibold text-sm">{{ fdx.lib_icd10.icd10_code }}:</span> {{ fdx.lib_icd10.icd10_desc }}
                   </li>
                 </ul>
 
