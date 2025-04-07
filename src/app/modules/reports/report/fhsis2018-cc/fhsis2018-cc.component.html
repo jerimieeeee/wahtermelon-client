@@ -395,9 +395,9 @@
       <td (click)="deworm.male_female_deworming_1_to_19 > 0 && showNameList('M,F', 'deworming_1_to_19')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': deworm.male_female_deworming_1_to_19 > 0}">{{ deworm.male_female_deworming_1_to_19 ?? 0 }}</td>
       <td class="border"></td>
       <td class="border">38. Sick Infants 6-11 mos. Old seen</td>
-      <td (click)="services.male_sick_infant > 0 && showNameList('M', 'sick_infant')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': sick.male_sick_infant > 0}">{{ sick.male_sick_infant ?? 0 }}</td>
-      <td (click)="services.female_sick_infant > 0 && showNameList('F', 'sick_infant')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': sick.female_sick_infant > 0}">{{ sick.female_sick_infant ?? 0 }}</td>
-      <td (click)="services.male_female_sick_infant > 0 && showNameList('M,F', 'sick_infant')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': sick.male_female_sick_infant > 0}">{{ sick.male_female_sick_infant ?? 0 }}</td>
+      <td (click)="sick.male_sick_infant > 0 && showNameList('M', 'sick_infant')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': sick.male_sick_infant > 0}">{{ sick.male_sick_infant ?? 0 }}</td>
+      <td (click)="sick.female_sick_infant > 0 && showNameList('F', 'sick_infant')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': sick.female_sick_infant > 0}">{{ sick.female_sick_infant ?? 0 }}</td>
+      <td (click)="sick.male_female_sick_infant > 0 && showNameList('M,F', 'sick_infant')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': sick.male_female_sick_infant > 0}">{{ sick.male_female_sick_infant ?? 0 }}</td>
       <td class="border"></td>
     </tr>
 
