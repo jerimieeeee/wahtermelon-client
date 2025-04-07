@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { faHospital } from '@fortawesome/free-regular-svg-icons';
-import { faCapsules, faCircleInfo, faCommentSms, faFileArrowUp, faFileMedical, faFlaskVial, faHouseMedical, faSquarePollHorizontal, faStethoscope, faTableList, faUsers } from '@fortawesome/free-solid-svg-icons';
+import { faBoxesPacking, faCapsules, faCircleInfo, faCommentSms, faFileArrowUp, faFileMedical, faFlaskVial, faHouseMedical, faSquarePollHorizontal, faStethoscope, faTableList, faUsers } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
     selector: 'app-admin',
@@ -31,6 +31,11 @@ export class AdminComponent implements OnInit {
       loc: 'drugs',
       name: 'Medicine List',
       icon: faCapsules
+    },
+    {
+      loc: 'item-list',
+      name: 'Item Supplies',
+      icon: faBoxesPacking
     },
     /* {
     {
