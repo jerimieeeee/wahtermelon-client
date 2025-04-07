@@ -1,0 +1,57 @@
+<hr class="my-4">
+<div class="flex w-full">
+  <div class="w-full">
+    <div class="rounded-md border border-solid border-gray-300">
+      <span class="rounded-t-md m-0 p-2 font-semibold text-gray-50 bg-amber-500 flex justify-between" [ngClass]="{'rounded-b' : !show_content}">
+        Medicine Supplies
+        <div>
+          <button *ngIf="show_actions" type="button" class="ml-3 text-sm bg-white text-blue-500 px-3 rounded-full" (click)="toggleList()">
+            <fa-icon [icon]="faAdd" class="pr-1"></fa-icon>
+            add supplies
+          </button>
+        </div>
+      </span>
+      <table *ngIf="show_content" class="w-full table-auto p-5">
+        <thead>
+          <tr class="align-top">
+            <th scope="col" class="text-center py-3 px-3 w-3/12">Item Name</th>
+            <th scope="col" class="text-center py-3 px-3 w-3/12">Quantity</th>
+            <th scope="col" class="text-center py-3 px-3 w-1/12">Price</th>
+            <th scope="col" class="text-center py-3 px-3 w-1/12">Total</th>
+            <th scope="col" class="text-center py-3 px-3 w-1/12">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let prescription of prescriptions; trackBy:identify" class="bg-white border-b last:border-0 text-sm align-top">
+            <td class="py-4 px-3">
+
+            </td>
+            <td scope="row" class="py-4 px-3 font-medium text-gray-900">
+
+            </td>
+            <td scope="row" class="py-4 px-3 font-medium text-gray-900">
+
+            </td>
+            <td scope="row" class="py-4 px-3 font-medium text-gray-900">
+
+            </td>
+            <td class="text-sm text-center mb-5  align-middle">
+              <button class="mr-3" (click)="openAddForm(prescription)">
+                <fa-icon [icon]="faEdit" class="text-amber-500"></fa-icon>
+              </button>
+              <button (click)="toggleModal('delete-item', prescription)">
+                <fa-icon [icon]="faTrashCan" class="text-rose-500"></fa-icon>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<app-delete-item *ngIf="modal['delete-item']"
+  [delete_id]="delete_id"
+  [delete_desc]="delete_desc"
+  [url]="url"
+  (toggleModal)="toggleModal($event)"></app-delete-item>
