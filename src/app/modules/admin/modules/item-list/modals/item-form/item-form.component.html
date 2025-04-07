@@ -1,0 +1,72 @@
+<div id="defaultModal" tabindex="-1" class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 w-full md:inset-0 h-modal md:h-full justify-center items-center flex" aria-modal="true" role="dialog" style="z-index:60">
+  <div class="relative p-4 w-full max-w-3xl h-auto md:h-auto">
+    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+      <div class="flex justify-between items-start py-3 px-5 rounded-t border-b bg-blue-500 dark:border-gray-600">
+        <h3 class="mt-2 text-sm font-bold text-white dark:text-white">
+            List new item
+        </h3>
+      </div>
+      <div class="overflow-y-auto max-h-96 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
+        <form [formGroup]="itemForm" class="w-full max-w-3xl text-left text-gray-500 dark:text-gray-400">
+
+          <!-- START PATIENT DETAILS -->
+          <div class="flex item-start flex-wrap pb-5 px-3">
+            <div class="relative w-full text-sm px-4 py-2 mt-2">
+              <label class="font-semibold" for="item_name" [ngClass]="{'text-red-500': is_saving && f.item_name.errors}">Item name</label>
+              <input name="item_name" id="item_name" formControlName="item_name" type="text" class="input" [ngClass]="{'invalid-input': is_saving && f.item_name.errors}">
+
+              <div *ngIf="is_saving && f.item_name.errors" class="invalid-alert">
+                <div *ngIf="f.item_name.errors?.['required']">
+                  {{ required_message }}
+                </div>
+              </div>
+            </div>
+
+            <div class="relative w-1/2 text-sm px-3 py-2 mt-2">
+              <label class="font-semibold" for="quantity" [ngClass]="{'text-red-500': is_saving && f.quantity.errors}">Quantity</label>
+              <input name="quantity" id="quantity" formControlName="quantity" [ngClass]="{'invalid-input': is_saving && f.quantity.errors}" type="number" class="input">
+
+              <div *ngIf="is_saving && f.quantity.errors" class="invalid-alert">
+                <div *ngIf="f.quantity.errors?.['required']">
+                  {{ required_message }}
+                </div>
+              </div>
+            </div>
+
+            <div class="relative w-1/2 text-sm pr-3 py-2 mt-2">
+              <label class="font-semibold" for="unit_price" [ngClass]="{'text-red-500': is_saving && f.unit_price.errors}">Unit Price</label>
+              <input name="unit_price" id="unit_price" formControlName="unit_price" [ngClass]="{'invalid-input': is_saving && f.unit_price.errors}" type="number" class="input">
+
+              <div *ngIf="is_saving && f.unit_price.errors" class="invalid-alert">
+                <div *ngIf="f.unit_price.errors?.['required']">
+                  {{ required_message }}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="submit_errors" id="show_errors" class="relative mx-10 col-span-8 bg-red-200 rounded border border-red-300 text-red-900 text-sm mb-5">
+            <div class="block p-3 pl-10" >
+              <ul class="list-disc" >
+                <li *ngFor="let error of submit_errors | keyvalue">{{ error.value }}</li>
+              </ul>
+            </div>
+          </div>
+        </form>
+
+
+      </div>
+      <div class="flex justify-end py-4 px-5 space-x-4 rounded-b border-t border-gray-200 dark:border-gray-600">
+        <div [@openCloseTrigger] *ngIf="showAlert" class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 my-1 rounded h-11 relative w-64 justify-start" role="alert">
+          <span class="block sm:inline">Record was updated.</span>
+        </div>
+
+        <button  type="button" class="text-white bg-gray-400 hover:ring-2 focus:outline-none hover:ring-gray-300 rounded text-sm font-medium my-2 px-6 py-2.5 transition duration-150 ease-in-out" (click)="closeModal()">Close</button>
+        <button [disabled]="itemForm.invalid" type="button" class="text-white bg-blue-500 enabled:hover:ring-2 enabled:focus:outline-none enabled:hover:ring-blue-300 disabled:opacity-75 font-medium rounded text-sm my-2 px-6 py-2.5 text-center transition duration-150 ease-in-out" (click)="onSubmit()" >Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="opacity-50 fixed inset-0 z-50 bg-black"></div>
+
