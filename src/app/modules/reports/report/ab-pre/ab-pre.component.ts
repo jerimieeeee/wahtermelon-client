@@ -169,7 +169,7 @@ export class AbPreComponent implements OnChanges {
       }
 
       if ($variable === 'stats_others') {
-        this.sum_total.code = ($variable === 'stats_others' && !this.reportFlag) ? value[0].municipality_code : value[0].barangay_code;
+        this.sum_total.code = ($variable === 'stats_others' && !this.reportFlag) ? value[0].municipality_code : value[0].province_code;
       }
 
       if( $variable === 'stats' || $variable === 'stats_others') {
@@ -277,6 +277,7 @@ export class AbPreComponent implements OnChanges {
     this.reportFlag = this.userInfo.reports_flag === 1 ? '1' : null;
     this.selected_barangay = this.selectedBrgy;
     this.show_stats = false;
+    console.log(this.reportForm, 'amens2');
 
     this.stats = this.report_data.data;
     this.stats_others = this.report_data.data1_others;

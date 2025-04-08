@@ -49,23 +49,23 @@ export class PatientRecordComponent implements OnInit, OnChanges {
   physical_examination = [
     {
       code: 'palpitation_heart',
-      desc: 'Palpitation of heart'
+      desc: 'Palpation of Heart'
     },
     {
       code: 'peripheral_pulses',
-      desc: 'Palpation of peripheral pulses'
+      desc: 'Palpation of Peripheral Pulses'
     },
     {
       code: 'abdomen',
-      desc: 'Palpation of abdomen'
+      desc: 'Palpation of Abdomen'
     },
     {
       code: 'heart',
-      desc: 'Auscultation of heart'
+      desc: 'Auscultation of Heart'
     },
     {
       code: 'lungs',
-      desc: 'Auscultation of lungs'
+      desc: 'Auscultation of Lungs'
     },
     {
       code: 'sensation_feet',
