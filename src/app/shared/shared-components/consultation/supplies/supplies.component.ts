@@ -1,21 +1,29 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faAdd, faEdit, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
+import { AddItemFormComponent } from './modals/add-item-form/add-item-form.component';
+import { ItemListComponent } from './modals/item-list/item-list.component';
 
 @Component({
   selector: 'app-supplies',
-  imports: [CommonModule, FontAwesomeModule],
+  imports: [CommonModule, FontAwesomeModule, AddItemFormComponent, ItemListComponent],
   templateUrl: './supplies.component.html',
   styleUrl: './supplies.component.scss'
 })
 export class SuppliesComponent implements OnChanges {
+  @Output() loadConsult = new EventEmitter<any>();
   @Input() toggle_content;
   @Input() consult_details;
   @Input() with_credentials;
   @Input() allowed_to_edit;
   @Input() user_id;
+
+  faEdit = faEdit;
+  faTrashCan = faTrashCan;
+  faAdd = faAdd;
 
   show_content: boolean = true;
   show_list: boolean = false;
@@ -25,10 +33,10 @@ export class SuppliesComponent implements OnChanges {
   is_saving: boolean = false;
   consult_done: boolean = false;
 
-  modal: any = [];
+  modals: any = [];
   prescriptions: any;
 
-  onSubmut () {
+  onSubmit () {
     this.is_saving = true;
 
     this.http.post('', {}).subscribe({
@@ -40,6 +48,22 @@ export class SuppliesComponent implements OnChanges {
       }
     })
   }
+  selected_item: any;
+
+  toggleModal(item) {
+    console.log(item);
+    if(item.data) {
+      this.selected_item = item.data;
+      this.modals[item.name] = !this.modals[item.name];
+      if(item.name == 'item-list') this.modals['add-item'] = true;
+      if(this.modals[item.name] === false) this.loadConsult.emit();
+    } else {
+      this.modals[item] = !this.modals[item];
+      if(this.modals[item] === false) this.loadConsult.emit();
+    }
+
+
+  }
 
   constructor(
     private http: HttpService,
@@ -47,6 +71,7 @@ export class SuppliesComponent implements OnChanges {
   ) {}
 
   ngOnChanges(changes: SimpleChanges): void {
+    console.log(this.consult_details)
     this.show_content = this.toggle_content;
 
     if(this.consult_details.consult_done === false) this.show_actions = true;
