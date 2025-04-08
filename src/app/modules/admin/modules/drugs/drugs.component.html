@@ -33,15 +33,19 @@
         <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 mb-5">
           <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
-              <th scope="col" class="py-3 px-6">Brand Name</th>
-              <th scope="col" class="py-3 px-6">Name</th>
-              <th scope="col" class="py-3 px-6">Drug Strength </th>
-              <th scope="col" class="py-3 px-6">Regimen</th>
-              <th scope="col" class="py-3 px-6">Duration</th>
-              <th scope="col" class="py-3 px-6">Qty</th>
-              <th scope="col" class="py-3 px-6">Medicine Route</th>
-              <th scope="col" class="py-3 px-6">Action</th>
-              <!-- <th scope="col" class="py-3 px-6">Actions</th> -->
+              <th scope="col" class="py-3 px-3">Brand Name</th>
+              <th scope="col" class="py-3 px-3">Name</th>
+              <th scope="col" class="py-3 px-3">Drug Strength </th>
+              <th scope="col" class="py-3 px-3">
+                Regimen <br />
+                Duration <br />
+                Quantity | Unit Price
+              </th>
+              <!-- <th scope="col" class="py-3 px-3">Duration</th> -->
+              <!-- <th scope="col" class="py-3 px-3">Qty</th> -->
+              <th scope="col" class="py-3 px-3">Medicine Route</th>
+              <th scope="col" class="py-3 px-3">Action</th>
+              <!-- <th scope="col" class="py-3 px-3">Actions</th> -->
             </tr>
           </thead>
           <tbody *ngIf="!is_loading">
@@ -59,30 +63,32 @@
               </td>
             </tr>
             <tr *ngFor="let drug of drug_list; let odd = odd; let i = index" class="bg-white border-t" [ngClass]="{'bg-gray-50': odd}">
-              <td class="py-4 px-6">
+              <td class="py-4 px-3">
                 {{ drug.brand_name }}
               </td>
-              <td class="py-4 px-6">
+              <td class="py-4 px-3">
                 <span class="font-semibold">{{ drug.konsulta_medicine ? drug.konsulta_medicine.generic.desc: '' }}</span>
                 {{ drug.added_medicine ?? '' }}
                 <span *ngIf="drug.konsulta_medicine" class="text-xs font-normal"> <br />{{ drug.konsulta_medicine.desc }}</span>
               </td>
-              <td class="py-4 px-6">
+              <td class="py-4 px-3 text-center">
                 {{ drug.dosage_quantity }} {{ drug.unit_of_measurement.desc + ' (' + drug.unit_of_measurement.code + ')' }}
               </td>
-              <td class="py-4 px-6">
-                {{ drug.regimen.desc }}
+              <td class="py-4 px-3 font-normal">
+                {{ drug.regimen.desc }} <br />
+                {{ drug.duration_intake }} {{ drug.frequency.desc }} <br />
+                {{ drug.quantity }} {{ drug.preparation.desc }} | {{ drug.unit_price | currency: 'PHP' }}
               </td>
-              <td class="py-4 px-6">
+              <!-- <td class="py-4 px-3 text-center">
                 {{ drug.duration_intake }} {{ drug.frequency.desc }}
               </td>
-              <td class="py-4 px-6">
+              <td class="py-4 px-3 text-center">
                 {{ drug.quantity }} {{ drug.preparation.desc }}
-              </td>
-              <td class="py-4 px-6">
+              </td> -->
+              <td class="py-4 px-3 text-center">
                 {{ drug.medicine_route.desc}}
               </td>
-              <td class="py-4 px-6">
+              <td class="py-4 px-3 text-center">
                 <button type="button" (click)="showEdit(drug)">
                   <fa-icon [icon]="faEdit" class="text-amber-500"></fa-icon>
                 </button>
@@ -112,7 +118,7 @@
   </div>
 
   <div *ngIf="drug_list?.length >= 1">
-    <div class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
+    <div class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-3">
       <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
         <div>
           <p class="text-sm text-gray-700">
