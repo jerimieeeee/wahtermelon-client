@@ -220,8 +220,11 @@ export class PbefComponent implements OnInit {
 
   show_pdf: boolean = false;
   ngOnInit(): void {
+    console.log(this.caserate_list)
     if(this.caserate_list.length === 1) {
       this.selected_caserate = this.caserate_list[0];
+      this.getParams();
+    } else {
       this.getParams();
     }
   }
