@@ -44,6 +44,7 @@
               <tr>
                 <th rowspan="3" class="border border-slate-300 w-[70px]">ICD10/ <br />RVS Code</th>
                 <th rowspan="3" class="border border-slate-300 w-[198px]">Description</th>
+                <th rowspan="3" class="border border-slate-300 w-[198px]">Effectivity Date</th>
                 <th colspan="3" class="border border-slate-300 w-[216px]">First Case Rate</th>
                 <th colspan="3" class="border border-slate-300 w-[216px]">Second Case Rate</th>
                 <th colspan="7" class="border border-slate-300 w-[200px]">Applicable Health Care Institutions <br />Note: If licensed and capable to perform the procedure</th>
@@ -71,6 +72,7 @@
               <tr class="border border-slate-300" *ngFor="let caserate of caserate_result">
                 <td [rowSpan]="caserate.amount.length" class="border border-slate-300">{{ caserate.pitemCode }}</td>
                 <td [rowSpan]="caserate.amount.length" class="border border-slate-300">{{ caserate.pcaseRateDescription }}</td>
+                <td [rowSpan]="caserate.amount.length" class="border border-slate-300">{{ caserate.peffectivityDate | date: 'MM/dd/yyyy' }} to {{ caserate.peffectivityEndDate | date: 'MM/dd/yyyy' }}</td>
                 <td colspan="13" class="p-0 m-0">
                   <table class="table-auto p-0 m-0 w-full border-0" *ngIf="caserate.amount.length">
                     <tr *ngFor="let amount of caserate.amount; let last = last; let first = first">

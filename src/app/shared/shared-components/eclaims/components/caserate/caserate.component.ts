@@ -1,10 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, formatDate } from '@angular/common';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 import { faEdit, faSave } from '@fortawesome/free-regular-svg-icons';
-import { faCircleNotch, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faCircleNotch, faSearch } from '@fortawesome/free-solid-svg-icons';
 import * as angularFontawesome from '@fortawesome/angular-fontawesome';
 import { SearchCaserateComponent } from './modals/search-caserate/search-caserate.component';
 import { catchError, concat, debounceTime, distinctUntilChanged, filter, map, Observable, of, Subject, switchMap, tap } from 'rxjs';
@@ -27,6 +27,7 @@ export class CaserateComponent implements OnInit {
   faCircleNotch = faCircleNotch;
   faSearch = faSearch;
   faEdit = faEdit;
+  faCheck = faCheck;
 
   modals: any = [];
   attendant: any;
@@ -49,6 +50,10 @@ export class CaserateComponent implements OnInit {
   onSubmit() {
     this.is_saving = true;
 
+    this.caserateForm.patchValue({
+      caserate_attendant: this.caserateForm.value.caserate_attendant.id
+    });
+
     this.http.post('eclaims/eclaims-caserate', this.caserateForm.value).subscribe({
       next:(data:any) => {
         this.toastr.success('Successfuly recorded.', 'Caserate');
@@ -60,6 +65,39 @@ export class CaserateComponent implements OnInit {
   }
 
   caserate_list: any;
+  checking_accred: boolean = false;
+
+  toggleAttendant() {
+    this.caserateForm.controls.caserate_attendant.disable();
+
+    if(this.caserateForm.value.caserate_date) this.caserateForm.controls.caserate_attendant.enable();
+
+
+    if(this.accredcode) this.checkDoctorAccred();
+
+  }
+
+  accredcode: string;
+  result_accred_check: any;
+
+  checkDoctorAccred() {
+    this.checking_accred = true;
+    this.accredcode = this.caserateForm.value.caserate_attendant.accreditation_number;
+    let params = {
+      accrecode: this.accredcode,
+      admissiondate: formatDate(this.caserateForm.value.caserate_date, 'MM-dd-yyyy', 'en', 'Asia/Manila'),
+      dischargedate: formatDate(this.caserateForm.value.caserate_date, 'MM-dd-yyyy', 'en', 'Asia/Manila')
+    };
+
+    this.http.post('eclaims/check-doctor-accredited', params).subscribe({
+      next: (data: any) => {
+        console.log(data);
+        this.result_accred_check = data;
+        this.checking_accred = false;
+      },
+      error: err => {console.log(err); this.checking_accred = false;}
+    })
+  }
 
   getCaserate() {
     this.show_form = false;
@@ -114,7 +152,11 @@ export class CaserateComponent implements OnInit {
       meds_pExamTotalAmount: [null],
     });
 
-    if(data) this.patchData(data);
+    if(data) {
+      this.patchData(data);
+    } else {
+      this.caserateForm.controls.caserate_attendant.disable();
+    }
     this.show_form = true;
   }
 
@@ -176,6 +218,8 @@ export class CaserateComponent implements OnInit {
 
   patchData(data){
     this.caserateForm.patchValue({...data});
+    this.caserateForm.patchValue({caserate_attendant: data.attendant});
+    console.log(this.caserateForm.value);
   }
 
   loadContent(content) {
@@ -191,7 +235,9 @@ export class CaserateComponent implements OnInit {
       prof_fee: content.amount.pprimaryProfFee,
       caserate_fee: content.amount.pprimaryCaseRate,
       caserate_attendant: '',
-    })
+    });
+
+    this.toggleAttendant();
   }
 
   toggleModal(content) {
