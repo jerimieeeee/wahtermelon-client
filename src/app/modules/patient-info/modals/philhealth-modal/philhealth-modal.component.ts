@@ -170,26 +170,37 @@ export class PhilhealthModalComponent implements OnInit {
 
   retrieving_pin:boolean = false;
   retrieving_error: string;
+  get_pin_error: string;
   getMemberPin() {
+    this.get_pin_error = undefined;
     this.retrieving_error = null;
     this.retrieving_pin = true;
 
     let patient = this.http.getPatientInfo();
+    let birthdate = this.philhealthForm.value.membership_type_id === 'DD' ? this.philhealthForm.value.member_birthdate : patient.birthdate;
     let params = {
       program_code: 'hf',
-      last_name: patient.last_name,
-      first_name: patient.first_name,
-      middle_name: patient.middle_name,
-      suffix_name: patient.suffix_name !== 'NA' ? patient.suffix_name : '',
-      birthdate: formatDate(patient.birthdate, 'MM-dd-yyyy', 'en', 'Asia/Manila')
+      last_name: this.philhealthForm.value.membership_type_id === 'DD' ? this.philhealthForm.value.member_last_name : patient.last_name,
+      first_name: this.philhealthForm.value.membership_type_id === 'DD' ? this.philhealthForm.value.member_first_name : patient.first_name,
+      middle_name: this.philhealthForm.value.membership_type_id === 'DD' ? this.philhealthForm.value.member_middle_name : patient.middle_name,
+      suffix_name: this.philhealthForm.value.membership_type_id === 'DD' ? (this.philhealthForm.value.member_suffix_name !== 'NA' ? patient.suffix_name : '') : (patient.suffix_name !== 'NA' ? patient.suffix_name : ''),
+      birthdate: formatDate(birthdate, 'MM-dd-yyyy', 'en', 'Asia/Manila')
     }
 
     this.http.post('eclaims/get-member-pin', params).subscribe({
       next: (data:any) => {
+        if(data.success === false) this.get_pin_error = data.message;
         this.philhealthForm.patchValue({
           philhealth_id: data.pin,
           philhealth_id_confirmation: data.pin
         });
+
+        if(this.philhealthForm.value.membership_type_id === 'DD') {
+          this.philhealthForm.patchValue({
+            member_pin: data.pin,
+            member_pin_confirmation: data.pin
+          });
+        }
         this.toastrMessage('success', 'Philhealth', 'Philhealth PIN retrieved', 'retrieving_pin');
       },
       error: err => {

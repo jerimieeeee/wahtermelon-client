@@ -56,14 +56,183 @@
           <!-- START PATIENT DETAILS -->
           <div class="flex item-start flex-wrap pb-5 px-5">
             <div class="flex justify-between w-full -px-5 mt-3 rounded-tl rounded-tr">
-              <h4 class="font-bold text-blue-500 text-sm mt-2">Patient Details</h4>
+              <h4 class="font-bold text-blue-500 text-sm mt-2">Details</h4>
             </div>
 
-            <div class="w-full mx-5 flex justify-center">
-              <button [disabled]="retrieving_pin" type="button" class="btn-save" (click)="getMemberPin()">
-                <fa-icon *ngIf="retrieving_pin" [icon]="faCircleNotch" animation="spin"></fa-icon>
-                Get Philhealth PIN
-              </button>
+            <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
+              <label  for="membership_type_id" class="font-semibold" [ngClass]="{'text-red-500': is_saving && f.membership_type_id.errors}">Membership type</label>
+              <select name="membership_type_id" id="membership_type_id" formControlName="membership_type_id" [ngClass]="{'invalid-input': is_saving && f.membership_type_id.errors}" (change)="showMember()" class="input">
+                <option [value]="type.id" *ngFor="let type of membership_types">{{ type.desc}}</option>
+              </select>
+              <div *ngIf="is_saving && f.membership_type_id.errors" class="invalid-alert">
+                <div *ngIf="f.membership_type_id.errors?.['required']">
+                  {{ required_message }}
+                </div>
+              </div>
+            </div>
+
+            <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
+              <label  for="membership_category_id" class="font-semibold" [ngClass]="{'text-red-500': is_saving && f.membership_category_id.errors}">Membership category</label>
+              <select name="membership_category_id" id="membership_category_id" formControlName="membership_category_id" [ngClass]="{'invalid-input': is_saving && f.membership_category_id.errors}" class="input">
+                <option [value]="cat.id" *ngFor="let cat of membership_categories">{{ cat.desc}}</option>
+              </select>
+              <div *ngIf="is_saving && f.membership_category_id.errors" class="invalid-alert">
+                <div *ngIf="f.membership_category_id.errors?.['required']">
+                  {{ required_message }}
+                </div>
+              </div>
+            </div>
+
+            <!-- START MEMBER DETAILS -->
+            <div *ngIf="show_member_form" class="flex item-start flex-wrap pb-5">
+              <div class="flex justify-between w-full -px-5 mt-3 rounded-tl rounded-tr">
+                <h4 class="font-bold text-blue-500 text-sm mt-2">Member Details</h4>
+              </div>
+
+              <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
+                <label  for="member_relation_id" class="font-semibold" [ngClass]="{'text-red-500': is_saving && f.member_relation_id.errors}">Member relation</label>
+                <select name="member_relation_id" id="member_relation_id" formControlName="member_relation_id" class="input" [ngClass]="{'invalid-input': is_saving && f.member_relation_id.errors}" >
+                  <option [value]="relation.id" *ngFor="let relation of member_relationships">{{ relation.desc}}</option>
+                </select>
+                <div *ngIf="is_saving && f.member_relation_id.errors" class="invalid-alert">
+                  <div *ngIf="f.member_relation_id.errors?.['required']">
+                    {{ required_message }}
+                  </div>
+                </div>
+              </div>
+              <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2"></div>
+
+              <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
+                <label for="member_last_name" class="font-semibold" [ngClass]="{'text-red-500': is_saving && f.member_last_name.errors}">Member last name</label>
+                <input name="member_last_name" id="member_last_name" formControlName="member_last_name" [ngClass]="{'invalid-input': is_saving && f.member_last_name.errors}" type="text" class="input">
+
+                <div *ngIf="is_saving && f.member_last_name.errors" class="invalid-alert">
+                  <div *ngIf="f.member_last_name.errors?.['required']">
+                    {{ required_message }}
+                  </div>
+
+                  <div *ngIf="is_saving && f.member_last_name.errors?.['minLength']">
+                    field must have at least 2 characters
+                  </div>
+                </div>
+              </div>
+
+              <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
+                <label for="member_first_name" class="font-semibold" [ngClass]="{'text-red-500': is_saving && f.member_first_name.errors}">Member first name</label>
+                <input name="member_first_name" id="member_first_name" formControlName="member_first_name" [ngClass]="{'invalid-input': is_saving && f.member_first_name.errors}" type="text" class="input">
+
+                <div *ngIf="is_saving && f.member_first_name.errors" class="invalid-alert">
+                  <div *ngIf="f.member_first_name.errors?.['required']">
+                    {{ required_message }}
+                  </div>
+
+                  <div *ngIf="is_saving && f.member_first_name.errors?.['minLength']">
+                    field must have at least 2 characters
+                  </div>
+                </div>
+              </div>
+
+              <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
+                <label for="member_middle_name" class="font-semibold" [ngClass]="{'text-red-500': is_saving && f.member_middle_name.errors}">Member middle name</label>
+                <input name="member_middle_name" id="member_middle_name" formControlName="member_middle_name" [ngClass]="{'invalid-input': is_saving && f.member_middle_name.errors}" type="text" class="input">
+
+                <div *ngIf="is_saving && f.member_middle_name.errors" class="invalid-alert">
+                  <div *ngIf="f.member_middle_name.errors?.['required']">
+                    {{ required_message }}
+                  </div>
+
+                  <div *ngIf="is_saving && f.member_middle_name.errors?.['minLength']">
+                    field must have at least 2 characters
+                  </div>
+                </div>
+              </div>
+
+              <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
+                <label  for="member_suffix_name" class="font-semibold" [ngClass]="{'text-red-500': is_saving && f.member_suffix_name.errors}">Member suffix name</label>
+                <select name="member_suffix_name" id="member_suffix_name" formControlName="member_suffix_name" [ngClass]="{'invalid-input': is_saving && f.member_suffix_name.errors}" class="input">
+                  <option [value]="suffix.code" *ngFor="let suffix of suffix_names">{{ suffix.suffix_desc}}</option>
+                </select>
+                <div *ngIf="is_saving && f.member_suffix_name.errors" class="invalid-alert">
+                  <div *ngIf="f.member_suffix_name.errors?.['required']">
+                    {{ required_message }}
+                  </div>
+                </div>
+              </div>
+
+              <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
+                <label class="font-semibold" for="member_birthdate" [ngClass]="{'text-red-500': is_saving && f.member_birthdate.errors}">Member birthdate</label>
+                <input name="member_birthdate" id="member_birthdate" formControlName="member_birthdate" [ngClass]="{'invalid-input': is_saving && f.member_birthdate.errors}" type="date" max="{{ date | date: 'yyyy-MM-dd'}}" class="input">
+
+                <div *ngIf="is_saving && f.member_birthdate.errors" class="invalid-alert">
+                  <div *ngIf="f.member_birthdate.errors?.['required']">
+                    {{ required_message }}
+                  </div>
+                </div>
+              </div>
+
+              <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
+                <label  for="member_gender" class="font-semibold" [ngClass]="{'text-red-500': is_saving && f.member_gender.errors}">Member gender</label>
+                <select name="member_gender" id="member_gender" formControlName="member_gender" [ngClass]="{'invalid-input': is_saving && f.member_gender.errors}" class="input">
+                  <option [value]="sex.id" *ngFor="let sex of sex_cat">{{ sex.desc}}</option>
+                </select>
+                <div *ngIf="is_saving && f.member_gender.errors" class="invalid-alert">
+                  <div *ngIf="f.member_gender.errors?.['required']">
+                    {{ required_message }}
+                  </div>
+                </div>
+              </div>
+
+              <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
+                <label class="font-semibold" for="member_pin" [ngClass]="{'text-red-500': is_saving && f.member_pin.errors}">Member philhealth number</label>
+                <input name="member_pin" id="member_pin" formControlName="member_pin" mask="99-999999999-9" [showMaskTyped]="true" type="text" [ngClass]="{'invalid-input': is_saving && f.member_pin.errors}" class="input">
+
+                <div *ngIf="is_saving && f.member_pin.errors" class="invalid-alert">
+                  <div *ngIf="f.member_pin.errors?.['required']">
+                    {{ required_message }}
+                  </div>
+
+                  <div *ngIf="is_saving && f.member_pin.errors?.['minLength']">
+                    Philhealth ID must be 12 characters
+                  </div>
+                </div>
+              </div>
+
+              <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
+                <label class="font-semibold" for="member_pin_confirmation" [ngClass]="{'text-red-500': is_saving && f.member_pin_confirmation.errors}">Confirm Philhealth ID</label>
+                <input name="member_pin_confirmation" id="member_pin_confirmation" formControlName="member_pin_confirmation" mask="99-999999999-9" [showMaskTyped]="true" [ngClass]="{'invalid-input': is_saving && f.member_pin_confirmation.errors}" type="text" class="input">
+
+                <div *ngIf="philhealthMemberMatchError" class="invalid-alert">
+                  <div>
+                    Philhealth number does not match
+                  </div>
+                </div>
+
+                <div *ngIf="is_saving && f.member_pin_confirmation.errors" class="invalid-alert">
+                  <div *ngIf="f.member_pin_confirmation.errors?.['required']">
+                    {{ required_message }}
+                  </div>
+
+                  <div *ngIf="f.member_pin_confirmation.errors?.['minLength']">
+                    Philhealth ID must be 12 characters
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="text-gray-600 border border-slate-100 mx-5"></div>
+            <!-- END MEMBER DETAILS -->
+
+            <div class="w-full mx-5 flex flex-col justify-center">
+              <div class="flex justify-center">
+                <button [disabled]="retrieving_pin" type="button" class="btn-save" (click)="getMemberPin()">
+                  <fa-icon *ngIf="retrieving_pin" [icon]="faCircleNotch" animation="spin"></fa-icon>
+                  Get Philhealth PIN
+                </button>
+              </div>
+              <div *ngIf="get_pin_error" class="flex justify-center">
+                <div class="text-rose-500 text-sm flex text-center justify-center italic">
+                  {{ get_pin_error }}
+                </div>
+              </div>
             </div>
             <div *ngIf="retrieving_error" class="w-full mt-3 py-0.5 rounded-md mx-5 flex justify-center text-red-800 text-xs border border-red-400 bg-red-100" >
               {{ retrieving_error }}
@@ -134,29 +303,7 @@
               </div>
             </div>
 
-            <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
-              <label  for="membership_type_id" class="font-semibold" [ngClass]="{'text-red-500': is_saving && f.membership_type_id.errors}">Membership type</label>
-              <select name="membership_type_id" id="membership_type_id" formControlName="membership_type_id" [ngClass]="{'invalid-input': is_saving && f.membership_type_id.errors}" (change)="showMember()" class="input">
-                <option [value]="type.id" *ngFor="let type of membership_types">{{ type.desc}}</option>
-              </select>
-              <div *ngIf="is_saving && f.membership_type_id.errors" class="invalid-alert">
-                <div *ngIf="f.membership_type_id.errors?.['required']">
-                  {{ required_message }}
-                </div>
-              </div>
-            </div>
 
-            <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
-              <label  for="membership_category_id" class="font-semibold" [ngClass]="{'text-red-500': is_saving && f.membership_category_id.errors}">Membership category</label>
-              <select name="membership_category_id" id="membership_category_id" formControlName="membership_category_id" [ngClass]="{'invalid-input': is_saving && f.membership_category_id.errors}" class="input">
-                <option [value]="cat.id" *ngFor="let cat of membership_categories">{{ cat.desc}}</option>
-              </select>
-              <div *ngIf="is_saving && f.membership_category_id.errors" class="invalid-alert">
-                <div *ngIf="f.membership_category_id.errors?.['required']">
-                  {{ required_message }}
-                </div>
-              </div>
-            </div>
 
             <div *ngIf="(philhealthForm.controls.authorization_transaction_code.enabled && philhealthForm.value.philhealth_id && philhealthForm.value.philhealth_id_confirmation && philhealthForm.value.membership_type_id) && !philhealthMatchError" class="relative w-full flex text-sm px-5 mt-2">
               <div class="w-full text-sm md:w-1/2 lg:w-1/2">
@@ -287,143 +434,7 @@
           </div>
           <div class="text-gray-600 border border-slate-100 mx-5"></div>
           <!-- END EMPLOYER DETAILS -->
-          <!-- START MEMBER DETAILS -->
-          <div *ngIf="show_member_form" class="flex item-start flex-wrap pb-5 px-5">
-            <div class="flex justify-between w-full -px-5 mt-3 rounded-tl rounded-tr">
-              <h4 class="font-bold text-blue-500 text-sm mt-2">Member Details</h4>
-            </div>
 
-            <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
-              <label class="font-semibold" for="member_pin" [ngClass]="{'text-red-500': is_saving && f.member_pin.errors}">Member philhealth number</label>
-              <input name="member_pin" id="member_pin" formControlName="member_pin" mask="99-999999999-9" [showMaskTyped]="true" type="text" [ngClass]="{'invalid-input': is_saving && f.member_pin.errors}" class="input">
-
-              <div *ngIf="is_saving && f.member_pin.errors" class="invalid-alert">
-                <div *ngIf="f.member_pin.errors?.['required']">
-                  {{ required_message }}
-                </div>
-
-                <div *ngIf="is_saving && f.member_pin.errors?.['minLength']">
-                  Philhealth ID must be 12 characters
-                </div>
-              </div>
-            </div>
-
-            <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
-              <label class="font-semibold" for="member_pin_confirmation" [ngClass]="{'text-red-500': is_saving && f.member_pin_confirmation.errors}">Confirm Philhealth ID</label>
-              <input name="member_pin_confirmation" id="member_pin_confirmation" formControlName="member_pin_confirmation" mask="99-999999999-9" [showMaskTyped]="true" [ngClass]="{'invalid-input': is_saving && f.member_pin_confirmation.errors}" type="text" class="input">
-
-              <div *ngIf="philhealthMemberMatchError" class="invalid-alert">
-                <div>
-                  Philhealth number does not match
-                </div>
-              </div>
-
-              <div *ngIf="is_saving && f.member_pin_confirmation.errors" class="invalid-alert">
-                <div *ngIf="f.member_pin_confirmation.errors?.['required']">
-                  {{ required_message }}
-                </div>
-
-                <div *ngIf="f.member_pin_confirmation.errors?.['minLength']">
-                  Philhealth ID must be 12 characters
-                </div>
-              </div>
-            </div>
-
-            <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
-              <label  for="member_relation_id" class="font-semibold" [ngClass]="{'text-red-500': is_saving && f.member_relation_id.errors}">Member relation</label>
-              <select name="member_relation_id" id="member_relation_id" formControlName="member_relation_id" class="input" [ngClass]="{'invalid-input': is_saving && f.member_relation_id.errors}" >
-                <option [value]="relation.id" *ngFor="let relation of member_relationships">{{ relation.desc}}</option>
-              </select>
-              <div *ngIf="is_saving && f.member_relation_id.errors" class="invalid-alert">
-                <div *ngIf="f.member_relation_id.errors?.['required']">
-                  {{ required_message }}
-                </div>
-              </div>
-            </div>
-            <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2"></div>
-
-            <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
-              <label for="member_last_name" class="font-semibold" [ngClass]="{'text-red-500': is_saving && f.member_last_name.errors}">Member last name</label>
-              <input name="member_last_name" id="member_last_name" formControlName="member_last_name" [ngClass]="{'invalid-input': is_saving && f.member_last_name.errors}" type="text" class="input">
-
-              <div *ngIf="is_saving && f.member_last_name.errors" class="invalid-alert">
-                <div *ngIf="f.member_last_name.errors?.['required']">
-                  {{ required_message }}
-                </div>
-
-                <div *ngIf="is_saving && f.member_last_name.errors?.['minLength']">
-                  field must have at least 2 characters
-                </div>
-              </div>
-            </div>
-
-            <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
-              <label for="member_first_name" class="font-semibold" [ngClass]="{'text-red-500': is_saving && f.member_first_name.errors}">Member first name</label>
-              <input name="member_first_name" id="member_first_name" formControlName="member_first_name" [ngClass]="{'invalid-input': is_saving && f.member_first_name.errors}" type="text" class="input">
-
-              <div *ngIf="is_saving && f.member_first_name.errors" class="invalid-alert">
-                <div *ngIf="f.member_first_name.errors?.['required']">
-                  {{ required_message }}
-                </div>
-
-                <div *ngIf="is_saving && f.member_first_name.errors?.['minLength']">
-                  field must have at least 2 characters
-                </div>
-              </div>
-            </div>
-
-            <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
-              <label for="member_middle_name" class="font-semibold" [ngClass]="{'text-red-500': is_saving && f.member_middle_name.errors}">Member middle name</label>
-              <input name="member_middle_name" id="member_middle_name" formControlName="member_middle_name" [ngClass]="{'invalid-input': is_saving && f.member_middle_name.errors}" type="text" class="input">
-
-              <div *ngIf="is_saving && f.member_middle_name.errors" class="invalid-alert">
-                <div *ngIf="f.member_middle_name.errors?.['required']">
-                  {{ required_message }}
-                </div>
-
-                <div *ngIf="is_saving && f.member_middle_name.errors?.['minLength']">
-                  field must have at least 2 characters
-                </div>
-              </div>
-            </div>
-
-            <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
-              <label  for="member_suffix_name" class="font-semibold" [ngClass]="{'text-red-500': is_saving && f.member_suffix_name.errors}">Member suffix name</label>
-              <select name="member_suffix_name" id="member_suffix_name" formControlName="member_suffix_name" [ngClass]="{'invalid-input': is_saving && f.member_suffix_name.errors}" class="input">
-                <option [value]="suffix.code" *ngFor="let suffix of suffix_names">{{ suffix.suffix_desc}}</option>
-              </select>
-              <div *ngIf="is_saving && f.member_suffix_name.errors" class="invalid-alert">
-                <div *ngIf="f.member_suffix_name.errors?.['required']">
-                  {{ required_message }}
-                </div>
-              </div>
-            </div>
-
-            <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
-              <label class="font-semibold" for="member_birthdate" [ngClass]="{'text-red-500': is_saving && f.member_birthdate.errors}">Member birthdate</label>
-              <input name="member_birthdate" id="member_birthdate" formControlName="member_birthdate" [ngClass]="{'invalid-input': is_saving && f.member_birthdate.errors}" type="date" max="{{ date | date: 'yyyy-MM-dd'}}" class="input">
-
-              <div *ngIf="is_saving && f.member_birthdate.errors" class="invalid-alert">
-                <div *ngIf="f.member_birthdate.errors?.['required']">
-                  {{ required_message }}
-                </div>
-              </div>
-            </div>
-
-            <div class="relative w-full text-sm md:w-1/2 lg:w-1/2 px-5 py-2 mt-2">
-              <label  for="member_gender" class="font-semibold" [ngClass]="{'text-red-500': is_saving && f.member_gender.errors}">Member gender</label>
-              <select name="member_gender" id="member_gender" formControlName="member_gender" [ngClass]="{'invalid-input': is_saving && f.member_gender.errors}" class="input">
-                <option [value]="sex.id" *ngFor="let sex of sex_cat">{{ sex.desc}}</option>
-              </select>
-              <div *ngIf="is_saving && f.member_gender.errors" class="invalid-alert">
-                <div *ngIf="f.member_gender.errors?.['required']">
-                  {{ required_message }}
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="text-gray-600 border border-slate-100 mx-5"></div>
-          <!-- END MEMBER DETAILS -->
           <div *ngIf="submit_errors" id="show_errors" class="relative mx-10 col-span-8 bg-red-200 rounded border border-red-300 text-red-900 text-sm mb-5">
             <div class="block p-3 pl-10" >
               <ul class="list-disc" >
