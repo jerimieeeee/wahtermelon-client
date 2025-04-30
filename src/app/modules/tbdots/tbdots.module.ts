@@ -21,6 +21,7 @@ import { InitialDxComponent } from 'app/shared/shared-components/consultation/in
 import { FinalDxComponent } from 'app/shared/shared-components/consultation/final-dx/final-dx.component';
 import { PrescriptionComponent } from 'app/shared/shared-components/consultation/prescription/prescription.component';
 import { SuppliesComponent } from 'app/shared/shared-components/consultation/supplies/supplies.component';
+import { EsoaComponent } from 'app/shared/shared-components/eclaims/components/esoa/esoa.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { SuppliesComponent } from 'app/shared/shared-components/consultation/sup
     InitialDxComponent,
     FinalDxComponent,
     PrescriptionComponent,
-    SuppliesComponent
+    SuppliesComponent,
+    EsoaComponent
   ]
 })
 export class TbdotsModule { }
