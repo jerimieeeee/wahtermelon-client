@@ -1,0 +1,308 @@
+<div class="flex flex-col justify-center overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
+  <div class="flex flex-col w-full justify-center border border-gray-200 mt-3">
+    <div class="w-full bg-blue-500 text-white pl-3 py-2 font-semibold flex justify-between">
+      <div>Summary of Fees</div>
+      <!-- <div>
+        <button></button>
+      </div> -->
+    </div>
+    <table class="w-full table-auto text-xs">
+      <thead>
+        <tr>
+          <th class="w-1/12" rowspan='2'>CATEGORY</th>
+          <th class="w-1/12" rowspan='2'>AMOUNT</th>
+          <th class="w-8/12" colspan='7'>DISCOUNTS</th>
+          <!-- <th class="w-1/12" rowspan='2'>BALANCE</th> -->
+        </tr>
+        <tr>
+          <th class="">Senior Citizen</th>
+          <th>PWD</th>
+          <th>PCSO</th>
+          <th>DSWD</th>
+          <th>DOHMAP</th>
+          <th>HMO</th>
+          <!-- <th>Others</th> -->
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of summary_list| keyvalue: keepOriginalOrder">
+          <td class="pl-2">{{ item.value.label }}</td>
+          <td class="text-right pr-2">
+            {{ item.value.pChargesNetOfApplicableVat | currency: 'PHP' }}
+          </td>
+          <td>
+            <input type="number" class="input" (keyup)="computeBalance(item.key, 'pSeniorCitizenDiscount')" [(ngModel)]="summary_list[item.key]['pSeniorCitizenDiscount']" />
+          </td>
+          <td>
+            <input type="number" class="input" (keyup)="computeBalance(item.key, 'pPWDDiscount')" [(ngModel)]="summary_list[item.key]['pPWDDiscount']" />
+          </td>
+          <td>
+            <input type="number" class="input" (keyup)="computeBalance(item.key, 'pPCSO')" [(ngModel)]="summary_list[item.key]['pPCSO']" />
+          </td>
+          <td>
+            <input type="number" class="input" (keyup)="computeBalance(item.key, 'pDSWD')" [(ngModel)]="summary_list[item.key]['pDSWD']" />
+          </td>
+          <td>
+            <input type="number" class="input" (keyup)="computeBalance(item.key, 'pDOHMAP')" [(ngModel)]="summary_list[item.key]['pDOHMAP']" />
+          </td>
+          <td>
+            <input type="number" class="input" (keyup)="computeBalance(item.key, 'pHMO')" [(ngModel)]="summary_list[item.key]['pHMO']" />
+          </td>
+          <!-- <td class="items-center">
+
+          </td> -->
+        </tr>
+        <tr class="text-right py-2">
+            <td colspan="7" class="text-right pr-2">
+              Total Amount
+            </td>
+            <td colspan="1" class="text-right pr-2 font-semibold text-base">
+              {{ totalAmount | currency: 'PHP' }}
+            </td>
+        </tr>
+        <tr class="text-right py-2">
+            <td colspan="7" class="text-right pr-2">
+              HCI Fee
+            </td>
+            <td colspan="1" class="text-right pr-2 font-semibold text-base">
+              ({{ caseRateAmount | currency: 'PHP' }})
+            </td>
+        </tr>
+        <tr class="text-right py-2">
+            <td colspan="7" class="text-right pr-2">
+              Professional Fee
+            </td>
+            <td colspan="1" class="text-right pr-2 font-semibold text-base">
+              ({{ profFee | currency: 'PHP' }})
+            </td>
+        </tr>
+        <tr class="text-right py-2">
+            <td colspan="7" class="text-right pr-2">
+              Total Discount
+            </td>
+            <td colspan="1" class="text-right pr-2 font-semibold text-base">
+              ({{ computedDiscount['Items'] + computedDiscount['Prof'] | currency: 'PHP' }})
+            </td>
+        </tr>
+        <tr class="text-right py-2">
+          <td colspan="7 " class="text-right pr-2">
+            Balance:
+          </td>
+          <td colspan="1" class="text-right pr-2 font-semibold text-base">
+            {{ this.totalBalance | currency: 'PHP' }}
+            <!-- {{ summary_list[item.key]['balance'] | currency: 'PHP' }} -->
+          </td>
+        </tr>
+
+        <tr class="text-right py-2">
+          <td colspan="7 " class="text-right pr-2">
+            Patients Balance:
+          </td>
+          <td colspan="1" class="text-right pr-2 font-semibold text-base">
+            {{ (this.totalBalance < 0 ? 0 : this.totalBalance) | currency: 'PHP' }}
+            <!-- {{ summary_list[item.key]['balance'] | currency: 'PHP' }} -->
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="w-full text-left text-rose-500 italic mx-5 font-semibold text-sm">
+      <ul class="list-item">
+        <li *ngFor="let item of esoa_erros">{{ item }}</li>
+      </ul>
+    </div>
+    <div class="flex justify-end m-3">
+      <button [disabled]="generating_xml" type="button" class="btn-save" (click)="downloadEsoa()">
+        <fa-icon  *ngIf="!generating_xml" [icon]="faDownload"></fa-icon>
+        <fa-icon  *ngIf="generating_xml" [icon]="faCircleNotch" animation="spin"></fa-icon>
+        Download{{ generating_xml ? 'ing' : ''}} Esoa XML
+      </button>
+    </div>
+  </div>
+  <div class="flex w-full justify-center pt-3">
+    <div class="mb-3 w-10/12 flex flex-col">
+      <div class="w-full bg-orange-500 text-white pl-3 py-2 font-semibold">
+        Drugs and Medicine
+      </div>
+      <table class="w-full table-auto text-xs border border-gray-200">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Category</th>
+            <th>Quantity</th>
+            <th>Unit Price</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of prescription_list">
+            <td class="py-2 px-3">{{ item.added_item ? item.added_item : item.konsulta_medicine.desc }}</td>
+            <td class="py-2 px-3 text-center">{{ item.added_item ? 'OTHERS' : item.konsulta_medicine.category }}</td>
+            <td class="py-2 px-3 text-center">{{ item.quantity }}</td>
+            <td class="py-2 px-3 text-right">{{ item.unit_price | currency: 'PHP' }}</td>
+            <td class="py-2 px-3 text-right">{{ item.total_price | currency: 'PHP' }}</td>
+          </tr>
+          <tr *ngIf="prescription_list.length<1">
+            <td colspan="5" class="text-center italic">No item on this list</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- <div class="flex w-full justify-center">
+    <div class="w-10/12 flex flex-col">
+      <div class="w-full bg-orange-500 text-white pl-3 py-2 font-semibold">
+        Medical Supplies
+      </div>
+      <table class="w-full table-auto text-xs border border-gray-200">
+        <thead>
+          <tr>
+            <th>Item Name</th>
+            <th>Category</th>
+            <th>Quantity</th>
+            <th>Unit Price</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of supplies_list">
+            <td class="py-2 px-3">{{ item.added_item ? item.added_item : item.item_list.lib_item_claim.item_name }}</td>
+            <td class="py-2 px-3 text-center">{{ item.added_item ? 'OTHERS' : item.item_list.lib_item_claim.category }}</td>
+            <td class="py-2 px-3 text-center">{{ item.quantity }}</td>
+            <td class="py-2 px-3 text-right">{{ item.unit_price | currency: 'PHP' }}</td>
+            <td class="py-2 px-3 text-right">{{ item.total_price | currency: 'PHP' }}</td>
+          </tr>
+          <tr *ngIf="supplies_list.length<1">
+            <td colspan="5" class="text-center italic">No item on this list</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div> -->
+
+  <div class="flex flex-col w-full justify-center">
+    <ng-container *ngFor="let summary of summary_list | keyvalue: keepOriginalOrder">
+      <div *ngIf="summary.value.listVariable !== 'prescription_list' && summary.value.listVariable !== 'professional_list'" class="mb-3 w-10/12 flex flex-col mx-auto">
+        <div class="w-full bg-orange-500 text-white pl-3 py-2 font-semibold">
+          {{ summary.value.label }}
+        </div>
+        <table class="w-full table-auto text-xs border border-gray-200">
+          <thead>
+            <tr>
+              <th>Item Name</th>
+              <th>Category</th>
+              <th>Quantity</th>
+              <th>Unit Price</th>
+              <th>Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of this[summary.value.listVariable]">
+              <td class="py-2 px-3">{{ item.item_list.added_item ? item.item_list.added_item : item.item_list.lib_item_claim.item_name }}</td>
+              <td class="py-2 px-3 text-center">{{ item.added_item ? 'OTHERS' : (item.item_list.added_item ? 'OTHERS' : item.item_list.lib_item_claim.category) }}</td>
+              <td class="py-2 px-3 text-center">{{ item.quantity }}</td>
+              <td class="py-2 px-3 text-right">{{ item.unit_price | currency: 'PHP' }}</td>
+              <td class="py-2 px-3 text-right">{{ item.total_price | currency: 'PHP' }}</td>
+            </tr>
+            <tr *ngIf="supplies_list.length<1">
+              <td colspan="5" class="text-center italic">No item on this list</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </ng-container>
+  </div>
+
+  <!-- <div class="flex w-full justify-center">
+    <div class="w-10/12 flex flex-col">
+      <div class="w-full bg-orange-500 text-white pl-3 py-2 font-semibold">
+        Room and Board
+      </div>
+      <table class="w-full table-auto text-xs border border-gray-200">
+        <thead>
+          <tr>
+            <th>Item Name</th>
+            <th>Category</th>
+            <th>Quantity</th>
+            <th>Unit Price</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of room_list">
+            <td class="py-2 px-3">{{ item.added_item ? item.added_item : item.item_list.lib_item_claim.item_name }}</td>
+            <td class="py-2 px-3 text-center">{{ item.added_item ? 'OTHERS' : item.item_list.lib_item_claim.category }}</td>
+            <td class="py-2 px-3 text-center">{{ item.quantity }}</td>
+            <td class="py-2 px-3 text-right">{{ item.unit_price | currency: 'PHP' }}</td>
+            <td class="py-2 px-3 text-right">{{ item.total_price | currency: 'PHP' }}</td>
+          </tr>
+          <tr *ngIf="room_list.length<1">
+            <td colspan="5" class="text-center italic">No item on this list</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div> -->
+
+  <!-- <div class="flex w-full justify-center">
+    <div class="w-10/12 flex flex-col">
+      <div class="w-full bg-orange-500 text-white pl-3 py-2 font-semibold">
+        Operating Room
+      </div>
+      <table class="w-full table-auto text-xs border border-gray-200">
+        <thead>
+          <tr>
+            <th>Item Name</th>
+            <th>Category</th>
+            <th>Quantity</th>
+            <th>Unit Price</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of operating_list">
+            <td class="py-2 px-3">{{ item.added_item ? item.added_item : item.item_list.lib_item_claim.item_name }}</td>
+            <td class="py-2 px-3 text-center">{{ item.added_item ? 'OTHERS' : item.item_list.lib_item_claim.category }}</td>
+            <td class="py-2 px-3 text-center">{{ item.quantity }}</td>
+            <td class="py-2 px-3 text-right">{{ item.unit_price | currency: 'PHP' }}</td>
+            <td class="py-2 px-3 text-right">{{ item.total_price | currency: 'PHP' }}</td>
+          </tr>
+          <tr *ngIf="operating_list.length<1">
+            <td colspan="5" class="text-center italic">No item on this list</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div> -->
+
+  <!-- <div class="flex w-full justify-center">
+    <div class="w-10/12 flex flex-col">
+      <div class="w-full bg-orange-500 text-white pl-3 py-2 font-semibold">
+        Others
+      </div>
+      <table class="w-full table-auto text-xs border border-gray-200">
+        <thead>
+          <tr>
+            <th>Item Name</th>
+            <th>Category</th>
+            <th>Quantity</th>
+            <th>Unit Price</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of others_list">
+            <td class="py-2 px-3">{{ item.item_list.lib_item_claim ? item.item_list.lib_item_claim.item_name :item.item_list.added_item }}</td>
+            <td class="py-2 px-3 text-center">{{ item.item_list.lib_item_claim ? item.item_list.lib_item_claim.category : 'OTHERS' }}</td>
+            <td class="py-2 px-3 text-center">{{ item.quantity }}</td>
+            <td class="py-2 px-3 text-right">{{ item.unit_price | currency: 'PHP' }}</td>
+            <td class="py-2 px-3 text-right">{{ item.total_price | currency: 'PHP' }}</td>
+          </tr>
+          <tr *ngIf="others_list.length<1">
+            <td colspan="5" class="text-center italic">No item on this list</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div> -->
+</div>
