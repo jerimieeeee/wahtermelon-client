@@ -7,7 +7,7 @@
         </span>
       </div>
       <div class="text-sm font-normal"> <!--  || caserate_list?.length===0 -->
-        <button [disabled]="!program_creds" type="button" class="w-32 px-3 py-2 rounded-md bg-blue-500 text-sm text-white ml-auto mr-1 disabled:bg-gray-400" (click)="toggleModal('pbef')">
+        <button *ngIf="caserate_list?.length>0" [disabled]="!program_creds" type="button" class="w-32 px-3 py-2 rounded-md bg-blue-500 text-sm text-white ml-auto mr-1 disabled:bg-gray-400" (click)="toggleModal('pbef')">
           PBEF
         </button>
         <button [disabled]="!program_creds || caserate_list?.length===0" type="button" class="w-32 px-3 py-2 rounded-md bg-blue-500 text-sm text-white ml-auto mr-1 disabled:bg-gray-400" (click)="toggleModal('cf2')">
@@ -58,6 +58,11 @@
                 {{ eclaims.denied_reason ?? '-'  }}
               </td>
               <td class="py-4 px-3 text-center grid grid-cols-1">
+                <button class="bg-blue-500 text-white rounded-md p-0.5 mb-3 disabled:opacity-75" type="button" (click)="toggleModal('pbef', eclaims)">
+                  <!-- <fa-icon [icon]="faUpload"></fa-icon> -->
+                  PBEF<!-- {{ eclaims.pReceiptTicketNumber ? 'Reupload Docs' : 'Upload Claim' }} -->
+                </button>
+
                 <button *ngIf="eclaims.pStatus === '' || !eclaims.pStatus" class="bg-blue-500 text-white rounded-md p-0.5 mb-3 disabled:opacity-75" type="button" (click)="toggleModal('upload-claims', eclaims)">
                   <fa-icon [icon]="faUpload"></fa-icon>
                   Upload Claim<!-- {{ eclaims.pReceiptTicketNumber ? 'Reupload Docs' : 'Upload Claim' }} -->
@@ -80,10 +85,22 @@
                   Get Series Lhio
                 </button>
 
+                <button class="bg-orange-500 text-white rounded-md p-0.5 mb-3 disabled:opacity-75" type="button" *ngIf="eclaims.pClaimSeriesLhio" (click)="exportXML(eclaims)" [disabled]="is_exporting">
+                  <!-- <fa-icon [icon]="faReceipt" *ngIf="!is_refreshing"></fa-icon> -->
+                  <fa-icon [icon]="faRotate" *ngIf="is_exporting" animation="spin"></fa-icon>
+                  {{ is_exporting ? 'Exporting' : 'Export' }} XML
+                </button>
+
                 <button class="bg-green-500 text-white rounded-md p-0.5 mb-3 disabled:opacity-75" type="button" *ngIf="eclaims.pClaimSeriesLhio && !eclaims.denied_reason" (click)="getClaimStatus(eclaims, eclaims.pStatus)" [disabled]="is_refreshing">
                   <fa-icon [icon]="faReceipt" *ngIf="!is_refreshing"></fa-icon>
                   <fa-icon [icon]="faRotate" *ngIf="is_refreshing" animation="spin"></fa-icon>
                   Check {{ eclaims.pStatus === 'DENIED' ? 'Reason' : 'Status' }}
+                </button>
+
+                <button class="bg-green-500 text-white rounded-md p-0.5 mb-3 disabled:opacity-75" type="button" *ngIf="eclaims.pStatus === 'WITH VOUCHER'" (click)="getVoucherDetails(eclaims)" [disabled]="is_refreshing">
+                  <!-- <fa-icon [icon]="faReceipt" *ngIf="!is_refreshing"></fa-icon> -->
+                  <fa-icon [icon]="faRotate" *ngIf="is_refreshing" animation="spin"></fa-icon>
+                  Get Voucher Details
                 </button>
               </td>
             </tr>

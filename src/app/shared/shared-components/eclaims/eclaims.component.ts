@@ -27,7 +27,7 @@ export class EclaimsComponent implements OnInit {
   caserate_list: any;
   patient:any;
   patient_philhealth:any;
-  eclaims_list: any;
+  eclaims_list: any = [];
   program_creds:any;
 
   selected_pHospitalTransmittalNo: string;
@@ -76,7 +76,7 @@ export class EclaimsComponent implements OnInit {
     this.http.get('eclaims/eclaims-caserate', {params}).subscribe({
       next:(data:any) => {
         this.caserate_list = data.data;
-
+        console.log(this.caserate_list)
         this.show_cf2 = Object.keys(this.caserate_list).length > 0 ? true : false;
         this.show_form = true;
       },
@@ -92,16 +92,22 @@ export class EclaimsComponent implements OnInit {
     this.is_refreshing = true;
 
     let params = {
-      pReceiptTicketNumber: data.pReceiptTicketNumber,
+      receiptTicketNumber: data.pReceiptTicketNumber,
       program_code: this.program_name === 'cc' || this.program_name === 'fp' ? 'mc' :  this.program_name
     }
 
     this.http.post('eclaims/get-claims-map', params).subscribe({
       next: (resp: any) => {
-        data.pClaimSeriesLhio = resp.MAPPING.pClaimSeriesLhio;
-        data.pStatus = 'IN PROCESS';
+        console.log(resp)
+        if(resp.success === false) {
+          this.toastr.error('No query result', 'Series LHIO');
+          this.is_refreshing = false;
+        } else {
+          data.pClaimSeriesLhio = resp.mapping[0].pclaimSeriesLhio;
+          data.pStatus = 'IN PROCESS';
 
-        this.updateUploadClaim(data);
+          this.updateUploadClaim(data);
+        }
       },
       error: err => {
         this.is_refreshing = false;
@@ -124,7 +130,8 @@ export class EclaimsComponent implements OnInit {
 
     this.http.post('eclaims/get-claim-status', params).subscribe({
       next:(resp: any) => {
-        this.iterateMessage(resp, data, resp.CLAIM.pStatus);
+        console.log(resp)
+        this.iterateMessage(resp, data, resp.CLAIM['@attributes'].pStatus);
       },
       error: err => {
         console.log(err)
@@ -139,28 +146,48 @@ export class EclaimsComponent implements OnInit {
   }
 
   iterateMessage(resp, data, type) {
-    data.pStatus = resp.CLAIM.pStatus;
+    data.pStatus = resp.CLAIM['@attributes'].pStatus;
     let message: string;
 
     switch(type) {
       case 'DENIED': {
-        data.denied_reason = resp.CLAIM.DENIED.REASON.pReason;
-        message = 'As of: '+resp.pAsOf+ ' '+resp.pAsOfTime+ '<br />'+resp.CLAIM.DENIED.REASON.pReason;
+        data.denied_reason = resp.CLAIM.DENIED.REASON['@attributes'].pReason;
+        message = 'As of: '+resp['@attributes'].pAsOf+ ' '+resp['@attributes'].pAsOfTime+ '<br />'+resp.CLAIM.DENIED.REASON['@attributes'].pReason;
         break;
       }
       case 'WITH CHEQUE': {
-        message = 'As of: '+resp.pAsOf+ ' '+resp.pAsOfTime;
+        message = 'As of: '+resp['@attributes'].pAsOf+ ' '+resp['@attributes'].pAsOfTime;
+
+        /* Object.entries(resp.CLAIM.PAYMENT.PAYEE).forEach(([key, value]:any, index) => {
+          message = 'As of: '+resp['@attributes'].pAsOf+ ' '+resp['@attributes'].pAsOfTime;
+          message += '<br />Voucher No: '+value['@attributes'].pVoucherNo;
+          message += '<br />Check Amount: '+value['@attributes'].pCheckAmount;
+        }); */
+        Object.entries(resp.CLAIM.PAYMENT.PAYEE).forEach(([key, value]:any, index) => {
+          data.pCheckNo = value['@attributes'].pCheckNo;
+          message += '<br />Voucher No: '+value['@attributes'].pCheckNo;
+          message += '<br />Voucher Date: '+value['@attributes'].pVoucherDate;
+          message += '<br />Claim Amount: '+value['@attributes'].pClaimAmount;
+          message += '<br />Check Amount: '+value['@attributes'].pCheckAmount+'<br />';
+        });
+        break;
+      }
+      case 'WITH VOUCHER': {
+        message = 'As of: '+resp['@attributes'].pAsOf+ ' '+resp['@attributes'].pAsOfTime;
 
         Object.entries(resp.CLAIM.PAYMENT.PAYEE).forEach(([key, value]:any, index) => {
-          message = 'As of: '+resp.pAsOf+ ' '+resp.pAsOfTime;
-          message += '<br />Voucher No: '+value.pVoucherNo;
-          message += '<br />Check Amount: '+value.pCheckAmount;
+          data.pVoucherNo = value['@attributes'].pVoucherNo;
+          message += '<br />Voucher No: '+value['@attributes'].pVoucherNo;
+          message += '<br />Voucher Date: '+value['@attributes'].pVoucherDate;
+          message += '<br />Claim Amount: '+value['@attributes'].pClaimAmount;
+          message += '<br />Check Amount: '+value['@attributes'].pCheckAmount+'<br />';
         });
         break;
       }
       case 'RETURN' : {
-        message = 'As of: '+resp.pAsOf+ ' '+resp.pAsOfTime;
-        Object.entries(resp.CLAIM.RETURN.DEFECTS).forEach(([key, value]:any, index) => {
+        data.return_reason = resp.CLAIM.RETURN;
+        message = 'As of: '+resp['@attributes'].pAsOf+ ' '+resp['@attributes'].pAsOfTime;
+        Object.entries(resp.CLAIM.RETURN.DEFECTS['@attributes']).forEach(([key, value]:any, index) => {
           if(!value.pRequirement) message += '<br />Deficiency: '+value;
           if(value.pRequirement) message += '<br />Requirement: '+value.pRequirement;
         });
@@ -168,22 +195,109 @@ export class EclaimsComponent implements OnInit {
         break;
       }
       case 'IN PROCESS': {
-        message = 'As of: '+resp.pAsOf+ ' '+resp.pAsOfTime+'<br />';
+        message = 'As of: '+resp['@attributes'].pAsOf+ ' '+resp['@attributes'].pAsOfTime+'<br />';
         if(resp.CLAIM.TRAIL) {
-          Object.entries(resp.CLAIM.TRAIL.PROCESS).forEach(([key, value]:any, index) => {
-            message += '<br /><strong>'+value.pProcessDate +':</strong> '+value.pProcessStage;
-          });
+          if(resp.CLAIM.TRAIL.PROCESS['@attributes']) {
+            message += '<br /><strong>'+resp.CLAIM.TRAIL.PROCESS['@attributes'].pProcessDate +':</strong> '+resp.CLAIM.TRAIL.PROCESS['@attributes'].pProcessStage;
+          } else {
+            Object.entries(resp.CLAIM.TRAIL.PROCESS).forEach(([key, value]:any, index) => {
+              message += '<br /><strong>'+value['@attributes'].pProcessDate +':</strong> '+value['@attributes'].pProcessStage;
+            });
+          }
         }
         break;
       }
       default: {
-        message = 'As of: '+resp.pAsOf+ ' '+resp.pAsOfTime;
+        message = 'As of: '+resp['@attributes'].pAsOf+ ' '+resp['@attributes'].pAsOfTime;
       }
     }
 
     this.showInfoToastr(message, resp.CLAIM.pStatus);
     this.updateUploadClaim(data);
     this.is_refreshing = false;
+  }
+
+  /* iterateMessage(resp, data, type) {
+    data.pStatus = resp.CLAIM['@attributes'].pStatus;
+    let message: string;
+
+    console.log(type);
+    switch(type) {
+      case 'DENIED': {
+        data.denied_reason = resp.CLAIM.DENIED.REASON['@attributes'].pReason;
+        message = 'As of: '+resp['@attributes'].pAsOf+ ' '+resp['@attributes'].pAsOfTime+ '<br />'+resp.CLAIM.DENIED.REASON['@attributes'].pReason;
+        break;
+      }
+      case 'WITH CHEQUE': {
+        message = 'As of: '+resp['@attributes'].pAsOf+ ' '+resp['@attributes'].pAsOfTime;
+
+        Object.entries(resp.CLAIM.PAYMENT.PAYEE['@attributes']).forEach(([key, value]:any, index) => {
+          message = 'As of: '+resp['@attributes'].pAsOf+ ' '+resp['@attributes'].pAsOfTime;
+          message += '<br />Voucher No: '+value['@attributes'].pVoucherNo;
+          message += '<br />Check Amount: '+value['@attributes'].pCheckAmount;
+        });
+        break;
+      }
+      case 'WITH VOUCHER': {
+        message = 'As ofs: '+resp['@attributes'].pAsOf+ ' '+resp['@attributes'].pAsOfTime;
+
+        Object.entries(resp.CLAIM.PAYMENT.PAYEE).forEach(([key, value]:any, index) => {
+          message += '<br />Voucher No: '+value['@attributes'].pVoucherNo;
+          message += '<br />Voucher Date: '+value['@attributes'].pVoucherDate;
+          message += '<br />Claim Amount: '+value['@attributes'].pClaimAmount;
+          message += '<br />Check Amount: '+value['@attributes'].pCheckAmount+'<br />';
+        });
+        break;
+      }
+      case 'RETURN' : {
+        message = 'As of: '+resp['@attributes'].pAsOf+ ' '+resp['@attributes'].pAsOfTime;
+        Object.entries(resp.CLAIM.RETURN.DEFECTS).forEach(([key, value]:any, index) => {
+          console.log(value);
+          if(!value.pRequirement) message += '<br />Deficiency: '+value.pDeficiency;
+          if(value.pRequirement) message += '<br />Requirement: '+value.pRequirement;
+        });
+
+        break;
+      }
+      case 'IN PROCESS': {
+        message = 'As of: '+resp['@attributes'].pAsOf+ ' '+resp['@attributes'].pAsOfTime+'<br />';
+        if(resp.CLAIM.TRAIL) {
+          Object.entries(resp.CLAIM.TRAIL.PROCESS).forEach(([key, value]:any, index) => {
+            if(value['@attributes']){
+              message += '<br /><strong>'+value['@attributes'].pProcessDate +':</strong> '+value['@attributes'].pProcessStage;
+            } else {
+              message += '<br /><strong>'+value.pProcessDate +':</strong> '+value.pProcessStage;
+            }
+            console.log(value)
+          });
+        }
+        break;
+      }
+      default: {
+        message = 'As of: '+resp['@attributes'].pAsOf+ ' '+resp['@attributes'].pAsOfTime;
+      }
+    }
+
+    this.showInfoToastr(message, resp.CLAIM.pStatus);
+    this.updateUploadClaim(data);
+    this.is_refreshing = false;
+  } */
+
+  is_exporting: boolean = false;
+  exportXML(data: any) {
+    this.is_exporting = true;
+    this.http.post('eclaims/export-xml', data, { responseType: 'blob'  }).subscribe({
+      next: (blob: any) => {
+        const a = document.createElement('a');
+        const objectUrl = URL.createObjectURL(blob);
+        a.href = objectUrl;
+        a.download = data.pClaimSeriesLhio+'.xml.enc';
+        a.click();
+        URL.revokeObjectURL(objectUrl);
+        this.is_exporting = false;
+      },
+      error: err => console.log(err)
+    })
   }
 
   showInfoToastr(message, title) {
@@ -195,7 +309,21 @@ export class EclaimsComponent implements OnInit {
     });
   }
 
+  getVoucherDetails(data) {
+    console.log(data);
+    let params = {
+      voucherNo: data.pVoucherNo
+    }
+    this.http.post('eclaims/get-voucher-details', params).subscribe({
+      next: (data: any) => {
+        console.log(data);
+      },
+      error: err => console.log(err.error.message)
+    })
+  }
+
   updateUploadClaim(data) {
+    console.log(data);
     this.http.post('eclaims/eclaims-upload', data).subscribe({
       next: (data:any) => {
         this.is_refreshing = false;
@@ -226,10 +354,17 @@ export class EclaimsComponent implements OnInit {
   }
 
   toggleModal(name, eclaims?) {
-    this.selected_pHospitalTransmittalNo = eclaims?.pHospitalTransmittalNo ?? null;
-    this.selected_caserate_code = eclaims?.caserate.caserate_code ?? null;
-    this.selected_ticket_number = eclaims?.pReceiptTicketNumber ?? null;
-    this.selected_series_lhio = eclaims?.pClaimSeriesLhio ?? null;
+    console.log(eclaims)
+
+    if(eclaims) {
+      this.caserate_list = [eclaims?.caserate];
+    }
+
+    this.selected_pHospitalTransmittalNo = eclaims != undefined ? eclaims?.pHospitalTransmittalNo : null;
+    this.selected_caserate_code = eclaims != undefined ? eclaims?.caserate.caserate_code : null;
+
+    this.selected_ticket_number = eclaims != undefined ? eclaims?.pReceiptTicketNumber : null;
+    this.selected_series_lhio = eclaims != undefined ? eclaims?.pClaimSeriesLhio : null;
 
     this.modal[name] = !this.modal[name];
 
