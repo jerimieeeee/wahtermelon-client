@@ -61,9 +61,9 @@ export class DentalOhsConsolidatedComponent implements OnChanges {
   }
 
   indicatorVar: any = [
-    {title: 'pregnant_women_10_14_year_old', gender: null, age: '10', namelist_var: 'pregnant'},
-    {title: 'pregnant_women_15_19_year_old', gender: null, age: '15', namelist_var: 'pregnant'},
-    {title: 'pregnant_women_20_49_year_old', gender: null, age: '20', namelist_var: 'pregnant'},
+    {title: 'pregnant_women_10_14_year_old', gender: 'F', age: '10', namelist_var: 'pregnant'},
+    {title: 'pregnant_women_15_19_year_old', gender: 'F', age: '15', namelist_var: 'pregnant'},
+    {title: 'pregnant_women_20_49_year_old', gender: 'F', age: '20', namelist_var: 'pregnant'},
     {title: 'male_infant', gender: 'M', age: null, namelist_var: 'infant'},
     {title: 'female_infant', gender: 'F', age: null, namelist_var: 'infant'},
     {title: 'male_1_year_old', gender: 'M', age: '1', namelist_var: 'underfive'},
