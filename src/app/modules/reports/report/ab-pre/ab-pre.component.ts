@@ -277,7 +277,6 @@ export class AbPreComponent implements OnChanges {
     this.reportFlag = this.userInfo.reports_flag === 1 ? '1' : null;
     this.selected_barangay = this.selectedBrgy;
     this.show_stats = false;
-    console.log(this.reportForm, 'amens2');
 
     this.stats = this.report_data.data;
     this.stats_others = this.report_data.data1_others;
