@@ -1,1 +1,141 @@
-<p>asrh-masterlist works!</p>
+<div class="grid grid-cols-1 w-full">
+  <div class="flex justify-between w-full text-blue-500 font-semibold text-lg  p-3" >
+    <span>ASRH Masterlist</span>
+    <span>
+      <!-- <fa-icon *ngIf="exporting" [icon]="faCircleNotch" animation="spin" class="text-blue-500 text-sm mr-3">Exporting...</fa-icon> -->
+      <!-- <button [disabled]="pdf_exported" type="button" class="text-2xl mr-5 text-red-600 disabled:text-gray-600" (click)="exportP()">
+        <fa-icon [icon]="faFilePdf"></fa-icon>
+      </button>
+      <button  type="button" class="text-2xl" (click)="exportX()">
+        <fa-icon [icon]="faFileExcel" class="text-green-700"></fa-icon>
+      </button> -->
+    </span>
+  </div>
+  <div class="flex flex-col pb-5 overflow-x-auto">
+    <div class="sm:-mx-6 lg:-mx-8">
+      <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
+        <div class="">
+          <table class="border select-none" id="reportForm">
+            <thead class="border-b">
+              <tr>
+                <th class="text-sm font-medium text-gray-900 px-2 py-4 border break-words">Patient OPD Number</th>
+                <th class="w-48 text-sm font-medium text-gray-900 px-2 py-4 border">Initials</th>
+                <th class="w-20 text-sm font-medium text-gray-900 px-2 py-4 border">Age</th>
+                <th class="w-48 text-sm font-medium text-gray-900 px-2 py-4 border">Gender</th>
+                <th class="w-48 text-sm font-medium text-gray-900 px-2 py-4 border">Gender Identity</th>
+                <th class="w-48 text-sm font-medium text-gray-900 px-2 py-4 border">Birthday</th>
+                <th class="w-64 text-sm font-medium text-gray-900 px-2 py-4 border">Living condition</th>
+                <th class="w-40 text-sm font-medium text-gray-900 px-2 py-4 border">Area of residence</th>
+                <th class="w-40 text-sm font-medium text-gray-900 px-2 py-4 border">Contact details</th>
+                <th class="w-48 text-sm font-medium text-gray-900 px-2 py-4 border">Mode of Referral</th>
+                <th class="w-48 text-sm font-medium text-gray-900 px-2 py-4 border">Client Type</th>
+                <th class="w-48 text-sm font-medium text-gray-900 px-2 py-4 border">Educational level</th>
+                <th class="w-40 text-sm font-medium text-gray-900 px-2 py-4 border">Employment</th>
+                <th class="w-48 text-sm font-medium text-gray-900 px-2 py-4 border">Reason for consult</th>
+                <th class="w-48 text-sm font-medium text-gray-900 px-2 py-4 border">Brief History</th>
+                <th class="w-32 text-sm font-medium text-gray-900 px-2 py-4 border">Alcohol Use</th>
+                <th class="w-32 text-sm font-medium text-gray-900 px-2 py-4 border">Tobacco use/Vape</th>
+                <th class="w-32 text-sm font-medium text-gray-900 px-2 py-4 border">Illicit drug use</th>
+                <th class="w-40 text-sm font-medium text-gray-900 px-2 py-4 border">History of Self Harm</th>
+                <th class="w-40 text-sm font-medium text-gray-900 px-2 py-4 border">Coitarche</th>
+                <th class="w-48 text-sm font-medium text-gray-900 px-2 py-4 border">Risky Behavior for STIs</th>
+                <th class="w-64 text-sm font-medium text-gray-900 px-2 py-4 border">Contraceptive Use</th>
+                <th class="w-48 text-sm font-medium text-gray-900 px-2 py-4 border">Abuse History</th>
+                <th class="w-40 text-sm font-medium text-gray-900 px-2 py-4 border">Age of Menarche</th>
+                <th class="w-40 text-sm font-medium text-gray-900 px-2 py-4 border">Interval of Menses</th>
+                <th class="w-32 text-sm font-medium text-gray-900 px-2 py-4 border">LMP</th>
+                <th class="w-40 text-sm font-medium text-gray-900 px-2 py-4 border">Age of Gestation</th>
+                <th class="w-48 text-sm font-medium text-gray-900 px-2 py-4 border">Gravidity and Parity</th>
+                <th class="w-24 text-sm font-medium text-gray-900 px-2 py-4 border">Height</th>
+                <th class="w-24 text-sm font-medium text-gray-900 px-2 py-4 border">Weight</th>
+                <th class="w-24 text-sm font-medium text-gray-900 px-2 py-4 border">BMI</th>
+                <th class="w-32 text-sm font-medium text-gray-900 px-2 py-4 border">Blood Pressure</th>
+                <th class="w-32 text-sm font-medium text-gray-900 px-2 py-4 border">Heart Rate</th>
+                <th class="w-48 text-sm font-medium text-gray-900 px-2 py-4 border">Physical Exam Findings</th>
+                <th class="w-40 text-sm font-medium text-gray-900 px-2 py-4 border">Diagnosis</th>
+                <th class="w-40 text-sm font-medium text-gray-900 px-2 py-4 border">Management</th>
+                <th class="w-40 text-sm font-medium text-gray-900 px-2 py-4 border">Referral</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr class="border text-sm" *ngFor="let data of stats.data">
+                <td class="p-5 border text-center whitespace-nowrap">{{ data.patient_opd_id || '-' }}</td>
+                <td class="p-5 border whitespace-nowrap text-blue-500"><a [routerLink]="['/patient/itr',{id: data.patient_opd_id}]" target="_blank">{{ data.initials || '-' }}</a></td>
+                <td class="p-5 border whitespace-nowrap">{{ data.age || '-' }}</td>
+                <td class="p-5 border whitespace-nowrap">{{ data.gender || '-' }}</td>
+                <td class="p-5 border whitespace-nowrap">{{ data.gender_identity || '-' }}</td>
+                <td class="p-5 border whitespace-nowrap">{{ (data.birthdate | date:'MM/dd/yyyy') || '-' }}</td>
+                <td class="p-5 border whitespace-nowrap">{{ data.living_condition || '-' }}</td>
+                <td class="p-5 border whitespace-nowrap">{{ data.area_of_residence || '-' }}</td>
+                <td class="p-5 border whitespace-nowrap">{{ data.mobile_number || '-' }}</td>
+                <td class="p-5 border whitespace-nowrap">{{ data.mode_of_referral || '-' }}</td>
+                <td class="p-5 border whitespace-nowrap">{{ data.client_type || '-' }}</td>
+                <td class="p-5 border whitespace-nowrap">{{ data.education || '-' }}</td>
+                <td class="p-5 border whitespace-nowrap">{{ data.occupation || '-' }}</td>
+                <td class="p-5 border whitespace-nowrap">
+                  <ng-container *ngFor="let pe of data.complaint; let last = last">
+      <!-- <ng-container *ngIf="pe.lib_physical_exam?.pe_desc !== 'Essentially Normal'"> -->
+        <span>{{pe.lib_complaints.complaint_desc | titlecase }}</span><span *ngIf="!last">, </span>
+      <!-- </ng-container> -->
+    </ng-container>
+                </td>
+                <td class="p-5 border whitespace-nowrap">{{ (data.history_of_current_illness | titlecase) || '-' }}</td>
+                <td class="p-5 border whitespace-nowrap">{{ (data.alcohol_use || '-') | titlecase }}</td>
+                <td class="p-5 border whitespace-nowrap">{{ (data.tobacco_vape_use || '-') | titlecase }}</td>
+                <td class="p-5 border whitespace-nowrap">{{ (data.illicit_drug_use || '-') | titlecase }}</td>
+                <td class="p-5 border whitespace-nowrap">{{ (data.self_harm || '-') | titlecase }}</td>
+                <td class="p-5 border whitespace-nowrap">{{ (data.sexually_active || '-') | titlecase }}</td>
+                <td class="p-5 border whitespace-nowrap">{{ (data.risky_behavior || '-') | titlecase }}</td>
+                <td class="p-5 border whitespace-nowrap">{{ (data.with_family_planning || '-') | titlecase }}</td>
+                <td class="p-5 border whitespace-nowrap">{{ (data.abuse_history || '-') | titlecase }}</td>
+                <td class="p-5 border whitespace-nowrap">{{ data.menarche || '-' }}</td>
+                <td class="p-5 border whitespace-nowrap">{{ data.interval_of_menses || '-' }}</td>
+                <td class="p-5 border whitespace-nowrap">{{ data.lmp || '-' }}</td>
+                <td class="p-5 border whitespace-nowrap">{{ data.age_of_gestation || '-' }}</td>
+                <td class="p-5 border whitespace-nowrap">{{ data.gravida_parity || '-' }}</td>
+                <td class="p-5 border whitespace-nowrap">{{ data.height || '-' }}</td>
+                <td class="p-5 border whitespace-nowrap">{{ data.weight || '-' }}</td>
+                <td class="p-5 border whitespace-nowrap">{{ (data.bmi && data.bmi_class) ? data.bmi + ' ' + data.bmi_class : '-' }}</td>
+                <td class="p-5 border whitespace-nowrap">{{ data.blood_pressure || '-' }}</td>
+                <td class="p-5 border whitespace-nowrap">{{ data.heart_rate || '-' }}</td>
+
+<td class="p-5 border whitespace-nowrap">
+  <!-- <ng-container *ngIf="data.physical_exam?.length === 0 || data.physical_exam?.every(pe => pe.lib_physical_exam?.pe_desc === 'Essentially Normal')">
+    Essentially Well
+  </ng-container> -->
+<ng-container>
+  <span *ngIf="isPhysicalExamNormal(data.physical_exam)">Essentially Well</span>
+  <ng-container *ngIf="!isPhysicalExamNormal(data.physical_exam)">
+    <ng-container *ngFor="let pe of data.physical_exam; let last = last">
+      <ng-container *ngIf="pe.lib_physical_exam?.pe_desc !== 'Essentially Normal'">
+        <span>{{(pe.lib_physical_exam?.category_id | titlecase) + ' ' + (pe.lib_physical_exam?.pe_desc || '-')}}</span><span *ngIf="!last">, </span>
+      </ng-container>
+    </ng-container>
+  </ng-container>
+</ng-container>
+
+</td>
+
+<td class="p-5 border whitespace-nowrap">
+
+
+
+    <ng-container *ngFor="let pe of data.diagnosis; let last = last">
+      <!-- <ng-container *ngIf="pe.lib_physical_exam?.pe_desc !== 'Essentially Normal'"> -->
+        <span>{{pe.lib_icd10.icd10_desc | titlecase }}</span><span *ngIf="!last">, </span>
+      <!-- </ng-container> -->
+    </ng-container>
+
+
+</td>
+                <td class="p-5 border whitespace-nowrap">{{ (data.management || '-') | titlecase }}</td>
+                <td class="p-5 border whitespace-nowrap">{{ (data.referral || '-') | titlecase }}</td>
+                </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

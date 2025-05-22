@@ -60,6 +60,10 @@ export class ReportsComponent implements OnInit {
     { id: 'ab-pre', desc: 'Rabies and Bite Victim Report Form', url: 'reports-2018/animal-bite/pre-exposure'}
   ];
 
+  asrh_stats = [
+    { id: 'asrh-masterlist', desc: 'ASRH Masterlist', url: 'reports-2018/asrh/masterlist'},
+  ];
+
   gbv_stats = [
     { id: 'gbv-report', desc: 'GBV Report', url: 'gbv-report/catalyst-report'},
   ]
@@ -216,7 +220,8 @@ export class ReportsComponent implements OnInit {
   fhsis2018_data: any = [];
   onSubmit(page?: number) {
     this.pdf_exported = false;
-    this.is_fetching = true;
+    console.log(this.reportForm.value?.report_type.id);
+    // this.is_fetching = true;
 
     if(this.reportForm.value.report_type.id === 'fhsis2018-consolidated') {
       this.fhsis2018_data = {}; // Initialize storage
