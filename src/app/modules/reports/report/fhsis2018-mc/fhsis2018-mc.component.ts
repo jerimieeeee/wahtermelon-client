@@ -5,10 +5,10 @@ import { dateHelper } from 'app/shared/services/date-helper.service';
 import { ExportAsConfig, ExportAsService } from 'ngx-export-as';
 
 @Component({
-    selector: 'app-fhsis2018-mc',
-    templateUrl: './fhsis2018-mc.component.html',
-    styleUrls: ['./fhsis2018-mc.component.scss'],
-    standalone: false
+  selector: 'app-fhsis2018-mc',
+  templateUrl: './fhsis2018-mc.component.html',
+  styleUrls: ['./fhsis2018-mc.component.scss'],
+  standalone: false
 })
 export class Fhsis2018McComponent implements OnChanges {
   @Input() report_data;
