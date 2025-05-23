@@ -1,9 +1,17 @@
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faFilePdf } from '@fortawesome/free-regular-svg-icons';
+import {faAnglesLeft, faAnglesRight, faCircleNotch, faCircleXmark, faSearch, faChevronLeft, faChevronRight, faFileExcel} from "@fortawesome/free-solid-svg-icons";
 import { HttpService } from 'app/shared/services/http.service';
+import {ExportAsService, ExportAsModule, ExportAsConfig} from "ngx-export-as";
 import { is } from 'date-fns/locale';
 import { report } from 'process';
+import {BehaviorSubject} from "rxjs";
+
+interface State {
+  page: number;
+  pageOffset: number;
+}
 
 @Component({
   selector: 'app-asrh-masterlist',
@@ -19,82 +27,116 @@ export class AsrhMasterlistComponent implements OnChanges, OnInit {
   @Input() brgys;
   @Input() facility;
   @Input() submit_flag;
-  @Input() name_list_params: any;
+  // @Input() name_list_params: any;
   @Input() length: number;
   @Input() pageOffset: number;
   @Input() pageIndex: number;
-  @Input() url: any;
+  // @Input() url: any;
   @Input() loc: any;
   @Input() params: any;
 
-  search = faSearch;
-    show_nameList: any;
-    search_patient: string;
+    protected readonly faCircleXmark = faCircleXmark;
+   protected readonly faSearch = faSearch;
+   protected readonly faAnglesLeft = faAnglesLeft;
+   protected readonly faAnglesRight = faAnglesRight;
+   protected readonly Number = Number;
+   protected readonly faCircleNotch = faCircleNotch;
 
-    per_page: number = 10;
-    current_page: number = 1;
-    last_page: number;
-    from: number;
-    to: number;
-    total: number;
-    is_fetching: boolean = false;
-    location: any;
+   paginate = new BehaviorSubject<State>({
+     page: 1,
+     pageOffset: 10
+   });
 
-    constructor(
+   search = faSearch;
+   show_nameList: any;
+   search_patient: string;
+   name_list_params: any = {
+     category: 'all',
+     per_page: 15
+   };
+
+   exportAsExcel: ExportAsConfig = {
+       type: 'xlsx',
+       elementIdOrContent: 'reportForm',
+       options: { }
+     }
+
+   per_page: number = 10;
+   current_page: number = 1;
+   last_page: number;
+   from: number;
+   to: number;
+   total: number;
+   is_fetching: boolean = false;
+   location: any;
+
+  constructor(
       private http: HttpService,
       private router: Router,
+      private exportAsService: ExportAsService,
 
     ) { }
 
+  show_form: boolean = false;
   stats : any;
 
-   showNameList(patient_initials: string) {
-    this.name_list_params = {
-      initials: patient_initials,
-      category: this.reportForm.value.report_class,
-      per_page: 10,
-    };
-    this.openList = true;
-  }
+  pararams: any;
 
-  openList:boolean = false;
-  toggleModal(){
-    let list = [];
+  exporting: boolean = false;
 
-    this.show_nameList = list;
-    this.openList = !this.openList;
-  }
+  faChevronLeft = faChevronLeft;
+  faChevronRight = faChevronRight;
+  faFileExcel = faFileExcel
 
-  getList() {
-    this.is_fetching = true;
+  url= 'reports-2018/asrh/masterlist';
 
-    let params: any = this.name_list_params;
+  //  showNameList(patient_initials: string) {
+  //   this.name_list_params = {
+  //     initials: patient_initials,
+  //     category: this.reportForm.value.report_class,
+  //     per_page: 10,
+  //   };
+  //   this.openList = true;
+  // }
 
-    if (this.search_patient) params['search'] = this.search_patient;
+  // openList:boolean = false;
+  // toggleModal(){
+  //   let list = [];
 
-    if (this.name_list_params.category === 'muncity') {
-      params['category'] = 'muncity';
-    } else if (this.name_list_params.category === 'brgys') {
-      params['category'] = 'brgys';
-    } else if (this.name_list_params.category === 'fac') {
-      params['category'] = 'fac';
-    } else {
-      params['category'] = this.name_list_params.category;
+  //   this.show_nameList = list;
+  //   this.openList = !this.openList;
+  // }
+
+  getChartHistory(page?: number){
+    // console.log('query')
+    let params = {
+      start_date: this.reportForm.value.start_date,
+      end_date: this.reportForm.value.end_date,
+      per_page: 15,
+      page: !page ? this.current_page : page
     }
 
-    if(this.name_list_params.category !== 'all') {
-      params['code'] = this.selectedCode;
-    }
-    this.http.get(this.url, { params }).subscribe({
+    // params['params']['page'] = !page ? this.current_page : page;
+    // if (this.selected_physician !== 'all') params['params']['physician_id'] = this.selected_physician;
+    // params['params']['per_page'] = this.per_page;
+    // params['params']['patient_id'] = this.fp_visit_history_details.patient_id;
+    // params['params']['consult_done'] = 0;
+
+    // console.log(params, page, this.current_page)
+    this.http.get(this.url, {params}).subscribe({
       next: (data: any) => {
-        this.is_fetching = false;
-        this.show_nameList = data.data;
-        console.log(this.show_nameList, 'amens2u')
-        this.current_page = data.current_page;
-        this.last_page = data.last_page;
+        // console.log(data);
+        // this.show_form = true;
+        this.stats = data
+        this.current_page = data.meta.current_page;
+        this.last_page = data.meta.last_page;
+        this.from = data.meta.from;
+        this.to = data.meta.to;
+        this.total = data.meta.total;
+        console.log(this.stats, 'chart history')
       },
       error: err => console.log(err)
-    });
+    })
   }
 
   navigateTo(patient_opd_id: string){
@@ -149,13 +191,23 @@ isDiagnosis(peList: any[]): boolean {
 }
 
 
-
+exportX() {
+  this.exportAsService.save(this.exportAsExcel, 'ASRH Masterlist').subscribe({
+    next: () => {
+    this.exporting = true;
+    },
+    complete: () => {
+    this.exporting = false;
+    }
+  });
+  }
 
 
 
   ngOnChanges(): void {
     this.stats = this.report_data;
-    console.log(this.stats.data);
+    this.pararams = this.reportForm;
+    console.log(this.pararams, 'params');
     // const normal = this.isPhysicalExamNormal(this.stats.data.physical_exam);
     // console.log(normal, 'normal');
   }

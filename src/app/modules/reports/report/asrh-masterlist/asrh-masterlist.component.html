@@ -2,13 +2,13 @@
   <div class="flex justify-between w-full text-blue-500 font-semibold text-lg  p-3" >
     <span>ASRH Masterlist</span>
     <span>
-      <!-- <fa-icon *ngIf="exporting" [icon]="faCircleNotch" animation="spin" class="text-blue-500 text-sm mr-3">Exporting...</fa-icon> -->
+      <fa-icon *ngIf="exporting" [icon]="faCircleNotch" animation="spin" class="text-blue-500 text-sm ">Exporting...</fa-icon>
       <!-- <button [disabled]="pdf_exported" type="button" class="text-2xl mr-5 text-red-600 disabled:text-gray-600" (click)="exportP()">
         <fa-icon [icon]="faFilePdf"></fa-icon>
-      </button>
+      </button> -->
       <button  type="button" class="text-2xl" (click)="exportX()">
         <fa-icon [icon]="faFileExcel" class="text-green-700"></fa-icon>
-      </button> -->
+      </button>
     </span>
   </div>
   <div class="flex flex-col pb-5 overflow-x-auto">
@@ -133,6 +133,39 @@
                 </tr>
             </tbody>
           </table>
+
+         <div *ngIf="this.stats?.meta?.total >= 1">
+            <div class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
+              <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+                <div>
+                  <p class="text-sm text-gray-700">
+                    Showing <span class="font-medium">{{ this.stats?.meta?.from }}</span>
+                    to <span class="font-medium">{{ this.stats?.meta?.to }}</span>
+                    of <span class="font-medium">{{ this.stats?.meta?.total }}</span> results
+                  </p>
+                </div>
+                <div *ngIf="this.stats?.meta?.total >= 2">
+                  <nav class="relative z-0 inline-flex shadow-sm -space-x-px" aria-label="Pagination">
+                    <button [disabled]="current_page===1" (click)="getChartHistory(1)" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 enabled:bg-white disabled:bg-gray-300 text-sm font-medium text-gray-500 hover:bg-gray-50">
+                      <fa-icon [icon]="faAnglesLeft" class="block h-15 w-15 text-gray-500 pr-1"></fa-icon>
+                    </button>
+
+                      <button [disabled]="current_page===1" (click)="getChartHistory(current_page-1)" class="relative inline-flex items-center px-4 py-2 border border-gray-300 enabled:bg-white disabled:bg-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
+                        <fa-icon [icon]="faChevronLeft" class="block h-15 w-15 text-gray-500 pr-1"></fa-icon>Previous
+                      </button>
+                      <button [disabled]="current_page===last_page" (click)="getChartHistory(current_page+1)" class="relative inline-flex items-center px-4 py-2 border border-gray-300 enabled:bg-white disabled:bg-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
+                        Next<fa-icon [icon]="faChevronRight" class="h-5 w-5 text-gray-500"></fa-icon>
+                      </button>
+
+                    <button [disabled]="current_page===last_page" (click)="getChartHistory(last_page)" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 enabled:bg-white disabled:bg-gray-300 text-sm font-medium text-gray-500 hover:bg-gray-50">
+                      <fa-icon [icon]="faAnglesRight" class="h-5 w-5 text-gray-500"></fa-icon>
+                    </button>
+                  </nav>
+                </div>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
