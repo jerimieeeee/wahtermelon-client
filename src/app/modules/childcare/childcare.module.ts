@@ -15,22 +15,35 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { EndVisitComponent } from 'app/shared/shared-modals/end-visit/end-visit.component';
 import { SharedComponentsModule } from 'app/shared/shared-components/shared-components.module';
 import { CaserateComponent } from 'app/shared/shared-components/eclaims/components/caserate/caserate.component';
+import { FinalDxComponent } from 'app/shared/shared-components/consultation/final-dx/final-dx.component';
+import { PrescriptionComponent } from 'app/shared/shared-components/consultation/prescription/prescription.component';
+import { SuppliesComponent } from 'app/shared/shared-components/consultation/supplies/supplies.component';
 
 
 
-@NgModule({ declarations: [
-        ChildcareComponent,
-        FirstVisitComponent,
-        ServicesComponent,
-        VaccineInfoComponent,
-        BreastfeedingComponent,
-    ], imports: [CommonModule,
-        ChildcareRoutingModule,
-        FontAwesomeModule,
-        ReactiveFormsModule,
-        NgSelectModule,
-        FormsModule,
-        EndVisitComponent,
-        CaserateComponent,
-        SharedComponentsModule], providers: [provideHttpClient(withInterceptorsFromDi())] })
+@NgModule({
+  declarations: [
+    ChildcareComponent,
+    FirstVisitComponent,
+    ServicesComponent,
+    VaccineInfoComponent,
+    BreastfeedingComponent,
+  ],
+  imports: [
+    CommonModule,
+    ChildcareRoutingModule,
+    FontAwesomeModule,
+    ReactiveFormsModule,
+    NgSelectModule,
+    FormsModule,
+    EndVisitComponent,
+    CaserateComponent,
+    SharedComponentsModule,
+    FinalDxComponent,
+    PrescriptionComponent,
+    SuppliesComponent
+  ],
+  providers: [
+    provideHttpClient(withInterceptorsFromDi())
+  ] })
 export class ChildcareModule { }

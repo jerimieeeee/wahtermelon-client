@@ -12,7 +12,7 @@ import { HttpService } from 'app/shared/services/http.service';
   styleUrl: './item-list.component.scss'
 })
 export class ItemListComponent implements OnInit {
-  @Output() toggleModal = new EventEmitter<any>()
+  @Output() toggleSupplyModal = new EventEmitter<any>()
   @Input() search_item;
 
   faAnglesLeft = faAnglesLeft;
@@ -49,7 +49,7 @@ export class ItemListComponent implements OnInit {
       emit_data = 'item-list';
     }
 
-    this.toggleModal.emit(emit_data);
+    this.toggleSupplyModal.emit(emit_data);
   }
 
   loadItem(page?: number){

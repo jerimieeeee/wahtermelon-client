@@ -12,7 +12,7 @@ import { ToastrService } from 'ngx-toastr';
   styleUrl: './add-item-form.component.scss'
 })
 export class AddItemFormComponent implements OnInit {
-  @Output() toggleModal = new EventEmitter<any>();
+  @Output() toggleSupplyModal = new EventEmitter<any>();
   @Input() selected_item;
 
   itemForm: FormGroup = new FormGroup({
@@ -119,7 +119,7 @@ export class AddItemFormComponent implements OnInit {
   }
 
   closeModal() {
-    this.toggleModal.emit('add-item');
+    this.toggleSupplyModal.emit('add-item');
   }
 
   constructor(

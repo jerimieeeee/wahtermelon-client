@@ -3,11 +3,11 @@
   <div class="w-full">
     <div class="rounded-md border border-solid border-gray-300">
       <span class="rounded-t-md m-0 p-2 font-semibold text-gray-50 bg-amber-500 flex justify-between" [ngClass]="{'rounded-b' : !show_content}">
-        Medicine Supplies
+        Medicine, Rooms & Supplies
         <div>
-          <button *ngIf="show_actions" type="button" class="ml-3 text-sm bg-white text-blue-500 px-3 rounded-full" (click)="toggleModal('item-list')">
+          <button *ngIf="show_actions" type="button" class="ml-3 text-sm bg-white text-blue-500 px-3 rounded-full" (click)="toggleSupplyModal('item-list')">
             <fa-icon [icon]="faAdd" class="pr-1"></fa-icon>
-            add supplies
+            add item
           </button>
         </div>
       </span>
@@ -42,10 +42,10 @@
               {{ item.total_price | currency: 'PHP' }}
             </td>
             <td class="text-sm text-center mb-5  align-middle">
-              <button class="mr-3" (click)="toggleModal({data: item, name: 'add-item'})">
+              <button class="mr-3" (click)="toggleSupplyModal({data: item, name: 'add-item'})">
                 <fa-icon [icon]="faEdit" class="text-amber-500"></fa-icon>
               </button>
-              <button (click)="toggleModal('delete-item', prescription)">
+              <button (click)="toggleSupplyModal('delete-item', prescription)">
                 <fa-icon [icon]="faTrashCan" class="text-rose-500"></fa-icon>
               </button>
             </td>
@@ -56,18 +56,18 @@
   </div>
 </div>
 
-<app-delete-item *ngIf="modals['delete-item']"
+<app-delete-item *ngIf="supply_modals['delete-item']"
   [delete_id]="delete_id"
   [delete_desc]="delete_desc"
   [url]="url"
-  (toggleModal)="toggleModal($event)"
+  (toggleSupplyModal)="toggleSupplyModal($event)"
 ></app-delete-item>
 
-<app-add-item-form *ngIf="modals['add-item']"
-  (toggleModal)="toggleModal($event)"
+<app-add-item-form *ngIf="supply_modals['add-item']"
+  (toggleSupplyModal)="toggleSupplyModal($event)"
   [selected_item]="selected_item"
 ></app-add-item-form>
 
-<app-item-list *ngIf="modals['item-list']"
-  (toggleModal)="toggleModal($event)"
+<app-item-list *ngIf="supply_modals['item-list']"
+  (toggleSupplyModal)="toggleSupplyModal($event)"
 ></app-item-list>

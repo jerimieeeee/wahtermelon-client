@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { faCircleNotch, faClipboardQuestion, faPenToSquare, faReceipt, faRotate, faUpload } from '@fortawesome/free-solid-svg-icons';
+import { faCircleNotch, faClipboardQuestion, faPenToSquare, faReceipt, faRotate, faUpload, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -20,6 +20,7 @@ export class EclaimsComponent implements OnInit {
   faReceipt = faReceipt;
   faClipboardQuestion = faClipboardQuestion;
   faPenToSquare = faPenToSquare;
+  faXmark = faXmark;
 
   pending_list: any = [];
   modal: any = [];
@@ -37,6 +38,18 @@ export class EclaimsComponent implements OnInit {
   is_refreshing: boolean = false;
   show_form:boolean = false;
   show_cf2: boolean = false;
+
+  page: number = 1;
+  caserate_details!: any;
+  transmittal_number: string;
+  eclaims_upload_id: string;
+  togglePage(page_number: number, data?: any) {
+    console.log(data);
+    this.caserate_details = page_number === 2 ? data.caserate : null;
+    this.transmittal_number = page_number === 2 ? data.pHospitalTransmittalNo : null;
+    this.eclaims_upload_id = page_number === 2 ? data.id : null;
+    this.page = page_number;
+  }
 
   getEclaimsList() {
     this.show_form = false;
@@ -379,6 +392,7 @@ export class EclaimsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    console.log(this.selected_case)
     this.patient = this.http.getPatientInfo();
     this.patient_philhealth = this.patient.philhealthLatest;
 

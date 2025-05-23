@@ -18,10 +18,14 @@
 
     <div class="border border-slate-200 shadow-md rounded-xl">
       <div class="w-full bg-blue-500 text-white rounded-t-xl p-3 font-semibold flex justify-between">
-        <span>Eclaims</span>
+        <span>{{ page === 2 ? 'ESOA' : 'Eclaims' }}</span>
+        <button *ngIf="page === 2" (click)="togglePage(1)">
+          <fa-icon [icon]="faXmark"></fa-icon>
+          Close
+        </button>
       </div>
 
-      <div class="w-full p-5 overflow-x-auto">
+      <div *ngIf="page === 1" class="w-full p-5 overflow-x-auto">
         <table class="table-fixed w-full text-sm text-left text-gray-500">
           <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700">
             <tr>
@@ -66,6 +70,11 @@
                 <button *ngIf="eclaims.pStatus === '' || !eclaims.pStatus" class="bg-blue-500 text-white rounded-md p-0.5 mb-3 disabled:opacity-75" type="button" (click)="toggleModal('upload-claims', eclaims)">
                   <fa-icon [icon]="faUpload"></fa-icon>
                   Upload Claim<!-- {{ eclaims.pReceiptTicketNumber ? 'Reupload Docs' : 'Upload Claim' }} -->
+                </button>
+
+                <button *ngIf="eclaims.pStatus === '' || !eclaims.pStatus" class="bg-blue-500 text-white rounded-md p-0.5 mb-3 disabled:opacity-75" type="button" (click)="togglePage(2, eclaims)">
+                  <fa-icon [icon]="faReceipt"></fa-icon>
+                  Create ESOA
                 </button>
 
                 <button *ngIf="eclaims.pStatus === 'RETURN'" class="bg-blue-500 text-white rounded-md p-0.5 mb-3 disabled:opacity-75" type="button" (click)="toggleModal('upload-required-claims', eclaims)">
@@ -125,6 +134,14 @@
             </tr>
           </tbody>
         </table>
+      </div>
+
+      <div class="p-3" *ngIf="page === 2">
+        <app-esoa [program_id]="selected_case.id"
+          [caserate_details]="this.caserate_details"
+          [transmittal_number]="this.transmittal_number"
+          [eclaims_upload_id]="this.eclaims_upload_id"
+        ></app-esoa>
       </div>
     </div>
   </div>

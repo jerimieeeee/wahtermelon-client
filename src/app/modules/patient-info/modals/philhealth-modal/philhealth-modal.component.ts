@@ -373,8 +373,30 @@ export class PhilhealthModalComponent implements OnInit {
     });
   }
 
-  updateEffectivity(){
-    this.philhealthForm.patchValue({effectivity_year: formatDate(this.philhealthForm.value.enlistment_date, 'yyyy', 'en', 'Asia/Manila')});
+  existing_effectivity_year: string;
+  enlistment_invalid: boolean = false;
+  updateEffectivity(from_patch?: boolean){
+    if(from_patch){
+      this.philhealthForm.patchValue({effectivity_year: formatDate(this.philhealthForm.value.enlistment_date, 'yyyy', 'en', 'Asia/Manila')});
+      this.existing_effectivity_year = this.philhealthForm.value.effectivity_year;
+    } else {
+      this.philhealthForm.patchValue({effectivity_year: formatDate(this.philhealthForm.value.enlistment_date, 'yyyy', 'en', 'Asia/Manila')});
+
+      if(!this.existing_effectivity_year) {
+        this.enlistment_invalid = false;
+        return 1;
+      }
+      // console.log(this.philhealthForm.value.effectivity_year, this.existing_effectivity_year)
+      if(Number(this.philhealthForm.value.effectivity_year) >= 2000) {
+        if((this.existing_effectivity_year !== this.philhealthForm.value.effectivity_year)) {
+          this.toastr.error('Not allowed to change effectivity year, recorded effectivity year: '+this.existing_effectivity_year, 'Philhealth');
+          this.enlistment_invalid = true;
+        } else {
+          this.toastr.success('Enlistment date updated', 'Philhealth');
+          this.enlistment_invalid = false;
+        }
+      }
+    }
   }
 
   isATCrequired(){
@@ -448,6 +470,7 @@ export class PhilhealthModalComponent implements OnInit {
         this.philhealthForm.patchValue({member_birthdate: formatDate(this.philhealth_to_edit.member_birthdate, 'yyyy-MM-dd','en', 'Asia/Manila')});
         this.philhealthForm.patchValue({member_pin_confirmation: this.philhealth_to_edit.member_pin});
       }
+      this.updateEffectivity(true);
       this.showMember();
     }
 

@@ -33,7 +33,7 @@ export class SuppliesComponent implements OnChanges {
   is_saving: boolean = false;
   consult_done: boolean = false;
 
-  modals: any = [];
+  supply_modals: any = [];
   prescriptions: any;
 
   onSubmit () {
@@ -50,19 +50,17 @@ export class SuppliesComponent implements OnChanges {
   }
   selected_item: any;
 
-  toggleModal(item) {
+  toggleSupplyModal(item) {
     console.log(item);
     if(item.data) {
       this.selected_item = item.data;
-      this.modals[item.name] = !this.modals[item.name];
-      if(item.name == 'item-list') this.modals['add-item'] = true;
-      if(this.modals[item.name] === false) this.loadConsult.emit();
+      this.supply_modals[item.name] = !this.supply_modals[item.name];
+      if(item.name == 'item-list') this.supply_modals['add-item'] = true;
+      if(this.supply_modals[item.name] === false) this.loadConsult.emit();
     } else {
-      this.modals[item] = !this.modals[item];
-      if(this.modals[item] === false) this.loadConsult.emit();
+      this.supply_modals[item] = !this.supply_modals[item];
+      if(this.supply_modals[item] === false) this.loadConsult.emit();
     }
-
-
   }
 
   constructor(
