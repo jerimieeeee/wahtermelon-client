@@ -73,8 +73,10 @@
                 <td class="p-5 border whitespace-nowrap">{{ data.education || '-' }}</td>
                 <td class="p-5 border whitespace-nowrap">{{ data.occupation || '-' }}</td>
                 <td class="p-5 border whitespace-nowrap">
+                  <span *ngIf="data.complaint === null">-</span>
                   <ng-container *ngFor="let pe of data.complaint; let last = last">
       <!-- <ng-container *ngIf="pe.lib_physical_exam?.pe_desc !== 'Essentially Normal'"> -->
+
         <span>{{pe.lib_complaints.complaint_desc | titlecase }}</span><span *ngIf="!last">, </span>
       <!-- </ng-container> -->
     </ng-container>
@@ -106,6 +108,7 @@
 <ng-container>
   <span *ngIf="isPhysicalExamNormal(data.physical_exam)">Essentially Well</span>
   <ng-container *ngIf="!isPhysicalExamNormal(data.physical_exam)">
+     <span *ngIf="data.physical_exam === null">-</span>
     <ng-container *ngFor="let pe of data.physical_exam; let last = last">
       <ng-container *ngIf="pe.lib_physical_exam?.pe_desc !== 'Essentially Normal'">
         <span>{{(pe.lib_physical_exam?.category_id | titlecase) + ' ' + (pe.lib_physical_exam?.pe_desc || '-')}}</span><span *ngIf="!last">, </span>
@@ -119,9 +122,10 @@
 <td class="p-5 border whitespace-nowrap">
 
 
-
+    <span *ngIf="data.diagnosis === null">-</span>
     <ng-container *ngFor="let pe of data.diagnosis; let last = last">
       <!-- <ng-container *ngIf="pe.lib_physical_exam?.pe_desc !== 'Essentially Normal'"> -->
+
         <span>{{pe.lib_icd10.icd10_desc | titlecase }}</span><span *ngIf="!last">, </span>
       <!-- </ng-container> -->
     </ng-container>

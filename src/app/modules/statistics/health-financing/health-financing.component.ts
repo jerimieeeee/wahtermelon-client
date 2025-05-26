@@ -19,7 +19,7 @@ export class HealthFinancingComponent implements OnInit{
 
 
 tabloid(){
-  var divElement = document.getElementById('viz1733728776832');
+  var divElement = document.getElementById('viz1748239711220');
   var vizElement = divElement.getElementsByTagName('object')[0];
   if ( divElement.offsetWidth > 800 ) { vizElement.style.width='1225px';vizElement.style.height='1000px';}
   else if ( divElement.offsetWidth > 500 ) { vizElement.style.width='1225px';vizElement.style.height='1000px';}
