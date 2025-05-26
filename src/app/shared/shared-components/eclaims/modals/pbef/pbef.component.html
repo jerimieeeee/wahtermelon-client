@@ -9,7 +9,7 @@
         </h3>
       </div>
       <!-- Modal body -->
-      <div class="flex justify-center overflow-y-auto h-[600px] scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
+      <div *ngIf="!pbef_err_message" class="flex justify-center overflow-y-auto h-[600px] scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
         <embed *ngIf="show_pdf && (selected_caserate && show_form)"
           type="application/pdf"
           [src]="pbef_result"
@@ -30,7 +30,7 @@
           </div>
         </div>
 
-        <div  *ngIf="selected_caserate && !show_form" class="grid grid-cols-1 my-20">
+        <div  *ngIf="selected_caserate && !show_form" class="flex flex-col justify-center my-20">
           <div class="flex justify-center text-blue-500">
             <fa-icon [icon]="faCircleNotch" animation="spin"></fa-icon>
           </div>
@@ -41,6 +41,9 @@
         </div>
       </div>
 
+      <div *ngIf="pbef_err_message" class="flex justify-center my-20">
+        {{ pbef_err_message }}
+      </div>
       <!-- Modal footer -->
       <div class="flex justify-end py-4 px-5 space-x-4 rounded-b border-t border-gray-200">
         <button type="button" class="btn-save bg-gray-400" (click)="closeModal()">Close</button>

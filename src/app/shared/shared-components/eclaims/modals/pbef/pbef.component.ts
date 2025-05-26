@@ -145,6 +145,7 @@ export class PbefComponent implements OnInit {
     this.getPbef(admission_date);
   }
 
+  pbef_err_message: string;
   getPbef(admission_date, discharge_date?){
     let admit_date = formatDate(admission_date, 'MM-dd-yyyy', 'en', 'Asia/Manila');
 
@@ -181,7 +182,9 @@ export class PbefComponent implements OnInit {
         }
       },
       error: err => {
-        this.http.showError('Error fetching pbef. Please try again.', 'PBEF')
+        this.pbef_err_message = err.error.message;
+        console.log(err);
+        // this.http.showError(err.error.message, 'PBEF')
         // this.closeModal();
       }
     })
