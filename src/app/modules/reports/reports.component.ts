@@ -28,7 +28,8 @@ export class ReportsComponent implements OnInit {
     municipality_code: new FormControl<string| null>(''),
     month: new FormControl<string| null>(''),
     year: new FormControl<string| null>(''),
-    quarter: new FormControl<string| null>('')
+    quarter: new FormControl<string| null>(''),
+    disable_filter: new FormControl<string| null>(''),
   });
 
   fhsis2018 = [
@@ -277,6 +278,9 @@ export class ReportsComponent implements OnInit {
       if (this.reportForm.value.program) params['program'] = this.reportForm.value.program;
       if (page) params['page'] = page;
       params['category'] = this.reportForm.value.report_class;
+      if (this.reportForm.value.report_type.id === 'asrh-masterlist') {
+        params['disable_filter'] = this.reportForm.value.disable_filter = 1;
+      }
 
       if (this.reportForm.value.report_class === 'fac') params['code'] = this.reportFlag === '1' ? this.selectedFacilities.join(',') : this.userInfo.facility_code;
       if (this.reportForm.value.report_class === 'muncity') params['code'] = this.reportFlag === '1' ? this.selectedMuncity.join(',') : this.reportForm.value.municipality_code;
@@ -463,6 +467,7 @@ export class ReportsComponent implements OnInit {
       end_date: ['', Validators.required],
       month: [null, Validators.required],
       year: [null, Validators.required],
+      disable_filter: [''],
       program: [''],
     });
 
