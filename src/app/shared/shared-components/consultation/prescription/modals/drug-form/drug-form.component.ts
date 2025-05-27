@@ -201,7 +201,8 @@ export class DrugFormComponent implements OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    let physician = this.user_id;
+    // if(!this.user_id) this.http.getUserID();
+    let physician = !this.user_id ? this.http.getUserID() : this.user_id;
     this.prescriptionForm = this.formBuilder.nonNullable.group({
       brand_name: [null],
       patient_id: [this.consult_details.patient.id],
@@ -226,7 +227,7 @@ export class DrugFormComponent implements OnChanges {
       remarks: [null]
     });
 
-    // console.log(this.selected_drug)
+    console.log(this.prescriptionForm)
     if(this.selected_drug){
       this.patchValue();
     } else {

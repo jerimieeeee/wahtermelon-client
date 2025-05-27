@@ -6,10 +6,11 @@ import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 import { AddItemFormComponent } from './modals/add-item-form/add-item-form.component';
 import { ItemListComponent } from './modals/item-list/item-list.component';
+import { DeleteItemComponent } from 'app/shared/shared-modals/delete-item/delete-item.component';
 
 @Component({
   selector: 'app-supplies',
-  imports: [CommonModule, FontAwesomeModule, AddItemFormComponent, ItemListComponent],
+  imports: [CommonModule, FontAwesomeModule, AddItemFormComponent, ItemListComponent, DeleteItemComponent],
   templateUrl: './supplies.component.html',
   styleUrl: './supplies.component.scss'
 })
@@ -35,7 +36,9 @@ export class SuppliesComponent implements OnChanges {
 
   supply_modals: any = [];
   prescriptions: any;
-
+  delete_desc: string = 'Items';
+  delete_id: string;
+  url: string = 'consultation/item-supplies/';
   onSubmit () {
     this.is_saving = true;
 
@@ -50,7 +53,7 @@ export class SuppliesComponent implements OnChanges {
   }
   selected_item: any;
 
-  toggleSupplyModal(item) {
+  toggleSupplyModal(item, data?) {
     console.log(item);
     if(item.data) {
       this.selected_item = item.data;
@@ -58,6 +61,8 @@ export class SuppliesComponent implements OnChanges {
       if(item.name == 'item-list') this.supply_modals['add-item'] = true;
       if(this.supply_modals[item.name] === false) this.loadConsult.emit();
     } else {
+      console.log(data);
+      this.delete_id = data ? data.id : null;
       this.supply_modals[item] = !this.supply_modals[item];
       if(this.supply_modals[item] === false) this.loadConsult.emit();
     }

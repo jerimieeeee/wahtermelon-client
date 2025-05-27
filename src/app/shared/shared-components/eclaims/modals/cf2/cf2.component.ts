@@ -246,6 +246,21 @@ export class Cf2Component implements OnInit {
     this.getCreds();
   }
 
+  paramsDn(){
+    this.f.pICDCode.setValidators([Validators.required]);
+
+    this.eclaimsForm.patchValue({
+      pICDCode: this.eclaimsForm.value.icd10_code,
+      attendant_sign_date: formatDate(this.eclaimsForm.value.caserate_date, 'yyyy-MM-dd', 'en', 'Asia/Manila'),
+      admission_date: formatDate(this.eclaimsForm.value.caserate_date, 'yyyy-MM-dd', 'en', 'Asia/Manila'),
+      admission_time: formatDate(new Date().setHours(8), 'hh:mma', 'en', 'Asia/Manila'),
+      discharge_date: formatDate(this.eclaimsForm.value.caserate_date, 'yyyy-MM-dd', 'en', 'Asia/Manila'),
+      discharge_time: formatDate(new Date().setHours(17), 'hh:mma', 'en', 'Asia/Manila'),
+    })
+
+    this.getCreds();
+  }
+
   getCreds(){
     let params = {
       'filter[program_code]': this.program_name === 'cc' || this.program_name === 'fp'? 'mc' : this.program_name
@@ -253,6 +268,7 @@ export class Cf2Component implements OnInit {
 
     this.http.get('settings/philhealth-credentials', {params}).subscribe({
       next:(data:any) => {
+        console.log(data);
         this.program_creds = data.data[0];
         this.show_form = true;
       },
@@ -294,6 +310,10 @@ export class Cf2Component implements OnInit {
       }
       case 'fp': {
         this.paramsFp();
+        break;
+      }
+      case 'dn': {
+        this.paramsDn();
         break;
       }
     }
@@ -421,6 +441,7 @@ export class Cf2Component implements OnInit {
   ngOnInit(): void {
     this.facility = this.http.getUserFromJSON().facility;
     if(this.caserate_list.length === 1) {
+      console.log(this.caserate_list[0]);
       this.selected_caserate = this.caserate_list[0];
       this.createForm();
     }

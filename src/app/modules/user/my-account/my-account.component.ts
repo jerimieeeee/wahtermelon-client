@@ -69,6 +69,7 @@ export class MyAccountComponent implements OnInit {
     attendant_ml_flag: new FormControl<boolean| null>(false),
     attendant_fp_flag: new FormControl<boolean| null>(false),
     attendant_cv_flag: new FormControl<boolean| null>(false),
+    attendant_dn_flag: new FormControl<boolean| null>(false),
   });
 
   enbaleEdit(){
@@ -240,13 +241,14 @@ export class MyAccountComponent implements OnInit {
       employer_code: ['', Validators.required],
       accreditation_number: [null],
       prc_number: [null],
-      attendant_cc_flag: [null],
-      attendant_mc_flag: [null],
-      attendant_tb_flag: [null],
-      attendant_ab_flag: [null],
-      attendant_ml_flag: [null],
-      attendant_fp_flag: [null],
-      attendant_cv_flag: [null],
+      attendant_cc_flag: [false],
+      attendant_mc_flag: [false],
+      attendant_tb_flag: [false],
+      attendant_ab_flag: [false],
+      attendant_ml_flag: [false],
+      attendant_fp_flag: [false],
+      attendant_cv_flag: [false],
+      attendant_dn_flag: [false],
       aja_flag: [null],
     });
     this.userForm.disable();

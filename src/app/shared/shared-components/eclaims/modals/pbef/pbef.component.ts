@@ -105,34 +105,60 @@ export class PbefComponent implements OnInit {
       }
       default: {
         console.log(this.selected_case)
+        let admission_date = formatDate(this.selected_caserate.caserate_date, 'yyyy-MM-dd', 'en', 'Asia/Manila');
+        this.getPbef(admission_date);
         // this.getPbef();
       }
     }
   }
 
+  pbefGenerationError(message: string) {
+    this.toastr.error(message, 'PBEF');
+    this.closeModal();
+  }
+
   paramsFp() {
-    let admission_date = formatDate(this.selected_caserate.caserate_date, 'yyyy-MM-dd', 'en', 'Asia/Manila');
-    this.getPbef(admission_date);
+    if(!this.selected_caserate.caserate_date) {
+      this.pbefGenerationError('Caserate date is not set for this case');
+    } else {
+      let admission_date = formatDate(this.selected_caserate.caserate_date, 'yyyy-MM-dd', 'en', 'Asia/Manila');
+      this.getPbef(admission_date);
+    };
   }
 
   paramsAb() {
-    let admission_date = formatDate(this.selected_case.abPostExposure.day0_date, 'yyyy-MM-dd', 'en', 'Asia/Manila');
-    this.getPbef(admission_date);
+    if(!this.selected_case.abPostExposure.day0_date) {
+      this.pbefGenerationError('Day 0 date is not set for this case');
+    } else {
+      let admission_date = formatDate(this.selected_case.abPostExposure.day0_date, 'yyyy-MM-dd', 'en', 'Asia/Manila');
+      this.getPbef(admission_date);
+    }
   }
 
   paramsCc() {
-    let admission_date = formatDate(this.selected_case.admission_date, 'MM-dd-yyyy', 'en', 'Asia/Manila');
-
-    this.getPbef(admission_date);
+    if(!this.selected_case.admission_date) {
+      this.pbefGenerationError('Admission date is not set for this case');
+    } else {
+      let admission_date = formatDate(this.selected_case.admission_date, 'MM-dd-yyyy', 'en', 'Asia/Manila');
+      this.getPbef(admission_date);
+    }
   }
 
   paramsMc() {
     let admission_date;
 
     if(this.selected_caserate.code === 'ANC01' || this.selected_caserate.code === 'ANC02') {
-      admission_date = formatDate(new Date(this.selected_case.prenatal_visit[0].prenatal_date), 'MM-dd-yyyy', 'en', 'Asia/Manila');
+      if(!this.selected_case.prenatal_visit[0].prenatal_date) {
+        this.pbefGenerationError('Prenatal date is not set for this case');
+      } else {
+        admission_date = formatDate(new Date(this.selected_case.prenatal_visit[0].prenatal_date), 'MM-dd-yyyy', 'en', 'Asia/Manila');
+      }
     } else {
-      admission_date = formatDate(this.selected_case.post_registration.admission_date, 'MM-dd-yyyy', 'en', 'Asia/Manila');
+      if(!this.selected_case.post_registration.admission_date) {
+        this.pbefGenerationError('Admission date is not set for this case');
+      } else {
+        admission_date = formatDate(this.selected_case.post_registration.admission_date, 'MM-dd-yyyy', 'en', 'Asia/Manila');
+      }
     }
 
     this.getPbef(admission_date);
@@ -141,8 +167,23 @@ export class PbefComponent implements OnInit {
   paramsTb() {
     let admission_date: Date;
 
-    admission_date = this.selected_caserate.code === '89222' ? this.selected_case.case_holding.continuation_start : this.selected_case.case_holding.treatment_start;
-    this.getPbef(admission_date);
+    if(this.selected_caserate.code === '89222') {
+      if(!this.selected_case.case_holding.continuation_start) {
+        this.pbefGenerationError('Continuation start date is not set for this case');
+      } else {
+        admission_date = this.selected_case.case_holding.continuation_start;
+        this.getPbef(admission_date);
+      }
+    } else {
+      if(!this.selected_case.case_holding.treatment_start) {
+        this.pbefGenerationError('Treatment start date is not set for this case');
+      } else {
+        admission_date = this.selected_case.case_holding.treatment_start;
+        this.getPbef(admission_date);
+      }
+    }
+
+    // admission_date = this.selected_caserate.code === '89222' ? this.selected_case.case_holding.continuation_start : this.selected_case.case_holding.treatment_start;
   }
 
   pbef_err_message: string;
@@ -192,6 +233,7 @@ export class PbefComponent implements OnInit {
 
   generatePBEF(data) {
     let params = {
+      program_code: this.program_name === 'cc' || this.program_name === 'fp' ? 'mc' : this.program_name,
       referenceno: data.referenceno
     };
 

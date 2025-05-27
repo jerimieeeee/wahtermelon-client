@@ -44,7 +44,7 @@ export class EclaimsComponent implements OnInit {
   transmittal_number: string;
   eclaims_upload_id: string;
   togglePage(page_number: number, data?: any) {
-    console.log(data);
+    // console.log(data);
     this.caserate_details = page_number === 2 ? data.caserate : null;
     this.transmittal_number = page_number === 2 ? data.pHospitalTransmittalNo : null;
     this.eclaims_upload_id = page_number === 2 ? data.id : null;
@@ -89,7 +89,7 @@ export class EclaimsComponent implements OnInit {
     this.http.get('eclaims/eclaims-caserate', {params}).subscribe({
       next:(data:any) => {
         this.caserate_list = data.data;
-        console.log(this.caserate_list)
+        // console.log(data)
         this.show_cf2 = Object.keys(this.caserate_list).length > 0 ? true : false;
         this.show_form = true;
       },
@@ -102,6 +102,7 @@ export class EclaimsComponent implements OnInit {
   }
 
   checkSeries(data){
+    this.process_name = 'checking_series';
     this.is_refreshing = true;
 
     let params = {
@@ -111,10 +112,10 @@ export class EclaimsComponent implements OnInit {
 
     this.http.post('eclaims/get-claims-map', params).subscribe({
       next: (resp: any) => {
-        console.log(resp)
+        // console.log(resp)
         if(resp.success === false) {
           this.toastr.error('No query result', 'Series LHIO');
-          this.is_refreshing = false;
+          this.stopRefreshing();
         } else {
           data.pClaimSeriesLhio = resp.mapping[0].pclaimSeriesLhio;
           data.pStatus = 'IN PROCESS';
@@ -123,17 +124,18 @@ export class EclaimsComponent implements OnInit {
         }
       },
       error: err => {
-        this.is_refreshing = false;
         this.toastr.error(err.error.message, 'Series LHIO', {
           closeButton: true,
           positionClass: 'toast-top-center',
           disableTimeOut: true
         });
+        this.stopRefreshing();
       }
     })
   }
 
   getClaimStatus(data, type) {
+    this.process_name = 'checking_claim_status';
     this.is_refreshing = true;
 
     let params = {
@@ -143,12 +145,11 @@ export class EclaimsComponent implements OnInit {
 
     this.http.post('eclaims/get-claim-status', params).subscribe({
       next:(resp: any) => {
-        console.log(resp)
+        this.stopRefreshing();
         this.iterateMessage(resp, data, resp.CLAIM['@attributes'].pStatus);
       },
       error: err => {
-        console.log(err)
-        this.is_refreshing = false;
+        this.stopRefreshing();
         this.http.showError(err.error.message, 'eClaims Error');
       }
     })
@@ -298,7 +299,9 @@ export class EclaimsComponent implements OnInit {
 
   is_exporting: boolean = false;
   exportXML(data: any) {
+    this.process_name = 'exporting_xml';
     this.is_exporting = true;
+    this.is_refreshing = true;
     this.http.post('eclaims/export-xml', data, { responseType: 'blob'  }).subscribe({
       next: (blob: any) => {
         const a = document.createElement('a');
@@ -308,6 +311,7 @@ export class EclaimsComponent implements OnInit {
         a.click();
         URL.revokeObjectURL(objectUrl);
         this.is_exporting = false;
+        this.stopRefreshing();
       },
       error: err => console.log(err)
     })
@@ -322,24 +326,38 @@ export class EclaimsComponent implements OnInit {
     });
   }
 
+  process_name: string = null;
   getVoucherDetails(data) {
-    console.log(data);
+    this.process_name = 'checking_voucher';
+    this.is_refreshing = true;
     let params = {
       voucherNo: data.pVoucherNo
     }
     this.http.post('eclaims/get-voucher-details', params).subscribe({
       next: (data: any) => {
-        console.log(data);
+        // console.log(data);
+        data.voucher_details = data.CLAIM;
+        this.updateUploadClaim(data);
+        this.toggleModal('voucher-details', data.voucher_details);
+        this.stopRefreshing();
       },
-      error: err => console.log(err.error.message)
+      error: err => {
+        // console.log(err)
+        this.http.showError(err.error.text, 'Voucher Details Error');
+        this.stopRefreshing();
+      }
     })
   }
 
+  stopRefreshing() {
+    this.is_refreshing =false;
+    this.process_name = null;
+  }
+
   updateUploadClaim(data) {
-    console.log(data);
     this.http.post('eclaims/eclaims-upload', data).subscribe({
-      next: (data:any) => {
-        this.is_refreshing = false;
+      next: () => {
+        this.stopRefreshing();
       },
       error: err => {
         console.log(err)
@@ -366,18 +384,28 @@ export class EclaimsComponent implements OnInit {
     this.modal[name] = !this.modal[name];
   }
 
+  voucher_details: any;
   toggleModal(name, eclaims?) {
-    console.log(eclaims)
+    // console.log(eclaims)
 
-    if(eclaims) {
-      this.caserate_list = [eclaims?.caserate];
+    if(name==='voucher-details') {
+      this.voucher_details = eclaims;
+    } else {
+      this.selected_pHospitalTransmittalNo = eclaims?.pHospitalTransmittalNo ?? null;
+      this.selected_caserate_code = eclaims?.caserate.caserate_code ?? null;
+      this.selected_ticket_number = eclaims?.pReceiptTicketNumber ?? null;
+      this.selected_series_lhio = eclaims?.pClaimSeriesLhio ?? null;
+
+      if(eclaims) this.caserate_list = [eclaims?.caserate];
     }
 
-    this.selected_pHospitalTransmittalNo = eclaims != undefined ? eclaims?.pHospitalTransmittalNo : null;
+
+
+    /* this.selected_pHospitalTransmittalNo = eclaims != undefined ? eclaims?.pHospitalTransmittalNo : null;
     this.selected_caserate_code = eclaims != undefined ? eclaims?.caserate.caserate_code : null;
 
     this.selected_ticket_number = eclaims != undefined ? eclaims?.pReceiptTicketNumber : null;
-    this.selected_series_lhio = eclaims != undefined ? eclaims?.pClaimSeriesLhio : null;
+    this.selected_series_lhio = eclaims != undefined ? eclaims?.pClaimSeriesLhio : null; */
 
     this.modal[name] = !this.modal[name];
 
@@ -392,7 +420,8 @@ export class EclaimsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    console.log(this.selected_case)
+    // console.log(this.selected_case)
+    // console.log(this.program_id)
     this.patient = this.http.getPatientInfo();
     this.patient_philhealth = this.patient.philhealthLatest;
 

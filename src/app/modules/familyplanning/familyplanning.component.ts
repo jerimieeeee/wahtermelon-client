@@ -22,6 +22,8 @@ export class FamilyplanningComponent implements OnInit {
   module: number = 1;
   show_end: boolean = false;
   fetching_history: boolean = true;
+  toggle_content: boolean = true;
+  allowed_to_edit: boolean = true;
 
   patient_id: any;
   consult_id: any;
@@ -63,7 +65,7 @@ export class FamilyplanningComponent implements OnInit {
   }
 
   selected_fp_consult: {};
-  
+
   openFPConsult(data) {
     // console.log(data, 'test open fp consult')
     this.selected_fp_consult = data;
@@ -99,7 +101,7 @@ export class FamilyplanningComponent implements OnInit {
     this.http.get('consultation/records',{params: {patient_id: this.patient_id, id: this.consult_id}}).subscribe({
       next: (data: any) => {
         this.consult_details = data.data;
-        // console.log(this.consult_details, 'consult details')
+        console.log(this.consult_details, 'consult details')
         this.show_form = true;
       },
       error: err => console.log(err)

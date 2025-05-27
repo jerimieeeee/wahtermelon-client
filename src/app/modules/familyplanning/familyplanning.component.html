@@ -51,6 +51,14 @@
         [class]="module===7? 'tabs-main-true' : 'tabs-main-false' ">
         FP CHART
     </button>
+    <button (click)="switchTab(11)" *ngIf="selected_fp_consult?.id" class="tabs-main w-28"
+        [class]="module === 11? 'tabs-main-true' : 'tabs-main-false' ">
+        Diagnosis & Prescription
+    </button>
+    <button (click)="switchTab(9)" *ngIf="selected_fp_consult?.id" class="tabs-main w-28"
+        [class]="module === 9? 'tabs-main-true' : 'tabs-main-false' ">
+        Supplies
+    </button>
     <button (click)="switchTab(8)" *ngIf="selected_fp_consult?.id" class="tabs-main w-28"
         [class]="module===8? 'tabs-main-true' : 'tabs-main-false' ">
         CASE RATE
@@ -178,6 +186,30 @@
   [program_name]="'fp'"
   [max_date]="max_date"
 ></app-caserate>
+
+<div *ngIf="pages === 2 && module === 11">
+  <app-final-dx [toggle_content]="toggle_content"
+    [consult_details]="consult_details[0]"
+    [have_complaint]="have_complaint"
+    [allowed_to_edit]="allowed_to_edit"
+    (loadConsultDetails)="loadConsult($event)"
+  ></app-final-dx>
+  <app-prescription [toggle_content]="toggle_content"
+    [consult_details]="consult_details[0]"
+    [have_complaint]="have_complaint"
+    [allowed_to_edit]="allowed_to_edit"
+    [user_id]="user_id"
+    (loadConsultDetails)="loadConsult($event)"
+  ></app-prescription>
+</div>
+
+<app-supplies *ngIf="pages === 2 && module === 9" [toggle_content]="toggle_content"
+    (switchPage)="switchPage($event)"
+    [consult_details]="consult_details[0]"
+    [allowed_to_edit]="allowed_to_edit"
+    [user_id]="user_id"
+    (loadConsultDetails)="loadConsult($event)"
+  ></app-supplies>
 
 <app-eclaims *ngIf="pages === 3"
   (switchPage)="switchPage($event)"
