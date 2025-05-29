@@ -6,10 +6,10 @@ import moment from 'moment';
 import { dateHelper } from 'app/shared/services/date-helper.service';
 
 @Component({
-    selector: 'app-fhsis2018-cc',
-    templateUrl: './fhsis2018-cc.component.html',
-    styleUrls: ['./fhsis2018-cc.component.scss'],
-    standalone: false
+  selector: 'app-fhsis2018-cc',
+  templateUrl: './fhsis2018-cc.component.html',
+  styleUrls: ['./fhsis2018-cc.component.scss'],
+  standalone: false
 })
 
 export class Fhsis2018CcComponent implements OnChanges {
@@ -140,6 +140,7 @@ export class Fhsis2018CcComponent implements OnChanges {
 
     this.current_submit_flag = this.submit_flag;
     if(this.current_submit_flag){
+      console.log(this.report_data.data, 'report_date')
       this.show_stats = false;
       this.vaccines = this.report_data.data.vaccines[0];
       this.fic_cic = this.report_data.data.fic_cic[0];
