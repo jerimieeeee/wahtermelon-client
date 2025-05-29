@@ -1,5 +1,7 @@
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { formatDate } from '@angular/common';
+import * as XLSX from 'xlsx';
 import { faFilePdf } from '@fortawesome/free-regular-svg-icons';
 import {faAnglesLeft, faAnglesRight, faCircleNotch, faCircleXmark, faSearch, faChevronLeft, faChevronRight, faFileExcel} from "@fortawesome/free-solid-svg-icons";
 import { HttpService } from 'app/shared/services/http.service';
@@ -201,6 +203,100 @@ exportX() {
     }
   });
   }
+
+  printing: boolean = false;
+    allListArray!: any[];
+    total_print_page: number = 0;
+    current_print_page: number = 1;
+    getAllList() {
+      this.printing = true;
+      /* let params = {params: { }};
+
+      if (this.search_item) params['params']['search'] = this.search_item;
+      if (this.search_pin) params['params']['filter[philhealth_id]'] = this.search_pin;
+      if (this.tranche !== 'null') params['params']['tranche'] = this.tranche;
+      if (this.selected_brgy) params['params']['barangay_code'] = this.selected_brgy;
+      if (this.start_date) params['params']['start_date'] = this.start_date;
+      if (this.end_date) params['params']['end_date'] = this.end_date; */
+
+      let params = {params: { }};
+      // if (page) params['params']['page'] = page;
+      // params['params']['per_page'] = export_list ? 'all' : this.per_page;
+
+      // if (this.filter_tranche) params['params']['filter[tranche]'] = this.filter_tranche;
+      // if (this.filter_status) params['params']['filter[xml_status]'] = this.filter_status;
+      if (this.reportForm.value.start_date) params['params']['start_date'] = this.reportForm.value.start_date;
+      if (this.reportForm.value.end_date) params['params']['end_date'] = this.reportForm.value.end_date;
+      // if (this.search) params['params']['search'] = this.search;
+
+
+      params['params']['per_page'] = 'all';
+      // params['params']['reconcillation'] = 1;
+
+      this.allListArray = [];
+      let current_number = 0;
+
+      const fetchPage = (page: number) => {
+        // params['params']['page'] = page;
+
+        this.http.get(this.url, params).subscribe({
+          next: (data: any) => {
+            // this.total_print_page = data.meta.last_page;
+            // this.current_print_page = page;
+            console.log(data, 'data ng mama');
+            const filteredData = data.data.map((item: any, index: number) => {
+              current_number += 1;
+
+            });
+
+            this.allListArray.push(...filteredData);
+
+              this.exportToExcel(this.allListArray);
+              this.printing = false;
+
+          },
+          error: err => console.log(err)
+        });
+      };
+
+      fetchPage(1);
+    }
+
+    exportToExcel(data: {any}[]) {
+        const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
+
+        const columnWidths = Object.keys(data[0] || {}).map((key) => {
+          const maxLength = Math.max(
+            key.length,
+            ...data.map((row) => (row[key] ? row[key].toString().length : 0))
+          );
+          return { wch: maxLength + 2 };
+        });
+        worksheet['!cols'] = columnWidths;
+
+        const workbook: XLSX.WorkBook = {
+          Sheets: { 'data': worksheet },
+          SheetNames: ['data'],
+        };
+
+        const excelBuffer: any = XLSX.write(workbook, {
+          bookType: 'xlsx',
+          type: 'array',
+        });
+
+        this.saveAsExcelFile(excelBuffer, 'Konsulta Summary Report');
+      }
+
+    private saveAsExcelFile(buffer: any, fileName: string): void {
+        const data: Blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+        const url: string = window.URL.createObjectURL(data);
+        const link: HTMLAnchorElement = document.createElement('a');
+        link.href = url;
+        link.download = `${fileName}.xlsx`;
+        link.click();
+        window.URL.revokeObjectURL(url);
+    }
+
 
 
 
