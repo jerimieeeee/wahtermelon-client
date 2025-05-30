@@ -63,6 +63,7 @@ export class ReportsComponent implements OnInit {
 
   asrh_stats = [
     { id: 'asrh-masterlist', desc: 'ASRH Masterlist', url: 'reports-2018/asrh/masterlist'},
+    { id: 'asrh-consolidated', desc: 'ASRH Consolidated', url: 'reports-2018/asrh/consolidated'},
   ];
 
   gbv_stats = [
@@ -222,7 +223,7 @@ export class ReportsComponent implements OnInit {
   onSubmit(page?: number) {
     this.pdf_exported = false;
     console.log(this.reportForm.value?.report_type.id);
-    // this.is_fetching = true;
+    this.is_fetching = true;
 
     if(this.reportForm.value.report_type.id === 'fhsis2018-consolidated') {
       this.fhsis2018_data = {}; // Initialize storage

@@ -10,18 +10,19 @@ import { is } from 'date-fns/locale';
 import { report } from 'process';
 import {BehaviorSubject} from "rxjs";
 
+
 interface State {
   page: number;
   pageOffset: number;
 }
 
 @Component({
-  selector: 'app-asrh-masterlist',
-  templateUrl: './asrh-masterlist.component.html',
-  styleUrl: './asrh-masterlist.component.scss',
+  selector: 'app-asrh-consolidated',
+  templateUrl: './asrh-consolidated.component.html',
+  styleUrl: './asrh-consolidated.component.scss',
   standalone: false
 })
-export class AsrhMasterlistComponent implements OnChanges, OnInit {
+export class AsrhConsolidatedComponent implements OnChanges, OnInit {
   @Input() report_data;
   @Input() reportForm;
   @Input() selectedBrgy;
@@ -71,6 +72,7 @@ export class AsrhMasterlistComponent implements OnChanges, OnInit {
    total: number;
    is_fetching: boolean = false;
    location: any;
+   userInfo: any = {};
 
   constructor(
       private http: HttpService,
@@ -194,7 +196,7 @@ isDiagnosis(peList: any[]): boolean {
 
 
 // exportX() {
-//   this.exportAsService.save(this.exportAsExcel, 'ASRH Masterlist').subscribe({
+//   this.exportAsService.save(this.exportAsExcel, 'ASRH Consolidated').subscribe({
 //     next: () => {
 //     this.exporting = true;
 //     },
@@ -220,7 +222,6 @@ isDiagnosis(peList: any[]): boolean {
 
     return trailName
   }
-
 
   printing: boolean = false;
     allListArray!: any[];
@@ -315,13 +316,40 @@ isDiagnosis(peList: any[]): boolean {
         window.URL.revokeObjectURL(url);
     }
 
+    dateToday : any;
+    getToday(): string {
+      const today = new Date();
+      this.dateToday = formatDate(today, 'MMMM-dd-yyy HH:mm:ss', 'en-US');
+      console.log(this.dateToday, 'today date');
+      return
+
+    }
+
+
+    start_year : any;
+    end_year : any;
+    getYearFromDates(): { startYear: number, endYear: number } {
+      const startDate = new Date(this.reportForm?.value?.start_date);
+      const endDate = new Date(this.reportForm?.value?.end_date);
+      this.start_year = startDate.getFullYear();
+      this.end_year = endDate.getFullYear();
+      return {
+        startYear: startDate.getFullYear(),
+        endYear: endDate.getFullYear()
+      };
+
+
+    }
+
 
 
 
   ngOnChanges(): void {
     this.stats = this.report_data;
     this.pararams = this.reportForm;
-    console.log(this.pararams, 'params');
+    this.getToday();
+    this.getYearFromDates();
+    console.log(this.reportForm, 'params for report form');
     // const normal = this.isPhysicalExamNormal(this.stats.data.physical_exam);
     // console.log(normal, 'normal');
   }
@@ -330,7 +358,8 @@ isDiagnosis(peList: any[]): boolean {
 
   ngOnInit(): void {
     this.stats = this.report_data;
-    console.log(this.selectedCode)
+    this.userInfo = this.http.getUserFromJSON();
+    console.log(this.userInfo, 'user info');
 
     // console.log(this.report_data.data, 'selected report data');
   }
