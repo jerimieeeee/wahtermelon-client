@@ -262,6 +262,19 @@ export class Cf2Component implements OnInit {
   }
 
   getCreds(){
+    if (this.eclaimsForm.value.discharge_date) {
+      const dischargeDate = new Date(this.eclaimsForm.value.discharge_date);
+      const today = new Date();
+      const diffTime = Math.abs(today.getTime() - dischargeDate.getTime());
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+      if (diffDays > 60) {
+        this.toastr.error('This claim is now beyond the 60-day filing period.', 'Warning',{
+          disableTimeOut: true,
+          positionClass: 'toast-top-center',
+        });
+      }
+    }
+
     let params = {
       'filter[program_code]': this.program_name === 'cc' || this.program_name === 'fp'? 'mc' : this.program_name
     }
