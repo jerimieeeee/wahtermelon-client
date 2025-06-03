@@ -83,6 +83,7 @@ export class AsrhConsolidatedComponent implements OnChanges, OnInit {
 
   show_form: boolean = false;
   stats : any;
+  stats2 : any;
 
   pararams: any;
 
@@ -345,11 +346,12 @@ isDiagnosis(peList: any[]): boolean {
 
 
   ngOnChanges(): void {
-    this.stats = this.report_data;
+    this.stats = this.report_data.data.main;
+    this.stats2 = this.report_data.data.top5;
     this.pararams = this.reportForm;
     this.getToday();
     this.getYearFromDates();
-    console.log(this.reportForm, 'params for report form');
+    console.log(this.report_data, 'report data');
     // const normal = this.isPhysicalExamNormal(this.stats.data.physical_exam);
     // console.log(normal, 'normal');
   }
@@ -357,7 +359,8 @@ isDiagnosis(peList: any[]): boolean {
 
 
   ngOnInit(): void {
-    this.stats = this.report_data;
+    this.stats = this.report_data.data.main;
+    this.stats2 = this.report_data.data.top5;
     this.userInfo = this.http.getUserFromJSON();
     console.log(this.userInfo, 'user info');
 
