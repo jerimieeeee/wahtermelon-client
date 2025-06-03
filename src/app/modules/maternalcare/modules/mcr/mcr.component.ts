@@ -108,7 +108,7 @@ export class McrComponent implements OnInit {
       [Validators.required]],
       lmp_date: [(this.mcr_data == -1 ? null : new Date(this.mcr_data.lmp_date).toISOString().substring(0, 10)),
       [Validators.required]],
-      initial_gravidity: [(this.mcr_data == -1 ? null : this.mcr_data.initial_gravidity),
+      initial_gravidity: [(this.mcr_data == -1 ? 1 : this.mcr_data.initial_gravidity),
       [Validators.required]],
       initial_parity: [(this.mcr_data == -1 ? null : this.mcr_data.initial_parity),
       [Validators.required]],
@@ -159,6 +159,11 @@ export class McrComponent implements OnInit {
   }
 
   onKeyUp(data_input: string, id: string) {
+    console.log(data_input, id);
+    if(id === 'initial_gravidity' && data_input === '0') {
+      this.toastr.warning('Gravidity cannot be 0', 'Maternal Care Record', {timeOut: 3000, progressBar: true, progressAnimation: 'increasing'});
+      this.mcr_form.patchValue({'initial_gravidity' : 1});
+    }
     if (this.keyUp.includes(id)) {
       if (data_input == '') {
         this.keyUp.splice(this.keyUp.indexOf(id), 1);

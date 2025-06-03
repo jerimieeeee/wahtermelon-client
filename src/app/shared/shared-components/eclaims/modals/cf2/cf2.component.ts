@@ -262,6 +262,12 @@ export class Cf2Component implements OnInit {
   }
 
   getCreds(){
+    if(this.eclaimsForm.invalid) {
+      this.toastr.error('Please fill out all required fields.', 'Error', {
+        disableTimeOut: true,
+      })
+    }
+
     if (this.eclaimsForm.value.discharge_date) {
       const dischargeDate = new Date(this.eclaimsForm.value.discharge_date);
       const today = new Date();

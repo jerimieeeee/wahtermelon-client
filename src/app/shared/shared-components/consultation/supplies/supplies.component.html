@@ -24,12 +24,15 @@
         <tbody>
           <tr *ngFor="let item of this.consult_details.consultItems; trackBy:identify" class="bg-white border-b last:border-0 text-sm align-top">
             <td class="py-4 px-3">
-              @if(item.item_list.lib_item_claim) {
+              @if(item.item_list && item.item_list.lib_item_claim) {
                 <span class="font-semibold">{{ item.item_list.lib_item_claim.item_name}}</span> <br />
                 <span class="italic text-sm">{{ item.item_list.lib_item_claim.category }}</span>
-              } @else {
+              } @else if (item.item_list && item.item_list.added_item) {
                 <span class="font-semibold">{{ item.item_list.added_item }}</span> <br />
                 <span class="italic text-sm">OTHERS</span>
+              } @else {
+                <span class="italic text-rose-500">Item was deleted from the library</span> <br />
+                <!-- <span class="italic text-sm">OTHERS</span> -->
               }
             </td>
             <td scope="row" class="py-4 px-3 font-medium text-gray-900">
