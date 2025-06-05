@@ -1,92 +1,173 @@
-<!-- <ng-container *ngIf="consult && consult.length > 0; else noData">
-  <div *ngFor="let item of consult">
-    <p>{{ item?.patient_name || 'No Name' }}</p>
-  </div>
-</ng-container> -->
+<!-- Modal Overlay -->
+<div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50" *ngIf="isModalOpen">
+  <!-- Modal Container -->
+  <div class="bg-white rounded-lg shadow-lg w-full max-w-[750px] max-h-[90vh] flex flex-col">
+    <!-- Modal Header -->
+     <div class="sticky top-0 flex justify-between items-center px-6 py-4 bg-blue-500 rounded-t">
+          <div class="justify-start">
+            <h3 class="text-white font-bold text-lg">Medical Certificate</h3>
+          </div>
+        <button
+          *ngIf="step === 2"
+          [disabled]="show_form"
+          type="button"
+          class="text-2xl mr-5 text-white disabled:text-gray-200"
+          (click)="exportP()"
+        >
+          <fa-icon [icon]="faFilePdf"></fa-icon>
+        </button>
+     </div>
 
+    <!-- Modal Content -->
+    <div class="p-4 overflow-y-auto flex-1">
+      <!-- Step 1: Purpose Selection -->
+      <div *ngIf="step === 1">
+        <label for="purpose" class="block mb-2 font-semibold">Select Purpose</label>
+        <select [(ngModel)]="selectedPurpose" id="purpose" class="border px-3 py-2 rounded w-full">
+          <option value="" disabled>Select...</option>
+          <option value="work">Work</option>
+          <option value="school">School</option>
+          <option value="travel">Travel</option>
+          <option value="others">Others</option>
+        </select>
 
+        <div *ngIf="selectedPurpose === 'others'" class="mt-4">
+          <label for="otherPurpose" class="block mb-2 font-semibold">Please specify</label>
+          <input
+            id="otherPurpose"
+            type="text"
+            [(ngModel)]="otherPurpose"
+            class="border px-3 py-2 rounded w-full"
+            placeholder="Enter purpose"
+          />
+        </div>
 
-<div class="flex min-h-screen w-full items-center justify-center p-4 overflow-auto" *ngFor="let info of consult; let i = index">
-  <div class="w-[794px] h-[1123px] shadow-lg px-12 py-10">
- 
-    <div class="text-center mb-6" *ngFor="let info of consult; let i = index">
-      <h4 class="text-lg">{{ info?.municipality_name}}</h4>
-      <h4 class="font-semibold text-lg">{{ info?.facility_name}}</h4>
-    </div>
+        <button
+          (click)="goToStep(2)"
+          [disabled]="!isPurposeValid()"
+          class="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 disabled:bg-gray-400"
+        >
+          Next
+        </button>
+      </div>
 
+      <!-- Step 2: Certificate View -->
+      <div *ngIf="step === 2">
+        <!-- Loading Spinner -->
+        <div *ngIf="show_form" class="flex justify-center py-4">
+          <fa-icon [icon]="faSpinner" [spin]="true" class="mr-2 text-blue-600 text-xl"></fa-icon>
+          <span>Loading certificate data...</span>
+        </div>
 
-    <div class="text-right mb-4">
-      Date: {{ today | date:'MM-dd-yyyy' }}
-    </div>
+        <!-- Certificate Content -->
+        <div id="pdf-content" class="flex flex-col items-center justify-center w-full space-y-5 overflow-y-auto flex-1">
+          <div
+            class="scale-[0.75] mt-4 origin-top w-full h-full bg-white px-2 py-5 flex flex-col"
+            *ngFor="let info of consult"
+          >
+            <!-- Facility Header -->
+            <div class="text-center mb-6">
+              <h4 class="font-semibold text-lg">{{ info?.facility_name }}</h4>
+              <h4 class="text-base">
+                {{ info?.header_name === 'Province Of NCR, All District' ? 'National Capital Region' : info?.header_name }}
+              </h4>
+              <h4 class="text-base">Municipality of {{ info?.municipality_name }}</h4>
+            </div>
 
- 
-    <div class="mb-4">
-      <p>
-        <span class="font-semibold uppercase">To Whom It May Concern</span><br>
-        <span>
-          This is to certify that we have on record the following data from the patient's information, to wit:
-        </span>
-      </p>
-    </div>
+            <h1 class="text-xl text-center font-semibold my-2">MEDICAL CERTIFICATE</h1>
 
-    <div class="flex flex-col gap-3 border-b py-4" *ngFor="let info of consult; let i = index">
-        <p class="flex justify-between">
-        <span class="font-semibold">Name:</span>
-        <span>{{info?.patient_name }} </span>
-        </p>
+            <div class="text-right mb-4">Date: {{ dateNgayon }}</div>
 
-      <p class="flex justify-between">
-        <span class="font-semibold">Age:</span>
-        <span> {{ info?.age }} </span>
-    </p>
-      <p class="flex justify-between">
-        <span class="font-semibold">Sex:</span>
-        <span>{{info?.gender}}</span>
-    </p>
-      <p class="flex justify-between">
-        <span class="font-semibold">Civil Status:</span>
-        <span>{{info?.civil_status}}</span>
-    </p>
-      <p class="flex justify-between">
-        <span class="font-semibold">Address:</span>
-        <span class="block pl-3">
-              {{info?.address}} <br />
-            </span>
-    </p>
-      <p class="flex justify-between">
-        <span class="font-semibold">Occupation:</span>
-        <span>{{info?.occupation}}</span>
-    </p>
-      <p class="flex justify-between">
-        <span class="font-semibold">Date of Consultation:</span>
-        <span>{{info?.consult_date}}</span>
-    </p>
-     <p class="flex justify-between items-start gap-2">
-        <span class="font-semibold min-w-[120px]">Diagnosis:</span>
-        <span class="text-right block">
-          {{ info?.final_diagnosis[0].lib_icd10.icd10_desc }}
-        </span>
-      </p>
-      <p class="flex justify-between mt-5">
-        <span class="font-semibold">Remarks:</span>
-        <span> {{info?.treatment_plan}} </span>
-    </p>
-    </div>
+            <div class="mb-4">
+              <p>
+                <span class="font-semibold uppercase">To Whom It May Concern</span><br />
+                This is to certify that we have on record the following data from the patient's information, to wit:
+              </p>
+            </div>
 
-   
-    <div class="mt-10">
-      <p>
-        This document is issued upon the request of the patient for work/school/travel purposes only and is not intended for medico-legal use.
-      </p>
-    </div>
+            <!-- Patient Info Section -->
+            <div class="flex flex-col space-y-4 border-b border-gray-300 pb-6">
+              <div class="flex gap-4">
+                <div class="w-44 font-semibold">Name:</div>
+                <div class="flex-1">{{ info?.patient_name }}</div>
+              </div>
+              <div class="flex gap-4">
+                <div class="w-44 font-semibold">Age:</div>
+                <div class="flex-1">{{ info?.age }}</div>
+              </div>
+              <div class="flex gap-4">
+                <div class="w-44 font-semibold">Sex:</div>
+                <div class="flex-1">{{ info?.gender }}</div>
+              </div>
+              <div class="flex gap-4">
+                <div class="w-44 font-semibold">Civil Status:</div>
+                <div class="flex-1">{{ info?.civil_status }}</div>
+              </div>
+              <div class="flex gap-4 items-start">
+                <div class="w-44 font-semibold">Address:</div>
+                <div class="flex-1 whitespace-pre-line">{{ info?.address }}</div>
+              </div>
+              <div class="flex gap-4">
+                <div class="w-44 font-semibold">Occupation:</div>
+                <div class="flex-1">{{ info?.occupation }}</div>
+              </div>
+              <div class="flex gap-4">
+                <div class="w-44 font-semibold">Date of Consultation:</div>
+                <div class="flex-1">{{ info?.consult_date }}</div>
+              </div>
+              <div class="flex gap-4 items-start">
+                <div class="w-44 font-semibold">Diagnosis:</div>
+                <div class="flex-1">{{ info?.final_diagnosis[0].lib_icd10.icd10_desc }}</div>
+              </div>
+              <div class="flex gap-4 items-start">
+                <div class="w-44 font-semibold">Remarks:</div>
+                <div class="flex-1">{{ capitalizeFirst(info?.treatment_plan) }}</div>
+              </div>
+            </div>
 
-   
-    <div class="flex justify-end mt-16">
-      <div class="text-right" *ngFor="let info of consult; let i = index">
-        <p class="font-semibold text-center">{{info?.physician + ', ' + 'MD'}}</p>
-        <div class="w-auto border-t border-black ml-auto mb-1"></div>
-        <p class="text-sm text-gray-700 text-center">Attending Physician</p>
+            <!-- Purpose Statement -->
+            <div class="mt-10">
+              <p>
+                This document is issued upon the request of the patient for
+                <span class="font-semibold">{{ displayPurpose | lowercase }}</span> purposes only and is not intended
+                for medico-legal use.
+              </p>
+            </div>
+
+            <!-- Physician Signature -->
+            <div class="flex justify-end mt-16">
+              <div class="text-right">
+                <p class="font-semibold text-center">{{ info?.physician }}, MD</p>
+                <p class="text-sm text-gray-700 text-center">Attending Physician</p>
+                <p class="text-sm text-gray-700 text-center">License No. {{ info?.physician_prc }}</p>
+              </div>
+            </div>
+
+            <!-- Footer Note Pinned to Bottom -->
+            <div class="mt-10 pt-6">
+              <div class="flex items-center justify-center space-x-3 text-sm italic text-gray-700">
+                <span>
+                  *This certificate was generated using the WAHtermelon EMR
+                </span>
+                  <img src="./assets/img/wah_icon.png" class="rounded-full w-9 h-9" />
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
+    <!-- Modal Footer -->
+      <div
+          class="flex justify-end py-4 px-5 space-x-4 rounded-b border-t border-gray-200 dark:border-gray-600"
+        >
+          <button
+            [disabled]="is_loading"
+            type="button"
+            class="btn-save px-5 bg-red-500 text-white rounded hover:bg-red-600"
+            (click)="closeModal()"
+          >
+            Close
+          </button>
+      </div>
   </div>
 </div>

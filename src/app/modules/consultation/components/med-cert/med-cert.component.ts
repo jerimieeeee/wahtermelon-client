@@ -1,8 +1,12 @@
 import { CommonModule, DatePipe } from '@angular/common';
 import { ChangeDetectorRef, Component, NgModule, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { Router, RouterOutlet } from '@angular/router';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faFileExcel, faFilePdf, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { AgeService } from 'app/shared/services/age.service';
 import { HttpService } from 'app/shared/services/http.service';
+import { ExportAsConfig, ExportAsService } from 'ngx-export-as';
 
 RouterOutlet
 
@@ -11,25 +15,38 @@ RouterOutlet
   templateUrl: './med-cert.component.html',
   styleUrl: './med-cert.component.scss',
   standalone: true,
-  imports: [CommonModule]
+  imports: [CommonModule, FormsModule, FontAwesomeModule],
+  providers: [DatePipe] 
 })
 export class MedCertComponent implements OnInit {
 
+  faFilePdf = faFilePdf;
+  faFileExcel = faFileExcel;
+  faSpinner = faSpinner;
 
   constructor(
       private router: Router,
       private http: HttpService,
       private ageService: AgeService,
-      private datePipe: DatePipe
+      private datePipe: DatePipe,
+      private exportAsService: ExportAsService,
     ) { }
 
   selected_consult_id!: string;
   user_facility: string;
 
-   occupations: object;
-   civil_statuses: object;
+  occupations: object;
+  civil_statuses: object;
 
-    patient_age: any;
+  patient_age: any;
+
+  isModalOpen = true;
+    
+    closeModal(details: any) {
+        let patient_id = this.consultation.patient_id;
+        console.log(patient_id, 'patient id');
+        this.router.navigate(['/patient/itr', {id: patient_id}]);
+    }
 
    getAge(){
     if(this.patient_info && this.patient_info.birthdate){
@@ -39,20 +56,93 @@ export class MedCertComponent implements OnInit {
     }
   }
 
-  
+  dateNgayon : any;
 
   todaysDate(){
     const today = new Date();
 
-    const formattedDate = this.datePipe.transform(today, 'MM-dd-yyyy');
+    const formattedDate = this.datePipe.transform(today, 'MM/dd/yyyy');
+    this.dateNgayon = formattedDate;
   console.log(formattedDate);
 
   }
 
+exportAsPdf: ExportAsConfig = {
+  type: 'pdf',
+  elementIdOrContent: 'pdf-content',
+  options: {
+    html2canvas: { 
+      useCORS: true,
+      allowTaint: true,
+      scrollX: false,
+      scrollY: false,
+    },
+    jsPDF: {
+      unit: 'px',
+      format: [794, 1123], // A4 in pixels
+      orientation: 'portrait',
+      putOnlyUsedFonts: true,
+      precision: 2,
+      margin: [0, 0, 0, 0], // Try 0 margin
+    }
+  }
+}
 
+  getTrailName(): string {
+    let trailName: string = '';
+
+    trailName = this.consult[0]?.file_patient_name + '_' + 'Medical Certificate';
+    return trailName
+  }
+
+ pdf_exported: boolean = false;          
+  exportP(med_cert: string) {
+  this.pdf_exported = true;
+   this.exportAsService.save(this.exportAsPdf, this.getTrailName()).subscribe(() => {
+        this.printCount();
+    });
+  }
+
+   printCount() {
+  const consultId = this.consultation.consult_id;
+  console.log(consultId, 'consult id for print');
+
+  this.http.post(`consultation/print/${consultId}`, {})
+    .subscribe({
+      next: (res: any) => {
+        console.log('Print count updated:', res);
+      },
+      error: (err) => {
+        console.error('Error incrementing print count:', err);
+      }
+    });
+}
+  
+
+
+  selectedPurpose: string = '';
+  otherPurpose: string = '';
+  step = 1;
+
+  goToStep(stepNumber: number): void {
+    this.step = stepNumber;
+  }
+
+   isPurposeValid(): boolean {
+    return (
+      this.selectedPurpose &&
+      (this.selectedPurpose !== 'others' || this.otherPurpose.trim().length > 0)
+    );
+  }
+
+  get displayPurpose(): string {
+    return this.selectedPurpose === 'others' ? this.otherPurpose : this.selectedPurpose;
+  }
 
   consult: any[] = [];
   loading = true;
+
+  show_form = true;
 
   getConsultInfo(){
     const params = this.consultation
@@ -61,14 +151,20 @@ export class MedCertComponent implements OnInit {
   next: (data: any) => {
     this.consult = data.data;
     console.log('consult:', this.consult);
+    this.show_form = false;
   },
   error: err => {
-    console.error('API Error:', err);
     this.loading = false;
+     this.show_form = false;
   }
   
     })
   } 
+
+  capitalizeFirst(text: string): string {
+    if (!text) return '';
+    return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
+  }
 
   patient_info: any;
    consultation: any;
@@ -85,9 +181,11 @@ export class MedCertComponent implements OnInit {
     this.consultation.consult_id = this.consultation.consult_id.split('/')[0];
   }
 
-  console.log(this.consultation, 'cleaned consult id');
+  console.log(this.consultation, 'consult id');
 
-    this.getConsultInfo();
+  this.todaysDate();
+
+  this.getConsultInfo();
    
   }
 }
