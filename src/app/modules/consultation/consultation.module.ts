@@ -29,6 +29,7 @@ import { UpdateDateComponent } from './modals/update-date/update-date.component'
 import { PregnantTagComponent } from 'app/shared/shared-components/consultation/pregnant-tag/pregnant-tag.component';
 import { EprescriptionComponent } from 'app/shared/shared-components/eprescription/eprescription.component';
 import { ReferralComponent } from 'app/shared/shared-components/referral/referral.component';
+import { MedicalCertificateComponent } from '../gbv/components/medical/modals/medical-certificate/medical-certificate.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { ReferralComponent } from 'app/shared/shared-components/referral/referra
     GeneralSurveyComponent,
     ManagementComponent,
     GbvReferralComponent,
-    UpdateDateComponent
+    UpdateDateComponent,
+    MedicalCertificateComponent
   ],
   imports: [
     CommonModule,
@@ -63,7 +65,7 @@ import { ReferralComponent } from 'app/shared/shared-components/referral/referra
     OpenConsultComponent,
     PregnantTagComponent,
     EprescriptionComponent,
-    ReferralComponent
+    ReferralComponent,
   ]
 })
 export class ConsultationModule { }

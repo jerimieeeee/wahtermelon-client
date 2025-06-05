@@ -58,7 +58,11 @@ const routes: Routes = [
       {
         path: 'at',
         loadChildren: () => import('../adolescent/adolescent.module').then(m => m.AdolescentModule)
-      }
+      },
+   /*  {
+      path: 'medical-cert',
+      loadComponent: () => import('../consultation/components/med-cert/med-cert.component').then(m => m.MedCertComponent)
+      } */
     ]
   },
 ];
