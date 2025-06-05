@@ -3,12 +3,12 @@ import { Router } from '@angular/router';
 import { formatDate } from '@angular/common';
 import * as XLSX from 'xlsx';
 import { faFilePdf } from '@fortawesome/free-regular-svg-icons';
-import {faAnglesLeft, faAnglesRight, faCircleNotch, faCircleXmark, faSearch, faChevronLeft, faChevronRight, faFileExcel} from "@fortawesome/free-solid-svg-icons";
+import {faAnglesLeft, faAnglesRight, faCircleNotch, faCircleXmark, faSearch, faChevronLeft, faChevronRight, faFileExcel, faSync} from "@fortawesome/free-solid-svg-icons";
 import { HttpService } from 'app/shared/services/http.service';
 import {ExportAsService, ExportAsModule, ExportAsConfig} from "ngx-export-as";
 import { is } from 'date-fns/locale';
 import { report } from 'process';
-import {BehaviorSubject} from "rxjs";
+import {BehaviorSubject, firstValueFrom} from "rxjs";
 
 interface State {
   page: number;
@@ -43,6 +43,7 @@ export class AsrhMasterlistComponent implements OnChanges, OnInit {
    protected readonly faAnglesRight = faAnglesRight;
    protected readonly Number = Number;
    protected readonly faCircleNotch = faCircleNotch;
+    protected readonly faSync = faSync;
 
    paginate = new BehaviorSubject<State>({
      page: 1,
@@ -222,62 +223,84 @@ isDiagnosis(peList: any[]): boolean {
   }
 
 
-  printing: boolean = false;
+    printing: boolean = false;
+    exportSuccess: boolean = false;
     allListArray!: any[];
     total_print_page: number = 0;
     current_print_page: number = 1;
-    getAllList() {
+    async getAllList() {
       this.printing = true;
-      /* let params = {params: { }};
+      this.exportSuccess = false;
+      let allData: any[] = [];
+      let currentPage = 1;
+      let hasMorePages = true;
+      this.current_print_page = 1; // Reset current page
+      this.total_print_page = 0; // Reset total pages
 
-      if (this.search_item) params['params']['search'] = this.search_item;
-      if (this.search_pin) params['params']['filter[philhealth_id]'] = this.search_pin;
-      if (this.tranche !== 'null') params['params']['tranche'] = this.tranche;
-      if (this.selected_brgy) params['params']['barangay_code'] = this.selected_brgy;
-      if (this.start_date) params['params']['start_date'] = this.start_date;
-      if (this.end_date) params['params']['end_date'] = this.end_date; */
-
-      let params = {params: { }};
-      // if (page) params['params']['page'] = page;
-      // params['params']['per_page'] = export_list ? 'all' : this.per_page;
-
-      // if (this.filter_tranche) params['params']['filter[tranche]'] = this.filter_tranche;
-      // if (this.filter_status) params['params']['filter[xml_status]'] = this.filter_status;
-      if (this.reportForm.value.start_date) params['params']['start_date'] = this.reportForm.value.start_date;
-      if (this.reportForm.value.end_date) params['params']['end_date'] = this.reportForm.value.end_date;
-      // if (this.search) params['params']['search'] = this.search;
-
-
-      params['params']['per_page'] = 'all';
-      // params['params']['reconcillation'] = 1;
-
-      this.allListArray = [];
-      let current_number = 0;
-
-      const fetchPage = (page: number) => {
-        // params['params']['page'] = page;
-
-        this.http.get(this.url, params).subscribe({
-          next: (data: any) => {
-            // this.total_print_page = data.meta.last_page;
-            // this.current_print_page = page;
-            console.log(data, 'data ng mama');
-            const filteredData = data.data.map((item: any, index: number) => {
-              current_number += 1;
-
-            });
-
-            this.allListArray.push(...filteredData);
-
-              this.exportToExcel(this.allListArray);
-              this.printing = false;
-
-          },
-          error: err => console.log(err)
-        });
+      try {
+      // Get first page to determine total pages
+      const firstParams = {
+        params: {
+          category: 'all',
+          disable_filter: 1,
+          page: 1,
+          per_page: 100
+        }
       };
+      if (this.reportForm.value.start_date) firstParams.params['start_date'] = this.reportForm.value.start_date;
+      if (this.reportForm.value.end_date) firstParams.params['end_date'] = this.reportForm.value.end_date;
 
-      fetchPage(1);
+      const firstResponse: any = await firstValueFrom(this.http.get(this.url, firstParams));
+
+      if (firstResponse?.meta?.last_page) {
+        this.total_print_page = firstResponse.meta.last_page;
+        console.log(`Total pages: ${this.total_print_page}`); // Log total pages
+      }
+
+      while (hasMorePages) {
+        let params = {
+        params: {
+          category: 'all',
+          disable_filter: 1,
+          page: currentPage,
+          per_page: 100
+        }
+        };
+
+        if (this.reportForm.value.start_date) params.params['start_date'] = this.reportForm.value.start_date;
+        if (this.reportForm.value.end_date) params.params['end_date'] = this.reportForm.value.end_date;
+
+        const response: any = await firstValueFrom(this.http.get(this.url, params));
+
+        if (!response || !response.data) {
+        console.error('No data received');
+        break;
+        }
+
+        allData = [...allData, ...response.data];
+
+        // Update current page and show progress
+        this.current_print_page = currentPage;
+        console.log(`Processing page ${currentPage} of ${this.total_print_page}`);
+
+        hasMorePages = response.meta && response.meta.current_page < response.meta.last_page;
+        currentPage++;
+      }
+
+      if (allData.length > 0) {
+        const transformedData = allData.map((item: any) => {
+        return item;
+        });
+
+        this.exportToExcel(transformedData);
+        this.exportSuccess = true;
+      }
+      } catch (error) {
+      console.error('Error fetching data:', error);
+      this.exportSuccess = false;
+      } finally {
+      this.printing = false;
+      }
     }
 
     exportToExcel(data: {any}[]) {

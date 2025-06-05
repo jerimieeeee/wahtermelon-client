@@ -2,13 +2,13 @@
   <div class="flex justify-between w-full text-blue-500 font-semibold text-lg  p-3" >
     <span>ASRH Masterlist</span>
     <span>
-      <fa-icon *ngIf="exporting" [icon]="faCircleNotch" animation="spin" class="text-blue-500 text-sm ">Exporting...</fa-icon>
-      <!-- <button [disabled]="pdf_exported" type="button" class="text-2xl mr-5 text-red-600 disabled:text-gray-600" (click)="exportP()">
-        <fa-icon [icon]="faFilePdf"></fa-icon>
-      </button> -->
-      <button  type="button" class="text-2xl" (click)="exportX(reportForm.value.report_type.desc)">
-        <fa-icon [icon]="faFileExcel" class="text-green-700"></fa-icon>
+      <fa-icon *ngIf="printing" [icon]="faCircleNotch" animation="spin" class="text-blue-green text-lg mr-2"></fa-icon>
+      <span *ngIf="printing" class="text-blue-500 text-sm mr-2">Please wait, exporting records... (Page {{current_print_page}} of {{total_print_page}})</span>
+      <span *ngIf="exportSuccess" class="text-black-500 text-sm mr-2">Successfully exported!</span>
+      <button [disabled]="printing" type="button" class="text-3xl mr-2" (click)="getAllList()">
+        <fa-icon [icon]="faFileExcel" [class.text-green-700]="!printing" [class.text-gray-400]="printing"></fa-icon>
       </button>
+      <!-- <fa-icon [icon]="faFileExcel" [class.text-green-700]="!printing" [class.text-gray-400]="exporting" class="text-3xl"></fa-icon> -->
     </span>
   </div>
   <div class="flex flex-col pb-5 overflow-x-auto">
