@@ -100,6 +100,16 @@ export class ShowNameListComponent implements OnInit {
     }
   }
 
+  total_patient_count() {
+    let total = 0;
+    if (this.show_nameList && this.show_nameList.length > 0) {
+      total = this.show_nameList.reduce((acc, curr) => {
+        return acc + (curr.patient_count || 0);
+      }, 0);
+    }
+    return total;
+  }
+
   closeModal() {
     this.toggleModal.emit();
   }

@@ -71,119 +71,118 @@
                     <tr *ngFor="let stat of stats; let i = index">
                     <td class="border text-center font-normal py-4 px-6">Male</td>
                     <td class="border text-center font-normal py-4">10-14yo</td>
-                    <td class="border text-center font-normal py-4">{{stat.male_10_to_14_registered || '0'}}</td>
-                    <td class="border text-center font-normal py-4">{{stat.male_10_to_14_assessed_headsss || '0'}}</td>
-                    <td class="border text-center font-normal py-4">{{stat.male_10_to_14_adolescent_visits || '0'}}</td>
-                    <td class="border text-center font-normal py-4">{{stat.male_10_to_14_referred_by_peer_educators || '0'}}</td>
-                    <td class="border text-center font-normal py-4" colspan="6">{{stat.male_10_to_14_dental_visits || '0'}}</td>
-                    <td class="border text-center font-normal py-4" colspan="6">{{stat.male_10_to_14_iron || '0'}}</td>
-                    <td class="border text-center font-normal py-4" colspan="6">{{stat.male_10_to_14_immunization || '0'}}</td>
-                    <td class="border text-center font-normal py-4" colspan="6">{{stat.male_10_to_14_medical_consultation || '0'}}</td>
-                    <td class="border text-center font-normal py-4" colspan="6">{{stat.male_10_to_14_counselling || '0'}}</td>
+                    <td (click)="stat.male_10_to_14_registered > 0 && showNameList('M', 'registered', '10-14')" class="border text-center font-normal py-4" [ngClass]="{'text-blue-500 cursor-pointer': stat.male_10_to_14_registered > 0}">{{stat.male_10_to_14_registered || '0'}}</td>
+                    <td (click)="stat.male_10_to_14_assessed_headsss > 0 && showNameList('M', 'assessed_headsss', '10-14')" class="border text-center font-normal py-4" [ngClass]="{'text-blue-500 cursor-pointer': stat.male_10_to_14_assessed_headsss > 0}">{{stat.male_10_to_14_assessed_headsss || '0'}}</td>
+                    <td (click)="stat3.male_10_to_14_adolescent_visits > 0 && showNameList('M', 'adolescent_visits', '10-14')" class="border text-center font-normal py-4" [ngClass]="{'text-blue-500 cursor-pointer': stat3.male_10_to_14_adolescent_visits > 0}" *ngFor="let stat3 of stats3; let i = index">{{stat3.male_10_to_14_adolescent_visits || '0'}}</td>
+                    <td (click)="stat.male_10_to_14_referred_by_peer_educators > 0 && showNameList('M', 'referred_by_peer_educators', '10-14')" class="border text-center font-normal py-4" [ngClass]="{'text-blue-500 cursor-pointer': stat.male_10_to_14_referred_by_peer_educators > 0}">{{stat.male_10_to_14_referred_by_peer_educators || '0'}}</td>
+                    <td (click)="stat.male_10_to_14_dental_visits > 0 && showNameList('M', 'dental_visits', '10-14')" class="border text-center font-normal py-4" [ngClass]="{'text-blue-500 cursor-pointer': stat.male_10_to_14_dental_visits > 0}" colspan="6">{{stat.male_10_to_14_dental_visits || '0'}}</td>
+                    <td (click)="stat.male_10_to_14_iron > 0 && showNameList('M', 'iron', '10-14')" class="border text-center font-normal py-4" [ngClass]="{'text-blue-500 cursor-pointer': stat.male_10_to_14_iron > 0}" colspan="6">{{stat.male_10_to_14_iron || '0'}}</td>
+                    <td (click)="stat.male_10_to_14_immunization > 0 && showNameList('M', 'immunization', '10-14')" class="border text-center font-normal py-4" [ngClass]="{'text-blue-500 cursor-pointer': stat.male_10_to_14_immunization > 0}" colspan="6">{{stat.male_10_to_14_immunization || '0'}}</td>
+                    <td (click)="stat.male_10_to_14_medical_consultation > 0 && showNameList('M', 'medical_consultation', '10-14')" class="border text-center font-normal py-4" [ngClass]="{'text-blue-500 cursor-pointer': stat.male_10_to_14_medical_consultation > 0}" colspan="6">{{stat.male_10_to_14_medical_consultation || '0'}}</td>
+                    <td (click)="stat.male_10_to_14_counselling > 0 && showNameList('M', 'counselling', '10-14')" class="border text-center font-normal py-4" [ngClass]="{'text-blue-500 cursor-pointer': stat.male_10_to_14_counselling > 0}" colspan="6">{{stat.male_10_to_14_counselling || '0'}}</td>
                     <td class="border text-center font-normal py-4 bg-gray-300" colspan="6"></td>
-                    <td class="border text-center font-normal py-4" colspan="6">{{stat.male_10_to_14_fp_service || '0'}}</td>
+                    <td (click)="stat.male_10_to_14_fp_service > 0 && showNameList('M', 'fp_service', '10-14')" class="border text-center font-normal py-4" [ngClass]="{'text-blue-500 cursor-pointer': stat.male_10_to_14_fp_service > 0}" colspan="6">{{stat.male_10_to_14_fp_service || '0'}}</td>
                     <td class="border text-center font-normal py-4 bg-gray-300" colspan="6"></td>
                     <td class="border text-center font-normal py-4 bg-gray-300" colspan="6"></td>
                     <td class="border text-center font-normal py-4 bg-gray-300" colspan="6"></td>
-                    <td class="border text-center font-normal py-4" colspan="6">{{stat.male_10_to_14_risky_behavior || '0'}}</td>
-                    <td class="border text-center font-normal py-4" colspan="6">{{stat.male_10_to_14_underweight || '0'}}</td>
-                    <td class="border text-center font-normal py-4" colspan="6">{{stat.male_10_to_14_obese || '0'}}</td>
-                    <td class="border text-center font-normal py-4" colspan="6">{{stat.male_10_to_14_smoker || '0'}}</td>
-                    <td class="border text-center font-normal py-4" colspan="6">{{stat.male_10_to_14_alcohol_drinker || '0'}}</td>
-                    <td class="border text-center font-normal py-4" colspan="6">{{stat.male_10_to_14_illicit_drugs || '0'}}</td>
-                    <td class="border text-center font-normal py-4" colspan="6">{{stat.male_10_to_14_dental_carries || '0'}}</td>
-                    <td class="border text-center font-normal py-4" colspan="6">{{stat.male_10_to_14_dm_hypn || '0'}}</td>
-                    <td class="border text-center font-normal py-4" colspan="6">{{stat.male_10_to_14_mental_concerns || '0'}}</td>
-                    <td class="border text-center font-normal py-4" colspan="6">{{stat.male_10_to_14_accident || '0'}}</td>
-                    <td class="border text-center font-normal py-4" colspan="6">{{stat.male_10_to_14_abuse_victim || '0'}}</td>
-
+                    <td (click)="stat.male_10_to_14_risky_behavior > 0 && showNameList('M', 'risky_behavior', '10-14')" class="border text-center font-normal py-4" [ngClass]="{'text-blue-500 cursor-pointer': stat.male_10_to_14_risky_behavior > 0}" colspan="6">{{stat.male_10_to_14_risky_behavior || '0'}}</td>
+                    <td (click)="stat.male_10_to_14_underweight > 0 && showNameList('M', 'underweight', '10-14')" class="border text-center font-normal py-4" [ngClass]="{'text-blue-500 cursor-pointer': stat.male_10_to_14_underweight > 0}" colspan="6">{{stat.male_10_to_14_underweight || '0'}}</td>
+                    <td (click)="stat.male_10_to_14_obese > 0 && showNameList('M', 'obese', '10-14')" class="border text-center font-normal py-4" [ngClass]="{'text-blue-500 cursor-pointer': stat.male_10_to_14_obese > 0}" colspan="6">{{stat.male_10_to_14_obese || '0'}}</td>
+                    <td (click)="stat.male_10_to_14_smoker > 0 && showNameList('M', 'smoker', '10-14')" class="border text-center font-normal py-4" [ngClass]="{'text-blue-500 cursor-pointer': stat.male_10_to_14_smoker > 0}" colspan="6">{{stat.male_10_to_14_smoker || '0'}}</td>
+                    <td (click)="stat.male_10_to_14_alcohol_drinker > 0 && showNameList('M', 'alcohol_drinker', '10-14')" class="border text-center font-normal py-4" [ngClass]="{'text-blue-500 cursor-pointer': stat.male_10_to_14_alcohol_drinker > 0}" colspan="6">{{stat.male_10_to_14_alcohol_drinker || '0'}}</td>
+                    <td (click)="stat.male_10_to_14_illicit_drugs > 0 && showNameList('M', 'illicit_drugs', '10-14')" class="border text-center font-normal py-4" [ngClass]="{'text-blue-500 cursor-pointer': stat.male_10_to_14_illicit_drugs > 0}" colspan="6">{{stat.male_10_to_14_illicit_drugs || '0'}}</td>
+                    <td (click)="stat.male_10_to_14_dental_carries > 0 && showNameList('M', 'dental_carries', '10-14')" class="border text-center font-normal py-4" [ngClass]="{'text-blue-500 cursor-pointer': stat.male_10_to_14_dental_carries > 0}" colspan="6">{{stat.male_10_to_14_dental_carries || '0'}}</td>
+                    <td (click)="stat.male_10_to_14_dm_hypn > 0 && showNameList('M', 'dm_hypn', '10-14')" class="border text-center font-normal py-4" [ngClass]="{'text-blue-500 cursor-pointer': stat.male_10_to_14_dm_hypn > 0}" colspan="6">{{stat.male_10_to_14_dm_hypn || '0'}}</td>
+                    <td (click)="stat.male_10_to_14_mental_concerns > 0 && showNameList('M', 'mental_concerns', '10-14')" class="border text-center font-normal py-4" [ngClass]="{'text-blue-500 cursor-pointer': stat.male_10_to_14_mental_concerns > 0}" colspan="6">{{stat.male_10_to_14_mental_concerns || '0'}}</td>
+                    <td (click)="stat.male_10_to_14_accident > 0 && showNameList('M', 'accident', '10-14')" class="border text-center font-normal py-4" [ngClass]="{'text-blue-500 cursor-pointer': stat.male_10_to_14_accident > 0}" colspan="6">{{stat.male_10_to_14_accident || '0'}}</td>
+                    <td (click)="stat.male_10_to_14_abuse_victim > 0 && showNameList('M', 'abuse_victim', '10-14')" class="border text-center font-normal py-4" [ngClass]="{'text-blue-500 cursor-pointer': stat.male_10_to_14_abuse_victim > 0}" colspan="6">{{stat.male_10_to_14_abuse_victim || '0'}}</td>
                     </tr>
                     <tr *ngFor="let stat of stats; let i = index">
                     <td class="border text-center font-normal py-4">Male</td>
                     <td class="border text-center font-normal py-4">15-19yo</td>
-                    <td class="border text-center font-normal py-4">{{stat.male_15_to_19_registered || '0'}}</td>
-                    <td class="border text-center font-normal py-4">{{stat.male_15_to_19_assessed_headsss || '0'}}</td>
-                    <td class="border text-center font-normal py-4">{{stat.male_15_to_19_adolescent_visits || '0'}}</td>
-                    <td class="border text-center font-normal py-4">{{stat.male_15_to_19_referred_by_peer_educators || '0'}}</td>
-                    <td class="border text-center font-normal py-4" colspan="6">{{stat.male_15_to_19_dental_visits || '0'}}</td>
-                    <td class="border text-center font-normal py-4" colspan="6">{{stat.male_15_to_19_iron || '0'}}</td>
-                    <td class="border text-center font-normal py-4" colspan="6">{{stat.male_15_to_19_immunization || '0'}}</td>
-                    <td class="border text-center font-normal py-4" colspan="6">{{stat.male_15_to_19_medical_consultation || '0'}}</td>
-                    <td class="border text-center font-normal py-4" colspan="6">{{stat.male_15_to_19_counselling || '0'}}</td>
+                    <td (click)="stat.male_15_to_19_registered > 0 && showNameList('M', 'registered', '15-19')" class="border text-center font-normal py-4" [ngClass]="{'text-blue-500 cursor-pointer': stat.male_15_to_19_registered > 0}">{{stat.male_15_to_19_registered || '0'}}</td>
+                    <td (click)="stat.male_15_to_19_assessed_headsss > 0 && showNameList('M', 'assessed_headsss', '15-19')" class="border text-center font-normal py-4" [ngClass]="{'text-blue-500 cursor-pointer': stat.male_15_to_19_assessed_headsss > 0}">{{stat.male_15_to_19_assessed_headsss || '0'}}</td>
+                    <td (click)="stat3.male_15_to_19_adolescent_visits > 0 && showNameList('M', 'adolescent_visits', '15-19')" class="border text-center font-normal py-4" [ngClass]="{'text-blue-500 cursor-pointer': stat3.male_15_to_19_adolescent_visits > 0}" *ngFor="let stat3 of stats3; let i = index">{{stat3.male_15_to_19_adolescent_visits || '0'}}</td>
+                    <td (click)="stat.male_15_to_19_referred_by_peer_educators > 0 && showNameList('M', 'referred_by_peer_educators', '15-19')" class="border text-center font-normal py-4" [ngClass]="{'text-blue-500 cursor-pointer': stat.male_15_to_19_referred_by_peer_educators > 0}">{{stat.male_15_to_19_referred_by_peer_educators || '0'}}</td>
+                    <td (click)="stat.male_15_to_19_dental_visits > 0 && showNameList('M', 'dental_visits', '15-19')" class="border text-center font-normal py-4" [ngClass]="{'text-blue-500 cursor-pointer': stat.male_15_to_19_dental_visits > 0}" colspan="6">{{stat.male_15_to_19_dental_visits || '0'}}</td>
+                    <td (click)="stat.male_15_to_19_iron > 0 && showNameList('M', 'iron', '15-19')" class="border text-center font-normal py-4" [ngClass]="{'text-blue-500 cursor-pointer': stat.male_15_to_19_iron > 0}" colspan="6">{{stat.male_15_to_19_iron || '0'}}</td>
+                    <td (click)="stat.male_15_to_19_immunization > 0 && showNameList('M', 'immunization', '15-19')" class="border text-center font-normal py-4" [ngClass]="{'text-blue-500 cursor-pointer': stat.male_15_to_19_immunization > 0}" colspan="6">{{stat.male_15_to_19_immunization || '0'}}</td>
+                    <td (click)="stat.male_15_to_19_medical_consultation > 0 && showNameList('M', 'medical_consultation', '15-19')" class="border text-center font-normal py-4" [ngClass]="{'text-blue-500 cursor-pointer': stat.male_15_to_19_medical_consultation > 0}" colspan="6">{{stat.male_15_to_19_medical_consultation || '0'}}</td>
+                    <td (click)="stat.male_15_to_19_counselling > 0 && showNameList('M', 'counselling', '15-19')" class="border text-center font-normal py-4" [ngClass]="{'text-blue-500 cursor-pointer': stat.male_15_to_19_counselling > 0}" colspan="6">{{stat.male_15_to_19_counselling || '0'}}</td>
                     <td class="border text-center font-normal py-4 bg-gray-300" colspan="6"></td>
-                    <td class="border text-center font-normal py-4" colspan="6">{{stat.male_15_to_19_fp_service || '0'}}</td>
+                    <td (click)="stat.male_15_to_19_fp_service > 0 && showNameList('M', 'fp_service', '15-19')" class="border text-center font-normal py-4" [ngClass]="{'text-blue-500 cursor-pointer': stat.male_15_to_19_fp_service > 0}" colspan="6">{{stat.male_15_to_19_fp_service || '0'}}</td>
                     <td class="border text-center font-normal py-4 bg-gray-300" colspan="6"></td>
                     <td class="border text-center font-normal py-4 bg-gray-300" colspan="6"></td>
                     <td class="border text-center font-normal py-4 bg-gray-300" colspan="6"></td>
-                    <td class="border text-center font-normal py-4" colspan="6">{{stat.male_15_to_19_risky_behavior || '0'}}</td>
-                    <td class="border text-center font-normal py-4" colspan="6">{{stat.male_15_to_19_underweight || '0'}}</td>
-                    <td class="border text-center font-normal py-4" colspan="6">{{stat.male_15_to_19_obese || '0'}}</td>
-                    <td class="border text-center font-normal py-4" colspan="6">{{stat.male_15_to_19_smoker || '0'}}</td>
-                    <td class="border text-center font-normal py-4" colspan="6">{{stat.male_15_to_19_alcohol_drinker || '0'}}</td>
-                    <td class="border text-center font-normal py-4" colspan="6">{{stat.male_15_to_19_illicit_drugs || '0'}}</td>
-                    <td class="border text-center font-normal py-4" colspan="6">{{stat.male_15_to_19_dental_carries || '0'}}</td>
-                    <td class="border text-center font-normal py-4" colspan="6">{{stat.male_15_to_19_dm_hypn || '0'}}</td>
-                    <td class="border text-center font-normal py-4" colspan="6">{{stat.male_15_to_19_mental_concerns || '0'}}</td>
-                    <td class="border text-center font-normal py-4" colspan="6">{{stat.male_15_to_19_accident || '0'}}</td>
-                    <td class="border text-center font-normal py-4" colspan="6">{{stat.male_15_to_19_abuse_victim || '0'}}</td>
+                    <td (click)="stat.male_15_to_19_risky_behavior > 0 && showNameList('M', 'risky_behavior', '15-19')" class="border text-center font-normal py-4" [ngClass]="{'text-blue-500 cursor-pointer': stat.male_15_to_19_risky_behavior > 0}" colspan="6">{{stat.male_15_to_19_risky_behavior || '0'}}</td>
+                    <td (click)="stat.male_15_to_19_underweight > 0 && showNameList('M', 'underweight', '15-19')" class="border text-center font-normal py-4" [ngClass]="{'text-blue-500 cursor-pointer': stat.male_15_to_19_underweight > 0}" colspan="6">{{stat.male_15_to_19_underweight || '0'}}</td>
+                    <td (click)="stat.male_15_to_19_obese > 0 && showNameList('M', 'obese', '15-19')" class="border text-center font-normal py-4" [ngClass]="{'text-blue-500 cursor-pointer': stat.male_15_to_19_obese > 0}" colspan="6">{{stat.male_15_to_19_obese || '0'}}</td>
+                    <td (click)="stat.male_15_to_19_smoker > 0 && showNameList('M', 'smoker', '15-19')" class="border text-center font-normal py-4" [ngClass]="{'text-blue-500 cursor-pointer': stat.male_15_to_19_smoker > 0}" colspan="6">{{stat.male_15_to_19_smoker || '0'}}</td>
+                    <td (click)="stat.male_15_to_19_alcohol_drinker > 0 && showNameList('M', 'alcohol_drinker', '15-19')" class="border text-center font-normal py-4" [ngClass]="{'text-blue-500 cursor-pointer': stat.male_15_to_19_alcohol_drinker > 0}" colspan="6">{{stat.male_15_to_19_alcohol_drinker || '0'}}</td>
+                    <td (click)="stat.male_15_to_19_illicit_drugs > 0 && showNameList('M', 'illicit_drugs', '15-19')" class="border text-center font-normal py-4" [ngClass]="{'text-blue-500 cursor-pointer': stat.male_15_to_19_illicit_drugs > 0}" colspan="6">{{stat.male_15_to_19_illicit_drugs || '0'}}</td>
+                    <td (click)="stat.male_15_to_19_dental_carries > 0 && showNameList('M', 'dental_carries', '15-19')" class="border text-center font-normal py-4" [ngClass]="{'text-blue-500 cursor-pointer': stat.male_15_to_19_dental_carries > 0}" colspan="6">{{stat.male_15_to_19_dental_carries || '0'}}</td>
+                    <td (click)="stat.male_15_to_19_dm_hypn > 0 && showNameList('M', 'dm_hypn', '15-19')" class="border text-center font-normal py-4" [ngClass]="{'text-blue-500 cursor-pointer': stat.male_15_to_19_dm_hypn > 0}" colspan="6">{{stat.male_15_to_19_dm_hypn || '0'}}</td>
+                    <td (click)="stat.male_15_to_19_mental_concerns > 0 && showNameList('M', 'mental_concerns', '15-19')" class="border text-center font-normal py-4" [ngClass]="{'text-blue-500 cursor-pointer': stat.male_15_to_19_mental_concerns > 0}" colspan="6">{{stat.male_15_to_19_mental_concerns || '0'}}</td>
+                    <td (click)="stat.male_15_to_19_accident > 0 && showNameList('M', 'accident', '15-19')" class="border text-center font-normal py-4" [ngClass]="{'text-blue-500 cursor-pointer': stat.male_15_to_19_accident > 0}" colspan="6">{{stat.male_15_to_19_accident || '0'}}</td>
+                    <td (click)="stat.male_15_to_19_abuse_victim > 0 && showNameList('M', 'abuse_victim', '15-19')" class="border text-center font-normal py-4" [ngClass]="{'text-blue-500 cursor-pointer': stat.male_15_to_19_abuse_victim > 0}" colspan="6">{{stat.male_15_to_19_abuse_victim || '0'}}</td>
                     </tr>
                     <tr *ngFor="let stat of stats; let i = index">
                     <td class="border text-center font-normal py-4">Female</td>
                     <td class="border text-center font-normal py-4">10-14yo</td>
-                    <td class="border text-center font-normal py-4">{{stat.female_10_to_14_registered || '0'}}</td>
-                    <td class="border text-center font-normal py-4">{{stat.female_10_to_14_assessed_headsss || '0'}}</td>
-                    <td class="border text-center font-normal py-4">{{stat.female_10_to_14_adolescent_visits || '0'}}</td>
-                    <td class="border text-center font-normal py-4">{{stat.female_10_to_14_referred_by_peer_educators || '0'}}</td>
-                    <td class="border text-center font-normal py-4" colspan="6">{{stat.female_10_to_14_dental_visits || '0'}}</td>
-                    <td class="border text-center font-normal py-4" colspan="6">{{stat.female_10_to_14_iron || '0'}}</td>
-                    <td class="border text-center font-normal py-4" colspan="6">{{stat.female_10_to_14_immunization || '0'}}</td>
-                    <td class="border text-center font-normal py-4" colspan="6">{{stat.female_10_to_14_medical_consultation || '0'}}</td>
-                    <td class="border text-center font-normal py-4" colspan="6">{{stat.female_10_to_14_counselling || '0'}}</td>
-                    <td class="border text-center font-normal py-4" colspan="6">{{stat.female_10_to_14_prenatal || '0'}}</td>
-                    <td class="border text-center font-normal py-4" colspan="6">{{stat.female_10_to_14_fp_service || '0'}}</td>
+                    <td (click)="stat.female_10_to_14_registered > 0 && showNameList('F', 'registered', '10-14')" class="border text-center font-normal py-4" [ngClass]="{'text-blue-500 cursor-pointer': stat.female_10_to_14_registered > 0}">{{stat.female_10_to_14_registered || '0'}}</td>
+                    <td (click)="stat.female_10_to_14_assessed_headsss > 0 && showNameList('F', 'assessed_headsss', '10-14')" class="border text-center font-normal py-4" [ngClass]="{'text-blue-500 cursor-pointer': stat.female_10_to_14_assessed_headsss > 0}">{{stat.female_10_to_14_assessed_headsss || '0'}}</td>
+                    <td (click)="stat3.female_10_to_14_adolescent_visits > 0 && showNameList('F', 'adolescent_visits', '10-14')" class="border text-center font-normal py-4" [ngClass]="{'text-blue-500 cursor-pointer': stat3.female_10_to_14_adolescent_visits > 0}" *ngFor="let stat3 of stats3; let i = index">{{stat3.female_10_to_14_adolescent_visits || '0'}}</td>
+                    <td (click)="stat.female_10_to_14_referred_by_peer_educators > 0 && showNameList('F', 'referred_by_peer_educators', '10-14')" class="border text-center font-normal py-4" [ngClass]="{'text-blue-500 cursor-pointer': stat.female_10_to_14_referred_by_peer_educators > 0}">{{stat.female_10_to_14_referred_by_peer_educators || '0'}}</td>
+                    <td (click)="stat.female_10_to_14_dental_visits > 0 && showNameList('F', 'dental_visits', '10-14')" class="border text-center font-normal py-4" [ngClass]="{'text-blue-500 cursor-pointer': stat.female_10_to_14_dental_visits > 0}" colspan="6">{{stat.female_10_to_14_dental_visits || '0'}}</td>
+                    <td (click)="stat.female_10_to_14_iron > 0 && showNameList('F', 'iron', '10-14')" class="border text-center font-normal py-4" [ngClass]="{'text-blue-500 cursor-pointer': stat.female_10_to_14_iron > 0}" colspan="6">{{stat.female_10_to_14_iron || '0'}}</td>
+                    <td (click)="stat.female_10_to_14_immunization > 0 && showNameList('F', 'immunization', '10-14')" class="border text-center font-normal py-4" [ngClass]="{'text-blue-500 cursor-pointer': stat.female_10_to_14_immunization > 0}" colspan="6">{{stat.female_10_to_14_immunization || '0'}}</td>
+                    <td (click)="stat.female_10_to_14_medical_consultation > 0 && showNameList('F', 'medical_consultation', '10-14')" class="border text-center font-normal py-4" [ngClass]="{'text-blue-500 cursor-pointer': stat.female_10_to_14_medical_consultation > 0}" colspan="6">{{stat.female_10_to_14_medical_consultation || '0'}}</td>
+                    <td (click)="stat.female_10_to_14_counselling > 0 && showNameList('F', 'counselling', '10-14')" class="border text-center font-normal py-4" [ngClass]="{'text-blue-500 cursor-pointer': stat.female_10_to_14_counselling > 0}" colspan="6">{{stat.female_10_to_14_counselling || '0'}}</td>
+                    <td (click)="stat.female_10_to_14_prenatal > 0 && showNameList('F', 'prenatal', '10-14')" class="border text-center font-normal py-4" [ngClass]="{'text-blue-500 cursor-pointer': stat.female_10_to_14_prenatal > 0}" colspan="6">{{stat.female_10_to_14_prenatal || '0'}}</td>
+                    <td (click)="stat.female_10_to_14_fp_service > 0 && showNameList('F', 'fp_service', '10-14')" class="border text-center font-normal py-4" [ngClass]="{'text-blue-500 cursor-pointer': stat.female_10_to_14_fp_service > 0}" colspan="6">{{stat.female_10_to_14_fp_service || '0'}}</td>
                     <td class="border text-center font-normal py-4 bg-gray-300" colspan="6"></td>
                     <td class="border text-center font-normal py-4 bg-gray-300" colspan="6"></td>
-                    <td class="border text-center font-normal py-4" colspan="6">{{stat.female_10_to_14_new_pregnant || '0'}}</td>
-                    <td class="border text-center font-normal py-4" colspan="6">{{stat.female_10_to_14_risky_behavior || '0'}}</td>
-                    <td class="border text-center font-normal py-4" colspan="6">{{stat.female_10_to_14_underweight || '0'}}</td>
-                    <td class="border text-center font-normal py-4" colspan="6">{{stat.female_10_to_14_obese || '0'}}</td>
-                    <td class="border text-center font-normal py-4" colspan="6">{{stat.female_10_to_14_smoker || '0'}}</td>
-                    <td class="border text-center font-normal py-4" colspan="6">{{stat.female_10_to_14_alcohol_drinker || '0'}}</td>
-                    <td class="border text-center font-normal py-4" colspan="6">{{stat.female_10_to_14_illicit_drugs || '0'}}</td>
-                    <td class="border text-center font-normal py-4" colspan="6">{{stat.female_10_to_14_dental_carries || '0'}}</td>
-                    <td class="border text-center font-normal py-4" colspan="6">{{stat.female_10_to_14_dm_hypn || '0'}}</td>
-                    <td class="border text-center font-normal py-4" colspan="6">{{stat.female_10_to_14_mental_concerns || '0'}}</td>
-                    <td class="border text-center font-normal py-4" colspan="6">{{stat.female_10_to_14_accident || '0'}}</td>
-                    <td class="border text-center font-normal py-4" colspan="6">{{stat.female_10_to_14_abuse_victim || '0'}}</td>
+                    <td (click)="stat.female_10_to_14_new_pregnant > 0 && showNameList('F', 'new_pregnant', '10-14')" class="border text-center font-normal py-4" [ngClass]="{'text-blue-500 cursor-pointer': stat.female_10_to_14_new_pregnant > 0}" colspan="6">{{stat.female_10_to_14_new_pregnant || '0'}}</td>
+                    <td (click)="stat.female_10_to_14_risky_behavior > 0 && showNameList('F', 'risky_behavior', '10-14')" class="border text-center font-normal py-4" [ngClass]="{'text-blue-500 cursor-pointer': stat.female_10_to_14_risky_behavior > 0}" colspan="6">{{stat.female_10_to_14_risky_behavior || '0'}}</td>
+                    <td (click)="stat.female_10_to_14_underweight > 0 && showNameList('F', 'underweight', '10-14')" class="border text-center font-normal py-4" [ngClass]="{'text-blue-500 cursor-pointer': stat.female_10_to_14_underweight > 0}" colspan="6">{{stat.female_10_to_14_underweight || '0'}}</td>
+                    <td (click)="stat.female_10_to_14_obese > 0 && showNameList('F', 'obese', '10-14')" class="border text-center font-normal py-4" [ngClass]="{'text-blue-500 cursor-pointer': stat.female_10_to_14_obese > 0}" colspan="6">{{stat.female_10_to_14_obese || '0'}}</td>
+                    <td (click)="stat.female_10_to_14_smoker > 0 && showNameList('F', 'smoker', '10-14')" class="border text-center font-normal py-4" [ngClass]="{'text-blue-500 cursor-pointer': stat.female_10_to_14_smoker > 0}" colspan="6">{{stat.female_10_to_14_smoker || '0'}}</td>
+                    <td (click)="stat.female_10_to_14_alcohol_drinker > 0 && showNameList('F', 'alcohol_drinker', '10-14')" class="border text-center font-normal py-4" [ngClass]="{'text-blue-500 cursor-pointer': stat.female_10_to_14_alcohol_drinker > 0}" colspan="6">{{stat.female_10_to_14_alcohol_drinker || '0'}}</td>
+                    <td (click)="stat.female_10_to_14_illicit_drugs > 0 && showNameList('F', 'illicit_drugs', '10-14')" class="border text-center font-normal py-4" [ngClass]="{'text-blue-500 cursor-pointer': stat.female_10_to_14_illicit_drugs > 0}" colspan="6">{{stat.female_10_to_14_illicit_drugs || '0'}}</td>
+                    <td (click)="stat.female_10_to_14_dental_carries > 0 && showNameList('F', 'dental_carries', '10-14')" class="border text-center font-normal py-4" [ngClass]="{'text-blue-500 cursor-pointer': stat.female_10_to_14_dental_carries > 0}" colspan="6">{{stat.female_10_to_14_dental_carries || '0'}}</td>
+                    <td (click)="stat.female_10_to_14_dm_hypn > 0 && showNameList('F', 'dm_hypn', '10-14')" class="border text-center font-normal py-4" [ngClass]="{'text-blue-500 cursor-pointer': stat.female_10_to_14_dm_hypn > 0}" colspan="6">{{stat.female_10_to_14_dm_hypn || '0'}}</td>
+                    <td (click)="stat.female_10_to_14_mental_concerns > 0 && showNameList('F', 'mental_concerns', '10-14')" class="border text-center font-normal py-4" [ngClass]="{'text-blue-500 cursor-pointer': stat.female_10_to_14_mental_concerns > 0}" colspan="6">{{stat.female_10_to_14_mental_concerns || '0'}}</td>
+                    <td (click)="stat.female_10_to_14_accident > 0 && showNameList('F', 'accident', '10-14')" class="border text-center font-normal py-4" [ngClass]="{'text-blue-500 cursor-pointer': stat.female_10_to_14_accident > 0}" colspan="6">{{stat.female_10_to_14_accident || '0'}}</td>
+                    <td (click)="stat.female_10_to_14_abuse_victim > 0 && showNameList('F', 'abuse_victim', '10-14')" class="border text-center font-normal py-4" [ngClass]="{'text-blue-500 cursor-pointer': stat.female_10_to_14_abuse_victim > 0}" colspan="6">{{stat.female_10_to_14_abuse_victim || '0'}}</td>
                     </tr>
                     <tr *ngFor="let stat of stats; let i = index">
                     <td class="border text-center font-normal py-4">Female</td>
                     <td class="border text-center font-normal py-4">15-19yo</td>
-                    <td class="border text-center font-normal py-4">{{stat.female_15_to_19_registered || '0'}}</td>
-                    <td class="border text-center font-normal py-4">{{stat.female_15_to_19_assessed_headsss || '0'}}</td>
-                    <td class="border text-center font-normal py-4">{{stat.female_15_to_19_adolescent_visits || '0'}}</td>
-                    <td class="border text-center font-normal py-4">{{stat.female_15_to_19_referred_by_peer_educators || '0'}}</td>
-                    <td class="border text-center font-normal py-4" colspan="6">{{stat.female_15_to_19_dental_visits || '0'}}</td>
-                    <td class="border text-center font-normal py-4" colspan="6">{{stat.female_15_to_19_iron || '0'}}</td>
-                    <td class="border text-center font-normal py-4" colspan="6">{{stat.female_15_to_19_immunization || '0'}}</td>
-                    <td class="border text-center font-normal py-4" colspan="6">{{stat.female_15_to_19_medical_consultation || '0'}}</td>
-                    <td class="border text-center font-normal py-4" colspan="6">{{stat.female_15_to_19_counselling || '0'}}</td>
-                    <td class="border text-center font-normal py-4" colspan="6">{{stat.female_15_to_19_prenatal || '0'}}</td>
-                    <td class="border text-center font-normal py-4" colspan="6">{{stat.female_15_to_19_fp_service || '0'}}</td>
+                    <td (click)="stat.female_15_to_19_registered > 0 && showNameList('F', 'registered', '15-19')" class="border text-center font-normal py-4" [ngClass]="{'text-blue-500 cursor-pointer': stat.female_15_to_19_registered > 0}">{{stat.female_15_to_19_registered || '0'}}</td>
+                    <td (click)="stat.female_15_to_19_assessed_headsss > 0 && showNameList('F', 'assessed_headsss', '15-19')" class="border text-center font-normal py-4" [ngClass]="{'text-blue-500 cursor-pointer': stat.female_15_to_19_assessed_headsss > 0}">{{stat.female_15_to_19_assessed_headsss || '0'}}</td>
+                    <td (click)="stat3.female_15_to_19_adolescent_visits > 0 && showNameList('F', 'adolescent_visits', '15-19')" class="border text-center font-normal py-4" [ngClass]="{'text-blue-500 cursor-pointer': stat3.female_15_to_19_adolescent_visits > 0}" *ngFor="let stat3 of stats3; let i = index">{{stat3.female_15_to_19_adolescent_visits || '0'}}</td>
+                    <td (click)="stat.female_15_to_19_referred_by_peer_educators > 0 && showNameList('F', 'referred_by_peer_educators', '15-19')" class="border text-center font-normal py-4" [ngClass]="{'text-blue-500 cursor-pointer': stat.female_15_to_19_referred_by_peer_educators > 0}">{{stat.female_15_to_19_referred_by_peer_educators || '0'}}</td>
+                    <td (click)="stat.female_15_to_19_dental_visits > 0 && showNameList('F', 'dental_visits', '15-19')" class="border text-center font-normal py-4" [ngClass]="{'text-blue-500 cursor-pointer': stat.female_15_to_19_dental_visits > 0}" colspan="6">{{stat.female_15_to_19_dental_visits || '0'}}</td>
+                    <td (click)="stat.female_15_to_19_iron > 0 && showNameList('F', 'iron', '15-19')" class="border text-center font-normal py-4" [ngClass]="{'text-blue-500 cursor-pointer': stat.female_15_to_19_iron > 0}" colspan="6">{{stat.female_15_to_19_iron || '0'}}</td>
+                    <td (click)="stat.female_15_to_19_immunization > 0 && showNameList('F', 'immunization', '15-19')" class="border text-center font-normal py-4" [ngClass]="{'text-blue-500 cursor-pointer': stat.female_15_to_19_immunization > 0}" colspan="6">{{stat.female_15_to_19_immunization || '0'}}</td>
+                    <td (click)="stat.female_15_to_19_medical_consultation > 0 && showNameList('F', 'medical_consultation', '15-19')" class="border text-center font-normal py-4" [ngClass]="{'text-blue-500 cursor-pointer': stat.female_15_to_19_medical_consultation > 0}" colspan="6">{{stat.female_15_to_19_medical_consultation || '0'}}</td>
+                    <td (click)="stat.female_15_to_19_counselling > 0 && showNameList('F', 'counselling', '15-19')" class="border text-center font-normal py-4" [ngClass]="{'text-blue-500 cursor-pointer': stat.female_15_to_19_counselling > 0}" colspan="6">{{stat.female_15_to_19_counselling || '0'}}</td>
+                    <td (click)="stat.female_15_to_19_prenatal > 0 && showNameList('F', 'prenatal', '15-19')" class="border text-center font-normal py-4" [ngClass]="{'text-blue-500 cursor-pointer': stat.female_15_to_19_prenatal > 0}" colspan="6">{{stat.female_15_to_19_prenatal || '0'}}</td>
+                    <td (click)="stat.female_15_to_19_fp_service > 0 && showNameList('F', 'fp_service', '15-19')" class="border text-center font-normal py-4" [ngClass]="{'text-blue-500 cursor-pointer': stat.female_15_to_19_fp_service > 0}" colspan="6">{{stat.female_15_to_19_fp_service || '0'}}</td>
                     <td class="border text-center font-normal py-4 bg-gray-300" colspan="6"></td>
                     <td class="border text-center font-normal py-4 bg-gray-300" colspan="6"></td>
-                    <td class="border text-center font-normal py-4" colspan="6">{{stat.female_15_to_19_new_pregnant || '0'}}</td>
-                    <td class="border text-center font-normal py-4" colspan="6">{{stat.female_15_to_19_risky_behavior || '0'}}</td>
-                    <td class="border text-center font-normal py-4" colspan="6">{{stat.female_15_to_19_underweight || '0'}}</td>
-                    <td class="border text-center font-normal py-4" colspan="6">{{stat.female_15_to_19_obese || '0'}}</td>
-                    <td class="border text-center font-normal py-4" colspan="6">{{stat.female_15_to_19_smoker || '0'}}</td>
-                    <td class="border text-center font-normal py-4" colspan="6">{{stat.female_15_to_19_alcohol_drinker || '0'}}</td>
-                    <td class="border text-center font-normal py-4" colspan="6">{{stat.female_15_to_19_illicit_drugs || '0'}}</td>
-                    <td class="border text-center font-normal py-4" colspan="6">{{stat.female_15_to_19_dental_carries || '0'}}</td>
-                    <td class="border text-center font-normal py-4" colspan="6">{{stat.female_15_to_19_dm_hypn || '0'}}</td>
-                    <td class="border text-center font-normal py-4" colspan="6">{{stat.female_15_to_19_mental_concerns || '0'}}</td>
-                    <td class="border text-center font-normal py-4" colspan="6">{{stat.female_15_to_19_accident || '0'}}</td>
-                    <td class="border text-center font-normal py-4" colspan="6">{{stat.female_15_to_19_abuse_victim || '0'}}</td>
+                    <td (click)="stat.female_15_to_19_new_pregnant > 0 && showNameList('F', 'new_pregnant', '15-19')" class="border text-center font-normal py-4" [ngClass]="{'text-blue-500 cursor-pointer': stat.female_15_to_19_new_pregnant > 0}" colspan="6">{{stat.female_15_to_19_new_pregnant || '0'}}</td>
+                    <td (click)="stat.female_15_to_19_risky_behavior > 0 && showNameList('F', 'risky_behavior', '15-19')" class="border text-center font-normal py-4" [ngClass]="{'text-blue-500 cursor-pointer': stat.female_15_to_19_risky_behavior > 0}" colspan="6">{{stat.female_15_to_19_risky_behavior || '0'}}</td>
+                    <td (click)="stat.female_15_to_19_underweight > 0 && showNameList('F', 'underweight', '15-19')" class="border text-center font-normal py-4" [ngClass]="{'text-blue-500 cursor-pointer': stat.female_15_to_19_underweight > 0}" colspan="6">{{stat.female_15_to_19_underweight || '0'}}</td>
+                    <td (click)="stat.female_15_to_19_obese > 0 && showNameList('F', 'obese', '15-19')" class="border text-center font-normal py-4" [ngClass]="{'text-blue-500 cursor-pointer': stat.female_15_to_19_obese > 0}" colspan="6">{{stat.female_15_to_19_obese || '0'}}</td>
+                    <td (click)="stat.female_15_to_19_smoker > 0 && showNameList('F', 'smoker', '15-19')" class="border text-center font-normal py-4" [ngClass]="{'text-blue-500 cursor-pointer': stat.female_15_to_19_smoker > 0}" colspan="6">{{stat.female_15_to_19_smoker || '0'}}</td>
+                    <td (click)="stat.female_15_to_19_alcohol_drinker > 0 && showNameList('F', 'alcohol_drinker', '15-19')" class="border text-center font-normal py-4" [ngClass]="{'text-blue-500 cursor-pointer': stat.female_15_to_19_alcohol_drinker > 0}" colspan="6">{{stat.female_15_to_19_alcohol_drinker || '0'}}</td>
+                    <td (click)="stat.female_15_to_19_illicit_drugs > 0 && showNameList('F', 'illicit_drugs', '15-19')" class="border text-center font-normal py-4" [ngClass]="{'text-blue-500 cursor-pointer': stat.female_15_to_19_illicit_drugs > 0}" colspan="6">{{stat.female_15_to_19_illicit_drugs || '0'}}</td>
+                    <td (click)="stat.female_15_to_19_dental_carries > 0 && showNameList('F', 'dental_carries', '15-19')" class="border text-center font-normal py-4" [ngClass]="{'text-blue-500 cursor-pointer': stat.female_15_to_19_dental_carries > 0}" colspan="6">{{stat.female_15_to_19_dental_carries || '0'}}</td>
+                    <td (click)="stat.female_15_to_19_dm_hypn > 0 && showNameList('F', 'dm_hypn', '15-19')" class="border text-center font-normal py-4" [ngClass]="{'text-blue-500 cursor-pointer': stat.female_15_to_19_dm_hypn > 0}" colspan="6">{{stat.female_15_to_19_dm_hypn || '0'}}</td>
+                    <td (click)="stat.female_15_to_19_mental_concerns > 0 && showNameList('F', 'mental_concerns', '15-19')" class="border text-center font-normal py-4" [ngClass]="{'text-blue-500 cursor-pointer': stat.female_15_to_19_mental_concerns > 0}" colspan="6">{{stat.female_15_to_19_mental_concerns || '0'}}</td>
+                    <td (click)="stat.female_15_to_19_accident > 0 && showNameList('F', 'accident', '15-19')" class="border text-center font-normal py-4" [ngClass]="{'text-blue-500 cursor-pointer': stat.female_15_to_19_accident > 0}" colspan="6">{{stat.female_15_to_19_accident || '0'}}</td>
+                    <td (click)="stat.female_15_to_19_abuse_victim > 0 && showNameList('F', 'abuse_victim', '15-19')" class="border text-center font-normal py-4" [ngClass]="{'text-blue-500 cursor-pointer': stat.female_15_to_19_abuse_victim > 0}" colspan="6">{{stat.female_15_to_19_abuse_victim || '0'}}</td>
                     </tr>
                   <tr *ngFor="let stat of stats; let i = index">
                     <td class="border text-center font-bold py-4">Total</td>
@@ -312,3 +311,13 @@
   </div>
 </div>
 
+<app-show-name-list
+  *ngIf="openList"
+  (toggleModal)="toggleModal()"
+  [name_list_params]="name_list_parameters"
+  [selectedBrgy]="selectedBrgy"
+  [selectedCode]="selectedCode"
+  [reportForm]="reportForm"
+  [url]="url"
+  [loc]="'itr'"
+></app-show-name-list>

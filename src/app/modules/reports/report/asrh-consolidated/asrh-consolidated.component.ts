@@ -73,6 +73,7 @@ export class AsrhConsolidatedComponent implements OnChanges, OnInit {
    is_fetching: boolean = false;
    location: any;
    userInfo: any = {};
+   name_list: any = [];
 
   constructor(
       private http: HttpService,
@@ -84,6 +85,7 @@ export class AsrhConsolidatedComponent implements OnChanges, OnInit {
   show_form: boolean = false;
   stats : any;
   stats2 : any;
+  stats3: any;
 
   pararams: any;
 
@@ -93,7 +95,8 @@ export class AsrhConsolidatedComponent implements OnChanges, OnInit {
   faChevronRight = faChevronRight;
   faFileExcel = faFileExcel
 
-  url= 'reports-2018/asrh/masterlist';
+  url2= 'reports-2018/asrh/masterlist';
+  url= 'reports-2018/asrh/name-list';
 
   //  showNameList(patient_initials: string) {
   //   this.name_list_params = {
@@ -128,7 +131,7 @@ export class AsrhConsolidatedComponent implements OnChanges, OnInit {
     // params['params']['consult_done'] = 0;
 
     // console.log(params, page, this.current_page)
-    this.http.get(this.url, {params}).subscribe({
+    this.http.get(this.url2, {params}).subscribe({
       next: (data: any) => {
         // console.log(data);
         // this.show_form = true;
@@ -259,7 +262,7 @@ isDiagnosis(peList: any[]): boolean {
       const fetchPage = (page: number) => {
         // params['params']['page'] = page;
 
-        this.http.get(this.url, params).subscribe({
+        this.http.get(this.url2, params).subscribe({
           next: (data: any) => {
             // this.total_print_page = data.meta.last_page;
             // this.current_print_page = page;
@@ -342,12 +345,38 @@ isDiagnosis(peList: any[]): boolean {
 
     }
 
+    name_list_parameters: {};
+  openList:boolean = false;
+
+    showNameList(gender: string, indicator: string, age: string) {
+    // Create the name_list_params object dynamically
+    this.name_list_parameters = {
+      start_date: this.reportForm.value.start_date,
+      end_date: this.reportForm.value.end_date,
+      category: this.reportForm.value.report_class,
+      per_page: 10,
+      indicator: indicator,
+      age: age,
+      gender: gender,
+    };
+    this.openList = true;
+    console.log(this.name_list_parameters, 'name list params');
+  };
+
+   toggleModal(){
+    let list = [];
+
+    this.name_list = list;
+    this.openList = !this.openList;
+  }
+
 
 
 
   ngOnChanges(): void {
     this.stats = this.report_data.data.main;
     this.stats2 = this.report_data.data.top5;
+    this.stats3 = this.report_data.data.visits;
     this.pararams = this.reportForm;
     this.getToday();
     this.getYearFromDates();
