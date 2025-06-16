@@ -58,9 +58,13 @@ const routes: Routes = [
       {
         path: 'at',
         loadChildren: () => import('../adolescent/adolescent.module').then(m => m.AdolescentModule)
+      },
+      {
+        path: 'mh', loadChildren: () => import('../mental-health/mental-health.module').then(m => m.MentalHealthModule)
       }
     ]
   },
+
 ];
 
 @NgModule({

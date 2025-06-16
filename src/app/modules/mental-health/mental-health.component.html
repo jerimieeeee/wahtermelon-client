@@ -1,0 +1,85 @@
+<div class="flex">
+  <nav class="mt-4 flex flex-row border-b border-slate-300 text-xs">
+    <button (click)="switchPage(1)" class="tabs-main w-36"
+      [class]="page===1? 'tabs-main-true rounded-t-md' : 'tabs-main-false' ">
+      TREATMENT ARCHIVE
+    </button>
+    <button *ngIf="!selected_mh_consult || (selected_mh_consult?.facility_code === user_facility)" (click)="switchPage(2)" class="tabs-main w-36"
+      [class]="page===2? 'tabs-main-true rounded-t-md' : 'tabs-main-false' ">
+      TREATMENT
+    </button>
+    <button *ngIf="!selected_mh_consult || (selected_mh_consult?.facility_code === user_facility)" (click)="switchPage(3)" class="tabs-main w-36"
+      [class]="page===3? 'tabs-main-true rounded-t-md' : 'tabs-main-false' ">
+      ECLAIMS
+    </button>
+  </nav>
+  <div class="ml-auto">
+    <button *ngIf="consult_details && !consult_details?.consult_done" type="button" class="btn-end-visit ml-auto mt-5" (click)="toggleModal('end_visit')">
+      <fa-icon class="mr-1" [icon]="faDoorClosed"></fa-icon>
+      End Visit
+    </button>
+  </div>
+</div>
+
+<div *ngIf="page === 1" class="flex w-full">
+  <table class="w-full table-auto border-collapse border border-gray-200 shadow-md rounded-xl mt-3">
+    <thead>
+      <tr class="bg-blue-500 text-white">
+        <th class="px-4 py-2">Date</th>
+        <th class="px-4 py-2">Outcome</th>
+        <th class="px-4 py-2">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let treatment of treatments">
+        <td class="border px-4 py-2">{{ treatment.date | date: 'MM/dd/yyyy' }}</td>
+        <td class="border px-4 py-2">{{ treatment.patient_name }}</td>
+        <td class="border px-4 py-2">
+          <button (click)="switchPage(2, treatment)" class="btn-view-details">View Details</button>
+        </td>
+      </tr>
+      <tr *ngIf="treatments.length === 0">
+        <td colspan="3" class="text-center py-4">
+          <span class="italic">No Record found.</span> <br /><br />
+          <button class="btn-add" (click)="switchPage(2)">Create new</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<nav *ngIf="page===2" class="mt-2 flex justify-between border-b border-slate-300 text-xs">
+  <div class="flex flex-row">
+    <button (click)="switchTab(1)" class="tabs-main w-28"
+        [class]="module===1? 'tabs-main-true' : 'tabs-main-false' ">
+        REGISTRATION
+    </button>
+    <button (click)="switchTab(19)" *ngIf="selected_mh_consult?.id" class="tabs-main w-28"
+        [class]="module===3? 'tabs-main-true' : 'tabs-main-false' ">
+        DIAGNOSIS & PRESCRIPTION
+    </button>
+    <button (click)="switchTab(20)" *ngIf="selected_mh_consult?.id" class="tabs-main w-28"
+        [class]="module===8? 'tabs-main-true' : 'tabs-main-false' ">
+        CASE RATE
+    </button>
+  </div>
+  <div class="flex flex-row">
+    <button type="button" *ngIf="selected_mh_consult && selected_mh_consult.treatment_done === 0" (click)="toggleModal('treatment_outcome')" class="bg-rose-500 px-3 py-2  rounded text-white hover:opacity-75">
+      Treatment Outcome
+    </button>
+  </div>
+</nav>
+
+<div *ngIf="page === 2" class="flex w-full">
+  <app-registration *ngIf="module === 1">
+
+  </app-registration>
+</div>
+
+<app-end-visit *ngIf="modals['end_visit']"
+  (toggleModal)="toggleModal($event)"
+  [consult_id]="consult_details?.id"
+  [consult_date]="consult_details?.consult_date"
+  [patient_id]="consult_details?.patient.id"
+  [pt_group]="'mh'"
+></app-end-visit>
