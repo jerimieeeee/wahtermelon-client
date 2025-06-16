@@ -65,6 +65,11 @@ export class Cf2Component implements OnInit {
     }
 
     if(this.selected_caserate.code === '89221') {
+      if(!this.selected_case.case_holding || !this.selected_case.case_holding.treatment_start || !this.selected_case.case_holding.treatment_end) {
+        this.showError('Treatment start and end dates are required to proceed.');
+        return;
+      }
+
       tb.pTBType = 'I';
       tb.attendant_sign_date = formatDate(this.selected_case.case_holding.treatment_start, 'yyyy-MM-dd', 'en', 'Asia/Manila');
       tb.admission_date = formatDate(this.selected_case.case_holding.treatment_start, 'yyyy-MM-dd', 'en', 'Asia/Manila');
@@ -76,6 +81,11 @@ export class Cf2Component implements OnInit {
     }
 
     if(this.selected_caserate.code === '89222') {
+      if(!this.selected_case.case_holding || !this.selected_case.case_holding.continuation_start || !this.selected_case.case_holding.treatment_end) {
+        this.showError('Continuation start and treatment end dates are required to proceed.');
+        return;
+      }
+
       tb.pTBType = 'M';
       tb.attendant_sign_date = formatDate(this.selected_case.case_holding.continuation_start, 'yyyy-MM-dd', 'en', 'Asia/Manila');
       tb.admission_date = formatDate(this.selected_case.case_holding.continuation_start, 'yyyy-MM-dd', 'en', 'Asia/Manila');
@@ -123,6 +133,11 @@ export class Cf2Component implements OnInit {
       });
     }
 
+    if(!this.selected_case.admission_date || !this.selected_case.discharge_date) {
+      this.showError('Admission and Discharge dates are required to proceed.');
+      return;
+    }
+
     this.eclaimsForm.patchValue({
       attendant_sign_date: formatDate(this.selected_case.admission_date, 'yyyy-MM-dd', 'en', 'Asia/Manila'),
       admission_date: formatDate(this.selected_case.admission_date, 'yyyy-MM-dd', 'en', 'Asia/Manila'),
@@ -145,6 +160,13 @@ export class Cf2Component implements OnInit {
     this.f.pRIG.setValidators([Validators.required]);
     this.f.pABPOthers.setValidators([Validators.required]);
 
+    if(!this.selected_case.abPostExposure.day0_date || !this.selected_case.abPostExposure.day0_date ||
+        !this.selected_case.abPostExposure.day7_date || !this.selected_case.abPostExposure.rig_date ||
+        !this.selected_case.abPostExposure.other_vacc_date
+    ) {
+      this.showError('One or more required dates are missing');
+      return;
+    }
     this.eclaimsForm.patchValue({
       pDay0ARV: formatDate(this.selected_case.abPostExposure.day0_date, 'yyyy-MM-dd', 'en', 'Asia/Manila'),
       pDay3ARV: formatDate(this.selected_case.abPostExposure.day3_date, 'yyyy-MM-dd', 'en', 'Asia/Manila'),
@@ -198,9 +220,9 @@ export class Cf2Component implements OnInit {
         admitDate = new Date(visit1);
         dischargeDate = new Date(visit4);
       } else {
-        signDate = this.selected_case.post_registration.admission_date;
-        admitDate = this.selected_case.post_registration.admission_date;
-        dischargeDate = this.selected_case.post_registration.discharge_date;
+        signDate = this.selected_case.post_registration.admission_date ?? null;
+        admitDate = this.selected_case.post_registration.admission_date ?? null;
+        dischargeDate = this.selected_case.post_registration.discharge_date ?? null;
       }
 
       this.eclaimsForm.patchValue({
@@ -219,7 +241,12 @@ export class Cf2Component implements OnInit {
     }
   }
 
-  paramsMl() {
+  /* paramsMl() {
+    if(!this.eclaimsForm.value.caserate_date) {
+      this.showError('Caserate date is required to proceed.');
+      return;
+    }
+
     this.eclaimsForm.patchValue({
       attendant_sign_date: formatDate(this.eclaimsForm.value.caserate_date, 'yyyy-MM-dd', 'en', 'Asia/Manila'),
       admission_date: formatDate(this.eclaimsForm.value.caserate_date, 'yyyy-MM-dd', 'en', 'Asia/Manila'),
@@ -229,10 +256,45 @@ export class Cf2Component implements OnInit {
     });
 
     this.getCreds();
+  } */
+
+  paramsGeneric(){
+    this.f.pICDCode.setValidators([Validators.required]);
+
+    if(!this.eclaimsForm.value.caserate_date) {
+      this.showError('Caserate date is required to proceed.');
+      return;
+    }
+
+    if(!this.eclaimsForm.value.icd10_code) {
+      this.showError('ICD10 code is required to proceed.');
+      return;
+    }
+
+    this.eclaimsForm.patchValue({
+      pICDCode: this.eclaimsForm.value.icd10_code,
+      attendant_sign_date: formatDate(this.eclaimsForm.value.caserate_date, 'yyyy-MM-dd', 'en', 'Asia/Manila'),
+      admission_date: formatDate(this.eclaimsForm.value.caserate_date, 'yyyy-MM-dd', 'en', 'Asia/Manila'),
+      admission_time: formatDate(new Date().setHours(8), 'hh:mma', 'en', 'Asia/Manila'),
+      discharge_date: formatDate(this.eclaimsForm.value.caserate_date, 'yyyy-MM-dd', 'en', 'Asia/Manila'),
+      discharge_time: formatDate(new Date().setHours(17), 'hh:mma', 'en', 'Asia/Manila'),
+    })
+
+    this.getCreds();
   }
 
   paramsFp(){
     this.f.pICDCode.setValidators([Validators.required]);
+
+    if(!this.eclaimsForm.value.caserate_date) {
+      this.showError('Caserate date is required to proceed.');
+      return;
+    }
+
+    if(!this.eclaimsForm.value.icd10_code) {
+      this.showError('ICD10 code is required to proceed.');
+      return;
+    }
 
     this.eclaimsForm.patchValue({
       pICDCode: this.eclaimsForm.value.icd10_code,
@@ -248,6 +310,16 @@ export class Cf2Component implements OnInit {
 
   paramsDn(){
     this.f.pICDCode.setValidators([Validators.required]);
+
+    if(!this.eclaimsForm.value.caserate_date) {
+      this.showError('Caserate date is required to proceed.');
+      return;
+    }
+
+    if(!this.eclaimsForm.value.icd10_code) {
+      this.showError('ICD10 code is required to proceed.');
+      return;
+    }
 
     this.eclaimsForm.patchValue({
       pICDCode: this.eclaimsForm.value.icd10_code,
@@ -331,8 +403,12 @@ export class Cf2Component implements OnInit {
         this.paramsFp();
         break;
       }
-      case 'dn': {
+      /* case 'dn': {
         this.paramsDn();
+        break;
+      } */
+      default: {
+        this.paramsGeneric();
         break;
       }
     }
@@ -445,6 +521,14 @@ export class Cf2Component implements OnInit {
     this.loadCf2Params();
   }
 
+  showError(message: string,) {
+    this.toastr.error(message, "Error", {
+      closeButton: true,
+      positionClass: 'toast-top-center',
+      disableTimeOut: true
+    });
+  }
+
   closeModal() {
     this.toggleModal.emit('cf2');
   }
@@ -460,7 +544,6 @@ export class Cf2Component implements OnInit {
   ngOnInit(): void {
     this.facility = this.http.getUserFromJSON().facility;
     if(this.caserate_list.length === 1) {
-      console.log(this.caserate_list[0]);
       this.selected_caserate = this.caserate_list[0];
       this.createForm();
     }
