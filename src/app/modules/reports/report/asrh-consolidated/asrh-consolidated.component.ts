@@ -86,6 +86,8 @@ export class AsrhConsolidatedComponent implements OnChanges, OnInit {
   stats : any;
   stats2 : any;
   stats3: any;
+  stats4: any;
+  stats5: any;
 
   pararams: any;
 
@@ -348,7 +350,7 @@ isDiagnosis(peList: any[]): boolean {
     name_list_parameters: {};
   openList:boolean = false;
 
-    showNameList(gender: string, indicator: string, age: string) {
+    showNameList(gender: string, indicator: string, age?: string, icd10_code?: string) {
     // Create the name_list_params object dynamically
     this.name_list_parameters = {
       start_date: this.reportForm.value.start_date,
@@ -356,7 +358,8 @@ isDiagnosis(peList: any[]): boolean {
       category: this.reportForm.value.report_class,
       per_page: 10,
       indicator: indicator,
-      age: age,
+     ...(age !== undefined && { age: age }), // Add 'routine' only if it's defined
+     ...(icd10_code !== undefined && { icd10_code: icd10_code }), // Add 'routine' only if it's defined
       gender: gender,
     };
     this.openList = true;
@@ -377,6 +380,8 @@ isDiagnosis(peList: any[]): boolean {
     this.stats = this.report_data.data.main;
     this.stats2 = this.report_data.data.top5;
     this.stats3 = this.report_data.data.visits;
+    this.stats4 = this.report_data.data.prenatal;
+    this.stats5 = this.report_data.data.fp;
     this.pararams = this.reportForm;
     this.getToday();
     this.getYearFromDates();
