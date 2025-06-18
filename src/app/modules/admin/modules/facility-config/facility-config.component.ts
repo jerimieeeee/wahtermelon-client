@@ -1,8 +1,9 @@
 import { formatDate } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { faCircleNotch, faDoorClosed, faSave } from '@fortawesome/free-solid-svg-icons';
+import { faCircleNotch, faDoorClosed, faImage, faSave } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
+
 
 @Component({
     selector: 'app-facility-config',
@@ -16,6 +17,7 @@ export class FacilityConfigComponent implements OnInit {
   faSave = faSave;
   faCircleNotch = faCircleNotch;
   faDoorClosed = faDoorClosed;
+  faImage = faImage;
 
   pages: number = 1;
   module: number = 1;
@@ -97,6 +99,82 @@ export class FacilityConfigComponent implements OnInit {
     })
   }
 
+
+  /* logo upload start */
+ /*  imageData: string | null = null;
+
+  onFileSelected(event: any) {
+    const file: File = event.target.files[0];
+    if (!file) return;
+
+    // Preview
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.imageData = reader.result as string;
+    };
+    reader.readAsDataURL(file);
+
+    // Upload
+    const formData = new FormData();
+    formData.append('logo', file);
+
+    this.http.post('consultation/upload-logo', formData)
+      .subscribe({
+        next: (res:any) => {
+          const imageUrl = 'http://localhost:8000' + res.path;
+          console.log('Logo uploaded:', imageUrl);
+          this.imageData = imageUrl; // optionally update to live URL
+           this.toastr.success('Logo successfully uploaded');
+        },
+         error: (err) => {
+            console.error('Upload failed.', err);
+            this.toastr.error('Logo upload failed!');
+        }
+      });
+  } */
+
+      imageData: string | null = null;
+
+onFileSelected(event: any) {
+  const file: File = event.target.files[0];
+  if (!file) return;
+
+
+  // Upload to backend
+  const formData = new FormData();
+  formData.append('logo', file);
+
+  this.http.post('consultation/upload-logo', formData).subscribe({
+    next: (res: any) => {
+      const imageUrl = 'http://localhost:8000' + res.path;
+      console.log('Logo uploaded:', imageUrl);
+      this.imageData = imageUrl; // Set the real image URL after successful upload
+      this.toastr.success('Logo successfully uploaded');
+    },
+    error: (err) => {
+      console.error('Upload failed.', err);
+      this.toastr.error('Logo upload failed!');
+    }
+  });
+}
+
+loadLogo() {
+  this.http.get('consultation/logo').subscribe({
+    next: (res: any) => {
+      if (res.path) {
+        this.imageData = 'http://localhost:8000' + res.path;
+      }
+    },
+    error: () => {
+      console.warn('No logo found or failed to load.');
+      this.imageData = null;
+    }
+  });
+}
+  
+
+ /* logo upload end */
+
   constructor(
     private http: HttpService,
     private toastr: ToastrService,
@@ -112,5 +190,9 @@ export class FacilityConfigComponent implements OnInit {
     for(let year = Number(this.current_year); year > 2017; year--) {
       this.years.push(year);
     }
+
+     this.loadLogo();
   }
+
+  
 }

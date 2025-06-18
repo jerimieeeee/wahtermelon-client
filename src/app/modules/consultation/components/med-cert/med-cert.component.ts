@@ -63,7 +63,6 @@ export class MedCertComponent implements OnInit {
 
     const formattedDate = this.datePipe.transform(today, 'MM/dd/yyyy');
     this.dateNgayon = formattedDate;
-  console.log(formattedDate);
 
   }
 
@@ -174,6 +173,25 @@ exportAsPdf: ExportAsConfig = {
     municipality: {municipality_code:''},
   };
 
+  /* logo */
+   logoUrl = '';
+
+  fetchFacilityLogo() {
+   this.http.get('consultation/logo').subscribe({
+    next: (res: any) => {
+      console.log('Logo response:', res);
+      if (res.path) {
+        this.logoUrl = 'http://localhost:8000' + res.path;
+        console.log('Full logo URL:', this.logoUrl);
+      }
+    },
+    error: (err) => {
+      console.warn('No logo found:', err);
+      this.logoUrl = ''; // Optional: hide logo if error
+    }
+  });
+}
+
   ngOnInit(): void {
 
     this.consultation = this.http.getUrlParams();
@@ -186,6 +204,8 @@ exportAsPdf: ExportAsConfig = {
   this.todaysDate();
 
   this.getConsultInfo();
+
+  this.fetchFacilityLogo();
    
   }
 }

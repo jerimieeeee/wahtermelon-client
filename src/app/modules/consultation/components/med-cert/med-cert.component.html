@@ -60,19 +60,27 @@
         </div>
 
         <!-- Certificate Content -->
+         
         <div id="pdf-content" class="flex flex-col items-center justify-center w-full space-y-5 overflow-y-auto flex-1">
           <div
             class="scale-[0.75] mt-4 origin-top w-full h-full bg-white px-2 py-5 flex flex-col"
             *ngFor="let info of consult"
           >
-            <!-- Facility Header -->
-            <div class="text-center mb-6">
-              <h4 class="font-semibold text-lg">{{ info?.facility_name }}</h4>
-              <h4 class="text-base">
-                {{ info?.header_name === 'Province Of NCR, All District' ? 'National Capital Region' : info?.header_name }}
-              </h4>
-              <h4 class="text-base">Municipality of {{ info?.municipality_name }}</h4>
-            </div>
+         <div class="relative mb-6">
+          <!-- Logo on the left -->
+          <div class="absolute left-0 top-0">
+            <img *ngIf="logoUrl" [src]="logoUrl" class="w-auto h-32 max-h-40 object-contain" />
+          </div>
+
+          <!-- Facility Header centered -->
+          <div class="text-center">
+            <h4 class="font-semibold text-lg">{{ info?.facility_name }}</h4>
+            <h4 class="text-base">
+              {{ info?.header_name === 'Province Of NCR, All District' ? 'National Capital Region' : info?.header_name }}
+            </h4>
+            <h4 class="text-base">Municipality of {{ info?.municipality_name }}</h4>
+          </div>
+        </div>
 
             <h1 class="text-xl text-center font-semibold my-2">MEDICAL CERTIFICATE</h1>
 
