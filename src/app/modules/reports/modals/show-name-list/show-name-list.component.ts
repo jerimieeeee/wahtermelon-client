@@ -91,7 +91,7 @@ export class ShowNameListComponent implements OnInit {
     });
   }
 
-  navigateTo(loc, patient_id, consult_id){
+  navigateTo(loc, patient_id, consult_id?){
     console.log(patient_id, 'patient')
     if (loc === 'cn') {
       this.router.navigate(['/patient/'+loc,{id: patient_id, consult_id: consult_id}])
@@ -108,6 +108,16 @@ export class ShowNameListComponent implements OnInit {
       }, 0);
     }
     return total;
+  }
+
+  openInNewTab(loc: string, patient_id: number, consult_id?: number) {
+    let url = '';
+    if (loc === 'cn') {
+      url = `/patient/${loc}?id=${patient_id}&consult_id=${consult_id}`;
+    } else {
+      url = `/patient/${loc}?id=${patient_id}`;
+    }
+    window.open(url, '_blank');
   }
 
   closeModal() {

@@ -38,8 +38,10 @@
             </thead>
             <tbody>
             <tr *ngFor="let list of show_nameList" class="w-full font-medium my-0 text-sm rounded-md py-2 px-3 hover:cursor-pointer hover:bg-blue-500 hover:text-white">
-                    <td class="py-4 px-6 cursor-pointer" [routerLink]="['/patient/itr', {id: list.patient_id}]" target="_blank">
-                    {{ list.name }}
+                    <td class="py-4 px-6" >
+                      <a [routerLink]="['/patient/itr', {id: list.patient_id}]" target="_blank" class="hover:underline">
+                        {{ list.name }}
+                      </a>
                     </td>
               <td class="py-4 px-6">
                 {{ list.birthdate | date: 'MM/dd/yyyy':'Asia/Manila' }}
