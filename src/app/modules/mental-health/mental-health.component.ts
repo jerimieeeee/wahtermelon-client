@@ -18,6 +18,9 @@ export class MentalHealthComponent implements OnInit {
 
   treatments: any = [];
   modals: string[] = [];
+
+  show_form: boolean = false;
+
   switchPage(page?: number, data?: any) {
     this.page = page || 1;
     this.selected_mh_consult = data || [];
@@ -33,7 +36,7 @@ export class MentalHealthComponent implements OnInit {
   }
 
   getMentalHealthRecords() {
-    this.http.get('mental-health/records').subscribe({
+    this.http.get('mental-health/records', {params: { patient_id: this.http.get}}).subscribe({
       next: (data: any) => {
         console.log(data);
         this.treatments = data.data;
