@@ -325,7 +325,7 @@ isDiagnosis(peList: any[]): boolean {
     dateToday : any;
     getToday(): string {
       const today = new Date();
-      this.dateToday = formatDate(today, 'MMMM-dd-yyy HH:mm:ss', 'en-US');
+      this.dateToday = formatDate(today, 'MMMM dd, yyyy HH:mm', 'en-US');
       console.log(this.dateToday, 'today date');
       return
 
@@ -347,6 +347,17 @@ isDiagnosis(peList: any[]): boolean {
 
     }
 
+    start_date : any;
+    end_date : any;
+    getStartAndEndDate(): { start_date: string, end_date: string } {
+     const startDate = new Date(this.reportForm?.value?.start_date);
+      const endDate = new Date(this.reportForm?.value?.end_date);
+      this.start_date = formatDate(startDate, 'MMMM dd, yyyy', 'en-US');
+      this.end_date = formatDate(endDate, 'MMMM dd, yyyy', 'en-US');
+      return { start_date: this.start_date,
+               end_date: this.end_date };
+    }
+
     name_list_parameters: {};
   openList:boolean = false;
 
@@ -358,8 +369,8 @@ isDiagnosis(peList: any[]): boolean {
       category: this.reportForm.value.report_class,
       per_page: 10,
       indicator: indicator,
-     ...(age !== undefined && { age: age }), // Add 'routine' only if it's defined
-     ...(icd10_code !== undefined && { icd10_code: icd10_code }), // Add 'routine' only if it's defined
+     ...(age !== undefined && { age: age }), // Add 'age' only if it's defined
+     ...(icd10_code !== undefined && { icd10_code: icd10_code }), // Add 'icd10' only if it's defined
       gender: gender,
     };
     this.openList = true;
@@ -385,7 +396,9 @@ isDiagnosis(peList: any[]): boolean {
     this.pararams = this.reportForm;
     this.getToday();
     this.getYearFromDates();
+    this.getStartAndEndDate();
     console.log(this.report_data, 'report data');
+    console.log(this.start_date, 'statrs');
     // const normal = this.isPhysicalExamNormal(this.stats.data.physical_exam);
     // console.log(normal, 'normal');
   }

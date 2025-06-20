@@ -14,15 +14,16 @@
   <div class="flex flex-col pb-5 overflow-x-auto border border-gray-200" id="reportForm">
     <div class="sm:-mx-6 lg:-mx-8">
       <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8 pl-10">
-        <span id="reportTitle" class="font-bold mb-4 block text-center">DEPARTMENT OF HEALTH - NATIONAL CAPITAL REGIONAL OFFICE</span>
+        <!-- <span id="reportTitle" class="font-bold mb-4 block text-center">DEPARTMENT OF HEALTH - NATIONAL CAPITAL REGIONAL OFFICE</span> -->
         <span id="reportTitle" class="font-bold mb-4 block text-center">ADOLESCENT HEALTH AND DEVELOPMENT PROGRAM (AHDP) PROGRAM</span>
-        <span id="reportTitle" class="font-bold mb-4 block text-center italic">QUARTERLY REPORTING FORM</span>
+        <!-- <span id="reportTitle" class="font-bold mb-4 block text-center italic">QUARTERLY REPORTING FORM</span> -->
         <div class="pl-10">
-            <div class="font-semibold pb-3">LGU: <span class="font-bold">Manila</span> </div>
-            <div class="grid grid-cols-4 gap-4 pb-3">
+            <!-- <div class="font-semibold pb-3">LGU: <span class="font-bold">Manila</span> </div> -->
+            <div class="pb-3">
                 <div class="font-semibold">Health Center/ Facility: <span class="font-bold">{{userInfo.facility.facility_name | titlecase}}</span></div>
-                <div class="font-semibold">For The Year Of: <span class="font-bold">{{start_year === end_year ? start_year : start_year + '-' + end_year || '-'}}</span></div>
-              <div class="font-semibold">Name of AHDP Program Coordinators: <span class="font-bold">{{userInfo.first_name}} {{userInfo.middle_name}} {{userInfo.last_name}}</span></div>
+                <!-- <div class="font-semibold">For The Year Of: <span class="font-bold">{{start_year === end_year ? start_year : start_year + '-' + end_year || '-'}}</span></div> -->
+                <div class="font-semibold" *ngIf="start_date && end_date">Period: <span class="font-bold">{{ start_date }} - {{ end_date }}</span></div>
+              <!-- <div class="font-semibold">Name of AHDP Program Coordinators: <span class="font-bold">{{userInfo.first_name}} {{userInfo.middle_name}} {{userInfo.last_name}}</span></div> -->
               <div class="font-semibold">Date Prepared: <span class="font-bold">{{dateToday}}</span></div>
             </div>
          <span id="reportTitle" class="font-bold mb-4 pt-10 block">Adolescent Sexual Health Services</span>
@@ -227,14 +228,16 @@
               <th class="border whitespace-nowrap p-2 font-normal">No. of Adolescents Affected</th>
               </tr>
               </thead>
-              <tbody>
-              <tr *ngFor="let stat of stats2; let i = index">
+                <tbody>
+                <tr *ngIf="!stats2 || stats2.length === 0">
+                <td class="border whitespace-nowrap p-2 font-normal text-center" colspan="3">No records found</td>
+                </tr>
+                <tr *ngFor="let stat of stats2; let i = index">
                 <td class="border whitespace-nowrap p-2 font-normal pl-5">{{stat.icd10_desc | titlecase}}</td>
-              <td class="border text-center whitespace-nowrap p-2 font-normal">{{stat.icd10_code}}</td>
-              <td (click)="stat.patient_count > 0 && showNameList('ALL', 'top5', '', stat.icd10_code)" class="border text-center whitespace-nowrap p-2 font-normal" [ngClass]="{'text-blue-500 cursor-pointer': stat.patient_count > 0}">{{stat.patient_count}}</td>
-              </tr>
-
-              </tbody>
+                <td class="border text-center whitespace-nowrap p-2 font-normal">{{stat.icd10_code}}</td>
+                <td (click)="stat.patient_count > 0 && showNameList('ALL', 'top5', '', stat.icd10_code)" class="border text-center whitespace-nowrap p-2 font-normal" [ngClass]="{'text-blue-500 cursor-pointer': stat.patient_count > 0}">{{stat.patient_count}}</td>
+                </tr>
+                </tbody>
               </table>
               </div>
 
