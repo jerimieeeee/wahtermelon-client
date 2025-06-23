@@ -36,7 +36,7 @@ export class MentalHealthComponent implements OnInit {
   }
 
   getMentalHealthRecords() {
-    this.http.get('mental-health/records', {params: { patient_id: this.http.get}}).subscribe({
+    this.http.get('mental-health/records', {params: { patient_id: this.http.getUrlParams().patient_id}}).subscribe({
       next: (data: any) => {
         console.log(data);
         this.treatments = data.data;
@@ -53,6 +53,7 @@ export class MentalHealthComponent implements OnInit {
       next: (data: any) => {
         console.log(data);
         this.consult_details = data.data[0];
+        this.getMentalHealthRecords();
       },
       error: err => {
         this.toastr.error(err.error.message, 'Error');

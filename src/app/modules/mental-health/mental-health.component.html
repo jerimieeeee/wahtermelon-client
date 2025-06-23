@@ -54,6 +54,10 @@
         [class]="module===1? 'tabs-main-true' : 'tabs-main-false' ">
         REGISTRATION
     </button>
+    <button (click)="switchTab(1)" class="tabs-main w-28"
+        [class]="module===1? 'tabs-main-true' : 'tabs-main-false' ">
+        COMPLAINT AND HISTORY
+    </button>
     <button (click)="switchTab(19)" *ngIf="selected_mh_consult?.id" class="tabs-main w-28"
         [class]="module===3? 'tabs-main-true' : 'tabs-main-false' ">
         DIAGNOSIS & PRESCRIPTION
