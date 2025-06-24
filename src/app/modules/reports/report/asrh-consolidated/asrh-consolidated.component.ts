@@ -88,6 +88,10 @@ export class AsrhConsolidatedComponent implements OnChanges, OnInit {
   stats3: any;
   stats4: any;
   stats5: any;
+  stats6: any;
+  stats7: any;
+  stats8: any;
+  stats9: any;
 
   pararams: any;
 
@@ -393,6 +397,8 @@ isDiagnosis(peList: any[]): boolean {
     this.stats3 = this.report_data.data.visits;
     this.stats4 = this.report_data.data.prenatal;
     this.stats5 = this.report_data.data.fp;
+    this.stats6 = this.report_data.data.social_histories;
+    this.stats7 = this.report_data.data.iron;
     this.pararams = this.reportForm;
     this.getToday();
     this.getYearFromDates();
