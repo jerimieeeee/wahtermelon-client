@@ -54,13 +54,17 @@
         [class]="module===1? 'tabs-main-true' : 'tabs-main-false' ">
         REGISTRATION
     </button>
-    <button (click)="switchTab(1)" class="tabs-main w-28"
+    <button (click)="switchTab(17)" *ngIf="selected_mh_consult?.id" class="tabs-main w-28"
         [class]="module===1? 'tabs-main-true' : 'tabs-main-false' ">
         COMPLAINT AND HISTORY
     </button>
-    <button (click)="switchTab(19)" *ngIf="selected_mh_consult?.id" class="tabs-main w-28"
+    <button (click)="switchTab(18)" *ngIf="selected_mh_consult?.id" class="tabs-main w-28"
         [class]="module===3? 'tabs-main-true' : 'tabs-main-false' ">
         DIAGNOSIS & PRESCRIPTION
+    </button>
+    <button (click)="switchTab(19)" *ngIf="selected_mh_consult?.id" class="tabs-main w-28"
+        [class]="module===3? 'tabs-main-true' : 'tabs-main-false' ">
+        SUPPLIES
     </button>
     <button (click)="switchTab(20)" *ngIf="selected_mh_consult?.id" class="tabs-main w-28"
         [class]="module===8? 'tabs-main-true' : 'tabs-main-false' ">
@@ -74,10 +78,33 @@
   </div>
 </nav>
 
+<div *ngIf="page === 3">
+  <app-eclaims
+    (switchPage)="switchPage($event)"
+    [program_id]="selected_mh_consult.id"
+    [program_name]="'mh'"
+    [max_date]="max_date"
+    [selected_case]="selected_mh_consult"
+  ></app-eclaims>
+</div>
+
 <div *ngIf="page === 2" class="flex w-full">
   <app-registration *ngIf="module === 1">
 
   </app-registration>
+
+  <div *ngIf="module === 17">
+
+  </div>
+  <div *ngIf="module === 18">
+
+  </div>
+  <div *ngIf="module === 19">
+
+  </div>
+  <div *ngIf="module === 20">
+
+  </div>
 </div>
 
 <app-end-visit *ngIf="modals['end_visit']"
