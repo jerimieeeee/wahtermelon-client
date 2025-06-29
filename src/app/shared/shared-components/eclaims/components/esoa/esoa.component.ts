@@ -264,8 +264,7 @@ export class EsoaComponent implements OnInit {
   getEsoaItems() {
     const getCaseRate = this.http.get('eclaims/eclaims-caserate',  {
       params: {
-        program_id: this.program_id,
-        program_desc: this.program_name
+        id: this.caserate_details.id
       }});
     const getPrescriptions = this.http.get('medicine/prescriptions',  {params: {consult_id: this.consult_id}});
     const getMedicalSupplies = this.http.get('consultation/item-supplies',  {params: {consult_id: this.consult_id, category: 'MedicalSupplies'}});
