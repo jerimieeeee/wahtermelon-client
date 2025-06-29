@@ -23,11 +23,10 @@ export class DentalComponent implements OnInit {
   enable_edit: boolean = false;
   referred_to: any;
   consult_id: any;
-  allowed_to_edit: boolean = true
+  allowed_to_edit: boolean = true;
+  toggle_content: boolean = true;
   have_complaint: boolean = false;
   user_id: string;
-
-  toggle_content: boolean = true;
 
   loadSelectedConsult() {
     let params = {
@@ -77,7 +76,9 @@ export class DentalComponent implements OnInit {
       this.module = 1;
     }
     this.pages = page;
-    this.selected_visit = data ? data : null;
+    // this.selected_visit = data ? data : null;
+    if(data) this.selected_visit = data;
+    console.log(this.selected_visit, 'selected visit');
   }
 
   switchTab(tab){

@@ -16,10 +16,8 @@ export class ChildcareComponent implements OnInit {
   faDoorClosed = faDoorClosed;
 
   patient_details: any;
-
   consult_details: any;
   patient_consultdetails: any;
-
   active_loc_id: any;
   consult_id: any
 
@@ -50,10 +48,11 @@ export class ChildcareComponent implements OnInit {
   }
 
   loadConsultDetails(){
-    this.show_form = false;
+    // this.show_form = false;
     this.http.get('consultation/records',{params: {patient_id: this.patient_details.id, id: this.consult_id}}).subscribe({
       next: (data: any) => {
         this.consult_details = data.data;
+        console.log(this.consult_details)
         this.loadCcDetails();
       },
       error: err => console.log(err)
@@ -68,7 +67,7 @@ export class ChildcareComponent implements OnInit {
     }
     this.http.get('child-care/cc-records', {params}).subscribe({
       next: (data:any) => {
-        console.log(data)
+        // console.log(data)
         this.show_form = true;
         this.ccdev_data = data.data[0];
 
@@ -82,8 +81,9 @@ export class ChildcareComponent implements OnInit {
   checkCCdevDetails(e){
     if(e) this.show_forms = true;
   }
-
+  user_id: string;
   ngOnInit(): void {
+    this.user_id = this.http.getUserID();
     this.module=1;
     this.show_forms = false;
 

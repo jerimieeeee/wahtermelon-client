@@ -26,12 +26,13 @@ export class MaternalcareComponent implements OnInit {
   services: boolean;
   post_value: boolean;
   loading: boolean;
-
   modalStats: any;
   mcr: boolean;
   consult_details: any;
   show_end: boolean;
   show_list: boolean = false;
+  toggle_content: boolean = true;
+  allowed_to_edit: boolean = true;
 
 
   libraries = [
@@ -188,8 +189,9 @@ export class MaternalcareComponent implements OnInit {
     this.router.navigate(['/patient/itr', {id: this.patient_id}])
   }
 
-  loadConsultDetails(){
+  loadConsultDetails(data?){
     this.http.get('consultation/records',{params: {id: this.consult_id}}).subscribe((data: any) => {
+      console.log(data)
       this.consult_details = data.data[0];
       this.mcrID('all', this.patient_id);
     });
@@ -201,7 +203,9 @@ export class MaternalcareComponent implements OnInit {
     private toastr: ToastrService
   ) { }
 
+  user_id: string;
   ngOnInit(): void {
+    this.user_id = this.http.getUserID();
     this.mcr = true;
     this.module = 2;
     this.post_value = false;

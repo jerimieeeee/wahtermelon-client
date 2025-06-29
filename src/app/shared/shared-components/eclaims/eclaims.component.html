@@ -7,7 +7,7 @@
         </span>
       </div>
       <div class="text-sm font-normal"> <!--  || caserate_list?.length===0 -->
-        <button [disabled]="!program_creds || caserate_list?.length===0" type="button" class="w-32 px-3 py-2 rounded-md bg-blue-500 text-sm text-white ml-auto mr-1 disabled:bg-gray-400" (click)="toggleModal('pbef')">
+        <button *ngIf="caserate_list?.length>0" [disabled]="!program_creds" type="button" class="w-32 px-3 py-2 rounded-md bg-blue-500 text-sm text-white ml-auto mr-1 disabled:bg-gray-400" (click)="toggleModal('pbef')">
           PBEF
         </button>
         <button [disabled]="!program_creds || caserate_list?.length===0" type="button" class="w-32 px-3 py-2 rounded-md bg-blue-500 text-sm text-white ml-auto mr-1 disabled:bg-gray-400" (click)="toggleModal('cf2')">
@@ -18,10 +18,14 @@
 
     <div class="border border-slate-200 shadow-md rounded-xl">
       <div class="w-full bg-blue-500 text-white rounded-t-xl p-3 font-semibold flex justify-between">
-        <span>Eclaims</span>
+        <span>{{ page === 2 ? 'ESOA' : 'Eclaims' }}</span>
+        <button *ngIf="page === 2" (click)="togglePage(1)">
+          <fa-icon [icon]="faXmark"></fa-icon>
+          Close
+        </button>
       </div>
 
-      <div class="w-full p-5 overflow-x-auto">
+      <div *ngIf="page === 1" class="w-full p-5 overflow-x-auto">
         <table class="table-fixed w-full text-sm text-left text-gray-500">
           <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700">
             <tr>
@@ -37,7 +41,7 @@
               <th scope="col" class="py-3 px-3">Action</th>
             </tr>
           </thead>
-          <tbody *ngIf="show_form"> <!-- *ngFor="let philhealth of philhealth_infos"  -->
+          <tbody *ngIf="show_form">
             <tr *ngFor="let eclaims of eclaims_list" class="bg-white border-b last:border-0">
               <td>
                 {{ eclaims.caserate.caserate_code }} <br />
@@ -58,32 +62,49 @@
                 {{ eclaims.denied_reason ?? '-'  }}
               </td>
               <td class="py-4 px-3 text-center grid grid-cols-1">
-                <button *ngIf="eclaims.pStatus === '' || !eclaims.pStatus" class="bg-blue-500 text-white rounded-md p-0.5 mb-3 disabled:opacity-75" type="button" (click)="toggleModal('upload-claims', eclaims)">
-                  <fa-icon [icon]="faUpload"></fa-icon>
-                  Upload Claim<!-- {{ eclaims.pReceiptTicketNumber ? 'Reupload Docs' : 'Upload Claim' }} -->
+                <button class="bg-pink-300 text-white rounded-md p-0.5 mb-3 disabled:opacity-75" type="button" (click)="toggleModal('pbef', eclaims)" [disabled]="is_refreshing">
+                  PBEF
+                </button>
+                <!-- {{ program_id }} : {{ eclaims.caserate.program_id}} | {{ program_id == eclaims.caserate.program_id}} -->
+                <button *ngIf="(eclaims.pStatus === '' || !eclaims.pStatus) && program_id == eclaims.caserate.program_id" class="bg-sky-500 text-white rounded-md p-0.5 mb-3 disabled:opacity-75" type="button" (click)="togglePage(2, eclaims)" [disabled]="is_refreshing">
+                  <fa-icon [icon]="faReceipt"></fa-icon>
+                  Create ESOA
                 </button>
 
-                <button *ngIf="eclaims.pStatus === 'RETURN'" class="bg-blue-500 text-white rounded-md p-0.5 mb-3 disabled:opacity-75" type="button" (click)="toggleModal('upload-required-claims', eclaims)">
+                <button *ngIf="eclaims.pStatus === '' || !eclaims.pStatus" class="bg-blue-500 text-white rounded-md p-0.5 mb-3 disabled:opacity-75" type="button" (click)="toggleModal('upload-claims', eclaims)" [disabled]="is_refreshing">
+                  <fa-icon [icon]="faUpload"></fa-icon>
+                  Upload Claim
+                </button>
+
+                <button *ngIf="eclaims.pStatus === 'RETURN'" class="bg-blue-500 text-white rounded-md p-0.5 mb-3 disabled:opacity-75" type="button" (click)="toggleModal('upload-required-claims', eclaims)" [disabled]="is_refreshing">
                   <fa-icon [icon]="faUpload"></fa-icon>
                   Upload Required Docs
                 </button>
 
-
-                <button *ngIf="!eclaims.pReceiptTicketNumber" class="bg-rose-500 text-white rounded-md p-0.5 mb-3 disabled:opacity-75" type="button" (click)="reopenCf2('cf2', eclaims)">
+                <button *ngIf="!eclaims.pReceiptTicketNumber" class="bg-rose-500 text-white rounded-md p-0.5 mb-3 disabled:opacity-75" type="button" (click)="reopenCf2('cf2', eclaims)" [disabled]="is_refreshing">
                   <fa-icon [icon]="faPenToSquare"></fa-icon>
                   Update CF2 XML
                 </button>
 
                 <button class="bg-green-500 text-white rounded-md p-0.5 mb-3 disabled:opacity-75" type="button" *ngIf="eclaims.pReceiptTicketNumber && !eclaims.pClaimSeriesLhio" (click)="checkSeries(eclaims)" [disabled]="is_refreshing">
                   <fa-icon [icon]="faReceipt" *ngIf="!is_refreshing"></fa-icon>
-                  <fa-icon [icon]="faRotate" *ngIf="is_refreshing" animation="spin"></fa-icon>
+                  <fa-icon [icon]="faRotate" *ngIf="is_refreshing && process_name === 'checking_series'" animation="spin"></fa-icon>
                   Get Series Lhio
                 </button>
 
+                <button class="bg-orange-500 text-white rounded-md p-0.5 mb-3 disabled:opacity-75" type="button" *ngIf="eclaims.pClaimSeriesLhio" (click)="exportXML(eclaims)" [disabled]="is_exporting || is_refreshing">
+                  <fa-icon [icon]="faRotate" *ngIf="is_exporting" animation="spin"></fa-icon>
+                  {{ is_exporting ? 'Exporting' : 'Export' }} XML
+                </button>
+
                 <button class="bg-green-500 text-white rounded-md p-0.5 mb-3 disabled:opacity-75" type="button" *ngIf="eclaims.pClaimSeriesLhio && !eclaims.denied_reason" (click)="getClaimStatus(eclaims, eclaims.pStatus)" [disabled]="is_refreshing">
-                  <fa-icon [icon]="faReceipt" *ngIf="!is_refreshing"></fa-icon>
-                  <fa-icon [icon]="faRotate" *ngIf="is_refreshing" animation="spin"></fa-icon>
+                  <fa-icon [icon]="faRotate" *ngIf="is_refreshing && process_name === 'checking_claim_status'" animation="spin"></fa-icon>
                   Check {{ eclaims.pStatus === 'DENIED' ? 'Reason' : 'Status' }}
+                </button>
+
+                <button class="bg-blue-500 text-white rounded-md p-0.5 mb-3 disabled:opacity-75" type="button" *ngIf="eclaims.pStatus === 'WITH VOUCHER'" (click)="getVoucherDetails(eclaims)" [disabled]="is_refreshing">
+                  <fa-icon [icon]="faRotate" *ngIf="is_refreshing && process_name === 'checking_voucher'" animation="spin"></fa-icon>
+                  Get Voucher Details
                 </button>
               </td>
             </tr>
@@ -108,6 +129,14 @@
             </tr>
           </tbody>
         </table>
+      </div>
+
+      <div class="p-3" *ngIf="page === 2">
+        <app-esoa [program_id]="selected_case.id"
+          [caserate_details]="this.caserate_details"
+          [transmittal_number]="this.transmittal_number"
+          [eclaims_upload_id]="this.eclaims_upload_id"
+        ></app-esoa>
       </div>
     </div>
   </div>
@@ -158,3 +187,8 @@
   [selected_ticket_number]="selected_ticket_number"
   [selected_series_lhio]="selected_series_lhio"
 ></app-upload-required-claims>
+
+<app-voucher-details *ngIf="modal['voucher-details']"
+  [voucher_details]="voucher_details"
+  (toggleModal)="toggleModal($event)"
+></app-voucher-details>

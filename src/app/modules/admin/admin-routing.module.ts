@@ -54,6 +54,10 @@ const routes: Routes = [
       {
         path: 'eclaims-rth',
         loadChildren: () => import('./modules/eclaims-rth/eclaims-rth.module').then(m => m.EclaimsRthModule)
+      },
+      {
+        path: 'item-list',
+        loadChildren: () => import('./modules/item-list/item-list.module').then(m => m.ItemListModule)
       }
     ]
   },

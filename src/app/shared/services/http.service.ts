@@ -10,7 +10,7 @@ import { Subject } from 'rxjs';
 })
 export class HttpService {
   baseUrl = 'https://training-api.wah.ph/api/v1/';
-  masterFormUrl = 'http://127.0.0.1:8000/api/v1/';
+  masterFormUrl = 'https://masterform-api.wah.ph/api/v1/';
 
   constructor(
     private http: HttpClient,
@@ -29,8 +29,8 @@ export class HttpService {
     return this.http.get(`${this.baseUrl}` + loc, data ? data : '')
   }
 
-  post(loc, data) {
-    return this.http.post(`${this.baseUrl}` + loc, data)
+  post(loc, data, options?) {
+    return this.http.post(`${this.baseUrl}` + loc, data, options)
   }
 
   update(loc, id, data) {

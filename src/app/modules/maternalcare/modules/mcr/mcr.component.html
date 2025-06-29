@@ -96,7 +96,7 @@
                             class="absolute bottom-1.5 left-2 text-gray-300 group-hover:text-pink-400"
                             *ngIf="!focused && mcr_form.disabled">
                         </fa-icon>
-                        <input type="number" formControlName="initial_gravidity"
+                        <input type="number" formControlName="initial_gravidity" min="1"
                             class="font-medium disabled:group-hover:font-semibold peer invalid:border-red-500 border-check focus:border-blue-300 focus:ring-1 focus:ring-blue-300 outline-none rounded border-solid border border-zinc-300 placeholder-black placeholder-opacity-100 disabled:cursor-not-allowed disabled:border-0  disabled:pl-5  disabled:typed-out disabled:group-hover:bg-gray-100 disabled:rounded-full"
                             (keyup)="onKeyUp($event.target.value, $event.target.id)"
                             (keyup.escape)="clearForm($event.target.id)" id="initial_gravidity" min="0"

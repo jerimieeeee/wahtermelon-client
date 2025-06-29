@@ -44,6 +44,7 @@
               <tr>
                 <th rowspan="3" class="border border-slate-300 w-[70px]">ICD10/ <br />RVS Code</th>
                 <th rowspan="3" class="border border-slate-300 w-[198px]">Description</th>
+                <th rowspan="3" class="border border-slate-300 w-[198px]">Effectivity Date</th>
                 <th colspan="3" class="border border-slate-300 w-[216px]">First Case Rate</th>
                 <th colspan="3" class="border border-slate-300 w-[216px]">Second Case Rate</th>
                 <th colspan="7" class="border border-slate-300 w-[200px]">Applicable Health Care Institutions <br />Note: If licensed and capable to perform the procedure</th>
@@ -69,41 +70,42 @@
             </thead>
             <tbody>
               <tr class="border border-slate-300" *ngFor="let caserate of caserate_result">
-                <td [rowSpan]="caserate.AMOUNT.length" class="border border-slate-300">{{ caserate.pItemCode }}</td>
-                <td [rowSpan]="caserate.AMOUNT.length" class="border border-slate-300">{{ caserate.pCaseRateDescription }}</td>
+                <td [rowSpan]="caserate.amount.length" class="border border-slate-300">{{ caserate.pitemCode }}</td>
+                <td [rowSpan]="caserate.amount.length" class="border border-slate-300">{{ caserate.pcaseRateDescription }}</td>
+                <td [rowSpan]="caserate.amount.length" class="border border-slate-300">{{ caserate.peffectivityDate | date: 'MM/dd/yyyy' }} to {{ caserate.peffectivityEndDate | date: 'MM/dd/yyyy' }}</td>
                 <td colspan="13" class="p-0 m-0">
-                  <table class="table-auto p-0 m-0 w-full border-0" *ngIf="caserate.AMOUNT.length">
-                    <tr *ngFor="let amount of caserate.AMOUNT; let last = last; let first = first">
-                      <td class="px-1 border border-slate-300 w-[72px] border-l-0" [ngClass]="{'border-b-0': last, 'border-t-0': first}">{{ amount.pPrimaryHCIFee }}</td>
-                      <td class="px-1 border border-slate-300 w-[72px]" [ngClass]="{'border-b-0': last, 'border-t-0': first}">{{ amount.pPrimaryProfFee }}</td>
-                      <td class="px-1 border border-slate-300 w-[72px] text-blue-500 font-semibold hover:cursor-pointer" (click)="closeModal(caserate, amount)" [ngClass]="{'border-b-0': last, 'border-t-0': first}">{{ amount.pPrimaryCaseRate }}</td>
-                      <td class="px-1 border border-slate-300 w-[72px]" [ngClass]="{'border-b-0': last, 'border-t-0': first}">{{ amount.pSecondaryHCIFee }}</td>
-                      <td class="px-1 border border-slate-300 w-[72px]" [ngClass]="{'border-b-0': last, 'border-t-0': first}">{{ amount.pSecondaryProfFee }}</td>
-                      <td class="px-1 border border-slate-300 w-[72px]" [ngClass]="{'border-b-0': last, 'border-t-0': first}">{{ amount.pSecondaryCaseRate }}</td>
-                      <td class="px-1 border border-slate-300" [ngClass]="{'border-b-0': last, 'border-t-0': first}">{{ amount.pCheckFacilityH1 }}</td>
-                      <td class="px-1 border border-slate-300" [ngClass]="{'border-b-0': last, 'border-t-0': first}">{{ amount.pCheckFacilityH2 }}</td>
-                      <td class="px-1 border border-slate-300" [ngClass]="{'border-b-0': last, 'border-t-0': first}">{{ amount.pCheckFacilityH3 }}</td>
-                      <td class="px-1 border border-slate-300" [ngClass]="{'border-b-0': last, 'border-t-0': first}">{{ amount.pCheckFacilityASC }}</td>
-                      <td class="px-1 border border-slate-300" [ngClass]="{'border-b-0': last, 'border-t-0': first}">{{ amount.pCheckFacilityPCF }}</td>
-                      <td class="px-1 border border-slate-300" [ngClass]="{'border-b-0': last, 'border-t-0': first}">{{ amount.pCheckFacilityMAT }}</td>
-                      <td class="px-1 border border-slate-300 border-r-0" [ngClass]="{'border-b-0': last, 'border-t-0': first}">{{ amount.pCheckFacilityFSDC }}</td>
+                  <table class="table-auto p-0 m-0 w-full border-0" *ngIf="caserate.amount.length">
+                    <tr *ngFor="let amount of caserate.amount; let last = last; let first = first">
+                      <td class="px-1 border border-slate-300 w-[72px] border-l-0" [ngClass]="{'border-b-0': last, 'border-t-0': first}">{{ amount.pprimaryHCIFee }}</td>
+                      <td class="px-1 border border-slate-300 w-[72px]" [ngClass]="{'border-b-0': last, 'border-t-0': first}">{{ amount.pprimaryProfFee }}</td>
+                      <td class="px-1 border border-slate-300 w-[72px] text-blue-500 font-semibold hover:cursor-pointer" (click)="closeModal(caserate, amount)" [ngClass]="{'border-b-0': last, 'border-t-0': first}">{{ amount.pprimaryCaseRate }}</td>
+                      <td class="px-1 border border-slate-300 w-[72px]" [ngClass]="{'border-b-0': last, 'border-t-0': first}">{{ amount.psecondaryHCIFee }}</td>
+                      <td class="px-1 border border-slate-300 w-[72px]" [ngClass]="{'border-b-0': last, 'border-t-0': first}">{{ amount.psecondaryProfFee }}</td>
+                      <td class="px-1 border border-slate-300 w-[72px]" [ngClass]="{'border-b-0': last, 'border-t-0': first}">{{ amount.psecondaryCaseRate }}</td>
+                      <td class="px-1 border border-slate-300" [ngClass]="{'border-b-0': last, 'border-t-0': first}">{{ amount.pcheckFacilityH1 }}</td>
+                      <td class="px-1 border border-slate-300" [ngClass]="{'border-b-0': last, 'border-t-0': first}">{{ amount.pcheckFacilityH2 }}</td>
+                      <td class="px-1 border border-slate-300" [ngClass]="{'border-b-0': last, 'border-t-0': first}">{{ amount.pcheckFacilityH3 }}</td>
+                      <td class="px-1 border border-slate-300" [ngClass]="{'border-b-0': last, 'border-t-0': first}">{{ amount.pcheckFacilityASC }}</td>
+                      <td class="px-1 border border-slate-300" [ngClass]="{'border-b-0': last, 'border-t-0': first}">{{ amount.pcheckFacilityPCF }}</td>
+                      <td class="px-1 border border-slate-300" [ngClass]="{'border-b-0': last, 'border-t-0': first}">{{ amount.pcheckFacilityMAT }}</td>
+                      <td class="px-1 border border-slate-300 border-r-0" [ngClass]="{'border-b-0': last, 'border-t-0': first}">{{ amount.pcheckFacilityFSDC }}</td>
                     </tr>
                   </table>
-                  <table class="table-auto p-0 m-0 w-full" *ngIf="!caserate.AMOUNT.length">
+                  <table class="table-auto p-0 m-0 w-full" *ngIf="!caserate.amount.length">
                     <tr class="h-full py-8">
-                      <td class="px-1 border border-slate-300 border-y-0 border-l-0 w-[72px]">{{ caserate.AMOUNT.pPrimaryHCIFee }}</td>
-                      <td class="px-1 border border-slate-300 border-y-0 w-[72px]">{{ caserate.AMOUNT.pPrimaryProfFee }}</td>
-                      <td class="px-1 border border-slate-300 border-y-0 w-[72px] text-blue-500 font-semibold hover:cursor-pointer" (click)="closeModal(caserate, caserate.AMOUNT)">{{ caserate.AMOUNT.pPrimaryCaseRate }}</td>
-                      <td class="px-1 border border-slate-300 border-y-0 w-[72px]">{{ caserate.AMOUNT.pSecondaryHCIFee }}</td>
-                      <td class="px-1 border border-slate-300 border-y-0 w-[72px]">{{ caserate.AMOUNT.pSecondaryProfFee }}</td>
-                      <td class="px-1 border border-slate-300 border-y-0 w-[72px]">{{ caserate.AMOUNT.pSecondaryCaseRate }}</td>
-                      <td class="px-1 border border-slate-300 border-y-0">{{ caserate.AMOUNT.pCheckFacilityH1 }}</td>
-                      <td class="px-1 border border-slate-300 border-y-0">{{ caserate.AMOUNT.pCheckFacilityH2 }}</td>
-                      <td class="px-1 border border-slate-300 border-y-0">{{ caserate.AMOUNT.pCheckFacilityH3 }}</td>
-                      <td class="px-1 border border-slate-300 border-y-0">{{ caserate.AMOUNT.pCheckFacilityASC }}</td>
-                      <td class="px-1 border border-slate-300 border-y-0">{{ caserate.AMOUNT.pCheckFacilityPCF }}</td>
-                      <td class="px-1 border border-slate-300 border-y-0">{{ caserate.AMOUNT.pCheckFacilityMAT }}</td>
-                      <td class="px-1 border border-slate-300 border-y-0 border-r-0">{{ caserate.AMOUNT.pCheckFacilityFSDC }}</td>
+                      <td class="px-1 border border-slate-300 border-y-0 border-l-0 w-[72px]">{{ caserate.amount.pPrimaryHCIFee }}</td>
+                      <td class="px-1 border border-slate-300 border-y-0 w-[72px]">{{ caserate.amount.pPrimaryProfFee }}</td>
+                      <td class="px-1 border border-slate-300 border-y-0 w-[72px] text-blue-500 font-semibold hover:cursor-pointer" (click)="closeModal(caserate, caserate.amount)">{{ caserate.amount.pprimaryCaseRate }}</td>
+                      <td class="px-1 border border-slate-300 border-y-0 w-[72px]">{{ caserate.amount.psecondaryHCIFee }}</td>
+                      <td class="px-1 border border-slate-300 border-y-0 w-[72px]">{{ caserate.amount.psecondaryProfFee }}</td>
+                      <td class="px-1 border border-slate-300 border-y-0 w-[72px]">{{ caserate.amount.psecondaryCaseRate }}</td>
+                      <td class="px-1 border border-slate-300 border-y-0">{{ caserate.amount.pcheckFacilityH1 }}</td>
+                      <td class="px-1 border border-slate-300 border-y-0">{{ caserate.amount.pcheckFacilityH2 }}</td>
+                      <td class="px-1 border border-slate-300 border-y-0">{{ caserate.amount.pcheckFacilityH3 }}</td>
+                      <td class="px-1 border border-slate-300 border-y-0">{{ caserate.amount.pcheckFacilityASC }}</td>
+                      <td class="px-1 border border-slate-300 border-y-0">{{ caserate.amount.pcheckFacilityPCF }}</td>
+                      <td class="px-1 border border-slate-300 border-y-0">{{ caserate.amount.pcheckFacilityMAT }}</td>
+                      <td class="px-1 border border-slate-300 border-y-0 border-r-0">{{ caserate.amount.pcheckFacilityFSDC }}</td>
                     </tr>
                   </table>
                 </td>

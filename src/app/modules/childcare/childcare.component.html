@@ -23,6 +23,14 @@
         [class]="module===1? 'tabs-main-true' : 'tabs-main-false' ">
         DETAILS
     </button>
+    <button (click)="switchTab(3)" class="tabs-main w-28"
+        [class]="module===3? 'tabs-main-true' : 'tabs-main-false' ">
+        DIAGNOSIS & PRESCRIPTION
+    </button>
+    <button (click)="switchTab(4)" class="tabs-main w-28"
+        [class]="module===4? 'tabs-main-true' : 'tabs-main-false' ">
+        ITEM SUPPLIES
+    </button>
     <button (click)="switchTab(2)" class="tabs-main w-28"
         [class]="module===2? 'tabs-main-true' : 'tabs-main-false' ">
         CASE RATE
@@ -36,56 +44,47 @@
   <app-services *ngIf="show_forms" [patient_details]="patient_details"></app-services>
   <app-breastfeeding *ngIf="show_forms" [patient_details]="patient_details"></app-breastfeeding>
 </div>
-<!-- <div class="body-up flex w-full mt-4 mb-4"> -->
-
-  <!-- <div class="flex-wrap w-full h-full rounded-xl text-gray-600 border border-slate-100 px-4 py-4 ml-5 mr-1" *ngIf="module===1">
-
-    <nav class="flex w-full flex-col sm:flex-row text-sm">
-      <button (click)="switchTab(1)" class="text-gray-600 border-b-2 border-gray-200 block hover:text-blue-500 hover:border-blue-500 mr-6 pb-2"
-      [class]="module===1? 'text-blue-500 border-b-2 border-blue-500 font-bold' : 'hover:-translate-y-1 hover:scale-110 transition ease-in-out delay-400 duration-300' ">
-         NEW VISIT
-      </button>
-
-      <button type="button" class="btn-end-visit ml-auto" (click)="toggleModal()">
-        <fa-icon class="mr-1" [icon]="faDoorClosed"></fa-icon>
-        End Visit
-      </button>
-    </nav>
-
-    <div class="grid grid-col-8">
-      <app-first-visit *ngIf="patient_details" [patient_details]="patient_details" (checkCCdevDetails)="checkCCdevDetails($event)"></app-first-visit>
-    </div>
-
-    <div class="grid grid-col-8" *ngIf="show_forms">
-      <app-services *ngIf="patient_details" [patient_details]="patient_details"></app-services>
-    </div>
-
-    <div class="grid grid-col-8" *ngIf="show_forms">
-      <app-breastfeeding *ngIf="patient_details" [patient_details]="patient_details"></app-breastfeeding>
-    </div>
-  </div> -->
-
-
-  <!-- <div class="w-3/12">
-    <app-patient-info (patientInfo)="patientInfo($event)"></app-patient-info>
-  </div> -->
-
-<!-- </div> -->
 
 <app-end-visit *ngIf="modals['end_visit']"
-  (toggleModal)="toggleModal()"
+  (toggleModal)="toggleModal('end_visit')"
   [consult_id]="consult_id"
   [consult_date]="consult_details[0]?.consult_date"
   [patient_id]="consult_details[0]?.patient.id"
   [pt_group]="consult_details[0]?.pt_group"
 ></app-end-visit>
 
-<app-caserate *ngIf="pages === 1 && module === 2 && show_form"
-  [patient_id]="ccdev_data.patient_id"
-  [program_id]="ccdev_data.id"
-  [program_name]="'cc'"
-  [max_date]="max_date"
-></app-caserate>
+<div *ngIf="pages === 1 && show_form">
+  <app-caserate *ngIf="module === 2"
+    [patient_id]="ccdev_data.patient_id"
+    [program_id]="ccdev_data.id"
+    [program_name]="'cc'"
+    [max_date]="max_date"
+  ></app-caserate>
+
+  <div *ngIf="module === 3">
+    <app-final-dx [toggle_content]="1"
+      [consult_details]="consult_details[0]"
+      [have_complaint]="1"
+      [allowed_to_edit]="1"
+      (loadConsult)="loadConsultDetails($event)"
+    ></app-final-dx>
+    <app-prescription [toggle_content]="1"
+      [consult_details]="consult_details[0]"
+      [have_complaint]="1"
+      [allowed_to_edit]="1"
+      [user_id]="user_id"
+      (loadConsult)="loadConsultDetails($event)"
+    ></app-prescription>
+  </div>
+
+  <app-supplies *ngIf="module === 4"
+    [toggle_content]="1"
+    [consult_details]="consult_details[0]"
+    [allowed_to_edit]="1"
+    [user_id]="user_id"
+    (loadConsult)="loadConsultDetails($event)"
+  ></app-supplies>
+</div>
 
 <app-eclaims *ngIf="pages === 2 && show_form"
   [program_id]="ccdev_data.id"
@@ -93,3 +92,5 @@
   [max_date]="max_date"
   [selected_case]="ccdev_data"
 ></app-eclaims>
+
+

@@ -7,15 +7,15 @@
         <h3 class="text-sm font-bold text-white">
           Eligibility
         </h3>
-        <button [disabled]="!show_form || pdf_exported || !pbef_result" class="bg-white text-orange-400 rounded-md px-2 py-1 disabled:opacity-50" (click)="exportP()">
-          <fa-icon *ngIf="!pdf_exported" [icon]="faFilePdf"></fa-icon>
-          <fa-icon *ngIf="pdf_exported" [icon]="faCircleNotch" animation="spin"></fa-icon>
-        </button>
       </div>
       <!-- Modal body -->
-      <div class="overflow-y-auto max-h-[500px] scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
+      <div *ngIf="!pbef_err_message" class="flex justify-center overflow-y-auto h-[600px] scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
+        <embed *ngIf="show_pdf && (selected_caserate && show_form)"
+          type="application/pdf"
+          [src]="pbef_result"
+          class="w-[210mm] h-full"
+        />
 
-        <img src="./assets/img/philhealth-pbef.jpg" hidden />
         <div *ngIf="!selected_caserate" class="flex w-2/3 mx-auto">
           <div class="p-2 w-1/2">
             <label for="caserate_field">Caserate</label>
@@ -30,34 +30,7 @@
           </div>
         </div>
 
-        <div *ngIf="selected_caserate"  class="w-full">
-          <div *ngIf="show_form" class="relative text-xs w-[210mm] h-[297mm]" id="mainForm">
-            <img src="./assets/img/philhealth-pbef.jpg" />
-            <div class="ml-60">
-              <span class="absolute top-[53.3mm]">{{ pbef_result?.ASOF }}</span>
-              <span class="absolute top-[58.7mm]">{{ pbef_result?.TRACKING_NUMBER }}</span>
-
-              <span class="absolute top-[70mm]">{{ program_creds?.facility_name }}</span>
-              <span class="absolute top-[75.5mm]">{{ program_creds?.accreditation_number }}</span>
-
-              <span class="absolute top-[87.9mm]">{{ pbef_result?.MEMBER.PIN }}</span>
-              <span class="absolute top-[91.8mm]">{{ pbef_result?.MEMBER.LASTNAME }}, {{ pbef_result?.MEMBER.FIRSTNAME }} {{ pbef_result?.MEMBER.MIDDLENAME }} {{ pbef_result?.MEMBER.SUFFIX }}</span>
-              <span class="absolute top-[95.7mm]">{{ patient_philhealth.membership_type_id === 'DD' ? patient_philhealth.member_gender : patient.gender }}</span>
-              <span class="absolute top-[99.7mm]">{{ pbef_result?.MEMBER.BIRTHDATE | date:'MM/dd/yyyy':'Asia/Manila' }}</span>
-              <span class="absolute top-[103.6mm]">{{ pbef_result?.MEMBER.MEMBER_CATEGORY_DESC }}</span>
-
-              <span class="absolute top-[120.1mm]">{{ pbef_result?.PATIENT.LASTNAME }}, {{ pbef_result?.PATIENT.FIRSTNAME }} {{ pbef_result?.PATIENT.MIDDLENAME }} {{ pbef_result?.PATIENT.SUFFIX }}</span>
-              <span class="absolute top-[123.8mm]">{{ pbef_result?.CONFINMENT.ADMITTED }}</span>
-              <span class="absolute top-[127.8mm]">{{ patient.gender }}</span>
-              <span class="absolute top-[131.8mm]">{{ pbef_result?.PATIENT.BIRTHDATE | date:'MM/dd/yyyy':'Asia/Manila' }}</span>
-
-              <span class="absolute top-[144.3mm] left-[105mm]">{{  pbef_result?.ISOK }}</span>
-              <span class="absolute top-[155mm] left-[105mm]">{{  pbef_result?.DOCUMENTS?.DOCUMENT }}</span>
-            </div>
-          </div>
-        </div>
-
-        <div  *ngIf="selected_caserate && !show_form" class="grid grid-cols-1 my-20">
+        <div  *ngIf="selected_caserate && !show_form" class="flex flex-col justify-center my-20">
           <div class="flex justify-center text-blue-500">
             <fa-icon [icon]="faCircleNotch" animation="spin"></fa-icon>
           </div>
@@ -68,6 +41,9 @@
         </div>
       </div>
 
+      <div *ngIf="pbef_err_message" class="flex justify-center my-20">
+        {{ pbef_err_message }}
+      </div>
       <!-- Modal footer -->
       <div class="flex justify-end py-4 px-5 space-x-4 rounded-b border-t border-gray-200">
         <button type="button" class="btn-save bg-gray-400" (click)="closeModal()">Close</button>

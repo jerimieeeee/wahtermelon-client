@@ -4,9 +4,13 @@
       [class]="pages===1? 'tabs-main-true rounded-t-md' : 'tabs-main-false' ">
       DENTAL VISITS
     </button>
-    <button *ngIf="selected_visit || (selected_visit?.facility?.code === user_facility)" (click)="switchPage(1)" class="tabs-main w-36"
+    <button *ngIf="selected_visit || (selected_visit?.facility?.code === user_facility)" (click)="switchPage(2)" class="tabs-main w-36"
       [class]="pages===2? 'tabs-main-true rounded-t-md' : 'tabs-main-false' ">
       VISIT DETAILS
+    </button>
+    <button *ngIf="selected_visit || (selected_visit?.facility_code === user_facility)" (click)="switchPage(3)" class="tabs-main w-36"
+      [class]="pages===3? 'tabs-main-true rounded-t-md' : 'tabs-main-false' ">
+      ECLAIMS
     </button>
   </nav>
   <div class="ml-auto">
@@ -34,6 +38,14 @@
     <button (click)="switchTab(4)" class="tabs-main px-3"
         [class]="module===4? 'tabs-main-true' : 'tabs-main-false' ">
         DIAGNOSIS & TREATMENT
+    </button>
+    <button (click)="switchTab(5)" class="tabs-main px-3"
+        [class]="module===5? 'tabs-main-true' : 'tabs-main-false' ">
+        SUPPLIES
+    </button>
+    <button (click)="switchTab(8)" class="tabs-main w-28"
+        [class]="module===8? 'tabs-main-true' : 'tabs-main-false' ">
+        CASE RATE
     </button>
   </div>
 </nav>
@@ -133,10 +145,34 @@
   ></app-prescription>
 </div>
 
+<app-eclaims *ngIf="pages === 3"
+  (switchPage)="switchPage($event)"
+  [program_id]="selected_visit.id"
+  [program_name]="'dn'"
+  [max_date]="max_date"
+  [selected_case]="selected_visit"
+></app-eclaims>
+
+<app-supplies *ngIf="pages === 2 && module === 5" [toggle_content]="toggle_content"
+    (switchPage)="switchPage($event)"
+    [consult_details]="selected_visit"
+    [allowed_to_edit]="allowed_to_edit"
+    [user_id]="user_id"
+    (loadConsult)="loadSelectedConsult($event)"
+  ></app-supplies>
+
+<app-caserate *ngIf="pages === 2 && module === 8"
+  (switchPage)="switchPage($event)"
+  [patient_id]="selected_visit.patient_id"
+  [program_id]="selected_visit.id"
+  [program_name]="'dn'"
+  [max_date]="max_date"
+></app-caserate>
+
 <app-end-visit *ngIf="modals['end_visit']"
   (toggleModal)="toggleModal($event)"
   [consult_id]="selected_visit?.id"
   [consult_date]="selected_visit?.consult_date"
   [patient_id]="selected_visit?.patient.id"
-  [pt_group]="'tb'"
+  [pt_group]="'dn'"
 ></app-end-visit>
