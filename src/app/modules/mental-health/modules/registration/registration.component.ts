@@ -50,11 +50,11 @@ treatmentForm: FormGroup = new FormGroup({
   patchValue() {
     console.log(this.selected_mh_consult);
     this.treatmentForm = this.formBuilder.nonNullable.group({
-        id: [this.selected_mh_consult.id || null],
+        id: [this.selected_mh_consult ? this.selected_mh_consult.id : null],
         patient_id: [this.patient_id],
-        treatment_done: [this.selected_mh_consult.treatment_done || false],
-        treatment_start: [this.selected_mh_consult.treatment_start, Validators.required],
-        treatment_end: [this.selected_mh_consult.treatment_end, Validators.required]
+        treatment_done: [this.selected_mh_consult ? this.selected_mh_consult.treatment_done : false],
+        treatment_start: [this.selected_mh_consult ? this.selected_mh_consult.treatment_start : null, Validators.required],
+        treatment_end: [this.selected_mh_consult ? this.selected_mh_consult.treatment_end : null, Validators.required]
     });
   }
 
