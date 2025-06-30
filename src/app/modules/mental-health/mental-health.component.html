@@ -4,11 +4,11 @@
       [class]="page===1? 'tabs-main-true rounded-t-md' : 'tabs-main-false' ">
       TREATMENT ARCHIVE
     </button>
-    <button *ngIf="!selected_mh_consult || (selected_mh_consult?.facility_code === user_facility)" (click)="switchPage(2)" class="tabs-main w-36"
+    <button *ngIf="selected_mh_consult || (selected_mh_consult?.facility_code === user_facility)" (click)="switchPage(2)" class="tabs-main w-36"
       [class]="page===2? 'tabs-main-true rounded-t-md' : 'tabs-main-false' ">
       TREATMENT
     </button>
-    <button *ngIf="!selected_mh_consult || (selected_mh_consult?.facility_code === user_facility)" (click)="switchPage(3)" class="tabs-main w-36"
+    <button *ngIf="selected_mh_consult || (selected_mh_consult?.facility_code === user_facility)" (click)="switchPage(3)" class="tabs-main w-36"
       [class]="page===3? 'tabs-main-true rounded-t-md' : 'tabs-main-false' ">
       ECLAIMS
     </button>
@@ -22,20 +22,20 @@
 </div>
 
 <div *ngIf="page === 1" class="flex w-full">
-  <table class="w-full table-auto border-collapse border border-gray-200 shadow-md rounded-xl mt-3">
+  <table *ngIf="!is_loading" class="w-full table-auto border-collapse border border-gray-200 shadow-md rounded-xl mt-3">
     <thead>
       <tr class="bg-blue-500 text-white">
-        <th class="px-4 py-2">Date</th>
-        <th class="px-4 py-2">Outcome</th>
+        <th class="px-4 py-2">Start Date - End Date</th>
+        <!-- <th class="px-4 py-2">come</th> -->
         <th class="px-4 py-2">Actions</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let treatment of treatments">
-        <td class="border px-4 py-2">{{ treatment.date | date: 'MM/dd/yyyy' }}</td>
-        <td class="border px-4 py-2">{{ treatment.patient_name }}</td>
+      <tr *ngFor="let treatment of treatments; let i = index">
+        <td class="border px-4 py-2">{{ treatment.treatment_start | date: 'MM/dd/yyyy' }} - {{ treatment.treatment_end | date: 'MM/dd/yyyy' }}</td>
+        <!-- <td class="border px-4 py-2">-</td> -->
         <td class="border px-4 py-2">
-          <button (click)="switchPage(2, treatment)" class="btn-view-details">View Details</button>
+          <button (click)="switchPage(2, treatment, i)" class="btn-save px-3 py-1">View Details</button>
         </td>
       </tr>
       <tr *ngIf="treatments.length === 0">
@@ -46,6 +46,15 @@
       </tr>
     </tbody>
   </table>
+
+  <div class="flex flex-col w-full" *ngIf="is_loading">
+    <div class="flex justify-center items-center mt-20 text-blue-500">
+      <fa-icon [icon]="faCircleNotch" animaton="spin"></fa-icon>
+    </div>
+    <div class="flex justify-center items-center">
+      Loading list...
+    </div>
+  </div>
 </div>
 
 <nav *ngIf="page===2" class="mt-2 flex justify-between border-b border-slate-300 text-xs">
@@ -55,32 +64,31 @@
         REGISTRATION
     </button>
     <button (click)="switchTab(17)" *ngIf="selected_mh_consult?.id" class="tabs-main w-28"
-        [class]="module===1? 'tabs-main-true' : 'tabs-main-false' ">
+        [class]="module===17? 'tabs-main-true' : 'tabs-main-false' ">
         COMPLAINT AND HISTORY
     </button>
     <button (click)="switchTab(18)" *ngIf="selected_mh_consult?.id" class="tabs-main w-28"
-        [class]="module===3? 'tabs-main-true' : 'tabs-main-false' ">
+        [class]="module===18? 'tabs-main-true' : 'tabs-main-false' ">
         DIAGNOSIS & PRESCRIPTION
     </button>
     <button (click)="switchTab(19)" *ngIf="selected_mh_consult?.id" class="tabs-main w-28"
-        [class]="module===3? 'tabs-main-true' : 'tabs-main-false' ">
+        [class]="module===19? 'tabs-main-true' : 'tabs-main-false' ">
         SUPPLIES
     </button>
     <button (click)="switchTab(20)" *ngIf="selected_mh_consult?.id" class="tabs-main w-28"
-        [class]="module===8? 'tabs-main-true' : 'tabs-main-false' ">
+        [class]="module===20? 'tabs-main-true' : 'tabs-main-false' ">
         CASE RATE
     </button>
   </div>
-  <div class="flex flex-row">
+  <!-- <div class="flex flex-row">
     <button type="button" *ngIf="selected_mh_consult && selected_mh_consult.treatment_done === 0" (click)="toggleModal('treatment_outcome')" class="bg-rose-500 px-3 py-2  rounded text-white hover:opacity-75">
       Treatment Outcome
     </button>
-  </div>
+  </div> -->
 </nav>
 
 <div *ngIf="page === 3">
-  <app-eclaims
-    (switchPage)="switchPage($event)"
+  <app-eclaims class="w-full"
     [program_id]="selected_mh_consult.id"
     [program_name]="'mh'"
     [max_date]="max_date"
@@ -88,22 +96,51 @@
   ></app-eclaims>
 </div>
 
-<div *ngIf="page === 2" class="flex w-full">
-  <app-registration *ngIf="module === 1">
-
+<div *ngIf="page === 2" class="flex w-full justify-center">
+  <app-registration class="w-1/2 justify-center m-3"
+    (updateSelectedMh)="updateSelectedMh($event)"
+    [selected_mh_consult]="selected_mh_consult"
+    *ngIf="module === 1">
   </app-registration>
 
   <div *ngIf="module === 17">
-
+    <app-complaint-history [toggle_content]="toggle_content"
+      [consult_details]="consult_details"
+      (switchPage)="switchPage($event)"
+      (toggleModal)="toggleModal($event)">
+    </app-complaint-history>
   </div>
-  <div *ngIf="module === 18">
-
+  <div class="w-full" *ngIf="module === 18">
+    <app-final-dx [toggle_content]="toggle_content"
+      [consult_details]="consult_details"
+      [have_complaint]="have_complaint"
+      [allowed_to_edit]="allowed_to_edit"
+      (loadConsult)="loadConsult($event)"
+    ></app-final-dx>
+    <app-prescription [toggle_content]="toggle_content"
+      [consult_details]="consult_details"
+      [have_complaint]="have_complaint"
+      [allowed_to_edit]="allowed_to_edit"
+      [user_id]="user_id"
+      (loadConsult)="loadConsult($event)"
+    ></app-prescription>
   </div>
-  <div *ngIf="module === 19">
-
+  <div class="w-full" *ngIf="module === 19">
+    <app-supplies [toggle_content]="toggle_content"
+      [consult_details]="consult_details"
+      [have_complaint]="have_complaint"
+      [allowed_to_edit]="allowed_to_edit"
+      [user_id]="user_id"
+      (loadConsult)="loadConsult($event)"
+    ></app-supplies>
   </div>
-  <div *ngIf="module === 20">
-
+  <div class="w-full" *ngIf="module === 20">
+    <app-caserate
+      [patient_id]="selected_mh_consult.patient_id"
+      [program_id]="selected_mh_consult.id"
+      [program_name]="'mh'"
+      [max_date]="max_date"
+    ></app-caserate>
   </div>
 </div>
 

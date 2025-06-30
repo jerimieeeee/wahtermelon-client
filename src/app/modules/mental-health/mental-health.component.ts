@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { faCircleNotch, faDoorClosed } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -9,6 +10,9 @@ import { ToastrService } from 'ngx-toastr';
   styleUrl: './mental-health.component.scss'
 })
 export class MentalHealthComponent implements OnInit {
+  faDoorClosed = faDoorClosed;
+  faCircleNotch = faCircleNotch;
+
   page: number = 1;
   module!: number;
 
@@ -21,9 +25,25 @@ export class MentalHealthComponent implements OnInit {
 
   show_form: boolean = false;
 
-  switchPage(page?: number, data?: any) {
+  allowed_to_edit: boolean = true
+  have_complaint: boolean = false;
+  toggle_content: boolean = true;
+
+  updateSelectedMh(data: any){
+    if(data) {
+      this.selected_mh_consult = data;
+      this.treatments[this.index_ofSelectedMh] = data;
+    }
+  }
+
+  index_ofSelectedMh!: number;
+  switchPage(page?: number, data?: any, i?: number) {
     this.page = page || 1;
-    this.selected_mh_consult = data || [];
+    if(page === 2) this.module = 1;
+    if(data) {
+      this.selected_mh_consult = data;
+      this.index_ofSelectedMh = i;
+    }
   }
 
   switchTab(page?: number) {
@@ -35,12 +55,15 @@ export class MentalHealthComponent implements OnInit {
     this.modals[name] = !this.modals[name];
   }
 
+  is_loading: boolean =true;
+
   getMentalHealthRecords() {
     this.http.get('mental-health/records', {params: { patient_id: this.http.getUrlParams().patient_id}}).subscribe({
       next: (data: any) => {
         console.log(data);
         this.treatments = data.data;
         this.user_facility = data.user_facility;
+        this.is_loading = false;
       },
       error: err => {
         this.toastr.error(err.error.message, 'Error');
@@ -48,7 +71,7 @@ export class MentalHealthComponent implements OnInit {
     });
   }
 
-  getConsultDetails() {
+  loadConsult() {
     this.http.get('consultation/records', { params: { id: this.http.getUrlParams().consult_id } }).subscribe({
       next: (data: any) => {
         console.log(data);
@@ -67,6 +90,7 @@ export class MentalHealthComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.getConsultDetails();
+    this.is_loading = true;
+    this.loadConsult();
   }
 }
