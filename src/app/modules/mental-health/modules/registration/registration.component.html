@@ -15,7 +15,7 @@
         <fa-icon *ngIf="is_saving" [icon]="faCircleNotch" animation="spin"></fa-icon>
         <fa-icon *ngIf="!is_saving" [icon]="faSave"></fa-icon>
         {{
-          selected_mh_consult.id ?
+          selected_mh_consult && selected_mh_consult.id ?
           (is_saving ? 'Updating' : 'Update') :
           (is_saving ? 'Saving' : 'Save')
         }}
