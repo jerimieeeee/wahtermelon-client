@@ -179,10 +179,20 @@ export class UploadClaimsComponent implements OnInit {
 
 
   uploadDocs(file_to_upload){
-    // console.log(file_to_upload, this.patient)
     this.is_uploading = true;
 
     const formData: FormData = new FormData();
+
+    const allowedTypes = ['application/pdf', 'text/xml', 'application/xml'];
+    if (!allowedTypes.includes(this.file_to_upload.type)) {
+      this.is_uploading = false;
+      this.toastr.error('Only PDF or XML files are allowed.', 'File Upload', {
+        closeButton: true,
+        positionClass: 'toast-top-center',
+        disableTimeOut: true
+      });
+      return;
+    }
 
     if(this.file_to_upload.size > (2*1024*1024)) {
       this.is_uploading = false;
