@@ -36,6 +36,8 @@ import { FamilyPlanningMasterlistComponent } from "./report/masterlist/family-pl
 import { BloodTypeMasterlistComponent } from "./report/masterlist/blood-type-masterlist/blood-type-masterlist.component";
 import { SeniorMasterlistComponent } from "./report/masterlist/senior-masterlist/senior-masterlist.component";
 import { PaginationComponent } from 'app/shared/shared-components/pagination/pagination.component';
+import { AsrhMasterlistComponent } from './report/asrh-masterlist/asrh-masterlist.component';
+import { AsrhConsolidatedComponent } from './report/asrh-consolidated/asrh-consolidated.component';
 
 @NgModule({
   declarations: [
@@ -64,7 +66,9 @@ import { PaginationComponent } from 'app/shared/shared-components/pagination/pag
     MaternalCareMasterlistComponent,
     FamilyPlanningMasterlistComponent,
     BloodTypeMasterlistComponent,
-    SeniorMasterlistComponent
+    SeniorMasterlistComponent,
+    AsrhMasterlistComponent,
+    AsrhConsolidatedComponent
   ],
   exports: [
     ShowNameListComponent
