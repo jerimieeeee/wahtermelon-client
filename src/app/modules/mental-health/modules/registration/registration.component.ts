@@ -48,7 +48,7 @@ treatmentForm: FormGroup = new FormGroup({
   }
 
   patchValue() {
-    console.log(this.selected_mh_consult);
+    // console.log(this.selected_mh_consult);
     this.treatmentForm = this.formBuilder.nonNullable.group({
         id: [this.selected_mh_consult ? this.selected_mh_consult.id : null],
         patient_id: [this.patient_id],

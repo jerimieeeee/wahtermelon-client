@@ -23,6 +23,10 @@
           <fa-icon [icon]="faXmark"></fa-icon>
           Close
         </button>
+        <button class="bg-gray-200 btn-save px-2 text-gray-700" *ngIf="page === 1" (click)="toggleModal('eclaims_guide')">
+          Eclaims Guide
+          <fa-icon [icon]="faQuestionCircle"></fa-icon>
+        </button>
       </div>
 
       <div *ngIf="page === 1" class="w-full p-5 overflow-x-auto">
@@ -192,3 +196,8 @@
   [voucher_details]="voucher_details"
   (toggleModal)="toggleModal($event)"
 ></app-voucher-details>
+
+<app-eclaims-pdf *ngIf="modal['eclaims_guide']"
+  (toggleModal)="toggleModal($event)"
+></app-eclaims-pdf>
+

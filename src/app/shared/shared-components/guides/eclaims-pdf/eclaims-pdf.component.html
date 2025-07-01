@@ -1,0 +1,27 @@
+<div id="defaultModal" tabindex="-1" class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 w-full md:inset-0 h-modal md:h-full justify-center items-center flex" aria-modal="true" role="dialog" style="z-index:60">
+  <div class="relative p-4 w-full max-w-4xl h-auto md:h-auto">
+    <!-- Modal content -->
+    <div class="relative bg-white rounded-lg shadow">
+      <!-- Modal header -->
+      <div class="flex justify-between items-start py-3 px-5 rounded-t border-b bg-orange-400">
+        <h3 class="text-sm font-bold text-white">
+          ECLAIMS GUIDE
+        </h3>
+      </div>
+      <!-- Modal body -->
+      <div class="flex justify-center overflow-y-auto h-[600px] scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
+        <iframe src="assets/docs/eclaims_guide.pdf" width="100%" height="100%" style="border:none;"></iframe>
+      </div>
+
+      <div *ngIf="pbef_err_message" class="flex justify-center my-20">
+        {{ pbef_err_message }}
+      </div>
+      <!-- Modal footer -->
+      <div class="flex justify-end py-4 px-5 space-x-4 rounded-b border-t border-gray-200">
+        <button type="button" class="btn-save bg-gray-400" (click)="closeModal()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="opacity-50 fixed inset-0 z-50 bg-black"></div>

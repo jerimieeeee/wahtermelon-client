@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { faQuestionCircle } from '@fortawesome/free-regular-svg-icons';
 import { faCircleNotch, faClipboardQuestion, faPenToSquare, faReceipt, faRotate, faUpload, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
@@ -21,6 +22,7 @@ export class EclaimsComponent implements OnInit {
   faClipboardQuestion = faClipboardQuestion;
   faPenToSquare = faPenToSquare;
   faXmark = faXmark;
+  faQuestionCircle = faQuestionCircle;
 
   pending_list: any = [];
   modal: any = [];
@@ -384,9 +386,14 @@ export class EclaimsComponent implements OnInit {
     this.modal[name] = !this.modal[name];
   }
 
+  show_guide: boolean = false;
+  openGuide() {
+    this.show_guide = !this.show_guide;
+  }
+
   voucher_details: any;
   toggleModal(name, eclaims?) {
-    // console.log(eclaims)
+    console.log(name)
 
     if(name==='voucher-details') {
       this.voucher_details = eclaims;
