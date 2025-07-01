@@ -54,10 +54,17 @@ export class ItemListComponent implements OnInit{
     }
   }
 
+  current_page: number;
+  last_page: number;
+  from: number;
+  to: number;
+  total: number;
+  per_page: number = 10;
+
   loadItem(page?: number) {
     this.is_loading = true;
 
-    let params = { params: { page: page ? page : 1 }};
+    let params = { params: { page: page ? page : 1, per_page: this.per_page } };
     if(this.search_item) params['params']['filter[search]'] = this.search_item;
 
     this.http.get('item-lists/item-list', params).subscribe({
@@ -65,6 +72,12 @@ export class ItemListComponent implements OnInit{
         console.log(data);
         this.item_list = data.data;
         this.is_loading = false;
+
+        this.current_page = data.meta.current_page;
+        this.last_page = data.meta.last_page;
+        this.from = data.meta.from;
+        this.to = data.meta.to;
+        this.total = data.meta.total;
       },
       error: err => {
         console.log(err.error.message);
