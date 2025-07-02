@@ -83,15 +83,15 @@ export class AsrhConsolidatedComponent implements OnChanges, OnInit {
     ) { }
 
   show_form: boolean = false;
-  stats : any;
-  stats2 : any;
-  stats3: any;
-  stats4: any;
-  stats5: any;
-  stats6: any;
-  stats7: any;
-  stats8: any;
-  stats9: any;
+  main : any;
+  top5 : any;
+  visits: any;
+  prenatal: any;
+  fp: any;
+  social_histories: any;
+  iron: any;
+  dm_hypn: any;
+  vitals: any;
 
   pararams: any;
 
@@ -141,13 +141,13 @@ export class AsrhConsolidatedComponent implements OnChanges, OnInit {
       next: (data: any) => {
         // console.log(data);
         // this.show_form = true;
-        this.stats = data
+        this.main = data
         this.current_page = data.meta.current_page;
         this.last_page = data.meta.last_page;
         this.from = data.meta.from;
         this.to = data.meta.to;
         this.total = data.meta.total;
-        console.log(this.stats, 'chart history')
+        console.log(this.main, 'chart history')
       },
       error: err => console.log(err)
     })
@@ -392,13 +392,15 @@ isDiagnosis(peList: any[]): boolean {
 
 
   ngOnChanges(): void {
-    this.stats = this.report_data.data.main;
-    this.stats2 = this.report_data.data.top5;
-    this.stats3 = this.report_data.data.visits;
-    this.stats4 = this.report_data.data.prenatal;
-    this.stats5 = this.report_data.data.fp;
-    this.stats6 = this.report_data.data.social_histories;
-    this.stats7 = this.report_data.data.iron;
+    this.main = this.report_data.data.main;
+    this.top5 = this.report_data.data.top5;
+    this.visits = this.report_data.data.visits;
+    this.prenatal = this.report_data.data.prenatal;
+    this.fp = this.report_data.data.fp;
+    this.social_histories = this.report_data.data.social_histories;
+    this.iron = this.report_data.data.iron;
+    this.dm_hypn = this.report_data.data.dm_hypn;
+    this.vitals = this.report_data.data.vitals;
     this.pararams = this.reportForm;
     this.getToday();
     this.getYearFromDates();
@@ -412,8 +414,8 @@ isDiagnosis(peList: any[]): boolean {
 
 
   ngOnInit(): void {
-    this.stats = this.report_data.data.main;
-    this.stats2 = this.report_data.data.top5;
+    this.main = this.report_data.data.main;
+    this.top5 = this.report_data.data.top5;
     this.userInfo = this.http.getUserFromJSON();
     console.log(this.userInfo, 'user info');
 
