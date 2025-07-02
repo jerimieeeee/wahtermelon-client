@@ -92,6 +92,7 @@ export class AsrhConsolidatedComponent implements OnChanges, OnInit {
   iron: any;
   dm_hypn: any;
   vitals: any;
+  risky_behavior: any;
 
   pararams: any;
 
@@ -401,6 +402,7 @@ isDiagnosis(peList: any[]): boolean {
     this.iron = this.report_data.data.iron;
     this.dm_hypn = this.report_data.data.dm_hypn;
     this.vitals = this.report_data.data.vitals;
+    this.risky_behavior = this.report_data.data.risky_behavior;
     this.pararams = this.reportForm;
     this.getToday();
     this.getYearFromDates();
