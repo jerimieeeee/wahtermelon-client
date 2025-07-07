@@ -174,6 +174,7 @@ export class EclaimsComponent implements OnInit {
     let params = {
       pStatus: this.pStatus ?? '',
       program_desc: this.program_desc ?? '',
+      program_code: this.program_desc === 'cc' || this.program_desc === 'fp' ? 'mc' : this.program_desc,
       code: this.code ?? '',
       'filter[search]': this.patient_search ?? '',
       per_page: 50,
@@ -499,7 +500,8 @@ export class EclaimsComponent implements OnInit {
       this.is_refreshing = false;
     } else {
       let params = {
-        voucherNo: data.pVoucherNo
+        voucherNo: data.pVoucherNo,
+        program_code: data.program_desc === 'cc' || data.program_desc === 'fp' ? 'mc' : data.program_desc
       };
 
       this.http.post('eclaims/get-voucher-details', params).subscribe({
@@ -601,7 +603,7 @@ export class EclaimsComponent implements OnInit {
   }
 
   updateUploadClaim(data) {
-    console.log(data);
+    // console.log(data);
     this.http.post('eclaims/eclaims-upload', data).subscribe({
       next: (data:any) => {
         this.is_refreshing = false;

@@ -148,7 +148,7 @@
               <div class="col-span-6 sm:col-span-2">
                 <label for="blood_type_code" class="input-label" [ngClass]="{'text-red-500': is_saving && f.blood_type_code.errors}">Blood Type</label>
                 <select id="blood_type_code" name="blood_type_code" class="input" [ngClass]="{'invalid-input': is_saving && f.blood_type_code.errors}" formControlName="blood_type_code">
-                  <option *ngFor="let blood_type of blood_types" [value]="blood_type.code">{{ blood_type.code }}</option>
+                  <option *ngFor="let blood_type of blood_types" [value]="blood_type.code">{{ blood_type.code === 'NA' ? "Patient doesn't know" : blood_type.code }}</option>
                 </select>
 
                 <div *ngIf="is_saving && f.blood_type_code.errors" class="invalid-alert">

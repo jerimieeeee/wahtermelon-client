@@ -58,7 +58,8 @@ export class EclaimsComponent implements OnInit {
 
     let params = {
       patient_id: this.patient.id,
-      program_desc: this.program_name
+      program_desc: this.program_name,
+      program_code: this.program_name === 'cc' || this.program_name === 'fp' ? 'mc' :  this.program_name,
     };
 
     this.http.get('eclaims/eclaims-upload', {params}).subscribe({
@@ -83,7 +84,8 @@ export class EclaimsComponent implements OnInit {
   getCaserate(eclaims_id_arr?) {
     let params = {
       program_id: this.program_id,
-      program_desc: this.program_name
+      program_desc: this.program_name,
+      program_code: this.program_name === 'cc' || this.program_name === 'fp' ? 'mc' :  this.program_name,
     };
 
     params['eclaims_id_arr'] = eclaims_id_arr ? eclaims_id_arr.join(',') : null;
@@ -333,7 +335,8 @@ export class EclaimsComponent implements OnInit {
     this.process_name = 'checking_voucher';
     this.is_refreshing = true;
     let params = {
-      voucherNo: data.pVoucherNo
+      voucherNo: data.pVoucherNo,
+      program_code: data.program_desc === 'cc' || data.program_desc === 'fp' ? 'mc' : data.program_desc
     }
     this.http.post('eclaims/get-voucher-details', params).subscribe({
       next: (data: any) => {
