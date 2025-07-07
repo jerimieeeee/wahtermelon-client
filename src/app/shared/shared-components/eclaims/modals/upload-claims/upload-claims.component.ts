@@ -134,7 +134,8 @@ export class UploadClaimsComponent implements OnInit {
       pTransmissionDate: formatDate(data.pTransmissionDate, 'yyyy-MM-dd', 'en', 'Asia/Manila'),
       pTransmissionTime: formatDate(new Date(), 'HH:mm:ss', 'en', 'Asia/Manila'),
       isSuccess:'Y',
-      program_desc: this.program_name
+      program_desc: this.program_name,
+      program_code: this.program_name === 'cc' || this.program_name === 'fp' ? 'mc' :  this.program_name,
     }
 
     this.http.post('eclaims/eclaims-upload', params).subscribe({
