@@ -36,6 +36,7 @@
               <th *ngIf="name_list_params.params === 'temp_decayed' || name_list_params.params === 'temp_filled' || name_list_params.params === 'decayed' || name_list_params.params === 'missing' || name_list_params.params === 'filled' || name_list_params.params === 'permanent_filling' || name_list_params.params === 'temporary_filling' || name_list_params.params === 'extraction' " scope="col" class="py-3 px-6">Tooth Count</th>
               <th *ngIf="name_list_params.indicator === 'adolescent_visits' " scope="col" class="py-3 px-6">Consult Type</th>
               <th *ngIf="name_list_params.indicator === 'adolescent_visits' " scope="col" class="py-3 px-6">Consult Date</th>
+              <th *ngIf="name_list_params.indicator === 'dm_hypn' " scope="col" class="py-3 px-6">ICD 10</th>
             </tr>
             </thead>
             <tbody>
@@ -58,7 +59,10 @@
                 {{ list.pt_group }}
               </td>
               <td *ngIf="name_list_params.indicator === 'adolescent_visits' " class="py-4 px-6">
-                {{ list.consult_date }}
+                {{ list.consult_date | date: 'MM/dd/yyyy hh:mm:ss a':'Asia/Manila' }}
+              </td>
+              <td *ngIf="name_list_params.indicator === 'dm_hypn' " class="py-4 px-6">
+                {{ list.icd10_code }} | {{ list.icd10_desc }}
               </td>
             </tr>
             </tbody>
