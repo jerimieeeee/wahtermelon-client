@@ -1,12 +1,13 @@
 import { CommonModule, DatePipe } from '@angular/common';
 import { ChangeDetectorRef, Component, NgModule, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Router, RouterOutlet } from '@angular/router';
+import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faFileExcel, faFilePdf, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { AgeService } from 'app/shared/services/age.service';
 import { HttpService } from 'app/shared/services/http.service';
 import { ExportAsConfig, ExportAsService } from 'ngx-export-as';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 RouterOutlet
 
@@ -30,6 +31,8 @@ export class MedCertComponent implements OnInit {
       private ageService: AgeService,
       private datePipe: DatePipe,
       private exportAsService: ExportAsService,
+      private sanitizer: DomSanitizer,
+      private route: ActivatedRoute
     ) { }
 
   selected_consult_id!: string;
@@ -42,11 +45,9 @@ export class MedCertComponent implements OnInit {
 
   isModalOpen = true;
     
-    closeModal(details: any) {
-        let patient_id = this.consultation.patient_id;
-        console.log(patient_id, 'patient id');
-        this.router.navigate(['/patient/itr', {id: patient_id}]);
-    }
+    closeModal() {
+  this.router.navigate(['../'], { relativeTo: this.route });
+}
 
    getAge(){
     if(this.patient_info && this.patient_info.birthdate){
@@ -76,14 +77,14 @@ exportAsPdf: ExportAsConfig = {
       scrollX: false,
       scrollY: false,
     },
-    jsPDF: {
-      unit: 'px',
-      format: [794, 1123], // A4 in pixels
+
+   jsPDF: {
       orientation: 'portrait',
+      format: 'a4',
       putOnlyUsedFonts: true,
       precision: 2,
-      margin: [0, 0, 0, 0], // Try 0 margin
-    }
+      margin: [0, 0, 0, 0]
+      }
   }
 }
 
@@ -93,13 +94,20 @@ exportAsPdf: ExportAsConfig = {
     trailName = this.consult[0]?.file_patient_name + '_' + 'Medical Certificate';
     return trailName
   }
+  
 
+  
  pdf_exported: boolean = false;          
   exportP(med_cert: string) {
   this.pdf_exported = true;
-   this.exportAsService.save(this.exportAsPdf, this.getTrailName()).subscribe(() => {
-        this.printCount();
+     if (this.pdf_exported) {
+    this.exportAsService.save(this.exportAsPdf, this.getTrailName()).subscribe(() => {
+      this.printCount();
     });
+  } else {
+    // Try again after short delay until image loads
+    setTimeout(() => this.exportP(med_cert), 300);
+  }
   }
 
    printCount() {
@@ -117,7 +125,7 @@ exportAsPdf: ExportAsConfig = {
     });
 }
   
-
+//med cert
 
   selectedPurpose: string = '';
   otherPurpose: string = '';
@@ -174,14 +182,16 @@ exportAsPdf: ExportAsConfig = {
   };
 
   /* logo */
-   logoUrl = '';
+   logoUrl: SafeUrl | string = '';
+    apiBase = this.http.baseUrl.replace('/api/v1/', '');
 
   fetchFacilityLogo() {
-   this.http.get('consultation/logo').subscribe({
+
+  this.http.get('consultation/logo', { params: { facility_code: this.facility_code }}).subscribe({
     next: (res: any) => {
       console.log('Logo response:', res);
       if (res.path) {
-        this.logoUrl = 'http://localhost:8000' + res.path;
+       this.logoUrl = this.apiBase + '/logo-image/' + res.path.replace('/storage/logos/', '');
         console.log('Full logo URL:', this.logoUrl);
       }
     },
@@ -191,8 +201,13 @@ exportAsPdf: ExportAsConfig = {
     }
   });
 }
+  facility_code: string;
 
   ngOnInit(): void {
+      let facility = this.http.getUserFromJSON().facility;
+
+
+     this.facility_code = facility.code ?? facility.facility.code;
 
     this.consultation = this.http.getUrlParams();
      if (this.consultation.consult_id?.includes('/')) {
@@ -200,6 +215,7 @@ exportAsPdf: ExportAsConfig = {
   }
 
   console.log(this.consultation, 'consult id');
+ console.log(this.facility_code, 'facility code');
 
   this.todaysDate();
 
