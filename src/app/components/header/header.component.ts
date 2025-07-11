@@ -95,7 +95,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.searchInput$.pipe(
       filter(res => res !== null && res.length >= this.minLengthTerm),
       distinctUntilChanged((prev, curr) => prev.trim() === curr.trim()),
-      debounceTime(3000),
+      debounceTime(2000),
       tap(() => {this.patientLoading = true; }),
       switchMap(term => {
         this.current_term = term;

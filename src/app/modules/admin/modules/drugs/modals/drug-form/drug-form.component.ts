@@ -32,6 +32,7 @@ export class DrugFormComponent implements OnInit {
     medicine_route_code: new FormControl<string| null>(null),
     purpose_other: new FormControl<string| null>(null),
     quantity: new FormControl<string| null>(null),
+    unit_price: new FormControl<string| null>(null),
     instruction_quantity: new FormControl<number| null>(null)
   });
 
@@ -152,6 +153,7 @@ export class DrugFormComponent implements OnInit {
       duration_intake: [null, Validators.required],
       duration_frequency: [null, Validators.required],
       quantity: [null],
+      unit_price: [null],
       quantity_preparation: [null, Validators.required],
       medicine_route_code: [null, Validators.required],
       instruction_quantity: [1],

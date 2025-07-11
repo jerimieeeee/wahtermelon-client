@@ -1,0 +1,154 @@
+
+<div class="bg-white border border-solid border-slate-100 rounded-xl shadow-md">
+  <div class="border border-solid border-slate-100 rounded-t-xl font-semibold justify-between">
+    <div class="flex border border-solid border-slate-100 rounded-t-xl p-3 font-semibold justify-between">
+      <div class="text-blue-500 text-lg pt-2 pl-5">
+        Item List
+      </div>
+
+      <div class="border border-gray-400 rounded-md">
+        <input type="text" [(ngModel)]="search_item" class="form-input border-0 text-sm p-1 m-1 border-r border-gray-400" (keyup.enter)="loadItem()" placeholder="Search item"/>
+        <button type="button" class="text-blue-500 w-9 h-9" (click)="loadItem()">
+          <fa-icon class="-ml-1" [icon]="faSearch"></fa-icon>
+        </button>
+      </div>
+    </div>
+
+    <div *ngIf="submit_error" class="col-span-8 bg-red-200 rounded border border-red-300 text-red-900 text-sm">
+      <div class="block p-3 pl-10" >
+        <ul class="list-disc" >
+          <li *ngFor="let error of submit_error | keyvalue">{{ error.value }}</li>
+        </ul>
+      </div>
+    </div>
+
+    <div>
+      <div class="overflow-x-auto relative shadow-md sm:rounded-lg">
+        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 mb-5">
+          <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+              <th scope="col" class="py-3 px-6">Item Name</th>
+              <th scope="col" class="py-3 px-6">Category</th>
+              <th scope="col" class="py-3 px-6">Quantity </th>
+              <th scope="col" class="py-3 px-6">Unit Price</th>
+              <th scope="col" class="py-3 px-6"></th>
+            </tr>
+          </thead>
+          <tbody *ngIf="!is_loading">
+            <tr *ngIf="item_list?.length === 0">
+              <td colspan="9" >
+                <div class="grid grid-cols-1 w-full mt-10">
+                  <div class="text-center italic"> No records found... </div>
+                  <div class="flex justify-center mt-3">
+                    <button type="button" class="btn-save" (click)="toggleModal('item-lib')">
+                      <fa-icon [icon]="faAdd" class="mr-1 text-white"></fa-icon>
+                      Add
+                    </button>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr *ngFor="let item of item_list; let odd = odd; let i = index" class="bg-white border-t" [ngClass]="{'bg-gray-50': odd}">
+              <td class="py-4 px-6">
+                @if(item.libItemClaim) {
+                  {{ item.libItemClaim.item_name }}
+                } @else {
+                  {{ item.added_item }}
+                }
+              </td>
+              <td class="py-4 px-6">
+                @if(item.libItemClaim) {
+                  {{ item.libItemClaim.category }}
+                } @else {
+                  OTHERS
+                }
+              </td>
+              <td class="py-4 px-6">
+                {{ item.quantity }}
+              </td>
+              <td class="py-4 px-6">
+                {{ item.unit_price }}
+              </td>
+              <td class="py-4 px-6">
+                <button type="button" (click)="toggleModal({data: item, name: 'item-list'})">
+                  <fa-icon [icon]="faEdit" class="text-amber-500"></fa-icon>
+                </button>
+                <button class="ml-2" (click)="toggleDelete(item)">
+                  <fa-icon [icon]="faTrashCan" class="text-rose-500"></fa-icon>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+          <tbody *ngIf="is_loading">
+            <tr>
+              <td colspan="8" class="text-center py-12">
+                <div class="grid grid-cols-1 w-full">
+                  <span class="flex justify-center">
+                    <fa-icon [icon]="faCircleNotch" animation="spin" class="text-blue-500"></fa-icon>
+                  </span>
+                  <span class="flex justify-center">
+                    Loading list...
+                  </span>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="item_list?.length >= 1">
+    <div class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
+      <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+        <div>
+          <p class="text-sm text-gray-700">
+            Showing <span class="font-medium">{{ from }}</span>
+            to <span class="font-medium">{{ to }}</span>
+            of <span class="font-medium">{{ total }}</span> results
+          </p>
+        </div>
+        <div>
+          <nav class="relative z-0 inline-flex shadow-sm -space-x-px" aria-label="Pagination">
+            <button [disabled]="current_page===1" (click)="loadItem(1)" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 enabled:bg-white disabled:bg-gray-300 text-sm font-medium text-gray-500 hover:bg-gray-50">
+              <fa-icon [icon]="faAnglesLeft" class="block h-15 w-15 text-gray-500 pr-1"></fa-icon>
+            </button>
+
+              <button [disabled]="current_page===1" (click)="loadItem(current_page-1)" class="relative inline-flex items-center px-4 py-2 border border-gray-300 enabled:bg-white disabled:bg-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
+                <fa-icon [icon]="faChevronLeft" class="block h-15 w-15 text-gray-500 pr-1"></fa-icon>Previous
+              </button>
+              <button [disabled]="current_page===last_page" (click)="loadItem(current_page+1)" class="relative inline-flex items-center px-4 py-2 border border-gray-300 enabled:bg-white disabled:bg-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
+                Next<fa-icon [icon]="faChevronRight" class="h-5 w-5 text-gray-500"></fa-icon>
+              </button>
+
+            <button [disabled]="current_page===last_page" (click)="loadItem(last_page)" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 enabled:bg-white disabled:bg-gray-300 text-sm font-medium text-gray-500 hover:bg-gray-50">
+              <fa-icon [icon]="faAnglesRight" class="h-5 w-5 text-gray-500"></fa-icon>
+            </button>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<app-lib-item-list *ngIf="modals['item-lib']"
+  [search_item]="search_item"
+  (toggleModal)="toggleModal($event)"
+  (loadItem)="loadItem()"
+
+></app-lib-item-list>
+
+<app-item-form *ngIf="modals['item-list']"
+  [selected_item]="selected_item"
+  (toggleModal)="toggleModal($event)"
+  (loadItem)="loadItem()"
+></app-item-form>
+
+<app-delete-item *ngIf="modals['delete-item']"
+  [delete_id]="delete_id"
+  [delete_desc]="delete_desc"
+  [url]="url"
+  (toggleModal)="toggleDelete($event)"
+></app-delete-item>
+

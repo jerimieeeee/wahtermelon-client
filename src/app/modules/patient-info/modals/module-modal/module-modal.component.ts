@@ -59,6 +59,13 @@ export class ModuleModalComponent implements OnInit {
           consult_active: false,
           id: null
         },
+        mh: {
+          name: 'Mental Health',
+          location: 'mh',
+          group: 'mh',
+          consult_active: false,
+          id: null
+        },
       }
     }
   };

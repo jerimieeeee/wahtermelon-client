@@ -138,7 +138,7 @@ export class FirstVisitComponent implements OnInit, OnChanges {
     this.patient_info = this.ccdev_data ?? data;
     this.getccdevMama();
     this.visitForm.patchValue({...this.patient_info});
-    console.log(this.patient_info)
+    // console.log(this.patient_info)
     if(this.patient_info && this.patient_info.status == 'CPAB' ) {
       this.cpab = 'Child Protected at Birth'
     }
@@ -150,7 +150,7 @@ export class FirstVisitComponent implements OnInit, OnChanges {
       .subscribe({
         next: (data: any) => {
           this.patient_info2 = data.data;
-          console.log(this.patient_info2, 'info ccdev mama first visit')
+          // console.log(this.patient_info2, 'info ccdev mama first visit')
         },
         error: err => console.log(err)
       });

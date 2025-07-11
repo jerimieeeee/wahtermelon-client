@@ -101,7 +101,7 @@ export class ServicesComponent implements OnInit {
   }
 
   toggleEssentialModal(value: any){
-    console.log('toggleEssentialModal');
+    // console.log('toggleEssentialModal');
     this.modalFilter = value;
     this.showEssentialModal = !this.showEssentialModal;
     this.loadServicesTest()
@@ -135,7 +135,7 @@ export class ServicesComponent implements OnInit {
     }
 
     this.x = JSON.parse(localStorage.getItem('eservice'));
-    console.log('retrievedeServices: ', this.x );
+    // console.log('retrievedeServices: ', this.x );
     this.x.forEach(m =>{
       let i = this.eservices2.findIndex(c => c.id === m.id);
         if(i != -1){
@@ -162,7 +162,7 @@ export class ServicesComponent implements OnInit {
     }
 
     this.cservices = JSON.parse(localStorage.getItem('service'));
-    console.log('retrievedServices: ', this.cservices );
+    // console.log('retrievedServices: ', this.cservices );
     this.cservices.forEach(m =>{
       let i = this.services.findIndex(c => c.id === m.id);
        if(i != -1){
@@ -189,7 +189,7 @@ export class ServicesComponent implements OnInit {
       if(!value.ischecked){
         this.eservices2[index].service_date=''
       }
-      console.log('fetchSelectedItems');
+      // console.log('fetchSelectedItems');
 
       return value.ischecked
     });
@@ -297,7 +297,7 @@ export class ServicesComponent implements OnInit {
     this.loadServices()
     this.http.get('libraries/cc-services').subscribe((data: any) => {
       this.lib_ccservices = data.data
-      console.log(this.lib_ccservices, 'cc dev services library');
+      // console.log(this.lib_ccservices, 'cc dev services library');
       // console.log(this.patient_details.id, 'awaw')
     });
   }
@@ -355,7 +355,7 @@ export class ServicesComponent implements OnInit {
     this.submitNBS()
     var service_arr = [];
 
-    console.log(this.serviceForm)
+    // console.log(this.serviceForm)
     Object.entries(this.serviceForm.service_status).forEach(([key, value], index) => {
       if(value != '-'){
         let service = {
@@ -366,7 +366,7 @@ export class ServicesComponent implements OnInit {
         };
 
         service_arr.push(service);
-        console.log(this.serviceForm.quantity[key], 'check quantity if working')
+        // console.log(this.serviceForm.quantity[key], 'check quantity if working')
       }
     })
 
@@ -381,10 +381,12 @@ export class ServicesComponent implements OnInit {
         services: service_arr
       }
 
-      console.log(serv_form, 'ito ung isusubmit')
+      // console.log(serv_form, 'ito ung isusubmit')
 
       this.http.post('child-care/cc-services', serv_form).subscribe({
-        next: (data: any) => { console.log(data, 'display lahat ng services') },
+        next: (data: any) => {
+          // console.log(data, 'display lahat ng services')
+        },
         error: err => {console.log(err)
           // this.toggleAlertModal('E')
           if (serv_form.essential == 'Y') {
@@ -459,7 +461,7 @@ export class ServicesComponent implements OnInit {
   loadServicesTest(){
     this.http.get('child-care/cc-services', {params:{patient_id: this.patient_details.id, sort:'service_id'}}).subscribe({
       next: (data: any) => {
-        console.log(data)
+        // console.log(data)
         this.service_list = data.data;
       //   data.data.sort(function(a, b) {
       //     return (a.services.service_name - b.services.service_name) || a.services.service_name.localeCompare(b.services.service_id);
@@ -484,7 +486,7 @@ export class ServicesComponent implements OnInit {
         // console.log(this.serviceForm, 'test serv 2')
       },
       error: err => console.log(err),
-      complete: () => console.log(this.service_list,'services loaded')
+      // complete: () => console.log(this.service_list,'services loaded')
 
     })
   }

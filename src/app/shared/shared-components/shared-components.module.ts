@@ -16,6 +16,9 @@ import { ExportAsModule } from 'ngx-export-as';
 import { UploadClaimsComponent } from './eclaims/modals/upload-claims/upload-claims.component';
 import { DeleteItemComponent } from '../shared-modals/delete-item/delete-item.component';
 import { UploadRequiredClaimsComponent } from './eclaims/modals/upload-required-claims/upload-required-claims.component';
+import { EsoaComponent } from './eclaims/components/esoa/esoa.component';
+import { VoucherDetailsComponent } from './eclaims/voucher-details/voucher-details.component';
+import { EclaimsPdfComponent } from './guides/eclaims-pdf/eclaims-pdf.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +41,10 @@ import { UploadRequiredClaimsComponent } from './eclaims/modals/upload-required-
     WebcamModule,
     NgxPrintModule,
     ExportAsModule,
-    DeleteItemComponent
+    DeleteItemComponent,
+    EsoaComponent,
+    VoucherDetailsComponent,
+    EclaimsPdfComponent
   ],
   exports: [
     KonsultaComponent,

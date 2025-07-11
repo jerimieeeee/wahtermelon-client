@@ -53,6 +53,8 @@ export class DrugFormComponent implements OnChanges {
     duration_intake: new FormControl<string| null>(null),
     duration_frequency: new FormControl<string| null>(null),
     quantity: new FormControl<number| null>(null),
+    unit_price: new FormControl<number| null>(null),
+    total_price: new FormControl<number| null>(null),
     quantity_preparation: new FormControl<string| null>(null),
     instruction_quantity: new FormControl<number| null>(null),
     medicine_route_code: new FormControl<string| null>(null),
@@ -61,6 +63,18 @@ export class DrugFormComponent implements OnChanges {
 
   get f(): { [key: string]: AbstractControl } {
     return this.prescriptionForm.controls;
+  }
+
+  computeTotalPrice() {
+    console.log(this.prescriptionForm.value);
+    let quantity = this.prescriptionForm.value.quantity ?? 0;
+    let unit_price = this.prescriptionForm.value.unit_price ?? 0;
+    let total_price = quantity * unit_price;
+    this.prescriptionForm.patchValue({
+      total_price: total_price
+    });
+
+    this.prescriptionForm.controls.total_price.disable();
   }
 
   closeModal(){
@@ -73,6 +87,7 @@ export class DrugFormComponent implements OnChanges {
     // console.log(this.prescriptionForm);
 
     if(this.prescriptionForm.valid){
+      this.prescriptionForm.controls.total_price.enable();
       if(this.selected_drug.new_drug) {
         this.http.post('medicine/list', this.prescriptionForm.value).subscribe({
           next: (data: any) => {
@@ -159,6 +174,8 @@ export class DrugFormComponent implements OnChanges {
       duration_intake: this.selected_drug.duration_intake,
       duration_frequency: this.selected_drug.frequency ? this.selected_drug.frequency.code : null,
       quantity: this.selected_drug.quantity,
+      unit_price: this.selected_drug.unit_price,
+      total_price: this.selected_drug.total_price,
       quantity_preparation: this.selected_drug.preparation ? this.selected_drug.preparation.code : null,
       instruction_quantity: this.selected_drug.instruction_quantity ?? 1,
       medicine_route_code: this.selected_drug.medicine_route ? this.selected_drug.medicine_route.code : null,
@@ -179,11 +196,13 @@ export class DrugFormComponent implements OnChanges {
         this.prescriptionForm.controls.konsulta_medicine_code.disable();
       }
     }
+    this.computeTotalPrice();
     this.checkPurpose();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    let physician = this.user_id;
+    // if(!this.user_id) this.http.getUserID();
+    let physician = !this.user_id ? this.http.getUserID() : this.user_id;
     this.prescriptionForm = this.formBuilder.nonNullable.group({
       brand_name: [null],
       patient_id: [this.consult_details.patient.id],
@@ -200,13 +219,15 @@ export class DrugFormComponent implements OnChanges {
       duration_intake: [null,[Validators.required]],
       duration_frequency: [null,[Validators.required]], //libraries/duration-frequencies
       quantity: [null,[Validators.required]],
+      unit_price: [null],
+      total_price: [null],
       quantity_preparation: [null,[Validators.required]], //libraries/preparations
       instruction_quantity: [1],
       medicine_route_code: [null,[Validators.required]],
       remarks: [null]
     });
 
-    // console.log(this.selected_drug)
+    console.log(this.prescriptionForm)
     if(this.selected_drug){
       this.patchValue();
     } else {

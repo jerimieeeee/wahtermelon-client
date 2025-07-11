@@ -22,7 +22,8 @@ export class AnimalbiteComponent implements OnInit{
   module: number = 1;
   show_end: boolean = false;
   fetching_history: boolean = true;
-
+  toggle_content: boolean = true;
+  allowed_to_edit: boolean = true;
   consult_details: any;
 
   patient_ab_history: any = [];
@@ -33,8 +34,11 @@ export class AnimalbiteComponent implements OnInit{
   max_date = formatDate(new Date(), 'yyyy-MM-dd', 'en', 'Asia/Manila');
 
   openAbConsult(data) {
+    console.log(data);
+    // console.log(this.consult_details);
     this.selected_ab_consult = data;
     if(data.treatment_done === 1) this.consult_details = null;
+    console.log(this.consult_details);
     this.pages = 2;
   }
 
@@ -81,6 +85,7 @@ export class AnimalbiteComponent implements OnInit{
   }
 
   loadConsult(){
+        console.log('test');
     let params = {
       id: this.consult_id,
       pt_group: 'ab'
@@ -89,6 +94,7 @@ export class AnimalbiteComponent implements OnInit{
     this.http.get('consultation/records', {params}).subscribe({
       next: (data: any) => {
         this.consult_details = data.data[0];
+        console.log(this.consult_details);
         this.getAbHistory();
       },
       error: err => console.log(err)

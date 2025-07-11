@@ -23,6 +23,9 @@ import { FpchartModalComponent } from './modules/fpchart/fpchart-modal/fpchart-m
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { CaserateComponent } from 'app/shared/shared-components/eclaims/components/caserate/caserate.component';
 import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
+import { PrescriptionComponent } from 'app/shared/shared-components/consultation/prescription/prescription.component';
+import { FinalDxComponent } from 'app/shared/shared-components/consultation/final-dx/final-dx.component';
+import { SuppliesComponent } from 'app/shared/shared-components/consultation/supplies/supplies.component';
 
 @NgModule({
   declarations: [FamilyplanningComponent, FpchartComponent, FirsvisitComponent, FppeComponent, FphxComponent, ObshxComponent, PelvicComponent, MethodsComponent, MethodsModalComponent, FpchartModalComponent,
@@ -40,6 +43,9 @@ import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
     CaserateComponent,
     NgxMaskDirective,
     NgxMaskPipe,
+    PrescriptionComponent,
+    FinalDxComponent,
+    SuppliesComponent
   ],
   providers: [provideNgxMask()]
 })

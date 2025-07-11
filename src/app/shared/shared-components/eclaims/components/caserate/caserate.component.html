@@ -30,18 +30,40 @@
     </div>
 
     <div class="rounded-b-md border-x border-b border-slate-200 grid grid-cols-1">
-      <div *ngIf="show_form" class="flex mt-5 mx-5">
+      <!-- <div *ngIf="show_form" class="flex mt-5 mx-5">
         <label class="w-1/2 mt-2" for="loaded_caserate">Select preloaded caserate</label>
         <select name="loaded_caserate" id="loaded_caserate" (change)="selectPreloadedCaserate()" [(ngModel)]="loaded_caserate" class="w-1/2 input">
           <option *ngFor="let pre_case of preloaded_caserate" [ngValue]="pre_case">{{ pre_case.caserate_code }} - {{ pre_case.code }} <span *ngIf="program_name === 'cc'">({{ pre_case.caserate_fee }})</span></option>
         </select>
-      </div>
+      </div> -->
 
       <form class="m-5" [formGroup]="caserateForm" (ngSubmit)="onSubmit()">
         <div *ngIf="show_form" class="grid grid-cols-1 gap-2 w-full">
           <div>
               <label for="caserate_date">Caserate date</label>
-              <input type="date" name="caserate_date" id="caserate_date" formControlName="caserate_date" class="input" />
+              <input (change)="toggleAttendant()" type="date" name="caserate_date" id="caserate_date" formControlName="caserate_date" class="input" />
+          </div>
+
+          <div>
+            <label for="caserate_attendant">Caserate attendant</label>
+            <select (change)="checkDoctorAccred()" name="caserate_attendant" id="caserate_attendant" formControlName="caserate_attendant" class="input">
+              <option *ngFor="let att of attendant" [ngValue]="att">{{ att.last_name }}, {{ att.first_name }}</option>
+            </select>
+          </div>
+
+          <div *ngIf="checking_accred">
+            <fa-icon [icon]="faCircleNotch" animation="spin" class="pr-2"></fa-icon>Check Acceditation Status
+          </div>
+
+          <div *ngIf="result_accred_check" class="italic text-sm">
+            @if(result_accred_check.result.success === false){
+              <span class="text-red-500">{{ result_accred_check.result.message }}</span>
+            } @else {
+              <span [ngClass]="result_accred_check.result.isaccredited === 'NO' ? 'text-red-500' : 'text-green-500'">
+                Is Accredited: {{ result_accred_check.result.isaccredited }} <br />
+                Validity Date of Accreditation: {{ result_accred_check.result.accreditationstart }} TO {{ result_accred_check.result.accreditationend }}
+              </span>
+            }
           </div>
 
           <div>
@@ -113,13 +135,19 @@
             <input type="number" name="caserate_fee" id="caserate_fee" formControlName="caserate_fee" class="input" />
           </fieldset>
 
-          <div>
-            <label for="caserate_attendant">Caserate attendant</label>
-            <select name="caserate_attendant" id="caserate_attendant" formControlName="caserate_attendant" class="input">
-              <option *ngFor="let att of attendant" [value]="att.id">{{ att.last_name }}, {{ att.first_name }}</option>
-            </select>
-          </div>
-
+          <!-- <div class="flex justify-start">
+            <div>
+              <button class="rounded text-white bg-blue-500">
+                <fa-icon [icon]="faCheck"></fa-icon>
+              </button>
+            </div>
+            <div>
+              <label for="caserate_attendant">Caserate attendant</label>
+              <select (change)="checkDoctorAccred()" name="caserate_attendant" id="caserate_attendant" formControlName="caserate_attendant" class="input">
+                <option *ngFor="let att of attendant" [value]="att.id">{{ att.last_name }}, {{ att.first_name }}</option>
+              </select>
+            </div>
+          </div> -->
 
           <div>
             <input type="checkbox" class="input-checkbox" name="enough_benefit_flag" id="enough_benefit_flag" formControlName="enough_benefit_flag" />

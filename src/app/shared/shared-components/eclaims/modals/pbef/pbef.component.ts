@@ -5,6 +5,7 @@ import { faSave, faCircleNotch, faSearch, faMagnifyingGlass, faFilePdf } from '@
 import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 import { ExportAsConfig, ExportAsService } from 'ngx-export-as';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
     selector: 'app-pbef',
@@ -25,7 +26,7 @@ export class PbefComponent implements OnInit {
   faFilePdf = faFilePdf;
   faCircleNotch = faCircleNotch;
 
-  pbef_result: any;
+  pbef_result: SafeResourceUrl | null = null;
   // program_creds: any;
 
   pdf_exported: boolean = false;
@@ -82,6 +83,10 @@ export class PbefComponent implements OnInit {
   getParams() {
     this.show_form = false;
     switch(this.program_name) {
+      case 'ab': {
+        this.paramsAb();
+        break;
+      }
       case 'tb': {
         this.paramsTb();
         break;
@@ -100,127 +105,151 @@ export class PbefComponent implements OnInit {
       }
       default: {
         console.log(this.selected_case)
+        let admission_date = formatDate(this.selected_caserate.caserate_date, 'yyyy-MM-dd', 'en', 'Asia/Manila');
+        this.getPbef(admission_date);
         // this.getPbef();
       }
     }
   }
 
+  pbefGenerationError(message: string) {
+    this.toastr.error(message, 'PBEF');
+    this.closeModal();
+  }
+
   paramsFp() {
-    let admission_date;
-    let discharge_date;
-
-    admission_date = formatDate(this.selected_caserate.caserate_date, 'yyyy-MM-dd', 'en', 'Asia/Manila');
-    discharge_date = formatDate(this.selected_caserate.caserate_date, 'yyyy-MM-dd', 'en', 'Asia/Manila');
-
-    this.getPbef(admission_date, discharge_date);
+    if(!this.selected_caserate.caserate_date) {
+      this.pbefGenerationError('Caserate date is not set for this case');
+    } else {
+      let admission_date = formatDate(this.selected_caserate.caserate_date, 'yyyy-MM-dd', 'en', 'Asia/Manila');
+      this.getPbef(admission_date);
+    };
   }
 
   paramsAb() {
-    let admission_date;
-    let discharge_date;
-
-    admission_date = formatDate(this.selected_case.abPostExposure.day0_date, 'yyyy-MM-dd', 'en', 'Asia/Manila');
-    discharge_date = formatDate(this.selected_case.abPostExposure.day7_date, 'yyyy-MM-dd', 'en', 'Asia/Manila');
-
-    this.getPbef(admission_date, discharge_date);
+    if(!this.selected_case.abPostExposure.day0_date) {
+      this.pbefGenerationError('Day 0 date is not set for this case');
+    } else {
+      let admission_date = formatDate(this.selected_case.abPostExposure.day0_date, 'yyyy-MM-dd', 'en', 'Asia/Manila');
+      this.getPbef(admission_date);
+    }
   }
 
   paramsCc() {
-    let admission_date;
-    let discharge_date;
-
-    admission_date = formatDate(this.selected_case.admission_date, 'MM-dd-yyyy', 'en', 'Asia/Manila');
-    discharge_date = formatDate(this.selected_case.discharge_date, 'MM-dd-yyyy', 'en', 'Asia/Manila');
-
-    this.getPbef(admission_date, discharge_date);
+    if(!this.selected_case.admission_date) {
+      this.pbefGenerationError('Admission date is not set for this case');
+    } else {
+      let admission_date = formatDate(this.selected_case.admission_date, 'MM-dd-yyyy', 'en', 'Asia/Manila');
+      this.getPbef(admission_date);
+    }
   }
 
   paramsMc() {
     let admission_date;
-    let discharge_date;
 
     if(this.selected_caserate.code === 'ANC01' || this.selected_caserate.code === 'ANC02') {
-      let visit1: string = null;
-      let visit2: string = null;
-      let visit3: string = null;
-      let visit4: string = null;
-
-      Object.entries(this.selected_case.prenatal_visit).reverse().forEach(([key, value]:any, index) => {
-        if(index === 0 && !visit1) visit1 = value.prenatal_date;
-        if(index === 1 && !visit2) visit2 = value.prenatal_date;
-        if(index === 2 && !visit3) visit3 = value.prenatal_date;
-
-        if((index > 2 && !visit4) && value.trimester === 3) {
-          visit4 = value.prenatal_date;
-          return true;
-        }
-      });
-
-      admission_date = formatDate(new Date(visit1), 'MM-dd-yyyy', 'en', 'Asia/Manila');
-      discharge_date = formatDate(new Date(visit4), 'MM-dd-yyyy', 'en', 'Asia/Manila');
+      if(!this.selected_case.prenatal_visit[0].prenatal_date) {
+        this.pbefGenerationError('Prenatal date is not set for this case');
+      } else {
+        admission_date = formatDate(new Date(this.selected_case.prenatal_visit[0].prenatal_date), 'MM-dd-yyyy', 'en', 'Asia/Manila');
+      }
     } else {
-      admission_date = formatDate(this.selected_case.post_registration.admission_date, 'MM-dd-yyyy', 'en', 'Asia/Manila');
-      discharge_date = formatDate(this.selected_case.post_registration.discharge_date, 'MM-dd-yyyy', 'en', 'Asia/Manila');
+      if(!this.selected_case.post_registration.admission_date) {
+        this.pbefGenerationError('Admission date is not set for this case');
+      } else {
+        admission_date = formatDate(this.selected_case.post_registration.admission_date, 'MM-dd-yyyy', 'en', 'Asia/Manila');
+      }
     }
 
-    this.getPbef(admission_date, discharge_date);
+    this.getPbef(admission_date);
   }
 
   paramsTb() {
     let admission_date: Date;
-    let discharge_date: Date;
 
-    if(this.selected_caserate.code === '89221'){
-      admission_date = this.selected_case.case_holding.treatment_start;
-      discharge_date = new Date(this.selected_case.case_holding.continuation_start);
-      discharge_date.setDate(discharge_date.getDate()-1);
+    if(this.selected_caserate.code === '89222') {
+      if(!this.selected_case.case_holding.continuation_start) {
+        this.pbefGenerationError('Continuation start date is not set for this case');
+      } else {
+        admission_date = this.selected_case.case_holding.continuation_start;
+        this.getPbef(admission_date);
+      }
+    } else {
+      if(!this.selected_case.case_holding.treatment_start) {
+        this.pbefGenerationError('Treatment start date is not set for this case');
+      } else {
+        admission_date = this.selected_case.case_holding.treatment_start;
+        this.getPbef(admission_date);
+      }
     }
 
-    if(this.selected_caserate.code === '89222'){
-      admission_date = this.selected_case.case_holding.continuation_start;
-      discharge_date = this.selected_case.case_holding.treatment_end;
-    }
-
-    this.getPbef(admission_date, discharge_date);
+    // admission_date = this.selected_caserate.code === '89222' ? this.selected_case.case_holding.continuation_start : this.selected_case.case_holding.treatment_start;
   }
 
-
-
-  getPbef(admission_date, discharge_date){
+  pbef_err_message: string;
+  getPbef(admission_date, discharge_date?){
     let admit_date = formatDate(admission_date, 'MM-dd-yyyy', 'en', 'Asia/Manila');
-    let disch_date = formatDate(discharge_date, 'MM-dd-yyyy', 'en', 'Asia/Manila');
 
     this.show_form = false;
-    // let test_date = formatDate(new Date(), 'MM-dd-yyyy', 'en', 'Asia/Manila');
+
     let params = {
       program_code: this.program_name === 'cc' || this.program_name === 'fp' ? 'mc' : this.program_name,
-      member_pin: this.patient_philhealth.philhealth_id,
+      member_pin: this.patient_philhealth.membership_type_id === 'DD' ? this.patient_philhealth.member_pin : this.patient_philhealth.philhealth_id,
       member_last_name: this.patient_philhealth.membership_type_id === 'DD' ? this.patient_philhealth.member_last_name.toUpperCase() : this.patient.last_name.toUpperCase(),
       member_first_name: this.patient_philhealth.membership_type_id === 'DD' ? this.patient_philhealth.member_first_name.toUpperCase() : this.patient.first_name.toUpperCase(),
       member_middle_name: this.patient_philhealth.membership_type_id === 'DD' ? this.patient_philhealth.member_middle_name.toUpperCase() : this.patient.middle_name.toUpperCase(),
       member_suffix_name: this.patient_philhealth.membership_type_id === 'DD' ? (this.patient_philhealth.member_suffix_name === 'NA' ? '' : this.patient_philhealth.member_suffix_name.toUpperCase()) : (this.patient.suffix_name === 'NA' ? '' : this.patient.suffix_name.toUpperCase()),
       member_birthdate: formatDate(this.patient_philhealth.membership_type_id === 'DD' ? this.patient_philhealth.member_birthdate : this.patient.birthdate, 'MM-dd-yyyy', 'en', 'Asia/Manila'),
+      member_gender: this.patient_philhealth === 'DD' ? this.patient_philhealth.member_gender : this.patient.gender,
       patient_is: this.patient_philhealth.membership_type_id === 'DD' ? this.patient_philhealth.member_relation_id : 'M',
       admission_date: admit_date,
-      discharge_date: disch_date,
+      patient_pin: this.patient_philhealth.philhealth_id,
       patient_last_name: this.patient.last_name.toUpperCase(),
       patient_first_name: this.patient.first_name.toUpperCase(),
       patient_middle_name: this.patient.middle_name.toUpperCase(),
       patient_suffix_name: this.patient.suffix_name === 'NA' ? '' : this.patient.suffix_name.toUpperCase(),
+      patient_gender: this.patient.gender,
       patient_birthdate: formatDate(this.patient.birthdate, 'MM-dd-yyyy', 'en', 'Asia/Manila'),
-      patient_gender: this.patient.gender
+      membership_type: this.patient_philhealth.membership_type_id,
     }
 
     this.http.post('eclaims/check-claim-eligibility', params).subscribe({
       next: (data: any) => {
-        this.pbef_result = data;
+        if(data.success === false) {
+          this.toastr.error(data.message, 'PBEF');
+          this.closeModal();
+        } else {
+          this.generatePBEF(data);
+        }
+      },
+      error: err => {
+        this.pbef_err_message = err.error.message;
+        console.log(err);
+        // this.http.showError(err.error.message, 'PBEF')
+        // this.closeModal();
+      }
+    })
+  }
+
+  generatePBEF(data) {
+    let params = {
+      program_code: this.program_name === 'cc' || this.program_name === 'fp' ? 'mc' : this.program_name,
+      referenceno: data.referenceno
+    };
+
+    this.http.post('eclaims/generate-pbef', params).subscribe({
+      next: (data: any) => {
+        this.pbef_result = this.sanitizer.bypassSecurityTrustResourceUrl(
+          'data:application/pdf;base64,' + data.result
+        );
+
+        this.show_pdf = true;
         this.show_form = true;
       },
       error: err => {
-        this.http.showError('Error fetching pbef. Please try again.', 'PBEF')
-        this.closeModal();
+        console.log(err.error.message);
       }
-    })
+    });
   }
 
   closeModal() {
@@ -230,12 +259,17 @@ export class PbefComponent implements OnInit {
   constructor (
     private http: HttpService,
     private toastr: ToastrService,
-    private exportAsService: ExportAsService
+    private exportAsService: ExportAsService,
+    private sanitizer: DomSanitizer
   ) { }
 
+  show_pdf: boolean = false;
   ngOnInit(): void {
+    console.log(this.caserate_list)
     if(this.caserate_list.length === 1) {
       this.selected_caserate = this.caserate_list[0];
+      this.getParams();
+    } else {
       this.getParams();
     }
   }

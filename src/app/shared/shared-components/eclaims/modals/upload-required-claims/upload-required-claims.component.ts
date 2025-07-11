@@ -72,7 +72,8 @@ export class UploadRequiredClaimsComponent implements OnInit {
 
     let params = {
       pHospitalTransmittalNo: this.selected_pHospitalTransmittalNo,
-      program_desc: this.program_name
+      program_desc: this.program_name,
+      program_code: this.program_name === 'cc' || this.program_name === 'fp' ? 'mc' :  this.program_name,
     };
 
     this.http.post('eclaims/create-required-xml', params).subscribe({
@@ -115,6 +116,7 @@ export class UploadRequiredClaimsComponent implements OnInit {
     let params = {
       pHospitalTransmittalNo: this.selected_pHospitalTransmittalNo,
       pStatus: 'IN PROCESS',
+      program_code: this.program_name === 'cc' || this.program_name === 'fp' ? 'mc' :  this.program_name,
     }
 
     this.http.post('eclaims/eclaims-upload', params).subscribe({
@@ -144,7 +146,8 @@ export class UploadRequiredClaimsComponent implements OnInit {
     this.show_form = false;
     let params = {
       pHospitalTransmittalNo: this.selected_pHospitalTransmittalNo,
-      required: 'Y'
+      required: 'Y',
+      program_code: this.program_name === 'cc' || this.program_name === 'fp' ? 'mc' :  this.program_name,
     };
 
     this.http.get('eclaims/eclaims-doc', {params}).subscribe({

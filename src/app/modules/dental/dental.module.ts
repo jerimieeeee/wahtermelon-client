@@ -22,6 +22,9 @@ import { PrescriptionComponent } from 'app/shared/shared-components/consultation
 import { EndVisitComponent } from 'app/shared/shared-modals/end-visit/end-visit.component';
 import { DeleteItemComponent } from 'app/shared/shared-modals/delete-item/delete-item.component';
 import { PregnantTagComponent } from 'app/shared/shared-components/consultation/pregnant-tag/pregnant-tag.component';
+import { SuppliesComponent } from 'app/shared/shared-components/consultation/supplies/supplies.component';
+import { SharedComponentsModule } from 'app/shared/shared-components/shared-components.module';
+import { CaserateComponent } from 'app/shared/shared-components/eclaims/components/caserate/caserate.component';
 
 
 @NgModule({
@@ -50,7 +53,10 @@ import { PregnantTagComponent } from 'app/shared/shared-components/consultation/
     ManagementComponent,
     DeleteItemComponent,
     EndVisitComponent,
-    PregnantTagComponent
+    PregnantTagComponent,
+    SuppliesComponent,
+    SharedComponentsModule,
+    CaserateComponent
   ]
 })
 export class DentalModule { }

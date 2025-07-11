@@ -138,6 +138,17 @@
               </div>
             </div>
 
+            <div class="relative w-full text-sm md:w-2/6 lg:w-2/6 px-3 py-2 mt-2">
+              <label class="font-semibold" for="unit_price" [ngClass]="{'text-red-500': is_saving && f.unit_price.errors}">Unit Price</label>
+              <input name="unit_price" id="unit_price" formControlName="unit_price" [ngClass]="{'invalid-input': is_saving && f.unit_price.errors}" type="number" class="input">
+
+              <div *ngIf="is_saving && f.unit_price.errors" class="invalid-alert">
+                <div *ngIf="f.unit_price.errors?.['required']">
+                  {{ required_message }}
+                </div>
+              </div>
+            </div>
+
             <div class="relative w-full text-sm px-3 py-2 mt-2">
               <label class="font-semibold" for="medicine_purpose" [ngClass]="{'text-red-500': is_saving && f.medicine_purpose.errors}">Medicine purpose</label>
               <select name="medicine_purpose" id="medicine_purpose" formControlName="medicine_purpose" [ngClass]="{'invalid-input': is_saving && f.medicine_purpose.errors}" class="input">

@@ -138,22 +138,14 @@ export class BreastfeedingComponent implements OnInit {
   }
 
   changeSelection(i: any, value: any) {
-
-    console.log(this.ccdev)
     this.ccdev[i].selected = value;
-    // this.fetchSelectedItems()
     this.getPrev()
-    // console.log(this.groupList, 'selected bfed_months')
-    if(this.groupList.includes('0'))
-    {
-     console.log('open ang reason for stopping')
+    this.showData = this.groupList.includes('0') ? true : false;
+    /* if(this.groupList.includes('0')) {
      this.showData = true
-    }
-    else{
+    } else {
       this.showData = false
-      // console.log('close ang reason for stopping')
-    }
-
+    } */
   }
 
   fetchSelectedItems() {
@@ -171,7 +163,7 @@ export class BreastfeedingComponent implements OnInit {
 
     });
 
-    console.log(this.groupList);
+    // console.log(this.groupList);
     let user_id = this.http.getUserID();;
     var bfedmonths ={
       patient_ccdevs_id: '',
@@ -208,7 +200,7 @@ export class BreastfeedingComponent implements OnInit {
 
     });
 
-    console.log(this.patient_breastfed);
+    // console.log(this.patient_breastfed);
     let user_id = this.http.getUserID();;
     var bfedmonths ={
       patient_ccdev_id: this.patient_info.id,
@@ -226,7 +218,7 @@ export class BreastfeedingComponent implements OnInit {
       comp_fed_date: this.patient_breastfed.comp_fed_date
     }
 
-    console.log(bfedmonths);
+    // console.log(bfedmonths);
 
     this.http.post('child-care/cc-breastfed', bfedmonths).subscribe({
       // next: (data: any) => console.log(data.status, 'check status'),
@@ -291,7 +283,7 @@ export class BreastfeedingComponent implements OnInit {
   loadLibraries(){
     this.http.get('libraries/reason').subscribe((data: any) => {
       this.lib_reasons = data.data
-      console.log(data, 'reason library');
+      // console.log(data, 'reason library');
     });
   }
 
@@ -367,7 +359,7 @@ export class BreastfeedingComponent implements OnInit {
       next: (data: any) => {
         this.patient_breastfed = data.data;
 
-        console.log(this.patient_breastfed, 'data ng breast fedzxc');
+        // console.log(this.patient_breastfed, 'data ng breast fedzxc');
 
         if(this.patient_breastfed.ebfreasons != null){
           this.patient_breastfed.ebfreasons =  this.patient_breastfed.ebfreasons.reason_id;

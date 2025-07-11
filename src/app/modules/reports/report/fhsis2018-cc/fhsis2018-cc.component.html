@@ -1,489 +1,489 @@
 <table class="border select-none" [ngClass]="'w-['+paper_width+']'">
   <thead class="border-b">
-    <tr>
-      <th scope="col" colspan="10" class="text-xs font-semibold text-gray-900 px-6 py-4 border">
-        Section C. Child Care and Services
-      </th>
-    </tr>
-    <tr class="text-center sticky top-0 bg-gray-200 text-xs">
-      <th scope="col" class="text-xs font-semibold text-gray-900 px-6 py-4 border-r">
-        Indicator
+  <tr>
+    <th scope="col" colspan="10" class="text-xs font-semibold text-gray-900 px-6 py-4 border">
+      Section C. Child Care and Services
+    </th>
+  </tr>
+  <tr class="text-center sticky top-0 bg-gray-200 text-xs">
+    <th scope="col" class="text-xs font-semibold text-gray-900 px-6 py-4 border-r">
+      Indicator
       <br /><span class="text-xs">(Col. 1)</span>
-      </th>
-      <th scope="col" class="text-xs font-semibold text-gray-900 px-6 py-4 border-r">
-        Male
+    </th>
+    <th scope="col" class="text-xs font-semibold text-gray-900 px-6 py-4 border-r">
+      Male
       <br /><span class="text-xs">(Col. 2)</span>
-      </th>
-      <th scope="col" class="text-xs font-semibold text-gray-900 px-6 py-4 border-r">
-        Female
+    </th>
+    <th scope="col" class="text-xs font-semibold text-gray-900 px-6 py-4 border-r">
+      Female
       <br /><span class="text-xs">(Col. 3)</span>
-      </th>
-      <th scope="col" class="text-xs font-semibold text-gray-900 px-6 py-4 border-r">
-        Total
+    </th>
+    <th scope="col" class="text-xs font-semibold text-gray-900 px-6 py-4 border-r">
+      Total
       <br /><span class="text-xs">(Col. 4)</span>
-      </th>
-      <th scope="col" class="text-xs font-semibold text-gray-900 px-6 py-4 border-r">
-        Remarks
+    </th>
+    <th scope="col" class="text-xs font-semibold text-gray-900 px-6 py-4 border-r">
+      Remarks
       <br /><span class="text-xs">(Col. 5)</span>
-      </th>
-      <th scope="col" class="text-xs font-semibold text-gray-900 px-6 py-4 border-r">
-        Indicator
+    </th>
+    <th scope="col" class="text-xs font-semibold text-gray-900 px-6 py-4 border-r">
+      Indicator
       <br /><span class="text-xs">(Col. 1)</span>
-      </th>
-      <th scope="col" class="text-xs font-semibold text-gray-900 px-6 py-4 border-r">
-        Male
+    </th>
+    <th scope="col" class="text-xs font-semibold text-gray-900 px-6 py-4 border-r">
+      Male
       <br /><span class="text-xs">(Col. 2)</span>
-      </th>
-      <th scope="col" class="text-xs font-semibold text-gray-900 px-6 py-4 border-r">
-        Female
+    </th>
+    <th scope="col" class="text-xs font-semibold text-gray-900 px-6 py-4 border-r">
+      Female
       <br /><span class="text-xs">(Col. 3)</span>
-      </th>
-      <th scope="col" class="text-xs font-semibold text-gray-900 px-6 py-4 border-r">
-        Total
+    </th>
+    <th scope="col" class="text-xs font-semibold text-gray-900 px-6 py-4 border-r">
+      Total
       <br /><span class="text-xs">(Col. 4)</span>
-      </th>
-      <th scope="col" class="text-xs font-semibold text-gray-900 px-6 py-4 border-r">
-        Remarks
+    </th>
+    <th scope="col" class="text-xs font-semibold text-gray-900 px-6 py-4 border-r">
+      Remarks
       <br /><span class="text-xs">(Col. 5)</span>
-      </th>
-    </tr>
+    </th>
+  </tr>
   </thead>
   <tbody>
-    <tr>
-      <th scope="col" colspan="10" class="text-xs font-semibold text-left text-gray-900 px-6 py-4 border bg-gray-100">
-        C1. Immunization Services for Newborns, Infants and School-Aged Children/Adolescents
-      </th>
-    </tr>
+  <tr>
+    <th scope="col" colspan="10" class="text-xs font-semibold text-left text-gray-900 px-6 py-4 border bg-gray-100">
+      C1. Immunization Services for Newborns, Infants and School-Aged Children/Adolescents
+    </th>
+  </tr>
 
-    <tr class="border text-xs">
-      <td class="pt-2 pb-3 pl-3 border">1. CPAB</td>
-      <td (click)="cpab.male_cpab > 0 && showNameList('M', 'cpab')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': cpab.male_cpab > 0}">{{ cpab.male_cpab ?? 0 }}</td>
-      <td (click)="cpab.female_cpab > 0 && showNameList('F', 'cpab')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': cpab.female_cpab > 0}">{{ cpab.female_cpab ?? 0 }}</td>
-      <td (click)="cpab.male_female_cpab > 0 && showNameList('M,F', 'cpab')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': cpab.male_female_cpab > 0}">{{ cpab.male_female_cpab ?? 0 }}</td>
-      <td class="border"></td>
-      <td class="border">12. IPV2 (catch up)</td>
-      <td (click)="vaccines.male_ipv2_catch_up > 0 && showNameList('male', 'IPV', 2, '0')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.male_ipv2_catch_up > 0}">{{ vaccines.male_ipv2_catch_up ?? 0 }}</td>
-      <td (click)="vaccines.female_ipv2_catch_up > 0 && showNameList('female', 'IPV', 2, '0')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.female_ipv2_catch_up > 0}">{{ vaccines.female_ipv2_catch_up ?? 0 }}</td>
-      <td (click)="vaccines.male_female_ipv2_catch_up > 0 && showNameList('male_female', 'IPV', 2, '0')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.male_female_ipv2_catch_up > 0}">{{ vaccines.male_female_ipv2_catch_up ?? 0 }}</td>
-      <td class="border"></td>
-    </tr>
+  <tr class="border text-xs">
+    <td class="pt-2 pb-3 pl-3 border">1. CPAB</td>
+    <td (click)="cpab.male_cpab > 0 && showNameList('M', 'cpab')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': cpab.male_cpab > 0}">{{ cpab.male_cpab ?? 0 }}</td>
+    <td (click)="cpab.female_cpab > 0 && showNameList('F', 'cpab')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': cpab.female_cpab > 0}">{{ cpab.female_cpab ?? 0 }}</td>
+    <td (click)="cpab.male_female_cpab > 0 && showNameList('M,F', 'cpab')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': cpab.male_female_cpab > 0}">{{ cpab.male_female_cpab ?? 0 }}</td>
+    <td class="border"></td>
+    <td class="border">12. IPV2 (catch up)</td>
+    <td (click)="vaccines.male_ipv2_catch_up > 0 && showNameList('male', 'IPV', 2, '0')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.male_ipv2_catch_up > 0}">{{ vaccines.male_ipv2_catch_up ?? 0 }}</td>
+    <td (click)="vaccines.female_ipv2_catch_up > 0 && showNameList('female', 'IPV', 2, '0')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.female_ipv2_catch_up > 0}">{{ vaccines.female_ipv2_catch_up ?? 0 }}</td>
+    <td (click)="vaccines.male_female_ipv2_catch_up > 0 && showNameList('male_female', 'IPV', 2, '0')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.male_female_ipv2_catch_up > 0}">{{ vaccines.male_female_ipv2_catch_up ?? 0 }}</td>
+    <td class="border"></td>
+  </tr>
 
-    <tr class="border text-xs">
-      <td class="pt-2 pb-3 pl-3 border select-none">2. BCG</td>
-      <td (click)="vaccines.male_bcg > 0 && showNameList('male', 'BCG', 1)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.male_bcg > 0}">{{ vaccines.male_bcg ?? 0 }}</td>
-      <td (click)="vaccines.female_bcg > 0 && showNameList('female', 'BCG', 1)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.female_bcg > 0}">{{ vaccines.female_bcg ?? 0 }}</td>
-      <td (click)="vaccines.male_female_bcg > 0 && showNameList('male_female', 'BCG', 1)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.male_female_bcg > 0}">{{ vaccines.male_female_bcg ?? 0 }}</td>
-      <td class="border"></td>
-      <td class="border">13. PCV 1 </td>
-      <td (click)="vaccines.male_pcv1 > 0 && showNameList('male', 'PCV', 1)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.male_pcv1 > 0}">{{ vaccines.male_pcv1 ?? 0 }}</td>
-      <td (click)="vaccines.female_pcv1 > 0 && showNameList('female', 'PCV', 1)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.female_pcv1 > 0}">{{ vaccines.female_pcv1 ?? 0 }}</td>
-      <td (click)="vaccines.male_female_pcv1 > 0 && showNameList('male_female', 'PCV', 1)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.male_female_pcv1 > 0}">{{ vaccines.male_female_pcv1 ?? 0 }}</td>
-      <td class="border"></td>
-    </tr>
+  <tr class="border text-xs">
+    <td class="pt-2 pb-3 pl-3 border select-none">2. BCG</td>
+    <td (click)="vaccines.male_bcg > 0 && showNameList('male', 'BCG', 1)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.male_bcg > 0}">{{ vaccines.male_bcg ?? 0 }}</td>
+    <td (click)="vaccines.female_bcg > 0 && showNameList('female', 'BCG', 1)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.female_bcg > 0}">{{ vaccines.female_bcg ?? 0 }}</td>
+    <td (click)="vaccines.male_female_bcg > 0 && showNameList('male_female', 'BCG', 1)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.male_female_bcg > 0}">{{ vaccines.male_female_bcg ?? 0 }}</td>
+    <td class="border"></td>
+    <td class="border">13. PCV 1 </td>
+    <td (click)="vaccines.male_pcv1 > 0 && showNameList('male', 'PCV', 1)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.male_pcv1 > 0}">{{ vaccines.male_pcv1 ?? 0 }}</td>
+    <td (click)="vaccines.female_pcv1 > 0 && showNameList('female', 'PCV', 1)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.female_pcv1 > 0}">{{ vaccines.female_pcv1 ?? 0 }}</td>
+    <td (click)="vaccines.male_female_pcv1 > 0 && showNameList('male_female', 'PCV', 1)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.male_female_pcv1 > 0}">{{ vaccines.male_female_pcv1 ?? 0 }}</td>
+    <td class="border"></td>
+  </tr>
 
-    <tr class="border text-xs">
-      <td class="pt-2 pb-3 pl-3 border">3. a. HepB, within 24 hours.</td>
-      <td (click)="vaccines.male_hepb > 0 && showNameList('male', 'HEPB', 1)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.male_hepb > 0}">{{ vaccines.male_hepb ?? 0 }}</td>
-      <td (click)="vaccines.female_hepb > 0 && showNameList('female', 'HEPB', 1)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.female_hepb > 0}">{{ vaccines.female_hepb ?? 0 }}</td>
-      <td (click)="vaccines.male_female_hepb > 0 && showNameList('male_female', 'HEPB', 1)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.male_female_hepb > 0}">{{ vaccines.male_female_hepb ?? 0 }}</td>
-      <td class="border"></td>
-      <td class="border">14. PCV 2</td>
-      <td (click)="vaccines.male_pcv2 > 0 && showNameList('male', 'PCV', 2)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.male_pcv2 > 0}">{{ vaccines.male_pcv2 ?? 0 }}</td>
-      <td (click)="vaccines.female_pcv2 > 0 && showNameList('female', 'PCV', 2)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.female_pcv2 > 0}">{{ vaccines.female_pcv2 ?? 0 }}</td>
-      <td (click)="vaccines.male_female_pcv2 > 0 && showNameList('male_female', 'PCV', 2)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.male_female_pcv2 > 0}">{{ vaccines.male_female_pcv2 ?? 0 }}</td>
-      <td class="border"></td>
-    </tr>
+  <tr class="border text-xs">
+    <td class="pt-2 pb-3 pl-3 border">3. a. HepB, within 24 hours.</td>
+    <td (click)="vaccines.male_hepb > 0 && showNameList('male', 'HEPB', 1)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.male_hepb > 0}">{{ vaccines.male_hepb ?? 0 }}</td>
+    <td (click)="vaccines.female_hepb > 0 && showNameList('female', 'HEPB', 1)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.female_hepb > 0}">{{ vaccines.female_hepb ?? 0 }}</td>
+    <td (click)="vaccines.male_female_hepb > 0 && showNameList('male_female', 'HEPB', 1)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.male_female_hepb > 0}">{{ vaccines.male_female_hepb ?? 0 }}</td>
+    <td class="border"></td>
+    <td class="border">14. PCV 2</td>
+    <td (click)="vaccines.male_pcv2 > 0 && showNameList('male', 'PCV', 2)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.male_pcv2 > 0}">{{ vaccines.male_pcv2 ?? 0 }}</td>
+    <td (click)="vaccines.female_pcv2 > 0 && showNameList('female', 'PCV', 2)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.female_pcv2 > 0}">{{ vaccines.female_pcv2 ?? 0 }}</td>
+    <td (click)="vaccines.male_female_pcv2 > 0 && showNameList('male_female', 'PCV', 2)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.male_female_pcv2 > 0}">{{ vaccines.male_female_pcv2 ?? 0 }}</td>
+    <td class="border"></td>
+  </tr>
 
-    <tr class="border text-xs">
-      <td class="pt-2 pb-3 pl-3 border pl-9">b. HepB, after 24 hours.</td>
-      <td (click)="vaccines.male_hepbv > 0 && showNameList('male', 'HEPBV', 1)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.male_hepbv > 0}">{{ vaccines.male_hepbv ?? 0 }}</td>
-      <td (click)="vaccines.female_hepbv > 0 && showNameList('female', 'HEPBV', 1)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.female_hepbv > 0}">{{ vaccines.female_hepbv ?? 0 }}</td>
-      <td (click)="vaccines.male_female_hepbv > 0 && showNameList('male_female', 'HEPBV', 1)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.male_female_hepbv > 0}">{{ vaccines.male_female_hepbv ?? 0 }}</td>
-      <td class="border"></td>
-      <td class="border">15. PCV 3</td>
-      <td (click)="vaccines.male_pcv3 > 0 && showNameList('male', 'PCV', 3)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.male_pcv3 > 0}">{{ vaccines.male_pcv3 ?? 0 }}</td>
-      <td (click)="vaccines.female_pcv3 > 0 && showNameList('female', 'PCV', 3)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.female_pcv3 > 0}">{{ vaccines.female_pcv3 ?? 0 }}</td>
-      <td (click)="vaccines.male_female_pcv3 > 0 && showNameList('male_female', 'PCV', 3)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.male_female_pcv3 > 0}">{{ vaccines.male_female_pcv3 ?? 0 }}</td>
-      <td class="border"></td>
-    </tr>
+  <tr class="border text-xs">
+    <td class="pt-2 pb-3 pl-3 border pl-9">b. HepB, after 24 hours.</td>
+    <td (click)="vaccines.male_hepbv > 0 && showNameList('male', 'HEPBV', 1)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.male_hepbv > 0}">{{ vaccines.male_hepbv ?? 0 }}</td>
+    <td (click)="vaccines.female_hepbv > 0 && showNameList('female', 'HEPBV', 1)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.female_hepbv > 0}">{{ vaccines.female_hepbv ?? 0 }}</td>
+    <td (click)="vaccines.male_female_hepbv > 0 && showNameList('male_female', 'HEPBV', 1)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.male_female_hepbv > 0}">{{ vaccines.male_female_hepbv ?? 0 }}</td>
+    <td class="border"></td>
+    <td class="border">15. PCV 3</td>
+    <td (click)="vaccines.male_pcv3 > 0 && showNameList('male', 'PCV', 3)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.male_pcv3 > 0}">{{ vaccines.male_pcv3 ?? 0 }}</td>
+    <td (click)="vaccines.female_pcv3 > 0 && showNameList('female', 'PCV', 3)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.female_pcv3 > 0}">{{ vaccines.female_pcv3 ?? 0 }}</td>
+    <td (click)="vaccines.male_female_pcv3 > 0 && showNameList('male_female', 'PCV', 3)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.male_female_pcv3 > 0}">{{ vaccines.male_female_pcv3 ?? 0 }}</td>
+    <td class="border"></td>
+  </tr>
 
-    <tr class="border text-xs">
-      <td class="pt-2 pb-3 pl-3 border">4. DPT-HiB-HepB 1</td>
-      <td (click)="vaccines.male_penta1 > 0 && showNameList('male', 'PENTA', 1)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.male_penta1 > 0}">{{ vaccines.male_penta1 ?? 0 }}</td>
-      <td (click)="vaccines.female_penta1 > 0 && showNameList('female', 'PENTA', 1)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.female_penta1 > 0}">{{ vaccines.female_penta1 ?? 0 }}</td>
-      <td (click)="vaccines.male_female_penta1 > 0 && showNameList('male_female', 'PENTA', 1)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.male_female_penta1 > 0}">{{ vaccines.male_female_penta1 ?? 0 }}</td>
-      <td class="border"></td>
-      <td class="border">16. MCV 1</td>
-      <td (click)="vaccines.male_mcv1 > 0 && showNameList('male', 'MCV', 1)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.male_mcv1 > 0}">{{ vaccines.male_mcv1 ?? 0 }}</td>
-      <td (click)="vaccines.female_mcv1 > 0 && showNameList('female', 'MCV', 1)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.female_mcv1 > 0}">{{ vaccines.female_mcv1 ?? 0 }}</td>
-      <td (click)="vaccines.male_female_mcv1 > 0 && showNameList('male_female', 'MCV', 1)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.male_female_mcv1 > 0}">{{ vaccines.male_female_mcv1 ?? 0 }}</td>
-      <td class="border"></td>
-    </tr>
+  <tr class="border text-xs">
+    <td class="pt-2 pb-3 pl-3 border">4. DPT-HiB-HepB 1</td>
+    <td (click)="vaccines.male_penta1 > 0 && showNameList('male', 'PENTA', 1)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.male_penta1 > 0}">{{ vaccines.male_penta1 ?? 0 }}</td>
+    <td (click)="vaccines.female_penta1 > 0 && showNameList('female', 'PENTA', 1)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.female_penta1 > 0}">{{ vaccines.female_penta1 ?? 0 }}</td>
+    <td (click)="vaccines.male_female_penta1 > 0 && showNameList('male_female', 'PENTA', 1)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.male_female_penta1 > 0}">{{ vaccines.male_female_penta1 ?? 0 }}</td>
+    <td class="border"></td>
+    <td class="border">16. MCV 1</td>
+    <td (click)="vaccines.male_mcv1 > 0 && showNameList('male', 'MCV', 1)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.male_mcv1 > 0}">{{ vaccines.male_mcv1 ?? 0 }}</td>
+    <td (click)="vaccines.female_mcv1 > 0 && showNameList('female', 'MCV', 1)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.female_mcv1 > 0}">{{ vaccines.female_mcv1 ?? 0 }}</td>
+    <td (click)="vaccines.male_female_mcv1 > 0 && showNameList('male_female', 'MCV', 1)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.male_female_mcv1 > 0}">{{ vaccines.male_female_mcv1 ?? 0 }}</td>
+    <td class="border"></td>
+  </tr>
 
-    <tr class="border text-xs">
-      <td class="pt-2 pb-3 pl-3 border">5. DPT-HiB-HepB 2</td>
-      <td (click)="vaccines.male_penta2 > 0 && showNameList('male', 'PENTA', 2)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.male_penta2 > 0}">{{ vaccines.male_penta2 ?? 0 }}</td>
-      <td (click)="vaccines.female_penta2 > 0 && showNameList('female', 'PENTA', 2)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.female_penta2 > 0}">{{ vaccines.female_penta2 ?? 0 }}</td>
-      <td (click)="vaccines.male_female_penta2 > 0 && showNameList('male_female', 'PENTA', 2)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.male_female_penta2 > 0}">{{ vaccines.male_female_penta2 ?? 0 }}</td>
-      <td class="border"></td>
-      <td class="border">17. MCV 2</td>
-      <td (click)="vaccines.male_mcv2 > 0 && showNameList('male', 'MCV', 2)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.male_mcv2 > 0}">{{ vaccines.male_mcv2 ?? 0 }}</td>
-      <td (click)="vaccines.female_mcv2 > 0 && showNameList('female', 'MCV', 2)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.female_mcv2 > 0}">{{ vaccines.female_mcv2 ?? 0 }}</td>
-      <td (click)="vaccines.male_female_mcv2 > 0 && showNameList('male_female', 'MCV', 2)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.male_female_mcv2 > 0}">{{ vaccines.male_female_mcv2 ?? 0 }}</td>
-      <td class="border"></td>
-    </tr>
+  <tr class="border text-xs">
+    <td class="pt-2 pb-3 pl-3 border">5. DPT-HiB-HepB 2</td>
+    <td (click)="vaccines.male_penta2 > 0 && showNameList('male', 'PENTA', 2)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.male_penta2 > 0}">{{ vaccines.male_penta2 ?? 0 }}</td>
+    <td (click)="vaccines.female_penta2 > 0 && showNameList('female', 'PENTA', 2)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.female_penta2 > 0}">{{ vaccines.female_penta2 ?? 0 }}</td>
+    <td (click)="vaccines.male_female_penta2 > 0 && showNameList('male_female', 'PENTA', 2)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.male_female_penta2 > 0}">{{ vaccines.male_female_penta2 ?? 0 }}</td>
+    <td class="border"></td>
+    <td class="border">17. MCV 2</td>
+    <td (click)="vaccines.male_mcv2 > 0 && showNameList('male', 'MCV', 2)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.male_mcv2 > 0}">{{ vaccines.male_mcv2 ?? 0 }}</td>
+    <td (click)="vaccines.female_mcv2 > 0 && showNameList('female', 'MCV', 2)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.female_mcv2 > 0}">{{ vaccines.female_mcv2 ?? 0 }}</td>
+    <td (click)="vaccines.male_female_mcv2 > 0 && showNameList('male_female', 'MCV', 2)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.male_female_mcv2 > 0}">{{ vaccines.male_female_mcv2 ?? 0 }}</td>
+    <td class="border"></td>
+  </tr>
 
-    <tr class="border text-xs">
-      <td class="pt-2 pb-3 pl-3 border">6. DPT-HiB-HepB 3</td>
-      <td (click)="vaccines.male_penta3 > 0 && showNameList('male', 'PENTA', 3)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.male_penta3 > 0}">{{ vaccines.male_penta3 ?? 0 }}</td>
-      <td (click)="vaccines.female_penta3 > 0 && showNameList('female', 'PENTA', 3)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.female_penta3 > 0}">{{ vaccines.female_penta3 ?? 0 }}</td>
-      <td (click)="vaccines.male_female_penta3 > 0 && showNameList('male_female', 'PENTA', 3)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.male_female_penta3 > 0}">{{ vaccines.male_female_penta3 ?? 0 }}</td>
-      <td class="border"></td>
-      <td class="border">18. FIC</td>
-      <td (click)="fic_cic.male_penta3 > 0 && showNameList('M', 'fic')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': fic_cic.male_fic > 0}">{{ fic_cic.male_fic ?? 0 }}</td>
-      <td (click)="fic_cic.male_penta3 > 0 && showNameList('F', 'fic')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': fic_cic.female_fic > 0}">{{ fic_cic.female_fic ?? 0 }}</td>
-      <td (click)="fic_cic.male_penta3 > 0 && showNameList('M,F', 'fic')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': fic_cic.male_female_fic > 0}">{{ fic_cic.male_female_fic ?? 0 }}</td>
-      <td class="border"></td>
-    </tr>
+  <tr class="border text-xs">
+    <td class="pt-2 pb-3 pl-3 border">6. DPT-HiB-HepB 3</td>
+    <td (click)="vaccines.male_penta3 > 0 && showNameList('male', 'PENTA', 3)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.male_penta3 > 0}">{{ vaccines.male_penta3 ?? 0 }}</td>
+    <td (click)="vaccines.female_penta3 > 0 && showNameList('female', 'PENTA', 3)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.female_penta3 > 0}">{{ vaccines.female_penta3 ?? 0 }}</td>
+    <td (click)="vaccines.male_female_penta3 > 0 && showNameList('male_female', 'PENTA', 3)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.male_female_penta3 > 0}">{{ vaccines.male_female_penta3 ?? 0 }}</td>
+    <td class="border"></td>
+    <td class="border">18. FIC</td>
+    <td (click)="fic_cic.male_fic > 0 && showNameList('M', 'fic')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': fic_cic.male_fic > 0}">{{ fic_cic.male_fic ?? 0 }}</td>
+    <td (click)="fic_cic.female_fic > 0 && showNameList('F', 'fic')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': fic_cic.female_fic > 0}">{{ fic_cic.female_fic ?? 0 }}</td>
+    <td (click)="fic_cic.male_female_fic > 0 && showNameList('M,F', 'fic')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': fic_cic.male_female_fic > 0}">{{ fic_cic.male_female_fic ?? 0 }}</td>
+    <td class="border"></td>
+  </tr>
 
-    <tr class="border text-xs">
-      <td class="pt-2 pb-3 pl-3 border">7. OPV 1</td>
-      <td (click)="vaccines.male_opv1 > 0 && showNameList('male', 'OPV', 1)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.male_opv1 > 0}">{{ vaccines.male_opv1 ?? 0 }}</td>
-      <td (click)="vaccines.female_opv1 > 0 && showNameList('female', 'OPV', 1)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.female_opv1 > 0}">{{ vaccines.female_opv1 ?? 0 }}</td>
-      <td (click)="vaccines.male_female_opv1 > 0 && showNameList('male_female', 'OPV', 1)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.male_female_opv1 > 0}">{{ vaccines.male_female_opv1 ?? 0 }}</td>
-      <td class="border"></td>
-      <td class="border">19. CIC</td>
-      <td (click)="fic_cic.male_cic > 0 && showNameList('M', 'cic')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': fic_cic.male_cic > 0}">{{ fic_cic.male_cic ?? 0 }}</td>
-      <td (click)="fic_cic.female_cic > 0 && showNameList('F', 'cic')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': fic_cic.female_cic > 0}">{{ fic_cic.female_cic ?? 0 }}</td>
-      <td (click)="fic_cic.male_female_cic > 0 && showNameList('M,F', 'cic')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': fic_cic.male_female_cic > 0}">{{ fic_cic.male_female_cic ?? 0 }}</td>
-      <td class="border"></td>
-    </tr>
+  <tr class="border text-xs">
+    <td class="pt-2 pb-3 pl-3 border">7. OPV 1</td>
+    <td (click)="vaccines.male_opv1 > 0 && showNameList('male', 'OPV', 1)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.male_opv1 > 0}">{{ vaccines.male_opv1 ?? 0 }}</td>
+    <td (click)="vaccines.female_opv1 > 0 && showNameList('female', 'OPV', 1)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.female_opv1 > 0}">{{ vaccines.female_opv1 ?? 0 }}</td>
+    <td (click)="vaccines.male_female_opv1 > 0 && showNameList('male_female', 'OPV', 1)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.male_female_opv1 > 0}">{{ vaccines.male_female_opv1 ?? 0 }}</td>
+    <td class="border"></td>
+    <td class="border">19. CIC</td>
+    <td (click)="fic_cic.male_cic > 0 && showNameList('M', 'cic')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': fic_cic.male_cic > 0}">{{ fic_cic.male_cic ?? 0 }}</td>
+    <td (click)="fic_cic.female_cic > 0 && showNameList('F', 'cic')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': fic_cic.female_cic > 0}">{{ fic_cic.female_cic ?? 0 }}</td>
+    <td (click)="fic_cic.male_female_cic > 0 && showNameList('M,F', 'cic')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': fic_cic.male_female_cic > 0}">{{ fic_cic.male_female_cic ?? 0 }}</td>
+    <td class="border"></td>
+  </tr>
 
-    <tr class="border text-xs">
-      <td class="pt-2 pb-3 pl-3 border">8. OPV 2</td>
-      <td (click)="vaccines.male_opv2 > 0 && showNameList('male', 'OPV', 2)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.male_opv2 > 0}">{{ vaccines.male_opv2 ?? 0 }}</td>
-      <td (click)="vaccines.female_opv2 > 0 && showNameList('female', 'OPV', 2)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.female_opv2 > 0}">{{ vaccines.female_opv2 ?? 0 }}</td>
-      <td (click)="vaccines.male_female_opv2 > 0 && showNameList('male_female', 'OPV', 2)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.male_female_opv2 > 0}">{{ vaccines.male_female_opv2 ?? 0 }}</td>
-      <td class="border"></td>
-      <td class="border">20. Td, Grade 1 (November) - Total</td>
-      <td (click)="vaccines.male_tdgr1 > 0 && showNameList('male', 'TDGR1', 1)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.male_tdgr1 > 0}">{{ vaccines.male_tdgr1 ?? 0 }}</td>
-      <td (click)="vaccines.female_tdgr1 > 0 && showNameList('female', 'TDGR1', 1)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.female_tdgr1 > 0}">{{ vaccines.female_tdgr1 ?? 0 }}</td>
-      <td (click)="vaccines.male_female_tdgr1 > 0 && showNameList('male_female', 'TDGR1', 1)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.male_female_tdgr1 > 0}">{{ vaccines.male_female_tdgr1 ?? 0 }}</td>
-      <td class="border"></td>
-    </tr>
+  <tr class="border text-xs">
+    <td class="pt-2 pb-3 pl-3 border">8. OPV 2</td>
+    <td (click)="vaccines.male_opv2 > 0 && showNameList('male', 'OPV', 2)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.male_opv2 > 0}">{{ vaccines.male_opv2 ?? 0 }}</td>
+    <td (click)="vaccines.female_opv2 > 0 && showNameList('female', 'OPV', 2)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.female_opv2 > 0}">{{ vaccines.female_opv2 ?? 0 }}</td>
+    <td (click)="vaccines.male_female_opv2 > 0 && showNameList('male_female', 'OPV', 2)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.male_female_opv2 > 0}">{{ vaccines.male_female_opv2 ?? 0 }}</td>
+    <td class="border"></td>
+    <td class="border">20. Td, Grade 1 (November) - Total</td>
+    <td (click)="vaccines.male_tdgr1 > 0 && showNameList('male', 'TDGR1', 1)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.male_tdgr1 > 0}">{{ vaccines.male_tdgr1 ?? 0 }}</td>
+    <td (click)="vaccines.female_tdgr1 > 0 && showNameList('female', 'TDGR1', 1)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.female_tdgr1 > 0}">{{ vaccines.female_tdgr1 ?? 0 }}</td>
+    <td (click)="vaccines.male_female_tdgr1 > 0 && showNameList('male_female', 'TDGR1', 1)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.male_female_tdgr1 > 0}">{{ vaccines.male_female_tdgr1 ?? 0 }}</td>
+    <td class="border"></td>
+  </tr>
 
-    <tr class="border text-xs">
-      <td class="pt-2 pb-3 pl-3 border">9. OPV 3</td>
-      <td (click)="vaccines.male_opv3 > 0 && showNameList('male', 'OPV', 3)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.male_opv3 > 0}">{{ vaccines.male_opv3 ?? 0 }}</td>
-      <td (click)="vaccines.female_opv3 > 0 && showNameList('female', 'OPV', 3)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.female_opv3 > 0}">{{ vaccines.female_opv3 ?? 0 }}</td>
-      <td (click)="vaccines.male_female_opv3 > 0 && showNameList('male_female', 'OPV', 3)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.male_female_opv3 > 0}">{{ vaccines.male_female_opv3 ?? 0 }}</td>
-      <td class="border"></td>
-      <td class="border">21. MR, Grade 1 (November) - Total</td>
-      <td (click)="vaccines.male_mrgr > 0 && showNameList('male', 'MRGR', 1)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.male_mrgr > 0}">{{ vaccines.male_mrgr ?? 0 }}</td>
-      <td (click)="vaccines.female_mrgr > 0 && showNameList('female', 'MRGR', 1)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.female_mrgr > 0}">{{ vaccines.female_mrgr ?? 0 }}</td>
-      <td (click)="vaccines.male_female_mrgr > 0 && showNameList('male_female', 'MRGR', 1)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.male_female_mrgr > 0}">{{ vaccines.male_female_mrgr ?? 0 }}</td>
-      <td class="border"></td>
-    </tr>
+  <tr class="border text-xs">
+    <td class="pt-2 pb-3 pl-3 border">9. OPV 3</td>
+    <td (click)="vaccines.male_opv3 > 0 && showNameList('male', 'OPV', 3)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.male_opv3 > 0}">{{ vaccines.male_opv3 ?? 0 }}</td>
+    <td (click)="vaccines.female_opv3 > 0 && showNameList('female', 'OPV', 3)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.female_opv3 > 0}">{{ vaccines.female_opv3 ?? 0 }}</td>
+    <td (click)="vaccines.male_female_opv3 > 0 && showNameList('male_female', 'OPV', 3)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.male_female_opv3 > 0}">{{ vaccines.male_female_opv3 ?? 0 }}</td>
+    <td class="border"></td>
+    <td class="border">21. MR, Grade 1 (November) - Total</td>
+    <td (click)="vaccines.male_mrgr > 0 && showNameList('male', 'MRGR', 1)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.male_mrgr > 0}">{{ vaccines.male_mrgr ?? 0 }}</td>
+    <td (click)="vaccines.female_mrgr > 0 && showNameList('female', 'MRGR', 1)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.female_mrgr > 0}">{{ vaccines.female_mrgr ?? 0 }}</td>
+    <td (click)="vaccines.male_female_mrgr > 0 && showNameList('male_female', 'MRGR', 1)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.male_female_mrgr > 0}">{{ vaccines.male_female_mrgr ?? 0 }}</td>
+    <td class="border"></td>
+  </tr>
 
-    <tr class=" border text-xs">
-      <td class="pt-2 pb-3 pl-3 border">10. IPV 1</td>
-      <td (click)="vaccines.male_ipv1 > 0 && showNameList('male', 'IPV', 1)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.male_ipv1 > 0}">{{ vaccines.male_ipv1 ?? 0 }}</td>
-      <td (click)="vaccines.female_ipv1 > 0 && showNameList('female', 'IPV', 1)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.female_ipv1 > 0}">{{ vaccines.female_ipv1 ?? 0 }}</td>
-      <td (click)="vaccines.male_female_ipv1 > 0 && showNameList('male_female', 'IPV', 1)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.male_female_ipv1 > 0}">{{ vaccines.male_female_ipv1 ?? 0 }}</td>
-      <td class="border"></td>
-      <td class="border">22. Td, Grade 7 (November) - Total</td>
-      <td (click)="vaccines.male_tdgr7 > 0 && showNameList('male', 'TDGR7', 1)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.male_tdgr7 > 0}">{{ vaccines.male_tdgr7 ?? 0 }}</td>
-      <td (click)="vaccines.female_tdgr7 > 0 && showNameList('female', 'TDGR7', 1)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.female_tdgr7 > 0}">{{ vaccines.female_tdgr7 ?? 0 }}</td>
-      <td (click)="vaccines.male_female_tdgr7 > 0 && showNameList('male_female', 'TDGR7', 1)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.male_female_tdgr7 > 0}">{{ vaccines.male_female_tdgr7 ?? 0 }}</td>
-      <td class="border"></td>
-    </tr>
+  <tr class=" border text-xs">
+    <td class="pt-2 pb-3 pl-3 border">10. IPV 1</td>
+    <td (click)="vaccines.male_ipv1 > 0 && showNameList('male', 'IPV', 1)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.male_ipv1 > 0}">{{ vaccines.male_ipv1 ?? 0 }}</td>
+    <td (click)="vaccines.female_ipv1 > 0 && showNameList('female', 'IPV', 1)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.female_ipv1 > 0}">{{ vaccines.female_ipv1 ?? 0 }}</td>
+    <td (click)="vaccines.male_female_ipv1 > 0 && showNameList('male_female', 'IPV', 1)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.male_female_ipv1 > 0}">{{ vaccines.male_female_ipv1 ?? 0 }}</td>
+    <td class="border"></td>
+    <td class="border">22. Td, Grade 7 (November) - Total</td>
+    <td (click)="vaccines.male_tdgr7 > 0 && showNameList('male', 'TDGR7', 1)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.male_tdgr7 > 0}">{{ vaccines.male_tdgr7 ?? 0 }}</td>
+    <td (click)="vaccines.female_tdgr7 > 0 && showNameList('female', 'TDGR7', 1)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.female_tdgr7 > 0}">{{ vaccines.female_tdgr7 ?? 0 }}</td>
+    <td (click)="vaccines.male_female_tdgr7 > 0 && showNameList('male_female', 'TDGR7', 1)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.male_female_tdgr7 > 0}">{{ vaccines.male_female_tdgr7 ?? 0 }}</td>
+    <td class="border"></td>
+  </tr>
 
-    <tr class="page-break border text-xs">
-      <td class="pt-2 pb-3 pl-3 border">12. IPV 2 (routine)</td>
-      <td (click)="vaccines.male_ipv2_routine > 0 && showNameList('male', 'IPV', 2, '1')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.male_ipv2_routine > 0}">{{ vaccines.male_ipv2_routine ?? 0 }}</td>
-      <td (click)="vaccines.female_ipv2_routine > 0 && showNameList('female', 'IPV', 2, '1')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.female_ipv2_routine > 0}">{{ vaccines.female_ipv2_routine ?? 0 }}</td>
-      <td (click)="vaccines.male_female_ipv2_routine > 0 && showNameList('male_female', 'IPV', 2, '1')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.male_female_ipv2_routine > 0}">{{ vaccines.male_female_ipv2_routine ?? 0 }}</td>
-      <td class="border"></td>
-      <td class="border">23. MR, Grade 7 (November) - Total</td>
-      <td (click)="vaccines.female_mrgr7 > 0 && showNameList('male', 'MRGR7', 1)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.female_mrgr7 > 0}">{{ vaccines.female_mrgr7 ?? 0 }}</td>
-      <td (click)="vaccines.female_mrgr7 > 0 && showNameList('female', 'MRGR7', 1)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.female_mrgr7 > 0}">{{ vaccines.female_mrgr7 ?? 0 }}</td>
-      <td (click)="vaccines.male_female_mrgr7 > 0 && showNameList('male_female', 'MRGR7', 1)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.male_female_mrgr7 > 0}">{{ vaccines.male_female_mrgr7 ?? 0 }}</td>
-      <td class="border"></td>
-    </tr>
+  <tr class="page-break border text-xs">
+    <td class="pt-2 pb-3 pl-3 border">12. IPV 2 (routine)</td>
+    <td (click)="vaccines.male_ipv2_routine > 0 && showNameList('male', 'IPV', 2, '1')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.male_ipv2_routine > 0}">{{ vaccines.male_ipv2_routine ?? 0 }}</td>
+    <td (click)="vaccines.female_ipv2_routine > 0 && showNameList('female', 'IPV', 2, '1')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.female_ipv2_routine > 0}">{{ vaccines.female_ipv2_routine ?? 0 }}</td>
+    <td (click)="vaccines.male_female_ipv2_routine > 0 && showNameList('male_female', 'IPV', 2, '1')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.male_female_ipv2_routine > 0}">{{ vaccines.male_female_ipv2_routine ?? 0 }}</td>
+    <td class="border"></td>
+    <td class="border">23. MR, Grade 7 (November) - Total</td>
+    <td (click)="vaccines.female_mrgr7 > 0 && showNameList('male', 'MRGR7', 1)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.female_mrgr7 > 0}">{{ vaccines.female_mrgr7 ?? 0 }}</td>
+    <td (click)="vaccines.female_mrgr7 > 0 && showNameList('female', 'MRGR7', 1)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.female_mrgr7 > 0}">{{ vaccines.female_mrgr7 ?? 0 }}</td>
+    <td (click)="vaccines.male_female_mrgr7 > 0 && showNameList('male_female', 'MRGR7', 1)" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vaccines.male_female_mrgr7 > 0}">{{ vaccines.male_female_mrgr7 ?? 0 }}</td>
+    <td class="border"></td>
+  </tr>
 
-    <tr>
-      <th scope="col" colspan="10" class="text-xs font-semibold text-left text-gray-900 px-6 py-4 border bg-gray-200">
-        C2. Nutrition Services for Infants and Children
-      </th>
-    </tr>
+  <tr>
+    <th scope="col" colspan="10" class="text-xs font-semibold text-left text-gray-900 px-6 py-4 border bg-gray-200">
+      C2. Nutrition Services for Infants and Children
+    </th>
+  </tr>
 
-    <tr class="border text-xs">
-      <td class="pt-2 pb-3 pl-3 border">24. Newborns initiated on breastfeeding<br>immediately after birth lasting to 90 mins - Total</td>
-      <td (click)="bfed.male_init_bfed > 0 && showNameList('male', 'male_init_bfed')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': bfed.male_init_bfed > 0}">{{ bfed.male_init_bfed ?? 0 }}</td>
-      <td (click)="bfed.female_init_bfed > 0 && showNameList('female', 'female_init_bfed')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': bfed.female_init_bfed > 0}">{{ bfed.female_init_bfed ?? 0 }}</td>
-      <td (click)="bfed.male_female_init_bfed > 0 && showNameList('male_female', 'male_female_init_bfed')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': bfed.male_female_init_bfed > 0}">{{ bfed.male_female_init_bfed ?? 0 }}</td>
-      <td class="border"></td>
-      <td class="border">33. Stunted - Total</td>
-      <td (click)="vitals.male_stunted > 0 && showNameList('M', 'stunted')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vitals.male_stunted > 0}">{{ vitals.male_stunted ?? 0 }}</td>
-      <td (click)="vitals.female_stunted > 0 && showNameList('F', 'stunted')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vitals.female_stunted > 0}">{{ vitals.female_stunted ?? 0 }}</td>
-      <td (click)="vitals.male_female_stunted > 0 && showNameList('M,F', 'stunted')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vitals.male_female_stunted > 0}">{{ vitals.male_female_stunted ?? 0 }}</td>
-      <td class="border"></td>
-    </tr>
+  <tr class="border text-xs">
+    <td class="pt-2 pb-3 pl-3 border">24. Newborns initiated on breastfeeding<br>immediately after birth lasting to 90 mins - Total</td>
+    <td (click)="bfed.male_init_bfed > 0 && showNameList('male', 'male_init_bfed')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': bfed.male_init_bfed > 0}">{{ bfed.male_init_bfed ?? 0 }}</td>
+    <td (click)="bfed.female_init_bfed > 0 && showNameList('female', 'female_init_bfed')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': bfed.female_init_bfed > 0}">{{ bfed.female_init_bfed ?? 0 }}</td>
+    <td (click)="bfed.male_female_init_bfed > 0 && showNameList('male_female', 'male_female_init_bfed')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': bfed.male_female_init_bfed > 0}">{{ bfed.male_female_init_bfed ?? 0 }}</td>
+    <td class="border"></td>
+    <td class="border">33. Stunted - Total</td>
+    <td (click)="vitals.male_stunted > 0 && showNameList('M', 'stunted')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vitals.male_stunted > 0}">{{ vitals.male_stunted ?? 0 }}</td>
+    <td (click)="vitals.female_stunted > 0 && showNameList('F', 'stunted')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vitals.female_stunted > 0}">{{ vitals.female_stunted ?? 0 }}</td>
+    <td (click)="vitals.male_female_stunted > 0 && showNameList('M,F', 'stunted')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vitals.male_female_stunted > 0}">{{ vitals.male_female_stunted ?? 0 }}</td>
+    <td class="border"></td>
+  </tr>
 
-    <tr class="border text-xs">
-      <td class="pt-2 pb-3 pl-3 border">25. Preterm/LBW infants given iron <br /> supplementation</td>
-      <td (click)="services.male_lbw_iron > 0 && showNameList('M', 'lbw_iron')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': services.male_lbw_iron > 0}">{{ services.male_lbw_iron ?? 0 }}</td>
-      <td (click)="services.female_lbw_iron > 0 && showNameList('F', 'lbw_iron')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': services.female_lbw_iron > 0}">{{ services.female_lbw_iron ?? 0 }}</td>
-      <td (click)="services.male_female_lbw_iron > 0 && showNameList('M,F', 'lbw_iron')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': services.male_female_lbw_iron > 0}">{{ services.male_female_lbw_iron ?? 0 }}</td>
-      <td class="border"></td>
-      <td class="border">34. Wasted - Total</td>
-      <td (click)="vitals.male_wasted > 0 && showNameList('M', 'wasted')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vitals.male_wasted > 0}">{{ vitals.male_wasted ?? 0 }}</td>
-      <td (click)="vitals.female_wasted > 0 && showNameList('F', 'wasted')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vitals.female_wasted > 0}">{{ vitals.female_wasted ?? 0 }}</td>
-      <td (click)="vitals.male_female_wasted > 0 && showNameList('M,F', 'wasted')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vitals.male_female_wasted > 0}">{{ vitals.male_female_wasted ?? 0 }}</td>
-      <td class="border"></td>
-    </tr>
+  <tr class="border text-xs">
+    <td class="pt-2 pb-3 pl-3 border">25. Preterm/LBW infants given iron <br /> supplementation</td>
+    <td (click)="services.male_lbw_iron > 0 && showNameList('M', 'lbw_iron')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': services.male_lbw_iron > 0}">{{ services.male_lbw_iron ?? 0 }}</td>
+    <td (click)="services.female_lbw_iron > 0 && showNameList('F', 'lbw_iron')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': services.female_lbw_iron > 0}">{{ services.female_lbw_iron ?? 0 }}</td>
+    <td (click)="services.male_female_lbw_iron > 0 && showNameList('M,F', 'lbw_iron')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': services.male_female_lbw_iron > 0}">{{ services.male_female_lbw_iron ?? 0 }}</td>
+    <td class="border"></td>
+    <td class="border">34. Wasted - Total</td>
+    <td (click)="vitals.male_wasted > 0 && showNameList('M', 'wasted')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vitals.male_wasted > 0}">{{ vitals.male_wasted ?? 0 }}</td>
+    <td (click)="vitals.female_wasted > 0 && showNameList('F', 'wasted')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vitals.female_wasted > 0}">{{ vitals.female_wasted ?? 0 }}</td>
+    <td (click)="vitals.male_female_wasted > 0 && showNameList('M,F', 'wasted')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vitals.male_female_wasted > 0}">{{ vitals.male_female_wasted ?? 0 }}</td>
+    <td class="border"></td>
+  </tr>
 
-    <tr class="border text-xs">
-      <td class="pt-2 pb-3 pl-3 border">26. Infants exclusively breastfed until 5th month <br/> and 29 Days - Total</td>
-      <td (click)="ebf.male_ebf > 0 && showNameList('M', 'ebf')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': ebf.male_ebf > 0}">{{ ebf.male_ebf ?? 0 }}</td>
-      <td (click)="ebf.female_ebf > 0 && showNameList('F', 'ebf')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': ebf.female_ebf > 0}">{{ ebf.female_ebf ?? 0 }}</td>
-      <td (click)="ebf.male_female_ebf > 0 && showNameList('M,F', 'ebf')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': ebf.male_female_ebf > 0}">{{ ebf.male_female_ebf ?? 0 }}</td>
-      <td class="border"></td>
-      <td class="border">34. a. MAM - Total</td>
-      <td class="border text-blue-500 text-center">-</td>
-      <td class="border text-blue-500 text-center">-</td>
-      <td class="border text-blue-500 text-center">-</td>
-      <td class="border"></td>
-    </tr>
+  <tr class="border text-xs">
+    <td class="pt-2 pb-3 pl-3 border">26. Infants exclusively breastfed until 5th month <br/> and 29 Days - Total</td>
+    <td (click)="ebf.male_ebf > 0 && showNameList('M', 'ebf')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': ebf.male_ebf > 0}">{{ ebf.male_ebf ?? 0 }}</td>
+    <td (click)="ebf.female_ebf > 0 && showNameList('F', 'ebf')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': ebf.female_ebf > 0}">{{ ebf.female_ebf ?? 0 }}</td>
+    <td (click)="ebf.male_female_ebf > 0 && showNameList('M,F', 'ebf')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': ebf.male_female_ebf > 0}">{{ ebf.male_female_ebf ?? 0 }}</td>
+    <td class="border"></td>
+    <td class="border">34. a. MAM - Total</td>
+    <td class="border text-blue-500 text-center">-</td>
+    <td class="border text-blue-500 text-center">-</td>
+    <td class="border text-blue-500 text-center">-</td>
+    <td class="border"></td>
+  </tr>
 
-    <tr class="border text-xs">
-      <td class="pt-2 pb-3 pl-3 border">27.  Infants 6 mos. old initiated to comp. feeding <br/> w/ con't. BF</td>
-      <td (click)="ebf.male_comp_feeding > 0 && showNameList('M', 'comp_fed')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': ebf.male_comp_feeding > 0}">{{ ebf.male_comp_feeding ?? 0 }}</td>
-      <td (click)="ebf.female_comp_feeding > 0 && showNameList('F', 'comp_fed')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': ebf.female_comp_feeding > 0}">{{ ebf.female_comp_feeding ?? 0 }}</td>
-      <td (click)="ebf.male_female_comp_feeding > 0 && showNameList('M,F', 'comp_fed')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': ebf.male_female_comp_feeding > 0}">{{ ebf.male_female_comp_feeding ?? 0 }}</td>
-      <td class="border"></td>
-      <td class="border">34. a.1. MAM-admitted in SFT - Total</td>
-      <td class="border text-blue-500 text-center">-</td>
-      <td class="border text-blue-500 text-center">-</td>
-      <td class="border text-blue-500 text-center">-</td>
-      <td class="border"></td>
-    </tr>
+  <tr class="border text-xs">
+    <td class="pt-2 pb-3 pl-3 border">27.  Infants 6 mos. old initiated to comp. feeding <br/> w/ con't. BF</td>
+    <td (click)="ebf.male_comp_feeding > 0 && showNameList('M', 'comp_fed')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': ebf.male_comp_feeding > 0}">{{ ebf.male_comp_feeding ?? 0 }}</td>
+    <td (click)="ebf.female_comp_feeding > 0 && showNameList('F', 'comp_fed')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': ebf.female_comp_feeding > 0}">{{ ebf.female_comp_feeding ?? 0 }}</td>
+    <td (click)="ebf.male_female_comp_feeding > 0 && showNameList('M,F', 'comp_fed')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': ebf.male_female_comp_feeding > 0}">{{ ebf.male_female_comp_feeding ?? 0 }}</td>
+    <td class="border"></td>
+    <td class="border">34. a.1. MAM-admitted in SFT - Total</td>
+    <td class="border text-blue-500 text-center">-</td>
+    <td class="border text-blue-500 text-center">-</td>
+    <td class="border text-blue-500 text-center">-</td>
+    <td class="border"></td>
+  </tr>
 
-    <tr class="border text-xs">
-      <td class="pt-2 pb-3 pl-3 border">28. Infants 6 mos. old who have initiated and <br/> received  comp.feeding but has stopped BF or  <br/> has never been BF at all - Total</td>
-      <td (click)="ebf.male_comp_feeding_stop_bfed > 0 && showNameList('M', 'comp_fed_stop_bfed')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': ebf.male_comp_feeding_stop_bfed > 0}">{{ ebf.male_comp_feeding_stop_bfed ?? 0 }}</td>
-      <td (click)="ebf.female_comp_feeding_stop_bfed > 0 && showNameList('F', 'comp_fed_stop_bfed')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': ebf.female_comp_feeding_stop_bfed > 0}">{{ ebf.female_comp_feeding_stop_bfed ?? 0 }}</td>
-      <td (click)="ebf.male_female_comp_feeding_stop_bfed > 0 && showNameList('M,F', 'comp_fed_stop_bfed')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': ebf.male_female_comp_feeding_stop_bfed > 0}">{{ ebf.male_female_comp_feeding_stop_bfed ?? 0 }}</td>
-      <td class="border"></td>
-      <td class="border">34. a.2. MAM-cured in SFP - Total</td>
-      <td class="border text-blue-500 text-center">-</td>
-      <td class="border text-blue-500 text-center">-</td>
-      <td class="border text-blue-500 text-center">-</td>
-      <td class="border"></td>
-    </tr>
+  <tr class="border text-xs">
+    <td class="pt-2 pb-3 pl-3 border">28. Infants 6 mos. old who have initiated and <br/> received  comp.feeding but has stopped BF or  <br/> has never been BF at all - Total</td>
+    <td (click)="ebf.male_comp_feeding_stop_bfed > 0 && showNameList('M', 'comp_fed_stop_bfed')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': ebf.male_comp_feeding_stop_bfed > 0}">{{ ebf.male_comp_feeding_stop_bfed ?? 0 }}</td>
+    <td (click)="ebf.female_comp_feeding_stop_bfed > 0 && showNameList('F', 'comp_fed_stop_bfed')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': ebf.female_comp_feeding_stop_bfed > 0}">{{ ebf.female_comp_feeding_stop_bfed ?? 0 }}</td>
+    <td (click)="ebf.male_female_comp_feeding_stop_bfed > 0 && showNameList('M,F', 'comp_fed_stop_bfed')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': ebf.male_female_comp_feeding_stop_bfed > 0}">{{ ebf.male_female_comp_feeding_stop_bfed ?? 0 }}</td>
+    <td class="border"></td>
+    <td class="border">34. a.2. MAM-cured in SFP - Total</td>
+    <td class="border text-blue-500 text-center">-</td>
+    <td class="border text-blue-500 text-center">-</td>
+    <td class="border text-blue-500 text-center">-</td>
+    <td class="border"></td>
+  </tr>
 
-    <tr class="border text-xs">
-      <td class="pt-2 pb-3 pl-3 border">29.  Infants 6-11 mos. Old given 1 dose of <br/> Vit. A 100,000 I.U.</td>
-      <td (click)="services.male_vit_a > 0 && showNameList('M', 'vit_a')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': services.male_vit_a > 0}">{{ services.male_vit_a ?? 0 }}</td>
-      <td (click)="services.female_vit_a > 0 && showNameList('F', 'vit_a')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': services.female_vit_a > 0}">{{ services.female_vit_a ?? 0 }}</td>
-      <td (click)="services.male_female_vit_a > 0 && showNameList('M,F', 'vit_a')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': services.male_female_vit_a > 0}">{{ services.male_female_vit_a ?? 0 }}</td>
-      <td class="border"></td>
-      <td class="border">34. a.3. MAM-defaulted in SFP - Total</td>
-      <td class="border text-blue-500 text-center">-</td>
-      <td class="border text-blue-500 text-center">-</td>
-      <td class="border text-blue-500 text-center">-</td>
-      <td class="border"></td>
-    </tr>
+  <tr class="border text-xs">
+    <td class="pt-2 pb-3 pl-3 border">29.  Infants 6-11 mos. Old given 1 dose of <br/> Vit. A 100,000 I.U.</td>
+    <td (click)="services.male_vit_a > 0 && showNameList('M', 'vit_a')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': services.male_vit_a > 0}">{{ services.male_vit_a ?? 0 }}</td>
+    <td (click)="services.female_vit_a > 0 && showNameList('F', 'vit_a')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': services.female_vit_a > 0}">{{ services.female_vit_a ?? 0 }}</td>
+    <td (click)="services.male_female_vit_a > 0 && showNameList('M,F', 'vit_a')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': services.male_female_vit_a > 0}">{{ services.male_female_vit_a ?? 0 }}</td>
+    <td class="border"></td>
+    <td class="border">34. a.3. MAM-defaulted in SFP - Total</td>
+    <td class="border text-blue-500 text-center">-</td>
+    <td class="border text-blue-500 text-center">-</td>
+    <td class="border text-blue-500 text-center">-</td>
+    <td class="border"></td>
+  </tr>
 
-    <tr class="border text-xs">
-      <td class="pt-2 pb-3 pl-3 border">30. Children 12-59 mos. Old given 2 doses of <br/> Vit. A 200,000 I.U.</td>
-      <td (click)="services.male_vit_a_2nd_3rd > 0 && showNameList('M', 'vit_a_2nd_3rd')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': services.male_vit_a_2nd_3rd > 0}">{{ services.male_vit_a_2nd_3rd ?? 0 }}</td>
-      <td (click)="services.female_vit_a_2nd_3rd > 0 && showNameList('F', 'vit_a_2nd_3rd')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': services.female_vit_a_2nd_3rd > 0}">{{ services.female_vit_a_2nd_3rd ?? 0 }}</td>
-      <td (click)="services.male_female_vit_a_2nd_3rd > 0 && showNameList('M,F', 'vit_a_2nd_3rd')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': services.male_female_vit_a_2nd_3rd > 0}">{{ services.male_female_vit_a_2nd_3rd ?? 0 }}</td>
-      <td class="border"></td>
-      <td class="border">34. a.4. MAM died in SFP - Total</td>
-      <td class="border text-blue-500 text-center">-</td>
-      <td class="border text-blue-500 text-center">-</td>
-      <td class="border text-blue-500 text-center">-</td>
-      <td class="border"></td>
-    </tr>
+  <tr class="border text-xs">
+    <td class="pt-2 pb-3 pl-3 border">30. Children 12-59 mos. Old given 2 doses of <br/> Vit. A 200,000 I.U.</td>
+    <td (click)="services.male_vit_a_2nd_3rd > 0 && showNameList('M', 'vit_a_2nd_3rd')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': services.male_vit_a_2nd_3rd > 0}">{{ services.male_vit_a_2nd_3rd ?? 0 }}</td>
+    <td (click)="services.female_vit_a_2nd_3rd > 0 && showNameList('F', 'vit_a_2nd_3rd')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': services.female_vit_a_2nd_3rd > 0}">{{ services.female_vit_a_2nd_3rd ?? 0 }}</td>
+    <td (click)="services.male_female_vit_a_2nd_3rd > 0 && showNameList('M,F', 'vit_a_2nd_3rd')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': services.male_female_vit_a_2nd_3rd > 0}">{{ services.male_female_vit_a_2nd_3rd ?? 0 }}</td>
+    <td class="border"></td>
+    <td class="border">34. a.4. MAM died in SFP - Total</td>
+    <td class="border text-blue-500 text-center">-</td>
+    <td class="border text-blue-500 text-center">-</td>
+    <td class="border text-blue-500 text-center">-</td>
+    <td class="border"></td>
+  </tr>
 
-    <tr class=" border text-xs">
-      <td class="pt-2 pb-3 pl-3 border">31. Infant 6-11 mos. Old who completed MNP <br/> supplementation</td>
-      <td (click)="services.male_mnp > 0 && showNameList('M', 'mnp')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': services.male_mnp > 0}">{{ services.male_mnp ?? 0 }}</td>
-      <td (click)="services.female_mnp > 0 && showNameList('F', 'mnp')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': services.female_mnp > 0}">{{ services.female_mnp ?? 0 }}</td>
-      <td (click)="services.male_female_mnp > 0 && showNameList('M,F', 'mnp')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': services.male_female_mnp > 0}">{{ services.male_female_mnp ?? 0 }}</td>
-      <td class="border"></td>
-      <td class="border">34. b. SAM  - Total</td>
-      <td class="border text-blue-500 text-center">-</td>
-      <td class="border text-blue-500 text-center">-</td>
-      <td class="border text-blue-500 text-center">-</td>
-      <td class="border"></td>
-    </tr>
+  <tr class=" border text-xs">
+    <td class="pt-2 pb-3 pl-3 border">31. Infant 6-11 mos. Old who completed MNP <br/> supplementation</td>
+    <td (click)="services.male_mnp > 0 && showNameList('M', 'mnp')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': services.male_mnp > 0}">{{ services.male_mnp ?? 0 }}</td>
+    <td (click)="services.female_mnp > 0 && showNameList('F', 'mnp')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': services.female_mnp > 0}">{{ services.female_mnp ?? 0 }}</td>
+    <td (click)="services.male_female_mnp > 0 && showNameList('M,F', 'mnp')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': services.male_female_mnp > 0}">{{ services.male_female_mnp ?? 0 }}</td>
+    <td class="border"></td>
+    <td class="border">34. b. SAM  - Total</td>
+    <td class="border text-blue-500 text-center">-</td>
+    <td class="border text-blue-500 text-center">-</td>
+    <td class="border text-blue-500 text-center">-</td>
+    <td class="border"></td>
+  </tr>
 
-    <tr class="border text-xs">
-      <td class="pt-2 pb-3 pl-3 border">32. Children 12-23 mos. Who completed  MNP <br/> Supplementation</td>
-      <td (click)="services.male_mnp2 > 0 && showNameList('M', 'mnp2')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': services.male_mnp2 > 0}">{{ services.male_mnp2 ?? 0 }}</td>
-      <td (click)="services.female_mnp2 > 0 && showNameList('F', 'mnp2')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': services.female_mnp2 > 0}">{{ services.female_mnp2 ?? 0 }}</td>
-      <td (click)="services.male_female_mnp2 > 0 && showNameList('M,F', 'mnp2')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': services.male_female_mnp2 > 0}">{{ services.male_female_mnp2 ?? 0 }}</td>
-      <td class="border"></td>
-      <td class="border">34. b.1. SAM- admitted to OTC - Total</td>
-      <td class="border text-blue-500 text-center">-</td>
-      <td class="border text-blue-500 text-center">-</td>
-      <td class="border text-blue-500 text-center">-</td>
-      <td class="border"></td>
-    </tr>
+  <tr class="border text-xs">
+    <td class="pt-2 pb-3 pl-3 border">32. Children 12-23 mos. Who completed  MNP <br/> Supplementation</td>
+    <td (click)="services.male_mnp2 > 0 && showNameList('M', 'mnp2')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': services.male_mnp2 > 0}">{{ services.male_mnp2 ?? 0 }}</td>
+    <td (click)="services.female_mnp2 > 0 && showNameList('F', 'mnp2')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': services.female_mnp2 > 0}">{{ services.female_mnp2 ?? 0 }}</td>
+    <td (click)="services.male_female_mnp2 > 0 && showNameList('M,F', 'mnp2')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': services.male_female_mnp2 > 0}">{{ services.male_female_mnp2 ?? 0 }}</td>
+    <td class="border"></td>
+    <td class="border">34. b.1. SAM- admitted to OTC - Total</td>
+    <td class="border text-blue-500 text-center">-</td>
+    <td class="border text-blue-500 text-center">-</td>
+    <td class="border text-blue-500 text-center">-</td>
+    <td class="border"></td>
+  </tr>
 
-    <tr class="page-break text-xs">
-      <td colspan="5" class="pt-2 pb-3 pl-3 bg-gray-200"></td>
-      <td class="pt-2 pb-3 border">34. b.2. SAM - cured in OTC - Total</td>
-      <td class="border text-blue-500 text-center">-</td>
-      <td class="border text-blue-500 text-center">-</td>
-      <td class="border text-blue-500 text-center">-</td>
-      <td class="border"></td>
-    </tr>
+  <tr class="page-break text-xs">
+    <td colspan="5" class="pt-2 pb-3 pl-3 bg-gray-200"></td>
+    <td class="pt-2 pb-3 border">34. b.2. SAM - cured in OTC - Total</td>
+    <td class="border text-blue-500 text-center">-</td>
+    <td class="border text-blue-500 text-center">-</td>
+    <td class="border text-blue-500 text-center">-</td>
+    <td class="border"></td>
+  </tr>
 
-    <tr class="text-xs">
-      <td colspan="5" class="pt-2 pb-3 pl-3 bg-gray-200"></td>
-      <td class="pt-2 pb-3 border">34. b.3. SAM-defaulted in OTC - Total</td>
-      <td class="border text-blue-500 text-center">-</td>
-      <td class="border text-blue-500 text-center">-</td>
-      <td class="border text-blue-500 text-center">-</td>
-      <td class="border"></td>
-    </tr>
+  <tr class="text-xs">
+    <td colspan="5" class="pt-2 pb-3 pl-3 bg-gray-200"></td>
+    <td class="pt-2 pb-3 border">34. b.3. SAM-defaulted in OTC - Total</td>
+    <td class="border text-blue-500 text-center">-</td>
+    <td class="border text-blue-500 text-center">-</td>
+    <td class="border text-blue-500 text-center">-</td>
+    <td class="border"></td>
+  </tr>
 
-    <tr class="text-xs">
-      <td colspan="5" class="pt-2 pb-3 pl-3 bg-gray-200"></td>
-      <td class="pt-2 pb-3 border">34. b.4. SAM- died in OTC - Total</td>
-      <td class="border text-blue-500 text-center">-</td>
-      <td class="border text-blue-500 text-center">-</td>
-      <td class="border text-blue-500 text-center">-</td>
-      <td class="border"></td>
-    </tr>
+  <tr class="text-xs">
+    <td colspan="5" class="pt-2 pb-3 pl-3 bg-gray-200"></td>
+    <td class="pt-2 pb-3 border">34. b.4. SAM- died in OTC - Total</td>
+    <td class="border text-blue-500 text-center">-</td>
+    <td class="border text-blue-500 text-center">-</td>
+    <td class="border text-blue-500 text-center">-</td>
+    <td class="border"></td>
+  </tr>
 
-    <tr class="text-xs">
-      <td colspan="5" class="pt-2 pb-3 pl-3 bg-gray-200"></td>
-      <td class="pt-2 pb-3 border">35. Overweight and Obese - Total</td>
-      <td (click)="vitals.male_overweight_obese > 0 && showNameList('M', 'overweight_obese')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vitals.male_overweight_obese > 0}">{{ vitals.male_overweight_obese ?? 0 }}</td>
-      <td (click)="vitals.female_overweight_obese > 0 && showNameList('F', 'overweight_obese')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vitals.female_overweight_obese > 0}">{{ vitals.female_overweight_obese ?? 0 }}</td>
-      <td (click)="vitals.male_female_overweight_obese > 0 && showNameList('M,F', 'overweight_obese')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vitals.male_female_overweight_obese > 0}">{{ vitals.male_female_overweight_obese ?? 0 }}</td>
-      <td class="border"></td>
-    </tr>
+  <tr class="text-xs">
+    <td colspan="5" class="pt-2 pb-3 pl-3 bg-gray-200"></td>
+    <td class="pt-2 pb-3 border">35. Overweight and Obese - Total</td>
+    <td (click)="vitals.male_overweight_obese > 0 && showNameList('M', 'overweight_obese')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vitals.male_overweight_obese > 0}">{{ vitals.male_overweight_obese ?? 0 }}</td>
+    <td (click)="vitals.female_overweight_obese > 0 && showNameList('F', 'overweight_obese')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vitals.female_overweight_obese > 0}">{{ vitals.female_overweight_obese ?? 0 }}</td>
+    <td (click)="vitals.male_female_overweight_obese > 0 && showNameList('M,F', 'overweight_obese')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vitals.male_female_overweight_obese > 0}">{{ vitals.male_female_overweight_obese ?? 0 }}</td>
+    <td class="border"></td>
+  </tr>
 
-    <tr class="text-xs">
-      <td colspan="5" class="pt-2 pb-3 pl-3 bg-gray-200"></td>
-      <td class="pt-2 pb-3 border">36. Normal - Total</td>
-      <td (click)="vitals.male_normal > 0 && showNameList('M', 'normal')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vitals.male_normal > 0}">{{ vitals.male_normal ?? 0 }}</td>
-      <td (click)="vitals.female_normal > 0 && showNameList('F', 'normal')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vitals.female_normal > 0}">{{ vitals.female_normal ?? 0 }}</td>
-      <td (click)="vitals.male_female_normal > 0 && showNameList('M,F', 'normal')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vitals.male_female_normal > 0}">{{ vitals.male_female_normal ?? 0 }}</td>
-      <td class="border"></td>
-    </tr>
+  <tr class="text-xs">
+    <td colspan="5" class="pt-2 pb-3 pl-3 bg-gray-200"></td>
+    <td class="pt-2 pb-3 border">36. Normal - Total</td>
+    <td (click)="vitals.male_normal > 0 && showNameList('M', 'normal')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vitals.male_normal > 0}">{{ vitals.male_normal ?? 0 }}</td>
+    <td (click)="vitals.female_normal > 0 && showNameList('F', 'normal')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vitals.female_normal > 0}">{{ vitals.female_normal ?? 0 }}</td>
+    <td (click)="vitals.male_female_normal > 0 && showNameList('M,F', 'normal')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': vitals.male_female_normal > 0}">{{ vitals.male_female_normal ?? 0 }}</td>
+    <td class="border"></td>
+  </tr>
 
-    <tr>
-      <td scope="col" colspan="5" class="text-xs font-semibold text-left text-gray-900 px-6 py-4 border bg-gray-100">
-        C3. Deworming Services for Infants, Children and Adolescents
-      </td>
-      <td scope="col" colspan="5" class="text-xs font-semibold text-left text-gray-900 px-6 py-4 border bg-gray-100">
-        C4. Management of Sick Infants and Children
-      </td>
-    </tr>
+  <tr>
+    <td scope="col" colspan="5" class="text-xs font-semibold text-left text-gray-900 px-6 py-4 border bg-gray-100">
+      C3. Deworming Services for Infants, Children and Adolescents
+    </td>
+    <td scope="col" colspan="5" class="text-xs font-semibold text-left text-gray-900 px-6 py-4 border bg-gray-100">
+      C4. Management of Sick Infants and Children
+    </td>
+  </tr>
 
-    <tr class="border text-xs">
-      <td class="pt-2 pb-3 pl-3 border">37. 1-19 y/o given 2 doses of deworming drug</td>
-      <td (click)="deworm.male_deworming_1_to_19 > 0 && showNameList('M', 'deworming_1_to_19')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': deworm.male_deworming_1_to_19 > 0}">{{ deworm.male_deworming_1_to_19 ?? 0 }}</td>
-      <td (click)="deworm.female_deworming_1_to_19 > 0 && showNameList('F', 'deworming_1_to_19')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': deworm.female_deworming_1_to_19 > 0}">{{ deworm.female_deworming_1_to_19 ?? 0 }}</td>
-      <td (click)="deworm.male_female_deworming_1_to_19 > 0 && showNameList('M,F', 'deworming_1_to_19')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': deworm.male_female_deworming_1_to_19 > 0}">{{ deworm.male_female_deworming_1_to_19 ?? 0 }}</td>
-      <td class="border"></td>
-      <td class="border">38. Sick Infants 6-11 mos. Old seen</td>
-      <td (click)="services.male_sick_infant > 0 && showNameList('M', 'sick_infant')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': sick.male_sick_infant > 0}">{{ sick.male_sick_infant ?? 0 }}</td>
-      <td (click)="services.female_sick_infant > 0 && showNameList('F', 'sick_infant')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': sick.female_sick_infant > 0}">{{ sick.female_sick_infant ?? 0 }}</td>
-      <td (click)="services.male_female_sick_infant > 0 && showNameList('M,F', 'sick_infant')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': sick.male_female_sick_infant > 0}">{{ sick.male_female_sick_infant ?? 0 }}</td>
-      <td class="border"></td>
-    </tr>
+  <tr class="border text-xs">
+    <td class="pt-2 pb-3 pl-3 border">37. 1-19 y/o given 2 doses of deworming drug</td>
+    <td (click)="deworm.male_deworming_1_to_19 > 0 && showNameList('M', 'deworming_1_to_19')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': deworm.male_deworming_1_to_19 > 0}">{{ deworm.male_deworming_1_to_19 ?? 0 }}</td>
+    <td (click)="deworm.female_deworming_1_to_19 > 0 && showNameList('F', 'deworming_1_to_19')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': deworm.female_deworming_1_to_19 > 0}">{{ deworm.female_deworming_1_to_19 ?? 0 }}</td>
+    <td (click)="deworm.male_female_deworming_1_to_19 > 0 && showNameList('M,F', 'deworming_1_to_19')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': deworm.male_female_deworming_1_to_19 > 0}">{{ deworm.male_female_deworming_1_to_19 ?? 0 }}</td>
+    <td class="border"></td>
+    <td class="border">38. Sick Infants 6-11 mos. Old seen</td>
+    <td (click)="sick.male_sick_infant > 0 && showNameList('M', 'sick_infant')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': sick.male_sick_infant > 0}">{{ sick.male_sick_infant ?? 0 }}</td>
+    <td (click)="sick.female_sick_infant > 0 && showNameList('F', 'sick_infant')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': sick.female_sick_infant > 0}">{{ sick.female_sick_infant ?? 0 }}</td>
+    <td (click)="sick.male_female_sick_infant > 0 && showNameList('M,F', 'sick_infant')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': sick.male_female_sick_infant > 0}">{{ sick.male_female_sick_infant ?? 0 }}</td>
+    <td class="border"></td>
+  </tr>
 
-    <tr class="border text-xs">
-      <td class="pt-2 pb-3 pl-8 border"> a. PSAC, 1-4 y.o. dewormed (2 doses)</td>
-      <td (click)="deworm.male_deworming_1_to_4 > 0 && showNameList('M', 'deworming_1_to_4')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': deworm.male_deworming_1_to_4 > 0}">{{ deworm.male_deworming_1_to_4 ?? 0 }}</td>
-      <td (click)="deworm.male_deworming_1_to_4 > 0 && showNameList('F', 'deworming_1_to_4')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': deworm.male_deworming_1_to_4 > 0}">{{ deworm.male_deworming_1_to_4 ?? 0 }}</td>
-      <td (click)="deworm.male_deworming_1_to_4 > 0 && showNameList('M,F', 'deworming_1_to_4')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': deworm.male_deworming_1_to_4 > 0}">{{ deworm.male_deworming_1_to_4 ?? 0 }}</td>
-      <td class="border"></td>
-      <td class="border">39. Sick Infants 6-11 mos. Old received Vitamin A</td>
-      <td (click)="sick_with_meds.male_sick_infant_with_vit_a > 0 && showNameList('M', 'sick_infant_with_vit_a')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': sick_with_meds.male_sick_infant_with_vit_a > 0}">{{ sick_with_meds.male_sick_infant_with_vit_a ?? 0 }}</td>
-      <td (click)="sick_with_meds.female_sick_infant_with_vit_a > 0 && showNameList('F', 'sick_infant_with_vit_a')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': sick_with_meds.female_sick_infant_with_vit_a > 0}">{{ sick_with_meds.female_sick_infant_with_vit_a ?? 0 }}</td>
-      <td (click)="sick_with_meds.male_female_sick_infant_with_vit_a > 0 && showNameList('M,F', 'sick_infant_with_vit_a')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': sick_with_meds.male_female_sick_infant_with_vit_a > 0}">{{ sick_with_meds.male_female_sick_infant_with_vit_a ?? 0 }}</td>
-      <td class="border"></td>
-    </tr>
+  <tr class="border text-xs">
+    <td class="pt-2 pb-3 pl-8 border"> a. PSAC, 1-4 y.o. dewormed (2 doses)</td>
+    <td (click)="deworm.male_deworming_1_to_4 > 0 && showNameList('M', 'deworming_1_to_4')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': deworm.male_deworming_1_to_4 > 0}">{{ deworm.male_deworming_1_to_4 ?? 0 }}</td>
+    <td (click)="deworm.female_deworming_1_to_4 > 0 && showNameList('F', 'deworming_1_to_4')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': deworm.male_deworming_1_to_4 > 0}">{{ deworm.female_deworming_1_to_4 ?? 0 }}</td>
+    <td (click)="deworm.male_female_deworming_1_to_4 > 0 && showNameList('M,F', 'deworming_1_to_4')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': deworm.male_deworming_1_to_4 > 0}">{{ deworm.male_female_deworming_1_to_4 ?? 0 }}</td>
+    <td class="border"></td>
+    <td class="border">39. Sick Infants 6-11 mos. Old received Vitamin A</td>
+    <td (click)="sick_with_meds.male_sick_infant_with_vit_a > 0 && showNameList('M', 'sick_infant_with_vit_a')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': sick_with_meds.male_sick_infant_with_vit_a > 0}">{{ sick_with_meds.male_sick_infant_with_vit_a ?? 0 }}</td>
+    <td (click)="sick_with_meds.female_sick_infant_with_vit_a > 0 && showNameList('F', 'sick_infant_with_vit_a')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': sick_with_meds.female_sick_infant_with_vit_a > 0}">{{ sick_with_meds.female_sick_infant_with_vit_a ?? 0 }}</td>
+    <td (click)="sick_with_meds.male_female_sick_infant_with_vit_a > 0 && showNameList('M,F', 'sick_infant_with_vit_a')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': sick_with_meds.male_female_sick_infant_with_vit_a > 0}">{{ sick_with_meds.male_female_sick_infant_with_vit_a ?? 0 }}</td>
+    <td class="border"></td>
+  </tr>
 
-    <tr class="border text-xs">
-      <td class="pt-2 pb-3 pl-8 border"> b. SAC, 5-9 y.o. dewormed (2 doses)</td>
-      <td (click)="deworm.male_deworming_5_to_9 > 0 && showNameList('M', 'deworming_5_to_9')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': deworm.male_deworming_5_to_9 > 0}">{{ deworm.male_deworming_5_to_9 ?? 0 }}</td>
-      <td (click)="deworm.female_deworming_5_to_9 > 0 && showNameList('F', 'deworming_5_to_9')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': deworm.female_deworming_5_to_9 > 0}">{{ deworm.female_deworming_5_to_9 ?? 0 }}</td>
-      <td (click)="deworm.male_female_deworming_5_to_9 > 0 && showNameList('M,F', 'deworming_5_to_9')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': deworm.male_female_deworming_5_to_9 > 0}">{{ deworm.male_female_deworming_5_to_9 ?? 0 }}</td>
-      <td class="border"></td>
-      <td class="border">40. Sick Children 12-59 mos. old seen</td>
-      <td (click)="sick.male_sick_children > 0 && showNameList('M', 'sick_children')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': sick.male_sick_children > 0}">{{ sick.male_sick_children ?? 0 }}</td>
-      <td (click)="sick.female_sick_children > 0 && showNameList('F', 'sick_children')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': sick.female_sick_children > 0}">{{ sick.female_sick_children ?? 0 }}</td>
-      <td (click)="sick.male_female_sick_children > 0 && showNameList('M,F', 'sick_children')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': sick.male_female_sick_children > 0}">{{ sick.male_female_sick_children ?? 0 }}</td>
-      <td class="border"></td>
-    </tr>
+  <tr class="border text-xs">
+    <td class="pt-2 pb-3 pl-8 border"> b. SAC, 5-9 y.o. dewormed (2 doses)</td>
+    <td (click)="deworm.male_deworming_5_to_9 > 0 && showNameList('M', 'deworming_5_to_9')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': deworm.male_deworming_5_to_9 > 0}">{{ deworm.male_deworming_5_to_9 ?? 0 }}</td>
+    <td (click)="deworm.female_deworming_5_to_9 > 0 && showNameList('F', 'deworming_5_to_9')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': deworm.female_deworming_5_to_9 > 0}">{{ deworm.female_deworming_5_to_9 ?? 0 }}</td>
+    <td (click)="deworm.male_female_deworming_5_to_9 > 0 && showNameList('M,F', 'deworming_5_to_9')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': deworm.male_female_deworming_5_to_9 > 0}">{{ deworm.male_female_deworming_5_to_9 ?? 0 }}</td>
+    <td class="border"></td>
+    <td class="border">40. Sick Children 12-59 mos. old seen</td>
+    <td (click)="sick.male_sick_children > 0 && showNameList('M', 'sick_children')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': sick.male_sick_children > 0}">{{ sick.male_sick_children ?? 0 }}</td>
+    <td (click)="sick.female_sick_children > 0 && showNameList('F', 'sick_children')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': sick.female_sick_children > 0}">{{ sick.female_sick_children ?? 0 }}</td>
+    <td (click)="sick.male_female_sick_children > 0 && showNameList('M,F', 'sick_children')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': sick.male_female_sick_children > 0}">{{ sick.male_female_sick_children ?? 0 }}</td>
+    <td class="border"></td>
+  </tr>
 
-    <tr class="border text-xs">
-      <td class="pt-2 pb-3 pl-8 border"> c. Adolescents, 10-19 y.o. dewormed (2 doses)</td>
-      <td (click)="deworm.male_deworming_10_to_19 > 0 && showNameList('M', 'deworming_10_to_19')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': deworm.male_deworming_10_to_19 > 0}">{{ deworm.male_deworming_10_to_19 ?? 0 }}</td>
-      <td (click)="deworm.female_deworming_10_to_19 > 0 && showNameList('F', 'deworming_10_to_19')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': deworm.female_deworming_10_to_19 > 0}">{{ deworm.female_deworming_10_to_19 ?? 0 }}</td>
-      <td (click)="deworm.male_female_deworming_10_to_19 > 0 && showNameList('M,F', 'deworming_10_to_19')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': deworm.male_female_deworming_10_to_19 > 0}">{{ deworm.male_female_deworming_10_to_19 ?? 0 }}</td>
-      <td class="border"></td>
-      <td class="border">41. Sick Children 12-59 mos. old received Vitamin A</td>
-      <td (click)="sick_with_meds.male_sick_children_with_vit_a > 0 && showNameList('M', 'sick_children_with_vit_a')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': sick_with_meds.male_sick_children_with_vit_a > 0}">{{ sick_with_meds.male_sick_children_with_vit_a ?? 0 }}</td>
-      <td (click)="sick_with_meds.female_sick_children_with_vit_a > 0 && showNameList('F', 'sick_children_with_vit_a')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': sick_with_meds.female_sick_children_with_vit_a > 0}">{{ sick_with_meds.female_sick_children_with_vit_a ?? 0 }}</td>
-      <td (click)="sick_with_meds.male_female_sick_children_with_vit_a > 0 && showNameList('M,F', 'sick_children_with_vit_a')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': sick_with_meds.male_female_sick_children_with_vit_a > 0}">{{ sick_with_meds.male_female_sick_children_with_vit_a ?? 0 }}</td>
-      <td class="border"></td>
-    </tr>
+  <tr class="border text-xs">
+    <td class="pt-2 pb-3 pl-8 border"> c. Adolescents, 10-19 y.o. dewormed (2 doses)</td>
+    <td (click)="deworm.male_deworming_10_to_19 > 0 && showNameList('M', 'deworming_10_to_19')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': deworm.male_deworming_10_to_19 > 0}">{{ deworm.male_deworming_10_to_19 ?? 0 }}</td>
+    <td (click)="deworm.female_deworming_10_to_19 > 0 && showNameList('F', 'deworming_10_to_19')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': deworm.female_deworming_10_to_19 > 0}">{{ deworm.female_deworming_10_to_19 ?? 0 }}</td>
+    <td (click)="deworm.male_female_deworming_10_to_19 > 0 && showNameList('M,F', 'deworming_10_to_19')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': deworm.male_female_deworming_10_to_19 > 0}">{{ deworm.male_female_deworming_10_to_19 ?? 0 }}</td>
+    <td class="border"></td>
+    <td class="border">41. Sick Children 12-59 mos. old received Vitamin A</td>
+    <td (click)="sick_with_meds.male_sick_children_with_vit_a > 0 && showNameList('M', 'sick_children_with_vit_a')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': sick_with_meds.male_sick_children_with_vit_a > 0}">{{ sick_with_meds.male_sick_children_with_vit_a ?? 0 }}</td>
+    <td (click)="sick_with_meds.female_sick_children_with_vit_a > 0 && showNameList('F', 'sick_children_with_vit_a')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': sick_with_meds.female_sick_children_with_vit_a > 0}">{{ sick_with_meds.female_sick_children_with_vit_a ?? 0 }}</td>
+    <td (click)="sick_with_meds.male_female_sick_children_with_vit_a > 0 && showNameList('M,F', 'sick_children_with_vit_a')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': sick_with_meds.male_female_sick_children_with_vit_a > 0}">{{ sick_with_meds.male_female_sick_children_with_vit_a ?? 0 }}</td>
+    <td class="border"></td>
+  </tr>
 
-    <tr class="text-xs">
-      <td colspan="5" class="pt-2 pb-3 pl-3 bg-gray-200"></td>
-      <td class="pt-2 pb-3 border">42. Diarrhea cases 0-59 months old seen</td>
-      <td (click)="sick.male_diarrhea > 0 && showNameList('M', 'diarrhea')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': sick.male_diarrhea > 0}">{{ sick.male_diarrhea ?? 0 }}</td>
-      <td (click)="sick.female_diarrhea > 0 && showNameList('F', 'diarrhea')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': sick.female_diarrhea > 0}">{{ sick.female_diarrhea ?? 0 }}</td>
-      <td (click)="sick.male_female_diarrhea > 0 && showNameList('M,F', 'diarrhea')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': sick.male_female_diarrhea > 0}">{{ sick.male_female_diarrhea ?? 0 }}</td>
-      <td class="border"></td>
-    </tr>
+  <tr class="text-xs">
+    <td colspan="5" class="pt-2 pb-3 pl-3 bg-gray-200"></td>
+    <td class="pt-2 pb-3 border">42. Diarrhea cases 0-59 months old seen</td>
+    <td (click)="sick.male_diarrhea > 0 && showNameList('M', 'diarrhea')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': sick.male_diarrhea > 0}">{{ sick.male_diarrhea ?? 0 }}</td>
+    <td (click)="sick.female_diarrhea > 0 && showNameList('F', 'diarrhea')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': sick.female_diarrhea > 0}">{{ sick.female_diarrhea ?? 0 }}</td>
+    <td (click)="sick.male_female_diarrhea > 0 && showNameList('M,F', 'diarrhea')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': sick.male_female_diarrhea > 0}">{{ sick.male_female_diarrhea ?? 0 }}</td>
+    <td class="border"></td>
+  </tr>
 
-    <tr class="text-xs">
-      <td colspan="5" class="pt-2 pb-3 pl-3 bg-gray-200"></td>
-      <td class="pt-2 pb-3 border">43. Diarrhea cases 0-59 months old received ORS</td>
-      <td (click)="sick_with_meds.male_diarrhea_with_ors > 0 && showNameList('M', 'diarrhea_with_ors')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': sick_with_meds.male_diarrhea_with_ors > 0}">{{ sick_with_meds.male_diarrhea_with_ors ?? 0 }}</td>
-      <td (click)="sick_with_meds.female_diarrhea_with_ors > 0 && showNameList('F', 'diarrhea_with_ors')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': sick_with_meds.female_diarrhea_with_ors > 0}">{{ sick_with_meds.female_diarrhea_with_ors ?? 0 }}</td>
-      <td (click)="sick_with_meds.male_female_diarrhea_with_ors > 0 && showNameList('M,F', 'diarrhea_with_ors')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': sick_with_meds.male_female_diarrhea_with_ors > 0}">{{ sick_with_meds.male_female_diarrhea_with_ors ?? 0 }}</td>
-      <td class="border"></td>
-    </tr>
+  <tr class="text-xs">
+    <td colspan="5" class="pt-2 pb-3 pl-3 bg-gray-200"></td>
+    <td class="pt-2 pb-3 border">43. Diarrhea cases 0-59 months old received ORS</td>
+    <td (click)="sick_with_meds.male_diarrhea_with_ors > 0 && showNameList('M', 'diarrhea_with_ors')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': sick_with_meds.male_diarrhea_with_ors > 0}">{{ sick_with_meds.male_diarrhea_with_ors ?? 0 }}</td>
+    <td (click)="sick_with_meds.female_diarrhea_with_ors > 0 && showNameList('F', 'diarrhea_with_ors')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': sick_with_meds.female_diarrhea_with_ors > 0}">{{ sick_with_meds.female_diarrhea_with_ors ?? 0 }}</td>
+    <td (click)="sick_with_meds.male_female_diarrhea_with_ors > 0 && showNameList('M,F', 'diarrhea_with_ors')" class="border text-blue-500 text-center" [ngClass]="{'cursor-pointer text-blue-500 font-semibold': sick_with_meds.male_female_diarrhea_with_ors > 0}">{{ sick_with_meds.male_female_diarrhea_with_ors ?? 0 }}</td>
+    <td class="border"></td>
+  </tr>
 
-    <tr class=" text-xs">
-      <td colspan="5" class="pt-2 pb-3 pl-3 bg-gray-200"></td>
-      <td class="pt-2 pb-3 border">44. Diarrhea cases 0-59 mos. received ORS w/ zinc</td>
-      <td (click)="sick_with_meds.male_diarrhea_with_ors_zinc > 0 && showNameList('M', 'diarrhea_with_ors_zinc')" class="border text-blue-500 text-center" [class]=" sick_with_meds.male_diarrhea_with_ors_zinc !==0 ? 'cursor-pointer' : 'pointer-events-none' ">{{ sick_with_meds.male_diarrhea_with_ors_zinc ?? 0 }}</td>
-      <td (click)="sick_with_meds.female_diarrhea_with_ors_zinc > 0 && showNameList('F', 'diarrhea_with_ors_zinc')" class="border text-blue-500 text-center" [class]=" sick_with_meds.female_diarrhea_with_ors_zinc !==0 ? 'cursor-pointer' : 'pointer-events-none' ">{{ sick_with_meds.female_diarrhea_with_ors_zinc ?? 0 }}</td>
-      <td (click)="sick_with_meds.male_female_diarrhea_with_ors_zinc > 0 && showNameList('M,F', 'diarrhea_with_ors_zinc')" class="border text-blue-500 text-center" [class]=" sick_with_meds.male_female_diarrhea_with_ors_zinc !==0 ? 'cursor-pointer' : 'pointer-events-none' ">{{ sick_with_meds.male_female_diarrhea_with_ors_zinc ?? 0 }}</td>
-      <td class="border"></td>
-    </tr>
+  <tr class=" text-xs">
+    <td colspan="5" class="pt-2 pb-3 pl-3 bg-gray-200"></td>
+    <td class="pt-2 pb-3 border">44. Diarrhea cases 0-59 mos. received ORS w/ zinc</td>
+    <td (click)="sick_with_meds.male_diarrhea_with_ors_zinc > 0 && showNameList('M', 'diarrhea_with_ors_zinc')" class="border text-blue-500 text-center" [class]=" sick_with_meds.male_diarrhea_with_ors_zinc !==0 ? 'cursor-pointer' : 'pointer-events-none' ">{{ sick_with_meds.male_diarrhea_with_ors_zinc ?? 0 }}</td>
+    <td (click)="sick_with_meds.female_diarrhea_with_ors_zinc > 0 && showNameList('F', 'diarrhea_with_ors_zinc')" class="border text-blue-500 text-center" [class]=" sick_with_meds.female_diarrhea_with_ors_zinc !==0 ? 'cursor-pointer' : 'pointer-events-none' ">{{ sick_with_meds.female_diarrhea_with_ors_zinc ?? 0 }}</td>
+    <td (click)="sick_with_meds.male_female_diarrhea_with_ors_zinc > 0 && showNameList('M,F', 'diarrhea_with_ors_zinc')" class="border text-blue-500 text-center" [class]=" sick_with_meds.male_female_diarrhea_with_ors_zinc !==0 ? 'cursor-pointer' : 'pointer-events-none' ">{{ sick_with_meds.male_female_diarrhea_with_ors_zinc ?? 0 }}</td>
+    <td class="border"></td>
+  </tr>
 
-    <tr class="text-xs">
-      <td colspan="5" class="pt-2 pb-3 pl-3 bg-gray-200"></td>
-      <td class="pt-2 pb-3 border">45. Pneumonia cases 0-59 mos. old seen</td>
-      <td (click)="sick.male_pneumonia > 0 && showNameList('M', 'pneumonia')" class="border text-blue-500 text-center" [class]=" sick.male_pneumonia !==0 ? 'cursor-pointer' : 'pointer-events-none' ">{{ sick.male_pneumonia ?? 0 }}</td>
-      <td (click)="sick.female_pneumonia > 0 && showNameList('F', 'pneumonia')" class="border text-blue-500 text-center" [class]=" sick.female_pneumonia !==0 ? 'cursor-pointer' : 'pointer-events-none' ">{{ sick.female_pneumonia ?? 0 }}</td>
-      <td (click)="sick.male_female_pneumonia > 0 && showNameList('M,F', 'pneumonia')" class="border text-blue-500 text-center" [class]=" sick.male_female_pneumonia !==0 ? 'cursor-pointer' : 'pointer-events-none' ">{{ sick.male_female_pneumonia ?? 0 }}</td>
-      <td class="border"></td>
-    </tr>
+  <tr class="text-xs">
+    <td colspan="5" class="pt-2 pb-3 pl-3 bg-gray-200"></td>
+    <td class="pt-2 pb-3 border">45. Pneumonia cases 0-59 mos. old seen</td>
+    <td (click)="sick.male_pneumonia > 0 && showNameList('M', 'pneumonia')" class="border text-blue-500 text-center" [class]=" sick.male_pneumonia !==0 ? 'cursor-pointer' : 'pointer-events-none' ">{{ sick.male_pneumonia ?? 0 }}</td>
+    <td (click)="sick.female_pneumonia > 0 && showNameList('F', 'pneumonia')" class="border text-blue-500 text-center" [class]=" sick.female_pneumonia !==0 ? 'cursor-pointer' : 'pointer-events-none' ">{{ sick.female_pneumonia ?? 0 }}</td>
+    <td (click)="sick.male_female_pneumonia > 0 && showNameList('M,F', 'pneumonia')" class="border text-blue-500 text-center" [class]=" sick.male_female_pneumonia !==0 ? 'cursor-pointer' : 'pointer-events-none' ">{{ sick.male_female_pneumonia ?? 0 }}</td>
+    <td class="border"></td>
+  </tr>
 
-    <tr class="text-xs">
-      <td colspan="5" class="pt-2 pb-3 pl-3 bg-gray-200"></td>
-      <td class="pt-2 pb-3 border">46. Pneumonia cases 0-59 mos. old completed treatment</td>
-      <td (click)="sick_with_meds.male_pneumonia_with_treatment > 0 && showNameList('M', 'pneumonia_with_treatment')" class="border text-blue-500 text-center" [class]=" sick_with_meds.male_pneumonia_with_treatment !==0 ? 'cursor-pointer' : 'pointer-events-none' ">{{ sick_with_meds.male_pneumonia_with_treatment ?? 0 }}</td>
-      <td (click)="sick_with_meds.female_pneumonia_with_treatment > 0 && showNameList('F', 'pneumonia_with_treatment')" class="border text-blue-500 text-center" [class]=" sick_with_meds.female_pneumonia_with_treatment !==0 ? 'cursor-pointer' : 'pointer-events-none' ">{{ sick_with_meds.female_pneumonia_with_treatment ?? 0 }}</td>
-      <td (click)="sick_with_meds.male_female_pneumonia_with_treatment > 0 && showNameList('M,F', 'pneumonia_with_treatment')" class="border text-blue-500 text-center" [class]=" sick_with_meds.male_female_pneumonia_with_treatment !==0 ? 'cursor-pointer' : 'pointer-events-none' ">{{ sick_with_meds.male_female_pneumonia_with_treatment ?? 0 }}</td>
-      <td class="border"></td>
-    </tr>
+  <tr class="text-xs">
+    <td colspan="5" class="pt-2 pb-3 pl-3 bg-gray-200"></td>
+    <td class="pt-2 pb-3 border">46. Pneumonia cases 0-59 mos. old completed treatment</td>
+    <td (click)="sick_with_meds.male_pneumonia_with_treatment > 0 && showNameList('M', 'pneumonia_with_treatment')" class="border text-blue-500 text-center" [class]=" sick_with_meds.male_pneumonia_with_treatment !==0 ? 'cursor-pointer' : 'pointer-events-none' ">{{ sick_with_meds.male_pneumonia_with_treatment ?? 0 }}</td>
+    <td (click)="sick_with_meds.female_pneumonia_with_treatment > 0 && showNameList('F', 'pneumonia_with_treatment')" class="border text-blue-500 text-center" [class]=" sick_with_meds.female_pneumonia_with_treatment !==0 ? 'cursor-pointer' : 'pointer-events-none' ">{{ sick_with_meds.female_pneumonia_with_treatment ?? 0 }}</td>
+    <td (click)="sick_with_meds.male_female_pneumonia_with_treatment > 0 && showNameList('M,F', 'pneumonia_with_treatment')" class="border text-blue-500 text-center" [class]=" sick_with_meds.male_female_pneumonia_with_treatment !==0 ? 'cursor-pointer' : 'pointer-events-none' ">{{ sick_with_meds.male_female_pneumonia_with_treatment ?? 0 }}</td>
+    <td class="border"></td>
+  </tr>
   </tbody>
 </table>
 

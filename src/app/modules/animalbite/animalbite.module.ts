@@ -13,6 +13,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PreExposureModalComponent } from './modals/pre-exposure-modal/pre-exposure-modal.component';
 import { CaserateComponent } from 'app/shared/shared-components/eclaims/components/caserate/caserate.component';
 import { AbPostexposureComponent } from './components/ab-postexposure/ab-postexposure.component';
+import { PrescriptionComponent } from 'app/shared/shared-components/consultation/prescription/prescription.component';
+import { FinalDxComponent } from 'app/shared/shared-components/consultation/final-dx/final-dx.component';
+import { SuppliesComponent } from 'app/shared/shared-components/consultation/supplies/supplies.component';
 
 
 @NgModule({
@@ -32,7 +35,10 @@ import { AbPostexposureComponent } from './components/ab-postexposure/ab-postexp
     FontAwesomeModule,
     ReactiveFormsModule,
     FormsModule,
-    CaserateComponent
+    CaserateComponent,
+    PrescriptionComponent,
+    FinalDxComponent,
+    SuppliesComponent
   ]
 })
 export class AnimalbiteModule { }

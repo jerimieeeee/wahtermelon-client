@@ -30,7 +30,7 @@
               <tbody>
                 <tr>
                   <td colspan="2" class="">
-                    <span class="font-semibold">NAME:</span>
+                    <span class="font-semibold">Name:</span>
                     {{ patient_info?.first_name }} {{ patient_info?.middle_name }} {{ patient_info?.suffix_name === 'NA' ? '' : patient_info?.suffix_name }} {{ patient_info?.last_name }}
                   </td>
                   <td class="">
@@ -38,8 +38,8 @@
                     {{ patient_age }}
                   </td>
                   <td class="">
-                    <span class="font-semibold">Gender:</span>
-                    {{ patient_info?.gender }}
+                    <span class="font-semibold">Date:</span>
+                    {{ consult_details?.consult_date | date: 'MMM dd, yyyy' }}
                   </td>
                 </tr>
 
@@ -49,8 +49,8 @@
                     {{ patient_info?.household_folder.barangay.name }}, {{ patient_info?.household_folder.barangay.municipality.name }}
                   </td>
                   <td colspan="2" class="">
-                    <span class="font-semibold">Date:</span>
-                    {{ consult_details?.consult_date | date: 'MMM dd, yyyy' }}
+                    <span class="font-semibold">Gender:</span>
+                    {{ patient_info?.gender }}
                   </td>
                 </tr>
               </tbody>
@@ -70,8 +70,19 @@
                       <span class="text-base font-semibold" *ngIf="pres.konsulta_medicine">{{ pres.konsulta_medicine.desc }}</span>
                       <span class="text-base font-semibold" *ngIf="!pres.konsulta_medicine && !pres.medicine">{{ pres.added_medicine }} {{ pres.dosage_quantity }} {{ pres.unit_of_measurement.code }}</span>
 
-                      <span>{{ pres.regimen.desc }} - {{ pres.duration_intake }} {{ pres.frequency.desc + (pres.duration_intake > 1 ? 's' : '')}}</span>
-                      <span>{{ pres.quantity }} {{ pres.preparation.desc + (pres.quantity > 1 ? 's' : '') }}</span> <br />
+                      <span class="text-base font-semibold">{{ pres.dosage_quantity }} {{ pres.unit_of_measurement.desc }} </span>
+                      <div class="flex flex-col">
+                         <span class="text-base font-semibold">
+                           Sig: <text class="text-base font-normal">{{ pres.regimen.desc }} ({{ pres.duration_intake }} {{ pres.frequency.desc + (pres.duration_intake > 1 ? 's' : '')}})</text>
+                        </span>
+                      </div>
+                      <span class="text-base font-semibold">
+                        Quantity: <text class="text-base font-normal">{{ pres.quantity }} {{ pres.preparation.desc + (pres.quantity > 1 ? 's' : '') }}</text>
+                      </span>
+                      <span class="text-base font-semibold">
+                        Remarks: <text class="text-base font-normal">{{ pres.remarks }}</text>
+                      </span>
+                      <br/>
                     </div>
                   </span>
                 </div>

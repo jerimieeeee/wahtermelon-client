@@ -1,0 +1,25 @@
+<div class="flex-col w-full p-5">
+  <form [formGroup]="treatmentForm" (ngSubmit)="saveRegistration()">
+    <div class="flex w-full justify-center">
+      <div class="w-1/2 mr-5">
+        <label for="treatment_start">Start Date</label>
+        <input type="date" name="treatment_start" id="treatment_start" [max]="max_date" formControlName="treatment_start" class="input">
+      </div>
+      <div class="w-1/2">
+        <label for="treatment_end">End Date</label>
+        <input type="date" name="treatment_end" id="treatment_end" [max]="max_date" formControlName="treatment_end" class="input">
+      </div>
+    </div>
+    <div class="flex w-full justify-end pt-5">
+      <button type="submit" class="btn-save w-40" [disabled]="is_saving || !treatmentForm.valid">
+        <fa-icon *ngIf="is_saving" [icon]="faCircleNotch" animation="spin"></fa-icon>
+        <fa-icon *ngIf="!is_saving" [icon]="faSave"></fa-icon>
+        {{
+          selected_mh_consult && selected_mh_consult.id ?
+          (is_saving ? 'Updating' : 'Update') :
+          (is_saving ? 'Saving' : 'Save')
+        }}
+      </button>
+    </div>
+  </form>
+</div>
