@@ -56,8 +56,8 @@ export class SearchCaserateComponent {
     this.http.post('eclaims/case-rate', this.searchForm.value).subscribe({
       next: (data:any) => {
         this.is_searching = false;
-        this.caserate_result.push(data.CASERATES);
-        console.log(typeof this.caserate_result, this.caserate_result)
+        this.caserate_result = data.caserates;
+        console.log(this.caserate_result)
       },
       error: err => {
         console.log(err)

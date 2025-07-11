@@ -202,13 +202,27 @@
               </div>
             </div>
 
-            <div class="col-span-8">
-              <label for="accreditation_number" class="input-label" [ngClass]="{'text-red-500': is_saving && f.accreditation_number.errors}">Accreditation Number</label>
-              <input type="text" name="accreditation_number" id="accreditation_number" class="input capitalize disabled:bg-gray-200 disabled:text-gray-500" [ngClass]="{'invalid-input': is_saving && f.accreditation_number.errors}" formControlName="accreditation_number">
+            <div class="col-span-8 flex flex-row">
+              <div class="w-10 mr-1">
+                <button [disabled]="searching_pan || userForm.controls.accreditation_number.disabled" class="text-white bg-blue-500 px-2.5 py-1.5 rounded-md mt-6 disabled:bg-gray-300" (click)="searchPAN()">
+                  <fa-icon [icon]="faCircleNotch" animation="spin" *ngIf="searching_pan"></fa-icon>
+                  <fa-icon [icon]="faSearch" *ngIf="!searching_pan"></fa-icon>
+                </button>
+              </div>
+              <div class="w-full">
+                <label for="accreditation_number" class="input-label" [ngClass]="{'text-red-500': is_saving && f.accreditation_number.errors}">Accreditation Number</label>
+                <input type="text" name="accreditation_number" id="accreditation_number" class="input capitalize disabled:bg-gray-200 disabled:text-gray-500" [ngClass]="{'invalid-input': is_saving && f.accreditation_number.errors}" formControlName="accreditation_number">
 
-              <div *ngIf="is_saving && f.accreditation_number.errors" class="invalid-alert">
-                <div *ngIf="f.accreditation_number.errors?.['required']">
-                  {{ required_message }}
+                <div *ngIf="is_saving && f.accreditation_number.errors" class="invalid-alert">
+                  <div *ngIf="f.accreditation_number.errors?.['required']">
+                    {{ required_message }}
+                  </div>
+                </div>
+
+                <div *ngIf="doctor_pan?.message || doctor_pan?.pan" class="invalid-alert italic text-gray-700">
+                  <div>
+                    {{ doctor_pan?.pan ? 'Retrieved: '+doctor_pan?.pan : doctor_pan?.message }}
+                  </div>
                 </div>
               </div>
             </div>
@@ -233,6 +247,11 @@
               <div class="col-span-4">
                 <input type="checkbox" class="input-checkbox" id="attendant_cc_flag" formControlName="attendant_cc_flag" />
                 <label for="attendant_cc_flag">Child Care</label>
+              </div>
+
+              <div class="col-span-4">
+                <input type="checkbox" class="input-checkbox" id="attendant_dn_flag" formControlName="attendant_dn_flag" />
+                <label for="attendant_dn_flag">Dental</label>
               </div>
 
               <div class="col-span-4">

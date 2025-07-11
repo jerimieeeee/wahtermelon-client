@@ -18,6 +18,10 @@ import { EndVisitComponent } from 'app/shared/shared-modals/end-visit/end-visit.
 import { CaserateComponent } from 'app/shared/shared-components/eclaims/components/caserate/caserate.component';
 import { SharedComponentsModule } from 'app/shared/shared-components/shared-components.module';
 import { TerminatePregnancyComponent } from './modals/terminate-pregnancy/terminate-pregnancy.component';
+import { SuppliesComponent } from 'app/shared/shared-components/consultation/supplies/supplies.component';
+import { EsoaComponent } from 'app/shared/shared-components/eclaims/components/esoa/esoa.component';
+import { FinalDxComponent } from 'app/shared/shared-components/consultation/final-dx/final-dx.component';
+import { PrescriptionComponent } from 'app/shared/shared-components/consultation/prescription/prescription.component';
 @NgModule({
   declarations: [
     MaternalcareComponent,
@@ -37,7 +41,11 @@ import { TerminatePregnancyComponent } from './modals/terminate-pregnancy/termin
     ReactiveFormsModule,
     EndVisitComponent,
     CaserateComponent,
-    SharedComponentsModule
+    SharedComponentsModule,
+    SuppliesComponent,
+    EsoaComponent,
+    FinalDxComponent,
+    PrescriptionComponent
   ]
 })
 export class MaternalcareModule { }

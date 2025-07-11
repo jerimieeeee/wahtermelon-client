@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { faFileExcel } from '@fortawesome/free-regular-svg-icons';
+import { faFile, faFileExcel } from '@fortawesome/free-regular-svg-icons';
 import { faAnglesLeft, faAnglesRight, faCheckCircle, faChevronLeft, faChevronRight, faCircleNotch, faClipboardQuestion, faFilter, faPenToSquare, faReceipt, faRotate, faUpload, faXmarkCircle } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
@@ -28,6 +28,7 @@ export class EclaimsComponent implements OnInit {
   faAnglesLeft = faAnglesLeft;
   faAnglesRight = faAnglesRight;
   faFileExcel = faFileExcel;
+  faFile = faFile;
 
   pending_list: any = [];
   modal: any = [];
@@ -81,9 +82,28 @@ export class EclaimsComponent implements OnInit {
 
   printFile() {
     this.getAllData();
-    /* let sample: any = [{name: 'John', age: 30, city: 'New York'}, {name: 'Doe', age: 25, city: 'Chicago'}];
+  }
 
-    this.exportToExcel(sample); */
+  is_exporting: boolean = false;
+  exportXML(data: any) {
+    this.is_exporting = true;
+    this.http.post('eclaims/export-xml', data, { responseType: 'blob'  }).subscribe({
+      next: (blob: any) => {
+        const a = document.createElement('a');
+        const objectUrl = URL.createObjectURL(blob);
+        a.href = objectUrl;
+        a.download = data.pClaimSeriesLhio+'.xml.enc';
+        a.click();
+        URL.revokeObjectURL(objectUrl);
+        this.is_exporting = false;
+        this.toastr.success('XML Successfully downloaded', 'Export XML');
+      },
+      error: err => {
+        console.log(err);
+        this.toastr.success(err.error.message, 'Export XML');
+        this.is_exporting = false;
+      }
+    })
   }
 
   exportToExcel(data: {any}[]) {
@@ -109,11 +129,6 @@ export class EclaimsComponent implements OnInit {
     });
 
     this.saveAsExcelFile(excelBuffer, 'E-Claims Summary Report');
-    /* const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
-    const workbook: XLSX.WorkBook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
-    const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
-
-    this.saveAsExcelFile(excelBuffer, 'eclaims list'); */
   }
 
   saveAsExcelFile(buffer: any, fileName: string): void {
@@ -159,6 +174,7 @@ export class EclaimsComponent implements OnInit {
     let params = {
       pStatus: this.pStatus ?? '',
       program_desc: this.program_desc ?? '',
+      program_code: this.program_desc === 'cc' || this.program_desc === 'fp' ? 'mc' : this.program_desc,
       code: this.code ?? '',
       'filter[search]': this.patient_search ?? '',
       per_page: 50,
@@ -347,7 +363,7 @@ export class EclaimsComponent implements OnInit {
     return new Promise((resolve, reject) => {
       this.http.post('eclaims/get-claim-status', params).subscribe({
         next:(resp: any) => {
-          this.iterateMessage(resp, data, type);
+          this.iterateMessage(resp, data, resp.CLAIM['@attributes'].pStatus);
           this.addRetrieved();
           resolve();
         },
@@ -390,8 +406,9 @@ export class EclaimsComponent implements OnInit {
         this.batch_refresh = false;
       },
       error: err => {
+        console.log(err)
         if(i >= 0) this.item_status[i] = {icon: faXmarkCircle, status: 'failed'};
-        this.http.showError(err.error.message, 'Claims Status - '+ data.pHospitalTransmittalNo);
+        this.http.showError(err.error.text, 'Claims Status - '+ data.pClaimSeriesLhio);
         this.addRetrieved();
         this.batch_refresh = false;
       }
@@ -474,111 +491,113 @@ export class EclaimsComponent implements OnInit {
     return '';
   }
 
+  getVoucherDetails(data) {
+    console.log(data.voucher_details);
+    this.is_refreshing = true;
+
+    if(data.voucher_details) {
+      this.toggleModal('voucher-details', data.voucher_details);
+      this.is_refreshing = false;
+    } else {
+      let params = {
+        voucherNo: data.pVoucherNo,
+        program_code: data.program_desc === 'cc' || data.program_desc === 'fp' ? 'mc' : data.program_desc
+      };
+
+      this.http.post('eclaims/get-voucher-details', params).subscribe({
+        next: (res: any) => {
+          console.log(res);
+          data.voucher_details = res.CLAIM;
+          this.updateUploadClaim(data);
+          this.toggleModal('voucher-details', data.voucher_details);
+          this.is_refreshing = false;
+        },
+        error: (err) => {
+          console.log(err.error.text);
+          this.toastr.error(err.error.text, 'Get Voucher Details');
+          this.is_refreshing = false;
+        }
+      });
+    }
+  }
+
   iterateMessage(resp, data, type) {
-    data.pStatus = resp.CLAIM.pStatus;
+    data.pStatus = resp.CLAIM['@attributes'].pStatus;
     let message: string;
 
-    // console.log(type, resp)
-    switch(resp.CLAIM.pStatus) {
+    switch(type) {
       case 'DENIED': {
-        data.denied_reason = resp.CLAIM.DENIED.REASON;
-        message = 'As of: '+resp.pAsOf+ ' '+resp.pAsOfTime+ '<br />'+resp.CLAIM.DENIED.REASON.pReason;
-        break;
-      }
-      case 'VOUCHERING': {
-        message = 'As of: '+resp.pAsOf+ ' '+resp.pAsOfTime;
-        if(resp.CLAIM.PAYMENT.PAYEE.length > 0) {
-          Object.entries(resp.CLAIM.PAYMENT.PAYEE).forEach(([key, value]:any, index) => {
-            message += '<br />Claim Amount: '+value.pClaimAmount;
-          });
-        } else {
-          message += '<br />Claim Amount: '+resp.CLAIM.PAYMENT.PAYEE.pClaimAmount;
-        }
-        break;
-      }
-      case 'WITH VOUCHER': {
-        message = 'As of: '+resp.pAsOf+ ' '+resp.pAsOfTime;
-        if(resp.CLAIM.PAYMENT.PAYEE.length > 0) {
-          Object.entries(resp.CLAIM.PAYMENT.PAYEE).forEach(([key, value]:any, index) => {
-            message += '<br />Voucher No: '+value.pVoucherNo;
-            message += '<br />Voucher Date: '+value.pVoucherDate;
-            message += '<br />Claim Amount: '+value.pClaimAmount;
-          });
-        } else {
-          message += '<br />Voucher No: '+resp.CLAIM.PAYMENT.PAYEE.pVoucherNo;
-          message += '<br />Voucher Date: '+resp.CLAIM.PAYMENT.PAYEE.pVoucherDate;
-          message += '<br />Claim Amount: '+resp.CLAIM.PAYMENT.PAYEE.pClaimAmount;
-        }
+        data.denied_reason = resp.CLAIM.DENIED.REASON['@attributes'].pReason;
+        message = 'As of: '+resp['@attributes'].pAsOf+ ' '+resp['@attributes'].pAsOfTime+ '<br />'+resp.CLAIM.DENIED.REASON['@attributes'].pReason;
         break;
       }
       case 'WITH CHEQUE': {
-        message = 'As of: '+resp.pAsOf+ ' '+resp.pAsOfTime;
-        if(resp.CLAIM.PAYMENT.PAYEE.length > 0) {
-          Object.entries(resp.CLAIM.PAYMENT.PAYEE).forEach(([key, value]:any, index) => {
-            message += '<br />Voucher No: '+value.pVoucherNo;
-            message += '<br />Check No: '+value.pCheckNo;
-            message += '<br />Check Date: '+value.pCheckDate;
+        message = 'As of: '+resp['@attributes'].pAsOf+ ' '+resp['@attributes'].pAsOfTime;
+
+        /* Object.entries(resp.CLAIM.PAYMENT.PAYEE).forEach(([key, value]:any, index) => {
+          message = 'As of: '+resp['@attributes'].pAsOf+ ' '+resp['@attributes'].pAsOfTime;
+          message += '<br />Voucher No: '+value['@attributes'].pVoucherNo;
+          message += '<br />Check Amount: '+value['@attributes'].pCheckAmount;
+        }); */
+        Object.entries(resp.CLAIM.PAYMENT.PAYEE).forEach(([key, value]:any, index) => {
+          console.log(value);
+          if(value['@attributes']) {
+            data.pCheckNo = value['@attributes'].pCheckNo;
+            message += '<br />Voucher No: '+value['@attributes'].pCheckNo;
+            message += '<br />Voucher Date: '+value['@attributes'].pVoucherDate;
+            message += '<br />Claim Amount: '+value['@attributes'].pClaimAmount;
+            message += '<br />Check Amount: '+value['@attributes'].pCheckAmount+'<br />';
+          } else {
+            data.pCheckNo = value.pCheckNo;
+            message += '<br />Voucher No: '+value.pCheckNo;
+            message += '<br />Voucher Date: '+value.pVoucherDate;
             message += '<br />Claim Amount: '+value.pClaimAmount;
-          });
-        } else {
-          message += '<br />Voucher No: '+resp.CLAIM.PAYMENT.PAYEE.pVoucherNo;
-          message += '<br />Check No: '+resp.CLAIM.PAYMENT.PAYEE.pCheckNo;
-          message += '<br />Check Date: '+resp.CLAIM.PAYMENT.PAYEE.pCheckDate;
-          message += '<br />Claim Amount: '+resp.CLAIM.PAYMENT.PAYEE.pClaimAmount;
-        }
+            message += '<br />Check Amount: '+value.pCheckAmount+'<br />';
+          }
+        });
+        break;
+      }
+      case 'WITH VOUCHER': {
+        message = 'As of: '+resp['@attributes'].pAsOf+ ' '+resp['@attributes'].pAsOfTime;
+
+        Object.entries(resp.CLAIM.PAYMENT.PAYEE).forEach(([key, value]:any, index) => {
+          data.pVoucherNo = value['@attributes'].pVoucherNo;
+          message += '<br />Voucher No: '+value['@attributes'].pVoucherNo;
+          message += '<br />Voucher Date: '+value['@attributes'].pVoucherDate;
+          message += '<br />Claim Amount: '+value['@attributes'].pClaimAmount;
+          message += '<br />Check Amount: '+value['@attributes'].pCheckAmount+'<br />';
+        });
         break;
       }
       case 'RETURN' : {
-        message = 'As of: '+resp.pAsOf+ ' '+resp.pAsOfTime;
-        if(resp.CLAIM.RETURN && resp.CLAIM.RETURN.DEFECTS) {
-          data.return_reason = resp.CLAIM.RETURN.DEFECTS;
-          Object.entries(resp.CLAIM.RETURN.DEFECTS).forEach(([key, value]:any, index) => {
-            // console.log(key, index, value)
-            if(value.REQUIREMENT) {
-              Object.entries(value.REQUIREMENT).forEach(([k, v]:any, i) => {
-                // console.log(v)
-                message += '<br />Requirement: '+ (v.pRequirement ? v.pRequirement : v);
-              });
-            }
+        data.return_reason = resp.CLAIM.RETURN;
+        message = 'As of: '+resp['@attributes'].pAsOf+ ' '+resp['@attributes'].pAsOfTime;
+        Object.entries(resp.CLAIM.RETURN.DEFECTS['@attributes']).forEach(([key, value]:any, index) => {
+          if(!value.pRequirement) message += '<br />Deficiency: '+value;
+          if(value.pRequirement) message += '<br />Requirement: '+value.pRequirement;
+        });
 
-            if(typeof value === 'string') message += '<br />Deficiency: '+value;
-            if(value.pDeficiency) message += '<br />Deficiency: '+value.pDeficiency;
-            if(value.pRequirement) message += '<br />Requirement: '+value.pRequirement;
-
-          });
-        }
         break;
       }
-      case 'IN PROCESS' : {
-        message = 'As of: '+resp.pAsOf+ ' '+resp.pAsOfTime;
-
-        if(resp.CLAIM.TRAIL){
-          if(resp.CLAIM.TRAIL.PROCESS.length > 0) {
-            Object.entries(resp.CLAIM.TRAIL.PROCESS).forEach(([key, value]:any, index) => {
-              message += '<br />Process Stage: '+value.pProcessStage;
-              message += '<br />Process Date: '+value.pProcessDate + '<br />';
-            });
+      case 'IN PROCESS': {
+        message = 'As of: '+resp['@attributes'].pAsOf+ ' '+resp['@attributes'].pAsOfTime+'<br />';
+        if(resp.CLAIM.TRAIL) {
+          if(resp.CLAIM.TRAIL.PROCESS['@attributes']) {
+            message += '<br /><strong>'+resp.CLAIM.TRAIL.PROCESS['@attributes'].pProcessDate +':</strong> '+resp.CLAIM.TRAIL.PROCESS['@attributes'].pProcessStage;
           } else {
-            message += '<br />Process Stage: '+resp.CLAIM.TRAIL.PROCESS.pProcessStage;
-            message += '<br />Process Date: '+resp.CLAIM.TRAIL.PROCESS.pProcessDate + '<br />';
-          }
-        } else {
-          if(resp.CLAIM.RETURN && resp.CLAIM.RETURN.DEFECTS) {
-            Object.entries(resp.CLAIM.RETURN.DEFECTS).forEach(([key, value]:any, index) => {
-              if(!value.pRequirement) message += '<br />Deficiency: '+value;
-              if(value.pRequirement) message += '<br />Requirement: '+value.pRequirement;
+            Object.entries(resp.CLAIM.TRAIL.PROCESS).forEach(([key, value]:any, index) => {
+              message += '<br /><strong>'+value['@attributes'].pProcessDate +':</strong> '+value['@attributes'].pProcessStage;
             });
           }
         }
-
         break;
       }
       default: {
-        message = 'As of: '+resp.pAsOf+ ' '+resp.pAsOfTime;
+        message = 'As of: '+resp['@attributes'].pAsOf+ ' '+resp['@attributes'].pAsOfTime;
       }
     }
 
-    this.showInfoToastr(message, resp.CLAIM.pStatus+' - '+data.pHospitalTransmittalNo);
+    this.showInfoToastr(message, resp.CLAIM.pStatus);
     this.updateUploadClaim(data);
     this.is_refreshing = false;
   }
@@ -593,6 +612,7 @@ export class EclaimsComponent implements OnInit {
   }
 
   updateUploadClaim(data) {
+    // console.log(data);
     this.http.post('eclaims/eclaims-upload', data).subscribe({
       next: (data:any) => {
         this.is_refreshing = false;
@@ -638,11 +658,16 @@ export class EclaimsComponent implements OnInit {
     return style;
   }
 
+  voucher_details: any;
   toggleModal(name, eclaims?) {
-    this.selected_pHospitalTransmittalNo = eclaims?.pHospitalTransmittalNo ?? null;
-    this.selected_caserate_code = eclaims?.caserate.caserate_code ?? null;
-    this.selected_ticket_number = eclaims?.pReceiptTicketNumber ?? null;
-    this.selected_series_lhio = eclaims?.pClaimSeriesLhio ?? null;
+    if(name==='voucher-details') {
+      this.voucher_details = eclaims;
+    } else {
+      this.selected_pHospitalTransmittalNo = eclaims?.pHospitalTransmittalNo ?? null;
+      this.selected_caserate_code = eclaims?.caserate.caserate_code ?? null;
+      this.selected_ticket_number = eclaims?.pReceiptTicketNumber ?? null;
+      this.selected_series_lhio = eclaims?.pClaimSeriesLhio ?? null;
+    }
 
     if(name==='cf2' && !this.modal['cf2']) this.getEclaimsList();
     if(name==='upload-claims' && !this.modal['upload-claims']) this.patient = eclaims.patient; this.getEclaimsList();

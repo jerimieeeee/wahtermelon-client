@@ -108,7 +108,6 @@ export class UploadClaimsComponent implements OnInit {
     //ECLAIMS SERVICES
     this.http.post('eclaims/upload-claim', params).subscribe({
       next:(data:any) => {
-        // console.log(data)
         this.updateUploadData(data);
       },
       error: err => {
@@ -125,7 +124,8 @@ export class UploadClaimsComponent implements OnInit {
 
   show_ticket_number: boolean = false;
   ticket_number: string;
-  updateUploadData(data){
+  updateUploadData(result){
+    let data = result['@attributes'];
     let params = {
       pHospitalTransmittalNo: this.selected_pHospitalTransmittalNo,
       pTransmissionControlNumber: data.pTransmissionControlNumber,
@@ -134,7 +134,8 @@ export class UploadClaimsComponent implements OnInit {
       pTransmissionDate: formatDate(data.pTransmissionDate, 'yyyy-MM-dd', 'en', 'Asia/Manila'),
       pTransmissionTime: formatDate(new Date(), 'HH:mm:ss', 'en', 'Asia/Manila'),
       isSuccess:'Y',
-      program_desc: this.program_name
+      program_desc: this.program_name,
+      program_code: this.program_name === 'cc' || this.program_name === 'fp' ? 'mc' :  this.program_name,
     }
 
     this.http.post('eclaims/eclaims-upload', params).subscribe({
@@ -169,7 +170,7 @@ export class UploadClaimsComponent implements OnInit {
 
     this.http.get('eclaims/eclaims-doc', {params}).subscribe({
       next:(data:any) => {
-        // console.log(data)
+        console.log(data)
         this.uploaded_docs = data.data;
         this.show_form = true;
       },
@@ -179,10 +180,20 @@ export class UploadClaimsComponent implements OnInit {
 
 
   uploadDocs(file_to_upload){
-    // console.log(file_to_upload, this.patient)
     this.is_uploading = true;
 
     const formData: FormData = new FormData();
+
+    const allowedTypes = ['application/pdf', 'text/xml', 'application/xml'];
+    if (!allowedTypes.includes(this.file_to_upload.type)) {
+      this.is_uploading = false;
+      this.toastr.error('Only PDF or XML files are allowed.', 'File Upload', {
+        closeButton: true,
+        positionClass: 'toast-top-center',
+        disableTimeOut: true
+      });
+      return;
+    }
 
     if(this.file_to_upload.size > (2*1024*1024)) {
       this.is_uploading = false;
@@ -201,12 +212,16 @@ export class UploadClaimsComponent implements OnInit {
 
       this.http.post('eclaims/eclaims-doc', formData).subscribe({
         next: (data:any) => {
+          console.log(data);
           this.loadDocs();
           this.resetForm();
           this.is_uploading = false;
           this.toastr.success('Successfully uploaded.', 'EClaims Docs');
         },
-        error: err => console.log(err)
+        error: err => {
+          console.log(err);
+          this.is_uploading = false;
+        }
       })
     }
   }

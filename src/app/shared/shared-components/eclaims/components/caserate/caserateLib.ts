@@ -15,7 +15,7 @@ export const tb_caserate = [
     prof_fee: '0.00',
     caserate_fee: '1500.00'
   }
-];
+];//
 
 export const cc_caserate = [
   {
@@ -34,7 +34,7 @@ export const cc_caserate = [
     prof_fee: '500.00',
     caserate_fee: '2750.00'
   }
-];
+];//
 
 export const mc_caserate = [
   {
@@ -69,7 +69,7 @@ export const mc_caserate = [
     prof_fee: '860.00',
     caserate_fee: '2150.00'
   }
-];
+];//
 
 export const ab_caserate = [
   {

@@ -114,7 +114,7 @@
 
             <div class="col-span-1 text-sm">
               <label class="font-semibold" for="quantity" [ngClass]="{'text-red-500': is_saving && f.quantity.errors}">Quantity</label>
-              <input name="quantity" id="quantity" formControlName="quantity" [ngClass]="{'invalid-input': is_saving && f.quantity.errors}" type="number" class="input">
+              <input (keyup)="computeTotalPrice()" name="quantity" id="quantity" formControlName="quantity" [ngClass]="{'invalid-input': is_saving && f.quantity.errors}" type="number" class="input">
 
               <div *ngIf="is_saving && f.quantity.errors" class="invalid-alert">
                 <div *ngIf="f.quantity.errors?.['required']">
@@ -135,6 +135,28 @@
               </div>
             </div>
 
+            <div class="col-span-1 text-sm">
+              <label class="font-semibold" for="unit_price" [ngClass]="{'text-red-500': is_saving && f.unit_price.errors}">Unit Price</label>
+              <input (keyup)="computeTotalPrice()" name="unit_price" id="unit_price" formControlName="unit_price" [ngClass]="{'invalid-input': is_saving && f.unit_price.errors}" type="number" class="input">
+
+              <div *ngIf="is_saving && f.unit_price.errors" class="invalid-alert">
+                <div *ngIf="f.unit_price.errors?.['required']">
+                  {{ required_message }}
+                </div>
+              </div>
+            </div>
+
+
+            <div class="col-span-1 text-sm">
+              <label class="font-semibold" for="total_price" [ngClass]="{'text-red-500': is_saving && f.total_price.errors}">Total Price</label>
+              <input name="total_price" id="total_price" formControlName="total_price" [ngClass]="{'invalid-input': is_saving && f.total_price.errors}" type="number" class="input">
+
+              <div *ngIf="is_saving && f.total_price.errors" class="invalid-alert">
+                <div *ngIf="f.total_price.errors?.['required']">
+                  {{ required_message }}
+                </div>
+              </div>
+            </div>
             <!-- <div class="col-span-1 text-sm">
               <label class="font-semibold" for="instruction_quantity" [ngClass]="{'text-red-500': is_saving && f.instruction_quantity.errors}">Instruction Qty.</label>
               <input name="instruction_quantity" id="instruction_quantity" formControlName="instruction_quantity" [ngClass]="{'invalid-input': is_saving && f.instruction_quantity.errors}" type="number" class="input">
