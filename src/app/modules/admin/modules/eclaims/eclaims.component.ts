@@ -540,11 +540,20 @@ export class EclaimsComponent implements OnInit {
           message += '<br />Check Amount: '+value['@attributes'].pCheckAmount;
         }); */
         Object.entries(resp.CLAIM.PAYMENT.PAYEE).forEach(([key, value]:any, index) => {
-          data.pCheckNo = value['@attributes'].pCheckNo;
-          message += '<br />Voucher No: '+value['@attributes'].pCheckNo;
-          message += '<br />Voucher Date: '+value['@attributes'].pVoucherDate;
-          message += '<br />Claim Amount: '+value['@attributes'].pClaimAmount;
-          message += '<br />Check Amount: '+value['@attributes'].pCheckAmount+'<br />';
+          console.log(value);
+          if(value['@attributes']) {
+            data.pCheckNo = value['@attributes'].pCheckNo;
+            message += '<br />Voucher No: '+value['@attributes'].pCheckNo;
+            message += '<br />Voucher Date: '+value['@attributes'].pVoucherDate;
+            message += '<br />Claim Amount: '+value['@attributes'].pClaimAmount;
+            message += '<br />Check Amount: '+value['@attributes'].pCheckAmount+'<br />';
+          } else {
+            data.pCheckNo = value.pCheckNo;
+            message += '<br />Voucher No: '+value.pCheckNo;
+            message += '<br />Voucher Date: '+value.pVoucherDate;
+            message += '<br />Claim Amount: '+value.pClaimAmount;
+            message += '<br />Check Amount: '+value.pCheckAmount+'<br />';
+          }
         });
         break;
       }
