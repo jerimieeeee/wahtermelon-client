@@ -3,11 +3,12 @@ import { ChangeDetectorRef, Component, NgModule, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faFileExcel, faFilePdf, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { faFileExcel, faFilePdf, faPrint, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { AgeService } from 'app/shared/services/age.service';
 import { HttpService } from 'app/shared/services/http.service';
 import { ExportAsConfig, ExportAsService } from 'ngx-export-as';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { NgxPrintModule } from 'ngx-print';
 
 RouterOutlet
 
@@ -16,7 +17,7 @@ RouterOutlet
   templateUrl: './med-cert.component.html',
   styleUrl: './med-cert.component.scss',
   standalone: true,
-  imports: [CommonModule, FormsModule, FontAwesomeModule],
+  imports: [CommonModule, FormsModule, FontAwesomeModule, NgxPrintModule],
   providers: [DatePipe] 
 })
 export class MedCertComponent implements OnInit {
@@ -24,6 +25,7 @@ export class MedCertComponent implements OnInit {
   faFilePdf = faFilePdf;
   faFileExcel = faFileExcel;
   faSpinner = faSpinner;
+  faPrint = faPrint;
 
   constructor(
       private router: Router,
