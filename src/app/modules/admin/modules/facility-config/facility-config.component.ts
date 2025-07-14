@@ -1,8 +1,11 @@
 import { formatDate } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { faCircleNotch, faDoorClosed, faSave } from '@fortawesome/free-solid-svg-icons';
+import { SafeUrl } from '@angular/platform-browser';
+import { faCircleNotch, faDoorClosed, faImage, faSave } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
+import { environment } from 'environments/environment';
 import { ToastrService } from 'ngx-toastr';
+
 
 @Component({
     selector: 'app-facility-config',
@@ -16,6 +19,7 @@ export class FacilityConfigComponent implements OnInit {
   faSave = faSave;
   faCircleNotch = faCircleNotch;
   faDoorClosed = faDoorClosed;
+  faImage = faImage;
 
   pages: number = 1;
   module: number = 1;
@@ -97,6 +101,76 @@ export class FacilityConfigComponent implements OnInit {
     })
   }
 
+
+ imageData: SafeUrl | null = null;
+
+  apiBase = this.http.baseUrl.replace('/api/v1/', '');
+
+ fileError: string | null = null;
+
+onFileSelected(event: any) {
+  const file: File = event.target.files[0];
+  const allowedTypes = ['image/png', 'image/jpeg', 'image/jpg'];
+  if (!file) return;
+
+  // Validate file type
+  if (!allowedTypes.includes(file.type)) {
+  this.toastr.error('Only JPG and PNG images are allowed.', 'Upload Error');
+  return;
+  }
+
+  // Validate file size (e.g., max 2MB)
+  const maxSize = 2 * 1024 * 1024; // 2MB
+  if (file.size > maxSize) {
+    this.toastr.error('File is too large. Maximum size is 2MB.', 'Upload Error');
+    return;
+  }
+
+  // Proceed with upload
+  const formData = new FormData();
+  formData.append('logo', file);
+  formData.append('facility_code', this.facility_code);
+
+  this.http.post('consultation/upload-logo', formData).subscribe({
+    next: (res: any) => {
+      const imageUrl = this.apiBase + res.path;
+      console.log('Logo uploaded:', imageUrl);
+      this.imageData = imageUrl;
+      this.toastr.success('Logo successfully uploaded', 'Success');
+    },
+    error: (err) => {
+      console.error('Upload failed.', err);
+      this.toastr.error('Logo upload failed!', 'Server Error');
+    }
+  });
+}
+
+
+
+loadLogo() {
+  this.http.get('consultation/logo', { params: { facility_code: this.facility_code }}).subscribe({
+    next: (res: any) => {
+      if (res.path) {
+
+         console.log('Logo response:', res);
+        this.imageData = this.apiBase + res.path;
+        console.log('Full logo URL:', this.imageData);
+
+      } else {
+        this.imageData = null;
+        console.warn('No logo found.');
+      }
+    },
+    error: () => {
+      console.warn('No logo found or failed to load.');
+      this.imageData = '';
+    }
+  });
+}
+  
+
+ /* logo upload end */
+
   constructor(
     private http: HttpService,
     private toastr: ToastrService,
@@ -112,5 +186,9 @@ export class FacilityConfigComponent implements OnInit {
     for(let year = Number(this.current_year); year > 2017; year--) {
       this.years.push(year);
     }
+
+     this.loadLogo();
   }
+
+  
 }

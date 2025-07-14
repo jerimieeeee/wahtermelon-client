@@ -1,9 +1,16 @@
 <span class="flex justify-between align-middle bg-blue-500 w-full p-2 font-semibold text-sm mb-1 text-white rounded-md">
   <span class="py-1">VISIT DETAILS</span>
-  <button type="button" class="px-2 py-1 bg-slate-50 text-gray-700 rounded-lg" (click)="openVisit(selected_visit)">
-    <!-- <fa-icon [icon]="faEye" class="text-gray-700 text-lg"></fa-icon> -->
-    Open
-  </button>
+  <div class="flex items-center gap-x-2">
+    <button type="button" class="px-2 py-1 bg-slate-50 text-gray-700 rounded-lg" (click)="openVisit(selected_visit)">
+      Open
+    </button>
+  
+
+    <button *ngIf="selected_visit.pt_group === 'cn'" type="button" class="text-2xl text-white disabled:text-gray-600" (click)="goPrint(selected_visit)">
+      <fa-icon [icon]="faFileMedical"></fa-icon>
+    </button>
+  </div>
+
 </span>
 <div >
   <div class="flex mx-2 text-sm">

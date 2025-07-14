@@ -68,7 +68,6 @@ export const options: Partial<null|IConfig> | (() => Partial<IConfig>) = null;
     ViewFileComponent,
     ExportPdfComponent,
     LegalVisitComponent,
-    MedicalCertificateComponent
   ],
   imports: [
     CommonModule,

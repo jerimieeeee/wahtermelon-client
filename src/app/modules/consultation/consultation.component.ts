@@ -1,5 +1,5 @@
 import { Component, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
-import { faChevronDown, faChevronUp, faDoorClosed, faFile } from '@fortawesome/free-solid-svg-icons';
+import { faChevronDown, faChevronUp, faDoorClosed, faFile, faFileMedical } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { GraphsComponent } from './components/graphs/graphs.component';
@@ -21,6 +21,7 @@ export class ConsultationComponent implements OnInit {
   faDoorClosed = faDoorClosed;
   faFile = faFile;
   faEdit = faEdit;
+  fafileMedical = faFileMedical;
 
   is_saving: boolean = false;
   show_item: boolean = true;
@@ -74,7 +75,12 @@ export class ConsultationComponent implements OnInit {
     if((name==='show_open' && !this.show_open) || (name==='update_date' && !this.update_date)) {
       this.loadConsult();
     }
+  }
 
+  goPrint(){
+    console.log(this.patient_id, this.consult_details.id, 'details');
+    this.router.navigate(['medical-cert'], { relativeTo: this.route });
+    console.log('working');
   }
 
   openEkas() {
