@@ -41,6 +41,7 @@ export class ConsultationComponent implements OnInit {
   visit_list: any;
   vitals: any;
   consult_details: any;
+  final_dx: any;
   consult_id: string;
   patient_id: string;
 
@@ -48,6 +49,7 @@ export class ConsultationComponent implements OnInit {
     id: ''
   };
   physicians: any;
+  final_diagnosis: any;
 
   switchTabs(tabs){
     this.modules = 0;
@@ -129,6 +131,9 @@ export class ConsultationComponent implements OnInit {
       next: (data: any) => {
         // console.log(data)
         this.consult_details = data.data[0];
+        this.final_dx = this.consult_details.consult_notes.finaldx;
+        console.log(this.final_dx, 'final dx');
+        console.log(this.consult_details, 'consult details');
         this.allowed_to_edit = this.http.getUserFacility() === this.consult_details.facility.code ? true : false;
         // console.log(this.consult_details.facility.code)
         if(this.consult_details.consult_notes.complaint || this.consult_details.consult_notes.complaints.length > 0  || this.consult_details.consult_notes.history) {
@@ -202,5 +207,6 @@ export class ConsultationComponent implements OnInit {
     this.loadConsult();
     this.navigationEnd$.subscribe();
     // this.loadUsers()
+
   }
 }
