@@ -106,7 +106,7 @@ exportAsPdf: ExportAsConfig = {
   console.log(facilityName, 'facility name');
 
   if(!facilityName){
-     return { width: '90px', height: '90px' };
+     return { width: '80px', height: '80px' };
   }
 
   const nameLength = facilityName.length;
@@ -116,7 +116,7 @@ exportAsPdf: ExportAsConfig = {
     return { width: '70px', height: '70px' };
   } else {
     // Default size for shorter names
-    return { width: '90px', height: '90px' };
+    return { width: '80px', height: '80px' };
   }
 }
 
