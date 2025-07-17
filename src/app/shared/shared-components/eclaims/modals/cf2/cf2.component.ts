@@ -382,13 +382,18 @@ export class Cf2Component implements OnInit {
         break;
       }
       case 'cc': {
-        let params = { patient_id: this.selected_case.patient_id };
+        // console.log(this.eclaimsForm.value);
+        if(this.eclaimsForm.value.code === '99460') {
+          let params = { patient_id: this.selected_case.patient_id };
 
-        this.http.get('patient-vaccines/vaccines-records', {params}).subscribe({
-          next: (data:any) => {
-            this.paramsCc(data.data);
-          }
-        });
+          this.http.get('patient-vaccines/vaccines-records', {params}).subscribe({
+            next: (data:any) => {
+              this.paramsCc(data.data);
+            }
+          });
+        } else {
+          this.paramsGeneric();
+        }
         break;
       }
       case 'mc': {
