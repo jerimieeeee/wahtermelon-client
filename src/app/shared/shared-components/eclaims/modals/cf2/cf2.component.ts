@@ -345,19 +345,19 @@ export class Cf2Component implements OnInit {
       const today = new Date();
 
       if (dischargeDate > today) {
-      this.toastr.error('Discharge date cannot be in the future.', 'Error', {
-        disableTimeOut: true,
-        positionClass: 'toast-top-center',
-      });
-      return;
+        this.toastr.error('Discharge date cannot be in the future.', 'Error', {
+          disableTimeOut: true,
+          positionClass: 'toast-top-center',
+        });
+        return;
       }
 
       const diffDays = Math.ceil(Math.abs(today.getTime() - dischargeDate.getTime()) / (1000 * 60 * 60 * 24));
       if (diffDays > 60) {
-      this.toastr.error('This claim is now beyond the 60-day filing period.', 'Warning', {
-        disableTimeOut: true,
-        positionClass: 'toast-top-center',
-      });
+        this.toastr.error('This claim is now beyond the 60-day filing period.', 'Warning', {
+          disableTimeOut: true,
+          positionClass: 'toast-top-center',
+        });
       }
     }
 
