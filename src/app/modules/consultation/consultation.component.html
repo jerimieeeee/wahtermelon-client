@@ -8,7 +8,7 @@
 
       <div>
 
-        <button *ngIf="final_dx.length" type="button" class="btn-end-visit ml-auto bg-blue-600 mr-3 hover:ring-blue-500" (click)="goPrint()">
+        <button *ngIf="final_dx?.length" type="button" class="btn-end-visit ml-auto bg-blue-600 mr-3 hover:ring-blue-500" (click)="goPrint()">
           <fa-icon class="mr-1" [icon]="fafileMedical"></fa-icon>
           Print MedCert
         </button>
