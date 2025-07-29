@@ -3,11 +3,12 @@ import { ChangeDetectorRef, Component, NgModule, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faFileExcel, faFilePdf, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { faFileExcel, faFilePdf, faPrint, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { AgeService } from 'app/shared/services/age.service';
 import { HttpService } from 'app/shared/services/http.service';
 import { ExportAsConfig, ExportAsService } from 'ngx-export-as';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { NgxPrintModule } from 'ngx-print';
 
 RouterOutlet
 
@@ -16,7 +17,7 @@ RouterOutlet
   templateUrl: './med-cert.component.html',
   styleUrl: './med-cert.component.scss',
   standalone: true,
-  imports: [CommonModule, FormsModule, FontAwesomeModule],
+  imports: [CommonModule, FormsModule, FontAwesomeModule, NgxPrintModule],
   providers: [DatePipe] 
 })
 export class MedCertComponent implements OnInit {
@@ -24,6 +25,7 @@ export class MedCertComponent implements OnInit {
   faFilePdf = faFilePdf;
   faFileExcel = faFileExcel;
   faSpinner = faSpinner;
+  faPrint = faPrint;
 
   constructor(
       private router: Router,
@@ -71,22 +73,25 @@ exportAsPdf: ExportAsConfig = {
   type: 'pdf',
   elementIdOrContent: 'pdf-content',
   options: {
-    html2canvas: { 
+    html2canvas: {
       useCORS: true,
-      allowTaint: true,
-      scrollX: false,
-      scrollY: false,
+      allowTaint: false, // more secure, set to true only if needed
+      scrollX: 0,
+      scrollY: 0,
+      scale: 3, // Increase scale for higher quality (default is 1)
     },
-
-   jsPDF: {
+    jsPDF: {
       orientation: 'portrait',
       format: 'a4',
       putOnlyUsedFonts: true,
-      precision: 2,
+      precision: 12, // Increase precision (default is 2)
+      unit: 'mm',
+      compress: false, // Prevent compression for clearer output
       margin: [0, 0, 0, 0]
-      }
+    }
   }
-}
+};
+ 
 
   getTrailName(): string {
     let trailName: string = '';
@@ -95,6 +100,26 @@ exportAsPdf: ExportAsConfig = {
     return trailName
   }
   
+  
+
+ getFacilityLength(facilityName: string) {
+  console.log(facilityName, 'facility name');
+
+  if(!facilityName){
+     return { width: '80px', height: '80px' };
+  }
+
+  const nameLength = facilityName.length;
+
+  if (nameLength > 40) {
+    // Smaller size for long names
+    return { width: '70px', height: '70px' };
+  } else {
+    // Default size for shorter names
+    return { width: '80px', height: '80px' };
+  }
+}
+
 
   
  pdf_exported: boolean = false;          
@@ -175,6 +200,7 @@ exportAsPdf: ExportAsConfig = {
 
   patient_info: any;
    consultation: any;
+   facility: any;
 
   user = {
     facility: {facility_name:''},
@@ -203,8 +229,18 @@ exportAsPdf: ExportAsConfig = {
 }
   facility_code: string;
 
+  facilityName : string;
+
   ngOnInit(): void {
+
+
+
       let facility = this.http.getUserFromJSON().facility;
+
+       this.facilityName = facility.facility_name;
+      this.getFacilityLength(this.facilityName);
+
+      console.log(facility, 'facility');
 
 
      this.facility_code = facility.code ?? facility.facility.code;
