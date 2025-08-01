@@ -1,0 +1,51 @@
+<table class="morbidity border border-gray-400 select-none">
+  <thead class="text-xs">
+  <tr>
+    <th scope="col" colspan="53" class="text-xs font-semibold text-gray-900 px-6 py-4 border border-gray-400">
+      Section A.1 Morbidity Report
+    </th>
+  </tr>
+  <tr class="text-center border border-gray-400">
+    <td class="px-1 border border-gray-400 font-bold">Disease/s</td>
+    <td class="px-1 w-60 border border-gray-400 font-bold">ICD-Code/s</td>
+    <td class="text-center px-2 py-1 border border-gray-400 font-bold" *ngFor="let title of headers">{{ title }}</td>
+  </tr>
+  </thead>
+  <tbody class="text-xs border border-gray-400">
+<!--  <tr class="font-bold text-center px-2 py-1">
+    Certain Infectious and Parasitic Diseases
+    <td class="text-left">A00-B99</td>
+  </tr>-->
+  <tr *ngFor="let stat of stats">
+    <td class="text-left"> {{ stat.icd10_desc }}</td>
+    <td class="text-center">{{ stat.icd10_code }}</td>
+    <td class="text-center text-blue-500 border border-gray-400" [class]="stat[indicator.var_name] !== '0' ? 'cursor-pointer' : 'pointer-events-none'" *ngFor="let indicator of indicator_var">
+      {{ stat[indicator.var_name] | number }}
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<!--<div *ngIf="!show_stats">
+  <div class="grid grid-cols-1">
+    <div class="flex justify-center text-blue-500">
+      <fa-icon [icon]="faCircleNotch" animation="spin"></fa-icon>
+    </div>
+    <div class="flex justify-center">
+      Sorting report...
+    </div>
+  </div>
+</div>-->
+
+
+<!--<app-show-name-list
+  *ngIf="openList"
+  (toggleModal)="toggleModal()"
+  [name_list_params]="name_list_params"
+  [selectedBrgy]="selectedBrgy"
+  [selectedCode]="selectedCode"
+  [reportForm]="reportForm"
+  [url]="url"
+  [loc]="'itr'"
+>
+</app-show-name-list>-->
