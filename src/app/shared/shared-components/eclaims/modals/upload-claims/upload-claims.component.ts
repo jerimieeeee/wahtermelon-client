@@ -108,7 +108,8 @@ export class UploadClaimsComponent implements OnInit {
     //ECLAIMS SERVICES
     this.http.post('eclaims/upload-claim', params).subscribe({
       next:(data:any) => {
-        this.updateUploadData(data);
+        this.checkSeries(data);
+        // this.updateUploadData(data);
       },
       error: err => {
         // console.log(err);
@@ -152,6 +153,35 @@ export class UploadClaimsComponent implements OnInit {
         this.closeModal();
       },
       error: err => console.log(err)
+    })
+  }
+
+  checkSeries(result){
+    let data = result['@attributes'];
+    let params = {
+      receiptTicketNumber: data.pReceiptTicketNumber,
+      program_code: this.program_name === 'cc' || this.program_name === 'fp' ? 'mc' :  this.program_name
+    }
+
+    this.http.post('eclaims/get-claims-map', params).subscribe({
+      next: (resp: any) => {
+        // console.log(resp)
+        if(resp.success === false) {
+          this.toastr.error('No query result', 'Series LHIO');
+        } else {
+          data.pClaimSeriesLhio = resp.mapping[0].pclaimSeriesLhio;
+          data.pStatus = 'IN PROCESS';
+
+          this.updateUploadData(data);
+        }
+      },
+      error: err => {
+        this.toastr.error(err.error.message, 'Series LHIO', {
+          closeButton: true,
+          positionClass: 'toast-top-center',
+          disableTimeOut: true
+        });
+      }
     })
   }
 
