@@ -105,7 +105,7 @@
       <button [disabled]="disable_button || generating_xml" type="button" class="btn-save" (click)="downloadEsoa()">
         <fa-icon  *ngIf="!generating_xml" [icon]="faDownload"></fa-icon>
         <fa-icon  *ngIf="generating_xml" [icon]="faCircleNotch" animation="spin"></fa-icon>
-        Save{{ generating_xml ? 'ing' : ''}} Esoa XML
+         {{ generating_xml ? 'Saving' : 'Save'}} Esoa XML
       </button>
     </div>
   </div>

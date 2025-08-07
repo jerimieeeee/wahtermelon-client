@@ -60,7 +60,7 @@ export class ImportXmlComponent {
       error: err => {
         console.log(err);
         this.is_uploading = false;
-        this.toastr.error('Error Uploading', 'XML Uplaod');
+        this.toastr.error('Error Uploading', 'XML Upload');
       }
     })
   }
