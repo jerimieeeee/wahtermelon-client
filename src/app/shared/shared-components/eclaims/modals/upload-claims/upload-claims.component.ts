@@ -95,13 +95,14 @@ export class UploadClaimsComponent implements OnInit {
     //ECLAIMS SERVICES
     this.http.post('eclaims/upload-claim', params).subscribe({
       next:(data:any) => {
+        console.log(data);
         this.checkSeries(data);
         // this.updateUploadData(data);
       },
       error: err => {
-        // console.log(err);
+        console.log(err);
         this.is_uploading_claim = false;
-        this.toastr.error(err.error.message, 'Upload Claim', {
+        this.toastr.error(err.error.message || err.error.text, 'Upload Claim', {
           closeButton: true,
           positionClass: 'toast-top-center',
           disableTimeOut: true
@@ -114,6 +115,7 @@ export class UploadClaimsComponent implements OnInit {
   ticket_number: string;
   updateUploadData(result){
     let data = result['@attributes'];
+    console.log(data);
     let params = {
       pHospitalTransmittalNo: this.selected_pHospitalTransmittalNo,
       pTransmissionControlNumber: data.pTransmissionControlNumber,
@@ -152,12 +154,20 @@ export class UploadClaimsComponent implements OnInit {
 
     this.http.post('eclaims/get-claims-map', params).subscribe({
       next: (resp: any) => {
-        // console.log(resp)
+        console.log(data)
         if(resp.success === false) {
           this.toastr.error('No query result', 'Series LHIO');
         } else {
-          data.pClaimSeriesLhio = resp.mapping[0].pclaimSeriesLhio;
-          data.pStatus = 'IN PROCESS';
+          data['@attributes'].pClaimSeriesLhio = resp.mapping[0].pclaimSeriesLhio;
+          data['@attributes'].pTransmissionControlNumber = data.pTransmissionControlNumber;
+          data['@attributes'].pReceiptTicketNumber = data.pReceiptTicketNumber;
+          data['@attributes'].pTransmissionDate = data.pTransmissionDate;
+          data['@attributes'].pStatus = 'IN PROCESS';
+
+          /*
+          pTransmissionControlNumber: data.pTransmissionControlNumber,
+          pReceiptTicketNumber: data.pReceiptTicketNumber,
+          pTransmissionDate: formatDate(data.pTransmissionDate, 'yyyy-MM-dd', 'en', 'Asia/Manila')*/
 
           this.updateUploadData(data);
         }
