@@ -93,7 +93,6 @@ export class EclaimsComponent implements OnInit {
     this.http.get('eclaims/eclaims-caserate', {params}).subscribe({
       next:(data:any) => {
         this.caserate_list = data.data;
-        // console.log(data)
         this.show_cf2 = Object.keys(this.caserate_list).length > 0 ? true : false;
         this.show_form = true;
       },
@@ -116,7 +115,6 @@ export class EclaimsComponent implements OnInit {
 
     this.http.post('eclaims/get-claims-map', params).subscribe({
       next: (resp: any) => {
-        // console.log(resp)
         if(resp.success === false) {
           this.toastr.error('No query result', 'Series LHIO');
           this.stopRefreshing();
@@ -175,12 +173,6 @@ export class EclaimsComponent implements OnInit {
       }
       case 'WITH CHEQUE': {
         message = 'As of: '+resp['@attributes'].pAsOf+ ' '+resp['@attributes'].pAsOfTime;
-
-        /* Object.entries(resp.CLAIM.PAYMENT.PAYEE).forEach(([key, value]:any, index) => {
-          message = 'As of: '+resp['@attributes'].pAsOf+ ' '+resp['@attributes'].pAsOfTime;
-          message += '<br />Voucher No: '+value['@attributes'].pVoucherNo;
-          message += '<br />Check Amount: '+value['@attributes'].pCheckAmount;
-        }); */
         Object.entries(resp.CLAIM.PAYMENT.PAYEE).forEach(([key, value]:any, index) => {
           data.pCheckNo = value['@attributes'].pCheckNo;
           message += '<br />Voucher No: '+value['@attributes'].pCheckNo;
@@ -235,72 +227,6 @@ export class EclaimsComponent implements OnInit {
     this.is_refreshing = false;
   }
 
-  /* iterateMessage(resp, data, type) {
-    data.pStatus = resp.CLAIM['@attributes'].pStatus;
-    let message: string;
-
-    console.log(type);
-    switch(type) {
-      case 'DENIED': {
-        data.denied_reason = resp.CLAIM.DENIED.REASON['@attributes'].pReason;
-        message = 'As of: '+resp['@attributes'].pAsOf+ ' '+resp['@attributes'].pAsOfTime+ '<br />'+resp.CLAIM.DENIED.REASON['@attributes'].pReason;
-        break;
-      }
-      case 'WITH CHEQUE': {
-        message = 'As of: '+resp['@attributes'].pAsOf+ ' '+resp['@attributes'].pAsOfTime;
-
-        Object.entries(resp.CLAIM.PAYMENT.PAYEE['@attributes']).forEach(([key, value]:any, index) => {
-          message = 'As of: '+resp['@attributes'].pAsOf+ ' '+resp['@attributes'].pAsOfTime;
-          message += '<br />Voucher No: '+value['@attributes'].pVoucherNo;
-          message += '<br />Check Amount: '+value['@attributes'].pCheckAmount;
-        });
-        break;
-      }
-      case 'WITH VOUCHER': {
-        message = 'As ofs: '+resp['@attributes'].pAsOf+ ' '+resp['@attributes'].pAsOfTime;
-
-        Object.entries(resp.CLAIM.PAYMENT.PAYEE).forEach(([key, value]:any, index) => {
-          message += '<br />Voucher No: '+value['@attributes'].pVoucherNo;
-          message += '<br />Voucher Date: '+value['@attributes'].pVoucherDate;
-          message += '<br />Claim Amount: '+value['@attributes'].pClaimAmount;
-          message += '<br />Check Amount: '+value['@attributes'].pCheckAmount+'<br />';
-        });
-        break;
-      }
-      case 'RETURN' : {
-        message = 'As of: '+resp['@attributes'].pAsOf+ ' '+resp['@attributes'].pAsOfTime;
-        Object.entries(resp.CLAIM.RETURN.DEFECTS).forEach(([key, value]:any, index) => {
-          console.log(value);
-          if(!value.pRequirement) message += '<br />Deficiency: '+value.pDeficiency;
-          if(value.pRequirement) message += '<br />Requirement: '+value.pRequirement;
-        });
-
-        break;
-      }
-      case 'IN PROCESS': {
-        message = 'As of: '+resp['@attributes'].pAsOf+ ' '+resp['@attributes'].pAsOfTime+'<br />';
-        if(resp.CLAIM.TRAIL) {
-          Object.entries(resp.CLAIM.TRAIL.PROCESS).forEach(([key, value]:any, index) => {
-            if(value['@attributes']){
-              message += '<br /><strong>'+value['@attributes'].pProcessDate +':</strong> '+value['@attributes'].pProcessStage;
-            } else {
-              message += '<br /><strong>'+value.pProcessDate +':</strong> '+value.pProcessStage;
-            }
-            console.log(value)
-          });
-        }
-        break;
-      }
-      default: {
-        message = 'As of: '+resp['@attributes'].pAsOf+ ' '+resp['@attributes'].pAsOfTime;
-      }
-    }
-
-    this.showInfoToastr(message, resp.CLAIM.pStatus);
-    this.updateUploadClaim(data);
-    this.is_refreshing = false;
-  } */
-
   is_exporting: boolean = false;
   exportXML(data: any) {
     this.process_name = 'exporting_xml';
@@ -340,14 +266,12 @@ export class EclaimsComponent implements OnInit {
     }
     this.http.post('eclaims/get-voucher-details', params).subscribe({
       next: (data: any) => {
-        // console.log(data);
         data.voucher_details = data.CLAIM;
         this.updateUploadClaim(data);
         this.toggleModal('voucher-details', data.voucher_details);
         this.stopRefreshing();
       },
       error: err => {
-        // console.log(err)
         this.http.showError(err.error.text, 'Voucher Details Error');
         this.stopRefreshing();
       }
@@ -396,7 +320,7 @@ export class EclaimsComponent implements OnInit {
 
   voucher_details: any;
   toggleModal(name, eclaims?) {
-    console.log(name)
+    // console.log(name)
 
     if(name==='voucher-details') {
       this.voucher_details = eclaims;
@@ -408,14 +332,6 @@ export class EclaimsComponent implements OnInit {
 
       if(eclaims) this.caserate_list = [eclaims?.caserate];
     }
-
-
-
-    /* this.selected_pHospitalTransmittalNo = eclaims != undefined ? eclaims?.pHospitalTransmittalNo : null;
-    this.selected_caserate_code = eclaims != undefined ? eclaims?.caserate.caserate_code : null;
-
-    this.selected_ticket_number = eclaims != undefined ? eclaims?.pReceiptTicketNumber : null;
-    this.selected_series_lhio = eclaims != undefined ? eclaims?.pClaimSeriesLhio : null; */
 
     this.modal[name] = !this.modal[name];
 
@@ -430,8 +346,6 @@ export class EclaimsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    // console.log(this.selected_case)
-    // console.log(this.program_id)
     this.patient = this.http.getPatientInfo();
     this.patient_philhealth = this.patient.philhealthLatest;
 
