@@ -36,30 +36,17 @@ export class UploadClaimsComponent implements OnInit {
   uploading_claim: boolean = false;
   modals: any =[];
 
-  /* arr_CR4652 = ['CF2', 'CSF', 'CF3', 'SOA'];
-  arr_CR4651 = ['CF2', 'CSF', 'CF3', 'SOA'];
-  arr_CR4683 = ['CF2', 'CSF', 'CF3', 'SOA', 'OTH'];
-  arr_CR4684 = ['CF2', 'CSF', 'CF3', 'SOA', 'OTH'];
-  arr_CR4687 = ['CF2', 'CSF', 'PMRF', 'SOA', 'PBC'];
-  arr_CR4656 = ['CF2', 'CSF', 'NTP', 'SOA'];
-  arr_CR4657 = ['CF2', 'CSF', 'NTP', 'SOA'];
-  arr_CR4658 = ['CF2', 'CSF', 'SOA', 'OTH'];
-  arr_CR4685 = ['CF2', 'CSF', 'SOA'];
-  arr_CR0385 = ['CF2', 'CSF', 'SOA'];
-  arr_CR0456 = ['CF2', 'CSF', 'SOA'];
-  arr_CR4655 = ['CF2', 'CSF', 'MSR']; */
-
-  arr_CR4652 = ['CF2', 'CSF', 'CF3', 'SOA w/ CTC'];
-  arr_CR4651 = ['CF2', 'CSF', 'CF3', 'SOA w/ CTC'];
-  arr_CR4683 = ['CF2', 'CSF', 'CF3', 'SOA w/ CTC', 'Pink Card'];
-  arr_CR4684 = ['CF2', 'CSF', 'CF3', 'SOA w/ CTC', 'Pink Card'];
-  arr_CR4687 = ['CF2', 'CSF + NBS Sticker', 'PMRF', 'SOA w/ CTC', 'Birth Certificate'];
-  arr_CR4656 = ['CF2', 'CSF', 'Treatment Card', 'SOA w/ CTC'];
-  arr_CR4657 = ['CF2', 'CSF', 'Treatment Card', 'SOA w/ CTC'];
-  arr_CR4658 = ['CF2', 'CSF', 'Treatment Card', 'SOA w/ CTC', 'Summary Report'];
-  arr_CR4685 = ['CF2', 'CSF + Serial Sticker', 'SOA w/ CTC'];
-  arr_CR0385 = ['CF2', 'CSF + Serial Number of Box', 'SOA w/ CTC'];
-  arr_CR0456 = ['CF2', 'CSF', 'SOA'];
+  arr_CR4652 = ['CF2', 'CSF', 'CF3', 'eSOA'];
+  arr_CR4651 = ['CF2', 'CSF', 'CF3', 'eSOA'];
+  arr_CR4683 = ['CF2', 'CSF', 'CF3', 'eSOA', 'Pink Card'];
+  arr_CR4684 = ['CF2', 'CSF', 'CF3', 'eSOA', 'Pink Card'];
+  arr_CR4687 = ['CF2', 'CSF + NBS Sticker', 'PMRF', 'eSOA', 'Birth Certificate'];
+  arr_CR4656 = ['CF2', 'CSF', 'Treatment Card', 'eSOA'];
+  arr_CR4657 = ['CF2', 'CSF', 'Treatment Card', 'eSOA'];
+  arr_CR4658 = ['CF2', 'CSF', 'Treatment Card', 'eSOA', 'Summary Report'];
+  arr_CR4685 = ['CF2', 'CSF + Serial Sticker', 'eSOA'];
+  arr_CR0385 = ['CF2', 'CSF + Serial Number of Box', 'eSOA'];
+  arr_CR0456 = ['CF2', 'CSF', 'eSOA'];
   arr_CR4655 = ['CF2', 'CSF', 'Smear Test for OMP'];
 
   is_retrieving_xml: boolean = false;
@@ -190,7 +177,7 @@ export class UploadClaimsComponent implements OnInit {
   }
 
   show_form: boolean = false;
-
+  missing_esa: boolean = true;
   loadDocs(){
     this.show_form = false;
     let params = {
@@ -202,12 +189,16 @@ export class UploadClaimsComponent implements OnInit {
       next:(data:any) => {
         console.log(data)
         this.uploaded_docs = data.data;
+        this.checkForEsa(data.data);
         this.show_form = true;
       },
       error: err => console.log(err)
     });
   }
 
+  checkForEsa(docs) {
+    this.missing_esa = !docs.some(doc => doc.doc_type_code === 'ESA');
+  }
 
   uploadDocs(file_to_upload){
     this.is_uploading = true;
@@ -300,5 +291,7 @@ export class UploadClaimsComponent implements OnInit {
   ngOnInit(): void {
     this.getLibraries();
     this.required_docs = this['arr_'+this.caserate_code];
+    console.log(this.caserate_code);
+    console.log(this.required_docs);
   }
 }

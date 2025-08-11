@@ -8,7 +8,8 @@
             CLAIM: {{ selected_pHospitalTransmittalNo }}
         </h3>
         <div>
-          <button *ngIf="!selected_ticket_number" type="button" [disabled]="is_uploading || !show_form || show_confirm_form" class="disabled:bg-gray-400 bg-white px-3 py-1 text-blue-500 rounded-md" (click)="getEncryptedXml()">
+          <span *ngIf="missing_esa" class="text-white font-semibold text-xs mr-3">eSOA is required to upload claim</span>
+          <button *ngIf="!selected_ticket_number" type="button" [disabled]="is_uploading || !show_form || show_confirm_form || missing_esa" class="disabled:bg-gray-400 bg-white px-3 py-1 text-blue-500 rounded-md" (click)="getEncryptedXml()">
             <fa-icon [icon]="faUpload" class="pr-2"></fa-icon>
             Upload Claim
           </button>
@@ -128,6 +129,7 @@
           <span *ngFor="let docs of required_docs; let last = last">
             {{ docs }}<span *ngIf="!last">,</span>
           </span>
+
         </div>
         <button  type="button" class="text-white bg-gray-400 hover:ring-2 focus:outline-none hover:ring-gray-300 rounded text-sm font-medium px-6 py-2.5 transition duration-150 ease-in-out transform hover:scale-110 " (click)="closeModal()">Close</button>
         <!-- <button  type="button" class="text-white bg-blue-500 hover:ring-2 focus:outline-none hover:ring-blue-300 font-medium rounded text-sm px-6 py-2.5 text-center transition duration-150 ease-in-out transform hover:scale-110" (click)="onSubmit()" >Save</button> -->
