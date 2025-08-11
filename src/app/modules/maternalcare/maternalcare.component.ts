@@ -191,7 +191,7 @@ export class MaternalcareComponent implements OnInit {
 
   loadConsultDetails(data?){
     this.http.get('consultation/records',{params: {id: this.consult_id}}).subscribe((data: any) => {
-      console.log(data)
+      // console.log(data)
       this.consult_details = data.data[0];
       this.mcrID('all', this.patient_id);
     });

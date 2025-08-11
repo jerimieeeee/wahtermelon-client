@@ -24,7 +24,6 @@ export class ServicesComponent {
   loadData(patient_id){
     this.http.get('patient-services/service', {params:{patient_id: patient_id}}).subscribe({
       next: (data: any) => {
-        console.log(data)
         this.setDetails.emit(data);
         this.services = data.data;
       },
