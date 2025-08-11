@@ -11,7 +11,7 @@
       </select>
       <select class="input rounded-none w-20 text-xs" (change)="changeCodeList()" [(ngModel)]="program_desc">
         <option [ngValue]="null">ALL</option>
-        <option [value]="program" *ngFor="let program of program_list">{{ program | uppercase }}</option>
+        <option [value]="program.id" *ngFor="let program of program_list">{{ program.name | uppercase }}</option>
       </select>
       <select *ngIf="program_desc !== null" class="input rounded-none w-24" [(ngModel)]="code">
         <option [ngValue]="null">ALL</option>
