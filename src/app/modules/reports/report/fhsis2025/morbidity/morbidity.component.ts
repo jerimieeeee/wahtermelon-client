@@ -110,17 +110,17 @@ export class MorbidityComponent {
   ];
 
   indicator_var = [
-    {var_name: 'male_0_to_6_days',                    gender: 'M',   start: 0, end: 6,   type: 'days'},
-    {var_name: 'female_0_to_6_days',                  gender: 'F',   start: 0, end: 6,   type: 'days'},
-    {var_name: 'male_female_0_to_6_days',             gender: 'M-F', start: 0, end: 6,   type: 'days'},
+    {var_name: 'male_0_to_6_days',                    gender: 'M',   start: 0,  end: 6,   type: 'days'},
+    {var_name: 'female_0_to_6_days',                  gender: 'F',   start: 0,  end: 6,   type: 'days'},
+    {var_name: 'male_female_0_to_6_days',             gender: 'M-F', start: 0,  end: 6,   type: 'days'},
 
-    {var_name: 'male_7_to_28_days',                   gender: 'M',   start: 7, end: 28,  type: 'days'},
-    {var_name: 'female_7_to_28_days',                 gender: 'F',   start: 7, end: 28,  type: 'days'},
-    {var_name: 'male_female_7_to_28_days',            gender: 'M-F', start: 7, end: 28, type: 'days'},
+    {var_name: 'male_7_to_28_days',                   gender: 'M',   start: 7,  end: 28,  type: 'days'},
+    {var_name: 'female_7_to_28_days',                 gender: 'F',   start: 7,  end: 28,  type: 'days'},
+    {var_name: 'male_female_7_to_28_days',            gender: 'M-F', start: 7,  end: 28,  type: 'days'},
 
-    {var_name: 'male_29_days_to_11_months',           gender: 'M',   type: 'days_months'},
-    {var_name: 'female_29_days_to_11_months',         gender: 'F',   type: 'days_months'},
-    {var_name: 'male_female_29_days_to_11_months',    gender: 'M-F', type: 'days_months'},
+    {var_name: 'male_29_days_to_11_months',           gender: 'M',   start: 29, end: 364, type: 'days'},
+    {var_name: 'female_29_days_to_11_months',         gender: 'F',   start: 29, end: 364, type: 'days'},
+    {var_name: 'male_female_29_days_to_11_months',    gender: 'M-F', start: 29, end: 364, type: 'days'},
 
     {var_name: 'male_1_to_4_years',                   gender: 'M',   start: 1, end: 4,   type: 'years'},
     {var_name: 'female_1_to_4_years',                 gender: 'F',   start: 1, end: 4,   type: 'years'},
@@ -177,8 +177,17 @@ export class MorbidityComponent {
     {var_name: 'grand_total_male',                    gender: 'M',    type: '>=0'},
     {var_name: 'grand_total_female',                  gender: 'F',    type: '>=0'},
 
-    {var_name: 'grand_total_both_sexes',              gender: 'M-F',    type: '>=0'},
+    {var_name: 'grand_total_both_sexes',              gender: 'M-F',  type: '>=0'},
   ]
+
+  icd10_codes = [
+    {var_name: 'Cholera', icd10_code: 'A00', range1: 'A00', range2: 'A00.99'},
+    {var_name: 'Typhoid and paratyphoid fevers', range1: 'A01', range2: 'A01.99'},
+    {var_name: 'Shigellosis', range1: 'A03', range2: 'A03.99'},
+    {var_name: 'Amoebiasis', range1: 'A06', range2: 'A06.99'},
+    {var_name: 'Diarrhea and gastroenteritis of presumed infectious origin', range1: 'A09', range2: 'A09.99'},
+  ]
+
 
   label_value: {};
   ngOnChanges(): void {
