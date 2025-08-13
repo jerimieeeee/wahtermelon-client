@@ -70,6 +70,7 @@ import {MorbidityComponent} from "./report/fhsis2025/morbidity/morbidity.compone
     SeniorMasterlistComponent,
     AsrhMasterlistComponent,
     AsrhConsolidatedComponent,
+    MorbidityComponent,
   ],
   exports: [
     ShowNameListComponent
@@ -86,7 +87,6 @@ import {MorbidityComponent} from "./report/fhsis2025/morbidity/morbidity.compone
     HeaderFhsis2018Component,
     FooterComponent,
     PaginationComponent,
-    MorbidityComponent
   ]
 })
 export class ReportsModule { }

@@ -5,12 +5,13 @@ import {ReportsModule} from "../../../reports.module";
 
 @Component({
   selector: 'app-morbidity',
-    imports: [
-        DecimalPipe,
-        FaIconComponent,
-        NgForOf,
-        NgIf,
-    ],
+  // imports: [
+  //   DecimalPipe,
+  //   FaIconComponent,
+  //   NgForOf,
+  //   NgIf,
+  // ],
+  standalone: false,
   templateUrl: './morbidity.component.html',
   styleUrl: './morbidity.component.scss',
 })
@@ -36,7 +37,7 @@ export class MorbidityComponent {
   convertedMonth : any;
   brgys_info : any;
   name_list: any = [];
-  url: any = 'reports-2018/morbidity-namelist/name-list';
+  url: any = 'fhsis-2025/morbidity/name-list';
 
   headers = [
     '0-6 days Male',
@@ -181,12 +182,42 @@ export class MorbidityComponent {
   ]
 
   icd10_codes = [
-    {var_name: 'Cholera', icd10_code: 'A00', range1: 'A00', range2: 'A00.99'},
-    {var_name: 'Typhoid and paratyphoid fevers', range1: 'A01', range2: 'A01.99'},
-    {var_name: 'Shigellosis', range1: 'A03', range2: 'A03.99'},
-    {var_name: 'Amoebiasis', range1: 'A06', range2: 'A06.99'},
-    {var_name: 'Diarrhea and gastroenteritis of presumed infectious origin', range1: 'A09', range2: 'A09.99'},
+    {icd10_code: 'A00', range1: 'A00', range2: 'A00.99'},
+    {icd10_code: 'A01', range1: 'A01', range2: 'A01.99'},
+    {icd10_code: 'A03', range1: 'A03', range2: 'A03.99'},
+    {icd10_code: 'A06', range1: 'A06', range2: 'A06.99'},
+    {icd10_code: 'A09', range1: 'A09', range2: 'A09.99'},
+
+    {icd10_code: 'E10', range1: 'E10', range2: 'E14.99'},
   ]
+
+  name_list_params: {};
+
+  showNameList(params, indicator) {
+    this.params = params;
+    this.name_list_params = {
+      category: this.reportForm.value.report_class,
+      start_date: this.reportForm.value.start_date ,
+      end_date: this.reportForm.value.end_date,
+      gender: indicator.gender,
+      date_type: indicator.type,
+      icd10: params.icd10_code = params.icd10_code.replace(/\u2013/g, '-'),
+      'age[0]': indicator.start,
+      'age[1]': indicator.end,
+
+      per_page: 10,
+    };
+    this.openList = true;
+  };
+
+  openList:boolean = false;
+
+  toggleModal(){
+    let list = [];
+
+    this.name_list = list;
+    this.openList = !this.openList;
+  }
 
 
   label_value: {};
@@ -196,7 +227,7 @@ export class MorbidityComponent {
       this.show_stats = false;
       this.stats = this.report_data.data;
       this.brgys_info = this.brgys;
-      // console.log(this.stats)
+      console.log(this.stats, 'stats itu')
       this.show_stats = true;
     }
   }
