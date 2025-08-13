@@ -32,6 +32,10 @@ export class ReportsComponent implements OnInit {
     disable_filter: new FormControl<string| null>(''),
   });
 
+  fhsis2025 = [
+    { id: 'fhsis2025-morbidity',                   section: 'A', desc: 'Morbidity', url: 'fhsis-2025/morbidity/m2'},
+  ];
+
   fhsis2018 = [
     { id: 'fhsis2018-fp',                   section: 'A', desc: 'Family Planning', url: 'reports-2018/family-planning/m1'},
     { id: 'fhsis2018-mc',                   section: 'B', desc: 'Maternal Care', url: 'reports-2018/maternal-care/m1'},
