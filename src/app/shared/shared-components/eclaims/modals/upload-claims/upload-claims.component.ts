@@ -114,7 +114,39 @@ export class UploadClaimsComponent implements OnInit {
   show_ticket_number: boolean = false;
   ticket_number: string;
   updateUploadData(result){
-    let data = result['@attributes'];
+    let data = result;
+    console.log(data);
+    let params = {
+      pHospitalTransmittalNo: this.selected_pHospitalTransmittalNo,
+      pTransmissionControlNumber: data.pTransmissionControlNumber,
+      pReceiptTicketNumber: data.pReceiptTicketNumber,
+      pClaimSeriesLhio: data.pClaimSeriesLhio,
+      pStatus: 'IN PROCESS',
+      pTransmissionDate: formatDate(data.pTransmissionDate, 'yyyy-MM-dd', 'en', 'Asia/Manila'),
+      pTransmissionTime: formatDate(new Date(), 'HH:mm:ss', 'en', 'Asia/Manila'),
+      isSuccess:'Y',
+      program_desc: this.program_name,
+      program_code: this.program_name === 'cc' || this.program_name === 'fp' ? 'mc' :  this.program_name,
+    }
+
+    this.http.post('eclaims/eclaims-upload', params).subscribe({
+      next: (res: any) => {
+        this.ticket_number = res.data.pReceiptTicketNumber;
+
+        this.toastr.success('Ticket Number: '+this.ticket_number+'| Claim Series: '+res.pClaimSeriesLhio, 'Claim Uploaded!', {
+          closeButton: true,
+          positionClass: 'toast-top-center',
+          disableTimeOut: true
+        });
+
+        this.is_uploading_claim = false;
+        this.closeModal();
+      },
+      error: err => console.log(err)
+    })
+  }
+  /* updateUploadData(result){
+    let data = result;
     console.log(data);
     let params = {
       pHospitalTransmittalNo: this.selected_pHospitalTransmittalNo,
@@ -143,10 +175,10 @@ export class UploadClaimsComponent implements OnInit {
       },
       error: err => console.log(err)
     })
-  }
+  } */
 
   checkSeries(result){
-    let data = result['@attributes'];
+    let data: any = result['@attributes'];
     let params = {
       receiptTicketNumber: data.pReceiptTicketNumber,
       program_code: this.program_name === 'cc' || this.program_name === 'fp' ? 'mc' :  this.program_name
@@ -155,14 +187,11 @@ export class UploadClaimsComponent implements OnInit {
     this.http.post('eclaims/get-claims-map', params).subscribe({
       next: (resp: any) => {
         console.log(data)
+        console.log(resp.mapping[0])
         if(resp.success === false) {
           this.toastr.error('No query result', 'Series LHIO');
         } else {
-          data['@attributes'].pClaimSeriesLhio = resp.mapping[0].pclaimSeriesLhio;
-          data['@attributes'].pTransmissionControlNumber = data.pTransmissionControlNumber;
-          data['@attributes'].pReceiptTicketNumber = data.pReceiptTicketNumber;
-          data['@attributes'].pTransmissionDate = data.pTransmissionDate;
-          data['@attributes'].pStatus = 'IN PROCESS';
+          data.pClaimSeriesLhio = resp.mapping[0].pclaimSeriesLhio;
 
           /*
           pTransmissionControlNumber: data.pTransmissionControlNumber,
