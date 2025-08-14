@@ -80,7 +80,7 @@ export class ConsentComponent implements OnInit, OnChanges {
     });
 
     onSubmit(){
-      console.log(this.consentForm.value, 'display visit details')
+      // console.log(this.consentForm.value, 'display visit details')
       this.is_saving = true;
       this.http.post('asrh/comprehensive', this.consentForm.value).subscribe({
         next: (data: any) => {
@@ -91,10 +91,10 @@ export class ConsentComponent implements OnInit, OnChanges {
           // this.loadASRH.emit();
           // this.reloadData();
             // this.patchCompre();
-          console.log(this.consentForm, 'checker home')
+          // console.log(this.consentForm, 'checker home')
            },
         complete: () => {
-          console.log('success')
+          // console.log('success')
         },
         error: err => {console.log(err)
 
@@ -176,7 +176,7 @@ export class ConsentComponent implements OnInit, OnChanges {
 
     toggleModal(name){
       this.modals[name] = !this.modals[name];
-      console.log('toggle modal')
+      // console.log('toggle modal')
     }
 
     openModal() {
@@ -225,7 +225,7 @@ export class ConsentComponent implements OnInit, OnChanges {
       this.http.get('libraries/consent-type').subscribe({
         next: (data: any) => {
           this.consent_type = data.data;
-          console.log(this.consent_type, 'consent_type')
+          // console.log(this.consent_type, 'consent_type')
         },
         error: err => console.log(err)
       });
@@ -235,7 +235,7 @@ export class ConsentComponent implements OnInit, OnChanges {
       this.http.get('libraries/refusal-reason').subscribe({
         next: (data: any) => {
           this.refusal_reasons = data.data;
-          console.log(this.consent_type, 'consent_type')
+          // console.log(this.consent_type, 'consent_type')
         },
         error: err => console.log(err)
       });
@@ -293,7 +293,7 @@ export class ConsentComponent implements OnInit, OnChanges {
     this.loadConsentLib();
     this.loadReasonLib();
     this.validateForm();
-    console.log(this.consentForm, 'user_info')
+    // console.log(this.consentForm, 'user_info')
   }
 }
 

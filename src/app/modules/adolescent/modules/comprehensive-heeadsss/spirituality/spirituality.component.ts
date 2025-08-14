@@ -63,7 +63,7 @@ export class SpiritualityComponent implements OnInit {
     errors: string[] = []; // Store error messages to pass to the modal
 
     onSubmit() {
-      console.log(this.spiritualityForm.value, 'display visit details');
+      // console.log(this.spiritualityForm.value, 'display visit details');
       this.is_saving = true;
       this.http.post('asrh/comprehensive', this.spiritualityForm.value).subscribe({
         next: (data: any) => {
@@ -220,7 +220,7 @@ export class SpiritualityComponent implements OnInit {
        next: (data: any) => {
 
         this.asrh_compre_history = data.data[0]
-        console.log(this.asrh_compre_history, 'hugot ng compre history')
+        // console.log(this.asrh_compre_history, 'hugot ng compre history')
         this.patchCompre();
        },
        complete: () => {

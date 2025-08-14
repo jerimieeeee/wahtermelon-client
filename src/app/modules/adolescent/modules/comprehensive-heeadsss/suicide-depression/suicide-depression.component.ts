@@ -49,7 +49,7 @@ export class SuicideDepressionComponent implements OnInit {
      });
 
      onSubmit(){
-       console.log(this.suicideForm.value, 'display visit details')
+      //  console.log(this.suicideForm.value, 'display visit details')
        this.is_saving = true;
        this.http.post('asrh/comprehensive', this.suicideForm.value).subscribe({
          next: (data: any) => {
@@ -60,7 +60,7 @@ export class SuicideDepressionComponent implements OnInit {
            // this.loadFP.emit();
            // this.reloadData();
 
-           console.log(this.suicideForm, 'checker education')
+          //  console.log(this.suicideForm, 'checker education')
             },
          complete: () => {
 
@@ -118,7 +118,7 @@ export class SuicideDepressionComponent implements OnInit {
         next: (data: any) => {
 
          this.asrh_compre_history = data.data[0]
-         console.log(this.asrh_compre_history, 'hugot ng compre history')
+        //  console.log(this.asrh_compre_history, 'hugot ng compre history')
          this.patchCompre();
         },
         complete: () => {
