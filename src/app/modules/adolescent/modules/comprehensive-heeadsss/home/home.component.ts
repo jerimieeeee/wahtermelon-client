@@ -55,7 +55,7 @@ export class HomeComponent implements OnInit {
   ];
 
   onSubmit(){
-    console.log(this.homeForm.value, 'display visit details')
+    // console.log(this.homeForm.value, 'display visit details')
     this.is_saving = true;
     this.http.post('asrh/comprehensive', this.homeForm.value).subscribe({
       next: (data: any) => {
@@ -66,10 +66,10 @@ export class HomeComponent implements OnInit {
         // this.loadASRH.emit();
         // this.reloadData();
           // this.patchCompre();
-        console.log(this.homeForm, 'checker home')
+        // console.log(this.homeForm, 'checker home')
          },
       complete: () => {
-        console.log('success')
+        // console.log('success')
       },
       error: err => {console.log(err)
 
@@ -107,7 +107,7 @@ export class HomeComponent implements OnInit {
       next: (data: any) => {
 
        this.asrh_compre_history = data.data[0]
-       console.log(this.asrh_compre_history, 'hugot ng compre history')
+      //  console.log(this.asrh_compre_history, 'hugot ng compre history')
        this.patchCompre();
       },
       complete: () => {
@@ -131,7 +131,7 @@ export class HomeComponent implements OnInit {
 
       });
       // this.show_form = true;
-      console.log(this.selected_asrh_consult,'load compre home working')
+      // console.log(this.selected_asrh_consult,'load compre home working')
       // this.loadSelected();
     }
   }
@@ -141,7 +141,7 @@ export class HomeComponent implements OnInit {
     const spirituality = this.selected_asrh_consult?.comprehensive?.spirituality_notes;
 
     const comprestatusControl = this.homeForm.get('status');
-    console.log(home, spirituality, 'home and spirituality')
+    // console.log(home, spirituality, 'home and spirituality')
 
     if (home === null || spirituality === null) {
       comprestatusControl?.reset();
