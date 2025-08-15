@@ -35,13 +35,16 @@
               <tr *ngIf="item_list?.length === 0">
                 <td colspan="4" >
                   <div class="grid grid-cols-1 w-full mt-10">
-                    <div class="text-center italic"> No records found... </div>
-                    <div class="flex justify-center mt-3">
+                    <div class="text-center italic">
+                      No records found. <br />
+                      Please ask your administrator to add items to the library.
+                    </div>
+                    <!-- <div class="flex justify-center mt-3">
                       <button type="button" class="btn-save" (click)="closeModal({added_item: search_item})">
                         <fa-icon [icon]="faAdd" class="mr-1 text-white"></fa-icon>
                         Add
                       </button>
-                    </div>
+                    </div> -->
                   </div>
                 </td>
               </tr>
