@@ -70,7 +70,7 @@
                   PBEF
                 </button>
                 <!-- {{ program_id }} : {{ eclaims.caserate.program_id}} | {{ program_id == eclaims.caserate.program_id}} -->
-                <button *ngIf="(eclaims.pStatus === '' || !eclaims.pStatus) && program_id == eclaims.caserate.program_id" class="bg-sky-500 text-white rounded-md p-0.5 mb-3 disabled:opacity-75" type="button" (click)="togglePage(2, eclaims)" [disabled]="is_refreshing">
+                <button *ngIf="(eclaims.pStatus === '' || !eclaims.pStatus || eclaims.pStatus === 'RETURN') && program_id == eclaims.caserate.program_id" class="bg-sky-500 text-white rounded-md p-0.5 mb-3 disabled:opacity-75" type="button" (click)="togglePage(2, eclaims)" [disabled]="is_refreshing">
                   <fa-icon [icon]="faReceipt"></fa-icon>
                   Create ESOA
                 </button>
