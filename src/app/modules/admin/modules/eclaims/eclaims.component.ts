@@ -501,7 +501,7 @@ export class EclaimsComponent implements OnInit {
   }
 
   getVoucherDetails(data) {
-    console.log(data.voucher_details);
+    // console.log(data.voucher_details);
     this.is_refreshing = true;
 
     if(data.voucher_details) {
@@ -606,7 +606,7 @@ export class EclaimsComponent implements OnInit {
       }
     }
 
-    this.showInfoToastr(message, resp.CLAIM.pStatus);
+    this.showInfoToastr(message, resp.CLAIM['@attributes'].pStatus);
     this.updateUploadClaim(data);
     this.is_refreshing = false;
   }
