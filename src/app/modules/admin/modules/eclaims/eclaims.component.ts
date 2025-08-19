@@ -69,7 +69,7 @@ export class EclaimsComponent implements OnInit {
   // program_list = ['ab', 'cc', 'tb', 'mc', 'fp', 'mh', 'dn'];
   program_list = [
     { id: 'ab', name: 'Animal Bite' },
-    { id: 'cc', name: 'Child Case' },
+    { id: 'cc', name: 'Child Care' },
     { id: 'tb', name: 'Tuberculosis' },
     { id: 'mc', name: 'Maternal Care' },
     { id: 'fp', name: 'Family Planning' },
