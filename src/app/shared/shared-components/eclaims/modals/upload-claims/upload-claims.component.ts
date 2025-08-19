@@ -133,7 +133,7 @@ export class UploadClaimsComponent implements OnInit {
       next: (res: any) => {
         this.ticket_number = res.data.pReceiptTicketNumber;
 
-        this.toastr.success('Ticket Number: '+this.ticket_number+'| Claim Series: '+res.pClaimSeriesLhio, 'Claim Uploaded!', {
+        this.toastr.success('Ticket Number: '+this.ticket_number+'| Claim Series: '+data.pClaimSeriesLhio, 'Claim Uploaded!', {
           closeButton: true,
           positionClass: 'toast-top-center',
           disableTimeOut: true
