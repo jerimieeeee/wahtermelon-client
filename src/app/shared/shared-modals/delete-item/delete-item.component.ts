@@ -32,6 +32,7 @@ export class DeleteItemComponent implements OnChanges, AfterViewInit{
   }
 
   onSubmit() {
+    // console.log(this.url)
     this.is_loading = true;
     if(this.confirm_code === this.confirmation_code){
       this.http.delete(this.url, this.delete_id).subscribe({
@@ -43,6 +44,13 @@ export class DeleteItemComponent implements OnChanges, AfterViewInit{
         },
         error: err => {
           console.log(err)
+          let message: string
+          if(this.url === 'item-lists/item-list/'){
+            message = 'This item might be referenced in other records'
+          } else {
+            message = 'Error deleting record';
+          }
+          this.toastr.error(message, 'Error');
           this.is_loading = false;
           this.generateCode();
         }
