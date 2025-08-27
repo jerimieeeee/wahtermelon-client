@@ -47,7 +47,13 @@ export class UploadClaimsComponent implements OnInit {
   arr_CR4685 = ['CF2', 'CSF + Serial Sticker', 'eSOA'];
   arr_CR0385 = ['CF2', 'CSF + Serial Number of Box', 'eSOA'];
   arr_CR0456 = ['CF2', 'CSF', 'eSOA'];
-  arr_CR4655 = ['CF2', 'CSF', 'Smear Test for OMP'];
+  arr_CR4655 = ['CF2', 'CSF', 'Smear Test for OMP', 'eSOA'];
+  arr_CR4752 = ['CF2', 'CSF', 'Annex E: Claim Form Dental Service', 'Dental Record', 'eSOA']; //OPH01
+  arr_CR4753 = ['CF2', 'CSF', 'Annex E: Claim Form Dental Service', 'Dental Record', 'eSOA']; //OPH01A
+  arr_CR4754 = ['CF2', 'CSF', 'Annex E: Claim Form Dental Service', 'Dental Record', 'eSOA']; //OPH01B
+  arr_CR4755 = ['CF2', 'CSF', 'Annex E: Claim Form Dental Service', 'Dental Record', 'eSOA']; //OPH02
+  arr_CR4756 = ['CF2', 'CSF', 'Annex E: Claim Form Dental Service', 'Dental Record', 'eSOA']; //OPH02A
+  arr_CR4757 = ['CF2', 'CSF', 'Annex E: Claim Form Dental Service', 'Dental Record', 'eSOA']; //OPH02B
 
   is_retrieving_xml: boolean = false;
   confirm_upload: boolean = false;
