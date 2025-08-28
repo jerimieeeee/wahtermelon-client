@@ -8,18 +8,20 @@ import { EndVisitComponent } from 'app/shared/shared-modals/end-visit/end-visit.
 import { SharedComponentsModule } from 'app/shared/shared-components/shared-components.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ComplaintHistoryComponent } from 'app/shared/shared-components/consultation/complaint-history/complaint-history.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PrescriptionComponent } from 'app/shared/shared-components/consultation/prescription/prescription.component';
 import { FinalDxComponent } from 'app/shared/shared-components/consultation/final-dx/final-dx.component';
 import { SuppliesComponent } from 'app/shared/shared-components/consultation/supplies/supplies.component';
 import { CaserateComponent } from 'app/shared/shared-components/eclaims/components/caserate/caserate.component';
 import { ToastrModule } from 'ngx-toastr';
+import { TreatmentVisitComponent } from './modals/treatment-visit/treatment-visit.component';
 
 
 @NgModule({
   declarations: [
     MentalHealthComponent,
-    RegistrationComponent
+    RegistrationComponent,
+    TreatmentVisitComponent
   ],
   imports: [
     CommonModule,
@@ -33,7 +35,8 @@ import { ToastrModule } from 'ngx-toastr';
     FinalDxComponent,
     CaserateComponent,
     SuppliesComponent,
-    ToastrModule
+    ToastrModule,
+    FormsModule
   ]
 })
 export class MentalHealthModule { }

@@ -1,7 +1,8 @@
 import { formatDate } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { faCircleNotch, faSave } from '@fortawesome/free-solid-svg-icons';
+import { faEdit } from '@fortawesome/free-regular-svg-icons';
+import { faAdd, faCircleNotch, faSave } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -19,6 +20,8 @@ export class RegistrationComponent implements OnInit {
 
   faSave = faSave;
   faCircleNotch = faCircleNotch;
+  faEdit = faEdit;
+  faAdd = faAdd;
 
   is_saving: boolean = false;
 
@@ -56,6 +59,11 @@ treatmentForm: FormGroup = new FormGroup({
         treatment_start: [this.selected_mh_consult ? this.selected_mh_consult.treatment_start : null, Validators.required],
         treatment_end: [this.selected_mh_consult ? this.selected_mh_consult.treatment_end : null, Validators.required]
     });
+  }
+
+  modals: any[] = [];
+  toggleModal(name: string) {
+    this.modals[name] = !this.modals[name];
   }
 
   constructor(

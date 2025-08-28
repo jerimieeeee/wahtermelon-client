@@ -1,25 +1,79 @@
-<div class="flex-col w-full p-5">
-  <form [formGroup]="treatmentForm" (ngSubmit)="saveRegistration()">
-    <div class="flex w-full justify-center">
-      <div class="w-1/2 mr-5">
-        <label for="treatment_start">Start Date</label>
-        <input type="date" name="treatment_start" id="treatment_start" [max]="max_date" formControlName="treatment_start" class="input">
+<div class="flex flex-col w-full">
+  <div class="w-full table-auto border-collapse border border-gray-200 shadow-md rounded-xl mb-5">
+    <div class="w-full rounded-t-xl bg-blue-500 text-white p-3 font-semibold">
+      MENTAL HEALTH TREATMENT REGISTRATION
+    </div>
+    <form class="w-full p-5" [formGroup]="treatmentForm" (ngSubmit)="saveRegistration()">
+      <div class="flex w-full justify-center">
+        <div class="w-1/2 mr-5">
+          <label for="treatment_start">Start Date</label>
+          <input type="date" name="treatment_start" id="treatment_start" [max]="max_date" formControlName="treatment_start" class="input">
+        </div>
+        <div class="w-1/2">
+          <label for="treatment_end">End Date</label>
+          <input type="date" name="treatment_end" id="treatment_end" [max]="max_date" formControlName="treatment_end" class="input">
+        </div>
       </div>
-      <div class="w-1/2">
-        <label for="treatment_end">End Date</label>
-        <input type="date" name="treatment_end" id="treatment_end" [max]="max_date" formControlName="treatment_end" class="input">
+      <div class="flex w-full justify-end pt-5">
+        <button type="submit" class="btn-save w-40" [disabled]="is_saving || !treatmentForm.valid">
+          <fa-icon *ngIf="is_saving" [icon]="faCircleNotch" animation="spin"></fa-icon>
+          <fa-icon *ngIf="!is_saving" [icon]="faSave"></fa-icon>
+          {{
+            selected_mh_consult && selected_mh_consult.id ?
+            (is_saving ? 'Updating' : 'Update') :
+            (is_saving ? 'Saving' : 'Save')
+          }}
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <div class="w-full table-auto border-collapse border border-gray-200 shadow-md rounded-xl">
+    <div class="w-full rounded-t-xl bg-blue-500 text-white p-3 font-semibold flex justify-between">
+      <div>VISITS</div>
+      <div>
+        <button (click)="toggleModal('treatment_visit')" class="bg-white text-blue-500 rounded-full px-3 py-1 text-sm">
+          <fa-icon class="pr-1" [icon]="faAdd"></fa-icon>Add Visit
+        </button>
       </div>
     </div>
-    <div class="flex w-full justify-end pt-5">
-      <button type="submit" class="btn-save w-40" [disabled]="is_saving || !treatmentForm.valid">
-        <fa-icon *ngIf="is_saving" [icon]="faCircleNotch" animation="spin"></fa-icon>
-        <fa-icon *ngIf="!is_saving" [icon]="faSave"></fa-icon>
-        {{
-          selected_mh_consult && selected_mh_consult.id ?
-          (is_saving ? 'Updating' : 'Update') :
-          (is_saving ? 'Saving' : 'Save')
-        }}
-      </button>
+
+    <!-- <div class="flex justify-center py-5 italic">
+      No recorded visits...
+    </div> -->
+
+    <div class="flex justify-center w-full">
+      <table class="table-auto w-full border-collapse m-3">
+        <thead>
+          <tr class="border-b-2 border-gray-200">
+            <th class="w-4/12">Date</th>
+            <th class="w-7/12">Status</th>
+            <th class="w-1/12"></th>
+          </tr>
+        </thead>
+
+        <tbody>
+            <tr class="border-b border-gray-200">
+              <td>test</td>
+              <td>test</td>
+              <td>
+                <button>
+                  <fa-icon class="text-orange-500" [icon]="faEdit"></fa-icon>
+                </button>
+              </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-  </form>
+  </div>
 </div>
+
+
+
+<app-treatment-visit *ngIf="modals['treatment_visit']"
+  (toggleModal)="toggleModal($event)"
+  [consult_id]="consult_details?.id"
+  [consult_date]="consult_details?.consult_date"
+  [patient_id]="consult_details?.patient.id"
+  [pt_group]="'mh'"
+></app-treatment-visit>
