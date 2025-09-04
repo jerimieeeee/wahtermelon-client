@@ -50,17 +50,12 @@
     </div>
 
     <div class="col-span-6 px-10 pt-6">
-        <label for="average_monthly_income" class="text-sm font-semibold">Average Monthly Income</label>
-        <input type="text" name="average_monthly_income" id="average_monthly_income" class="input" placeholder="Input Average Monthly Income" mask="separator.2" thousandSeparator="," formControlName="average_monthly_income">
-
-        <!-- <div *ngIf="show_error && f.case_number.errors" class="invalid-alert">
-          <div *ngIf="f.case_number.errors?.['required']">
-            {{ required_message }}
-          </div> -->
-
-          <!-- <div *ngIf="f.case_number.errors?.['pattern']">
-            Only letters and numbers are allowed.
-          </div> -->
+        <label for="lib_salary_bracket_id" class="text-sm font-semibold">Average Monthly Income</label>
+        <!-- <input type="text" name="average_monthly_income" id="average_monthly_income" class="input" placeholder="Input Average Monthly Income" mask="separator.2" thousandSeparator="," formControlName="average_monthly_income"> -->
+        <select name="lib_salary_bracket_id" id="lib_salary_bracket_id" class="input" formControlName="lib_salary_bracket_id">
+            <!-- <option value="" disabled selected>Select Average Monthly Income</option> -->
+          <option *ngFor="let item of salary_bracket" [value]="item.id">{{ item.desc }}</option>
+        </select>
     </div>
 
 

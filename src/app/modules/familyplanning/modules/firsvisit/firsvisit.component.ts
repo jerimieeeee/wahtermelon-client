@@ -38,6 +38,7 @@ export class FirsvisitComponent implements OnInit {
     no_of_living_children_desired: new FormControl<string| null>(''),
     birth_interval_desired: new FormControl<string| null>(''),
     average_monthly_income: new FormControl<string| null>(''),
+    lib_salary_bracket_id: new FormControl<string| null>(''),
   });
 
   onSubmit(){
@@ -50,7 +51,7 @@ export class FirsvisitComponent implements OnInit {
         this.showButton = !this.showButton;
         this.loadFP.emit();
         this.reloadData();
-      
+
         // console.log(this.fp_visit_history, 'checker FV 2')
          },
       complete: () => {
@@ -70,7 +71,8 @@ export class FirsvisitComponent implements OnInit {
       no_of_living_children_actual: ['', [Validators.required, Validators.minLength(1)]],
       no_of_living_children_desired: ['', [Validators.required, Validators.minLength(1)]],
       birth_interval_desired: ['', [Validators.required, Validators.minLength(1)]],
-      average_monthly_income: ['', [Validators.required, Validators.minLength(1)]],
+      average_monthly_income: [''],
+      lib_salary_bracket_id: ['', [Validators.required]],
       // average_monthly_income: ['', [Validators.required, Validators.minLength(1), Validators.pattern("^[0-9,;]+$")]],
     });
 
@@ -93,10 +95,27 @@ export class FirsvisitComponent implements OnInit {
     });
   }
 
+  salary_bracket: any[] = [];
+  loadLibraries() {
+    this.http.get('libraries/salary-bracket').subscribe({
+      next: (data: any) => {
+        this.salary_bracket = data.data;
+        console.log(this.salary_bracket, 'check mo salary bracket')
+        this.validateForm();
+      },
+      error: err => {
+        this.toastr.error('Error loading salary bracket', 'Error');
+      }
+
+    })
+  }
+
   loadFPDetails(){
 
     if(this.fp_visit_history) {
-      this.visitForm.patchValue({...this.fp_visit_history});
+      this.visitForm.patchValue({...this.fp_visit_history,
+        lib_salary_bracket_id: this.fp_visit_history.lib_salary_bracket.id
+      });
       // this.visitForm.patchValue({id: this.fp_visit_history.id});
       // this.visitForm.patchValue({patient_id: this.patient_id});
       // this.visitForm.patchValue({no_of_living_children_desired: this.fp_visit_history.birth_interval_desired});
@@ -104,7 +123,7 @@ export class FirsvisitComponent implements OnInit {
       // this.visitForm.patchValue({birth_interval_desired: this.fp_visit_history.birth_interval_desired});
       // this.visitForm.patchValue({average_monthly_income: parseFloat(this.fp_visit_history.average_monthly_income).toLocaleString()});
       this.show_form = true;
-      // console.log(this.visitForm.value)
+      console.log(this.visitForm.value)
     }
   }
 
@@ -116,7 +135,7 @@ export class FirsvisitComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.validateForm();
+    this.loadLibraries();
     // console.log(this.fp_visit_history, 'checker FV')
   }
 }
