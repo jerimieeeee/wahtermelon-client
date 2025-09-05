@@ -1,4 +1,4 @@
-<!-- medical-certificate-modal.component.html -->
+
 <div
   class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
   *ngIf="isModalOpen"
@@ -81,7 +81,7 @@
 
         <div id="pdf-content" class="relative flex flex-col items-center w-full space-y-5 overflow-y-auto flex-1">
           <ng-container *ngFor="let info of consult">
-            <div class="relative scale-[0.75] mt-4 origin-top w-full bg-white px-2 py-5 overflow-hidden">
+            <div class="relative scale-[0.70] mt-4 origin-top w-full bg-white px-2 py-5 overflow-hidden">
 
               <!-- Watermark -->
               <img
@@ -90,37 +90,55 @@
                 class="absolute inset-0 m-auto w-[300px] opacity-10 pointer-events-none select-none"
               />
 
+
               <!-- Header Section with Logo -->
-              <div class="grid grid-cols-[auto_1fr] items-center w-full mx-auto my-2 relative z-10">
-                <!-- Column 1: Logo -->
-                <div class="flex justify-center items-start">
-                  <img
-                    *ngIf="logoUrl"
-                    [src]="logoUrl"
-                    [ngStyle]="{
-                      width: getFacilityLength(facilityName).width,
-                      height: getFacilityLength(facilityName).height
-                    }"
-                    class="rounded-full object-cover"
-                  />
+              <div class="grid grid-cols-[auto_1fr_auto] items-center w-full mx-auto my-2 relative z-10">
+                  <!-- Column 1: Primary Logo -->
+                  <div class="flex justify-center items-start">
+                    <img
+                      *ngIf="primaryLogoUrl"
+                      [src]="primaryLogoUrl"
+                      [ngStyle]="{
+                        width: getFacilityLength(facilityName).width,
+                        height: getFacilityLength(facilityName).height
+                      }"
+                      class="rounded-full object-cover"
+                    />
+                  </div>
+
+                  <!-- Column 2: Facility Text -->
+                  <div class="text-center mx-6">
+                    <h4 class="text-base">REPUBLIC OF THE PHILIPPINES</h4>
+                    <h4 class="text-base">
+                      {{ info?.header_name === 'Province Of NCR, All District'
+                        ? 'National Capital Region'
+                        : info?.header_name }}
+                    </h4>
+                    <h4 class="text-base">Municipality of {{ info?.municipality_name }}</h4>
+                    <h4 class="font-semibold mt-2 text-xl">{{ facilityName }}</h4>
+                  </div>
+
+                  <!-- Column 3: Secondary Logo -->
+                  <div class="flex justify-center items-start">
+                    <img
+                      *ngIf="secondaryLogoUrl"
+                      [src]="secondaryLogoUrl"
+                      [ngStyle]="{
+                        width: getFacilityLength(facilityName).width,
+                        height: getFacilityLength(facilityName).height
+                      }"
+                      class="rounded-full object-cover"
+                    />
+                  </div>
                 </div>
 
-                <!-- Column 2: Facility Text -->
-                <div class="text-center mr-6">
-                  <h4 class="text-base">REPUBLIC OF THE PHILIPPINES</h4>
-                  <h4 class="text-base">
-                    {{ info?.header_name === 'Province Of NCR, All District' ? 'National Capital Region' : info?.header_name }}
-                  </h4>
-                  <h4 class="text-base">Municipality of {{ info?.municipality_name }}</h4>
-                  <h4 class="font-semibold mt-2 text-xl">{{ facilityName }}</h4>
-                </div>
-              </div>
               <hr class="my-5 h-0.5 border-t-0 bg-neutral-200 dark:bg-white/10" />
 
               <h1 class="text-xl text-center font-semibold ml-10 my-2 relative z-10">MEDICAL CERTIFICATE</h1>
               <div class="text-right mb-4 relative z-10">Date: {{ dateNgayon }}</div>
 
               <p class="mb-4 relative z-10">
+
                 <span class="font-semibold uppercase">To Whom It May Concern</span><br />
                 This is to certify that we have on record the following data from the patient's information, to wit:
               </p>
@@ -149,7 +167,7 @@
                     <div class="w-44 font-semibold">Diagnosis:</div>
                     <div class="flex-1 whitespace-pre-line">
                       <ng-container *ngFor="let diag of info?.final_diagnosis; let i = index">
-                        {{ diag?.lib_icd10?.icd10_desc }}<span *ngIf="i < info.final_diagnosis.length - 1">, </span>
+                        {{ diag?.lib_icd10?.icd10_desc }}<span *ngIf="i < info.final_diagnosis.length - 1">; </span>
                       </ng-container>
                     </div>
                   </div>
@@ -170,7 +188,7 @@
               </p>
 
               <!-- Physician Signature -->
-              <div class="flex justify-end mt-16 text-right relative z-10">
+              <div class="flex justify-end mt-10 text-right relative z-10">
                 <div>
                   <p class="font-semibold text-center">{{ info?.physician }}, MD</p>
                   <p class="text-sm text-gray-700 text-center">Attending Physician</p>
@@ -179,10 +197,15 @@
               </div>
 
               <!-- Footer Note -->
-              <div class="mt-10 pt-6 flex items-center justify-center space-x-3 text-sm italic text-gray-700 relative z-10">
+              <div class="mt-5 pt-6 flex items-center justify-center space-x-3 text-sm italic text-gray-700 relative z-10">
                 <span>*This certificate was generated using the WAHtermelon EMR</span>
                 <img src="./assets/img/wah_icon.png" class="rounded-full w-9 h-9" />
               </div>
+
+              <span class="text-gray-500 block my-1 italic">
+                {{info.province === 'NCR, All District' ? 'NCR' : info.province}}-{{consultation.consult_id}}
+                </span>
+                
             </div>
           </ng-container>
         </div>

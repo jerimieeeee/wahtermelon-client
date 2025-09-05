@@ -99,16 +99,17 @@ export class FacilityConfigComponent implements OnInit {
       },
       error: err => console.log(err)
     })
-  }
+  }  
 
 
- imageData: SafeUrl | null = null;
+imageData1: SafeUrl | null = null;
+imageData2: SafeUrl | null = null;
 
-  apiBase = this.http.baseUrl.replace('/api/v1/', '');
+apiBase = this.http.baseUrl.replace('/api/v1/', '');
 
- fileError: string | null = null;
+fileError: string | null = null;
 
-onFileSelected(event: any) {
+onFileSelected(event: any, type: 'primary' | 'secondary') {
   const file: File = event.target.files[0];
   const allowedTypes = ['image/png', 'image/jpeg', 'image/jpg'];
   if (!file) return;
@@ -126,8 +127,17 @@ onFileSelected(event: any) {
     return;
   }
 
+  if (type === 'primary') {
+      this.selectedFile1 = file;
+    } else {
+      this.selectedFile2 = file;
+    }
+
+    // Upload immediately after selecting
+    this.uploadLogos();
+
   // Proceed with upload
-  const formData = new FormData();
+ /*  const formData = new FormData();
   formData.append('logo', file);
   formData.append('facility_code', this.facility_code);
 
@@ -142,31 +152,70 @@ onFileSelected(event: any) {
       console.error('Upload failed.', err);
       this.toastr.error('Logo upload failed!', 'Server Error');
     }
-  });
+  }); */
+}
+
+ selectedFile1: File | null = null;
+  selectedFile2: File | null = null;
+
+uploadLogos(){
+
+  // Proceed with upload
+  const formData = new FormData();
+  formData.append('facility_code', this.facility_code);
+
+  if (this.selectedFile1) {
+      formData.append('primary_logo', this.selectedFile1);
+    }
+    if (this.selectedFile2) {
+      formData.append('secondary_logo', this.selectedFile2);
+    }
+
+ this.http.post('consultation/upload-logo', formData).subscribe({
+      next: (res: any) => {
+        if (res.logos?.primary_logo) {
+          this.imageData1 = this.apiBase + res.logos.primary_logo;
+        }
+        if (res.logos?.secondary_logo) {
+          this.imageData2 = this.apiBase + res.logos.secondary_logo;
+        }
+        this.toastr.success('Logo(s) successfully uploaded', 'Success');
+      },
+      error: (err) => {
+        console.error('Upload failed.', err);
+        this.toastr.error('Logo upload failed!', 'Server Error');
+      }
+    });
 }
 
 
+loadLogos(){
 
-loadLogo() {
-  this.http.get('consultation/logo', { params: { facility_code: this.facility_code }}).subscribe({
-    next: (res: any) => {
-      if (res.path) {
+  this.http.get('consultation/logo', {params: {facility_code: this.facility_code}}).subscribe({
+    next: (res:any) => {
+      if (res.logos) {
+        if (res.logos.primary_logo) {
+          this.imageData1 = this.apiBase + res.logos.primary_logo;
+        }
 
-         console.log('Logo response:', res);
-        this.imageData = this.apiBase + res.path;
-        console.log('Full logo URL:', this.imageData);
-
+        if (res.logos.secondary_logo) {
+          this.imageData2 = this.apiBase + res.logos.secondary_logo;
+        }
       } else {
-        this.imageData = null;
-        console.warn('No logo found.');
+        this.imageData1 = null;
+        this.imageData2 = null;
+        console.warn('No logos found.');
       }
     },
     error: () => {
       console.warn('No logo found or failed to load.');
-      this.imageData = '';
+      this.imageData1 = '';
+      this.imageData2 = '';
     }
   });
 }
+
+
   
 
  /* logo upload end */
@@ -187,7 +236,7 @@ loadLogo() {
       this.years.push(year);
     }
 
-     this.loadLogo();
+     this.loadLogos();
   }
 
   
