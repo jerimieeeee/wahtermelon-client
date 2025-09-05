@@ -62,12 +62,12 @@ export class AssessmentSummaryComponent implements OnInit {
             this.toastr.success('Rapid Assessment Details was Updated Successfuly')
 
               this.updateSelectedASRH.emit(data);
-              console.log(data, 'rapid details')
+              // console.log(data, 'rapid details')
 
             // console.log(this.selected_asrh_consult, 'checker current selected')
           },
           error: err => console.log(err),
-          complete: () => console.log('success')
+          // complete: () => console.log('success')
         })
 
     }
@@ -78,7 +78,7 @@ export class AssessmentSummaryComponent implements OnInit {
   }
 
   parseReason(selected_asrh_consult) {
-    console.log(selected_asrh_consult, 'parseReason')
+    // console.log(selected_asrh_consult, 'parseReason')
     if(selected_asrh_consult) {
       let obj: any = typeof selected_asrh_consult === 'object' ? JSON.stringify(selected_asrh_consult) : selected_asrh_consult;
       let message: any = '';
@@ -115,7 +115,7 @@ export class AssessmentSummaryComponent implements OnInit {
       next: (data: any) => {
         // console.log(data.data)
         this.physicians = data.data
-        console.log(this.physicians, 'users')
+        // console.log(this.physicians, 'users')
 
       },
       error: err => console.log(err)
@@ -138,8 +138,8 @@ export class AssessmentSummaryComponent implements OnInit {
         algorithm_remarks: this.selected_asrh_consult?.algorithm_remarks,
         lib_asrh_living_arrangement_type_id: this.selected_asrh_consult?.lib_asrh_living_arrangement_type_id,
       });
-      console.log(this.selected_asrh_consult, 'patch data working selected asrh');
-      console.log('patch data working');
+      // console.log(this.selected_asrh_consult, 'patch data working selected asrh');
+      // console.log('patch data working');
     }
 
   }
@@ -183,7 +183,7 @@ export class AssessmentSummaryComponent implements OnInit {
     checkAnswers(answers): boolean {
       let showAlgo: boolean = false;
       Object.entries(answers).forEach(([key, value]: any, index) => {
-        console.log(value.answer)
+        // console.log(value.answer)
         if(value.answer === '1') {
           showAlgo = true;
         }
@@ -228,7 +228,7 @@ export class AssessmentSummaryComponent implements OnInit {
     // this.loadASRH.emit();
   this.loadUsers();
   this.selectVisit();
-    console.log(this.selected_asrh_consult, 'check mo selected rapid')
+    // console.log(this.selected_asrh_consult, 'check mo selected rapid')
   }
 
   // eslint-disable-next-line @angular-eslint/use-lifecycle-interface

@@ -36,31 +36,24 @@ export class UploadClaimsComponent implements OnInit {
   uploading_claim: boolean = false;
   modals: any =[];
 
-  /* arr_CR4652 = ['CF2', 'CSF', 'CF3', 'SOA'];
-  arr_CR4651 = ['CF2', 'CSF', 'CF3', 'SOA'];
-  arr_CR4683 = ['CF2', 'CSF', 'CF3', 'SOA', 'OTH'];
-  arr_CR4684 = ['CF2', 'CSF', 'CF3', 'SOA', 'OTH'];
-  arr_CR4687 = ['CF2', 'CSF', 'PMRF', 'SOA', 'PBC'];
-  arr_CR4656 = ['CF2', 'CSF', 'NTP', 'SOA'];
-  arr_CR4657 = ['CF2', 'CSF', 'NTP', 'SOA'];
-  arr_CR4658 = ['CF2', 'CSF', 'SOA', 'OTH'];
-  arr_CR4685 = ['CF2', 'CSF', 'SOA'];
-  arr_CR0385 = ['CF2', 'CSF', 'SOA'];
-  arr_CR0456 = ['CF2', 'CSF', 'SOA'];
-  arr_CR4655 = ['CF2', 'CSF', 'MSR']; */
-
-  arr_CR4652 = ['CF2', 'CSF', 'CF3', 'SOA w/ CTC'];
-  arr_CR4651 = ['CF2', 'CSF', 'CF3', 'SOA w/ CTC'];
-  arr_CR4683 = ['CF2', 'CSF', 'CF3', 'SOA w/ CTC', 'Pink Card'];
-  arr_CR4684 = ['CF2', 'CSF', 'CF3', 'SOA w/ CTC', 'Pink Card'];
-  arr_CR4687 = ['CF2', 'CSF + NBS Sticker', 'PMRF', 'SOA w/ CTC', 'Birth Certificate'];
-  arr_CR4656 = ['CF2', 'CSF', 'Treatment Card', 'SOA w/ CTC'];
-  arr_CR4657 = ['CF2', 'CSF', 'Treatment Card', 'SOA w/ CTC'];
-  arr_CR4658 = ['CF2', 'CSF', 'Treatment Card', 'SOA w/ CTC', 'Summary Report'];
-  arr_CR4685 = ['CF2', 'CSF + Serial Sticker', 'SOA w/ CTC'];
-  arr_CR0385 = ['CF2', 'CSF + Serial Number of Box', 'SOA w/ CTC'];
-  arr_CR0456 = ['CF2', 'CSF', 'SOA'];
-  arr_CR4655 = ['CF2', 'CSF', 'Smear Test for OMP'];
+  arr_CR4652 = ['CF2', 'CSF', 'CF3', 'eSOA'];
+  arr_CR4651 = ['CF2', 'CSF', 'CF3', 'eSOA'];
+  arr_CR4683 = ['CF2', 'CSF', 'CF3', 'eSOA', 'Pink Card'];
+  arr_CR4684 = ['CF2', 'CSF', 'CF3', 'eSOA', 'Pink Card'];
+  arr_CR4687 = ['CF2', 'CSF + NBS Sticker', 'PMRF', 'eSOA', 'Birth Certificate'];
+  arr_CR4656 = ['CF2', 'CSF', 'Treatment Card', 'eSOA'];
+  arr_CR4657 = ['CF2', 'CSF', 'Treatment Card', 'eSOA'];
+  arr_CR4658 = ['CF2', 'CSF', 'Treatment Card', 'eSOA', 'Summary Report'];
+  arr_CR4685 = ['CF2', 'CSF + Serial Sticker', 'eSOA'];
+  arr_CR0385 = ['CF2', 'CSF + Serial Number of Box', 'eSOA'];
+  arr_CR0456 = ['CF2', 'CSF', 'eSOA'];
+  arr_CR4655 = ['CF2', 'CSF', 'Smear Test for OMP', 'eSOA'];
+  arr_CR4752 = ['CF2', 'CSF', 'Annex E: Claim Form Dental Service', 'Dental Record', 'eSOA']; //OPH01
+  arr_CR4753 = ['CF2', 'CSF', 'Annex E: Claim Form Dental Service', 'Dental Record', 'eSOA']; //OPH01A
+  arr_CR4754 = ['CF2', 'CSF', 'Annex E: Claim Form Dental Service', 'Dental Record', 'eSOA']; //OPH01B
+  arr_CR4755 = ['CF2', 'CSF', 'Annex E: Claim Form Dental Service', 'Dental Record', 'eSOA']; //OPH02
+  arr_CR4756 = ['CF2', 'CSF', 'Annex E: Claim Form Dental Service', 'Dental Record', 'eSOA']; //OPH02A
+  arr_CR4757 = ['CF2', 'CSF', 'Annex E: Claim Form Dental Service', 'Dental Record', 'eSOA']; //OPH02B
 
   is_retrieving_xml: boolean = false;
   confirm_upload: boolean = false;
@@ -108,12 +101,14 @@ export class UploadClaimsComponent implements OnInit {
     //ECLAIMS SERVICES
     this.http.post('eclaims/upload-claim', params).subscribe({
       next:(data:any) => {
-        this.updateUploadData(data);
+        console.log(data);
+        this.checkSeries(data);
+        // this.updateUploadData(data);
       },
       error: err => {
-        // console.log(err);
+        console.log(err);
         this.is_uploading_claim = false;
-        this.toastr.error(err.error.message, 'Upload Claim', {
+        this.toastr.error(err.error.message || err.error.text, 'Upload Claim', {
           closeButton: true,
           positionClass: 'toast-top-center',
           disableTimeOut: true
@@ -125,7 +120,40 @@ export class UploadClaimsComponent implements OnInit {
   show_ticket_number: boolean = false;
   ticket_number: string;
   updateUploadData(result){
-    let data = result['@attributes'];
+    let data = result;
+    console.log(data);
+    let params = {
+      pHospitalTransmittalNo: this.selected_pHospitalTransmittalNo,
+      pTransmissionControlNumber: data.pTransmissionControlNumber,
+      pReceiptTicketNumber: data.pReceiptTicketNumber,
+      pClaimSeriesLhio: data.pClaimSeriesLhio,
+      pStatus: 'IN PROCESS',
+      pTransmissionDate: formatDate(data.pTransmissionDate, 'yyyy-MM-dd', 'en', 'Asia/Manila'),
+      pTransmissionTime: formatDate(new Date(), 'HH:mm:ss', 'en', 'Asia/Manila'),
+      isSuccess:'Y',
+      program_desc: this.program_name,
+      program_code: this.program_name === 'cc' || this.program_name === 'fp' ? 'mc' :  this.program_name,
+    }
+
+    this.http.post('eclaims/eclaims-upload', params).subscribe({
+      next: (res: any) => {
+        this.ticket_number = res.data.pReceiptTicketNumber;
+
+        this.toastr.success('Ticket Number: '+this.ticket_number+'| Claim Series: '+data.pClaimSeriesLhio, 'Claim Uploaded!', {
+          closeButton: true,
+          positionClass: 'toast-top-center',
+          disableTimeOut: true
+        });
+
+        this.is_uploading_claim = false;
+        this.closeModal();
+      },
+      error: err => console.log(err)
+    })
+  }
+  /* updateUploadData(result){
+    let data = result;
+    console.log(data);
     let params = {
       pHospitalTransmittalNo: this.selected_pHospitalTransmittalNo,
       pTransmissionControlNumber: data.pTransmissionControlNumber,
@@ -153,6 +181,40 @@ export class UploadClaimsComponent implements OnInit {
       },
       error: err => console.log(err)
     })
+  } */
+
+  checkSeries(result){
+    let data: any = result['@attributes'];
+    let params = {
+      receiptTicketNumber: data.pReceiptTicketNumber,
+      program_code: this.program_name === 'cc' || this.program_name === 'fp' ? 'mc' :  this.program_name
+    }
+
+    this.http.post('eclaims/get-claims-map', params).subscribe({
+      next: (resp: any) => {
+        console.log(data)
+        console.log(resp.mapping[0])
+        if(resp.success === false) {
+          this.toastr.error('No query result', 'Series LHIO');
+        } else {
+          data.pClaimSeriesLhio = resp.mapping[0].pclaimSeriesLhio;
+
+          /*
+          pTransmissionControlNumber: data.pTransmissionControlNumber,
+          pReceiptTicketNumber: data.pReceiptTicketNumber,
+          pTransmissionDate: formatDate(data.pTransmissionDate, 'yyyy-MM-dd', 'en', 'Asia/Manila')*/
+
+          this.updateUploadData(data);
+        }
+      },
+      error: err => {
+        this.toastr.error(err.error.message, 'Series LHIO', {
+          closeButton: true,
+          positionClass: 'toast-top-center',
+          disableTimeOut: true
+        });
+      }
+    })
   }
 
   deleteDocs(data){
@@ -160,7 +222,7 @@ export class UploadClaimsComponent implements OnInit {
   }
 
   show_form: boolean = false;
-
+  missing_esa: boolean = true;
   loadDocs(){
     this.show_form = false;
     let params = {
@@ -172,12 +234,16 @@ export class UploadClaimsComponent implements OnInit {
       next:(data:any) => {
         console.log(data)
         this.uploaded_docs = data.data;
+        this.checkForEsa(data.data);
         this.show_form = true;
       },
       error: err => console.log(err)
     });
   }
 
+  checkForEsa(docs) {
+    this.missing_esa = !docs.some(doc => doc.doc_type_code === 'ESA');
+  }
 
   uploadDocs(file_to_upload){
     this.is_uploading = true;
@@ -270,5 +336,7 @@ export class UploadClaimsComponent implements OnInit {
   ngOnInit(): void {
     this.getLibraries();
     this.required_docs = this['arr_'+this.caserate_code];
+    console.log(this.caserate_code);
+    console.log(this.required_docs);
   }
 }

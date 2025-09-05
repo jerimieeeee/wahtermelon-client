@@ -66,7 +66,16 @@ export class EclaimsComponent implements OnInit {
     'RETURN'
   ];
 
-  program_list = ['ab', 'cc', 'tb', 'mc', 'fp'];
+  // program_list = ['ab', 'cc', 'tb', 'mc', 'fp', 'mh', 'dn'];
+  program_list = [
+    { id: 'ab', name: 'Animal Bite' },
+    { id: 'cc', name: 'Child Care' },
+    { id: 'tb', name: 'Tuberculosis' },
+    { id: 'mc', name: 'Maternal Care' },
+    { id: 'fp', name: 'Family Planning' },
+    { id: 'mh', name: 'Mental Health' },
+    { id: 'dn', name: 'Dental' }
+  ];
   code_list_ab = ['90375'];
   code_list_cc = ['99432', '99460'];
   code_list_tb = ['89221', '89222'];
@@ -492,7 +501,7 @@ export class EclaimsComponent implements OnInit {
   }
 
   getVoucherDetails(data) {
-    console.log(data.voucher_details);
+    // console.log(data.voucher_details);
     this.is_refreshing = true;
 
     if(data.voucher_details) {
@@ -597,7 +606,7 @@ export class EclaimsComponent implements OnInit {
       }
     }
 
-    this.showInfoToastr(message, resp.CLAIM.pStatus);
+    this.showInfoToastr(message, resp.CLAIM['@attributes'].pStatus);
     this.updateUploadClaim(data);
     this.is_refreshing = false;
   }

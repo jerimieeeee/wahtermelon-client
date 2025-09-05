@@ -343,10 +343,18 @@ export class Cf2Component implements OnInit {
     if (this.eclaimsForm.value.discharge_date) {
       const dischargeDate = new Date(this.eclaimsForm.value.discharge_date);
       const today = new Date();
-      const diffTime = Math.abs(today.getTime() - dischargeDate.getTime());
-      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+      if (dischargeDate > today) {
+        this.toastr.error('Discharge date cannot be in the future.', 'Error', {
+          disableTimeOut: true,
+          positionClass: 'toast-top-center',
+        });
+        return;
+      }
+
+      const diffDays = Math.ceil(Math.abs(today.getTime() - dischargeDate.getTime()) / (1000 * 60 * 60 * 24));
       if (diffDays > 60) {
-        this.toastr.error('This claim is now beyond the 60-day filing period.', 'Warning',{
+        this.toastr.error('This claim is now beyond the 60-day filing period.', 'Warning', {
           disableTimeOut: true,
           positionClass: 'toast-top-center',
         });
@@ -382,13 +390,18 @@ export class Cf2Component implements OnInit {
         break;
       }
       case 'cc': {
-        let params = { patient_id: this.selected_case.patient_id };
+        // console.log(this.eclaimsForm.value);
+        if(this.eclaimsForm.value.code === '99460') {
+          let params = { patient_id: this.selected_case.patient_id };
 
-        this.http.get('patient-vaccines/vaccines-records', {params}).subscribe({
-          next: (data:any) => {
-            this.paramsCc(data.data);
-          }
-        });
+          this.http.get('patient-vaccines/vaccines-records', {params}).subscribe({
+            next: (data:any) => {
+              this.paramsCc(data.data);
+            }
+          });
+        } else {
+          this.paramsGeneric();
+        }
         break;
       }
       case 'mc': {

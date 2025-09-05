@@ -11,14 +11,14 @@
       </select>
       <select class="input rounded-none w-20 text-xs" (change)="changeCodeList()" [(ngModel)]="program_desc">
         <option [ngValue]="null">ALL</option>
-        <option [value]="program" *ngFor="let program of program_list">{{ program | uppercase }}</option>
+        <option [value]="program.id" *ngFor="let program of program_list">{{ program.name | uppercase }}</option>
       </select>
-      <input type="date" class="input rounded-none w-32 text-xs" [(ngModel)]="start_date" />
-      <input type="date" class="input rounded-none w-32 text-xs" [(ngModel)]="end_date" />
       <select *ngIf="program_desc !== null" class="input rounded-none w-24" [(ngModel)]="code">
         <option [ngValue]="null">ALL</option>
         <option [value]="list" *ngFor="let list of code_list">{{ list | uppercase }}</option>
       </select>
+      <input type="date" class="input rounded-none w-32 text-xs" [(ngModel)]="start_date" />
+      <input type="date" class="input rounded-none w-32 text-xs" [(ngModel)]="end_date" />
       <button type="button" (click)="getEclaimsList()" class="px-3 bg-white text-blue-500 rounded-r-md h-10 mt-1 w-24">
         <fa-icon [icon]="faFilter"></fa-icon> Filter
       </button>

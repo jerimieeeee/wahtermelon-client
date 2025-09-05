@@ -7,6 +7,7 @@ import { HttpService } from 'app/shared/services/http.service';
 import { ToastrService } from 'ngx-toastr';
 import { forkJoin } from 'rxjs';
 import { SummaryOfFee, SummaryOfFees } from './esoa-interface';
+import { AgeService } from 'app/shared/services/age.service';
 
 @Component({
   selector: 'app-esoa',
@@ -83,8 +84,10 @@ export class EsoaComponent implements OnInit {
     let esoa_summary: any = {'SummaryOfFees' : {}};
     let esoa_items = {'ItemizedBillingItems' : []}
     let esoa_prof = {'ProfessionalFees': []};
-    console.log(this.summary_list)
+    // console.log(this.summary_list)
     Object.entries(this.summary_list).forEach(([key, value]: any) => {
+      // console.log(this.senior_discount, " senior discount");
+      // console.log(this.pwd_discount, " pwd discount");
       if(key !== 'ProfessionalFee'){
         esoa_summary['SummaryOfFees'][key] = {
           pChargesNetOfApplicableVat: Number(value['pChargesNetOfApplicableVat']).toFixed(2),
@@ -232,6 +235,7 @@ export class EsoaComponent implements OnInit {
     'Prof': 0
   };
   computeBalance(key?:string, subkey?: string) {
+    // console.log(key);
     this.totalDiscount[key] = Number(this.summary_list[key].pSeniorCitizenDiscount) + Number(this.summary_list[key].pPWDDiscount) + Number(this.summary_list[key].pPCSO) + Number(this.summary_list[key].pDSWD) + Number(this.summary_list[key].pDOHMAP) + Number(this.summary_list[key].pHMO);
 
     this.computedDiscount['Items'] = 0;
@@ -303,7 +307,6 @@ export class EsoaComponent implements OnInit {
         if(data.data.length > 0) {
           this.patchTotalSummary(data.data);// : this.computeTotalSummary();
         } else {
-          console.log(2);
           this.show_form = true;
         }
       },
@@ -316,7 +319,7 @@ export class EsoaComponent implements OnInit {
   patchTotalSummary(data){
     // console.log(data);
     this.totalSummary = 0;
-    console.log(this.summary_list);
+    // console.log(this.summary_list);
     Object.entries(data).forEach(([key, value]: any) => {
       console.log(value);
       this.summary_list[value.category].pDOHMAP = value.pDOHMAP;
@@ -343,14 +346,22 @@ export class EsoaComponent implements OnInit {
       this.totalDiscount[key] = 0;
 
       if(value.listVariable === 'professional_list') {
-        // console.log(this.professional_list);
         value.pChargesNetOfApplicableVat = this.professional_list.prof_pTotalAmount ? Number(this.professional_list.prof_pTotalAmount) : Number(this.professional_list.prof_fee)
       } else {
         this[value.listVariable].forEach((item: any) => {
           value.pChargesNetOfApplicableVat += item.quantity*item.unit_price || 0;
         });
+
+        value.pSeniorCitizenDiscount = this.senior_discount ? value.pChargesNetOfApplicableVat * 0.20 : 0;
+        if(this.pwd_discount && !this.senior_discount) {
+          value.pPWDDiscount = value.pChargesNetOfApplicableVat * 0.20;
+        }
+
         this.totalSummary += value.pChargesNetOfApplicableVat;
       }
+
+      // console.log(key)
+      this.computeBalance(key);
       this.totalAmount += value.pChargesNetOfApplicableVat;
     });
 
@@ -360,20 +371,64 @@ export class EsoaComponent implements OnInit {
     // console.log(this.summary_list);
   }
 
+  patient_info: any;
+  active_loc_id: any;
+  getPatientInfo() {
+    this.active_loc_id = this.http.getUrlParams();
+
+    this.http.get('patient/'+this.active_loc_id.patient_id).subscribe({
+        next: (data: any) => {
+          this.patient_info = data.data;
+          // console.log(this.patient_info, " patient info");
+          this.toggleDiscount();
+        },
+        error: err => {
+          // feature: add prompt that patient is not found. for now redirect to home
+          console.log(err)
+        }
+      });
+  }
+
+  patient_age: string;
+  senior_discount: boolean = false;
+  pwd_discount: boolean = false;
+  toggleDiscount() {
+    this.senior_discount = false;
+    this.pwd_discount = false;
+
+    if(this.patient_info && this.patient_info.birthdate){
+      let age_value = this.ageService.calcuateAge(this.patient_info.birthdate);
+      // console.log(age_value, " age value");
+      this.patient_age = age_value;
+
+      if(age_value.type === 'year' && age_value.age >= 60) {
+        this.senior_discount = true;
+      }
+
+      if(this.patient_info.pwd_type_code !== 'NA') {
+        this.pwd_discount = true;
+      }
+      // return age_value.age + ' ' + age_value.type+(age_value.age>1 ? 's old' : ' old' );
+    }
+
+    this.getConsultDetails();
+  }
+
   closeModal() {
     this.toggleModal.emit('esoa');
   }
 
   constructor(
     private http: HttpService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private ageService: AgeService
   ) { }
 
   ngOnInit(): void {
-    console.log(this.consult_details)
+    // console.log(this.consult_details)
     this.consult_id = this.http.getUrlParams().consult_id;
     this.program_name = this.http.getUrlParams().loc;
-    this.getConsultDetails();
+    this.getPatientInfo();
     // console.log(this.http.getUrlParams())
   }
 }

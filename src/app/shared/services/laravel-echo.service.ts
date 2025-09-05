@@ -204,13 +204,13 @@ export class LaravelEchoService {
       broadcaster: 'pusher',
       key: 'app-key',
       cluster: 'mt1',
-      wsHost: window.location.hostname,
-      wsPort: 6001, // Update if different from 6001
-      wssPort: 6001, // Update if different from 6001
-      forceTLS: false, // Set to true if using HTTPS
+      wsHost: 'sockets.wah.ph',
+      wsPort: 443, // Update if different from 6001
+      wssPort: 443, // Update if different from 6001
+      forceTLS: true, // Set to true if using HTTPS
       disableStats: true,
       enabledTransports: ['ws', 'wss'],
-      authEndpoint: 'http://wahtermelon.test/broadcasting/auth',
+      authEndpoint: 'https://training-api.wah.ph/broadcasting/auth',
       auth: {
         headers: {
           Authorization: `Bearer ${this.cookie_value}`

@@ -46,7 +46,7 @@ export class EducationComponent implements OnInit {
   });
 
   onSubmit(){
-    console.log(this.educationForm.value, 'display visit details')
+    // console.log(this.educationForm.value, 'display visit details')
     this.is_saving = true;
     this.http.post('asrh/comprehensive', this.educationForm.value).subscribe({
       next: (data: any) => {
@@ -57,7 +57,7 @@ export class EducationComponent implements OnInit {
         // this.loadFP.emit();
         // this.reloadData();
 
-        console.log(this.educationForm, 'checker education')
+        // console.log(this.educationForm, 'checker education')
          },
       complete: () => {
 
@@ -95,7 +95,7 @@ export class EducationComponent implements OnInit {
       consent_flag: this.selected_asrh_consult?.comprehensive?.consent_flag,
       });
       // this.show_form = true;
-      console.log(this.selected_asrh_consult.comprehensive,'load compre home working')
+      // console.log(this.selected_asrh_consult.comprehensive,'load compre home working')
       // this.loadSelected();
     }
   }
@@ -110,7 +110,7 @@ export class EducationComponent implements OnInit {
       next: (data: any) => {
 
        this.asrh_compre_history = data.data[0]
-       console.log(this.asrh_compre_history, 'hugot ng compre history')
+      //  console.log(this.asrh_compre_history, 'hugot ng compre history')
        this.patchCompre();
       },
       complete: () => {

@@ -73,6 +73,6 @@ constructor(private http: HttpClient, private formBuilder: FormBuilder) {}
 
 ngOnInit(): void {
   this.validateForm();
-  console.log(this.client_types)
+  // console.log(this.client_types)
 }
 }

@@ -21,7 +21,7 @@
       </thead>
       <tbody>
         <tr *ngFor="let item of summary_list| keyvalue: keepOriginalOrder">
-          <td class="pl-2">{{ item.value.label }}</td>
+          <td class="pl-2">{{ item.value.label }} {{ item.key }}</td>
           <td class="text-right pr-2">
             {{ item.value.pChargesNetOfApplicableVat | currency: 'PHP' }}
           </td>
@@ -105,7 +105,7 @@
       <button [disabled]="disable_button || generating_xml" type="button" class="btn-save" (click)="downloadEsoa()">
         <fa-icon  *ngIf="!generating_xml" [icon]="faDownload"></fa-icon>
         <fa-icon  *ngIf="generating_xml" [icon]="faCircleNotch" animation="spin"></fa-icon>
-        Save{{ generating_xml ? 'ing' : ''}} Esoa XML
+         {{ generating_xml ? 'Saving' : 'Save'}} Esoa XML
       </button>
     </div>
   </div>
@@ -126,8 +126,8 @@
         </thead>
         <tbody>
           <tr *ngFor="let item of prescription_list">
-            <td class="py-2 px-3">{{ item.added_item ? item.added_item : item.konsulta_medicine.desc }}</td>
-            <td class="py-2 px-3 text-center">{{ item.added_item ? 'OTHERS' : item.konsulta_medicine.category }}</td>
+            <td class="py-2 px-3">{{ item.added_medicine ? item.added_medicine : (item.konsulta_medicine ? item.konsulta_medicine.desc : '') }}</td>
+            <td class="py-2 px-3 text-center">{{ item.added_medicine ? 'OTHERS' : (item.konsulta_medicine ? item.konsulta_medicine.category : '') }}</td>
             <td class="py-2 px-3 text-center">{{ item.quantity }}</td>
             <td class="py-2 px-3 text-right">{{ item.unit_price | currency: 'PHP' }}</td>
             <td class="py-2 px-3 text-right">{{ item.total_price | currency: 'PHP' }}</td>

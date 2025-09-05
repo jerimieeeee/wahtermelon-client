@@ -38,6 +38,7 @@ import { SeniorMasterlistComponent } from "./report/masterlist/senior-masterlist
 import { PaginationComponent } from 'app/shared/shared-components/pagination/pagination.component';
 import { AsrhMasterlistComponent } from './report/asrh-masterlist/asrh-masterlist.component';
 import { AsrhConsolidatedComponent } from './report/asrh-consolidated/asrh-consolidated.component';
+import {MorbidityComponent} from "./report/fhsis2025/morbidity/morbidity.component";
 
 @NgModule({
   declarations: [
@@ -68,7 +69,8 @@ import { AsrhConsolidatedComponent } from './report/asrh-consolidated/asrh-conso
     BloodTypeMasterlistComponent,
     SeniorMasterlistComponent,
     AsrhMasterlistComponent,
-    AsrhConsolidatedComponent
+    AsrhConsolidatedComponent,
+    MorbidityComponent,
   ],
   exports: [
     ShowNameListComponent
@@ -84,7 +86,7 @@ import { AsrhConsolidatedComponent } from './report/asrh-consolidated/asrh-conso
     ConsolidatedComponent,
     HeaderFhsis2018Component,
     FooterComponent,
-    PaginationComponent
+    PaginationComponent,
   ]
 })
 export class ReportsModule { }

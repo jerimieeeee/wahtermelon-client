@@ -61,13 +61,13 @@ export class AdolescentComponent implements OnInit, OnChanges {
     // let params = {
     //   id: this.selected_asrh_consult.id
     // };
-    console.log('selected id')
+    // console.log('selected id')
     this.http.get('asrh/rapid/'+ this.selected_asrh_consult.id).subscribe({
       next: (data: any) => {
         // this.patient_asrh_history = data.data;
         this.selected_asrh_consult = data.data;
         this.fetching_history = true;
-        console.log(this.selected_asrh_consult, 'selected_asrh_consult main');
+        // console.log(this.selected_asrh_consult, 'selected_asrh_consult main');
         // this.pages = 2;
       },
       error: err => console.log(err)
@@ -75,13 +75,13 @@ export class AdolescentComponent implements OnInit, OnChanges {
   }
 
   updateSelectedASRH2(id){
-    console.log('selected id')
+    // console.log('selected id')
     this.http.get('asrh/rapid/'+ id).subscribe({
       next: (data: any) => {
         // this.patient_asrh_history = data.data;
         this.selected_asrh_consult = data.data;
         this.fetching_history = true;
-        console.log(this.selected_asrh_consult, 'selected_asrh_consult main');
+        // console.log(this.selected_asrh_consult, 'selected_asrh_consult main');
         // this.pages = 2;
       },
       error: err => console.log(err)
@@ -91,14 +91,14 @@ export class AdolescentComponent implements OnInit, OnChanges {
   openASRHConsult(data) {
     // this.router.navigate(['/patient/at', {id: this.patient_id ?? this.patient_id, consult_id: this.consult_id ?? this.consult_id}]);
     this.selected_asrh_consult = data;
-    console.log(this.selected_asrh_consult, 'selected_asrh_consult');
+    // console.log(this.selected_asrh_consult, 'selected_asrh_consult');
     this.pages = 2;
-    console.log()
+    // console.log()
   }
 
   toggleModal(name){
     this.modals[name] = !this.modals[name];
-    console.log('toggle modal')
+    // console.log('toggle modal')
   }
 
   loadLibraries() {
@@ -109,7 +109,7 @@ export class AdolescentComponent implements OnInit, OnChanges {
       next: ([dataCompre, dataClient]: any) => {
         this.compre_questions = dataCompre.data;
         this.client_types = dataClient.data;
-        console.log(this.compre_questions, this.client_types, 'libraries')
+        // console.log(this.compre_questions, this.client_types, 'libraries')
       },
       error: err => console.log(err)
     });
@@ -169,7 +169,7 @@ export class AdolescentComponent implements OnInit, OnChanges {
 
 
           this.fetching_history = true; // Set to false after data is fetched
-          console.log(this.selected_asrh_consult, 'selected_asrh_consult');
+          // console.log(this.selected_asrh_consult, 'selected_asrh_consult');
           // this.pages = 2; // This is commented out but you might want to handle it later
         },
         error: err => console.log(err)
@@ -187,7 +187,7 @@ export class AdolescentComponent implements OnInit, OnChanges {
       next: (data: any) => {
         this.patient_asrh_history = data.data[0];
         this.fetching_history = true;
-        console.log(this.patient_asrh_history, 'selected_asrh_consult sa main');
+        // console.log(this.patient_asrh_history, 'selected_asrh_consult sa main');
         // this.pages = 2;
       },
       error: err => console.log(err)
@@ -199,7 +199,7 @@ export class AdolescentComponent implements OnInit, OnChanges {
     this.http.get('consultation/records',{params: {patient_id: this.patient_id, id: this.consult_id}}).subscribe({
       next: (data: any) => {
         this.consult_details = data.data[0];
-        console.log(this.consult_details, 'consult details')
+        // console.log(this.consult_details, 'consult details')
         this.loadASRH();
         this.loadLibraries();
         this.show_form = true;
@@ -227,16 +227,16 @@ export class AdolescentComponent implements OnInit, OnChanges {
     this.user_facility = this.http.getUserFacility();
 
     this.loadConsultDetails();
-    console.log(this.user_info, 'user_info')
+    // console.log(this.user_info, 'user_info')
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log('ngOnChanges triggered in Parent!');
+    // console.log('ngOnChanges triggered in Parent!');
     // Handle any changes in parent data here
   }
 
   onChildOpened() {
-    console.log('Child component was opened!');
+    // console.log('Child component was opened!');
     // Trigger changes in the parent component
   }
 }

@@ -144,7 +144,7 @@ export class RapidHeeadsssComponent implements OnInit, OnChanges {
   onSubmit(){
     var rapid_arr = [];
 
-    console.log(this.selected_asrh_consult, 'test')
+    // console.log(this.selected_asrh_consult, 'test')
     Object.entries(this.rapid_ans).forEach(([key, value]) => {
       if(value != '-'){
         let ans = {
@@ -166,13 +166,13 @@ export class RapidHeeadsssComponent implements OnInit, OnChanges {
         answers: rapid_arr
       }
 
-      console.log(rapid_form)
+      // console.log(rapid_form)
       this.is_saving2 = true;
       this.http.post('asrh/rapid-answer', rapid_form).subscribe({
         next: (data : any) => {
           this.is_saving2 = false;
           this.toastr.success('Rapid Assessment Answers was ' + (this.selected_asrh_consult?.answers?.length !== 0 ? 'updated' : 'saved') + ' successfuly', 'Success')
-          console.log(data, 'display save rapid answers')
+          // console.log(data, 'display save rapid answers')
           // if(this.selected_asrh_consult !== null)
              this.updateSelectedASRH.emit(data);
             //  this.loadASRH.emit();
@@ -222,8 +222,8 @@ export class RapidHeeadsssComponent implements OnInit, OnChanges {
         // refer_to_user_id: this.selected_asrh_consult?.refer_to_user_id,
         // status: this.selected_asrh_consult?.status,
       });
-      console.log(this.selected_asrh_consult, 'patch data working selected asrh')
-      console.log('patch data working')
+      // console.log(this.selected_asrh_consult, 'patch data working selected asrh')
+      // console.log('patch data working')
       this.loadSelected();
       this.show_form = true;
     }
@@ -329,7 +329,7 @@ export class RapidHeeadsssComponent implements OnInit, OnChanges {
           this.is_saving = false;
           console.log(err);
         },
-        complete: () => console.log('success')
+        // complete: () => console.log('success')
       });
     } else {
       this.http.update('asrh/rapid/', this.selected_asrh_consult.id, formValue).subscribe({
@@ -337,13 +337,13 @@ export class RapidHeeadsssComponent implements OnInit, OnChanges {
           this.is_saving = false;
           this.toastr.success('Rapid Assessment Details was updated successfully');
           this.updateSelectedASRH.emit(data);
-          console.log(data, 'rapid details');
+          // console.log(data, 'rapid details');
         },
         error: err => {
           this.is_saving = false;
           console.log(err);
         },
-        complete: () => console.log('success')
+        // complete: () => console.log('success')
       });
     }
   }
@@ -449,7 +449,7 @@ export class RapidHeeadsssComponent implements OnInit, OnChanges {
       next: (data: any) => {
         // console.log(data.data)
         this.physicians = data.data
-        console.log(this.physicians, 'users')
+        // console.log(this.physicians, 'users')
       },
       error: err => console.log(err)
     })
@@ -466,7 +466,7 @@ export class RapidHeeadsssComponent implements OnInit, OnChanges {
 
   toggleModal(name){
     this.modals[name] = !this.modals[name];
-    console.log('toggle modal')
+    // console.log('toggle modal')
   }
 
   openModal() {
@@ -522,8 +522,8 @@ export class RapidHeeadsssComponent implements OnInit, OnChanges {
           this.refusal_reasons = dataRefusal.data;
           this.living_conditions = dataLiving.data;
           this.show_form = true;
-          console.log(this.living_conditions, this.client_types, 'libraries')
-          console.log(this.refusal_reasons, this.client_types, 'libraries')
+          // console.log(this.living_conditions, this.client_types, 'libraries')
+          // console.log(this.refusal_reasons, this.client_types, 'libraries')
         },
         error: err => console.log(err)
       });
@@ -544,7 +544,7 @@ ngOnChanges(change: SimpleChanges): void{
   }
 
 ngOnInit(): void {
-    console.log(this.patient_asrh_history, 'patient asrh history main')
+    // console.log(this.patient_asrh_history, 'patient asrh history main')
     this.validateForm();
     this.loadRapidLib();
     // this.loadLibraries();

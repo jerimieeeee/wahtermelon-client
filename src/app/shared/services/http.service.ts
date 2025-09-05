@@ -9,12 +9,7 @@ import { Subject } from 'rxjs';
   providedIn: 'root'
 })
 export class HttpService {
- // baseUrl = 'https://apiwahtermelon-staging.wah.ph/api/v1/';
- baseUrl = 'https://demo-api.wah.ph/api/v1/';
-  // baseUrl = 'https://api.wah.ph/api/v1/'; //api
-  // baseUrl = 'http://127.0.0.1:8000/api/v1/'; //local api
-  // baseUrl = 'http://wahtermelon.test/api/v1/'; //local api
-
+  baseUrl = 'https://training-api.wah.ph/api/v1/';
   masterFormUrl = 'https://masterform-api.wah.ph/api/v1/';
 
   constructor(

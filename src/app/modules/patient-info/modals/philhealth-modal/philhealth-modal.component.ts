@@ -321,6 +321,22 @@ export class PhilhealthModalComponent implements OnInit {
     })
   }
 
+  checkRequirement() {
+    const category = this.philhealthForm.value.membership_category_id;
+    if (category && Number(category) >= 1 && Number(category) <= 9) {
+      this.philhealthForm.controls.employer_name.setValidators([Validators.required]);
+      this.philhealthForm.controls.employer_pin.setValidators([Validators.required]);
+      this.philhealthForm.controls.employer_address.setValidators([Validators.required]);
+    } else {
+      this.philhealthForm.controls.employer_name.clearValidators();
+      this.philhealthForm.controls.employer_pin.clearValidators();
+      this.philhealthForm.controls.employer_address.clearValidators();
+    }
+    this.philhealthForm.controls.employer_name.updateValueAndValidity();
+    this.philhealthForm.controls.employer_pin.updateValueAndValidity();
+    this.philhealthForm.controls.employer_address.updateValueAndValidity();
+  }
+
   showMember(){
     if(this.philhealthForm.value.membership_type_id === 'DD'){
       this.show_member_form = true;

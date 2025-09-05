@@ -50,7 +50,7 @@ export class SexualityComponent implements OnInit {
       });
 
       onSubmit(){
-        console.log(this.sexualityForm.value, 'display visit details')
+        // console.log(this.sexualityForm.value, 'display visit details')
         this.is_saving = true;
         this.http.post('asrh/comprehensive', this.sexualityForm.value).subscribe({
           next: (data: any) => {
@@ -61,7 +61,7 @@ export class SexualityComponent implements OnInit {
             // this.loadFP.emit();
             // this.reloadData();
 
-            console.log(this.sexualityForm, 'checker education')
+            // console.log(this.sexualityForm, 'checker education')
              },
           complete: () => {
 
@@ -119,7 +119,7 @@ export class SexualityComponent implements OnInit {
          next: (data: any) => {
 
           this.asrh_compre_history = data.data[0]
-          console.log(this.asrh_compre_history, 'hugot ng compre history')
+          // console.log(this.asrh_compre_history, 'hugot ng compre history')
 
           this.patchCompre();
          },
