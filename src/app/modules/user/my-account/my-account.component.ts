@@ -70,6 +70,7 @@ export class MyAccountComponent implements OnInit {
     attendant_fp_flag: new FormControl<boolean| null>(false),
     attendant_cv_flag: new FormControl<boolean| null>(false),
     attendant_dn_flag: new FormControl<boolean| null>(false),
+    attendant_mh_flag: new FormControl<boolean| null>(false),
   });
 
   enbaleEdit(){
@@ -249,6 +250,7 @@ export class MyAccountComponent implements OnInit {
       attendant_fp_flag: [false],
       attendant_cv_flag: [false],
       attendant_dn_flag: [false],
+      attendant_mh_flag: [false],
       aja_flag: [null],
     });
     this.userForm.disable();
