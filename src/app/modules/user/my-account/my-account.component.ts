@@ -242,15 +242,15 @@ export class MyAccountComponent implements OnInit {
       employer_code: ['', Validators.required],
       accreditation_number: [null],
       prc_number: [null],
-      attendant_cc_flag: [false],
-      attendant_mc_flag: [false],
-      attendant_tb_flag: [false],
-      attendant_ab_flag: [false],
-      attendant_ml_flag: [false],
-      attendant_fp_flag: [false],
-      attendant_cv_flag: [false],
-      attendant_dn_flag: [false],
-      attendant_mh_flag: [false],
+      attendant_cc_flag: [0],
+      attendant_mc_flag: [0],
+      attendant_tb_flag: [0],
+      attendant_ab_flag: [0],
+      attendant_ml_flag: [0],
+      attendant_fp_flag: [0],
+      attendant_cv_flag: [0],
+      attendant_dn_flag: [0],
+      attendant_mh_flag: [0],
       aja_flag: [null],
     });
     this.userForm.disable();
@@ -262,6 +262,7 @@ export class MyAccountComponent implements OnInit {
     let user_id = this.http.getUserID();
     this.http.get('users/'+user_id).subscribe({
       next: (data: any) => {
+        console.log(data.data)
         this.orig_value = data.data;
         this.orig_value.birthdate = formatDate(this.orig_value.birthdate,'yyyy-MM-dd','en', 'Asia/Manila')
         this.userForm.patchValue({...this.orig_value});
