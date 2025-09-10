@@ -75,19 +75,14 @@ exportAsPdf: ExportAsConfig = {
   options: {
     html2canvas: {
       useCORS: true,
-      allowTaint: false, // more secure, set to true only if needed
-      scrollX: 0,
-      scrollY: 0,
-      scale: 3, // Increase scale for higher quality (default is 1)
+      allowTaint: false,
+      imageTimeout: 15000, // wait up to 15s for images
     },
     jsPDF: {
       orientation: 'portrait',
       format: 'a4',
-      putOnlyUsedFonts: true,
-      precision: 12, // Increase precision (default is 2)
       unit: 'mm',
-      compress: false, // Prevent compression for clearer output
-      margin: [0, 0, 0, 0]
+      precision: 12,
     }
   }
 };
@@ -103,7 +98,6 @@ exportAsPdf: ExportAsConfig = {
   
 
  getFacilityLength(facilityName: string) {
-  console.log(facilityName, 'facility name');
 
   if(!facilityName){
      return { width: '80px', height: '80px' };
@@ -122,8 +116,10 @@ exportAsPdf: ExportAsConfig = {
 
 
   
- pdf_exported: boolean = false;          
+ pdf_exported: boolean = false;       
+
   exportP(med_cert: string) {
+
   this.pdf_exported = true;
      if (this.pdf_exported) {
     this.exportAsService.save(this.exportAsPdf, this.getTrailName()).subscribe(() => {
@@ -207,33 +203,62 @@ exportAsPdf: ExportAsConfig = {
     municipality: {municipality_code:''},
   };
 
+  
   /* logo */
-   logoUrl: SafeUrl | string = '';
-    apiBase = this.http.baseUrl.replace('/api/v1/', '');
+   primaryLogoUrl: string = '';
+  secondaryLogoUrl: string = '';
+
+  apiBase = this.http.baseUrl.replace('/api/v1/', '');
 
   fetchFacilityLogo() {
-
-  this.http.get('consultation/logo', { params: { facility_code: this.facility_code }}).subscribe({
+  this.http.get('consultation/logo', { params: { facility_code: this.facility_code } }).subscribe({
     next: (res: any) => {
       console.log('Logo response:', res);
-      if (res.path) {
-       this.logoUrl = this.apiBase + '/logo-image/' + res.path.replace('/storage/logos/', '');
-        console.log('Full logo URL:', this.logoUrl);
-      }
+
+      if (res.logos?.primary_logo) {
+  this.primaryLogoUrl =
+    this.apiBase + '/logo-image/' + res.logos.primary_logo.replace('/storage/logos/', '');
+}
+
+if (res.logos?.secondary_logo) {
+  this.secondaryLogoUrl =
+    this.apiBase + '/logo-image/' + res.logos.secondary_logo.replace('/storage/logos/', '');
+}
     },
     error: (err) => {
       console.warn('No logo found:', err);
-      this.logoUrl = ''; // Optional: hide logo if error
+      this.primaryLogoUrl = '';
+      this.secondaryLogoUrl = '';
     }
   });
 }
+
+  clearLogo(type: 'primary' | 'secondary') {
+    this.http.delete('consultation/delete-logo', {
+      body: {
+        facility_code: this.facility_code,
+        type: type
+      }
+    }).subscribe({
+      next: (res: any) => {
+        if (type === 'primary') {
+          this.primaryLogoUrl = '';
+        } else {
+          this.secondaryLogoUrl = '';
+        }
+        console.log(`${type} logo cleared successfully`, res);
+      },
+      error: (err) => {
+        console.error(`Failed to clear ${type} logo`, err);
+      }
+    });
+  }
+
   facility_code: string;
 
   facilityName : string;
 
   ngOnInit(): void {
-
-
 
       let facility = this.http.getUserFromJSON().facility;
 
@@ -246,9 +271,10 @@ exportAsPdf: ExportAsConfig = {
      this.facility_code = facility.code ?? facility.facility.code;
 
     this.consultation = this.http.getUrlParams();
-     if (this.consultation.consult_id?.includes('/')) {
+     if (this.consultation.consult_id?.includes('/')) 
+      {
     this.consultation.consult_id = this.consultation.consult_id.split('/')[0];
-  }
+    }
 
   console.log(this.consultation, 'consult id');
  console.log(this.facility_code, 'facility code');

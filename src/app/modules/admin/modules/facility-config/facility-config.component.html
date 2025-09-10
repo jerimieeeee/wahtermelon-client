@@ -29,27 +29,73 @@
     <div *ngIf="show_form" class="p-5 max-h-[600px] col-span-4 overflow-y-auto">
       <div class="grid grid-cols-4 gap-2 w-full">
         <!-- Photo Column -->
-         <div>
-            <div
-                class="cursor-pointer relative mx-auto flex justify-center items-center mt-10
-                      w-48 h-48 bg-gray-500 rounded-full overflow-hidden hover:bg-gray-700 hover:opacity-50"
-                (click)="fileInput.click()"
-              >
-                <span *ngIf="!imageData" class="font-medium text-gray-700"></span>
-                <img *ngIf="imageData" [src]="imageData" alt="Profile Image" class="w-full h-full object-cover" />
-                <span *ngIf="!imageData" class="absolute text-white">
-                <fa-icon [icon]="faImage" size="xl"></fa-icon>
-              </span>
-              </div>
-              <input type="file" accept="image/*" class="hidden" (change)="onFileSelected($event)" #fileInput/>
-            <!-- label -->
-             
-              <div class="my-4 text-center justify-center">
-                <h1 class="italic text-gray-800"> Upload Logo Here</h1>
-                <h3 class="italic text-sm text-gray-800"> Recommended Size: 400x400 px</h3>
-                <h3 class="italic text-sm text-gray-800"> File size: 2mb</h3>
-              </div>
-         </div>
+         <div class="flex flex-col items-center">
+  <!-- First Upload -->
+        <div>
+    <div
+      class="cursor-pointer relative mx-auto flex justify-center items-center mt-10
+             w-48 h-48 bg-gray-500 rounded-full overflow-hidden hover:bg-gray-700 hover:opacity-50"
+      (click)="fileInput1.click()"
+    >
+      <span *ngIf="!imageData1" class="font-medium text-gray-700"></span>
+      <img
+        *ngIf="imageData1"
+        [src]="imageData1"
+        alt="Municipality Logo"
+        class="w-full h-full object-cover"
+      />
+      <span *ngIf="!imageData1" class="absolute text-white">
+        <fa-icon [icon]="faImage" size="xl"></fa-icon>
+      </span>
+    </div>
+    <input
+      type="file"
+      accept="image/*"
+      class="hidden"
+      (change)="onFileSelected($event, 'primary')"
+      #fileInput1
+    />
+    <!-- label -->
+    <div class="my-4 text-center justify-center">
+      <h1 class="italic text-gray-800">Upload Municipality Logo Here</h1>
+      <h3 class="italic text-sm text-gray-800">Recommended Size: 400x400 px</h3>
+      <h3 class="italic text-sm text-gray-800">File size: 2mb</h3>
+    </div>
+  </div>
+
+  <!-- Second Upload: Facility Logo -->
+  <div>
+    <div
+      class="cursor-pointer relative mx-auto flex justify-center items-center mt-10
+             w-48 h-48 bg-gray-500 rounded-full overflow-hidden hover:bg-gray-700 hover:opacity-50"
+      (click)="fileInput2.click()"
+    >
+      <span *ngIf="!imageData2" class="font-medium text-gray-700"></span>
+      <img
+        *ngIf="imageData2"
+        [src]="imageData2"
+        alt="Facility Logo"
+        class="w-full h-full object-cover"
+      />
+      <span *ngIf="!imageData2" class="absolute text-white">
+        <fa-icon [icon]="faImage" size="xl"></fa-icon>
+      </span>
+    </div>
+    <input
+      type="file"
+      accept="image/*"
+      class="hidden"
+      (change)="onFileSelected($event, 'secondary')"
+      #fileInput2
+    />
+    <!-- label -->
+    <div class="my-4 text-center justify-center">
+      <h1 class="italic text-gray-800">Upload Facility Logo Here</h1>
+      <h3 class="italic text-sm text-gray-800">Recommended Size: 400x400 px</h3>
+      <h3 class="italic text-sm text-gray-800">File size: 2mb</h3>
+    </div>
+  </div>
+</div>
         
         <!-- Barangays -->
         <div class="col-span-3 grid grid-cols-3 gap-4">
